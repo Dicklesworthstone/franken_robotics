@@ -1,0 +1,115 @@
+---
+key: "CARD-T-23"
+title: "Theorem card T-23: the docking family (a robust causal policy exists iff on time and ε < (U + ½)/4)"
+type: "task"
+priority: 1
+milestone: "M1"
+labels: ["m1", "lemma", "frob-cert", "frob-lemma", "solid", "test"]
+parent: "WP-42"
+deps: ["BD-132", "BD-129", "N12-06", "SPEC-C-19"]
+needs: []
+related: ["BD-041", "BD-134", "N12-39", "CARD-T-30", "N12-35", "N12-05"]
+gates: []
+plan_refs: ["§12.3 (T-23)", "§10 C-19", "§10 C-17", "§10 C-18", "§12.7", "Appendix D.6 (docking boundary)"]
+---
+## Background
+
+Information has a clock. A causal policy is a map from the history of arrived packets to commands: the command
+decided at an instant depends only on packets whose arrival is not later than that instant. The docking fixture
+gives the trade-off between sensing, actuation and delivery time in closed form. A unit mass starts at rest and
+must reach position 1 with velocity 0 after three ticks of unit length. Its acceleration during tick k is g·u_k
+with |u_k| ≤ U, and the gain g ∈ {1, 2} is fixed and hidden. The only informative packet is the velocity after
+the first tick, read with additive error in [−ε, +ε]. Writing p = u₀, the terminal conditions force
+u₁ = 1/g − 2p and u₂ = p − 1/g, and the bounds for both gains hold exactly when 1 − U ≤ p ≤ (U + ½)/2 for
+U ∈ [½, 1]. The readings are centred at p and 2p, and they must be disjoint because the required next commands
+differ by ½.
+
+Statement (T-23). The docking family: for U ∈ [½, 1] a robust causal policy exists if and only if the packet is
+on time (it arrives before the second command) and ε < (U + ½)/4, equality excluded. If the packet arrives after
+the third command is committed, no robust policy exists for any U and ε.
+
+The inequality prices sensing in actuator authority at a rate of one quarter, because the first command is also
+a probe: a larger probe separates the readings and needs more authority to recover from. Route: exact rational
+case analysis on a grid of instances (Solid, `Certified` per cell); the general statement in Lean by linear
+arithmetic over ℚ (Frontier, N12-39). It is a scalar model: no device timing follows from it. Rejected
+alternative: evidence consisting of one successful policy per world (each world alone has a successful open-loop
+command and no single command succeeds in both).
+
+## Scope
+
+In: statement document, registry row, the per-cell certificates on the instance grid (kind `finite-game` for
+inclusions, `alias-pair` for exclusions) bound to this card, the boundary cases, the registered mutations.
+Out: the solver for the family and its scenario-tree comparator (the docking-family bead); the checkers
+(BD-132); the Lean theorem (N12-39); the three-gain amendment (polarity, N12-05).
+
+## Technical approach
+
+1. Instance grid (DESIGN, the grid of the plan-time pilot to be re-run): 561 cells of (U, ε) with the packet on
+   time; the expected classification is 344 admitted, 217 excluded, with nine cells on the boundary
+   ε = (U + ½)/4, which are excluded; every late-packet cell is excluded.
+2. Inclusion certificate for a cell (kind `finite-game`): the policy table is the first command p and, for each
+   reading interval, the pair (u₁, u₂). With p = (U + ½)/2 (the largest admissible probe) the readings for gain 1
+   lie in [p − ε, p + ε] and for gain 2 in [2p − ε, 2p + ε], disjoint exactly when ε < p/2 = (U + ½)/4. The auditor
+   replays both worlds at the error vertices ±ε in exact rationals: velocity g·(p + u₁ + u₂) = 0, position
+   g·(5/2·p + 3/2·u₁ + 1/2·u₂) = 1, |u_k| ≤ U, and equal histories receive equal commands.
+3. Exclusion certificate at or above the bound (kind `alias-pair`): a reading common to both worlds exists
+   (p + e₁ = 2p + e₂ with |eᵢ| ≤ ε requires ε ≥ p/2) for every admissible first command p, and the continuations
+   that succeed in the two worlds are disjoint (they differ by ½ in u₁). At equality the common reading is exact:
+   at U = ¾ with p = 5/8 both worlds can report 15/16 while needing −¼ and −¾.
+4. Exclusion certificate for a late packet (kind `alias-pair`): with no informative packet before commitment the
+   two worlds have identical packet histories under every command prefix; required commands (1/g − 2p, p − 1/g)
+   differ by ½ between the gains, so no single sequence succeeds in both.
+5. The bound is an open threshold: the supremum of tolerable ε is not attained, and a certificate that claims
+   ε = (U + ½)/4 as admitted is rejected.
+6. Class and limits: `Certified` per cell for the declared scalar model; `Proved` for the general statement only
+   when its capsule is sealed.
+7. Artifacts: `docs/math/cards/T-23.md`; registry row; specimens `finite-game/accept-T-23-*.frobcert`,
+   `alias-pair/accept-T-23-*.frobcert` and mutants.
+
+## Acceptance criteria
+
+- [ ] `frob-verify` accepts the inclusion at (U, ε) = (¾, ¼) with the packet on time, and the exclusions at
+      (¾, 5/16), (¾, 3/8) and for the late packet at several (U, ε).
+- [ ] Rejected mutations: the inclusion bundle with its quantifiers reordered; an inclusion claimed at
+      ε = 5/16; a policy table that gives different commands for one reading; an alias pair whose histories
+      differ in one packet.
+- [ ] The grid classification through the certificates reproduces 344 admitted, 217 excluded, nine boundary
+      cells excluded and every late-packet cell excluded.
+- [ ] Registry row: instance route `checked`, class `Certified`, with bundle hashes; Lean route `hypothesis`
+      until sealed.
+
+## Test plan
+
+### Unit tests
+
+`crates/frob-cert/tests/cards_t23.rs`: `terminal_conditions_force_commands` (u₁ = 1/g − 2p, u₂ = p − 1/g from the
+two terminal equations); `bounds_give_probe_interval` (1 − U ≤ p ≤ (U + ½)/2 on U ∈ [½, 1]);
+`witness_quarter_probe` (p = ¼ with an exact on-time reading: (¼, ½, −¾) for g = 1 and (¼, 0, −¼) for g = 2 both
+reach (1, 0) exactly); `three_quarters_probe_tolerances` (at U = ¾ the probe p = ¼ tolerates ε < 1/8 and the probe
+p = 5/8 tolerates ε < 5/16); `inclusion_three_quarters_quarter` (p = 5/8: commands (−¼, −3/8) for g = 1 and
+(−¾, 1/8) for g = 2); `equality_shared_reading_15_16`; `late_packet_commands_differ_by_half`;
+`grid_counts_344_217_9`; `quantifier_reorder_rejects`; `open_threshold_not_attained`.
+
+### End-to-end script and logging
+
+`scripts/e2e/lemma_second_machine.sh` (bead N12-35) ships the docking cells as bundles and re-checks them on the
+second machine; `lemma_auditor_mutations.sh` (bead N12-34) runs the mutants.
+
+### Known answers and negative controls
+
+KA-209 (docking cell (¾, ¼), packet on time: `accept` for the inclusion; quantifiers reordered: `reject`),
+KA-210 (packet late: `accept` for the exclusion at every U and ε). CX-045, CX-107, CX-114. Amendment known
+answer: enlarging the world set by one hidden gain 33/32 reverses the inclusion at (¾, 1/64), the least
+worst-case terminal error becoming 1/65 m. Determinism: exact (D0).
+
+## Considerations
+
+- With bounded probes and positive read error, a nondegenerate interval of hidden gains always contains an
+  indistinguishable pair, so an exact guarantee fails there and a finite tolerance must be declared; the card is
+  about the two-gain model.
+- A scenario-tree linear program answers the same family; agreement cell by cell is the mission-side pilot, and
+  a tie ships the generic method.
+
+## References
+
+§12.3; C-17, C-18, C-19; KA-209, KA-210; CX-045, CX-107, CX-114; GATE-AUGUR-03 (mission side).

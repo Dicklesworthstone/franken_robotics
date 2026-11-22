@@ -1,0 +1,8099 @@
+[
+ {
+  "bd": "BD-001",
+  "milestone": "M0",
+  "title": "Core workspace skeleton: `Cargo.toml`, one `rust-toolchain.toml` for the whole build graph naming candidate (a) of §33.13 as the provisional T, `.cargo/config.toml` with the build-identity variable, `franken-stack.lock` and its first resolution receipt, the asupersync patch entry, FrankenSQLite profile overrides",
+  "deps": [],
+  "done_when": "`cargo check` is green on the empty workspace through the offload shim, and the receipt hash recomputes from the lock",
+  "chapter_refs": {
+   "33": 1
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.13",
+  "unit": "U33c"
+ },
+ {
+  "bd": "BD-002",
+  "milestone": "M0",
+  "title": "Companion documents: `AGENTS.md`, `README.md` with a generated honest-status table, `DEPENDENCY_ADMISSION.md`, schema-valid registries (empty except `formats.toml` with its thirteen rows), the schemas for `demo.yaml` and `contract.toml`",
+  "deps": [
+   "BD-001"
+  ],
+  "done_when": "The status table regenerates from `registries/gates.toml`; a gate with no measured value prints as open, never as passed",
+  "chapter_refs": {},
+  "owner_chapter": 25,
+  "mapped_by": "keyword",
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-003",
+  "milestone": "M0",
+  "title": "`xtask check-layers` and `check-deps`",
+  "deps": [
+   "BD-001"
+  ],
+  "done_when": "A deliberate upward edge, an intra-layer edge against rank and a forbidden dependency each fail",
+  "chapter_refs": {},
+  "owner_chapter": 34,
+  "mapped_by": "keyword",
+  "slice": "S24-workspace-safety",
+  "chapter": 34,
+  "best_sub": "34.3",
+  "unit": "U34"
+ },
+ {
+  "bd": "BD-004",
+  "milestone": "M0",
+  "title": "`xtask check-stack`, `check-contracts`, `check-unsafe`, `check-generated`; the test that `xtask` has exactly six subcommands",
+  "deps": [
+   "BD-003"
+  ],
+  "done_when": "GATE-WS-01: 7 of 7 plants caught, each by the check that owns it and by no other; GATE-WS-04: the six checks finish within 60 s on a warm tree",
+  "chapter_refs": {
+   "34": 4
+  },
+  "owner_chapter": 34,
+  "slice": "S24-workspace-safety",
+  "chapter": 34,
+  "best_sub": "34.6",
+  "unit": "U34"
+ },
+ {
+  "bd": "BD-005",
+  "milestone": "M0",
+  "title": "`frob-core`: identities and hashing, evidence classes, the claim-product type, the no-authorization flags, the refusal type and registry loader, the `qty` re-export module",
+  "deps": [
+   "BD-001"
+  ],
+  "done_when": "An unknown refusal code is a load-time error; converting a claim product to one of its factors fails to compile; a flag has no setter",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 34,
+  "best_sub": "34.2",
+  "unit": "U34"
+ },
+ {
+  "bd": "BD-006",
+  "milestone": "M0",
+  "title": "INT-FSIM-01 and the core row of INT-TOOLCHAIN-01: path dependencies on `fs-ga`, `fs-mbd`, `fs-contact`, `fs-time`, `fs-query` with the root patch, profile and build-identity settings, built on candidate (a) for T and, if FrankenSim cannot yet build there, on candidate (b)",
+  "deps": [
+   "BD-001"
+  ],
+  "done_when": "An admission record with the command, its output, the commit, cold and warm check times, peak memory and package count, and the candidate on which FrankenSim builds; with the build-identity variable unset the build fails closed",
+  "chapter_refs": {
+   "33": 4
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.6",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-007",
+  "milestone": "M0",
+  "title": "`frob-fsim` v0: `RefereeDynamics` over `fs_mbd::articulated`; the G1 digest test",
+  "deps": [
+   "BD-006"
+  ],
+  "done_when": "The digest equals the one computed inside FrankenSim at the pinned commit; a perturbed input changes it",
+  "chapter_refs": {},
+  "owner_chapter": 29,
+  "mapped_by": "keyword",
+  "slice": "S19-chronicle",
+  "chapter": 33,
+  "best_sub": "33.3",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-008",
+  "milestone": "M0",
+  "title": "INT-ASUP-01 wired into `check-stack`, and upstream work item FD-ASUP-01: FrankenSim's constellation, FrankenTorch and fastmcp_rust aligned on one published asupersync version by changes in those repositories",
+  "deps": [
+   "BD-004",
+   "BD-006"
+  ],
+  "done_when": "`cargo tree -d` evidence recorded for each workspace, showing one package at the one published version; a seeded second asupersync version fails; each sibling change has landed through that sibling's own gates and has its mirrored bead",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.8",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-009",
+  "milestone": "M0",
+  "title": "INT-FSQL-01: ledger open, write, forced kill, recover",
+  "deps": [
+   "BD-006"
+  ],
+  "done_when": "The forced-kill test passes 100 times",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.6",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-010",
+  "milestone": "M0",
+  "title": "`frob-lie`: traits; SO(3) and SE(3) over `fs-ga`; the PO-MARROW-01 fixture",
+  "deps": [
+   "BD-006"
+  ],
+  "done_when": "Bit-equal on 1,000 transforms produced by `fs-ga`",
+  "chapter_refs": {},
+  "owner_chapter": 13,
+  "mapped_by": "keyword",
+  "slice": "S02-marrow",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.10"
+ },
+ {
+  "bd": "BD-011",
+  "milestone": "M0",
+  "title": "`frob-lie`: Cayley and exponential retractions with derivatives; laws for SO(3) and SE(3); the coadjoint convention of §11.2",
+  "deps": [
+   "BD-010"
+  ],
+  "done_when": "GATE-MARROW-01 rows for these groups; a planted reversed ad* fails the free-body known answer π̇ = (0, 0, −1)",
+  "chapter_refs": {
+   "13": 2,
+   "11": 1
+  },
+  "owner_chapter": 13,
+  "slice": "S02-marrow",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.10"
+ },
+ {
+  "bd": "BD-012",
+  "milestone": "M0",
+  "title": "`frob-lie`: SO(2) as a unit complex number with a turn counter",
+  "deps": [
+   "BD-011"
+  ],
+  "done_when": "PO-MARROW-03 over 10⁹ steps",
+  "chapter_refs": {},
+  "owner_chapter": 13,
+  "mapped_by": "keyword",
+  "slice": "S02-marrow",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.10"
+ },
+ {
+  "bd": "BD-013",
+  "milestone": "M0",
+  "title": "Shared dialect prelude v0 for CUDA and Metal; the dialect lint",
+  "deps": [
+   "BD-001"
+  ],
+  "done_when": "The lint rejects a built-in transcendental, a floating-point atomic and a construct that permits fusing a multiply with an add",
+  "chapter_refs": {},
+  "owner_chapter": 21,
+  "mapped_by": "keyword",
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.6",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-014",
+  "milestone": "M0",
+  "title": "`KernelBackend` trait, the kernel manifest with its stage signature, and the `batch-cpu` harness",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "A trivial kernel runs through the harness with a receipt; a manifest whose write footprint aliases an undeclared buffer is refused",
+  "chapter_refs": {},
+  "owner_chapter": 21,
+  "mapped_by": "keyword",
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.9",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-015",
+  "milestone": "M0",
+  "title": "INT-CUDA-01 and `spark/frob-spark-cuda` v0: driver load, NVRTC compile, cache, launch",
+  "deps": [
+   "BD-013",
+   "BD-014"
+  ],
+  "done_when": "A kernel runs on both GPUs of `trj`; the admission record states whether the pinned `cudarc` binds graph capture and stream-ordered pools",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.4",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-016",
+  "milestone": "M0",
+  "title": "INT-FT-01 and `spark/frob-spark-metal` v0 over the `ft-kernel-metal` gateway, with FrankenTorch's `block` patch repeated at the annex root",
+  "deps": [
+   "BD-013",
+   "BD-014"
+  ],
+  "done_when": "A kernel runs on this Mac and matches a Rust loop bit for bit on 10⁶ quaternions; admission record",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.6",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-017",
+  "milestone": "M0",
+  "title": "`spark.probe`: the IEEE probe kernels and report",
+  "deps": [
+   "BD-015",
+   "BD-016"
+  ],
+  "done_when": "GATE-SPARK-01 results stored as device evidence for both families; the contraction detector fires on a planted fused multiply-add",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.15",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-018",
+  "milestone": "M0",
+  "title": "`frob-kir` v0: straight-line programs, common-subexpression elimination, Rust and dialect emitters, the dimension checker",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "Emits `K-cay-step`; a seeded dimension violation is rejected",
+  "chapter_refs": {},
+  "owner_chapter": 21,
+  "mapped_by": "keyword",
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.7",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-019",
+  "milestone": "M0",
+  "title": "INT-FSYM-01 and `derive/frob-derive` v0: derive `K-cay-step` and `K-normalize`",
+  "deps": [
+   "BD-018"
+  ],
+  "done_when": "Regeneration reproduces the checked-in sources bit for bit",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.6",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-020",
+  "milestone": "M0",
+  "title": "GATE-SPARK-00 and INT-FSIM-11: one dialect source for `K-cay-step` on `batch-cpu`, CUDA and Metal",
+  "deps": [
+   "BD-015",
+   "BD-016",
+   "BD-019"
+  ],
+  "done_when": "Agreement inside the class, recorded in the divergence ledger; a one-ulp change planted in one prelude is reported",
+  "chapter_refs": {
+   "21": 2,
+   "33": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.13",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-021",
+  "milestone": "M0",
+  "title": "`frob-lemma` v0: claims and instance certificates for T-01, T-03 and T-04 on the M0 kernels, checked by FrankenSymPy",
+  "deps": [
+   "BD-019"
+  ],
+  "done_when": "The three identities certify and a mutated coefficient is rejected; constructing `Proved` evidence outside `frob-lemma` fails to compile",
+  "chapter_refs": {},
+  "owner_chapter": 12,
+  "mapped_by": "keyword",
+  "slice": "S01-lemma-spine",
+  "chapter": 25,
+  "best_sub": "25.5",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-022",
+  "milestone": "M0",
+  "title": "`frob-verbs` v0 and the `frob` skeleton: registry loader, the envelope with claim product and flags, exit codes including 8 (accepted and still running), `doctor`, `capabilities`, `schema`, `robot-docs`",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "GATE-TETHER-03 on these verbs",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-023",
+  "milestone": "M0",
+  "title": "INT-FMCP-01 and upstream work item FD-FMCP-01: fastmcp_rust brought onto T in its own repository (its toolchain file and, where T requires it, its declared `rust-version` changed; its test suite and MCP conformance checks passing on T); `surface/frob-mcp` as a member of the core workspace, built on fastmcp_rust, linking `frob-verbs`, generated from the registry for the M0 verbs and running them in process",
+  "deps": [
+   "BD-022"
+  ],
+  "done_when": "fastmcp_rust's own suite and conformance checks are green on T at the pinned commit; `frob-mcp` builds in the core graph on T with exactly one asupersync package (`cargo tree -d` shows no duplicate), lists the tools generated from the verb registry, and passes the MCP protocol smoke test over stdio and HTTP",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-024",
+  "milestone": "M0",
+  "title": "`sim.run --tier referee` for the built-in G1; digest and T0 telemetry to the ledger",
+  "deps": [
+   "BD-007",
+   "BD-009",
+   "BD-022"
+  ],
+  "done_when": "A fresh session reproduces the M0 artifact from the recorded command",
+  "chapter_refs": {},
+  "owner_chapter": 29,
+  "mapped_by": "keyword",
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.8",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-025",
+  "milestone": "M0",
+  "title": "`frob-conformance` v0: tiers G0 to G5 and the negative-control registry",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "A gate registered without a negative control fails the registry check (GATE-GAUNT-01 for M0)",
+  "chapter_refs": {},
+  "owner_chapter": 34,
+  "mapped_by": "keyword",
+  "slice": "S24-workspace-safety",
+  "chapter": 38,
+  "best_sub": "38.11",
+  "unit": "U38b"
+ },
+ {
+  "bd": "BD-026",
+  "milestone": "M0",
+  "title": "`frob-cert` with an empty dependency table and its own stable toolchain file: canonical JSON reader, BLAKE3, exact integer and rational arithmetic, outward-rounded intervals; the `frob-verify` binary",
+  "deps": [
+   "BD-001"
+  ],
+  "done_when": "GATE-WS-03: `cargo tree -p frob-cert` prints one line, the copied directory builds with no network access, and a system-call trace of an audit shows no socket and no child process; BLAKE3 matches the published vectors",
+  "chapter_refs": {
+   "34": 2
+  },
+  "owner_chapter": 34,
+  "slice": "S24-workspace-safety",
+  "chapter": 25,
+  "best_sub": "25.5",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-027",
+  "milestone": "M0",
+  "title": "`.frobcert` bundles for instance certificates: the writer in `frob-lemma` against the schema, the `poly-identity` and `rational-ldlt` checkers in `frob-cert`, and `prove.kernel`, `prove.verify`, `prove.list`",
+  "deps": [
+   "BD-021",
+   "BD-022",
+   "BD-026"
+  ],
+  "done_when": "GATE-LEMMA-00: the M0 certificates replay in `frob-verify`, which closes INT-FSYM-01; GATE-LEMMA-06: a bundle with a flag set to `true` is rejected",
+  "chapter_refs": {
+   "12": 4,
+   "33": 2
+  },
+  "owner_chapter": 12,
+  "slice": "S01-lemma-spine",
+  "chapter": 25,
+  "best_sub": "25.5",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-028",
+  "milestone": "M0",
+  "title": "INT-FT-02: resident buffers and device completion receipts through the Metal gateway",
+  "deps": [
+   "BD-016"
+  ],
+  "done_when": "A buffer stays resident across two command buffers and the receipt comes from the device; a device tag alone earns zero operator coverage",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.10",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-029",
+  "milestone": "M0",
+  "title": "`spark.fingerprint`: the hardware fingerprint of both machines (`frob.fingerprint/1`)",
+  "deps": [
+   "BD-015",
+   "BD-016"
+  ],
+  "done_when": "GATE-SPARK-07",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.1",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-030",
+  "milestone": "M0",
+  "title": "Exact-integer kernel class probe: `K-x-pred` and `K-g-pred` with exact fallback on the docking-boundary screen of 65,536 rows",
+  "deps": [
+   "BD-015",
+   "BD-016",
+   "BD-018"
+  ],
+  "done_when": "GATE-SPARK-08: identical bytes on `batch-cpu`, both RTX 4090 and Metal; the unguarded single-precision kernel shows false admissions and is rejected as a strict predicate",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.15",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-031",
+  "milestone": "M0",
+  "title": "INT-TOOLCHAIN-01: the matrix of §33.12 over the four nightlies in play, the choice of T and its record in `franken-stack.lock` and `rust-toolchain.toml`, the `fs-qty` coupling test, and the decision on `frob-units`",
+  "deps": [
+   "BD-003",
+   "BD-005",
+   "BD-006",
+   "BD-016",
+   "BD-019",
+   "BD-023",
+   "BD-026"
+  ],
+  "done_when": "Every cell of the matrix has a recorded result and every row passes on T; the choice of T is an ADR that names the sibling pins a toolchain train must move; a direct `fs_qty` import outside `frob-core` and `frob-fsim` fails `check-deps`; the `frob-units` decision is an ADR",
+  "chapter_refs": {
+   "33": 3
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.12",
+  "unit": "U33c"
+ },
+ {
+  "bd": "BD-032",
+  "milestone": "M0",
+  "title": "INT-FSIM-02 and INT-FSIM-03: first admission tests of the `fs-ga` Lie façades and of `fs-mbd` articulated dynamics",
+  "deps": [
+   "BD-007"
+  ],
+  "done_when": "Power ⟨wrench, twist⟩ is frame-invariant to 10⁻¹² relative and a reversed adjoint fails at least three fixtures; a two-joint arm's accelerations match differentiated energy to 10⁻¹⁰",
+  "chapter_refs": {
+   "33": 4
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.10",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-033",
+  "milestone": "M0",
+  "title": "Foundation-defect admission INT-FSIM-05: the `planar_drive` near-straight case, and the independent chord formula in `frob-conformance`",
+  "deps": [
+   "BD-007",
+   "BD-025"
+  ],
+  "done_when": "The record states whether zero translation reproduces at the pin; the independent formula returns the chord (0, 2/π) m and one metre over 400 steps at heading 32 rad",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.11",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-034",
+  "milestone": "M0",
+  "title": "Foundation-defect admission INT-FSIM-06: three PPO probes (the clip branch for both advantage signs, the critic gradient from the current output, packed sequences across a reset)",
+  "deps": [
+   "BD-025"
+  ],
+  "done_when": "Each probe has a recorded result against the sibling source at the pin, and an implementation carrying each planted defect fails its probe",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.11",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-035",
+  "milestone": "M0",
+  "title": "Foundation-defect admission INT-FSIM-04 and INT-FSIM-07 (refusal half): the fixed-witness sustained step and the contact capacity, through the airlock",
+  "deps": [
+   "BD-007"
+  ],
+  "done_when": "The flat-to-edge-to-top transition returns the typed refusal at the pin; a set of 22 contacts returns the capacity refusal; a thin step between clear endpoint poses is detected on 1,000 of 1,000 sweeps",
+  "chapter_refs": {
+   "33": 4
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.10",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-036",
+  "milestone": "M0",
+  "title": "Foundation-defect admission INT-FNP-01 and INT-FNP-02: the typed stride converter at the interchange boundary",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "An array file reads back identically; the 2×2 case reads element 3, and the verbatim stride copy that reads element 12 is refused",
+  "chapter_refs": {
+   "33": 4
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.6",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-037",
+  "milestone": "M0",
+  "title": "The upstream work items of Appendix F opened as beads labelled `upstream` in this graph and mirrored in the sibling trackers (FD-FSIM-10 to -16, FD-FNP-01 and the others on file; the two P0 items are in BD-008 and BD-023)",
+  "deps": [
+   "BD-016",
+   "BD-023",
+   "BD-033",
+   "BD-034",
+   "BD-035",
+   "BD-036"
+  ],
+  "done_when": "Each upstream work item has its fixture, its interim posture, its switch-over rule and an identifier in `registries/upstream.toml`, a bead here and a mirrored bead in its sibling's tracker",
+  "chapter_refs": {},
+  "owner_chapter": 18,
+  "mapped_by": "keyword",
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.3",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-038",
+  "milestone": "M0",
+  "title": "INT-FSIM-18: the worker-process fallback exercised before it is needed (`frob-fsim-worker`, the `remote` mode of the airlock)",
+  "deps": [
+   "BD-007"
+  ],
+  "done_when": "The G1 digest through the worker equals the in-process digest; a worker at a different pin is refused (FROB-REF-791)",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.14",
+  "unit": "U33c"
+ },
+ {
+  "bd": "BD-039",
+  "milestone": "M0",
+  "title": "The incumbent harness as an out-of-process oracle: pinned revisions, the strongest warm configurations, the disclosure block",
+  "deps": [
+   "BD-001",
+   "BD-029"
+  ],
+  "done_when": "The pinned incumbents run on `trj` from a recorded environment; a changed revision changes the harness identity",
+  "chapter_refs": {},
+  "owner_chapter": 33,
+  "mapped_by": "keyword",
+  "slice": "S23-suite",
+  "chapter": 39,
+  "best_sub": "39.5",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-040",
+  "milestone": "M0",
+  "title": "Parity baseline on `trj`: the incumbent phase ledger for cold start, physics and full step on workloads Q and H, time to threshold on one and two cards, and edit to first step for a parameter edit and a topology edit",
+  "deps": [
+   "BD-039"
+  ],
+  "done_when": "The `trj` rows of GATE-SPARK-21 are recorded under the disclosure block; each published figure of §36.3 is reproduced within 20% or the difference is explained in writing",
+  "chapter_refs": {
+   "36": 3
+  },
+  "owner_chapter": 36,
+  "slice": "S11-numerics-perf",
+  "chapter": 36,
+  "best_sub": "36.3",
+  "unit": "U36"
+ },
+ {
+  "bd": "BD-041",
+  "milestone": "M0",
+  "title": "The plan-time pilot for the cart docking closed form, re-run from the reproduction bundle with two gains and with three",
+  "deps": [
+   "BD-025"
+  ],
+  "done_when": "561 cells give 344 admitted, 217 excluded and nine on the boundary, and every late-packet cell is excluded; the gain 33/32 makes exact docking unsatisfiable with worst error at least 1/65 m",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 38,
+  "best_sub": "38.5",
+  "unit": "U38a"
+ },
+ {
+  "bd": "BD-042",
+  "milestone": "M0",
+  "title": "The plan-time pilot for the static stance family, re-run from the reproduction bundle",
+  "deps": [
+   "BD-025"
+  ],
+  "done_when": "11,520 of 11,520 states agree and the half-width is 3/14 m; the support-polygon-plus-capacity screen wrongly accepts 1,596 bodies; equal passive springs give (175, 115, 85, 25) N",
+  "chapter_refs": {},
+  "owner_chapter": 23,
+  "mapped_by": "keyword",
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": null,
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-043",
+  "milestone": "M0",
+  "title": "The remaining plan-time pilots of §25.22, re-run and recorded (probe, pad family, sensor aliasing, pusher and its timing ceiling, labels, decision reuse, shared bus, admission fixtures, sill)",
+  "deps": [
+   "BD-041",
+   "BD-042"
+  ],
+  "done_when": "Every row reproduces its recorded result or the difference is written into the review log; the pusher ceiling of about 1.46 is recomputed before any speed figure is quoted",
+  "chapter_refs": {
+   "25": 1
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.22",
+  "unit": "U25d"
+ },
+ {
+  "bd": "BD-044",
+  "milestone": "M0",
+  "title": "M0 exit review by a fresh-context session that did not implement the work; KILL-FSIM and KILL-MCP decisions recorded as ADRs; the state of the two P0 upstream work items recorded",
+  "deps": [
+   "BD-002",
+   "BD-008",
+   "BD-012",
+   "BD-017",
+   "BD-020",
+   "BD-024",
+   "BD-027",
+   "BD-028",
+   "BD-030",
+   "BD-031",
+   "BD-032",
+   "BD-037",
+   "BD-038",
+   "BD-040",
+   "BD-043"
+  ],
+  "done_when": "Every gate of M0 has a recorded value and a caught negative control (GATE-GAUNT-01)",
+  "chapter_refs": {
+   "33": 2,
+   "32": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.5",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-045",
+  "milestone": "M1",
+  "title": "`frob-lie`: SE(2), SE₂(3), SE₂₊ₖ(3), product groups",
+  "deps": [
+   "BD-011",
+   "BD-012"
+  ],
+  "done_when": "GATE-MARROW-01 complete: laws pass on 10⁶ cases each inside the ulp bounds; a planted error in the SE(2) exponential's Jacobian is caught",
+  "chapter_refs": {
+   "13": 2
+  },
+  "owner_chapter": 13,
+  "slice": "S02-marrow",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.10"
+ },
+ {
+  "bd": "BD-046",
+  "milestone": "M1",
+  "title": "`frob-lie`: joint subgroups, Hervé classification (T-11), generated joint maps",
+  "deps": [
+   "BD-011"
+  ],
+  "done_when": "Each of the twelve classes is recognized from a basis; a non-closed basis is reported as a product",
+  "chapter_refs": {},
+  "owner_chapter": 12,
+  "mapped_by": "keyword",
+  "slice": "S01-lemma-spine",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.10"
+ },
+ {
+  "bd": "BD-047",
+  "milestone": "M1",
+  "title": "Frame-typed transforms, twists and wrenches; the three typed maps between frames (§11.3)",
+  "deps": [
+   "BD-010"
+  ],
+  "done_when": "Mismatched frames fail to compile; the planar 2R fixture gives torques (−3, −3) N·m and −0.3 W by both routes, and the lower-three-rows shortcut, which gives (0, 0), is caught",
+  "chapter_refs": {
+   "11": 1
+  },
+  "owner_chapter": 11,
+  "slice": "S02-marrow",
+  "chapter": 11,
+  "unit": "U13",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-048",
+  "milestone": "M1",
+  "title": "`frob-algebra`: finite groups from generators, classes, characters, projectors (`algebra.irreps`)",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "GATE-MARROW-02",
+  "chapter_refs": {
+   "13": 2
+  },
+  "owner_chapter": 13,
+  "slice": "S02-marrow",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.5"
+ },
+ {
+  "bd": "BD-049",
+  "milestone": "M1",
+  "title": "`frob-algebra`: orbits, Burnside counts, subgroup lattices, wreath products (`algebra.orbits`)",
+  "deps": [
+   "BD-048"
+  ],
+  "done_when": "The counts 86,185, 500,500 and 27 are exact; a wrong cycle index is caught",
+  "chapter_refs": {},
+  "owner_chapter": 13,
+  "mapped_by": "keyword",
+  "slice": "S02-marrow",
+  "chapter": 22,
+  "best_sub": "22.5",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-050",
+  "milestone": "M1",
+  "title": "`frob-algebra`: the `Cone` trait; orthant, second-order and semidefinite cones",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "Cone laws pass; a planted non-idempotent projection is caught",
+  "chapter_refs": {},
+  "owner_chapter": 13,
+  "mapped_by": "keyword",
+  "slice": "S02-marrow",
+  "chapter": 22,
+  "best_sub": "22.5",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-051",
+  "milestone": "M1",
+  "title": "`frob-algebra`: the inertia cone and the mass-support predicate",
+  "deps": [
+   "BD-050"
+  ],
+  "done_when": "Round trip; a matrix one eigenvalue below zero is rejected; the 1 kg part declared inside a 0.10 m sphere is refused (FROB-REF-106)",
+  "chapter_refs": {},
+  "owner_chapter": 13,
+  "mapped_by": "keyword",
+  "slice": "S02-marrow",
+  "chapter": 22,
+  "best_sub": "22.5",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-052",
+  "milestone": "M1",
+  "title": "`frob-algebra`: posets, antichains, Kleene iteration",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "GB-03's closed form is reproduced; a divergent loop is reported infeasible",
+  "chapter_refs": {},
+  "owner_chapter": 13,
+  "mapped_by": "keyword",
+  "slice": "S02-marrow",
+  "chapter": 22,
+  "best_sub": "22.5",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-053",
+  "milestone": "M1",
+  "title": "Exact predicates and guarded single precision as kernel classes: predicate typing, the select lint and error-bound derivation in `frob-kir`",
+  "deps": [
+   "BD-030"
+  ],
+  "done_when": "Single-precision 0.3, 0.4, 0.5 in x² + y² ≤ z² returns the exact sign; PO-MARROW-06 holds for each guarded predicate; an unguarded strict predicate fails the lint",
+  "chapter_refs": {},
+  "owner_chapter": 21,
+  "mapped_by": "keyword",
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.8",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-054",
+  "milestone": "M1",
+  "title": "`frob-design`: the term model, schema `frob.design/1`, the seven canonical-form rules, `DesignId`",
+  "deps": [
+   "BD-005",
+   "BD-031"
+  ],
+  "done_when": "Canonicalization is idempotent; the hash is equal on Linux and macOS; a duplicate key refuses",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.8",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-055",
+  "milestone": "M1",
+  "title": "`.fbot` fields: fills with shell thickness and no default fill, budgets, levers, locks, the power bus, sensors, payloads, symmetry assertions",
+  "deps": [
+   "BD-054"
+  ],
+  "done_when": "A body with no fill refuses; a shell thicker than half the Region's smallest dimension refuses (FROB-REF-105); a lever outside its bounds refuses (FROB-REF-111)",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.4",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-056",
+  "milestone": "M1",
+  "title": "Constructors: `attach`, `chain`, `serial`, `mirror`, `radial`, `scale`, `replace`, `closure`",
+  "deps": [
+   "BD-054"
+  ],
+  "done_when": "`mirror` equals its hand-expanded form; constructor terms stay unexpanded in the canonical bytes",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-057",
+  "milestone": "M1",
+  "title": "The S-expression view and `design.view`",
+  "deps": [
+   "BD-055",
+   "BD-056"
+  ],
+  "done_when": "GATE-SKEL-05; KILL-SKEL-SEXPR decided",
+  "chapter_refs": {
+   "14": 4
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.4",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-058",
+  "milestone": "M1",
+  "title": "Typed edits with preconditions, inverses and declared symmetry effects (`design.edit`)",
+  "deps": [
+   "BD-056"
+  ],
+  "done_when": "An edit and its inverse return the same `DesignId`",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-059",
+  "milestone": "M1",
+  "title": "Design patches and versioning: `design.patch`, schema `frob.design.patch/1`, expected parent, idempotency key, schema migration",
+  "deps": [
+   "BD-058"
+  ],
+  "done_when": "GATE-SKEL-08",
+  "chapter_refs": {
+   "14": 2
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.8",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-060",
+  "milestone": "M1",
+  "title": "`.fmodule`: the module format and its port contract (mechanical, electrical, thermal, signal and contact ports; parameters); `module.list`, `module.show`, `module.check`",
+  "deps": [
+   "BD-055",
+   "BD-056"
+  ],
+  "done_when": "A reversed port sign refuses; a module digest mismatch refuses; a contract check that adds peak currents fails the shared-bus fixture",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-061",
+  "milestone": "M1",
+  "title": "`frob-model`: the kinematic functor, `RobotModel`, the referee lowering",
+  "deps": [
+   "BD-007",
+   "BD-032",
+   "BD-046",
+   "BD-047",
+   "BD-056"
+  ],
+  "done_when": "A template quadruped's forward kinematics runs on the referee",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.9",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-062",
+  "milestone": "M1",
+  "title": "Geometry and inertia functor: Regions, materials, the fill rule with shell moments as a difference of solids, primitive fitting with recorded error",
+  "deps": [
+   "BD-051",
+   "BD-055",
+   "BD-061"
+  ],
+  "done_when": "The worked torso weighs 22.7 kg read as solid and 1.92 kg as a 2.5 mm shell; PO-SKEL-02 holds exactly; INV-SKEL-03 on every archetype shipped",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.9",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-063",
+  "milestone": "M1",
+  "title": "Memoized incremental compilation, with the invalidation set returned by an edit",
+  "deps": [
+   "BD-058",
+   "BD-061"
+  ],
+  "done_when": "GATE-SKEL-02",
+  "chapter_refs": {
+   "14": 2
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.10",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-064",
+  "milestone": "M1",
+  "title": "Design lints with ranked repairs as typed edits",
+  "deps": [
+   "BD-058"
+  ],
+  "done_when": "Each lint has a fixture that triggers it and one that does not",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.22",
+  "unit": "U24c"
+ },
+ {
+  "bd": "BD-065",
+  "milestone": "M1",
+  "title": "`frob-io`: the in-house XML reader; URDF import with a loss report",
+  "deps": [
+   "BD-061"
+  ],
+  "done_when": "Reference robots import; a planted dropped field appears in the report with its file and line",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.12",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-066",
+  "milestone": "M1",
+  "title": "MJCF import with a loss report; URDF and MJCF export with the reverse loss report",
+  "deps": [
+   "BD-062",
+   "BD-065"
+  ],
+  "done_when": "GATE-SKEL-01",
+  "chapter_refs": {
+   "14": 2
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.6",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-067",
+  "milestone": "M1",
+  "title": "Oracle capture scripts; fixtures for reference robots with pin and date",
+  "deps": [
+   "BD-039",
+   "BD-066"
+  ],
+  "done_when": "Fixtures are on disk with their pins; the regeneration-from-candidate path does not exist",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.9",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-068",
+  "milestone": "M1",
+  "title": "INT-FSIM-09: admission of `fs-phs` interconnection, `fs-tribo` friction-law selection and `fs-matdb` material data",
+  "deps": [
+   "BD-007"
+  ],
+  "done_when": "Power across an interconnection sums to zero to 10⁻¹² relative; a missing material pair is a refusal",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.10",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-069",
+  "milestone": "M1",
+  "title": "Actuator, battery and transmission cards: the `.fcard` schema, per-field provenance, the generic catalog; `actuator.list`, `actuator.show`, `actuator.check`",
+  "deps": [
+   "BD-005",
+   "BD-068"
+  ],
+  "done_when": "A card without provenance is refused; every card in the catalog passes `actuator.check`",
+  "chapter_refs": {},
+  "owner_chapter": 15,
+  "mapped_by": "keyword",
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.3",
+  "unit": "U15a"
+ },
+ {
+  "bd": "BD-070",
+  "milestone": "M1",
+  "title": "Actuator levels L0 and L1 on the referee",
+  "deps": [
+   "BD-061",
+   "BD-069"
+  ],
+  "done_when": "L1 rows of GATE-SINEW-01",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-071",
+  "milestone": "M1",
+  "title": "Actuator level L2: winding current, the thermal network, the battery",
+  "deps": [
+   "BD-070"
+  ],
+  "done_when": "Remaining rows of GATE-SINEW-01",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-072",
+  "milestone": "M1",
+  "title": "Winding temperature with temperature-dependent resistance, and thermal runaway (`actuator.thermal`)",
+  "deps": [
+   "BD-071"
+  ],
+  "done_when": "GATE-SINEW-05: the worked card's 20 A point is admitted by the constant-resistance check and refused by the corrected one",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.7",
+  "unit": "U15a"
+ },
+ {
+  "bd": "BD-073",
+  "milestone": "M1",
+  "title": "The voltage limit and field weakening (`actuator.envelope`)",
+  "deps": [
+   "BD-071"
+  ],
+  "done_when": "GATE-SINEW-06",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.8",
+  "unit": "U15a"
+ },
+ {
+  "bd": "BD-074",
+  "milestone": "M1",
+  "title": "Transmissions: gear, belt, screw, linkage, cable and coupling matrices with loss laws",
+  "deps": [
+   "BD-070"
+  ],
+  "done_when": "GATE-SINEW-08: every loss and entropy production is nonnegative over 10⁶ operating points; the single-multiplier gear fixture refuses",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-075",
+  "milestone": "M1",
+  "title": "The power bus and the battery, with brownout events (`actuator.bus`)",
+  "deps": [
+   "BD-071"
+  ],
+  "done_when": "GATE-SINEW-07",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-076",
+  "milestone": "M1",
+  "title": "Port energy-balance check on the referee",
+  "deps": [
+   "BD-070"
+  ],
+  "done_when": "GATE-SINEW-02 on the referee; a planted unaccounted loss is caught",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.5",
+  "unit": "U15a"
+ },
+ {
+  "bd": "BD-077",
+  "milestone": "M1",
+  "title": "`module.substitute` and the invalidation contract of C-12",
+  "deps": [
+   "BD-060",
+   "BD-063",
+   "BD-075"
+  ],
+  "done_when": "GATE-SKEL-06; KILL-SKEL-SUBST decided",
+  "chapter_refs": {
+   "14": 4
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.6",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-078",
+  "milestone": "M1",
+  "title": "The clock contract: rational periods, phase accumulators, the seven instants and the boundary ordering rule (`sense.schedule`)",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "CPU rows of GATE-SENS-04: the 400/30 schedule exactly and zero drift over 10⁹ ticks; an every-thirteenth-step schedule, which runs a 30 Hz policy at 30.77 Hz, is caught",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.4",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-079",
+  "milestone": "M1",
+  "title": "`frob-contact`: collision primitives; contact sets from `fs-query`; INT-FSIM-08",
+  "deps": [
+   "BD-061"
+  ],
+  "done_when": "GATE-TRAC-02",
+  "chapter_refs": {
+   "33": 2,
+   "18": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.10",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-080",
+  "milestone": "M1",
+  "title": "The referee step: FrankenSim's contact step on generated contact sets; compliant feet",
+  "deps": [
+   "BD-070",
+   "BD-079"
+  ],
+  "done_when": "Stand and drop tests pass; a contact set above the capacity returns the typed refusal, never a truncated solve",
+  "chapter_refs": {},
+  "owner_chapter": 18,
+  "mapped_by": "keyword",
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.4",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-081",
+  "milestone": "M1",
+  "title": "The transactional referee step: the restore set and the commit fence with `commit_epoch`",
+  "deps": [
+   "BD-080"
+  ],
+  "done_when": "Zero uncommitted reads observed in 10⁵ injected faults (row of GATE-KIN-04)",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.5",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-082",
+  "milestone": "M1",
+  "title": "Event location on rational base intervals, with coupled impulses per island",
+  "deps": [
+   "BD-078",
+   "BD-081"
+  ],
+  "done_when": "Impact time within 10⁻⁹ s and tied sliders exact to 10⁻¹² N·s (rows of GATE-KIN-04); simultaneous impacts are solved together and none is refused for simultaneity",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.5",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-083",
+  "milestone": "M1",
+  "title": "The retry ladder that changes numerical parameters only, and the refinement law for random inputs",
+  "deps": [
+   "BD-082"
+  ],
+  "done_when": "GATE-KIN-04 on the referee: forced-retry digests equal, refinement statistics inside 3σ at 10⁶ draws, the redraw mutation caught",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.24",
+  "unit": "U16c"
+ },
+ {
+  "bd": "BD-084",
+  "milestone": "M1",
+  "title": "Joint-level stiction, backlash and hard stops as rows in the referee solve",
+  "deps": [
+   "BD-070",
+   "BD-082"
+  ],
+  "done_when": "GATE-SINEW-04 on the referee; GATE-SINEW-09; backlash modelled as a torque dead zone fails the closure-speed case",
+  "chapter_refs": {
+   "15": 4
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-085",
+  "milestone": "M1",
+  "title": "The contact known-answer battery on the referee",
+  "deps": [
+   "BD-082"
+  ],
+  "done_when": "Referee rows of GATE-TRAC-01, with the list of rows FrankenSim's solve can express recorded beside the gate",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.5",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-086",
+  "milestone": "M1",
+  "title": "Thin-barrier and sill fixtures under the transactional step",
+  "deps": [
+   "BD-082"
+  ],
+  "done_when": "Referee rows of GATE-TRAC-06: zero missed hits in 10⁶ thin-barrier crossings; the endpoint-only mutation is caught",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.4",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-087",
+  "milestone": "M1",
+  "title": "The free-body variational step as an oracle [S]",
+  "deps": [
+   "BD-011"
+  ],
+  "done_when": "Free-flight momentum is conserved to 10⁻¹² relative over 10⁶ steps; a right-trivialized differential in the solve fails the four-step test",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-088",
+  "milestone": "M1",
+  "title": "The dynamics known-answer battery",
+  "deps": [
+   "BD-080",
+   "BD-087"
+  ],
+  "done_when": "GATE-KIN-01",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.7",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-089",
+  "milestone": "M1",
+  "title": "Contact-free dynamics parity against the pinned oracle",
+  "deps": [
+   "BD-067",
+   "BD-080"
+  ],
+  "done_when": "GATE-KIN-02",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.6",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-090",
+  "milestone": "M1",
+  "title": "`frob-chronicle`: the ledger schema, `.frun` episodes, telemetry levels T0 to T2 with streams and channel kinds",
+  "deps": [
+   "BD-009",
+   "BD-080"
+  ],
+  "done_when": "Round-trip tests pass; a chunk with one changed byte fails its digest",
+  "chapter_refs": {},
+  "owner_chapter": 29,
+  "mapped_by": "keyword",
+  "slice": "S19-chronicle",
+  "chapter": 28,
+  "best_sub": "28.14",
+  "unit": "U28b"
+ },
+ {
+  "bd": "BD-091",
+  "milestone": "M1",
+  "title": "The chunk protocol on the CPU: leases, ranges, the committed frontier",
+  "deps": [
+   "BD-090"
+  ],
+  "done_when": "CPU rows of GATE-CHRON-04",
+  "chapter_refs": {
+   "29": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-092",
+  "milestone": "M1",
+  "title": "The energy ledger on the referee, with stored heat, separate braking modes and the first offending event",
+  "deps": [
+   "BD-071",
+   "BD-076",
+   "BD-090"
+  ],
+  "done_when": "GATE-CHRON-03 on the referee; a damped pendulum's ledger matches the hand calculation",
+  "chapter_refs": {
+   "29": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-093",
+  "milestone": "M1",
+  "title": "Witness migration in the transactional step",
+  "deps": [
+   "BD-035",
+   "BD-082",
+   "BD-092"
+  ],
+  "done_when": "INT-FSIM-07 in full: the flat-to-edge-to-top transition completes with the energy ledger closed to its stated residual",
+  "chapter_refs": {
+   "33": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.11",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-094",
+  "milestone": "M1",
+  "title": "Failure taxonomy with outcome kinds, first-cause ordering and budgeted summaries (`telemetry.summary`, `telemetry.failures`, `telemetry.energy`, `telemetry.query`)",
+  "deps": [
+   "BD-090"
+  ],
+  "done_when": "A fixture per failure class fires its monitor; a numerical fault is never counted as a physical failure or dropped from a denominator",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.1",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-095",
+  "milestone": "M1",
+  "title": "The artifact graph (`evidence.trace`) and the per-bead log `frob.beadlog/1`",
+  "deps": [
+   "BD-004",
+   "BD-090"
+  ],
+  "done_when": "GATE-CHRON-10",
+  "chapter_refs": {
+   "29": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-096",
+  "milestone": "M1",
+  "title": "Simulation testing of the ledger and the submit path under asupersync's lab runtime",
+  "deps": [
+   "BD-091"
+  ],
+  "done_when": "INT-ASUP-02; CPU part of GATE-CHRON-11",
+  "chapter_refs": {
+   "33": 2,
+   "29": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.4",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-097",
+  "milestone": "M1",
+  "title": "`artifact.read`, `artifact.list`, `artifact.export`, `run.show`, `run.list`",
+  "deps": [
+   "BD-022",
+   "BD-090"
+  ],
+  "done_when": "A byte-range read returns bytes whose digest matches the record; a traversal path is refused",
+  "chapter_refs": {},
+  "owner_chapter": 29,
+  "mapped_by": "keyword",
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.5",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-098",
+  "milestone": "M1",
+  "title": "Packet queues and delivered observations, with the queues inside every checkpoint",
+  "deps": [
+   "BD-078",
+   "BD-081",
+   "BD-090"
+  ],
+  "done_when": "Referee rows of GATE-SENS-05: restore at the three adversarial instants gives byte-equal delivered observations",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.4",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-099",
+  "milestone": "M1",
+  "title": "Proprioception on the referee: IMU with lever arm, encoders, sensor cards (`sense.profile`)",
+  "deps": [
+   "BD-078",
+   "BD-080"
+  ],
+  "done_when": "The three IMU cases and the turntable case of GATE-SENS-01 on the referee",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.23",
+  "unit": "U20b"
+ },
+ {
+  "bd": "BD-100",
+  "milestone": "M1",
+  "title": "A-02 mass roll-up and A-08 static stability",
+  "deps": [
+   "BD-050",
+   "BD-062"
+  ],
+  "done_when": "Known answers; a planted top-heavy design is flagged; a point-foot biped is reported, not refused",
+  "chapter_refs": {},
+  "owner_chapter": 28,
+  "mapped_by": "keyword",
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.4",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-101",
+  "milestone": "M1",
+  "title": "A-01 mobility",
+  "deps": [
+   "BD-046",
+   "BD-061"
+  ],
+  "done_when": "Sarrus 1, Bennett 1, planar four-bar 1",
+  "chapter_refs": {},
+  "owner_chapter": 28,
+  "mapped_by": "keyword",
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.4",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-102",
+  "milestone": "M1",
+  "title": "A-03 symmetry: Γ_mech and Γ_obs with breakers and near-symmetry repairs (`analyze.symmetry`)",
+  "deps": [
+   "BD-048",
+   "BD-061"
+  ],
+  "done_when": "A symmetric quadruped with one forward lidar reports C₂ × C₂, C₂ and the lidar mount as breaker; a planted 0.4% asymmetry is found with its repair",
+  "chapter_refs": {},
+  "owner_chapter": 20,
+  "mapped_by": "keyword",
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.13",
+  "unit": "U20b"
+ },
+ {
+  "bd": "BD-103",
+  "milestone": "M1",
+  "title": "A-10 co-design closure and A-11 actuator envelope with the temperature-dependent steady state",
+  "deps": [
+   "BD-052",
+   "BD-072",
+   "BD-073",
+   "BD-075"
+  ],
+  "done_when": "A planted undersized actuator is found; a mass spiral that does not close is reported infeasible",
+  "chapter_refs": {},
+  "owner_chapter": 15,
+  "mapped_by": "keyword",
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.15",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-104",
+  "milestone": "M1",
+  "title": "A-13 self-collision and clearance",
+  "deps": [
+   "BD-079"
+  ],
+  "done_when": "A planted limb interference is found",
+  "chapter_refs": {},
+  "owner_chapter": 19,
+  "mapped_by": "keyword",
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.4",
+  "unit": "U19a"
+ },
+ {
+  "bd": "BD-105",
+  "milestone": "M1",
+  "title": "A-05 workspace, A-06 singularities, and the derived leg IK kernel; INT-FSYM-02",
+  "deps": [
+   "BD-019",
+   "BD-061"
+  ],
+  "done_when": "A 3R leg has four solutions and the singular locus matches the closed form; INT-FSYM-02",
+  "chapter_refs": {
+   "33": 4
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.6",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-106",
+  "milestone": "M1",
+  "title": "A-07 growth vector and maneuverability",
+  "deps": [
+   "BD-061"
+  ],
+  "done_when": "The growth vectors of C-07; a mecanum base with parallel rollers reports (2, 3) where (3) is required",
+  "chapter_refs": {},
+  "owner_chapter": 28,
+  "mapped_by": "keyword",
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.4",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-107",
+  "milestone": "M1",
+  "title": "A-12 modes with symmetry block-diagonalization",
+  "deps": [
+   "BD-102"
+  ],
+  "done_when": "Modes of a symmetric two-mass model",
+  "chapter_refs": {},
+  "owner_chapter": 28,
+  "mapped_by": "keyword",
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-108",
+  "milestone": "M1",
+  "title": "A-20 energy-budget feasibility, A-21 deadline and latency closure, A-22 sampled-loop stability, A-23 shared-bus schedule",
+  "deps": [
+   "BD-075",
+   "BD-078",
+   "BD-103"
+  ],
+  "done_when": "GATE-ATEL-05 rows for A-20 to A-23; the additive peak rule, which falsely prunes the two-finger bus, is caught",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.4",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-109",
+  "milestone": "M1",
+  "title": "The first archetypes: `quad-mammal`, `humanoid`, `diff-drive`, `mecanum` (`design.templates`)",
+  "deps": [
+   "BD-062",
+   "BD-064",
+   "BD-074",
+   "BD-075"
+  ],
+  "done_when": "Each compiles and passes its lints; the humanoid's mass lies within 15% of the mass on file for the G1 (row of GATE-SKEL-07)",
+  "chapter_refs": {
+   "14": 2
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.10",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-110",
+  "milestone": "M1",
+  "title": "`design.check` stages 1 to 6: aggregation, ranked repairs as typed edits, per-stage timing",
+  "deps": [
+   "BD-060",
+   "BD-100",
+   "BD-101",
+   "BD-102",
+   "BD-103",
+   "BD-104",
+   "BD-105",
+   "BD-106",
+   "BD-109"
+  ],
+  "done_when": "GATE-ATEL-02 for the included analyses; GATE-SKEL-04 for stages 1 to 6",
+  "chapter_refs": {
+   "28": 2,
+   "14": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-111",
+  "milestone": "M1",
+  "title": "The memo graph in front of analyses, with shadow recompute; INT-FSIM-16",
+  "deps": [
+   "BD-090",
+   "BD-110"
+  ],
+  "done_when": "Analysis part of GATE-ATEL-12: a shadow mismatch stops serving within one hit; INT-FSIM-16",
+  "chapter_refs": {
+   "33": 4,
+   "28": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.9",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-112",
+  "milestone": "M1",
+  "title": "`explain.run` and `explain.design`",
+  "deps": [
+   "BD-094",
+   "BD-110"
+  ],
+  "done_when": "The explanation of a planted knee-thermal failure names the first cause and cites the telemetry channel that shows it",
+  "chapter_refs": {},
+  "owner_chapter": 29,
+  "mapped_by": "keyword",
+  "slice": "S19-chronicle",
+  "chapter": 15,
+  "best_sub": null,
+  "unit": "U15a"
+ },
+ {
+  "bd": "BD-113",
+  "milestone": "M1",
+  "title": "Lineage basics: the lineage graph over patches, `design.diff`, `design.blame`",
+  "deps": [
+   "BD-059",
+   "BD-090"
+  ],
+  "done_when": "Blame on a three-edit lineage names the edit that changed a chosen field",
+  "chapter_refs": {},
+  "owner_chapter": 28,
+  "mapped_by": "keyword",
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-114",
+  "milestone": "M1",
+  "title": "The invariant filter (`control.estimate`)",
+  "deps": [
+   "BD-045"
+  ],
+  "done_when": "GATE-REFLEX-03 on a synthetic IMU; the `overconfident` flag fires on a planted bias",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.3",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-115",
+  "milestone": "M1",
+  "title": "The small dense cone-program solver, with end states and dual certificates",
+  "deps": [
+   "BD-050"
+  ],
+  "done_when": "KKT residuals; agreement with a reference optimizer on 10³ programs; a planted infeasible program returns a certificate that checks exactly",
+  "chapter_refs": {},
+  "owner_chapter": 12,
+  "mapped_by": "keyword",
+  "slice": "S01-lemma-spine",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-116",
+  "milestone": "M1",
+  "title": "Legged baseline controller",
+  "deps": [
+   "BD-080",
+   "BD-105",
+   "BD-115"
+  ],
+  "done_when": "A quadruped stands and walks 5 m on the referee",
+  "chapter_refs": {},
+  "owner_chapter": 22,
+  "mapped_by": "keyword",
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.9",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-117",
+  "milestone": "M1",
+  "title": "Wheeled baseline controller",
+  "deps": [
+   "BD-080",
+   "BD-106"
+  ],
+  "done_when": "Differential and mecanum archetypes traverse 5 m; the wheel loops saturate at the card's current limit",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.10",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-118",
+  "milestone": "M1",
+  "title": "`control.synth` with three-outcome reporting, and `control.show`",
+  "deps": [
+   "BD-109",
+   "BD-116",
+   "BD-117"
+  ],
+  "done_when": "GATE-REFLEX-01 on the referee and the standing rows of GATE-SKEL-03, for the first archetypes",
+  "chapter_refs": {
+   "22": 2,
+   "14": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.17",
+  "unit": "U22c"
+ },
+ {
+  "bd": "BD-119",
+  "milestone": "M1",
+  "title": "The causal-policy test (`sense.causal-test`)",
+  "deps": [
+   "BD-098",
+   "BD-118"
+  ],
+  "done_when": "Referee rows of GATE-SENS-12: every baseline controller passes and each of the five planted leaks fails",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.15",
+  "unit": "U20b"
+ },
+ {
+  "bd": "BD-120",
+  "milestone": "M1",
+  "title": "A-17 observability: the linearized Gramian modulo gauge on the CPU (`sense.observability`)",
+  "deps": [
+   "BD-099",
+   "BD-114"
+  ],
+  "done_when": "Linearized rows of GATE-SENS-08: the corridor case and the four-dimensional gauge; two identical aisles are reported ambiguous despite full local rank",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.11",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-121",
+  "milestone": "M1",
+  "title": "`frob-spec`: the requirement language core, with unit-normalized predicates, temporal operators and three evaluators",
+  "deps": [
+   "BD-005",
+   "BD-078"
+  ],
+  "done_when": "Monitor rows of GATE-ARENA-03: the three evaluators agree bit for bit on 10⁶ random traces per operator",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.1",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-122",
+  "milestone": "M1",
+  "title": "The task file `.ftask`: terms, requirements, randomization; `task.new`, `task.show`, `task.list`, `task.check`, `task.verdict`",
+  "deps": [
+   "BD-121"
+  ],
+  "done_when": "Refusal rows of GATE-ARENA-03: each refusal 520 to 528 is triggered by its planted task file",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.14",
+  "unit": "U24c"
+ },
+ {
+  "bd": "BD-123",
+  "milestone": "M1",
+  "title": "Fixture 1, `fixture:cart-sill-dock`: bodies, motor, sill, the analytic layer and the creep rigs (`task.fixture`)",
+  "deps": [
+   "BD-075",
+   "BD-083",
+   "BD-084",
+   "BD-086",
+   "BD-092",
+   "BD-122"
+  ],
+  "done_when": "GATE-ARENA-04 on the referee: both negative controls are caught",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.10",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-124",
+  "milestone": "M1",
+  "title": "The two study types on the CPU: the anytime-valid e-process and the fixed-n exact study with its reachability pre-analysis (`study.plan`, `study.submit`, `study.status`, `eval.preanalyze`, `eval.compare`); INT-FSIM-14",
+  "deps": [
+   "BD-090",
+   "BD-122"
+  ],
+  "done_when": "GATE-ARENA-05; GATE-ATEL-06; INT-FSIM-14; a study that declares both types is refused",
+  "chapter_refs": {
+   "33": 4,
+   "24": 2,
+   "28": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.9",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-125",
+  "milestone": "M1",
+  "title": "Task families of M1: stand and recover, threshold delivery, timed docking, each with a requirement, labelled traces and a reference scorecard (`eval.run`, `eval.scorecard`)",
+  "deps": [
+   "BD-118",
+   "BD-123",
+   "BD-124"
+  ],
+  "done_when": "Each task is reproducible on the referee from its `TaskId`, `ModelId` and seed; a changed seed changes the episode digest",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.14",
+  "unit": "U24c"
+ },
+ {
+  "bd": "BD-126",
+  "milestone": "M1",
+  "title": "`.fmission`: the mission schema and its admission (`mission.new`, `mission.check`), with the quantifier order echoed",
+  "deps": [
+   "BD-121"
+  ],
+  "done_when": "An empty or inconsistent domain is refused; a query written ∀w ∃u where ∃u ∀(w, e) is meant is echoed in the order written and fails the quantifier-order fixture",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.10",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-127",
+  "milestone": "M1",
+  "title": "Admission of the second linear-program solver (`fsci-opt` `linprog`) and of the airlock entries `fs-ivl` and `fs-sos` for mission work",
+  "deps": [
+   "BD-007"
+  ],
+  "done_when": "The two solvers agree on the 51 docking programs of the pilot; a planted infeasible program is reported infeasible by both with a dual that checks",
+  "chapter_refs": {},
+  "owner_chapter": 25,
+  "mapped_by": "keyword",
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.4",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-128",
+  "milestone": "M1",
+  "title": "`frob-mission` core: inner and outer design sets, cells, polarity, the proof rules on finite and polyhedral fragments, plain proof objects",
+  "deps": [
+   "BD-052",
+   "BD-115",
+   "BD-126",
+   "BD-127"
+  ],
+  "done_when": "On the quantifier-order fixture the inner set lies inside the exact set and the outer set contains it; an answer formed by intersecting per-world answers is rejected",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 25,
+  "best_sub": "25.8",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-129",
+  "milestone": "M1",
+  "title": "The docking family: the finite game over causal histories with one velocity packet, and its scenario-tree comparator",
+  "deps": [
+   "BD-041",
+   "BD-098",
+   "BD-128"
+  ],
+  "done_when": "GATE-AUGUR-03",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.15",
+  "unit": "U25c"
+ },
+ {
+  "bd": "BD-130",
+  "milestone": "M1",
+  "title": "The stance family: body–load feasibility with vertex witnesses and dual exclusions, in lifted and projected form",
+  "deps": [
+   "BD-042",
+   "BD-128"
+  ],
+  "done_when": "GATE-AUGUR-02",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.4",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-131",
+  "milestone": "M1",
+  "title": "The pusher battery: per-build and shared queries on one plant",
+  "deps": [
+   "BD-043",
+   "BD-128"
+  ],
+  "done_when": "GATE-AUGUR-04",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-132",
+  "milestone": "M1",
+  "title": "`frob-cert` checkers for the mission proof kinds (`lp-primal`, `lp-farkas`, `finite-game`, `alias-pair`, `partition`, `interval-box`, `trace-witness`)",
+  "deps": [
+   "BD-027"
+  ],
+  "done_when": "GATE-LEMMA-03",
+  "chapter_refs": {
+   "12": 2
+  },
+  "owner_chapter": 12,
+  "slice": "S01-lemma-spine",
+  "chapter": 12,
+  "best_sub": "12.4",
+  "unit": "U12"
+ },
+ {
+  "bd": "BD-133",
+  "milestone": "M1",
+  "title": "Mission bundles: the writer in `frob-lemma` for inner cells and exclusions; `prove.bundle`, `prove.verify`, `prove.list`; `frob-verbs` runs the checker before an answer returns",
+  "deps": [
+   "BD-129",
+   "BD-130",
+   "BD-131",
+   "BD-132"
+  ],
+  "done_when": "GATE-AUGUR-05; GATE-LEMMA-04: one accepted false certificate fails the gate",
+  "chapter_refs": {
+   "25": 2,
+   "12": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.5",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-134",
+  "milestone": "M1",
+  "title": "The late-packet alias witness for the docking mission (`sense.alias` on enumerated worlds)",
+  "deps": [
+   "BD-119",
+   "BD-129"
+  ],
+  "done_when": "The late-packet docking witness of GATE-SENS-09 is found and passes the checker; a pair of worlds with different transcripts is not reported as an alias",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.12",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-135",
+  "milestone": "M1",
+  "title": "`mission.synthesize`, `mission.refute`, `mission.distinguish`, `mission.show`, with budget stops",
+  "deps": [
+   "BD-133",
+   "BD-134"
+  ],
+  "done_when": "A budget stop returns the certified cells and the unresolved remainder, each cell complete in itself; no unresolved cell is printed as a verdict",
+  "chapter_refs": {},
+  "owner_chapter": 25,
+  "mapped_by": "keyword",
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-136",
+  "milestone": "M1",
+  "title": "The mission mutation corpus and the checker-independence campaign",
+  "deps": [
+   "BD-135"
+  ],
+  "done_when": "GATE-AUGUR-01; GATE-AUGUR-06: zero false accepts over at least 200 mutated witnesses per proof kind",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.5",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-137",
+  "milestone": "M1",
+  "title": "The M1 verbs with schemas, examples and refusal lists",
+  "deps": [
+   "BD-022",
+   "BD-024",
+   "BD-057",
+   "BD-059",
+   "BD-066",
+   "BD-077",
+   "BD-097",
+   "BD-107",
+   "BD-108",
+   "BD-110",
+   "BD-112",
+   "BD-113",
+   "BD-118",
+   "BD-120",
+   "BD-125",
+   "BD-135"
+  ],
+  "done_when": "GATE-TETHER-02 for the M1 verbs",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-138",
+  "milestone": "M1",
+  "title": "MCP tools generated for the M1 verbs in task clusters of at most seven, with `session.open`, `session.show`, `session.focus`, `session.close`",
+  "deps": [
+   "BD-023",
+   "BD-137"
+  ],
+  "done_when": "The parity diff is empty and the served `tools/list` equals the registry under the name map; after `session.focus` the list holds at most seven tools plus the base three",
+  "chapter_refs": {},
+  "owner_chapter": 32,
+  "mapped_by": "keyword",
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-139",
+  "milestone": "M1",
+  "title": "The `reality:` line on every report, and its negative battery",
+  "deps": [
+   "BD-137"
+  ],
+  "done_when": "GATE-GROUND-01",
+  "chapter_refs": {
+   "30": 2
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-140",
+  "milestone": "M1",
+  "title": "The first mission slice driven by a fresh agent through the CLI and MCP",
+  "deps": [
+   "BD-136",
+   "BD-138"
+  ],
+  "done_when": "GATE-AUGUR-07",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-141",
+  "milestone": "M1",
+  "title": "The format registry rows and round trips for the formats that exist at M1 (`.fbot`, `.fmodule`, `.fcard`, `.ftask`, `.fmission`, `.frun`, `.frobcert`)",
+  "deps": [
+   "BD-004",
+   "BD-057",
+   "BD-060",
+   "BD-069",
+   "BD-090",
+   "BD-122",
+   "BD-126",
+   "BD-133"
+  ],
+  "done_when": "GATE-WS-02 for these formats; a second parser for a registered extension fails `check-contracts`",
+  "chapter_refs": {
+   "34": 2
+  },
+  "owner_chapter": 34,
+  "slice": "S24-workspace-safety",
+  "chapter": 34,
+  "best_sub": "34.9",
+  "unit": "U34"
+ },
+ {
+  "bd": "BD-142",
+  "milestone": "M1",
+  "title": "Parity baseline completed: incumbents on this Mac (CPU MuJoCo at 1, 24 and 36 threads; an incumbent with a Metal path) and native settings on `trj`",
+  "deps": [
+   "BD-040"
+  ],
+  "done_when": "GATE-SPARK-21",
+  "chapter_refs": {
+   "36": 2
+  },
+  "owner_chapter": 36,
+  "slice": "S11-numerics-perf",
+  "chapter": 36,
+  "best_sub": "36.3",
+  "unit": "U36"
+ },
+ {
+  "bd": "BD-143",
+  "milestone": "M1",
+  "title": "The incumbent design-loop phase ledger on `trj`: one agent-driven round timed by phase, cold and warm separated, with the ceilings of §2 recomputed from the measured shares",
+  "deps": [
+   "BD-040"
+  ],
+  "done_when": "The ledger is on record under the disclosure block before any ratio against an incumbent is written; a repeat of the round reproduces each phase's share inside its stated interval",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": 39,
+  "best_sub": "39.11",
+  "unit": "U39b"
+ },
+ {
+  "bd": "BD-144",
+  "milestone": "M1",
+  "title": "Phylum pilot with no GPU code: padding overhead and bucket count of the first archetypes and of 1,000 generated designs under the bucket set",
+  "deps": [
+   "BD-109"
+  ],
+  "done_when": "The pilot's numbers and its falsifier outcome are filed; the padding known answers 1.32, 1.58 and 1.76 for p = 1, 2, 3 reproduce",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.10",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-145",
+  "milestone": "M1",
+  "title": "Pre-registration of the rank-agreement experiment: design set, strata, the τ thresholds 0.7 and 0.5 fixed before data, and the compute request under OPEN-SPARK-2",
+  "deps": [
+   "BD-039",
+   "BD-124"
+  ],
+  "done_when": "The registration is committed before any paired training runs; a threshold edited after the first result is refused by the study record",
+  "chapter_refs": {},
+  "owner_chapter": 21,
+  "mapped_by": "keyword",
+  "slice": "S10-spark",
+  "chapter": 34,
+  "best_sub": "34.7",
+  "unit": "U34"
+ },
+ {
+  "bd": "BD-146",
+  "milestone": "M1",
+  "title": "`frob-conformance` for M1: known answers against pinned oracles, the counterexample catalogue seeds, the `smoke` and `fixtures` batteries",
+  "deps": [
+   "BD-025",
+   "BD-067",
+   "BD-088",
+   "BD-089",
+   "BD-123"
+  ],
+  "done_when": "GATE-GAUNT-01 for M1: every M1 gate has a registered negative control that it catches",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 38,
+  "best_sub": "38.11",
+  "unit": "U38b"
+ },
+ {
+  "bd": "BD-147",
+  "milestone": "M1",
+  "title": "M1 exit review by a fresh-context session that did not implement the work; the schedule gate (BET-12, §40.5)",
+  "deps": [
+   "BD-044",
+   "BD-049",
+   "BD-053",
+   "BD-085",
+   "BD-093",
+   "BD-095",
+   "BD-096",
+   "BD-111",
+   "BD-139",
+   "BD-140",
+   "BD-141",
+   "BD-142",
+   "BD-143",
+   "BD-144",
+   "BD-145",
+   "BD-146"
+  ],
+  "done_when": "Every gate of M1 has a recorded value and a caught negative control; NS-01, NS-07 and NS-22 are demonstrated; the schedule gate is evaluated; GATE-TENFOLD-02 and -09 are recorded",
+  "chapter_refs": {
+   "40": 1
+  },
+  "owner_chapter": 40,
+  "slice": "S26-tenfold-gates",
+  "chapter": 39,
+  "best_sub": "39.3",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-148",
+  "milestone": "M2",
+  "title": "Packed lowering of `RobotModel`: depth levels, path tables, capacities, `ShapeClassId`",
+  "deps": [
+   "BD-018",
+   "BD-061"
+  ],
+  "done_when": "The layout digest is stable across platforms",
+  "chapter_refs": {},
+  "owner_chapter": 29,
+  "mapped_by": "keyword",
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": null,
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-149",
+  "milestone": "M2",
+  "title": "Derive and emit `K-fk-level` and `K-twist-level`",
+  "deps": [
+   "BD-019",
+   "BD-148"
+  ],
+  "done_when": "Parity with `fs-mbd` forward kinematics",
+  "chapter_refs": {},
+  "owner_chapter": 36,
+  "mapped_by": "keyword",
+  "slice": "S11-numerics-perf",
+  "chapter": 36,
+  "best_sub": "36.3",
+  "unit": "U36"
+ },
+ {
+  "bd": "BD-150",
+  "milestone": "M2",
+  "title": "Derive and emit `K-crba-level` and `K-rnea-level`",
+  "deps": [
+   "BD-149"
+  ],
+  "done_when": "Rows of GATE-KIN-03",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.6",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-151",
+  "milestone": "M2",
+  "title": "`K-act-l1`, `K-act-l2`, `K-passive`, and the shared-bus reduction `K-act-bus`",
+  "deps": [
+   "BD-071",
+   "BD-075",
+   "BD-148"
+  ],
+  "done_when": "GATE-SINEW-03",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-152",
+  "milestone": "M2",
+  "title": "Utility kernels: `K-scan`, `K-sort`, `K-reduce`, `K-seg-reduce`, `K-compact`",
+  "deps": [
+   "BD-014"
+  ],
+  "done_when": "Bitwise equal across worker counts; padding a reduction with −0.0 as the neutral element is caught",
+  "chapter_refs": {},
+  "owner_chapter": 21,
+  "mapped_by": "keyword",
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.5",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-153",
+  "milestone": "M2",
+  "title": "`K-jac-rows`, `K-cone-setup`, `K-cone-eval` for CL-1",
+  "deps": [
+   "BD-050",
+   "BD-150"
+  ],
+  "done_when": "KKT and projection tests",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-154",
+  "milestone": "M2",
+  "title": "The four-dimensional contact cone (normal, two tangential, spin) in the `Cone` trait and the cone kernels",
+  "deps": [
+   "BD-153"
+  ],
+  "done_when": "Cone rows of GATE-TRAC-04: coupled and diagonal forces within 0.5% of μ·N/√2 and μ·N; the pyramid and independent-row mutations fail",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.6",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-155",
+  "milestone": "M2",
+  "title": "`K-joint-rows`: stiction, backlash and hard stops on the batched tiers",
+  "deps": [
+   "BD-084",
+   "BD-153"
+  ],
+  "done_when": "Joint rows of GATE-TRAC-04; GATE-SINEW-04 on batched tiers within the stated regularization; KILL-SINEW-ROWS decided",
+  "chapter_refs": {
+   "18": 2,
+   "15": 4
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-156",
+  "milestone": "M2",
+  "title": "`K-scale-diag`, `K-hess`, batched dense `K-chol`, exact `K-linesearch`, `K-refine`",
+  "deps": [
+   "BD-154"
+  ],
+  "done_when": "Convergence on the battery with the gradient-norm certificate recorded; GATE-TRAC-10",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.12",
+  "unit": "U18b"
+ },
+ {
+  "bd": "BD-157",
+  "milestone": "M2",
+  "title": "Articulated `K-cay-step`, `K-normalize`, `K-anchor`",
+  "deps": [
+   "BD-149"
+  ],
+  "done_when": "Group-membership test over 10⁶ steps",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-158",
+  "milestone": "M2",
+  "title": "`K-geom-pose`, `K-np-prim`, `K-bp-sort`, `K-bp-pairs`: poses of primitives, primitive pairs, the deterministic broad phase",
+  "deps": [
+   "BD-079",
+   "BD-148",
+   "BD-152"
+  ],
+  "done_when": "Primitive pair distances match the CPU primitives of GATE-TRAC-02 on its 10⁶ pairs, inside the class; the broad-phase pair order is identical across worker counts",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.3",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-159",
+  "milestone": "M2",
+  "title": "The batched step on `batch-cpu` in `f64` and `f32`, with lockstep masks and capacity flags",
+  "deps": [
+   "BD-151",
+   "BD-152",
+   "BD-155",
+   "BD-156",
+   "BD-157",
+   "BD-158"
+  ],
+  "done_when": "A quadruped drops, stands and walks under the baseline controller; GATE-KIN-03; a forced contact overflow is flagged `Degraded`, never dropped silently",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.6",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-160",
+  "milestone": "M2",
+  "title": "The tile program on `fs-exec` with fixed-slot reductions",
+  "deps": [
+   "BD-159"
+  ],
+  "done_when": "Bitwise equal across worker counts",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-161",
+  "milestone": "M2",
+  "title": "The `strict` profile of `batch-cpu`: the transactional, event-located step in `f64` on our own kernels",
+  "deps": [
+   "BD-083",
+   "BD-093",
+   "BD-159"
+  ],
+  "done_when": "The `strict` rows of GATE-KIN-04, GATE-TRAC-01 and GATE-TRAC-06; the rate is printed with every strict result",
+  "chapter_refs": {
+   "16": 2,
+   "18": 4
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.5",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-162",
+  "milestone": "M2",
+  "title": "`frob-scene`: the `.fscene` scene-pack format, bricks, interpolation bounds, truncated fields with a stated range",
+  "deps": [
+   "BD-005"
+  ],
+  "done_when": "Schema and round trip; a field value outside its stated range is refused, not clipped",
+  "chapter_refs": {},
+  "owner_chapter": 19,
+  "mapped_by": "keyword",
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.10",
+  "unit": "U19b"
+ },
+ {
+  "bd": "BD-163",
+  "milestone": "M2",
+  "title": "The scene compiler through the airlock, with analytic overlays (`scene.compile`, `scene.show`, `scene.list`)",
+  "deps": [
+   "BD-007",
+   "BD-162"
+  ],
+  "done_when": "GATE-HAB-01",
+  "chapter_refs": {
+   "19": 2
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.22",
+  "unit": "U19c"
+ },
+ {
+  "bd": "BD-164",
+  "milestone": "M2",
+  "title": "The brick pool with one dense directory per scene variant",
+  "deps": [
+   "BD-163"
+  ],
+  "done_when": "GATE-HAB-13; KILL-POOL decided",
+  "chapter_refs": {
+   "19": 4
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.15",
+  "unit": "U19c"
+ },
+ {
+  "bd": "BD-165",
+  "milestone": "M2",
+  "title": "Terrain generators with a difficulty parameter (`scene.gen`)",
+  "deps": [
+   "BD-163"
+  ],
+  "done_when": "The same seed gives the same `SceneId` on Linux and macOS",
+  "chapter_refs": {},
+  "owner_chapter": 19,
+  "mapped_by": "keyword",
+  "slice": "S08-habitat",
+  "chapter": 18,
+  "best_sub": "18.1",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-166",
+  "milestone": "M2",
+  "title": "`K-np-sdf` with overlays and the pooled directory; `K-np-thin`",
+  "deps": [
+   "BD-158",
+   "BD-164"
+  ],
+  "done_when": "The sphere-against-field known answer; a thin barrier between two clear endpoint poses is detected",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-167",
+  "milestone": "M2",
+  "title": "Rolling and torsional rows; interface cards by material pair and condition (`contact.laws`, `contact.probe`)",
+  "deps": [
+   "BD-068",
+   "BD-154"
+  ],
+  "done_when": "Incline, rolling and mecanum known answers; a missing material pair is refused",
+  "chapter_refs": {},
+  "owner_chapter": 18,
+  "mapped_by": "keyword",
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.13",
+  "unit": "U18b"
+ },
+ {
+  "bd": "BD-168",
+  "milestone": "M2",
+  "title": "The contact battery on batched tiers; the tunneling audit; the capacity audit (`contact.audit`, `contact.capacity`)",
+  "deps": [
+   "BD-085",
+   "BD-159",
+   "BD-161",
+   "BD-166",
+   "BD-167"
+  ],
+  "done_when": "GATE-TRAC-01 and GATE-TRAC-06 on batched tiers; GATE-TRAC-03; a verdict shaped by capacity is labelled `capacity-biased`",
+  "chapter_refs": {
+   "18": 6
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.13",
+  "unit": "U18b"
+ },
+ {
+  "bd": "BD-169",
+  "milestone": "M2",
+  "title": "Per-world parameter variants (level P-A): model, scene and task slots with a parameter row",
+  "deps": [
+   "BD-159"
+  ],
+  "done_when": "`batch-cpu` rows of GATE-KIN-06: 256 parameter variants equal 256 homogeneous runs bit for bit",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.6",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-170",
+  "milestone": "M2",
+  "title": "Model variants inside padded capacities (level P-B): one model table per slot, masks, `K-variant-gather`",
+  "deps": [
+   "BD-169"
+  ],
+  "done_when": "`batch-cpu` rows of GATE-PHYLUM-02; a padded link changes no digest of a real link",
+  "chapter_refs": {
+   "17": 2
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.14",
+  "unit": "U17b"
+ },
+ {
+  "bd": "BD-171",
+  "milestone": "M2",
+  "title": "Size buckets and `phylum.plan`",
+  "deps": [
+   "BD-144",
+   "BD-170"
+  ],
+  "done_when": "Bucket plans reproduce the padding known answers; a population that needs more than eight buckets is reported against KILL-BUCKET",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.11",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-172",
+  "milestone": "M2",
+  "title": "CUDA backend: buffers, the step plan (`frob.stepplan/1`), launch-graph capture, stream-ordered pools, receipts",
+  "deps": [
+   "BD-015",
+   "BD-159"
+  ],
+  "done_when": "The full step runs on one RTX 4090; GATE-SPARK-12",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.1",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-173",
+  "milestone": "M2",
+  "title": "The device arena, leases and the binary kernel cache (`spark.cache`, `spark.precompile`)",
+  "deps": [
+   "BD-172"
+  ],
+  "done_when": "GATE-SPARK-11",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.1",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-174",
+  "milestone": "M2",
+  "title": "Metal backend: packed arguments, batch chains, snapshot blits, receipts",
+  "deps": [
+   "BD-016",
+   "BD-028",
+   "BD-159"
+  ],
+  "done_when": "The full step runs on this Mac",
+  "chapter_refs": {},
+  "owner_chapter": 21,
+  "mapped_by": "keyword",
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.9",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-175",
+  "milestone": "M2",
+  "title": "Device faults and cancellation",
+  "deps": [
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-SPARK-06",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.2",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-176",
+  "milestone": "M2",
+  "title": "`spark.check` and the divergence ledger",
+  "deps": [
+   "BD-017",
+   "BD-020",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-SPARK-02; KILL-D1 decided per device family",
+  "chapter_refs": {
+   "21": 4
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.15",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-177",
+  "milestone": "M2",
+  "title": "The decision-level equivalence test under class D3",
+  "deps": [
+   "BD-176"
+  ],
+  "done_when": "GATE-SPARK-16: a planted bias of one decision in fifty fails",
+  "chapter_refs": {
+   "35": 2
+  },
+  "owner_chapter": 35,
+  "slice": "S11-numerics-perf",
+  "chapter": 35,
+  "best_sub": "35.3",
+  "unit": "U35"
+ },
+ {
+  "bd": "BD-178",
+  "milestone": "M2",
+  "title": "The placement planner with requested-versus-actual receipts per stage, and strict backends (`spark.place`, `frob.placement/1`)",
+  "deps": [
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-SPARK-09",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.1",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-179",
+  "milestone": "M2",
+  "title": "Anchored positions (cell side 8 m, offset in [−4, 4) m), the precision battery and the conditioning certificate",
+  "deps": [
+   "BD-156",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-SPARK-05; GATE-SPARK-18; the uncentred [0, 8) shift fails the battery",
+  "chapter_refs": {
+   "21": 2,
+   "35": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.11",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-180",
+  "milestone": "M2",
+  "title": "Randomness by address: `K-x-philox` and addressed draws",
+  "deps": [
+   "BD-152"
+  ],
+  "done_when": "Draws depend on address alone; an implementation that draws sequentially is caught",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-181",
+  "milestone": "M2",
+  "title": "The batch-composition invariance test: co-tenancy, slot permutation, bucket capacity, shards",
+  "deps": [
+   "BD-170",
+   "BD-172",
+   "BD-174",
+   "BD-180"
+  ],
+  "done_when": "GATE-SPARK-15; GATE-KIN-05",
+  "chapter_refs": {
+   "35": 2,
+   "16": 2
+  },
+  "owner_chapter": 35,
+  "slice": "S11-numerics-perf",
+  "chapter": 35,
+  "best_sub": "35.1",
+  "unit": "U35"
+ },
+ {
+  "bd": "BD-182",
+  "milestone": "M2",
+  "title": "Guarded predicates on devices over the contact battery",
+  "deps": [
+   "BD-053",
+   "BD-168",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-MARROW-05; KILL-MARROW-GUARD decided",
+  "chapter_refs": {
+   "13": 4
+  },
+  "owner_chapter": 13,
+  "slice": "S02-marrow",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.10"
+ },
+ {
+  "bd": "BD-183",
+  "milestone": "M2",
+  "title": "Variants on devices: parameter variants, topology variants on one captured graph, a mixed batch of three body plans, admission of a variant into a free slot",
+  "deps": [
+   "BD-170",
+   "BD-171",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-SPARK-10; device rows of GATE-KIN-06 and GATE-PHYLUM-02",
+  "chapter_refs": {
+   "21": 2,
+   "16": 2,
+   "17": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.11",
+  "unit": "U21b"
+ },
+ {
+  "bd": "BD-184",
+  "milestone": "M2",
+  "title": "Admission and edit-to-first-step latency on the warm, cool and cold paths (`phylum.sweep`)",
+  "deps": [
+   "BD-040",
+   "BD-173",
+   "BD-183"
+  ],
+  "done_when": "GATE-PHYLUM-04",
+  "chapter_refs": {
+   "17": 2
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.15",
+  "unit": "U17b"
+ },
+ {
+  "bd": "BD-185",
+  "milestone": "M2",
+  "title": "The control arm of the head-to-head: nine padded per-family templates with lockable joints and per-design parameter tables",
+  "deps": [
+   "BD-169"
+  ],
+  "done_when": "Each template family of §14 runs as a homogeneous environment; the share of the mutation corpus the arm can express is recorded",
+  "chapter_refs": {
+   "14": 1
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.10",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-186",
+  "milestone": "M2",
+  "title": "The mixed-batch head-to-head experiment with arms A, B, C and D, as a fixed-n study",
+  "deps": [
+   "BD-039",
+   "BD-124",
+   "BD-181",
+   "BD-183",
+   "BD-184",
+   "BD-185"
+  ],
+  "done_when": "GATE-PHYLUM-03 published with all four arms; KILL-PHYLUM and KILL-BUCKET decided by the pre-declared outcomes",
+  "chapter_refs": {
+   "17": 4,
+   "21": 2
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.14",
+  "unit": "U17b"
+ },
+ {
+  "bd": "BD-187",
+  "milestone": "M2",
+  "title": "Ray kernels; height scan, depth, lidar; proprioception with noise on batched tiers",
+  "deps": [
+   "BD-099",
+   "BD-166",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-SENS-01; GATE-SENS-02",
+  "chapter_refs": {
+   "20": 4
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.24",
+  "unit": "U20b"
+ },
+ {
+  "bd": "BD-188",
+  "milestone": "M2",
+  "title": "Camera timing: exposure integration, rolling shutter and lidar beam instants",
+  "deps": [
+   "BD-078",
+   "BD-187"
+  ],
+  "done_when": "GATE-SENS-06; KILL-EXPOSURE decided",
+  "chapter_refs": {
+   "20": 4
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.7",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-189",
+  "milestone": "M2",
+  "title": "The clock contract and checkpointed packet queues on every tier",
+  "deps": [
+   "BD-078",
+   "BD-098",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-SENS-04 and GATE-SENS-05 on every tier; KILL-SCHED decided",
+  "chapter_refs": {
+   "20": 6
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.4",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-190",
+  "milestone": "M2",
+  "title": "The docking fixture in exact arithmetic on every backend",
+  "deps": [
+   "BD-030",
+   "BD-129",
+   "BD-189"
+  ],
+  "done_when": "GATE-SENS-13",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.12",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-191",
+  "milestone": "M2",
+  "title": "Stills and pixel inspection (`telemetry.stills`, `telemetry.inspect-pixel`, `telemetry.export-html`)",
+  "deps": [
+   "BD-187"
+  ],
+  "done_when": "A pixel maps to the right link in fixtures",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.1",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-192",
+  "milestone": "M2",
+  "title": "`VecEnv` with the corrected semantics E-1 to E-9: explicit reset, the preserved final observation, termination against truncation, typed spaces, access classes, snapshots, and masked automatic reset as a labeled mode",
+  "deps": [
+   "BD-098",
+   "BD-159"
+  ],
+  "done_when": "GATE-CORTEX-06",
+  "chapter_refs": {
+   "23": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.3",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-193",
+  "milestone": "M2",
+  "title": "Device-resident tensor views with the stride converter and ownership epochs",
+  "deps": [
+   "BD-036",
+   "BD-172",
+   "BD-174",
+   "BD-192"
+  ],
+  "done_when": "GATE-CORTEX-09",
+  "chapter_refs": {
+   "23": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.3",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-194",
+  "milestone": "M2",
+  "title": "Declarative task specifications with requirement terms, time-aware rewards, physical discounting and the likelihood of the applied action",
+  "deps": [
+   "BD-122",
+   "BD-192"
+  ],
+  "done_when": "The 500 against 1,000 reward fixture is invariant under rate terms; the 2.000 and 1.995 discount fixture holds across control rates",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.10",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-195",
+  "milestone": "M2",
+  "title": "The settled-pose reset cache",
+  "deps": [
+   "BD-192"
+  ],
+  "done_when": "GATE-ARENA-08",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.1",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-196",
+  "milestone": "M2",
+  "title": "On-device networks and optimizer (`K-gemm`, `K-act-fn`, `K-adam`); gradient parity with FrankenTorch",
+  "deps": [
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-CORTEX-02; KILL-LEARNKERN decided",
+  "chapter_refs": {
+   "23": 4
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.8",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-197",
+  "milestone": "M2",
+  "title": "PPO under rules P-1 to P-11",
+  "deps": [
+   "BD-034",
+   "BD-194",
+   "BD-196"
+  ],
+  "done_when": "GATE-CORTEX-07: the battery passes, and three planted defects that reproduce the sibling's errors each fail it",
+  "chapter_refs": {
+   "23": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.6",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-198",
+  "milestone": "M2",
+  "title": "PPO training of the reference quadruped's flat velocity task, with negative controls; `train.start`, `train.status`, `train.stop`, `train.export`",
+  "deps": [
+   "BD-193",
+   "BD-195",
+   "BD-197"
+  ],
+  "done_when": "GATE-CORTEX-01 on `batch-cpu` and on each GPU backend",
+  "chapter_refs": {
+   "23": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.6",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-199",
+  "milestone": "M2",
+  "title": "Sharding across both RTX 4090, and multi-device PPO under the global normalization rule",
+  "deps": [
+   "BD-198"
+  ],
+  "done_when": "GATE-CORTEX-08; GATE-SPARK-20; KILL-SHARD decided",
+  "chapter_refs": {
+   "23": 2,
+   "36": 4
+  },
+  "owner_chapter": 36,
+  "slice": "S11-numerics-perf",
+  "chapter": 36,
+  "best_sub": "36.6",
+  "unit": "U36"
+ },
+ {
+  "bd": "BD-200",
+  "milestone": "M2",
+  "title": "Randomization from cards, drawn by address",
+  "deps": [
+   "BD-069",
+   "BD-180",
+   "BD-192"
+  ],
+  "done_when": "A card field with no interval refuses randomization; two runs at one address draw the same value in any batch",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-201",
+  "milestone": "M2",
+  "title": "Task families of M2: velocity tracking and terrain traversal, with reference-robot scorecards",
+  "deps": [
+   "BD-165",
+   "BD-194",
+   "BD-200"
+  ],
+  "done_when": "GATE-ARENA-01",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.3",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-202",
+  "milestone": "M2",
+  "title": "Fixture 2, `fixture:quad-split-grip`",
+  "deps": [
+   "BD-167",
+   "BD-201"
+  ],
+  "done_when": "GATE-ARENA-06",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.11",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-203",
+  "milestone": "M2",
+  "title": "In-kernel digests (`K-x-digest`), per-stage digests, snapshots at the fence (`K-commit`, `K-snapshot`), replay (`sim.replay`)",
+  "deps": [
+   "BD-090",
+   "BD-159",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "GATE-CHRON-01",
+  "chapter_refs": {
+   "29": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.8",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-204",
+  "milestone": "M2",
+  "title": "Teleport with step and stage localization (`sim.replay --tier`)",
+  "deps": [
+   "BD-176",
+   "BD-203"
+  ],
+  "done_when": "GATE-CHRON-02",
+  "chapter_refs": {
+   "29": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-205",
+  "milestone": "M2",
+  "title": "Forks from snapshots by indexed copy, and their classification into the five classes of §27.4 (`run.fork`)",
+  "deps": [
+   "BD-203"
+  ],
+  "done_when": "GATE-CHRON-05; GATE-AUTOPSY-01; GATE-AUTOPSY-02",
+  "chapter_refs": {
+   "29": 2,
+   "27": 5
+  },
+  "owner_chapter": 27,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.4",
+  "unit": "U27a"
+ },
+ {
+  "bd": "BD-206",
+  "milestone": "M2",
+  "title": "The first-divergence search over the digest chain, in exact and tolerance modes (`telemetry.divergence`)",
+  "deps": [
+   "BD-203"
+  ],
+  "done_when": "GATE-CHRON-06; GATE-AUTOPSY-07",
+  "chapter_refs": {
+   "29": 2,
+   "27": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-207",
+  "milestone": "M2",
+  "title": "Telemetry on devices: the reservoir by address, deterministic integer histograms (`K-x-hist`, `telemetry.histogram`), the cost of T0 to T2",
+  "deps": [
+   "BD-180",
+   "BD-203"
+  ],
+  "done_when": "GATE-CHRON-07; GATE-CHRON-13",
+  "chapter_refs": {
+   "29": 4
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-208",
+  "milestone": "M2",
+  "title": "The energy ledger on batched tiers (`K-ledger-step`) and the audit for energy created by the simulator (`fidelity.energy`)",
+  "deps": [
+   "BD-092",
+   "BD-159",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "Single-precision rows of GATE-CHRON-03 and GATE-SINEW-02; GATE-CHRON-08; GATE-FID-06",
+  "chapter_refs": {
+   "29": 4,
+   "15": 2,
+   "16": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-209",
+  "milestone": "M2",
+  "title": "Retention and collection with tombstones (`store.status`, `store.collect`)",
+  "deps": [
+   "BD-095"
+  ],
+  "done_when": "GATE-CHRON-12",
+  "chapter_refs": {
+   "29": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-210",
+  "milestone": "M2",
+  "title": "The crash-consistent job protocol on devices: chunk publish, leases, cancel, restart; `job.list`, `job.status`, `job.wait`, `job.find`, `job.cancel`",
+  "deps": [
+   "BD-091",
+   "BD-096",
+   "BD-172",
+   "BD-174"
+  ],
+  "done_when": "Device rows of GATE-CHRON-04 and GATE-CHRON-11; GATE-TETHER-08",
+  "chapter_refs": {
+   "29": 4,
+   "32": 2
+  },
+  "owner_chapter": 29,
+  "slice": "S19-chronicle",
+  "chapter": 29,
+  "best_sub": "29.1",
+  "unit": "U29a"
+ },
+ {
+  "bd": "BD-211",
+  "milestone": "M2",
+  "title": "Atomic idempotency binding, pagination pinned to a committed frontier, integers above 2⁵³ as strings",
+  "deps": [
+   "BD-059",
+   "BD-210"
+  ],
+  "done_when": "GATE-TETHER-05; GATE-TETHER-06; GATE-TETHER-07",
+  "chapter_refs": {
+   "32": 6
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-212",
+  "milestone": "M2",
+  "title": "The standard battery, frozen; the fidelity ledger with its frozen envelopes (`fidelity.ledger`)",
+  "deps": [
+   "BD-123",
+   "BD-168",
+   "BD-202",
+   "BD-208"
+  ],
+  "done_when": "GATE-FID-01, with the one permitted re-baseline written down; GATE-KIN-07; GATE-ARENA-04 on the batch tiers; KILL-CONTACT decided",
+  "chapter_refs": {
+   "16": 4,
+   "24": 2,
+   "18": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.8",
+  "unit": "U16b"
+ },
+ {
+  "bd": "BD-213",
+  "milestone": "M2",
+  "title": "The referee's own coverage report per robot class (`fidelity.coverage`)",
+  "deps": [
+   "BD-161",
+   "BD-212"
+  ],
+  "done_when": "GATE-FID-03",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.4",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-214",
+  "milestone": "M2",
+  "title": "The sampled background referee (`fidelity.shadow`): address-hashed sampling, snapshots, one-step defects, the coverage figure on every receipt",
+  "deps": [
+   "BD-161",
+   "BD-203",
+   "BD-212"
+  ],
+  "done_when": "GATE-FID-07 at the M2 exit: the share of device world-seconds shadowed is reported with a throughput loss of at most 5% (row 17 of §36.3); a run with no sampler prints a share of zero",
+  "chapter_refs": {
+   "16": 2,
+   "36": 1
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.11",
+  "unit": "U16b"
+ },
+ {
+  "bd": "BD-215",
+  "milestone": "M2",
+  "title": "The noninterference test, and the causal-policy test on every tier",
+  "deps": [
+   "BD-119",
+   "BD-191",
+   "BD-203",
+   "BD-207"
+  ],
+  "done_when": "GATE-SENS-03; GATE-SENS-12",
+  "chapter_refs": {
+   "20": 4
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.23",
+  "unit": "U20b"
+ },
+ {
+  "bd": "BD-216",
+  "milestone": "M2",
+  "title": "The performance harness: unit ordering, the paired lower bound, the disclosure block",
+  "deps": [
+   "BD-025",
+   "BD-029"
+  ],
+  "done_when": "GATE-SPARK-19",
+  "chapter_refs": {
+   "36": 2
+  },
+  "owner_chapter": 36,
+  "slice": "S11-numerics-perf",
+  "chapter": 36,
+  "best_sub": "36.2",
+  "unit": "U36"
+ },
+ {
+  "bd": "BD-217",
+  "milestone": "M2",
+  "title": "Profile, optimize one lever at a time, measure, disclose: the throughput parity rows",
+  "deps": [
+   "BD-142",
+   "BD-160",
+   "BD-183",
+   "BD-198",
+   "BD-216"
+  ],
+  "done_when": "GATE-SPARK-03 and GATE-SPARK-04 recorded as measured, pass or fail; KILL-PARITY and KILL-METAL decided",
+  "chapter_refs": {
+   "21": 6,
+   "36": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.4",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-218",
+  "milestone": "M2",
+  "title": "Training-time parity on one RTX 4090",
+  "deps": [
+   "BD-217"
+  ],
+  "done_when": "GATE-CORTEX-05",
+  "chapter_refs": {
+   "23": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.27",
+  "unit": "U23b"
+ },
+ {
+  "bd": "BD-219",
+  "milestone": "M2",
+  "title": "The `sim.estimate` cost and memory model",
+  "deps": [
+   "BD-217"
+  ],
+  "done_when": "GATE-SPARK-22",
+  "chapter_refs": {
+   "36": 2
+  },
+  "owner_chapter": 36,
+  "slice": "S11-numerics-perf",
+  "chapter": 36,
+  "best_sub": "36.10",
+  "unit": "U36"
+ },
+ {
+  "bd": "BD-220",
+  "milestone": "M2",
+  "title": "Memoized episodes under class D2 on one fingerprint; INT-FSQL-02",
+  "deps": [
+   "BD-111",
+   "BD-203"
+  ],
+  "done_when": "Episode part of GATE-ATEL-12; INT-FSQL-02; an episode recorded on another fingerprint is not served",
+  "chapter_refs": {
+   "33": 4,
+   "28": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.4",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-221",
+  "milestone": "M2",
+  "title": "The derivation toolchain measured against KILL-KIR; INT-FJAX-01 only if the profile asks for rewrite rules",
+  "deps": [
+   "BD-150",
+   "BD-156",
+   "BD-217"
+  ],
+  "done_when": "The share of kernel arithmetic the toolchain expresses and emits, and the emitted kernels' speed against BET-01's bound, are recorded; KILL-KIR decided",
+  "chapter_refs": {
+   "21": 4,
+   "33": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.6",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-222",
+  "milestone": "M2",
+  "title": "The M2 verbs with schemas, examples and refusal lists",
+  "deps": [
+   "BD-137",
+   "BD-173",
+   "BD-178",
+   "BD-186",
+   "BD-188",
+   "BD-191",
+   "BD-198",
+   "BD-204",
+   "BD-205",
+   "BD-206",
+   "BD-209",
+   "BD-211",
+   "BD-213",
+   "BD-214",
+   "BD-219"
+  ],
+  "done_when": "GATE-TETHER-02 for the M2 verbs",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-223",
+  "milestone": "M2",
+  "title": "`frob-conformance` for M2: the `standard` battery wiring, metamorphic relations, chaos tests on devices",
+  "deps": [
+   "BD-146",
+   "BD-175",
+   "BD-179",
+   "BD-212",
+   "BD-215"
+  ],
+  "done_when": "GATE-GAUNT-01 for M2",
+  "chapter_refs": {},
+  "owner_chapter": 15,
+  "mapped_by": "keyword",
+  "slice": "S04-sinew",
+  "chapter": 38,
+  "best_sub": "38.11",
+  "unit": "U38b"
+ },
+ {
+  "bd": "BD-224",
+  "milestone": "M2",
+  "title": "M2 exit review by a fresh-context session that did not implement the work; kill decisions as ADRs",
+  "deps": [
+   "BD-147",
+   "BD-177",
+   "BD-182",
+   "BD-190",
+   "BD-199",
+   "BD-218",
+   "BD-220",
+   "BD-221",
+   "BD-222",
+   "BD-223"
+  ],
+  "done_when": "Every gate of M2 has a recorded value and a caught negative control; the kill decisions for the kernel toolchain, contact, Metal and mixed batches are recorded as ADRs",
+  "chapter_refs": {},
+  "owner_chapter": 18,
+  "mapped_by": "keyword",
+  "slice": "S07-traction",
+  "chapter": 43,
+  "unit": "U40",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-225",
+  "milestone": "M3",
+  "title": "The interior grammar mechanism and the structural proxies of the warehouse and the commercial kitchen, with doors, ramps, thresholds, stairs, glass and mirror regions",
+  "deps": [
+   "BD-165"
+  ],
+  "done_when": "1,000 seeds per archetype satisfy every dimensional constraint of the grammar; the same seed gives the same `SceneId` on Linux and macOS",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.11",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-226",
+  "milestone": "M3",
+  "title": "Structural proxies of the home, apartment, office, manufacturing plant and retail store",
+  "deps": [
+   "BD-225"
+  ],
+  "done_when": "1,000 seeds per archetype satisfy every constraint; repeated modules land on the coarse lattice and their bricks are stored once",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.11",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-227",
+  "milestone": "M3",
+  "title": "Hazard lists: `registries/hazards/<archetype>.toml` with dimension ranges, mechanisms, provoked failures and provenance (`scene.hazards`)",
+  "deps": [
+   "BD-226"
+  ],
+  "done_when": "A pack counts the `assumed` dimensions it used; a report that claims a scene is representative while that count is non-zero is refused (FROB-REF-312)",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.3",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-228",
+  "milestone": "M3",
+  "title": "Scene acceptance (`scene.accept`)",
+  "deps": [
+   "BD-225"
+  ],
+  "done_when": "GATE-HAB-04",
+  "chapter_refs": {
+   "19": 2
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.5",
+  "unit": "U19a"
+ },
+ {
+  "bd": "BD-229",
+  "milestone": "M3",
+  "title": "Optical and friction properties as separate maps; fixtures and movable objects",
+  "deps": [
+   "BD-225"
+  ],
+  "done_when": "GATE-HAB-05",
+  "chapter_refs": {
+   "19": 2
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.3",
+  "unit": "U19a"
+ },
+ {
+  "bd": "BD-230",
+  "milestone": "M3",
+  "title": "The film-friction law: Habitat's thickness state and Traction's cone row (`K-film`)",
+  "deps": [
+   "BD-154",
+   "BD-167",
+   "BD-229"
+  ],
+  "done_when": "GATE-HAB-06; GATE-TRAC-05; KILL-FILM decided",
+  "chapter_refs": {
+   "19": 2,
+   "18": 4
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.8",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-231",
+  "milestone": "M3",
+  "title": "Rigid proxies: a rug as a free slab, a cord as a fixed ridge or a free rod, clutter as rigid bodies",
+  "deps": [
+   "BD-225"
+  ],
+  "done_when": "The free-slab rug slides in the castor case, where a fixed step would not",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-232",
+  "milestone": "M3",
+  "title": "The mesh path with enclosures and a bounding-volume hierarchy; thin-feature detection",
+  "deps": [
+   "BD-166"
+  ],
+  "done_when": "A feature thinner than the brick bound is routed to thin primitives or refused (FROB-REF-320); KILL-MESHGPU decided",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.3",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-233",
+  "milestone": "M3",
+  "title": "Clearance complexes `.fclear`: two-sided cells, path witnesses and component cuts; enclosure tests (`contact.clearance`); A-18",
+  "deps": [
+   "BD-053",
+   "BD-132",
+   "BD-163",
+   "BD-232"
+  ],
+  "done_when": "GATE-HAB-10; GATE-TRAC-07; KILL-FCLEAR decided",
+  "chapter_refs": {
+   "19": 4,
+   "18": 2
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.11",
+  "unit": "U19b"
+ },
+ {
+  "bd": "BD-234",
+  "milestone": "M3",
+  "title": "Feasibility tags for generated scenes, from the clearance complex",
+  "deps": [
+   "BD-226",
+   "BD-233"
+  ],
+  "done_when": "GATE-HAB-02",
+  "chapter_refs": {
+   "19": 2
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.5",
+  "unit": "U19a"
+ },
+ {
+  "bd": "BD-235",
+  "milestone": "M3",
+  "title": "Train and test hygiene: `scene.split`, building-level holdouts, mirrored layouts and edited variants",
+  "deps": [
+   "BD-226"
+  ],
+  "done_when": "GATE-HAB-14; GATE-ARENA-02",
+  "chapter_refs": {
+   "19": 2,
+   "24": 2
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.14",
+  "unit": "U19c"
+ },
+ {
+  "bd": "BD-236",
+  "milestone": "M3",
+  "title": "The world bank (`scene.bank`): resident scenes under the admission cap, a change of scene at reset",
+  "deps": [
+   "BD-164",
+   "BD-183",
+   "BD-226"
+  ],
+  "done_when": "GATE-HAB-12; KILL-BANK-BREADTH decided",
+  "chapter_refs": {
+   "19": 4
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.15",
+  "unit": "U19c"
+ },
+ {
+  "bd": "BD-237",
+  "milestone": "M3",
+  "title": "Optical failure modes: mirror, glass, steam, pattern dropout, with a reason on every masked sample",
+  "deps": [
+   "BD-187",
+   "BD-229"
+  ],
+  "done_when": "GATE-SENS-07",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.8",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-238",
+  "milestone": "M3",
+  "title": "Sensor cards with failure modes and per-field provenance",
+  "deps": [
+   "BD-237"
+  ],
+  "done_when": "GATE-SENS-14",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.8",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-239",
+  "milestone": "M3",
+  "title": "The empirical observability Gramian on batched tiers",
+  "deps": [
+   "BD-120",
+   "BD-187"
+  ],
+  "done_when": "GATE-SENS-08",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.11",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-240",
+  "milestone": "M3",
+  "title": "The alias-witness search over admitted world families (`sense.alias`)",
+  "deps": [
+   "BD-134",
+   "BD-225"
+  ],
+  "done_when": "GATE-SENS-09; KILL-ALIAS decided",
+  "chapter_refs": {
+   "20": 4
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.12",
+  "unit": "U20a"
+ },
+ {
+  "bd": "BD-241",
+  "milestone": "M3",
+  "title": "Γ_obs per robot and task, with the equivariance test (`sense.symmetry`)",
+  "deps": [
+   "BD-102",
+   "BD-187"
+  ],
+  "done_when": "GATE-SENS-10",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.13",
+  "unit": "U20b"
+ },
+ {
+  "bd": "BD-242",
+  "milestone": "M3",
+  "title": "Sensor calibration as a least-squares pose graph (`sense.calibrate`)",
+  "deps": [
+   "BD-187"
+  ],
+  "done_when": "GATE-SENS-11",
+  "chapter_refs": {
+   "20": 2
+  },
+  "owner_chapter": 20,
+  "slice": "S09-sensorium",
+  "chapter": 20,
+  "best_sub": "20.14",
+  "unit": "U20b"
+ },
+ {
+  "bd": "BD-243",
+  "milestone": "M3",
+  "title": "A-09 connection curvature, A-14 sensor coverage, A-16 sensitivity; INT-FSIM-10",
+  "deps": [
+   "BD-007",
+   "BD-106",
+   "BD-187"
+  ],
+  "done_when": "The connection curvature on the snake crawler has the sign fixed in §13.8, and a planted sign flip of the bracket term is caught; INT-FSIM-10",
+  "chapter_refs": {
+   "33": 4,
+   "13": 1
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.10",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-244",
+  "milestone": "M3",
+  "title": "Preflight stages 7 (place) and 8 (information)",
+  "deps": [
+   "BD-110",
+   "BD-233",
+   "BD-240",
+   "BD-243"
+  ],
+  "done_when": "GATE-SKEL-04 for stages 7 and 8; KILL-SKEL-ALIAS decided",
+  "chapter_refs": {
+   "14": 4
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.11",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-245",
+  "milestone": "M3",
+  "title": "Contact laws for the remaining archetypes on all tiers: `belt`, `skid`, `pad`, `roller-wheel`, `wheel-rolling`",
+  "deps": [
+   "BD-167"
+  ],
+  "done_when": "Skid turning in place costs the scrub work of the belt-law known answer; a no-slip model of the same base is caught",
+  "chapter_refs": {},
+  "owner_chapter": 14,
+  "mapped_by": "keyword",
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.4",
+  "unit": "U14a"
+ },
+ {
+  "bd": "BD-246",
+  "milestone": "M3",
+  "title": "The remaining fourteen archetypes",
+  "deps": [
+   "BD-060",
+   "BD-102",
+   "BD-109",
+   "BD-245"
+  ],
+  "done_when": "Each compiles and passes stages 1 to 6 with no refusal; GATE-SKEL-07; GATE-MARROW-03",
+  "chapter_refs": {
+   "14": 2,
+   "13": 2
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.10",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-247",
+  "milestone": "M3",
+  "title": "Baseline controllers for every archetype: multi-legged, biped balance, steered, omnidirectional, tracked, hybrid, arm on a base",
+  "deps": [
+   "BD-118",
+   "BD-159",
+   "BD-246"
+  ],
+  "done_when": "GATE-SKEL-03; GATE-REFLEX-01 on `referee` and `batch-cpu`",
+  "chapter_refs": {
+   "14": 2,
+   "22": 2
+  },
+  "owner_chapter": 14,
+  "slice": "S03-skeleton",
+  "chapter": 14,
+  "best_sub": "14.10",
+  "unit": "U14b"
+ },
+ {
+  "bd": "BD-248",
+  "milestone": "M3",
+  "title": "The design corpus: about 200 designs with frozen labels, planted defects, planted winners and planted single causes",
+  "deps": [
+   "BD-246"
+  ],
+  "done_when": "The hash of the label file is committed before any analysis is tuned; a relabel changes the corpus identity",
+  "chapter_refs": {},
+  "owner_chapter": 28,
+  "mapped_by": "keyword",
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.12",
+  "unit": "U28b"
+ },
+ {
+  "bd": "BD-249",
+  "milestone": "M3",
+  "title": "Validation of baseline synthesis on the corpus",
+  "deps": [
+   "BD-110",
+   "BD-247",
+   "BD-248"
+  ],
+  "done_when": "GATE-REFLEX-02; KILL-BASELINE decided",
+  "chapter_refs": {
+   "22": 4
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.7",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-250",
+  "milestone": "M3",
+  "title": "Validation of static analysis on the corpus",
+  "deps": [
+   "BD-110",
+   "BD-124",
+   "BD-248"
+  ],
+  "done_when": "GATE-ATEL-01; KILL-STATIC decided",
+  "chapter_refs": {
+   "28": 4
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-251",
+  "milestone": "M3",
+  "title": "Control programs with layer records, infeasibility certificates and fallback events",
+  "deps": [
+   "BD-115",
+   "BD-132",
+   "BD-247"
+  ],
+  "done_when": "GATE-REFLEX-05",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.7",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-252",
+  "milestone": "M3",
+  "title": "The sampling-based predictive controller as a fallback (`control.mpc`; `K-fork`, `K-cost`, `K-weight`)",
+  "deps": [
+   "BD-205",
+   "BD-247"
+  ],
+  "done_when": "The controlled world's digest does not change with the fork count; FROB-REF-817 fires on a planted acceptance request",
+  "chapter_refs": {},
+  "owner_chapter": 22,
+  "mapped_by": "keyword",
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.8",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-253",
+  "milestone": "M3",
+  "title": "Task families of M3: interior navigation, payload transport, low-friction crossing, tight-space maneuvering",
+  "deps": [
+   "BD-201",
+   "BD-230",
+   "BD-231",
+   "BD-234",
+   "BD-247"
+  ],
+  "done_when": "GATE-ARENA-01 for these families, with reference-robot scorecards on the warehouse and kitchen proxies",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.3",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-254",
+  "milestone": "M3",
+  "title": "Metrics, scorecard accounting and the batteries `standard`, `full`, `hard`, `covering`",
+  "deps": [
+   "BD-253"
+  ],
+  "done_when": "GATE-ARENA-07",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.9",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-255",
+  "milestone": "M3",
+  "title": "Requirement verdicts on batched tiers: streaming past-time monitors, `task.verdict`, `task.settle`, `frob.verdict/1`",
+  "deps": [
+   "BD-194",
+   "BD-253"
+  ],
+  "done_when": "GATE-CORTEX-10",
+  "chapter_refs": {
+   "23": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.5",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-256",
+  "milestone": "M3",
+  "title": "The requirement-writing test with a fresh agent",
+  "deps": [
+   "BD-138",
+   "BD-255"
+  ],
+  "done_when": "GATE-ARENA-09",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.1",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-257",
+  "milestone": "M3",
+  "title": "The requirement reward-term pilot under three arms",
+  "deps": [
+   "BD-198",
+   "BD-255"
+  ],
+  "done_when": "KILL-SPEC-REWARD decided from five seeds per arm",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.5",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-258",
+  "milestone": "M3",
+  "title": "Capabilities, namespaces and many agents: scopes, session budgets, the path jail",
+  "deps": [
+   "BD-210",
+   "BD-211"
+  ],
+  "done_when": "GATE-SAFE-10; a session without the scope receives the refusal and no partial data",
+  "chapter_refs": {
+   "37": 2
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 37,
+  "best_sub": "37.4",
+  "unit": "U37"
+ },
+ {
+  "bd": "BD-259",
+  "milestone": "M3",
+  "title": "The blinded qualification lane: sealed world clusters, pre-committed requests, receipts, the error budget α_i = α / [i·(i+1)] (`eval.qualify`, `eval.ledger`)",
+  "deps": [
+   "BD-124",
+   "BD-235",
+   "BD-255"
+  ],
+  "done_when": "A planted true gain of the declared size is promoted within 10 requests in at least 80% of campaigns; the same adversary against reused clusters at a constant level is caught",
+  "chapter_refs": {},
+  "owner_chapter": 24,
+  "mapped_by": "keyword",
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.13",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-260",
+  "milestone": "M3",
+  "title": "The 500-retry gate on no-signal worlds",
+  "deps": [
+   "BD-259"
+  ],
+  "done_when": "GATE-QUAL-01",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": null,
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-261",
+  "milestone": "M3",
+  "title": "The confirmation firewall: capability scopes `qual:admin` and `qual:run`, the sealed-field audit",
+  "deps": [
+   "BD-258",
+   "BD-259"
+  ],
+  "done_when": "GATE-QUAL-02; GATE-SAFE-03",
+  "chapter_refs": {
+   "24": 2,
+   "37": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.13",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-262",
+  "milestone": "M3",
+  "title": "Anytime-valid paired comparison on devices (`eval.compare`, `study.compare`, `explain.compare`)",
+  "deps": [
+   "BD-124",
+   "BD-181",
+   "BD-192"
+  ],
+  "done_when": "Type-I error at or below α under optional stopping over 10⁴ null comparisons (row of GATE-ATEL-04); a D4 arm in a paired comparison is refused",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-263",
+  "milestone": "M3",
+  "title": "The trust ladder and the promotion rule with the DC-01 table (`eval.promote`)",
+  "deps": [
+   "BD-212",
+   "BD-262"
+  ],
+  "done_when": "GATE-FID-02: a planted tier-sensitive policy is caught (NS-09)",
+  "chapter_refs": {
+   "16": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.8",
+  "unit": "U16b"
+ },
+ {
+  "bd": "BD-264",
+  "milestone": "M3",
+  "title": "The tier-correction ledger: control variate and doubly robust correction",
+  "deps": [
+   "BD-263"
+  ],
+  "done_when": "GATE-CHRON-09; GATE-FID-08; KILL-DR decided",
+  "chapter_refs": {
+   "29": 2,
+   "16": 4
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.8",
+  "unit": "U16b"
+ },
+ {
+  "bd": "BD-265",
+  "milestone": "M3",
+  "title": "Rank agreement between tiers on the 40-design set (`eval.rank-agreement` on a tier pair)",
+  "deps": [
+   "BD-248",
+   "BD-263"
+  ],
+  "done_when": "GATE-FID-04; KILL-RANK decided for tier pairs",
+  "chapter_refs": {
+   "16": 4
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.9",
+  "unit": "U16b"
+ },
+ {
+  "bd": "BD-266",
+  "milestone": "M3",
+  "title": "The model-form rank check (`fidelity.modelform`)",
+  "deps": [
+   "BD-208",
+   "BD-263"
+  ],
+  "done_when": "GATE-FID-05; GATE-CORTEX-15",
+  "chapter_refs": {
+   "16": 2,
+   "23": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.13",
+  "unit": "U16b"
+ },
+ {
+  "bd": "BD-267",
+  "milestone": "M3",
+  "title": "Exploitation detectors (`eval.detect`)",
+  "deps": [
+   "BD-208",
+   "BD-263"
+  ],
+  "done_when": "GATE-CORTEX-04",
+  "chapter_refs": {
+   "23": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.16",
+  "unit": "U23b"
+ },
+ {
+  "bd": "BD-268",
+  "milestone": "M3",
+  "title": "The background referee at its gate",
+  "deps": [
+   "BD-214",
+   "BD-264"
+  ],
+  "done_when": "GATE-FID-07 repeated with the tier-correction ledger; KILL-SHADOW decided",
+  "chapter_refs": {
+   "16": 4
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.11",
+  "unit": "U16b"
+ },
+ {
+  "bd": "BD-269",
+  "milestone": "M3",
+  "title": "Determinism-class licences and the labeled D4 training profile",
+  "deps": [
+   "BD-177",
+   "BD-198",
+   "BD-262"
+  ],
+  "done_when": "GATE-SPARK-17; GATE-SAFE-09",
+  "chapter_refs": {
+   "35": 2,
+   "37": 2
+  },
+  "owner_chapter": 35,
+  "slice": "S11-numerics-perf",
+  "chapter": 35,
+  "best_sub": "35.1",
+  "unit": "U35"
+ },
+ {
+  "bd": "BD-270",
+  "milestone": "M3",
+  "title": "The Nemesis search space and the legality set (`frob.legality/1`), with the hazard registries as the scene-edit vocabulary",
+  "deps": [
+   "BD-227"
+  ],
+  "done_when": "100 of 100 planted illegal edits are refused (row of GATE-NEMESIS-01)",
+  "chapter_refs": {
+   "26": 2
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.3",
+  "unit": "U26a"
+ },
+ {
+  "bd": "BD-271",
+  "milestone": "M3",
+  "title": "The solvability oracle (`nemesis.oracle`)",
+  "deps": [
+   "BD-233",
+   "BD-252",
+   "BD-270"
+  ],
+  "done_when": "GATE-NEMESIS-01",
+  "chapter_refs": {
+   "26": 2
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.12",
+  "unit": "U26b"
+ },
+ {
+  "bd": "BD-272",
+  "milestone": "M3",
+  "title": "The artifact guard",
+  "deps": [
+   "BD-263",
+   "BD-270"
+  ],
+  "done_when": "GATE-NEMESIS-06",
+  "chapter_refs": {
+   "26": 2
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.1",
+  "unit": "U26a"
+ },
+ {
+  "bd": "BD-273",
+  "milestone": "M3",
+  "title": "The falsification score and the search (`nemesis.search`)",
+  "deps": [
+   "BD-255",
+   "BD-271",
+   "BD-272"
+  ],
+  "done_when": "GATE-NEMESIS-02; KILL-NEMESIS decided",
+  "chapter_refs": {
+   "26": 4
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.4",
+  "unit": "U26a"
+ },
+ {
+  "bd": "BD-274",
+  "milestone": "M3",
+  "title": "Shrinking to a minimal counterexample world `.fmcw` (`nemesis.shrink`)",
+  "deps": [
+   "BD-273"
+  ],
+  "done_when": "GATE-NEMESIS-03; KILL-MCW decided",
+  "chapter_refs": {
+   "26": 4
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.12",
+  "unit": "U26b"
+ },
+ {
+  "bd": "BD-275",
+  "milestone": "M3",
+  "title": "The hard-world set (`nemesis.hardset`, `frob.hardset/1`)",
+  "deps": [
+   "BD-254",
+   "BD-274"
+  ],
+  "done_when": "A hard world offered as a confirmation sample is refused; adopting one into a regression battery changes the battery's identity",
+  "chapter_refs": {},
+  "owner_chapter": 15,
+  "mapped_by": "keyword",
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.5",
+  "unit": "U15a"
+ },
+ {
+  "bd": "BD-276",
+  "milestone": "M3",
+  "title": "Rare failures, certification lane: bounded-weight estimation with the defensive mixture (`nemesis.bound`)",
+  "deps": [
+   "BD-273"
+  ],
+  "done_when": "GATE-NEMESIS-04",
+  "chapter_refs": {
+   "26": 2
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.9",
+  "unit": "U26a"
+ },
+ {
+  "bd": "BD-277",
+  "milestone": "M3",
+  "title": "Rare failures, exploration lane: splitting",
+  "deps": [
+   "BD-276"
+  ],
+  "done_when": "GATE-NEMESIS-05; KILL-RARE decided",
+  "chapter_refs": {
+   "26": 4
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.1",
+  "unit": "U26a"
+ },
+ {
+  "bd": "BD-278",
+  "milestone": "M3",
+  "title": "Scene-set coverage by submodular selection (`nemesis.cover`)",
+  "deps": [
+   "BD-226",
+   "BD-254"
+  ],
+  "done_when": "GATE-NEMESIS-08",
+  "chapter_refs": {
+   "26": 2
+  },
+  "owner_chapter": 26,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 26,
+  "best_sub": "26.12",
+  "unit": "U26b"
+ },
+ {
+  "bd": "BD-279",
+  "milestone": "M3",
+  "title": "Interventions and the placebo fork (`autopsy.intervene`)",
+  "deps": [
+   "BD-205"
+  ],
+  "done_when": "A placebo fork equals replay on 1,000 worlds; a mid-episode gear change is refused with the right fields",
+  "chapter_refs": {},
+  "owner_chapter": 27,
+  "mapped_by": "keyword",
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.14",
+  "unit": "U27b"
+ },
+ {
+  "bd": "BD-280",
+  "milestone": "M3",
+  "title": "Interventional contrasts with flip rates, in double precision (`autopsy.attribute`)",
+  "deps": [
+   "BD-248",
+   "BD-279"
+  ],
+  "done_when": "GATE-AUTOPSY-03; KILL-AUTOPSY decided",
+  "chapter_refs": {
+   "27": 4
+  },
+  "owner_chapter": 27,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.19",
+  "unit": "U27b"
+ },
+ {
+  "bd": "BD-281",
+  "milestone": "M3",
+  "title": "Coalitions and budgeted Shapley summaries",
+  "deps": [
+   "BD-280"
+  ],
+  "done_when": "GATE-AUTOPSY-04",
+  "chapter_refs": {
+   "27": 2
+  },
+  "owner_chapter": 27,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.1",
+  "unit": "U27a"
+ },
+ {
+  "bd": "BD-282",
+  "milestone": "M3",
+  "title": "The decision model for attribution, with abstention (DC-06)",
+  "deps": [
+   "BD-280"
+  ],
+  "done_when": "GATE-AUTOPSY-05",
+  "chapter_refs": {
+   "27": 2
+  },
+  "owner_chapter": 27,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.9",
+  "unit": "U27a"
+ },
+ {
+  "bd": "BD-283",
+  "milestone": "M3",
+  "title": "Design parameters re-run from the episode start (`autopsy.rerun`)",
+  "deps": [
+   "BD-072",
+   "BD-279"
+  ],
+  "done_when": "GATE-AUTOPSY-06",
+  "chapter_refs": {
+   "27": 2
+  },
+  "owner_chapter": 27,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.8",
+  "unit": "U27a"
+ },
+ {
+  "bd": "BD-284",
+  "milestone": "M3",
+  "title": "Time-travel debugging as an agent workflow (`autopsy.repair`, `autopsy.show`)",
+  "deps": [
+   "BD-206",
+   "BD-281",
+   "BD-282",
+   "BD-283"
+  ],
+  "done_when": "A recorded transcript replays to the same repair; citing an attribution as established is refused (FROB-REF-880)",
+  "chapter_refs": {},
+  "owner_chapter": 27,
+  "mapped_by": "keyword",
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.14",
+  "unit": "U27b"
+ },
+ {
+  "bd": "BD-285",
+  "milestone": "M3",
+  "title": "Campaign quotienting: the similarity canonical form, orbit representatives, the mission-observable digest (`phylum.quotient`)",
+  "deps": [
+   "BD-049",
+   "BD-170",
+   "BD-241"
+  ],
+  "done_when": "GATE-PHYLUM-01; KILL-QUOTIENT decided",
+  "chapter_refs": {
+   "17": 4
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.11",
+  "unit": "U17a"
+ },
+ {
+  "bd": "BD-286",
+  "milestone": "M3",
+  "title": "The invalidation contract for reuse across designs (`phylum.reuse`)",
+  "deps": [
+   "BD-220",
+   "BD-285"
+  ],
+  "done_when": "GATE-PHYLUM-05",
+  "chapter_refs": {
+   "17": 2
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.15",
+  "unit": "U17b"
+ },
+ {
+  "bd": "BD-287",
+  "milestone": "M3",
+  "title": "The morphology generator with `GeneratorId` and `DesignSplit` (`phylum.generate`)",
+  "deps": [
+   "BD-246",
+   "BD-285"
+  ],
+  "done_when": "GATE-PHYLUM-07",
+  "chapter_refs": {
+   "17": 2
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.10",
+  "unit": "U17a"
+ },
+ {
+  "bd": "BD-288",
+  "milestone": "M3",
+  "title": "Monotone transport of verdicts, with its falsification harness",
+  "deps": [
+   "BD-135"
+  ],
+  "done_when": "GATE-AUGUR-08",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.4",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-289",
+  "milestone": "M3",
+  "title": "The region-certificate pilot of §25.6 on the 12-parameter box",
+  "deps": [
+   "BD-135"
+  ],
+  "done_when": "The undecided share of the best arm and the largest share from one monotone bound are on file; KILL-AUGUR-REGION decided before the work package is funded",
+  "chapter_refs": {
+   "25": 3
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.6",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-290",
+  "milestone": "M3",
+  "title": "Alias and jaw fixtures; `mission.refute` on the blind payload task",
+  "deps": [
+   "BD-135",
+   "BD-240"
+  ],
+  "done_when": "GATE-AUGUR-10; KILL-AUGUR-ALIAS decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.10",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-291",
+  "milestone": "M3",
+  "title": "Probe and instrument design (`mission.distinguish`, `scene.probe-request`)",
+  "deps": [
+   "BD-135"
+  ],
+  "done_when": "The pilot of GATE-AUGUR-11; KILL-AUGUR-PROBE decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.14",
+  "unit": "U25c"
+ },
+ {
+  "bd": "BD-292",
+  "milestone": "M3",
+  "title": "The revalidation engine behind `result.revalidate` and `mission.revalidate`: dependency grades 1 and 2, polarity",
+  "deps": [
+   "BD-135",
+   "BD-220",
+   "BD-288"
+  ],
+  "done_when": "GATE-AUGUR-12; dependency-grade rows of GATE-ATEL-11; KILL-AUGUR-REUSE decided",
+  "chapter_refs": {
+   "25": 4,
+   "28": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-293",
+  "milestone": "M3",
+  "title": "Separation of two designs by a minimized world pair (`mission.separate`)",
+  "deps": [
+   "BD-135",
+   "BD-202",
+   "BD-274"
+  ],
+  "done_when": "GATE-AUGUR-13; KILL-AUGUR-SEPARATE decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.9",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-294",
+  "milestone": "M3",
+  "title": "Checker independence repeated over every proof kind in use at M3",
+  "deps": [
+   "BD-136",
+   "BD-233",
+   "BD-251",
+   "BD-290"
+  ],
+  "done_when": "GATE-AUGUR-06 at M3",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.37",
+  "unit": "U25e"
+ },
+ {
+  "bd": "BD-295",
+  "milestone": "M3",
+  "title": "The daemon: persistent environments with slot-level episode dispatch",
+  "deps": [
+   "BD-181",
+   "BD-183",
+   "BD-210"
+  ],
+  "done_when": "GATE-TETHER-09; KILL-SLOT decided",
+  "chapter_refs": {
+   "32": 2,
+   "21": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.11",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-296",
+  "milestone": "M3",
+  "title": "Size classes, shortest estimated work and preempt-resume, with the DC-09 table",
+  "deps": [
+   "BD-219",
+   "BD-295"
+  ],
+  "done_when": "GATE-TETHER-10; KILL-PREEMPT decided",
+  "chapter_refs": {
+   "32": 4
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.11",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-297",
+  "milestone": "M3",
+  "title": "Estimates and budgets: calibrated intervals per stratum",
+  "deps": [
+   "BD-296"
+  ],
+  "done_when": "GATE-TETHER-11",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.9",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-298",
+  "milestone": "M3",
+  "title": "The full MCP surface: seventeen task clusters, the bounded synchronous wait, progress and cancellation, resources, prompts",
+  "deps": [
+   "BD-138",
+   "BD-258",
+   "BD-295"
+  ],
+  "done_when": "GATE-TETHER-12; KILL-MCPTASKS decided",
+  "chapter_refs": {
+   "32": 4
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-299",
+  "milestone": "M3",
+  "title": "The three failure classes on both surfaces",
+  "deps": [
+   "BD-298"
+  ],
+  "done_when": "GATE-TETHER-04",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.5",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-300",
+  "milestone": "M3",
+  "title": "The dashboard `frob-tui` (INT-FTUI-01) and the viewer overlays (INT-F3D-01)",
+  "deps": [
+   "BD-191",
+   "BD-295"
+  ],
+  "done_when": "GATE-TETHER-14; INT-FTUI-01; INT-F3D-01; KILL-TUI decided",
+  "chapter_refs": {
+   "33": 8,
+   "32": 4
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.4",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-301",
+  "milestone": "M3",
+  "title": "The Gymnasium-compatible adapter `bindings/frob-gymnasium`",
+  "deps": [
+   "BD-192",
+   "BD-198"
+  ],
+  "done_when": "GATE-CORTEX-16; KILL-GYMADAPT decided",
+  "chapter_refs": {
+   "23": 4
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.18",
+  "unit": "U23b"
+ },
+ {
+  "bd": "BD-302",
+  "milestone": "M3",
+  "title": "`report.design`, `report.run`, `report.campaign`, `report.mission`",
+  "deps": [
+   "BD-095",
+   "BD-135",
+   "BD-254",
+   "BD-263"
+  ],
+  "done_when": "Every number in a report resolves to its evidence through `evidence.trace`; a `model-conditional` result printed without its condition is refused",
+  "chapter_refs": {},
+  "owner_chapter": 25,
+  "mapped_by": "keyword",
+  "slice": "S15-augur-a",
+  "chapter": 25,
+  "best_sub": "25.30",
+  "unit": "U25e"
+ },
+ {
+  "bd": "BD-303",
+  "milestone": "M3",
+  "title": "The no-authorization flags on every exporting verb",
+  "deps": [
+   "BD-027",
+   "BD-222"
+  ],
+  "done_when": "GATE-SAFE-01",
+  "chapter_refs": {
+   "37": 2
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 37,
+  "best_sub": "37.9",
+  "unit": "U37"
+ },
+ {
+  "bd": "BD-304",
+  "milestone": "M3",
+  "title": "Imported text as data: the `x-frob-untrusted` mark through every verb that echoes imported text",
+  "deps": [
+   "BD-298"
+  ],
+  "done_when": "GATE-SAFE-02",
+  "chapter_refs": {
+   "37": 2
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 37,
+  "best_sub": "37.3",
+  "unit": "U37"
+ },
+ {
+  "bd": "BD-305",
+  "milestone": "M3",
+  "title": "Private places and licences: the private mark, licence joins, `scene.purge`",
+  "deps": [
+   "BD-209",
+   "BD-225"
+  ],
+  "done_when": "GATE-SAFE-04; GATE-SAFE-05",
+  "chapter_refs": {
+   "37": 4
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 37,
+  "best_sub": "37.6",
+  "unit": "U37"
+ },
+ {
+  "bd": "BD-306",
+  "milestone": "M3",
+  "title": "Supply-chain checks: one asupersync package per workspace, committed lockfiles, kernel-cache integrity",
+  "deps": [
+   "BD-008",
+   "BD-173"
+  ],
+  "done_when": "GATE-SAFE-06",
+  "chapter_refs": {
+   "37": 2
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 37,
+  "best_sub": "37.8",
+  "unit": "U37"
+ },
+ {
+  "bd": "BD-307",
+  "milestone": "M3",
+  "title": "Importer fuzz targets and limits",
+  "deps": [
+   "BD-066",
+   "BD-163"
+  ],
+  "done_when": "GATE-SAFE-07",
+  "chapter_refs": {
+   "37": 2
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 37,
+  "best_sub": "37.3",
+  "unit": "U37"
+ },
+ {
+  "bd": "BD-308",
+  "milestone": "M3",
+  "title": "The claim product at the boundary",
+  "deps": [
+   "BD-222"
+  ],
+  "done_when": "GATE-SAFE-08",
+  "chapter_refs": {
+   "37": 2
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 37,
+  "best_sub": "37.10",
+  "unit": "U37"
+ },
+ {
+  "bd": "BD-309",
+  "milestone": "M3",
+  "title": "Decision-core tables DC-01, DC-09 and DC-10 in `registries/cores/` (`cores.show`)",
+  "deps": [
+   "BD-263",
+   "BD-278",
+   "BD-296"
+  ],
+  "done_when": "Rows of GATE-ATEL-13 for these cores: each table regenerates bit-identically and each fallback is demonstrated by forcing its trigger",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.19",
+  "unit": "U28c"
+ },
+ {
+  "bd": "BD-310",
+  "milestone": "M3",
+  "title": "The rank-agreement and ladder pilots on an incumbent engine or on `batch-cpu`",
+  "deps": [
+   "BD-145",
+   "BD-248",
+   "BD-265"
+  ],
+  "done_when": "The pilot record of GATE-CORTEX-12 exists with τ, top-10 recall and intervals per class; pilot rows of GATE-ATEL-07 and GATE-ATEL-08",
+  "chapter_refs": {
+   "23": 2,
+   "28": 4
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-311",
+  "milestone": "M3",
+  "title": "The published-anchor comparison under the Parity label",
+  "deps": [
+   "BD-139",
+   "BD-212"
+  ],
+  "done_when": "A report prints `reality: published-anchor` with its source and issues no band",
+  "chapter_refs": {},
+  "owner_chapter": 30,
+  "mapped_by": "keyword",
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.2",
+  "unit": "U30a"
+ },
+ {
+  "bd": "BD-312",
+  "milestone": "M3",
+  "title": "The M3 verbs with schemas, examples and refusal lists",
+  "deps": [
+   "BD-222",
+   "BD-228",
+   "BD-234",
+   "BD-235",
+   "BD-236",
+   "BD-238",
+   "BD-239",
+   "BD-242",
+   "BD-244",
+   "BD-251",
+   "BD-259",
+   "BD-266",
+   "BD-267",
+   "BD-269",
+   "BD-275",
+   "BD-277",
+   "BD-284",
+   "BD-286",
+   "BD-287",
+   "BD-291",
+   "BD-292",
+   "BD-293",
+   "BD-297",
+   "BD-302"
+  ],
+  "done_when": "GATE-TETHER-02 for the M3 verbs",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-313",
+  "milestone": "M3",
+  "title": "`robot-docs`, the skill file and the two worked sessions; the fresh-agent test",
+  "deps": [
+   "BD-298",
+   "BD-299",
+   "BD-312"
+  ],
+  "done_when": "GATE-TETHER-01",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.6",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-314",
+  "milestone": "M3",
+  "title": "The partial ten-fold gate, protocol: sealed legged and wheeled briefs, strata, the decision rule with its reachable verdicts, the ceilings, the adjudicating evaluator",
+  "deps": [
+   "BD-124",
+   "BD-143",
+   "BD-218",
+   "BD-260"
+  ],
+  "done_when": "GATE-TENFOLD-03, -04, -05, -10, -11: the protocol is committed before either arm runs; a stratum whose computed ceiling is below its claimed ratio is refused",
+  "chapter_refs": {},
+  "owner_chapter": 39,
+  "mapped_by": "keyword",
+  "slice": "S26-tenfold-gates",
+  "chapter": 39,
+  "best_sub": "39.3",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-315",
+  "milestone": "M3",
+  "title": "The partial ten-fold gate, incumbent arm: the strongest composed rival at pinned versions, warm, driven through its own tools and the adapter",
+  "deps": [
+   "BD-039",
+   "BD-301",
+   "BD-314"
+  ],
+  "done_when": "Restricted mean times to an independently accepted answer are recorded per brief with the phase ledger, cold and warm runs separated",
+  "chapter_refs": {},
+  "owner_chapter": 39,
+  "mapped_by": "keyword",
+  "slice": "S26-tenfold-gates",
+  "chapter": 39,
+  "best_sub": "39.2",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-316",
+  "milestone": "M3",
+  "title": "The partial ten-fold gate, our arm: fresh agents on the full MCP surface",
+  "deps": [
+   "BD-249",
+   "BD-261",
+   "BD-273",
+   "BD-280",
+   "BD-294",
+   "BD-302",
+   "BD-313",
+   "BD-314"
+  ],
+  "done_when": "Restricted mean times are recorded per brief with the phase ledger; one false certificate disqualifies the arm (KILL-AUGUR-FALSECERT)",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.1",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-317",
+  "milestone": "M3",
+  "title": "The partial ten-fold gate, adjudication and record",
+  "deps": [
+   "BD-315",
+   "BD-316"
+  ],
+  "done_when": "GATE-TENFOLD-06 and GATE-TENFOLD-13: the ratio and the recovery ratios are recorded whatever they are, under the rule of BET-13; KILL-FAMILYCERT and KILL-AUGUR-TIE decided",
+  "chapter_refs": {
+   "12": 2,
+   "25": 2
+  },
+  "owner_chapter": 12,
+  "slice": "S01-lemma-spine",
+  "chapter": 39,
+  "best_sub": "39.12",
+  "unit": "U39b"
+ },
+ {
+  "bd": "BD-318",
+  "milestone": "M3",
+  "title": "`frob-conformance` for M3: the `hard` and `covering` batteries, the planted-defect registries of Nemesis and Autopsy, the hostile-input corpora of §37",
+  "deps": [
+   "BD-223",
+   "BD-275",
+   "BD-278",
+   "BD-284",
+   "BD-304",
+   "BD-306",
+   "BD-307",
+   "BD-308"
+  ],
+  "done_when": "GATE-GAUNT-01 for M3",
+  "chapter_refs": {
+   "37": 1
+  },
+  "owner_chapter": 37,
+  "slice": "S24-workspace-safety",
+  "chapter": 38,
+  "best_sub": "38.11",
+  "unit": "U38b"
+ },
+ {
+  "bd": "BD-319",
+  "milestone": "M3",
+  "title": "M3 exit review by a fresh-context session that did not implement the work",
+  "deps": [
+   "BD-224",
+   "BD-250",
+   "BD-256",
+   "BD-257",
+   "BD-268",
+   "BD-289",
+   "BD-300",
+   "BD-303",
+   "BD-305",
+   "BD-309",
+   "BD-310",
+   "BD-311",
+   "BD-317",
+   "BD-318"
+  ],
+  "done_when": "Every gate of M3 has a recorded value and a caught negative control; the partial ten-fold gate is recorded, whatever the ratio",
+  "chapter_refs": {},
+  "owner_chapter": 39,
+  "mapped_by": "keyword",
+  "slice": "S26-tenfold-gates",
+  "chapter": 43,
+  "unit": "U40",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-320",
+  "milestone": "M4",
+  "title": "Family policies per morphology class: link tokens, the mapping table (`frob.policy/1`), pretraining on a `GeneratorId` with a `DesignSplit` (`train.family`)",
+  "deps": [
+   "BD-183",
+   "BD-198",
+   "BD-287"
+  ],
+  "done_when": "The pilot of §23.22 has run and its falsifier outcome is on file; a design outside the class is declined, not scored",
+  "chapter_refs": {
+   "23": 1
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.22",
+  "unit": "U23b"
+ },
+ {
+  "bd": "BD-321",
+  "milestone": "M4",
+  "title": "The family-policy experiment on held-out parametric designs, with the fine-tuning rungs",
+  "deps": [
+   "BD-320"
+  ],
+  "done_when": "GATE-CORTEX-11; KILL-FAMILY decided",
+  "chapter_refs": {
+   "23": 4
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.11",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-322",
+  "milestone": "M4",
+  "title": "Inheritance along design edits (`train.inherit`, `policy.apply`)",
+  "deps": [
+   "BD-058",
+   "BD-320"
+  ],
+  "done_when": "GATE-CORTEX-13; KILL-INHERIT decided",
+  "chapter_refs": {
+   "23": 4
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.12",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-323",
+  "milestone": "M4",
+  "title": "Distillation from baseline, specialist and sampling-controller teachers (`train.distill`)",
+  "deps": [
+   "BD-198",
+   "BD-247",
+   "BD-252"
+  ],
+  "done_when": "GATE-CORTEX-14; KILL-DISTILL decided",
+  "chapter_refs": {
+   "23": 4
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.10",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-324",
+  "milestone": "M4",
+  "title": "Pilots of the other learning algorithms of §23.22 against PPO at equal wall-clock",
+  "deps": [
+   "BD-039",
+   "BD-198"
+  ],
+  "done_when": "Each pilot's result is on file; KILL-ALTALGO decided per algorithm, and no algorithm is built without a passed pilot",
+  "chapter_refs": {
+   "23": 3
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.22",
+  "unit": "U23b"
+ },
+ {
+  "bd": "BD-325",
+  "milestone": "M4",
+  "title": "Equivariant linear maps by irreducible blocks under Γ_obs",
+  "deps": [
+   "BD-048",
+   "BD-241"
+  ],
+  "done_when": "GATE-MARROW-04; KILL-MARROW-BLOCKS decided",
+  "chapter_refs": {
+   "13": 4
+  },
+  "owner_chapter": 13,
+  "slice": "S02-marrow",
+  "chapter": 13,
+  "unit": "U13",
+  "best_sub": "13.10"
+ },
+ {
+  "bd": "BD-326",
+  "milestone": "M4",
+  "title": "The three-arm equivariance experiment",
+  "deps": [
+   "BD-198",
+   "BD-325"
+  ],
+  "done_when": "GATE-CORTEX-03; KILL-EQUIV decided",
+  "chapter_refs": {
+   "23": 4
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.13",
+  "unit": "U23a"
+ },
+ {
+  "bd": "BD-327",
+  "milestone": "M4",
+  "title": "Symmetric controllers under stabilizer intersection (`control.symmetry`)",
+  "deps": [
+   "BD-241",
+   "BD-247"
+  ],
+  "done_when": "GATE-REFLEX-07",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.13",
+  "unit": "U22b"
+ },
+ {
+  "bd": "BD-328",
+  "milestone": "M4",
+  "title": "The rank-agreement experiment on our engine, per morphology class and task family (`eval.rank-agreement`; the model-form check is `fidelity.modelform`)",
+  "deps": [
+   "BD-249",
+   "BD-310",
+   "BD-321"
+  ],
+  "done_when": "GATE-CORTEX-12; GATE-ATEL-07; GATE-REFLEX-04; KILL-RANK decided for rungs",
+  "chapter_refs": {
+   "23": 2,
+   "28": 2,
+   "22": 2,
+   "16": 2
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.16",
+  "unit": "U23b"
+ },
+ {
+  "bd": "BD-329",
+  "milestone": "M4",
+  "title": "The ladder of rungs R0 to R5: the fixed halving table and the calibrated layer with DC-02 and DC-03",
+  "deps": [
+   "BD-250",
+   "BD-263",
+   "BD-276",
+   "BD-328"
+  ],
+  "done_when": "GATE-ATEL-08; KILL-LADDER decided",
+  "chapter_refs": {
+   "28": 4
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-330",
+  "milestone": "M4",
+  "title": "An inspectable baseline plus a learned residual (`control.ladder`)",
+  "deps": [
+   "BD-198",
+   "BD-247"
+  ],
+  "done_when": "The residual rung's steps against a specialist's are recorded on the corpus; KILL-RESIDUAL decided",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.7",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-331",
+  "milestone": "M4",
+  "title": "The sampling controller at its gate",
+  "deps": [
+   "BD-252",
+   "BD-328"
+  ],
+  "done_when": "GATE-REFLEX-06; KILL-MPC decided",
+  "chapter_refs": {
+   "22": 4
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.8",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-332",
+  "milestone": "M4",
+  "title": "The gait atlas and max-plus timing; A-04 (`gait.atlas`)",
+  "deps": [
+   "BD-048",
+   "BD-110",
+   "BD-247"
+  ],
+  "done_when": "Trot, pace and bound appear as (H, K) pairs for the quadruped and the tripod gait for the hexapod; GATE-ATEL-02 complete for A-01 to A-14",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.8",
+  "unit": "U28b"
+ },
+ {
+  "bd": "BD-333",
+  "milestone": "M4",
+  "title": "Gaits as hybrid orbits: return maps, saltation, Floquet multipliers (`gait.orbit`); INT-FSIM-13",
+  "deps": [
+   "BD-161",
+   "BD-332"
+  ],
+  "done_when": "GATE-GAIT-01; INT-FSIM-13",
+  "chapter_refs": {
+   "33": 4,
+   "22": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.9",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-334",
+  "milestone": "M4",
+  "title": "Labeled derivatives through events (`gait.gradient`)",
+  "deps": [
+   "BD-333"
+  ],
+  "done_when": "GATE-GAIT-02",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.9",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-335",
+  "milestone": "M4",
+  "title": "Continuation of orbits in morphology, and orbit screening (`gait.continue`)",
+  "deps": [
+   "BD-328",
+   "BD-333"
+  ],
+  "done_when": "GATE-GAIT-03; KILL-GAIT decided",
+  "chapter_refs": {
+   "22": 4
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.9",
+  "unit": "U22a"
+ },
+ {
+  "bd": "BD-336",
+  "milestone": "M4",
+  "title": "Skill artifacts `.fskill`, the exact layer (`skill.compile`, `skill.check`, `skill.show`)",
+  "deps": [
+   "BD-251"
+  ],
+  "done_when": "GATE-REFLEX-08",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.10",
+  "unit": "U22b"
+ },
+ {
+  "bd": "BD-337",
+  "milestone": "M4",
+  "title": "The energy-budget safety tier `.fenergy`, with the exact-integer monitor `K-energy-monitor` and its proof kind (`shield.budget`)",
+  "deps": [
+   "BD-053",
+   "BD-132",
+   "BD-208"
+  ],
+  "done_when": "GATE-SHIELD-01; KILL-ENERGY decided",
+  "chapter_refs": {
+   "22": 4
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.11",
+  "unit": "U22b"
+ },
+ {
+  "bd": "BD-338",
+  "milestone": "M4",
+  "title": "Runtime shields with a backup controller (`shield.fit`, `shield.check`)",
+  "deps": [
+   "BD-251",
+   "BD-337"
+  ],
+  "done_when": "GATE-SHIELD-02",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.12",
+  "unit": "U22b"
+ },
+ {
+  "bd": "BD-339",
+  "milestone": "M4",
+  "title": "Shields on in-envelope and shifted worlds",
+  "deps": [
+   "BD-198",
+   "BD-338"
+  ],
+  "done_when": "GATE-SHIELD-03; KILL-SHIELD decided",
+  "chapter_refs": {
+   "22": 4
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.12",
+  "unit": "U22b"
+ },
+ {
+  "bd": "BD-340",
+  "milestone": "M4",
+  "title": "The measured shield margin with its drift alarm (`shield.report`)",
+  "deps": [
+   "BD-339"
+  ],
+  "done_when": "GATE-SHIELD-04",
+  "chapter_refs": {
+   "22": 2
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.12",
+  "unit": "U22b"
+ },
+ {
+  "bd": "BD-341",
+  "milestone": "M4",
+  "title": "Optimization and racing (`opt.start`, `opt.status`)",
+  "deps": [
+   "BD-183",
+   "BD-262"
+  ],
+  "done_when": "A null race keeps the best design with probability at least 1 − α; a race with a planted winner returns it",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-342",
+  "milestone": "M4",
+  "title": "The quality-diversity archive and maps per dispatch (`opt.archive`, `phylum.map`)",
+  "deps": [
+   "BD-287",
+   "BD-341"
+  ],
+  "done_when": "GATE-PHYLUM-08; merging two agents' archives in both orders gives identical bytes",
+  "chapter_refs": {
+   "17": 2
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.15",
+  "unit": "U17b"
+ },
+ {
+  "bd": "BD-343",
+  "milestone": "M4",
+  "title": "Lineage bisect and merge (`design.bisect`)",
+  "deps": [
+   "BD-113",
+   "BD-262"
+  ],
+  "done_when": "Bisect row of GATE-ATEL-04: the planted edit is found in at least 95 of 100 trials; bisect on a non-monotone predicate is refused",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-344",
+  "milestone": "M4",
+  "title": "Registered predictions (`predict.register`, `predict.report`)",
+  "deps": [
+   "BD-341"
+  ],
+  "done_when": "A prediction registered after its outcome exists is refused; a report scores every registered prediction, the failed ones included",
+  "chapter_refs": {},
+  "owner_chapter": null,
+  "slice": "S28-delivery-general",
+  "chapter": null,
+  "unit": "U41",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-345",
+  "milestone": "M4",
+  "title": "Screening audits: sampled discarded strata and the planted winner (`nemesis.audit`, applied by the cascade)",
+  "deps": [
+   "BD-248",
+   "BD-329"
+  ],
+  "done_when": "GATE-ATEL-09; GATE-NEMESIS-07",
+  "chapter_refs": {
+   "28": 2,
+   "26": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.12",
+  "unit": "U28b"
+ },
+ {
+  "bd": "BD-346",
+  "milestone": "M4",
+  "title": "Rank robustness of finalists inside the cascade (A-19)",
+  "deps": [
+   "BD-266",
+   "BD-329"
+  ],
+  "done_when": "GATE-ATEL-10",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.8",
+  "unit": "U28b"
+ },
+ {
+  "bd": "BD-347",
+  "milestone": "M4",
+  "title": "Revalidation grades 3 and 4",
+  "deps": [
+   "BD-292"
+  ],
+  "done_when": "GATE-ATEL-11; KILL-REUSE decided",
+  "chapter_refs": {
+   "28": 4
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-348",
+  "milestone": "M4",
+  "title": "The remaining analyses: A-24 task-wrench attainability, A-25 identifiability, A-26 regime atlas",
+  "deps": [
+   "BD-233",
+   "BD-265",
+   "BD-336"
+  ],
+  "done_when": "GATE-ATEL-05; KILL-ATLAS decided",
+  "chapter_refs": {
+   "28": 4
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.4",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-349",
+  "milestone": "M4",
+  "title": "Decision-core tables DC-02 to DC-08 and DC-11",
+  "deps": [
+   "BD-276",
+   "BD-282",
+   "BD-309",
+   "BD-329",
+   "BD-341"
+  ],
+  "done_when": "GATE-ATEL-13",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-350",
+  "milestone": "M4",
+  "title": "Composition of decision cores: the nine interference tests",
+  "deps": [
+   "BD-349"
+  ],
+  "done_when": "GATE-ATEL-14",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.19",
+  "unit": "U28c"
+ },
+ {
+  "bd": "BD-351",
+  "milestone": "M4",
+  "title": "Experiment suggestion by value of information (`experiment.suggest`)",
+  "deps": [
+   "BD-291",
+   "BD-341"
+  ],
+  "done_when": "GATE-ATEL-15; GATE-AUGUR-11; KILL-VOI decided",
+  "chapter_refs": {
+   "28": 4,
+   "25": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-352",
+  "milestone": "M4",
+  "title": "The six-stage co-design cascade (`opt.cascade`, `report.campaign`)",
+  "deps": [
+   "BD-260",
+   "BD-285",
+   "BD-329",
+   "BD-335",
+   "BD-342",
+   "BD-345",
+   "BD-346",
+   "BD-347"
+  ],
+  "done_when": "GATE-ATEL-16; NS-06 demonstrated",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.1",
+  "unit": "U28a"
+ },
+ {
+  "bd": "BD-353",
+  "milestone": "M4",
+  "title": "Paired finite-difference design gradients (`phylum.gradient`)",
+  "deps": [
+   "BD-183",
+   "BD-341"
+  ],
+  "done_when": "GATE-PHYLUM-06; KILL-FDGRAD decided",
+  "chapter_refs": {
+   "17": 4
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.13",
+  "unit": "U17b"
+ },
+ {
+  "bd": "BD-354",
+  "milestone": "M4",
+  "title": "The ceiling-before-speed check on every registered speed comparison",
+  "deps": [
+   "BD-135",
+   "BD-216"
+  ],
+  "done_when": "GATE-AUGUR-14",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-355",
+  "milestone": "M4",
+  "title": "Mission queries over families on the GPU: the 65,536-row screen and a 1,024-design family batch under the exact-integer or guarded class",
+  "deps": [
+   "BD-135",
+   "BD-182",
+   "BD-183",
+   "BD-190"
+  ],
+  "done_when": "GATE-AUGUR-15",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.4",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-356",
+  "milestone": "M4",
+  "title": "Design-family lanes (level P-C) with the speedup bound 1/(1 − f + f/r + h)",
+  "deps": [
+   "BD-354",
+   "BD-355"
+  ],
+  "done_when": "Measured f, r and h are recorded on the strong baseline before any ratio is quoted; KILL-FAMILYLANE decided",
+  "chapter_refs": {
+   "17": 2
+  },
+  "owner_chapter": 17,
+  "slice": "S06-phylum",
+  "chapter": 17,
+  "best_sub": "17.6",
+  "unit": "U17a"
+ },
+ {
+  "bd": "BD-357",
+  "milestone": "M4",
+  "title": "Quotients, cuts and cell refinement in family search",
+  "deps": [
+   "BD-285",
+   "BD-355"
+  ],
+  "done_when": "False cuts on the frozen catalog and the evaluation cost saved are recorded; KILL-AUGUR-CUTS decided",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.7",
+  "unit": "U25b"
+ },
+ {
+  "bd": "BD-358",
+  "milestone": "M4",
+  "title": "Region certificates on small sub-boxes",
+  "deps": [
+   "BD-289",
+   "BD-355"
+  ],
+  "done_when": "GATE-AUGUR-09",
+  "chapter_refs": {
+   "25": 2
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.34",
+  "unit": "U25e"
+ },
+ {
+  "bd": "BD-359",
+  "milestone": "M4",
+  "title": "Product-system dominance",
+  "deps": [
+   "BD-135",
+   "BD-161"
+  ],
+  "done_when": "GATE-AUGUR-16; KILL-AUGUR-DOMINANCE decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.16",
+  "unit": "U25c"
+ },
+ {
+  "bd": "BD-360",
+  "milestone": "M4",
+  "title": "The co-design fixed-point lane of `frob-synth` (`mission.synthesize` with strategy `codesign`)",
+  "deps": [
+   "BD-103",
+   "BD-135"
+  ],
+  "done_when": "Co-design rows of GATE-AUGUR-17; KILL-SYNTH-CODESIGN decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.21",
+  "unit": "U25d"
+ },
+ {
+  "bd": "BD-361",
+  "milestone": "M4",
+  "title": "Bounded exact linkage synthesis through the derivation subprocess, emitting a `.fmodule` (strategy `linkage`)",
+  "deps": [
+   "BD-060",
+   "BD-101",
+   "BD-135"
+  ],
+  "done_when": "Linkage rows of GATE-AUGUR-17; KILL-SYNTH-LINKAGE decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.21",
+  "unit": "U25d"
+ },
+ {
+  "bd": "BD-362",
+  "milestone": "M4",
+  "title": "Trajectory optimization with design variables (strategy `refine`)",
+  "deps": [
+   "BD-135",
+   "BD-334"
+  ],
+  "done_when": "GATE-AUGUR-18; KILL-SYNTH-TRAJOPT decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.21",
+  "unit": "U25d"
+ },
+ {
+  "bd": "BD-363",
+  "milestone": "M4",
+  "title": "Label queries on supplied command sets",
+  "deps": [
+   "BD-135"
+  ],
+  "done_when": "GATE-AUGUR-19; KILL-AUGUR-LABELS decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.18",
+  "unit": "U25c"
+ },
+ {
+  "bd": "BD-364",
+  "milestone": "M4",
+  "title": "Mission bundles for family answers, re-checked on a second machine",
+  "deps": [
+   "BD-355",
+   "BD-358"
+  ],
+  "done_when": "GATE-LEMMA-04 at M4",
+  "chapter_refs": {
+   "12": 2
+  },
+  "owner_chapter": 12,
+  "slice": "S01-lemma-spine",
+  "chapter": 12,
+  "best_sub": "12.4",
+  "unit": "U12"
+ },
+ {
+  "bd": "BD-365",
+  "milestone": "M4",
+  "title": "Tyre laws, tracks and hybrids on all tiers",
+  "deps": [
+   "BD-245"
+  ],
+  "done_when": "Known answers of §18.16 for these laws; NS-08 demonstrated",
+  "chapter_refs": {
+   "18": 1
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.16",
+  "unit": "U18b"
+ },
+ {
+  "bd": "BD-366",
+  "milestone": "M4",
+  "title": "Soil mechanics: plate sinkage, drawbar pull, ruts as per-world mutable state (`contact.soil`)",
+  "deps": [
+   "BD-365"
+  ],
+  "done_when": "GATE-TRAC-08; KILL-SOIL decided",
+  "chapter_refs": {
+   "18": 4
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.10",
+  "unit": "U18b"
+ },
+ {
+  "bd": "BD-367",
+  "milestone": "M4",
+  "title": "The contact response batch with per-column bounds and reroutes (`contact.response`)",
+  "deps": [
+   "BD-168"
+  ],
+  "done_when": "The share of columns the guard reroutes on battery states is recorded; KILL-RESPONSE decided",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.5",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-368",
+  "milestone": "M4",
+  "title": "Moving surfaces and the task families of M4: conveyors, stair and curb climbing for wheels and tracks, reach and carry",
+  "deps": [
+   "BD-253",
+   "BD-365"
+  ],
+  "done_when": "GATE-ARENA-01 for these families; a belt whose boundary work is left off the energy ledger is caught",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.3",
+  "unit": "U24a"
+ },
+ {
+  "bd": "BD-369",
+  "milestone": "M4",
+  "title": "The retrofit catalog `registries/retrofits.toml` with priced kits, and `scene.retrofit` on a `.fmcw`",
+  "deps": [
+   "BD-227",
+   "BD-233",
+   "BD-274"
+  ],
+  "done_when": "GATE-HAB-11; KILL-RETROFIT decided; NS-18 demonstrated",
+  "chapter_refs": {
+   "19": 4
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.12",
+  "unit": "U19b"
+ },
+ {
+  "bd": "BD-370",
+  "milestone": "M4",
+  "title": "The fleet scheduler across the two machines (`fleet.status`, `fleet.plan`)",
+  "deps": [
+   "BD-199",
+   "BD-296"
+  ],
+  "done_when": "GATE-SPARK-13; KILL-FLEET decided",
+  "chapter_refs": {
+   "21": 4
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.17",
+  "unit": "U21c"
+ },
+ {
+  "bd": "BD-371",
+  "milestone": "M4",
+  "title": "Specialized kernels for survivors",
+  "deps": [
+   "BD-217",
+   "BD-352"
+  ],
+  "done_when": "GATE-SPARK-14; KILL-SPECIALIZE decided",
+  "chapter_refs": {
+   "21": 2,
+   "17": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.4",
+  "unit": "U21a"
+ },
+ {
+  "bd": "BD-372",
+  "milestone": "M4",
+  "title": "The one-call pipeline `solve.run`, which calls `opt.cascade`",
+  "deps": [
+   "BD-298",
+   "BD-352"
+  ],
+  "done_when": "Second arm of GATE-TETHER-13, the same A/B as GATE-ATEL-03; KILL-SOLVE decided",
+  "chapter_refs": {
+   "32": 4,
+   "28": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.6",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-373",
+  "milestone": "M4",
+  "title": "The mission session with a fresh agent",
+  "deps": [
+   "BD-298",
+   "BD-355"
+  ],
+  "done_when": "GATE-TETHER-13",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.6",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-374",
+  "milestone": "M4",
+  "title": "The agent-surface A/B on the design benchmark",
+  "deps": [
+   "BD-298",
+   "BD-352"
+  ],
+  "done_when": "GATE-ATEL-03",
+  "chapter_refs": {
+   "28": 2
+  },
+  "owner_chapter": 28,
+  "slice": "S18-atelier",
+  "chapter": 28,
+  "best_sub": "28.8",
+  "unit": "U28b"
+ },
+ {
+  "bd": "BD-375",
+  "milestone": "M4",
+  "title": "Autopsy against logs and `explain` alone, with agents on the planted-defect designs",
+  "deps": [
+   "BD-248",
+   "BD-284",
+   "BD-298"
+  ],
+  "done_when": "GATE-AUTOPSY-08",
+  "chapter_refs": {
+   "27": 2
+  },
+  "owner_chapter": 27,
+  "slice": "S17-nemesis-autopsy",
+  "chapter": 27,
+  "best_sub": "27.1",
+  "unit": "U27a"
+ },
+ {
+  "bd": "BD-376",
+  "milestone": "M4",
+  "title": "The M4 verbs with schemas, examples and refusal lists",
+  "deps": [
+   "BD-312",
+   "BD-322",
+   "BD-323",
+   "BD-327",
+   "BD-330",
+   "BD-331",
+   "BD-334",
+   "BD-335",
+   "BD-340",
+   "BD-343",
+   "BD-344",
+   "BD-348",
+   "BD-351",
+   "BD-352",
+   "BD-353",
+   "BD-360",
+   "BD-361",
+   "BD-362",
+   "BD-363",
+   "BD-366",
+   "BD-367",
+   "BD-369",
+   "BD-370",
+   "BD-372"
+  ],
+  "done_when": "GATE-TETHER-02 for the M4 verbs",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-377",
+  "milestone": "M4",
+  "title": "`frob-conformance` for M4: the calibration sets, the frozen 30-amendment campaign, the seeded cascade population",
+  "deps": [
+   "BD-318",
+   "BD-350",
+   "BD-352",
+   "BD-364"
+  ],
+  "done_when": "GATE-GAUNT-01 for M4",
+  "chapter_refs": {},
+  "owner_chapter": 28,
+  "mapped_by": "keyword",
+  "slice": "S18-atelier",
+  "chapter": 38,
+  "best_sub": "38.11",
+  "unit": "U38b"
+ },
+ {
+  "bd": "BD-378",
+  "milestone": "M4",
+  "title": "M4 exit review by a fresh-context session that did not implement the work",
+  "deps": [
+   "BD-319",
+   "BD-324",
+   "BD-326",
+   "BD-356",
+   "BD-357",
+   "BD-359",
+   "BD-368",
+   "BD-371",
+   "BD-373",
+   "BD-374",
+   "BD-375",
+   "BD-376",
+   "BD-377"
+  ],
+  "done_when": "Every gate of M4 has a recorded value and a caught negative control; rank agreement is measured and the family-policy bets are decided",
+  "chapter_refs": {},
+  "owner_chapter": 23,
+  "mapped_by": "keyword",
+  "slice": "S13-cortex",
+  "chapter": 43,
+  "unit": "U40",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-379",
+  "milestone": "M5",
+  "title": "Certificate coverage for derived kernels",
+  "deps": [
+   "BD-027",
+   "BD-221"
+  ],
+  "done_when": "GATE-LEMMA-01; KILL-LEMMA decided; NS-11 demonstrated",
+  "chapter_refs": {
+   "12": 4
+  },
+  "owner_chapter": 12,
+  "slice": "S01-lemma-spine",
+  "chapter": 12,
+  "best_sub": "12.3",
+  "unit": "U12"
+ },
+ {
+  "bd": "BD-380",
+  "milestone": "M5",
+  "title": "INT-FLN-01 and INT-FLN-02: the Lean project under `lean/` and the `fln` checker on a Linux host",
+  "deps": [
+   "BD-001"
+  ],
+  "done_when": "INT-FLN-01; INT-FLN-02: a true port identity is admitted and its sign-mutated twin is rejected",
+  "chapter_refs": {
+   "33": 8
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.6",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-381",
+  "milestone": "M5",
+  "title": "Lean theorem cards as sealed capsules (proof kind `lean-capsule`)",
+  "deps": [
+   "BD-027",
+   "BD-380"
+  ],
+  "done_when": "GATE-LEMMA-02",
+  "chapter_refs": {
+   "12": 2
+  },
+  "owner_chapter": 12,
+  "slice": "S01-lemma-spine",
+  "chapter": 12,
+  "best_sub": "12.4",
+  "unit": "U12"
+ },
+ {
+  "bd": "BD-382",
+  "milestone": "M5",
+  "title": "The reflection pilot: Farkas and rational LDLᵀ reflectors (`prove.reflect`)",
+  "deps": [
+   "BD-132",
+   "BD-381"
+  ],
+  "done_when": "GATE-LEMMA-05; KILL-REFLECT decided",
+  "chapter_refs": {
+   "12": 4
+  },
+  "owner_chapter": 12,
+  "slice": "S01-lemma-spine",
+  "chapter": 12,
+  "best_sub": "12.4",
+  "unit": "U12"
+ },
+ {
+  "bd": "BD-383",
+  "milestone": "M5",
+  "title": "Qualification campaigns replayed by `frob-verify`",
+  "deps": [
+   "BD-132",
+   "BD-260"
+  ],
+  "done_when": "GATE-QUAL-03",
+  "chapter_refs": {
+   "24": 2
+  },
+  "owner_chapter": 24,
+  "slice": "S14-arena",
+  "chapter": 24,
+  "best_sub": "24.13",
+  "unit": "U24b"
+ },
+ {
+  "bd": "BD-384",
+  "milestone": "M5",
+  "title": "The articulated variational integrator on the referee and the `strict` profile",
+  "deps": [
+   "BD-087",
+   "BD-161"
+  ],
+  "done_when": "Momentum and energy known answers of §16.16; cost at matched accuracy recorded against the factor-two limit; KILL-VARIATIONAL decided",
+  "chapter_refs": {
+   "16": 3
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.7",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-385",
+  "milestone": "M5",
+  "title": "The tree-operator route for larger mechanisms and limb port packets, as a pilot",
+  "deps": [
+   "BD-060",
+   "BD-159"
+  ],
+  "done_when": "The pilot's result is on file with PO-SKEL-04; KILL-TREEOP and KILL-SKEL-PORT decided",
+  "chapter_refs": {
+   "16": 2,
+   "14": 2
+  },
+  "owner_chapter": 16,
+  "slice": "S05-kinesis",
+  "chapter": 16,
+  "best_sub": "16.6",
+  "unit": "U16a"
+ },
+ {
+  "bd": "BD-386",
+  "milestone": "M5",
+  "title": "The hard-contact law CL-H as a batch law on `batch-cpu`",
+  "deps": [
+   "BD-154",
+   "BD-161",
+   "BD-266"
+  ],
+  "done_when": "GATE-TRAC-09 on `batch-cpu`; KILL-HARDCONTACT decided",
+  "chapter_refs": {
+   "18": 4
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.5",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-387",
+  "milestone": "M5",
+  "title": "Ground data admission: the dataset manifest (`frob.ground.dataset/1`), cells, sealed validation and holdout splits (`ground.ingest`)",
+  "deps": [
+   "BD-007",
+   "BD-090",
+   "BD-305"
+  ],
+  "done_when": "A dataset with no declared cell is refused; a read of a sealed split before its prediction is frozen is refused",
+  "chapter_refs": {},
+  "owner_chapter": 25,
+  "mapped_by": "keyword",
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-388",
+  "milestone": "M5",
+  "title": "The synthetic rehearsal: a `synthetic` dataset generated with planted parameters",
+  "deps": [
+   "BD-187",
+   "BD-208",
+   "BD-387"
+  ],
+  "done_when": "The known answers of §30.21 reproduce; every output of the rehearsal prints `synthetic` in its evidence",
+  "chapter_refs": {
+   "30": 1
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-389",
+  "milestone": "M5",
+  "title": "Clock fitting",
+  "deps": [
+   "BD-078",
+   "BD-388"
+  ],
+  "done_when": "GATE-GROUND-02; KILL-CLOCK decided",
+  "chapter_refs": {
+   "30": 4
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-390",
+  "milestone": "M5",
+  "title": "Identifiability analysis and excitation design (`ground.excite`)",
+  "deps": [
+   "BD-348",
+   "BD-388"
+  ],
+  "done_when": "GATE-GROUND-03",
+  "chapter_refs": {
+   "30": 2
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.8",
+  "unit": "U30a"
+ },
+ {
+  "bd": "BD-391",
+  "milestone": "M5",
+  "title": "Identification, actuators first, and card updates from logs (`ground.identify`)",
+  "deps": [
+   "BD-069",
+   "BD-389",
+   "BD-390"
+  ],
+  "done_when": "GATE-GROUND-04; KILL-GROUND decided",
+  "chapter_refs": {
+   "30": 4
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-392",
+  "milestone": "M5",
+  "title": "Frozen predictions, sealed trials and holdout retirement (`ground.predict`, `ground.score`)",
+  "deps": [
+   "BD-344",
+   "BD-387"
+  ],
+  "done_when": "GATE-GROUND-05",
+  "chapter_refs": {
+   "30": 2
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-393",
+  "milestone": "M5",
+  "title": "Conformal reality bands per calibrated cell, with the DC-07 table (`ground.band`)",
+  "deps": [
+   "BD-391",
+   "BD-392"
+  ],
+  "done_when": "GATE-GROUND-06",
+  "chapter_refs": {
+   "30": 2
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-394",
+  "milestone": "M5",
+  "title": "Drift detection that retires a calibration",
+  "deps": [
+   "BD-393"
+  ],
+  "done_when": "GATE-GROUND-07; KILL-BAND decided",
+  "chapter_refs": {
+   "30": 4
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-395",
+  "milestone": "M5",
+  "title": "As-built ingestion",
+  "deps": [
+   "BD-062",
+   "BD-387"
+  ],
+  "done_when": "GATE-GROUND-08; KILL-ASBUILT decided",
+  "chapter_refs": {
+   "30": 4
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-396",
+  "milestone": "M5",
+  "title": "The replication kit (`ground.kit`)",
+  "deps": [
+   "BD-305",
+   "BD-392"
+  ],
+  "done_when": "GATE-GROUND-09; KILL-KIT decided",
+  "chapter_refs": {
+   "30": 4
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-397",
+  "milestone": "M5",
+  "title": "The Reality lane's first record",
+  "deps": [
+   "BD-393",
+   "BD-394"
+  ],
+  "done_when": "GATE-GROUND-10: a frozen prediction scored on sealed data with a band issued, or a recorded `no-claim` with its reason",
+  "chapter_refs": {
+   "30": 2
+  },
+  "owner_chapter": 30,
+  "slice": "S20-ground",
+  "chapter": 30,
+  "best_sub": "30.22",
+  "unit": "U30b"
+ },
+ {
+  "bd": "BD-398",
+  "milestone": "M5",
+  "title": "Real-place ingestion (`scene.import`, `scene.fit`); INT-FDGR-01",
+  "deps": [
+   "BD-228",
+   "BD-291",
+   "BD-305"
+  ],
+  "done_when": "GATE-HAB-03; INT-FDGR-01; KILL-INGEST decided",
+  "chapter_refs": {
+   "33": 4,
+   "19": 4
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.4",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-399",
+  "milestone": "M5",
+  "title": "Asset-populated interiors with their licences",
+  "deps": [
+   "BD-226",
+   "BD-305"
+  ],
+  "done_when": "A populated scene keeps the launch shape and the determinism class of its batch; KILL-DRESSING decided",
+  "chapter_refs": {
+   "19": 2
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.7",
+  "unit": "U19a"
+ },
+ {
+  "bd": "BD-400",
+  "milestone": "M5",
+  "title": "Load cases and spectra extracted from T2 telemetry (`foundry.loads`)",
+  "deps": [
+   "BD-207",
+   "BD-260"
+  ],
+  "done_when": "GATE-FOUNDRY-02; KILL-LOADS decided",
+  "chapter_refs": {
+   "31": 4
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-401",
+  "milestone": "M5",
+  "title": "The beam-rung sizing check and A-15 structural margin (`foundry.size`); INT-FSIM-15",
+  "deps": [
+   "BD-400"
+  ],
+  "done_when": "GATE-FOUNDRY-01; INT-FSIM-15",
+  "chapter_refs": {
+   "33": 4,
+   "31": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.9",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-402",
+  "milestone": "M5",
+  "title": "Stress, buckling, modes and cumulative fatigue damage",
+  "deps": [
+   "BD-401"
+  ],
+  "done_when": "GATE-FOUNDRY-03",
+  "chapter_refs": {
+   "31": 2
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-403",
+  "milestone": "M5",
+  "title": "Topology optimization of links (`foundry.optimize`)",
+  "deps": [
+   "BD-401"
+  ],
+  "done_when": "GATE-FOUNDRY-04; GATE-FOUNDRY-05; KILL-TOPOPT decided",
+  "chapter_refs": {
+   "31": 6
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-404",
+  "milestone": "M5",
+  "title": "Inertia fed back into the model as a typed edit, with the convergence test",
+  "deps": [
+   "BD-058",
+   "BD-403"
+  ],
+  "done_when": "GATE-FOUNDRY-06",
+  "chapter_refs": {
+   "31": 2
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-405",
+  "milestone": "M5",
+  "title": "Manufacturability checks (`foundry.check`)",
+  "deps": [
+   "BD-403"
+  ],
+  "done_when": "GATE-FOUNDRY-07; KILL-FAB decided",
+  "chapter_refs": {
+   "31": 4
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-406",
+  "milestone": "M5",
+  "title": "Tolerance allocation driven by sensitivities (`foundry.tolerance`)",
+  "deps": [
+   "BD-401"
+  ],
+  "done_when": "GATE-FOUNDRY-08; KILL-TOLERANCE decided",
+  "chapter_refs": {
+   "31": 4
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-407",
+  "milestone": "M5",
+  "title": "Bounded geometry export",
+  "deps": [
+   "BD-405"
+  ],
+  "done_when": "GATE-FOUNDRY-09",
+  "chapter_refs": {
+   "31": 2
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-408",
+  "milestone": "M5",
+  "title": "The build packet `.fbuild` with its four flags (`foundry.export`)",
+  "deps": [
+   "BD-303",
+   "BD-346",
+   "BD-402",
+   "BD-404",
+   "BD-406",
+   "BD-407"
+  ],
+  "done_when": "GATE-FOUNDRY-10; KILL-PACKET decided; NS-20 demonstrated",
+  "chapter_refs": {
+   "31": 4
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-409",
+  "milestone": "M5",
+  "title": "The M5 verbs with schemas, examples and refusal lists",
+  "deps": [
+   "BD-376",
+   "BD-379",
+   "BD-382",
+   "BD-395",
+   "BD-396",
+   "BD-397",
+   "BD-398",
+   "BD-408"
+  ],
+  "done_when": "GATE-TETHER-02 for the M5 verbs",
+  "chapter_refs": {
+   "32": 2
+  },
+  "owner_chapter": 32,
+  "slice": "S22-tether",
+  "chapter": 32,
+  "best_sub": "32.12",
+  "unit": "U32a"
+ },
+ {
+  "bd": "BD-410",
+  "milestone": "M5",
+  "title": "The format registry complete for all thirteen formats",
+  "deps": [
+   "BD-141",
+   "BD-162",
+   "BD-233",
+   "BD-274",
+   "BD-336",
+   "BD-337",
+   "BD-408"
+  ],
+  "done_when": "GATE-WS-02",
+  "chapter_refs": {
+   "34": 2
+  },
+  "owner_chapter": 34,
+  "slice": "S24-workspace-safety",
+  "chapter": 34,
+  "best_sub": "34.9",
+  "unit": "U34"
+ },
+ {
+  "bd": "BD-411",
+  "milestone": "M5",
+  "title": "`frob-conformance` for M5: the certificate mutation corpora, the synthetic rehearsal, the structure fixtures",
+  "deps": [
+   "BD-377",
+   "BD-382",
+   "BD-397",
+   "BD-408"
+  ],
+  "done_when": "GATE-GAUNT-01 for M5",
+  "chapter_refs": {},
+  "owner_chapter": 12,
+  "mapped_by": "keyword",
+  "slice": "S01-lemma-spine",
+  "chapter": 38,
+  "best_sub": "38.11",
+  "unit": "U38b"
+ },
+ {
+  "bd": "BD-412",
+  "milestone": "M5",
+  "title": "M5 exit review by a fresh-context session that did not implement the work",
+  "deps": [
+   "BD-378",
+   "BD-383",
+   "BD-384",
+   "BD-385",
+   "BD-386",
+   "BD-399",
+   "BD-409",
+   "BD-410",
+   "BD-411"
+  ],
+  "done_when": "Every gate of M5 has a recorded value and a caught negative control; the Reality lane has a record or a recorded `no-claim`",
+  "chapter_refs": {},
+  "owner_chapter": 30,
+  "mapped_by": "keyword",
+  "slice": "S20-ground",
+  "chapter": 43,
+  "unit": "U40",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-413",
+  "milestone": "M6",
+  "title": "Epic: robot-advected films; INT-FSIM-17",
+  "deps": [
+   "BD-230"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-HAB-07; INT-FSIM-17",
+  "chapter_refs": {
+   "33": 4,
+   "19": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.9",
+  "unit": "U33b"
+ },
+ {
+  "bd": "BD-414",
+  "milestone": "M6",
+  "title": "Epic: payload slosh by an equivalent mechanical model",
+  "deps": [
+   "BD-231"
+  ],
+  "done_when": "A short plan exists and its pilot has run; slosh rows of GATE-HAB-08; KILL-SLOSH decided",
+  "chapter_refs": {
+   "19": 4
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.10",
+  "unit": "U19b"
+ },
+ {
+  "bd": "BD-415",
+  "milestone": "M6",
+  "title": "Epic: articulated proxies, a cord as a chain of links and a rug as hinged plates",
+  "deps": [
+   "BD-231"
+  ],
+  "done_when": "A short plan exists and its pilot has run; proxy rows of GATE-HAB-08; GATE-HAB-09 reported; KILL-PROXY decided",
+  "chapter_refs": {
+   "19": 6
+  },
+  "owner_chapter": 19,
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.10",
+  "unit": "U19b"
+ },
+ {
+  "bd": "BD-416",
+  "milestone": "M6",
+  "title": "Epic: Cosserat rods, cloth and coupled multiphysics islands on the CPU referee, for finalists only; INT-FTX-01",
+  "deps": [
+   "BD-413",
+   "BD-415"
+  ],
+  "done_when": "A short plan exists and its pilot has run; INT-FTX-01; KILL-LIVING decided",
+  "chapter_refs": {
+   "33": 4,
+   "19": 2
+  },
+  "owner_chapter": 33,
+  "slice": "S23-suite",
+  "chapter": 33,
+  "best_sub": "33.4",
+  "unit": "U33a"
+ },
+ {
+  "bd": "BD-417",
+  "milestone": "M6",
+  "title": "Epic: soft soil at scale",
+  "deps": [
+   "BD-366"
+  ],
+  "done_when": "A short plan exists and its pilot has run; rut state stays per-world with zero leak over 10³ resets at batch scale",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 38,
+  "best_sub": null,
+  "unit": "U38a"
+ },
+ {
+  "bd": "BD-418",
+  "milestone": "M6",
+  "title": "Epic: tactile sensing and compliant pads",
+  "deps": [
+   "BD-167",
+   "BD-187"
+  ],
+  "done_when": "A short plan exists and its pilot has run; a kill gate and its fallback are written before any work package is funded",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 38,
+  "best_sub": "38.5",
+  "unit": "U38a"
+ },
+ {
+  "bd": "BD-419",
+  "milestone": "M6",
+  "title": "Epic: the rotor port for flight",
+  "deps": [
+   "BD-071",
+   "BD-159"
+  ],
+  "done_when": "A short plan exists and its pilot has run; the hover known answer and the port balance; KILL-SINEW-ROTOR decided",
+  "chapter_refs": {
+   "15": 2
+  },
+  "owner_chapter": 15,
+  "slice": "S04-sinew",
+  "chapter": 15,
+  "best_sub": "15.14",
+  "unit": "U15b"
+ },
+ {
+  "bd": "BD-420",
+  "milestone": "M6",
+  "title": "Epic: RGB and splat scenes",
+  "deps": [
+   "BD-187",
+   "BD-398"
+  ],
+  "done_when": "A short plan exists and its pilot has run; a kill gate and its fallback are written before any work package is funded",
+  "chapter_refs": {},
+  "owner_chapter": 19,
+  "mapped_by": "keyword",
+  "slice": "S08-habitat",
+  "chapter": 19,
+  "best_sub": "19.10",
+  "unit": "U19b"
+ },
+ {
+  "bd": "BD-421",
+  "milestone": "M6",
+  "title": "Epic: moving people as kinematic actors on route graphs",
+  "deps": [
+   "BD-399"
+  ],
+  "done_when": "A short plan exists and its pilot has run; no claim about human behaviour is issued from an actor",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 38,
+  "best_sub": "38.3",
+  "unit": "U38a"
+ },
+ {
+  "bd": "BD-422",
+  "milestone": "M6",
+  "title": "Epic: gradients through contact",
+  "deps": [
+   "BD-334",
+   "BD-353"
+  ],
+  "done_when": "A short plan exists and its pilot has run; every derivative carries its validity label, and a gradient at a grazing event is labeled or refused",
+  "chapter_refs": {},
+  "owner_chapter": 18,
+  "mapped_by": "keyword",
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.3",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-423",
+  "milestone": "M6",
+  "title": "Epic: lifecycle compression (`foundry.lifecycle`)",
+  "deps": [
+   "BD-391",
+   "BD-402"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-FOUNDRY-12; KILL-LIFECYCLE and KILL-SINEW-AGE decided",
+  "chapter_refs": {
+   "31": 4,
+   "15": 2
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-424",
+  "milestone": "M6",
+  "title": "Epic: the hard-contact law on GPU tiers",
+  "deps": [
+   "BD-172",
+   "BD-174",
+   "BD-386"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GPU rows of GATE-TRAC-09",
+  "chapter_refs": {
+   "18": 2
+  },
+  "owner_chapter": 18,
+  "slice": "S07-traction",
+  "chapter": 18,
+  "best_sub": "18.5",
+  "unit": "U18a"
+ },
+ {
+  "bd": "BD-425",
+  "milestone": "M6",
+  "title": "Epic: geometric phase for locomotion",
+  "deps": [
+   "BD-243",
+   "BD-332"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-AUGUR-20; KILL-AUGUR-PHASE decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.19",
+  "unit": "U25c"
+ },
+ {
+  "bd": "BD-426",
+  "milestone": "M6",
+  "title": "Epic: symmetry at the instant of contact",
+  "deps": [
+   "BD-327",
+   "BD-334"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-AUGUR-21; KILL-AUGUR-SYMEVENT decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.20",
+  "unit": "U25d"
+ },
+ {
+  "bd": "BD-427",
+  "milestone": "M6",
+  "title": "M6 exit review by a fresh-context session that did not implement the work",
+  "deps": [
+   "BD-412",
+   "BD-414",
+   "BD-416",
+   "BD-417",
+   "BD-418",
+   "BD-419",
+   "BD-420",
+   "BD-421",
+   "BD-422",
+   "BD-423",
+   "BD-424",
+   "BD-425",
+   "BD-426"
+  ],
+  "done_when": "Every epic of M6 has its plan, its pilot result and its kill-gate decision on record; every gate reached has a recorded value and a caught negative control",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 43,
+  "unit": "U40",
+  "best_sub": null
+ },
+ {
+  "bd": "BD-428",
+  "milestone": "M7",
+  "title": "Epic: the sealed suite: missions in named strata, sealed worlds including externally authored ones, the crossover reuse count",
+  "deps": [
+   "BD-317",
+   "BD-378"
+  ],
+  "done_when": "A short plan exists and its pilot has run; the suite's commitment hash is published before either arm sees it",
+  "chapter_refs": {},
+  "owner_chapter": 25,
+  "mapped_by": "keyword",
+  "slice": "S16-augur-b",
+  "chapter": 39,
+  "best_sub": "39.4",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-429",
+  "milestone": "M7",
+  "title": "Epic: the tournament decision rule: the pooled ratio of restricted mean times, 24 mission families per cell for a finite-suite result and at least 32 for a population result (§39.20), the power analysis against a true ratio of 10, the written kill rules",
+  "deps": [
+   "BD-124",
+   "BD-317"
+  ],
+  "done_when": "A short plan exists and its pilot has run; the reachable verdicts are enumerated before sampling, and a rule that cannot return one of its verdicts at the planned n is rejected",
+  "chapter_refs": {
+   "39": 1
+  },
+  "owner_chapter": 39,
+  "slice": "S26-tenfold-gates",
+  "chapter": 39,
+  "best_sub": "39.20",
+  "unit": "U39b"
+ },
+ {
+  "bd": "BD-430",
+  "milestone": "M7",
+  "title": "Epic: the incumbent arms: the strongest composed rival at pinned versions, cold and warm, including a short robust program over an incumbent engine",
+  "deps": [
+   "BD-039",
+   "BD-301",
+   "BD-428"
+  ],
+  "done_when": "A short plan exists and its pilot has run; the rival's phase ledger is recorded on `trj` under the disclosure block",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 39,
+  "best_sub": "39.5",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-431",
+  "milestone": "M7",
+  "title": "Epic: our arm: fresh agents on the released surface, cold and warm runs separated",
+  "deps": [
+   "BD-412",
+   "BD-428"
+  ],
+  "done_when": "A short plan exists and its pilot has run; every phase of every campaign is in the phase ledger, and one false certificate disqualifies the arm",
+  "chapter_refs": {},
+  "owner_chapter": 12,
+  "mapped_by": "keyword",
+  "slice": "S01-lemma-spine",
+  "chapter": 39,
+  "best_sub": "39.2",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-432",
+  "milestone": "M7",
+  "title": "Epic: neutral adjudication of accepted answers",
+  "deps": [
+   "BD-383",
+   "BD-429",
+   "BD-430",
+   "BD-431"
+  ],
+  "done_when": "A short plan exists and its pilot has run; an answer is accepted only by the adjudicator, and a planted false acceptance in a dry run is caught",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 38,
+  "best_sub": "38.3",
+  "unit": "U38a"
+ },
+ {
+  "bd": "BD-433",
+  "milestone": "M7",
+  "title": "Epic: publication of the result",
+  "deps": [
+   "BD-432"
+  ],
+  "done_when": "A short plan exists and its pilot has run; the measured ratio is published with its phase ledger whatever it is, and a tie with a short robust program over an incumbent is reported as a tie (BET-14)",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 39,
+  "best_sub": "39.4",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-434",
+  "milestone": "M7",
+  "title": "M7 exit review by a fresh-context session that did not implement the work",
+  "deps": [
+   "BD-427",
+   "BD-433"
+  ],
+  "done_when": "Every gate of the ten-fold test due at M7 (GATE-TENFOLD-03 to -05 repeated, -07, -08, -11, -12, -13) has a recorded value and a caught negative control; the measured ratio is published with its phase ledger",
+  "chapter_refs": {},
+  "owner_chapter": 39,
+  "mapped_by": "keyword",
+  "slice": "S26-tenfold-gates",
+  "chapter": 39,
+  "best_sub": "39.3",
+  "unit": "U39a"
+ },
+ {
+  "bd": "BD-435",
+  "milestone": "M8",
+  "title": "Epic: facility co-design and multi-robot handoff",
+  "deps": [
+   "BD-352",
+   "BD-363",
+   "BD-369"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-AUGUR-24; KILL-AUGUR-FACILITY decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.17",
+  "unit": "U25c"
+ },
+ {
+  "bd": "BD-436",
+  "milestone": "M8",
+  "title": "Epic: skill transport. `skill.transport` moves a skill artifact with a learned residual [M]; `mission.transport` moves a certified claim through an interface map with a bounded error [F]",
+  "deps": [
+   "BD-321",
+   "BD-336"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-AUGUR-23; GATE-REFLEX-09; KILL-SKILL and KILL-AUGUR-TRANSPORT decided",
+  "chapter_refs": {
+   "25": 4,
+   "22": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.3",
+  "unit": "U25a"
+ },
+ {
+  "bd": "BD-437",
+  "milestone": "M8",
+  "title": "Epic: continuation-based synthesis (strategy `continuation`)",
+  "deps": [
+   "BD-361"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-AUGUR-22; KILL-SYNTH-CONT decided",
+  "chapter_refs": {
+   "25": 4
+  },
+  "owner_chapter": 25,
+  "slice": "S16-augur-b",
+  "chapter": 25,
+  "best_sub": "25.21",
+  "unit": "U25d"
+ },
+ {
+  "bd": "BD-438",
+  "milestone": "M8",
+  "title": "Epic: firmware export",
+  "deps": [
+   "BD-338",
+   "BD-408"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-FOUNDRY-11; KILL-FIRMWARE decided",
+  "chapter_refs": {
+   "31": 4
+  },
+  "owner_chapter": 31,
+  "slice": "S21-foundry",
+  "chapter": 31,
+  "best_sub": "31.19",
+  "unit": "U31b"
+ },
+ {
+  "bd": "BD-439",
+  "milestone": "M8",
+  "title": "Epic: geometric-algebra tree policies at scale",
+  "deps": [
+   "BD-321",
+   "BD-325"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-CORTEX-17; KILL-GATREE decided",
+  "chapter_refs": {
+   "23": 4
+  },
+  "owner_chapter": 23,
+  "slice": "S13-cortex",
+  "chapter": 23,
+  "best_sub": "23.14",
+  "unit": "U23b"
+ },
+ {
+  "bd": "BD-440",
+  "milestone": "M8",
+  "title": "Epic: reachable-set tables for shields",
+  "deps": [
+   "BD-338"
+  ],
+  "done_when": "A short plan exists and its pilot has run; GATE-SHIELD-05; KILL-TUBE decided",
+  "chapter_refs": {
+   "22": 4
+  },
+  "owner_chapter": 22,
+  "slice": "S12-reflex",
+  "chapter": 22,
+  "best_sub": "22.12",
+  "unit": "U22b"
+ },
+ {
+  "bd": "BD-441",
+  "milestone": "M8",
+  "title": "Epic: the fused per-world step kernel",
+  "deps": [
+   "BD-217"
+  ],
+  "done_when": "A short plan exists and its pilot has run; the paired lower bound on the whole step is recorded with digests unchanged; KILL-MEGA decided",
+  "chapter_refs": {
+   "21": 2
+  },
+  "owner_chapter": 21,
+  "slice": "S10-spark",
+  "chapter": 21,
+  "best_sub": "21.18",
+  "unit": "U21c"
+ },
+ {
+  "bd": "BD-442",
+  "milestone": "M8",
+  "title": "M8 exit review by a fresh-context session that did not implement the work",
+  "deps": [
+   "BD-434",
+   "BD-435",
+   "BD-436",
+   "BD-437",
+   "BD-438",
+   "BD-439",
+   "BD-440",
+   "BD-441"
+  ],
+  "done_when": "Every epic of M8 has its plan, its pilot result and its stop rule applied; every gate reached has a recorded value and a caught negative control",
+  "chapter_refs": {},
+  "owner_chapter": 38,
+  "mapped_by": "keyword",
+  "slice": "S25-gauntlet",
+  "chapter": 43,
+  "unit": "U40",
+  "best_sub": null
+ }
+]

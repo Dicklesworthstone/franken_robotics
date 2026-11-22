@@ -1,0 +1,107 @@
+---
+key: "CARD-T-32"
+title: "Theorem card T-32: dominance on a product model (success of A with failure of B is unreachable)"
+type: "task"
+priority: 2
+milestone: "M4"
+labels: ["m4", "lemma", "frob-cert", "frob-mission", "frontier", "test"]
+parent: "WP-66"
+deps: ["N12-17", "BD-359", "N12-06", "SPEC-C-40"]
+needs: ["§0.7: the paper-scale pilot of the dominance construction (one contact transition, a sole exchange over a split-grip strip, against a reachability tool on the same product model), owned by the mission work"]
+related: ["BD-293", "BD-262", "N12-16", "CARD-T-28"]
+gates: []
+plan_refs: ["§12.3 (T-32)", "§10 C-40", "§25.16", "Appendix D.6 (dominance by unreachability)"]
+---
+## Background
+
+The question "can replacing design A by design B make a formerly successful mission fail?" does not need either
+design to have a guarantee. For two closed loops with fixed controllers, a regression is a shared world input in
+which A succeeds and B fails. The product system runs both plants on the same exogenous scene, payload and clock
+law, with a joint terminal monitor on the pair of outcomes. If the pair (success, failure) is unreachable over an
+enclosure of every admitted joint execution, with progress and nonempty executions, B dominates A on that cell.
+A concrete paired trace that reaches it is a counterexample; an outer enclosure that intersects it triggers a
+witness search or `unknown`. Only declared shared inputs are coupled, and every other branch choice varies
+independently inside the enclosure. Shared inputs are compiled at physical coordinates: one space-indexed
+material field read at each robot's actual contact point, one latent lighting state seen by each camera from
+where it is. The answer carries the paired verdict and each design's absolute verdict.
+
+Statement (T-32). Dominance on a product model with rational piecewise-affine outcome maps, the reference
+fixture included: the pair (success of A, failure of B) is unreachable.
+
+Route: exact case analysis; interval enclosure for cells that are not affine (`product-unreachable`). Tier:
+Frontier. Rejected alternatives: computing two success sets and comparing them (outcomes enclosed separately
+admit the impossible pair); pairing by seed and assuming the worlds match.
+
+## Scope
+
+In: statement document, registry row, the per-cell `product-unreachable` certificates bound to this card, the
+reference fixture, mutants. Out: building product systems and searching for witnesses (the product-dominance
+bead); the auditor's checker (N12-17); the statistical paired comparison used as the fallback.
+
+## Technical approach
+
+1. Model class: shared inputs z in a box with rational ends; finitely many independent branch variables per
+   plant; on each piece (a cell of z together with a combination of branch values) each plant's success is the
+   sign of a rational affine function of z, or, for a piece that is not affine, an outward-rounded interval
+   enclosure of the success margin.
+2. The certificate lists the pieces with their outcome pairs. The auditor checks (a) joint coverage: the pieces
+   partition the product of the shared box and all branch combinations of both plants, and no branch of A is
+   tied to a branch of B unless that input is declared shared; (b) the outcome pair on each piece, exactly for
+   affine pieces (signs at the piece's vertices, with no sign change inside) and by interval ends otherwise;
+   (c) that no piece has the pair (success, failure); (d) the declarations of progress and nonempty executions
+   per piece; (e) that the bundle carries each design's absolute verdict next to the paired one.
+3. Class and limits: `Certified` for the declared product model. A relative verdict of no loss does not
+   establish that either design meets the mission. One mislabeled branch invalidates the certificate. The
+   lowering that keeps spatially coupled disturbances coupled is the producer's and is reviewed through the
+   primitive equations in the bundle; a conventional reachability tool applied to the same product model is the
+   comparator, and a tie ships the generic method.
+4. Relies on it: construction C-40; clearing a replacement without a guarantee for either design; design
+   separation by a minimized world pair (the dual question).
+5. Artifacts: `docs/math/cards/T-32.md`; registry row; specimens `product-unreachable/accept-T-32-*.frobcert`
+   and mutants.
+
+## Acceptance criteria
+
+- [ ] `frob-verify` accepts the reference fixture: a surface parameter z ∈ [0, 1]; A succeeds when z ≥ 3/5 and B
+      when z ≥ 2/5; under the shared z the outcome pairs are (0, 0) on [0, 2/5), (0, 1) on [2/5, 3/5) and (1, 1) on
+      [3/5, 1]; the pair (1, 0) is unreachable; B adds the interval [2/5, 3/5), a gain of 1/5 under a uniform law;
+      neither design is guaranteed (A fails for z < 3/5 and B for z < 2/5).
+- [ ] Rejected mutations: the two outcomes enclosed separately (all four pairs admitted, including the
+      impossible one); a product whose internal branches are wrongly tied so that only (0, 0) and (1, 1) appear,
+      whose projections cover both marginal outcome sets and so hide a reachable (1, 0): the checker must demand
+      joint coverage; a missing piece; a piece on which a predicate changes sign.
+- [ ] The bundle prints both absolute verdicts; a bundle that prints only "B never loses to A" is rejected as
+      incomplete.
+- [ ] Registry row `checked`, class `Certified`, with hashes and checker identity.
+
+## Test plan
+
+### Unit tests
+
+`crates/frob-lemma/tests/cards/t32.rs`: `surface_parameter_fixture_accepts`; `gain_interval_is_one_fifth`;
+`separate_enclosures_admit_all_four_pairs`; `tied_branches_hide_one_zero`; `missing_piece_rejects`;
+`sign_change_inside_piece_rejects`; `absolute_verdicts_required`; `non_affine_piece_by_interval`
+(a margin z² − 1/4 on [3/5, 1] enclosed as [11/100, 3/4] > 0).
+
+### End-to-end script and logging
+
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants;
+`lemma_second_machine.sh` with profile `m4` (bead N12-35) re-checks dominance bundles of the M4 family answers.
+
+### Known answers and negative controls
+
+The fixture above. CX-096 (pairing two designs by seed and tick does not make the worlds match: two tyres on
+different paths over a patterned floor meet different friction at the same tick, so a product coupled by tick
+and not by position reports a false regression or hides a true one). CX-097 ("B never loses to A" does not mean
+B meets the mission). Negative controls as listed. Determinism: exact.
+
+## Considerations
+
+- The kill gate of the owning mechanism falls back to the paired statistical comparison with position-indexed
+  fields, for which this card issues nothing.
+- A controller retuned per body needs its own information and budget contract; the card assumes fixed
+  controllers.
+
+## References
+
+§12.3; C-40; §25.16; CX-096, CX-097; D-17.

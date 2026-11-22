@@ -1,0 +1,7768 @@
+{
+ "units": [
+  {
+   "unit": "U10a",
+   "prefix": "N10a-",
+   "chapters": [
+    9,
+    10
+   ],
+   "subsystem": "spine",
+   "subs": [
+    "C-01",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "C-07",
+    "C-08",
+    "C-09",
+    "C-10",
+    "C-11",
+    "C-12",
+    "C-13",
+    "C-14",
+    "C-15"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [],
+   "extra": ""
+  },
+  {
+   "unit": "U10b",
+   "prefix": "N10b-",
+   "chapters": [
+    10
+   ],
+   "subsystem": "spine",
+   "subs": [
+    "C-16",
+    "C-17",
+    "C-18",
+    "C-19",
+    "C-20",
+    "C-21",
+    "C-22",
+    "C-23",
+    "C-24",
+    "C-25",
+    "C-26",
+    "C-27"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [],
+   "extra": ""
+  },
+  {
+   "unit": "U10c",
+   "prefix": "N10c-",
+   "chapters": [
+    10
+   ],
+   "subsystem": "spine",
+   "subs": [
+    "C-28",
+    "C-29",
+    "C-30",
+    "C-31",
+    "C-32",
+    "C-33",
+    "C-34",
+    "C-35",
+    "C-36",
+    "C-37",
+    "C-38",
+    "C-39",
+    "C-40"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [],
+   "extra": ""
+  },
+  {
+   "unit": "U12",
+   "prefix": "N12-",
+   "chapters": [
+    12
+   ],
+   "subsystem": "lemma",
+   "subs": [
+    "12.1",
+    "12.2",
+    "12.3",
+    "12.4",
+    "12.5",
+    "12.6",
+    "12.7",
+    "12.8"
+   ],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-132",
+    "BD-364",
+    "BD-379",
+    "BD-381",
+    "BD-382"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U13",
+   "prefix": "N13-",
+   "chapters": [
+    11,
+    13
+   ],
+   "subsystem": "marrow",
+   "subs": [
+    "11.1",
+    "11.2",
+    "11.3",
+    "11.4",
+    "11.5",
+    "11.6",
+    "11.7",
+    "11.8",
+    "13.1",
+    "13.2",
+    "13.3",
+    "13.4",
+    "13.5",
+    "13.6",
+    "13.7",
+    "13.8",
+    "13.9",
+    "13.10",
+    "13.11"
+   ],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-010",
+    "BD-011",
+    "BD-012",
+    "BD-045",
+    "BD-046",
+    "BD-047",
+    "BD-048",
+    "BD-182",
+    "BD-325"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U14a",
+   "prefix": "N14a-",
+   "chapters": [
+    14
+   ],
+   "subsystem": "skeleton",
+   "subs": [
+    "14.1",
+    "14.2",
+    "14.3",
+    "14.4",
+    "14.5",
+    "14.6",
+    "14.7",
+    "14.8",
+    "14.9"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-054",
+    "BD-055",
+    "BD-057",
+    "BD-059",
+    "BD-061",
+    "BD-062",
+    "BD-066",
+    "BD-077",
+    "BD-227",
+    "BD-245"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U14b",
+   "prefix": "N14b-",
+   "chapters": [
+    14
+   ],
+   "subsystem": "skeleton",
+   "subs": [
+    "14.10",
+    "14.11",
+    "14.12",
+    "14.13",
+    "14.14",
+    "14.15",
+    "14.16",
+    "14.17"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-063",
+    "BD-065",
+    "BD-109",
+    "BD-117",
+    "BD-144",
+    "BD-185",
+    "BD-225",
+    "BD-226",
+    "BD-244",
+    "BD-246",
+    "BD-247"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U15a",
+   "prefix": "N15a-",
+   "chapters": [
+    15
+   ],
+   "subsystem": "sinew",
+   "subs": [
+    "15.1",
+    "15.2",
+    "15.3",
+    "15.4",
+    "15.5",
+    "15.6",
+    "15.7",
+    "15.8",
+    "15.9"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-069",
+    "BD-072",
+    "BD-073",
+    "BD-076",
+    "BD-112",
+    "BD-275"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U15b",
+   "prefix": "N15b-",
+   "chapters": [
+    15
+   ],
+   "subsystem": "sinew",
+   "subs": [
+    "15.10",
+    "15.11",
+    "15.12",
+    "15.13",
+    "15.14",
+    "15.15"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-060",
+    "BD-070",
+    "BD-071",
+    "BD-074",
+    "BD-075",
+    "BD-084",
+    "BD-103",
+    "BD-151",
+    "BD-155",
+    "BD-419"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U16a",
+   "prefix": "N16a-",
+   "chapters": [
+    16
+   ],
+   "subsystem": "kinesis",
+   "subs": [
+    "16.1",
+    "16.2",
+    "16.3",
+    "16.4",
+    "16.5",
+    "16.6",
+    "16.7"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [
+    "BD-081",
+    "BD-082",
+    "BD-088",
+    "BD-089",
+    "BD-150",
+    "BD-159",
+    "BD-169",
+    "BD-213",
+    "BD-384",
+    "BD-385"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U16b",
+   "prefix": "N16b-",
+   "chapters": [
+    16
+   ],
+   "subsystem": "kinesis",
+   "subs": [
+    "16.8",
+    "16.9",
+    "16.10",
+    "16.11",
+    "16.12",
+    "16.13",
+    "16.14",
+    "16.15"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [
+    "BD-212",
+    "BD-214",
+    "BD-263",
+    "BD-264",
+    "BD-265",
+    "BD-266",
+    "BD-268"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U16c",
+   "prefix": "N16c-",
+   "chapters": [
+    16
+   ],
+   "subsystem": "kinesis",
+   "subs": [
+    "16.16",
+    "16.17",
+    "16.18",
+    "16.19",
+    "16.20",
+    "16.21",
+    "16.22",
+    "16.23",
+    "16.24"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [
+    "BD-083"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U17a",
+   "prefix": "N17a-",
+   "chapters": [
+    17
+   ],
+   "subsystem": "phylum",
+   "subs": [
+    "17.1",
+    "17.2",
+    "17.3",
+    "17.4",
+    "17.5",
+    "17.6",
+    "17.7",
+    "17.8",
+    "17.9",
+    "17.10",
+    "17.11"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-285",
+    "BD-287",
+    "BD-356"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U17b",
+   "prefix": "N17b-",
+   "chapters": [
+    17
+   ],
+   "subsystem": "phylum",
+   "subs": [
+    "17.12",
+    "17.13",
+    "17.14",
+    "17.15",
+    "17.16",
+    "17.17",
+    "17.18",
+    "17.19",
+    "17.20",
+    "17.21"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-170",
+    "BD-184",
+    "BD-186",
+    "BD-286",
+    "BD-342",
+    "BD-353"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U18a",
+   "prefix": "N18a-",
+   "chapters": [
+    18
+   ],
+   "subsystem": "traction",
+   "subs": [
+    "18.1",
+    "18.2",
+    "18.3",
+    "18.4",
+    "18.5",
+    "18.6",
+    "18.7",
+    "18.8"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-037",
+    "BD-080",
+    "BD-085",
+    "BD-086",
+    "BD-154",
+    "BD-158",
+    "BD-161",
+    "BD-165",
+    "BD-230",
+    "BD-232",
+    "BD-367",
+    "BD-386",
+    "BD-422",
+    "BD-424"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U18b",
+   "prefix": "N18b-",
+   "chapters": [
+    18
+   ],
+   "subsystem": "traction",
+   "subs": [
+    "18.9",
+    "18.10",
+    "18.11",
+    "18.12",
+    "18.13",
+    "18.14",
+    "18.15",
+    "18.16",
+    "18.17",
+    "18.18",
+    "18.19",
+    "18.20"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-156",
+    "BD-167",
+    "BD-168",
+    "BD-365",
+    "BD-366"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U19a",
+   "prefix": "N19a-",
+   "chapters": [
+    19
+   ],
+   "subsystem": "habitat",
+   "subs": [
+    "19.1",
+    "19.2",
+    "19.3",
+    "19.4",
+    "19.5",
+    "19.6",
+    "19.7",
+    "19.8"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [
+    "BD-104",
+    "BD-228",
+    "BD-229",
+    "BD-234",
+    "BD-399"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U19b",
+   "prefix": "N19b-",
+   "chapters": [
+    19
+   ],
+   "subsystem": "habitat",
+   "subs": [
+    "19.9",
+    "19.10",
+    "19.11",
+    "19.12"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [
+    "BD-162",
+    "BD-233",
+    "BD-369",
+    "BD-414",
+    "BD-415",
+    "BD-420"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U19c",
+   "prefix": "N19c-",
+   "chapters": [
+    19
+   ],
+   "subsystem": "habitat",
+   "subs": [
+    "19.13",
+    "19.14",
+    "19.15",
+    "19.16",
+    "19.17",
+    "19.18",
+    "19.19",
+    "19.20",
+    "19.21",
+    "19.22"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [
+    "BD-163",
+    "BD-164",
+    "BD-235",
+    "BD-236"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U20a",
+   "prefix": "N20a-",
+   "chapters": [
+    20
+   ],
+   "subsystem": "sensorium",
+   "subs": [
+    "20.1",
+    "20.2",
+    "20.3",
+    "20.4",
+    "20.5",
+    "20.6",
+    "20.7",
+    "20.8",
+    "20.9",
+    "20.10",
+    "20.11",
+    "20.12"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-078",
+    "BD-098",
+    "BD-120",
+    "BD-134",
+    "BD-188",
+    "BD-189",
+    "BD-190",
+    "BD-237",
+    "BD-238",
+    "BD-239",
+    "BD-240"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U20b",
+   "prefix": "N20b-",
+   "chapters": [
+    20
+   ],
+   "subsystem": "sensorium",
+   "subs": [
+    "20.13",
+    "20.14",
+    "20.15",
+    "20.16",
+    "20.17",
+    "20.18",
+    "20.19",
+    "20.20",
+    "20.21",
+    "20.22",
+    "20.23",
+    "20.24",
+    "20.25"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-099",
+    "BD-102",
+    "BD-119",
+    "BD-187",
+    "BD-215",
+    "BD-241",
+    "BD-242"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U21a",
+   "prefix": "N21a-",
+   "chapters": [
+    21
+   ],
+   "subsystem": "spark",
+   "subs": [
+    "21.1",
+    "21.2",
+    "21.3",
+    "21.4",
+    "21.5",
+    "21.6",
+    "21.7",
+    "21.8"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [
+    "BD-013",
+    "BD-018",
+    "BD-029",
+    "BD-053",
+    "BD-152",
+    "BD-172",
+    "BD-173",
+    "BD-175",
+    "BD-178",
+    "BD-217",
+    "BD-221",
+    "BD-371"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U21b",
+   "prefix": "N21b-",
+   "chapters": [
+    21
+   ],
+   "subsystem": "spark",
+   "subs": [
+    "21.9",
+    "21.10",
+    "21.11",
+    "21.12",
+    "21.13",
+    "21.14",
+    "21.15"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [
+    "BD-014",
+    "BD-017",
+    "BD-020",
+    "BD-030",
+    "BD-171",
+    "BD-174",
+    "BD-176",
+    "BD-179",
+    "BD-183"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U21c",
+   "prefix": "N21c-",
+   "chapters": [
+    21
+   ],
+   "subsystem": "spark",
+   "subs": [
+    "21.16",
+    "21.17",
+    "21.18",
+    "21.19",
+    "21.20",
+    "21.21",
+    "21.22",
+    "21.23",
+    "21.24",
+    "21.25",
+    "21.26"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [
+    "BD-370",
+    "BD-441"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U22a",
+   "prefix": "N22a-",
+   "chapters": [
+    22
+   ],
+   "subsystem": "reflex",
+   "subs": [
+    "22.1",
+    "22.2",
+    "22.3",
+    "22.4",
+    "22.5",
+    "22.6",
+    "22.7",
+    "22.8",
+    "22.9"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [
+    "BD-049",
+    "BD-050",
+    "BD-051",
+    "BD-052",
+    "BD-114",
+    "BD-116",
+    "BD-249",
+    "BD-251",
+    "BD-252",
+    "BD-330",
+    "BD-331",
+    "BD-334",
+    "BD-335"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U22b",
+   "prefix": "N22b-",
+   "chapters": [
+    22
+   ],
+   "subsystem": "reflex",
+   "subs": [
+    "22.10",
+    "22.11",
+    "22.12",
+    "22.13"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [
+    "BD-327",
+    "BD-336",
+    "BD-337",
+    "BD-338",
+    "BD-339",
+    "BD-340",
+    "BD-440"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U22c",
+   "prefix": "N22c-",
+   "chapters": [
+    22
+   ],
+   "subsystem": "reflex",
+   "subs": [
+    "22.14",
+    "22.15",
+    "22.16",
+    "22.17",
+    "22.18",
+    "22.19",
+    "22.20",
+    "22.21",
+    "22.22",
+    "22.23",
+    "22.24",
+    "22.25"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [
+    "BD-118"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U23a",
+   "prefix": "N23a-",
+   "chapters": [
+    23
+   ],
+   "subsystem": "cortex",
+   "subs": [
+    "23.1",
+    "23.2",
+    "23.3",
+    "23.4",
+    "23.5",
+    "23.6",
+    "23.7",
+    "23.8",
+    "23.9",
+    "23.10",
+    "23.11",
+    "23.12",
+    "23.13"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-042",
+    "BD-192",
+    "BD-193",
+    "BD-196",
+    "BD-197",
+    "BD-198",
+    "BD-255",
+    "BD-321",
+    "BD-322",
+    "BD-323",
+    "BD-326"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U23b",
+   "prefix": "N23b-",
+   "chapters": [
+    23
+   ],
+   "subsystem": "cortex",
+   "subs": [
+    "23.14",
+    "23.15",
+    "23.16",
+    "23.17",
+    "23.18",
+    "23.19",
+    "23.20",
+    "23.21",
+    "23.22",
+    "23.23",
+    "23.24",
+    "23.25",
+    "23.26",
+    "23.27",
+    "23.28",
+    "23.29"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-218",
+    "BD-267",
+    "BD-301",
+    "BD-320",
+    "BD-324",
+    "BD-328",
+    "BD-439"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U24a",
+   "prefix": "N24a-",
+   "chapters": [
+    24
+   ],
+   "subsystem": "arena",
+   "subs": [
+    "24.1",
+    "24.2",
+    "24.3",
+    "24.4",
+    "24.5",
+    "24.6",
+    "24.7",
+    "24.8"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [
+    "BD-094",
+    "BD-121",
+    "BD-191",
+    "BD-195",
+    "BD-201",
+    "BD-253",
+    "BD-256",
+    "BD-257",
+    "BD-260",
+    "BD-368"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U24b",
+   "prefix": "N24b-",
+   "chapters": [
+    24
+   ],
+   "subsystem": "arena",
+   "subs": [
+    "24.9",
+    "24.10",
+    "24.11",
+    "24.12",
+    "24.13"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [
+    "BD-067",
+    "BD-123",
+    "BD-126",
+    "BD-194",
+    "BD-202",
+    "BD-254",
+    "BD-259",
+    "BD-261",
+    "BD-383"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U24c",
+   "prefix": "N24c-",
+   "chapters": [
+    24
+   ],
+   "subsystem": "arena",
+   "subs": [
+    "24.14",
+    "24.15",
+    "24.16",
+    "24.17",
+    "24.18",
+    "24.19",
+    "24.20",
+    "24.21",
+    "24.22",
+    "24.23"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [
+    "BD-064",
+    "BD-122",
+    "BD-125"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U25a",
+   "prefix": "N25a-",
+   "chapters": [
+    25
+   ],
+   "subsystem": "augur",
+   "subs": [
+    "25.1",
+    "25.2",
+    "25.3",
+    "25.4"
+   ],
+   "part": 0,
+   "parts": 5,
+   "seeds": [
+    "BD-002",
+    "BD-127",
+    "BD-130",
+    "BD-131",
+    "BD-135",
+    "BD-140",
+    "BD-288",
+    "BD-292",
+    "BD-316",
+    "BD-354",
+    "BD-355",
+    "BD-387",
+    "BD-436"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U25b",
+   "prefix": "N25b-",
+   "chapters": [
+    25
+   ],
+   "subsystem": "augur",
+   "subs": [
+    "25.5",
+    "25.6",
+    "25.7",
+    "25.8",
+    "25.9",
+    "25.10"
+   ],
+   "part": 1,
+   "parts": 5,
+   "seeds": [
+    "BD-021",
+    "BD-026",
+    "BD-027",
+    "BD-128",
+    "BD-133",
+    "BD-136",
+    "BD-289",
+    "BD-290",
+    "BD-293",
+    "BD-357"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U25c",
+   "prefix": "N25c-",
+   "chapters": [
+    25
+   ],
+   "subsystem": "augur",
+   "subs": [
+    "25.11",
+    "25.12",
+    "25.13",
+    "25.14",
+    "25.15",
+    "25.16",
+    "25.17",
+    "25.18",
+    "25.19"
+   ],
+   "part": 2,
+   "parts": 5,
+   "seeds": [
+    "BD-129",
+    "BD-291",
+    "BD-359",
+    "BD-363",
+    "BD-425",
+    "BD-435"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U25d",
+   "prefix": "N25d-",
+   "chapters": [
+    25
+   ],
+   "subsystem": "augur",
+   "subs": [
+    "25.20",
+    "25.21",
+    "25.22",
+    "25.23",
+    "25.24",
+    "25.25",
+    "25.26",
+    "25.27",
+    "25.28"
+   ],
+   "part": 3,
+   "parts": 5,
+   "seeds": [
+    "BD-043",
+    "BD-360",
+    "BD-361",
+    "BD-362",
+    "BD-426",
+    "BD-437"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U25e",
+   "prefix": "N25e-",
+   "chapters": [
+    25
+   ],
+   "subsystem": "augur",
+   "subs": [
+    "25.29",
+    "25.30",
+    "25.31",
+    "25.32",
+    "25.33",
+    "25.34",
+    "25.35",
+    "25.36",
+    "25.37",
+    "25.38",
+    "25.39"
+   ],
+   "part": 4,
+   "parts": 5,
+   "seeds": [
+    "BD-294",
+    "BD-302",
+    "BD-358"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U26a",
+   "prefix": "N26a-",
+   "chapters": [
+    26
+   ],
+   "subsystem": "nemesis",
+   "subs": [
+    "26.1",
+    "26.2",
+    "26.3",
+    "26.4",
+    "26.5",
+    "26.6",
+    "26.7",
+    "26.8",
+    "26.9"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-270",
+    "BD-272",
+    "BD-273",
+    "BD-276",
+    "BD-277"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U26b",
+   "prefix": "N26b-",
+   "chapters": [
+    26
+   ],
+   "subsystem": "nemesis",
+   "subs": [
+    "26.10",
+    "26.11",
+    "26.12",
+    "26.13",
+    "26.14",
+    "26.15",
+    "26.16"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-271",
+    "BD-274",
+    "BD-278"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U27a",
+   "prefix": "N27a-",
+   "chapters": [
+    27
+   ],
+   "subsystem": "autopsy",
+   "subs": [
+    "27.1",
+    "27.2",
+    "27.3",
+    "27.4",
+    "27.5",
+    "27.6",
+    "27.7",
+    "27.8",
+    "27.9",
+    "27.10"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-205",
+    "BD-281",
+    "BD-282",
+    "BD-283",
+    "BD-375"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U27b",
+   "prefix": "N27b-",
+   "chapters": [
+    27
+   ],
+   "subsystem": "autopsy",
+   "subs": [
+    "27.11",
+    "27.12",
+    "27.13",
+    "27.14",
+    "27.15",
+    "27.16",
+    "27.17",
+    "27.18",
+    "27.19"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-279",
+    "BD-280",
+    "BD-284"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U28a",
+   "prefix": "N28a-",
+   "chapters": [
+    28
+   ],
+   "subsystem": "atelier",
+   "subs": [
+    "28.1",
+    "28.2",
+    "28.3",
+    "28.4",
+    "28.5",
+    "28.6"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [
+    "BD-100",
+    "BD-101",
+    "BD-106",
+    "BD-107",
+    "BD-108",
+    "BD-110",
+    "BD-113",
+    "BD-250",
+    "BD-262",
+    "BD-310",
+    "BD-329",
+    "BD-343",
+    "BD-347",
+    "BD-348",
+    "BD-349",
+    "BD-351",
+    "BD-352"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U28b",
+   "prefix": "N28b-",
+   "chapters": [
+    28
+   ],
+   "subsystem": "atelier",
+   "subs": [
+    "28.7",
+    "28.8",
+    "28.9",
+    "28.10",
+    "28.11",
+    "28.12",
+    "28.13",
+    "28.14",
+    "28.15"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [
+    "BD-090",
+    "BD-248",
+    "BD-332",
+    "BD-345",
+    "BD-346",
+    "BD-374"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U28c",
+   "prefix": "N28c-",
+   "chapters": [
+    28
+   ],
+   "subsystem": "atelier",
+   "subs": [
+    "28.16",
+    "28.17",
+    "28.18",
+    "28.19",
+    "28.20",
+    "28.21",
+    "28.22",
+    "28.23",
+    "28.24",
+    "28.25",
+    "28.26"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [
+    "BD-309",
+    "BD-350"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U29a",
+   "prefix": "N29a-",
+   "chapters": [
+    29
+   ],
+   "subsystem": "chronicle",
+   "subs": [
+    "29.1",
+    "29.2",
+    "29.3",
+    "29.4",
+    "29.5",
+    "29.6",
+    "29.7",
+    "29.8"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-024",
+    "BD-091",
+    "BD-092",
+    "BD-095",
+    "BD-097",
+    "BD-148",
+    "BD-203",
+    "BD-204",
+    "BD-206",
+    "BD-207",
+    "BD-208",
+    "BD-209",
+    "BD-210"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U29b",
+   "prefix": "N29b-",
+   "chapters": [
+    29
+   ],
+   "subsystem": "chronicle",
+   "subs": [
+    "29.9",
+    "29.10",
+    "29.11",
+    "29.12",
+    "29.13",
+    "29.14",
+    "29.15",
+    "29.16",
+    "29.17",
+    "29.18",
+    "29.19",
+    "29.20",
+    "29.21",
+    "29.22"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [],
+   "extra": ""
+  },
+  {
+   "unit": "U30a",
+   "prefix": "N30a-",
+   "chapters": [
+    30
+   ],
+   "subsystem": "ground",
+   "subs": [
+    "30.1",
+    "30.2",
+    "30.3",
+    "30.4",
+    "30.5",
+    "30.6",
+    "30.7",
+    "30.8",
+    "30.9",
+    "30.10",
+    "30.11",
+    "30.12",
+    "30.13",
+    "30.14"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-311",
+    "BD-390"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U30b",
+   "prefix": "N30b-",
+   "chapters": [
+    30
+   ],
+   "subsystem": "ground",
+   "subs": [
+    "30.15",
+    "30.16",
+    "30.17",
+    "30.18",
+    "30.19",
+    "30.20",
+    "30.21",
+    "30.22",
+    "30.23",
+    "30.24"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-139",
+    "BD-388",
+    "BD-389",
+    "BD-391",
+    "BD-392",
+    "BD-393",
+    "BD-394",
+    "BD-395",
+    "BD-396",
+    "BD-397"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U31a",
+   "prefix": "N31a-",
+   "chapters": [
+    31
+   ],
+   "subsystem": "foundry",
+   "subs": [
+    "31.1",
+    "31.2",
+    "31.3",
+    "31.4",
+    "31.5",
+    "31.6",
+    "31.7",
+    "31.8",
+    "31.9",
+    "31.10",
+    "31.11",
+    "31.12",
+    "31.13",
+    "31.14",
+    "31.15",
+    "31.16"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [],
+   "extra": ""
+  },
+  {
+   "unit": "U31b",
+   "prefix": "N31b-",
+   "chapters": [
+    31
+   ],
+   "subsystem": "foundry",
+   "subs": [
+    "31.17",
+    "31.18",
+    "31.19",
+    "31.20",
+    "31.21",
+    "31.22",
+    "31.23"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-400",
+    "BD-402",
+    "BD-403",
+    "BD-404",
+    "BD-405",
+    "BD-406",
+    "BD-407",
+    "BD-408",
+    "BD-423",
+    "BD-438"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U32a",
+   "prefix": "N32a-",
+   "chapters": [
+    32
+   ],
+   "subsystem": "tether",
+   "subs": [
+    "32.1",
+    "32.2",
+    "32.3",
+    "32.4",
+    "32.5",
+    "32.6",
+    "32.7",
+    "32.8",
+    "32.9",
+    "32.10",
+    "32.11",
+    "32.12"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-022",
+    "BD-023",
+    "BD-137",
+    "BD-138",
+    "BD-211",
+    "BD-222",
+    "BD-295",
+    "BD-296",
+    "BD-297",
+    "BD-298",
+    "BD-299",
+    "BD-312",
+    "BD-313",
+    "BD-372",
+    "BD-373",
+    "BD-376",
+    "BD-409"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U32b",
+   "prefix": "N32b-",
+   "chapters": [
+    32
+   ],
+   "subsystem": "tether",
+   "subs": [
+    "32.13",
+    "32.14",
+    "32.15",
+    "32.16",
+    "32.17",
+    "32.18",
+    "32.19",
+    "32.20",
+    "32.21",
+    "32.22",
+    "32.23",
+    "32.24"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [],
+   "extra": ""
+  },
+  {
+   "unit": "U33a",
+   "prefix": "N33a-",
+   "chapters": [
+    33
+   ],
+   "subsystem": "suite",
+   "subs": [
+    "33.1",
+    "33.2",
+    "33.3",
+    "33.4",
+    "33.5",
+    "33.6"
+   ],
+   "part": 0,
+   "parts": 3,
+   "seeds": [
+    "BD-006",
+    "BD-007",
+    "BD-009",
+    "BD-015",
+    "BD-016",
+    "BD-019",
+    "BD-036",
+    "BD-044",
+    "BD-096",
+    "BD-105",
+    "BD-220",
+    "BD-300",
+    "BD-380",
+    "BD-398",
+    "BD-416"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U33b",
+   "prefix": "N33b-",
+   "chapters": [
+    33
+   ],
+   "subsystem": "suite",
+   "subs": [
+    "33.7",
+    "33.8",
+    "33.9",
+    "33.10",
+    "33.11"
+   ],
+   "part": 1,
+   "parts": 3,
+   "seeds": [
+    "BD-008",
+    "BD-028",
+    "BD-032",
+    "BD-033",
+    "BD-034",
+    "BD-035",
+    "BD-068",
+    "BD-079",
+    "BD-093",
+    "BD-111",
+    "BD-124",
+    "BD-243",
+    "BD-333",
+    "BD-401",
+    "BD-413"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U33c",
+   "prefix": "N33c-",
+   "chapters": [
+    33
+   ],
+   "subsystem": "suite",
+   "subs": [
+    "33.12",
+    "33.13",
+    "33.14",
+    "33.15",
+    "33.16",
+    "33.17",
+    "33.18"
+   ],
+   "part": 2,
+   "parts": 3,
+   "seeds": [
+    "BD-001",
+    "BD-031",
+    "BD-038"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U34",
+   "prefix": "N34-",
+   "chapters": [
+    34
+   ],
+   "subsystem": "workspace",
+   "subs": [
+    "34.1",
+    "34.2",
+    "34.3",
+    "34.4",
+    "34.5",
+    "34.6",
+    "34.7",
+    "34.8",
+    "34.9",
+    "34.10",
+    "34.11",
+    "34.12",
+    "34.13",
+    "34.14"
+   ],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-003",
+    "BD-004",
+    "BD-005",
+    "BD-141",
+    "BD-145",
+    "BD-410"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U35",
+   "prefix": "N35-",
+   "chapters": [
+    35
+   ],
+   "subsystem": "numerics",
+   "subs": [
+    "35.1",
+    "35.2",
+    "35.3",
+    "35.4",
+    "35.5",
+    "35.6",
+    "35.7",
+    "35.8",
+    "35.9",
+    "35.10",
+    "35.11",
+    "35.12",
+    "35.13",
+    "35.14",
+    "35.15",
+    "35.16"
+   ],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-177",
+    "BD-181",
+    "BD-269"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U36",
+   "prefix": "N36-",
+   "chapters": [
+    36
+   ],
+   "subsystem": "performance",
+   "subs": [
+    "36.1",
+    "36.2",
+    "36.3",
+    "36.4",
+    "36.5",
+    "36.6",
+    "36.7",
+    "36.8",
+    "36.9",
+    "36.10",
+    "36.11",
+    "36.12",
+    "36.13",
+    "36.14",
+    "36.15",
+    "36.16"
+   ],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-040",
+    "BD-142",
+    "BD-149",
+    "BD-199",
+    "BD-216",
+    "BD-219"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U37",
+   "prefix": "N37-",
+   "chapters": [
+    37
+   ],
+   "subsystem": "safety",
+   "subs": [
+    "37.1",
+    "37.2",
+    "37.3",
+    "37.4",
+    "37.5",
+    "37.6",
+    "37.7",
+    "37.8",
+    "37.9",
+    "37.10",
+    "37.11",
+    "37.12",
+    "37.13",
+    "37.14",
+    "37.15"
+   ],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-258",
+    "BD-303",
+    "BD-304",
+    "BD-305",
+    "BD-306",
+    "BD-307",
+    "BD-308"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U38a",
+   "prefix": "N38a-",
+   "chapters": [
+    38
+   ],
+   "subsystem": "gauntlet",
+   "subs": [
+    "38.1",
+    "38.2",
+    "38.3",
+    "38.4",
+    "38.5",
+    "38.6",
+    "38.7",
+    "38.8",
+    "38.9"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-041",
+    "BD-417",
+    "BD-418",
+    "BD-421",
+    "BD-432"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U38b",
+   "prefix": "N38b-",
+   "chapters": [
+    38
+   ],
+   "subsystem": "gauntlet",
+   "subs": [
+    "38.10",
+    "38.11",
+    "38.12",
+    "38.13",
+    "38.14",
+    "38.15",
+    "38.16",
+    "38.17",
+    "38.18"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-025",
+    "BD-146",
+    "BD-223",
+    "BD-318",
+    "BD-377",
+    "BD-411"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U39a",
+   "prefix": "N39a-",
+   "chapters": [
+    39
+   ],
+   "subsystem": "tenfold",
+   "subs": [
+    "39.1",
+    "39.2",
+    "39.3",
+    "39.4",
+    "39.5",
+    "39.6",
+    "39.7",
+    "39.8"
+   ],
+   "part": 0,
+   "parts": 2,
+   "seeds": [
+    "BD-039",
+    "BD-147",
+    "BD-314",
+    "BD-315",
+    "BD-428",
+    "BD-430",
+    "BD-431",
+    "BD-433",
+    "BD-434"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U39b",
+   "prefix": "N39b-",
+   "chapters": [
+    39
+   ],
+   "subsystem": "tenfold",
+   "subs": [
+    "39.9",
+    "39.10",
+    "39.11",
+    "39.12",
+    "39.13",
+    "39.14",
+    "39.15",
+    "39.16",
+    "39.17",
+    "39.18",
+    "39.19",
+    "39.20",
+    "39.21",
+    "39.22"
+   ],
+   "part": 1,
+   "parts": 2,
+   "seeds": [
+    "BD-143",
+    "BD-317",
+    "BD-429"
+   ],
+   "extra": ""
+  },
+  {
+   "unit": "U00",
+   "prefix": "N00-",
+   "what": "Part 0 and §1–§8 (the thesis, claims, bets, North-Star scenarios, principles) and Appendix K",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [],
+   "extra": "",
+   "subsystem": ""
+  },
+  {
+   "unit": "UAB",
+   "prefix": "NAB-",
+   "what": "Appendix A (glossary), B (idea passes), C (EV matrix and killed-idea register), H (source register)",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [],
+   "extra": "",
+   "subsystem": ""
+  },
+  {
+   "unit": "U40",
+   "prefix": "N40-",
+   "what": "§40 (the gate register) and §43 (milestones)",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-224",
+    "BD-319",
+    "BD-378",
+    "BD-412",
+    "BD-427",
+    "BD-442"
+   ],
+   "extra": "",
+   "subsystem": ""
+  },
+  {
+   "unit": "U41",
+   "prefix": "N41-",
+   "what": "§41 (risks), §42 (open questions), §45.10–45.11, §46 (first session), §47 (definition of done)",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [
+    "BD-056",
+    "BD-058",
+    "BD-087",
+    "BD-115",
+    "BD-153",
+    "BD-157",
+    "BD-160",
+    "BD-166",
+    "BD-180",
+    "BD-200",
+    "BD-231",
+    "BD-341",
+    "BD-344"
+   ],
+   "extra": "",
+   "subsystem": ""
+  },
+  {
+   "unit": "U44",
+   "prefix": "N44-",
+   "what": "§44 (work packages)",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [],
+   "extra": "",
+   "subsystem": ""
+  },
+  {
+   "unit": "UEG",
+   "prefix": "NEG-",
+   "what": "Appendix E (worked cards) and Appendix G (reference robots, scene assets, licences, hazards)",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [],
+   "extra": "",
+   "subsystem": ""
+  },
+  {
+   "unit": "UJL",
+   "prefix": "NJL-",
+   "what": "Appendix J (verb registry) and Appendix L (worked artifacts)",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [],
+   "extra": "",
+   "subsystem": ""
+  },
+  {
+   "unit": "UF",
+   "prefix": "NF-",
+   "what": "Appendix F (upstream work items)",
+   "chapters": [],
+   "subs": [],
+   "part": 0,
+   "parts": 1,
+   "seeds": [],
+   "extra": "",
+   "subsystem": ""
+  }
+ ],
+ "chapters": {
+  "1": {
+   "title": "What exists, what is missing, what this is",
+   "start": 426,
+   "end": 727
+  },
+  "2": {
+   "title": "The ten-fold thesis",
+   "start": 728,
+   "end": 940
+  },
+  "3": {
+   "title": "Twelve principles",
+   "start": 941,
+   "end": 991
+  },
+  "4": {
+   "title": "Bets, each with its falsifier",
+   "start": 992,
+   "end": 1055
+  },
+  "5": {
+   "title": "Readers",
+   "start": 1056,
+   "end": 1073
+  },
+  "6": {
+   "title": "Goals, non-goals, anti-goals",
+   "start": 1074,
+   "end": 1187
+  },
+  "7": {
+   "title": "North-Star scenarios",
+   "start": 1188,
+   "end": 1335
+  },
+  "8": {
+   "title": "The seven claims and the claim product",
+   "start": 1336,
+   "end": 1480
+  },
+  "9": {
+   "title": "Doctrine",
+   "start": 1481,
+   "end": 1560
+  },
+  "10": {
+   "title": "The constructions (C-01 onward)",
+   "start": 1561,
+   "end": 3273
+  },
+  "11": {
+   "title": "Conventions",
+   "start": 3274,
+   "end": 3458
+  },
+  "12": {
+   "title": "Lemma: proofs, certificates, the offline auditor",
+   "start": 3459,
+   "end": 3851
+  },
+  "13": {
+   "title": "Marrow: the algebraic core",
+   "start": 3852,
+   "end": 4302
+  },
+  "14": {
+   "title": "Skeleton: design language, modules, archetypes, preflight",
+   "start": 4303,
+   "end": 5117
+  },
+  "15": {
+   "title": "Sinew: actuators, transmissions, power",
+   "start": 5118,
+   "end": 5630
+  },
+  "16": {
+   "title": "Kinesis: dynamics on three tiers",
+   "start": 5631,
+   "end": 6731
+  },
+  "17": {
+   "title": "Phylum: families of bodies in one batch",
+   "start": 6732,
+   "end": 7363
+  },
+  "18": {
+   "title": "Traction: collision, contact, wheels, tracks, terrain",
+   "start": 7364,
+   "end": 7956
+  },
+  "19": {
+   "title": "Habitat: scenes, living worlds, clearance, retrofits",
+   "start": 7957,
+   "end": 9334
+  },
+  "20": {
+   "title": "Sensorium: sensors, clocks, observability",
+   "start": 9335,
+   "end": 10232
+  },
+  "21": {
+   "title": "Spark: GPU backends and the kernel toolchain",
+   "start": 10233,
+   "end": 11120
+  },
+  "22": {
+   "title": "Reflex: estimation, control, gaits, skills, shields",
+   "start": 11121,
+   "end": 12369
+  },
+  "23": {
+   "title": "Cortex: the gym, learning, family policies, inheritance",
+   "start": 12370,
+   "end": 13279
+  },
+  "24": {
+   "title": "Arena: tasks, requirements, fixtures, metrics, qualification",
+   "start": 13280,
+   "end": 14324
+  },
+  "25": {
+   "title": "Augur: mission queries and inverse design",
+   "start": 14325,
+   "end": 17105
+  },
+  "26": {
+   "title": "Nemesis: adversarial worlds and rare failures",
+   "start": 17106,
+   "end": 17595
+  },
+  "27": {
+   "title": "Autopsy: counterfactual debugging",
+   "start": 17596,
+   "end": 18127
+  },
+  "28": {
+   "title": "Atelier: the studio loop, analyses, comparison, lineage, cascade, decision cores",
+   "start": 18128,
+   "end": 19482
+  },
+  "29": {
+   "title": "Chronicle: telemetry, replay, evidence",
+   "start": 19483,
+   "end": 20159
+  },
+  "30": {
+   "title": "Ground: calibration against reality",
+   "start": 20160,
+   "end": 20838
+  },
+  "31": {
+   "title": "Foundry: structure, manufacture, lifecycle",
+   "start": 20839,
+   "end": 21541
+  },
+  "32": {
+   "title": "Tether: CLI, daemon, MCP, dashboard, viewer",
+   "start": 21542,
+   "end": 22570
+  },
+  "33": {
+   "title": "Suite consumption",
+   "start": 22571,
+   "end": 23533
+  },
+  "34": {
+   "title": "Workspace, crates, formats",
+   "start": 23534,
+   "end": 24040
+  },
+  "35": {
+   "title": "Numerics and determinism",
+   "start": 24041,
+   "end": 24437
+  },
+  "36": {
+   "title": "The performance program",
+   "start": 24438,
+   "end": 24902
+  },
+  "37": {
+   "title": "Safety, security, privacy",
+   "start": 24903,
+   "end": 25165
+  },
+  "38": {
+   "title": "Gauntlet: the verification program",
+   "start": 25166,
+   "end": 25716
+  },
+  "39": {
+   "title": "The ten-fold test",
+   "start": 25717,
+   "end": 26712
+  },
+  "40": {
+   "title": "The gate register",
+   "start": 26713,
+   "end": 27629
+  },
+  "41": {
+   "title": "Risks and the pre-mortem",
+   "start": 27630,
+   "end": 27802
+  },
+  "42": {
+   "title": "Open questions",
+   "start": 27803,
+   "end": 28067
+  },
+  "43": {
+   "title": "Milestones M0–M8",
+   "start": 28068,
+   "end": 28582
+  },
+  "44": {
+   "title": "Work packages",
+   "start": 28583,
+   "end": 28720
+  },
+  "45": {
+   "title": "The beads",
+   "start": 28721,
+   "end": 29445
+  },
+  "46": {
+   "title": "The first implementation session",
+   "start": 29446,
+   "end": 29529
+  },
+  "47": {
+   "title": "Definition of done and the release rubric",
+   "start": 29530,
+   "end": 29682
+  }
+ },
+ "appendices": {
+  "A": {
+   "title": "Glossary",
+   "start": 29683,
+   "end": 30029
+  },
+  "B": {
+   "title": "Idea passes",
+   "start": 30030,
+   "end": 30466
+  },
+  "C": {
+   "title": "EV matrix and the killed-idea register",
+   "start": 30467,
+   "end": 31478
+  },
+  "D": {
+   "title": "Mathematics compendium",
+   "start": 31479,
+   "end": 31668
+  },
+  "E": {
+   "title": "Worked cards",
+   "start": 31669,
+   "end": 32451
+  },
+  "F": {
+   "title": "Upstream work items",
+   "start": 32452,
+   "end": 32571
+  },
+  "G": {
+   "title": "Reference robots, scene assets, licences and hazard lists",
+   "start": 32572,
+   "end": 32736
+  },
+  "H": {
+   "title": "Source register",
+   "start": 32737,
+   "end": 33092
+  },
+  "I": {
+   "title": "Type sketches",
+   "start": 33093,
+   "end": 33808
+  },
+  "J": {
+   "title": "Verb registry",
+   "start": 33809,
+   "end": 34160
+  },
+  "K": {
+   "title": "Review log and plan-time record",
+   "start": 34161,
+   "end": 34238
+  },
+  "L": {
+   "title": "Worked artifacts",
+   "start": 34239,
+   "end": 35080
+  },
+  "M": {
+   "title": "Known-answer suite",
+   "start": 35081,
+   "end": 36214
+  },
+  "N": {
+   "title": "Counterexample catalogue",
+   "start": 36215,
+   "end": 36818
+  },
+  "O": {
+   "title": "Refusal code registry",
+   "start": 36819,
+   "end": 37158
+  }
+ },
+ "late": [
+  "13.11",
+  "14.16",
+  "14.17",
+  "15.15",
+  "16.19",
+  "16.20",
+  "16.21",
+  "16.22",
+  "16.23",
+  "16.24",
+  "17.21",
+  "18.19",
+  "18.20",
+  "19.21",
+  "19.22",
+  "20.23",
+  "20.24",
+  "20.25",
+  "21.26",
+  "22.20",
+  "22.21",
+  "22.22",
+  "22.23",
+  "22.24",
+  "22.25",
+  "23.25",
+  "23.26",
+  "23.27",
+  "23.28",
+  "23.29",
+  "24.19",
+  "24.20",
+  "24.21",
+  "24.22",
+  "24.23",
+  "25.29",
+  "25.30",
+  "25.31",
+  "25.32",
+  "25.33",
+  "25.34",
+  "25.35",
+  "25.36",
+  "25.37",
+  "25.38",
+  "25.39",
+  "27.19",
+  "28.25",
+  "28.26",
+  "29.22",
+  "30.24",
+  "31.21",
+  "31.22",
+  "31.23",
+  "32.23",
+  "32.24",
+  "33.17",
+  "33.18",
+  "34.14",
+  "38.17",
+  "38.18",
+  "39.20",
+  "39.21",
+  "39.22",
+  "41.5",
+  "47.4"
+ ],
+ "gate_def": {
+  "GATE-LEMMA-00": 12,
+  "GATE-LEMMA-01": 12,
+  "GATE-LEMMA-02": 12,
+  "GATE-LEMMA-03": 12,
+  "GATE-LEMMA-04": 12,
+  "GATE-LEMMA-05": 12,
+  "GATE-LEMMA-06": 12,
+  "KILL-LEMMA": 12,
+  "KILL-REFLECT": 12,
+  "KILL-FAMILYCERT": 12,
+  "GATE-MARROW-01": 13,
+  "GATE-MARROW-02": 13,
+  "GATE-MARROW-03": 13,
+  "GATE-MARROW-04": 13,
+  "GATE-MARROW-05": 13,
+  "KILL-MARROW-BLOCKS": 13,
+  "KILL-MARROW-GUARD": 13,
+  "GATE-MARROW-06": 13,
+  "GATE-SKEL-01": 14,
+  "GATE-SKEL-02": 14,
+  "GATE-SKEL-03": 14,
+  "GATE-SKEL-04": 14,
+  "GATE-SKEL-05": 14,
+  "GATE-SKEL-06": 14,
+  "GATE-SKEL-07": 14,
+  "GATE-SKEL-08": 14,
+  "KILL-SKEL-SUBST": 14,
+  "KILL-SKEL-PORT": 14,
+  "KILL-SKEL-ALIAS": 14,
+  "KILL-SKEL-SEXPR": 14,
+  "GATE-SKEL-09": 14,
+  "GATE-SKEL-10": 14,
+  "KILL-SKEL-CELL": 14,
+  "GATE-SKEL-11": 14,
+  "GATE-SINEW-01": 15,
+  "GATE-SINEW-02": 15,
+  "GATE-SINEW-03": 15,
+  "GATE-SINEW-04": 15,
+  "GATE-SINEW-05": 15,
+  "GATE-SINEW-06": 15,
+  "GATE-SINEW-07": 15,
+  "GATE-SINEW-08": 15,
+  "GATE-SINEW-09": 15,
+  "KILL-SINEW-ROWS": 15,
+  "KILL-SINEW-AGE": 15,
+  "KILL-SINEW-ROTOR": 15,
+  "GATE-SINEW-10": 15,
+  "GATE-KIN-01": 16,
+  "GATE-KIN-02": 16,
+  "GATE-KIN-03": 16,
+  "GATE-KIN-04": 16,
+  "GATE-KIN-05": 16,
+  "GATE-KIN-06": 16,
+  "GATE-KIN-07": 16,
+  "GATE-FID-01": 16,
+  "GATE-FID-02": 16,
+  "GATE-FID-03": 16,
+  "GATE-FID-04": 16,
+  "GATE-FID-05": 16,
+  "GATE-FID-06": 16,
+  "GATE-FID-07": 16,
+  "GATE-FID-08": 16,
+  "KILL-DR": 16,
+  "KILL-RANK": 16,
+  "KILL-SHADOW": 16,
+  "KILL-VARIATIONAL": 16,
+  "KILL-TREEOP": 16,
+  "GATE-KIN-08": 16,
+  "GATE-KIN-09": 16,
+  "GATE-KIN-10": 16,
+  "KILL-STEPADJOINT": 16,
+  "GATE-KIN-11": 16,
+  "KILL-LOOPELIM": 16,
+  "GATE-KIN-12": 16,
+  "KILL-ANCESTOR": 16,
+  "GATE-KIN-13": 16,
+  "GATE-PHYLUM-01": 17,
+  "GATE-PHYLUM-02": 17,
+  "GATE-PHYLUM-03": 17,
+  "GATE-PHYLUM-04": 17,
+  "GATE-PHYLUM-05": 17,
+  "GATE-PHYLUM-06": 17,
+  "GATE-PHYLUM-07": 17,
+  "GATE-PHYLUM-08": 17,
+  "KILL-PHYLUM": 17,
+  "KILL-FAMILYLANE": 17,
+  "KILL-SPECIALIZE": 17,
+  "KILL-FDGRAD": 17,
+  "KILL-QUOTIENT": 17,
+  "GATE-PHYLUM-09": 17,
+  "GATE-TRAC-01": 18,
+  "GATE-TRAC-02": 18,
+  "GATE-TRAC-03": 18,
+  "GATE-TRAC-04": 18,
+  "GATE-TRAC-05": 18,
+  "GATE-TRAC-06": 18,
+  "GATE-TRAC-07": 18,
+  "GATE-TRAC-08": 18,
+  "GATE-TRAC-09": 18,
+  "GATE-TRAC-10": 18,
+  "KILL-CONTACT": 18,
+  "KILL-FILM": 18,
+  "KILL-HARDCONTACT": 18,
+  "KILL-MESHGPU": 18,
+  "KILL-RESPONSE": 18,
+  "KILL-SOIL": 18,
+  "GATE-TRAC-11": 18,
+  "GATE-TRAC-12": 18,
+  "GATE-HAB-01": 19,
+  "GATE-HAB-02": 19,
+  "GATE-HAB-03": 19,
+  "GATE-HAB-04": 19,
+  "GATE-HAB-05": 19,
+  "GATE-HAB-06": 19,
+  "GATE-HAB-07": 19,
+  "GATE-HAB-08": 19,
+  "GATE-HAB-09": 19,
+  "GATE-HAB-10": 19,
+  "GATE-HAB-11": 19,
+  "GATE-HAB-12": 19,
+  "GATE-HAB-13": 19,
+  "GATE-HAB-14": 19,
+  "KILL-LIVING": 19,
+  "KILL-ADVECT": 19,
+  "KILL-SLOSH": 19,
+  "KILL-PROXY": 19,
+  "KILL-DRESSING": 19,
+  "KILL-INGEST": 19,
+  "KILL-FCLEAR": 19,
+  "KILL-RETROFIT": 19,
+  "KILL-POOL": 19,
+  "KILL-BANK-BREADTH": 19,
+  "GATE-HAB-15": 19,
+  "KILL-FARFIELD": 19,
+  "GATE-HAB-16": 19,
+  "GATE-SENS-01": 20,
+  "GATE-SENS-02": 20,
+  "GATE-SENS-03": 20,
+  "GATE-SENS-04": 20,
+  "GATE-SENS-05": 20,
+  "GATE-SENS-06": 20,
+  "GATE-SENS-07": 20,
+  "GATE-SENS-08": 20,
+  "GATE-SENS-09": 20,
+  "GATE-SENS-10": 20,
+  "GATE-SENS-11": 20,
+  "GATE-SENS-12": 20,
+  "GATE-SENS-13": 20,
+  "GATE-SENS-14": 20,
+  "KILL-ALIAS": 20,
+  "KILL-SCHED": 20,
+  "KILL-EXPOSURE": 20,
+  "GATE-SENS-15": 20,
+  "GATE-SENS-16": 20,
+  "GATE-SENS-17": 20,
+  "KILL-VISIBILITY": 20,
+  "GATE-SENS-18": 20,
+  "KILL-KIR": 21,
+  "KILL-BUCKET": 21,
+  "KILL-SLOT": 21,
+  "KILL-D1": 21,
+  "KILL-FLEET": 21,
+  "KILL-MEGA": 21,
+  "GATE-SPARK-00": 21,
+  "GATE-SPARK-01": 21,
+  "GATE-SPARK-02": 21,
+  "GATE-SPARK-03": 21,
+  "GATE-SPARK-04": 21,
+  "GATE-SPARK-05": 21,
+  "GATE-SPARK-06": 21,
+  "GATE-SPARK-07": 21,
+  "GATE-SPARK-08": 21,
+  "GATE-SPARK-09": 21,
+  "GATE-SPARK-10": 21,
+  "GATE-SPARK-11": 21,
+  "GATE-SPARK-12": 21,
+  "GATE-SPARK-13": 21,
+  "GATE-SPARK-14": 21,
+  "KILL-METAL": 21,
+  "GATE-SPARK-23": 21,
+  "GATE-REFLEX-01": 22,
+  "GATE-REFLEX-02": 22,
+  "GATE-REFLEX-03": 22,
+  "GATE-REFLEX-04": 22,
+  "GATE-REFLEX-05": 22,
+  "GATE-REFLEX-06": 22,
+  "GATE-REFLEX-07": 22,
+  "GATE-REFLEX-08": 22,
+  "GATE-REFLEX-09": 22,
+  "GATE-GAIT-01": 22,
+  "GATE-GAIT-02": 22,
+  "GATE-GAIT-03": 22,
+  "GATE-SHIELD-01": 22,
+  "GATE-SHIELD-02": 22,
+  "GATE-SHIELD-03": 22,
+  "GATE-SHIELD-04": 22,
+  "GATE-SHIELD-05": 22,
+  "KILL-BASELINE": 22,
+  "KILL-RESIDUAL": 22,
+  "KILL-MPC": 22,
+  "KILL-GAIT": 22,
+  "KILL-SKILL": 22,
+  "KILL-ENERGY": 22,
+  "KILL-SHIELD": 22,
+  "KILL-TUBE": 22,
+  "GATE-REFLEX-10": 22,
+  "GATE-SHIELD-06": 22,
+  "GATE-REFLEX-11": 22,
+  "KILL-MPCRECORD": 22,
+  "GATE-GAIT-04": 22,
+  "KILL-FREEPERIOD": 22,
+  "GATE-GAIT-05": 22,
+  "KILL-STRIDESEQ": 22,
+  "GATE-SHIELD-07": 22,
+  "GATE-CORTEX-01": 23,
+  "GATE-CORTEX-02": 23,
+  "GATE-CORTEX-03": 23,
+  "GATE-CORTEX-04": 23,
+  "GATE-CORTEX-05": 23,
+  "GATE-CORTEX-06": 23,
+  "GATE-CORTEX-07": 23,
+  "GATE-CORTEX-08": 23,
+  "GATE-CORTEX-09": 23,
+  "GATE-CORTEX-10": 23,
+  "GATE-CORTEX-11": 23,
+  "GATE-CORTEX-12": 23,
+  "GATE-CORTEX-13": 23,
+  "GATE-CORTEX-14": 23,
+  "GATE-CORTEX-15": 23,
+  "GATE-CORTEX-16": 23,
+  "GATE-CORTEX-17": 23,
+  "KILL-EQUIV": 23,
+  "KILL-LEARNKERN": 23,
+  "KILL-FAMILY": 23,
+  "KILL-INHERIT": 23,
+  "KILL-DISTILL": 23,
+  "KILL-ALTALGO": 23,
+  "KILL-GATREE": 23,
+  "KILL-GYMADAPT": 23,
+  "GATE-CORTEX-18": 23,
+  "GATE-CORTEX-19": 23,
+  "GATE-CORTEX-20": 23,
+  "GATE-CORTEX-21": 23,
+  "GATE-CORTEX-22": 23,
+  "KILL-SHORTGRAD": 23,
+  "GATE-ARENA-01": 24,
+  "GATE-ARENA-02": 24,
+  "GATE-ARENA-03": 24,
+  "GATE-ARENA-04": 24,
+  "GATE-ARENA-05": 24,
+  "GATE-ARENA-06": 24,
+  "GATE-ARENA-07": 24,
+  "GATE-ARENA-08": 24,
+  "GATE-ARENA-09": 24,
+  "GATE-QUAL-01": 24,
+  "GATE-QUAL-02": 24,
+  "GATE-QUAL-03": 24,
+  "KILL-SPEC-REWARD": 24,
+  "GATE-ARENA-10": 24,
+  "GATE-ARENA-11": 24,
+  "KILL-FOIL": 24,
+  "GATE-ARENA-12": 24,
+  "GATE-ARENA-13": 24,
+  "KILL-ITEMBANK": 24,
+  "GATE-ARENA-14": 24,
+  "KILL-EXPODOMAIN": 24,
+  "GATE-ARENA-15": 24,
+  "GATE-AUGUR-01": 25,
+  "GATE-AUGUR-02": 25,
+  "GATE-AUGUR-03": 25,
+  "GATE-AUGUR-04": 25,
+  "GATE-AUGUR-05": 25,
+  "GATE-AUGUR-06": 25,
+  "GATE-AUGUR-07": 25,
+  "GATE-AUGUR-08": 25,
+  "GATE-AUGUR-09": 25,
+  "GATE-AUGUR-10": 25,
+  "GATE-AUGUR-11": 25,
+  "GATE-AUGUR-12": 25,
+  "GATE-AUGUR-13": 25,
+  "GATE-AUGUR-14": 25,
+  "GATE-AUGUR-15": 25,
+  "GATE-AUGUR-16": 25,
+  "GATE-AUGUR-17": 25,
+  "GATE-AUGUR-18": 25,
+  "GATE-AUGUR-19": 25,
+  "GATE-AUGUR-20": 25,
+  "GATE-AUGUR-21": 25,
+  "GATE-AUGUR-22": 25,
+  "GATE-AUGUR-23": 25,
+  "GATE-AUGUR-24": 25,
+  "KILL-AUGUR-TIE": 25,
+  "KILL-AUGUR-FALSECERT": 25,
+  "KILL-AUGUR-REGION": 25,
+  "KILL-AUGUR-CUTS": 25,
+  "KILL-AUGUR-REUSE": 25,
+  "KILL-AUGUR-SEPARATE": 25,
+  "KILL-AUGUR-ALIAS": 25,
+  "KILL-AUGUR-PROBE": 25,
+  "KILL-AUGUR-DOMINANCE": 25,
+  "KILL-AUGUR-LABELS": 25,
+  "KILL-AUGUR-TRANSPORT": 25,
+  "KILL-AUGUR-FACILITY": 25,
+  "KILL-AUGUR-PHASE": 25,
+  "KILL-AUGUR-SYMEVENT": 25,
+  "KILL-SYNTH-CODESIGN": 25,
+  "KILL-SYNTH-TRAJOPT": 25,
+  "KILL-SYNTH-LINKAGE": 25,
+  "KILL-SYNTH-CONT": 25,
+  "GATE-AUGUR-25": 25,
+  "KILL-COUPLING": 25,
+  "GATE-AUGUR-26": 25,
+  "GATE-AUGUR-27": 25,
+  "GATE-AUGUR-28": 25,
+  "KILL-AUGUR-BRACKET": 25,
+  "GATE-AUGUR-29": 25,
+  "KILL-SYNTH-REGRESSOR": 25,
+  "GATE-AUGUR-30": 25,
+  "KILL-WEAKVAR": 25,
+  "GATE-AUGUR-31": 25,
+  "GATE-AUGUR-32": 25,
+  "GATE-AUGUR-33": 25,
+  "GATE-AUGUR-34": 25,
+  "GATE-AUGUR-35": 25,
+  "GATE-NEMESIS-01": 26,
+  "GATE-NEMESIS-02": 26,
+  "GATE-NEMESIS-03": 26,
+  "GATE-NEMESIS-04": 26,
+  "GATE-NEMESIS-05": 26,
+  "GATE-NEMESIS-06": 26,
+  "GATE-NEMESIS-07": 26,
+  "GATE-NEMESIS-08": 26,
+  "KILL-NEMESIS": 26,
+  "KILL-RARE": 26,
+  "KILL-MCW": 26,
+  "GATE-AUTOPSY-01": 27,
+  "GATE-AUTOPSY-02": 27,
+  "GATE-AUTOPSY-03": 27,
+  "GATE-AUTOPSY-04": 27,
+  "GATE-AUTOPSY-05": 27,
+  "GATE-AUTOPSY-06": 27,
+  "GATE-AUTOPSY-07": 27,
+  "GATE-AUTOPSY-08": 27,
+  "KILL-AUTOPSY": 27,
+  "GATE-AUTOPSY-09": 27,
+  "KILL-ENSEMBLE": 27,
+  "GATE-ATEL-01": 28,
+  "GATE-ATEL-02": 28,
+  "GATE-ATEL-03": 28,
+  "GATE-ATEL-04": 28,
+  "GATE-ATEL-05": 28,
+  "GATE-ATEL-06": 28,
+  "GATE-ATEL-07": 28,
+  "GATE-ATEL-08": 28,
+  "GATE-ATEL-09": 28,
+  "GATE-ATEL-10": 28,
+  "GATE-ATEL-11": 28,
+  "GATE-ATEL-12": 28,
+  "GATE-ATEL-13": 28,
+  "GATE-ATEL-14": 28,
+  "GATE-ATEL-15": 28,
+  "GATE-ATEL-16": 28,
+  "KILL-STATIC": 28,
+  "KILL-LADDER": 28,
+  "KILL-VOI": 28,
+  "KILL-REUSE": 28,
+  "KILL-ATLAS": 28,
+  "GATE-ATEL-17": 28,
+  "GATE-ATEL-18": 28,
+  "KILL-BUDGETCURVE": 28,
+  "GATE-ATEL-19": 28,
+  "GATE-CHRON-01": 29,
+  "GATE-CHRON-02": 29,
+  "GATE-CHRON-03": 29,
+  "GATE-CHRON-04": 29,
+  "GATE-CHRON-05": 29,
+  "GATE-CHRON-06": 29,
+  "GATE-CHRON-07": 29,
+  "GATE-CHRON-08": 29,
+  "GATE-CHRON-09": 29,
+  "GATE-CHRON-10": 29,
+  "GATE-CHRON-11": 29,
+  "GATE-CHRON-12": 29,
+  "GATE-CHRON-13": 29,
+  "GATE-CHRON-14": 29,
+  "GATE-GROUND-01": 30,
+  "GATE-GROUND-02": 30,
+  "GATE-GROUND-03": 30,
+  "GATE-GROUND-04": 30,
+  "GATE-GROUND-05": 30,
+  "GATE-GROUND-06": 30,
+  "GATE-GROUND-07": 30,
+  "GATE-GROUND-08": 30,
+  "GATE-GROUND-09": 30,
+  "GATE-GROUND-10": 30,
+  "KILL-GROUND": 30,
+  "KILL-BAND": 30,
+  "KILL-CLOCK": 30,
+  "KILL-ASBUILT": 30,
+  "KILL-KIT": 30,
+  "GATE-GROUND-11": 30,
+  "GATE-FOUNDRY-01": 31,
+  "GATE-FOUNDRY-02": 31,
+  "GATE-FOUNDRY-03": 31,
+  "GATE-FOUNDRY-04": 31,
+  "GATE-FOUNDRY-05": 31,
+  "GATE-FOUNDRY-06": 31,
+  "GATE-FOUNDRY-07": 31,
+  "GATE-FOUNDRY-08": 31,
+  "GATE-FOUNDRY-09": 31,
+  "GATE-FOUNDRY-10": 31,
+  "GATE-FOUNDRY-11": 31,
+  "GATE-FOUNDRY-12": 31,
+  "KILL-TOPOPT": 31,
+  "KILL-LOADS": 31,
+  "KILL-FAB": 31,
+  "KILL-TOLERANCE": 31,
+  "KILL-PACKET": 31,
+  "KILL-FIRMWARE": 31,
+  "KILL-LIFECYCLE": 31,
+  "GATE-FOUNDRY-13": 31,
+  "GATE-FOUNDRY-14": 31,
+  "GATE-FOUNDRY-15": 31,
+  "GATE-TETHER-01": 32,
+  "GATE-TETHER-02": 32,
+  "GATE-TETHER-03": 32,
+  "GATE-TETHER-04": 32,
+  "GATE-TETHER-05": 32,
+  "GATE-TETHER-06": 32,
+  "GATE-TETHER-07": 32,
+  "GATE-TETHER-08": 32,
+  "GATE-TETHER-09": 32,
+  "GATE-TETHER-10": 32,
+  "GATE-TETHER-11": 32,
+  "GATE-TETHER-12": 32,
+  "GATE-TETHER-13": 32,
+  "GATE-TETHER-14": 32,
+  "KILL-MCP": 32,
+  "KILL-PREEMPT": 32,
+  "KILL-MCPTASKS": 32,
+  "KILL-SOLVE": 32,
+  "KILL-TUI": 32,
+  "GATE-TETHER-15": 32,
+  "GATE-TETHER-16": 32,
+  "KILL-REPLAYPACK": 32,
+  "INT-TOOLCHAIN-01": 33,
+  "INT-FSIM-01": 33,
+  "INT-FSIM-18": 33,
+  "INT-ASUP-01": 33,
+  "INT-ASUP-02": 33,
+  "INT-FSQL-01": 33,
+  "INT-FSQL-02": 33,
+  "INT-FT-01": 33,
+  "INT-FT-02": 33,
+  "INT-CUDA-01": 33,
+  "INT-FSYM-01": 33,
+  "INT-FSYM-02": 33,
+  "INT-FLN-01": 33,
+  "INT-FLN-02": 33,
+  "INT-FMCP-01": 33,
+  "INT-FNP-01": 33,
+  "INT-FNP-02": 33,
+  "INT-FTUI-01": 33,
+  "INT-F3D-01": 33,
+  "INT-FDGR-01": 33,
+  "INT-FJAX-01": 33,
+  "INT-FTX-01": 33,
+  "KILL-FSIM": 33,
+  "INT-FSIM-13": 33,
+  "INT-FSIM-14": 33,
+  "INT-FSIM-15": 33,
+  "INT-FSIM-16": 33,
+  "INT-FSIM-17": 33,
+  "INT-FSIM-02": 33,
+  "INT-FSIM-03": 33,
+  "INT-FSIM-04": 33,
+  "INT-FSIM-05": 33,
+  "INT-FSIM-06": 33,
+  "INT-FSIM-07": 33,
+  "INT-FSIM-08": 33,
+  "INT-FSIM-09": 33,
+  "INT-FSIM-10": 33,
+  "INT-FSIM-11": 33,
+  "GATE-WS-06": 33,
+  "GATE-WS-09": 33,
+  "GATE-WS-01": 34,
+  "GATE-WS-02": 34,
+  "GATE-WS-03": 34,
+  "GATE-WS-04": 34,
+  "GATE-WS-05": 34,
+  "GATE-SPARK-15": 35,
+  "GATE-SPARK-16": 35,
+  "GATE-SPARK-17": 35,
+  "GATE-SPARK-18": 35,
+  "KILL-SHARD": 36,
+  "GATE-SPARK-19": 36,
+  "GATE-SPARK-20": 36,
+  "GATE-SPARK-21": 36,
+  "GATE-SPARK-22": 36,
+  "KILL-PARITY": 36,
+  "GATE-SAFE-01": 37,
+  "GATE-SAFE-02": 37,
+  "GATE-SAFE-03": 37,
+  "GATE-SAFE-04": 37,
+  "GATE-SAFE-05": 37,
+  "GATE-SAFE-06": 37,
+  "GATE-SAFE-07": 37,
+  "GATE-SAFE-08": 37,
+  "GATE-SAFE-09": 37,
+  "GATE-SAFE-10": 37,
+  "GATE-TENFOLD-01": 39,
+  "GATE-TENFOLD-02": 39,
+  "GATE-TENFOLD-03": 39,
+  "GATE-TENFOLD-04": 39,
+  "GATE-TENFOLD-05": 39,
+  "GATE-TENFOLD-06": 39,
+  "GATE-TENFOLD-07": 39,
+  "GATE-TENFOLD-08": 39,
+  "GATE-TENFOLD-09": 39,
+  "KILL-TENFOLD-SPEED": 39,
+  "KILL-TENFOLD-TIE": 39,
+  "KILL-TENFOLD-CERT": 39,
+  "KILL-TENFOLD-LEAK": 39,
+  "KILL-TENFOLD-LEVER": 39,
+  "KILL-TENFOLD-ADJ": 39,
+  "KILL-TENFOLD-REACH": 39,
+  "GATE-TENFOLD-10": 39,
+  "GATE-TENFOLD-11": 39,
+  "GATE-TENFOLD-12": 39,
+  "GATE-TENFOLD-13": 39
+ },
+ "gate_row40": {
+  "INT-TOOLCHAIN-01": 26760,
+  "INT-FSIM-01": 26761,
+  "INT-FSIM-02": 26762,
+  "INT-FSIM-03": 26763,
+  "INT-FSIM-04": 26764,
+  "INT-FSIM-05": 26765,
+  "INT-FSIM-06": 26766,
+  "INT-FSIM-07": 26767,
+  "INT-FSIM-08": 26768,
+  "INT-FSIM-09": 26769,
+  "INT-FSIM-10": 26770,
+  "INT-FSIM-11": 26771,
+  "INT-FSIM-13": 26772,
+  "INT-FSIM-14": 26773,
+  "INT-FSIM-15": 26774,
+  "INT-FSIM-16": 26775,
+  "INT-FSIM-17": 26776,
+  "INT-FSIM-18": 26777,
+  "INT-ASUP-01": 26778,
+  "INT-ASUP-02": 26779,
+  "INT-FSQL-01": 26780,
+  "INT-FSQL-02": 26781,
+  "INT-FT-01": 26782,
+  "INT-FT-02": 26783,
+  "INT-CUDA-01": 26784,
+  "INT-FSYM-01": 26785,
+  "INT-FSYM-02": 26786,
+  "INT-FLN-01": 26787,
+  "INT-FLN-02": 26788,
+  "INT-FMCP-01": 26789,
+  "INT-FNP-01": 26790,
+  "INT-FNP-02": 26791,
+  "INT-FTUI-01": 26798,
+  "INT-F3D-01": 26799,
+  "INT-FDGR-01": 26800,
+  "INT-FJAX-01": 26801,
+  "INT-FTX-01": 26802,
+  "GATE-LEMMA-00": 26817,
+  "GATE-LEMMA-01": 26818,
+  "GATE-LEMMA-02": 26819,
+  "GATE-LEMMA-03": 26820,
+  "GATE-LEMMA-04": 26821,
+  "GATE-LEMMA-05": 26822,
+  "GATE-LEMMA-06": 26823,
+  "GATE-MARROW-01": 26829,
+  "GATE-MARROW-02": 26830,
+  "GATE-MARROW-03": 26831,
+  "GATE-MARROW-04": 26832,
+  "GATE-MARROW-05": 26833,
+  "GATE-SKEL-01": 26839,
+  "GATE-SKEL-02": 26840,
+  "GATE-SKEL-03": 26841,
+  "GATE-SKEL-04": 26842,
+  "GATE-SKEL-05": 26843,
+  "GATE-SKEL-06": 26844,
+  "GATE-SKEL-07": 26845,
+  "GATE-SKEL-08": 26846,
+  "GATE-SINEW-01": 26852,
+  "GATE-SINEW-02": 26853,
+  "GATE-SINEW-03": 26854,
+  "GATE-SINEW-04": 26855,
+  "GATE-SINEW-05": 26856,
+  "GATE-SINEW-06": 26857,
+  "GATE-SINEW-07": 26858,
+  "GATE-SINEW-08": 26859,
+  "GATE-SINEW-09": 26860,
+  "GATE-KIN-01": 26866,
+  "GATE-KIN-02": 26867,
+  "GATE-KIN-03": 26868,
+  "GATE-KIN-04": 26869,
+  "GATE-KIN-05": 26870,
+  "GATE-KIN-06": 26871,
+  "GATE-KIN-07": 26872,
+  "GATE-FID-01": 26873,
+  "GATE-FID-02": 26874,
+  "GATE-FID-03": 26875,
+  "GATE-FID-04": 26876,
+  "GATE-FID-05": 26877,
+  "GATE-FID-06": 26878,
+  "GATE-FID-07": 26879,
+  "GATE-FID-08": 26880,
+  "GATE-PHYLUM-01": 26886,
+  "GATE-PHYLUM-02": 26887,
+  "GATE-PHYLUM-03": 26888,
+  "GATE-PHYLUM-04": 26889,
+  "GATE-PHYLUM-05": 26890,
+  "GATE-PHYLUM-06": 26891,
+  "GATE-PHYLUM-07": 26892,
+  "GATE-PHYLUM-08": 26893,
+  "GATE-TRAC-01": 26899,
+  "GATE-TRAC-02": 26900,
+  "GATE-TRAC-03": 26901,
+  "GATE-TRAC-04": 26902,
+  "GATE-TRAC-05": 26903,
+  "GATE-TRAC-06": 26904,
+  "GATE-TRAC-07": 26905,
+  "GATE-TRAC-08": 26906,
+  "GATE-TRAC-09": 26907,
+  "GATE-TRAC-10": 26908,
+  "GATE-HAB-01": 26914,
+  "GATE-HAB-02": 26915,
+  "GATE-HAB-03": 26916,
+  "GATE-HAB-04": 26917,
+  "GATE-HAB-05": 26918,
+  "GATE-HAB-06": 26919,
+  "GATE-HAB-07": 26920,
+  "GATE-HAB-08": 26921,
+  "GATE-HAB-09": 26922,
+  "GATE-HAB-10": 26923,
+  "GATE-HAB-11": 26924,
+  "GATE-HAB-12": 26925,
+  "GATE-HAB-13": 26926,
+  "GATE-HAB-14": 26927,
+  "GATE-SENS-01": 26933,
+  "GATE-SENS-02": 26934,
+  "GATE-SENS-03": 26935,
+  "GATE-SENS-04": 26936,
+  "GATE-SENS-05": 26937,
+  "GATE-SENS-06": 26938,
+  "GATE-SENS-07": 26939,
+  "GATE-SENS-08": 26940,
+  "GATE-SENS-09": 26941,
+  "GATE-SENS-10": 26942,
+  "GATE-SENS-11": 26943,
+  "GATE-SENS-12": 26944,
+  "GATE-SENS-13": 26945,
+  "GATE-SENS-14": 26946,
+  "GATE-SPARK-00": 26952,
+  "GATE-SPARK-01": 26953,
+  "GATE-SPARK-02": 26954,
+  "GATE-SPARK-03": 26955,
+  "GATE-SPARK-04": 26956,
+  "GATE-SPARK-05": 26957,
+  "GATE-SPARK-06": 26958,
+  "GATE-SPARK-07": 26959,
+  "GATE-SPARK-08": 26960,
+  "GATE-SPARK-09": 26961,
+  "GATE-SPARK-10": 26962,
+  "GATE-SPARK-11": 26963,
+  "GATE-SPARK-12": 26964,
+  "GATE-SPARK-13": 26965,
+  "GATE-SPARK-14": 26966,
+  "GATE-SPARK-15": 26967,
+  "GATE-SPARK-16": 26968,
+  "GATE-SPARK-17": 26969,
+  "GATE-SPARK-18": 26970,
+  "GATE-SPARK-19": 26971,
+  "GATE-SPARK-20": 26972,
+  "GATE-SPARK-21": 26973,
+  "GATE-SPARK-22": 26974,
+  "GATE-REFLEX-01": 26980,
+  "GATE-REFLEX-02": 26981,
+  "GATE-REFLEX-03": 26982,
+  "GATE-REFLEX-04": 26983,
+  "GATE-REFLEX-05": 26984,
+  "GATE-REFLEX-06": 26985,
+  "GATE-REFLEX-07": 26986,
+  "GATE-REFLEX-08": 26987,
+  "GATE-REFLEX-09": 26988,
+  "GATE-GAIT-01": 26989,
+  "GATE-GAIT-02": 26990,
+  "GATE-GAIT-03": 26991,
+  "GATE-SHIELD-01": 26992,
+  "GATE-SHIELD-02": 26993,
+  "GATE-SHIELD-03": 26994,
+  "GATE-SHIELD-04": 26995,
+  "GATE-SHIELD-05": 26996,
+  "GATE-CORTEX-01": 27002,
+  "GATE-CORTEX-02": 27003,
+  "GATE-CORTEX-03": 27004,
+  "GATE-CORTEX-04": 27005,
+  "GATE-CORTEX-05": 27006,
+  "GATE-CORTEX-06": 27007,
+  "GATE-CORTEX-07": 27008,
+  "GATE-CORTEX-08": 27009,
+  "GATE-CORTEX-09": 27010,
+  "GATE-CORTEX-10": 27011,
+  "GATE-CORTEX-11": 27012,
+  "GATE-CORTEX-12": 27013,
+  "GATE-CORTEX-13": 27014,
+  "GATE-CORTEX-14": 27015,
+  "GATE-CORTEX-15": 27016,
+  "GATE-CORTEX-16": 27017,
+  "GATE-CORTEX-17": 27018,
+  "GATE-ARENA-01": 27024,
+  "GATE-ARENA-02": 27025,
+  "GATE-ARENA-03": 27026,
+  "GATE-ARENA-04": 27027,
+  "GATE-ARENA-05": 27028,
+  "GATE-ARENA-06": 27029,
+  "GATE-ARENA-07": 27030,
+  "GATE-ARENA-08": 27031,
+  "GATE-ARENA-09": 27032,
+  "GATE-QUAL-01": 27033,
+  "GATE-QUAL-02": 27034,
+  "GATE-QUAL-03": 27035,
+  "GATE-AUGUR-01": 27041,
+  "GATE-AUGUR-02": 27042,
+  "GATE-AUGUR-03": 27043,
+  "GATE-AUGUR-04": 27044,
+  "GATE-AUGUR-05": 27045,
+  "GATE-AUGUR-06": 27046,
+  "GATE-AUGUR-07": 27047,
+  "GATE-AUGUR-08": 27048,
+  "GATE-AUGUR-09": 27049,
+  "GATE-AUGUR-10": 27050,
+  "GATE-AUGUR-11": 27051,
+  "GATE-AUGUR-12": 27052,
+  "GATE-AUGUR-13": 27053,
+  "GATE-AUGUR-14": 27054,
+  "GATE-AUGUR-15": 27055,
+  "GATE-AUGUR-16": 27056,
+  "GATE-AUGUR-17": 27057,
+  "GATE-AUGUR-18": 27058,
+  "GATE-AUGUR-19": 27059,
+  "GATE-AUGUR-20": 27060,
+  "GATE-AUGUR-21": 27061,
+  "GATE-AUGUR-22": 27062,
+  "GATE-AUGUR-23": 27063,
+  "GATE-AUGUR-24": 27064,
+  "GATE-NEMESIS-01": 27070,
+  "GATE-NEMESIS-02": 27071,
+  "GATE-NEMESIS-03": 27072,
+  "GATE-NEMESIS-04": 27073,
+  "GATE-NEMESIS-05": 27074,
+  "GATE-NEMESIS-06": 27075,
+  "GATE-NEMESIS-07": 27076,
+  "GATE-NEMESIS-08": 27077,
+  "GATE-AUTOPSY-01": 27083,
+  "GATE-AUTOPSY-02": 27084,
+  "GATE-AUTOPSY-03": 27085,
+  "GATE-AUTOPSY-04": 27086,
+  "GATE-AUTOPSY-05": 27087,
+  "GATE-AUTOPSY-06": 27088,
+  "GATE-AUTOPSY-07": 27089,
+  "GATE-AUTOPSY-08": 27090,
+  "GATE-ATEL-01": 27096,
+  "GATE-ATEL-02": 27097,
+  "GATE-ATEL-03": 27098,
+  "GATE-ATEL-04": 27099,
+  "GATE-ATEL-05": 27100,
+  "GATE-ATEL-06": 27101,
+  "GATE-ATEL-07": 27102,
+  "GATE-ATEL-08": 27103,
+  "GATE-ATEL-09": 27104,
+  "GATE-ATEL-10": 27105,
+  "GATE-ATEL-11": 27106,
+  "GATE-ATEL-12": 27107,
+  "GATE-ATEL-13": 27108,
+  "GATE-ATEL-14": 27109,
+  "GATE-ATEL-15": 27110,
+  "GATE-ATEL-16": 27111,
+  "GATE-CHRON-01": 27117,
+  "GATE-CHRON-02": 27118,
+  "GATE-CHRON-03": 27119,
+  "GATE-CHRON-04": 27120,
+  "GATE-CHRON-05": 27121,
+  "GATE-CHRON-06": 27122,
+  "GATE-CHRON-07": 27123,
+  "GATE-CHRON-08": 27124,
+  "GATE-CHRON-09": 27125,
+  "GATE-CHRON-10": 27126,
+  "GATE-CHRON-11": 27127,
+  "GATE-CHRON-12": 27128,
+  "GATE-CHRON-13": 27129,
+  "GATE-GROUND-01": 27135,
+  "GATE-GROUND-02": 27136,
+  "GATE-GROUND-03": 27137,
+  "GATE-GROUND-04": 27138,
+  "GATE-GROUND-05": 27139,
+  "GATE-GROUND-06": 27140,
+  "GATE-GROUND-07": 27141,
+  "GATE-GROUND-08": 27142,
+  "GATE-GROUND-09": 27143,
+  "GATE-GROUND-10": 27144,
+  "GATE-FOUNDRY-01": 27150,
+  "GATE-FOUNDRY-02": 27151,
+  "GATE-FOUNDRY-03": 27152,
+  "GATE-FOUNDRY-04": 27153,
+  "GATE-FOUNDRY-05": 27154,
+  "GATE-FOUNDRY-06": 27155,
+  "GATE-FOUNDRY-07": 27156,
+  "GATE-FOUNDRY-08": 27157,
+  "GATE-FOUNDRY-09": 27158,
+  "GATE-FOUNDRY-10": 27159,
+  "GATE-FOUNDRY-11": 27160,
+  "GATE-FOUNDRY-12": 27161,
+  "GATE-TETHER-01": 27167,
+  "GATE-TETHER-02": 27168,
+  "GATE-TETHER-03": 27169,
+  "GATE-TETHER-04": 27170,
+  "GATE-TETHER-05": 27171,
+  "GATE-TETHER-06": 27172,
+  "GATE-TETHER-07": 27173,
+  "GATE-TETHER-08": 27174,
+  "GATE-TETHER-09": 27175,
+  "GATE-TETHER-10": 27176,
+  "GATE-TETHER-11": 27177,
+  "GATE-TETHER-12": 27178,
+  "GATE-TETHER-13": 27179,
+  "GATE-TETHER-14": 27180,
+  "GATE-SAFE-01": 27186,
+  "GATE-SAFE-02": 27187,
+  "GATE-SAFE-03": 27188,
+  "GATE-SAFE-04": 27189,
+  "GATE-SAFE-05": 27190,
+  "GATE-SAFE-06": 27191,
+  "GATE-SAFE-07": 27192,
+  "GATE-SAFE-08": 27193,
+  "GATE-SAFE-09": 27194,
+  "GATE-SAFE-10": 27195,
+  "GATE-WS-01": 27201,
+  "GATE-WS-02": 27202,
+  "GATE-WS-03": 27203,
+  "GATE-WS-04": 27204,
+  "GATE-GAUNT-01": 27210,
+  "KILL-FSIM": 27267,
+  "KILL-FAMILYCERT": 27268,
+  "KILL-LEMMA": 27269,
+  "KILL-REFLECT": 27270,
+  "KILL-MARROW-BLOCKS": 27271,
+  "KILL-MARROW-GUARD": 27272,
+  "KILL-SKEL-ALIAS": 27273,
+  "KILL-SKEL-PORT": 27274,
+  "KILL-SKEL-SEXPR": 27275,
+  "KILL-SKEL-SUBST": 27276,
+  "KILL-SINEW-AGE": 27277,
+  "KILL-SINEW-ROTOR": 27278,
+  "KILL-SINEW-ROWS": 27279,
+  "KILL-SHADOW": 27285,
+  "KILL-TREEOP": 27286,
+  "KILL-VARIATIONAL": 27287,
+  "KILL-FAMILYLANE": 27288,
+  "KILL-FDGRAD": 27289,
+  "KILL-PHYLUM": 27290,
+  "KILL-QUOTIENT": 27291,
+  "KILL-CONTACT": 27292,
+  "KILL-FILM": 27293,
+  "KILL-ADVECT": 27294,
+  "KILL-HARDCONTACT": 27295,
+  "KILL-MESHGPU": 27296,
+  "KILL-RESPONSE": 27297,
+  "KILL-SOIL": 27298,
+  "KILL-BANK-BREADTH": 27299,
+  "KILL-DRESSING": 27300,
+  "KILL-FCLEAR": 27301,
+  "KILL-INGEST": 27302,
+  "KILL-LIVING": 27303,
+  "KILL-POOL": 27304,
+  "KILL-PROXY": 27305,
+  "KILL-RETROFIT": 27306,
+  "KILL-SLOSH": 27307,
+  "KILL-ALIAS": 27308,
+  "KILL-EXPOSURE": 27309,
+  "KILL-SCHED": 27310,
+  "KILL-BUCKET": 27311,
+  "KILL-D1": 27312,
+  "KILL-FLEET": 27313,
+  "KILL-KIR": 27314,
+  "KILL-MEGA": 27315,
+  "KILL-METAL": 27316,
+  "KILL-SPECIALIZE": 27317,
+  "KILL-PARITY": 27318,
+  "KILL-SHARD": 27319,
+  "KILL-BASELINE": 27325,
+  "KILL-ENERGY": 27326,
+  "KILL-GAIT": 27327,
+  "KILL-MPC": 27328,
+  "KILL-RESIDUAL": 27329,
+  "KILL-SHIELD": 27330,
+  "KILL-SKILL": 27331,
+  "KILL-TUBE": 27332,
+  "KILL-ALTALGO": 27333,
+  "KILL-DISTILL": 27334,
+  "KILL-EQUIV": 27335,
+  "KILL-FAMILY": 27336,
+  "KILL-GATREE": 27337,
+  "KILL-GYMADAPT": 27338,
+  "KILL-INHERIT": 27339,
+  "KILL-LEARNKERN": 27340,
+  "KILL-SPEC-REWARD": 27341,
+  "KILL-AUGUR-ALIAS": 27342,
+  "KILL-AUGUR-CUTS": 27343,
+  "KILL-AUGUR-DOMINANCE": 27344,
+  "KILL-AUGUR-FACILITY": 27345,
+  "KILL-AUGUR-FALSECERT": 27346,
+  "KILL-AUGUR-LABELS": 27347,
+  "KILL-AUGUR-PHASE": 27348,
+  "KILL-AUGUR-PROBE": 27349,
+  "KILL-AUGUR-REGION": 27350,
+  "KILL-AUGUR-REUSE": 27351,
+  "KILL-AUGUR-SEPARATE": 27352,
+  "KILL-AUGUR-SYMEVENT": 27353,
+  "KILL-AUGUR-TIE": 27354,
+  "KILL-AUGUR-TRANSPORT": 27355,
+  "KILL-SYNTH-CODESIGN": 27356,
+  "KILL-SYNTH-CONT": 27357,
+  "KILL-SYNTH-LINKAGE": 27358,
+  "KILL-SYNTH-TRAJOPT": 27359,
+  "KILL-MCW": 27360,
+  "KILL-NEMESIS": 27361,
+  "KILL-RARE": 27362,
+  "KILL-AUTOPSY": 27363,
+  "KILL-ATLAS": 27364,
+  "KILL-LADDER": 27365,
+  "KILL-RANK": 27366,
+  "KILL-REUSE": 27367,
+  "KILL-STATIC": 27368,
+  "KILL-VOI": 27369,
+  "KILL-DR": 27375,
+  "KILL-ASBUILT": 27376,
+  "KILL-BAND": 27377,
+  "KILL-CLOCK": 27378,
+  "KILL-GROUND": 27379,
+  "KILL-KIT": 27380,
+  "KILL-FAB": 27381,
+  "KILL-FIRMWARE": 27382,
+  "KILL-LIFECYCLE": 27383,
+  "KILL-LOADS": 27384,
+  "KILL-PACKET": 27385,
+  "KILL-TOLERANCE": 27386,
+  "KILL-TOPOPT": 27387,
+  "KILL-MCP": 27388,
+  "KILL-MCPTASKS": 27389,
+  "KILL-PREEMPT": 27390,
+  "KILL-SLOT": 27391,
+  "KILL-SOLVE": 27392,
+  "KILL-TUI": 27393,
+  "GATE-TENFOLD-02": 27405,
+  "GATE-TENFOLD-09": 27406,
+  "GATE-TENFOLD-08": 27410,
+  "GATE-TENFOLD-10": 27411,
+  "GATE-TENFOLD-11": 27412,
+  "GATE-TENFOLD-12": 27413,
+  "GATE-TENFOLD-13": 27414,
+  "KILL-TENFOLD-SPEED": 27418,
+  "KILL-TENFOLD-TIE": 27419,
+  "KILL-TENFOLD-CERT": 27420,
+  "KILL-TENFOLD-LEAK": 27421,
+  "KILL-TENFOLD-LEVER": 27422,
+  "KILL-TENFOLD-ADJ": 27423,
+  "KILL-TENFOLD-REACH": 27424,
+  "GATE-SKEL-11": 27596,
+  "GATE-SINEW-10": 27597,
+  "GATE-KIN-13": 27598,
+  "GATE-TRAC-12": 27599,
+  "GATE-HAB-16": 27600,
+  "GATE-SENS-18": 27601,
+  "GATE-GAIT-04": 27602,
+  "KILL-FREEPERIOD": 27603,
+  "GATE-GAIT-05": 27604,
+  "KILL-STRIDESEQ": 27605,
+  "GATE-SHIELD-07": 27606,
+  "GATE-AUGUR-31": 27607,
+  "GATE-AUGUR-32": 27608,
+  "GATE-AUGUR-33": 27609,
+  "GATE-AUGUR-34": 27610,
+  "GATE-AUGUR-35": 27611,
+  "GATE-ARENA-13": 27612,
+  "GATE-ARENA-15": 27613,
+  "GATE-GROUND-11": 27614,
+  "GATE-WS-09": 27615,
+  "GATE-GAUNT-02": 27616,
+  "GATE-GAUNT-03": 27617,
+  "GATE-GAUNT-04": 27618,
+  "GATE-GAUNT-05": 27619,
+  "GATE-GAUNT-06": 27620,
+  "GATE-GAUNT-07": 27621,
+  "GATE-GAUNT-08": 27622,
+  "GATE-GAUNT-09": 27623,
+  "GATE-GAUNT-10": 27624,
+  "KILL-DEVORACLE": 27625,
+  "GATE-GAUNT-11": 27626,
+  "GATE-TENFOLD-04": 27627,
+  "GATE-TENFOLD-05": 27628
+ },
+ "subs": {
+  "1": [
+   {
+    "id": "1.1",
+    "title": "What the strongest existing systems already do",
+    "start": 437,
+    "end": 464
+   },
+   {
+    "id": "1.2",
+    "title": "The fossils, corrected",
+    "start": 465,
+    "end": 501
+   },
+   {
+    "id": "1.3",
+    "title": "What this plan does not claim",
+    "start": 502,
+    "end": 531
+   },
+   {
+    "id": "1.4",
+    "title": "What is already solved, and what nobody has composed",
+    "start": 532,
+    "end": 571
+   },
+   {
+    "id": "1.5",
+    "title": "What FrankenRobotics is",
+    "start": 572,
+    "end": 606
+   },
+   {
+    "id": "1.6",
+    "title": "The differentiators, worded as the audit permits",
+    "start": 607,
+    "end": 629
+   },
+   {
+    "id": "1.7",
+    "title": "Why the suite, and why now",
+    "start": 630,
+    "end": 705
+   },
+   {
+    "id": "1.8",
+    "title": "The two machines",
+    "start": 706,
+    "end": 727
+   }
+  ],
+  "2": [
+   {
+    "id": "2.1",
+    "title": "The metric",
+    "start": 736,
+    "end": 784
+   },
+   {
+    "id": "2.2",
+    "title": "The Amdahl ledger: where the time goes today",
+    "start": 785,
+    "end": 806
+   },
+   {
+    "id": "2.3",
+    "title": "The ceilings",
+    "start": 807,
+    "end": 848
+   },
+   {
+    "id": "2.4",
+    "title": "The levers",
+    "start": 849,
+    "end": 871
+   },
+   {
+    "id": "2.5",
+    "title": "What will not deliver ten-fold",
+    "start": 872,
+    "end": 899
+   },
+   {
+    "id": "2.6",
+    "title": "The expected range, by mission class",
+    "start": 900,
+    "end": 926
+   },
+   {
+    "id": "2.7",
+    "title": "What the program does first because of this",
+    "start": 927,
+    "end": 940
+   }
+  ],
+  "3": [],
+  "4": [],
+  "5": [],
+  "6": [
+   {
+    "id": "6.1",
+    "title": "Goals",
+    "start": 1076,
+    "end": 1127
+   },
+   {
+    "id": "6.2",
+    "title": "Non-goals",
+    "start": 1128,
+    "end": 1152
+   },
+   {
+    "id": "6.3",
+    "title": "Anti-goals",
+    "start": 1153,
+    "end": 1187
+   }
+  ],
+  "7": [],
+  "8": [
+   {
+    "id": "8.1",
+    "title": "The seven claims",
+    "start": 1343,
+    "end": 1379
+   },
+   {
+    "id": "8.2",
+    "title": "The claim product",
+    "start": 1380,
+    "end": 1439
+   },
+   {
+    "id": "8.3",
+    "title": "Rules",
+    "start": 1440,
+    "end": 1480
+   }
+  ],
+  "9": [],
+  "10": [
+   {
+    "id": "C-01",
+    "title": "Configuration is a Lie group, and joints are subgroups",
+    "start": 1624,
+    "end": 1653
+   },
+   {
+    "id": "C-02",
+    "title": "The frame groupoid and typed spatial algebra",
+    "start": 1654,
+    "end": 1680
+   },
+   {
+    "id": "C-03",
+    "title": "Inertia lives on a cone",
+    "start": 1681,
+    "end": 1710
+   },
+   {
+    "id": "C-04",
+    "title": "Dynamics is the Euler–Poincaré equation on a tree",
+    "start": 1711,
+    "end": 1745
+   },
+   {
+    "id": "C-05",
+    "title": "Time stepping stays on the group",
+    "start": 1746,
+    "end": 1779
+   },
+   {
+    "id": "C-06",
+    "title": "Contact is a cone program in the dual algebra",
+    "start": 1780,
+    "end": 1821
+   },
+   {
+    "id": "C-07",
+    "title": "Wheels are a distribution, and maneuvering is a Lie bracket",
+    "start": 1822,
+    "end": 1855
+   },
+   {
+    "id": "C-08",
+    "title": "Locomotion is holonomy",
+    "start": 1856,
+    "end": 1888
+   },
+   {
+    "id": "C-09",
+    "title": "A morphology has two symmetry groups",
+    "start": 1889,
+    "end": 1955
+   },
+   {
+    "id": "C-10",
+    "title": "Gaits are subgroups, and their timing is max-plus linear",
+    "start": 1956,
+    "end": 1994
+   },
+   {
+    "id": "C-11",
+    "title": "Kinematics is algebraic geometry",
+    "start": 1995,
+    "end": 2017
+   },
+   {
+    "id": "C-12",
+    "title": "A robot is a composition over typed ports",
+    "start": 2018,
+    "end": 2058
+   },
+   {
+    "id": "C-13",
+    "title": "Estimation and control live on groups",
+    "start": 2059,
+    "end": 2088
+   },
+   {
+    "id": "C-14",
+    "title": "Kernels are derived, typed by dimension, and carry certificates",
+    "start": 2089,
+    "end": 2126
+   },
+   {
+    "id": "C-15",
+    "title": "Evidence is a test martingale",
+    "start": 2127,
+    "end": 2155
+   },
+   {
+    "id": "C-16",
+    "title": "A gait is a hybrid orbit: saltation, return maps, labeled derivatives",
+    "start": 2156,
+    "end": 2235
+   },
+   {
+    "id": "C-17",
+    "title": "A mission is a quantified set of designs",
+    "start": 2236,
+    "end": 2317
+   },
+   {
+    "id": "C-18",
+    "title": "Assumptions form a lattice, and verdicts have polarity",
+    "start": 2318,
+    "end": 2369
+   },
+   {
+    "id": "C-19",
+    "title": "Information has a clock: causal policies and indistinguishability",
+    "start": 2370,
+    "end": 2437
+   },
+   {
+    "id": "C-20",
+    "title": "Observability is a Gramian modulo a gauge",
+    "start": 2438,
+    "end": 2464
+   },
+   {
+    "id": "C-21",
+    "title": "Designs are canonical up to the similarity group",
+    "start": 2465,
+    "end": 2506
+   },
+   {
+    "id": "C-22",
+    "title": "A campaign is quotiented by symmetry orbits",
+    "start": 2507,
+    "end": 2545
+   },
+   {
+    "id": "C-23",
+    "title": "A family policy is a section, and edits transport it",
+    "start": 2546,
+    "end": 2594
+   },
+   {
+    "id": "C-24",
+    "title": "A geometric-algebra policy on the kinematic tree",
+    "start": 2595,
+    "end": 2622
+   },
+   {
+    "id": "C-25",
+    "title": "Fidelity tiers are coupled estimators",
+    "start": 2623,
+    "end": 2660
+   },
+   {
+    "id": "C-26",
+    "title": "Rungs are trusted by rank agreement and conformal margins",
+    "start": 2661,
+    "end": 2693
+   },
+   {
+    "id": "C-27",
+    "title": "Rare failures: bounded weights certify, splitting explores",
+    "start": 2694,
+    "end": 2728
+   },
+   {
+    "id": "C-28",
+    "title": "A failure has a minimal counterexample world",
+    "start": 2729,
+    "end": 2760
+   },
+   {
+    "id": "C-29",
+    "title": "A deterministic forkable simulator is a causal model",
+    "start": 2761,
+    "end": 2797
+   },
+   {
+    "id": "C-30",
+    "title": "Requirements are temporal logic over unit-normalized predicates",
+    "start": 2798,
+    "end": 2825
+   },
+   {
+    "id": "C-31",
+    "title": "Safety is an energy budget first, a filter second",
+    "start": 2826,
+    "end": 2898
+   },
+   {
+    "id": "C-32",
+    "title": "Region certificates and dual witnesses of infeasibility",
+    "start": 2899,
+    "end": 2946
+   },
+   {
+    "id": "C-33",
+    "title": "Clearance is certified from both sides",
+    "start": 2947,
+    "end": 2978
+   },
+   {
+    "id": "C-34",
+    "title": "Linkage synthesis: an exact bounded lane and a continuation lane",
+    "start": 2979,
+    "end": 3018
+   },
+   {
+    "id": "C-35",
+    "title": "Structure and life: topology, fatigue, tolerance",
+    "start": 3019,
+    "end": 3057
+   },
+   {
+    "id": "C-36",
+    "title": "The trapezoidal variational step and the discrete nonholonomic step",
+    "start": 3058,
+    "end": 3118
+   },
+   {
+    "id": "C-37",
+    "title": "The four-dimensional contact cone and joint-level rows",
+    "start": 3119,
+    "end": 3147
+   },
+   {
+    "id": "C-38",
+    "title": "Actuators are port-Hamiltonian with a thermal node",
+    "start": 3148,
+    "end": 3196
+   },
+   {
+    "id": "C-39",
+    "title": "The value of an experiment, and the design of a probe",
+    "start": 3197,
+    "end": 3239
+   },
+   {
+    "id": "C-40",
+    "title": "Dominance is unreachability in a product system",
+    "start": 3240,
+    "end": 3273
+   }
+  ],
+  "11": [
+   {
+    "id": "11.1",
+    "title": "The table",
+    "start": 3280,
+    "end": 3305
+   },
+   {
+    "id": "11.2",
+    "title": "Adjoint, coadjoint and the Euler–Poincaré sign",
+    "start": 3306,
+    "end": 3328
+   },
+   {
+    "id": "11.3",
+    "title": "Three typed maps between frames",
+    "start": 3329,
+    "end": 3340
+   },
+   {
+    "id": "11.4",
+    "title": "Reflection parity",
+    "start": 3341,
+    "end": 3361
+   },
+   {
+    "id": "11.5",
+    "title": "Inertia: pseudo-inertia, shells and mass support",
+    "start": 3362,
+    "end": 3380
+   },
+   {
+    "id": "11.6",
+    "title": "Curvature of the connection",
+    "start": 3381,
+    "end": 3398
+   },
+   {
+    "id": "11.7",
+    "title": "Rational clocks and phase accumulators",
+    "start": 3399,
+    "end": 3422
+   },
+   {
+    "id": "11.8",
+    "title": "The seven instants",
+    "start": 3423,
+    "end": 3458
+   }
+  ],
+  "12": [
+   {
+    "id": "12.1",
+    "title": "What the two proof tools can do today",
+    "start": 3476,
+    "end": 3507
+   },
+   {
+    "id": "12.2",
+    "title": "Proof classes, family certificates and the claim product",
+    "start": 3508,
+    "end": 3564
+   },
+   {
+    "id": "12.3",
+    "title": "Theorem cards",
+    "start": 3565,
+    "end": 3627
+   },
+   {
+    "id": "12.4",
+    "title": "Mechanics",
+    "start": 3628,
+    "end": 3766
+   },
+   {
+    "id": "12.5",
+    "title": "What Lemma does not claim",
+    "start": 3767,
+    "end": 3781
+   },
+   {
+    "id": "12.6",
+    "title": "Gates",
+    "start": 3782,
+    "end": 3796
+   },
+   {
+    "id": "12.7",
+    "title": "Refusals, invariants and known answers",
+    "start": 3797,
+    "end": 3834
+   },
+   {
+    "id": "12.8",
+    "title": "Open questions",
+    "start": 3835,
+    "end": 3851
+   }
+  ],
+  "13": [
+   {
+    "id": "13.1",
+    "title": "What it owns",
+    "start": 3854,
+    "end": 3875
+   },
+   {
+    "id": "13.2",
+    "title": "Decisions",
+    "start": 3876,
+    "end": 3917
+   },
+   {
+    "id": "13.3",
+    "title": "Conventions fixed here: the coadjoint, the wrench maps, reflections",
+    "start": 3918,
+    "end": 3967
+   },
+   {
+    "id": "13.4",
+    "title": "The mechanical group and the observation-preserving subgroup",
+    "start": 3968,
+    "end": 4061
+   },
+   {
+    "id": "13.5",
+    "title": "Equivariant linear maps by irreducible blocks",
+    "start": 4062,
+    "end": 4111
+   },
+   {
+    "id": "13.6",
+    "title": "Orbits, subgroup lattices and wreath products",
+    "start": 4112,
+    "end": 4130
+   },
+   {
+    "id": "13.7",
+    "title": "Exact predicates and guarded single precision",
+    "start": 4131,
+    "end": 4172
+   },
+   {
+    "id": "13.8",
+    "title": "Laws",
+    "start": 4173,
+    "end": 4204
+   },
+   {
+    "id": "13.9",
+    "title": "Refusals",
+    "start": 4205,
+    "end": 4213
+   },
+   {
+    "id": "13.10",
+    "title": "Proof obligations, known answers, gates, open questions",
+    "start": 4214,
+    "end": 4266
+   },
+   {
+    "id": "13.11",
+    "title": "A circle-valued joint needs periodic laws, or its turn count",
+    "start": 4267,
+    "end": 4302
+   }
+  ],
+  "14": [
+   {
+    "id": "14.1",
+    "title": "What it owns",
+    "start": 4305,
+    "end": 4313
+   },
+   {
+    "id": "14.2",
+    "title": "Decisions",
+    "start": 4314,
+    "end": 4347
+   },
+   {
+    "id": "14.3",
+    "title": "The design term",
+    "start": 4348,
+    "end": 4368
+   },
+   {
+    "id": "14.4",
+    "title": "The `.fbot` format",
+    "start": 4369,
+    "end": 4486
+   },
+   {
+    "id": "14.5",
+    "title": "Mass from geometry: the fill rule",
+    "start": 4487,
+    "end": 4530
+   },
+   {
+    "id": "14.6",
+    "title": "Reusable modules: `.fmodule`",
+    "start": 4531,
+    "end": 4640
+   },
+   {
+    "id": "14.7",
+    "title": "Typed edits",
+    "start": 4641,
+    "end": 4672
+   },
+   {
+    "id": "14.8",
+    "title": "Design patches and versioning",
+    "start": 4673,
+    "end": 4715
+   },
+   {
+    "id": "14.9",
+    "title": "The compile pipeline and its memoization",
+    "start": 4716,
+    "end": 4753
+   },
+   {
+    "id": "14.10",
+    "title": "Archetypes: the eighteen",
+    "start": 4754,
+    "end": 4799
+   },
+   {
+    "id": "14.11",
+    "title": "Preflight: eight stages that are `design check`",
+    "start": 4800,
+    "end": 4869
+   },
+   {
+    "id": "14.12",
+    "title": "Import and export (`frob-io`)",
+    "start": 4870,
+    "end": 4892
+   },
+   {
+    "id": "14.13",
+    "title": "Refusals instead of repairs in silence",
+    "start": 4893,
+    "end": 4929
+   },
+   {
+    "id": "14.14",
+    "title": "Invariants, proof obligations, known answers",
+    "start": 4930,
+    "end": 4963
+   },
+   {
+    "id": "14.15",
+    "title": "Gates, kill gates, open questions",
+    "start": 4964,
+    "end": 5001
+   },
+   {
+    "id": "14.16",
+    "title": "Module capability tables and the composed quasi-static screen",
+    "start": 5002,
+    "end": 5077
+   },
+   {
+    "id": "14.17",
+    "title": "Folding fixed joints, and reduced models",
+    "start": 5078,
+    "end": 5117
+   }
+  ],
+  "15": [
+   {
+    "id": "15.1",
+    "title": "What it owns, and why actuators are first-class",
+    "start": 5120,
+    "end": 5138
+   },
+   {
+    "id": "15.2",
+    "title": "Decisions",
+    "start": 5139,
+    "end": 5168
+   },
+   {
+    "id": "15.3",
+    "title": "The actuator card",
+    "start": 5169,
+    "end": 5196
+   },
+   {
+    "id": "15.4",
+    "title": "The model ladder",
+    "start": 5197,
+    "end": 5217
+   },
+   {
+    "id": "15.5",
+    "title": "The port-Hamiltonian form of each element",
+    "start": 5218,
+    "end": 5258
+   },
+   {
+    "id": "15.6",
+    "title": "Stiction and backlash as rows in the solve",
+    "start": 5259,
+    "end": 5319
+   },
+   {
+    "id": "15.7",
+    "title": "Winding temperature, resistance, and thermal runaway",
+    "start": 5320,
+    "end": 5380
+   },
+   {
+    "id": "15.8",
+    "title": "The voltage limit and field weakening",
+    "start": 5381,
+    "end": 5417
+   },
+   {
+    "id": "15.9",
+    "title": "Transmissions",
+    "start": 5418,
+    "end": 5441
+   },
+   {
+    "id": "15.10",
+    "title": "The power bus and the battery",
+    "start": 5442,
+    "end": 5479
+   },
+   {
+    "id": "15.11",
+    "title": "Energy at the ports",
+    "start": 5480,
+    "end": 5498
+   },
+   {
+    "id": "15.12",
+    "title": "What agreement between tiers cannot show",
+    "start": 5499,
+    "end": 5507
+   },
+   {
+    "id": "15.13",
+    "title": "Refusals, invariants and known answers",
+    "start": 5508,
+    "end": 5540
+   },
+   {
+    "id": "15.14",
+    "title": "Foundations, gates, kill gates, open questions",
+    "start": 5541,
+    "end": 5583
+   },
+   {
+    "id": "15.15",
+    "title": "Coupled transmissions: the torque set, the rotor energy and the direction witness",
+    "start": 5584,
+    "end": 5630
+   }
+  ],
+  "16": [
+   {
+    "id": "16.1",
+    "title": "What Kinesis owns",
+    "start": 5637,
+    "end": 5656
+   },
+   {
+    "id": "16.2",
+    "title": "Decisions",
+    "start": 5657,
+    "end": 5668
+   },
+   {
+    "id": "16.3",
+    "title": "One model, three tiers",
+    "start": 5669,
+    "end": 5691
+   },
+   {
+    "id": "16.4",
+    "title": "The referee as it can exist at M1, and where FrankenSim's limits bind",
+    "start": 5692,
+    "end": 5719
+   },
+   {
+    "id": "16.5",
+    "title": "The transactional step [S]",
+    "start": 5720,
+    "end": 5824
+   },
+   {
+    "id": "16.6",
+    "title": "The batched step [S], with per-world variants",
+    "start": 5825,
+    "end": 5920
+   },
+   {
+    "id": "16.7",
+    "title": "Integrators",
+    "start": 5921,
+    "end": 5958
+   },
+   {
+    "id": "16.8",
+    "title": "The trust ladder, the fidelity ledger and the promotion rule",
+    "start": 5959,
+    "end": 6037
+   },
+   {
+    "id": "16.9",
+    "title": "Rank agreement between tiers, and model-form rank checks",
+    "start": 6038,
+    "end": 6085
+   },
+   {
+    "id": "16.10",
+    "title": "The audit for energy created by the simulator [S]",
+    "start": 6086,
+    "end": 6111
+   },
+   {
+    "id": "16.11",
+    "title": "The background referee and its coverage figures [F]",
+    "start": 6112,
+    "end": 6169
+   },
+   {
+    "id": "16.12",
+    "title": "Events, loops and limits of the claim",
+    "start": 6170,
+    "end": 6185
+   },
+   {
+    "id": "16.13",
+    "title": "Verbs",
+    "start": 6186,
+    "end": 6202
+   },
+   {
+    "id": "16.14",
+    "title": "Refusals",
+    "start": 6203,
+    "end": 6217
+   },
+   {
+    "id": "16.15",
+    "title": "Invariants and proof obligations",
+    "start": 6218,
+    "end": 6238
+   },
+   {
+    "id": "16.16",
+    "title": "Known answers",
+    "start": 6239,
+    "end": 6255
+   },
+   {
+    "id": "16.17",
+    "title": "Gates and kill gates",
+    "start": 6256,
+    "end": 6283
+   },
+   {
+    "id": "16.18",
+    "title": "Open questions",
+    "start": 6284,
+    "end": 6299
+   },
+   {
+    "id": "16.19",
+    "title": "Row-class solve queues",
+    "start": 6300,
+    "end": 6398
+   },
+   {
+    "id": "16.20",
+    "title": "Decoupled stepping of separated robots in one world",
+    "start": 6399,
+    "end": 6474
+   },
+   {
+    "id": "16.21",
+    "title": "Step adjoints through the converged contact solve",
+    "start": 6475,
+    "end": 6562
+   },
+   {
+    "id": "16.22",
+    "title": "Closed-form elimination of single-loop planar closures",
+    "start": 6563,
+    "end": 6615
+   },
+   {
+    "id": "16.23",
+    "title": "Ancestor-sparse assembly and the solve-stage ledger",
+    "start": 6616,
+    "end": 6682
+   },
+   {
+    "id": "16.24",
+    "title": "A held command and the step that integrates it",
+    "start": 6683,
+    "end": 6731
+   }
+  ],
+  "17": [
+   {
+    "id": "17.1",
+    "title": "What Phylum owns",
+    "start": 6738,
+    "end": 6770
+   },
+   {
+    "id": "17.2",
+    "title": "Decisions",
+    "start": 6771,
+    "end": 6781
+   },
+   {
+    "id": "17.3",
+    "title": "Three levels of variation",
+    "start": 6782,
+    "end": 6789
+   },
+   {
+    "id": "17.4",
+    "title": "Shape classes and model tables",
+    "start": 6790,
+    "end": 6838
+   },
+   {
+    "id": "17.5",
+    "title": "Size buckets, and when bucketing recovers the padding overhead",
+    "start": 6839,
+    "end": 6898
+   },
+   {
+    "id": "17.6",
+    "title": "Design-family lanes and the speedup bound",
+    "start": 6899,
+    "end": 6928
+   },
+   {
+    "id": "17.7",
+    "title": "Memory: which population shapes fit which machine",
+    "start": 6929,
+    "end": 6963
+   },
+   {
+    "id": "17.8",
+    "title": "Admission, and edit-to-first-step latency as a target",
+    "start": 6964,
+    "end": 6988
+   },
+   {
+    "id": "17.9",
+    "title": "Specialization of survivors, a gated optimization [F]",
+    "start": 6989,
+    "end": 7013
+   },
+   {
+    "id": "17.10",
+    "title": "The morphology generator [F]",
+    "start": 7014,
+    "end": 7046
+   },
+   {
+    "id": "17.11",
+    "title": "Campaign quotienting",
+    "start": 7047,
+    "end": 7105
+   },
+   {
+    "id": "17.12",
+    "title": "Quality-diversity maps per dispatch [F]",
+    "start": 7106,
+    "end": 7123
+   },
+   {
+    "id": "17.13",
+    "title": "Paired finite-difference design gradients [F]",
+    "start": 7124,
+    "end": 7160
+   },
+   {
+    "id": "17.14",
+    "title": "The head-to-head experiment",
+    "start": 7161,
+    "end": 7196
+   },
+   {
+    "id": "17.15",
+    "title": "Verbs",
+    "start": 7197,
+    "end": 7217
+   },
+   {
+    "id": "17.16",
+    "title": "Refusals",
+    "start": 7218,
+    "end": 7229
+   },
+   {
+    "id": "17.17",
+    "title": "Invariants and proof obligations",
+    "start": 7230,
+    "end": 7247
+   },
+   {
+    "id": "17.18",
+    "title": "Known answers",
+    "start": 7248,
+    "end": 7262
+   },
+   {
+    "id": "17.19",
+    "title": "Gates and kill gates",
+    "start": 7263,
+    "end": 7283
+   },
+   {
+    "id": "17.20",
+    "title": "Open questions",
+    "start": 7284,
+    "end": 7297
+   },
+   {
+    "id": "17.21",
+    "title": "Limb-archetype kernels",
+    "start": 7298,
+    "end": 7363
+   }
+  ],
+  "18": [
+   {
+    "id": "18.1",
+    "title": "What Traction owns",
+    "start": 7369,
+    "end": 7383
+   },
+   {
+    "id": "18.2",
+    "title": "Decisions",
+    "start": 7384,
+    "end": 7396
+   },
+   {
+    "id": "18.3",
+    "title": "Geometry: fields, primitives, and a mesh path with enclosures",
+    "start": 7397,
+    "end": 7448
+   },
+   {
+    "id": "18.4",
+    "title": "Detection, swept bounds and witnesses",
+    "start": 7449,
+    "end": 7486
+   },
+   {
+    "id": "18.5",
+    "title": "Contact laws",
+    "start": 7487,
+    "end": 7542
+   },
+   {
+    "id": "18.6",
+    "title": "Friction, and the cone in four dimensions",
+    "start": 7543,
+    "end": 7573
+   },
+   {
+    "id": "18.7",
+    "title": "Joint-level rows: stiction, backlash and hard stops [S]",
+    "start": 7574,
+    "end": 7593
+   },
+   {
+    "id": "18.8",
+    "title": "Film friction for wet and greasy floors [S]",
+    "start": 7594,
+    "end": 7628
+   },
+   {
+    "id": "18.9",
+    "title": "Wheels, tracks and hybrids",
+    "start": 7629,
+    "end": 7656
+   },
+   {
+    "id": "18.10",
+    "title": "Terrain mechanics",
+    "start": 7657,
+    "end": 7679
+   },
+   {
+    "id": "18.11",
+    "title": "Contact capacity and the rule against capacity bias",
+    "start": 7680,
+    "end": 7698
+   },
+   {
+    "id": "18.12",
+    "title": "Precision: diagonal scaling, and why half precision is rejected",
+    "start": 7699,
+    "end": 7742
+   },
+   {
+    "id": "18.13",
+    "title": "Verbs",
+    "start": 7743,
+    "end": 7754
+   },
+   {
+    "id": "18.14",
+    "title": "Refusals",
+    "start": 7755,
+    "end": 7769
+   },
+   {
+    "id": "18.15",
+    "title": "Invariants and proof obligations",
+    "start": 7770,
+    "end": 7788
+   },
+   {
+    "id": "18.16",
+    "title": "Known-answer battery",
+    "start": 7789,
+    "end": 7820
+   },
+   {
+    "id": "18.17",
+    "title": "Gates and kill gates",
+    "start": 7821,
+    "end": 7856
+   },
+   {
+    "id": "18.18",
+    "title": "Open questions",
+    "start": 7857,
+    "end": 7869
+   },
+   {
+    "id": "18.19",
+    "title": "Response batches: anchor, acceptance, known answers, gate",
+    "start": 7870,
+    "end": 7923
+   },
+   {
+    "id": "18.20",
+    "title": "Swept bounds enclose arcs",
+    "start": 7924,
+    "end": 7956
+   }
+  ],
+  "19": [
+   {
+    "id": "19.1",
+    "title": "What it owns",
+    "start": 7966,
+    "end": 8008
+   },
+   {
+    "id": "19.2",
+    "title": "Decisions",
+    "start": 8009,
+    "end": 8047
+   },
+   {
+    "id": "19.3",
+    "title": "The scene pack",
+    "start": 8048,
+    "end": 8164
+   },
+   {
+    "id": "19.4",
+    "title": "The scene compiler",
+    "start": 8165,
+    "end": 8231
+   },
+   {
+    "id": "19.5",
+    "title": "Scene acceptance [S]",
+    "start": 8232,
+    "end": 8320
+   },
+   {
+    "id": "19.6",
+    "title": "Terrain generators [S]",
+    "start": 8321,
+    "end": 8333
+   },
+   {
+    "id": "19.7",
+    "title": "Interior generators: seven archetypes",
+    "start": 8334,
+    "end": 8371
+   },
+   {
+    "id": "19.8",
+    "title": "Hazard lists",
+    "start": 8372,
+    "end": 8481
+   },
+   {
+    "id": "19.9",
+    "title": "Assets and licences",
+    "start": 8482,
+    "end": 8493
+   },
+   {
+    "id": "19.10",
+    "title": "Living worlds in three tiers",
+    "start": 8494,
+    "end": 8726
+   },
+   {
+    "id": "19.11",
+    "title": "Clearance complexes (`.fclear`) [F]",
+    "start": 8727,
+    "end": 8831
+   },
+   {
+    "id": "19.12",
+    "title": "The retrofit catalog [F]",
+    "start": 8832,
+    "end": 8920
+   },
+   {
+    "id": "19.13",
+    "title": "Ingesting real places [F]",
+    "start": 8921,
+    "end": 8983
+   },
+   {
+    "id": "19.14",
+    "title": "Train and test hygiene",
+    "start": 8984,
+    "end": 9000
+   },
+   {
+    "id": "19.15",
+    "title": "Memory arithmetic, brick pools and the world bank",
+    "start": 9001,
+    "end": 9086
+   },
+   {
+    "id": "19.16",
+    "title": "Refusals",
+    "start": 9087,
+    "end": 9110
+   },
+   {
+    "id": "19.17",
+    "title": "Invariants and proof obligations",
+    "start": 9111,
+    "end": 9135
+   },
+   {
+    "id": "19.18",
+    "title": "Known answers",
+    "start": 9136,
+    "end": 9158
+   },
+   {
+    "id": "19.19",
+    "title": "Gates and kill gates",
+    "start": 9159,
+    "end": 9190
+   },
+   {
+    "id": "19.20",
+    "title": "Open questions",
+    "start": 9191,
+    "end": 9211
+   },
+   {
+    "id": "19.21",
+    "title": "Far-field field reuse across forks",
+    "start": 9212,
+    "end": 9296
+   },
+   {
+    "id": "19.22",
+    "title": "Scaled instances: distances, normals and ray parameters in world metres",
+    "start": 9297,
+    "end": 9334
+   }
+  ],
+  "20": [
+   {
+    "id": "20.1",
+    "title": "What it owns",
+    "start": 9344,
+    "end": 9355
+   },
+   {
+    "id": "20.2",
+    "title": "Decisions",
+    "start": 9356,
+    "end": 9387
+   },
+   {
+    "id": "20.3",
+    "title": "The rule",
+    "start": 9388,
+    "end": 9398
+   },
+   {
+    "id": "20.4",
+    "title": "The clock contract [S]",
+    "start": 9399,
+    "end": 9529
+   },
+   {
+    "id": "20.5",
+    "title": "Proprioception [S]",
+    "start": 9530,
+    "end": 9555
+   },
+   {
+    "id": "20.6",
+    "title": "Exteroception [S]",
+    "start": 9556,
+    "end": 9597
+   },
+   {
+    "id": "20.7",
+    "title": "Cameras with exposure and rolling shutter [S from M2]",
+    "start": 9598,
+    "end": 9629
+   },
+   {
+    "id": "20.8",
+    "title": "Sensor failure modes",
+    "start": 9630,
+    "end": 9658
+   },
+   {
+    "id": "20.9",
+    "title": "Images",
+    "start": 9659,
+    "end": 9670
+   },
+   {
+    "id": "20.10",
+    "title": "The viewer",
+    "start": 9671,
+    "end": 9681
+   },
+   {
+    "id": "20.11",
+    "title": "The observability Gramian [S]",
+    "start": 9682,
+    "end": 9722
+   },
+   {
+    "id": "20.12",
+    "title": "The observation-alias impossibility witness",
+    "start": 9723,
+    "end": 9802
+   },
+   {
+    "id": "20.13",
+    "title": "The observation-preserving symmetry subgroup [S]",
+    "start": 9803,
+    "end": 9847
+   },
+   {
+    "id": "20.14",
+    "title": "Calibration as a least-squares pose graph [S]",
+    "start": 9848,
+    "end": 9886
+   },
+   {
+    "id": "20.15",
+    "title": "The causal-policy test [S]",
+    "start": 9887,
+    "end": 9908
+   },
+   {
+    "id": "20.16",
+    "title": "The docking fixture: a known answer with a closed-form boundary",
+    "start": 9909,
+    "end": 9955
+   },
+   {
+    "id": "20.17",
+    "title": "Noninterference [S]",
+    "start": 9956,
+    "end": 9970
+   },
+   {
+    "id": "20.18",
+    "title": "Verbs and refusals",
+    "start": 9971,
+    "end": 9993
+   },
+   {
+    "id": "20.19",
+    "title": "Invariants and proof obligations",
+    "start": 9994,
+    "end": 10019
+   },
+   {
+    "id": "20.20",
+    "title": "Known answers",
+    "start": 10020,
+    "end": 10051
+   },
+   {
+    "id": "20.21",
+    "title": "Gates and kill gates",
+    "start": 10052,
+    "end": 10076
+   },
+   {
+    "id": "20.22",
+    "title": "Open questions",
+    "start": 10077,
+    "end": 10090
+   },
+   {
+    "id": "20.23",
+    "title": "Force sensors act on a force history: filter, clip and integrate in a declared order",
+    "start": 10091,
+    "end": 10124
+   },
+   {
+    "id": "20.24",
+    "title": "Visibility under self-occlusion, and sensor mounts as design variables",
+    "start": 10125,
+    "end": 10182
+   },
+   {
+    "id": "20.25",
+    "title": "Sampled readings: impacts in an exposure, encoder unwrapping, the load-cell cut",
+    "start": 10183,
+    "end": 10232
+   }
+  ],
+  "21": [
+   {
+    "id": "21.1",
+    "title": "What Spark owns",
+    "start": 10235,
+    "end": 10250
+   },
+   {
+    "id": "21.2",
+    "title": "Position relative to suite doctrine",
+    "start": 10251,
+    "end": 10287
+   },
+   {
+    "id": "21.3",
+    "title": "Decisions",
+    "start": 10288,
+    "end": 10302
+   },
+   {
+    "id": "21.4",
+    "title": "Mechanisms and their tiers",
+    "start": 10303,
+    "end": 10328
+   },
+   {
+    "id": "21.5",
+    "title": "The kernel library",
+    "start": 10329,
+    "end": 10363
+   },
+   {
+    "id": "21.6",
+    "title": "Two layers of source",
+    "start": 10364,
+    "end": 10407
+   },
+   {
+    "id": "21.7",
+    "title": "The kernel IR",
+    "start": 10408,
+    "end": 10450
+   },
+   {
+    "id": "21.8",
+    "title": "Kernel classes: floating, exact-integer and guarded",
+    "start": 10451,
+    "end": 10492
+   },
+   {
+    "id": "21.9",
+    "title": "Backends",
+    "start": 10493,
+    "end": 10579
+   },
+   {
+    "id": "21.10",
+    "title": "The device arena, leases and the binary kernel cache",
+    "start": 10580,
+    "end": 10618
+   },
+   {
+    "id": "21.11",
+    "title": "Execution model: shape classes, variants, buckets and the step plan",
+    "start": 10619,
+    "end": 10715
+   },
+   {
+    "id": "21.12",
+    "title": "The placement planner and its receipts",
+    "start": 10716,
+    "end": 10747
+   },
+   {
+    "id": "21.13",
+    "title": "The CPU-versus-device check",
+    "start": 10748,
+    "end": 10765
+   },
+   {
+    "id": "21.14",
+    "title": "Precision",
+    "start": 10766,
+    "end": 10787
+   },
+   {
+    "id": "21.15",
+    "title": "Determinism on devices",
+    "start": 10788,
+    "end": 10808
+   },
+   {
+    "id": "21.16",
+    "title": "The hardware fingerprint",
+    "start": 10809,
+    "end": 10840
+   },
+   {
+    "id": "21.17",
+    "title": "Division of labour between the machines, and the fleet scheduler",
+    "start": 10841,
+    "end": 10885
+   },
+   {
+    "id": "21.18",
+    "title": "Specialization for survivors only; the fused step kernel",
+    "start": 10886,
+    "end": 10926
+   },
+   {
+    "id": "21.19",
+    "title": "Routes considered and not taken",
+    "start": 10927,
+    "end": 10941
+   },
+   {
+    "id": "21.20",
+    "title": "Rejected mechanisms, with the calculation that refutes each",
+    "start": 10942,
+    "end": 10956
+   },
+   {
+    "id": "21.21",
+    "title": "Refusals",
+    "start": 10957,
+    "end": 10982
+   },
+   {
+    "id": "21.22",
+    "title": "Invariants and proof obligations",
+    "start": 10983,
+    "end": 11001
+   },
+   {
+    "id": "21.23",
+    "title": "Known answers and negative controls",
+    "start": 11002,
+    "end": 11018
+   },
+   {
+    "id": "21.24",
+    "title": "Gates and kill gates",
+    "start": 11019,
+    "end": 11062
+   },
+   {
+    "id": "21.25",
+    "title": "Open questions",
+    "start": 11063,
+    "end": 11082
+   },
+   {
+    "id": "21.26",
+    "title": "Counts beyond 2³² without 64-bit atomics",
+    "start": 11083,
+    "end": 11120
+   }
+  ],
+  "22": [
+   {
+    "id": "22.1",
+    "title": "What it owns",
+    "start": 11123,
+    "end": 11154
+   },
+   {
+    "id": "22.2",
+    "title": "Decisions",
+    "start": 11155,
+    "end": 11167
+   },
+   {
+    "id": "22.3",
+    "title": "The estimator [S]",
+    "start": 11168,
+    "end": 11198
+   },
+   {
+    "id": "22.4",
+    "title": "Baseline controller synthesis by morphology class",
+    "start": 11199,
+    "end": 11240
+   },
+   {
+    "id": "22.5",
+    "title": "One cone solver [S]",
+    "start": 11241,
+    "end": 11266
+   },
+   {
+    "id": "22.6",
+    "title": "Reporting: three outcomes, never a bare failure [S]",
+    "start": 11267,
+    "end": 11282
+   },
+   {
+    "id": "22.7",
+    "title": "An inspectable baseline plus a learned residual [F]",
+    "start": 11283,
+    "end": 11312
+   },
+   {
+    "id": "22.8",
+    "title": "The sampling-based predictive controller [F]",
+    "start": 11313,
+    "end": 11392
+   },
+   {
+    "id": "22.9",
+    "title": "Gaits as orbits (`frob-gait`) [F]",
+    "start": 11393,
+    "end": 11535
+   },
+   {
+    "id": "22.10",
+    "title": "Skill artifacts (`.fskill`)",
+    "start": 11536,
+    "end": 11609
+   },
+   {
+    "id": "22.11",
+    "title": "The energy-budget safety tier (`.fenergy`) [F]",
+    "start": 11610,
+    "end": 11712
+   },
+   {
+    "id": "22.12",
+    "title": "Runtime shields (`frob-shield`) [F]",
+    "start": 11713,
+    "end": 11826
+   },
+   {
+    "id": "22.13",
+    "title": "Symmetric controllers under stabilizer intersection [S]",
+    "start": 11827,
+    "end": 11880
+   },
+   {
+    "id": "22.14",
+    "title": "Refusals",
+    "start": 11881,
+    "end": 11899
+   },
+   {
+    "id": "22.15",
+    "title": "Invariants and proof obligations",
+    "start": 11900,
+    "end": 11923
+   },
+   {
+    "id": "22.16",
+    "title": "Known answers and negative controls",
+    "start": 11924,
+    "end": 11946
+   },
+   {
+    "id": "22.17",
+    "title": "Pilots and ceilings for the Frontier and Moonshot items",
+    "start": 11947,
+    "end": 11962
+   },
+   {
+    "id": "22.18",
+    "title": "Gates and kill gates",
+    "start": 11963,
+    "end": 11995
+   },
+   {
+    "id": "22.19",
+    "title": "Open questions",
+    "start": 11996,
+    "end": 12017
+   },
+   {
+    "id": "22.20",
+    "title": "A lifted linear planning model for one soft-soil regime",
+    "start": 12018,
+    "end": 12087
+   },
+   {
+    "id": "22.21",
+    "title": "The pre-slip aliasing fixture and the sampled-data backup domain",
+    "start": 12088,
+    "end": 12155
+   },
+   {
+    "id": "22.22",
+    "title": "The sampling controller as the delivered controller",
+    "start": 12156,
+    "end": 12228
+   },
+   {
+    "id": "22.23",
+    "title": "Orbits of a loop with no clock: the free period and the trivial multiplier",
+    "start": 12229,
+    "end": 12283
+   },
+   {
+    "id": "22.24",
+    "title": "Stability over admitted sequences of strides",
+    "start": 12284,
+    "end": 12322
+   },
+   {
+    "id": "22.25",
+    "title": "Sampled damping, and the work of a held command",
+    "start": 12323,
+    "end": 12369
+   }
+  ],
+  "23": [
+   {
+    "id": "23.1",
+    "title": "What it owns",
+    "start": 12372,
+    "end": 12391
+   },
+   {
+    "id": "23.2",
+    "title": "Decisions",
+    "start": 12392,
+    "end": 12405
+   },
+   {
+    "id": "23.3",
+    "title": "The environment API and its semantics [S]",
+    "start": 12406,
+    "end": 12492
+   },
+   {
+    "id": "23.4",
+    "title": "Device-resident tensor views [S]",
+    "start": 12493,
+    "end": 12513
+   },
+   {
+    "id": "23.5",
+    "title": "Declarative task specifications with requirement terms [S]",
+    "start": 12514,
+    "end": 12548
+   },
+   {
+    "id": "23.6",
+    "title": "Algorithms and the PPO rules",
+    "start": 12549,
+    "end": 12591
+   },
+   {
+    "id": "23.7",
+    "title": "Networks, checkpoints and the mapping table",
+    "start": 12592,
+    "end": 12624
+   },
+   {
+    "id": "23.8",
+    "title": "Where learning runs, and what FrankenTorch is for",
+    "start": 12625,
+    "end": 12657
+   },
+   {
+    "id": "23.9",
+    "title": "Multi-device PPO: the normalization rule [S]",
+    "start": 12658,
+    "end": 12680
+   },
+   {
+    "id": "23.10",
+    "title": "Distillation [F]",
+    "start": 12681,
+    "end": 12699
+   },
+   {
+    "id": "23.11",
+    "title": "Family policies per morphology class [F]",
+    "start": 12700,
+    "end": 12771
+   },
+   {
+    "id": "23.12",
+    "title": "Inheritance along design edits [F]",
+    "start": 12772,
+    "end": 12800
+   },
+   {
+    "id": "23.13",
+    "title": "Equivariance, only where the closed loop has it",
+    "start": 12801,
+    "end": 12832
+   },
+   {
+    "id": "23.14",
+    "title": "A geometric-algebra tree policy [M]",
+    "start": 12833,
+    "end": 12852
+   },
+   {
+    "id": "23.15",
+    "title": "Randomization from cards [S]",
+    "start": 12853,
+    "end": 12869
+   },
+   {
+    "id": "23.16",
+    "title": "Detecting exploitation (GOAL-16), and rank robustness of finalists [S]",
+    "start": 12870,
+    "end": 12909
+   },
+   {
+    "id": "23.17",
+    "title": "Evaluation protocol [S]",
+    "start": 12910,
+    "end": 12930
+   },
+   {
+    "id": "23.18",
+    "title": "The Gymnasium-compatible adapter [F]",
+    "start": 12931,
+    "end": 12951
+   },
+   {
+    "id": "23.19",
+    "title": "Refusals",
+    "start": 12952,
+    "end": 12970
+   },
+   {
+    "id": "23.20",
+    "title": "Invariants and proof obligations",
+    "start": 12971,
+    "end": 12991
+   },
+   {
+    "id": "23.21",
+    "title": "Known answers and negative controls",
+    "start": 12992,
+    "end": 13011
+   },
+   {
+    "id": "23.22",
+    "title": "Pilots and ceilings for the Frontier and Moonshot items",
+    "start": 13012,
+    "end": 13027
+   },
+   {
+    "id": "23.23",
+    "title": "Gates and kill gates",
+    "start": 13028,
+    "end": 13066
+   },
+   {
+    "id": "23.24",
+    "title": "Open questions",
+    "start": 13067,
+    "end": 13083
+   },
+   {
+    "id": "23.25",
+    "title": "The joint law of sampled actions",
+    "start": 13084,
+    "end": 13124
+   },
+   {
+    "id": "23.26",
+    "title": "The actor's information contract covers every field it can read",
+    "start": 13125,
+    "end": 13164
+   },
+   {
+    "id": "23.27",
+    "title": "A threshold crossing is not attainment",
+    "start": 13165,
+    "end": 13200
+   },
+   {
+    "id": "23.28",
+    "title": "The winner check for a selecting rung",
+    "start": 13201,
+    "end": 13226
+   },
+   {
+    "id": "23.29",
+    "title": "Short-horizon gradient training with design parameters",
+    "start": 13227,
+    "end": 13279
+   }
+  ],
+  "24": [
+   {
+    "id": "24.1",
+    "title": "What Arena owns",
+    "start": 13284,
+    "end": 13307
+   },
+   {
+    "id": "24.2",
+    "title": "Decisions",
+    "start": 13308,
+    "end": 13344
+   },
+   {
+    "id": "24.3",
+    "title": "Task families",
+    "start": 13345,
+    "end": 13365
+   },
+   {
+    "id": "24.4",
+    "title": "The task file `.ftask` [S]",
+    "start": 13366,
+    "end": 13402
+   },
+   {
+    "id": "24.5",
+    "title": "The requirement language [S]",
+    "start": 13403,
+    "end": 13513
+   },
+   {
+    "id": "24.6",
+    "title": "Requirements and rewards",
+    "start": 13514,
+    "end": 13532
+   },
+   {
+    "id": "24.7",
+    "title": "The settled-pose reset cache [S]",
+    "start": 13533,
+    "end": 13551
+   },
+   {
+    "id": "24.8",
+    "title": "Metrics and scorecards [S]",
+    "start": 13552,
+    "end": 13596
+   },
+   {
+    "id": "24.9",
+    "title": "Batteries and the design corpus",
+    "start": 13597,
+    "end": 13612
+   },
+   {
+    "id": "24.10",
+    "title": "Fixture 1: a loaded cart crosses a sill and docks [S]",
+    "start": 13613,
+    "end": 13789
+   },
+   {
+    "id": "24.11",
+    "title": "Fixture 2: a quadruped on a split-grip landing [S]",
+    "start": 13790,
+    "end": 13839
+   },
+   {
+    "id": "24.12",
+    "title": "Two study types [S]",
+    "start": 13840,
+    "end": 13870
+   },
+   {
+    "id": "24.13",
+    "title": "The blinded qualification lane [S]",
+    "start": 13871,
+    "end": 13946
+   },
+   {
+    "id": "24.14",
+    "title": "Verbs and refusals",
+    "start": 13947,
+    "end": 13988
+   },
+   {
+    "id": "24.15",
+    "title": "Invariants and proof obligations",
+    "start": 13989,
+    "end": 14011
+   },
+   {
+    "id": "24.16",
+    "title": "Known answers",
+    "start": 14012,
+    "end": 14027
+   },
+   {
+    "id": "24.17",
+    "title": "Gates, kill gate and pilots",
+    "start": 14028,
+    "end": 14050
+   },
+   {
+    "id": "24.18",
+    "title": "Open questions",
+    "start": 14051,
+    "end": 14063
+   },
+   {
+    "id": "24.19",
+    "title": "Traction capacity is a slice of the wrench set at the commanded wrench",
+    "start": 14064,
+    "end": 14096
+   },
+   {
+    "id": "24.20",
+    "title": "Auditing a task before any design runs on it: foil bodies and intent invariants",
+    "start": 14097,
+    "end": 14168
+   },
+   {
+    "id": "24.21",
+    "title": "The item bank: importance sampling of battery items for close comparisons",
+    "start": 14169,
+    "end": 14239
+   },
+   {
+    "id": "24.22",
+    "title": "Exposure domains and the coupling test",
+    "start": 14240,
+    "end": 14295
+   },
+   {
+    "id": "24.23",
+    "title": "The idle arm of the task audit",
+    "start": 14296,
+    "end": 14324
+   }
+  ],
+  "25": [
+   {
+    "id": "25.1",
+    "title": "What Augur owns and what it is for",
+    "start": 14340,
+    "end": 14413
+   },
+   {
+    "id": "25.2",
+    "title": "Decisions",
+    "start": 14414,
+    "end": 14457
+   },
+   {
+    "id": "25.3",
+    "title": "The user contract",
+    "start": 14458,
+    "end": 14690
+   },
+   {
+    "id": "25.4",
+    "title": "Semantics",
+    "start": 14691,
+    "end": 14935
+   },
+   {
+    "id": "25.5",
+    "title": "Certificates",
+    "start": 14936,
+    "end": 15065
+   },
+   {
+    "id": "25.6",
+    "title": "Region evidence within its real scope [F]",
+    "start": 15066,
+    "end": 15118
+   },
+   {
+    "id": "25.7",
+    "title": "Searching a family: quotients, cuts and cell refinement [F]",
+    "start": 15119,
+    "end": 15170
+   },
+   {
+    "id": "25.8",
+    "title": "Revalidation after an edit [F]",
+    "start": 15171,
+    "end": 15237
+   },
+   {
+    "id": "25.9",
+    "title": "Design–world duality and minimal counterexamples [F]",
+    "start": 15238,
+    "end": 15271
+   },
+   {
+    "id": "25.10",
+    "title": "When a better body cannot rescue a blind policy [F]",
+    "start": 15272,
+    "end": 15341
+   },
+   {
+    "id": "25.11",
+    "title": "Transfer of control through a physical interface [M]",
+    "start": 15342,
+    "end": 15389
+   },
+   {
+    "id": "25.12",
+    "title": "Physics across design families on CUDA and Metal [F]",
+    "start": 15390,
+    "end": 15444
+   },
+   {
+    "id": "25.13",
+    "title": "The continuous morphology family with an exact answer [S]",
+    "start": 15445,
+    "end": 15530
+   },
+   {
+    "id": "25.14",
+    "title": "Probe and instrument design [F]",
+    "start": 15531,
+    "end": 15644
+   },
+   {
+    "id": "25.15",
+    "title": "Buying information with early control inputs [S] as a fixture, [F] as a method",
+    "start": 15645,
+    "end": 15713
+   },
+   {
+    "id": "25.16",
+    "title": "Proving that a replacement improves a decision when neither robot has a guarantee [F]",
+    "start": 15714,
+    "end": 15768
+   },
+   {
+    "id": "25.17",
+    "title": "Designing the robot, the facility and the handoff together [M]",
+    "start": 15769,
+    "end": 15838
+   },
+   {
+    "id": "25.18",
+    "title": "How much a factory must tell a shared controller [F] on supplied sets, [M] from contact",
+    "start": 15839,
+    "end": 15902
+   },
+   {
+    "id": "25.19",
+    "title": "Using geometric phase to invent locomotion [F] on kinematic fixtures, [M] as an atlas",
+    "start": 15903,
+    "end": 15957
+   },
+   {
+    "id": "25.20",
+    "title": "Computing with symmetry at the instant of contact [F] as a test, [M] as an amortization",
+    "start": 15958,
+    "end": 16007
+   },
+   {
+    "id": "25.21",
+    "title": "Constructive lanes (`frob-synth`)",
+    "start": 16008,
+    "end": 16177
+   },
+   {
+    "id": "25.22",
+    "title": "What was actually checked at plan time",
+    "start": 16178,
+    "end": 16219
+   },
+   {
+    "id": "25.23",
+    "title": "Delivery order and stop decisions",
+    "start": 16220,
+    "end": 16252
+   },
+   {
+    "id": "25.24",
+    "title": "Refusals",
+    "start": 16253,
+    "end": 16284
+   },
+   {
+    "id": "25.25",
+    "title": "Invariants and proof obligations",
+    "start": 16285,
+    "end": 16310
+   },
+   {
+    "id": "25.26",
+    "title": "Known answers",
+    "start": 16311,
+    "end": 16350
+   },
+   {
+    "id": "25.27",
+    "title": "Gates and kill gates",
+    "start": 16351,
+    "end": 16434
+   },
+   {
+    "id": "25.28",
+    "title": "Open questions",
+    "start": 16435,
+    "end": 16475
+   },
+   {
+    "id": "25.29",
+    "title": "Chance claims transport only through a coupling",
+    "start": 16476,
+    "end": 16518
+   },
+   {
+    "id": "25.30",
+    "title": "No monotone fill without a proof of monotonicity",
+    "start": 16519,
+    "end": 16555
+   },
+   {
+    "id": "25.31",
+    "title": "Monomial screens in exponent coordinates",
+    "start": 16556,
+    "end": 16626
+   },
+   {
+    "id": "25.32",
+    "title": "Utility brackets and the dominance stop",
+    "start": 16627,
+    "end": 16687
+   },
+   {
+    "id": "25.33",
+    "title": "Placement and sizing along a prescribed motion",
+    "start": 16688,
+    "end": 16752
+   },
+   {
+    "id": "25.34",
+    "title": "Weak-variable enclosure and the split set",
+    "start": 16753,
+    "end": 16815
+   },
+   {
+    "id": "25.35",
+    "title": "The controller class is part of a family answer",
+    "start": 16816,
+    "end": 16882
+   },
+   {
+    "id": "25.36",
+    "title": "Docking to a finite tolerance over a continuous gain interval",
+    "start": 16883,
+    "end": 16946
+   },
+   {
+    "id": "25.37",
+    "title": "Channel laws: the joint error law of repeated reads, and the code that carries a label",
+    "start": 16947,
+    "end": 17004
+   },
+   {
+    "id": "25.38",
+    "title": "Shared nuisance parameters, and the probe for four admitted laws",
+    "start": 17005,
+    "end": 17062
+   },
+   {
+    "id": "25.39",
+    "title": "Sizing witnesses for fixed points, and Pareto coverage of a catalog",
+    "start": 17063,
+    "end": 17105
+   }
+  ],
+  "26": [
+   {
+    "id": "26.1",
+    "title": "What Nemesis owns",
+    "start": 17110,
+    "end": 17136
+   },
+   {
+    "id": "26.2",
+    "title": "Decisions",
+    "start": 17137,
+    "end": 17158
+   },
+   {
+    "id": "26.3",
+    "title": "The search space and the legality set [S]",
+    "start": 17159,
+    "end": 17191
+   },
+   {
+    "id": "26.4",
+    "title": "The falsification score and the search [F]",
+    "start": 17192,
+    "end": 17226
+   },
+   {
+    "id": "26.5",
+    "title": "The solvability oracle [S]",
+    "start": 17227,
+    "end": 17243
+   },
+   {
+    "id": "26.6",
+    "title": "The artifact guard [S]",
+    "start": 17244,
+    "end": 17262
+   },
+   {
+    "id": "26.7",
+    "title": "Shrinking to a minimal counterexample world [F]",
+    "start": 17263,
+    "end": 17322
+   },
+   {
+    "id": "26.8",
+    "title": "The hard-world set [S]",
+    "start": 17323,
+    "end": 17331
+   },
+   {
+    "id": "26.9",
+    "title": "Rare failures: exploration and certification",
+    "start": 17332,
+    "end": 17434
+   },
+   {
+    "id": "26.10",
+    "title": "Auditing what screening discarded [S]",
+    "start": 17435,
+    "end": 17457
+   },
+   {
+    "id": "26.11",
+    "title": "Covering scene sets by submodular selection [S]",
+    "start": 17458,
+    "end": 17494
+   },
+   {
+    "id": "26.12",
+    "title": "Verbs and refusals",
+    "start": 17495,
+    "end": 17521
+   },
+   {
+    "id": "26.13",
+    "title": "Invariants and proof obligations",
+    "start": 17522,
+    "end": 17538
+   },
+   {
+    "id": "26.14",
+    "title": "Known answers",
+    "start": 17539,
+    "end": 17554
+   },
+   {
+    "id": "26.15",
+    "title": "Gates, kill gates and pilots",
+    "start": 17555,
+    "end": 17580
+   },
+   {
+    "id": "26.16",
+    "title": "Open questions",
+    "start": 17581,
+    "end": 17595
+   }
+  ],
+  "27": [
+   {
+    "id": "27.1",
+    "title": "What Autopsy owns",
+    "start": 17600,
+    "end": 17628
+   },
+   {
+    "id": "27.2",
+    "title": "Decisions",
+    "start": 17629,
+    "end": 17648
+   },
+   {
+    "id": "27.3",
+    "title": "Forks from snapshots [S]",
+    "start": 17649,
+    "end": 17671
+   },
+   {
+    "id": "27.4",
+    "title": "Classifying a fork [S]",
+    "start": 17672,
+    "end": 17691
+   },
+   {
+    "id": "27.5",
+    "title": "Interventions and the placebo [S]",
+    "start": 17692,
+    "end": 17711
+   },
+   {
+    "id": "27.6",
+    "title": "Interventional contrasts and the flip rate [S]",
+    "start": 17712,
+    "end": 17740
+   },
+   {
+    "id": "27.7",
+    "title": "Coalitions and budgeted Shapley summaries [S]",
+    "start": 17741,
+    "end": 17773
+   },
+   {
+    "id": "27.8",
+    "title": "Design parameters re-run from the episode start [S]",
+    "start": 17774,
+    "end": 17807
+   },
+   {
+    "id": "27.9",
+    "title": "Precision for attribution [S]",
+    "start": 17808,
+    "end": 17831
+   },
+   {
+    "id": "27.10",
+    "title": "The first-divergence algorithm [S]",
+    "start": 17832,
+    "end": 17871
+   },
+   {
+    "id": "27.11",
+    "title": "The decision model for attribution",
+    "start": 17872,
+    "end": 17896
+   },
+   {
+    "id": "27.12",
+    "title": "Time-travel debugging as an agent workflow",
+    "start": 17897,
+    "end": 17954
+   },
+   {
+    "id": "27.13",
+    "title": "What Autopsy does not claim",
+    "start": 17955,
+    "end": 17971
+   },
+   {
+    "id": "27.14",
+    "title": "Verbs and refusals",
+    "start": 17972,
+    "end": 17997
+   },
+   {
+    "id": "27.15",
+    "title": "Invariants and proof obligations",
+    "start": 17998,
+    "end": 18016
+   },
+   {
+    "id": "27.16",
+    "title": "Known answers",
+    "start": 18017,
+    "end": 18031
+   },
+   {
+    "id": "27.17",
+    "title": "Gates, kill gate and pilot",
+    "start": 18032,
+    "end": 18054
+   },
+   {
+    "id": "27.18",
+    "title": "Open questions",
+    "start": 18055,
+    "end": 18066
+   },
+   {
+    "id": "27.19",
+    "title": "Attribution in single precision on the originating tier",
+    "start": 18067,
+    "end": 18127
+   }
+  ],
+  "28": [
+   {
+    "id": "28.1",
+    "title": "What Atelier owns",
+    "start": 18130,
+    "end": 18177
+   },
+   {
+    "id": "28.2",
+    "title": "Decisions",
+    "start": 18178,
+    "end": 18213
+   },
+   {
+    "id": "28.3",
+    "title": "The loop",
+    "start": 18214,
+    "end": 18235
+   },
+   {
+    "id": "28.4",
+    "title": "Analyses",
+    "start": 18236,
+    "end": 18311
+   },
+   {
+    "id": "28.5",
+    "title": "Explain",
+    "start": 18312,
+    "end": 18336
+   },
+   {
+    "id": "28.6",
+    "title": "Comparing designs honestly (C-15)",
+    "start": 18337,
+    "end": 18413
+   },
+   {
+    "id": "28.7",
+    "title": "Lineage: diff, blame, bisect, merge",
+    "start": 18414,
+    "end": 18442
+   },
+   {
+    "id": "28.8",
+    "title": "Optimization",
+    "start": 18443,
+    "end": 18485
+   },
+   {
+    "id": "28.9",
+    "title": "The ladder of evaluation rungs",
+    "start": 18486,
+    "end": 18583
+   },
+   {
+    "id": "28.10",
+    "title": "The rank-agreement ledger",
+    "start": 18584,
+    "end": 18644
+   },
+   {
+    "id": "28.11",
+    "title": "The six-stage co-design cascade",
+    "start": 18645,
+    "end": 18676
+   },
+   {
+    "id": "28.12",
+    "title": "Screening audits",
+    "start": 18677,
+    "end": 18699
+   },
+   {
+    "id": "28.13",
+    "title": "Revalidation after edits (`result.revalidate`)",
+    "start": 18700,
+    "end": 18803
+   },
+   {
+    "id": "28.14",
+    "title": "The memo graph",
+    "start": 18804,
+    "end": 18852
+   },
+   {
+    "id": "28.15",
+    "title": "Campaign-level deduplication",
+    "start": 18853,
+    "end": 18869
+   },
+   {
+    "id": "28.16",
+    "title": "Experiment suggestion",
+    "start": 18870,
+    "end": 18896
+   },
+   {
+    "id": "28.17",
+    "title": "Registered predictions",
+    "start": 18897,
+    "end": 18911
+   },
+   {
+    "id": "28.18",
+    "title": "Reports",
+    "start": 18912,
+    "end": 18925
+   },
+   {
+    "id": "28.19",
+    "title": "Decision cores",
+    "start": 18926,
+    "end": 19232
+   },
+   {
+    "id": "28.20",
+    "title": "Refusals",
+    "start": 19233,
+    "end": 19252
+   },
+   {
+    "id": "28.21",
+    "title": "Invariants and proof obligations",
+    "start": 19253,
+    "end": 19282
+   },
+   {
+    "id": "28.22",
+    "title": "Known answers and negative controls",
+    "start": 19283,
+    "end": 19312
+   },
+   {
+    "id": "28.23",
+    "title": "Gates and kill gates",
+    "start": 19313,
+    "end": 19353
+   },
+   {
+    "id": "28.24",
+    "title": "Open questions",
+    "start": 19354,
+    "end": 19372
+   },
+   {
+    "id": "28.25",
+    "title": "Controller-budget curves and the controller-limited label",
+    "start": 19373,
+    "end": 19447
+   },
+   {
+    "id": "28.26",
+    "title": "The reuse ledger: three columns, never summed",
+    "start": 19448,
+    "end": 19482
+   }
+  ],
+  "29": [
+   {
+    "id": "29.1",
+    "title": "What Chronicle owns",
+    "start": 19485,
+    "end": 19519
+   },
+   {
+    "id": "29.2",
+    "title": "Decisions",
+    "start": 19520,
+    "end": 19547
+   },
+   {
+    "id": "29.3",
+    "title": "What is stored, and where",
+    "start": 19548,
+    "end": 19575
+   },
+   {
+    "id": "29.4",
+    "title": "The chunk protocol",
+    "start": 19576,
+    "end": 19629
+   },
+   {
+    "id": "29.5",
+    "title": "Telemetry levels, streams and channel kinds",
+    "start": 19630,
+    "end": 19672
+   },
+   {
+    "id": "29.6",
+    "title": "Choosing which worlds to trace: a reservoir by address",
+    "start": 19673,
+    "end": 19694
+   },
+   {
+    "id": "29.7",
+    "title": "Deterministic integer histograms",
+    "start": 19695,
+    "end": 19720
+   },
+   {
+    "id": "29.8",
+    "title": "Replay, teleport and forks (GOAL-10)",
+    "start": 19721,
+    "end": 19784
+   },
+   {
+    "id": "29.9",
+    "title": "The energy ledger (GOAL-11) and the audit for created energy",
+    "start": 19785,
+    "end": 19822
+   },
+   {
+    "id": "29.10",
+    "title": "Failure taxonomy",
+    "start": 19823,
+    "end": 19839
+   },
+   {
+    "id": "29.11",
+    "title": "The tier-correction ledger",
+    "start": 19840,
+    "end": 19909
+   },
+   {
+    "id": "29.12",
+    "title": "Summaries an agent can afford",
+    "start": 19910,
+    "end": 19925
+   },
+   {
+    "id": "29.13",
+    "title": "The artifact graph: every claim traces to its evidence",
+    "start": 19926,
+    "end": 19954
+   },
+   {
+    "id": "29.14",
+    "title": "A structured log per bead",
+    "start": 19955,
+    "end": 19970
+   },
+   {
+    "id": "29.15",
+    "title": "Simulation testing of the daemon and the ledger",
+    "start": 19971,
+    "end": 19998
+   },
+   {
+    "id": "29.16",
+    "title": "Retention",
+    "start": 19999,
+    "end": 20016
+   },
+   {
+    "id": "29.17",
+    "title": "Refusals",
+    "start": 20017,
+    "end": 20033
+   },
+   {
+    "id": "29.18",
+    "title": "Invariants and proof obligations",
+    "start": 20034,
+    "end": 20061
+   },
+   {
+    "id": "29.19",
+    "title": "Known answers and negative controls",
+    "start": 20062,
+    "end": 20080
+   },
+   {
+    "id": "29.20",
+    "title": "Gates and kill gates",
+    "start": 20081,
+    "end": 20106
+   },
+   {
+    "id": "29.21",
+    "title": "Open questions",
+    "start": 20107,
+    "end": 20120
+   },
+   {
+    "id": "29.22",
+    "title": "The solver's kinetic-energy correction is not heat",
+    "start": 20121,
+    "end": 20159
+   }
+  ],
+  "30": [
+   {
+    "id": "30.1",
+    "title": "What Ground owns",
+    "start": 20166,
+    "end": 20182
+   },
+   {
+    "id": "30.2",
+    "title": "The Reality claim, and why it is mostly `no-claim`",
+    "start": 20183,
+    "end": 20217
+   },
+   {
+    "id": "30.3",
+    "title": "Decisions",
+    "start": 20218,
+    "end": 20232
+   },
+   {
+    "id": "30.4",
+    "title": "What the siblings provide today",
+    "start": 20233,
+    "end": 20253
+   },
+   {
+    "id": "30.5",
+    "title": "Data admitted, and the cell",
+    "start": 20254,
+    "end": 20306
+   },
+   {
+    "id": "30.6",
+    "title": "The procedure",
+    "start": 20307,
+    "end": 20325
+   },
+   {
+    "id": "30.7",
+    "title": "Clock fitting [F]",
+    "start": 20326,
+    "end": 20357
+   },
+   {
+    "id": "30.8",
+    "title": "Identifiability and excitation design [F]",
+    "start": 20358,
+    "end": 20417
+   },
+   {
+    "id": "30.9",
+    "title": "Identification: actuators first [F]",
+    "start": 20418,
+    "end": 20465
+   },
+   {
+    "id": "30.10",
+    "title": "Card updates from logs [F]",
+    "start": 20466,
+    "end": 20483
+   },
+   {
+    "id": "30.11",
+    "title": "Frozen predictions, sealed trials, holdout retirement [F]",
+    "start": 20484,
+    "end": 20520
+   },
+   {
+    "id": "30.12",
+    "title": "Conformal bands per calibrated cell [F]",
+    "start": 20521,
+    "end": 20571
+   },
+   {
+    "id": "30.13",
+    "title": "Drift detection that retires a calibration [F]",
+    "start": 20572,
+    "end": 20595
+   },
+   {
+    "id": "30.14",
+    "title": "As-built ingestion [F]",
+    "start": 20596,
+    "end": 20623
+   },
+   {
+    "id": "30.15",
+    "title": "The decision model for reality calibration [F]",
+    "start": 20624,
+    "end": 20658
+   },
+   {
+    "id": "30.16",
+    "title": "Verbs",
+    "start": 20659,
+    "end": 20673
+   },
+   {
+    "id": "30.17",
+    "title": "Bench work packages (optional, outside the critical path)",
+    "start": 20674,
+    "end": 20689
+   },
+   {
+    "id": "30.18",
+    "title": "The replication kit [F]",
+    "start": 20690,
+    "end": 20704
+   },
+   {
+    "id": "30.19",
+    "title": "Refusals",
+    "start": 20705,
+    "end": 20722
+   },
+   {
+    "id": "30.20",
+    "title": "Invariants and proof obligations",
+    "start": 20723,
+    "end": 20737
+   },
+   {
+    "id": "30.21",
+    "title": "Known answers: the synthetic rehearsal",
+    "start": 20738,
+    "end": 20761
+   },
+   {
+    "id": "30.22",
+    "title": "Pilots, gates and kill gates",
+    "start": 20762,
+    "end": 20795
+   },
+   {
+    "id": "30.23",
+    "title": "Open questions",
+    "start": 20796,
+    "end": 20809
+   },
+   {
+    "id": "30.24",
+    "title": "Exposure delay and mount translation on a straight pass",
+    "start": 20810,
+    "end": 20838
+   }
+  ],
+  "31": [
+   {
+    "id": "31.1",
+    "title": "What Foundry owns",
+    "start": 20845,
+    "end": 20857
+   },
+   {
+    "id": "31.2",
+    "title": "An output-quality subsystem, not a speed lever",
+    "start": 20858,
+    "end": 20890
+   },
+   {
+    "id": "31.3",
+    "title": "Decisions",
+    "start": 20891,
+    "end": 20907
+   },
+   {
+    "id": "31.4",
+    "title": "What the siblings provide today",
+    "start": 20908,
+    "end": 20936
+   },
+   {
+    "id": "31.5",
+    "title": "The structure loop",
+    "start": 20937,
+    "end": 20952
+   },
+   {
+    "id": "31.6",
+    "title": "Load cases extracted from telemetry [F]",
+    "start": 20953,
+    "end": 20996
+   },
+   {
+    "id": "31.7",
+    "title": "Sizing and topology optimization of links [F]",
+    "start": 20997,
+    "end": 21021
+   },
+   {
+    "id": "31.8",
+    "title": "Stress, buckling, modes and cumulative fatigue damage [F]",
+    "start": 21022,
+    "end": 21046
+   },
+   {
+    "id": "31.9",
+    "title": "Inertia fed back into the model, and the convergence test [F]",
+    "start": 21047,
+    "end": 21074
+   },
+   {
+    "id": "31.10",
+    "title": "Manufacturability [F]",
+    "start": 21075,
+    "end": 21095
+   },
+   {
+    "id": "31.11",
+    "title": "Tolerance allocation driven by sensitivities [F]",
+    "start": 21096,
+    "end": 21122
+   },
+   {
+    "id": "31.12",
+    "title": "Bounded export and the build packet `.fbuild` [F]",
+    "start": 21123,
+    "end": 21185
+   },
+   {
+    "id": "31.13",
+    "title": "Firmware export [M]",
+    "start": 21186,
+    "end": 21220
+   },
+   {
+    "id": "31.14",
+    "title": "Lifecycle compression [M]",
+    "start": 21221,
+    "end": 21255
+   },
+   {
+    "id": "31.15",
+    "title": "Verbs",
+    "start": 21256,
+    "end": 21269
+   },
+   {
+    "id": "31.16",
+    "title": "Refusals",
+    "start": 21270,
+    "end": 21288
+   },
+   {
+    "id": "31.17",
+    "title": "Invariants and proof obligations",
+    "start": 21289,
+    "end": 21304
+   },
+   {
+    "id": "31.18",
+    "title": "Known answers",
+    "start": 21305,
+    "end": 21329
+   },
+   {
+    "id": "31.19",
+    "title": "Pilots, gates and kill gates",
+    "start": 21330,
+    "end": 21366
+   },
+   {
+    "id": "31.20",
+    "title": "Open questions",
+    "start": 21367,
+    "end": 21383
+   },
+   {
+    "id": "31.21",
+    "title": "Packet review as an imported record",
+    "start": 21384,
+    "end": 21452
+   },
+   {
+    "id": "31.22",
+    "title": "Referee re-extraction of load cases that enter a build packet",
+    "start": 21453,
+    "end": 21491
+   },
+   {
+    "id": "31.23",
+    "title": "Member sizing as a validity check in screening",
+    "start": 21492,
+    "end": 21541
+   }
+  ],
+  "32": [
+   {
+    "id": "32.1",
+    "title": "What Tether owns",
+    "start": 21550,
+    "end": 21561
+   },
+   {
+    "id": "32.2",
+    "title": "Principles",
+    "start": 21562,
+    "end": 21585
+   },
+   {
+    "id": "32.3",
+    "title": "Decisions",
+    "start": 21586,
+    "end": 21601
+   },
+   {
+    "id": "32.4",
+    "title": "The envelope",
+    "start": 21602,
+    "end": 21648
+   },
+   {
+    "id": "32.5",
+    "title": "Three failure classes",
+    "start": 21649,
+    "end": 21661
+   },
+   {
+    "id": "32.6",
+    "title": "Verb clusters",
+    "start": 21662,
+    "end": 21729
+   },
+   {
+    "id": "32.7",
+    "title": "Idempotency [S]",
+    "start": 21730,
+    "end": 21755
+   },
+   {
+    "id": "32.8",
+    "title": "Pagination and numbers [S]",
+    "start": 21756,
+    "end": 21791
+   },
+   {
+    "id": "32.9",
+    "title": "Estimates and budgets",
+    "start": 21792,
+    "end": 21818
+   },
+   {
+    "id": "32.10",
+    "title": "Jobs: the crash-consistent protocol [S]",
+    "start": 21819,
+    "end": 21853
+   },
+   {
+    "id": "32.11",
+    "title": "The daemon",
+    "start": 21854,
+    "end": 21954
+   },
+   {
+    "id": "32.12",
+    "title": "The MCP server",
+    "start": 21955,
+    "end": 22193
+   },
+   {
+    "id": "32.13",
+    "title": "Capabilities, namespaces and many agents",
+    "start": 22194,
+    "end": 22211
+   },
+   {
+    "id": "32.14",
+    "title": "The dashboard",
+    "start": 22212,
+    "end": 22234
+   },
+   {
+    "id": "32.15",
+    "title": "The viewer and its overlays",
+    "start": 22235,
+    "end": 22269
+   },
+   {
+    "id": "32.16",
+    "title": "Two sessions, end to end",
+    "start": 22270,
+    "end": 22345
+   },
+   {
+    "id": "32.17",
+    "title": "Documentation for agents",
+    "start": 22346,
+    "end": 22355
+   },
+   {
+    "id": "32.18",
+    "title": "Refusals",
+    "start": 22356,
+    "end": 22381
+   },
+   {
+    "id": "32.19",
+    "title": "Invariants and proof obligations",
+    "start": 22382,
+    "end": 22407
+   },
+   {
+    "id": "32.20",
+    "title": "Known answers and counterexamples",
+    "start": 22408,
+    "end": 22424
+   },
+   {
+    "id": "32.21",
+    "title": "Gates",
+    "start": 22425,
+    "end": 22449
+   },
+   {
+    "id": "32.22",
+    "title": "Open questions",
+    "start": 22450,
+    "end": 22459
+   },
+   {
+    "id": "32.23",
+    "title": "The agent diagnosis battery",
+    "start": 22460,
+    "end": 22492
+   },
+   {
+    "id": "32.24",
+    "title": "The offline replay packet",
+    "start": 22493,
+    "end": 22570
+   }
+  ],
+  "33": [
+   {
+    "id": "33.1",
+    "title": "Postures",
+    "start": 22580,
+    "end": 22598
+   },
+   {
+    "id": "33.2",
+    "title": "The FrankenSim decision",
+    "start": 22599,
+    "end": 22686
+   },
+   {
+    "id": "33.3",
+    "title": "The airlock",
+    "start": 22687,
+    "end": 22744
+   },
+   {
+    "id": "33.4",
+    "title": "Foundation ledger",
+    "start": 22745,
+    "end": 22784
+   },
+   {
+    "id": "33.5",
+    "title": "The stack lock",
+    "start": 22785,
+    "end": 22859
+   },
+   {
+    "id": "33.6",
+    "title": "Admission gates",
+    "start": 22860,
+    "end": 22897
+   },
+   {
+    "id": "33.7",
+    "title": "The dependency firewall",
+    "start": 22898,
+    "end": 22930
+   },
+   {
+    "id": "33.8",
+    "title": "Upstream work and drift",
+    "start": 22931,
+    "end": 22988
+   },
+   {
+    "id": "33.9",
+    "title": "FrankenSim crates reached through the airlock for the new subsystems",
+    "start": 22989,
+    "end": 23051
+   },
+   {
+    "id": "33.10",
+    "title": "First admission tests, file by file",
+    "start": 23052,
+    "end": 23076
+   },
+   {
+    "id": "33.11",
+    "title": "Reported foundation defects",
+    "start": 23077,
+    "end": 23137
+   },
+   {
+    "id": "33.12",
+    "title": "The `fs-qty` coupling and the `frob-units` escape hatch",
+    "start": 23138,
+    "end": 23202
+   },
+   {
+    "id": "33.13",
+    "title": "Toolchain facts across the suite",
+    "start": 23203,
+    "end": 23254
+   },
+   {
+    "id": "33.14",
+    "title": "The worker-process fallback",
+    "start": 23255,
+    "end": 23300
+   },
+   {
+    "id": "33.15",
+    "title": "What the other siblings contribute",
+    "start": 23301,
+    "end": 23424
+   },
+   {
+    "id": "33.16",
+    "title": "Invariants, refusals and open questions",
+    "start": 23425,
+    "end": 23460
+   },
+   {
+    "id": "33.17",
+    "title": "Further foundation facts and their admission tests",
+    "start": 23461,
+    "end": 23494
+   },
+   {
+    "id": "33.18",
+    "title": "Six later foundation facts and their admission tests",
+    "start": 23495,
+    "end": 23533
+   }
+  ],
+  "34": [
+   {
+    "id": "34.1",
+    "title": "Repository layout",
+    "start": 23541,
+    "end": 23586
+   },
+   {
+    "id": "34.2",
+    "title": "Crate map",
+    "start": 23587,
+    "end": 23667
+   },
+   {
+    "id": "34.3",
+    "title": "Layer and dependency rules",
+    "start": 23668,
+    "end": 23713
+   },
+   {
+    "id": "34.4",
+    "title": "Unsafe code",
+    "start": 23714,
+    "end": 23723
+   },
+   {
+    "id": "34.5",
+    "title": "Contracts",
+    "start": 23724,
+    "end": 23731
+   },
+   {
+    "id": "34.6",
+    "title": "The six checks",
+    "start": 23732,
+    "end": 23750
+   },
+   {
+    "id": "34.7",
+    "title": "Working rules inherited from the machine and the suite",
+    "start": 23751,
+    "end": 23778
+   },
+   {
+    "id": "34.8",
+    "title": "What ships with the first commit",
+    "start": 23779,
+    "end": 23789
+   },
+   {
+    "id": "34.9",
+    "title": "The format registry",
+    "start": 23790,
+    "end": 23868
+   },
+   {
+    "id": "34.10",
+    "title": "The rule for creating a new crate",
+    "start": 23869,
+    "end": 23897
+   },
+   {
+    "id": "34.11",
+    "title": "The independent auditor",
+    "start": 23898,
+    "end": 23933
+   },
+   {
+    "id": "34.12",
+    "title": "Suite conventions this project adopts",
+    "start": 23934,
+    "end": 23962
+   },
+   {
+    "id": "34.13",
+    "title": "Invariants, gates and open questions",
+    "start": 23963,
+    "end": 23992
+   },
+   {
+    "id": "34.14",
+    "title": "The canonical reader and writer, and JSON features that unify across the build",
+    "start": 23993,
+    "end": 24040
+   }
+  ],
+  "35": [
+   {
+    "id": "35.1",
+    "title": "Determinism classes",
+    "start": 24059,
+    "end": 24085
+   },
+   {
+    "id": "35.2",
+    "title": "Profiles",
+    "start": 24086,
+    "end": 24111
+   },
+   {
+    "id": "35.3",
+    "title": "What each class licenses",
+    "start": 24112,
+    "end": 24133
+   },
+   {
+    "id": "35.4",
+    "title": "Decision-level equivalence under class D3",
+    "start": 24134,
+    "end": 24165
+   },
+   {
+    "id": "35.5",
+    "title": "A world does not depend on the batch it ran in",
+    "start": 24166,
+    "end": 24198
+   },
+   {
+    "id": "35.6",
+    "title": "The bans",
+    "start": 24199,
+    "end": 24213
+   },
+   {
+    "id": "35.7",
+    "title": "Hazards and rules",
+    "start": 24214,
+    "end": 24249
+   },
+   {
+    "id": "35.8",
+    "title": "Anchored positions",
+    "start": 24250,
+    "end": 24271
+   },
+   {
+    "id": "35.9",
+    "title": "Randomness by address",
+    "start": 24272,
+    "end": 24294
+   },
+   {
+    "id": "35.10",
+    "title": "Diagonal scaling for single-precision contact solves",
+    "start": 24295,
+    "end": 24336
+   },
+   {
+    "id": "35.11",
+    "title": "Refusals",
+    "start": 24337,
+    "end": 24368
+   },
+   {
+    "id": "35.12",
+    "title": "A number never claims more than its certificate",
+    "start": 24369,
+    "end": 24386
+   },
+   {
+    "id": "35.13",
+    "title": "Invariants and proof obligations",
+    "start": 24387,
+    "end": 24400
+   },
+   {
+    "id": "35.14",
+    "title": "Known answers and negative controls",
+    "start": 24401,
+    "end": 24415
+   },
+   {
+    "id": "35.15",
+    "title": "Gates",
+    "start": 24416,
+    "end": 24427
+   },
+   {
+    "id": "35.16",
+    "title": "Open questions",
+    "start": 24428,
+    "end": 24437
+   }
+  ],
+  "36": [
+   {
+    "id": "36.1",
+    "title": "Position",
+    "start": 24440,
+    "end": 24455
+   },
+   {
+    "id": "36.2",
+    "title": "Units",
+    "start": 24456,
+    "end": 24478
+   },
+   {
+    "id": "36.3",
+    "title": "Targets",
+    "start": 24479,
+    "end": 24533
+   },
+   {
+    "id": "36.4",
+    "title": "Amdahl limits",
+    "start": 24534,
+    "end": 24564
+   },
+   {
+    "id": "36.5",
+    "title": "The speedup bound for family batches, and the ceiling-first rule",
+    "start": 24565,
+    "end": 24598
+   },
+   {
+    "id": "36.6",
+    "title": "Admission by paired lower bound; weak and strong scaling",
+    "start": 24599,
+    "end": 24634
+   },
+   {
+    "id": "36.7",
+    "title": "The disclosure block",
+    "start": 24635,
+    "end": 24658
+   },
+   {
+    "id": "36.8",
+    "title": "Method",
+    "start": 24659,
+    "end": 24684
+   },
+   {
+    "id": "36.9",
+    "title": "Where time goes",
+    "start": 24685,
+    "end": 24702
+   },
+   {
+    "id": "36.10",
+    "title": "Memory arithmetic per world and per scene",
+    "start": 24703,
+    "end": 24761
+   },
+   {
+    "id": "36.11",
+    "title": "The bandwidth-bound observation",
+    "start": 24762,
+    "end": 24792
+   },
+   {
+    "id": "36.12",
+    "title": "Camera memory arithmetic",
+    "start": 24793,
+    "end": 24804
+   },
+   {
+    "id": "36.13",
+    "title": "The distributed PPO normalization rule",
+    "start": 24805,
+    "end": 24820
+   },
+   {
+    "id": "36.14",
+    "title": "The compute envelope question",
+    "start": 24821,
+    "end": 24850
+   },
+   {
+    "id": "36.15",
+    "title": "End-to-end rows",
+    "start": 24851,
+    "end": 24866
+   },
+   {
+    "id": "36.16",
+    "title": "Known answers, gates, kill gate and open questions",
+    "start": 24867,
+    "end": 24902
+   }
+  ],
+  "37": [
+   {
+    "id": "37.1",
+    "title": "The threat model",
+    "start": 24910,
+    "end": 24919
+   },
+   {
+    "id": "37.2",
+    "title": "Decisions",
+    "start": 24920,
+    "end": 24929
+   },
+   {
+    "id": "37.3",
+    "title": "Agents supply data, not code",
+    "start": 24930,
+    "end": 24954
+   },
+   {
+    "id": "37.4",
+    "title": "Resource governance",
+    "start": 24955,
+    "end": 24964
+   },
+   {
+    "id": "37.5",
+    "title": "Capabilities, and why discovery cannot read confirmation worlds",
+    "start": 24965,
+    "end": 24987
+   },
+   {
+    "id": "37.6",
+    "title": "Private places stay private",
+    "start": 24988,
+    "end": 25010
+   },
+   {
+    "id": "37.7",
+    "title": "Licences",
+    "start": 25011,
+    "end": 25023
+   },
+   {
+    "id": "37.8",
+    "title": "Supply chain",
+    "start": 25024,
+    "end": 25046
+   },
+   {
+    "id": "37.9",
+    "title": "No safety certification, and the no-authorization flags",
+    "start": 25047,
+    "end": 25068
+   },
+   {
+    "id": "37.10",
+    "title": "The claim product at the boundary",
+    "start": 25069,
+    "end": 25087
+   },
+   {
+    "id": "37.11",
+    "title": "The labeled nondeterministic training profile",
+    "start": 25088,
+    "end": 25100
+   },
+   {
+    "id": "37.12",
+    "title": "Refusals",
+    "start": 25101,
+    "end": 25114
+   },
+   {
+    "id": "37.13",
+    "title": "Invariants and proof obligations",
+    "start": 25115,
+    "end": 25133
+   },
+   {
+    "id": "37.14",
+    "title": "Known answers and gates",
+    "start": 25134,
+    "end": 25152
+   },
+   {
+    "id": "37.15",
+    "title": "Open questions",
+    "start": 25153,
+    "end": 25165
+   }
+  ],
+  "38": [
+   {
+    "id": "38.1",
+    "title": "What it owns, and decisions",
+    "start": 25180,
+    "end": 25219
+   },
+   {
+    "id": "38.2",
+    "title": "Six tiers",
+    "start": 25220,
+    "end": 25250
+   },
+   {
+    "id": "38.3",
+    "title": "Oracles and pins",
+    "start": 25251,
+    "end": 25290
+   },
+   {
+    "id": "38.4",
+    "title": "The form of a method experiment",
+    "start": 25291,
+    "end": 25315
+   },
+   {
+    "id": "38.5",
+    "title": "Paper-scale pilots before funding",
+    "start": 25316,
+    "end": 25365
+   },
+   {
+    "id": "38.6",
+    "title": "Known answers",
+    "start": 25366,
+    "end": 25390
+   },
+   {
+    "id": "38.7",
+    "title": "Metamorphic relations",
+    "start": 25391,
+    "end": 25456
+   },
+   {
+    "id": "38.8",
+    "title": "The standard battery and the hard-world set",
+    "start": 25457,
+    "end": 25483
+   },
+   {
+    "id": "38.9",
+    "title": "Chaos",
+    "start": 25484,
+    "end": 25503
+   },
+   {
+    "id": "38.10",
+    "title": "The Reality lane",
+    "start": 25504,
+    "end": 25524
+   },
+   {
+    "id": "38.11",
+    "title": "Guarding against false progress",
+    "start": 25525,
+    "end": 25568
+   },
+   {
+    "id": "38.12",
+    "title": "Certifying the certifiers",
+    "start": 25569,
+    "end": 25593
+   },
+   {
+    "id": "38.13",
+    "title": "Status accounting",
+    "start": 25594,
+    "end": 25622
+   },
+   {
+    "id": "38.14",
+    "title": "Invariants and proof obligations",
+    "start": 25623,
+    "end": 25637
+   },
+   {
+    "id": "38.15",
+    "title": "Gates and kill gate",
+    "start": 25638,
+    "end": 25653
+   },
+   {
+    "id": "38.16",
+    "title": "Open questions",
+    "start": 25654,
+    "end": 25666
+   },
+   {
+    "id": "38.17",
+    "title": "Known answers adopted from corrected fixtures",
+    "start": 25667,
+    "end": 25688
+   },
+   {
+    "id": "38.18",
+    "title": "Known answers adopted from late fixtures",
+    "start": 25689,
+    "end": 25716
+   }
+  ],
+  "39": [
+   {
+    "id": "39.1",
+    "title": "Position",
+    "start": 25727,
+    "end": 25745
+   },
+   {
+    "id": "39.2",
+    "title": "The estimand",
+    "start": 25746,
+    "end": 25788
+   },
+   {
+    "id": "39.3",
+    "title": "What counts as an accepted answer, and who adjudicates",
+    "start": 25789,
+    "end": 25846
+   },
+   {
+    "id": "39.4",
+    "title": "The sealed mission suite",
+    "start": 25847,
+    "end": 25938
+   },
+   {
+    "id": "39.5",
+    "title": "The arms",
+    "start": 25939,
+    "end": 26019
+   },
+   {
+    "id": "39.6",
+    "title": "The phase ledger",
+    "start": 26020,
+    "end": 26075
+   },
+   {
+    "id": "39.7",
+    "title": "Statistics",
+    "start": 26076,
+    "end": 26203
+   },
+   {
+    "id": "39.8",
+    "title": "The ceilings",
+    "start": 26204,
+    "end": 26232
+   },
+   {
+    "id": "39.9",
+    "title": "Disqualification",
+    "start": 26233,
+    "end": 26259
+   },
+   {
+    "id": "39.10",
+    "title": "The outcome rules, written in advance",
+    "start": 26260,
+    "end": 26287
+   },
+   {
+    "id": "39.11",
+    "title": "The incumbent parity baseline at M0 and M1",
+    "start": 26288,
+    "end": 26314
+   },
+   {
+    "id": "39.12",
+    "title": "The partial gate at M3",
+    "start": 26315,
+    "end": 26340
+   },
+   {
+    "id": "39.13",
+    "title": "The tournament at M7",
+    "start": 26341,
+    "end": 26357
+   },
+   {
+    "id": "39.14",
+    "title": "The replication kit",
+    "start": 26358,
+    "end": 26375
+   },
+   {
+    "id": "39.15",
+    "title": "What the test does not measure",
+    "start": 26376,
+    "end": 26392
+   },
+   {
+    "id": "39.16",
+    "title": "Worked card: from a phase ledger to a ratio",
+    "start": 26393,
+    "end": 26447
+   },
+   {
+    "id": "39.17",
+    "title": "Invariants and known answers of the harness",
+    "start": 26448,
+    "end": 26478
+   },
+   {
+    "id": "39.18",
+    "title": "Gates and kill gates",
+    "start": 26479,
+    "end": 26502
+   },
+   {
+    "id": "39.19",
+    "title": "Open questions",
+    "start": 26503,
+    "end": 26533
+   },
+   {
+    "id": "39.20",
+    "title": "Estimating the ratio, and the smallest suite that can certify",
+    "start": 26534,
+    "end": 26585
+   },
+   {
+    "id": "39.21",
+    "title": "Rival arms, protocol controls and the sealed suite",
+    "start": 26586,
+    "end": 26647
+   },
+   {
+    "id": "39.22",
+    "title": "Three arms, the recovery ratio and the phase ablations",
+    "start": 26648,
+    "end": 26712
+   }
+  ],
+  "40": [
+   {
+    "id": "40.1",
+    "title": "Semantics",
+    "start": 26723,
+    "end": 26753
+   },
+   {
+    "id": "40.2",
+    "title": "Admission gates",
+    "start": 26754,
+    "end": 26807
+   },
+   {
+    "id": "40.3",
+    "title": "Convergence gates by subsystem",
+    "start": 26808,
+    "end": 27255
+   },
+   {
+    "id": "40.4",
+    "title": "Kill gates",
+    "start": 27256,
+    "end": 27396
+   },
+   {
+    "id": "40.5",
+    "title": "Program gates",
+    "start": 27397,
+    "end": 27468
+   },
+   {
+    "id": "40.6",
+    "title": "Gates by milestone exit",
+    "start": 27469,
+    "end": 27499
+   },
+   {
+    "id": "40.7",
+    "title": "Discrepancies resolved by this register",
+    "start": 27500,
+    "end": 27552
+   },
+   {
+    "id": "40.8",
+    "title": "Gates defined by subsections added after the register was compiled",
+    "start": 27553,
+    "end": 27587
+   },
+   {
+    "id": "40.9",
+    "title": "Gates defined in subsections added by the final audit",
+    "start": 27588,
+    "end": 27629
+   }
+  ],
+  "41": [
+   {
+    "id": "41.1",
+    "title": "It is late 2029 and FrankenRobotics failed. Why?",
+    "start": 27639,
+    "end": 27683
+   },
+   {
+    "id": "41.2",
+    "title": "Every gate passed and the claim still failed",
+    "start": 27684,
+    "end": 27698
+   },
+   {
+    "id": "41.3",
+    "title": "Risk register",
+    "start": 27699,
+    "end": 27764
+   },
+   {
+    "id": "41.4",
+    "title": "How the register is used",
+    "start": 27765,
+    "end": 27777
+   },
+   {
+    "id": "41.5",
+    "title": "Four risks that follow from late foundation facts",
+    "start": 27778,
+    "end": 27802
+   }
+  ],
+  "42": [
+   {
+    "id": "42.1",
+    "title": "The decision rule",
+    "start": 27810,
+    "end": 27833
+   },
+   {
+    "id": "42.2",
+    "title": "Questions for the owner",
+    "start": 27834,
+    "end": 27864
+   },
+   {
+    "id": "42.3",
+    "title": "The register by subsystem",
+    "start": 27865,
+    "end": 28046
+   },
+   {
+    "id": "42.4",
+    "title": "What the defaults add up to",
+    "start": 28047,
+    "end": 28067
+   }
+  ],
+  "43": [
+   {
+    "id": "43.1",
+    "title": "The shape of the program, and why M1 is a CPU studio",
+    "start": 28076,
+    "end": 28115
+   },
+   {
+    "id": "43.2",
+    "title": "Exit rules, and the dependency firewall in brief",
+    "start": 28116,
+    "end": 28150
+   },
+   {
+    "id": "43.3",
+    "title": "M0: spine and airlock",
+    "start": 28151,
+    "end": 28203
+   },
+   {
+    "id": "43.4",
+    "title": "M1: referee studio and first mission slice (CPU only)",
+    "start": 28204,
+    "end": 28253
+   },
+   {
+    "id": "43.5",
+    "title": "M2: batch, backends, families",
+    "start": 28254,
+    "end": 28314
+   },
+   {
+    "id": "43.6",
+    "title": "M3: places, tasks, adversaries, qualification",
+    "start": 28315,
+    "end": 28379
+   },
+   {
+    "id": "43.7",
+    "title": "M4: amortized control, co-design, mission queries at scale",
+    "start": 28380,
+    "end": 28442
+   },
+   {
+    "id": "43.8",
+    "title": "M5: proofs, reality, manufacture",
+    "start": 28443,
+    "end": 28482
+   },
+   {
+    "id": "43.9",
+    "title": "M6: frontier physics",
+    "start": 28483,
+    "end": 28509
+   },
+   {
+    "id": "43.10",
+    "title": "M7: the ten-fold tournament",
+    "start": 28510,
+    "end": 28535
+   },
+   {
+    "id": "43.11",
+    "title": "M8: frontier delivery",
+    "start": 28536,
+    "end": 28554
+   },
+   {
+    "id": "43.12",
+    "title": "No milestone is blocked by one failed bet",
+    "start": 28555,
+    "end": 28582
+   }
+  ],
+  "44": [
+   {
+    "id": "44.1",
+    "title": "The packages",
+    "start": 28596,
+    "end": 28680
+   },
+   {
+    "id": "44.2",
+    "title": "Packages that need more than the default envelope",
+    "start": 28681,
+    "end": 28699
+   },
+   {
+    "id": "44.3",
+    "title": "Coverage",
+    "start": 28700,
+    "end": 28720
+   }
+  ],
+  "45": [
+   {
+    "id": "45.1",
+    "title": "M0: spine and airlock",
+    "start": 28753,
+    "end": 28808
+   },
+   {
+    "id": "45.2",
+    "title": "M1: referee studio and first mission slice",
+    "start": 28809,
+    "end": 28920
+   },
+   {
+    "id": "45.3",
+    "title": "M2: batch, backends, families",
+    "start": 28921,
+    "end": 29007
+   },
+   {
+    "id": "45.4",
+    "title": "M3: places, tasks, adversaries, qualification",
+    "start": 29008,
+    "end": 29111
+   },
+   {
+    "id": "45.5",
+    "title": "M4: amortized control, co-design, mission queries at scale",
+    "start": 29112,
+    "end": 29178
+   },
+   {
+    "id": "45.6",
+    "title": "M5: proofs, reality, manufacture",
+    "start": 29179,
+    "end": 29220
+   },
+   {
+    "id": "45.7",
+    "title": "M6: frontier physics (epics)",
+    "start": 29221,
+    "end": 29244
+   },
+   {
+    "id": "45.8",
+    "title": "M7: the ten-fold tournament (epics)",
+    "start": 29245,
+    "end": 29259
+   },
+   {
+    "id": "45.9",
+    "title": "M8: frontier delivery (epics)",
+    "start": 29260,
+    "end": 29275
+   },
+   {
+    "id": "45.10",
+    "title": "Graph facts",
+    "start": 29276,
+    "end": 29333
+   },
+   {
+    "id": "45.11",
+    "title": "Conversion rules",
+    "start": 29334,
+    "end": 29369
+   },
+   {
+    "id": "45.12",
+    "title": "Subsections added by the audits, to be placed during conversion",
+    "start": 29370,
+    "end": 29445
+   }
+  ],
+  "46": [],
+  "47": [
+   {
+    "id": "47.1",
+    "title": "Definition of done",
+    "start": 29536,
+    "end": 29605
+   },
+   {
+    "id": "47.2",
+    "title": "Rules for any release",
+    "start": 29606,
+    "end": 29627
+   },
+   {
+    "id": "47.3",
+    "title": "The rubric by milestone",
+    "start": 29628,
+    "end": 29644
+   },
+   {
+    "id": "47.4",
+    "title": "The order in which evidence is procured, and complete dispositions",
+    "start": 29645,
+    "end": 29682
+   }
+  ]
+ }
+}

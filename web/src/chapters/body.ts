@@ -134,7 +134,7 @@ export const renderBody = (ref: Refs) =>
       name: "stage",
       no: "02.1",
       label: "The archetypes of §14.10",
-      title: "Drawn from the table *beside it*.",
+      title: "Drawn from *its table*.",
       basis: "drawing",
       source: [["§14.10", ref("14.10")]],
       note: "Proportions and motions are this page's own. The layout, actuated coordinates, symmetry group and purpose are the plan's.",
@@ -171,7 +171,7 @@ export const renderBody = (ref: Refs) =>
           ([key, name, s, text]) =>
             `<li data-organ="${key}"><a href="${ref(s)}"><b>${name}</b><span>§${s}</span></a><p>${copy(text)}</p></li>`,
         )
-        .join("")}</ul><div class="plate">${plate()}</div><ul class="organs right">${organs
+        .join("")}</ul><div class="plate">${plate()}</div><div class="organ-now" data-now></div><ul class="organs right">${organs
         .filter((o) => o[4] === "right")
         .map(
           ([key, name, s, text]) =>

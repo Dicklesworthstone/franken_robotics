@@ -1,4 +1,4 @@
-import { $, $$, seg } from "./lib";
+import { $, $$, reduced, seg } from "./lib";
 
 interface Card {
   replaces: string;
@@ -14,6 +14,9 @@ export default function mount(root: HTMLElement) {
   const rest = card.innerHTML;
   let cards: Promise<Card[]> | undefined;
   let current = -1;
+  const home = card.parentElement!;
+  const holder = document.createElement("li");
+  holder.className = "inline";
   // Nothing is fetched until a reader shows interest in one.
   const load = () =>
     (cards ??= fetch("/constructions.json").then((r) => {
@@ -21,6 +24,14 @@ export default function mount(root: HTMLElement) {
       return r.json() as Promise<Card[]>;
     }));
 
+  const close = () => {
+    links[current]?.removeAttribute("aria-current");
+    card.innerHTML = rest;
+    card.classList.remove("open");
+    home.append(card);
+    holder.remove();
+    current = -1;
+  };
   const show = async (i: number) => {
     current = i;
     for (const [j, a] of links.entries()) {
@@ -42,12 +53,21 @@ export default function mount(root: HTMLElement) {
     card.innerHTML = `<p class="kick small"><span class="num">C-${$(a, ".num").textContent}</span><i></i>${[...tiers].map((t) => TIER[t]).join(" and ")}</p><h4>${$(a, "b").innerHTML}</h4>${row("Replaces", c.replaces)}${row("Payoff", c.payoff)}${row("Test", c.test)}<p class="where"><span class="num">${c.crates}</span><a class="txt" href="${a.href}">Read it in full</a></p>`;
     card.scrollTop = 0;
     card.classList.add("open");
-    if (innerWidth < 1000) card.scrollIntoView({ block: "nearest" });
+    if (innerWidth < 1000) {
+      a.closest("li")!.after(holder);
+      holder.append(card);
+      card.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
+    } else if (card.parentElement !== home) {
+      home.append(card);
+      holder.remove();
+    }
   };
   root.addEventListener("click", (e) => {
     const a = (e.target as Element).closest<HTMLAnchorElement>("[data-i]");
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     e.preventDefault();
+    // A second tap on the open tile closes it.
+    if (innerWidth < 1000 && Number(a.dataset.i) === current) return close();
     void show(Number(a.dataset.i));
   });
   root.addEventListener("pointerover", (e) => {
@@ -72,9 +92,7 @@ export default function mount(root: HTMLElement) {
       li.classList.toggle("dim", !!t && !li.dataset.tiers!.includes(t));
     }
     if (current >= 0 && links[current]!.closest("li")!.classList.contains("dim")) {
-      links[current]!.removeAttribute("aria-current");
-      card.innerHTML = rest;
-      current = -1;
+      close();
     }
   });
 }

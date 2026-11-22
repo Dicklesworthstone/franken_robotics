@@ -62,7 +62,7 @@ export default function mount(root: HTMLElement) {
     const u = state();
     const W = width;
     const H = 214;
-    const x0 = 58;
+    const x0 = 86;
     const S = (W - x0 - 46) / 1.5;
     const X = (x: number) => x0 + x * S;
     const t = Math.min(3, clock);

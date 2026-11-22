@@ -96,17 +96,20 @@ export default function mount(root: HTMLElement) {
       [-am, bm],
     ] as const;
     const at = (i: number) => feet[i]!.join(" ");
+    const k = 960 / Math.max(280, view.clientWidth);
+    const small = Math.max(15, 11.5 * k).toFixed(1);
+    const large = Math.max(19, 12.5 * k);
     let svg = `<rect x="${-am - 10}" y="${-bm + 30}" width="${2 * am + 20}" height="${2 * bm - 60}" rx="46" fill="#0e1b15" stroke="rgb(190 240 212 / .3)"/><path d="M${at(0)}L${at(1)}L${at(3)}L${at(2)}Z" fill="none" stroke="rgb(190 240 212 / .25)" stroke-dasharray="5 6"/>`;
-    svg += `<rect x="-150" y="-75" width="300" height="150" rx="5" fill="rgb(198 242 90 / .07)" stroke="#c6f25a" stroke-opacity=".6"/><text x="0" y="64" text-anchor="middle" style="font-size:15px">payload rectangle</text>`;
+    svg += `<rect x="-150" y="-75" width="300" height="150" rx="5" fill="rgb(198 242 90 / .07)" stroke="#c6f25a" stroke-opacity=".6"/><text x="0" y="62" text-anchor="middle" style="font-size:${small}px">${k > 1.7 ? "payload" : "payload rectangle"}</text>`;
     const ringR = (v: number) => 12 + Math.sqrt(Math.max(0, v)) * 2.5;
     for (const [i, [x, y]] of feet.entries()) {
       const v = f[i]!;
       const bad = v.cmp(RATING) > 0 || v.cmp(ZERO) < 0 || (!passive && !here.ok);
       const tone = bad ? "#fb7185" : "#4ade80";
-      svg += `<circle cx="${x}" cy="${y}" r="${ringR(160)}" fill="none" stroke="rgb(190 240 212 / .22)" stroke-dasharray="2 4"/><circle cx="${x}" cy="${y}" r="${ringR(v.value)}" fill="${tone}" fill-opacity=".24" stroke="${tone}" stroke-width="2"/><text class="label" x="${x}" y="${y + 6}" text-anchor="middle" style="font-size:19px">${v.d === 1n ? v.toString() : v.value.toFixed(1)}</text>`;
+      svg += `<circle cx="${x}" cy="${y}" r="${ringR(160)}" fill="none" stroke="rgb(190 240 212 / .22)" stroke-dasharray="2 4"/><circle cx="${x}" cy="${y}" r="${ringR(v.value)}" fill="${tone}" fill-opacity=".24" stroke="${tone}" stroke-width="2"/><text class="label" x="${x}" y="${(y + large * 0.34).toFixed(1)}" text-anchor="middle" style="font-size:${large.toFixed(1)}px">${v.d === 1n ? v.toString() : v.value.toFixed(1)}</text>`;
     }
     svg += `<path d="M0 ${-py}H${px}M${px} 0V${-py}" stroke="#c6f25a" stroke-opacity=".4" fill="none"/><circle data-com cx="${px}" cy="${-py}" r="17" fill="#c6f25a" stroke="#030705" stroke-width="4" tabindex="0" role="slider" aria-label="Payload position" aria-valuenow="${px}" aria-valuemin="-150" aria-valuemax="150" aria-valuetext="${px} mm along, ${py} mm across" style="cursor:grab"/>`;
-    svg += `<path d="M${am + 88} ${-bm}V${bm}m-7 0h14M${am + 81} ${-bm}h14" stroke="#98aba1" fill="none"/><text x="${am + 78}" y="${-bm - 16}" text-anchor="start" style="font-size:15px">${(2 * bm).toFixed(0)} mm</text>`;
+    svg += `<path d="M${am + 88} ${-bm}V${bm}m-7 0h14M${am + 81} ${-bm}h14" stroke="#98aba1" fill="none"/><text x="526" y="${-bm - 16}" text-anchor="end" style="font-size:${small}px">${(2 * bm).toFixed(0)} mm</text>`;
     const focused = document.activeElement?.hasAttribute("data-com") && root.contains(document.activeElement);
     view.innerHTML = `<svg class="chart" viewBox="-430 -375 960 750" role="group" aria-label="Robot from above, with the force on each foot in newtons">${svg}</svg>`;
     if (focused) $<SVGElement>(view, "[data-com]").focus({ preventScroll: true });

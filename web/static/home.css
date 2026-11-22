@@ -1475,6 +1475,13 @@ svg.chart {
   border-top: 1px solid var(--line-2);
   scrollbar-width: thin;
 }
+.datawrap .data {
+  font-size: 0.68rem;
+}
+.datawrap .data th,
+.datawrap .data td {
+  padding-inline: 0 0.55rem;
+}
 .datawrap thead th {
   position: sticky;
   top: 0;
@@ -1497,7 +1504,7 @@ svg.chart {
 }
 @media (min-width: 1240px) {
   .stage {
-    grid-template-columns: 14.5rem minmax(0, 1fr) 19.5rem;
+    grid-template-columns: 13.5rem minmax(0, 1fr) 23.5rem;
   }
   .stage-list {
     grid-column: auto;
@@ -1526,6 +1533,7 @@ svg.chart {
 }
 .plate {
   position: relative;
+  overflow: clip;
 }
 .plate::after {
   content: "";
@@ -1619,6 +1627,9 @@ svg.chart {
 }
 .plate.focus g[data-part].on * {
   opacity: 1;
+}
+.organ-now {
+  display: none;
 }
 .organs {
   display: grid;
@@ -3333,7 +3344,7 @@ html:not(.js) .story + .story {
   line-height: 1.36;
   color: #e6efe9;
   overflow-wrap: anywhere;
-  hyphens: auto;
+  overflow-wrap: break-word;
 }
 .tiers {
   display: flex;
@@ -3416,6 +3427,18 @@ html:not(.js) .element-card {
   .el {
     min-height: 6.6rem;
   }
+  .element-grid ol {
+    grid-auto-flow: dense;
+  }
+  .element-grid li.inline {
+    grid-column: 1 / -1;
+  }
+  .element-card {
+    scroll-margin-block: 5.5rem 6.5rem;
+  }
+  .js .element-card:not(.open) {
+    display: none;
+  }
 }
 @media (min-width: 1000px) {
   .element-grid {
@@ -3443,6 +3466,12 @@ html:not(.js) .element-card {
 }
 
 /* ---------- Phones ---------- */
+@media (max-width: 479px) {
+  .datawrap th:nth-child(2),
+  .datawrap td:nth-child(2) {
+    display: none;
+  }
+}
 @media (max-width: 999px) {
   .story::after {
     content: none;
@@ -3477,9 +3506,66 @@ html:not(.js) .element-card {
   .block > *:nth-child(4) {
     order: 2;
   }
-  .stance-view svg text,
   .bench [data-art] svg text {
     font-size: 1.3rem !important;
+  }
+  .js .organ-now {
+    display: block;
+    order: -1;
+    min-height: 7.2rem;
+    padding: 0.9rem 1rem 1rem;
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--lime);
+    border-radius: 0.9rem;
+    background: rgb(0 0 0 / 0.24);
+    font-size: 0.9rem;
+    color: var(--soft);
+  }
+  .organ-now b {
+    color: var(--lime);
+  }
+  .organ-now .txt {
+    display: inline-block;
+    margin-top: 0.45rem;
+    font-size: 0.82rem;
+  }
+  .js .organs {
+    display: contents;
+  }
+  .js .anatomy {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+  .js .plate,
+  .js .organ-now {
+    grid-column: 1 / -1;
+  }
+  .js .organ-now {
+    margin-bottom: 0.5rem;
+  }
+  .js .organs li {
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+  }
+  .js .organs li.on {
+    border-color: rgb(198 242 90 / 0.5);
+  }
+  .js .organs li p {
+    display: none;
+  }
+  .js .organs a {
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.84rem;
+  }
+  .js .organs a span {
+    display: none;
+  }
+  .retries-grids .micro {
+    display: flex;
+    align-items: flex-end;
+    min-height: 2.9em;
   }
   .batch-hud dl {
     gap: 0.4rem 1.4rem;

@@ -5,7 +5,7 @@ its planning record: three plan editions and the multi-model research rounds tha
 all written on a single day.
 
 Scope window: project inception (the owner prompt recorded at 2026-11-21 18:01 EST) through the README revision
-committed at 21:28 EST the same day ([`5c86ec1`](https://github.com/Dicklesworthstone/franken_robotics/commit/5c86ec1b4f9b74f4279682568155f39b4cd127ae)),
+committed at 22:05 EST the same day ([`6c8e158`](https://github.com/Dicklesworthstone/franken_robotics/commit/6c8e158b4cadf6a47e2de9c98b250d0d531ba40a)),
 plus the changelog update that followed it.
 
 **Evidence and method.** There are no git tags, no GitHub Releases and no issue tracker yet (the base plan
@@ -20,23 +20,24 @@ A modification time is the *last* write, not the creation time: several files we
 also resets their birth time. Where a statement rests on inference rather than a timestamp or a citation, it
 says so. Links in a section point at the commit that captured its subject, so they keep showing the files as they
 were. The record is still being written: several agents work in one checkout, revise files in place and commit under
-the same git identity, so anything written after 21:28 is outside this history.
+the same git identity, so anything written after 22:05 is outside this history.
 
 ## Unreleased
 
 State at the snapshot, and work visibly in flight:
 
 - **A hybrid v1.0 is being assembled** ([section 6](#6-the-v10-hybrid-integration-charter-and-phase-1-drafts)). Its
-  charter says it will replace base v0.2 at the same path. Phase 1 (§0–§37) is drafted and has had one
-  reconciliation pass; a Phase 2 brief exists, but of Phase 2 (§38–§47 and the appendices) only Appendix O is
-  written, and nothing is assembled. The file at the base path is still v0.2.
-- **The Astra track is active again.** Its bundle was rebuilt at 21:25 and its edition rewritten at 21:26
-  ([section 4](#4-astra-edition-inverse-mission-design-and-a-sealed-tenfold-test)).
+  charter says it will replace base v0.2 at the same path. Phase 1 (§0–§37) is drafted, reconciled once and reviewed;
+  neither review is applied. Of Phase 2, §39 to §47 and Appendices F to J, L and O are drafted; §38 and Appendices A to
+  E, K, M and N are not. Nothing is assembled. The file at the base path is still v0.2.
+- **The Astra and Neon tracks are active again.** Astra was rewritten at 21:26 and 21:43
+  ([section 4](#4-astra-edition-inverse-mission-design-and-a-sealed-tenfold-test)) and Neon at 21:51
+  ([section 3](#3-neon-v20-campaign-time-quotienting-and-a-51-crate-foundry)).
 - **16 of the 24 round-2 verdicts are contested** by at least one cross-family challenger and none is adjudicated
   ([section 5](#5-round-2-fable-an-isolated-review-of-base-v02)). The Phase 1 drafts bind to the register as written
   and do not mention the challenges.
-- **Next steps** stated by the plans: write Phase 2, assemble v1.0, adjudicate the contested verdicts, convert to
-  beads, start M0 (charter §5, §11; base §34, §36).
+- **Next steps**: apply the two reviews and the completeness audit, write the rest of Phase 2, assemble v1.0,
+  adjudicate the contested verdicts, convert to beads, start M0 (charter §5, §11; base §34, §36).
 
 ---
 
@@ -52,17 +53,23 @@ that captured them. Times are EST on 2026-11-21.
 | Round 1 | Research round | 18:01 – 19:08 | Modes of reasoning, three-model dueling idea wizards and a Brenner session on Neon v1, run as one NTM swarm |
 | [Base plan v0.2](https://github.com/Dicklesworthstone/franken_robotics/blob/7041f51df6303c26be72ff0b67f83027ee6ab520/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) | Plan edition | last written 18:36 | "First complete draft plus one internal three-reviewer round". 3,666 lines |
 | Round 2 ("fable") | Research round | 18:44 – 20:52 | Reasoning audit, Brenner slate with evidence packs and cross-family challenges, idea duel, graveyard and artifact passes, all on base v0.2 |
-| [Astra edition](https://github.com/Dicklesworthstone/franken_robotics/blob/7041f51df6303c26be72ff0b67f83027ee6ab520/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) | Plan edition | 19:24, rewritten 19:37 and 21:26 | Inverse mission design and a sealed 10× acceptance test. The link shows the 3,222-line text; the 3,317-line text is at [`5afef55`](https://github.com/Dicklesworthstone/franken_robotics/blob/5afef55e5a9404d945441142c27df71c1f55cae0/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) |
-| [Neon v2.0](https://github.com/Dicklesworthstone/franken_robotics/blob/7041f51df6303c26be72ff0b67f83027ee6ab520/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) | Plan edition | 19:24, rewritten 19:50 and 20:08 | "10× Breakthrough Synthesis & Multi-Pass Adversarial Audit Fold-In", superseding Neon v1.0. The link shows the 1,452-line text; the 1,654-line text is at [`d18b5a1`](https://github.com/Dicklesworthstone/franken_robotics/blob/d18b5a1f083fa76a4c035a26840ad2b0177a44f7/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) |
+| [Astra edition](https://github.com/Dicklesworthstone/franken_robotics/blob/7041f51df6303c26be72ff0b67f83027ee6ab520/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) | Plan edition | 19:24, rewritten 19:37, 21:26 and 21:43 | Inverse mission design and a sealed 10× acceptance test. The link shows the 3,222-line text; the 3,424-line text is at [`4d99e2a`](https://github.com/Dicklesworthstone/franken_robotics/blob/4d99e2a23f6bdd1d92f4f1497000e9245178343f/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) |
+| [Neon v2.0](https://github.com/Dicklesworthstone/franken_robotics/blob/7041f51df6303c26be72ff0b67f83027ee6ab520/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) | Plan edition | 19:24, rewritten 19:50, 20:08 and 21:51 | "10× Breakthrough Synthesis & Multi-Pass Adversarial Audit Fold-In", superseding Neon v1.0. The link shows the 1,452-line text; later texts are at [`d18b5a1`](https://github.com/Dicklesworthstone/franken_robotics/blob/d18b5a1f083fa76a4c035a26840ad2b0177a44f7/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,654 lines) and [`1f5703d`](https://github.com/Dicklesworthstone/franken_robotics/blob/1f5703d861eb042580e22cb45b9ee60558711597/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,694 lines) |
 | [Import snapshot](https://github.com/Dicklesworthstone/franken_robotics/tree/7041f51df6303c26be72ff0b67f83027ee6ab520) | Git commit (no tag, no release) | about 19:55 | First commit: all three editions, `planning/`, the reproduction bundle, LICENSE and `.gitignore` |
 | [README](https://github.com/Dicklesworthstone/franken_robotics/tree/cb8d3e27badc32a30cec80c0a616fd7c0d110cd7) | Git commit (no tag, no release) | about 19:55 | Honest status, the three editions compared, the planned design |
 | [Changelog](https://github.com/Dicklesworthstone/franken_robotics/tree/acb809ce4ab3c437c0d0b2b9f99caea64071ed8b) | Git commit (no tag, no release) | 19:57 | First version of this file |
-| [Neon v2.0 final text](https://github.com/Dicklesworthstone/franken_robotics/tree/d18b5a1f083fa76a4c035a26840ad2b0177a44f7) | Git commit (no tag, no release) | about 21:20 | Neon's 20:08 rewrite, the round-1 record synced to it, and its consistency verifier |
+| [Neon v2.0, 20:08 text](https://github.com/Dicklesworthstone/franken_robotics/tree/d18b5a1f083fa76a4c035a26840ad2b0177a44f7) | Git commit (no tag, no release) | about 21:20 | Neon's 20:08 rewrite, the round-1 record synced to it, and its consistency verifier |
 | [Round 2 complete](https://github.com/Dicklesworthstone/franken_robotics/tree/e88398a5caef7b539712d41b97e792809decdb09) | Git commit (no tag, no release) | about 21:20 | Audited claims, 24 verdicts, two challenges, handback, duel report and reactions |
 | [v1.0 drafts](https://github.com/Dicklesworthstone/franken_robotics/tree/3996e58d7d7f6238661caf05043f939080decc4e) | Git commit (no tag, no release) | 21:20 | Charter, digests, idea catalog and Phase 1 parts P00 to P12, as written before reconciliation |
 | [v1.0 parts reconciled](https://github.com/Dicklesworthstone/franken_robotics/tree/db95b163d47cc23d98dfd1017ea2d4c26e04e796) | Git commit (no tag, no release) | 21:25 | Eight parts edited, Phase 2 brief, inventories, refusal registry |
 | [Astra bundle](https://github.com/Dicklesworthstone/franken_robotics/tree/a635b911505c555b02494b232a9d76985db152f7) and [Astra rewrite](https://github.com/Dicklesworthstone/franken_robotics/tree/5afef55e5a9404d945441142c27df71c1f55cae0) | Git commits (no tag, no release) | 21:26 – 21:27 | 161-file bundle; 3,317-line edition, with matching README corrections |
 | [README revision](https://github.com/Dicklesworthstone/franken_robotics/tree/5c86ec1b4f9b74f4279682568155f39b4cd127ae) | Git commit (no tag, no release) | 21:28 | Audited claims corrected; see [section 8](#8-documentation-corrections) |
+| [Astra rewrite](https://github.com/Dicklesworthstone/franken_robotics/tree/4d99e2a23f6bdd1d92f4f1497000e9245178343f) | Git commit (no tag, no release) | 21:44 | 3,424-line edition, 170-file bundle, README corrections |
+| [Neon rewrite](https://github.com/Dicklesworthstone/franken_robotics/tree/1f5703d861eb042580e22cb45b9ee60558711597) | Git commit (no tag, no release) | 21:55 | 1,694-line edition, rewritten verifier, round-1 record synced |
+| [v1.0 reviews and Phase 2 start](https://github.com/Dicklesworthstone/franken_robotics/tree/ff5e524900b2ca6f1a9853336d1650c73f17cc5b) | Git commits (no tag, no release) | 21:56 – 21:57 | Math review (26 findings), coherence review (44), partial Appendices F to J |
+| [README update](https://github.com/Dicklesworthstone/franken_robotics/tree/361ad6c022a85a46b0be6238b1915222130e09be) | Git commits (no tag, no release) | 21:57 – 21:58 | New counts, both reviews, conflicting thresholds |
+| [v1.0 Phase 2 drafts](https://github.com/Dicklesworthstone/franken_robotics/tree/ec917bbc4799b1ca5630837431ed127a25666644) | Git commits (no tag, no release) | 22:02 – 22:05 | §39 to §47, Appendices F to J and L, completeness audit |
+| [README corrections](https://github.com/Dicklesworthstone/franken_robotics/tree/6c8e158b4cadf6a47e2de9c98b250d0d531ba40a) | Git commits (no tag, no release) | 22:03 – 22:05 | Review wording corrected, gate register and Phase 2 parts added |
 
 **Three parallel tracks, not a version chain.** No plan cites another plan. Neon's "supersedes v1.0" refers
 to Neon's own earlier draft, not to base v0.2. The only cross-track awareness in the record is round 2's case
@@ -165,8 +172,14 @@ campaign.
   among them "`fln-anvil` egraph, norm_num and simp exist", "GPU RL on `DenseTensor`" and "Metal 64-bit atomics"), a
   sixth pass in Appendix E.2 (a three-auditor sweep of math, live code and grammars), and three early evidence rows
   in the round-1 case file marked superseded.
-- [`planning/verify_plan_math.py`](https://github.com/Dicklesworthstone/franken_robotics/blob/d18b5a1f083fa76a4c035a26840ad2b0177a44f7/planning/verify_plan_math.py): a standard-library checker of Neon's 16 numerical cards, crate table, bead graph, cross-references
-  and worked examples. Run in this session, it reports zero errors on 1,654 lines.
+- A further rewrite at 21:51 (1,654 → 1,694 lines), folding in a second three-auditor sweep: Appendix E.2 now lists
+  seven passes, and `frob-mcp` plans 46 tools (was 42). It lists fixes to the test that an α-theory root is real,
+  the `.ftube` erosion, the return-map adjoint (now nonsingular), the motor convention (power-invariant, absolute
+  kelvin), the SE(3) Cayley map (explicit matrix form) and an episode-level probability bound. The round-1 case,
+  report, duel report and disagreement register were synced to it.
+- [`planning/verify_plan_math.py`](https://github.com/Dicklesworthstone/franken_robotics/blob/1f5703d861eb042580e22cb45b9ee60558711597/planning/verify_plan_math.py): a standard-library checker, largely rewritten at 21:50, of Neon's 16 numerical cards, crate table and layering, bead graph,
+  cross-references, 46 MCP tools and worked examples (with a recursive-descent parser). Run for this update, it reports
+  zero errors on 1,694 lines; it did so on the 1,654-line text as well.
 
 ### Closed workstreams
 
@@ -175,6 +188,7 @@ campaign.
 ### Representative commits
 
 - [`7041f51`](https://github.com/Dicklesworthstone/franken_robotics/commit/7041f51df6303c26be72ff0b67f83027ee6ab520) imports Neon as rewritten at 19:50:43.
+- [`d18b5a1`](https://github.com/Dicklesworthstone/franken_robotics/commit/d18b5a1f083fa76a4c035a26840ad2b0177a44f7) the 20:08 text; [`1f5703d`](https://github.com/Dicklesworthstone/franken_robotics/commit/1f5703d861eb042580e22cb45b9ee60558711597) the 21:51 text and verifier.
 
 **Caveats for readers of Neon.** The audit passes listed in its Appendix E.2 have no artifacts in `planning/`. Its
 headline "delete 90%–99% of futile simulations" is stronger than its own pass bars (XT-P1 passes at 5× and 10×,
@@ -217,6 +231,12 @@ measured against the strongest composed rivals on sealed missions.
   population attainment (0.78548 chance over 50 looks at a true 0.89), a bootstrap lower bound that can be false, and
   accepted-decision rate as a separate measure from restricted time. It also corrects the pusher accounting: the 575.7 µs
   is a residual after subtracting a solve-only median, so the 1.46× ceiling is conditional on it.
+- A third rewrite at 21:43 binds design guarantees to assumptions: the stance result needs a freely adjustable force
+  allocation (a globally affine controller needs half-width 1/2 m, 7/3 times as much), a G1 model that drops four
+  welded links loses 1.377 kg, encoder samples can alias, pairwise sensor independence does not support a seven-read
+  guarantee (55/64 = 85.94%, against 3807/4096 under joint independence), and two univariate polynomial cases that the
+  pinned owner cannot certify soundly. A native check of binary32 variance merging ran on the M5 Ultra and both RTX
+  4090s: subtracting raw second moments returned zero, the centred merge returned the exact value.
 - Work packages W01–W43, milestones M0–M8, risks, and a sealed acceptance design with four strata and
   one-sided 95% lower bounds (§15–§19).
 
@@ -225,12 +245,13 @@ measured against the strongest composed rivals on sealed missions.
 - Astra's own reasoning audit (seven independently audited claims, five verified in scope), a 3 × 3 duel with
   18 external scores (top mean: compositional subsystem contracts, 665 of 1000; "No candidate reached 700 from
   both outside reviewers"), and follow-up checks (§20.4–§20.5).
-- [`planning/astra-10x-reproduction.zip`](https://github.com/Dicklesworthstone/franken_robotics/blob/7041f51df6303c26be72ff0b67f83027ee6ab520/planning/astra-10x-reproduction.zip): 155 entries at 19:36:48, with a new `followups/` folder. It was rebuilt at 21:25:48 with 161 entries ([`a635b91`](https://github.com/Dicklesworthstone/franken_robotics/commit/a635b911505c555b02494b232a9d76985db152f7)): contact work, policy sampling, studio contracts, benchmark and friction-refinement checks, and the 150-condition friction table. All 160 checksums in its manifest match. `python3 -B verify.py --all` and `python3 -B verify_negative.py` re-check it; neither was run for this update.
+- [`planning/astra-10x-reproduction.zip`](https://github.com/Dicklesworthstone/franken_robotics/blob/7041f51df6303c26be72ff0b67f83027ee6ab520/planning/astra-10x-reproduction.zip): 155 entries at 19:36:48, with a new `followups/` folder. It was rebuilt at 21:25:48 with 161 entries ([`a635b91`](https://github.com/Dicklesworthstone/franken_robotics/commit/a635b911505c555b02494b232a9d76985db152f7)): contact work, policy sampling, studio contracts, benchmark and friction-refinement checks, and the 150-condition friction table. All 160 checksums in its manifest match. At 21:40 it became 170 files (nine added, none removed), and all 169 manifest checksums match at [`4d99e2a`](https://github.com/Dicklesworthstone/franken_robotics/commit/4d99e2a23f6bdd1d92f4f1497000e9245178343f). `python3 -B verify.py --all` and `python3 -B verify_negative.py` re-check it; neither was run for these updates.
 
 ### Representative commits
 
 - [`7041f51`](https://github.com/Dicklesworthstone/franken_robotics/commit/7041f51df6303c26be72ff0b67f83027ee6ab520) imports the edition as rewritten at 19:37:52 and the matching bundle.
 - [`a635b91`](https://github.com/Dicklesworthstone/franken_robotics/commit/a635b911505c555b02494b232a9d76985db152f7) rebuilds the bundle; [`5afef55`](https://github.com/Dicklesworthstone/franken_robotics/commit/5afef55e5a9404d945441142c27df71c1f55cae0) rewrites the edition to cite it.
+- [`4d99e2a`](https://github.com/Dicklesworthstone/franken_robotics/commit/4d99e2a23f6bdd1d92f4f1497000e9245178343f) the 21:43 edition, its bundle and README corrections.
 
 ---
 
@@ -296,19 +317,43 @@ refuted ones as the evidence leaves them.
   (R1 to R10) and inventories of 421 gate, kill-gate and admission-gate identifiers, 141 open questions, 169 verbs and
   296 refusal codes. One gate tightened: training time to a threshold is at most 1.25× a re-measured incumbent (was
   1.5×).
-- Phase 2 (verification, the ten-fold test, the gate register, risks, milestones, beads, the first session, appendices)
-  is planned in a [brief](https://github.com/Dicklesworthstone/franken_robotics/blob/db95b163d47cc23d98dfd1017ea2d4c26e04e796/planning/fable/blend/PHASE2_BRIEF.md) and not written, apart from Appendix O.
+- **Mathematical review** (21:55): an independent, read-only [review](https://github.com/Dicklesworthstone/franken_robotics/blob/54c86463965334246251b09626e67d01bc57fa2c/planning/fable/blend/REVIEW_MATH.md) of §9–§13, §15, §16, §18 and §35. 26 findings: 2
+  critical (the §16.7 variational step uses the wrong differential for its sign; §16.6 pads sums with the wrong zero),
+  7 major and 17 minor, with replacement text.
+- **Coherence review** (21:57): a [review](https://github.com/Dicklesworthstone/franken_robotics/blob/361ad6c022a85a46b0be6238b1915222130e09be/planning/fable/blend/REVIEW_COHERENCE.md) of the parts against the charter, the brief and each other. 44 findings: 9 where two
+  binding texts cannot both be implemented (among them rank-agreement thresholds, proof-kind registries, verb names,
+  reference capacities, mixed-batch thresholds and the same §16.7 differential), 23 single disagreements and 12 minor.
+  Its checks also found the incumbent figures, crate counts and withdrawn claims consistent across parts.
+- **Phase 2** (verification, the ten-fold test, the gate register, risks, milestones, beads, the first session,
+  appendices) is set out in a [brief](https://github.com/Dicklesworthstone/franken_robotics/blob/db95b163d47cc23d98dfd1017ea2d4c26e04e796/planning/fable/blend/PHASE2_BRIEF.md). Drafted between 21:53 and 22:05:
+  [§39 and §40](https://github.com/Dicklesworthstone/franken_robotics/blob/ec917bbc4799b1ca5630837431ed127a25666644/planning/fable/blend/parts2/P13b.md) (the ten-fold test and the gate register),
+  [§41 to §44, §46 and §47](https://github.com/Dicklesworthstone/franken_robotics/blob/ec917bbc4799b1ca5630837431ed127a25666644/planning/fable/blend/parts2/P14.md) (risks, open questions, milestones, 80 work packages, first
+  session, release rubric), [§45](https://github.com/Dicklesworthstone/franken_robotics/blob/ec917bbc4799b1ca5630837431ed127a25666644/planning/fable/blend/parts2/P15.md) (442 beads) and
+  [Appendices F to J and L](https://github.com/Dicklesworthstone/franken_robotics/blob/ec917bbc4799b1ca5630837431ed127a25666644/planning/fable/blend/parts2/P16b.md). §38 and Appendices A to E, K, M and N are not written. The
+  brief calls the refusal registry final text for Appendix O; the coherence review asks for changes to it (F28).
+- **Checked for this update**: the bead tables hold 442 beads, 1,091 dependencies, none pointing to an equal or higher
+  number, one root and one sink. The gate register lists 37 admission gates (32 plus 5 sibling), 279 convergence gates
+  (278 plus GATE-GAUNT-01) and 111 kill gates, which matches the 421 identifiers of the inventory plus those six. The
+  register says it governs where a chapter differs. It reads the mixed-batch gate numbers as different workloads, sets
+  rank agreement at 0.7 and 0.5, and does not reconcile the two capacity tables.
+- **Completeness audit** (22:04): [GAPFILL_1](https://github.com/Dicklesworthstone/franken_robotics/blob/ec917bbc4799b1ca5630837431ed127a25666644/planning/fable/blend/GAPFILL_1.md) checks the parts against Astra and Neon and offers 18 insertion
+  blocks, none applied. Of 63 items from the two digests it marks 57 covered, 3 weaker and 3 deferred. Of 19 items added
+  to those plans after the digests, 11 are missing and 7 weaker.
 
 ### Closed workstreams
 
-- Phase 1 of the integration charter (section drafts); reconciliation of identifiers.
-- Not closed: Phase 2, assembly, adjudication. The drafts bind to the verdict register of section 5 as written, list
-  three open disagreements in §0.8, and do not mention the cross-family challenges.
+- Phase 1 of the integration charter (section drafts); reconciliation of identifiers; two read-only reviews; a
+  completeness audit.
+- Not closed: applying the reviews and the audit, the rest of Phase 2, assembly, adjudication. The drafts bind to the
+  verdict register of section 5 as written, list three open disagreements in §0.8, and do not mention the cross-family
+  challenges.
 
 ### Representative commits
 
 - [`3996e58`](https://github.com/Dicklesworthstone/franken_robotics/commit/3996e58d7d7f6238661caf05043f939080decc4e) The charter, inputs and Phase 1 text before reconciliation (byte-identical to the swarm's own backup).
 - [`db95b16`](https://github.com/Dicklesworthstone/franken_robotics/commit/db95b163d47cc23d98dfd1017ea2d4c26e04e796) The reconciled parts, inventories and Phase 2 brief.
+- [`54c8646`](https://github.com/Dicklesworthstone/franken_robotics/commit/54c86463965334246251b09626e67d01bc57fa2c) The math review and the first Phase 2 appendices; [`ff5e524`](https://github.com/Dicklesworthstone/franken_robotics/commit/ff5e524900b2ca6f1a9853336d1650c73f17cc5b) the coherence review.
+- [`8221cff`](https://github.com/Dicklesworthstone/franken_robotics/commit/8221cff56de5d9320e2c39277ace4834df93d5ca) §41 to §47, Appendices F to J and L and the completeness audit; [`ec917bb`](https://github.com/Dicklesworthstone/franken_robotics/commit/ec917bbc4799b1ca5630837431ed127a25666644) §39 and §40.
 
 ---
 
@@ -356,6 +401,11 @@ them in the text and replaces the base throughput table. This section records wh
   layout.
 - **`.gitignore`**: run records (`*.frun`), Python build output for the planned bindings, and the planning agents'
   backup copies.
+- **Second update** (21:57–21:58): Astra and Neon counts, the two reviews and the thresholds the coherence review found
+  conflicting. The Astra-specific README lines in [`5afef55`](https://github.com/Dicklesworthstone/franken_robotics/commit/5afef55e5a9404d945441142c27df71c1f55cae0) and [`4d99e2a`](https://github.com/Dicklesworthstone/franken_robotics/commit/4d99e2a23f6bdd1d92f4f1497000e9245178343f) were written by the Astra track's own agent.
+- **Corrections to that update** (22:03–22:05): it had called the v1.0 drafts unreviewed beside a row listing their
+  reviews, described the draft's real-root test as too weak when the review says it is reversed, and called Appendix O
+  final although the coherence review asks for changes. The README also now covers the Phase 2 parts.
 
 ### Closed workstreams
 
@@ -365,6 +415,7 @@ them in the text and replaces the base throughput table. This section records wh
 ### Representative commits
 
 - [`5c86ec1`](https://github.com/Dicklesworthstone/franken_robotics/commit/5c86ec1b4f9b74f4279682568155f39b4cd127ae) README and `.gitignore`.
+- [`521bb7b`](https://github.com/Dicklesworthstone/franken_robotics/commit/521bb7bade8b7bbd95766dd63564a5556ba82f5c) and [`361ad6c`](https://github.com/Dicklesworthstone/franken_robotics/commit/361ad6c022a85a46b0be6238b1915222130e09be) README updates; [`da1b334`](https://github.com/Dicklesworthstone/franken_robotics/commit/da1b3341d924d2aa9158401b8211fb4a69eca5ba) and [`6c8e158`](https://github.com/Dicklesworthstone/franken_robotics/commit/6c8e158b4cadf6a47e2de9c98b250d0d531ba40a) corrections.
 
 ---
 
@@ -373,19 +424,22 @@ them in the text and replaces the base throughput table. This section records wh
 - **Start with the README's status table**, then the edition that matches your task (see its Reading paths).
   Do not treat any one edition as canonical until a reconciled plan says so.
 - **What has been folded where.** Round 1 is folded into Neon v2.0 only. The Astra study is folded into Astra
-  only. All three editions and both rounds feed the v1.0 drafts, which are unreviewed. Base v0.2 itself has not been
-  edited since 18:36:46.
+  only. All three editions and both rounds feed the v1.0 drafts. Those drafts have had two read-only reviews (math and
+  coherence), and neither has been applied. Base v0.2 itself has not been edited since 18:36:46.
+- **Before implementing from a v1.0 part**, read `REVIEW_MATH.md` and `REVIEW_COHERENCE.md`. The math review's two
+  critical items and the coherence review's nine S1 items name places where the parts contradict each other.
 - **Verdict contest.** The v1.0 drafts treat the verdict register as settled. The challenges in
   `planning/fable/brenner/debates/` contest 16 of its 24 rows. Read both before relying on a verdict.
-- **Stale inputs of the v1.0 drafts.** `NEON_DIGEST.md` (20:04) predates Neon's 20:08 rewrite, and
-  `NEON_DELTA_SINCE_DIGEST.diff` records the difference. `IDEA_CATALOG.md` (20:27) marks the round-2 ideas "unscored"
+- **Stale inputs of the v1.0 drafts.** `NEON_DIGEST.md` (20:04) predates Neon's 20:08 and 21:51 rewrites;
+  `NEON_DELTA_SINCE_DIGEST.diff` (21:19) covers only the first. `ASTRA_DIGEST.md` (19:59) predates Astra's 21:26 and
+  21:43 rewrites; `GAPFILL_1.md` covers the first and Neon edits up to 21:38. `IDEA_CATALOG.md` (20:27) marks the round-2 ideas "unscored"
   although the duel's score files date from 19:47 to 19:50. The 0.86 mixed-batch figure in the H-03 verdict row comes
   from MOR claim C022; the H-03 evidence pack does not contain it.
 - **Numbers that disagree.** The reasoning report says nothing was measured on an incumbent, while Brenner evidence
   packs H-01, H-11, H-15 and H-19 timed CPU MuJoCo on the M5 Ultra under load. The performance table now in the README
   follows the v1.0 draft §36.3 as reconciled.
 - **Missing artifacts that the plans cite:** base Appendix K (review log), the first three audit records listed in Neon's
-  Appendix E.2, and Phase 2 of v1.0. `scratch/verify_*.py`, cited by earlier Neon text, is replaced by
+  Appendix E.2, and §38 and Appendices A to E, K, M and N of v1.0. `scratch/verify_*.py`, cited by earlier Neon text, is replaced by
   `planning/verify_plan_math.py`, whose `ROOT` path is hard-coded.
 - **Internal inconsistencies already found**, so you do not rediscover them: base has several cross-references
   one section off around §22 and an Appendix K that is cited but absent; Neon's preflight latency is "<200 ms"

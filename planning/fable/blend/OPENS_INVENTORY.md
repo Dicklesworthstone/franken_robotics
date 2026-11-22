@@ -9,7 +9,7 @@
 | OPEN-ARENA-5 | 24.18 | - **OPEN-ARENA-5.** The guard band for boundary atoms on each backend. Owner: Spark lead. Blocks the device half of |
 | OPEN-ATEL-1 | 28.24 | - **OPEN-ATEL-1.** The loss constants of DC-01 (C_fp, C_fn, the pair cost c) and the exchange rate between GPU-seconds |
 | OPEN-ATEL-2 | 28.24 | - **OPEN-ATEL-2.** The definition of a stratum (archive cell blocks, or morphology class by task family). The mode |
-| OPEN-ATEL-3 | 28.24 | - **OPEN-ATEL-3.** Whether `fs-recompute`, `fs-voi` and `fs-race` pass admission through the airlock on the core |
+| OPEN-ATEL-3 | 28.24 | - **OPEN-ATEL-3.** Whether `fs-recompute`, `fs-voi` and `fs-race` pass admission through the airlock on the |
 | OPEN-ATEL-4 | 28.24 | - **OPEN-ATEL-4.** Whether `result.revalidate` and the mission cluster's revalidation verb stay two verbs over one |
 | OPEN-ATEL-5 | 28.24 | - **OPEN-ATEL-5.** The planted winner for morphology classes that have no earlier specialist result. Owner: Arena |
 | OPEN-ATEL-6 | 28.24 | - **OPEN-ATEL-6.** Whether a fine-tune fraction of 5% is the right R2 rung, or two R2 rungs are needed. Owner: Cortex |
@@ -120,15 +120,15 @@
 | OPEN-SPARK-2 | 21.25 | - **OPEN-SPARK-2.** A compute envelope for gate measurements and training campaigns (§36.14). Default: |
 | OPEN-SPARK-3 | 21.25 | - **OPEN-SPARK-3.** The bucket set and the capacities of each reference workload. Default: degrees of freedom |
 | OPEN-SPARK-4 | 21.25 | - **OPEN-SPARK-4.** Whether the pinned `cudarc` exposes graph capture and the asynchronous pool calls, and if |
-| OPEN-SPARK-5 | 21.25 | - **OPEN-SPARK-5.** What Spark does if INT-FT-01 fails or the asks of FD-FT-01 never land. Default: stay inside |
+| OPEN-SPARK-5 | 21.25 | - **OPEN-SPARK-5.** What Spark does if INT-FT-01 fails, or until the upstream work item FD-FT-01 lands. Default: |
 | OPEN-SPARK-6 | 21.25 | - **OPEN-SPARK-6.** Whether the two RTX 4090 of `trj` allow device-to-device access. Default: host-staged |
-| OPEN-SUITE-1 | 33.16 | ¦ OPEN-SUITE-1 ¦ Which asupersync version the whole graph resolves to ¦ Whatever FrankenSim's pinned commit builds with (0.6.2 by path today) ¦ INT-ASUP-01 ¦ |
-| OPEN-SUITE-2 | 33.16 | ¦ OPEN-SUITE-2 ¦ Does the core move to a nightly at or above 1.100 if FrankenSim builds there, so that `frob-mcp` may join the core graph? ¦ No: the core stays on FrankenSim's pin and `frob-mcp` stays across the process boundary ¦ INT-TOOLCHAIN-01; owner ¦ |
+| OPEN-SUITE-1 | 33.16 | ¦ OPEN-SUITE-1 ¦ Which asupersync version the whole graph resolves to ¦ The one published version FD-ASUP-01 aligns the siblings on; until it lands, whatever FrankenSim's pinned commit builds with (0.6.2 by path today) ¦ INT-ASUP-01 ¦ |
+| OPEN-SUITE-2 | 33.16 | ¦ OPEN-SUITE-2 ¦ Decided; kept as a recorded decision. The question was whether the core moves to a nightly at or above 1.100 so that `frob-mcp` may join the core graph ¦ Decision (owner, 2026-11-22): the whole build graph uses one toolchain T, chosen at INT-TOOLCHAIN-01 in the order of §33.13; fastmcp_rust is brought onto T by  |
 | OPEN-SUITE-3 | 33.16 | ¦ OPEN-SUITE-3 ¦ Is a dirty asupersync checkout acceptable for development builds between receipts? ¦ Yes for development, with the tree hash in the receipt; no gate records a PASS ¦ INT-FSIM-01; owner ¦ |
 | OPEN-SUITE-4 | 33.16 | ¦ OPEN-SUITE-4 ¦ The alias set of `frob_core::qty`, and whether it stays within 64 ¦ The quantities used by §13 to §18 only ¦ INT-TOOLCHAIN-01; Marrow lead ¦ |
 | OPEN-SUITE-5 | 33.16 | ¦ OPEN-SUITE-5 ¦ Budget for the cold build of the M1 closure on the build workers ¦ The machine envelope: one hour, 16 GiB, 8 cores ¦ INT-FSIM-01; owner ¦ |
-| OPEN-SUITE-6 | 33.16 | ¦ OPEN-SUITE-6 ¦ Whether computational crates take asupersync's `Cx` or a capability-free token from `frob-core` ¦ asupersync's `Cx` wherever cancellation is observed; the token only if INT-ASUP-01 forces a process boundary ¦ INT-ASUP-01; Tether lead ¦ |
-| OPEN-TETHER-1 | 32.22 | ¦ OPEN-TETHER-1 ¦ Can the annex link handler crates in-process, or does the toolchain floor force the socket form permanently? ¦ Tether lead ¦ INT-FMCP-01 ¦ Socket form only ¦ |
+| OPEN-SUITE-6 | 33.16 | ¦ OPEN-SUITE-6 ¦ Whether computational crates take asupersync's `Cx` or a capability-free token from `frob-core` ¦ asupersync's `Cx` wherever cancellation is observed; the token only if INT-ASUP-01 fails after FD-ASUP-01 and a fallback splits the graph ¦ INT-ASUP-01; Tether lead ¦ |
+| OPEN-TETHER-1 | 32.22 | ¦ OPEN-TETHER-1 ¦ Decided with OPEN-SUITE-2 (§33.16); kept as a recorded decision. The question was whether `frob-mcp` can link handler crates in process. Decision: it is a member of the core graph and runs verbs in process, once FD-FMCP-01 has brought fastmcp_rust onto T ¦ Tether lead ¦ Confirmed by INT-FMCP-01 ¦ KILL-MCP's fal |
 | OPEN-TETHER-2 | 32.22 | ¦ OPEN-TETHER-2 ¦ Do the agent harnesses in use speak one of the two protocol eras the library serves, and act on catalog-changed notifications? ¦ Tether lead ¦ GATE-TETHER-12 ¦ Static clusters by launch flag, plus `verb_invoke` ¦ |
 | OPEN-TETHER-3 | 32.22 | ¦ OPEN-TETHER-3 ¦ The default and maximum of `sync_wait_ms` against measured agent turn time and measured verb latency. ¦ Tether lead ¦ GATE-TETHER-13 ¦ 5,000 and 30,000 ¦ |
 | OPEN-TETHER-4 | 32.22 | ¦ OPEN-TETHER-4 ¦ The slot reserve, per-environment job cap, quantum and ageing period, from the M2 queue trace. ¦ Daemon lead ¦ GATE-TETHER-10 ¦ 5%, 64, 5 s, 600 s ¦ |
@@ -139,7 +139,7 @@
 | OPEN-TRAC-4 | 18.18 | - **OPEN-TRAC-4.** The admission bound on scaled κ·u for `f32` tiers. Default: 0.05. Decided by GATE-TRAC-10. |
 | OPEN-TRAC-5 | 18.18 | - **OPEN-TRAC-5.** Witness-migration tolerances: δ_w and the largest normal rotation transported. Default: the |
 | OPEN-WS-1 | 34.13 | ¦ OPEN-WS-1 ¦ The rank order inside layers 4 and 5, where the chapters of Part IV may need edges this table did not foresee ¦ The order of §34.2; a change is an ADR ¦ The first contract of each crate ¦ |
-| OPEN-WS-2 | 34.13 | ¦ OPEN-WS-2 ¦ Whether `frob-tui` stays in the core workspace or becomes an annex ¦ Core, until INT-FTUI-01 shows frankentui does not build on the core toolchain ¦ INT-FTUI-01 ¦ |
+| OPEN-WS-2 | 34.13 | ¦ OPEN-WS-2 ¦ Whether `frob-tui` stays in the core workspace or becomes an annex ¦ Core. If INT-FTUI-01 shows frankentui does not build on T, the remedy is an upstream change in frankentui or the toolchain train, with no dashboard until it lands ¦ INT-FTUI-01 ¦ |
 | OPEN-WS-3 | 34.13 | ¦ OPEN-WS-3 ¦ The stable release named in `frob-cert`'s toolchain file ¦ The newest stable release on the day of its first commit, then moved only by ADR ¦ The first commit of `frob-cert` ¦ |
 | OPEN-WS-4 | 34.13 | ¦ OPEN-WS-4 ¦ Whether `.fmission` is owned by `frob-spec` or by `frob-mission` ¦ `frob-spec`, for the reason in §34.9 ¦ The contract of `frob-spec` ¦ |
 | OPEN-WS-5 | 34.13 | ¦ OPEN-WS-5 ¦ Whether the Gymnasium adapter binds in process or across a process boundary ¦ Across a process boundary with shared array files, so that no interpreter is ever in a `frob` binary ¦ §23; the adapter's contract ¦ |

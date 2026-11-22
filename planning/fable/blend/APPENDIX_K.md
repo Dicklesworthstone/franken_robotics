@@ -20,6 +20,7 @@ repository.
 | 10 | All blended chapters | A coherence reviewer | 44 findings: 9 where two binding texts could not both be implemented, 23 disagreements, 12 minor | All applied by exact substitution (131 substitutions with round 9) |
 | 11 | Coverage of the two other plans and of the idea catalog | Two completeness auditors | 315 checklist rows: 260 covered, 33 weaker, 19 missing, 3 deferred; 51 contradictions noticed | 48 subsections inserted; the contradictions fixed in a reconciliation pass (274 fixes logged) |
 | 12 | The two other plans' later revisions | A final delta auditor | 54 changes: 8 already covered, 21 weaker, 13 missing, 12 not taken | 34 corrections and 18 further subsections |
+| 13 | The plan's treatment of sibling projects | The owner | Ruling: every sibling is the owner's own project, so a mismatch is fixed in the sibling and not worked around. The plan had made a process boundary the default for the MCP server because fastmcp_rust declares a newer Rust version than FrankenSim's pin | Siblings are changed by this program in their own repositories (upstream work items); one toolchain for the whole build graph; fastmcp_rust is upgraded to it at M0; the MCP server joins the core graph and runs verbs in process; the process boundary is KILL-MCP's fallback (193 edits across §0.7, §1, §32–§34, §40–§47, Appendix F) |
 
 ### K.2 Revisions of the two other plans that this version integrates
 

@@ -98,3 +98,142 @@ One line per edit: file, subsection, what changed. `<!-- LEDGER -->` blocks were
 - P16b, F.2 table header: "Ask" → "Upstream work item".
 - P16b, F.3 title and three bullets: "asks" → "upstream work items"; "`frob-mcp` stays a separate workspace" replaced by KILL-MCP's fallbacks applying only if the two P0 items cannot land within the M0 budget; T also frozen during the tournament.
 - P16b, Appendices H, I, J, L: read; no passage describes the MCP boundary and the toolchain FACTs are file citations only; no edit.
+
+## parts2/P14.md
+
+- P14, §41.1 pre-mortem row 11: residual "depends on sibling progress" → the proof siblings maturing is upstream work of this program.
+- P14, §41.1 pre-mortem row 14: "asks FD-FT-01" → "upstream work item FD-FT-01".
+- P14, §41.1 pre-mortem row 25: "the toolchain split blocked a merge" restated as the toolchain train stalling; countermeasure is one toolchain T, FD-FMCP-01 and FD-ASUP-01 at M0, KILL-MCP's fallbacks; four nightlies named the starting state.
+- P14, §41.3 register intro: RISK-02 and RISK-20 named as restated.
+- P14, §41.3 RISK-01: "ask FD-FSIM-08" → "upstream work item FD-FSIM-08".
+- P14, §41.3 RISK-02: restated per REV-1 item 4 as the cost and breakage risk of the toolchain train; the toolchain FACTs kept as the starting state; mitigation is the ordered choice of T, FD-FMCP-01 at P0, the train rule, KILL-MCP's fallbacks.
+- P14, §41.3 RISK-03: mitigation "process boundary as fallback" → FD-ASUP-01 at P0 and KILL-MCP's first fallback.
+- P14, §41.3 RISK-08: "asks FD-FT-01" → "upstream work item FD-FT-01".
+- P14, §41.3 RISK-20: "upstream asks are never staffed" restated as the cost and sequencing of upstream work, with signal and mitigation.
+- P14, §41.3 RISK-21: "whole core" → "whole build graph"; signal includes a toolchain train; preferred fix is an upstream change (FD-FSIM-15, -31), `frob-units` the fallback.
+- P14, §41.3 RISK-31: "asks FD-FSIM-12 and -13" → "upstream work items".
+- P14, §41.3 new row RISK-55 (next free number, appended after RISK-54): collisions with other agents working in the same sibling repository; mitigation is file reservations and the sibling's own coordination rules.
+- P14, §41.4 last bullet: "An upstream ask is never a mitigation by itself" → an upstream work item is not; its interim posture is.
+- P14, §41.5 second row: "the pin move is an upstream ask" → upstream work item (FD-FTX-01, FD-F3D-01).
+- P14, §42.1 count sentence: closed questions two → four.
+- P14, §42.2 OPEN-SPARK-5: "if the gateway's asks never land" → before the upstream work item FD-FT-01 lands.
+- P14, §42.2 OPEN-SUITE-2: marked decided by the owner, with the decision text, its cost and the gates that confirm it.
+- P14, §42.3 OPEN-SINEW-4: "needs an upstream ask / file the ask" → upstream change / open the upstream work item (FD-FSIM-21).
+- P14, §42.3 OPEN-SPARK-5: "or the asks of FD-FT-01 never land" → until the upstream work item FD-FT-01 lands.
+- P14, §42.3 OPEN-NEMESIS-4: "an ask is filed and nothing is scheduled against it" → upstream work items FD-FSIM-18 and -19 open, no milestone waits.
+- P14, §42.3 OPEN-ATEL-3: "on the core toolchain" → "on T".
+- P14, §42.3 OPEN-TETHER-1: marked decided with OPEN-SUITE-2.
+- P14, §42.3 OPEN-SUITE-1: default restated around FD-ASUP-01.
+- P14, §42.3 OPEN-SUITE-2: marked decided, with the decision text.
+- P14, §42.3 OPEN-SUITE-6: "only if INT-ASUP-01 forces a process boundary" → only if it fails after FD-ASUP-01 and a fallback splits the graph.
+- P14, §42.3 OPEN-WS-2: default restated (core; upstream change or toolchain train).
+- P14, §42.4 closing paragraph: "Two questions are closed" → four, naming OPEN-SUITE-2 and OPEN-TETHER-1 and the decision; paragraph rewrapped.
+- P14, §43.2 firewall table, row M0: choice of T and the two P0 upstream work items added.
+- P14, §43.2 firewall table, row M7: T frozen with the pins.
+- P14, §43.3 M0 artifact: admission file also records the choice of T; new bullet for fastmcp_rust on T (FD-FMCP-01) and one asupersync version (FD-ASUP-01).
+- P14, §43.3 M0 artifact: "through `frob-mcp` across the process boundary" → `frob-mcp` in the core graph on T, linking `frob-verbs`, in process.
+- P14, §43.3 M0 acceptance: "INT-FMCP-01 as a smoke test" → the REV-3 criterion; upstream items landed or KILL-MCP decided.
+- P14, §43.3 M0 kill gates: KILL-MCP restated (trigger after FD-FMCP-01 and FD-ASUP-01 attempted; fallback 1 own workspace over a socket; fallback 2 CLI); choice of T follows §33.12 and §33.13.
+- P14, §43.4 M1 kill gates (schedule gate): wording aligned with BET-12 (upstream work item not landed, no interim posture); paragraph rewrapped.
+- P14, §43.4 M1 owner input: OPEN-SUITE-2 removed (decided).
+- P14, §43.12 variants table, second M0 row: "the MCP stack cannot be reached across the process boundary" → INT-FMCP-01 cannot pass within the M0 budget; exits with KILL-MCP's two fallbacks.
+- P14, §44 intro: sentence added that upstream work items are beads labelled `upstream` inside existing packages; the two P0 items sit in WP-02 and WP-06.
+- P14, §44.1 WP-01: name extended (the one toolchain T and the stack lock).
+- P14, §44.1 WP-02: name and crates extended with FD-ASUP-01.
+- P14, §44.1 WP-06: name and crates extended with FD-FMCP-01 and `frob-mcp` in the core graph, in process.
+- P14, §44.3 coverage: `surface/frob-mcp` moved from the Annexes row to the layer 7 row.
+- P14, §46 working rules: "no sibling repository is modified" → changed only as an upstream work item, in that repository, under its rules, with files reserved.
+- P14, §46 step 1: "FrankenSim's toolchain pin" → one `rust-toolchain.toml` naming candidate (a) as provisional T; paragraph rewrapped.
+- P14, §46 step 3: extended (step numbers kept) with: T falls to candidate (b) if FrankenSim does not build on (a); build fastmcp_rust on T in its repository, run its suite and conformance checks, record the result (FD-FMCP-01, BD-023).
+- P14, §46 observation table, row 3: observation and decisions extended to match.
+- P14, §46 closing paragraph: three honest measurements → four (fastmcp_rust on T added).
+- P14, §47.1 "The foundations are respected": "none was modified. Every ask has a bead in its home tracker" → none was patched locally; changes made in the sibling as upstream work items with mirrored beads; one toolchain T.
+
+## parts2/P15.md
+
+- P15, §45 "How to read a row", sibling bullet: "Sibling repositories are read-only. No bead schedules an upstream change" → upstream work is bead work (label `upstream`, mirrored bead; BD-037; P0 items in BD-008 and BD-023; interim posture).
+- P15, §45.1 intro: "The MCP server is a separate workspace across a process boundary. The core toolchain follows FrankenSim's" → M0 chooses T, brings fastmcp_rust onto it, aligns asupersync; MCP server in the core graph, in process.
+- P15, §45.1 BD-001 title: `rust-toolchain.toml` "at FrankenSim's pin" → one file for the whole graph naming candidate (a) as provisional T.
+- P15, §45.1 BD-006 title and done-condition: built on candidate (a), else (b); the record names the candidate FrankenSim builds on.
+- P15, §45.1 BD-008 title and done-condition: extended to cover FD-ASUP-01 (no new bead, no new dependency edge).
+- P15, §45.1 BD-023 title and done-condition: "own workspace on its annex toolchain … across the process boundary" → FD-FMCP-01 (fastmcp_rust onto T) and `frob-mcp` in the core workspace, in process; done-condition is the REV-3 INT-FMCP-01 criterion (no new bead, dependencies unchanged).
+- P15, §45.1 BD-031 title and done-condition: adds the choice and recording of T; every row passes on T.
+- P15, §45.1 BD-037 title and done-condition: "asks filed … no local bead schedules an upstream change" → upstream work items opened as `upstream` beads and mirrored; `registries/upstream.toml`.
+- P15, §45.1 BD-044 title: the state of the two P0 upstream work items is recorded at the M0 exit review.
+
+## parts2/P13b.md
+
+- P13b, §40.2 INT-TOOLCHAIN-01 row: "Rust toolchain shared with FrankenSim … on FrankenSim's pinned nightly" → the gate that chooses and records T for the whole build graph; T then moves only by a toolchain train.
+- P13b, §40.2 INT-ASUP-01 row: one published version across workspaces; proves FD-ASUP-01.
+- P13b, §40.2 INT-FSYM-01 row: `derive/` builds on T.
+- P13b, §40.2 INT-FMCP-01 row: replaced by the REV-3 criterion; milestone label "M0 (smoke)" → "M0 (admission)".
+- P13b, §40.2 note under the table: "INT-FMCP-01 is run across the process boundary … not required" → run inside the core graph on T; FD-FMCP-01 and FD-ASUP-01 make it passable; KILL-MCP if it cannot pass.
+- P13b, §40.4 KILL-MCP row: trigger and two fallbacks restated as in REV-3 ("the separate workspace is the design of record" removed).
+- P13b, §40.5 schedule gate (BET-12) row: wording aligned with BET-12 (upstream work item not landed, no interim posture).
+- P13b, §40.7 paragraph on KILL-MCP: history of the row removed; states the design of record (core graph, in process) and the trigger and fallbacks once.
+
+## parts2/P16a.md
+
+- P16a, Appendix A, row "Annex": no longer "outside the core's toolchain"; defined by the lockfile and the unsafe and foreign-interface policy, on T; `surface/` removed from the list and `frob-mcp` named a core workspace member.
+- P16a, Appendix A, row "Stack lock": records the one toolchain T.
+- P16a, Appendix A, new row "Toolchain T; toolchain train" (alphabetical position).
+- P16a, Appendix A, row "Upstream ask" → "Upstream work item", redefined per REV-1.
+- P16a, Appendix B, row "Symbolic elimination of kinematic loop closures": "waits on an upstream ask" → "upstream work item (FD-FSIM-04)".
+- P16a, Appendix C EV matrix, row "MCP surface on fastmcp_rust": "across a process boundary" → in the core graph with verbs run in process; KILL-MCP's two fallbacks named.
+- P16a, Appendix C killed-idea register, group 63, row on sibling changes: "scheduled as a local bead / siblings are read-only / upstream asks" → a local patch or fork is what is not adopted; upstream work items done in the sibling.
+
+## parts/P05.md
+
+- P05, §21.2 ADR-SPARK-01, second bullet: annex workspaces kept with their own lockfiles; sentence added that they build on T and that the boundary exists for the unsafe and foreign-interface policy.
+- P05, §21.3 ADR-SPARK-09: "upstream asks, never local beads / sibling repositories are read-only" → upstream work items done in FrankenTorch's repository (FD-FT-01), never a local patch or second binding; reason restated.
+- P05, §21.5 stride paragraph: "an upstream ask (Appendix F)" → "an upstream work item (FD-FNP-01, Appendix F)".
+- P05, §21.9 gateway limits table: header "Ask" → "Upstream work item"; last row "pinned as upstream pins it; migration is upstream's" → pinned as FrankenTorch pins it; migration is part of FD-FT-01.
+- P05, §21.9 sentence under the table: "Until the asks in Appendix F land … does not schedule a change to it" → until the upstream work of FD-FT-01 lands; no local patch, no second binding.
+- P05, §21.10 kernel cache bullet: "part of ask FD-FT-01" → "part of upstream work item FD-FT-01".
+- P05, §21.25 OPEN-SPARK-5: "or the asks of FD-FT-01 never land" → until the upstream work item FD-FT-01 lands.
+- P05, §35.1 determinism classes paragraph: "that is ask FD-FSIM-07" → "upstream work item FD-FSIM-07".
+
+## parts/P01.md, P02.md, P03.md, P04.md, P06.md, P08.md, P09.md, P10.md, parts2/P13a.md (wording only: "ask" → "upstream work item")
+
+- P01, §10 C-06 (Foundations bullet): "an upstream ask" → "an upstream work item".
+- P01, §10 C-07 (Foundations bullet): "an upstream ask" → "an upstream work item".
+- P01, §10 C-25 (Foundations bullet): "an upstream ask (Appendix F)" → "an upstream work item (FD-FSIM-17, Appendix F)".
+- P02, §14.10 differential-drive known answer: "the upstream ask" → "the upstream work item".
+- P02, §15.14 OPEN-SINEW-4: "needs an upstream ask. Default: file the ask" → upstream change; open the upstream work item (FD-FSIM-21).
+- P03, §16.2 ADR-KIN-06 reason: "sibling limits are facts to plan around" → facts at the pinned commit, each with an interim posture until its upstream work item lands.
+- P03, §16.4 paragraph before the limits table: "(asks FD-FSIM-02 and FD-FSIM-04)" → upstream work items.
+- P03, §16.4 lead-in to the limits table: "each has an upstream ask …; none is scheduled as local work on FrankenSim" → each has an upstream work item done in FrankenSim's repository; the posture holds until it lands.
+- P03, §16.4 limits table: header "Posture until the ask lands" → "…until the upstream change lands"; four cells "Ask FD-FSIM-0x" → "Upstream work item FD-FSIM-0x".
+- P03, §16.8 promotion paragraph: "a batch entry point is an upstream ask" → upstream work item FD-FSIM-17; lines rewrapped.
+- P03, §18.3 collision paragraph: "(ask FD-FSIM-03)" → "(upstream work item FD-FSIM-03)".
+- P03, §18.9 planar-drive paragraph: "an upstream ask" → "an upstream work item (FD-FSIM-11)".
+- P03, §18.11 capacity list, item 2: "an upstream ask for the referee" → "an upstream work item for the referee, FD-FSIM-13".
+- P04, §19.10.6: "are asks upstream, never local beads" → upstream work items (FD-FSIM-22); no milestone waits.
+- P04, §19.13 ingestion: "Changes to either are asks upstream" → upstream work items (FD-FSS-01, FD-FDGR-01).
+- P04, §19.13 ceiling, pilot and kill: "an upstream ask and not an importer" → upstream work item (FD-FSS-01); paragraph rewrapped.
+- P06, §22.9.3: "waits on upstream asks" → "waits on upstream work item FD-FSIM-20".
+- P06, §22.20 FACT paragraph: "a request for it goes upstream" → adding it to `fs-surrogate` is an upstream change.
+- P06, §23.6 PPO paragraph: "admission tests and upstream asks" → "upstream work items".
+- P06, §23.8 device learning bullet: "An upstream ask (FD-FT-02) requests …. If it lands" → "An upstream work item (FD-FT-02) adds …. When it lands".
+- P08, §26.16 OPEN-NEMESIS-4: "an upstream ask is filed and nothing is scheduled against it" → upstream work items FD-FSIM-18 and -19 open; no milestone waits.
+- P09, §28.24 OPEN-ATEL-3: "on the core toolchain" → "on the toolchain T".
+- P10, §30.4: "upstream asks, to be numbered in Appendix F" → upstream work items, numbered FD-FSIM-23 to -25; rewrapped.
+- P10, §31.4: "Upstream asks, to be numbered in Appendix F" → upstream work items, numbered FD-FSIM-26 to -30; rewrapped.
+- P13a, Appendix N, row CX-029: "an upstream ask" → "an upstream work item".
+- P13a, Appendix N, row CX-182: "the upstream ask" → "the upstream work item FD-FSIM-11".
+
+## Later touches to files already logged above
+
+- P00, §4 BET-34 fallback cell: "Upstream asks." → "Upstream work items FD-FSIM-12 and FD-FSIM-13. Until they land, …".
+- P12, §34.1 workspace paragraph: sentence added that `worker/` builds on an older pin's toolchain only when KILL-FSIM's fallback (a) keeps the worker at that pin.
+- P12, §34.3 L-5, §34.8 and §34.14: rewrapped after the edits above (no change of meaning).
+- P12 §33.8, P16b F.1, P15 BD-023, P14 §46 step 3: FD-FMCP-01 wording made exact: the toolchain file changes, and the declared `rust-version` changes only where T requires it.
+
+## Not edited, by instruction or by finding
+
+- `<!-- LEDGER -->` blocks in every part still use the old wording ("upstream asks", "process boundary", "own toolchain file", "OPEN-SUITE-2 to -6" as open). They were not touched.
+- "process boundary" remains outside ledgers only for mechanisms that are not the MCP server: ADR-SUITE-02 and KILL-FSIM fallback (a) (P12 §33.8, §33.14), the Gymnasium adapter (OPEN-WS-5 in P12 §34.13 and P14 §42.3; OPEN-CORTEX-4 in P14 §42.3). KILL-MCP's first fallback is worded "its own workspace … over a local socket".
+- GPU annexes: kept as separate lockfile workspaces on T (ADR-SPARK-01, OPEN-SPARK-1, INT-FT-01 and BD-016 unchanged), on the FACTs cited in P12 §34.1 (engine-kit pattern outside FrankenSim's workspace; `cudarc` third party; FrankenTorch's `block` patch at the resolving root). Only the toolchain-file statements were withdrawn.
+- §45: no bead was added. FD-FMCP-01 is carried by BD-023 and FD-ASUP-01 by BD-008; adding a bead or an edge would have broken the topological numbering or the recorded edge count and longest chain of §45.
+- §37: no passage cited the process boundary as a security property; one bullet was added to §37.3 stating what bounds an MCP client.
+- P09 §29.14 sample record still shows `"toolchain":"nightly-2026-07-06"`; it is an illustrative value and equals candidate (b).

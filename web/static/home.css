@@ -1795,8 +1795,8 @@ svg.chart {
 .stages .fail b {
   color: var(--coral);
 }
-.stages .skip {
-  opacity: 0.42;
+.stages .unrun {
+  opacity: 0.66;
 }
 @media (min-width: 900px) {
   .preflight {

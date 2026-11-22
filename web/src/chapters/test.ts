@@ -95,7 +95,7 @@ export const renderTest = (ref: Refs, version: string) =>
       source: [["§39.10", ref("39.10")]],
       note: "Sentences are the plan's. The guard, the futility stop and the tie tests are simplified here to the ratio and two switches.",
       ref,
-      body: `<div class="outcomes"><div class="outcome-track" data-track><i class="needle" data-needle></i><span class="z z0">rival faster</span><span class="z z1">withdrawn</span><span class="z z2">measured</span><span class="z z3">ten-fold</span></div><label class="range" data-range="r"><span><b>Measured ratio</b><output>4.2</output></span><input type="range" min="-30" max="140" step="1" value="62" style="--p:54%"></label><div class="outcome-opts">${seg(
+      body: `<div class="outcomes"><div class="outcome-track" data-track><i class="needle" data-needle></i><span class="z z0">rival faster</span><span class="z z1">withdrawn</span><span class="z z2">measured</span><span class="z z3">ten-fold</span></div><label class="range" data-range="r"><span><b>Measured ratio</b><output aria-live="off">4.2</output></span><input type="range" aria-label="Measured ratio" min="-30" max="140" step="1" value="62" style="--p:54%"></label><div class="outcome-opts">${seg(
         "tie",
         "Against a short program on the rival's engine",
         [

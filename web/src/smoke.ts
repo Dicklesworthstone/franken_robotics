@@ -65,6 +65,26 @@ try {
   await page.getByRole("button", { name: "b = 1/5 m" }).click();
   await page.locator("#fig-stance", { hasText: "Excluded for every controller" }).waitFor();
 
+  // A refused robot leaves its later stages listed and unrun.
+  await page.evaluate(() => document.querySelector("#fig-preflight")!.scrollIntoView({ block: "center", behavior: "instant" }));
+  await page.locator("#fig-preflight .unrun").first().waitFor();
+  const rows = await page.locator("#fig-preflight .stages > *").evaluateAll((all) =>
+    all.map((e) => [getComputedStyle(e).position, e.getBoundingClientRect().height > 20] as const),
+  );
+  assert.equal(rows.length, 8);
+  assert(rows.every(([position, tall]) => position !== "fixed" && tall), "A preflight row left its list");
+  // Only the chrome is fixed to the window.
+  const fixed = await page.evaluate(() =>
+    [...document.querySelectorAll("main *")].filter((e) => getComputedStyle(e).position === "fixed").map((e) => e.className),
+  );
+  assert.deepEqual(fixed, []);
+
+  // An output is labelable, so a slider inside the same label needs its own name.
+  const unnamed = await page.evaluate(() =>
+    [...document.querySelectorAll("input")].filter((e) => !e.getAttribute("aria-label") && !e.labels?.length).length,
+  );
+  assert.equal(unnamed, 0, "Unnamed controls");
+
   /* The palette, from the keyboard. */
   await page.keyboard.press("/");
   const palette = page.locator("dialog.palette[open]");

@@ -100,7 +100,7 @@ export default function mount(root: HTMLElement) {
         s.className = failed ? "fail" : "pass";
         $(s, ".state").innerHTML = failed ? cross : check;
         if (failed || i === 8) {
-          for (const rest of stages.slice(i)) rest.className = "skip";
+          for (const rest of stages.slice(i)) rest.className = "unrun";
           print(c);
           if (repaired) out.innerHTML += `\n<span class="ok">applied: ${repaired}</span>`;
           repaired = "";

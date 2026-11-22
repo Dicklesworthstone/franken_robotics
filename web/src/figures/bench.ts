@@ -167,7 +167,7 @@ export default function mount(root: HTMLElement) {
     knob = s?.start ?? 0;
     bench.innerHTML = `<div data-art></div><div class="bench-side"><p>${f.text}</p>${
       s
-        ? `<label class="range"><span><b>${s.name}</b><output></output></span><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.start}"></label>`
+        ? `<label class="range"><span><b>${s.name}</b><output aria-live="off"></output></span><input type="range" aria-label="${s.name}" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.start}"></label>`
         : ""
     }<div class="pair" data-pair aria-live="polite"></div></div>`;
     if (s) {

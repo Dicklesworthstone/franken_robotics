@@ -129,7 +129,7 @@ export const range = (
   value: number,
   shown: string,
 ) =>
-  `<label class="range" data-range="${name}"><span><b>${escape(label)}</b><output>${escape(shown)}</output></span><input type="range" min="${min}" max="${max}" step="${step}" value="${value}" style="--p:${((value - min) / (max - min)) * 100}%"></label>`;
+  `<label class="range" data-range="${name}"><span><b>${escape(label)}</b><output aria-live="off">${escape(shown)}</output></span><input type="range" aria-label="${escape(label)}" min="${min}" max="${max}" step="${step}" value="${value}" style="--p:${((value - min) / (max - min)) * 100}%"></label>`;
 
 export const toggle = (name: string, label: string, on = false) =>
   `<button type="button" class="toggle" data-toggle="${name}" aria-pressed="${on}"><i></i>${escape(label)}</button>`;

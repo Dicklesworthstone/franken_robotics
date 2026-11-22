@@ -1,96 +1,91 @@
-const tracks = [
-  {
-    name: "Design a body",
-    icon: "M5 19h14 M8 18l4-9 5 3 3-7 M10 8l2-2 3 2 M7 18h4",
-    chapters: "§§ 13–15, 28",
-    text: "Describe a leg, a wheel or a transmission in the same mechanical language. Trace a change in geometry through loads, torque and power.",
-    link: "14",
-    action: "Explore robot morphology",
-  },
-  {
-    name: "Build a world",
-    icon: "M3 18l6-10 4 5 3-5 5 10z M7 18l6-5",
-    chapters: "§§ 16–21",
-    text: "Take a robot from a warehouse aisle to a kitchen doorway. Floor friction, contact geometry and sensor timing can each change the outcome.",
-    link: "19",
-    action: "Explore the environments",
-  },
-  {
-    name: "Test a mission",
-    icon: "M3 19h18 M5 16l4-5 4 2 6-8 M16 5h3v3",
-    chapters: "§§ 24–29",
-    text: "Ask which bodies can carry the tray. Map the feasible designs, find a world that breaks a candidate, and replay the failure with one change.",
-    link: "25",
-    action: "Explore mission queries",
-  },
+import { answer, renderAnswer } from "./chapters/answer";
+import { body, renderBody } from "./chapters/body";
+import { evidence, renderEvidence } from "./chapters/evidence";
+import { question, renderQuestion } from "./chapters/question";
+import { renderTest, test } from "./chapters/test";
+import { renderWorld, world } from "./chapters/world";
+import { icon, range, seg, title, type Refs } from "./parts";
+
+export const chapters = [question, body, world, answer, evidence, test];
+
+export const homeNav = chapters
+  .map(
+    (c) =>
+      `<a href="#${c.id}" data-spy="${c.id}" style="--chapter:${c.colour}"><span class="joint" aria-hidden="true"></span><span class="num">${c.number}</span>${c.short}</a>`,
+  )
+  .join("");
+export const homeDock = chapters
+  .map(
+    (c) =>
+      `<li><a href="#${c.id}" data-spy="${c.id}" style="--chapter:${c.colour}">${icon(c.icon)}${c.short}</a></li>`,
+  )
+  .join("");
+
+const stats: [n: string, label: string, note: string, section: string][] = [
+  ["18", "archetype bodies", "Legged, wheeled, tracked and hybrid, each with a known answer.", "14.10"],
+  ["40", "constructions", "Each owns a type, a verb, a test that fails and a payoff or kill date.", "10"],
+  ["24", "North-Star scenarios", "Stories with a before, an after and a milestone.", "7"],
+  ["10×", "target", "The wording for missing it is already written.", "39.10"],
+  ["0", "results so far", "No FrankenRobotics physics step has been measured.", "0.2"],
 ];
-const studio = [
-  {
-    stage: "Synthesize",
-    question: "Which bodies could carry the tray?",
-    command: "frob mission show q:5b1e… --set unresolved --order cost --limit 3 --json",
-    answer:
-      "The cheapest unresolved design costs 1,120 in the plan’s example. The studio proposes a test of its controller before spending more on a prototype.",
-  },
-  {
-    stage: "Refute",
-    question: "Could another controller fit it through the door?",
-    command: "frob mission refute q:5b1e… --cell c:0119 --json",
-    answer:
-      "The loaded body is too wide for the doorway. The example identifies a 14 mm reduction in track width as the smallest change that would remove this geometric obstruction.",
-  },
-  {
-    stage: "Diagnose",
-    question: "Which change in the kitchen caused the failure?",
-    command: "frob autopsy intervene r:5c11… --key aut-1 --json",
-    answer:
-      "Two edits reproduce the failure: a higher counter lip and a wet strip before it. Restoring dry friction removes the failure in 60 of 64 example replays. A placebo changes two.",
-  },
-  {
-    stage: "Revise",
-    question: "Which results survive a bigger wheel?",
-    command: "frob result revalidate carrier-b --since d:a3f1… --json",
-    answer:
-      "After increasing the wheel radius from 55 to 65 mm, the example retains 14 of 19 results and identifies five tests to run again.",
-  },
+
+const hero = (ref: Refs) => `
+<section class="hero" aria-labelledby="hero-title" id="fig-lineup" data-fig="lineup">
+<div class="lineup"><picture><source media="(max-width: 999px)" srcset="/media/lineup-tall.webp" width="1080" height="1180"><img src="/media/lineup.webp" width="1920" height="1100" alt="" fetchpriority="high"></picture><canvas aria-label="A crowd of 99 robots of eighteen kinds facing a doorway. The ones small enough for it are lit, the rest are dark."></canvas><p class="tip" data-tip hidden></p></div>
+<div class="wrap hero-copy"><p class="pill"><span class="joint on" aria-hidden="true"></span>Robot design<i class="opt"></i><span class="opt">Physics</span><i></i>Planning stage</p>
+<h1 class="d1" id="hero-title">${title("Every body that can *do the job*.")}</h1>
+<p class="lede">FrankenRobotics is a plan for a robotics lab that AI agents can use. State a mission and it should return the whole family: the robots that can do it, the robots that cannot and why, and the cheapest experiment that would settle the rest.</p>
+<div class="cta"><a class="btn go" href="#family">See a family answer${icon("down")}</a><a class="btn" href="/plan/">Explore the plan${icon("right")}</a></div>
+<p class="honest">Nothing has been built yet. The figures on this page run in your browser, and each one names its source in the plan.</p></div>
+<div class="wrap console-wrap"><div class="console"><div class="console-place"><p class="micro">Choose a place</p>${seg(
+  "place",
+  "Place",
+  [
+    ["door", "Narrow door"],
+    ["shelf", "Low shelf"],
+    ["landing", "Tight landing"],
+    ["hall", "Open hall"],
+  ],
+  "door",
+)}</div><div class="console-dials">${range("width", "Door width", 0.3, 1.2, 0.01, 0.6, "0.60 m")}${range("height", "Headroom", 0.2, 2, 0.01, 1.7, "1.70 m")}${range("circle", "Clear floor", 0.4, 2, 0.01, 1.2, "1.20 m")}</div><div class="console-out"><p class="tally"><b data-n="fits">0</b> of <span data-total>99</span> fit</p><div class="tallybar" aria-hidden="true"><i data-bar="fits"></i><i data-bar="wide"></i><i data-bar="tall"></i><i data-bar="long"></i></div><p class="tallykeys"><span class="wide"><b data-n="wide">0</b> too wide</span><span class="tall"><b data-n="tall">0</b> too tall</span><span class="long"><b data-n="long">0</b> too long</span></p></div><button type="button" class="console-pause" data-pause aria-label="Pause" aria-pressed="false"><span class="on">${icon("pause")}</span><span class="off">${icon("play")}</span></button></div>
+<p class="console-note"><span class="basis toy">A toy, for intuition</span><span>Eighteen <a class="txt" href="#bodies">archetypes of §14.10</a> at several sizes, sorted by size alone. The plan also asks about torque, grip, sensing and time.</span></p></div></section>
+<div class="wrap"><ul class="stats">${stats
+  .map(
+    ([n, label, note, s]) =>
+      `<li><a href="${ref(s)}"><b>${n}</b><strong>${label}</strong><span>${note}</span></a></li>`,
+  )
+  .join("")}</ul></div>`;
+
+const roles: [name: string, pages: [string, string][], text: string][] = [
+  ["You design robots", [["§14", "14"], ["§19", "19"], ["§25", "25"], ["§31", "31"]], "Bodies, places, mission queries and what reaches the workshop."],
+  ["You build simulators", [["§16", "16"], ["§18", "18"], ["§21", "21"], ["§36", "36"]], "Dynamics tiers, contact, GPU kernels and the performance program."],
+  ["You build agents", [["§28", "28"], ["§32", "32"], ["§24", "24"], ["§37", "37"]], "Verbs, budgets, refusals, and a qualification lane an agent cannot read."],
+  ["You doubt it", [["§2", "2"], ["§39", "39"], ["§41", "41"], ["§1.3", "1.3"]], "Ceilings, outcome rules, the pre-mortem and the withdrawn claims."],
 ];
-export function home() {
-  return `<section class="hero wrap">
-<div class="hero-copy"><p class="eyebrow"><i></i> Robotics research <span>/</span> Plan v1.0</p>
-<h1>A proving ground<br>for <em>robots.</em></h1><p class="intro">How do you know which robot to build? FrankenRobotics proposes a physics lab where an AI agent can design a body, test it in a world, and explain why it works.</p>
-<div class="actions"><a class="primary" href="/plan/">Explore the plan <b>↗</b></a><a class="secondary" href="#field-guide">Field guide <b>↓</b></a></div></div>
-<figure class="hero-plate"><img src="/media/quadruped.webp" alt="Concept illustration of a four-legged research robot on a laboratory floor" fetchpriority="high" width="1400" height="933"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span><figcaption><span class="cross">⌖</span> Quadruped morphology <small>Concept plate</small></figcaption></figure>
-</section>
-<div class="stats"><dl class="wrap">${[
-    ["24", "Mission scenarios"],
-    ["7", "Kinds of claim"],
-    ["3", "Dynamics tiers"],
-    ["10×", "Research target"],
-  ]
-    .map(([v, l]) => `<div><dt>${l}</dt><dd>${v}</dd></div>`)
-    .join("")}</dl></div>
-<section class="wrap guide" id="field-guide"><p class="eyebrow"><i></i> Field guide</p><h2>Inside the <em>proving ground.</em></h2>
-<div class="cards">${tracks.map((t) => `<a class="card" href="/plan/${t.link}/"><div class="card-top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${t.icon}"/></svg><span>${t.chapters}</span></div><h3>${t.name}</h3><p>${t.text}</p><strong>${t.action} <b>→</b></strong></a>`).join("")}</div></section>
-<section class="feature"><div class="wrap split"><div><p class="eyebrow"><i></i> Worked example</p><h2>How wide should<br>a robot <em>stand?</em></h2><p class="lede">Four feet support a 400 N load. Its centre of mass can shift 150 mm fore or aft and 75 mm sideways. Each foot can supply up to 160 N. How narrow can the stance be?</p><a class="inline" href="/plan/25/#s-25.13">Read the derivation ↗</a></div>
-<div class="instrument"><div class="instrument-head"><strong>Four-foot stance</strong><span>Static load model</span></div>
-<div class="choices"><span class="micro">Half-width</span>${[
-    ["0", "200 mm"],
-    ["1", "3/14 m"],
-    ["2", "250 mm"],
-  ]
-    .map(([i, v]) => `<button data-stance="${i}" aria-pressed="${i === "1"}">${v}</button>`)
-    .join("")}</div>
-<div class="measure"><span class="micro">Diagonal force difference · <span id="force">160 N</span></span><span class="micro">Limit · 160 N</span></div>
-<div class="gauge"><div class="fill"></div><i></i></div>
-<div class="answer" aria-live="polite"><strong id="stance-title">Exactly at the limit</strong><p id="stance-detail">One feasible allocation is 160, 130, 110 and 0 N at the positive load corner. Symmetry covers the other corners.</p></div>
-<small>The foot forces can adjust as the load moves. Half-length is fixed at ⅓ m.</small></div></div></section>
-<section class="wrap guide studio"><p class="eyebrow"><i></i> Agent design studio</p><h2>One delivery, <em>four design decisions.</em></h2><p class="lede">Follow a carrier through a kitchen with a wet floor and a raised counter lip. These commands and outcomes come from the plan’s illustrative CLI session.</p><div class="studio-steps">${studio.map((s, i) => `<details name="studio-step" ${i === 0 ? "open" : ""}><summary><span>${s.stage}</span>${s.question}</summary><div><pre><code>${s.command}</code></pre><p>${s.answer}</p></div></details>`).join("")}</div><a class="inline" href="/plan/32/#s-32.16">Read the full agent session ↗</a></section>
-<section class="wrap guide"><p class="eyebrow"><i></i> Research agenda</p><h2>What would count as <em>evidence?</em></h2><div class="rows">
-<a href="/plan/9/"><span>Mathematics</span><div><h3>Give every frame and force a type.</h3><p>Lie groups describe poses. Their tangent spaces describe velocities. Dual spaces carry forces, so a frame change has to preserve mechanical power.</p></div><b>↗</b></a>
-<a href="/plan/23/#s-23.8"><span>Learning</span><div><h3>Train a controller where its observations live.</h3><p>The proposed gym keeps sensing, policy updates and rollouts on the device. FrankenTorch supplies the CPU reference for checking the gradients used in training.</p></div><b>↗</b></a>
-<a href="/plan/21/"><span>Hardware</span><div><h3>Run many bodies in many worlds.</h3><p>The plan targets CUDA on dual RTX 4090s and Metal on Apple silicon. A CPU referee built on FrankenSim supplies a comparison for the accelerated physics.</p></div><b>↗</b></a>
-<a href="/plan/12/"><span>Verification</span><div><h3>Trace an equation all the way to its checker.</h3><p>FrankenSymPy handles symbolic derivations and FrankenLean checks selected theorems. A separate auditor would let another researcher verify a design certificate offline.</p></div><b>↗</b></a>
-<a href="/plan/39/"><span>Acceptance</span><div><h3>Time the answer an independent judge accepts.</h3><p>The proposed ten-fold test compares complete design studies on sealed missions. Search, simulation, rejected candidates and verification all consume the budget.</p></div><b>↗</b></a>
-</div></section>
-<section class="library-call"><div class="wrap"><div><p class="eyebrow"><i></i> Final hybrid edition</p><h2>The complete <em>research plan.</em></h2><p>Read the architecture, proofs, worked examples, milestones and all 15 appendices.</p></div><a class="primary" href="/plan/">Open the library <b>→</b></a></div></section>`;
+
+const library = (ref: Refs, version: string, sections: number, words: string) => `
+<section class="libcta" aria-labelledby="lib-title"><div class="lattice" aria-hidden="true"></div><div class="wrap"><div class="reveal"><p class="kick"><span class="joint on" aria-hidden="true"></span>The whole plan</p><h2 class="d2" id="lib-title">${title("Read the *rest*.")}</h2><p class="lede">This page is a tour. The plan itself is ${sections} sections and appendices and about ${words} words: every equation, gate, risk and open question, at version ${version}. It is searchable, cross-linked and free to download.</p><div class="cta"><a class="btn go" href="/plan/">Open the library${icon("right")}</a><a class="btn" href="/search/" data-palette>${icon("search")}Search it</a><a class="btn" href="/plan.md" download>Download Markdown</a></div></div><div class="paths">${roles
+  .map(
+    ([name, pages, text]) =>
+      `<div class="path reveal"><h2>${name}</h2><p>${text}</p><p class="steps">${pages.map(([l, s]) => `<a class="tag" href="${ref(s)}">${l}</a>`).join("")}</p></div>`,
+  )
+  .join("")}</div></div></section>`;
+
+export function home(o: {
+  ref: Refs;
+  version: string;
+  session: string;
+  sections: number;
+  words: string;
+}) {
+  return (
+    hero(o.ref) +
+    renderQuestion(o.ref) +
+    renderBody(o.ref) +
+    renderWorld(o.ref) +
+    renderAnswer(o.ref, o.session) +
+    renderEvidence(o.ref) +
+    renderTest(o.ref, o.version) +
+    library(o.ref, o.version, o.sections, o.words)
+  );
 }

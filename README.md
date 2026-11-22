@@ -202,7 +202,7 @@ form, and no number is written as a result.
 | Phase 1 drafts | **Complete** at 21:14: [13 part files](planning/fable/blend/parts/), about 331,600 words, §0 to §37 of 47 |
 | Reconciliation | **One pass done** (21:20 to 21:24): colliding refusal codes renumbered, ten binding decisions recorded, and inventories generated: 421 gate, kill-gate and admission-gate identifiers, 141 open questions, 169 verbs, 296 refusal codes |
 | Phase 2 drafts | **In progress.** The brief covers verification, the ten-fold test, gates, risks, milestones, work packages, beads, the first session and appendices. Draft material includes upstream requests, reference assets and refusal codes: Appendix O is final, and [Appendices F to J](planning/fable/blend/parts2/P16b.md) are partly drafted (that file ends with a `CONTINUE` marker). [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
-| Mathematical review | **Done, not applied.** An independent, read-only [review](planning/fable/blend/REVIEW_MATH.md) of the mathematical chapters found 26 problems (2 critical, 7 major, 17 minor) and gives replacement text. The Phase 1 parts have not been edited since |
+| Reviews of the drafts | **Done, not applied.** An independent [mathematical review](planning/fable/blend/REVIEW_MATH.md) found 26 problems (2 critical, 7 major, 17 minor). A [coherence review](planning/fable/blend/REVIEW_COHERENCE.md) found 44 (9 where two binding texts cannot both be implemented), among them five different thresholds for one mixed-batch experiment, two closed registries of proof kinds, and different verb names for the same actions. Both give replacement text. The Phase 1 parts have not been edited since |
 | Assembly | **Not started.** The file at the base path is still v0.2 |
 
 **What the charter and drafts fix.** 43 Rust crates (38 core, 5 annex) with a 561 kLoC cap and a closed list ("a new crate is
@@ -483,7 +483,8 @@ With `--json`, every verb writes exactly one `frob.envelope/1` envelope: `verb`,
 
 The v1.0 draft keeps these and adds exit 8, "accepted and still running", because long tools take a bounded wait
 (`sync_wait_ms`) and then return a job handle. The lead's inventory counts 169 verbs in 34 clusters, adding `mission`,
-`nemesis`, `autopsy`, `ground`, `foundry`, `cert` and `study`.
+`nemesis`, `autopsy`, `ground`, `foundry`, `cert` and `study`; the coherence review found that several owner chapters
+use other verb names for the same actions (F03), so treat the list as unsettled.
 
 "Exit code 1 is never emitted on purpose." Every verb that can cost more than a second accepts `--estimate`.
 Mutating verbs take idempotency keys. Capabilities are scoped (`design:write`, `sim:run`, `gpu:seconds=600`,
@@ -525,6 +526,9 @@ below come from published figures. None is a measurement, and Phase 2 can still 
 | Quadruped physics, Metal | M5 Ultra | ≥ 0.25 of one RTX 4090 (BET-09) | ≥ 0.60 | None published on this chip; Genesis is measured beside it |
 | Humanoid physics, `batch-cpu`, `f32` | M5 Ultra, 24 threads | ≥ 0.5 of CPU MuJoCo on the same machine | ≥ 1.0 | CPU MuJoCo (`f64`): 550 k world-steps/s on 24 threads, measured here under load |
 | `design check` / `control synth` / generate and compile an interior | CPU | < 2 s p95 / < 5 s / < 60 s | `design check` after one edit: 0.2 / 0.5 / 1.0 s | |
+
+The mixed-batch row is one of five thresholds the drafts give for that experiment (coherence review F07), and the
+reference capacities behind the physics rows are stated two ways (F04); the gate register is meant to settle both.
 
 A published figure is a fact about its source, to be re-read from the primary source before a gate cites it. Every
 performance claim must carry a disclosure block (base §28.2, draft §36.7): hardware and driver, backend and compiler
@@ -618,7 +622,7 @@ Measurements of complete robot dynamics, sensor pipelines and the integrated des
 
 The base plan registers ten admission gates (`INT-*`, one per foundation), about fifty convergence gates and
 nine kill gates. The v1.0 drafts name 421 gate, kill-gate and admission-gate identifiers in the lead's inventory, but
-the gate register (§40) is not written, so treat that count as provisional. "No self-certification": a gate's PASS is
+the gate register (§40) is not written and several thresholds conflict, so treat that count as provisional. "No self-certification": a gate's PASS is
 recorded by a fresh-context session, and every gate has a registered negative control that it must catch.
 
 | Kill gate | Trigger | Fallback |
@@ -739,7 +743,7 @@ planning/fable/mor/ brenner/ duel/                  round 2 on base v0.2: audite
                                                     challenges, three-model duel
 planning/fable/graveyard/ artifact/                 graveyard harvest and decision-core compilation
 planning/fable/blend/                               v1.0 in progress: charter, digests, idea catalog, 13 draft parts,
-                                                    inventories, Phase 2 brief and first appendices, math review
+                                                    inventories, Phase 2 brief and first appendices, two reviews
 planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers (169 payloads plus manifest)
 ```
 

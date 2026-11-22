@@ -77,6 +77,8 @@ node_modules/
 # === Planning scratch copies ===
 # Working backups the planning agents keep beside files that git already versions.
 /planning/**/parts*_backup_*/
+# Output of planning/fable/blend/tools/assemble.py; the committed copy is the plan itself.
+/planning/fable/blend/ASSEMBLED.md
 
 # === Python (planning reproduction scripts, oracle capture tooling, bindings/) ===
 __pycache__/

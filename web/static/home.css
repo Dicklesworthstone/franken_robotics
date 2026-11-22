@@ -950,9 +950,39 @@
   font-size: 1.02rem;
   color: var(--soft);
 }
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
+  .road {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3rem 0;
+  }
+  .road::before {
+    content: none;
+  }
   .road > li {
-    grid-template-columns: minmax(0, 1fr) auto;
+    display: block;
+    padding: 2.6rem 2rem 0 0;
+  }
+  .road > li + li {
+    border-top: 0;
+  }
+  .road > li::before {
+    content: "";
+    position: absolute;
+    left: 1.25rem;
+    right: 0;
+    top: 0.56rem;
+    height: 2px;
+    background: color-mix(in srgb, var(--chapter) 34%, transparent);
+  }
+  .road > .now::before {
+    background: linear-gradient(90deg, var(--life), color-mix(in srgb, var(--chapter) 34%, transparent));
+  }
+  .road > li:last-child::before {
+    content: none;
+  }
+  .road-dot {
+    top: 0;
   }
 }
 
@@ -2842,21 +2872,6 @@ svg.chart {
 .story {
   position: relative;
 }
-/* The story's number, drawn large behind it. */
-.story::after {
-  content: attr(data-n);
-  position: absolute;
-  z-index: -1;
-  right: -0.04em;
-  bottom: -0.2em;
-  font-size: clamp(8rem, 18vw, 17rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.07em;
-  color: transparent;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--chapter) 24%, transparent);
-  pointer-events: none;
-}
 .story-stage {
   position: relative;
   z-index: 0;
@@ -2879,9 +2894,20 @@ svg.chart {
   border: 1px solid var(--line);
   border-radius: 1.1rem;
   background: rgb(255 255 255 / 0.016);
-  font-size: 0.96rem;
-  line-height: 1.66;
-  color: var(--muted);
+  font-size: clamp(1rem, 1.25vw, 1.14rem);
+  line-height: 1.58;
+  color: var(--soft);
+}
+.ba p,
+.bento-copy p,
+.suite p,
+.road p,
+.kicker {
+  text-wrap: pretty;
+}
+.sec .storyfig::before,
+.sec .storyfig::after {
+  content: none;
 }
 .ba .micro {
   margin-bottom: 0.55rem;
@@ -2889,7 +2915,7 @@ svg.chart {
 .ba .after {
   border-color: rgb(74 222 128 / 0.24);
   background: linear-gradient(150deg, rgb(74 222 128 / 0.07), rgb(74 222 128 / 0.012));
-  color: #d6e5dc;
+  color: #f0f7f2;
 }
 .ba .after .micro {
   color: var(--life-2);
@@ -2972,11 +2998,20 @@ html:not(.js) .story + .story {
     border-bottom: 0;
     border-right: 1px solid var(--line);
   }
-  /* The list is as tall as the stories beside it and scrolls inside that. */
   .story-list {
-    flex: 1 1 0;
-    min-height: 24rem;
+    flex: 1;
     flex-direction: column;
+    border-top: 0;
+  }
+  .story-list li {
+    flex: 1;
+  }
+  .story-list a {
+    height: 100%;
+    align-items: center;
+  }
+  .story-stage {
+    grid-template-rows: 1fr auto;
   }
   .story-list li + li {
     border-top: 1px solid var(--line);
@@ -3003,8 +3038,8 @@ html:not(.js) .story + .story {
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 7.6rem;
-  padding: 0.7rem 0.75rem 0.75rem;
+  min-height: 5.2rem;
+  padding: 0.75rem 0.8rem 0.8rem;
   border: 1px solid color-mix(in srgb, var(--tier) 20%, transparent);
   border-radius: 0.9rem;
   background: linear-gradient(160deg, color-mix(in srgb, var(--tier) 9%, transparent), rgb(255 255 255 / 0.008) 70%);
@@ -3035,7 +3070,7 @@ html:not(.js) .story + .story {
 }
 .el b {
   margin-top: 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: -0.012em;
   line-height: 1.36;
@@ -3112,7 +3147,7 @@ html:not(.js) .element-card {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .el {
-    min-height: 6.6rem;
+    min-height: 5rem;
   }
   .element-grid ol {
     grid-auto-flow: dense;
@@ -3249,8 +3284,16 @@ html:not(.js) .element-card {
   letter-spacing: -0.016em;
   color: var(--text);
 }
+.element-card .formal {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
 .element-card .more {
-  margin-top: 1.1rem;
+  margin-top: 0.7rem;
 }
 .facts4 .ours b {
   color: var(--life);

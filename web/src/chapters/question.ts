@@ -209,7 +209,7 @@ export const renderQuestion = (ref: Refs, session: string) =>
       .join("")}</ol></div><div class="story-stage">${stories
       .map(
         ([name, id, today, after], i) =>
-          `<article class="story${i ? "" : " on"}" data-panel="${i}" data-n="${String(i + 1).padStart(2, "0")}" aria-labelledby="st-${i}"><h4 id="st-${i}">${escape(name)}</h4><div class="ba"><div class="before"><p class="micro">Today</p><p>${copy(today)}</p></div><div class="after"><p class="micro">With FrankenRobotics</p><p>${copy(after)}</p></div></div><a class="more" href="${ref(id)}">Read the full scenario${icon("right")}</a></article>`,
+          `<article class="story${i ? "" : " on"}" data-panel="${i}" aria-labelledby="st-${i}"><h4 id="st-${i}">${escape(name)}</h4><div class="ba"><div class="before"><p class="micro">Today</p><p>${copy(today)}</p></div><div class="after"><p class="micro">With FrankenRobotics</p><p>${copy(after)}</p></div></div><a class="more" href="${ref(id)}">Read the full scenario${icon("right")}</a></article>`,
       )
       .join("")}<div class="story-nav"><button type="button" class="btn sm" data-prev>${icon("left")}Previous</button><span class="num" data-at>1 of ${stories.length}</span><button type="button" class="btn sm" data-next>Next${icon("right")}</button></div></div></div>`,
   }) +

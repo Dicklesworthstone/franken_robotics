@@ -26,7 +26,8 @@ export default function mount(root: HTMLElement) {
     }
     const a = links[i]!;
     const li = a.closest<HTMLElement>("li")!;
-    card.innerHTML = `<p class="kick small"><span class="num">${$(a, ".num").textContent}</span><i></i>${[...li.dataset.tiers!].map((t) => TIER[t]).join(" and ")}</p><h4>${$(a, "b").innerHTML}</h4><p class="good">${li.dataset.good}</p><a class="more" href="${a.href}">Read the math</a>`;
+    card.innerHTML = `<p class="kick small"><span class="num">${$(a, ".num").textContent}</span><i></i>${[...li.dataset.tiers!].map((t) => TIER[t]).join(" and ")}</p><h4>${$(a, "b").innerHTML}</h4><p class="good">${li.dataset.good}</p><p class="formal"></p><a class="more" href="${a.href}">Read the math</a>`;
+    $(card, ".formal").textContent = li.dataset.title!;
     card.scrollTop = 0;
     card.classList.add("open");
     if (innerWidth < 1000) {

@@ -62,11 +62,11 @@ export default function mount(root: HTMLElement) {
     const u = state();
     const W = width;
     const H = 214;
-    const x0 = 86;
+    const x0 = 46;
     const S = (W - x0 - 46) / 1.5;
     const X = (x: number) => x0 + x * S;
     const t = Math.min(3, clock);
-    let svg = `<path d="M${X(1)} 10V${H - 22}" stroke="#4ade80" stroke-dasharray="4 5" fill="none"/><text x="${X(1)}" y="${H - 6}" text-anchor="middle" style="fill:#4ade80">stop here</text><text x="${X(0)}" y="${H - 6}" text-anchor="middle">start</text>`;
+    let svg = `<path d="M${X(1)} 10V${H - 22}" stroke="#4ade80" stroke-dasharray="4 5" fill="none"/><text x="${X(1)}" y="${H - 6}" text-anchor="middle" style="fill:#4ade80">stop here</text>`;
     for (const [i, g] of [1, 2].entries()) {
       const path = ride(g, u[i]!);
       const k = Math.min(2, Math.floor(t));
@@ -78,7 +78,7 @@ export default function mount(root: HTMLElement) {
       const y = 22 + i * 86;
       const hit = Math.abs(end.x - 1) < 1e-6 && Math.abs(end.v) < 1e-6;
       const tone = t < 3 ? "#e9f2ec" : hit ? "#4ade80" : "#fb7185";
-      svg += `<text x="0" y="${y + 30}">${g === 1 ? "weak" : "strong"} motor</text><path d="M${X(-0.06)} ${y + 46}H${W - 14}" stroke="rgb(190 240 212 / .25)" fill="none"/>`;
+      svg += `<text x="${X(-0.06)}" y="${y + 64}">${g === 1 ? "weak" : "strong"} motor</text><path d="M${X(-0.06)} ${y + 46}H${W - 14}" stroke="rgb(190 240 212 / .25)" fill="none"/>`;
       for (const [j, q] of path.entries())
         if (j && j <= t + 1e-9) svg += `<circle cx="${X(q.x).toFixed(1)}" cy="${y + 46}" r="3" fill="#98aba1"/>`;
       const cx = X(pos);

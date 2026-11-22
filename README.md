@@ -53,8 +53,8 @@ figure is a target. All three plans were written on 2026-11-21. One research rou
 | Question | Answer |
 |---|---|
 | Is there a design? | **Yes, three.** The [base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) (3,666 lines), the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) (3,222 lines) and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,452 long lines). They were written in parallel and none cites another. See [Three plan editions](#three-plan-editions) |
-| Is there code? | **No.** The base plan's first session (§37) is meant to end with "two honest measurements" and "a two-second humanoid rollout on the referee. It does not end with a forest of empty crates." |
-| Can I run anything? | **Only the planning experiments.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. It contains no robot simulator. See [Planning experiments](#planning-experiments-already-computed) |
+| Is there a studio implementation? | **The studio is planned.** The base plan's first session (§37) is meant to end with "two honest measurements" and "a two-second humanoid rollout on the referee. It does not end with a forest of empty crates." |
+| Can I run anything? | **Only the planning experiments.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
 | Has anything been measured? | **One scalar test on the target hardware.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s. Exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. No physics step, environment step or training run has been measured |
 | Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent). Neon: round 1, a modes-of-reasoning audit (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified), a three-model idea duel and a Brenner session that killed 8 hypotheses. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4). Round 2 ("fable") targets the base plan, is still running and has not been folded into any plan |
 | Which plan is canonical? | **Not decided yet.** Where the editions disagree, this README uses the base plan's names: `frob-` crates and the `frob`, `frobd` and `frob-mcp` binaries. Neon keeps those names on a different 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
@@ -421,8 +421,7 @@ because a published simulator headline was "later re-measured two orders of magn
 
 ## Planning experiments already computed
 
-The Astra edition ran small, exact planning experiments while it was being written. They are the only
-computed results in this repository. None of them simulates a robot. Each is labelled the way Astra labels it.
+Astra combines exact calculations, numerical simulations and measured performance tests. Its reduced cart model integrates wheel, chassis and winding dynamics with penalty contact. The integrated Franken Robotics gym and design studio are planned.
 
 - **A three-tick docking robot** (analytic, §18.10). A robot can move to learn which of two actuator gains,
   1 or 2, it has, before committing to its final approach. With a command limit of 3/4, a fixed probe
@@ -437,12 +436,15 @@ computed results in this repository. None of them simulates a robot. Each is lab
   0 to 160 N, with a half-length of 1/3 m and a centre of mass that can move anywhere in a rectangle of
   half-dimensions 150 and 75 mm, needs a stance half-width of at least 3/14 m. At 0.20 m one foot would need
   165 N. All 11,520 checked cases agree.
+- **Cart over a sill** (reduced numerical model, §13.2). On the 300-row friction sweep, the 75 mm wheel with a sharp sill
+  and a rearward payload succeeded at μ = 0.500, timed out at 0.525, and succeeded at 0.550. Refining the step and
+  contact model changed those outcomes. The bundle replays both the original grid and a fixed-clock refinement.
 - **When a comparison can declare a tie** (analytic, §13.2). Under the registered promotion rule, a 64-pair
   batch cannot show equivalence whatever the outcome. The first sample size that can is 86 pairs.
 - **A speed gate that failed** (measured, §19.4). On a pusher family where each design needs its own
   command, the specialized arm ran only 1.345× faster than the composed baseline (ratio of medians, warm) and
-  1.088× faster cold. Shared checking and serialization took about 94% of the specialized warm batch, so even
-  a zero-cost solver would have reached only about 1.46×. "The inclusive speed gate failed."
+  1.088× faster cold. Subtracting the 34.4 µs solve-only median from the 610.1 µs full median leaves 575.7 µs for parsing,
+  checking, serialization and other work. Keeping that residual fixed would cap the gain at about 1.46×. "The inclusive speed gate failed."
 - **Native docking-facet screen** (measured, §11.6). The same scalar boundary test ran on the target
   hardware. Exact integer arithmetic on the host was fastest end to end on both machines:
 
@@ -455,10 +457,11 @@ computed results in this repository. None of them simulates a robot. Each is lab
 
   Comparisons are within a host only. The lesson Astra draws is "first choose a representation that preserves
   strict inequalities, then place it according to where the data and consumer already reside."
-- **Owner code needs admission.** Executable probes found three errors in FrankenSim's
-  `fs_g1_train::ppo_update` at the pinned commit (clip side for negative advantages, log-σ gradients, critic
-  bias gradient) and a planar-drive case that loses translation (Astra §5.1, §9.3). This is why every
-  edition admits sibling code through a recorded gate.
+- **Owner code needs admission.** On the pinned FrankenSim revision, executable tests found three PPO update
+  errors: wrong clipping for negative advantages, stale critic values and attention carried across episode
+  resets. A separate sampler test drew two nominally independent Gaussian actions per call. Their signs
+  agreed in about 66.55% of draws across three seeds, while independence predicts 50%. Astra also reproduces
+  a planar-drive case that loses translation (§§5.1, 9.3).
 
 To re-check them, unzip the bundle into an empty directory outside this repository:
 

@@ -155,7 +155,7 @@ can guide a probe. The files below determine what the probe should call.
 | same | `crates/fs-mbd/src/articulated.rs`, `articulated/generalized.rs`, `crates/fs-mbd/src/articulated/point_motion.rs`, `crates/fs-mbd/src/point_motion.rs` | Tree kinematics, recursive Newton–Euler, articulated-body solve, floating-base maps and rigid-point motion. Compare a two-joint arm against independent energy derivatives and an offset IMU against §8.1. |
 | same | `crates/fs-mbd/src/articulated_contacts.rs`, `articulated_contacts/step.rs`, `crates/fs-contact/src/broad_phase.rs` | Use coupled impulses and admitted contact steps. Supply persistent geometry and swept-path admission. A thin step between two clear endpoints must be detected. |
 | same | `crates/fs-mbd/src/robot_models.rs`, `planar_drive.rs` | G1 29-actuator and KUKA iiwa7 catalog builders, prescribed-speed SE(2) drive. The builders transcribe selected source records. Qualify the planar rolling model against an independently evaluated SE(2) exponential before using it as an oracle. See §5.1. |
-| same | `crates/fs-cmaes-viz-wasm/src/g1_walking.rs`, `manipulation.rs`, `crates/fs-g1-train/src/{ppo,standin_env}.rs` | Existing owner-composed walking objective, manipulation example, policy/observation lineage and historical PPO implementation. Three pinned training failures are reproduced in §9.3. Require the corrected update and a real mechanics rollout before admitting it as a learning baseline. |
+| same | `crates/fs-cmaes-viz-wasm/src/g1_walking.rs`, `manipulation.rs`, `crates/fs-g1-train/src/{ppo,standin_env}.rs` | Existing owner-composed walking objective, manipulation example, policy/observation lineage and historical PPO implementation. Three update failures and a joint action-sampling failure are reproduced in §9.3. Require a qualified sampler, corrected update and a real mechanics rollout before admitting it as a learning baseline. |
 | same | `crates/fs-scene/src/lib.rs`, `crates/fs-query/src/convex.rs` | Role-tagged support/keep-out boxes, half-spaces and convex support queries. A mesh-backed interior needs additional cooking and swept geometry cases. |
 | same | `crates/fs-phs/src/interconnection.rs`, `crates/fs-tribo/src/lib.rs`, `crates/fs-matdb/src/lib.rs` | Compose effort/flow ports, select a friction law and resolve material data. Check power transfer and record the provenance of each pair parameter. |
 | same | `crates/fs-symmetry/src/lib.rs`, `crates/fs-ad/src/{ift,gradcheck}.rs` | Cyclic/circulant reference cases and implicit sensitivities. A general morphology representation or a contact-event derivative requires new admission. |
@@ -248,7 +248,10 @@ Reject nonfinite inputs, duplicate IDs, overflow on shape products and unresolve
 
 An artifact envelope holds schema major/minor, type, canonicalization revision, payload digest,
 parent digests, generator pin, unit/frame profile, validity region, byte length and source/license.
-Canonicalize maps in key order, normalize signed zero for physical scalar content and specify
+Validate raw object members before building a map or computing its digest. Reject duplicate names after
+escape decoding at every nesting level. A radius entered twice, as `wheel_radius_mm` and
+`wheel_radius_\u006dm`, can yield 60 mm in a first-value reader and 75 mm in a last-value reader.
+Both the CLI and MCP must refuse this input before planning or charging a job. Canonicalize maps in key order, normalize signed zero for physical scalar content and specify
 endianness. Define the CLI and MCP wire encoding for exact 64-bit IDs, absolute nanoseconds and rational
 components. Use canonical decimal strings for unbounded or wide integers, rejecting ambiguous
 numeric encodings. A binary64 client parses integer literals 9007199254740992 and 9007199254740993
@@ -389,7 +392,14 @@ radius $r$, a sharp lip of height $h<r$, and vertical axle load $W$, the horizon
 about the corner at lift-off is $x=\sqrt{2rh-h^2}$. With sufficient grip, a pure axle couple
 must supply $Wx$. A pure horizontal axle push must supply $Wx/(r-h)$. In this example the
 couple arm rises from 36.0 to 40.7 mm while the push/load ratio falls from 0.750 to 0.646.
-Use both limiting fixtures before interpreting a driven cart with mixed load paths.
+Use both limiting fixtures before interpreting a driven cart with mixed load paths. At lift-off
+also test the contact cone. Write $a=\sqrt{2rh-h^2}$ and $b=r-h$ for a sharp corner, with
+$a,b>0$. A forward horizontal axle push $P$, clockwise drive couple $M$ and downward axle load $W$
+satisfy $bP+M=Wa$. The corner reaction must also satisfy $aP+bW\ge0$ and
+$|M|\le\mu(aP+bW)$. With pure couple, $\mu\ge a/b$ is necessary. For $W=25$ N, $h=12$ mm,
+μ = 0.70 and a 1.2 N·m torque cap, both wheel sizes clear the torque check, but only 75 mm clears
+the friction check. With μ = 0.80 and a 0.95 N·m cap, only 60 mm clears both. These are local
+quasi-static admissions for the single wheel.
 
 
 ## 5. Geometry, dynamics and compilation into numerical work
@@ -403,7 +413,12 @@ The regular part is a manifold when the constraint Jacobian has constant rank. S
 unilateral contacts and changing contact modes require a stratified description. The state at a
 regular configuration is a tangent vector or a cotangent momentum with its base point attached.
 A state also contains internal motor, battery, thermal, contact-memory, estimator and controller
-coordinates. A log-map coordinate is local to its stated reference pose.
+coordinates. A log-map coordinate is local to its stated reference pose. Use a circle-valued joint
+only where every relevant law is periodic, or store the missing turn state explicitly. A joint with
+a linear torsion spring of 0.5 N·m/rad has identical link poses and zero velocity at rest angle 0
+and after one full turn held stationary. The latter stores π² J and exerts −π N·m. Bind the lifted
+angle or turn count to compilation, snapshot and replay. A periodic encoder alone leaves that
+state ambiguous to the controller.
 
 Write $T_{AB}$ for the pose mapping coordinates in B into A. Then $T_{AC}=T_{AB}T_{BC}$.
 Use body perturbations on the right. Spatial twists use angular then linear components and wrenches
@@ -683,7 +698,13 @@ owner solve for redundant constraints. Two tied 1 kg sliders
 reaching a wall together at 1 m/s require a 2 N·s wall impulse to stop both. Applying an isolated
 1 N·s impulse then imposing the tie leaves them moving into the wall at 0.5 m/s. Preserve
 coupling among links and dynamic bodies. Redundant contacts can admit multiple impulse distributions.
-Compare observable post-event motion, total impulse and work. Recognize indeterminacy in a local
+Compare observable post-event motion, total impulse and work. Separate the contact solver’s
+kinetic-energy correction from physical heat. In the pinned force/contact/drift step a resting
+1 kg block under 8 m/s² gravity receives a free gravity kick that the support impulse removes.
+Over one second the sum of those removals is 1 J at 32 Hz and 0.5 J at 64 Hz. The block has
+zero displacement and its frictionless stationary support produces zero physical heat. The
+algorithmic gravity and contact terms can balance exactly at both rates. Keep this numerical
+quantity in the step ledger and require a physical dissipation law before feeding it to a thermal state. Recognize indeterminacy in a local
 pressure estimate. For patch contacts, define center of pressure, torsional wrench capacity and
 quadrature. Never infer a pressure map from a single resultant wrench.
 
@@ -864,6 +885,13 @@ Export both the realized noise path (when requested) and the law and seed that r
 missing depth return carries a mask/reason. A numeric zero corresponds to a physical measurement
 only when the schema defines it that way.
 
+A rigid contact impulse fixes an integral, while the sensor's bandwidth and overload response
+act on its input over time. A rectangular pulse of 1 N·s over 1 ms or 10 ms has peak 1,000 N
+or 100 N. Both average 50 N over a 20 ms exposure. A transducer clipping at 200 N before
+integration reports 10 N or 50 N respectively. Applying the clip after averaging would report
+50 N twice. For peak-load or sensor-overload claims, require a resolved force-time model or a
+calibrated transfer function with adequate bounds. Specify filter, clipping and integration order.
+
 ### 8.2 Clock contract and causality
 
 Use integer simulation times and rational periods with a deterministic phase accumulator for
@@ -988,7 +1016,14 @@ randomization parameters have a separate access path. An asymmetric critic may c
 state only under a training-only schema. Freeze the actor inference schema and verify it operates
 with those channels absent. A causal test perturbs future terrain, hidden friction and delayed
 measurements independently. Histories with identical delivered observations, past actions and
-policy random draws through decision time must yield the same command at that time.
+policy random draws through decision time must yield the same command at that time. Include
+all fields the actor can actually read, including earlier rewards, `info`, termination flags,
+action masks and their delivery times. Keep trainer/scorer outputs outside the online actor’s
+view unless the mission supplies them. In §18.10 with a late velocity packet and first input
+1/4, the shaped reward $-|1-x_1|$ is −7/8 at gain 1 and −3/4 at gain 2. Delivering that scalar
+before the second command lets one policy dock in both worlds. Run the late-packet exclusion
+against the actual Gym wrapper with the reward hidden, then expose the reward and require the
+verdict to change. The actor’s information contract belongs in the cached answer.
 
 Begin learned control with a small observation MLP, explicit normalization and PPO against the
 existing geometric baseline. Use separate GAE masks for value bootstrap and trajectory continuation.
@@ -1013,7 +1048,7 @@ Use the registered action law for multidimensional saturation and entropy as wel
 before admitting W22. [Fujita and Maeda, clipped action policy gradients](https://proceedings.mlr.press/v80/fujita18a.html)
 
 At FrankenSim revision `483d09c682f2`, executable calls to `fs_g1_train::ppo_update` found
-three errors. For a negative advantage and clipping width 0.2, the update follows the likelihood
+three update errors. For a negative advantage and clipping width 0.2, the update follows the likelihood
 ratio below 0.8 and clips it above 1.2. The clipped surrogate requires the reverse outside this
 interval. At ratios 0.5, 1 and 2, finite differences of the fixture loss with respect to log σ give
 0, −0.5 and −1, while the owner produced −0.25, −0.5 and 0. For a critic output of 2 with a
@@ -1025,6 +1060,15 @@ critic gradient with its current forward output, and test the packed recurrent s
 separate episode replays before W22 admits an update. Freeze the observation normalizer too,
 and carry the correct position and prior history for a minibatch starting mid-episode. The code and the three checks concern the
 pinned trainer. [Schulman et al., Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347)
+
+The pinned `gaussian_action` sampler has a separate defect. For two independent centered unit
+Gaussians the signs should agree with probability 1/2. In 100,000 public two-channel calls per
+seed, the counts were 66,552, 66,552 and 66,551, although each channel was positive almost exactly
+half the time. The cosine phases for adjacent draws differ by a fixed increment. Before rounding,
+the overlap of their same-sign half-circles predicts 0.66550976. The training code scores these
+samples with a product of marginal densities. Qualify the *joint* behavior law against the
+likelihood calculation, including paired channels, world streams and repeated decisions. A pair
+of correct marginal histograms would miss this failure. [Sampler and replay commands](planning/astra-10x-reproduction.zip)
 
 For recurrent policies, reset only the slots whose episodes ended. Preserve hidden state in checkpoints.
 Compare fixed seeds and train budgets. Report time to a target success rate and evaluation
@@ -1101,26 +1145,33 @@ and smallest corrective action when known.
 
 ```sh
 set -eu
+# Read one string field from exactly one receipt. Reject IDs that a shell cannot round-trip.
+receipt_string() {
+  jq -ers --arg key "$1" '
+    if length == 1 and (.[0] | type) == "object" then .[0][$key] else null end
+    | select(type == "string" and length > 0 and (explode | all(. >= 32 and . != 127)))'
+}
 frobot capabilities --device auto --json
 base_receipt=$(frobot design new --template indoor-cart/v1 --json)
-base=$(printf '%s\n' "$base_receipt" | jq -er '.design_id')
+base=$(printf '%s\n' "$base_receipt" | receipt_string design_id)
 patch_receipt=$(frobot design patch --parent "$base" --patch wheel75.yaml --key "wheel75-$base" --json)
-candidate=$(printf '%s\n' "$patch_receipt" | jq -er '.design_id')
+candidate=$(printf '%s\n' "$patch_receipt" | receipt_string design_id)
 scene_receipt=$(frobot scene cook --recipe apartment-threshold/v1 --json)
-scene=$(printf '%s\n' "$scene_receipt" | jq -er '.scene_id')
+scene=$(printf '%s\n' "$scene_receipt" | receipt_string scene_id)
 plan_receipt=$(frobot study plan --spec threshold-pair.yaml --baseline "$base" \
   --candidate "$candidate" --scene "$scene" --json)
-plan=$(printf '%s\n' "$plan_receipt" | jq -er '.plan_id')
+plan=$(printf '%s\n' "$plan_receipt" | receipt_string plan_id)
 job_receipt=$(frobot study submit --plan "$plan" --key "paired-$plan" --json)
-job=$(printf '%s\n' "$job_receipt" | jq -er '.job_id')
+job=$(printf '%s\n' "$job_receipt" | receipt_string job_id)
 terminal=$(frobot study status --job "$job" --wait-terminal --json)
-state=$(printf '%s\n' "$terminal" | jq -er '.state')
+state=$(printf '%s\n' "$terminal" | receipt_string state)
 if [ "$state" != complete ]; then
   printf '%s\n' "$terminal"
   exit 1
 fi
 comparison=$(frobot study compare --study "$job" --metric mission_success --paired --json)
 printf '%s\n' "$comparison" | jq -se '
+  def id_ok: type == "string" and length > 0 and (explode | all(. >= 32 and . != 127));
   def count_ok: type == "number" and . >= 0 and . <= 9007199254740991 and . == floor;
   length == 1 and (.[0] |
     type == "object" and
@@ -1130,7 +1181,7 @@ printf '%s\n' "$comparison" | jq -se '
     (.terminal_summary | type == "object") and
     (.diagnostic_event == null or
       (.diagnostic_event | type == "object" and
-       all(.run_id, .event_id, .preceding_checkpoint_id; type == "string" and length > 0))))
+       all(.run_id, .event_id, .preceding_checkpoint_id; id_ok))))
 ' >/dev/null
 printf '%s\n' "$comparison"
 if printf '%s\n' "$comparison" | jq -e '.diagnostic_event != null' >/dev/null; then
@@ -1698,7 +1749,11 @@ width $w$ at signed offset $z$ into the high-grip side is $\mathrm{clip}(1/2+z/w
 offset both widths have longitudinal friction capacity 0.525 times normal load with the accompanying
 yaw moment allowed. At +12 mm the 40/70 mm soles give 0.690/0.619, while at −12 mm they give
 0.360/0.431. Measure the actual load split and moment under the contact law. Area alone cannot
-predict traction when pressure redistributes.
+predict traction when pressure redistributes. For a two-point sole with longitudinal traction,
+place 50 N on each point at lateral offsets ±20 mm. With μ = 0.25 and 0.8, maximum forward force
+is 52.5 N and entails 0.55 N·m of yaw. Requiring zero yaw forces equal longitudinal forces and
+reduces the maximum to 25 N. A uniform μ = 0.4 comparator can supply 40 N at zero yaw, reversing
+the scalar ranking. Use the commanded wrench slice when comparing soles.
 Run all-dry, split-grip and reflected split-grip cases. Command 0.25 m/s along the ramp from
 rest and hold standing after all feet have cleared the crest by 0.40 m. Pass if the robot gets
 there within 12 s, stands 1 s, has no body strike, stays below 30° absolute roll/pitch and
@@ -1721,6 +1776,14 @@ rigid Coulomb contacts as the baseline. Prefer a design only if it completes mor
 under both qualified laws with no new hard-limit failures. A reversal is a fidelity-dependent
 ranking. Freeze the geometric controller before either morphology test. The learned residual
 comparison is a later experiment under W22/W23 with equal training resources.
+
+The original 300-trajectory friction sweep supplies a pruning test. For the 75 mm wheel, a sharp
+lip and a payload shifted 40 mm backward, the planar scorer reports success, timeout, success at
+μ = 0.500, 0.525, 0.550. Filling all friction levels above the first success falsely adds one
+success. With a fixed 1 ms scoring period, halving the 50 µs physics step changes the triplet to
+timeout, timeout, success. At 25 µs with the tested stiffer contact and adjusted damping, all
+three succeed. Keep the actual outcome rows and the separate scorer clock when refining. The
+middle timeout refutes monotone pruning of that pilot. Its physical interpretation is unresolved.
 
 ### 13.3 Verification battery and provisional tolerances
 
@@ -1772,7 +1835,13 @@ With five independent continuous latencies there is a $0.99^5\approx95.1\%$ chan
 the largest is below the population p99. It takes 299 independent observations for at least 95%
 chance of seeing a value above that quantile. This is a coverage calculation, not a precision
 target. A sparse tail remains descriptive. For P4, evaluate
-on a fixed development validation stream at a preregistered cadence. Record nonattainment as
+on a fixed development validation stream at a preregistered cadence. Distinguish a recorded score
+crossing from evidence that a policy reached the population target. With true success 0.89,
+30/30 successes would give a single-look one-sided 95% exact lower bound of 0.90497. Across 50
+independent evaluations of that unchanged policy, the chance of such a crossing is 0.78548.
+For a population attainment claim use independent confirmation with error allocated across looks,
+or a sequential procedure valid for the registered sampling design. A final holdout can qualify
+the selected policy while leaving its first attainment time unknown. Record nonattainment as
 right-censored at the training budget. Evaluate the frozen chosen checkpoint once on the final
 holdout. A slower profile may still be valuable for memory residency
 or training and must report the measured tradeoff. Benchmarks guide kernel placement. Targets give
@@ -1915,7 +1984,7 @@ The unit of release is a usable vertical slice with a stated capability matrix.
 | W19 | W06,W17 | Native Metal cart loop and ray kernel with the same analytic plane fixture | Real MSL dispatch, successful host-visible completion before readback, reference comparison and per-stage device placement |
 | W20 | W14,W15,W18,W19,W22 | Extend device laws, sensor→actor→actuator path to declared legged/sensing cells | Both families run matched sensor/control/physics profiles. Explicit missing/unsupported cells |
 | W21 | W15,W18,W22 | Shard whole environments over trj's two devices with policy-version and optimizer-step barriers | Singleton versus sharded identities and weighted gradients on unequal/empty shards, cancellation, memory limits and 1→2 scaling |
-| W22 | W09,W12,W15 | Torch policy inference and PPO, residual controller and policy export | Frozen train/eval split, equal-budget baseline, clipped-surrogate and critic gradients, packed-reset likelihood and applied-action law (§9.3) |
+| W22 | W09,W12,W15 | Torch policy inference and PPO, residual controller and policy export | Frozen train/eval split, equal-budget baseline, clipped and critic gradients, packed-reset likelihood, joint sample law and reward visibility (§9.3) |
 | W23 | W04,W11,W12,W16,W22 | Automorphism registry, equivariance tests, physical sole A/B and group-based learning experiments | Fixed-observation latch tests deterministic and randomized tying, unilateral payload breaks reduction, §13.2 sole and equal-budget controller comparisons |
 | W24 | W08,W12,W16 | Hybrid sensitivities, Poincaré map and regular/grazing fixtures | Event-relocated FD checks, refusal at ambiguous events and full-cycle gait comparison |
 | W25 | W09,W11,W14 | Scene suite and replay viewer, origin crosswalk, sensor exposures and discrepancy overlays | All requested environment classes have executable scenarios. Viewer matches committed time/geometry |
@@ -2422,7 +2491,13 @@ Use three treatments at equal compute: training from scratch, an ordinary cross-
 conditioned policy with full transfer learning, and interface-based transfer with limited
 adaptation. Give each the same source data. Record new trials to target, irrecoverable failures,
 task success, contact impulse and energy. Freeze the target morphology and terrain before tuning.
-A successful transfer of a skill segment cannot certify the remainder of the mission.
+For a probabilistic mission, matching possible successors preserves only their support. Suppose
+both robots have one action and the same two possible labels, success and failure, with success
+probabilities 0.99 and 0.01 respectively. Every successor finds a matching label, yet a 95%
+success claim reverses. Any coupling of the two laws disagrees on at least 0.98 of its mass.
+Transport a chance or expected-value claim only with a causal coupling of the transition and
+observation laws with the correct marginals and a propagated error budget, or measure the target
+law directly. A successful transfer of a skill segment cannot certify the remainder of the mission.
 
 ### 18.6 Physics across design families on CUDA and Metal
 
@@ -2915,7 +2990,7 @@ stratum. The strongest published result at a different task supplies context onl
 
 ### 19.2 Two claims with different acceptance tests
 
-**Engineering throughput.** Time begins with the engineer or agent receiving the mission and the
+**Time to an accepted engineering decision.** Time begins with the engineer or agent receiving the mission and the
 permitted inputs. Time ends when an independent checker accepts the first correct answer with all
 requested scope and precision. Count unsuccessful runs, training, tuning, compilation, device
 transfer, waiting, investigation of unknowns, certificate checking, repair and review. Keep
@@ -2927,7 +3002,12 @@ assistance and model revision. A cost claim needs its own prices and test.
 For a sealed stratum let $T_{s,i}$ be time to acceptance for system $s$ on mission $i$ and let
 $H$ be the common deadline. The primary estimand is the ratio of mean restricted times
 $E[\min(T_{baseline},H)]/E[\min(T_{Astra},H)]$. Also report both completion probabilities by $H$,
-conditional times, the full time-to-event curve, checked coverage and failures. An unresolved
+conditional times, the full time-to-event curve, checked coverage and failures. Timestamp each
+arm’s independent acceptance before a joint reveal. If claiming accepted decisions per hour,
+measure that rate separately. In 25 serial missions with a 100 s deadline, a baseline taking
+50 s for every mission consumes 1,250 s. Astra finishing 24 in 1 s each and timing out once
+consumes 124 s. The restricted-time ratio is 10.081×, but the accepted-output rate improves by
+only 9.677×. With parallel jobs use the actual campaign makespan under matched resource caps. An unresolved
 mission consumes its full allotted time in the primary score. If Astra misses a fraction $q>0$
 of deadlines, its mean restricted time is at least $qH$ while the comparator mean is at most $H$.
 The ratio is therefore at most $1/q$. With 12% unfinished, even the most favorable times give at
@@ -2945,7 +3025,16 @@ calculation. Treat a shared family, originating site or material batch as a depe
 groups together across splits, or prespecify a design and inference method for crossed site/batch
 factors. Twenty-four rows sharing one site are one site replicate. A stratum with too few
 independent units remains descriptive. Pre-register the resampling unit, common horizon and paired cluster interval for
-each ratio. For a claim covering several strata, require simultaneous one-sided 95% lower bounds
+each ratio. A constant timing sample can also give a false population lower bound. With a
+1,000 s deadline, let the baseline always take 20 s and Astra take 1 s on 99% of independent
+families and 999 s on 1%. Both always complete. The population ratio is 1.8215×, but 24 draws
+contain only fast missions with probability 0.78568. Every ordinary percentile-bootstrap resample
+then reports 20×. For threshold 10 and positive mean Astra time, test the bounded paired contrast
+$X=\min(T_B,H)-10\min(T_A,H)$. For unweighted IID families at fixed $n$, a conservative
+one-sided lower bound for its mean is $\bar X-11H\sqrt{\log(1/\alpha)/(2n)}$. Require a
+nonnegative lower bound for an at-least-ten claim, or a prespecified valid alternative under the
+actual cluster and sampling design. Report a finite-suite result when population evidence is
+insufficient. For a claim covering several strata, require simultaneous one-sided 95% lower bounds
 of at least 10 in **each named stratum**, with multiplicity control for the planned strata and
 comparators. Report also a preweighted portfolio result. A 10× outcome on one stratum earns that
 stratum alone. For both paired completion and useful coverage, require simultaneous one-sided 95% lower bounds
@@ -3021,9 +3110,11 @@ ratio of the composed and specialized arm medians was **1.345× warm and 1.088×
 nine warm pairs timed a block of 100 batches per arm. Each of nine cold pairs timed one fresh
 process per arm. Preserve the per-block means and reference-match flags. Individual warm-batch
 times were not recorded. Scope is one local scalar CPU fixture with authoring excluded. The
-inclusive speed gate failed. A separately timed follow-up measured about 576 µs of shared checking/serialization, roughly 94%
-of the specialized warm batch. Even reducing its solver time to zero would have produced only
-about 1.46× under that accounting. The timed baseline received the same analytical guard reduction.
+inclusive speed gate failed. A timing follow-up estimated the residual time by subtracting the 34.4 µs solve-only median on pre-parsed input
+from the 610.1 µs full specialized median. This difference includes parsing, result assembly,
+checking, serialization and harness costs. If the residual of 575.7 µs stayed fixed and the solver
+became free, the 842.8 µs composed median would imply about 1.46×. Separate timers would be
+needed to attribute that residual to individual operations. The timed baseline received the same analytical guard reduction.
 This experiment therefore cannot distinguish fast mathematical engines on harder missions. The
 separate direct SMT comparison does defeat the conjecture of a unique family query here. §18.7–8 provide two more
 examples where a strong analytic or experimental baseline ties or wins. They establish what
@@ -3136,13 +3227,17 @@ The portable research bundle contains the protocols, source, raw outputs, indepe
 reproduction commands and a checksum manifest. It includes the stance, material, sensing,
 docking, pusher, native Metal/CUDA and statistical fixtures, together with the three authored
 idea slates, reciprocal reviews and final responses summarized in §20.5. After extraction,
-`python3 -B verify.py --all` checks the 154-file manifest payload, rebuilds the 20 locked pusher
+`python3 -B verify.py --all` checks the 160-file manifest payload, rebuilds the 20 locked pusher
 queries and their negative control, checks all twelve eliminated formulas against the locked
 intervals using Z3, recomputes summaries from the original paired timing rows and reproduces
 the one-term cart sensitivity experiment in §13.2. It also reruns the gain-support, wheel-stability,
-physical-design and measurement-contract fixtures. Run `python3 -B verify_negative.py` for the
-20 deliberate data and checker regressions. The bundle README gives separate commands and toolchain
-prerequisites to compile the PPO and tensor-layout probes against the named owner revisions.
+physical-design and measurement-contract fixtures, the full 300-row planar friction grid, and the
+independent decision-time and transfer counterexamples. It compares 207 recorded event times and
+156 peak pitches on the original quick grid and reconciles the 18 CUDA emitter hashes and its
+source digest to the retained terminal record. Run `python3 -B verify_negative.py` for the
+25 deliberate data and checker regressions. The bundle README gives separate commands and toolchain
+prerequisites to compile the PPO update, Gaussian sampler and tensor-layout probes against the
+named owner revisions. The separate friction-refinement replay holds the scorer cadence fixed.
 These commands also permit independent inspection of the archived native results. A future studio
 release must add live benchmark artifacts produced via its public interface. [Download the reproduction bundle](planning/astra-10x-reproduction.zip)
 

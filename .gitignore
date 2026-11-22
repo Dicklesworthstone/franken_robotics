@@ -4,6 +4,9 @@
 # specifies (plan §26.1), so the first Cargo workspace, GPU annexes, Lean project and
 # viewer land without build output or private data leaking into commits.
 
+# Local prototype archive. The active project is planning-only.
+/.local-implementation/
+
 # === Rust build output ===
 # Matches every workspace: core, spark/ (GPU annexes), surface/ (MCP), derive/, apps/.
 target/

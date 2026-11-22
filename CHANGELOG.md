@@ -24,6 +24,8 @@ the same git identity, so anything written after 22:21 is outside this history.
 
 ## Unreleased
 
+**Current scope.** The owner confirmed that FrankenRobotics is in planning only. The experimental implementation and its task records have been archived locally. Section 9 describes the earlier snapshot.
+
 State at the snapshot, and work visibly in flight:
 
 - **A hybrid v1.0 is being assembled** ([section 6](#6-the-v10-hybrid-integration-charter-and-phase-1-drafts)). Its

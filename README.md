@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/status-plan%20stage%20%C2%B7%20no%20code%20yet-lightgrey)](#honest-status)
+[![Status](https://img.shields.io/badge/status-planning%20only-blue)](#honest-status)
 [![Plans](https://img.shields.io/badge/plans-3%20editions%20%C2%B7%20v1.0%20being%20assembled-blue)](#three-plan-editions)
 [![Physics](https://img.shields.io/badge/physics-FrankenSim%20referee-2ea44f)](#foundations)
 [![Core](https://img.shields.io/badge/core-Rust%20%C2%B7%20CUDA%20%C2%B7%20Metal-b7410e)](#architecture)
@@ -38,7 +38,7 @@ wheel's lever arm rises from 36.0 to 40.7 mm, and the push needed per unit of lo
 lag, compliance and clearance, so it is a question for the simulator and a paired comparison, not for
 intuition.
 
-**Nothing is built yet.** This repository holds three plan editions, the multi-model research rounds that
+**This project is in planning only.** This repository holds three plan editions, the multi-model research rounds that
 reviewed them, the drafts of a hybrid v1.0 that will replace the base plan, and a reproduction bundle for the
 planning experiments. Read [Honest status](#honest-status) first.
 
@@ -55,7 +55,7 @@ found errors in claims that earlier revisions of this README repeated; they are 
 | Question | Answer |
 |---|---|
 | Is there a design? | **Yes, three, and a fourth in assembly.** The [base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) (3,666 lines), the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) (3,531 lines) and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,694 long lines) were written in parallel and none cites another. A [hybrid v1.0](#the-v10-hybrid-being-assembled) is drafted except for one appendix and not yet assembled |
-| Is there a studio implementation? | **The studio is planned.** The base plan's first session (§37) is meant to end with "two honest measurements" and "a two-second humanoid rollout on the referee. It does not end with a forest of empty crates." At 22:18 EST on 2026-11-21 a first working slice had been started (tracker issue `frob-cys`: run a FrankenSim G1 episode from a clean checkout) and none of it was committed |
+| Is there a studio implementation? | The studio, gym and agent interfaces are proposals. Current work covers the plans and their supporting research. |
 | Can I run anything? | **Only the planning checks.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. [`planning/verify_plan_math.py`](planning/verify_plan_math.py) re-checks Neon's arithmetic, crate table, bead graph and cross-references. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
 | Has anything been measured? | **Planning experiments have run on the target hardware.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s; exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. Astra also ran normalization arithmetic (§11.2) and a sampled slider with three physics updates (§9.1) on those GPUs. Round-2 evidence packs also timed CPU MuJoCo on the M5 Ultra, under background load, to size the referee. No FrankenRobotics physics step, environment step or training run has been measured, and neither round ran an incumbent training loop |
 | Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper, had the verdicts challenged by two other model families and then adjudicated the challenges. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus two later three-auditor sweeps. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
@@ -688,8 +688,7 @@ first mission slice on the CPU; **M2** batch, GPU backends and mixed batches; **
 qualification and the partial ten-fold gate; **M4** amortized control, co-design and mission queries at scale; **M5**
 proofs, reality and manufacture; **M6** frontier physics; **M7** the ten-fold tournament; **M8** frontier delivery. Phase
 2 drafts 80 work packages ([§44](planning/fable/blend/parts2/P14.md)) and 442 beads
-([§45](planning/fable/blend/parts2/P15.md)) behind them. None of those beads has been created. The tracker in `.beads/`, opened with `br` at 22:13, holds three issues
-for a first working slice.
+([§45](planning/fable/blend/parts2/P15.md)) behind them. These are proposed tasks for a future implementation phase.
 
 ---
 

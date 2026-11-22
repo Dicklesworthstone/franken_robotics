@@ -45,6 +45,9 @@ node_modules/
 /chronicle/
 /replays/
 *.npz
+# Run records (the .frun format in the v1.0 drafts). Small golden runs may live with the tests.
+*.frun
+!tests/fixtures/**/*.frun
 *.crashpack
 /crashpacks/
 /artifacts/
@@ -68,9 +71,16 @@ node_modules/
 /astra-10x-reproduction/
 /repro/
 
-# === Python (planning reproduction scripts, oracle capture tooling) ===
+# === Planning scratch copies ===
+# Working backups the planning agents keep beside files that git already versions.
+/planning/**/parts_backup_*/
+
+# === Python (planning reproduction scripts, oracle capture tooling, bindings/) ===
 __pycache__/
 *.pyc
+*.egg-info/
+/bindings/*/build/
+/bindings/*/dist/
 .venv/
 .ruff_cache/
 .pytest_cache/

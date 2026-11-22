@@ -3,7 +3,7 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-plan%20stage%20%C2%B7%20no%20code%20yet-lightgrey)](#honest-status)
-[![Plans](https://img.shields.io/badge/plans-3%20editions%2C%20not%20yet%20reconciled-blue)](#three-plan-editions)
+[![Plans](https://img.shields.io/badge/plans-3%20editions%20%C2%B7%20v1.0%20being%20assembled-blue)](#three-plan-editions)
 [![Physics](https://img.shields.io/badge/physics-FrankenSim%20referee-2ea44f)](#foundations)
 [![Core](https://img.shields.io/badge/core-Rust%20%C2%B7%20CUDA%20%C2%B7%20Metal-b7410e)](#architecture)
 [![Agents](https://img.shields.io/badge/agents-CLI%20%2B%20MCP-8a2be2)](#command-surface-planned)
@@ -39,8 +39,8 @@ lag, compliance and clearance, so it is a question for the simulator and a paire
 intuition.
 
 **Nothing is built yet.** This repository holds three plan editions, the multi-model research rounds that
-reviewed them, and a reproduction bundle for the planning experiments. Read [Honest status](#honest-status)
-first.
+reviewed them, the drafts of a hybrid v1.0 that will replace the base plan, and a reproduction bundle for the
+planning experiments. Read [Honest status](#honest-status) first.
 
 ---
 
@@ -48,18 +48,20 @@ first.
 
 **Status.** Plan stage. There is no Cargo workspace, no crate and no binary. Every command, crate, file format
 and throughput number below is a proposal unless it is marked as a computed planning result. Every throughput
-figure is a target. All three plans were written on 2026-11-21. One research round is still in progress.
+figure is a target. Everything here was written on 2026-11-21. Both research rounds have reported. The last one
+found errors in claims that earlier revisions of this README repeated; they are corrected below and listed in
+[CHANGELOG.md](CHANGELOG.md).
 
 | Question | Answer |
 |---|---|
-| Is there a design? | **Yes, three.** The [base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) (3,666 lines), the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) (3,222 lines) and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,452 long lines). They were written in parallel and none cites another. See [Three plan editions](#three-plan-editions) |
+| Is there a design? | **Yes, three, and a fourth in assembly.** The [base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) (3,666 lines), the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) (3,317 lines) and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,654 long lines) were written in parallel and none cites another. A [hybrid v1.0](#the-v10-hybrid-being-assembled) is drafted through §37 and not yet assembled |
 | Is there a studio implementation? | **The studio is planned.** The base plan's first session (§37) is meant to end with "two honest measurements" and "a two-second humanoid rollout on the referee. It does not end with a forest of empty crates." |
-| Can I run anything? | **Only the planning experiments.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
-| Has anything been measured? | **One scalar test on the target hardware.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s. Exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. No physics step, environment step or training run has been measured |
-| Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent). Neon: round 1, a modes-of-reasoning audit (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified), a three-model idea duel and a Brenner session that killed 8 hypotheses. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4). Round 2 ("fable") targets the base plan, is still running and has not been folded into any plan |
-| Which plan is canonical? | **Not decided yet.** Where the editions disagree, this README uses the base plan's names: `frob-` crates and the `frob`, `frobd` and `frob-mcp` binaries. Neon keeps those names on a different 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
+| Can I run anything? | **Only the planning checks.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. [`planning/verify_plan_math.py`](planning/verify_plan_math.py) re-checks Neon's arithmetic, crate table, bead graph and cross-references. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
+| Has anything been measured? | **Nothing of FrankenRobotics.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s; exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. Round-2 evidence packs also timed CPU MuJoCo on the M5 Ultra, under background load, to size the referee. No FrankenRobotics physics step, environment step or training run has been measured, and neither round ran an incumbent training loop |
+| Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper and had the verdicts challenged by two other model families. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus a later three-auditor sweep. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
+| Which plan is canonical? | **A v1.0 hybrid is meant to be, and it is not assembled.** An [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) says v1.0 will replace base v0.2 at its current path and absorb the other two editions. Its Phase 1 text (§0 to §37) is drafted and reconciled; Phase 2 is not written. Until it is assembled, the file at that path is still v0.2, and this README uses base-plan names. The charter keeps them (`frob-` crates; `frob`, `frobd`, `frob-mcp`) and adds `frob-verify` and `frob-tui`. Neon keeps the prefix on its own 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
 | Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. This settles base OPEN-PROG-1, which blocked the first push |
-| What happens next? | Reconcile the three editions into one plan, finish round 2 and fold it in, convert the result to beads (the base plan seeds BD-001 to BD-125; Neon has a 97-bead graph), then start M0 |
+| What happens next? | Write the Phase 2 parts of v1.0 (verification, gates, risks, milestones, beads, appendices), assemble it, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
 
 The plans are written to be falsifiable. Each bet names the measurement that would kill it, and each kill
 gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
@@ -70,19 +72,30 @@ only say what a gate has recorded.
 
 ## TL;DR
 
-**The problem.** Robot simulators are fast and widely used, but they carry decisions from a time when "a
-simulator was a C library driven by a person in a notebook" (base §1.1):
+**The problem.** Robot simulators are fast and widely used, but the pieces an autonomous design agent needs are
+scattered or missing. Round 2 audited what incumbents document, and the v1.0 draft keeps only the gaps that
+survived (draft §1.2). Each is a statement about documentation read at pinned versions, and each is listed beside
+the incumbent it describes:
 
-- Poses are bags of floats, so frame and sign errors cannot be caught.
-- URDF and MJCF are "XML trees of free-form numbers with no units and no composition rules". A physically
-  impossible inertia loads without complaint.
-- Contact is softened for throughput. Policies learn to exploit the softness, and the result gets filed as a
-  sim-to-real gap.
-- The GPU code is not the CPU code, so a world that fails on the GPU "cannot be replayed anywhere else".
-- The morphology is fixed. Co-design is a black-box search over XML, and the feedback is "a scalar reward,
-  hours later".
-- The interface is "a Python API for a human at a keyboard", with no budgets, refusals or provenance.
-- Verification: "It looks right in the viewer."
+- **Replay.** No incumbent documents a bitwise re-run of one GPU world alone on a CPU. Newton's guide says results
+  "usually differ ... between the CPU and CUDA backends".
+- **Batch independence.** None documents that a world's trajectory does not depend on the batch it ran in.
+- **GPU determinism.** Opt-in bitwise run-to-run modes exist (Newton 1.8, Isaac Lab 3.0). MuJoCo Warp's
+  documentation answers "Is MJWarp on GPU deterministic? No."
+- **Topology inside a running batch.** Changing it is unsupported or experimental in the engines audited.
+- **Energy.** MuJoCo's reference says "potential and kinetic energy in constraints is not accounted for".
+- **Agents.** MCP access to a simulator exists, but nothing audited documents compute budgets, provenance or typed
+  refusals on it.
+- **Comparison and transfer.** Published sequential tests compare policies, not robot designs, and transfer to bodies
+  far outside a training set is, in its authors' words, "still problematic".
+
+**Withdrawn claims.** Earlier revisions of this README repeated "fossils" from base v0.2 that the audit overturned
+(draft §1.3). Incumbents do run one kernel source on CPU and CUDA, do offer bitwise replay on the same GPU, do
+support mixed topologies in one batch (ManiSkill3, two Newton solvers), and do let CPU MuJoCo edit a model without
+losing state. Training a quadruped policy takes about seven minutes on one RTX 4090, not "hours". Electrical and
+thermal actuator models, sampling control without training, interior generators for homes, kitchens, retail and
+warehouses, and anytime-valid tests for policies are all prior art. Where this README says "replaces" below, it
+names what an earlier tool did, not a gap in today's incumbents.
 
 **What already exists.** Each ingredient has been published: Featherstone's spatial algebra and its Lie-group
 form, convex compliant contact at GPU scale (MuJoCo Warp, Newton), Drake's SAP on the CPU, Lie-group and
@@ -92,7 +105,10 @@ floating-base Featherstone dynamics (`fs-mbd`), a 29-DoF Unitree G1 model, semis
 Signorini–Coulomb contact with certified continuous collision (`fs-contact`), and anytime-valid racing. "What
 does not exist is their composition."
 
-**What FrankenRobotics adds.** Three products that share one model and one ledger (base §1.3):
+**What FrankenRobotics adds.** The composition: one design identity and one evidence ledger across static analysis,
+simulation tiers, statistics and solid mechanics. That is the v1.0 draft's claim N13, "a hypothesis whose only test
+is the end-to-end benchmark against a composed incumbent baseline". Base v0.2 frames it as three products that share
+one model and one ledger (§1.3):
 
 1. **Arena**, a gym: a vectorized, device-resident environment API over batched physics.
 2. **Atelier**, a design studio for agents: CLI and MCP verbs to create, check, simulate, explain, compare
@@ -100,8 +116,10 @@ does not exist is their composition."
 3. **A mathematical instrument**: the algebra that generates the kernels, supplies the test oracles, prunes
    designs before simulation and, where a checker accepts it, carries proofs.
 
-FrankenSim stays "the referee and the bedrock". FrankenRobotics owns the batched Lie-algebraic rollout engine,
-the scenes, the sensors, the learning loop and the agent-facing studio.
+The v1.0 draft widens that to six (draft §1.5), adding a **mission-query engine** (Augur), an **adversary and
+counterfactual debugger** (Nemesis, Autopsy) and a **path to reality and the workshop** (Ground, Foundry). FrankenSim
+stays "the referee and the bedrock". FrankenRobotics owns the batched Lie-algebraic rollout engine, the scenes, the
+sensors, the learning loop and the agent-facing studio.
 
 **What the other editions add.** Astra turns the question around: give the studio a mission and ask for the
 *set* of designs that can do the job, with checkable reasons why the alternatives cannot, and the cheapest
@@ -117,8 +135,8 @@ morphologies on one GPU grid.
 |---|---|---|---|
 | **Organizing idea** | "A robot proving ground and a robot design studio built as one mathematical instrument." Algebra first, numbers last | Inverse mission design: the feasible set of designs, exclusions and the deciding experiment. Success means 10× less time to an independently accepted engineering answer | "Change the unit of computation, proof, world interaction, and verification": campaign-time quotienting, heterogeneous-morphology GPU execution, stratified certificates, spec-to-silicon packets |
 | **Shape** | Parts 0–V, §1–§38, Appendices A–J. 17 named subsystems, 28 crates plus `xtask` (361 kLoC cap) | 20 sections. Work packages W01–W43, milestones M0–M8 | 12 bounded contexts, 51 crates, 5 binaries. 16 bets, 16 North-Star scenarios, M0–M6 |
-| **Delivery seed** | 125 beads, BD-001 to BD-125 (M0–M2 detailed, M3+ as epics); a first-session script (§37) | Dependency graph of 43 work packages; a first session around a 2R arm and a wheel-on-lip fixture (§15.2) | 97 beads, BD-001 to BD-096 plus BD-029a, one terminal sink |
-| **Evidence it carries** | Study of six sibling projects' plans, seven code audits, an idea-wizard pass (30 → 5 → 15), one internal review round | Analytic results, native pilots on the M5 Ultra and both RTX 4090s, its own audit and duel, and a 155-file reproduction bundle | Round 1 in [`planning/`](planning/): modes-of-reasoning audit, three-model duel (90+ ideas → 39 proposals → 78 scores), Brenner session |
+| **Delivery seed** | 125 beads, BD-001 to BD-125 (M0–M2 detailed, M3+ as epics); a first-session script (§37) | Dependency graph of 43 work packages; a first session around a 2R arm and a wheel-on-lip fixture (§15.2) | 100 beads to one terminal sink (BD-096), checked acyclic by `verify_plan_math.py` |
+| **Evidence it carries** | Study of six sibling projects' plans, seven code audits, an idea-wizard pass (30 → 5 → 15), one internal review round | Analytic results, native pilots on the M5 Ultra and both RTX 4090s, its own audit and duel, and a 161-file reproduction bundle | Round 1 in [`planning/`](planning/): modes-of-reasoning audit, three-model duel (90+ ideas → 39 proposals → 78 scores), Brenner session (13 killed hypotheses, K-01 to K-13), six audit passes listed in its Appendix E.2 |
 
 **Where they agree.**
 
@@ -142,15 +160,77 @@ morphologies on one GPU grid.
 | Firmware and hardware | Out of scope (NONGOAL-04) | Ends at export | `.fbuild` packets with QEMU-checked `no_std` firmware; `hardware_safety_signoff: false` |
 | Headline number | Per-tier throughput targets | A 10× time ratio whose one-sided 95% lower bound must reach 10 in each of four sealed strata | "Delete 90%–99% of futile simulations"; 512 topologies on one GPU grid (both targets) |
 
-**What round 2 says so far.** Round 2 ("fable") is reviewing the base plan without reading the other editions.
-Its findings are unaudited: when this snapshot was taken, its claim audit had not started. Some of them bear on
-every edition's headline numbers. One pass estimates that policy training is about 93% of wall-clock, which
-caps a faster simulator "below 8× on training and at 2–5× on a whole iteration". Another finds that "of the
-sixteen capabilities, none is cleanly out of reach for the incumbent set". Its evidence packs mark
-supercompiled kernels and tensor-core mixed precision as refuted as throughput levers. The one hypothesis it
-marks "ACTIVE, and the strongest rival" is that "a thin layer over an incumbent gets most of it"; its pack says
-a new engine is justified only by a Metal GPU tier and by mixed-topology batches with deterministic forks. See [`planning/fable/`](planning/fable/)
-and [CHANGELOG.md](CHANGELOG.md).
+**What round 2 says.** Round 2 ("fable") reviewed base v0.2 without reading the other editions and has finished.
+Two independent auditors checked 76 of its 94 claims (31 verified, 39 partially supported, 2 hypothesis, 2 rejected;
+the other 18 are unaudited). Its answer to "which mechanisms give a tenfold faster accepted decision?" is that no
+single one does. The thesis that survives is a conjunction: decide many designs per agent turn, train few of them,
+stop early, search for failures, and measure time to an independently accepted answer against the strongest composed
+incumbent. The audited numbers bound every edition's headline:
+
+- An infinitely fast environment step speeds training by at most 7.8× on one incumbent stack and 1.4× on another.
+  An incumbent already measures 2.55 M humanoid steps/s. Engine speed is a parity requirement.
+- On quadrupeds the honest range tops out at about 3 to 10×. It is wider (5 to 20×) for humanoids, and only if a
+  baseline or family policy can stand in for per-design training. Nobody has measured that rank agreement; the v1.0
+  draft calls the experiment that would (about thirty trainings, 5 to 7.5 GPU-hours) the decisive early one.
+- 24 hypotheses got verdicts: 18 narrowed, 4 refuted (supercompiled kernels as a GPU lever, incremental evaluation,
+  half precision, living multiphysics in every world), 1 deferred, 1 active. The active one is H-19: "a thin layer
+  over an incumbent". The v1.0 draft states a rule for what happens if that ties (BET-14).
+- **The verdicts are contested.** Codex and Gemini each challenged the register. 16 of the 24 verdicts are contested by
+  at least one, 9 by both, and none has been adjudicated. The Phase 1 drafts of v1.0 bind to the register as written
+  and do not mention the challenges.
+
+The idea duel on the same plan gave seven ideas 700 or more from both other models. All seven come from the Claude
+slate, and the report says so ("the same family as one of the three duellists" compiled it). The top three are a
+design-decision benchmark against incumbents (858), paired estimation across fidelity tiers (853) and ragged cohorts
+that step different robots in one launch (831). See [`planning/fable/`](planning/fable/) and
+[CHANGELOG.md](CHANGELOG.md).
+
+
+---
+
+## The v1.0 hybrid, being assembled
+
+The [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) describes one document that will replace base
+v0.2 at its current path. Its brief is "maximalist": absorb every mechanism from the three editions, the two research
+rounds and the idea exercises, at the tier its evidence supports, with a falsifier and a kill gate. It "does not mean
+credulous": narrowed mechanisms are written with their surviving claims, refuted ones are not built in their strong
+form, and no number is written as a result.
+
+| | Status, evening of 2026-11-21 (EST) |
+|---|---|
+| Inputs compiled | A [digest of Astra](planning/fable/blend/ASTRA_DIGEST.md), a [digest of Neon](planning/fable/blend/NEON_DIGEST.md) with a 24-item "doubtful or wrong" list, and a [catalog of 112 distinct ideas](planning/fable/blend/IDEA_CATALOG.md) merged from about 225 entries |
+| Phase 1 drafts | **Complete** at 21:14: [13 part files](planning/fable/blend/parts/), about 331,600 words, §0 to §37 of 47 |
+| Reconciliation | **One pass done** (21:20 to 21:24): colliding refusal codes renumbered, ten binding decisions recorded, and inventories generated: 421 gate, kill-gate and admission-gate identifiers, 141 open questions, 169 verbs, 296 refusal codes |
+| Phase 2 drafts | **Not written.** A [brief](planning/fable/blend/PHASE2_BRIEF.md) sets out verification, the ten-fold test, the gate register, risks, milestones, work packages, beads, the first session and the appendices. Only Appendix O (refusal codes) exists |
+| Assembly | **Not started.** The file at the base path is still v0.2 |
+
+**What the charter and drafts fix.** 43 Rust crates (38 core, 5 annex) with a 561 kLoC cap and a closed list ("a new crate is
+created only for a distinct dependency, a distinct device target, or a proof boundary"); five binaries, adding
+`frob-verify` (an offline certificate auditor that depends only on the standard library) and `frob-tui`; thirteen
+versioned artifact formats (`.fbot`, `.fmodule`, `.fcard`, `.fscene`, `.fclear`, `.ftask`, `.fmission`, `.fenergy`,
+`.fskill`, `.fmcw`, `.frun`, `.fbuild`, `.frobcert`); the MCP server on `fastmcp_rust`; a seventh claim, Design
+comparison; and milestones M0 to M8. Six new subsystems join the base plan's seventeen:
+
+| New subsystem | What it adds |
+|---|---|
+| **Phylum** | Families of bodies in one batch: per-world model variants, size buckets, mixed topologies [F] |
+| **Augur** | Mission queries: the set of designs that can do a job, with witnesses, exclusions and the next experiment [F] |
+| **Nemesis** | Worlds that break a design, minimal counterexample worlds, bounds on rare failure rates |
+| **Autopsy** | Counterfactual debugging by intervening on forked replays, with a stability figure on every attribution |
+| **Ground** | Calibration against imported measurements; reality bands inside a calibrated family only [F] |
+| **Foundry** | Structure, fatigue, tolerances and build packets; every export says it authorizes nothing [F] |
+
+The draft defines 37 bets (25 new), 43 goals, 24 North-Star scenarios and 40 constructions (C-16 onward are new). Bets
+are meant to name a competing arm or a potency control, since a test that could not have failed does not count. The ten-fold
+claim is BET-13: a ratio of restricted mean times to an independently accepted answer, against the strongest composed
+rival, on a sealed suite, with a partial gate at M3 and the tournament at M7. If a measured ratio is between 3 and 10
+the report gives the number and does not use the word "ten-fold". BET-14 is the tie rule: if a short robust program
+over an incumbent engine ties, the charter's words are "say so and ship the layer".
+
+**Read the drafts as drafts.** They are unreviewed, unassembled, and refer to parts that do not exist. Two caveats
+affect what they inherit. The verdict register they bind to is contested and unadjudicated (above). And the Neon
+digest was written at 20:04, before Neon's last rewrite at 20:08, so some of its corrections describe text that has
+since changed. The lead has since extracted [the difference](planning/fable/blend/NEON_DELTA_SINCE_DIGEST.diff).
 
 ---
 
@@ -189,7 +269,8 @@ $ frob eval promote r:… --tier referee --json                         # establ
   from the model itself: gaits from an atlas indexed by leg count and Froude number, capture-point footsteps
   and force distribution over friction cones for legs, and kinematic connections and flat outputs for wheels.
   It reports one of `not-synthesizable`, `synthesized-failed` or `ok`. The baseline exists to give feedback,
-  not peak performance. "A design that fails under its baseline is not thereby a bad design."
+  not peak performance. "A design that fails under its baseline is not thereby a bad design." Whether its ranking of
+  designs matches that of trained policies is untested; that is what BET-17 in the v1.0 draft is for.
 - **Explain, don't just score.** `frob explain` returns a failure taxonomy (`fall`, `stuck`, `slip`,
   `torque-saturation`, `thermal-limit`, `numerical-fault` and others), stills before, at and after the event,
   and an energy ledger in which the integrator and solver residual is its own line. "An agent can see that,
@@ -206,7 +287,8 @@ $ frob eval promote r:… --tier referee --json                         # establ
 
 ## Mathematics that earns its place
 
-The base plan's spine is fifteen constructions (§8). Each one replaces something specific, names its payoff
+The base plan's spine is fifteen constructions (§8); the v1.0 draft has forty (C-16 to C-40 are new). Each one
+replaces something specific, names its payoff
 and has a test that fails when the mathematics is wrong. Tags are the plan's own: **[S]** solid, **[F]**
 frontier (published, not productized by mainstream robot simulators).
 
@@ -256,11 +338,13 @@ moved within their stated uncertainty, and under an alternative contact law. The
 (hypothesis until GATE-SPARK-01). D2 bitwise per backend, run to run and across worker counts, which every
 kernel must meet. D3 within a recorded tolerance. D4 unspecified, "never cited as evidence". Float atomics are
 banned in kernels; sums use fixed-shape pairwise trees; positions are anchored as an integer cell plus an `f32`
-offset (worst case 0.48 µm against 7.6 µm for a raw `f32` at 100 m).
+offset (worst case 0.48 µm against 7.6 µm for a raw `f32` at 100 m). The v1.0 draft adds a test that a world's
+trajectory does not depend on the batch it ran in, and drops half precision (refuted: the condition number times
+half-precision round-off is at or above one in 37–64% of sampled contact states).
 
 ---
 
-## The six claims
+## The claims
 
 | Claim | Meaning | What establishes it |
 |---|---|---|
@@ -270,6 +354,10 @@ offset (worst case 0.48 µm against 7.6 µm for a raw `f32` at 100 m).
 | **Fidelity** | A faster tier agrees with a slower, more trusted one | The fidelity ledger: per-quantity disagreement distributions on the standard battery |
 | **Reality** | Simulation agrees with physical measurement | A real-robot dataset with provenance. "In v1 this claim is almost always `no-claim`" |
 | **Performance** | Speed or scale on named hardware | A recorded run with the full disclosure block |
+
+Base v0.2 has these six. The v1.0 draft adds a seventh, **Design comparison** ("one design is better than another, or
+a design meets a mission, on a stated family of worlds"), and turns the rule into a type: `frob-core` owns a
+`ClaimProduct` whose class is the minimum over its inputs, with no setter.
 
 They are never averaged into one number (base §6). A gate names exactly one claim. A failure is a failed
 cell, never an excluded cell. Agreeing with MuJoCo "establishes that two programs agree", not that either
@@ -326,9 +414,13 @@ EvaluatedDesign>` has no conversion to `VerifiedFormal`, and every export hard-w
 | Gauntlet | `frob-conformance` | Six test tiers (laws, known answers, parity, metamorphic, chaos, determinism), oracle fixtures, batteries |
 | Airlock | `frob-fsim` | The only crate that names FrankenSim's fast-changing types |
 
-Plus `frob-core` (identities, hashing, evidence classes, refusals, units glue) and an `xtask` limited to six
+Base v0.2 also has `frob-core` (identities, hashing, evidence classes, refusals, units glue) and an `xtask` limited to six
 checks (`check-layers`, `check-deps`, `check-unsafe`, `check-generated`, `check-contracts`, `check-stack`).
 Crate size caps sum to 361 kLoC, and exceeding a cap by 15% triggers a conversation rather than a trim.
+
+The v1.0 draft keeps these, splits out crates such as `frob-cert`, `frob-spec`, `frob-phylum` and `frob-mission`, and
+raises the cap to 561 kLoC over 43 crates. Its rule for adding one: "a new crate is created only for a distinct
+dependency, a distinct device target, or a proof boundary".
 
 Layers depend only downward. The core crates set `unsafe_code = "deny"` and never depend on a GPU crate; CUDA
 and Metal live in annex workspaces under `spark/` with registered unsafe capsules. Forbidden everywhere: tokio
@@ -379,6 +471,10 @@ With `--json`, every verb writes exactly one `frob.envelope/1` envelope: `verb`,
 | 7 | Conflict: idempotency key reused or lineage conflict |
 | 9 | Indeterminate. "Never retry blindly" |
 
+The v1.0 draft keeps these and adds exit 8, "accepted and still running", because long tools take a bounded wait
+(`sync_wait_ms`) and then return a job handle. The lead's inventory counts 169 verbs in 34 clusters, adding `mission`,
+`nemesis`, `autopsy`, `ground`, `foundry`, `cert` and `study`.
+
 "Exit code 1 is never emitted on purpose." Every verb that can cost more than a second accepts `--estimate`.
 Mutating verbs take idempotency keys. Capabilities are scoped (`design:write`, `sim:run`, `gpu:seconds=600`,
 `scene:import`, `train:run`). Agents supply data, never code: designs, task specs, controller configurations
@@ -400,28 +496,48 @@ NVLink, peer-to-peer unverified), and a Mac Studio with an M5 Ultra (36 CPU core
 run at about 1/64 rate, so the devices work in single precision. Anchored positions, group-valued updates,
 fixed-order sums and double-float accumulators are meant to make that enough, and BET-08 tests whether it is.
 
-| Workload (base §28.1) | Hardware | Target | Context the plan cites |
-|---|---|---|---|
-| Quadruped, 12 joints, 16 foot samples, h = 2 ms, 4 Newton iterations, physics only | One RTX 4090, 8,192 worlds | ≥ 2.0 M world-steps/s | |
-| Same task, PPO training including policy and learning | One RTX 4090 | ≥ 400 k env-steps/s | MuJoCo Playground reports 417 k for a quadruped on an A100 with MJX |
-| Humanoid, 29 joints, physics only | One RTX 4090, 4,096 worlds | ≥ 500 k world-steps/s | Playground reports 106 k training throughput for G1 on an A100 |
-| Two devices | Two RTX 4090 | ≥ 1.8× one device | Independent shards |
-| Quadruped physics | M5 Ultra, Metal | ≥ 25% of one RTX 4090; stretch 60% | No published Metal physics benchmark for M5 found |
-| Quadruped physics, `batch-cpu`, `f32` | M5 Ultra, 36 cores | ≥ 150 k world-steps/s | Hypothesis-grade |
-| Train the reference quadruped task | One RTX 4090 | ≤ 15 min | Playground reports about 5 min on two RTX 4090s |
-| `design check` / `control synth` / generate and compile an interior | CPU | < 2 s p95 / < 5 s / < 60 s | |
+**Base v0.2's throughput table (§28.1) is withdrawn.** Round 2 found that it mixed world-steps and env-steps (400 k
+env-steps/s of training at a decimation of 10 implies 4.0 M world-steps/s, twice its own 2.0 M physics-only target),
+set a 15-minute training target 2.2× slower than a published run on the same card, put its humanoid target about five
+times below a published figure, and put its CPU target 7 to 11× below published CPU MuJoCo per core. The v1.0 draft
+restates the targets as ratios to an incumbent measured on our own hardware, in stated units, each with a **tolerance**
+(a parity band the plan's argument needs) and an **ambition** (a better number nothing depends on). Planning values
+below come from published figures. None is a measurement, and Phase 2 can still change them.
 
-"None is a measurement." Every performance claim must carry the disclosure block of base §28.2: hardware and
-driver, backend and compiler versions, world count, time step and substeps, solver iterations and tolerance,
-contact capacity and mean active contacts, sensors, whether policy and learning are included, scene,
-determinism class, warm-up, launch-graph capture, median and p99 step time, and peak memory. The block exists
-because a published simulator headline was "later re-measured two orders of magnitude lower".
+| Workload (v1.0 draft §36.3, at h = 2 ms, d = 10) | Hardware | Tolerance | Ambition | Incumbent reference |
+|---|---|---|---|---|
+| Quadruped, physics only | One RTX 4090, 8,192 worlds | ≥ 0.67 of the incumbent, floor 2.0 M world-steps/s | ≥ 1.0; 4.0 M | mjlab on MuJoCo Warp: 4.8 M world-steps/s at d = 4 (RTX 5090) |
+| Quadruped, full environment step | Same | ≥ 0.75 of the physics row | ≥ 0.85 | The same benchmark: 347 k env-steps/s against 1.20 M for physics |
+| Quadruped, PPO training throughput | Same | ≥ 0.60 of the physics row | ≥ 0.70 | Playground reports 417 k on an A100 with MJX, at d = 5 |
+| Quadruped, time to a return threshold (cold) | One RTX 4090 | ≤ 1.25× the incumbent (re-measured on the same card); planning value 515 s | ≤ the incumbent; 410 s | Playground: about 410 s, read by eye from a figure |
+| Humanoid, physics only | One RTX 4090, 8,192 worlds | ≥ 0.67; planning value 1.7 M | ≥ 1.0; 2.55 M | MuJoCo Warp nightly: 2.55 M (RTX 6000 Ada) |
+| Mixed batch of three body plans | One RTX 4090, 8,192 worlds | ≥ 0.70 of the harmonic mean | ≥ 0.86 | Newton's Kamino solver: 0.86 |
+| Quadruped physics, Metal | M5 Ultra | ≥ 0.25 of one RTX 4090 (BET-09) | ≥ 0.60 | None published on this chip; Genesis is measured beside it |
+| Humanoid physics, `batch-cpu`, `f32` | M5 Ultra, 24 threads | ≥ 0.5 of CPU MuJoCo on the same machine | ≥ 1.0 | CPU MuJoCo (`f64`): 550 k world-steps/s on 24 threads, measured here under load |
+| `design check` / `control synth` / generate and compile an interior | CPU | < 2 s p95 / < 5 s / < 60 s | `design check` after one edit: 0.2 / 0.5 / 1.0 s | |
+
+A published figure is a fact about its source, to be re-read from the primary source before a gate cites it. Every
+performance claim must carry a disclosure block (base §28.2, draft §36.7): hardware and driver, backend and compiler
+versions, world count, time step and substeps, solver iterations and tolerance, contact capacity and mean active
+contacts, sensors, whether policy and learning are included, scene, determinism class, warm-up, launch-graph
+capture, median and p99 step time, and peak memory. The base plan adds the block because a published simulator
+headline was "later re-measured two orders of magnitude lower".
 
 ---
 
 ## Planning experiments already computed
 
 Astra combines exact calculations, numerical simulations and measured performance tests. Its reduced cart model integrates wheel, chassis and winding dynamics with penalty contact. The integrated Franken Robotics gym and design studio are planned.
+
+- **Neon's consistency checker** (passing). `python3 -I -B planning/verify_plan_math.py` recomputes Neon's 16 numerical
+  cards, its 51-crate budget table, its 100-bead graph (no cycles, one sink), its 13 families of cross-references and
+  its worked `.fbot`, `.ftask` and JSON examples. It reports zero errors on the 1,654-line file. It checks that the
+  plan is internally consistent, which is not the same as checking that the design works, and its file path is
+  hard-coded to the author's machine (change `ROOT` to run it elsewhere).
+- **Incumbent timings behind round 2** (measured, under background load). Evidence packs H-01, H-11, H-15 and H-19 ran
+  CPU MuJoCo 4.0.1 on the M5 Ultra to size the referee and the precision risk: for example 50,612 steps/s on one
+  thread for a 27-DoF humanoid, and 410,000 steps/s on 36 threads for a Go2. They are the incumbent's numbers, and they
+  feed the referee-coverage arithmetic (0.1 to 2% of GPU world-seconds).
 
 - **A three-tick docking robot** (analytic, §18.10). A robot can move to learn which of two actuator gains,
   1 or 2, it has, before committing to its final approach. With a command limit of 3/4, a fixed probe
@@ -463,6 +579,8 @@ Astra combines exact calculations, numerical simulations and measured performanc
   agreed in about 66.55% of draws across three seeds, while independence predicts 50%. Astra also reproduces
   a planar-drive case that loses translation (§§5.1, 9.3).
 
+The bundle was rebuilt at 21:25 with six follow-up files (161 in all).
+
 To re-check them, unzip the bundle into an empty directory outside this repository:
 
 ```bash
@@ -482,8 +600,9 @@ pipelines and integrated product speed remain open."
 ## Gates and kill gates
 
 The base plan registers ten admission gates (`INT-*`, one per foundation), about fifty convergence gates and
-nine kill gates. "No self-certification": a gate's PASS is recorded by a fresh-context session, and every gate
-has a registered negative control that it must catch.
+nine kill gates. The v1.0 drafts name 421 gate, kill-gate and admission-gate identifiers in the lead's inventory, but
+the gate register (§40) is not written, so treat that count as provisional. "No self-certification": a gate's PASS is
+recorded by a fresh-context session, and every gate has a registered negative control that it must catch.
 
 | Kill gate | Trigger | Fallback |
 |---|---|---|
@@ -500,7 +619,7 @@ has a registered negative control that it must catch.
 A program gate at the end of M1 pauses for a written re-plan if M0 and M1 take more than 1.5× their estimate
 because a sibling lacked a primitive. Neon adds three Brenner exclusion tests (XT-P1, campaign algebra against
 per-step algebra; XT-P2, heterogeneous morphologies against specialized templates; XT-P3, formal certificates
-against real contact) and 21 kill gates. Astra defines a sealed tenfold test (§19): four strata of held-out
+against real contact) and 21 kill gates, and its killed-hypothesis list now runs to K-13. Astra defines a sealed tenfold test (§19): four strata of held-out
 missions, the strongest available rival pipelines as comparators, one-sided 95% lower bounds of at least 10 in
 each stratum, and "One false certificate disqualifies that arm from the scoped claim."
 
@@ -521,6 +640,12 @@ four each) and are "not acceptance evidence".
 | **M4** co-design and breadth | Optimization, racing and quality-diversity archive; lineage; predictions; equivariant networks; gait atlas; tires, tracks, hybrids and moving surfaces; reach-and-carry | NS-05, NS-06, NS-08 |
 | **M5** Lemma and reality | Certificate coverage; Lean capsules; variational integrator; private real-place ingestion; a first Reality record or a recorded `no-claim` | NS-11, NS-12 |
 | **M6** frontier | Unscheduled epics: gradients through contact, granular terrain at scale, flexible links, soft robots, moving people, OpenUSD, hydraulics | |
+
+The v1.0 charter renames and extends the list to nine: **M0** spine and airlock; **M1** CPU referee studio plus the
+first mission slice on the CPU; **M2** batch, GPU backends and mixed batches; **M3** places, tasks, adversaries,
+qualification and the partial ten-fold gate; **M4** amortized control, co-design and mission queries at scale; **M5**
+proofs, reality and manufacture; **M6** frontier physics; **M7** the ten-fold tournament; **M8** frontier delivery. The
+work packages and beads behind them are Phase 2 parts.
 
 ---
 
@@ -548,6 +673,11 @@ foundations all failed admission, M1 would still ship a referee-tier design stud
 engines (MuJoCo in double precision, run out of process) are comparison oracles only. Reference robots come
 from MuJoCo Menagerie under their own licences, and scene assets are procedural by default.
 
+The v1.0 draft keeps the postures and records what a reading of the sources found: four defects or limits reported in
+FrankenSim and other foundations are "facts to recheck", each with an admission test and an upstream ask. Its
+`INT-TOOLCHAIN-01` gate records which of four nightly compilers build the one crate that uses an unfinished language
+feature (`fs-qty`); if a needed toolchain cannot, the fallback is a small, dependency-free `frob-units` crate.
+
 ---
 
 ## Scope boundaries
@@ -555,7 +685,10 @@ from MuJoCo Menagerie under their own licences, and scene assets are procedural 
 Not a photorealistic renderer. Not a Python library ("The users are agents with a CLI and MCP"). Not a
 real-time or hardware-in-the-loop system, and not ROS. No Windows. No soft, continuum, flying or swimming robots
 in v1, and no dexterous in-hand manipulation (mobile reach-and-carry is in scope at M4). No general formal
-verification of controllers. The anti-goals (base §4.3) are firmer: never lower fidelity silently for frame
+verification of controllers. The v1.0 charter narrows this list: rods and cables, cloth, fluid films, slosh, coupled
+multiphysics, a rotor port for flight, tactile hands, firmware export and facility co-design are admitted as optional
+or moonshot work behind flags, with known answers and a kill gate, and stay off the critical path (charter G11). The
+anti-goals (base §4.3) are firmer: never lower fidelity silently for frame
 rate, never wrap MuJoCo, PhysX or another foreign engine as the production engine, never publish throughput
 without the disclosure block, never accept an inertia on faith, and never put "a language model inside the
 physics or control loop".
@@ -584,9 +717,13 @@ CHANGELOG.md                                        the planning history, with e
 planning/mor/                                       round 1: modes-of-reasoning audit of Neon v1 (case, 16 claims, report)
 planning/duel/                                      round 1: three-model idea duel (ideas, cross-scores, reactions, report)
 planning/brenner/                                   round 1: question of record, disagreement register, synthesis
-planning/fable/                                     round 2 on base v0.2, in progress: audit, hypothesis slate and
-                                                    evidence packs, duel ideation, graveyard harvest, artifact pass
-planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers
+planning/verify_plan_math.py                        consistency checker for the Neon edition
+planning/fable/mor/ brenner/ duel/                  round 2 on base v0.2: audited claims, 24 verdicts and their
+                                                    challenges, three-model duel
+planning/fable/graveyard/ artifact/                 graveyard harvest and decision-core compilation
+planning/fable/blend/                               v1.0 in progress: charter, digests, idea catalog, 13 draft parts,
+                                                    inventories, Phase 2 brief
+planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers (161 files)
 ```
 
 Target (base §26.1):
@@ -606,6 +743,9 @@ tests/fixtures/oracle/  tools/oracle/                 pinned oracle fixtures and
 docs/delivery/                                        the delivery log (never in the plan)
 ```
 
+The v1.0 draft (§34.1) adds `bindings/` (an optional Gymnasium adapter), `worker/` (FrankenSim's out-of-process
+fallback), `schemas/`, `demos/` and `receipts/`.
+
 ## Reading paths
 
 - **What and why**: this README, then base §1–§6.
@@ -614,15 +754,19 @@ docs/delivery/                                        the delivery log (never in
 - **GPUs and determinism**: base §20, §27 and §28; Astra §11; Neon §17.
 - **The agent surface**: base §24 and Appendix J; Astra §10.
 - **Gates, risks and delivery**: base §30–§37; Neon §25–§29; Astra §13–§16.
+- **The v1.0 direction**: the [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md), then draft part
+  [P00](planning/fable/blend/parts/P00.md) (thesis, bets, goals, the corrected fossils) and the part named by your topic.
 - **How the plans were reviewed**: [CHANGELOG.md](CHANGELOG.md), then [`planning/`](planning/).
 
 ---
 
 ## FAQ
 
-**Why not wrap MuJoCo, MuJoCo Warp, Newton or Genesis?** The base plan makes it an anti-goal. Its reasons are
-the "fossils" above, plus practical ones (Python ecosystems; Newton is CPU-only on macOS) (§20.9). MuJoCo runs
-out of process as a parity oracle. Parity with a simulator is not Reality.
+**Why not wrap MuJoCo, MuJoCo Warp, Newton or Genesis?** The base plan makes it an anti-goal (§20.9), citing
+its fossils plus practical reasons (Python ecosystems; Newton is CPU-only on macOS). Round 2 withdrew several of those
+fossils and left a shorter list of documented gaps ([TL;DR](#tldr)). It is also the program's strongest open rival: H-19 says a thin layer over an incumbent gets most of the value, and
+the v1.0 draft keeps it as a bet with a tie rule (BET-14) and a composed-incumbent arm in the ten-fold test. MuJoCo
+runs out of process as a parity oracle. Parity with a simulator is not Reality.
 
 **Why Lie theory and abstract algebra?** Because each construction pays for itself or is cut. Frame errors
 become type errors. Group-valued updates stay on the group. The Cayley map's arithmetic is a candidate for
@@ -638,15 +782,18 @@ demo"; if not, KILL-METAL demotes it to development and replay.
 disposes." A world that fails on a GPU must be replayable somewhere it can be inspected, and a fast-tier result
 must survive a sample on a trusted tier before anyone calls it established.
 
-**Why synthesize a baseline controller?** "Training a policy for every candidate design makes the design loop
-hours long." A synthesized baseline gives feedback on day one. It is not meant to be the best controller.
+**Why synthesize a baseline controller?** Training a policy per candidate is the dominant phase of a design loop
+(about 85% of a quadruped iteration and over 90% of a humanoid one in published figures). A synthesized baseline
+gives feedback on day one. It is not meant to be the best controller, and whether its design ranking can be trusted
+is the program's first experiment.
 
 **Why anytime-valid comparisons?** An agent can stop the moment the evidence is decisive, with the error rate
 intact. Pairing episodes by world address "does more for sample size than the test itself".
 
-**Why are there three plans?** They were written in parallel on 2026-11-21 and none cites another. Each went
-through a different review process, and they disagree on scope, names and headline numbers. Reconciling them
-is the next planning step. [CHANGELOG.md](CHANGELOG.md) records which research fed which edition.
+**Why are there three plans, and a fourth?** Three were written in parallel on 2026-11-21 and none cites another. A
+hybrid v1.0 is being assembled from them and the research rounds, and is meant to become the canonical plan (see
+[The v1.0 hybrid](#the-v10-hybrid-being-assembled)). [CHANGELOG.md](CHANGELOG.md) records which research fed which
+edition.
 
 **Does a good simulated result mean the robot will work?** No. In v1 the Reality claim is almost always
 `no-claim`, and nothing here is a safety case. Build it and measure it.

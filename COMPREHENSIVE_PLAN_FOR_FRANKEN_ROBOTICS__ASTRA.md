@@ -154,7 +154,7 @@ can guide a probe. The files below determine what the probe should call.
 | frankensim · `483d09c682f2` | `crates/fs-ga/src/lie.rs`, `lie_differential.rs`, `lie_opt.rs` | Group façades over PGA motors, twist and wrench conventions. Transform a moving link and verify power and a finite-difference Jacobian. |
 | same | `crates/fs-mbd/src/articulated.rs`, `articulated/generalized.rs`, `crates/fs-mbd/src/articulated/point_motion.rs`, `crates/fs-mbd/src/point_motion.rs` | Tree kinematics, recursive Newton–Euler, articulated-body solve, floating-base maps and rigid-point motion. Compare a two-joint arm against independent energy derivatives and an offset IMU against §8.1. |
 | same | `crates/fs-mbd/src/articulated_contacts.rs`, `articulated_contacts/step.rs`, `crates/fs-contact/src/broad_phase.rs` | Use coupled impulses and admitted contact steps. Supply persistent geometry and swept-path admission. A thin step between two clear endpoints must be detected. |
-| same | `crates/fs-mbd/src/robot_models.rs`, `planar_drive.rs` | G1 29-actuator and KUKA iiwa7 catalog builders, prescribed-speed SE(2) drive. The builders transcribe selected source records. Qualify the planar rolling model against an independently evaluated SE(2) exponential before using it as an oracle. See §5.1. |
+| same | `crates/fs-mbd/src/robot_models.rs`, `planar_drive.rs` | G1 29-actuator and KUKA iiwa7 catalog builders, prescribed-speed SE(2) drive. The builders transcribe selected source records. Check welded attachment mass and preserved frames against the G1 source (§4.3). Qualify the planar rolling model against an independently evaluated SE(2) exponential before using it as an oracle. See §5.1. |
 | same | `crates/fs-cmaes-viz-wasm/src/g1_walking.rs`, `manipulation.rs`, `crates/fs-g1-train/src/{ppo,standin_env}.rs` | Existing owner-composed walking objective, manipulation example, policy/observation lineage and historical PPO implementation. Three update failures and a joint action-sampling failure are reproduced in §9.3. Require a qualified sampler, corrected update and a real mechanics rollout before admitting it as a learning baseline. |
 | same | `crates/fs-scene/src/lib.rs`, `crates/fs-query/src/convex.rs` | Role-tagged support/keep-out boxes, half-spaces and convex support queries. A mesh-backed interior needs additional cooking and swept geometry cases. |
 | same | `crates/fs-phs/src/interconnection.rs`, `crates/fs-tribo/src/lib.rs`, `crates/fs-matdb/src/lib.rs` | Compose effort/flow ports, select a friction law and resolve material data. Check power transfer and record the provenance of each pair parameter. |
@@ -361,7 +361,13 @@ element or extension with file location. Compile macro-based sources externally 
 tool, retain the expanded document, and prohibit script execution inside the studio. Admit MJCF and
 SDF through feature matrices later. Each export includes a loss report for closed loops, sensor
 latency, transmissions, mimic joints, contact law, covariance and controller assumptions.
-A round trip compares physical meaning and mapped IDs. XML formatting has no effect on the verdict.
+A round trip compares physical meaning and mapped IDs. Folding a fixed joint must preserve mass,
+first moment, spatial inertia about a common frame, and named sensor and collision attachments.
+The pinned FrankenSim G1 builder retains 30 links with total mass 31.96314202 kg. Four welded
+source links (head, logo and two hands) add 1.377 kg. The full 38-link URDF weighs 33.34014202 kg.
+At 9.81 m/s² a hypothetical 320 N static support clears the reduced model's weight of 313.5584 N
+and fails the source assembly's 327.0668 N. Give the reduction its own profile and use a
+transform-and-sum inertia test to qualify a full-source importer. [Pinned Unitree G1 source model](https://github.com/unitreerobotics/unitree_ros/blob/7d6075f7f58588b189b940130e3edab3c839b2df/robots/g1_description/g1_29dof_mode_11.urdf)
 
 ### 4.4 Worked mechanical substitution
 
@@ -421,6 +427,15 @@ angle or turn count to compilation, snapshot and replay. A periodic encoder alon
 state ambiguous to the controller.
 
 Write $T_{AB}$ for the pose mapping coordinates in B into A. Then $T_{AC}=T_{AB}T_{BC}$.
+A public derivative query needs to distinguish a chart singularity from an owner's numerical
+limit. The pinned `Se3::exp` accepts a pure translation of 33 m. At that input its left and
+right Jacobian calls return `IllConditioned` with a series limit of 32. For pure translation
+$\operatorname{ad}_\xi^2=0$, so the Jacobians are exactly $I\pm\operatorname{ad}_\xi/2$ and
+both have determinant one. For translation along +x, a unit +z rotation produces linear y
+components −16.5 m and +16.5 m respectively. Exercise the public paths at 1 m and 33 m.
+Use a qualified closed form or local chart when available. Report an unsupported derivative
+without excluding a physically regular pose in a long warehouse aisle.
+
 Use body perturbations on the right. Spatial twists use angular then linear components and wrenches
 use torque then force. If $V_A=\operatorname{Ad}_{T_{AB}}V_B$, dual coordinates transform as
 $F_A=\operatorname{Ad}_{T_{AB}}^{-T}F_B$. Thus $F_A^TV_A=F_B^TV_B$. Persist component order,
@@ -589,7 +604,13 @@ Take a Poincaré section at a repeatable transverse foot event. Compose smooth t
 admitted saltations along one gait cycle. Compare the reduced return map against finite
 perturbations over a full cycle. Remove phase and any admitted group drift consistently. Floquet
 multipliers probe *local* orbital stability. Test recovery basin with finite disturbances.
-A stable local orbit on a treadmill supplies no estimate of recovery on an unseen staircase.
+Register which sequences of stride modes the terrain and controller admit. On a two-dimensional
+transverse section let $A=\left(\begin{smallmatrix}1/2&1\\0&1/2\end{smallmatrix}\right)$ and
+$B=A^T$. Repeating either map alone gives multipliers 1/2. If the robot can alternate them, the
+two-stride product $BA$ has an eigenvalue $3/4+1/\sqrt2>1$. The repeated alternating pattern can
+amplify a disturbance even while the two isolated tests pass. Test products for the admitted
+sequences or exhibit a common contraction over them. A stable local orbit on a treadmill supplies
+no estimate of recovery on an unseen staircase.
 
 ### 5.7 A research program with an economic use for each theorem
 
@@ -774,6 +795,15 @@ ceiling marker. Verify winding against the determinant of the composed node tran
 in glTF looks along local −Z with +Y up. Specify the conversion to the studio optical frame and
 check an off-axis point in front of the lens. [Khronos glTF coordinate and camera conventions](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html)
 
+For a nonuniformly scaled signed-distance field, pulling back a world point recovers the local
+query position. It does not preserve metric distances. Scale a unit sphere by $(2,0.5,1)$.
+At world $(0,0.6,0)$ the local distance is 0.20 and the world clearance is 0.10 m. Treating
+0.20 as metres would admit an intersecting 0.15 m probe. At $(2.2,0,0)$ the local distance is
+0.10 while the world clearance is 0.20 m. For an invertible linear map $A$ and exterior local
+distance $d$, the world distance lies in $[\sigma_{\min}(A)d,\sigma_{\max}(A)d]$ in the
+corresponding world units. Refine unresolved queries or bake a world-metric field. Transform
+surface normals by $A^{-T}$ and renormalize before constructing contact or optical responses.
+
 Flatten
 scene instances for collision only where necessary. Retain stable per-instance semantic IDs,
 mirrored winding policy, normals, articulated doors/drawers and movable-prop inertia.
@@ -878,6 +908,14 @@ $R_{WS}^{T}(a_P-g)$. A freely falling sphere spinning at 5 rad/s with a 0.10 m p
 offset gives 2.5 m/s² radially inward. Use the pinned FrankenSim articulated `prepare_point_motion`
 and `point_motion` APIs with their gravity convention, then `specific_acceleration_world` and the
 sensor rotation. Test prescribed-base and floating-base receipts for gravity applied exactly once.
+
+Qualify the encoder's sampling semantics as well as its unit conversion. A modulo-one-turn
+position delivered at 100 Hz yields identical samples at +80 and −20 turns/s, even with no
+measurement noise. A controller cannot infer direction from those samples alone. A sufficient
+nearest-increment unwrap condition in turns is $\Omega\Delta t+2\epsilon<1/2$, with a bound
+on absolute speed, the actual intersample gap and per-reading error. Opposite half-turns coincide
+at equality with zero error. Preserve ambiguity after a packet loss, or use an independently
+qualified hardware turn counter or velocity channel.
 
 Noise streams are keyed by logical sensor, episode, sample and stochastic component. Bias can have
 persistent state and cross-axis correlation. Time correlations require carrying state across steps.
@@ -1000,7 +1038,13 @@ render handles, recurrent policy hidden state and independent termination/trunca
 uses explicit reset. Declare autoreset behavior when adapting another API. Data for a dual-device
 batch can return in device order internally and must reassemble in the caller's order. Invalid
 physics is a study error with the affected item, trace and validity mask. Exclude it from policy
-updates while retaining it in benchmark and failure counts. A robot fall is a valid transition.
+updates while retaining it in benchmark and failure counts. End the advantage trace at the gap.
+A policy can enter states where the solver fails preferentially. Suppose a baseline succeeds
+on 60 of 100 valid trials and a candidate succeeds on its two valid trials with 98 unresolved.
+The complete-case candidate rate is 100%, while its binary success rate over all 100 lies in
+[2%,100%]. Report unresolved counts by policy and action regime and rescore the same worlds
+with a qualified solver before promoting a ranking that depends on those outcomes. A robot fall
+is a valid transition.
 
 ### 9.3 POMDP, rewards and experimental splits
 
@@ -1297,7 +1341,11 @@ in the first convention and (2,1) in the second. Copying the numbers verbatim in
 A view with byte origin 4 and strides (8,−4) indexes elements (1,0,3,2). Carry the logical
 origin, allocation extent, stride unit and signedness. Check alignment and the full addressed
 range before conversion. Materialize unrepresentable views in logical order and charge the copy,
-or return an explicit refusal under a zero-copy contract.
+or return an explicit refusal under a zero-copy contract. Check independence for writable views
+separately from address bounds. A 2 × 2 view with element strides (1,1) maps world 0/channel 1
+and world 1/channel 0 to the same element. If the desired commands are 7 and 11, changing the
+order of valid stores changes the result. Permit shared read-only data. For writes require an
+injective map on independent outputs, a declared reduction, or separate storage.
 
 | Stage | Parallel axis | Resident output | Fidelity check and hazard |
 |---|---|---|---|
@@ -1339,8 +1387,18 @@ worlds by logical episode ID, or split independent design candidates for highly 
 studies. The memory estimator must fit **each** shard on its selected GPU. Query P2P access, actual
 bandwidth and memory availability at admission. Start with bounded host staging for aggregates.
 For synchronous PPO, freeze behavior-policy weights during collection. Gather the valid batch
-at one learner or synchronize global sums, squared sums and valid counts for normalization. At
-each distributed optimizer step, reduce loss-gradient sums and divide by the global valid count,
+at one learner or combine valid counts, means and centered sums of squares ($M_2$). When both
+shards are nonempty let $n=n_A+n_B$ and $\delta=\mu_B-\mu_A$. The combined mean is
+$\mu_A+\delta n_B/n$ and the combined $M_2$ is $M_{2,A}+M_{2,B}+\delta^2 n_A n_B/n$.
+An empty shard is an identity. Define the variance divisor, accumulation precision and epsilon
+at the learner. In a native binary32 test, equal-size constant shards at 4,095 and 4,097 have
+population variance one. Subtracting the squared mean from the raw second moment returned
+zero on the M5 Ultra and on each RTX 4090. The centered merge returned one on all three.
+The translated pair (−1,+1) gave one by both methods, and moving the center to 8,192 reproduced
+the cancellation. Each device ran the merge locally. Cross-device communication and training
+throughput require separate tests. [Chan, Golub and LeVeque on computing variance](https://www.tandfonline.com/doi/abs/10.1080/00031305.1983.10483115)
+
+At each distributed optimizer step, reduce loss-gradient sums and divide by the global valid count,
 apply the shared clipping/update rule and synchronize optimizer state. An empty shard contributes
 zero sums and participates. Skip the update if the global count is zero. One sample with gradient
 1 and three with gradient 0 must yield 0.25 in both single- and two-shard runs. Freeze minibatch
@@ -1979,14 +2037,14 @@ The unit of release is a usable vertical slice with a stated capability matrix.
 | W14 | W07,W09,W11 | Add camera, LiDAR, force/torque and estimator pipeline | Real time-stamped arrays from geometry, moving-camera and lever-arm fixtures, sensor masks, drift report |
 | W15 | W08,W12 | Native vector gym, optional Python adapter, asynchronous sensor/actor timing and masked resets | Terminal/truncation and privileged-channel tests, batched reference equals independent singleton worlds |
 | W16 | W01,W04 | Symbolic/JVP/VJP path, bounded proof projection and checker evidence | Supported capsule fixture, numeric 2R derivative, sign-mutant rejected. Gear theorem requires new profile |
-| W17 | W01,W08 | Device ABI, placement planner, memory estimator, deterministic packing and tracing | Origin and signed byte/element stride cases, packed comparison, overflow/cancel probes and measured transfers |
+| W17 | W01,W08 | Device ABI, placement planner, memory estimator, deterministic packing and tracing | Origin and signed byte/element stride cases, independent writable outputs, overflow/cancel probes and measured transfers |
 | W18 | W06,W17 | Native CUDA single-device cart loop and ray kernel, including ray versus analytic plane at z = 2 m | Strict CUDA completion receipts, operator parity, warm/cold timings, GPU-resident state across chunks |
 | W19 | W06,W17 | Native Metal cart loop and ray kernel with the same analytic plane fixture | Real MSL dispatch, successful host-visible completion before readback, reference comparison and per-stage device placement |
 | W20 | W14,W15,W18,W19,W22 | Extend device laws, sensor→actor→actuator path to declared legged/sensing cells | Both families run matched sensor/control/physics profiles. Explicit missing/unsupported cells |
-| W21 | W15,W18,W22 | Shard whole environments over trj's two devices with policy-version and optimizer-step barriers | Singleton versus sharded identities and weighted gradients on unequal/empty shards, cancellation, memory limits and 1→2 scaling |
+| W21 | W15,W18,W22 | Shard whole environments over trj's two devices with policy-version and optimizer-step barriers | Singleton/sharded identities, stable moments and weighted gradients on unequal/empty shards, cancellation, memory limits and 1→2 scaling |
 | W22 | W09,W12,W15 | Torch policy inference and PPO, residual controller and policy export | Frozen train/eval split, equal-budget baseline, clipped and critic gradients, packed-reset likelihood, joint sample law and reward visibility (§9.3) |
 | W23 | W04,W11,W12,W16,W22 | Automorphism registry, equivariance tests, physical sole A/B and group-based learning experiments | Fixed-observation latch tests deterministic and randomized tying, unilateral payload breaks reduction, §13.2 sole and equal-budget controller comparisons |
-| W24 | W08,W12,W16 | Hybrid sensitivities, Poincaré map and regular/grazing fixtures | Event-relocated FD checks, refusal at ambiguous events and full-cycle gait comparison |
+| W24 | W08,W12,W16 | Hybrid sensitivities, Poincaré map and regular/grazing fixtures | Event-relocated FD checks, refusal at ambiguous events, full-cycle and admitted switched-stride comparisons |
 | W25 | W09,W11,W14 | Scene suite and replay viewer, origin crosswalk, sensor exposures and discrepancy overlays | All requested environment classes have executable scenarios. Viewer matches committed time/geometry |
 | W26 | W02,W07 | Bench calibration and independent physical cart validation from current, encoder and crossing traces | Time-aligned measurement with uncertainty, sealed prediction and residuals, physical domain recorded. Optical extensions consume W14. |
 | W27 | W10,W13,W22,W23,W24 | Agent co-design, paired interventions, ranking/fidelity checks and frontier experiments | A fresh agent proposes, simulates, diagnoses, revises and repeats. Equal training budget and sealed report |
@@ -1994,7 +2052,7 @@ The unit of release is a usable vertical slice with a stated capability matrix.
 | W29 | W10,W20,W21,W22,W25,W27,W28 | End-to-end CPU/CUDA/Metal qualification and distributable starter pack | Matched benchmark matrix, recovery and migration tests, per-cell release claims and failure inventory |
 | W30 | W26,W29 | Calibrated release for named robot/material/scene cells | Held-out engineering prediction gates for advertised physical cells, independent replay and limits |
 | W31 | W02,W03 | Mission quantifiers, observable policy and checker ABI. Baseline tournament and symbolic reference fixtures | Independent client rejects swapped quantifiers, planted false witness and incomplete hull. Costs start at mission receipt |
-| W32 | W04,W09,W16,W31 | Convex family synthesis and realizable force authority. Use the lifted LP first | P01 recovered through the public API. Passive spring and positive load floor invalidate the boundary. Design-dependent weight defeats a convex interpolation |
+| W32 | W04,W09,W16,W31 | Convex family synthesis and realizable force authority. Use the lifted LP first | P01 recovered for adjustable and globally affine policies. Passive spring and positive load floor invalidate the original boundary. Design-dependent weight defeats a convex interpolation |
 | W33 | W07,W09,W31 | Belief-state game, causal clock and active docking probe | Positive controller and shared-history exclusion pass. Recover the P05 actuator–sensor boundary, veto equality, and reject reuse after gain support expands |
 | W34 | W11,W14,W31 | Paired scenario search and causal counterexample minimization | Export twin worlds with matching permitted histories and distinct required decisions. Recheck reduced examples in the canonical owner |
 | W35 | W14,W31,W33 | Design, compile and price a physical probe grammar in simulation. Integrate independent measurements | Direct dwell, programmed expert and generated probes. Seed material discrepancy, shared contact and withheld law. Preserve conditional/unknown verdicts |
@@ -2369,7 +2427,18 @@ Use proof assistants on reusable proof rules and translations. Avoid dispatching
 prover for each wheel/terrain pair.
 
 **Existing owners worth probing early.** At the §2 FrankenSim revision, `crates/fs-sos/src/lib.rs`
-describes polynomial models, SOS programs and interval verification. `fs-regime` exposes a π-group
+provides univariate polynomial and SOS routines. Two compiled public-API cases limit their use
+as certificate evidence at this revision. `Poly::new` drops a trailing coefficient of magnitude
+$2^{-50}$ from $p(x)=1-2^{-50}x$. On $|x|\le 2^{28}$, the owner certifies 1 for the resulting
+constant, while the authored lower endpoint is $1-2^{-22}$. Changing coordinates to $y=x/2^{28}$
+retains the linear term. Independently, `certified_bound_on` returns 1 for $p(x)=1-x/2$ on
+$|x|\le 2^{-55}$, even though its exact minimum is $1-2^{-56}$. Here the term survives and the
+final binary64 subtraction rounds upward. Before admitting a lower bound, check the authored
+coefficients or bound their translation error on the actual domain, and enclose the final
+endpoint outward. A witness failing either test cannot establish the physical inequality.
+[Reproduction against pinned FrankenSim](planning/astra-10x-reproduction.zip)
+
+`fs-regime` exposes a π-group
 basis, scaling maps and model admission. `fs-voi` exposes ranking-aware opportunity loss and
 unknown-resolution proposals. `fs-eproc` contains sequential evidence routines, and `fs-checker`
 checks packages outside the stepping process. Reuse these where the actual assumptions match.
@@ -2426,6 +2495,14 @@ achieves 90% per class under independent errors with an unbounded stopping horiz
 expected reads. The chance of still waiting after six reads is $27/512$. Forcing a fair guess
 then gives $225/256$ success per class, below 90%. Price delay and enforce the mission deadline
 for every compared sensing policy. [Reproduction bundle](planning/astra-10x-reproduction.zip)
+
+Pairwise independence also falls short of the seven-read guarantee. In each hidden class draw
+the number of erroneous readings as 1, 2, 3 or 4 with probabilities $(43,3,9,9)/64$, then place
+them uniformly among the seven slots. Each read is 75% accurate and all 21 pairs have the same
+table as independent reads. For any history with three or four errors relative to one class, its likelihood is the same
+under the opposite class. Enumerating all 128 bit strings gives optimal equal-prior success **55/64** (85.94%).
+The earlier 3807/4096 result requires joint independence. Bind the full error law or a proved
+bound on the decision-relevant histories before promising a 90% sensor budget.
 
 Translate this into geometry and hardware. The first robot task conceals one of two container
 classes behind identical exteriors. Admit three design edits: a load-sensitive wrist, a different
@@ -2534,7 +2611,7 @@ removed.
 
 Consider a robot carrying a 400 N vertical load on four point feet at $(\pm a,\pm b)$. Its
 center of mass can move through a rectangle with half-dimensions 150 mm and 75 mm. Every foot
-can deliver any independently commanded normal reaction from 0 to 160 N. Given a half-length
+can deliver any independently commanded normal reaction from 0 to 160 N. The allocator observes the load moments and can choose its four commands jointly. Given a half-length
 of $a=1/3$ m, how narrow can the robot be and still balance the **entire continuous payload
 envelope**? The answer is a half-width of **3/14 m**, or a full foot-center spacing of 3/7 m.
 
@@ -2573,7 +2650,18 @@ projected formulation each obtained the optimum in one solve. A passive equal-sp
 at $b=1/4$ m changes the design verdict. An active allocation uses $(155,135,105,5)$ N. The specified
 passive suspension instead produces $(175,115,85,25)$ N. The typed certificate must state whether
 the controller can realize the assumed load sharing and which load observations arrive in time.
-Use the lifted LP as the first implementation. Earn a specialized kernel through repeated changed
+
+Policy class alone can change the optimum. If the allocator must use a single affine law of the
+observed load moments $(P_x,P_y)$, average any feasible law over the rectangle's two reflections.
+Linearity, convex force limits and the symmetric mission preserve feasibility. The resulting
+symmetric affine force at foot $(s_x a,s_y b)$ is $100+s_x P_x/(4a)+s_y P_y/(4b)$ in newtons,
+where $s_x,s_y\in\{-1,1\}$. With $|P_x|\le60$ N·m and $|P_y|\le30$ N·m, the 160 N cap
+requires $b\ge1/2$ m. That affine law attains the bound. With freely adjustable forces, bilinear
+interpolation of the four complete corner allocations gives one implementable nonlinear policy
+on the whole load rectangle, attaining $b=3/14$ m. The affine restriction therefore needs **7/3 times the half-width** in this fixture. Bind both the observation and the controller class to the
+stance result. [Policy-constrained stance experiment](planning/astra-10x-reproduction.zip)
+
+Use the lifted LP for the adjustable-force case. Earn a specialized kernel through repeated changed
 queries with actual timings. [P01 report, source and results](planning/astra-10x-reproduction.zip)
 
 ### 18.8 Let the robot design the instrument that would change its own design
@@ -2611,6 +2699,18 @@ and measured the other pad at mission dwell. It chose correctly in 900/900 cases
 0.25 s setup cost the early procedure reduced incremental probe time by a factor of 3.33 on its
 admitted cases. That comparison assumes the existing measurement is available. The delayed-law
 failures prevent using this stopping rule on an uncharacterized material.
+
+A subsequent four-law calculation treated the delayed law as known. The compact and broad pads
+in a trial share the same residual fraction and time constant. Giving each pad independent
+extremes produces a misleading lower margin of −0.0776 N for compact minus broad under the
+delayed law. Keeping those parameters shared bounds that margin above 4.07 N throughout the
+specified box. On the original radius/dwell grid the earliest separating dwell is 0.5 s,
+with radius 1.5 times the reference under the original tie-break. After both ±0.02 reading
+errors are included, the gap between the nearest opposite-decision reading sets is about
+0.01287 in normalized sensor units. The choices matched all 900 enumerated conditions.
+With the existing compact-pad measurement and a 0.25 s setup, this gives an incremental modeled
+time ratio of 1.25/0.75 = 5/3 versus direct dwell. The 225 earlier held-out reversals stand.
+This follow-up tests a revised four-law model on known conditions.
 
 The exploratory inverse calculation asks which combinations of pads can sustain a 75 N pull.
 If the contacts are independently loaded and total pull is additive, a sum of per-pad lower
@@ -2804,8 +2904,9 @@ $\sum r_i\times(0,0,f_i)=(P_y,-P_x,0)$. For $P=(60,30)$ the ordered forces $160,
 give torque $(30,-60,0)$ N·m. The payload applies its negative in static equilibrium. The other
 vertices have their own permuted witnesses. Type the packet field, frame, origin, sign and units.
 Reject a packet that passes $(60,30)$ directly as the torque. The checker recomputes vertical
-force and both torque components, checks each cap, validates convex coverage and checks the information available
-to the allocator. The exclusion below $3/14$ m follows from $90+15/b>160$ with $b$ expressed in metres. At $1/5$ m it
+force and both torque components, checks each cap, and validates coverage by an admissible control law. In this
+specimen, bilinear interpolation implements the four witnesses using measured load moments. Relabeling that
+witness as a globally affine controller must fail even though every corner passes its individual force check. The exclusion below $3/14$ m follows from $90+15/b>160$ with $b$ expressed in metres. At $1/5$ m it
 requires 165 N at that foot. A swapped foot ordering with unchanged forces, an unreported positive
 force floor or a passive authority tag must cause withdrawal or rejection. Give the end user the
 incumbent cost and a checked matching lower bound when claiming a minimum. Strict feasible
@@ -2950,7 +3051,11 @@ requires motor torque, electrical supply and heat rejection. Adding battery capa
 mass that flows back into the torque requirement. In the monotone admissible fragment compile
 this feedback as a least-fixed-point problem over resource antichains and compare against a
 conventional monotone co-design solver. State the required order, continuity assumptions,
-bounds and convergence criterion. If changed gearing trades a larger static moment for a blocked
+bounds and convergence criterion. In a scalar pack-sizing fixture the required mass is
+$F(m)=1+0.99m$ in kilograms. At $m=99.5$ kg the next iterate differs by only 5 g, yet the
+smallest feasible mass is 100 kg. For an upper sizing witness require $F(U)\le U$ or a verified
+feasible enclosure. With a proved contraction constant $q<1$, the residual divided by $1-q$
+bounds fixed-point error in the associated norm. If changed gearing trades a larger static moment for a blocked
 swing or introduces a contact mode, keep the possibilities in separate cells or dispatch the
 original mechanics. Do not force the plant into a monotone budget model. The new question is
 how much of a physically measured robot and facility can share these contracts across edits,
@@ -3219,7 +3324,8 @@ The scientific ledger has seven independently audited claims. Five were verified
 including the evaluation rule. These seven belong to the original design study. One material composition claim needed centered nominal readings.
 The combined inverse-design interface remains a hypothesis. The subsequent docking extension
 supplies a dynamic actuator–sensor family and an integration target. The analytic investigations used CPU programs and conventional solvers. The native study in
-§11.6 measured one decision kernel on all three physical GPUs. End-to-end GPU simulation,
+§11.6 measured the docking classifier on all three physical GPUs. The separate §11.2 native
+probe checked the accuracy of a binary32 normalization merge on each device. End-to-end GPU simulation,
 high-dimensional hybrid reachability and field outcomes require the corresponding implementation
 packages.
 
@@ -3227,7 +3333,7 @@ The portable research bundle contains the protocols, source, raw outputs, indepe
 reproduction commands and a checksum manifest. It includes the stance, material, sensing,
 docking, pusher, native Metal/CUDA and statistical fixtures, together with the three authored
 idea slates, reciprocal reviews and final responses summarized in §20.5. After extraction,
-`python3 -B verify.py --all` checks the 160-file manifest payload, rebuilds the 20 locked pusher
+`python3 -B verify.py --all` checks the 169-file manifest payload, rebuilds the 20 locked pusher
 queries and their negative control, checks all twelve eliminated formulas against the locked
 intervals using Z3, recomputes summaries from the original paired timing rows and reproduces
 the one-term cart sensitivity experiment in §13.2. It also reruns the gain-support, wheel-stability,
@@ -3235,9 +3341,10 @@ physical-design and measurement-contract fixtures, the full 300-row planar frict
 independent decision-time and transfer counterexamples. It compares 207 recorded event times and
 156 peak pitches on the original quick grid and reconciles the 18 CUDA emitter hashes and its
 source digest to the retained terminal record. Run `python3 -B verify_negative.py` for the
-25 deliberate data and checker regressions. The bundle README gives separate commands and toolchain
-prerequisites to compile the PPO update, Gaussian sampler and tensor-layout probes against the
-named owner revisions. The separate friction-refinement replay holds the scorer cadence fixed.
+28 deliberate data and checker regressions. The verifier now rejects an independent gripper
+result with incorrect decision counts or feasible pad combinations, even if the producing program
+exits normally. The bundle README gives commands for the normalization probe on Metal/CUDA and
+the optional pinned PPO, tensor-layout, catalog, Lie differential and SOS checks. The separate friction-refinement replay holds the scorer cadence fixed.
 These commands also permit independent inspection of the archived native results. A future studio
 release must add live benchmark artifacts produced via its public interface. [Download the reproduction bundle](planning/astra-10x-reproduction.zip)
 

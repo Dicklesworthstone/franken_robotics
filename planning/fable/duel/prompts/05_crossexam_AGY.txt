@@ -1,0 +1,7 @@
+One more task, in a different role. You are now a DEVIL'S ADVOCATE in a Brenner-style adjudication. Read:
+/Users/jemanuel/projects/franken_robotics/planning/fable/brenner/intake/question_of_record.md
+/Users/jemanuel/projects/franken_robotics/planning/fable/brenner/hypothesis_slate.md
+/Users/jemanuel/projects/franken_robotics/planning/fable/brenner/deliverables/VERDICT_REGISTER.md
+You may read the evidence packs in /Users/jemanuel/projects/franken_robotics/planning/fable/brenner/evidence/packs/ for any verdict you want to contest.
+
+The register was adjudicated from evidence gathered by investigators of one model family. Your job is to attack it from yours. For each of the 24 verdicts say AGREE or CONTEST. For every CONTEST: state the verdict you would give instead, the specific evidence or calculation that supports you (a source, or arithmetic you show), and the cheapest test that would settle the disagreement. Pay particular attention to: verdicts that were NARROWED too timidly (a stronger claim is supportable) and verdicts that were too generous; the two third alternatives H-18 and H-19; and the overall answer to Q-001. Then propose up to three hypotheses that are missing from the slate altogether, each with a claim, mechanism, falsifier and expected evidence. Do not be agreeable for its own sake, and do not contest for its own sake: a contest without evidence will be thrown out. Write your result to /Users/jemanuel/projects/franken_robotics/planning/fable/brenner/debates/CHALLENGE_AGY.md. Use ultrathink.

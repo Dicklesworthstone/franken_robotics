@@ -1,0 +1,48 @@
+# Verdict register — `RS-20261121-frob-fable-10x`
+
+Adjudicated from the evidence packs in `../evidence/packs/` (four independent investigators, refuter first) and
+the audited reasoning passes in `../../mor/`. No hypothesis was tested by running FrankenRobotics code; none
+exists. States: ACTIVE, NARROWED (the surviving claim is stated), REFUTED, DEFERRED.
+
+| ID | State | What survives, with the numbers the evidence supports | Decisive evidence | Consequence for the plan |
+|---|---|---|---|---|
+| H-01 Sampling control, zero training | NARROWED | A screening rung and an out-of-distribution fallback: about 0.3–1 GPU-minute per quadruped episode and 1–5 per humanoid episode; real-time control of one world on a CPU with about 30 samples is published. As acceptance evidence it loses: a few hundred episodes cost more than training once. | Published sampling-MPC configurations; arithmetic on rollout counts | Reflex gets a sampling controller as fallback and as a demonstration source for distillation. It is never the evaluator of record. |
+| H-02 Universal policy prior | NARROWED | Within one morphology class: zero-shot 70–85% of specialist return; fine-tuning with 1–20% of from-scratch steps. Across topology-diverse designs at affordable pretraining: zero-shot 10–40%, fine-tuning gain 2–3×. | Multi-embodiment locomotion papers, authors' own limits | Family policies per morphology class, not one universal policy. A gated experiment needing an owner-approved compute envelope. |
+| H-03 Topology as data | NARROWED | Mixed-topology populations with few worlds per design, in size buckets. An incumbent publishes a mixed batch at 0.86 of its homogeneous rate. The only differentiators left are measured throughput and time from an edit to the first GPU step. | Incumbent documentation and paper | Per-world model variants inside padded capacities; a head-to-head experiment with a per-family-template control arm. |
+| H-04 Supercompiled kernels | REFUTED as a GPU throughput lever | The Lie-algebraic recursions are about 16–20% of an incumbent's step, so the ceiling is about 1.2×. Derived derivative kernels for CPU solvers survive. | Incumbent step trace | Specialization only for survivors and only if our own profile shows a larger share. Derivation stays for correctness, certificates and CPU solvers. |
+| H-05 Gait continuation | NARROWED | Full-order orbit solves take about 4–260 s of CPU at 20–68 states: a screening signal for periodic gaits on regular ground, at 2% to over 100% of a training run. Not a referee-ready controller. | Published orbit-library solve times | A gait-orbit analysis with continuation in design parameters, labeled screening. |
+| H-06 Region certificates | NARROWED | Certificates per constraint on sub-boxes of about six parameters or fewer. Joint paving of a 10–20 dimensional box is out of reach. | Interval-analysis literature; bisection arithmetic | Family answers are built from per-constraint certificates, monotonicity and witnesses, not from brute paving. |
+| H-07 Rare-event engine | NARROWED | 10–100× fewer episodes at 10⁻⁴–10⁻⁵ for failures driven by per-step disturbances with a good score. Valid bounds come from bounded-weight importance sampling or crude sampling; splitting explores. | Adaptive-stress-testing and importance-sampling results | Nemesis separates exploration from certification. |
+| H-08 Counterfactual autopsy | NARROWED | Interventional contrasts reported with a flip rate under perturbation. Design-parameter interventions re-run from the episode start. Attribution runs in double precision. | Sensitivity of contact dynamics | Autopsy reports stability of each attribution and uses a placebo fork. |
+| H-09 Incremental evaluation | REFUTED as stated | Exact reuse of rollouts after a mass or geometry edit is at most about 10% of compute. A memo graph for analyses, step plans, kernels and scene compiles survives as hygiene. Dependency-directed revalidation of verdicts survives as an evidence rule. | Dependency analysis | The memo graph extends past model identity; "which verdicts survive an edit" becomes a verb. |
+| H-10 Value of information | NARROWED | 2–5× from stopping and elimination when candidates are separated; about 1× otherwise. | Best-arm identification results | Experiment planning is used at the finalist stage and for choosing measurements. |
+| H-11 Always-on referee | NARROWED | A sampled snapshot referee covering on the order of 0.1–2% of GPU world-seconds, on any backend. A correctness guard, not a speed lever; "zero copy" is irrelevant at these data rates. | Throughput arithmetic | A background referee sampler with a reported coverage figure. |
+| H-12 Generative structure | DEFERRED as a decision-time lever | 7–30% lighter links against engineered parts, about 4% of robot mass or less. It improves the output, not the time to a decision. | Topology-optimization results | Foundry is an output-quality subsystem. |
+| H-13 Requirements replace rewards | NARROWED | Bounded-time requirements as the acceptance metric and as a falsification score. Not a replacement for shaped rewards. | Temporal-logic reinforcement-learning results | Missions are requirements; training keeps reward terms. |
+| H-14 Conformal reality bands | NARROWED | Coverage within one calibrated robot and task family, varying by about six points at n = 20. Nothing for designs that were never built. | Conformal-prediction theory | Ground issues bands per calibrated family and refuses elsewhere. |
+| H-15 Half precision | REFUTED | The condition number times half-precision round-off is at or above one in 37–64% of sampled contact states; refinement alone costs more than the single-precision factorization. | Arithmetic and an emulated measurement | Not built. Single precision with diagonal scaling. |
+| H-16 Living multiphysics | REFUTED as stated | A contact-level film-friction law and rigid proxies capture the failures; full-room fluid is out of memory by orders of magnitude. | Memory and Mach-number arithmetic | Film law and proxies are Solid; coupled islands are a Moonshot with known answers and a kill gate. |
+| H-17 Mission to design by solving | NARROWED | Trajectory optimization with design variables as local refinement (about 12 degrees of freedom, up to 17 parameters, 4–10 minutes). Polynomial synthesis only inside the symbolic library's caps. | Published co-optimization; library caps | A bounded exact synthesis lane and a refinement lane; continuation is Frontier on the CPU. |
+| H-18 Information, not engine (third alternative) | NARROWED | Training dominates published loops, so the engine matters, but speed alone caps well under ten: the lever is deciding more designs per turn and training fewer of them. | Phase budgets of published loops | The ten-fold test measures decisions, with a phase ledger. |
+| H-19 A thin layer over an incumbent (third alternative) | ACTIVE | Nearly every mechanism can be hosted by an incumbent with a layer. Engine-internal gaps are few: deterministic forks with mixed topologies, replay of one world outside its batch, certificates, a Metal tier. | Rival audit at pinned versions | The ten-fold test includes a composed-incumbent arm, and the plan says what it will do if that arm ties. |
+| H-20 Proof-guided control | NARROWED | Reduced-order barrier shields with a statistically measured margin. No full-order certificates. | Template-anchor literature | An energy-budget tier and runtime filters, classed Tested. |
+| H-21 Policy inheritance | NARROWED | Parameter edits: 1–20% of from-scratch steps. Single-limb topology edits: 33–100%. Chained inheritance risks loss of plasticity. | Transfer results | Inheritance for parameter edits by default; resets on a schedule. |
+| H-22 Rank fidelity | NARROWED, unmeasured | No published rank agreement between a shared policy and specialists. The nearest figure is a rank correlation of 0.40 overall. A control variate saves about 2× unless correlation exceeds 0.9. | Literature search | The rank-agreement experiment is the decisive early experiment of the program. |
+| H-23 A family per dispatch | NARROWED | Fewer rounds are plausible; measured compute gains in published population methods are about 3–4×. Paired finite-difference gradients are unproven over long contact-rich horizons. | Published population co-design | Families per dispatch with short-horizon paired differences. |
+| H-24 Geometric-algebra tree policy | NARROWED | Invariance to heading and description conventions is necessary; augmentation recovers most of it. No locomotion evidence for the geometric-algebra specifics: expect 0–1.3×. | Equivariant-policy results | A Moonshot experiment with a plain morphology transformer as the control arm. |
+
+## Answer to Q-001
+
+No single mechanism delivers ten-fold. The thesis that survives is a conjunction: decide many designs per agent
+turn; avoid training for most of them with family policies and inheritance, gated by measured rank agreement;
+stop early; search for failures instead of waiting for them; and measure the result as time to an independently
+accepted answer against a composed incumbent. On quadruped missions an incumbent already trains in about seven
+minutes on one RTX 4090, so the realistic range is three to ten; on humanoid and multi-robot missions the range is
+wider. Engine speed is a parity requirement.
+
+## Disagreements kept open
+
+- Whether a sampling controller should be the default baseline (two idea slates ranked it in their top three; the
+  cost arithmetic says screening only).
+- Whether specialization pays (refuted on an incumbent's trace; our own profile decides).
+- Whether formal certificates change any design decision (no evidence either way).

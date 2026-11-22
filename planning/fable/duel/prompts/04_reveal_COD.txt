@@ -1,0 +1,5 @@
+I asked the other two models the exact same thing, to score YOUR ideas using the same grading methodology. Read what they wrote about your ideas (each file also scores a third model's ideas; focus on the parts about yours):
+/Users/jemanuel/projects/franken_robotics/planning/fable/duel/WIZARD_SCORES_CC_ON_OTHERS.md
+/Users/jemanuel/projects/franken_robotics/planning/fable/duel/WIZARD_SCORES_AGY_ON_OTHERS.md
+
+Now give me your honest reaction. Where do you agree with their assessment? Where do you think they're wrong, and why? Are there any ideas where you now think the other model made a good point that changes your own evaluation? Then answer two more questions: (1) Which single idea from EACH of the other two models do you now think is the strongest, and what is the best possible case for it (steelman it)? (2) What important idea did NONE of the three of us think of — something that would matter for a 10x unlock in agent-driven robot design and simulation? Give up to three, each with mechanism, lever and falsifier. Write all of this to /Users/jemanuel/projects/franken_robotics/planning/fable/duel/WIZARD_REACTIONS_COD.md. Use ultrathink.

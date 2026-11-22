@@ -1,0 +1,274 @@
+# Identifier collision and reference report
+
+## Identifiers defined in more than one part (possible collisions)
+
+- **A-01**
+    - P02.md:942: | A-01 Mobility | 3 | A-09 Connection curvature | 4, for kinematic shape-changers |
+    - P09.md:118: | A-01 | Mobility | How many degrees of freedom does it really have? Is any loop over-constrained? | Rank of the constra
+- **A-02**
+    - P02.md:943: | A-02 Mass roll-up | 2 | A-10 Co-design closure | 6 |
+    - P09.md:119: | A-02 | Mass roll-up | Mass, centre of mass and inertia by subtree; physical consistency | C-03 | ✓ | [S] |
+- **A-03**
+    - P02.md:944: | A-03 Symmetry | 5 | A-11 Actuator envelope | 6 |
+    - P09.md:120: | A-03 | Symmetry | What is the symmetry group, how does it act, and what is the smallest edit that restores a near-symm
+    - P09.md:1142: | A-03 | A quadruped with one forward lidar: four-element mechanical group, two-element observation-preserving subgroup 
+- **A-04**
+    - P02.md:945: | A-04 Gait atlas | Separate verb | A-12 Modes | Separate verb |
+    - P09.md:121: | A-04 | Gait atlas and orbits | Which gaits can this body have, with what phase lags and stability margins? Does a peri
+- **A-05**
+    - P02.md:946: | A-05 Workspace | 7, for the task's heights | A-13 Self-collision and clearance | 3 |
+    - P09.md:122: | A-05 | Workspace | Can the feet or the hand reach what the tasks require (step height, shelf height)? | C-11 | | [S] |
+- **A-06**
+    - P02.md:947: | A-06 Singularities | 3, at the reference pose | A-14 Sensor coverage | 7 and 8 |
+    - P09.md:123: | A-06 | Singularities | Where are they, and how close does a nominal gait come? | C-11 | | [S] |
+- **A-07**
+    - P02.md:948: | A-07 Maneuverability | 4; passability in 7 | A-15 Structural margin | Separate verb |
+    - P09.md:124: | A-07 | Maneuverability | Growth vector, turning footprint, cost of a sideways shift, door and aisle passability | C-07
+    - P09.md:1143: | A-07, A-09 | A mecanum base with misaligned rollers: full-rank curvature, rank drop in the growth vector | A curvature
+- **A-08**
+    - P02.md:949: | A-08 Static stability | 6 | A-16 Sensitivity | Separate verb |
+    - P09.md:125: | A-08 | Static stability | Support margins, tip-over angles on slopes, contact-wrench-cone margin with payload | C-06; 
+    - P09.md:1144: | A-08 | The stance enumeration: 11,520 of 11,520 classifications agree with the exact classifier; equal-spring forces (
+- **C-15**
+    - P01.md:117: | C-15 | Evidence is a test martingale | [S] | §24, §28 | `frob-arena` |
+    - P01.md:636: ### C-15 Evidence is a test martingale
+    - P09.md:210: ### 28.6 Comparing designs honestly (C-15)
+- **FMT-FMISSION**
+    - P07.md:164: #### 25.3.2 The `.fmission` schema (`FMT-FMISSION`, `frob.mission/1`)
+    - P12.md:1074: | `FMT-FMISSION` | `.fmission` | `frob.mission/1` | `frob-spec` | Agents | `frob-mission`, its only evaluator; `frob-lem
+- **FROB-REF-160**
+    - P03.md:1133: | `FROB-REF-160` | No shape class | A design exceeds the largest admitted bucket and the tree-operator route is off | En
+    - P10.md:1083: | FROB-REF-160 | Optimization or packet export for a design with no qualification verdict | Qualify, or run with `--expl
+- **FROB-REF-161**
+    - P01.md:2289: | FROB-REF-161 | A solid body exceeds the mass plausibility bound of its part class and no fill is declared (§11.5). |
+    - P03.md:1134: | `FROB-REF-161` | Group not observation-preserving | A quotient or a weight tie is requested under a group that moves a
+    - P10.md:1084: | FROB-REF-161 | A load case that is not one instant, or a campaign failing the free-body check | The offending samples 
+- **FROB-REF-162**
+    - P03.md:1135: | `FROB-REF-162` | Reuse without a dependency digest | A cached result has no recorded dependency digest, or the shadow 
+    - P10.md:1085: | FROB-REF-162 | Telemetry without the traces or samples a load metric needs | The telemetry level and worlds required |
+- **FROB-REF-212**
+    - P02.md:356: | FROB-REF-212 | A Cayley update with ‖ω‖·h above 0.2 in one substep | The substep count that admits it |
+    - P03.md:556: | `FROB-REF-212` | Cayley bound | ‖ω‖·h > 0.2 in a substep (existing, C-05) | Substep; use the exponential |
+- **FROB-REF-241**
+    - P03.md:1603: | `FROB-REF-241` | No rotor state | Backlash rows requested at a card level without a rotor degree of freedom | Raise th
+    - P05.md:1152: | `FROB-REF-241` | The determinism class a verb requires is not attainable on the requested placement |
+- **FROB-REF-242**
+    - P03.md:1604: | `FROB-REF-242` | Film law out of domain | Π or h/σ outside the card's calibrated range under `--strict-data` | Use a c
+    - P05.md:1153: | `FROB-REF-242` | A solve is ill-conditioned beyond its precision profile, under the `refuse` policy |
+- **FROB-REF-243**
+    - P03.md:1605: | `FROB-REF-243` | Soil or tyre law out of range | Pressure, slip or sinkage outside the card's validity range | Another
+    - P05.md:1154: | `FROB-REF-243` | An anchored offset left its range in one step, or a cell index left the scene bounds |
+- **FROB-REF-244**
+    - P03.md:1606: | `FROB-REF-244` | Stiffness beyond single precision | Estimated scaled κ·u above the admission bound on an `f32` tier |
+    - P05.md:1155: | `FROB-REF-244` | A kernel is not dimensionally homogeneous (build time) |
+- **FROB-REF-245**
+    - P03.md:1607: | `FROB-REF-245` | Half precision | A half-precision solve or state buffer is requested | None; not offered |
+    - P05.md:1156: | `FROB-REF-245` | A banned operation appears in kernel source (build time) |
+- **FROB-REF-246**
+    - P03.md:1608: | `FROB-REF-246` | Law not admitted | A law requested on a tier or profile where its gate has not passed | The admitted 
+    - P05.md:1157: | `FROB-REF-246` | A strict predicate in floating point without an exact form or a certified guard (build time) |
+- **FROB-REF-261**
+    - P01.md:2290: | FROB-REF-261 | A derivative is requested near grazing, at an ambiguous event order, across a change of active set or a
+    - P10.md:1090: | FROB-REF-261 | An optimized part that fails the independent check | The governing case and location; tighter cap or le
+- **FROB-REF-441**
+    - P04.md:1903: | `FROB-REF-441` | History buffers cannot cover the declared latency and exposure window | Raise the queue capacity; sho
+    - P06.md:723: | FROB-REF-441 | A skill's task wrench lies outside the body's attainable set | The witness names the binding actuator o
+- **FROB-REF-521**
+    - P06.md:1431: | FROB-REF-521 | `step` on a world that needs reset, in explicit mode | Reset the world; or run in the labeled `autorese
+    - P08.md:690: | FROB-REF-521 | Dimension mismatch inside an atom |
+- **FROB-REF-522**
+    - P06.md:1432: | FROB-REF-522 | A non-finite action, before any state changes | Fix the policy output; the world and channel are named 
+    - P08.md:691: | FROB-REF-522 | A temporal operator has no finite window |
+- **FROB-REF-524**
+    - P06.md:1433: | FROB-REF-524 | The actor schema reads a `critic-only` or `evaluation-only` channel | Move the channel to the critic; o
+    - P08.md:693: | FROB-REF-524 | A window bound is not a multiple of the clock period and no rounding is declared |
+- **FROB-REF-527**
+    - P06.md:1434: | FROB-REF-527 | The action law at learning differs from the law at collection | Recollect; or relabel under the registe
+    - P08.md:696: | FROB-REF-527 | A requirement has no labelled examples, or the monitor disagrees with a label |
+- **FROB-REF-531**
+    - P06.md:1435: | FROB-REF-531 | A policy's mapping table does not match the design, or cannot be built for an edit | Supply the corresp
+    - P08.md:700: | FROB-REF-531 | A request mixes study types |
+- **FROB-REF-540**
+    - P03.md:1136: | `FROB-REF-540` | Gradient unreliable | Non-smooth metric, horizon above the admitted cap, pairs diverged early, or an 
+    - P09.md:1092: | FROB-REF-540 | A comparison that mixes study types, or re-reads fixed-n data as a sequential study | Declare one type;
+- **FROB-REF-541**
+    - P03.md:1137: | `FROB-REF-541` | Outside generator support | A family-policy score is requested for a design outside its training gene
+    - P09.md:1093: | FROB-REF-541 | A fixed-n study whose declared verdict set contains an unreachable verdict | Raise n to the first value
+- **FROB-REF-544**
+    - P06.md:1438: | FROB-REF-544 | A training gate record without its negative controls | Add the zero-weight, random and shuffled-label c
+    - P09.md:1096: | FROB-REF-544 | A pairing keyed by event order or by a training counter | Space-indexed fields; (world, replicate) addr
+- **FROB-REF-547**
+    - P06.md:1439: | FROB-REF-547 | A tensor view the receiver cannot represent, under a zero-copy contract | Allow one charged copy; chang
+    - P09.md:1099: | FROB-REF-547 | A `model-conditional` result offered as a design comparison without its condition, or as input to a bui
+- **FROB-REF-561**
+    - P05.md:1158: | `FROB-REF-561` | A paired statistic was requested with an arm of class D4 or of unrecorded class, or as paired across 
+    - P08.md:1187: | FROB-REF-561 | The failure predicate changed after sampling began |
+- **FROB-REF-562**
+    - P05.md:1159: | `FROB-REF-562` | Attribution or a counterfactual fork was requested below class D2 |
+    - P08.md:1188: | FROB-REF-562 | Splitting requested where no randomness enters after the fork |
+- **FROB-REF-721**
+    - P03.md:562: | `FROB-REF-721` | Referee capacity | An island exceeds the referee's contact cap, or FrankenSim's fixed-witness gate re
+    - P11.md:799: | `FROB-REF-721` | The verb is not implemented in the §0.2 sense in this build | 5 |
+- **FROB-REF-722**
+    - P03.md:563: | `FROB-REF-722` | Capacity overflow, refused | A world exceeds its contact or row capacity and the caller chose refuse 
+    - P11.md:800: | `FROB-REF-722` | A write outside the caller's namespace or lineage | 5 |
+- **FROB-REF-840**
+    - P07.md:1923: | `FROB-REF-840` | The `.fmission` file is not valid: unknown field, missing unit, misspelt parameter, number not an exa
+    - P08.md:703: | FROB-REF-840 | A session without `qual:admin` asks for sealed confirmation data before close |
+    - P09.md:1748: | FROB-REF-840 | Citing a claim whose evidence closure is dangling or tombstoned | Re-run the evidence; the tombstone na
+    - P10.md:552: | FROB-REF-840 | A dataset lacking licence, provenance, rights or measurement uncertainty | The missing fields |
+- **FROB-REF-841**
+    - P07.md:1924: | `FROB-REF-841` | The world family is empty, or its scope changed after candidates were tested | The emptying constrain
+    - P08.md:704: | FROB-REF-841 | A confirmation request was not committed first, or differs from its commitment |
+    - P09.md:1749: | FROB-REF-841 | A publish under a late lease | Re-acquire; replay from the last committed tick |
+    - P10.md:553: | FROB-REF-841 | Clock alignment under-determined, or a scored instant outside the bracket | The marks needed |
+- **FROB-REF-842**
+    - P07.md:1925: | `FROB-REF-842` | The predicates conflict with the world family for every design | A minimal conflicting subset, with i
+    - P08.md:705: | FROB-REF-842 | The units the request needs at its level exceed its budget; the reachable verdicts are attached |
+    - P09.md:1750: | FROB-REF-842 | Different bytes for a committed chunk key | Stop the run; file the determinism violation with both hash
+    - P10.md:554: | FROB-REF-842 | A fit on a parameter set that fails identifiability | The aliased combination and the separating experi
+- **FROB-REF-843**
+    - P07.md:1926: | `FROB-REF-843` | Evidence or a certificate establishes a different quantifier prefix than the query's, including clair
+    - P08.md:706: | FROB-REF-843 | The candidate's lineage contains data from the sealed family |
+    - P09.md:1751: | FROB-REF-843 | A fork that asks to reuse state its change set invalidates | Fork at the earliest valid tick returned; 
+    - P10.md:555: | FROB-REF-843 | A read of sealed data with no frozen prediction, or a prediction changed after freezing | Register a ne
+- **FROB-REF-844**
+    - P07.md:1927: | `FROB-REF-844` | No quantifier prefix, or a hidden parameter with no persistence declaration | The two candidate decla
+    - P08.md:707: | FROB-REF-844 | A cluster would be used twice |
+    - P09.md:1752: | FROB-REF-844 | A chunk that is not a partition extent, or whose predecessor is not the frontier | Publish in order on 
+    - P10.md:556: | FROB-REF-844 | Reuse of a spent holdout | Acquire fresh sealed data |
+- **FROB-REF-845**
+    - P07.md:1928: | `FROB-REF-845` | A policy is indexed by a parameter the controller cannot observe | Move the parameter into the world,
+    - P08.md:708: | FROB-REF-845 | A result is cited as qualified without a promoting receipt |
+    - P09.md:1753: | FROB-REF-845 | A metric computed over missing samples | Re-run with the channel retained; accept `unavailable` |
+    - P10.md:557: | FROB-REF-845 | A band for an uncalibrated cell, or with too few calibration points | Samples present and samples neede
+- **FROB-REF-846**
+    - P07.md:1929: | `FROB-REF-846` | A chance constraint lacks its population, event or confidence, or marginal stage rates are multiplied
+    - P09.md:1754: | FROB-REF-846 | A snapshot restored under another numerical profile and labelled a continuation | Request a comparison 
+    - P10.md:558: | FROB-REF-846 | A band for a design that was never built | `reality: no-claim`, with the simulation's own interval |
+- **FROB-REF-847**
+    - P07.md:1930: | `FROB-REF-847` | An observation has no arrival instant, or a policy uses information before it arrives | The instant a
+    - P09.md:1755: | FROB-REF-847 | A pagination cursor used with a different pin, filter or order | Restart the query |
+    - P10.md:559: | FROB-REF-847 | Use of a retired calibration | The retirement reason; recalibrate |
+- **FROB-REF-848**
+    - P07.md:1931: | `FROB-REF-848` | A proof kind is unknown, at an unknown version, disabled, or used outside its scope | The kinds admit
+    - P09.md:1756: | FROB-REF-848 | An order-dependent aggregate requested on the evidence path | Use the integer histogram |
+    - P10.md:560: | FROB-REF-848 | A private or non-redistributable input to a kit | The offending inputs |
+- **FROB-REF-849**
+    - P07.md:1932: | `FROB-REF-849` | Certificate arithmetic is malformed: a non-reduced rational, a size limit exceeded, an interval witho
+    - P09.md:1757: | FROB-REF-849 | A tier-corrected estimate across identities, with no audited address, or below the effective-sample flo
+    - P10.md:561: | FROB-REF-849 | An as-built registration that is ill-posed or below its noise screen | Fiducials needed; residual again
+- **FROB-REF-850**
+    - P07.md:1933: | `FROB-REF-850` | A frame, unit, sign or port order in a certificate does not match its definitions (a first moment pas
+    - P09.md:1758: | FROB-REF-850 | A deletion that would remove a pinned object | Withdraw the claim first |
+    - P10.md:562: | FROB-REF-850 | Pooling across cells, across `ModelId`s, or of synthetic with real data | Separate the pools |
+- **FROB-REF-851**
+    - P07.md:1934: | `FROB-REF-851` | A certificate assumes an authority the design does not declare, or omits a force floor or other activ
+    - P09.md:1759: | FROB-REF-851 | Closing a bead without a resolving log line from another session | Record the gate from a fresh session
+- **FROB-REF-860**
+    - P10.md:1092: | FROB-REF-860 | An export without the flags, or any attempt to produce a true flag | None |
+    - P11.md:1094: | `FROB-REF-860` | An artifact whose authorization flags are missing or not `false` | 3 |
+- **FROB-REF-861**
+    - P01.md:2291: | FROB-REF-861 | Unknown proof kind. |
+    - P05.md:1161: | `FROB-REF-861` | A number from a `fast-training` run was cited as evidence, or a policy trained under it lacks a stric
+    - P06.md:730: | FROB-REF-861 | Sampling-controller episodes were offered as the scoring source of acceptance, promotion or qualificati
+    - P10.md:1093: | FROB-REF-861 | A priced parts list without a pinned, licensed catalogue | Omit prices |
+    - P11.md:1095: | `FROB-REF-861` | A result cited above its claim product | 3 |
+- **FROB-REF-862**
+    - P01.md:2292: | FROB-REF-862 | The quantifier prefix, domain or assumption set of a certificate does not match the query it is offered
+    - P05.md:1162: | `FROB-REF-862` | A performance figure without a complete disclosure block (§36.7) |
+    - P10.md:1094: | FROB-REF-862 | A STEP export above its bounds or failing bit-exact replay | Decimate under a stated tolerance |
+    - P11.md:1096: | `FROB-REF-862` | A result of class D4 offered as evidence | 3 |
+- **FROB-REF-863**
+    - P01.md:2293: | FROB-REF-863 | A side condition of a proof rule is missing, or a field has the wrong frame, origin, sign or unit. |
+    - P05.md:1163: | `FROB-REF-863` | A performance ratio without a paired lower bound (§36.6) |
+    - P10.md:1095: | FROB-REF-863 | A fixed-point obligation refuted or undecided within budget | The counterexample input, or a wider form
+    - P11.md:1097: | `FROB-REF-863` | A payload that carries code, or a weight format outside the allowlist | 3 |
+- **FROB-REF-864**
+    - P01.md:2294: | FROB-REF-864 | A no-authorization flag is missing or true. |
+    - P05.md:1164: | `FROB-REF-864` | A device result cited without a current CPU-versus-device check |
+    - P06.md:1441: | FROB-REF-864 | A `model-conditional` result offered for promotion, build or prototype budget | Resolve the variant tha
+    - P10.md:1096: | FROB-REF-864 | A lifecycle law outside its validity domain, or cited above class Estimated | The domain and the card n
+    - P11.md:1098: | `FROB-REF-864` | An import over its size, depth or polygon limit | 3 |
+- **FROB-REF-865**
+    - P01.md:2295: | FROB-REF-865 | A result is presented above the class of its weakest input, or as `Proved` or `Certified` without a cer
+    - P05.md:1165: | `FROB-REF-865` | A summary statistic that omits what it excluded |
+- **FROB-REF-866**
+    - P01.md:2296: | FROB-REF-866 | A verdict is reused after a change without a recorded implication (D-11). |
+    - P05.md:1166: | `FROB-REF-866` | A speed experiment requested without its computed ceiling, or with a ceiling below its goal (§36.5) |
+- **GOAL-10**
+    - P00.md:986: | GOAL-10 | Make any world reproducible: re-run any world alone on the CPU from its address, bit for bit where the devic
+    - P09.md:1461: ### 29.8 Replay, teleport and forks (GOAL-10)
+- **GOAL-11**
+    - P00.md:987: | GOAL-11 | Account for energy: a per-actuator and per-contact balance in which every joule that enters a rollout is att
+    - P09.md:1520: ### 29.9 The energy ledger (GOAL-11) and the audit for created energy
+- **GOAL-16**
+    - P00.md:992: | GOAL-16 | Detect results that depend on simulator artifacts or on model form before they are reported: promotion betwe
+    - P06.md:1343: ### 23.16 Detecting exploitation (GOAL-16), and rank robustness of finalists [S]
+- **KILL-DR**
+    - P03.md:627: | ✖ KILL-DR | ρ below 0.7 for the promoted quantities on 200 battery addresses, or effective sample size below 30% of th
+    - P09.md:1828: | ✖ KILL-DR | ρ_ep below 0.7 on 200 paired addresses in every stratum tested, or GATE-CHRON-09 coverage fails after one 
+- **KILL-FDGRAD**
+    - P03.md:1192: | ✖ KILL-FDGRAD | §17.13 | Rank-based search; the stencil as a sensitivity report |
+    - P09.md:1199: | ✖ KILL-FDGRAD | The paired finite-difference pilot of §28.8 fails | Derivative-free search only |
+- **KILL-FILM**
+    - P03.md:1682: | ✖ KILL-FILM | §18.8 | Static condition cards on lockstep tiers; the law on transactional profiles only |
+    - P04.md:1219: | ✖ KILL-FILM | §19.10.7 | Static film-friction patches |
+- **KILL-RANK**
+    - P03.md:628: | ✖ KILL-RANK | Top-weighted τ below 0.5 in more than half the strata for the reference classes | Tier pairs promote ind
+    - P09.md:1195: | ✖ KILL-RANK | GATE-ATEL-07 fails for every morphology class tested | R1 is `discard-only` everywhere; the ladder's cla
+- **KILL-SLOT**
+    - P05.md:459: | ✖ KILL-SLOT | Trigger: any slot-invariance failure at GATE-SPARK-15, or 99th-percentile step time more than 10% above 
+    - P11.md:878: | KILL-SLOT | — | Trigger: any digest difference under co-tenancy, or GATE-TETHER-09's throughput or step-time limits fa
+- **KILL-SPECIALIZE**
+    - P03.md:1191: | ✖ KILL-SPECIALIZE | §17.9 | The table-driven kernel only |
+    - P05.md:675: | ✖ KILL-SPECIALIZE | Trigger: in the pilot (c) over (b) is below 1.2 on the whole step, or (c) takes more than 60 s to 
+
+## Counts of definitions by kind
+
+- A: 26
+- ADR: 206
+- ADR-REF: 8
+- BET: 37
+- C: 40
+- D: 19
+- DC: 11
+- FMT: 13
+- FROB-REF: 213
+- GATE: 269
+- GATE-REF: 9
+- GOAL: 43
+- INT: 33
+- INV: 190
+- INV-REF: 4
+- KILL: 110
+- KILL-REF: 1
+- L: 12
+- NS: 24
+- OPEN: 137
+- OPEN-REF: 4
+- PO: 114
+- PO-REF: 3
+- T: 35
+
+## Referenced but never defined in any Phase 1 part (GATE/KILL/INT/OPEN/REF/PO/INV/ADR/C/T/A/DC/BET/GOAL/NS/FMT)
+
+- FROB-REF-114: referenced in ['P02.md']
+- FROB-REF-115: referenced in ['P02.md']
+- FROB-REF-116: referenced in ['P02.md']
+- FROB-REF-118: referenced in ['P02.md']
+- FROB-REF-119: referenced in ['P02.md']
+- FROB-REF-120: referenced in ['P02.md']
+- FROB-REF-121: referenced in ['P02.md']
+- FROB-REF-122: referenced in ['P02.md']
+- FROB-REF-123: referenced in ['P02.md']
+- FROB-REF-124: referenced in ['P02.md']
+- FROB-REF-125: referenced in ['P02.md']
+- FROB-REF-126: referenced in ['P02.md']
+- INT-F3D-01: referenced in ['P12.md']
+- INT-FDGR-01: referenced in ['P12.md']
+- INT-FJAX-01: referenced in ['P12.md']
+- INT-FSIM-12: referenced in ['P12.md']
+- INT-FTX-01: referenced in ['P12.md']
+- INV-PERF-01: referenced in ['P05.md']
+- INV-PERF-02: referenced in ['P05.md']

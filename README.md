@@ -61,7 +61,7 @@ found errors in claims that earlier revisions of this README repeated; they are 
 | Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper and had the verdicts challenged by two other model families. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus two later three-auditor sweeps. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
 | Which plan is canonical? | **A v1.0 hybrid is meant to be, and it is not assembled.** An [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) says v1.0 will replace base v0.2 at its current path and absorb the other two editions. Its Phase 1 text (§0 to §37) has completed reconciliation, and Phase 2 drafting is underway. Until it is assembled, the file at that path is still v0.2, and this README uses base-plan names. The charter keeps them (`frob-` crates; `frob`, `frobd`, `frob-mcp`) and adds `frob-verify` and `frob-tui`. Neon keeps the prefix on its own 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
 | Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. This settles base OPEN-PROG-1, which blocked the first push |
-| What happens next? | Apply the two reviews and the completeness audit to the v1.0 drafts, write the missing Phase 2 parts (verification, the ten-fold test, the gate register, seven appendices), assemble v1.0, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
+| What happens next? | Apply the two reviews and the completeness audit to the v1.0 drafts, write the missing Phase 2 parts (§38 on verification, and Appendices A to E, K, M and N), assemble v1.0, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
 
 The plans are written to be falsifiable. Each bet names the measurement that would kill it, and each kill
 gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
@@ -201,8 +201,8 @@ form, and no number is written as a result.
 | Inputs compiled | A [digest of Astra](planning/fable/blend/ASTRA_DIGEST.md), a [digest of Neon](planning/fable/blend/NEON_DIGEST.md) with a 24-item "doubtful or wrong" list, and a [catalog of 112 distinct ideas](planning/fable/blend/IDEA_CATALOG.md) merged from about 225 entries |
 | Phase 1 drafts | **Complete** at 21:14: [13 part files](planning/fable/blend/parts/), about 331,600 words, §0 to §37 of 47 |
 | Reconciliation | **One pass done** (21:20 to 21:24): colliding refusal codes renumbered, ten binding decisions recorded, and inventories generated: 421 gate, kill-gate and admission-gate identifiers, 141 open questions, 169 verbs, 296 refusal codes |
-| Phase 2 drafts | **In progress.** The brief covers verification, the ten-fold test, gates, risks, milestones, work packages, beads, the first session and appendices. Drafted so far: [§41 to §44, §46 and §47](planning/fable/blend/parts2/P14.md) (risks, open questions, milestones, work packages, first session, release rubric), [§45](planning/fable/blend/parts2/P15.md) (442 beads; a mechanical check here found 1,091 dependencies, all pointing to a lower number, one root and one sink), and [Appendices F to J and L](planning/fable/blend/parts2/P16b.md). The brief calls the [refusal registry](planning/fable/blend/APPENDIX_O_REFUSALS.md) final text for Appendix O, but the coherence review asks for changes to it (F28). Not written: §38 to §40 and Appendices A to E, K, M and N. [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
-| Reviews of the drafts | **Done, not applied.** An independent [mathematical review](planning/fable/blend/REVIEW_MATH.md) found 26 problems (2 critical, 7 major, 17 minor). A [coherence review](planning/fable/blend/REVIEW_COHERENCE.md) found 44 (9 where two binding texts cannot both be implemented), among them five different thresholds for one mixed-batch experiment, two closed registries of proof kinds, and different verb names for the same actions. Both give replacement text. A [completeness audit](planning/fable/blend/GAPFILL_1.md) of the parts against Astra and Neon offers 18 insertion blocks; of the 82 rows in its coverage table, 12 are marked missing and 11 weaker. The Phase 1 parts have not been edited since |
+| Phase 2 drafts | **In progress.** The brief covers verification, the ten-fold test, gates, risks, milestones, work packages, beads, the first session and appendices. Drafted so far: [§39 and §40](planning/fable/blend/parts2/P13b.md) (the ten-fold test and the gate register), [§41 to §44, §46 and §47](planning/fable/blend/parts2/P14.md) (risks, open questions, milestones, work packages, first session, release rubric), [§45](planning/fable/blend/parts2/P15.md) (442 beads; a mechanical check here found 1,091 dependencies, all pointing to a lower number, one root and one sink), and [Appendices F to J and L](planning/fable/blend/parts2/P16b.md). The brief calls the [refusal registry](planning/fable/blend/APPENDIX_O_REFUSALS.md) final text for Appendix O, but the coherence review asks for changes to it (F28). Not written: §38 and Appendices A to E, K, M and N. [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
+| Reviews of the drafts | **Done, not applied.** An independent [mathematical review](planning/fable/blend/REVIEW_MATH.md) found 26 problems (2 critical, 7 major, 17 minor). A [coherence review](planning/fable/blend/REVIEW_COHERENCE.md) found 44 (9 where two binding texts cannot both be implemented), among them five different thresholds for one mixed-batch experiment, two closed registries of proof kinds, and different verb names for the same actions. Both give replacement text. A [completeness audit](planning/fable/blend/GAPFILL_1.md) of the parts against Astra and Neon offers 18 insertion blocks. Of 63 items from the two digests it marks 57 covered, 3 weaker, 3 deferred and none missing; of 19 items added to those plans after the digests, 11 are missing and 7 weaker. The Phase 1 parts have not been edited since |
 | Assembly | **Not started.** The file at the base path is still v0.2 |
 
 **What the charter and drafts fix.** 43 Rust crates (38 core, 5 annex) with a 561 kLoC cap and a closed list ("a new crate is
@@ -528,8 +528,10 @@ below come from published figures. None is a measurement, and Phase 2 can still 
 | Humanoid physics, `batch-cpu`, `f32` | M5 Ultra, 24 threads | ≥ 0.5 of CPU MuJoCo on the same machine | ≥ 1.0 | CPU MuJoCo (`f64`): 550 k world-steps/s on 24 threads, measured here under load |
 | `design check` / `control synth` / generate and compile an interior | CPU | < 2 s p95 / < 5 s / < 60 s | `design check` after one edit: 0.2 / 0.5 / 1.0 s | |
 
-The mixed-batch row is one of five thresholds the drafts give for that experiment (coherence review F07), and the
-reference capacities behind the physics rows are stated two ways (F04); the gate register is meant to settle both.
+The mixed-batch row is one of five thresholds the drafts give for that experiment (coherence review F07). The gate
+register, drafted afterwards, reads the gate and kill-gate numbers as different workloads; it does not take up the 0.33
+in the bet itself (BET-18). The reference capacities behind the physics rows are stated two ways (F04), and the register
+does not reconcile them.
 
 A published figure is a fact about its source, to be re-read from the primary source before a gate cites it. Every
 performance claim must carry a disclosure block (base §28.2, draft §36.7): hardware and driver, backend and compiler
@@ -622,8 +624,9 @@ Measurements of complete robot dynamics, sensor pipelines and the integrated des
 ## Gates and kill gates
 
 The base plan registers ten admission gates (`INT-*`, one per foundation), about fifty convergence gates and
-nine kill gates. The v1.0 drafts name 421 gate, kill-gate and admission-gate identifiers in the lead's inventory, but
-the gate register (§40) is not written and several thresholds conflict, so treat that count as provisional. "No
+nine kill gates. The drafted v1.0 [gate register](planning/fable/blend/parts2/P13b.md) lists 37 admission gates, 279
+convergence gates and 111 kill gates, with nine gates and seven kill gates of the ten-fold test beside them. It says that
+it governs where a chapter differs, but it was written before the reviews were applied, so treat it as provisional. "No
 self-certification": a gate's PASS is recorded by a fresh-context session, and every gate has a registered negative
 control that it must catch.
 

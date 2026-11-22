@@ -130,7 +130,7 @@
 - Proof obligations: PO-LEMMA-01 to PO-LEMMA-04 (PO-MARROW-01 is extended in scope to §11.2–§11.6).
 - Open questions: OPEN-LEMMA-2 to OPEN-LEMMA-6 (OPEN-LEMMA-1 carried).
 - Refusal codes, provisional numbers chosen high in each family to avoid collisions with other parts:
-  FROB-REF-161, FROB-REF-261, FROB-REF-861, -862, -863, -864, -865, -866.
+  FROB-REF-168, FROB-REF-263, FROB-REF-823, -862, -863, -864, -865, -866.
 - Formats: `.frobcert` (schema `frob.cert/1`, FMT-FROBCERT): field list, rules and the closed proof-kind
   registry are defined in §12.4. Content of `.fenergy` is named in C-31, of `.fmcw` in C-28, of `.fclear` in
   C-33, of `.fmodule` in C-12; their schemas belong to the owning chapters.
@@ -210,7 +210,7 @@ dominance check; products coupled by tick instead of position; reassociation fil
   wreath products and subgroup lattices; the design term has a wall-thickness field, a mass-envelope field and
   the `.fmodule` invalidation contract of C-12; canonical scales m₀, ℓ₀, t₀ are computed at model compile;
   actuator cards carry the thermal node, the three braking modes, stiction and backlash parameters.
-- P03 (§16–§18): derivative labels and FROB-REF-261 at kernel outputs; the variational step in the referee and
+- P03 (§16–§18): derivative labels and FROB-REF-263 at kernel outputs; the variational step in the referee and
   strict profile; the power-of-two similarity test and orbit deduplication in family batches; the
   four-dimensional cone in the `Cone` trait; nonholonomic rows; the hard-contact law as specification.
 - P04 (§19–§20): inner and outer complexes with a reported band; the retrofit search consuming `.fmcw`; the
@@ -652,7 +652,7 @@ Open questions (provisional names for P14)
 
 Refusal codes (numbers provisional; the lead reconciles against other parts)
 - `6xx`: FROB-REF-601 to FROB-REF-618 (§21.21)
-- `2xx`: FROB-REF-241 to FROB-REF-246
+- `2xx`: FROB-REF-247 to FROB-REF-252
 - `5xx`: FROB-REF-561, FROB-REF-562
 - `7xx`: FROB-REF-761
 - `8xx`: FROB-REF-861 to FROB-REF-866
@@ -759,7 +759,7 @@ Open questions: OPEN-REFLEX-2, -3, -4 (OPEN-REFLEX-1 carried); OPEN-GAIT-1, -2; 
 OPEN-CORTEX-1 to -6. Referenced and unchanged: OPEN-SPARK-2.
 
 Refusal codes: FROB-REF-421, -424, -431, -441, -444, -451, -454, -457, -461, -464 (Reflex, `4xx`);
-FROB-REF-521, -522, -524, -527, -531, -534, -537, -544, -547, -554 (Cortex, `5xx`); FROB-REF-861, -864, -867
+FROB-REF-521, -522, -524, -527, -531, -534, -537, -544, -547, -554 (Cortex, `5xx`); FROB-REF-817, -864, -867
 (evidence, `8xx`).
 
 Formats: FMT-FSKILL (`.fskill`, `frob.skill/1`); FMT-FENERGY (`.fenergy`, `frob.energy/1`). Schema without a
@@ -846,7 +846,7 @@ variance; verbatim stride copy; the mixed-unit minimum; the box cone.
   KILL-AUGUR-TRANSPORT, KILL-AUGUR-FACILITY, KILL-AUGUR-PHASE, KILL-AUGUR-SYMEVENT, KILL-SYNTH-CODESIGN,
   KILL-SYNTH-TRAJOPT, KILL-SYNTH-LINKAGE, KILL-SYNTH-CONT.
 - Open questions: OPEN-AUGUR-1 to OPEN-AUGUR-11.
-- Refusal codes: FROB-REF-840 to FROB-REF-859 (a provisional block in the 8xx family; renumber if it collides).
+- Refusal codes: FROB-REF-868 to FROB-REF-859 (a provisional block in the 8xx family; renumber if it collides).
 - Formats: FMT-FMISSION (`.fmission`, schema `frob.mission/1`); the family payload of `.frobcert` and the closed
   proof-kind registry `frob.cert.kinds/1` (kinds: `lp-primal`, `lp-farkas`, `conic-farkas`, `interval-box`,
   `taylor-box`, `sos-gram`, `finite-game`, `alias-pair`, `monotone-transport`, `symmetry-transport`,
@@ -1033,8 +1033,8 @@ Proof obligations: PO-ATEL-01 to PO-ATEL-10; PO-CHRON-01 to PO-CHRON-07.
 
 Open questions: OPEN-ATEL-1 to OPEN-ATEL-6; OPEN-CHRON-2 to OPEN-CHRON-5 (OPEN-CHRON-1 carried forward).
 
-Refusal codes: FROB-REF-540 to FROB-REF-551 (evaluation protocol); FROB-REF-870 to FROB-REF-872 (evidence protocol,
-Atelier); FROB-REF-840 to FROB-REF-851 (evidence protocol, Chronicle). Sub-ranges were chosen to stay clear of other
+Refusal codes: FROB-REF-553 to FROB-REF-551 (evaluation protocol); FROB-REF-870 to FROB-REF-872 (evidence protocol,
+Atelier); FROB-REF-869 to FROB-REF-815 (evidence protocol, Chronicle). Sub-ranges were chosen to stay clear of other
 parts; the lead may renumber.
 
 Formats and schemas: FMT-FRUN (`.frun`, `frob.run/1`); `frob.verdict/1`; `frob.core-table/1`; `frob.beadlog/1`.
@@ -1145,8 +1145,8 @@ rules for mechanisms in `frob-nemesis`, `frob-autopsy`, `frob-ground`, `frob-dyn
 - Invariants: INV-GROUND-01 to -07; INV-FOUNDRY-01 to -07.
 - Proof obligations: PO-GROUND-01 to -03; PO-FOUNDRY-01 to -04.
 - Open questions (provisional, for §42): OPEN-GROUND-1 to -5; OPEN-FOUNDRY-1 to -6.
-- Refusal codes (provisional numbers; the lead reconciles them with other parts): FROB-REF-840 to -850 (Ground,
-  evidence and protocol family); FROB-REF-160 to -165 (Foundry, design and model family); FROB-REF-260 to -262
+- Refusal codes (provisional numbers; the lead reconciles them with other parts): FROB-REF-873 to -850 (Ground,
+  evidence and protocol family); FROB-REF-166 to -165 (Foundry, design and model family); FROB-REF-260 to -262
   (Foundry, numerics family); FROB-REF-860 to -864 (Foundry, evidence and protocol family).
 - Formats: FMT-FBUILD (`.fbuild`, schema `frob.fbuild/1`). Schemas with no new extension:
   `frob.ground.dataset/1` (manifest of a `.frun` bundle of origin `real` or `synthetic`),

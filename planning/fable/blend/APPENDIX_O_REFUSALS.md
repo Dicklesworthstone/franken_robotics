@@ -119,7 +119,7 @@ that define the codes; the chapter governs the meaning and the repairs. The mach
 | FROB-REF-440 | The clock lattice is not admissible: a period is zero or negative, or the common denominator exceeds the limit | §20.18 |
 | FROB-REF-441 | History buffers cannot cover the declared latency and exposure window | §20.18 |
 | FROB-REF-442 | An observation is requested from presentation state, or an actor schema names a privileged channel | §20.18 |
-| FROB-REF-443 | A symmetry consumer names a group element outside 𝔾_obs | §20.18 |
+| FROB-REF-443 | A symmetry consumer names a group element outside Γ_obs | §20.18 |
 | FROB-REF-444 | A transported skill does not refine its specification | §22.14 |
 | FROB-REF-445 | A training or optimization run is requested on a mission with a standing alias witness for its interface | §20.18 |
 | FROB-REF-446 | A calibration request exceeds what the graph supports: no anchor, or fault localization on a graph without the needed cycles | §20.18 |
@@ -188,7 +188,7 @@ that define the codes; the chapter governs the meaning and the repairs. The mach
 | FROB-REF-581 | A structural or design-parameter intervention requested at a mid-episode tick; the earliest valid tick and the forcing fields are returned | §27.14 |
 | FROB-REF-582 | State from one model grafted onto another | §27.14 |
 | FROB-REF-583 | The null fork does not reproduce its parent | §27.14 |
-| FROB-REF-584 | Attribution requested for a failure that is not reproduced in double precision, or under an uncontrolled determinism class | §27.14 |
+| FROB-REF-584 | Attribution requested for a failure that neither lane admits, or under an uncontrolled determinism class | §27.14 |
 | FROB-REF-586 | An intervention changes more than one declared mechanism | §27.14 |
 | FROB-REF-587 | A design-parameter re-run with a policy that cannot act on the edited body without retraining | §27.14 |
 
@@ -229,7 +229,6 @@ that define the codes; the chapter governs the meaning and the repairs. The mach
 | FROB-REF-723 | Token invalid or expired, or an attenuation that would widen scopes or budget | §32.18 |
 | FROB-REF-724 | The verb is not implemented in the §0.2 sense in this build | §32.18 |
 | FROB-REF-725 | A write outside the caller's namespace or lineage | §32.18 |
-| FROB-REF-730 | A confirmation world or run is not readable in a discovery session | §37.12 |
 | FROB-REF-731 | A private object, or anything derived from one, without the private scope and flag | §37.12 |
 | FROB-REF-733 | The licence set of the artifact forbids this export | §37.12 |
 | FROB-REF-734 | A path outside the session's roots | §37.12 |
@@ -321,7 +320,6 @@ that define the codes; the chapter governs the meaning and the repairs. The mach
 | FROB-REF-879 | A fit on a parameter set that fails identifiability | §30.19 |
 | FROB-REF-880 | An attribution cited as an established cause, or as a cause in the physical robot | §27.14 |
 | FROB-REF-881 | Evidence or a certificate establishes a different quantifier prefix than the query's, including clairvoyant evidence offered for a robust claim | §25.24 |
-| FROB-REF-882 | A fork that asks to reuse state its change set invalidates | §29.17 |
 | FROB-REF-883 | A read of sealed data with no frozen prediction, or a prediction changed after freezing | §30.19 |
 | FROB-REF-884 | No quantifier prefix, or a hidden parameter with no persistence declaration | §25.24 |
 | FROB-REF-885 | A chunk that is not a partition extent, or whose predecessor is not the frontier | §29.17 |

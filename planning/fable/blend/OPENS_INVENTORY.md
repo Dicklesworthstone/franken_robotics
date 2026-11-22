@@ -8,7 +8,7 @@
 | OPEN-ARENA-4 | 24.18 | - **OPEN-ARENA-4.** Whether fixture 2's quadruped is the reference template or a dedicated minimal body. Owner: Arena |
 | OPEN-ARENA-5 | 24.18 | - **OPEN-ARENA-5.** The guard band for boundary atoms on each backend. Owner: Spark lead. Blocks the device half of |
 | OPEN-ATEL-1 | 28.24 | - **OPEN-ATEL-1.** The loss constants of DC-01 (C_fp, C_fn, the pair cost c) and the exchange rate between GPU-seconds |
-| OPEN-ATEL-2 | 28.24 | - **OPEN-ATEL-2.** The lower mode threshold (0.2) and the definition of a stratum (archive cell blocks, or morphology |
+| OPEN-ATEL-2 | 28.24 | - **OPEN-ATEL-2.** The definition of a stratum (archive cell blocks, or morphology class by task family). The mode |
 | OPEN-ATEL-3 | 28.24 | - **OPEN-ATEL-3.** Whether `fs-recompute`, `fs-voi` and `fs-race` pass admission through the airlock on the core |
 | OPEN-ATEL-4 | 28.24 | - **OPEN-ATEL-4.** Whether `result.revalidate` and the mission cluster's revalidation verb stay two verbs over one |
 | OPEN-ATEL-5 | 28.24 | - **OPEN-ATEL-5.** The planted winner for morphology classes that have no earlier specialist result. Owner: Arena |
@@ -62,7 +62,7 @@
 | OPEN-HAB-8 | 19.20 | - **OPEN-HAB-8.** Sources for film roughness, carried thickness and transfer fraction. Default: `assumed`, outputs |
 | OPEN-KIN-1 | 16.18 | - **OPEN-KIN-1.** Default physics step and Newton iteration budget. Default: 2 ms, 4 iterations with warm start. |
 | OPEN-KIN-2 | 16.18 | - **OPEN-KIN-2.** Whether sleeping and islands are worth their complexity for single-robot worlds on the lockstep |
-| OPEN-KIN-3 | 16.18 | - **OPEN-KIN-3.** Final contact and row capacities per workload. Default: the table of §16.6. Owner: Kinesis |
+| OPEN-KIN-3 | 16.18 | - **OPEN-KIN-3.** Final contact and row capacities per workload other than Q and H, whose capacities OPEN-SPARK-3 owns |
 | OPEN-KIN-4 | 16.18 | - **OPEN-KIN-4.** Which law the `strict` profile runs by default once CL-H is admitted. Default: CL-1 with located |
 | OPEN-KIN-5 | 16.18 | - **OPEN-KIN-5.** L_max, E_max and the retry budget. Default: 16, 64 and 3. Decided by the refusal rate on the |
 | OPEN-KIN-6 | 16.18 | - **OPEN-KIN-6.** The created-energy bound per law and step. Default: 1% of actuator work per episode. |

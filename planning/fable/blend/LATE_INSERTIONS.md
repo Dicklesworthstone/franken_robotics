@@ -50,3 +50,21 @@
 | 31.23 | Member sizing as a validity check in screening | P10.md | 47 | GATE-FOUNDRY-15 |
 | 32.24 | The offline replay packet | P11.md | 70 | GATE-TETHER-16, KILL-REPLAYPACK |
 | 39.22 | Three arms, the recovery ratio and the phase ablations | P13b.md | 62 | GATE-TENFOLD-13 |
+| 25.35 | The controller class is part of a family answer | P07.md | 64 | GATE-AUGUR-31 |
+| 25.36 | Docking to a finite tolerance over a continuous gain interval | P07.md | 61 | GATE-AUGUR-32 |
+| 25.37 | Channel laws: the joint error law of repeated reads, and the code that carries a label | P07.md | 55 | GATE-AUGUR-33 |
+| 25.38 | Shared nuisance parameters, and the probe for four admitted laws | P07.md | 55 | GATE-AUGUR-34, KILL-AUGUR-PROBE |
+| 25.39 | Sizing witnesses for fixed points, and Pareto coverage of a catalog | P07.md | 40 | GATE-AUGUR-35 |
+| 14.17 | Folding fixed joints, and reduced models | P02.md | 37 | GATE-SKEL-11 |
+| 15.15 | Coupled transmissions: the torque set, the rotor energy and the direction witness | P02.md | 44 | GATE-SINEW-10 |
+| 16.24 | A held command and the step that integrates it | P03.md | 46 | GATE-KIN-13 |
+| 18.20 | Swept bounds enclose arcs | P03.md | 30 | GATE-TRAC-12 |
+| 19.22 | Scaled instances: distances, normals and ray parameters in world metres | P04.md | 35 | GATE-HAB-16 |
+| 20.25 | Sampled readings: impacts in an exposure, encoder unwrapping, the load-cell cut | P04.md | 47 | GATE-SENS-18 |
+| 22.23 | Orbits of a loop with no clock: the free period and the trivial multiplier | P06.md | 52 | GATE-GAIT-01, GATE-GAIT-04, KILL-FREEPERIOD |
+| 22.24 | Stability over admitted sequences of strides | P06.md | 36 | GATE-GAIT-05, KILL-STRIDESEQ |
+| 22.25 | Sampled damping, and the work of a held command | P06.md | 44 | GATE-SHIELD-07 |
+| 24.23 | The idle arm of the task audit | P08.md | 26 | GATE-ARENA-15 |
+| 30.24 | Exposure delay and mount translation on a straight pass | P10.md | 26 | GATE-GROUND-03, GATE-GROUND-11 |
+| 33.18 | Six later foundation facts and their admission tests | P12.md | 35 | GATE-WS-09 |
+| 38.18 | Known answers adopted from late fixtures | P13a.md | 25 | GATE-GAUNT-11 |

@@ -1,10 +1,13 @@
 # GAPFILL 1: completeness audit of the hybrid parts against the two source plans
 
-Scope: Phase 1 parts `parts/P00.md`–`P12.md` (§1–§37). Chapters §38–§47 and the appendices are not written yet, so
-anything the charter assigns to them is absent from the parts by construction; where a checklist item lands there,
-the status says so and an insertion block supplies the text. Method: grep of the parts for every mechanism, fixture
-and number in the checklists, targeted reads of the hits, and a re-read of both source plans against their digests.
-Arithmetic in the insertion blocks was recomputed for this file; sibling facts were re-read in source on 2026-11-21.
+Scope: Phase 1 parts `parts/P00.md`–`P12.md` (§1–§37). Three Phase 2 files appeared in `parts2/` while this audit
+ran (`P14.md` with §41–§44, §46, §47; `P15.md`; `P16b.md` with Appendices F–J and L, all timestamped 21:58–22:00).
+They were checked only for the items that land in them. §38–§40 (`P13`) and Appendices A–E, K, M, N (`P16a`) did not
+exist at the time of writing, so anything the charter assigns to them is absent by construction; where a checklist
+item lands there, the status says so and an insertion block supplies the text. Method: grep of the parts for every
+mechanism, fixture and number in the checklists, targeted reads of the hits, and a re-read of both source plans
+against their digests. Arithmetic in the insertion blocks was recomputed for this file; sibling facts were re-read
+in source on 2026-11-21.
 
 **Headline finding.** Both source plans changed after their digests were written, not only the third.
 
@@ -47,7 +50,7 @@ chapters), DROP (correctly absent under the do-not-inherit list or superseded by
 | 19 | Symmetry done carefully | ASTRA A19 | COVERED | P01 C-09; P02 §13.4; P06 §22.13, §23.13 |
 | 20 | Facility co-design, handoff, factory labels, skill transport | ASTRA A20 | COVERED | P07 §25.11 [M], §25.17 [M], §25.18 [F]/[M] |
 | 21 | Multi-model adversarial ideation with scores and withdrawals | ASTRA A21 | DEFERRED | Appendices B, C, K, written by the lead; scores may not appear in chapters (style rule 1) |
-| 22 | Release rubric, stop decisions per milestone, risks keyed by earliest signal | ASTRA A22 | WEAKER | Stop decisions exist for Augur only (P07 §25.23). Rubric and risk rows belong to §47 and §41, unwritten. Blocks 15, 16 |
+| 22 | Release rubric, stop decisions per milestone, risks keyed by earliest signal | ASTRA A22 | COVERED | `parts2/P14.md`: §41.1–§41.3 carry an earliest-signal column on every row (RISK-39 to -47 are the nine rows of the source); §43.2 exit rules; §47.2–§47.3 rubric by milestone with cell naming and the losing-experiment rule; P07 §25.23. Two small residues (order of evidence; four risks that arise from the post-digest facts) in blocks 15, 16 |
 
 ### A.2 Second plan, digest section E (18 landing sites)
 
@@ -70,7 +73,7 @@ chapters), DROP (correctly absent under the do-not-inherit list or superseded by
 | 15 | Foundation defects as facts and asks | ASTRA E15 | COVERED | P12 §33.8, §33.11 |
 | 16 | Rejection fixtures and counterexamples | ASTRA E16 | COVERED | Chapter known-answer tables; ledgers |
 | 17 | Idea ranks 16–30, R1–R3 with activation triggers | ASTRA E17 | DEFERRED | Appendices B and C |
-| 18 | Release rubric, new risk rows | ASTRA E18 | MISSING | §41, §47 unwritten; no draft text in the parts. Blocks 15, 16 |
+| 18 | Release rubric, new risk rows | ASTRA E18 | COVERED | `parts2/P14.md` §41.3 (RISK-39 to RISK-47), §47.2, §47.3 |
 
 ### A.3 Third plan, digest section (A) (23 ranked items)
 
@@ -124,7 +127,8 @@ chapters), DROP (correctly absent under the do-not-inherit list or superseded by
 | Δ18 | Corrected known answers (thermal card, plate sinkage, strata under the observation subgroup, all-real root fixtures) | NEON KA-08, -09, -13, GB-11 | WEAKER | The parts have their own re-derived cards (P02 §15.7, P03 §18.10), which stand. The corrected rows are now reproducible and are offered as additional rows. Block 17 |
 | Δ19 | Agent acceptance scored on diagnosis, unnecessary simulations and honouring inconclusive verdicts | ASTRA digest §14 (W27 card) | WEAKER | GATE-TETHER-01, -13 and GATE-AUTOPSY-08 score completion and repair; none scores restraint. Block 18 |
 
-Counts over the 63 digest checklist rows (A.1–A.3): COVERED 55, WEAKER 4, MISSING 1, DEFERRED 3.
+Counts over the 63 digest checklist rows (A.1–A.3): COVERED 57, WEAKER 3, MISSING 0, DEFERRED 3. The three WEAKER
+rows are one gap seen three times: the ten-fold protocol detail that belongs to the unwritten §39.
 Counts over the 19 post-digest rows (A.4): COVERED 1, WEAKER 7, MISSING 11.
 
 ---
@@ -756,72 +760,63 @@ mutant plan that lets one bin receive 2³² + 5 increments in a chunk reads 5 on
 | GATE-SPARK-915 | Known answer. On CUDA and on Metal a histogram run of 10¹⁰ increments, concentrated in one bin, matches a CPU `u64` reference in every bin; the boundary plan is refused and its neighbour admitted; the dialect lint finds no 64-bit atomic in any kernel source; the two-limb reduce matches `u64` addition on 10⁶ random pairs. M2. |
 <<<END>>>
 
-<<<INSERT chapter=41 title="Risk rows keyed by their earliest signal">>>
-**What it is.** [S] Thirteen rows for the risk register, each written as risk, earliest signal, bounded response and
-the section that owns the detector. The earliest signal is the first observable that distinguishes the risk from
-normal operation, and each one is a quantity that some gate already measures. A risk without such a signal is not
-admitted to the register.
+<<<INSERT chapter=41 title="Four risks that follow from late foundation facts">>>
+**What it is.** [S] Four rows for the register of §41.3, in its columns. Each arises from a fact recorded in §23,
+§33, §34 or §39, each has an earliest signal that an existing check already produces, and none is covered by a row
+that is already in the register. Identifiers are assigned with the rest of the series.
 
-| Risk | Earliest signal | Bounded response | Detector |
-|---|---|---|---|
-| A scene looks plausible and cannot support a robot | Scene acceptance fails the settle test, or collision-to-visual deviation exceeds the pack threshold | The scene is not admitted; the part is tagged `optical-only`, or the collision model is corrected | §19.5 |
-| A model fits nominal motion for the wrong physical reason | Current draw and mechanical work disagree in the energy ledger while speed matches | The identification is rejected; actuators are identified first, then contact | §30.9, §29.9 |
-| Contact capacity favours the wrong morphology | Capacity-overflow counts differ between the arms of a comparison | The comparison is void and is rerun at a capacity that both arms fit | §18.11 |
-| A gradient rewards a contact-order artifact | A derivative label other than `smooth`, or an order sensitivity above tolerance | The derivative is refused and the search continues derivative-free | §22.9, D-15 |
-| Two-device scaling vanishes under vision | The weak-scaling row with cameras enabled falls below its floor | The figure is published; camera work moves to the machine that holds the scenes | §36.6, §36.12 |
-| An agent optimizes failures out of the denominator | A battery's identity changes, or scenarios migrate to the `refused`, `infeasible` or `undetermined` columns | The battery is frozen; a removal is a recorded event; both denominators are printed | §24.8 |
-| Adaptation leaks into the final evaluation | A sealed holdout is read more than once, or the causal test fails | The holdout is retired and redrawn | §23.17, §20.15 |
-| An optimization changes unrelated semantics | Contact count, solver iterations or a sensor rate differs between the before and after disclosure blocks | The speed claim is void until the work is equal | §36.7 |
-| Trace retention deletes the interval that explains a decision | An evidence edge of the artifact graph points at a chunk scheduled to expire | The retention plan is refused, or the chunk is pinned | §29.13, §29.16 |
-| A dependency feature changes canonical bytes | The unified feature set of the JSON library differs from the stack lock | The build fails; digests come only from this project's writer | §34 |
-| An exact pin in a sibling blocks an oracle | Dependency resolution reports two exact requirements on one package | The oracle runs as a worker process; the pin is an upstream ask | §33 |
-| A sampler has correct marginals and a wrong joint law | A pairwise sign-agreement frequency leaves ½ ± 0.005 | The sampler is refused; training results from it are withdrawn | §23 |
-| A rare slow mission is absent from the sealed sample | The suite's family count is below the count that its registered bound needs | The stratum reports a finite-suite result and no population claim | §39 |
+| Risk | Severity | Earliest signal | Mitigation | Owner |
+|---|---|---|---|---|
+| A dependency feature changes canonical bytes: a sibling that enters the build graph switches the JSON library to insertion-ordered maps or to another number representation, and digests of unchanged artifacts move | High | `xtask check-deps` reports a unified feature set of the JSON library that differs from the stack lock; a golden digest changes with no change to its artifact | Canonical bytes come only from this project's writer; the four-way feature build of §34; the stack lock records the feature set | Workspace lead |
+| An exact version pin in a sibling blocks an oracle: two siblings require different exact versions of one package, so they cannot share a build graph | Medium | Dependency resolution reports two exact requirements on one package; the admission gate of the oracle cannot build | The oracle runs as a worker process in its own workspace (§33.14); the pin move is an upstream ask | Suite lead |
+| A sampler has correct marginals and a wrong joint law, so the likelihood ratio is computed for a variable that was not sampled and exploration is correlated across channels | High | A pairwise sign-agreement frequency outside ½ ± 0.005 in the sampler battery; a learning curve that changes when channels are reordered | Rule P-12 and its gate (§23); counter-based draws keyed per channel; no sibling sampler is linked | Cortex lead |
+| A rare slow mission is absent from the sealed sample, and a resampling interval certifies a ratio the population does not have | High | The pre-analysis of §39 reports a family count below the count its registered bound needs; every sealed mission of an arm finishes near its fastest time | The bounded paired contrast; the two result types of §39; a stratum below the necessary count reports a finite-suite result | Gauntlet lead |
 
-DESIGN: each row's detector is exercised by a planted instance in the negative-control registry (§38), so the signal
-is known to fire. A row whose planted instance is not detected is escalated to an open question with a fail-closed
-default.
+DESIGN: the detector of each row is exercised by a planted instance in the negative-control registry (§38), so the
+signal is known to fire: a dummy dependency that enables the two library features; a second exact pin on one
+package; the planted linear-phase sampler; the rare-tail arm of the ten-fold pre-analysis.
+
+Counterexample to the shortcut "a passing build means the pins are compatible": a build that never enables the
+oracle's feature flag resolves, and the conflict appears only when the flag is first turned on at the oracle's
+milestone. The resolution check therefore runs with every optional feature group enabled.
 
 | | |
 |---|---|
-| GATE-WS-916 | Known answer. For each of the thirteen rows a planted instance raises the named signal and triggers the named response in 100 of 100 runs; the register lists no risk without a detector. M3 for the first nine rows; the other four at the milestone of their owner. |
+| GATE-WS-916 | Known answer. Each of the four planted instances raises its named signal in 100 of 100 runs; `xtask check-deps` resolves the graph with every feature group enabled and fails on the planted second pin; no row of the register lacks a planted instance. M0 for the two build rows, M2 for the sampler row, M3 for the suite row. |
 <<<END>>>
 
-<<<INSERT chapter=47 title="The release rubric, and the order in which evidence is procured">>>
-**What it is.** [S] Four named release levels. A release is a capability matrix in which every cell names what it
-can do and the limit of the claim, for example "exact static family with independent active vertical reactions" or
-"CUDA two-device throughput in the pinned camera and contact profile". A cell enters a release only with gate
-receipts of the class that its level requires.
+<<<INSERT chapter=47 title="The order in which evidence is procured, and complete dispositions">>>
+**What it is.** [S] Two rules for §47.2, and the check that enforces the first. They add to the rubric of §47.3 and
+change none of its rows.
 
-| Level | What a user can do | Evidence every cell needs | Earliest |
-|---|---|---|---|
-| Studio preview | Describe a design, check it, simulate it on the CPU referee, read its energy ledger, ask the first mission queries, reproduce any verdict from its address | The known-answer gates of the cell's subsystem; certificates accepted by `frob-verify` on a second machine; no Performance claim and no Reality claim | M1 |
-| Gym release | Train and evaluate on device with the corrected semantics; drive the environment from a rival learner through the adapter; reproduce a losing learning experiment as readily as a winning one | The parity gates re-measured on the release hardware with the disclosure block; the determinism class stated per backend; the environment and PPO batteries | M2–M3 |
-| Design-science release | Run family queries, adversarial search, autopsy, qualification and the cascade; receive two-sided answers with witnesses | The method gates with competing arms and potency controls; the blinded qualification gate; the partial ten-fold result, published whatever its value | M4 |
-| Physically validated profile | Cite a reality band for a named robot, task family and cell | A Ground record: frozen predictions, sealed trials and a conformal band at its stated coverage; otherwise the cell reads `reality: no-claim` | M5 or later |
+**Evidence is procured in dependency order.** DESIGN: every release cell names the kind of evidence it rests on, and
+a cell is never scheduled ahead of the kind it needs. There are four kinds, in order.
 
-**Rules.** DESIGN:
+| Kind | What it is | Available |
+|---|---|---|
+| Authorable at once | Analytic fixtures, exact checkers, certificates, CPU runs on the referee and on `batch-cpu` | From M0 |
+| Pinned external comparison | An incumbent re-measured on the same hardware under the disclosure block of §36.7 | From the M0 phase ledger |
+| Operator or dataset | Bench logs, scans of real places, proficiency-matched operator trials | When the import lane has an admitted dataset (§30) |
+| Native device | A completed run on the device family that the cell names, with a placement receipt that shows no fallback (§21.12) | When that device ran it |
 
-1. A level is claimed per cell, not per release. A release may hold cells at different levels, and prints the matrix.
-2. Tied, infeasible, incomparable and inconclusive are complete dispositions of a cell's study and are published.
-3. A cell that loses its evidence, through a pin move, a retired holdout or a failed re-run, drops a level at the
-   next release, and the matrix records the drop.
-4. No level uses the word "verified" (§12).
+A successful CPU run on the M5 Ultra, or in a shell session on `trj`, establishes the CPU path and nothing about a
+device path. A cell that names CUDA or Metal therefore needs a receipt whose actual backend equals the requested one
+for every stage it claims. Counterexample: a step plan in which one stage fell back to the host produces correct
+results and a receipt; a release cell that cites it for device throughput describes a path that did not run.
 
-**Order of evidence.** Evidence is procured in dependency order, and a claim is never scheduled ahead of the kind of
-evidence it needs: (a) what can be authored at once, namely analytic fixtures, exact checkers and CPU runs; (b) what
-needs a pinned external comparison, namely an incumbent re-measured on the same hardware; (c) what needs an operator
-or a dataset, namely bench logs, scans and proficiency-matched trials; (d) what needs the native devices. A
-successful CPU run on the M5 Ultra, or in a shell session on `trj`, establishes the CPU path and nothing about a
-device path.
+**Tied, infeasible, incomparable and inconclusive are complete dispositions.** A study that ends in one of them has
+delivered its result. The release prints it under that name, with the evidence that produced it, and no release
+note rewords it as a win, a loss or work in progress. Reason: a rubric that counts only decisive outcomes pays for
+overstated ones.
 
-`xtask check-contracts` reads the release manifest and verifies that every cell cites receipts of the required class
-at the pinned commit. A cell without them cannot be listed at that level (refusal: release cell lacks evidence for
-its level).
+`xtask check-contracts` reads the release manifest and, for each cell, verifies the kind of evidence it declares,
+the class of each cited receipt and, for a device cell, the equality of requested and actual backend on every stage
+(refusal: release cell lacks evidence of the kind it declares). Owner: `xtask`, with the manifest schema in
+`frob-core`.
 
 | | |
 |---|---|
-| GATE-WS-917 | Known answer. A release manifest with one planted cell whose receipt is missing, one whose receipt is of a lower class, and one whose receipt predates a pin move is rejected on all three; a cell demoted by a failed re-run appears one level lower in the next matrix. M1, and at every release. |
+| GATE-WS-917 | Known answer. A release manifest with four planted cells is rejected on each: a device cell backed only by a CPU receipt; a device cell whose receipt records a fallback on one stage; a comparison cell whose incumbent figure is published and not re-measured; a cell whose study ended `inconclusive` and is listed as a capability. M1, and at every release. |
 <<<END>>>
 
 <<<INSERT chapter=38 title="Known answers adopted from corrected fixtures">>>
@@ -885,9 +880,11 @@ Owner: `frob-conformance` (battery and scorer); `frob-verbs` (transcript capture
 
 1. **Two names for one verb.** P01 C-18 (line 850) and the P01 ledger (line 2376) call the separating-world query
    `world.separate`. P07 §25.3.1 and the verb inventory call it `mission.separate`. `world.separate` is not a
-   registered verb.
+   registered verb. Appendix J (`parts2/P16b.md`, line 1646) already records the alias; the chapter text of C-18
+   still needs the registered name.
 2. **Two verbs for skill transport.** `skill.transport` (P06 §22.10, line 462) and `mission.transport` (P07 §25.3.1)
-   are both registered. One should own the query and the other be an alias, or their scopes should be stated.
+   are both registered. Appendix J gives them different scopes (a learned residual; an interface map with a bounded
+   error), but neither chapter states the division, and one bead (BD-436 in `parts2/P15.md`) covers both.
 3. **The energy-budget card is labeled two ways.** P01 C-31 test (lines 1386–1388) says "0.25 J stored and 0.10 J
    reserve" and divides (2.00 − 0.64 − 0.25 − 0.10) by 20. P06 §22.11 (lines 527–531) says 0.25 J is external work
    (gravity on an 8% slope over the stroke), 0.10 J is stored in a series spring, and 45.5 ms follows from a further
@@ -900,10 +897,11 @@ Owner: `frob-conformance` (battery and scorer); `frob-verbs` (transcript capture
    derivative is `smooth`, `one-sided`, `set-valued` or `surrogate`.
 6. **Two names for an uncovered window.** P01 C-30 (lines 1316, 1330) returns `inconclusive`. P08 §24.5 defines the
    verdict values as `satisfied`, `violated`, `undetermined`, `invalid`.
-7. **A withdrawn attribution is repeated four times.** P00 §0.7 (lines 266–267) and §2.3 item 6 (line 748), P05
-   §36.5 (line 1396) and P07 §25.22 (line 1858) say that about 576 µs, 94% of the specialized batch, was "shared
-   checking and serialization". The source now states that the 575.7 µs is a residual obtained by subtracting the
-   34.4 µs solve-only median on pre-parsed input from the 610.1 µs full specialized median, that it includes
+7. **A withdrawn attribution is repeated five times.** P00 §0.7 (lines 266–267) and §2.3 item 6 (line 748), P05
+   §36.5 (line 1396), P07 §25.22 (line 1858) and the source register in `parts2/P16b.md` (line 577) say that about
+   576 µs, 94% of the specialized batch, was "shared checking and serialization". The source now states that the
+   575.7 µs is a residual obtained by subtracting the 34.4 µs solve-only median on pre-parsed input from the
+   610.1 µs full specialized median, that it includes
    parsing, result assembly, checking, serialization and harness costs, and that separate timers would be needed to
    attribute it. The ceiling of about 1.46 (842.8 ÷ 575.7) stands. Suggested wording: "a residual of 575.7 µs that
    the solver does not touch (parsing, assembly, checking, serialization and harness, not separately timed)".
@@ -931,3 +929,8 @@ Owner: `frob-conformance` (battery and scorer); `frob-verbs` (transcript capture
     through `fs-evidence` "nearly every physics crate" depends on `fs-qty`. The third plan now splits the 22 coupled
     crates into 12 direct and 10 transitive, and notes that removing `fs-qty` from `fs-evidence` alone would free 8
     of the 22. That is a smaller upstream ask than FD-FSIM-15 and could be filed beside it. Not re-verified here.
+15. **Appendix F has no ask for the late facts.** `parts2/P16b.md` (Appendix F) lists no ask for the action sampler
+    of `fs-g1-train`, for the `serde_json` pins of franken_textiles and franken_threed, or for documenting the
+    mixed-frame `fs-mbd::Wrench`. FD-FT-01 asks for a binary archive and private storage with blits as new gateway
+    work; the `metal` 0.33.0 binding already exposes indirect dispatch and thread-group memory length
+    (`encoder.rs:1715`, `:1730`), so part of that ask is wrapping, which is cheaper to grant.

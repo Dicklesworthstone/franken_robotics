@@ -1,0 +1,655 @@
+# FrankenRobotics
+
+<div align="center">
+
+[![Status](https://img.shields.io/badge/status-plan%20stage%20%C2%B7%20no%20code%20yet-lightgrey)](#honest-status)
+[![Plans](https://img.shields.io/badge/plans-3%20editions%2C%20not%20yet%20reconciled-blue)](#three-plan-editions)
+[![Physics](https://img.shields.io/badge/physics-FrankenSim%20referee-2ea44f)](#foundations)
+[![Core](https://img.shields.io/badge/core-Rust%20%C2%B7%20CUDA%20%C2%B7%20Metal-b7410e)](#architecture)
+[![Agents](https://img.shields.io/badge/agents-CLI%20%2B%20MCP-8a2be2)](#command-surface-planned)
+[![License](https://img.shields.io/badge/license-MIT%20%2B%20AI%20rider-yellow)](LICENSE)
+
+</div>
+
+**FrankenRobotics is a robot proving ground and a robot design studio for AI agents, planned as one
+mathematical instrument.** An agent writes a robot as a typed design: bodies, joints, actuators, wheels,
+tracks, feet, batteries and sensors. It checks the design in seconds without simulating it, gets a baseline
+controller synthesized from the model, and runs thousands of worlds at once on CUDA or Metal. It then reads a
+structured account of what happened (the first cause of failure, where the energy went, stills of the moment
+it slipped), edits the design, and compares the two versions on paired episodes with a test that stays valid
+at whatever point it stops. A result is promoted only after a sample of it re-runs on a CPU referee built on
+[FrankenSim](https://github.com/Dicklesworthstone/frankensim).
+
+The robots are legged, wheeled, tracked and hybrid. The worlds are generated terrain (slopes, stairs, gaps,
+stepping stones, rubble, soft ground) and generated or scanned interiors: homes, apartments, offices,
+warehouses, manufacturing plants, retail stores and commercial kitchens. The same model serves the gym, the
+design studio and the mathematics. Configurations are group elements, joints are subgroups, contact is a cone
+program in the dual Lie algebra, a design's symmetry is a finite group acting on it, and the GPU kernels are
+derived from that algebra instead of being typed in by hand. A construction stays only if it owns a Rust type,
+an agent verb, a test that fails when the mathematics is wrong, and a measured payoff or a date to deliver one
+(base plan D-2, "No ornamental mathematics").
+
+The first forward-physics question the plans pose is deliberately one where either answer can be right. A
+small indoor delivery cart must cross a raised threshold. Should its drive wheels be larger? The motor,
+battery, chassis envelope, payload and current limit stay fixed. For an 8 kg cart with 1.2 N·m on each front
+shaft, a 60 mm wheel can push 40 N at the tread and a 75 mm wheel only 32 N. Against a 12 mm lip the larger
+wheel's lever arm rises from 36.0 to 40.7 mm, and the push needed per unit of load falls from 0.750 to 0.646
+(Astra §4.4, analytic). "Either design can lose." Which effect wins depends on weight distribution, motor
+lag, compliance and clearance, so it is a question for the simulator and a paired comparison, not for
+intuition.
+
+**Nothing is built yet.** This repository holds three plan editions, the multi-model research rounds that
+reviewed them, and a reproduction bundle for the planning experiments. Read [Honest status](#honest-status)
+first.
+
+---
+
+## Honest status
+
+**Status.** Plan stage. There is no Cargo workspace, no crate and no binary. Every command, crate, file format
+and throughput number below is a proposal unless it is marked as a computed planning result. Every throughput
+figure is a target. All three plans were written on 2026-11-21. One research round is still in progress.
+
+| Question | Answer |
+|---|---|
+| Is there a design? | **Yes, three.** The [base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) (3,666 lines), the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) (3,222 lines) and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,452 long lines). They were written in parallel and none cites another. See [Three plan editions](#three-plan-editions) |
+| Is there code? | **No.** The base plan's first session (§37) is meant to end with "two honest measurements" and "a two-second humanoid rollout on the referee. It does not end with a forest of empty crates." |
+| Can I run anything? | **Only the planning experiments.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. It contains no robot simulator. See [Planning experiments](#planning-experiments-already-computed) |
+| Has anything been measured? | **One scalar test on the target hardware.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s. Exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. No physics step, environment step or training run has been measured |
+| Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent). Neon: round 1, a modes-of-reasoning audit (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified), a three-model idea duel and a Brenner session that killed 8 hypotheses. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4). Round 2 ("fable") targets the base plan, is still running and has not been folded into any plan |
+| Which plan is canonical? | **Not decided yet.** Where the editions disagree, this README uses the base plan's names: `frob-` crates and the `frob`, `frobd` and `frob-mcp` binaries. Neon keeps those names on a different 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
+| Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. This settles base OPEN-PROG-1, which blocked the first push |
+| What happens next? | Reconcile the three editions into one plan, finish round 2 and fold it in, convert the result to beads (the base plan seeds BD-001 to BD-125; Neon has a 97-bead graph), then start M0 |
+
+The plans are written to be falsifiable. Each bet names the measurement that would kill it, and each kill
+gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
+workspace exists, the base plan generates this status table from `registries/gates.toml` (§30.10), so it can
+only say what a gate has recorded.
+
+---
+
+## TL;DR
+
+**The problem.** Robot simulators are fast and widely used, but they carry decisions from a time when "a
+simulator was a C library driven by a person in a notebook" (base §1.1):
+
+- Poses are bags of floats, so frame and sign errors cannot be caught.
+- URDF and MJCF are "XML trees of free-form numbers with no units and no composition rules". A physically
+  impossible inertia loads without complaint.
+- Contact is softened for throughput. Policies learn to exploit the softness, and the result gets filed as a
+  sim-to-real gap.
+- The GPU code is not the CPU code, so a world that fails on the GPU "cannot be replayed anywhere else".
+- The morphology is fixed. Co-design is a black-box search over XML, and the feedback is "a scalar reward,
+  hours later".
+- The interface is "a Python API for a human at a keyboard", with no budgets, refusals or provenance.
+- Verification: "It looks right in the viewer."
+
+**What already exists.** Each ingredient has been published: Featherstone's spatial algebra and its Lie-group
+form, convex compliant contact at GPU scale (MuJoCo Warp, Newton), Drake's SAP on the CPU, Lie-group and
+variational integrators, invariant filtering, morphological symmetry, monotone co-design, and anytime-valid
+inference. Much of it already exists in Rust in FrankenSim: SE(3) and SO(3) maps and Jacobians (`fs-ga`),
+floating-base Featherstone dynamics (`fs-mbd`), a 29-DoF Unitree G1 model, semismooth-Newton
+Signorini–Coulomb contact with certified continuous collision (`fs-contact`), and anytime-valid racing. "What
+does not exist is their composition."
+
+**What FrankenRobotics adds.** Three products that share one model and one ledger (base §1.3):
+
+1. **Arena**, a gym: a vectorized, device-resident environment API over batched physics.
+2. **Atelier**, a design studio for agents: CLI and MCP verbs to create, check, simulate, explain, compare
+   and optimize robot designs.
+3. **A mathematical instrument**: the algebra that generates the kernels, supplies the test oracles, prunes
+   designs before simulation and, where a checker accepts it, carries proofs.
+
+FrankenSim stays "the referee and the bedrock". FrankenRobotics owns the batched Lie-algebraic rollout engine,
+the scenes, the sensors, the learning loop and the agent-facing studio.
+
+**What the other editions add.** Astra turns the question around: give the studio a mission and ask for the
+*set* of designs that can do the job, with checkable reasons why the alternatives cannot, and the cheapest
+experiment that would decide what remains open. Neon aims to "change the unit of computation" from one robot
+to a whole design campaign, removing equivalent designs before any GPU rollout and stepping many different
+morphologies on one GPU grid.
+
+---
+
+## Three plan editions
+
+| | [Base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) | [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) | [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) |
+|---|---|---|---|
+| **Organizing idea** | "A robot proving ground and a robot design studio built as one mathematical instrument." Algebra first, numbers last | Inverse mission design: the feasible set of designs, exclusions and the deciding experiment. Success means 10× less time to an independently accepted engineering answer | "Change the unit of computation, proof, world interaction, and verification": campaign-time quotienting, heterogeneous-morphology GPU execution, stratified certificates, spec-to-silicon packets |
+| **Shape** | Parts 0–V, §1–§38, Appendices A–J. 17 named subsystems, 28 crates plus `xtask` (361 kLoC cap) | 20 sections. Work packages W01–W43, milestones M0–M8 | 12 bounded contexts, 51 crates, 5 binaries. 16 bets, 16 North-Star scenarios, M0–M6 |
+| **Delivery seed** | 125 beads, BD-001 to BD-125 (M0–M2 detailed, M3+ as epics); a first-session script (§37) | Dependency graph of 43 work packages; a first session around a 2R arm and a wheel-on-lip fixture (§15.2) | 97 beads, BD-001 to BD-096 plus BD-029a, one terminal sink |
+| **Evidence it carries** | Study of six sibling projects' plans, seven code audits, an idea-wizard pass (30 → 5 → 15), one internal review round | Analytic results, native pilots on the M5 Ultra and both RTX 4090s, its own audit and duel, and a 155-file reproduction bundle | Round 1 in [`planning/`](planning/): modes-of-reasoning audit, three-model duel (90+ ideas → 39 proposals → 78 scores), Brenner session |
+
+**Where they agree.**
+
+- FrankenSim supplies the mechanics. A CPU reference path is permanent. CUDA on two RTX 4090s and Metal on
+  an M5 Ultra are both first-class.
+- Agents get one CLI and MCP surface, generated from one registry, with explicit units, seeds, budgets,
+  versions and capabilities. Inputs that cannot be honoured are refused by name.
+- Different kinds of claim are never averaged together (base: six claims; Neon: five axes and a
+  non-promotable `ClaimProduct`; Astra: separate evidence classes).
+- Every bet names a falsifier and every gate a fallback, before any code exists.
+- The product ends at simulation, export, replay and analysis. Nothing certifies a physical robot as safe.
+
+**Where they disagree.**
+
+| Question | Base v0.2 | Astra | Neon v2.0 |
+|---|---|---|---|
+| Crates and binaries | 28 `frob-*` crates plus `xtask`; `frob`, `frobd`, `frob-mcp` | 8 `fr-robot-*` packages, starting as modules; `frobot` | 51 `frob-*` crates; adds `frob-tui` and `frob-verify` |
+| Kernels | One shared C-dialect source for CUDA and Metal; arithmetic derived through FrankenSymPy | Native CUDA and Metal plans compiled from the typed description; choose the representation first, the device second | Typed SSA IR (`FMT-KIR-1`) lowered to CPU Rust, Metal, CUDA PTX and `no_std` |
+| Metal | Metal 4 | Metal 4, via `ft-kernel-metal` first | Metal 3.2 at M2 |
+| FrankenSim | Consumed by path behind one airlock crate | One pinned closure as physics authority, with owner code re-tested before admission | Consume the `fs-qty`-free leaves; lift `fs-mbd` and `fs-contact` with provenance |
+| Firmware and hardware | Out of scope (NONGOAL-04) | Ends at export | `.fbuild` packets with QEMU-checked `no_std` firmware; `hardware_safety_signoff: false` |
+| Headline number | Per-tier throughput targets | A 10× time ratio whose one-sided 95% lower bound must reach 10 in each of four sealed strata | "Delete 90%–99% of futile simulations"; 512 topologies on one GPU grid (both targets) |
+
+**What round 2 says so far.** Round 2 ("fable") is reviewing the base plan without reading the other editions.
+Its findings are unaudited: when this snapshot was taken, its claim audit had not started. Some of them bear on
+every edition's headline numbers. One pass estimates that policy training is about 93% of wall-clock, which
+caps a faster simulator "below 8× on training and at 2–5× on a whole iteration". Another finds that "of the
+sixteen capabilities, none is cleanly out of reach for the incumbent set". Its evidence packs mark
+supercompiled kernels and tensor-core mixed precision as refuted as throughput levers. The one hypothesis it
+marks "ACTIVE, and the strongest rival" is that "a thin layer over an incumbent gets most of it"; its pack says
+a new engine is justified only by a Metal GPU tier and by mixed-topology batches with deterministic forks. See [`planning/fable/`](planning/fable/)
+and [CHANGELOG.md](CHANGELOG.md).
+
+---
+
+## The design loop
+
+The studio enforces an order (base §22.1): "check before you simulate, simulate before you train, train
+before you claim." This is a target session from base §24.8. None of these commands exist yet, and the
+numbers in the comments illustrate the envelope rather than report output.
+
+```text
+$ frob design new quad-a --template quadruped-12dof --json            # exit 0, design d:41aa…
+$ frob design check quad-a --json                                     # exit 2: knee undersized (A-11)
+$ frob design edit quad-a swap-actuator --joints '*.knee' --to qdd-l  # new version d:7c03…, symmetry preserved
+$ frob design check quad-a --json                                     # exit 0: closes at 15.1 kg
+$ frob control synth quad-a --json                                    # ok: trot from the atlas
+$ frob sim estimate quad-a --scene terrain:stairs@0.4 --worlds 2048 --seconds 20 --tier gpu-cuda
+                                                                      # 38 ± 6 GPU-seconds, 3.1 GB
+$ frob predict register --metric success --interval 0.6 0.9 --confidence 0.8 --for next
+$ frob sim run quad-a --scene terrain:stairs@0.4 --worlds 2048 --seconds 20 --tier gpu-cuda --json
+                                                                      # exit 2: success 0.44, provisional
+$ frob explain run r:19e2… --budget 600                               # first cause: slip on stair nosing;
+                                                                      # friction utilization p95 = 1.0 at front feet
+$ frob telemetry stills r:19e2… --world 311 --at failure              # contact sheet PNG
+$ frob design edit quad-a set-param foot.radius 0.022 0.030
+$ frob eval compare quad-a@prev quad-a --task stairs-0.4              # B better, e = 310, n = 96 pairs, provisional
+$ frob eval promote r:… --tier referee --json                         # established, inside the envelope
+```
+
+- **Check before you simulate.** A design is a term, not a file of numbers. `frob design check` runs the
+  static analyses that need no simulation: mobility, mass roll-up, symmetry, static stability, co-design
+  closure, actuator envelope and self-collision. The target is under 2 s at p95. In NS-01 it reports that "the
+  mass spiral closes at 14.2 kg, peak knee torque demand exceeds the selected actuator's continuous rating by
+  31%, the design has symmetry group C₂ × C₂, and three ranked repairs are offered as typed edits". Sixteen
+  analyses in all (A-01 to A-16) are planned, each also callable as its own verb.
+- **Every design can stand on day one.** `frob control synth` derives an estimator and baseline controller
+  from the model itself: gaits from an atlas indexed by leg count and Froude number, capture-point footsteps
+  and force distribution over friction cones for legs, and kinematic connections and flat outputs for wheels.
+  It reports one of `not-synthesizable`, `synthesized-failed` or `ok`. The baseline exists to give feedback,
+  not peak performance. "A design that fails under its baseline is not thereby a bad design."
+- **Explain, don't just score.** `frob explain` returns a failure taxonomy (`fall`, `stuck`, `slip`,
+  `torque-saturation`, `thermal-limit`, `numerical-fault` and others), stills before, at and after the event,
+  and an energy ledger in which the integrator and solver residual is its own line. "An agent can see that,
+  say, 38% of the energy went to copper loss in the knees during stance." The ranked edits come back as
+  `next_actions`.
+- **Compare honestly.** `frob eval compare` pairs episodes by world address, so both designs see the same
+  random numbers, and runs a betting e-process per metric. The comparison can stop the moment the evidence is
+  decisive without inflating its error rate.
+- **Promote, or be labelled.** Fast-tier results start `provisional`. They become `established` only after a
+  sample re-runs on a more trusted tier inside the promotion envelope. Otherwise they stay
+  `provisional: tier-sensitive`.
+
+---
+
+## Mathematics that earns its place
+
+The base plan's spine is fifteen constructions (§8). Each one replaces something specific, names its payoff
+and has a test that fails when the mathematics is wrong. Tags are the plan's own: **[S]** solid, **[F]**
+frontier (published, not productized by mainstream robot simulators).
+
+| | Construction | Replaces | Payoff |
+|---|---|---|---|
+| C-01 | Configuration is a Lie group; joints are its subgroups (twelve Hervé classes) [S/F] | `enum JointKind` | One kernel generator per screw basis; correct mobility where the Grübler–Kutzbach count is wrong (Sarrus: 1, not 0; Bennett: 1, not −2) |
+| C-02 | Frame groupoid and typed spatial algebra [S] | Poses as bags of floats | `a_from_b · b_from_c` has type `a_from_c`. Frame errors become type errors, at zero cost in batched kernels |
+| C-03 | Inertia lives on a cone [S/F] | Trusting imported numbers | Physically consistent iff the 4 × 4 pseudo-inertia is positive definite; import validation is an eigenvalue test |
+| C-04 | Dynamics is Euler–Poincaré on a tree [S] | An opaque `step()` | RNEA, CRBA and ABA; centroidal momentum as the momentum map; ballistic invariants as exact tests |
+| C-05 | Time stepping stays on the group [S/F] | Re-normalizing after every step | The Cayley map needs only +, −, ×, ÷ and √, so it is a candidate for bit-identical CPU, CUDA and Metal results (hypothesis, GATE-SPARK-01) |
+| C-06 | Contact is a cone program in the dual algebra [S/F] | Softness tuned for throughput | Strictly convex fast tiers with the solver error recorded per step; exact Coulomb complementarity on the referee; one `Cone` abstraction for contact, limits, control and certificates |
+| C-07 | Wheels are a distribution; maneuvering is a Lie bracket [S/F] | Kinematic wheel rules | The growth vector decides controllability and the cost of moving sideways |
+| C-08 | Locomotion is holonomy [F] | No model of gait displacement | Net displacement per cycle ≈ a curvature integral. Exact for kinematic systems; "for dynamic walking it is a diagnostic, not a predictor" |
+| C-09 | A morphology has a symmetry group [S/F] | Symmetry rediscovered by hand | C₂ for a biped, C₂ × C₂ for a quadruped, dihedral for a hexapod. Data augmentation, equivariant policies, block-diagonal linearizations and one metamorphic test per group element |
+| C-10 | Gaits are subgroups; timing is max-plus linear [F] | Hand-tuned gait tables | An (H, K) gait atlas; the stride period is a max-plus eigenvalue |
+| C-11 | Kinematics is algebraic geometry [S/F] | Numeric IK only | Closed-form three-joint legs, certified IK by interval Newton, singular loci. General 6R IK is not promised |
+| C-12 | A robot is a composition over typed ports [F] | XML trees | Mechanical, shaft, electrical, thermal and signal ports; the mass spiral (heavier robot → bigger motors → heavier robot) as a least fixed point |
+| C-13 | Estimation and control live on groups [S/F] | Euclidean filters | Invariant EKF on SE₂₊ₖ(3); control errors as g_d⁻¹·g; centroidal MPC over contact cones |
+| C-14 | Kernels are derived, dimension-typed and certified [F] | Hand-written kernels and derivatives in three languages | Straight-line programs with dimension checking and automatic differentiation; identities checked by FrankenSymPy and bound to a content hash |
+| C-15 | Evidence is a test martingale [S] | p-values at a fixed sample size | Stop at any time with the error rate intact (Ville's inequality) |
+
+Proofs are typed and the weakest link wins. A result is `Proved`, `Certified`, `Tested` or `Estimated`;
+"'Verified' is not a class and the word is not used for results" (§10.2). The base plan does not claim that the
+simulator is verified, that floating-point arithmetic satisfies identities exactly, or that any Mathlib Lie
+group result has been re-checked (§10.5). Lean is "a second opinion, not a prover we drive".
+
+---
+
+## Three tiers and a trust ladder
+
+| Tier | Precision | Engine | Scale | Role |
+|---|---|---|---|---|
+| `referee` | `f64` | FrankenSim through the airlock crate: exact Coulomb friction, certified collision | One to a few dozen worlds | The most trusted tier. "The referee is not called ground truth" |
+| `batch-cpu` | `f64` or `f32` | The same derived kernels and stage order as the GPUs | Hundreds to thousands | Permanent reference for the GPU tiers |
+| `gpu-cuda`, `gpu-metal` | `f32` | Derived kernels from one source | Thousands to tens of thousands per device | Rollouts, training, broad search |
+
+**Teleport.** Every world has an address, `(run_seed, world, episode)`, and every random stream is keyed by
+`(WorldAddr, step, stream_id)`. In NS-02, "world 1,337 of 4,096 produces NaNs on the GPU"; `frob sim replay
+--world 1337 --tier batch-cpu` replays it on the CPU, stops at the first differing stage digest and names the
+contact that started it.
+
+**Exploit detectors.** A policy is re-evaluated at half the time step, on the next tier up, with parameters
+moved within their stated uncertainty, and under an alternative contact law. The flags are `dt-sensitive`,
+`tier-sensitive`, `parameter-sensitive` and `law-sensitive`. A mirrored policy must match its mirror image.
+
+**Determinism classes** (base §27.1). D0 exact (integer, rational, symbolic). D1 bitwise across backends
+(hypothesis until GATE-SPARK-01). D2 bitwise per backend, run to run and across worker counts, which every
+kernel must meet. D3 within a recorded tolerance. D4 unspecified, "never cited as evidence". Float atomics are
+banned in kernels; sums use fixed-shape pairwise trees; positions are anchored as an integer cell plus an `f32`
+offset (worst case 0.48 µm against 7.6 µm for a raw `f32` at 100 m).
+
+---
+
+## The six claims
+
+| Claim | Meaning | What establishes it |
+|---|---|---|
+| **Proof** | A stated proposition holds | A checker accepted it: FrankenSymPy's proof kernel or a Lean kernel |
+| **Known answer** | Recovers an analytic or synthetic truth | A known-answer test with its derivation on file |
+| **Parity** | Reproduces a reference tool or published number | A fixture from a pinned oracle, never regenerated from the candidate |
+| **Fidelity** | A faster tier agrees with a slower, more trusted one | The fidelity ledger: per-quantity disagreement distributions on the standard battery |
+| **Reality** | Simulation agrees with physical measurement | A real-robot dataset with provenance. "In v1 this claim is almost always `no-claim`" |
+| **Performance** | Speed or scale on named hardware | A recorded run with the full disclosure block |
+
+They are never averaged into one number (base §6). A gate names exactly one claim. A failure is a failed
+cell, never an excluded cell. Agreeing with MuJoCo "establishes that two programs agree", not that either
+matches reality. "A result inherits the weakest claim among its inputs. A proved kernel fed an assumed friction
+coefficient produces an estimate." Neon makes the same point in the type system: `ClaimProduct<VerifiedFormal,
+EvaluatedDesign>` has no conversion to `VerifiedFormal`, and every export hard-wires
+`sim_to_real_certified: false`.
+
+---
+
+## Architecture
+
+```text
+ agent ─► Tether: frob · frob-mcp · frobd        one verb registry, budgets, refusals, JSON envelope
+             │
+             ▼
+ Skeleton ── design term ─► typed edits ─► RobotModel (content-addressed ModelId)
+   │  Marrow: Lie groups, frames, cones, finite groups     Sinew: actuator, battery and thermal cards
+   ▼
+ Atelier ── check (A-01..A-16) ─► Reflex: invariant filter + synthesized baseline controller
+   │
+   ▼
+ Kinesis ── referee ─────────── FrankenSim through the Airlock (frob-fsim), f64
+   │        batch-cpu ──┐
+   │        gpu-cuda ───┼─────── Spark: one derived kernel source, three backends
+   │        gpu-metal ──┘
+   │   Traction: contact, wheels, tracks, terrain      Habitat: scene packs ─► Sensorium: sensors, stills
+   ▼
+ Cortex: VecEnv, on-device PPO          Arena: task families, metrics, scorecards, batteries
+   │
+   ▼
+ Chronicle: ledger, telemetry, energy ledger, replay and teleport ─► Atelier: explain, compare, promote
+
+ Lemma: certificates and theorem cards        Gauntlet: conformance tiers, oracles and gates
+```
+
+| Subsystem | Crates (base §26.2) | What it owns |
+|---|---|---|
+| Marrow | `frob-lie`, `frob-algebra` | Lie groups and algebras, retractions, frame typing; finite groups and representations, cones and a cone solver, the inertia cone |
+| Skeleton | `frob-design`, `frob-model`, `frob-io` | Design terms (`frob.design/1`), constructors (`attach`, `serial`, `mirror`, `radial`, `closure`…), typed edits, the model compiler, URDF/MJCF import and export with a loss report |
+| Sinew | `frob-actuate` | Content-addressed actuator cards; models from ideal torque (L0) through torque-speed envelope, reflected inertia and delay (L1, the training default) to winding current, two-node thermal and battery sag (L2) |
+| Kinesis | `frob-dyn`, `frob-kernels` | The three tiers, the ten-stage batched step, integrators and the trust ladder |
+| Traction | `frob-contact` | Collision against distance fields, contact laws, wheels and tires, tracks, rigid and soft terrain |
+| Habitat | `frob-scene` | Scene packs (quantized distance-field bricks, materials, semantic labels, articulated fixtures, moving surfaces), terrain and interior generators |
+| Sensorium | `frob-sense` | Proprioception, IMU, force and contact, depth, lidar and height scans as deterministic ray queries; stills with a per-pixel link identifier |
+| Reflex | `frob-control` | Contact-aided invariant EKF; baseline controller synthesis for legged, wheeled and tracked designs |
+| Cortex | `frob-learn` | `VecEnv` (`reset`, `step`, `snapshot`, `restore`) over device-resident buffers, declarative tasks, on-device PPO, the FrankenTorch bridge |
+| Spark | `frob-kir`, `spark/frob-spark-cuda`, `spark/frob-spark-metal`, `derive/frob-derive` | Straight-line program IR, emitters, the CUDA and Metal annexes, symbolic derivation |
+| Arena | `frob-arena` | Task families, metrics, scorecards, test batteries, a corpus of about 200 designs with planted defects |
+| Atelier | `frob-analyze`, `frob-opt` | Static analyses, comparison, lineage (`diff`, `blame`, `bisect`), optimization, registered predictions |
+| Chronicle | `frob-chronicle` | FrankenSQLite ledger, telemetry levels T0–T3, replay digests, the energy ledger, token-budgeted summaries |
+| Lemma | `frob-lemma` | Claims, certificate production and offline verification, theorem cards T-01 to T-14 |
+| Tether | `frob-verbs`, `frob-cli`, `surface/frob-mcp` | The verb registry, envelope and schemas; the `frob` and `frobd` binaries; the MCP server |
+| Gauntlet | `frob-conformance` | Six test tiers (laws, known answers, parity, metamorphic, chaos, determinism), oracle fixtures, batteries |
+| Airlock | `frob-fsim` | The only crate that names FrankenSim's fast-changing types |
+
+Plus `frob-core` (identities, hashing, evidence classes, refusals, units glue) and an `xtask` limited to six
+checks (`check-layers`, `check-deps`, `check-unsafe`, `check-generated`, `check-contracts`, `check-stack`).
+Crate size caps sum to 361 kLoC, and exceeding a cap by 15% triggers a conversation rather than a trim.
+
+Layers depend only downward. The core crates set `unsafe_code = "deny"` and never depend on a GPU crate; CUDA
+and Metal live in annex workspaces under `spark/` with registered unsafe capsules. Forbidden everywhere: tokio
+and its ecosystem, a direct Rayon pool, BLAS and LAPACK, C or C++ numerical libraries and a Python interpreter
+(base §26.3). FrankenSim's own dependencies bring `nalgebra` and `rayon` in transitively; the plan says so: "'Franken-only'
+describes direct edges."
+
+---
+
+## Command surface (planned)
+
+One registry, `registries/verbs.toml`, generates the CLI, the MCP tools, the schemas and the docs, and a
+parity gate keeps them identical. "Agents ask questions and spend budgets. They do not drive solvers."
+
+```bash
+frob doctor | capabilities | schema | robot-docs        # operator verbs (M0)
+frob spark devices | probe | check | precompile sm_89   # device evidence; IEEE probe; CPU-vs-device divergence ledger
+frob design new | show | templates | edit | check       # typed edits only; check aggregates the static analyses (M1)
+frob design diff | blame | bisect                       # lineage; bisect finds the edit that broke a task (M4)
+frob design import | export                             # URDF/MJCF, always with a loss report
+frob analyze <A-01..A-16>                               # one verb per static analysis
+frob control synth | show                               # baseline estimator + controller
+frob scene gen | compile | import | list | show         # terrain, interiors, private scans
+frob sim estimate | run | replay                        # estimate never runs physics; replay --tier teleports
+frob train start | status | stop | export               # on-device PPO
+frob eval run | scorecard | compare | promote           # anytime-valid comparison; promotion to the referee
+frob telemetry summary | query | energy | failures | stills | inspect-pixel | export-html
+frob explain run | design                               # ends with next_actions
+frob opt start | status | archive                       # CMA-ES, BO, racing, MAP-Elites archive (M4)
+frob predict register | report                          # registered predictions, scored later
+frob prove kernel | verify | list                       # certificates, re-checked offline
+frob report design | run                                # evidence packages
+frob job list | status | wait | cancel                  # long work through frobd
+```
+
+With `--json`, every verb writes exactly one `frob.envelope/1` envelope: `verb`, `ok`, `exit`, `result`,
+`evidence` (claim class, tier, model identity, determinism), `cost` (wall time, CPU core-seconds, GPU-seconds),
+`warnings` and `next_actions`. Long jobs stream NDJSON progress first. Exit codes are fixed:
+
+| Exit | Meaning |
+|---|---|
+| 0 | Completed, nothing to flag |
+| 2 | Completed with findings or flags |
+| 3 | Refused input (`FROB-REF-1xx` to `3xx`) |
+| 4 | Budget stop; nothing partial is published |
+| 5 | Capability not implemented or not admitted |
+| 6 | Backend or device unavailable (`FROB-REF-6xx`) |
+| 7 | Conflict: idempotency key reused or lineage conflict |
+| 9 | Indeterminate. "Never retry blindly" |
+
+"Exit code 1 is never emitted on purpose." Every verb that can cost more than a second accepts `--estimate`.
+Mutating verbs take idempotency keys. Capabilities are scoped (`design:write`, `sim:run`, `gpu:seconds=600`,
+`scene:import`, `train:run`). Agents supply data, never code: designs, task specs, controller configurations
+and policy weights, but no kernels or programs. The MCP server is built on fastmcp-rust, groups tools "into
+clusters of at most seven per task", and treats imported text as data, "never interpreted as instructions".
+
+Astra's interface has the same shape under different names (`frobot design patch`, `study plan|submit|compare`,
+`run replay|fork`, `experiment suggest`) and adds six inverse queries, among them `mission.synthesize`,
+`mission.refute` and `result.revalidate`. Neon's `frob-mcp` plans 42 tools in seven clusters with
+`job_poll`, `job_stream` and `job_cancel`.
+
+---
+
+## Hardware and performance targets
+
+Two machines are named in every edition: `trj`, a Linux x86-64 host with two RTX 4090s (24 GiB each, no
+NVLink, peer-to-peer unverified), and a Mac Studio with an M5 Ultra (36 CPU cores, an 80-core GPU, Metal 4 and
+256 GB of unified memory, "the large-scene machine"). Metal has no double precision and the RTX 4090's doubles
+run at about 1/64 rate, so the devices work in single precision. Anchored positions, group-valued updates,
+fixed-order sums and double-float accumulators are meant to make that enough, and BET-08 tests whether it is.
+
+| Workload (base §28.1) | Hardware | Target | Context the plan cites |
+|---|---|---|---|
+| Quadruped, 12 joints, 16 foot samples, h = 2 ms, 4 Newton iterations, physics only | One RTX 4090, 8,192 worlds | ≥ 2.0 M world-steps/s | |
+| Same task, PPO training including policy and learning | One RTX 4090 | ≥ 400 k env-steps/s | MuJoCo Playground reports 417 k for a quadruped on an A100 with MJX |
+| Humanoid, 29 joints, physics only | One RTX 4090, 4,096 worlds | ≥ 500 k world-steps/s | Playground reports 106 k training throughput for G1 on an A100 |
+| Two devices | Two RTX 4090 | ≥ 1.8× one device | Independent shards |
+| Quadruped physics | M5 Ultra, Metal | ≥ 25% of one RTX 4090; stretch 60% | No published Metal physics benchmark for M5 found |
+| Quadruped physics, `batch-cpu`, `f32` | M5 Ultra, 36 cores | ≥ 150 k world-steps/s | Hypothesis-grade |
+| Train the reference quadruped task | One RTX 4090 | ≤ 15 min | Playground reports about 5 min on two RTX 4090s |
+| `design check` / `control synth` / generate and compile an interior | CPU | < 2 s p95 / < 5 s / < 60 s | |
+
+"None is a measurement." Every performance claim must carry the disclosure block of base §28.2: hardware and
+driver, backend and compiler versions, world count, time step and substeps, solver iterations and tolerance,
+contact capacity and mean active contacts, sensors, whether policy and learning are included, scene,
+determinism class, warm-up, launch-graph capture, median and p99 step time, and peak memory. The block exists
+because a published simulator headline was "later re-measured two orders of magnitude lower".
+
+---
+
+## Planning experiments already computed
+
+The Astra edition ran small, exact planning experiments while it was being written. They are the only
+computed results in this repository. None of them simulates a robot. Each is labelled the way Astra labels it.
+
+- **A three-tick docking robot** (analytic, §18.10). A robot can move to learn which of two actuator gains,
+  1 or 2, it has, before committing to its final approach. With a command limit of 3/4, a fixed probe
+  tolerates sensor error below 1/8. Designing the probe and the feedback together raises that threshold to
+  5/16. At the boundary, two physically different robots can report the same velocity, 15/16, and need
+  incompatible next commands, −1/4 and −3/4. The continuous boundary was checked against an independently
+  formulated LP comparator on 561 actuator/error cells: 561 of 561 match (344 admissible, 217 excluded, 9
+  exactly on the boundary). Adding a third plausible gain, 33/32, makes exact docking impossible, and all
+  34,590 previously feasible labels on each native test grid reverse. An agent must return that changed
+  verdict when the tolerance changes.
+- **The narrowest quadruped stance** (analytic, §18.7). A 400 N load on four point feet, each able to push
+  0 to 160 N, with a half-length of 1/3 m and a centre of mass that can move anywhere in a rectangle of
+  half-dimensions 150 and 75 mm, needs a stance half-width of at least 3/14 m. At 0.20 m one foot would need
+  165 N. All 11,520 checked cases agree.
+- **When a comparison can declare a tie** (analytic, §13.2). Under the registered promotion rule, a 64-pair
+  batch cannot show equivalence whatever the outcome. The first sample size that can is 86 pairs.
+- **A speed gate that failed** (measured, §19.4). On a pusher family where each design needs its own
+  command, the specialized arm ran only 1.345× faster than the composed baseline (ratio of medians, warm) and
+  1.088× faster cold. Shared checking and serialization took about 94% of the specialized warm batch, so even
+  a zero-cost solver would have reached only about 1.46×. "The inclusive speed gate failed."
+- **Native docking-facet screen** (measured, §11.6). The same scalar boundary test ran on the target
+  hardware. Exact integer arithmetic on the host was fastest end to end on both machines:
+
+  | Host and path | Warm median, near / spaced grid (µs) |
+  |---|---|
+  | M5 Ultra CPU, exact integer | 33.750 / 35.333 |
+  | M5 Ultra Metal, guarded `f32` | 288.500 / 308.750 (GPU-active 6.875 / 12.708) |
+  | `trj` CPU, exact integer | 780.560 / 423.382 |
+  | `trj` dual RTX 4090, guarded `f32` | 2,554.780 / 4,392.090 |
+
+  Comparisons are within a host only. The lesson Astra draws is "first choose a representation that preserves
+  strict inequalities, then place it according to where the data and consumer already reside."
+- **Owner code needs admission.** Executable probes found three errors in FrankenSim's
+  `fs_g1_train::ppo_update` at the pinned commit (clip side for negative advantages, log-σ gradients, critic
+  bias gradient) and a planar-drive case that loses translation (Astra §5.1, §9.3). This is why every
+  edition admits sibling code through a recorded gate.
+
+To re-check them, unzip the bundle into an empty directory outside this repository:
+
+```bash
+mkdir -p ~/scratch/astra-repro && cd ~/scratch/astra-repro
+unzip /path/to/franken_robotics/planning/astra-10x-reproduction.zip
+python3 -B verify.py             # standard-library checks
+python3 -B verify.py --all       # needs NumPy, SciPy and the z3 executable on PATH
+python3 -B verify_negative.py    # deliberate regressions that must each be caught
+```
+
+The recorded environment is CPython 3.15.0, NumPy 2.5.4, SciPy 1.18.1 and Z3 4.15.4 on arm64 macOS. In the
+bundle's own words: "These devices executed a scalar docking-boundary test. End-to-end robot dynamics, sensor
+pipelines and integrated product speed remain open."
+
+---
+
+## Gates and kill gates
+
+The base plan registers ten admission gates (`INT-*`, one per foundation), about fifty convergence gates and
+nine kill gates. "No self-certification": a gate's PASS is recorded by a fresh-context session, and every gate
+has a registered negative control that it must catch.
+
+| Kill gate | Trigger | Fallback |
+|---|---|---|
+| KILL-FSIM | FrankenSim cannot be consumed by path within two weeks of M0 effort, or upstream breakage exceeds 20% of working days | Lift the needed FrankenSim modules with provenance; the README says "lift-only" |
+| KILL-KIR | At M2 the derivation toolchain cannot cover the kernel arithmetic, or derived kernels stay more than 1.3× slower than hand-tuned ones | Hand-written arithmetic in Rust and the shared dialect, under differential tests |
+| KILL-CONTACT | Fast-tier contact disagrees with the referee on slip and creep | Hunt–Crossley contact as default at lower throughput; then referee-only locomotion claims |
+| KILL-METAL | Metal below 25% of one RTX 4090, or not deterministic run to run | Metal becomes a development and replay tier; CUDA trains; the Mac trains on `batch-cpu` |
+| KILL-MCP | The MCP library fails admission | A separate server talking NDJSON to `frobd` over a local socket; then CLI only |
+| KILL-STATIC | Static checks fail to predict which designs fail (AUC < 0.8, or < 0.05 above a mass-and-torque heuristic) | `design check` becomes advisory lints and the pruning claim is withdrawn |
+| KILL-BASELINE | Fewer than 80% of check-passing designs walk or drive 5 m under their baseline | Synthesis limited to the classes that pass |
+| KILL-EQUIV | Equivariant policies need more than 0.7× the environment steps of unconstrained ones | Symmetry used for augmentation and metamorphic tests only |
+| KILL-LEMMA | Fewer than half of derived kernels carry replayable certificates after one repair | Exact-rational randomized tests, recorded as `Tested`; "certificate" removed from manifests |
+
+A program gate at the end of M1 pauses for a written re-plan if M0 and M1 take more than 1.5× their estimate
+because a sibling lacked a primitive. Neon adds three Brenner exclusion tests (XT-P1, campaign algebra against
+per-step algebra; XT-P2, heterogeneous morphologies against specialized templates; XT-P3, formal certificates
+against real contact) and 21 kill gates. Astra defines a sealed tenfold test (§19): four strata of held-out
+missions, the strongest available rival pipelines as comparators, one-sided 95% lower bounds of at least 10 in
+each stratum, and "One false certificate disqualifies that arm from the scoped claim."
+
+---
+
+## Milestones
+
+From the base plan (§34). "M1 is a design studio on the CPU referee tier"; GPUs arrive at M2, "on top of
+something that already works". The planning estimates are in elapsed swarm weeks (M0 one, M1 three, M2 to M5
+four each) and are "not acceptance evidence".
+
+| Milestone | Delivers | Scenarios |
+|---|---|---|
+| **M0** spine and airlock | `frob doctor` lists admitted foundations; `frob sim run g1 --tier referee --seconds 2` reproduces FrankenSim's own digest; `frob spark probe` on both device families; one `K-cay-step` kernel source running on `batch-cpu`, CUDA and Metal; a certificate that replays offline; M0 verbs over MCP | |
+| **M1** referee and static studio | Design language and compiler; quadruped, humanoid, differential-drive and mecanum templates; URDF/MJCF import with loss reports; `design check`; actuator models L1 and L2; referee rollouts; invariant filter; baseline controllers; telemetry and energy ledger; `explain` | NS-01, NS-07 |
+| **M2** batch and Spark | Batched step on three backends; terrain and scene packs; sensors and stills; on-device PPO; fidelity and divergence ledgers; replay and teleport; measured throughput with disclosure | NS-02, NS-10 |
+| **M3** Habitat and Arena | Seven interior archetypes; interior navigation, payload and tight-space tasks; anytime-valid comparison, promotion and exploit detectors; `frobd` and full MCP | NS-03, NS-04, NS-09 |
+| **M4** co-design and breadth | Optimization, racing and quality-diversity archive; lineage; predictions; equivariant networks; gait atlas; tires, tracks, hybrids and moving surfaces; reach-and-carry | NS-05, NS-06, NS-08 |
+| **M5** Lemma and reality | Certificate coverage; Lean capsules; variational integrator; private real-place ingestion; a first Reality record or a recorded `no-claim` | NS-11, NS-12 |
+| **M6** frontier | Unscheduled epics: gradients through contact, granular terrain at scale, flexible links, soft robots, moving people, OpenUSD, hydraulics | |
+
+---
+
+## Foundations
+
+FrankenRobotics is built on the FrankenSuite. Each foundation has a posture, an admission gate and a written
+fallback (base §25.4). An admission record counts only if it cites a commit whose tracked `Cargo.lock`
+contains the foundation.
+
+| Foundation | Posture | Used for | Fallback |
+|---|---|---|---|
+| [frankensim](https://github.com/Dicklesworthstone/frankensim) | Consume by path, behind `frob-fsim` | Referee dynamics and contact, geometry, optimizers, racing and e-processes, evidence ledger | KILL-FSIM: lift with provenance |
+| asupersync | Consume | Structured concurrency and cancellation; one package per build | Process boundary |
+| frankensqlite | Consume | The Chronicle ledger | Append-only JSON-lines ledger |
+| frankentorch | Consume | `ft-kernel-metal` gateway in the Metal annex; CPU trainer, gradient oracle, safetensors | Bind Metal directly |
+| `cudarc` (third party) | Annex only | CUDA driver and NVRTC at run time, no toolkit needed | No CUDA tier |
+| frankensympy | Build time and checker | Kernel derivation; certificate checking | KILL-KIR, KILL-LEMMA |
+| franken_lean | Subprocess | Re-check and seal Lean proofs | Stock Lean |
+| fastmcp-rust | Consume | The MCP server | KILL-MCP |
+| franken_numpy, frankenscipy | Narrow consume and oracle | Array I/O; `solve_ivp` as an ODE oracle | |
+| franken_threed | Subprocess and pattern | Packaging replay viewers | Plain Three.js |
+
+The firewall: "M1 depends only on FrankenSim, asupersync and FrankenSQLite. If the GPU, symbolic and proof
+foundations all failed admission, M1 would still ship a referee-tier design studio on the CPU." Outside
+engines (MuJoCo in double precision, run out of process) are comparison oracles only. Reference robots come
+from MuJoCo Menagerie under their own licences, and scene assets are procedural by default.
+
+---
+
+## Scope boundaries
+
+Not a photorealistic renderer. Not a Python library ("The users are agents with a CLI and MCP"). Not a
+real-time or hardware-in-the-loop system, and not ROS. No Windows. No soft, continuum, flying or swimming robots
+in v1, and no dexterous in-hand manipulation (mobile reach-and-carry is in scope at M4). No general formal
+verification of controllers. The anti-goals (base §4.3) are firmer: never lower fidelity silently for frame
+rate, never wrap MuJoCo, PhysX or another foreign engine as the production engine, never publish throughput
+without the disclosure block, never accept an inertia on faith, and never put "a language model inside the
+physics or control loop".
+
+**No safety certification** (base §29.6). "Simulation results are not a safety case for a physical robot."
+
+## Privacy
+
+A scan of a real place (NS-12, "Your own kitchen") becomes a scene pack marked `private`, stored under a
+private root outside the repository. Stills, replays, reports and fixtures derived from it inherit the mark and
+cannot be exported without an explicit flag. "The scan never leaves the machine." Scale stays `ESTIMATED`
+unless it is anchored by a measurement. Licences are enforced when a pack is built, so research-only assets
+cannot reach an exported report or a redistributed pack.
+
+---
+
+## Repository layout
+
+Today:
+
+```text
+COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md          base plan v0.2
+COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md   Astra edition
+COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md    Neon v2.0
+CHANGELOG.md                                        the planning history, with evidence links
+planning/mor/                                       round 1: modes-of-reasoning audit of Neon v1 (case, 16 claims, report)
+planning/duel/                                      round 1: three-model idea duel (ideas, cross-scores, reactions, report)
+planning/brenner/                                   round 1: question of record, disagreement register, synthesis
+planning/fable/                                     round 2 on base v0.2, in progress: audit, hypothesis slate and
+                                                    evidence packs, duel ideation, graveyard harvest, artifact pass
+planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers
+```
+
+Target (base §26.1):
+
+```text
+Cargo.toml  rust-toolchain.toml  franken-stack.lock    workspace, pinned nightly, sibling pins
+AGENTS.md  DEPENDENCY_ADMISSION.md                    agent contract; admission evidence per foundation
+crates/frob-*/                                        the core workspace (unsafe denied)
+spark/frob-spark-cuda/  spark/frob-spark-metal/       GPU annexes with their own lockfiles and SAFETY.md
+surface/frob-mcp/                                     MCP server generated from the registry
+derive/frob-derive/                                   symbolic derivation and certificate production
+apps/                                                 links core and annexes into frob and frobd
+kernels/                                              derived kernel sources, checked in with digests
+registries/                                           verbs, refusals, kernels, gates, actuator cards
+lean/  viewer/  assets/                               Lean project; Three.js replays; templates
+tests/fixtures/oracle/  tools/oracle/                 pinned oracle fixtures and their capture scripts
+docs/delivery/                                        the delivery log (never in the plan)
+```
+
+## Reading paths
+
+- **What and why**: this README, then base §1–§6.
+- **The mathematics**: base §7–§10 and Appendix D; Neon Part II.
+- **Inverse design and the tenfold test**: Astra's front matter, then §18–§20.
+- **GPUs and determinism**: base §20, §27 and §28; Astra §11; Neon §17.
+- **The agent surface**: base §24 and Appendix J; Astra §10.
+- **Gates, risks and delivery**: base §30–§37; Neon §25–§29; Astra §13–§16.
+- **How the plans were reviewed**: [CHANGELOG.md](CHANGELOG.md), then [`planning/`](planning/).
+
+---
+
+## FAQ
+
+**Why not wrap MuJoCo, MuJoCo Warp, Newton or Genesis?** The base plan makes it an anti-goal. Its reasons are
+the "fossils" above, plus practical ones (Python ecosystems; Newton is CPU-only on macOS) (§20.9). MuJoCo runs
+out of process as a parity oracle. Parity with a simulator is not Reality.
+
+**Why Lie theory and abstract algebra?** Because each construction pays for itself or is cut. Frame errors
+become type errors. Group-valued updates stay on the group. The Cayley map's arithmetic is a candidate for
+bit-identical results across CPU, CUDA and Metal, and it can carry a certificate. One cone abstraction serves
+contact, control and certificates. A design's symmetry group yields augmentation, equivariant policies and
+free metamorphic tests. Static analyses answer design questions in seconds.
+
+**Why both CUDA and Metal?** The owner's hardware is two RTX 4090s and an M5 Ultra with 256 GB of unified
+memory, which can hold scenes no 24 GB card can. BET-09 tests whether Metal is "a real rollout tier, not a
+demo"; if not, KILL-METAL demotes it to development and replay.
+
+**Why keep a CPU referee if the GPUs are faster?** "The CPU reference is permanent. GPUs propose, the referee
+disposes." A world that fails on a GPU must be replayable somewhere it can be inspected, and a fast-tier result
+must survive a sample on a trusted tier before anyone calls it established.
+
+**Why synthesize a baseline controller?** "Training a policy for every candidate design makes the design loop
+hours long." A synthesized baseline gives feedback on day one. It is not meant to be the best controller.
+
+**Why anytime-valid comparisons?** An agent can stop the moment the evidence is decisive, with the error rate
+intact. Pairing episodes by world address "does more for sample size than the test itself".
+
+**Why are there three plans?** They were written in parallel on 2026-11-21 and none cites another. Each went
+through a different review process, and they disagree on scope, names and headline numbers. Reconciling them
+is the next planning step. [CHANGELOG.md](CHANGELOG.md) records which research fed which edition.
+
+**Does a good simulated result mean the robot will work?** No. In v1 the Reality claim is almost always
+`no-claim`, and nothing here is a safety case. Build it and measure it.
+
+---
+
+## License
+
+MIT with the OpenAI/Anthropic rider. See [LICENSE](LICENSE).

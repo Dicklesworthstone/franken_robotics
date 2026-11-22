@@ -4,7 +4,6 @@ const figures: Record<string, () => Promise<{ default: (root: HTMLElement) => vo
   lineup: () => import("../figures/lineup"),
   stories: () => import("../figures/stories"),
   film: () => import("../figures/film"),
-  ceilings: () => import("../figures/ceilings"),
   stage: () => import("../figures/stage"),
   anatomy: () => import("../figures/anatomy"),
   preflight: () => import("../figures/preflight"),
@@ -17,12 +16,10 @@ const figures: Record<string, () => Promise<{ default: (root: HTMLElement) => vo
   stance: () => import("../figures/stance"),
   docking: () => import("../figures/docking"),
   session: () => import("../figures/session"),
-  claims: () => import("../figures/claims"),
   shrink: () => import("../figures/shrink"),
   autopsy: () => import("../figures/autopsy"),
   retries: () => import("../figures/retries"),
   bench: () => import("../figures/bench"),
-  outcomes: () => import("../figures/outcomes"),
   constructions: () => import("../figures/constructions"),
 };
 
@@ -36,7 +33,7 @@ async function mount(el: HTMLElement) {
     console.error(`Figure ${el.dataset.fig} did not start`, error);
     const note = document.createElement("p");
     note.className = "noscript";
-    note.textContent = "This figure did not load. Reloading the page usually brings it back.";
+    note.textContent = "This didn’t load. Reloading the page usually brings it back.";
     el.append(note);
   }
 }

@@ -1,29 +1,15 @@
 import { $, $$, reduced, seg } from "./lib";
 
-interface Card {
-  replaces: string;
-  payoff: string;
-  test: string;
-  crates: string;
-}
-const TIER: Record<string, string> = { S: "Solid", F: "Frontier", M: "Moonshot" };
+const TIER: Record<string, string> = { S: "Core", F: "Frontier", M: "Moonshot" };
 
 export default function mount(root: HTMLElement) {
   const links = $$<HTMLAnchorElement>(root, "[data-i]");
   const card = $(root, "[data-card]");
   const rest = card.innerHTML;
-  let cards: Promise<Card[]> | undefined;
   let current = -1;
   const home = card.parentElement!;
   const holder = document.createElement("li");
   holder.className = "inline";
-  // Nothing is fetched until a reader shows interest in one.
-  const load = () =>
-    (cards ??= fetch("/constructions.json").then((r) => {
-      if (!r.ok) throw Error(String(r.status));
-      return r.json() as Promise<Card[]>;
-    }));
-
   const close = () => {
     links[current]?.removeAttribute("aria-current");
     card.innerHTML = rest;
@@ -32,25 +18,15 @@ export default function mount(root: HTMLElement) {
     holder.remove();
     current = -1;
   };
-  const show = async (i: number) => {
+  const show = (i: number) => {
     current = i;
     for (const [j, a] of links.entries()) {
       if (j === i) a.setAttribute("aria-current", "true");
       else a.removeAttribute("aria-current");
     }
     const a = links[i]!;
-    const tiers = a.closest<HTMLElement>("li")!.dataset.tiers!;
-    let c: Card;
-    try {
-      c = (await load())[i]!;
-    } catch {
-      cards = undefined;
-      location.href = a.href;
-      return;
-    }
-    if (current !== i) return;
-    const row = (name: string, html: string) => (html ? `<div><p class="micro">${name}</p><p>${html}</p></div>` : "");
-    card.innerHTML = `<p class="kick small"><span class="num">C-${$(a, ".num").textContent}</span><i></i>${[...tiers].map((t) => TIER[t]).join(" and ")}</p><h4>${$(a, "b").innerHTML}</h4>${row("Replaces", c.replaces)}${row("Payoff", c.payoff)}${row("Test", c.test)}<p class="where"><span class="num">${c.crates}</span><a class="txt" href="${a.href}">Read it in full</a></p>`;
+    const li = a.closest<HTMLElement>("li")!;
+    card.innerHTML = `<p class="kick small"><span class="num">${$(a, ".num").textContent}</span><i></i>${[...li.dataset.tiers!].map((t) => TIER[t]).join(" and ")}</p><h4>${$(a, "b").innerHTML}</h4><p class="good">${li.dataset.good}</p><a class="more" href="${a.href}">Read the math</a>`;
     card.scrollTop = 0;
     card.classList.add("open");
     if (innerWidth < 1000) {
@@ -68,10 +44,7 @@ export default function mount(root: HTMLElement) {
     e.preventDefault();
     // A second tap on the open tile closes it.
     if (innerWidth < 1000 && Number(a.dataset.i) === current) return close();
-    void show(Number(a.dataset.i));
-  });
-  root.addEventListener("pointerover", (e) => {
-    if ((e.target as Element).closest("[data-i]")) void load().catch(() => (cards = undefined));
+    show(Number(a.dataset.i));
   });
   root.addEventListener("keydown", (e) => {
     const from = (e.target as Element).closest<HTMLAnchorElement>("[data-i]");
@@ -82,10 +55,10 @@ export default function mount(root: HTMLElement) {
     if (!links[j]) return;
     e.preventDefault();
     links[j]!.focus();
-    void show(j);
+    show(j);
   });
   // One is open from the start, so that the panel shows what it is for.
-  if (innerWidth >= 1000) void show(32);
+  if (innerWidth >= 1000) show(32);
   seg(root, "tier", (t) => {
     for (const a of links) {
       const li = a.closest<HTMLElement>("li")!;

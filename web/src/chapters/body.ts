@@ -1,54 +1,52 @@
-import { chapterClose, chapterOpen, copy, figure, icon, section, seg, toggle, type Chapter, type Refs } from "../parts";
+import { chapterClose, chapterOpen, copy, figure, icon, section, seg, type Chapter, type Refs } from "../parts";
 import { archetypes } from "../figures/archetypes";
 
 export const body: Chapter = {
   id: "body",
   number: "02",
   label: "The body",
-  short: "Body",
+  short: "Bodies",
   icon: "body",
   colour: "#4ade80",
-  title: "A body is *data*.",
+  title: "Legs, wheels, tracks, *or all three*.",
   thesis:
-    "A robot is a composition of modules over typed ports, and it lowers to tables. Different robots can then share one batch, a new design recompiles nothing, and an agent can check a body in seconds before it simulates one step.",
+    "A robot is a set of modules with typed ports. Swap a motor, stretch a femur or bolt a wheel onto a leg, and the new body is ready to simulate with nothing to recompile.",
   sections: [
-    ["bodies", "Eighteen bodies"],
-    ["anatomy", "The anatomy"],
-    ["preflight", "Eight stages of preflight"],
-    ["symmetry", "What the sensors break"],
-    ["batch", "256 robots, one dispatch"],
+    ["bodies", "Eighteen bodies to start from"],
+    ["preflight", "The two-second check"],
+    ["batch", "256 robots in one batch"],
   ],
 };
 
 /** The subsystems of §0.5, in the order the plate lists them. */
 export const organs: [key: string, name: string, section: string, text: string, side: "left" | "right"][] = [
-  ["cortex", "Cortex", "23", "The environment API, learning, and one policy for a whole class of bodies.", "left"],
-  ["sensorium", "Sensorium", "20", "Sensor models, and a clock that records when each reading was taken, sent and used.", "left"],
-  ["reflex", "Reflex", "22", "State estimation, a controller synthesized from the model, gaits, and shields on commands.", "left"],
-  ["spark", "Spark", "21", "The GPU backends. Kernel arithmetic is derived once and emitted for a CPU reference, CUDA and Metal.", "left"],
-  ["sinew", "Sinew", "15", "Actuators, transmissions, batteries and winding temperatures.", "left"],
-  ["skeleton", "Skeleton", "14", "The design language: modules with port contracts, archetypes, preflight, the model compiler.", "left"],
-  ["marrow", "Marrow", "13", "Lie groups, finite groups, cones and order theory, under everything else.", "left"],
-  ["kinesis", "Kinesis", "16", "Dynamics and contact solves on three tiers, with the CPU referee as the permanent reference.", "left"],
-  ["traction", "Traction", "18", "Collision, friction, wheels, tracks and soft ground.", "left"],
-  ["habitat", "Habitat", "19", "Terrain and interiors, generated or scanned, and whether a body fits through them.", "left"],
-  ["airlock", "Airlock", "33", "The only code that names FrankenSim's volatile types.", "left"],
+  ["cortex", "Cortex", "23", "The gym. Trains one policy for a whole family of bodies.", "left"],
+  ["sensorium", "Sensorium", "20", "Cameras, lidar, touch, and the clock that stamps every reading.", "left"],
+  ["reflex", "Reflex", "22", "Balance, gaits and a controller worked out from the model.", "left"],
+  ["spark", "Spark", "21", "The GPU kernels for CUDA and Metal, with a CPU twin.", "left"],
+  ["sinew", "Sinew", "15", "Motors, gearboxes, batteries, and how hot they get.", "left"],
+  ["skeleton", "Skeleton", "14", "The design language: modules that snap together.", "left"],
+  ["marrow", "Marrow", "13", "The algebra underneath everything else.", "left"],
+  ["kinesis", "Kinesis", "16", "Motion and contact, at three levels of detail.", "left"],
+  ["traction", "Traction", "18", "Wheels, tracks, feet, friction and soft ground.", "left"],
+  ["habitat", "Habitat", "19", "Terrain and buildings, generated or scanned.", "left"],
+  ["airlock", "Airlock", "33", "The gateway to FrankenSim’s physics.", "left"],
   ["phylum", "Phylum", "17", "Families of different bodies in one batch.", "right"],
-  ["augur", "Augur", "25", "Mission queries: which designs can do the job, which cannot, and what to test next.", "right"],
-  ["atelier", "Atelier", "28", "The studio loop: analysis, comparison, lineage, and which verdicts an edit withdraws.", "right"],
-  ["nemesis", "Nemesis", "26", "The search for worlds that break a design, and bounds on rare failures.", "right"],
-  ["autopsy", "Autopsy", "27", "Failures explained by intervening on forked replays.", "right"],
-  ["chronicle", "Chronicle", "29", "Telemetry, replay, the energy ledger and the record of evidence.", "right"],
-  ["lemma", "Lemma", "12", "Proofs, certificates and an offline auditor that shares no code with the prover.", "right"],
-  ["gauntlet", "Gauntlet", "38", "The test program, and the harness for the ten-fold test.", "right"],
-  ["foundry", "Foundry", "31", "Structure, tolerance, fatigue and build packets.", "right"],
-  ["ground", "Ground", "30", "Calibration against imported measurements of real robots.", "right"],
-  ["tether", "Tether", "32", "The command line, the daemon, the MCP server and the viewer.", "right"],
-  ["arena", "Arena", "24", "Tasks, requirements, metrics, and a sealed lane for qualification.", "right"],
+  ["augur", "Augur", "25", "Answers missions with every design that works.", "right"],
+  ["atelier", "Atelier", "28", "The studio: edit, compare, trace, repeat.", "right"],
+  ["nemesis", "Nemesis", "26", "Hunts for the worlds that beat a design.", "right"],
+  ["autopsy", "Autopsy", "27", "Replays a failure until it finds the cause.", "right"],
+  ["chronicle", "Chronicle", "29", "Records every run, joule and result.", "right"],
+  ["lemma", "Lemma", "12", "Proofs, and an offline program that checks them.", "right"],
+  ["gauntlet", "Gauntlet", "38", "The tests that the lab itself has to pass.", "right"],
+  ["foundry", "Foundry", "31", "Parts, tolerances, fatigue life and build packets.", "right"],
+  ["ground", "Ground", "30", "Tunes the model to measurements of real robots.", "right"],
+  ["tether", "Tether", "32", "The command line, MCP server and viewer.", "right"],
+  ["arena", "Arena", "24", "Tasks, scoring and the sealed exam.", "right"],
 ];
 
 /** A standing machine with every subsystem drawn as a part of it. Groups carry data-part. */
-const plate = () => {
+export const plate = () => {
   const g = (part: string, inner: string) => `<g data-part="${part}">${inner}</g>`;
   const side = (f: (s: 1 | -1) => string) => f(1) + f(-1);
   const X = (s: number, x: number) => 260 + s * x;
@@ -110,14 +108,14 @@ ${g("tether", `<path class="wire" d="M346 250q70 10 74 70t60 70q30 12 30 40"/><r
 };
 
 const stages: [name: string, text: string, target: string][] = [
-  ["Form", "Units, ports, module digests, fills and locks", "100 ms"],
-  ["Mass", "Mass roll-up, inertia positivity by exact LDLᵀ", "50 ms"],
-  ["Mechanism", "Joint classes, loop closure, mobility, self-collision", "400 ms"],
-  ["Motion", "Growth vector of the wheels, curvature of shape-changers", "200 ms"],
-  ["Structure", "Both symmetry groups, port power balance", "150 ms"],
-  ["Statics and sizing", "Tip-over, torque, speed, heat and the bus", "600 ms"],
-  ["Place", "Reach, sensor coverage, clearance through the scene", "2 s"],
-  ["Information", "Two worlds that look the same and need opposite actions", "10 s"],
+  ["Form", "Units, ports and parts agree", "100 ms"],
+  ["Mass", "Weight and inertia add up", "50 ms"],
+  ["Mechanism", "Joints close and links don’t collide", "400 ms"],
+  ["Motion", "Which ways it can really move", "200 ms"],
+  ["Structure", "Symmetry and power balance", "150 ms"],
+  ["Sizing", "Torque, speed, heat, tip-over, battery", "600 ms"],
+  ["Place", "Reach, sightlines and clearance", "2 s"],
+  ["Information", "Sensors can tell the worlds apart", "10 s"],
 ];
 
 export const renderBody = (ref: Refs) =>
@@ -125,90 +123,48 @@ export const renderBody = (ref: Refs) =>
   section({
     ref,
     id: "bodies",
-    index: "02.1",
-    eyebrow: "Archetypes",
-    title: "Eighteen *bodies*.",
+    eyebrow: "Starting points",
+    title: "Eighteen bodies to *start from*.",
     kicker:
-      "Each archetype exists to exercise named mechanisms, and each has a known answer that fails if the mechanism is wrong. Pick one, drag to turn it, and read the table it is drawn from. [§14.10](§14.10)",
+      "A robot dog, a humanoid, a Mars-style rover, a snake. Each one is built from the table beside it, so stretching a link or moving a hip gives you a new machine.",
+    more: ["How a robot is described", "14"],
     body: figure({
       name: "stage",
-      no: "02.1",
-      label: "The archetypes of §14.10",
-      title: "Drawn from *its table*.",
-      basis: "drawing",
-      source: [["§14.10", ref("14.10")]],
-      note: "Proportions and motions are this page's own. The layout, actuated coordinates, symmetry group and purpose are the plan's.",
+      todo: "Pick a body, then drag to turn it",
+      kind: "live",
       ref,
-      body: `<div class="stage"><div class="stage-list" role="radiogroup" aria-label="Archetype">${archetypes
+      body: `<div class="stage"><div class="stage-list" role="radiogroup" aria-label="Body">${archetypes
         .map(
           (a, i) =>
-            `<button type="button" role="radio" aria-checked="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-i="${i}"><span class="num">${String(i + 1).padStart(2, "0")}</span><b>${a.id}</b><small>${a.dof}</small></button>`,
+            `<button type="button" role="radio" aria-checked="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-i="${i}"><span class="num">${String(i + 1).padStart(2, "0")}</span><b>${a.name}</b><small>${a.dof}</small></button>`,
         )
         .join("")}</div>
-<div class="stage-view"><canvas tabindex="0" aria-label="A turning model of the selected robot. Drag, or use the arrow keys, to turn it."></canvas><p class="stage-hint">Drag to turn</p><dl class="stage-hud"><div><dt>Actuated</dt><dd data-dof>${archetypes[0]!.dof}</dd></div><div><dt>Symmetry as built</dt><dd data-sym>${archetypes[0]!.symmetry}</dd></div><div><dt>Links</dt><dd data-links></dd></div></dl></div>
-<div class="stage-info" aria-live="polite"><p class="micro" data-no>Archetype 01</p><h5 data-name>${archetypes[0]!.id}</h5><p data-layout>${copy(archetypes[0]!.layout)}</p><p class="tests"><small>What it tests</small><span data-tests>${copy(archetypes[0]!.tests)}</span></p><div class="datawrap"><table class="data"><thead><tr><th>link</th><th>parent</th><th>joint</th><th>offset, m</th></tr></thead><tbody data-rows></tbody></table></div></div></div>`,
-    }),
-  }) +
-  section({
-    ref,
-    id: "anatomy",
-    index: "02.2",
-    eyebrow: "Subsystems",
-    title: "Assembled from *parts*.",
-    kicker:
-      "“The subsystems are named for the parts, for what the creature does, and for what is done to it.” Point at a name, or at the machine. [§0.5](§0.5)",
-    body: figure({
-      name: "anatomy",
-      no: "02.2",
-      label: "Twenty-three subsystems",
-      title: "The *anatomy*.",
-      basis: "plan",
-      source: [["§0.5", ref("0.5")]],
-      className: "plain",
-      body: `<div class="anatomy"><ul class="organs left">${organs
-        .filter((o) => o[4] === "left")
-        .map(
-          ([key, name, s, text]) =>
-            `<li data-organ="${key}"><a href="${ref(s)}"><b>${name}</b><span>§${s}</span></a><p>${copy(text)}</p></li>`,
-        )
-        .join("")}</ul><div class="plate">${plate()}</div><div class="organ-now" data-now></div><ul class="organs right">${organs
-        .filter((o) => o[4] === "right")
-        .map(
-          ([key, name, s, text]) =>
-            `<li data-organ="${key}"><a href="${ref(s)}"><b>${name}</b><span>§${s}</span></a><p>${copy(text)}</p></li>`,
-        )
-        .join("")}</ul></div>`,
+<div class="stage-view"><canvas tabindex="0" aria-label="A turning model of the selected robot. Drag, or use the arrow keys, to turn it."></canvas><p class="stage-hint">Drag to turn</p><dl class="stage-hud"><div><dt>Motors</dt><dd data-dof>${archetypes[0]!.dof}</dd></div><div><dt>Symmetry</dt><dd data-sym>${archetypes[0]!.symmetry}</dd></div><div><dt>Links</dt><dd data-links></dd></div></dl></div>
+<div class="stage-info" aria-live="polite"><p class="micro" data-no>Body 1 of ${archetypes.length}</p><h4 data-name>${archetypes[0]!.name}</h4><p data-layout>${copy(archetypes[0]!.layout)}</p><p class="tests"><span data-tests>${copy(archetypes[0]!.tests)}</span></p><div class="datawrap"><table class="data"><thead><tr><th>link</th><th>parent</th><th>joint</th><th>offset, m</th></tr></thead><tbody data-rows></tbody></table></div></div></div>`,
     }),
   }) +
   section({
     ref,
     id: "preflight",
-    index: "02.3",
-    eyebrow: "design check",
-    title: "Eight stages before the *first step*.",
+    eyebrow: "The design check",
+    title: "Catch it in *two seconds*.",
     kicker:
-      "Static checks stop at the first refusal and answer with a repair the agent can apply as an edit. Stages 1 to 6 have a target of two seconds together. [§14.11](§14.11)",
+      "Eight checks run before any simulation, and the first six take two seconds between them. When one fails, the answer comes with a repair the agent can apply.",
+    more: ["All eight checks", "14.11"],
     body: figure({
       name: "preflight",
-      no: "02.3",
-      label: "frob design check",
-      title: "Hand it a *faulty* robot.",
-      basis: "illustrative",
-      source: [
-        ["§14.11", ref("14.11")],
-        ["§7", ref("7")],
-      ],
-      note: "Stage names, refusal codes and time targets are the plan's. The parallel-roller and beacon cases are known answers; the sizing case is the story of NS-01.",
+      todo: "Hand it a faulty robot, then apply the repair",
+      kind: "example",
       ref,
       body: `<div class="preflight"><div>${seg(
         "case",
         "Robot to check",
         [
-          ["ok", "No fault"],
-          ["knee", "Undersized knee"],
-          ["roller", "Parallel rollers"],
-          ["door", "Too wide for door D"],
-          ["beacon", "Two beacons"],
+          ["knee", "Weak knees"],
+          ["roller", "Crossed wheels"],
+          ["door", "Too wide"],
+          ["beacon", "Confused sensors"],
+          ["ok", "Healthy"],
         ],
         "knee",
       )}<ol class="stages">${stages
@@ -216,51 +172,24 @@ export const renderBody = (ref: Refs) =>
           ([name, text, t], i) =>
             `<li data-stage="${i + 1}"><span class="num">${i + 1}</span><div><b>${name}</b><small>${text}</small></div><em>${t}</em><span class="state">${icon("check")}</span></li>`,
         )
-        .join("")}</ol></div><div class="term" aria-live="polite"><p class="term-bar"><i></i><i></i><i></i><span>frob design check</span></p><pre data-out></pre><button type="button" class="btn sm" data-fix>Apply the first repair</button></div></div>`,
-    }),
-  }) +
-  section({
-    ref,
-    id: "symmetry",
-    index: "02.4",
-    eyebrow: "C-09",
-    title: "What the sensors *break*.",
-    kicker:
-      "A body has one symmetry group as a mechanism and a smaller one once its sensors, payload and task are counted. Tests may use the first. Anything that ties weights or folds states together may use only the second. [C-09](§C-09)",
-    body: figure({
-      name: "symmetry",
-      no: "02.4",
-      label: "A quadruped from above",
-      title: "Mount something and *recount*.",
-      basis: "computed",
-      source: [["C-09", ref("C-09")]],
-      note: "The page tries the four planar isometries of the rectangle against every labelled feature.",
-      ref,
-      body: `<div class="symm"><div class="symm-view" data-view></div><div class="symm-side"><div class="toggles">${toggle("lidar", "Forward lidar", true)}${toggle("payload", "Payload on one side")}${toggle("goal", "Commanded forward")}${toggle("knees", "All knees bend back")}${toggle("gear", "One gearbox swapped")}</div><div class="groups"><div><small>As a mechanism</small><b data-mech>C₂ × C₂</b><span data-mech-n></span></div><div><small>With what it senses and carries</small><b data-obs>C₂</b><span data-obs-n></span></div></div><p class="say" data-say></p></div></div>`,
+        .join("")}</ol></div><div class="term" aria-live="polite"><p class="term-bar"><i></i><i></i><i></i><span>frob design check</span></p><pre data-out></pre><button type="button" class="btn sm" data-fix>Apply the repair</button></div></div>`,
     }),
   }) +
   section({
     ref,
     id: "batch",
-    index: "02.5",
-    eyebrow: "Phylum",
-    title: "256 robots, *one dispatch*.",
+    eyebrow: "One batch",
+    title: "256 robots, *all different*.",
     kicker:
-      "NS-14 asks for 256 different designs with three leg counts in a single batch, 32 worlds each, with no kernel compiled. Incumbents already mix topologies, so the plan may claim only two measured numbers against them. [§17](§17)",
+      "Four, six or eight legs, every limb its own length, all stepping together on one GPU. A new body is one more row in a table.",
+    more: ["How mixed batches work", "17"],
     body: figure({
       name: "batch",
-      no: "02.5",
-      label: "One table of 256 bodies",
-      title: "Every one is a *different* robot.",
-      basis: "drawing",
-      source: [
-        ["§17", ref("17")],
-        ["NS-14", ref("7")],
-      ],
-      note: "Leg count, femur, tibia, stance and gait speed are drawn at random per body. The motion is kinematic.",
+      todo: "Point at a robot to read its row",
+      kind: "live",
       ref,
       className: "bleed",
-      body: `<div class="batch"><canvas aria-label="A field of 256 walking robots with four, six or eight legs and different proportions"></canvas><div class="batch-hud"><dl><div><dt>Bodies</dt><dd>256</dd></div><div><dt>Links posed per frame</dt><dd data-links>0</dd></div><div><dt>Kernels compiled</dt><dd>0</dd></div></dl><button type="button" class="btn sm" data-seed>${icon("redo")}Another 256</button></div><p class="batch-tip" data-tip hidden></p></div>`,
+      body: `<div class="batch"><canvas aria-label="A field of 256 walking robots with four, six or eight legs and different proportions"></canvas><div class="batch-hud"><dl><div><dt>Bodies</dt><dd>256</dd></div><div><dt>Links moving</dt><dd data-links>0</dd></div><div><dt>Recompiled</dt><dd>0</dd></div></dl><button type="button" class="btn sm" data-seed>${icon("redo")}Another 256</button></div><p class="batch-tip" data-tip hidden></p></div>`,
     }),
   }) +
   chapterClose;

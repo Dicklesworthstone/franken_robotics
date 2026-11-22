@@ -3,16 +3,9 @@ import { escape } from "./layout";
 /** Where a section, appendix or construction of the plan is published. Filled in by the build. */
 export type Refs = (id: string) => string;
 
-/** What stands behind a figure. Every figure states one. */
-export type Basis = "computed" | "toy" | "published" | "illustrative" | "drawing" | "plan";
-const BASIS: Record<Basis, [label: string, meaning: string]> = {
-  computed: ["Computed here", "The plan's own fixture, worked out in your browser"],
-  toy: ["A toy, for intuition", "Runs in your browser; not FrankenRobotics code"],
-  published: ["Arithmetic on published figures", "No measurement of this project"],
-  illustrative: ["Illustrative numbers", "From a story in the plan; nothing was run"],
-  drawing: ["Drawing, no physics", "Kinematics and rendering only"],
-  plan: ["From the plan", "Quoted or counted from the plan"],
-};
+/** The small tag on a figure. A picture needs none. */
+export type Kind = "live" | "example";
+const KIND: Record<Kind, string> = { live: "Interactive", example: "Worked example" };
 
 export const icon = (name: keyof typeof ICONS) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;
@@ -35,6 +28,9 @@ const ICONS = {
   left: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
   home: '<path d="m4 11 8-7 8 7v9H4zM10 20v-6h4v6"/>',
   check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  star: '<path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.200-2.700-5.200 2.700 1-5.800-4.200-4.100 5.800-.8z"/>',
+  engine: '<circle cx="12" cy="12" r="3.200"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M18.400 5.600l-2.100 2.100M7.700 16.300l-2.100 2.100"/>',
+  crash: '<path d="m13 2-7 11h5l-1 9 8-12h-5.500z"/>',
   cross: '<path d="M6 6l12 12M18 6 6 18"/>',
 } as const;
 
@@ -66,50 +62,46 @@ export interface Chapter {
 export const chapterOpen = (c: Chapter) => `
 <div class="chapter" data-chapter="${c.id}" style="--chapter:${c.colour}">
 <section class="opener" aria-labelledby="${c.id}-title"><div class="wrap" id="${c.id}"><div class="opener-grid reveal">
-<div><p class="kick"><span class="joint on" aria-hidden="true"></span>Chapter ${c.number} · ${escape(c.label)}</p>
+<div><p class="kick"><span class="joint on" aria-hidden="true"></span>${escape(c.label)}</p>
 <h2 class="d2" id="${c.id}-title">${title(c.title)}</h2><p class="lede">${escape(c.thesis)}</p></div>
 <div class="opener-index"><span class="numeral" aria-hidden="true">${c.number}</span><ol>${c.sections
-  .map(([id, label], i) => `<li><a href="#${id}"><span class="num">${c.number}.${i + 1}</span>${escape(label)}</a></li>`)
+  .map(([id, label]) => `<li><a href="#${id}">${icon("right")}${escape(label)}</a></li>`)
   .join("")}</ol></div></div></div></section>`;
 export const chapterClose = "</div>";
 
 export function section(o: {
   id: string;
-  index: string;
   eyebrow: string;
   title: string;
   kicker?: string;
+  /** Where the plan goes into it: what the link says, and the section it opens. */
+  more?: [text: string, id: string];
   body: string;
   layout?: "wide" | "split";
   ref: Refs;
 }) {
-  const head = `<p class="kick small"><span class="num">${o.index}</span><i></i>${escape(o.eyebrow)}</p><h3 class="d3" id="${o.id}-title">${title(o.title)}</h3>`;
+  const head = `<p class="kick small"><span class="joint on" aria-hidden="true"></span>${escape(o.eyebrow)}</p><h3 class="d3" id="${o.id}-title">${title(o.title)}</h3>`;
+  const more = o.more ? `<a class="more" href="${o.ref(o.more[1])}">${escape(o.more[0])}${icon("right")}</a>` : "";
   const kicker = o.kicker ? `<p class="kicker">${copy(o.kicker, o.ref)}</p>` : "";
   return o.layout === "split"
-    ? `<section class="sec split" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap split-grid"><div class="sec-head reveal">${head}${kicker}</div><div class="sec-body">${o.body}</div></div></section>`
-    : `<section class="sec" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap"><div class="sec-head wide reveal"><div>${head}</div>${kicker}</div><div class="sec-body">${o.body}</div></div></section>`;
+    ? `<section class="sec split" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap split-grid"><div class="sec-head reveal">${head}${kicker}${more}</div><div class="sec-body">${o.body}</div></div></section>`
+    : `<section class="sec" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap"><div class="sec-head wide reveal"><div>${head}</div><div>${kicker}${more}</div></div><div class="sec-body">${o.body}</div></div></section>`;
 }
 
-/** A figure, framed like an engineering drawing: its title block names its basis and its source. */
+/** A figure: one line that says what to do with it, the thing itself, and a footnote where one helps. */
 export function figure(o: {
   name: string;
-  no: string;
-  label: string;
-  title: string;
-  basis: Basis;
-  source: [text: string, href: string][];
+  todo: string;
+  kind?: Kind;
   note?: string;
   body: string;
   className?: string;
   ref?: Refs;
 }) {
-  const [basis, meaning] = BASIS[o.basis];
   return `<figure class="fig reveal ${o.className ?? ""}" id="fig-${o.name}" data-fig="${o.name}">
-<header class="fig-head"><div><p class="micro${/\d|[{÷=]/.test(o.label) ? " asis" : ""}">${escape(o.label)}</p><h4>${title(o.title)}</h4></div><span class="basis ${o.basis}">${basis}</span></header>
-<div class="fig-body">${o.body}</div>
-<figcaption class="block"><span><small>Figure</small>${o.no}</span><span><small>Basis</small>${meaning}</span><span><small>Source</small>${o.source
-    .map(([text, href]) => `<a href="${href}">${escape(text)}</a>`)
-    .join(", ")}</span>${o.note ? `<span class="grow"><small>Note</small>${copy(o.note, o.ref)}</span>` : ""}</figcaption></figure>`;
+<header class="fig-head"><p class="todo">${escape(o.todo)}</p>${o.kind ? `<span class="tagged ${o.kind}">${KIND[o.kind]}</span>` : ""}</header>
+<div class="fig-body">${o.body}</div>${o.note ? `
+<figcaption class="fig-foot">${copy(o.note, o.ref)}</figcaption>` : ""}</figure>`;
 }
 
 export const seg = (name: string, label: string, options: [value: string, text: string][], on: string) =>

@@ -1,172 +1,209 @@
-import { chapterClose, chapterOpen, copy, figure, section, seg, type Chapter, type Refs } from "../parts";
+import { constructions } from "../catalogue";
+import { escape } from "../layout";
+import { chapterClose, chapterOpen, copy, figure, icon, section, seg, toggle, type Chapter, type Refs } from "../parts";
+import { organs, plate } from "./body";
 
 export const test: Chapter = {
-  id: "test",
+  id: "engine",
   number: "06",
-  label: "The test",
-  short: "Test",
-  icon: "test",
+  label: "The engine",
+  short: "Engine",
+  icon: "engine",
   colour: "#fb7185",
-  title: "How this could *fail*.",
+  title: "Algebra *all the way down*.",
   thesis:
-    "Ten-fold is a target: time to an independently accepted answer, against the strongest rival that can be composed from existing tools. The plan states what it expects, what every outcome would be called, and which parts are dropped.",
+    "Rust at the core. One set of kernels for CUDA, Metal and the CPU. A slower, stricter physics engine as referee. Underneath it all, forty pieces of mathematics that each have a job.",
   sections: [
-    ["ranges", "What to expect"],
-    ["outcomes", "The report, already worded"],
-    ["not", "What will not deliver it"],
-    ["milestones", "Nine milestones"],
-    ["status", "Where it stands"],
+    ["anatomy", "Twenty-three parts"],
+    ["symmetry", "Teach one leg, get the rest"],
+    ["constructions", "The math, piece by piece"],
+    ["bench", "Check its arithmetic"],
+    ["suite", "The Franken suite"],
+    ["roadmap", "What ships first"],
   ],
 };
 
-/** Expected ratio by mission class, §2.6. Drawn on a log axis from 0.5 to 100. */
-const ranges: [name: string, lo: number, hi: number, shown: string, must: string][] = [
-  ["Quadruped briefs", 3, 10, "3 to 10", "Many designs per turn, under about 1% of them trained, and cheap rungs that rank designs as training would."],
-  ["Humanoid briefs", 5, 20, "5 to 20", "A baseline or family policy stands in for training when designs are ranked. Otherwise near parity."],
-  ["Wheeled, tracked and hybrid, indoors", 3, 10, "3 to 10, low confidence", "Clearance and static analysis remove candidates before any training."],
-  ["Family queries with amendments, warm", 1, 3, "1 to 3", "Deriving the abstraction is cheaper than an expert doing it by hand. Cold may be below 1."],
-  ["Finding and repairing failures", 2, 20, "2 to 20 in episodes", "A good distress score and a witness that the failure was avoidable. Up to 100 is a target, and about 3 in repair turns."],
-  ["Facilities and several robots", 0, 0, "not estimated", "A ratio is claimed only for what was run."],
+/** What each construction is good for, in one line. Titles and links come from the plan. */
+const good: string[] = [
+  "One kernel covers every kind of joint, and the strange linkages come out right.",
+  "Mixing up two reference frames is a compile error.",
+  "Optimizers can’t invent a body with impossible inertia.",
+  "Momentum comes for free, and so do the laws it has to obey.",
+  "Rotations stay rotations, step after step, with only rounding to clean up.",
+  "Contact has one answer, found by a solver that knows when it’s done.",
+  "Tells you how well a wheeled base can maneuver before you simulate it.",
+  "Ranks snakes and swimmers by the shape of their wriggle, with no rollouts.",
+  "Finds the symmetries a robot really has once sensors and payload are counted.",
+  "Writes out every gait a body can walk, with its timing.",
+  "Solves a leg’s angles exactly, and says how many solutions there are.",
+  "Edit one part and only that part is recomputed.",
+  "Every new body gets an estimator and a controller from its own model.",
+  "The same arithmetic on three backends, with the paperwork attached.",
+  "Peek at the results as often as you like. The error rate still holds.",
+  "Measures whether a gait recovers from a stumble, and how fast.",
+  "Returns families of designs, and the smallest change that would let one in.",
+  "Change a motor and keep every answer the change can’t touch.",
+  "Says when more training can’t help, and which sensor would.",
+  "Shows the corridors where a robot goes blind.",
+  "Scales a verdict from a small robot to a large one.",
+  "Skips the designs that are mirror images of each other.",
+  "Scores most designs without training them.",
+  "A policy that can’t tell which way you drew the axes.",
+  "Referee-quality answers for a fraction of the referee’s time.",
+  "Knows how far to trust a cheap test, and audits itself.",
+  "Finds the one-in-100,000 failure without 100,000 tries.",
+  "Hands you the smallest world that breaks the robot.",
+  "Answers “what caused it?” by experiment.",
+  "One requirement scores the run, guides the attack and guards the robot.",
+  "A safety budget in joules that survives every retraining.",
+  "One solve covers a whole range of stances and ratings.",
+  "Finds the doorway that’s too tight, from both sides.",
+  "Designs linkages, and catches the ones that jam.",
+  "Sizes each part by the loads it met on the job.",
+  "No energy creeping in over long runs, and it plays backwards.",
+  "Spin and slip share one friction cone.",
+  "Every joule accounted for, down to the hot motor.",
+  "Buys a measurement only when it could change the decision.",
+  "Swaps in a cheaper part once it’s shown to be no worse.",
 ];
-const X = (v: number) => ((Math.log10(v) - Math.log10(0.5)) / (Math.log10(100) - Math.log10(0.5))) * 100;
+if (good.length !== constructions.length) throw Error(`${constructions.length} constructions and ${good.length} lines about them`);
 
-const notDeliver: [what: string, number: string, why: string][] = [
-  ["A faster step", "≤ 7.7×", "Throughput is a parity requirement. An infinitely fast step leaves the rest of training in place."],
-  ["Compiling a kernel per design", "≈ 1.2×", "Specializing the recursions is capped near here. An optimization for survivors at most."],
-  ["Half precision for contact", "refuted", "Not built."],
-  ["Sampling control instead of training", "4,000×", "About this many times the cost of a policy rollout per simulated second. Kept as a fallback."],
-  ["One universal policy", "unaffordable", "Out of reach at an affordable pretraining budget."],
-  ["Static checks alone", "≤ 1.19×", "Their value is feedback in seconds. They prune few trainings."],
-  ["Reusing rollouts after an edit", "≤ 10%", "Exact reuse is at most about this share of compute."],
-  ["A faster solver for family queries", "≈ 1.46×", "A pilot measured 1.345× warm, under a ceiling set by work the solver does not touch."],
+const suite: [name: string, repo: string, role: string, text: string][] = [
+  ["FrankenSim", "frankensim", "Referee physics", "Featherstone dynamics, contact with certified collision checks, and a 29-joint humanoid model."],
+  ["asupersync", "asupersync", "Concurrency", "Every job can be canceled cleanly, replayed and tested under a simulated clock."],
+  ["FrankenSQLite", "frankensqlite", "The ledger", "Every run, design and verdict in one database you can query."],
+  ["FrankenTorch", "frankentorch", "Learning", "The gateway to Apple GPUs, and a second opinion on every gradient."],
+  ["FrankenSymPy", "frankensympy", "Derivation", "Works out the kernels symbolically and checks their certificates."],
+  ["FrankenLean", "franken_lean", "Proof", "Re-checks the theorems, independently."],
+  ["FrankenTUI", "frankentui", "Dashboard", "The lab in your terminal."],
+  ["fastmcp_rust", "fastmcp_rust", "Agent access", "The MCP server that agents talk to."],
 ];
 
-const milestones: [id: string, name: string, weeks: number, at: number, path: boolean, exit: string, stories: string][] = [
-  ["M0", "Spine and airlock", 2, 0, true, "Foundations admitted, one kernel on three backends, and the rival's loop timed by phase", ""],
-  ["M1", "Referee studio, first mission slice, CPU only", 5, 2, true, "The docking scenario, answered and audited before any GPU work", "NS-01 NS-07 NS-13 NS-22"],
-  ["M2", "Batch, backends, families", 6, 7, true, "Kill decisions for kernels, contact, Metal and mixed batches on record", "NS-02 NS-10 NS-14"],
-  ["M3", "Places, tasks, adversaries, qualification", 6, 13, true, "The partial ten-fold gate recorded, whatever the ratio", "NS-03 NS-04 NS-09 NS-15 NS-16 NS-17"],
-  ["M4", "Amortized control, co-design, queries at scale", 8, 19, true, "Rank agreement measured and the family-policy bets decided", "NS-05 NS-06 NS-08 NS-18 NS-19 NS-23"],
-  ["M5", "Proofs, reality, manufacture", 6, 21, false, "The Reality lane has a record, or a recorded no-claim", "NS-11 NS-12 NS-20 NS-21"],
-  ["M7", "The ten-fold tournament", 6, 27, true, "The measured ratio, published with its phase ledger", "NS-24"],
+const roadmap: [name: string, text: string][] = [
+  ["The design", "The full plan, public and searchable."],
+  ["Foundations", "One kernel running on the CPU, CUDA and Metal."],
+  ["The CPU studio", "Design checks, the referee and the first mission answers, with no GPU needed."],
+  ["GPU batches", "256 different robots at once, on CUDA and on Apple silicon."],
+  ["Worlds and adversaries", "Generated buildings, Nemesis, Autopsy and the sealed exam."],
+  ["Families at scale", "Shared policies, co-design and big mission queries."],
+  ["The workshop", "Calibration against real robots, certificates and build packets."],
+  ["The ten-times test", "Sealed missions, head to head with the best stack anyone can assemble."],
 ];
 
-export const renderTest = (ref: Refs, version: string) =>
+const organ = (ref: Refs, side: "left" | "right") =>
+  organs
+    .filter((o) => o[4] === side)
+    .map(
+      ([key, name, s, text]) =>
+        `<li data-organ="${key}"><a href="${ref(s)}"><b>${name}</b></a><p>${copy(text)}</p></li>`,
+    )
+    .join("");
+
+export const renderTest = (ref: Refs) =>
   chapterOpen(test) +
   section({
     ref,
-    id: "ranges",
-    index: "06.1",
-    eyebrow: "Expected ranges",
-    title: "What to *expect*.",
-    kicker:
-      "Against a rival that trains a policy for every design, these are the ranges the ceilings allow. Against the strongest composed rival on fixed-topology CUDA missions, the expected ratio is near one unless a property inside an engine decides it, and the plan offers no range. [§2.6](§2.6)",
+    id: "anatomy",
+    eyebrow: "Twenty-three parts",
+    title: "Assembled, *like the monster*.",
+    kicker: "Every subsystem is named for what it does to the robot. Point at a part to meet it.",
     body: figure({
-      name: "ranges",
-      no: "06.1",
-      label: "Hypothesis, to be replaced by measurement",
-      title: "Two ranges reach past *ten*.",
-      basis: "plan",
-      source: [["§2.6", ref("2.6")]],
-      note: "Ratios of time to a decision. They are not forecasts with probabilities.",
+      name: "anatomy",
+      todo: "Point at a name, or at the machine",
       ref,
-      body: `<div class="rangechart"><div class="rc-axis" aria-hidden="true">${[1, 3, 10, 30, 100].map((v) => `<span style="left:${X(v).toFixed(2)}%"${v === 10 ? ' class="ten"' : ""}>${v}×</span>`).join("")}</div>${ranges
-        .map(
-          ([name, lo, hi, shown, must]) =>
-            `<div class="rc-row"><div class="rc-name"><b>${name}</b><span>${shown}</span></div><div class="rc-track">${[1, 3, 10, 30, 100].map((v) => `<i class="tick${v === 10 ? " ten" : ""}" style="left:${X(v).toFixed(2)}%"></i>`).join("")}${hi ? `<i class="span" style="left:${X(lo).toFixed(2)}%;width:${(X(hi) - X(lo)).toFixed(2)}%"></i>` : ""}</div><p>${copy(must)}</p></div>`,
-        )
-        .join("")}</div>`,
+      className: "plain",
+      body: `<div class="anatomy"><ul class="organs left">${organ(ref, "left")}</ul><div class="plate">${plate()}</div><div class="organ-now" data-now></div><ul class="organs right">${organ(ref, "right")}</ul></div>`,
     }),
   }) +
   section({
     ref,
-    id: "outcomes",
-    index: "06.2",
-    eyebrow: "Outcome rules",
-    title: "The report, *already worded*.",
+    id: "symmetry",
+    eyebrow: "Symmetry",
+    title: "Teach one leg, *get the rest*.",
     kicker:
-      "Thresholds are fixed when the first suite hash is committed and never changed after a sealed run. Drag the measured ratio to read the sentence the report must print. [§39.10](§39.10)",
+      "A robot dog’s legs mirror each other, so a policy can share what it learns. Bolt on a lidar or an off-center load and some of that symmetry goes. FrankenRobotics works out what’s left.",
+    more: ["Two kinds of symmetry", "C-09"],
     body: figure({
-      name: "outcomes",
-      no: "06.2",
-      label: "One stratum of the tournament",
-      title: "Choose a *result*.",
-      basis: "plan",
-      source: [["§39.10", ref("39.10")]],
-      note: "Sentences are the plan's. The guard, the futility stop and the tie tests are simplified here to the ratio and two switches.",
+      name: "symmetry",
+      todo: "Mount something and watch the symmetry change",
+      kind: "live",
       ref,
-      body: `<div class="outcomes"><div class="outcome-track" data-track><i class="needle" data-needle></i><span class="z z0">rival faster</span><span class="z z1">withdrawn</span><span class="z z2">measured</span><span class="z z3">ten-fold</span></div><label class="range" data-range="r"><span><b>Measured ratio</b><output aria-live="off">4.2</output></span><input type="range" aria-label="Measured ratio" min="-30" max="140" step="1" value="62" style="--p:54%"></label><div class="outcome-opts">${seg(
-        "tie",
-        "Against a short program on the rival's engine",
-        [
-          ["no", "The short program loses"],
-          ["yes", "The short program ties"],
-        ],
-        "no",
-      )}${seg(
-        "guard",
-        "Lower confidence bound",
-        [
-          ["no", "Guard not met"],
-          ["yes", "Guard met"],
-        ],
-        "yes",
-      )}</div><div class="sentence" aria-live="polite"><p class="micro" data-label></p><blockquote data-text></blockquote><p data-does></p></div></div>`,
+      body: `<div class="symm"><div class="symm-view" data-view></div><div class="symm-side"><div class="toggles">${toggle("lidar", "Forward lidar", true)}${toggle("payload", "Payload on one side")}${toggle("goal", "Told to go forward")}${toggle("knees", "All knees bend back")}${toggle("gear", "One gearbox swapped")}</div><div class="groups"><div><small>The mechanism</small><b data-mech>C₂ × C₂</b><span data-mech-n></span></div><div><small>With sensors and load</small><b data-obs>C₂</b><span data-obs-n></span></div></div><p class="say" data-say></p></div></div>`,
     }),
   }) +
   section({
     ref,
-    id: "not",
-    index: "06.3",
-    eyebrow: "Closed doors",
-    title: "What will *not* deliver it.",
-    kicker:
-      "No work package is funded on a hope the evidence has already closed. No single mechanism delivers ten-fold, and no conjunction has been shown to. [§2.5](§2.5)",
-    layout: "split",
-    body: `<ul class="ruled doors">${notDeliver
+    id: "constructions",
+    eyebrow: "Forty constructions",
+    title: "The math, *piece by piece*.",
+    kicker: "Each one replaces a guess or a hack with something you can calculate. Pick one to see what it buys.",
+    more: ["All forty, in full", "10"],
+    body: `<div class="fig elements reveal" id="fig-constructions" data-fig="constructions"><div class="seg" role="group" aria-label="Kind" data-seg="tier">${[
+      ["", "All"],
+      ["S", "Core"],
+      ["F", "Frontier"],
+      ["M", "Moonshot"],
+    ]
+      .map(([v, t]) => `<button type="button" data-v="${v}" aria-pressed="${!v}">${t}</button>`)
+      .join("")}</div><div class="element-grid"><ol>${constructions
       .map(
-        ([what, n, why]) =>
-          `<li class="reveal"><span class="num">${n}</span><div><h4>${what}</h4><p>${copy(why)}</p></div></li>`,
+        (c, i) =>
+          `<li data-tiers="${c.tiers.join("")}" data-good="${escape(good[i]!)}"><a href="${c.href}" data-i="${i}" class="el t-${c.tiers[0]}"><span class="num">${c.id.slice(2)}</span><b>${escape(c.title)}</b></a></li>`,
+      )
+      .join("")}</ol><aside class="element-card" data-card aria-live="polite"><p class="micro">Pick one</p><p class="hint">What it’s good for shows up here.</p></aside></div></div>`,
+  }) +
+  section({
+    ref,
+    id: "bench",
+    eyebrow: "Worked by hand",
+    title: "Check its *arithmetic*.",
+    kicker: "Six problems small enough for paper. Each shows the right answer beside the mistake it catches.",
+    more: ["The whole answer book", "appendix-m"],
+    body: figure({
+      name: "bench",
+      todo: "Pick a problem",
+      kind: "live",
+      ref,
+      body: `${seg(
+        "bench",
+        "Problem",
+        [
+          ["arm", "Two-link arm"],
+          ["shell", "Solid or hollow"],
+          ["mid", "Between two good designs"],
+          ["stage", "Two stages at 95%"],
+          ["cayley", "One big turn"],
+          ["reads", "Reading it again"],
+        ],
+        "arm",
+      )}<div class="bench" data-bench></div>`,
+    }),
+  }) +
+  section({
+    ref,
+    id: "suite",
+    eyebrow: "The Franken suite",
+    title: "Stitched from *parts that work*.",
+    kicker: "FrankenRobotics stands on a family of Rust projects by the same author. These eight do the heaviest lifting.",
+    body: `<ul class="suite">${suite
+      .map(
+        ([name, slug, role, text]) =>
+          `<li class="reveal"><a href="https://github.com/Dicklesworthstone/${slug}"><p class="micro">${role}</p><h4>${name}${icon("out")}</h4><p>${text}</p></a></li>`,
       )
       .join("")}</ul>`,
   }) +
   section({
     ref,
-    id: "milestones",
-    index: "06.4",
-    eyebrow: "Delivery",
-    title: "Nine *milestones*.",
-    kicker:
-      "The first studio runs on a CPU, so it would ship even if every GPU and proof foundation failed its admission. The critical path adds up to 33 weeks; M6 and M8 are per-epic and sit outside it. [§43](§43)",
-    body: figure({
-      name: "milestones",
-      no: "06.3",
-      label: "Planning estimates, elapsed weeks for a swarm",
-      title: "Thirty-three weeks on the *critical path*.",
-      basis: "plan",
-      source: [["§43.1", ref("43.1")]],
-      note: "Estimates exist so that a schedule gate can ask a question. No gate cites them.",
-      ref,
-      body: `<ol class="gantt">${milestones
-        .map(
-          ([id, name, weeks, at, path, exit, stories]) =>
-            `<li class="${path ? "on" : "off"}"><div class="g-name"><span class="num">${id}</span><b>${name}</b><small>${exit}</small></div><div class="g-track"><i style="--at:${((at / 33) * 100).toFixed(2)}%;--w:${((weeks / 33) * 100).toFixed(2)}%"><em>${weeks} wk</em></i></div><p class="tags">${stories
-              .split(" ")
-              .filter(Boolean)
-              .map((s) => `<a class="tag" href="${ref(s)}">${s}</a>`)
-              .join("")}</p></li>`,
-        )
-        .join("")}</ol>`,
-    }),
-  }) +
-  section({
-    ref,
-    id: "status",
-    index: "06.5",
-    eyebrow: "Status",
-    title: "Where it *stands*.",
-    kicker: `The plan is at version ${version}. No FrankenRobotics code has been released and no FrankenRobotics physics step has been measured.`,
-    layout: "split",
-    body: `<div class="status"><article class="reveal"><p class="micro">Done</p><h4>The plan, and the checks behind it</h4><ul><li>A plan with 70 sections and appendices, searchable here.</li><li>An audit of the strongest incumbents at pinned versions, with sixteen claims withdrawn.</li><li>Paper-scale pilots of the mission query, recorded with their exact counts.</li><li>A known-answer suite and a catalogue of counterexamples.</li></ul></article><article class="reveal"><p class="micro">Required before anything is called implemented</p><h4>Eight conditions, all of them</h4><ol class="eight"><li>Code in the crate the plan names</li><li>A contract with ten sections</li><li>Known answers against a pinned oracle</li><li>A claim product on every output</li><li>A CPU reference path</li><li>Reachable through the command line</li><li>Cancellation tested</li><li>A recorded pass with measured values</li></ol><p><a class="txt" href="${ref("0.2")}">Read the rule in §0.2</a></p></article><article class="reveal"><p class="micro">If the speed claim is withdrawn</p><h4>What stays</h4><p>The plan keeps the claims that never depended on speed. Any world re-runs alone on the CPU from its address. Comparisons keep error control through an agent's retries. Family answers are checked by an auditor that shares no code with their producer. Failures arrive as small replayable worlds with a cause found by intervention. Each is still to be built and tested.</p><p><a class="txt" href="${ref("39.10")}">Read it in §39.10</a></p></article></div>`,
+    id: "roadmap",
+    eyebrow: "Roadmap",
+    title: "What ships *first*.",
+    kicker: "The design is public today. The build follows in this order, so there’s something to use long before the end.",
+    more: ["Every milestone", "43"],
+    body: `<ol class="road">${roadmap
+      .map(
+        ([name, text], i) =>
+          `<li class="reveal${i ? "" : " now"}"><span class="road-dot" aria-hidden="true"></span><div><p class="micro">${i ? `Step ${i}` : "Today"}</p><h4>${name}</h4><p>${text}</p></div></li>`,
+      )
+      .join("")}</ol>`,
   }) +
   chapterClose;

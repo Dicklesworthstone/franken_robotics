@@ -132,8 +132,8 @@ export default function mount(root: HTMLElement) {
     scene.add(rootNode!);
     born = performance.now();
     const a = archetypes[i]!;
-    $(root, "[data-no]").textContent = `Archetype ${String(i + 1).padStart(2, "0")}`;
-    $(root, "[data-name]").textContent = a.id;
+    $(root, "[data-no]").textContent = `Body ${i + 1} of ${archetypes.length}`;
+    $(root, "[data-name]").textContent = a.name;
     $(root, "[data-layout]").textContent = a.layout;
     $(root, "[data-tests]").textContent = a.tests;
     $(root, "[data-dof]").textContent = String(a.dof);

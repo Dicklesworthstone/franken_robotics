@@ -1,4 +1,4 @@
-import { $, $$, reduced } from "./lib";
+import { $, $$, reduced, seen } from "./lib";
 
 export default function mount(root: HTMLElement) {
   const lines = $$(root, "[data-step]");
@@ -39,14 +39,16 @@ export default function mount(root: HTMLElement) {
   buttons.forEach((b, j) => b.addEventListener("click", () => go(j)));
   $(root, "[data-prev]").addEventListener("click", () => go(i - 1));
   $(root, "[data-next]").addEventListener("click", () => go(i + 1));
-  play.addEventListener("click", () => {
-    if (timer) return stop();
+  const start = () => {
     if (i === lines.length - 1) show(0);
     play.textContent = "Stop";
     timer = window.setInterval(() => {
       if (i >= lines.length - 1) stop();
       else show(i + 1);
-    }, 2600);
-  });
+    }, 2400);
+  };
+  play.addEventListener("click", () => (timer ? stop() : start()));
   show(0, "auto");
+  // It plays by itself the first time it is seen, until someone takes over.
+  if (!reduced) seen(root, () => void (!timer && i === 0 && start()));
 }

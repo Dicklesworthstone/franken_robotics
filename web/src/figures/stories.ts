@@ -1,4 +1,4 @@
-import { $, $$, reduced, seg } from "./lib";
+import { $, $$, reduced } from "./lib";
 
 export default function mount(root: HTMLElement) {
   const links = $$<HTMLAnchorElement>(root, "[data-story]");
@@ -8,7 +8,6 @@ export default function mount(root: HTMLElement) {
   const at = $(root, "[data-at]");
   const prev = $<HTMLButtonElement>(root, "[data-prev]");
   const next = $<HTMLButtonElement>(root, "[data-next]");
-  let shown = links.map((_, i) => i);
   let current = 0;
 
   const show = (i: number, follow = true) => {
@@ -18,10 +17,9 @@ export default function mount(root: HTMLElement) {
       if (j === i) a.setAttribute("aria-current", "true");
       else a.removeAttribute("aria-current");
     }
-    const k = shown.indexOf(i);
-    at.textContent = `${k + 1} of ${shown.length}`;
-    prev.disabled = k <= 0;
-    next.disabled = k >= shown.length - 1;
+    at.textContent = `${i + 1} of ${links.length}`;
+    prev.disabled = i === 0;
+    next.disabled = i === links.length - 1;
     if (!follow) return;
     const behavior = reduced ? "auto" : "smooth";
     const item = items[i]!;
@@ -36,8 +34,9 @@ export default function mount(root: HTMLElement) {
     show(Number(a.dataset.story));
   });
   const step = (d: number) => {
-    const to = shown[shown.indexOf(current) + d];
-    if (to !== undefined) show(to);
+    const to = current + d;
+    if (!links[to]) return;
+    show(to);
     return to;
   };
   prev.addEventListener("click", () => step(-1));
@@ -48,12 +47,6 @@ export default function mount(root: HTMLElement) {
     e.preventDefault();
     const to = step(d);
     if (to !== undefined) links[to]!.focus({ preventScroll: true });
-  });
-  seg(root, "milestone", (m) => {
-    shown = links.flatMap((_, i) => (!m || items[i]!.dataset.m === m ? [i] : []));
-    for (const [i, li] of items.entries()) li.hidden = !shown.includes(i);
-    list.scrollTo({ top: 0, left: 0 });
-    show(shown[0]!, false);
   });
   show(0, false);
 }

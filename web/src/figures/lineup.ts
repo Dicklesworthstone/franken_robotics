@@ -430,6 +430,7 @@ export default function mount(root: HTMLElement) {
   const ray = new Raycaster();
   const ground = new Plane(new Vector3(0, 1, 0), -0.28);
   const hit = new Vector3();
+  const NAME = Object.fromEntries(archetypes.map((a) => [a.id, a.name]));
   const reason: Record<Verdict, (b: (typeof bodies)[number]) => string> = {
     fits: () => "fits",
     wide: (b) => `too wide: ${metres(b.size.width * b.scale)} in a ${metres(place.width)} door`,
@@ -462,7 +463,7 @@ export default function mount(root: HTMLElement) {
       halo.position.set(best.x, 0.03, best.z);
       halo.scale.setScalar(best.size.circle * best.scale);
       (halo.material as MeshBasicMaterial).color.set(HUE[best.next]);
-      tip.innerHTML = `<b>${best.id}</b><span class="${best.next}">${reason[best.next](best)}</span>`;
+      tip.innerHTML = `<b>${NAME[best.id]}</b><span class="${best.next}">${reason[best.next](best)}</span>`;
       tip.style.left = `${clamp(x + 18, 8, box.width - tip.offsetWidth - 8)}px`;
       tip.style.top = `${clamp(y - tip.offsetHeight - 14, 8, box.height - tip.offsetHeight - 8)}px`;
     }

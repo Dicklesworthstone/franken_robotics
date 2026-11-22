@@ -1,6 +1,7 @@
-/** The eighteen archetypes of §14.10: layout, actuated coordinates and symmetry as the plan's table gives them. */
+/** The eighteen archetypes of §14.10. Motors and symmetry are the plan's; the words are the site's. */
 export interface Archetype {
   id: string;
+  name: string;
   dof: number;
   symmetry: string;
   layout: string;
@@ -10,139 +11,146 @@ export interface Archetype {
 export const archetypes: Archetype[] = [
   {
     id: "quad-mammal",
+    name: "Robot dog",
     dof: 12,
     symmetry: "C₂ × C₂",
-    layout: "Dog-like quadruped, three joints per leg.",
-    tests:
-      "Floating-base dynamics, the gait atlas with trot, pace and bound, and knee heat on a stair task.",
+    layout: "Four legs, three joints each.",
+    tests: "Trots, paces and bounds. On stairs its knees run hot, and the studio sees it coming.",
   },
   {
     id: "quad-sprawl",
+    name: "Crawler",
     dof: 12,
     symmetry: "C₂ × C₂",
-    layout: "Sprawled quadruped with a wide stance.",
-    tests:
-      "Large static margins against high holding torque. The design is stable and still fails on heat.",
+    layout: "Four legs in a wide sprawl.",
+    tests: "Very hard to tip over. It pays for that in holding torque, all day.",
   },
   {
     id: "hexapod-radial",
+    name: "Hexapod",
     dof: 18,
     symmetry: "D₆",
-    layout: "Radial hexapod, three joints per leg.",
-    tests:
-      "Character tables and orbit counts for D₆, the tripod gait, and static walking with three feet down.",
+    layout: "Six legs around a hub.",
+    tests: "Walks on three feet at a time, in any direction, without turning.",
   },
   {
     id: "octopod",
+    name: "Octopod",
     dof: 24,
     symmetry: "D₈",
-    layout: "Eight-legged, three joints per leg. A spider layout keeps only C₂.",
-    tests: "Contact capacity with eight feet, and what is left when a leg fails.",
+    layout: "Eight legs around a hub.",
+    tests: "Spreads its weight over eight feet and can spare a leg.",
   },
   {
     id: "biped-point",
+    name: "Point-foot biped",
     dof: 6,
     symmetry: "C₂",
-    layout: "Biped on point feet.",
-    tests:
-      "Underactuation and impact, with no static stability at all. The hardest case for the baseline controller.",
+    layout: "Two legs that end in points.",
+    tests: "Falls the moment it stands still. The hardest body here to control.",
   },
   {
     id: "humanoid",
+    name: "Humanoid",
     dof: 29,
     symmetry: "C₂",
-    layout: "Humanoid with arms and a waist.",
-    tests:
-      "The upper end of the dense mass matrix, coupled ankle and waist transmissions, and self-collision over large ranges.",
+    layout: "Arms, waist and 29 motors.",
+    tests: "Fits stairs, doors and counters that were built for people.",
   },
   {
     id: "diff-drive",
+    name: "Two-wheel drive",
     dof: 2,
     symmetry: "C₂",
     layout: "Two driven wheels and a caster.",
-    tests:
-      "Growth vector (2, 3), the sideways cost of a base that cannot slide, and the lever arm of a wheel at a raised threshold.",
+    tests: "Cheap and simple. A tall threshold stops it, and the studio says how tall.",
   },
   {
     id: "ackermann",
+    name: "Car steering",
     dof: 3,
     symmetry: "C₂",
-    layout: "Car-like, with the front axle steered through a linkage.",
-    tests: "Closure and mobility of the steering linkage, and a turning radius of L / tan δ.",
+    layout: "A front axle steered through a linkage.",
+    tests: "Quick in the open. Needs room to turn.",
   },
   {
     id: "mecanum",
+    name: "Mecanum base",
     dof: 4,
     symmetry: "C₂ × C₂",
-    layout: "Four mecanum wheels.",
-    tests:
-      "The roller contact law, with a negative control: all rollers parallel, which the preflight must refuse.",
+    layout: "Four wheels ringed with rollers.",
+    tests: "Slides sideways into tight spots.",
   },
   {
     id: "omni-3",
+    name: "Omni triangle",
     dof: 3,
     symmetry: "D₃",
     layout: "Three omni wheels at 120°.",
-    tests: "A holonomic base with an odd rotation order, and the inverse of its wheel map.",
+    tests: "Drives in any direction without turning.",
   },
   {
     id: "swerve-4",
+    name: "Swerve drive",
     dof: 8,
     symmetry: "D₄",
     layout: "Four modules that steer and drive.",
-    tests:
-      "Nested symmetry of module and hub, scrub torque, and the singular pose with all wheel axes through one point.",
+    tests: "Moves in any direction with full grip, for eight motors.",
   },
   {
     id: "tracked-flipper",
+    name: "Tracked climber",
     dof: 6,
     symmetry: "C₂ × C₂",
-    layout: "Two tracks with front and rear flippers.",
-    tests:
-      "The belt law and skid steering, where turning in place must cost scrub work, and stair nosing.",
+    layout: "Two tracks, with flippers front and rear.",
+    tests: "Climbs stairs and rubble. Turning in place costs it energy.",
   },
   {
     id: "wheel-leg",
+    name: "Wheel-leg hybrid",
     dof: 16,
     symmetry: "C₂ × C₂",
-    layout: "Quadruped with driven wheels for feet.",
-    tests: "Two contact laws on one limb, and switching between rolling and stepping.",
+    layout: "A robot dog with driven wheels for feet.",
+    tests: "Rolls on the flat and steps over what it can’t roll across.",
   },
   {
     id: "tri-wheel-stair",
+    name: "Stair roller",
     dof: 4,
     symmetry: "C₂",
-    layout: "Two clusters of three wheels on a chassis.",
-    tests: "Cluster geometry against riser and tread: a three-fold group inside a mirror group.",
+    layout: "Two clusters of three wheels.",
+    tests: "Tumbles its wheel clusters up a staircase.",
   },
   {
     id: "rocker-bogie",
+    name: "Rover",
     dof: 6,
     symmetry: "C₂",
-    layout: "Six wheels on a passive rocker-bogie suspension.",
-    tests: "Passive joints, a differential closure, and climbing without actuated suspension.",
+    layout: "Six wheels on a rocker-bogie suspension.",
+    tests: "Climbs rocks with no motors in its suspension.",
   },
   {
     id: "mobile-manipulator",
+    name: "Mobile arm",
     dof: 9,
     symmetry: "Trivial",
-    layout: "Seven-joint arm, off-centre, on a wheeled base.",
-    tests:
-      "Workspace and singular poses at tray and shelf heights, and a payload that breaks the symmetry.",
+    layout: "A seven-joint arm on a wheeled base.",
+    tests: "Reaches trays and shelves. The arm’s weight changes how it drives.",
   },
   {
     id: "snake-crawler",
+    name: "Snake",
     dof: 8,
     symmetry: "C₂",
-    layout: "Planar serial chain on passive wheels.",
-    tests: "Locomotion as holonomy: net motion from a closed loop of shapes.",
+    layout: "A chain of links on passive wheels.",
+    tests: "Moves by changing shape: one loop of wriggles, one step forward.",
   },
   {
     id: "balancer-2w",
+    name: "Balancer",
     dof: 2,
     symmetry: "C₂",
-    layout: "Two-wheeled inverted pendulum.",
-    tests:
-      "An unstable equilibrium, so the estimator and the baseline controller must work on the first step.",
+    layout: "Two wheels and an upright body.",
+    tests: "Has to balance from its very first step.",
   },
 ];

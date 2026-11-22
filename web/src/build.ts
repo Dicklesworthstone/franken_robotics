@@ -1,6 +1,5 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { constructions } from "./catalogue";
 import { home, homeDock, homeNav } from "./home";
 import { origin, shell, type Shell } from "./layout";
 import { bytes, codeUnder, definitions, entries, ref, render, version, words } from "./plan";
@@ -52,7 +51,7 @@ function share(id: string, alt: string): Shell["share"] {
   const home = {
     src: file("home")!,
     wide: file("home-wide"),
-    alt: "A dark hall of robots facing a lit doorway. Those that fit it glow; the rest are dark. Headline: Every body that can do the job.",
+    alt: "A dark hall of robots facing a lit doorway. Those that fit it glow; the rest are dark. Headline: Name the job. Get every robot that can do it.",
   };
   if (id === "home") return home;
   const src = file(id);
@@ -66,10 +65,10 @@ const js = `<script>document.documentElement.classList.add("js")</script>`;
 page({
   path: "/",
   share: share("home", ""),
-  title: "FrankenRobotics · Every body that can do the job",
+  title: "FrankenRobotics · Every robot that can do the job",
   description:
-    "The plan for a robotics lab that AI agents can use. State a mission, and it should return every robot that can do it, every robot that cannot and why, and the cheapest experiment that settles the rest.",
-  body: home({ ref, version, session: codeUnder("32.16", 1), sections: entries.length - 1, words: round(words) }),
+    "A robotics lab for AI agents. Describe a mission and get every robot that can do it, why the others fail, and a build packet for the one you pick.",
+  body: home({ ref, session: codeUnder("32.16", 1), sections: entries.length - 1, words: round(words) }),
   nav: homeNav,
   dock: homeDock,
   head: `${js}<link rel="stylesheet" href="${asset("/home.css")}"><link rel="modulepreload" href="${client}"><script type="module" src="${client}" onerror="document.documentElement.classList.remove('js')"></script>`,
@@ -108,10 +107,6 @@ const jumps = entries.flatMap((e) => [
     return m ? [[/^\d/.test(m[1]!) ? `§${m[1]}` : m[1]!, m[2]!, `${e.url}#${s.id}`]] : [];
   }),
 ]);
-emit(
-  "constructions.json",
-  JSON.stringify(constructions.map(({ replaces, payoff, test, crates }) => ({ replaces, payoff, test, crates }))),
-);
 emit("jump.json", JSON.stringify({ sections: jumps, ids: Object.fromEntries([...definitions].map(([id, d]) => [id, d.href])) }));
 cpSync(join(root, "static"), out, { recursive: true });
 // The still from the first site is kept in the repository and no longer published.

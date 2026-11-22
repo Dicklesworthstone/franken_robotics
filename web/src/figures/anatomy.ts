@@ -8,7 +8,7 @@ export default function mount(root: HTMLElement) {
   const tell = (item: HTMLElement) => {
     const name = $(item, "b").textContent!;
     const a = $<HTMLAnchorElement>(item, "a");
-    now.innerHTML = `<p><b>${name}</b> ${$(item, "p").innerHTML}</p><a class="txt" href="${a.getAttribute("href")}">Read ${$(a, "span").textContent}</a>`;
+    now.innerHTML = `<p><b>${name}</b> ${$(item, "p").innerHTML}</p><a class="txt" href="${a.getAttribute("href")}">Read more</a>`;
   };
   tell(items[0]!);
   const show = (key?: string) => {

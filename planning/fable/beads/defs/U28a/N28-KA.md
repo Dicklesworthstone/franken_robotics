@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "atelier", "frob-conformance", "frob-analyze", "frob-opt", "solid", "registry", "test"]
 parent: "WP-14"
-deps: ["BD-025", "STD-TEST"]
+deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§38: the known-answer registry file format of `frob-conformance` and its loader, if it differs from the one BD-025 creates"]
 related: ["BD-146", "BD-318", "BD-377", "BD-042", "BD-041", "BD-043"]
 gates: ["GATE-ATEL-02", "GATE-ATEL-05"]

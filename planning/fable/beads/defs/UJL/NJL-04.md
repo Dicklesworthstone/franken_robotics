@@ -1,0 +1,205 @@
+---
+key: "NJL-04"
+title: "frob-verbs: one name per verb: the alias lint, the retired-name table and the fifteen mechanisms with one owner each"
+type: "task"
+priority: 0
+milestone: "M0"
+labels: ["m0", "tether", "frob-verbs", "solid", "registry", "verb", "test"]
+parent: "WP-06"
+deps: ["BD-022", "NJL-01", "STD-E2E"]
+needs: []
+related: ["NJL-02", "NJL-03", "N16b-27", "N28c-29", "BD-137", "BD-313", "STD-TEST"]
+gates: ["GATE-TETHER-02"]
+plan_refs: ["Appendix J (J.2 preamble, J.4)", "§32.6", "§32.5", "§27.14", "§26.12", "§28.10", "§24.12", "§29.8", "§29.12"]
+---
+## Background
+
+FrankenRobotics (a robotics simulation and design system) exposes every capability as a verb in one registry,
+`registries/verbs.toml` (crate `frob-verbs`); the command line `frob`, the MCP server `frob-mcp`, the schemas
+and the agent guide are generated from it. The rule of this bead: **the registry holds no alias**. Every verb
+is registered under the name its owner chapter gives it, the surface lists the same names, and a lint refuses a
+second spelling of a registered verb. Where two chapters once named one mechanism, the owner's name is the
+registered one and the other name is not a verb.
+
+Why (DESIGN). An agent chooses tools from a list; two names for one mechanism double the list, split the
+documentation and, worse, split the evidence: a result recorded under one name is not found by a search under
+the other, and an idempotency key is scoped to (principal, verb, key), so the same request under two names
+would be two jobs and two charges. Aliases also defeat the parity gate, because "the served tool list equals
+the registry under the name map" has no meaning when the map is many-to-one. Rejected: deprecated aliases kept
+"for compatibility" (there is no installed base to be compatible with, and every alias is a second surface to
+test); aliases on the CLI only (the two surfaces would then differ, which the first invariant of the surface
+forbids).
+
+FACT about how the registry was filled: a mechanical scan of the specification for dotted names found 169. One,
+`policy.rs`, is a source file name in a sibling library. Five more were second names for a mechanism that an
+owner chapter registers under another name, or had no owner; they are not registered. The other 163, with 80
+that the scan missed, are the 243 registered verbs.
+
+## Scope
+
+In: the table of mechanisms that were named twice and the one registered name of each; the table of retired
+names; the lint and where it runs; what the surfaces do when a retired or unknown name is typed; the ban on
+alias features in the CLI generator and in the MCP registration. Out: the entry schema and the name grammar
+(NJL-01); the parity harness (NJL-02); the count reconciliation (NJL-03); the open decision on `fidelity.rank`
+(recorded with bead N16b-27; this bead only reads it).
+
+## Technical approach
+
+**The fifteen mechanisms and their one name each.** The owner column is the chapter section whose bead
+implements the verb; the other chapters call it.
+
+| Mechanism | Registered verb | Owner |
+|---|---|---|
+| The separating pair of worlds | `mission.separate`; its search machinery is §26's | §25.3.1 |
+| Forks and their classification | `run.fork`; the classes are those of §27.4 | §29.8 |
+| First divergence of two runs | `telemetry.divergence` | §29.8 |
+| Interventions and attribution | `autopsy.intervene`, then `autopsy.attribute` | §27.14 |
+| The screening audit | `nemesis.audit`; the cascade applies it | §26.10 |
+| A bound on a failure rate; the hard-world set | `nemesis.bound`; `nemesis.hardset` | §26.12 |
+| The model-form rank check (A-19) | `fidelity.modelform` | §16.9 |
+| The rank-agreement record, for rungs and for tier pairs | `eval.rank-agreement` | §28.10 |
+| The pre-analysis of a fixed-n study | `eval.preanalyze`; `study.plan` calls it | §24.12 |
+| Certificate bundles | `prove.bundle`, `prove.verify`, `prove.list` | §12 |
+| Calibration | `ground.ingest`, `ground.identify`, `ground.score` | §30.16 |
+| Structure and the build packet | `foundry.size`, `foundry.optimize`, `foundry.check`, `foundry.export` (`--with-firmware` under its feature) | §31.15 |
+| The co-design cascade and its one-call form | `opt.cascade`; `solve.run` is the agent-facing orchestration verb that calls it | §28.8, §32.6.2 |
+| Transport | `mission.transport` for a certified claim through an interface map [F]; `skill.transport` for a skill artifact with a learned residual [M] | §25.3.1, §22.10 |
+| The self-contained replay | `telemetry.export-html`, in the telemetry cluster; the viewer text is §32.15 | §29.12 |
+
+Readings that follow from the table and bind implementers:
+1. Autopsy registers no fork verb and no divergence verb: a fork point is made with `run.fork`, whose classes
+   are the five fork classes of the counterfactual chapter, and the first divergence of two runs is read with
+   `telemetry.divergence`.
+2. `nemesis.audit` is the one screening audit; the co-design cascade applies it and has no audit verb of its own.
+3. `eval.preanalyze` is the one pre-analysis of a fixed-n study; `study.plan` calls it and attaches its hash.
+4. `opt.cascade` is the mechanism and `solve.run` the agent-facing orchestration verb that calls it. They are
+   two verbs because their contracts differ (the second adds no evidence of its own); neither is an alias.
+5. `mission.transport` (a certified claim through an interface map, Frontier) and `skill.transport` (a skill
+   artifact with a learned residual, Moonshot) are two verbs with different outputs; neither is an alias.
+6. `result.revalidate` and `mission.revalidate` are two verbs over one engine (decision bead N28c-29): the
+   second takes a mission answer and applies the mission polarity rules; neither is an alias.
+7. An `analyze.<name>` verb that shares its mathematics with a verb of another cluster (`analyze.observability`
+   and `sense.observability`, for example) returns the studio's finding-shaped view and calls the other
+   computation; the output schemas differ, so the pair is not an alias.
+
+**What counts as an alias (the lint's four tests).** Semantics cannot be linted, so the rule is made mechanical:
+1. `retired-name`: no registry row may carry a name listed in `registries/verbs-retired.toml`.
+2. `same-handler`: no two registry rows may resolve to the same handler symbol in the generated table.
+3. `same-schemas`: no two rows may declare the same pair of input and output schema identifiers.
+4. `surface-alias`: the CLI generator and the MCP registration may not attach a second name to a command or
+   tool. A source scan of `frob-cli` and `surface/frob-mcp` fails on any `alias`, `visible_alias` or
+   `aliases` attribute and on any second registration of one handler; the MCP server is built with duplicate
+   names as an error.
+A fifth test covers text an agent copies: `next-actions-registered`, over the golden envelopes of the
+conformance suite, asserts that every `next_actions.command` and every registry `examples` entry starts with
+the CLI path of a registered verb.
+
+**The retired-name table (`registries/verbs-retired.toml`).** FACT (earlier drafts of the chapters, before
+the one-name pass): these second spellings appeared in drafts and were removed. The mapping to
+the registered verb follows the mechanisms table; where it is this bead's reading it is marked DESIGN.
+
+| Retired name | Use instead | Basis |
+|---|---|---|
+| `autopsy.fork` | `run.fork` | Forks and their classification |
+| `autopsy.diverge` | `telemetry.divergence` | First divergence of two runs |
+| `autopsy.interventions` | `autopsy.intervene`, then `autopsy.attribute` | Interventions and attribution |
+| `eval.audit` | `nemesis.audit` | The screening audit |
+| `eval.rankcheck` | `fidelity.modelform` for the model-form check; `eval.rank-agreement` for the record between rungs or tiers (DESIGN reading) | The model-form rank check; the rank-agreement record |
+| `fidelity.rank` | `eval.rank-agreement` with a tier pair (default of the open owner decision; the row leaves this table if the owner registers the name) | The rank-agreement record |
+| `nemesis.show` | `nemesis.hardset` (action `show`) (DESIGN reading) | The hard-world set |
+| `cert.bundle` | `prove.bundle` | Certificate bundles |
+| `ground.import` | `ground.ingest` | Calibration |
+| `foundry.structure` | `foundry.size`, `foundry.optimize`, `foundry.check` | Structure and the build packet |
+| `policy.rs`, `contact.rs` | none: source file names, not verbs | The scan's false positives |
+
+```toml
+[[retired]]
+name = "autopsy.fork"
+use = ["run.fork"]
+reason = "forks and their classification are owned by the replay chapter"
+```
+
+**What a caller sees.** Typing a retired or unknown name on the CLI gives one envelope with `ok: false`,
+`FROB-REF-801` (unknown verb), exit 3, and nothing is charged. For a retired name, `refusal.repairs[0]` names
+the registered verb with a complete command skeleton. That is a repair, not an alias: nothing executes. On MCP
+an unknown tool name is answered by the MCP library before any generated code runs (a JSON-RPC error, −32602,
+"Unknown tool"), so no envelope exists there; this is the one sanctioned difference between the surfaces for
+unknown names.
+
+**Where it runs.** Tests 1 to 3 are in the build script of `frob-verbs` (a registry with an alias does not
+build). Test 4 is a unit test in each surface crate. Test 5 is in the conformance crate. No new `xtask`
+subcommand is added (the workspace keeps exactly six).
+
+## Acceptance criteria
+
+- [ ] `registries/verbs-retired.toml` holds the rows of the table above; every `use` target is a registered verb.
+- [ ] Each of the fifteen mechanisms is reachable under its registered name and under no other: the registry
+      has exactly the verbs of the middle column for it.
+- [ ] Each of the four lint tests and the fifth check fires on its planted defect and names it (negative
+      controls, 5 of 5); the clean tree passes.
+- [ ] `frob autopsy fork …` (a retired name) exits 3 with `FROB-REF-801`, and the first repair is a `frob run
+      fork …` skeleton; `frob nosuch verb` exits 3 with `FROB-REF-801` and no repair naming a verb.
+- [ ] Over MCP, calling `autopsy_fork` returns the library's unknown-tool error, and `tools/list` never
+      contains a mapped retired name.
+- [ ] `frob robot-docs --json` contains no retired name anywhere in its text.
+- [ ] If the owner registers `fidelity.rank`, removing its row from the retired table is the only change this
+      bead needs: the name is either retired or registered, never both, and the count tests follow.
+
+## Test plan
+
+### Unit tests
+
+`cargo test -p frob-verbs --test one_name` (planted registries are TOML strings labelled `synthetic`):
+- `mechanisms_have_one_name`: for each row of the mechanisms table, the listed verbs exist and no retired name
+  of that mechanism does.
+- `lint_retired_name`: a registry with a row `autopsy.fork` fails with `retired-name` and names `run.fork`.
+- `lint_same_handler`: two rows bound to one handler symbol fail with `same-handler`.
+- `lint_same_schemas`: two rows with identical schema identifier pairs fail with `same-schemas`.
+- `retired_targets_exist`: every `use` entry resolves to a registered row.
+- `two_verbs_one_engine_allowed`: `result.revalidate` and `mission.revalidate`, and `opt.cascade` and
+  `solve.run`, pass (different handlers and schemas).
+`cargo test -p frob-cli --test no_aliases` and `cargo test -p frob-mcp --test no_aliases`:
+- `no_alias_attributes`: the source scan finds no alias attribute; a planted `visible_alias` fails.
+- `duplicate_tool_is_build_error`: registering one handler under two tool names fails server construction.
+`cargo test -p frob-conformance --test next_actions_registered`: every command in the golden envelopes and in
+the registry examples begins with a registered CLI path; a planted `frob cert bundle …` fails.
+
+### End-to-end script and logging
+
+`scripts/e2e/verbs_one_name.sh` (header: `bead=NJL-04 milestone=M0 labels=tether,verbs,registry
+gates=GATE-TETHER-02 seed=1 needs=cpu,mcp plants=alias-row,cli-alias`). Steps: (1) for each retired name with a
+`use` target, run it on the CLI and `e2e_expect_refusal FROB-REF-801 3`, then assert with
+`e2e_assert_repairs_order` that the first repair names the registered verb; (2) call each mapped retired name
+as an MCP tool and assert the unknown-tool error; (3) `frob robot-docs --json` piped through a search for each
+retired name, asserting zero hits; (4) the plants: a registry with an alias row must fail to build with
+`retired-name`; a CLI generator patched to add an alias must fail `no_alias_attributes`. Logged through the
+shared helper to `target/e2e-logs/verbs_one_name/<utc>.ndjson`: every command with exit code and wall time,
+each refusal with its code and first repair, each assertion with observed and expected values, the controls
+with `caught`, and the `summary`.
+
+### Known answers and negative controls
+
+- Known answer: the mechanisms table (fifteen rows) and the retired table are exact; KA-755 (unknown verb →
+  `FROB-REF-801`, exit 3) covers step (1).
+- Negative controls: the five planted defects of the lint; the two script plants.
+- Invariant carried: INV-TETHER-01 (no verb exists on one surface and not the other, except per-surface
+  defaults and the unknown-verb case), here in the form "no name exists on a surface that the registry lacks".
+- Determinism: the lint result and the generated tables are identical across runs and platforms (class D0).
+
+## Considerations
+
+- The specification says five scanned names were not registered and does not print them; earlier drafts of
+  the chapters show nine retired spellings and two file names. The table above carries all of them, which is the safe
+  superset: a retired name that was never used costs nothing to deny.
+- `same-schemas` would fire on two verbs that share a named artifact schema as output and have equal inputs.
+  None exists today; if one appears, the lint compares the pair (input identifier, output identifier), and
+  input identifiers are per verb, so a true positive needs a deliberate copy.
+- The repair on a retired name is generated from the retired table, never from text an import supplied, so the
+  rule that no `next_actions.command` contains imported text is kept.
+- Risk: a future chapter introduces a convenience name ("just an alias on the CLI"). The source scan is the
+  guard; an exception needs an ADR and a change to this bead.
+
+## References
+
+Appendix J (J.2 preamble, J.4), §32.6, §32.5, §27.14, §26.12, §28.10, §24.12, §29.8, §29.12; GATE-TETHER-02;
+INV-TETHER-01; KA-755.

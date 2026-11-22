@@ -1,12 +1,12 @@
 ---
 key: "N00-CX"
-title: "frob-conformance: counterexample catalogue entries CX-001 to CX-015 seeded as negative controls (document control, thesis, bets, claims)"
+title: "frob-conformance: counterexample catalogue entries CX-001 to CX-015 seeded as negative controls"
 type: "task"
 priority: 0
 milestone: "M0"
 labels: ["m0", "gauntlet", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-34"
-deps: ["BD-025"]
+deps: ["BD-025", "STD-E2E"]
 needs: ["§38.11: the negative-control registry `frob-conformance/registry/controls.toml` and its five rules (a gate with no control cannot record PASS, INV-GAUNT-02)"]
 related: ["N00-KA", "N00-17", "N00-27", "BD-354", "BD-124", "STD-TEST"]
 gates: ["GATE-GAUNT-01"]

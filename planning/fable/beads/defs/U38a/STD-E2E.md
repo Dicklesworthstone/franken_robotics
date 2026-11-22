@@ -1,6 +1,6 @@
 ---
 key: "STD-E2E"
-title: "scripts/e2e: the end-to-end harness, its structured NDJSON log, runner, linter, gate report and self-test"
+title: "scripts/e2e: end-to-end harness, structured NDJSON log, runner, linter, gate report and self-test"
 type: "task"
 priority: 0
 milestone: "M0"
@@ -9,7 +9,7 @@ parent: "WP-14"
 deps: []
 needs: []
 related: ["STD-TEST", "BD-001", "BD-022", "BD-025", "BD-004", "BD-095"]
-gates: ["GATE-GAUNT-01", "GATE-GAUNT-10"]
+gates: []
 plan_refs: ["§38", "§38.11", "§32.4", "§32.5", "§37.6", "§29.14", "§34.6", "§34.7", "§0.2"]
 ---
 ## Background
@@ -178,8 +178,8 @@ never writes `registries/gates.toml`: a status is entered by a session that did 
 ## Acceptance criteria
 
 - [ ] `scripts/e2e/lib.sh`, `run-all.sh`, `selftest.sh` and the tool exist; `frob-e2e schema` prints exactly
-      `schemas/e2e-log.schema.json`; `cargo tree -p frob-conformance --bin frob-e2e` shows no third-party crate
-      reached by the tool's modules.
+      `schemas/e2e-log.schema.json`; a source scan shows that the tool's modules (`src/e2e/` and the binary)
+      import nothing outside the standard library.
 - [ ] A script whose assertion fails exits 1 and its summary reports `asserts_failed ≥ 1` (negative control).
 - [ ] A script that logs a private field, a path under the private root or the canary fails the linter (negative
       control); the same script without the leak passes.

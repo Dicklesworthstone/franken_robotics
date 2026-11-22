@@ -1,0 +1,146 @@
+---
+key: "N27-KA"
+title: "Known-answer registry for Autopsy: KA-670 to KA-679, the related answers, derived values and their controls"
+type: "task"
+priority: 1
+milestone: "M2"
+labels: ["m2", "autopsy", "frob-conformance", "solid", "registry", "test"]
+parent: "WP-56"
+deps: ["STD-TEST"]
+needs: ["§38.6: the known-answer registry format of the conformance crate (identifier, case, truth with derivation, tolerance, verification tier, negative control, the test that carries it) and its check that every row has a test and a control"]
+related: ["BD-205", "BD-279", "BD-280", "BD-281", "BD-282", "BD-283", "N27a-02", "N27a-06", "N27a-07", "N27a-09", "N27a-11", "N27a-12", "N27a-13", "N27a-14", "N27a-16", "N27a-17", "N27a-18", "N27-CX", "N27-REF", "SPEC-C-29", "BD-146", "BD-318"]
+gates: []
+plan_refs: ["§27.16", "§27.1", "§27.7", "§27.8", "§27.9", "§27.10", "§27.19", "Appendix M.26", "Appendix M.37", "§38.6", "§10 C-29", "§29.19"]
+---
+## Background
+
+A known answer is a case whose right result is fixed by a formula or a construction before any code exists, with
+a derivation on file. The program's rule is that known-answer tests pass against values that were never
+regenerated from the candidate, and that every gate has at least one negative control: a planted defect the test
+must catch, because a gate that nothing can fail validates nothing.
+
+This bead is the registry of the known answers of the counterfactual-debugging chapter (the subsystem Autopsy,
+crate `frob-autopsy`, and the fork mechanism in `frob-chronicle` that it specifies). The chapter adds a rule of
+its own: a value in the chapter that follows from a stated formula is a derived value and a known answer; every
+other number carries its label (TARGET, DESIGN, FACT). The registry therefore has three parts: the ten numbered
+rows, the answers stated elsewhere that the same tests must honour, and the derived values. Mechanism beads cite
+these numbers and restate the values they need; this bead is where the whole list lives and where its
+completeness is checked.
+
+Verification tiers named below: G0 (host arithmetic), G1 (known answer on the stated tier), G5 (determinism).
+
+## Scope
+
+In: the registry file `crates/frob-conformance/registry/known-answers/autopsy.toml`; one entry per row below
+with its derivation reference; the mapping from each entry to the test that carries it; controls for the two
+rows that state none; the completeness check.
+Out: the tests themselves (the beads named in the last column); the counterexample registry and the refusal
+registry of the chapter (other registry beads).
+
+## Technical approach
+
+**Part 1. The numbered known answers (ten rows).**
+
+| KA | The case | The truth | Tolerance | Tier | Negative control | Carried by |
+|---|---|---|---|---|---|---|
+| KA-670 | Planted single causes: 200 failures in five classes (friction drop, torque cap, payload shift, latency, terrain step), ten candidate factors each | The planted factor ranks first with label `but-for`; accuracy at least 90% (the kill gate KILL-AUTOPSY triggers below that) | As stated by GATE-AUTOPSY-03: at least 90% of 200, and the top factor changes in at most 30% of cases under 10⁻⁷ perturbation | G1 · referee | A failure planted through a factor outside the list names no factor | BD-280 (the single-cause gate); control: N27a-14, BD-282 |
+| KA-671 | Null fork | Identical digests | Exact (digest) | G5 · all tiers | A checkpoint with its packet queue stripped does not replay and is refused | N27a-06, BD-205, N27a-08; BD-279 |
+| KA-672 | Chaotic placebo: a doubling map x ← 2x mod 1 with failure defined on its fortieth iterate | A 10⁻¹² placebo is amplified by 2⁴⁰ = 1,099,511,627,776 ≈ 1.1 × 10¹²; about half of placebo forks flip; the label is `chaotic: unattributable` | Exact (label) | G1 · host | The same map over five iterates (amplification 2⁵ = 32) attributes normally | N27a-14, BD-282, N27a-18; BD-279 |
+| KA-673 | Joint and alternative pairs: v of the pair 1 and of each single 0; v equal to 1 for either single and for the pair | Labels `joint` and `alternative`; Shapley values (½, ½) in both; repair sets {1, 2}, and {1} or {2} | Exact (rational) | G1 · host | A summary that reports only Shapley values cannot tell them apart | N27a-11, N27a-12, BD-281, N27a-18 |
+| KA-674 | Negative Shapley value: v(∅) = 0, v({1}) = 1, v({2}) = 0, v({1, 2}) = 0 | Values (½, −½); they sum to v(N) − v(∅) = 0 exactly; a single-factor repair exists | Exact (rational) | G1 · host | None stated in the plan. Registered here (DESIGN): an estimator that clips negative values to zero returns (½, 0) and breaks the sum | N27a-11, N27a-12, BD-281, N27a-18 |
+| KA-675 | Thermal re-run: one thermal node, time constant 60 s, ambient 25 °C, trip at 115 °C; steady-state rise 192 K at gear ratio 12 and 108 K at 16; 45 s task | Trip at 60·ln(192/102) = 37.95 s; ratio 16 from the start peaks at 25 + 108·(1 − e^(−0.75)) = 82.0 °C; ratio 16 applied at 36.95 s finds the winding at 113.3 °C and trips at 42.4 s | 0.1 s and 0.1 K (GATE-AUTOPSY-06) | G1 · referee | A tool that reports the forced fork's result as the answer to the design question | N27a-16, BD-283, N27a-17 |
+| KA-676 | Warm-start graft across a design edit | Refused with FROB-REF-582 | Exact (verdict) | G1 · host | None stated in the plan. Registered here (DESIGN): a classifier that allows the graft when the radii differ by less than 10% runs the fork; and the same design edit at tick 0 must be accepted, so the refusal is shown to be specific | N27a-02, N27a-07, BD-205, N27a-08 |
+| KA-677 | First divergence: two traces of eight ticks that differ at ticks 1 and 5 | Tick 1, by the chained digest | Exact | G1 · host | The pointwise midpoint search probes tick 3 or 4, sees agreement and reports tick 5 | N27a-09, N27a-13; BD-206 |
+| KA-678 | Tolerance mode with a coverage gap | The earliest possible interval and the coverage gap | Exact | G1 · host | A tool that skips the gap reports a later tick | N27a-09, N27a-13; BD-206 |
+| KA-679 | Precision: a marginal failure built to flip under a 10⁻⁷ perturbation and not under 10⁻¹², taken from a single-precision run | Labelled `precision-sensitive` | Exact (label) | G1 · referee, lockstep | The same failure with a wide margin attributes normally | BD-280 (precision routing); BD-282 (the forced precision trigger) |
+
+**Part 2. Answers stated elsewhere that bind the same tests.**
+
+| Identifier | The case | The truth | Carried by |
+|---|---|---|---|
+| KA-145 | Null intervention (stated with the construction "a deterministic forkable simulator is a causal model") | The empty intervention replays the recorded failure bit for bit | N27a-06, BD-205 |
+| KA-146 | Shapley summary with two interventions in two cases: either alone prevents the failure, v({A}) = v({B}) = v({A, B}) = 1; only both together prevent it, v({A}) = v({B}) = 0 and v({A, B}) = 1 | Both give φ = (½, ½), although the first has two causes with probability of necessity 1 and the second has none. (The construction's row words the first case's label `but-for`; the chapter's label for several single rescuers is `alternative`, and the chapter governs.) | N27a-11, BD-281 |
+| KA-147 | Placebo fork on a fixture where every nudge flips the outcome | The report is `chaotic: unattributable` | N27a-14 (the knife-edge fixture), BD-282 |
+| KA-148 | Planted cause | Recovered as first-ranked in at least 90% of planted cases (TARGET) | BD-280 |
+| KA-716 | Fork (stated with the telemetry chapter) | The empty intervention replays bit for bit; a setpoint change at tick t reuses the prefix to the snapshot before t; control: the 60 mm warm start grafted onto the 75 mm wheel | N27a-04, N27a-05, N27a-07, BD-205 |
+| KA-717 | First divergence: traces that differ at ticks 1 and 5 | Tick 1; control: midpoint search on a pointwise predicate reports tick 5 | N27a-09 |
+| KA-718 | Teleport | A planted single-kernel divergence is named by step and stage | N27a-09 (the planted tick-and-stage battery) |
+| KA-802 (part) | Licence refusals on planted cases | Attribution or a counterfactual fork below determinism class D2 is refused (FROB-REF-562) | N27a-08, BD-283 |
+| no number | The single-precision lane's linear map x ← 1.1735·x (exponent ln 1.1735 = 0.16 per step) | After 40 steps a perturbation has grown by 602; the measured growth must match within 1% | BD-280's lane (stated in the lane's subsection; listed here so the chapter's list is whole) |
+| no number | The lane's negative control: a pendulum released 5 × 10⁻⁸ rad from upright with no control, verdict "falls to the positive side" | A placebo of 10⁻⁷ rad flips the side whenever its sign is negative, so ρ₀ is about one half; the lane must not admit the case; label `marginal`. At a placebo of 10⁻¹² the side is stable | BD-280's lane |
+
+**Part 3. Derived values of the chapter** (each follows from a stated formula; each has a test).
+
+| Value | Formula | Carried by |
+|---|---|---|
+| 78 coalitions | 12 singles + C(12, 2) = 66 pairs | BD-281, N27a-10 |
+| 689 forks | 78 × 8 replicates + 64 placebo forks + 1 null fork; the 10⁻⁷ series adds 8 per coalition that rescues | BD-281, N27a-10, N27a-18 |
+| 32 and 1,024 coalitions | 2⁵ for an exact Shapley summary at m = 5; 2¹⁰ for ten factors | N27a-11, N27a-10 |
+| Contrasts 0.76 and 0.13 | Of 200 failing worlds: 164, 38 and 12 prevented by torque limit off, nominal friction and a placebo: rescue rates 0.82, 0.19, 0.06; contrasts net of the placebo | BD-280's statistics; cited in BD-281, BD-282 |
+| Interaction −11/32 | Rescue rates 8/8 and 3/8, pair 8/8, placebo 2/64: 1 − 1 − 3/8 + 1/32 | BD-281, N27a-10 |
+| 137 and 113 forks | Three interventions, singles and pairs: 1 + 64 + 6 × 8 = 113; plus 3 × 8 for three rescuing coalitions = 137 | BD-281 |
+| Growth 3.6 × 10⁵ | e^(0.16 × 80) for an exponent of 0.16 per control step over 80 steps (2 s at a 25 ms control period); single-precision round-off 6 × 10⁻⁸ then reaches about 2% of state scale; double-precision round-off 10⁻¹⁶ stays near 4 × 10⁻¹¹ | BD-280's stability report; cited in N27a-03 |
+| Several gigabytes | 20 snapshots × 8,192 worlds × about 35 kB ≈ 5.7 GB | N27a-03 |
+| Thermal constants | 192 × (12/16)² = 108 K; 115 − 82.0 = 33 K in hand; 25 + 108 = 133 °C asymptote of the forced fork | N27a-16 |
+| Lip lever | √(2rh − h²) for h = 12 mm: 36.000 mm at r = 60 mm, 40.694 mm at r = 75 mm (why a warm start cannot be grafted) | N27a-07 |
+
+**Registry mechanics.** Each entry: `id`, `case`, `truth` (value and formula), `tolerance`, `tier`, `control`,
+`derivation` (a path under `docs/derivations/` for the thermal case and the first-divergence monotonicity
+argument; "by construction" for exact tables), `test` (crate and test name), `gate` where one reads it. The
+completeness check fails if a row has no test, if a row has no control, or if a test named here no longer
+exists. Values are stored as exact rationals where they are rational and as decimal strings with their formula
+otherwise; no value is copied from program output.
+
+## Acceptance criteria
+
+- [ ] The registry file holds the 10 numbered rows, the 10 related rows and the 10 derived values above, and
+      validates against the registry schema.
+- [ ] Every row names an existing test; `xtask check-contracts` (or the conformance crate's registry check)
+      fails when one is removed.
+- [ ] KA-674 and KA-676, which the plan lists with no stated control, have the controls registered here and
+      those controls are exercised by the named tests.
+- [ ] The count matches the plan's own count for the chapter: 10 known-answer rows, 2 with no stated control,
+      0 with a tolerance still to set.
+- [ ] A recomputation test evaluates every derived value from its formula and compares it with the stored one.
+
+## Test plan
+
+### Unit tests
+`crates/frob-conformance/tests/ka_autopsy_registry.rs`:
+- `ten_numbered_rows`: identifiers KA-670 to KA-679 present, each with tolerance, tier and control.
+- `derived_values_recompute`: 12 + 66 = 78; 78 × 8 + 64 + 1 = 689; 2⁵ = 32; 2¹⁰ = 1,024; 164/200 − 12/200 =
+  0.76; 38/200 − 12/200 = 0.13; 1 − 1 − 3/8 + 1/32 = −11/32; 113 and 137; e^(12.8) = 3.62 × 10⁵ (within 1%);
+  6 × 10⁻⁸ × 3.62 × 10⁵ = 0.0217; 10⁻¹⁶ × 3.62 × 10⁵ = 3.6 × 10⁻¹¹; 20 × 8,192 × 35,000 = 5.73 × 10⁹ bytes;
+  60·ln(192/102) = 37.951; 25 + 108·(1 − e^(−0.75)) = 81.984; √(2 × 60 × 12 − 144) = 36.000 and
+  √(2 × 75 × 12 − 144) = 40.694.
+- `every_row_has_a_live_test`: the named tests exist in the workspace's test listing.
+- `controls_present`: no row's control is empty.
+- `shapley_rows_exact`: (1/2, 1/2), (1/2, 1/2), (1/2, −1/2) as rationals.
+
+### End-to-end script and logging
+None of its own. The scripts that carry rows from the user's side log the KA identifier beside every assertion
+that discharges one: `run_fork.sh` (KA-671, KA-676), `gate_autopsy_01.sh` (KA-671), `gate_autopsy_07.sh` (KA-677,
+KA-678), `autopsy_rerun.sh` (KA-675), `autopsy_coalitions_abstention.sh` (KA-672, KA-673, KA-674).
+
+### Known answers and negative controls
+This bead is the list. Its own negative controls are on the registry check: a row with its control deleted, a
+row pointing at a test that does not exist, and a derived value edited by one unit in the last printed digit
+must each fail the check. Determinism lanes: the registry and its recomputation are exact or use fixed decimal
+strings; identical on every platform.
+
+## Considerations
+
+- The related rows carry identifiers owned by other chapters' registries (the constructions, the telemetry
+  chapter, the numerics chapter). They are repeated here by value so that the Autopsy tests can be read alone;
+  the owning registry remains the source of the identifier.
+- The two unnumbered answers of the single-precision lane were added to the chapter after the numbered list was
+  compiled. If they are later given identifiers, the entries here take them.
+- KA-679 and the lane's pendulum control describe neighbouring cases with different labels
+  (`precision-sensitive` and `marginal`); the difference is whether double precision reproduces the failure and
+  whether the lane's admission rule was tried. Both are kept, and the tests that carry them state which path
+  each fixture takes.
+
+## References
+
+Plan §27.16, §27.1, §27.7 to §27.10, §27.19, Appendix M.26 (KA-670 to KA-679), Appendix M.37 (counts), §38.6,
+§10 C-29 (KA-145 to KA-148), §29.19 (KA-716 to KA-718), §35.15 (KA-802).

@@ -1,15 +1,15 @@
 ---
 key: "STD-TEST"
-title: "unit-test conventions, the test kit, registry loaders, determinism lanes and the no-control-no-pass rule"
+title: "unit-test conventions, test kit, registry loaders, determinism lanes and the no-control-no-pass rule"
 type: "task"
 priority: 0
 milestone: "M0"
 labels: ["m0", "gauntlet", "frob-conformance", "frob-core", "solid", "test", "registry", "delivery"]
 parent: "WP-14"
-deps: []
+deps: ["STD-E2E"]
 needs: ["§38.11: the record format of a negative control in `crates/frob-conformance/registry/controls.toml` and the seeding of that file from the counterexample catalogue (drafted with BD-025); this bead reads the file and restates the fields it reads", "§38.13: the recorder that writes a status into `registries/gates.toml` and refuses `pass` without a caught control; this bead supplies the evidence lines it reads"]
 related: ["STD-E2E", "BD-005", "BD-025", "N38a-12", "N38a-14", "N38a-35"]
-gates: ["GATE-GAUNT-01", "GATE-GAUNT-07"]
+gates: ["GATE-GAUNT-01"]
 plan_refs: ["§38.2", "§38.6", "§38.7", "§38.11", "§35.1", "§35.3", "§35.9", "§34.3", "§34.10", "§0.2", "§0.7"]
 ---
 ## Background
@@ -202,9 +202,9 @@ changes no drawn input. Determinism lanes: the kit's own draws under `twice` and
 
 ## Considerations
 
-- No blocking dependency is declared, on purpose: most beads depend on this one, so an edge to a seed bead could
-  close a cycle. The module lands with `frob-core` (BD-005); if `frob-core` does not exist yet, the conventions
-  document and the lint land first and the kit follows in the same session.
+- The only blocking dependency is the end-to-end harness (STD-E2E), on purpose: most beads depend on this one,
+  so an edge to a seed bead could close a cycle. The module lands with `frob-core` (BD-005); if `frob-core` does
+  not exist yet, the conventions document and the lint land first and the kit follows in the same session.
 - The kit must stay small (cap 1,500 lines inside `frob-core`'s cap of 8,000); it is test support, not a product
   feature, and `xtask` gains no check for it (six checks only): the lint is a test target of the conformance crate.
 - Open: the tolerances of 133 known-answer rows and the controls of 325 rows are not stated in the plan; the kit

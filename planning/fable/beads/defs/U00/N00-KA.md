@@ -1,12 +1,12 @@
 ---
 key: "N00-KA"
-title: "frob-conformance: known-answer registry rows KA-001 to KA-032 (document control, the audit, the thesis, the bets, the North-Star fixtures, the claim product)"
+title: "frob-conformance: known-answer registry rows KA-001 to KA-032 (document control through the claim product)"
 type: "task"
 priority: 0
 milestone: "M0"
 labels: ["m0", "gauntlet", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-34"
-deps: ["BD-025"]
+deps: ["BD-025", "STD-E2E"]
 needs: ["§38.6: the known-answer registry format and its loader in `frob-conformance` (rows are append-only, INV-GAUNT-07; the printed appendix is generated from the registry, ADR-GAUNT-02)"]
 related: ["N00-17", "N00-27", "N00-33", "NS-13", "NS-22", "BD-033", "BD-034", "BD-036", "BD-093", "BD-130", "BD-129", "BD-030"]
 gates: ["GATE-GAUNT-02"]

@@ -1,12 +1,12 @@
 ---
 key: "N24-KA"
-title: "Known-answer registry for Arena (KA-594 to KA-623): requirements, metrics, both fixtures, study types and qualification"
+title: "Known-answer registry for Arena (KA-594 to KA-623): requirements, metrics, fixtures, studies, qualification"
 type: "task"
 priority: 1
 milestone: "M1"
 labels: ["m1", "arena", "frob-conformance", "frob-spec", "frob-arena", "registry", "test", "solid"]
 parent: "WP-41"
-deps: ["BD-025", "STD-TEST"]
+deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§24.19 to §24.23: the known answers of the late subsections, which are stated there and have no row in the chapter's known-answer appendix (two-point traction rig 52.5 N, 0.55 N·m, 25 N and 40 N; strip model 0.525 and 0.3486; the sled hand case with dwell 0.2 s; item-bank variances 0.0975, 0.0075, 0.0085 and 0.9975 under the wrong model; pushes keyed by tick and by footfall; the parked robot's margin −0.3); the unit that drafts those subsections registers them"]
 related: ["BD-121", "BD-122", "BD-123", "BD-124", "BD-190", "BD-195", "BD-202", "BD-254", "BD-259", "BD-260", "BD-261", "BD-383", "N24a-05", "N24a-07", "N24a-08", "N24a-09", "N24a-10", "N24a-11", "N24a-16", "N24a-18", "N24a-20", "N24a-22", "N24a-34", "N24a-37", "N24a-42"]
 gates: []

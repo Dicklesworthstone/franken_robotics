@@ -1,6 +1,6 @@
 ---
 key: "N22-KA"
-title: "Known-answer registry for Reflex (KA-553 to KA-575): estimator, cone certificates, sampling cost, gait orbits, skills, shields, symmetry"
+title: "Known-answer registry for Reflex (KA-553 to KA-575): estimator, certificates, sampling cost, gaits, skills, shields"
 type: "task"
 priority: 1
 milestone: "M1"

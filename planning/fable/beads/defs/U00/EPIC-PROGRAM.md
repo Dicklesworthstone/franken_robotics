@@ -1,6 +1,6 @@
 ---
 key: "EPIC-PROGRAM"
-title: "FrankenRobotics: a robot proving ground, an agent design studio and a mission-query engine, measured against the strongest composed rival"
+title: "FrankenRobotics: robot proving ground, agent design studio and mission-query engine, measured against a composed rival"
 type: "epic"
 priority: 0
 milestone: "M0"

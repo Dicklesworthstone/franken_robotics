@@ -62,12 +62,12 @@ export interface Chapter {
 
 export const chapterOpen = (c: Chapter) => `
 <div class="chapter" data-chapter="${c.id}" style="--chapter:${c.colour}">
-<section class="opener" aria-labelledby="${c.id}-title"><div class="wrap" id="${c.id}"><div class="opener-grid reveal">
-<div><p class="kick"><span class="joint on" aria-hidden="true"></span>${escape(c.label)}</p>
-<h2 class="d2" id="${c.id}-title">${title(c.title)}</h2><p class="lede">${escape(c.thesis)}</p></div>
-<div class="opener-index"><span class="numeral" aria-hidden="true">${c.number}</span><ol>${c.sections
-  .map(([id, label]) => `<li><a href="#${id}">${icon("right")}${escape(label)}</a></li>`)
-  .join("")}</ol></div></div></div></section>`;
+<section class="opener" aria-labelledby="${c.id}-title"><div class="wrap" id="${c.id}"><div class="reveal">
+<p class="kick"><span class="joint on" aria-hidden="true"></span>${escape(c.label)}</p>
+<h2 class="d2" id="${c.id}-title">${title(c.title)}</h2><p class="lede">${escape(c.thesis)}</p>
+<ul class="opener-index">${c.sections
+  .map(([id, label]) => `<li><a href="#${id}">${escape(label)}</a></li>`)
+  .join("")}</ul></div></div></section>`;
 export const chapterClose = "</div>";
 
 export function section(o: {
@@ -86,7 +86,7 @@ export function section(o: {
   const kicker = o.kicker ? `<p class="kicker">${copy(o.kicker, o.ref)}</p>` : "";
   return o.layout === "split"
     ? `<section class="sec split" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap split-grid"><div class="sec-head reveal">${head}${kicker}${more}</div><div class="sec-body">${o.body}</div></div></section>`
-    : `<section class="sec" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap"><div class="sec-head wide reveal"><div>${head}</div><div>${kicker}${more}</div></div><div class="sec-body">${o.body}</div></div></section>`;
+    : `<section class="sec" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap"><div class="sec-head wide reveal"><div>${head}${kicker}</div>${more}</div><div class="sec-body">${o.body}</div></div></section>`;
 }
 
 /** A figure: one line that says what to do with it, the thing itself, and a footnote where one helps. */

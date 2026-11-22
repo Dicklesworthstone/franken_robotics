@@ -1,7 +1,7 @@
 import { blurbs } from "./blurbs";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { home, homeDock, homeNav } from "./home";
+import { home, homeNav } from "./home";
 import { origin, shell, type Shell } from "./layout";
 import { bytes, codeUnder, definitions, entries, ref, render, version, words } from "./plan";
 import { library, missing, reader, readerDock, search } from "./reader";
@@ -71,7 +71,6 @@ page({
     "A robotics lab for AI agents. Describe a mission and get every robot that can do it, why the others fail, and a build packet for the one you pick.",
   body: home({ ref, session: codeUnder("32.16", 1), sections: entries.length - 1, words: round(words) }),
   nav: homeNav,
-  dock: homeDock,
   head: `${js}<link rel="stylesheet" href="${asset("/home.css")}"><link rel="modulepreload" href="${client}"><script type="module" src="${client}" onerror="document.documentElement.classList.remove('js')"></script>`,
 });
 for (const entry of entries) {

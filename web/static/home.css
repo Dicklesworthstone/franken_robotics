@@ -137,11 +137,17 @@
   }
 }
 .hero .d1 {
-  max-width: 9.2em;
   width: fit-content;
-  font-size: clamp(2.9rem, 6.1vw, 6rem);
+  font-size: clamp(2.3rem, 11.4vw, 4.8rem);
   margin-top: 1.4rem;
-  text-wrap: balance;
+}
+.hero .d1 > span {
+  display: block;
+}
+@media (min-width: 1000px) {
+  .hero .d1 {
+    font-size: clamp(4rem, 6.1vw, 6rem);
+  }
 }
 .hero .lede {
   max-width: 33rem;
@@ -306,7 +312,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .console-place .seg {
-    display: flex;
+    display: inline-flex;
     width: auto;
   }
 }
@@ -375,13 +381,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.8rem 1.6rem;
-  padding: 1rem 1.15rem;
+  padding: 1rem var(--inset);
   border-bottom: 1px solid var(--line);
 }
 .film-grid {
   display: grid;
   gap: 1rem 1.3rem;
-  padding: 1.15rem 1.15rem 0;
+  padding: 1.15rem var(--inset) 0;
 }
 .film-map {
   display: grid;
@@ -493,7 +499,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem 1.3rem;
-  padding: 0.85rem 1.15rem 1.1rem;
+  padding: 0.85rem var(--inset) 1.1rem;
   font-size: 0.78rem;
   color: var(--soft);
 }
@@ -521,14 +527,16 @@
 .stats li:first-child {
   border-left: 0;
 }
+.stats li:first-child a {
+  padding-left: 0;
+}
 .stats a {
   display: block;
   height: 100%;
   padding: 1.5rem 1.3rem 1.8rem;
-  transition: background-color 0.25s;
 }
-.stats a:hover {
-  background: rgb(74 222 128 / 0.035);
+.stats a:hover strong {
+  color: #fff;
 }
 .stats b {
   display: block;
@@ -551,7 +559,21 @@
   line-height: 1.5;
   color: var(--muted);
 }
-@media (max-width: 899px) {
+@media (min-width: 600px) and (max-width: 1099px) {
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .stats li:nth-child(3n + 1) {
+    border-left: 0;
+  }
+  .stats li:nth-child(3n + 1) a {
+    padding-left: 0;
+  }
+  .stats li:nth-child(n + 4) {
+    border-top: 1px solid var(--line);
+  }
+}
+@media (max-width: 599px) {
   .stats li {
     border-left: 0;
     border-top: 1px solid var(--line);
@@ -591,10 +613,6 @@
   padding-block: clamp(5rem, 11vw, 9.5rem) clamp(3rem, 6vw, 5rem);
   scroll-margin-top: 2rem;
 }
-.opener-grid {
-  display: grid;
-  gap: 2.4rem clamp(2rem, 6vw, 6rem);
-}
 .opener .lede {
   max-width: 43rem;
   margin-top: 1.5rem;
@@ -619,60 +637,30 @@
   color: var(--chapter);
 }
 .opener-index {
-  position: relative;
-  min-width: 0;
-}
-.numeral {
-  position: absolute;
-  right: -0.06em;
-  bottom: calc(100% + 1.6rem);
-  font-size: clamp(7rem, 12.5vw, 11.5rem);
-  font-weight: 800;
-  line-height: 0.8;
-  letter-spacing: -0.07em;
-  color: transparent;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--chapter) 24%, transparent);
-  pointer-events: none;
-  user-select: none;
-}
-.opener-index ol {
-  position: relative;
-  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2.1rem;
 }
 .opener-index a {
-  display: flex;
-  gap: 1rem;
-  align-items: baseline;
-  padding: 0.8rem 0.2rem;
-  border-bottom: 1px solid var(--line);
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--soft);
+  display: block;
+  padding: 0.5rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--chapter) 26%, transparent);
+  border-radius: 99rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, var(--chapter) 30%, #fff);
   transition:
-    color 0.2s,
-    padding-left 0.35s var(--ease),
-    border-color 0.2s;
+    border-color 0.2s,
+    background-color 0.2s;
 }
 .opener-index a:hover {
-  color: #fff;
-  padding-left: 0.55rem;
-  border-color: color-mix(in srgb, var(--chapter) 50%, transparent);
-}
-.opener-index a svg {
-  flex: none;
-  align-self: center;
-  width: 0.95rem;
-  height: 0.95rem;
-  color: var(--chapter);
-}
-@media (min-width: 900px) {
-  .opener-grid {
-    grid-template-columns: minmax(0, 1.75fr) minmax(16rem, 1fr);
-    align-items: end;
-  }
+  border-color: var(--chapter);
+  background: color-mix(in srgb, var(--chapter) 10%, transparent);
 }
 @media (max-width: 899px) {
-  .numeral {
+  .opener-index {
     display: none;
   }
 }
@@ -680,26 +668,35 @@
   position: relative;
   padding-block: clamp(3rem, 5.6vw, 5.2rem);
   border-top: 1px solid var(--line);
-  scroll-margin-top: -1.6rem;
+  scroll-margin-top: -1.8rem;
 }
+/* One left edge: the name of the section, what it is, and then the thing itself. */
 .sec-head.wide {
-  display: grid;
-  gap: 1rem clamp(2rem, 5vw, 5rem);
-  margin-bottom: clamp(1.8rem, 3.5vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0.9rem 3rem;
+  margin-bottom: clamp(1.6rem, 3vw, 2.6rem);
+}
+.sec-head.wide > div {
+  flex: 1 1 34rem;
+  min-width: 0;
+}
+.sec-head.wide .kicker {
+  margin-top: 1rem;
+}
+.sec-head.wide .more {
+  flex: none;
+  margin: 0;
 }
 .kicker {
-  max-width: 41rem;
+  max-width: 46rem;
   font-size: clamp(1.06rem, 1.4vw, 1.26rem);
   line-height: 1.55;
   letter-spacing: -0.011em;
   color: var(--soft);
   text-wrap: pretty;
-}
-@media (min-width: 900px) {
-  .sec-head.wide {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: end;
-  }
 }
 .split-grid {
   display: grid;
@@ -1027,7 +1024,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.7rem 1.4rem;
-  padding: clamp(1.2rem, 2.4vw, 1.9rem) clamp(1.1rem, 2.6vw, 2.1rem) 0;
+  padding: clamp(1.2rem, 2.4vw, 1.9rem) var(--inset) 0;
 }
 .todo {
   font-size: clamp(1rem, 1.3vw, 1.14rem);
@@ -1064,14 +1061,27 @@
 }
 
 .fig-body {
-  padding: clamp(1.2rem, 2.4vw, 1.9rem) clamp(1.1rem, 2.6vw, 2.1rem);
+  padding: clamp(1.2rem, 2.4vw, 1.9rem) var(--inset);
   min-width: 0;
 }
 .fig-body > * + * {
   margin-top: 1.3rem;
 }
+.js .fig:not([data-ready]) > .fig-body {
+  min-height: var(--hp, auto);
+}
+@media (min-width: 640px) {
+  .js .fig:not([data-ready]) > .fig-body {
+    min-height: var(--ht, auto);
+  }
+}
+@media (min-width: 1000px) {
+  .js .fig:not([data-ready]) > .fig-body {
+    min-height: var(--hd, auto);
+  }
+}
 .fig-foot {
-  padding: 0.95rem clamp(1.1rem, 2.6vw, 2.1rem) 1.05rem;
+  padding: 0.95rem var(--inset) 1.05rem;
   border-top: 1px solid var(--line);
   font-size: 0.86rem;
   line-height: 1.5;
@@ -2508,6 +2518,12 @@ svg.chart {
 .session-note .btnrow {
   margin-top: 0.6rem;
 }
+@media (max-width: 999px) {
+  .session .term-body {
+    flex: none;
+    height: 20rem;
+  }
+}
 @media (min-width: 1000px) {
   .session {
     grid-template-columns: 17rem minmax(0, 1fr);
@@ -3026,7 +3042,7 @@ html:not(.js) .story + .story {
 
 /* ---------- Constructions ---------- */
 .elements {
-  padding: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 2vw, 1.5rem) var(--inset) clamp(1.1rem, 2.4vw, 1.9rem);
 }
 .element-grid {
   display: grid;
@@ -3149,23 +3165,30 @@ html:not(.js) .element-card {
   display: none;
 }
 @media (max-width: 999px) {
+  .element-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .element-grid ol {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(5rem, auto));
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 9.6rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    margin-inline: calc(-1 * var(--inset));
+    padding: 0.2rem var(--inset) 0.6rem;
+    scrollbar-width: none;
+  }
+  .element-grid li {
+    scroll-snap-align: start;
+    scroll-margin-left: var(--inset);
   }
   .el {
     min-height: 5rem;
   }
-  .element-grid ol {
-    grid-auto-flow: dense;
-  }
-  .element-grid li.inline {
-    grid-column: 1 / -1;
-  }
-  .element-card {
-    scroll-margin-block: 5.5rem 6.5rem;
-  }
-  .js .element-card:not(.open) {
-    display: none;
+  /* Room for the longest card, so the page holds still from one to the next. */
+  .js .element-card {
+    min-height: 21rem;
   }
 }
 @media (min-width: 1000px) {
@@ -3194,6 +3217,38 @@ html:not(.js) .element-card {
 }
 
 /* ---------- Phones ---------- */
+@media (max-width: 899px) {
+  .sec {
+    scroll-margin-top: -2.4rem;
+  }
+}
+@media (max-width: 400px) {
+  .hero .pill {
+    flex-wrap: nowrap;
+    padding-inline: 0.8rem;
+    font-size: min(0.625rem, 2.75vw);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 359px) {
+  .hero .cta {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 599px) {
+  .seg:has(> :nth-child(5)):not(:has(> :nth-child(7))) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+}
+@media (max-width: 759px) {
+  /* The first few rows say it; the rest is one tap away in the plan. */
+  .stage-info tbody tr:nth-child(n + 7) {
+    display: none;
+  }
+}
 @media (max-width: 479px) {
   .datawrap th:nth-child(2),
   .datawrap td:nth-child(2) {

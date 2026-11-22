@@ -15,13 +15,6 @@ export const homeNav = chapters
       `<a href="#${c.id}" data-spy="${c.id}" style="--chapter:${c.colour}"><span class="joint" aria-hidden="true"></span>${c.short}</a>`,
   )
   .join("");
-export const homeDock = chapters
-  .map(
-    (c) =>
-      `<li><a href="#${c.id}" data-spy="${c.id}" style="--chapter:${c.colour}">${icon(c.icon)}${c.short}</a></li>`,
-  )
-  .join("");
-
 /** The spec, as the plan sets it. Each opens the part of the page that shows it. */
 const stats: [n: string, label: string, note: string, to: string][] = [
   ["18", "kinds of body", "Dogs, humanoids, rovers, tracks, snakes and wheel-leg hybrids.", "#bodies"],
@@ -35,7 +28,7 @@ const hero = () => `
 <section class="hero" aria-labelledby="hero-title" id="fig-lineup" data-fig="lineup">
 <div class="lineup"><picture><source media="(max-width: 999px)" srcset="/media/lineup-tall.webp" width="1080" height="1180"><img src="/media/lineup.webp" width="1920" height="1100" alt="" fetchpriority="high"></picture><canvas aria-label="A crowd of 99 robots of eighteen kinds facing a doorway. The ones small enough for it are lit, the rest are dark."></canvas><p class="tip" data-tip hidden></p></div>
 <div class="wrap hero-copy"><p class="pill"><span class="joint on" aria-hidden="true"></span>Robotics lab for AI agents<i></i>In design</p>
-<h1 class="d1" id="hero-title">${title("Name the job. Get *every robot* that can do it.")}</h1>
+<h1 class="d1" id="hero-title"><span>Name the job.</span> <span>Get <em class="g">every robot</em></span> <span>that can do it.</span></h1>
 <p class="lede">FrankenRobotics is a robotics lab that AI agents run. Give it a mission and a parts catalog. It designs the bodies, works out the controllers, tests them in thousands of worlds at once, and hands back every design that passes, with a build packet for the one you pick.</p>
 <div class="cta"><a class="btn go" href="#lab">See what it does${icon("down")}</a><a class="btn" href="${repo}">${icon("star")}Star on GitHub</a></div></div>
 <div class="wrap console-wrap"><div class="console"><div class="console-place"><p class="micro">Pick a place</p>${seg(

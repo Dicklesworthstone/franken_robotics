@@ -59,9 +59,9 @@ found errors in claims that earlier revisions of this README repeated; they are 
 | Can I run anything? | **Only the planning checks.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. [`planning/verify_plan_math.py`](planning/verify_plan_math.py) re-checks Neon's arithmetic, crate table, bead graph and cross-references. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
 | Has anything been measured? | **Planning experiments have run on the target hardware.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s; exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. Astra also ran normalization arithmetic (§11.2) and a sampled slider with three physics updates (§9.1) on those GPUs. Round-2 evidence packs also timed CPU MuJoCo on the M5 Ultra, under background load, to size the referee. No FrankenRobotics physics step, environment step or training run has been measured, and neither round ran an incumbent training loop |
 | Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper, had the verdicts challenged by two other model families and then adjudicated the challenges. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus two later three-auditor sweeps. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
-| Which plan is canonical? | **A v1.0 hybrid is meant to be, and it is not assembled.** An [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) says v1.0 will replace base v0.2 at its current path and absorb the other two editions. Its Phase 1 text (§0 to §37) has completed reconciliation, and Phase 2 is drafted except for Appendix K. Until it is assembled, the file at that path is still v0.2, and this README uses base-plan names. The charter keeps them (`frob-` crates; `frob`, `frobd`, `frob-mcp`) and adds `frob-verify` and `frob-tui`. Neon keeps the prefix on its own 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
+| Which plan is canonical? | **A v1.0 hybrid is meant to be, and it is not assembled.** An [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) says v1.0 will replace base v0.2 at its current path and absorb the other two editions. All of it is drafted except Appendix K, and a second reconciliation has applied the two reviews, two completeness audits and the adjudicated verdicts. Until it is assembled, the file at that path is still v0.2, and this README uses base-plan names. The charter keeps them (`frob-` crates; `frob`, `frobd`, `frob-mcp`) and adds `frob-verify` and `frob-tui`. Neon keeps the prefix on its own 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
 | Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. This settles base OPEN-PROG-1, which blocked the first push |
-| What happens next? | Apply the two reviews and the completeness audit to the v1.0 drafts, fold the adjudicated verdicts in, write Appendix K, assemble v1.0, convert the plan to beads, then start M0 |
+| What happens next? | Fold the latest Astra and Neon edits into the v1.0 drafts, settle what the fix logs leave open, write Appendix K, assemble v1.0 and convert the plan to beads. Building starts only if the owner changes the scope in [AGENTS.md](AGENTS.md) |
 
 The plans are written to be falsifiable. Each bet names the measurement that would kill it, and each kill
 gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
@@ -168,24 +168,26 @@ stop early, search for failures, and measure time to an independently accepted a
 incumbent. The audited numbers bound every edition's headline. An adjudication at 22:19 has since revised several of
 them:
 
-- An infinitely fast environment step speeds training by at most 7.8× on one incumbent stack and 1.4× on another.
+- An infinitely fast environment step speeds training by at most about 7.7× on one incumbent stack (earlier revisions
+  here said 7.8×, from an unrounded share) and 1.4× on another.
   An incumbent already measures 2.55 M humanoid steps/s. Engine speed is a parity requirement.
 - **The ten-fold question is open and unmeasured.** The register's range of 3 to 10× on quadrupeds is withdrawn as an
   answer. Against per-design training, paper arithmetic gives about 3 to 3.5× on quadruped design cycles and about 15× on
   humanoid ones, only if family policies can replace per-design training when designs are ranked. Nobody has measured
-  that rank agreement; the v1.0 draft calls the experiment that would (about thirty trainings, 5 to 7.5 GPU-hours) the
-  decisive early one. Against a composed incumbent that hosts the same portable methods, the expected ratio on
-  fixed-topology CUDA missions is near one.
-- 24 hypotheses have verdicts. After adjudication: 16 narrowed, 3 refuted (recursion-only kernel specialization, half
-  precision, living multiphysics in every world), 2 split (incremental evaluation, rank fidelity), 1 deferred and 2
-  active: H-18 (information, not the engine, sets the pace) and H-19, "a thin layer over an incumbent". The v1.0 draft
-  states a rule for what happens if H-19 ties (BET-14).
+  that rank agreement; the v1.0 draft calls the experiment that would (forty designs; about 45 GPU-hours, or about 5 if
+  another experiment's specialists are reused) the decisive early one. Against a composed incumbent that hosts the same
+  portable methods, the expected ratio on fixed-topology CUDA missions is near one.
+- **The [register](planning/fable/brenner/deliverables/VERDICT_REGISTER.md) now has 32 rows**: the 24 hypotheses, three of
+  them split in two, and five admitted from the challenges. 16 are narrowed, 4 refuted (recursion-only kernel
+  specialization, exact rollout reuse, half precision, living multiphysics in every world), 1 deferred and 11 active.
+  The active ones include H-18 (information, not the engine, sets the pace) and H-19, "a thin layer over an incumbent".
+  The v1.0 draft states a rule for what happens if H-19 ties (BET-14).
 - **The challenges are adjudicated.** Codex and Gemini contested 16 of the 24 verdicts, 9 of them both. The
   [adjudication](planning/fable/brenner/deliverables/CHALLENGE_ADJUDICATION.md) ruled on 25 contests and on both
   contests of the main question: 11 upheld, 16 partly upheld, none rejected whole, ten specific claims rejected. All 16
   rows change and four change state. Five challenger hypotheses are admitted untested as H-25 to H-29. The adjudicator
   took no part in the packs or the challenges but comes from the same model family as the packs, which the document
-  says. The Phase 1 drafts of v1.0 still bind to the register as first written.
+  says. The v1.0 drafts now print the revised register (§0.8), and every row there has the same state as the register's.
 
 The idea duel on the same plan gave seven ideas 700 or more from both other models. All seven come from the Claude
 slate, and the report says so ("the same family as one of the three duellists" compiled it). The top three are a
@@ -207,10 +209,10 @@ form, and no number is written as a result.
 | | Status, evening of 2026-11-21 (EST) |
 |---|---|
 | Inputs compiled | A [digest of Astra](planning/fable/blend/ASTRA_DIGEST.md), a [digest of Neon](planning/fable/blend/NEON_DIGEST.md) with a 24-item "doubtful or wrong" list, and a [catalog of 112 distinct ideas](planning/fable/blend/IDEA_CATALOG.md) merged from about 225 entries |
-| Phase 1 drafts | **Complete** at 21:14: [13 part files](planning/fable/blend/parts/), about 331,600 words, §0 to §37 of 47 |
-| Reconciliation | **One pass done** (21:20 to 21:24): colliding refusal codes renumbered, ten binding decisions recorded, and inventories generated: 421 gate, kill-gate and admission-gate identifiers, 141 open questions, 169 verbs, 296 refusal codes |
-| Phase 2 drafts | **Drafted except Appendix K** (the lead's review log), about 252,000 words. [§38 and Appendices M and N](planning/fable/blend/parts2/P13a.md) (verification; 835 known answers, of which 133 lack a full tolerance and 325 a negative control; 384 counterexamples), [§39 and §40](planning/fable/blend/parts2/P13b.md) (the ten-fold test and the gate register), [§41 to §44, §46 and §47](planning/fable/blend/parts2/P14.md) (risks, open questions, milestones, work packages, first session, release rubric), [§45](planning/fable/blend/parts2/P15.md) (442 beads; a mechanical check here found 1,091 dependencies, all pointing to a lower number, one root and one sink), [Appendices A to E](planning/fable/blend/parts2/P16a.md) (glossary, idea passes, EV matrix with 63 killed ideas, mathematics, 41 worked cards) and [Appendices F to J and L](planning/fable/blend/parts2/P16b.md). The brief calls the [refusal registry](planning/fable/blend/APPENDIX_O_REFUSALS.md) final text for Appendix O, but the coherence review asks for changes to it (F28). [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
-| Reviews of the drafts | **Done, not applied.** An independent [mathematical review](planning/fable/blend/REVIEW_MATH.md) found 26 problems (2 critical, 7 major, 17 minor). A [coherence review](planning/fable/blend/REVIEW_COHERENCE.md) found 44 (9 where two binding texts cannot both be implemented), among them five different thresholds for one mixed-batch experiment, two closed registries of proof kinds, and different verb names for the same actions. Both give replacement text. A [completeness audit](planning/fable/blend/GAPFILL_1.md) of the parts against Astra and Neon offers 18 insertion blocks. Of 63 items from the two digests it marks 57 covered, 3 weaker, 3 deferred and none missing; of 19 items added to those plans after the digests, 11 are missing and 7 weaker. The new appendices add their own lists of figures that do not follow from their formulas (C.3, E.7 and M.38), none of which changes a conclusion. The Phase 1 parts have not been edited since |
+| Phase 1 drafts | **Complete** at 21:14, revised through 23:22: [13 part files](planning/fable/blend/parts/), about 372,400 words, §0 to §37 of 47 |
+| Reconciliation | **Two passes done.** The first (21:20 to 21:24) renumbered colliding refusal codes, recorded ten binding decisions and generated inventories. The second (22:30 to 23:25) inserted [48 subsections](planning/fable/blend/LATE_INSERTIONS.md) and applied both reviews, both audits and the adjudicated verdicts under [25 further decisions](planning/fable/blend/FIX_DECISIONS.md), with a line per finding in two logs ([P00 to P06](planning/fable/blend/FIXLOG_A.md), [P07 to P12 and Phase 2](planning/fable/blend/FIXLOG_B.md)) |
+| Phase 2 drafts | **Drafted except Appendix K** (the lead's review log), about 261,200 words. [§38 and Appendices M and N](planning/fable/blend/parts2/P13a.md) (verification; 835 known answers, of which 133 lack a full tolerance and 325 a negative control; 384 counterexamples), [§39 and §40](planning/fable/blend/parts2/P13b.md) (the ten-fold test and the gate register), [§41 to §44, §46 and §47](planning/fable/blend/parts2/P14.md) (risks, open questions, milestones, work packages, first session, release rubric), [§45](planning/fable/blend/parts2/P15.md) (442 beads; a mechanical check here found 1,091 dependencies, all pointing to a lower number, one root and one sink), [Appendices A to E](planning/fable/blend/parts2/P16a.md) (glossary, idea passes, EV matrix with 67 killed ideas, mathematics, 41 worked cards) and [Appendices F to J and L](planning/fable/blend/parts2/P16b.md). The [refusal registry](planning/fable/blend/APPENDIX_O_REFUSALS.md) for Appendix O has not been edited since 21:23. [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
+| Reviews of the drafts | **Done and applied.** An independent [mathematical review](planning/fable/blend/REVIEW_MATH.md) found 26 problems (2 critical, 7 major, 17 minor). A [coherence review](planning/fable/blend/REVIEW_COHERENCE.md) found 44 (9 where two binding texts cannot both be implemented), among them five different thresholds for one mixed-batch experiment, two closed registries of proof kinds, and different verb names for the same actions. Of the 70 exact replacements the two reviews give, 61 stand word for word; the other nine were changed again by later decisions. A first [completeness audit](planning/fable/blend/GAPFILL_1.md), against Astra and Neon, supplied 18 insertion blocks; a [second](planning/fable/blend/GAPFILL_2.md), against the idea catalog, the duel, the graveyard and artifact passes and the adjudication, checked 233 items (202 covered, 23 weaker, 8 missing) and supplied 30. The appendices list the figures that did not follow from their formulas (C.3, E.7 and M.38) and say which have been corrected; none changes a conclusion |
 | Assembly | **Not started.** The file at the base path is still v0.2 |
 
 **What the charter and drafts fix.** 43 Rust crates (38 core, 5 annex) with a 561 kLoC cap and a closed list ("a new crate is
@@ -236,13 +238,19 @@ rival, on a sealed suite, with a partial gate at M3 and the tournament at M7. If
 the report gives the number and does not use the word "ten-fold". BET-14 is the tie rule: if a short robust program
 over an incumbent engine ties, the charter's words are "say so and ship the layer".
 
-**Read the drafts as drafts.** They are reviewed but uncorrected, unassembled, and cite an Appendix K that does not exist. Two
-caveats affect what they inherit. All 16 contested rows of the verdict register they bind to have since been revised (above). And both
-digests are stale. The Neon digest (20:04) predates Neon's rewrites at 20:08 and 21:51; the lead extracted
-[the difference](planning/fable/blend/NEON_DELTA_SINCE_DIGEST.diff) at 21:19, which covers only the first. The Astra
-digest (19:59) predates Astra's rewrites at 21:26 and 21:43; the completeness audit lists what the first of those
-added. The mathematical review's two critical findings are places where two chapters disagree: how padded sums are
-signed, and which differential the variational step uses.
+**Read the drafts as drafts.** They are corrected against two reviews, but they are unassembled and cite an Appendix K
+that does not exist. The mathematical review's two critical findings (how padded sums are signed, and which differential
+the variational step uses) are fixed in §16.6 and §16.7. Still open on 2026-11-21 at 23:28 EST:
+
+- **Late plan edits.** The digests predate Neon's rewrites at 20:08 and 21:51 and Astra's at 21:26, 21:43 and 22:07. The
+  first audit covered part of them. The rest was extracted at 23:26 ([Neon](planning/fable/blend/NEON_DELTA_AFTER_d18b5a1.diff),
+  [Astra](planning/fable/blend/ASTRA_DELTA_AFTER_5afef55.diff)), and no log records folding them in.
+- **The gate register.** It indexes the gates of the inserted subsections in §40.8 without merging them into its tables,
+  omits GATE-GAUNT-02 to -10 and KILL-DEVORACLE of §38, and has two rows of §40.7 stranded below §40.8.
+- **Appendix O** still lists two refusal codes that the second pass retired (FROB-REF-730 and -882).
+- **Numbers.** §36.14 gives 5 to 7.5 device-hours for the rank-agreement experiment with reused specialists where §2.7,
+  §28.10 and §42.2 give about 5. The fix log adds a kill threshold stated against a denominator nobody has corrected
+  (KILL-INHERIT) and a grouping of eighteen archetypes into nine template families that no chapter defines.
 
 ---
 
@@ -491,9 +499,9 @@ With `--json`, every verb writes exactly one `frob.envelope/1` envelope: `verb`,
 | 9 | Indeterminate. "Never retry blindly" |
 
 The v1.0 draft keeps these and adds exit 8, "accepted and still running", because long tools take a bounded wait
-(`sync_wait_ms`) and then return a job handle. The lead's inventory counts 169 verbs in 34 clusters, adding `mission`,
-`nemesis`, `autopsy`, `ground`, `foundry`, `cert` and `study`; the coherence review found that several owner chapters
-use other verb names for the same actions (F03), so treat the list as unsettled.
+(`sync_wait_ms`) and then return a job handle. Appendix J of the draft registers 243 verbs, adding `mission`,
+`nemesis`, `autopsy`, `ground`, `foundry`, `cert` and `study`. The coherence review had found several chapters using
+other names for the same actions (F03); the second reconciliation keeps the owner chapter's name in each case.
 
 "Exit code 1 is never emitted on purpose." Every verb that can cost more than a second accepts `--estimate`.
 Mutating verbs take idempotency keys. Capabilities are scoped (`design:write`, `sim:run`, `gpu:seconds=600`,
@@ -529,7 +537,7 @@ below come from published figures. None is a measurement, and Phase 2 can still 
 | Quadruped, physics only | One RTX 4090, 8,192 worlds | ≥ 0.67 of the incumbent, floor 2.0 M world-steps/s | ≥ 1.0; 4.0 M | mjlab on MuJoCo Warp: 4.8 M world-steps/s at d = 4 (RTX 5090) |
 | Quadruped, full environment step | Same | ≥ 0.75 of the physics row | ≥ 0.85 | The same benchmark: 347 k env-steps/s against 1.20 M for physics |
 | Quadruped, PPO training throughput | Same | ≥ 0.60 of the physics row | ≥ 0.70 | Playground reports 417 k on an A100 with MJX, at d = 5 |
-| Quadruped, time to a return threshold (cold) | One RTX 4090 | ≤ 1.25× the incumbent (re-measured on the same card); planning value 515 s | ≤ the incumbent; 410 s | Playground: about 410 s, read by eye from a figure |
+| Quadruped, time to a return threshold (cold) | One RTX 4090 | ≤ 1.25× the incumbent (re-measured on the same card); planning value 513 s | ≤ the incumbent; 410 s | Playground: about 410 s, read by eye from a figure |
 | Humanoid, physics only | One RTX 4090, 8,192 worlds | ≥ 0.67; planning value 1.7 M | ≥ 1.0; 2.55 M | MuJoCo Warp nightly: 2.55 M (RTX 6000 Ada) |
 | Mixed batch of three body plans | One RTX 4090, 8,192 worlds | ≥ 0.70 of the harmonic mean | ≥ 0.86 | Newton's Kamino solver: 0.86 at 2,048 environments (maximal-coordinate, documented as not deterministic, GPU not stated) |
 | Quadruped physics, Metal | M5 Ultra | ≥ 0.25 of one RTX 4090 (BET-09) | ≥ 0.60 | None published on this chip; Genesis is measured beside it |
@@ -563,8 +571,8 @@ Astra combines exact calculations, numerical simulations and measured performanc
 - **Incumbent timings behind round 2** (measured, under background load). Evidence packs H-01, H-11, H-15 and H-19 ran
   CPU MuJoCo 4.0.1 on the M5 Ultra to size the referee and the precision risk: for example 50,612 steps/s on one
   thread for a 27-DoF humanoid, and 410,000 steps/s on 36 threads for a Go2. They are the incumbent's numbers, and they
-  feed the referee-coverage arithmetic. The drafts give 0.1 to 2% of GPU world-seconds; the adjudication calls that band a
-  projection and leaves coverage unmeasured (H-11).
+  feed the referee-coverage arithmetic. The drafts give about 0.1 to 2.4% of GPU world-seconds if the referee runs
+  at 0.2 to 1.0 times real time per core on 24 cores; the adjudication leaves coverage unmeasured (H-11).
 
 - **A three-tick docking robot** (analytic, §18.10). A robot can move to learn which of two actuator gains,
   1 or 2, it has, before committing to its final approach. With a command limit of 3/4, a fixed probe
@@ -640,9 +648,9 @@ Measurements of complete robot dynamics, sensor pipelines and the integrated des
 
 The base plan registers ten admission gates (`INT-*`, one per foundation), about fifty convergence gates and
 nine kill gates. The drafted v1.0 [gate register](planning/fable/blend/parts2/P13b.md) lists 37 admission gates, 279
-convergence gates and 111 kill gates, with nine gates and seven kill gates of the ten-fold test beside them. It says that
-it governs where a chapter differs, but it was written before the reviews were applied and does not list the nine gates
-(GATE-GAUNT-02 to -10) and one kill gate (KILL-DEVORACLE) of §38, so treat it as provisional. "No
+convergence gates and 112 kill gates, with thirteen gates and seven kill gates of the ten-fold test beside them and an
+index of 49 gates and 22 kill gates that later subsections define. It says that it governs where a chapter differs. It
+does not list the nine gates (GATE-GAUNT-02 to -10) and one kill gate (KILL-DEVORACLE) of §38, so treat it as provisional. "No
 self-certification": a gate's PASS is recorded by a fresh-context session, and every gate has a registered negative
 control that it must catch.
 
@@ -761,12 +769,14 @@ planning/mor/                                       round 1: modes-of-reasoning 
 planning/duel/                                      round 1: three-model idea duel (ideas, cross-scores, reactions, report)
 planning/brenner/                                   round 1: question of record, disagreement register, synthesis
 planning/verify_plan_math.py                        consistency checker for the Neon edition
-planning/fable/mor/ brenner/ duel/                  round 2 on base v0.2: audited claims, 24 verdicts and their
-                                                    challenges, three-model duel
+planning/fable/mor/ brenner/ duel/                  round 2 on base v0.2: audited claims, the verdict register, its
+                                                    challenges and adjudication, three-model duel
 planning/fable/graveyard/ artifact/                 graveyard harvest and decision-core compilation
 planning/fable/blend/                               v1.0 in progress: charter, digests, idea catalog, 13 draft parts,
-                                                    inventories, Phase 2 brief and parts, two reviews, gap audit
-.beads/                                             issue tracker (`br`), opened 2026-11-21 22:13 EST
+                                                    inventories, Phase 2 brief and parts, two reviews, two gap
+                                                    audits, fix decisions and logs
+AGENTS.md                                           project scope: planning only
+.beads/                                             issue tracker (`br`) workspace, no issues
 planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers (reproduction bundle)
 ```
 

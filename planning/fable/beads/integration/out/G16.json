@@ -1,0 +1,362 @@
+{
+ "group": "G16",
+ "needs": [
+  {
+   "bead": "BD-081",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-094"
+   ],
+   "note": "seed order: BD-081 emits the Faulted cause numerical-fault; BD-094 (higher-numbered seed) classifies it and depends on the step, not the reverse"
+  },
+  {
+   "bead": "BD-081",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16-REF"
+   ],
+   "note": "registry rows of FROB-REF-220 and -221"
+  },
+  {
+   "bead": "BD-082",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-13",
+    "N18a-11"
+   ],
+   "note": "N18a-13 is the narrow-phase record with g and ε_g and the swept detection interface of T4.2; N18a-11 the deterministic broad phase"
+  },
+  {
+   "bead": "BD-082",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N18b-43"
+   ],
+   "note": "N18b-43 measures GATE-TRAC-12 on the referee and already depends on BD-082; a dependency back would close a cycle"
+  },
+  {
+   "bead": "BD-083",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-07"
+   ],
+   "note": "N16a-07 owns the island solver trait with both implementations, the fixed-point cone iteration included (over BD-115); BD-083 only selects it at rung 3. BD-115 moved from deps to related in the file (seed order)"
+  },
+  {
+   "bead": "BD-088",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12",
+    "N16-KA"
+   ],
+   "note": "registry schema with derivation files and tolerances (N38a-12) and the Kinesis rows (N16-KA); N38b-47 writes the missing derivations and depends on BD-088"
+  },
+  {
+   "bead": "BD-088",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-061"
+   ],
+   "note": "referee lowering of joint classes; already reached through BD-080"
+  },
+  {
+   "bead": "BD-089",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-066 (MJCF loss report), which depends on BD-065 (URDF loss report)"
+  },
+  {
+   "bead": "BD-089",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-04"
+   ],
+   "note": "the oracle register; the pinned fixtures themselves are its dependency BD-067"
+  },
+  {
+   "bead": "BD-150",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-12"
+   ],
+   "note": "per-kernel-body derivation worker with checked-in generated sources; the skeleton pattern arrives with its dependency BD-149 and with BD-018, BD-013"
+  },
+  {
+   "bead": "BD-150",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-027",
+    "BD-021"
+   ],
+   "note": "kernel certificate bundles bound to the content hash; N12-20 (M5 pipeline per kernel family) is later and not blocking"
+  },
+  {
+   "bead": "BD-159",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18b-22"
+   ],
+   "note": "BD-159 implements the overflow flag and the three caller policies itself; N18b-22 (capacity-biased label) consumes the flag and depends on BD-159"
+  },
+  {
+   "bead": "BD-159",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-192"
+   ],
+   "note": "consumer: the environment step view reads Faulted and Degraded; BD-192 depends on BD-159 (and is a higher-numbered seed)"
+  },
+  {
+   "bead": "BD-159",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N20a-06"
+   ],
+   "note": "the boundary ordering rule the batched step must implement"
+  },
+  {
+   "bead": "BD-159",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N16-REF"
+   ],
+   "note": "registry row of FROB-REF-722"
+  },
+  {
+   "bead": "BD-169",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-200"
+   ],
+   "note": "consumer: BD-200 fills the parameter row and depends on BD-169 (higher-numbered seed)"
+  },
+  {
+   "bead": "BD-169",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N17a-03",
+    "BD-170"
+   ],
+   "note": "BD-169 defines the slot row itself; N17a-03 and BD-170 build cohorts and model tables on it and depend on BD-169"
+  },
+  {
+   "bead": "BD-169",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N18a-16",
+    "N18a-15"
+   ],
+   "note": "CL-1 with its admitted parameter mapping and convexity properties, and the law registry with parameter classes; theorem card CARD-T-08 is M5 and not blocking"
+  },
+  {
+   "bead": "BD-212",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18a-19",
+    "N18b-33"
+   ],
+   "note": "the decision depends on BD-212's GATE-FID-01 measurements (rule 7), never the reverse; N18a-19 and N18b-33 are two drafts of the same KILL-CONTACT decision in group G18"
+  },
+  {
+   "bead": "BD-212",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-09"
+   ],
+   "note": "component: fixture 1 on the batch tiers"
+  },
+  {
+   "bead": "BD-213",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-214"
+   ],
+   "note": "seed order (214 > 213): BD-213 prints a share of zero where no sampler record exists; the record itself is BD-214's"
+  },
+  {
+   "bead": "BD-213",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-213",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "VERBS-fidelity",
+    "N16b-27"
+   ],
+   "note": "registry rows; the two beads overlap (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "BD-214",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-14",
+    "N32a-15",
+    "N32b-01"
+   ],
+   "note": "daemon worker pool and per-job dispatch, core-second accounting, capability scopes; no bead names a low-priority job class (it is BD-214's own DESIGN on top of these)"
+  },
+  {
+   "bead": "BD-214",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-06"
+   ],
+   "note": "the paired lower-bound method (component of BD-216, which is a higher-numbered seed)"
+  },
+  {
+   "bead": "BD-263",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-07"
+   ],
+   "note": "the licence check per determinism class; N37-28 and BD-269 are consumers that depend on BD-263 or come later"
+  },
+  {
+   "bead": "BD-263",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "registry row of FROB-REF-830; N23b-08 raises it for trained finalists and depends on BD-263 through BD-267"
+  },
+  {
+   "bead": "BD-264",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-12"
+   ],
+   "note": "first-use admission of fs-eproc; already reached through BD-124"
+  },
+  {
+   "bead": "BD-265",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-328",
+    "N28b-22"
+   ],
+   "note": "BD-265 creates the rank_agreement table at M3; BD-328 and N28b-22 (M4) add rung rows and depend on BD-265"
+  },
+  {
+   "bead": "BD-265",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28b-14"
+   ],
+   "note": "split-conformal calibration with the margin q̂ over fs-surrogate"
+  },
+  {
+   "bead": "BD-265",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "registry row of FROB-REF-537; the rung-mode automaton that raises it (N28b-23) is M4"
+  },
+  {
+   "bead": "BD-266",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "registry row of FROB-REF-830; its raising consumers (BD-263 promotion, N23b-08, BD-346, BD-408) either precede or depend on BD-266"
+  },
+  {
+   "bead": "BD-266",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-408"
+   ],
+   "note": "M5 consumer that depends on BD-266 through BD-346; no bead carries a prototype-budget verb by name"
+  },
+  {
+   "bead": "BD-384",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-15"
+   ],
+   "note": "the Integrator group over fs-time; its admission record is re-run at the M5 pin (admissions are never inherited)"
+  },
+  {
+   "bead": "BD-384",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-25"
+   ],
+   "note": "the sim.run verb with profiles; the --integrator option itself is added by BD-384"
+  },
+  {
+   "bead": "BD-385",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16c-36"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-385",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17a-05"
+   ],
+   "note": "the bucket planner with the default set; the member designs come from its dependency BD-144"
+  },
+  {
+   "bead": "BD-385",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-09",
+    "N00-07"
+   ],
+   "note": "pilot register and funding rule; the two beads overlap (another group's pair)"
+  }
+ ],
+ "edges": [],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

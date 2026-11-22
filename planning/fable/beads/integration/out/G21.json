@@ -1,0 +1,355 @@
+{
+ "group": "G21",
+ "needs": [
+  {
+   "bead": "BD-013",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N33c-39",
+    "BD-016"
+   ],
+   "note": "both carriers already depend on BD-013: the prelude is written first against Metal Shading Language 3.1; N33c-39 records the version INT-FT-01 found and holds the dialect to it"
+  },
+  {
+   "bead": "BD-018",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-03"
+   ],
+   "note": "the one import path frob_core::qty and its closed alias set; INT-TOOLCHAIN-01 (BD-031) confirms later and already depends on BD-018 through BD-019, so it is related only"
+  },
+  {
+   "bead": "BD-029",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-01"
+   ],
+   "note": "capstone: the verb calls the rate probes and stores their results"
+  },
+  {
+   "bead": "BD-029",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-02"
+   ],
+   "note": "capstone: the arithmetic block is filled by these probes"
+  },
+  {
+   "bead": "BD-029",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N21c-05"
+   ],
+   "note": "currency is built on the record and already depends on BD-029"
+  },
+  {
+   "bead": "BD-029",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N21c-04"
+   ],
+   "note": "sibling verb that reads the fingerprint; already depends on BD-029"
+  },
+  {
+   "bead": "BD-029",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-017"
+   ],
+   "note": "the arithmetic block cites the probe digest and the attainable class"
+  },
+  {
+   "bead": "BD-029",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "N21c-03"
+   ],
+   "note": "the peer field is filled by the OPEN-SPARK-6 experiment"
+  },
+  {
+   "bead": "BD-053",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N13-11"
+   ],
+   "note": "N13-11 lists Marrow's guarded predicates with ranges and already depends on BD-053 (it registers them in the classes built here)"
+  },
+  {
+   "bead": "BD-053",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the frob-lemma certificate writer"
+  },
+  {
+   "bead": "BD-152",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-176",
+    "N21b-33"
+   ],
+   "note": "seed order and BD-176 already depends on BD-152; the sweep axes are N21b-33's; until then the battery runs through the BD-014 harness, an existing dependency"
+  },
+  {
+   "bead": "BD-172",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-02"
+   ],
+   "note": "capstone component"
+  },
+  {
+   "bead": "BD-172",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-03"
+   ],
+   "note": "decision OPEN-SPARK-4 (kept bead; N21c-37 is superseded by it)"
+  },
+  {
+   "bead": "BD-172",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-07"
+   ],
+   "note": "launch-fault retry reads the committed slab; the Metal rows of GATE-SPARK-12 are measured by N21b-26"
+  },
+  {
+   "bead": "BD-172",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N21b-22"
+   ],
+   "note": "the chunk and cancellation protocol is built on the running backend and already depends on BD-172; it is a component of BD-175"
+  },
+  {
+   "bead": "BD-172",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-173"
+   ],
+   "note": "BD-173 depends on BD-172 (seed order); the layout planner and leases it integrates are N21b-10 and N21b-11, recorded as edges"
+  },
+  {
+   "bead": "BD-172",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N21c-39"
+   ],
+   "note": "N21c-39 adds the no-wrap bound to the step plan and already depends on BD-172"
+  },
+  {
+   "bead": "BD-172",
+   "n": 7,
+   "as": "related",
+   "keys": [
+    "BD-203"
+   ],
+   "note": "seed order; BD-203 extends K-commit and already depends on BD-172"
+  },
+  {
+   "bead": "BD-173",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-10"
+   ],
+   "note": "capstone component"
+  },
+  {
+   "bead": "BD-173",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-11"
+   ],
+   "note": "capstone component"
+  },
+  {
+   "bead": "BD-173",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-12"
+   ],
+   "note": "capstone component"
+  },
+  {
+   "bead": "BD-173",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N21b-13"
+   ],
+   "note": "capstone component (the two verbs)"
+  },
+  {
+   "bead": "BD-173",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N21b-14"
+   ],
+   "note": "the gate script depends on BD-173; a mechanism never depends on its end-to-end bead"
+  },
+  {
+   "bead": "BD-173",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "N21c-05"
+   ],
+   "note": "the identity digest and the currency functions the cache keys on"
+  },
+  {
+   "bead": "BD-173",
+   "n": 7,
+   "as": "related",
+   "keys": [
+    "N21b-05"
+   ],
+   "note": "seed order forbids BD-174; the Metal packing N21b-05 builds on the planner N21b-10; the gate script N21b-14 depends on both backends"
+  },
+  {
+   "bead": "BD-173",
+   "n": 8,
+   "as": "related",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "seed order; BD-219 already depends on BD-173 and calls the layout planner for bytes"
+  },
+  {
+   "bead": "BD-175",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-22"
+   ],
+   "note": "capstone component"
+  },
+  {
+   "bead": "BD-175",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-07"
+   ],
+   "note": "capstone component (a drain ends on the commit fence)"
+  },
+  {
+   "bead": "BD-175",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-210"
+   ],
+   "note": "seed order; BD-210 already depends on BD-175"
+  },
+  {
+   "bead": "BD-175",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-008",
+    "BD-160"
+   ],
+   "note": "INT-ASUP-01 admits the capability context; fs-exec, whose executor mints the drain report, is first consumed by the batch-cpu tile program BD-160"
+  },
+  {
+   "bead": "BD-175",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N21-REF"
+   ],
+   "note": "the typed refusals are rows of the chapter registry"
+  },
+  {
+   "bead": "BD-175",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "N21b-23"
+   ],
+   "note": "the Spark-side fault states and caller policies; the status word itself comes with the batched step BD-159, already upstream through BD-172"
+  },
+  {
+   "bead": "BD-178",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-176"
+   ],
+   "note": "check currency read by --require-current-check"
+  },
+  {
+   "bead": "BD-178",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "the fingerprint record carries the launch, commit, encode and bandwidth figures and the arithmetic block (its probe components are N21c-01 and N21c-02)"
+  },
+  {
+   "bead": "BD-178",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-10",
+    "N21b-11"
+   ],
+   "note": "the residency map is data of the layout planner with the last-committed-epoch column of the leases; BD-173 is their capstone"
+  },
+  {
+   "bead": "BD-178",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "seed order; BD-219 already depends on BD-178 through BD-217"
+  },
+  {
+   "bead": "BD-178",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N21b-28"
+   ],
+   "note": "capstone component"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-018",
+   "dep": "BD-031",
+   "as": "related",
+   "why": "BD-018 need 1: INT-TOOLCHAIN-01 confirms the fs-qty coupling after the fact; BD-031 already depends on BD-018"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

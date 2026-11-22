@@ -1,0 +1,319 @@
+{
+ "group": "G15",
+ "needs": [
+  {
+   "bead": "BD-073",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-10"
+   ],
+   "note": "N15b-10 adds the joint_torque_set object to actuator.envelope and already depends on BD-073, so a dep would close a cycle"
+  },
+  {
+   "bead": "BD-076",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15b-04"
+   ],
+   "note": "the braking-mode lines classify the three regeneration paths that N15b-04 routes; same milestone, no cycle"
+  },
+  {
+   "bead": "BD-112",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N33b-18",
+    "BD-243"
+   ],
+   "note": "A-16 is M3, later than this M1 bead; explain.run names it as absent until it exists"
+  },
+  {
+   "bead": "BD-112",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-206"
+   ],
+   "note": "first divergence is M2, later than this M1 bead; consumed when present"
+  },
+  {
+   "bead": "BD-112",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-279",
+    "BD-283"
+   ],
+   "note": "fork and intervention verbs are M3; offered as next actions once they exist"
+  },
+  {
+   "bead": "BD-419",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N14b-05"
+   ],
+   "note": "N14b-05 carries the aerial-terrestrial hybrid variant (M6); it consumes the port, and an epic carries no deps"
+  },
+  {
+   "bead": "N15-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15-KA"
+   ],
+   "note": "two registries sharing KA numbers; a registry depends only on the registry skeleton"
+  },
+  {
+   "bead": "N15-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-075",
+    "N15b-03",
+    "N15b-30"
+   ],
+   "note": "rows KA-324 to KA-328 are owned by BD-075 (bus) and N15b-03 (battery), measured by N15b-30; a registry never depends on a mechanism"
+  },
+  {
+   "bead": "N15-KA",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N15b-10",
+    "N15b-11",
+    "N15b-12",
+    "N15b-13"
+   ],
+   "note": "GATE-SINEW-10 is carried by these four; its known answer has no KA number in this block"
+  },
+  {
+   "bead": "N15a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-12"
+   ],
+   "note": "N15a-03 defines the bind point; N15b-12 plugs the witness into it and depends on N15a-03 (edge recorded), so the reverse dep would be a cycle through BD-074 and BD-070"
+  },
+  {
+   "bead": "N15a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-03",
+    "BD-075"
+   ],
+   "note": "sibling elements of the same table; both build on BD-070, which builds on N15a-05"
+  },
+  {
+   "bead": "N15a-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N15b-10",
+    "BD-074"
+   ],
+   "note": "square couplings are in BD-074 and the matrix map C(q) in N15b-10; both are downstream of N15a-05"
+  },
+  {
+   "bead": "N15a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-018",
+    "BD-013"
+   ],
+   "note": "the straight-line program form (frob-kir v0) and the banned-construct lint rules, both M0; the remaining lint rules (masks as selects) are N21a-10, related"
+  },
+  {
+   "bead": "N15a-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18a-32",
+    "N18a-16"
+   ],
+   "note": "N18a-32 (M1) carries the lockstep form of joint-limit and backlash rows and consumes this bead's descriptors; CL-1 (N18a-16) is M2"
+  },
+  {
+   "bead": "N15a-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-099",
+    "N20a-13"
+   ],
+   "note": "the encoder models read the side this bead defines; they are consumers (N20a-13 depends on BD-084)"
+  },
+  {
+   "bead": "N15a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-156",
+    "BD-159"
+   ],
+   "note": "superseded by N15b-08; the kernels and the batched step consume the elimination (BD-159 depends on BD-155, which depends on N15b-08), so a dep would be a cycle"
+  },
+  {
+   "bead": "N15a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15b-10"
+   ],
+   "note": "superseded by N15b-08, which now carries this dep: the coupled-rotor block reads the CouplingMap of N15b-10 (M1)"
+  },
+  {
+   "bead": "N15a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-216"
+   ],
+   "note": "superseded by N15b-24, which already depends on BD-216 (performance harness, paired lower bound, disclosure block)"
+  },
+  {
+   "bead": "N15a-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15a-29",
+    "BD-122"
+   ],
+   "note": "no bead carried the task-file field; new bead N15a-29 adds thermal_start to the .ftask of BD-122 and depends on N15a-15, not the reverse"
+  },
+  {
+   "bead": "N15a-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N15a-30",
+    "BD-192"
+   ],
+   "note": "no bead carried the reset path; new bead N15a-30 (M2) applies the per-world start in VecEnv reset (BD-192 is M2, later than N15a-15)"
+  },
+  {
+   "bead": "N15a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-056"
+   ],
+   "note": "the linkage-modulus test builds its ratio as a closure of the design term; BD-056 is the closure constructor (M1)"
+  },
+  {
+   "bead": "N15a-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N15b-10",
+    "N15b-13"
+   ],
+   "note": "the non-square map extends the square differential tested here; not a prerequisite"
+  },
+  {
+   "bead": "N15a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-391"
+   ],
+   "note": "superseded by N15b-18 (already related to BD-391); a measured stiffness may also come from a bench record, so ground.identify is not blocking"
+  },
+  {
+   "bead": "N15a-21",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N15b-20; no hydraulic consumer is planned (N14b-05's variants are parallel, dual-arm, hands and aerial); the consumer check is a step of the epic N15b-20, not a prerequisite a bead delivers"
+  },
+  {
+   "bead": "N15a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15b-03",
+    "BD-075",
+    "N15b-04"
+   ],
+   "note": "the battery samples R0, R1, R2, harness and shunt losses; a test follows the mechanisms it exercises"
+  },
+  {
+   "bead": "N15b-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-39",
+    "N22a-08"
+   ],
+   "note": "consumer adoption had no carrier; new bead N15b-39 changes the control programs of N22a-08 and depends on N15b-10"
+  },
+  {
+   "bead": "N15b-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N15b-40",
+    "BD-100",
+    "BD-348"
+   ],
+   "note": "consumer adoption had no carrier; new bead N15b-40 makes A-08 read the generators (A-24, BD-348, is M4 and gains an edge)"
+  },
+  {
+   "bead": "N15b-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N15b-41",
+    "BD-130"
+   ],
+   "note": "consumer adoption had no carrier; new bead N15b-41 makes mission lowerings read the generators"
+  },
+  {
+   "bead": "N15b-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-39"
+   ],
+   "note": "the single-source rule for rotor inertia in controller models is enforced by new bead N15b-39, which depends on N15b-11"
+  },
+  {
+   "bead": "N15b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-43"
+   ],
+   "note": "the M0 admission probe of the two transformer entry points; it does not depend on any Sinew bead"
+  },
+  {
+   "bead": "N15b-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N14b-05"
+   ],
+   "note": "N14b-05 is the variant whose existence the decision asks about; it exists only on the admitted branch, so it follows the decision"
+  },
+  {
+   "bead": "N15b-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N14b-05"
+   ],
+   "note": "the hybrid variant consumes the element; the dependency runs from N14b-05 to this bead"
+  }
+ ],
+ "edges": [],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

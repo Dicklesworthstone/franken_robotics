@@ -1,7 +1,790 @@
 {
  "group": "G00",
- "needs": [],
- "edges": [],
+ "needs": [
+  {
+   "bead": "BET-01",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-221, which times derived kernels against hand-tuned twins per stage and tallies the planted frame, sign and unit defects"
+  },
+  {
+   "bead": "BET-01",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-221, whose typing-control tally counts conformance-triage defects against the untyped baseline; no separate triage-log bead exists or is needed"
+  },
+  {
+   "bead": "BET-02",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-181, which depends on N35-15 (the ten negative-control mutants of the invariance test, one per axis)"
+  },
+  {
+   "bead": "BET-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-16",
+    "N18a-18"
+   ],
+   "note": "CL-1 with its parameter mapping from the interface card; CL-2 as the model-form arm of the M3 reading and the first fallback of KILL-CONTACT"
+  },
+  {
+   "bead": "BET-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-37"
+   ],
+   "note": "the OPEN-GAUNT-7 scenario lists for the other robot classes; the freeze of the battery itself is its dependency BD-212"
+  },
+  {
+   "bead": "BET-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-10",
+    "N33b-04"
+   ],
+   "note": "the KILL-FSIM trigger ledger holds the breakage-share series; the compatibility train writes the train log it is computed from"
+  },
+  {
+   "bead": "BET-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-08"
+   ],
+   "note": "the toolchain train procedure; the frob-units decision is its dependency BD-031, and the crate itself (N33c-05) exists only if the hatch opens"
+  },
+  {
+   "bead": "BET-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-345",
+    "N28b-29",
+    "N26b-03"
+   ],
+   "note": "the cascade-level screening audit is M4, later than this M3 bead; the M3 reading of clauses (b) and (c) is delivered by its dependency BD-250 (discard audit on the corpus, planted winners passed)"
+  },
+  {
+   "bead": "BET-08",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-179, which depends on N21b-36 (the f32dd double-float accumulators and their validity domain)"
+  },
+  {
+   "bead": "BET-09",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-217 (both figures disclosed) and BD-142 (the incumbent on the Mac), which carry the block of N36-13"
+  },
+  {
+   "bead": "BET-10",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-374, which depends on N28b-10 (the design benchmark with its planted-defect control briefs)"
+  },
+  {
+   "bead": "BET-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-11"
+   ],
+   "note": "the reading of the BET-10 arm on the partial-gate record; arm B itself is BD-315, reached through its dependency BD-317"
+  },
+  {
+   "bead": "BET-11",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-379 (coverage per identity declared in each manifest, over the producer pipeline N12-20 and the budget pilot N12-22)"
+  },
+  {
+   "bead": "BET-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-06",
+    "N40-11"
+   ],
+   "note": "the planning estimates in registries/milestones.toml; the schedule gate's elapsed-time computation and cause attribution"
+  },
+  {
+   "bead": "BET-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-037"
+   ],
+   "note": "registries/upstream.toml with each item's interim posture and switch-over rule"
+  },
+  {
+   "bead": "BET-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-27",
+    "N40-19"
+   ],
+   "note": "the pooled ratio of restricted mean times with its censoring rule; the pre-analysis known answers and the smallest suite that can certify (GATE-TENFOLD-10); the protocol's decision rule is its dependency BD-314"
+  },
+  {
+   "bead": "BET-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-05"
+   ],
+   "note": "the outcome-rule engine with the frozen thresholds and the sentence per range; the kill-gate fallback rows are N40-28"
+  },
+  {
+   "bead": "BET-13",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-37",
+    "N39a-38"
+   ],
+   "note": "the six ceilings from the rival's ledger, and GATE-TENFOLD-09 measured before any speed test"
+  },
+  {
+   "bead": "BET-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-43",
+    "N39b-44",
+    "N39b-45",
+    "N40-22"
+   ],
+   "note": "the three-arm statistics with r_T and r_C, the one-receipt pipeline of arm W, the three phase ablations, and the record of GATE-TENFOLD-13"
+  },
+  {
+   "bead": "BET-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25a-18"
+   ],
+   "note": "the kill-gate decision KILL-AUGUR-TIE, read per family stratum"
+  },
+  {
+   "bead": "BET-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-19",
+    "GB-28"
+   ],
+   "note": "the pre-funding pilot and the break-even card N > P/(s·(1 − f))"
+  },
+  {
+   "bead": "BET-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23a-22",
+    "N23b-24"
+   ],
+   "note": "the owner decision OPEN-CORTEX-1 (two beads of the Cortex group carry it)"
+  },
+  {
+   "bead": "BET-16",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-322, which depends on N23a-27 (transport through the typed edit), N23a-28 (audit twins and the depth schedule) and N23a-29 (OPEN-CORTEX-3)"
+  },
+  {
+   "bead": "BET-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-08"
+   ],
+   "note": "the owner decision OPEN-PROG-4"
+  },
+  {
+   "bead": "BET-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-35"
+   ],
+   "note": "the winner check for a selecting rung (GATE-CORTEX-21)"
+  },
+  {
+   "bead": "BET-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28b-22",
+    "N28b-23"
+   ],
+   "note": "the rank-agreement ledger rows and the three rung modes as an automaton"
+  },
+  {
+   "bead": "BET-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-07"
+   ],
+   "note": "the owner decision OPEN-PHYLUM-3"
+  },
+  {
+   "bead": "BET-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17b-03"
+   ],
+   "note": "the 512-topology workload and the frozen mutation corpus; the four arms are its dependencies BD-186 and BD-185 with N17b-09"
+  },
+  {
+   "bead": "BET-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-20",
+    "N25c-13",
+    "N25a-18"
+   ],
+   "note": "the scenario-tree linear-program comparator, the programmed expert, and the per-stratum reading of the matched reducers by KILL-AUGUR-TIE"
+  },
+  {
+   "bead": "BET-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25b-03",
+    "N25b-04"
+   ],
+   "note": "the false-certificate procedure and the standing kill-gate decision KILL-AUGUR-FALSECERT"
+  },
+  {
+   "bead": "BET-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-136"
+   ],
+   "note": "the registered certificate mutations; the reference family and its unresolved band are in its dependency BD-289 at M3 and in BD-358 and N25b-11 at M4 (later, already related)"
+  },
+  {
+   "bead": "BET-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-24",
+    "N25e-23",
+    "N25e-26"
+   ],
+   "note": "weak-variable enclosure is M4, later than this M3 bead; the M3 reading rests on the pilot BD-289"
+  },
+  {
+   "bead": "BET-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-07",
+    "N26a-11"
+   ],
+   "note": "the search-method interface with the baseline arm at equal budget, and the measurement on the planted traps (GATE-NEMESIS-02)"
+  },
+  {
+   "bead": "BET-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27b-24",
+    "N27b-28"
+   ],
+   "note": "the single-precision lane and the measurement of GATE-AUTOPSY-09 with its admission rule"
+  },
+  {
+   "bead": "BET-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-37"
+   ],
+   "note": "nothing carried the acceptance comparison on sealed variants; new bead N00-37 runs it"
+  },
+  {
+   "bead": "BET-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-07"
+   ],
+   "note": "the planted-exploit corpus and the honest policy"
+  },
+  {
+   "bead": "BET-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22c-27",
+    "N22c-28",
+    "N22c-29"
+   ],
+   "note": "the pre-slip aliasing fixture, the sampled-data backup domain, and the measurement of GATE-SHIELD-06"
+  },
+  {
+   "bead": "BET-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22b-14"
+   ],
+   "note": "the energy-budget proof kind with its mutation corpus"
+  },
+  {
+   "bead": "BET-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-38"
+   ],
+   "note": "the orbit fixtures with the planted instability (GATE-GAIT-01 recorded); the catalogue and the calibration set are in its dependencies BD-335 and BD-328"
+  },
+  {
+   "bead": "BET-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22c-31",
+    "N22c-32",
+    "N22c-33"
+   ],
+   "note": "the frozen planner record, the delivered-controller lane, and the measurement of GATE-REFLEX-11; FROB-REF-817 is N22a-25, reached through its dependency BD-331"
+  },
+  {
+   "bead": "BET-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-26",
+    "N41-10"
+   ],
+   "note": "the decision OPEN-GAUNT-1 (two beads carry it, in the Gauntlet group and the register group)"
+  },
+  {
+   "bead": "BET-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N30a-18"
+   ],
+   "note": "the omitted-law control; the rehearsal and the alarm that retires a calibration are its dependencies BD-388 and BD-394"
+  },
+  {
+   "bead": "BET-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-13"
+   ],
+   "note": "the registered protocol and measurement of GATE-FOUNDRY-05 against the hand-sized reference part"
+  },
+  {
+   "bead": "BET-30",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-326, whose diagnostic arm M ties a policy under the mechanical group on the front-lidar variant"
+  },
+  {
+   "bead": "BET-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-28"
+   ],
+   "note": "the quotient audit: replay of in-class pairs, dispatches saved, the unquotiented arm with the planted winner"
+  },
+  {
+   "bead": "BET-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17a-28"
+   ],
+   "note": "part C of the quotient audit adds the coupled-bus pair as a control; the bus model is BD-075"
+  },
+  {
+   "bead": "BET-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-30"
+   ],
+   "note": "the measurement of GATE-NEMESIS-04 on the planted-rate fixtures; the defensive mixture is N26a-24, reached through its dependency BD-276"
+  },
+  {
+   "bead": "BET-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-35",
+    "BD-377"
+   ],
+   "note": "GATE-ATEL-11 on the freshly frozen 30-amendment campaign, and the campaign as a conformance fixture; grades 1 to 4 are its dependencies BD-292 and BD-347"
+  },
+  {
+   "bead": "BET-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28c-42"
+   ],
+   "note": "the reuse ledger with three columns never summed"
+  },
+  {
+   "bead": "BET-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-086",
+    "BD-093"
+   ],
+   "note": "the thin-barrier fixture and witness migration on the referee"
+  },
+  {
+   "bead": "BET-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "FD-FSIM-12",
+    "FD-FSIM-13"
+   ],
+   "note": "not blocking: the bet is read on the coverage the referee has at M2 and M3; until the upstream items land the strict profile of batch-cpu is the interim posture"
+  },
+  {
+   "bead": "BET-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-10",
+    "N21c-08"
+   ],
+   "note": "the fleet pilot with the movable fraction g, and the transfer-class allow-list"
+  },
+  {
+   "bead": "BET-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19c-25",
+    "N19c-26"
+   ],
+   "note": "the breadth experiment and the decision KILL-BANK-BREADTH that reads it"
+  },
+  {
+   "bead": "BET-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19b-16",
+    "N19b-11",
+    "N19b-20"
+   ],
+   "note": "M6, later than this M3 bead: the proxy pilot and the advected-film decisions are the bet's M6 addendum"
+  },
+  {
+   "bead": "BET-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18a-33"
+   ],
+   "note": "the wet-floor battery against a constant-coefficient patch"
+  },
+  {
+   "bead": "BET-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19b-37",
+    "N19b-42",
+    "N19b-43"
+   ],
+   "note": "the retrofit pilot, the reading on the minimized failures of the home battery, and the owner decision OPEN-HAB-4 on price and norm sources"
+  },
+  {
+   "bead": "BET-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-274"
+   ],
+   "note": "nemesis.shrink writes the .fmcw the retrofit search starts from"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BET-02",
+   "dep": "N21b-34",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-D1"
+  },
+  {
+   "bead": "BET-03",
+   "dep": "N18a-19",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-CONTACT"
+  },
+  {
+   "bead": "BET-03",
+   "dep": "N18b-33",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-CONTACT (second bead of the Traction group for the same decision)"
+  },
+  {
+   "bead": "BET-04",
+   "dep": "N33b-05",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-FSIM"
+  },
+  {
+   "bead": "BET-05",
+   "dep": "N28a-22",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-STATIC"
+  },
+  {
+   "bead": "BET-06",
+   "dep": "N22c-14",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-BASELINE"
+  },
+  {
+   "bead": "BET-07",
+   "dep": "N23a-33",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-EQUIV"
+  },
+  {
+   "bead": "BET-09",
+   "dep": "N21b-08",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-METAL"
+  },
+  {
+   "bead": "BET-09",
+   "dep": "N21c-33",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-METAL (second bead of the Spark group for the same decision)"
+  },
+  {
+   "bead": "BET-11",
+   "dep": "N12-31",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-LEMMA"
+  },
+  {
+   "bead": "BET-13",
+   "dep": "N39b-06",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-TENFOLD-SPEED"
+  },
+  {
+   "bead": "BET-14",
+   "dep": "N39b-07",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-TENFOLD-TIE"
+  },
+  {
+   "bead": "BET-15",
+   "dep": "N23a-26",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-FAMILY"
+  },
+  {
+   "bead": "BET-16",
+   "dep": "N23a-30",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-INHERIT"
+  },
+  {
+   "bead": "BET-17",
+   "dep": "N16b-12",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-RANK (tier-pair reading at M3; the rung reading is its dependency BD-328)"
+  },
+  {
+   "bead": "BET-18",
+   "dep": "N17b-10",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-PHYLUM"
+  },
+  {
+   "bead": "BET-18",
+   "dep": "N21b-19",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-BUCKET"
+  },
+  {
+   "bead": "BET-22",
+   "dep": "N26a-12",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-NEMESIS"
+  },
+  {
+   "bead": "BET-22",
+   "dep": "N26a-35",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-MCW"
+  },
+  {
+   "bead": "BET-23",
+   "dep": "N27b-11",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-AUTOPSY"
+  },
+  {
+   "bead": "BET-24",
+   "dep": "N24a-15",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SPEC-REWARD"
+  },
+  {
+   "bead": "BET-24",
+   "dep": "N24c-12",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SPEC-REWARD (second bead of the Arena group for the same decision)"
+  },
+  {
+   "bead": "BET-25",
+   "dep": "N22c-18",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-ENERGY (second bead of the Reflex group; N22b-16 is already reached)"
+  },
+  {
+   "bead": "BET-25",
+   "dep": "N22b-28",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SHIELD"
+  },
+  {
+   "bead": "BET-25",
+   "dep": "N22c-19",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SHIELD (second bead of the Reflex group for the same decision)"
+  },
+  {
+   "bead": "BET-26",
+   "dep": "N22c-17",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-GAIT"
+  },
+  {
+   "bead": "BET-27",
+   "dep": "N22c-16",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-MPC"
+  },
+  {
+   "bead": "BET-27",
+   "dep": "N23a-21",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-DISTILL"
+  },
+  {
+   "bead": "BET-28",
+   "dep": "N30b-18",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-BAND"
+  },
+  {
+   "bead": "BET-29",
+   "dep": "N31b-15",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-TOPOPT"
+  },
+  {
+   "bead": "BET-29",
+   "dep": "N31b-18",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-TOLERANCE"
+  },
+  {
+   "bead": "BET-29",
+   "dep": "N31b-19",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-PACKET"
+  },
+  {
+   "bead": "BET-30",
+   "dep": "N23a-33",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-EQUIV"
+  },
+  {
+   "bead": "BET-30",
+   "dep": "N13-24",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-MARROW-BLOCKS"
+  },
+  {
+   "bead": "BET-31",
+   "dep": "N17a-29",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-QUOTIENT"
+  },
+  {
+   "bead": "BET-32",
+   "dep": "N26a-32",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-RARE"
+  },
+  {
+   "bead": "BET-33",
+   "dep": "N28a-24",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-REUSE"
+  },
+  {
+   "bead": "BET-33",
+   "dep": "N28b-36",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-REUSE (second bead of the Atelier group for the same decision)"
+  },
+  {
+   "bead": "BET-33",
+   "dep": "N25a-19",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-AUGUR-REUSE"
+  },
+  {
+   "bead": "BET-33",
+   "dep": "N25b-20",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-AUGUR-REUSE (second bead of the Augur group for the same decision)"
+  },
+  {
+   "bead": "BET-34",
+   "dep": "N16b-19",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SHADOW"
+  },
+  {
+   "bead": "BET-36",
+   "dep": "N18a-34",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-FILM"
+  }
+ ],
  "superseded": [],
  "cross_group_duplicates": [],
  "new_beads": [],

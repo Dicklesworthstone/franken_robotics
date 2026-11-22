@@ -664,6 +664,615 @@
     "N25d-47"
    ],
    "note": "several decision makers are admitted only after the schema decision"
+  },
+  {
+   "bead": "N25c-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-143",
+    "BD-315"
+   ],
+   "note": "the incumbent phase ledger and the composed rival's arm, whose phases the amended-mission timing is set against"
+  },
+  {
+   "bead": "N25c-30",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-098"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25e-43"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-31",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "§19.12: the retrofit catalog (BD-369, N19b-38) carries price and geometry; no bead adds installation time, access constraints, calibration, tolerances and maintenance fields"
+  },
+  {
+   "bead": "N25c-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-072",
+    "N15a-15",
+    "N15b-03"
+   ],
+   "note": "derating and trip, thermal state from a duty history, the battery element"
+  },
+  {
+   "bead": "N25c-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31a-48"
+   ],
+   "note": "the four slow-state laws (wear among them), an M6 Moonshot; if KILL-LIFECYCLE fires this bead uses hand-specified wear"
+  },
+  {
+   "bead": "N25c-32",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N19b-16"
+   ],
+   "note": "the proxy-adequacy measurement; the rigid proxies BD-231 are already a dep"
+  },
+  {
+   "bead": "N25c-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25e-43"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-122"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-34",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-274"
+  },
+  {
+   "bead": "N25c-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-039"
+   ],
+   "note": "the out-of-process harness through which the conventional arm runs; the arm itself is a step of this bead. N39b-41 (the M7 facility stratum) consumes this gate"
+  },
+  {
+   "bead": "N25c-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "the decision applies the stop rule inside the owner's envelope"
+  },
+  {
+   "bead": "N25c-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-132"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-37",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-35"
+   ],
+   "note": "the channel code is checked against the deadlines this bead defines; N25e-35 is the consumer"
+  },
+  {
+   "bead": "N25c-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-098"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-38",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-45"
+   ],
+   "note": "both branches of the decision allow a comparator outside the product"
+  },
+  {
+   "bead": "N25c-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-080"
+   ],
+   "note": "the referee's contact step with compliant contact"
+  },
+  {
+   "bead": "N25c-39",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-44"
+   ],
+   "note": "open question with a fail-closed default; the decision is taken at the same milestone"
+  },
+  {
+   "bead": "N25c-41",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-44"
+   ],
+   "note": "open question with a fail-closed default that bounds what an inner set can certify"
+  },
+  {
+   "bead": "N25c-41",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "a Moonshot mechanism is built only inside the owner's envelope"
+  },
+  {
+   "bead": "N25c-41",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-358"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14b-04"
+   ],
+   "note": "the M3 archetype set that includes snake-crawler; the three-link reduction is made in this pilot"
+  },
+  {
+   "bead": "N25c-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-167"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25e-45"
+   ],
+   "note": "the chapter had no code for it: N25e-45 (the decision on Augur refusals stated without a code) now carries a sixth row for a connection requested outside its qualified stratum"
+  },
+  {
+   "bead": "N25c-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-103",
+    "BD-072"
+   ],
+   "note": "actuator envelope and thermal derating"
+  },
+  {
+   "bead": "N25c-44",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": "the typed-edit engine"
+  },
+  {
+   "bead": "N25c-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-167",
+    "BD-154"
+   ],
+   "note": "rolling rows and the friction cone that gives the same wheels a finite lateral limit"
+  },
+  {
+   "bead": "N25c-47",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "a Moonshot mechanism is built only inside the owner's envelope"
+  },
+  {
+   "bead": "N25c-47",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-333"
+   ],
+   "note": "return maps and saltation across events"
+  },
+  {
+   "bead": "N25c-47",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-332"
+   ],
+   "note": "shares gait identities, not content"
+  },
+  {
+   "bead": "N25d-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-analyze",
+    "VERBS-gait"
+   ],
+   "note": "the registry rows where the option and the result block are confirmed"
+  },
+  {
+   "bead": "N25d-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the control registry's runner and rules; STD-TEST (loaders) is already a dep"
+  },
+  {
+   "bead": "N25d-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-376"
+   ],
+   "note": "BD-376 registers the option and already depends on this bead"
+  },
+  {
+   "bead": "N25d-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25c-33"
+   ],
+   "note": "the M8 facility query is a consumer of this static construction; BD-435 is an epic and carries nothing"
+  },
+  {
+   "bead": "N25d-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-20"
+   ],
+   "note": "the placement lane extends this program; it is the consumer"
+  },
+  {
+   "bead": "N25d-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "STD-TEST is already a dep"
+  },
+  {
+   "bead": "N25d-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N44-01",
+    "N21c-35"
+   ],
+   "note": "the owner's envelope classes and the package requests"
+  },
+  {
+   "bead": "N25d-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-20"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-31"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "STD-TEST is already a dep"
+  },
+  {
+   "bead": "N25d-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-18",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-132"
+  },
+  {
+   "bead": "N25d-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "STD-TEST is already a dep"
+  },
+  {
+   "bead": "N25d-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-19"
+   ],
+   "note": "the Moonshot-tier alpha-root checker; CARD-T-34 is already a dep"
+  },
+  {
+   "bead": "N25d-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10c-05"
+   ],
+   "note": "the specification part comes first"
+  },
+  {
+   "bead": "N25d-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "STD-TEST is already a dep"
+  },
+  {
+   "bead": "N25d-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-29"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-147",
+    "BD-319",
+    "BD-378",
+    "BD-442"
+   ],
+   "note": "exit reviews read this bead's slices and record the stop decisions; they follow it"
+  },
+  {
+   "bead": "N25d-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-002"
+   ],
+   "note": "the demo.yaml schema; N00-29 carries the North-Star demo harness that the slice demonstration also uses"
+  },
+  {
+   "bead": "N25d-28",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-291"
+  },
+  {
+   "bead": "N25d-28",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-292"
+  },
+  {
+   "bead": "N25d-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-039"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-039",
+    "BD-315"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25c-06"
+   ],
+   "note": "the pre-kernel timing pilot that applies the kill rule; this bead repeats the measurement by stage once the family kernels exist"
+  },
+  {
+   "bead": "N25d-31",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-357"
+   ],
+   "note": "M4, later; BD-128 is already a dep. Until BD-357 the first repair of FROB-REF-877 names the conflict without the minimal subset"
+  },
+  {
+   "bead": "N25d-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-04",
+    "N12-REF"
+   ],
+   "note": "the auditor's report contract and its own codes"
+  },
+  {
+   "bead": "N25d-31",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25-REF"
+   ],
+   "note": "registry rows come first"
+  },
+  {
+   "bead": "N25d-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-299"
+   ],
+   "note": "M3, later; the MCP half of each refusal joins when BD-299 lands"
+  },
+  {
+   "bead": "N25d-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-288",
+    "BD-292",
+    "BD-358",
+    "N25c-30",
+    "N25c-17"
+   ],
+   "note": "later mechanisms that make codes 852, 854, 856, 858 and 859 reachable; each adds its trigger to this battery when it lands"
+  },
+  {
+   "bead": "N25d-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "STD-TEST is already a dep"
+  },
+  {
+   "bead": "N25d-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-06"
+   ],
+   "note": "M4, later; the row of INV-AUGUR-11 is pending until then"
+  },
+  {
+   "bead": "N25d-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-10"
+   ],
+   "note": "N25c-10 carries the lifted and projected lowerings of the stance template; BD-130 is already a dep"
+  },
+  {
+   "bead": "N25d-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25c-20"
+   ],
+   "note": "N25c-20 carries the scenario-tree comparator; BD-129 is already a dep"
+  },
+  {
+   "bead": "N25d-34",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "STD-TEST is already a dep"
   }
  ],
  "edges": [
@@ -696,6 +1305,12 @@
    "dep": "N25c-20",
    "as": "dep",
    "why": "coverage (d) of U25c: the KILL-AUGUR-TIE decision reads the first measurement, which N25c-20 produces"
+  },
+  {
+   "bead": "N25d-27",
+   "dep": "N00-29",
+   "as": "related",
+   "why": "need 1 of N25d-27: the demo harness and index in which this slice demonstration is listed"
   }
  ],
  "superseded": [],
@@ -731,6 +1346,13 @@
    "what": "a decision by the Lemma lead on whether refinement (alternating-simulation) proofs get a proof kind of their own",
    "needed_by": [
     "N25c-03"
+   ]
+  },
+  {
+   "section": "§19.12",
+   "what": "retrofit kit fields for installation time, access constraints, calibration, tolerances and maintenance, which the priced world-edit grammar of §25.17 reads",
+   "needed_by": [
+    "N25c-31"
    ]
   }
  ],

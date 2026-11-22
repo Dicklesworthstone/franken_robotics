@@ -40,12 +40,12 @@ try {
   assert(hall > shelf && shelf > 0, `The hall fits ${hall} and the shelf ${shelf}`);
 
   /* Every figure mounts when it comes on screen, without an error. */
-  // These three are drawn by the server and have nothing to run.
-  const still = ["loop", "ranges", "milestones"];
+  // Drawn by the server, with nothing to run.
+  const still = ["loop"];
   const ids = (await page.locator("[data-fig]").evaluateAll((all) => all.map((e) => [e.id, (e as HTMLElement).dataset.fig!])))
     .filter(([, fig]) => !still.includes(fig!))
     .map(([id]) => id!);
-  assert.equal(ids.length, 23);
+  assert.equal(ids.length, 20);
   for (const id of ids) {
     await page.evaluate((x) => document.getElementById(x)!.scrollIntoView({ block: "center", behavior: "instant" }), id);
     await page.locator(`#${id}[data-ready]`).waitFor({ timeout: 20_000 }).catch(() => {
@@ -56,14 +56,14 @@ try {
   /* A few controls do what their labels say. */
   await page.evaluate(() => document.querySelector("#fig-stories")!.scrollIntoView({ block: "center", behavior: "instant" }));
   await page.locator("#fig-stories [data-next]").click();
-  assert.equal(await page.locator("#fig-stories [data-at]").innerText(), "2 of 24");
+  assert.equal(await page.locator("#fig-stories [data-at]").innerText(), "2 of 12");
   await page.evaluate(() => document.querySelector("#fig-constructions")!.scrollIntoView({ block: "start", behavior: "instant" }));
   await page.locator('#fig-constructions [data-i="5"]').click();
-  await page.locator("#fig-constructions [data-card] .num", { hasText: "C-06" }).waitFor();
+  await page.locator("#fig-constructions [data-card] .num", { hasText: "06" }).waitFor();
   assert.equal(new URL(page.url()).pathname, "/");
   await page.evaluate(() => document.querySelector("#fig-stance")!.scrollIntoView({ block: "center", behavior: "instant" }));
-  await page.getByRole("button", { name: "b = 1/5 m" }).click();
-  await page.locator("#fig-stance", { hasText: "Excluded for every controller" }).waitFor();
+  await page.getByRole("button", { name: "1/5 m" }).click();
+  await page.locator("#fig-stance", { hasText: "No controller can balance it" }).waitFor();
 
   // A refused robot leaves its later stages listed and unrun.
   await page.evaluate(() => document.querySelector("#fig-preflight")!.scrollIntoView({ block: "center", behavior: "instant" }));

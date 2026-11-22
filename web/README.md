@@ -1,8 +1,8 @@
 # FrankenRobotics.com
 
-The site presents the research plan in `../COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md`. The home page explains it in six chapters with interactive figures. The reader at `/plan/` holds every section and appendix, cross-linked and searchable.
+The marketing site for FrankenRobotics, plus a reader for the plan in `../COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md`. The home page shows what the lab does in six chapters with interactive figures. The reader at `/plan/` holds every section and appendix, cross-linked and searchable.
 
-No FrankenRobotics code has been released, and the site says so. Each figure carries a badge that says what it is (computed here, a toy, a drawing, illustrative numbers, or quoted from the plan) and a title block that names its source.
+The home page sells the project: it says what FrankenRobotics does, in plain words, and that it is in design. Caveats, open questions and the evidence behind each number belong in the plan. Each figure opens with one line saying what to do with it and a tag, "Interactive" or "Worked example".
 
 ## Build and preview
 

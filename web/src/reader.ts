@@ -66,40 +66,39 @@ export function readerDock(entry: Entry) {
 
 const paths: [name: string, text: string, steps: [label: string, to: string][]][] = [
   [
-    "An hour, start to finish",
-    "What it is for, what it refuses to claim, and how it would be proved wrong.",
-    [["§1", "1"], ["§2", "2"], ["§7", "7"], ["§8", "8"], ["§39", "39"]],
+    "New here",
+    "What it is, what it’s built to do, and the scenarios that drive it.",
+    [["Overview", "1"], ["Principles", "3"], ["Goals", "6"], ["Scenarios", "7"]],
   ],
   [
     "Robot design",
-    "Bodies as data, the places they work, and questions asked about whole families.",
-    [["§14", "14"], ["§15", "15"], ["§19", "19"], ["§25", "25"], ["§31", "31"]],
+    "Bodies, motors, buildings, missions and the workshop.",
+    [["Skeleton", "14"], ["Sinew", "15"], ["Habitat", "19"], ["Augur", "25"], ["Foundry", "31"]],
   ],
   [
     "Simulation",
-    "The algebra, three tiers of dynamics, contact, and the kernels that run them.",
-    [["§10", "10"], ["§13", "13"], ["§16", "16"], ["§18", "18"], ["§21", "21"], ["§36", "36"]],
+    "Dynamics, contact, GPU kernels and performance.",
+    [["Kinesis", "16"], ["Phylum", "17"], ["Traction", "18"], ["Spark", "21"], ["Speed", "36"]],
   ],
   [
     "Agents",
-    "Verbs, budgets and refusals, and a qualification lane an agent cannot read.",
-    [["§22", "22"], ["§24", "24"], ["§28", "28"], ["§32", "32"], ["§37", "37"]],
+    "Commands, budgets, control and the sealed exam.",
+    [["Reflex", "22"], ["Arena", "24"], ["Atelier", "28"], ["Tether", "32"], ["Safety", "37"]],
   ],
   [
-    "Evidence",
-    "Claims and their classes, certificates, adversarial worlds and failure analysis.",
-    [["§8", "8"], ["§12", "12"], ["§26", "26"], ["§27", "27"], ["§29", "29"], ["§38", "38"]],
+    "Testing",
+    "Adversarial worlds, failure analysis, replay and the test program.",
+    [["Nemesis", "26"], ["Autopsy", "27"], ["Chronicle", "29"], ["Gauntlet", "38"]],
   ],
   [
-    "Doubts",
-    "Ceilings, bets with falsifiers, the pre-mortem, and what is still undecided.",
-    [["§2", "2"], ["§4", "4"], ["§39", "39"], ["§41", "41"], ["§42", "42"]],
+    "The math",
+    "Forty constructions, the algebra core, proofs and worked answers.",
+    [["Constructions", "10"], ["Marrow", "13"], ["Lemma", "12"], ["Compendium", "appendix-d"], ["Answers", "appendix-m"]],
   ],
 ];
 
 export function library() {
-  const tables = entries.reduce((s, e) => s + e.tables, 0);
-  return `<section class="lib-head"><div class="lattice" aria-hidden="true"></div><span class="glow" style="width:40rem;height:40rem;left:-12rem;top:-14rem;background:#1d7a48" aria-hidden="true"></span><div class="wrap"><p class="kick"><span class="joint on" aria-hidden="true"></span>Version ${version}</p><h1 class="d2">${heading("The whole *plan*.")}</h1><p class="lede">${entries.length - 1} sections and appendices, ${n(Math.round(words / 1000) * 1000)} words and ${n(tables)} tables, from the algebra of a single joint to the experiment that would establish a ten-fold gain or withdraw the claim.</p><div class="cta"><a class="btn go" href="/search/" data-palette>${icon("search")}Search the text</a><a class="btn" href="/plan.md" download>Download Markdown${icon("down")}</a></div></div></section>
+  return `<section class="lib-head"><div class="lattice" aria-hidden="true"></div><span class="glow" style="width:40rem;height:40rem;left:-12rem;top:-14rem;background:#1d7a48" aria-hidden="true"></span><div class="wrap"><p class="kick"><span class="joint on" aria-hidden="true"></span>Version ${version}</p><h1 class="d2">${heading("The *full design*.")}</h1><p class="lede">Everything behind FrankenRobotics in ${entries.length - 1} sections and appendices, from the algebra of a single joint to the packet that goes to the workshop.</p><div class="cta"><a class="btn go" href="/search/" data-palette>${icon("search")}Search the text</a><a class="btn" href="/plan.md" download>Download Markdown${icon("down")}</a></div></div></section>
 <div class="wrap"><h2 class="sr">Where to start</h2><div class="paths">${paths
     .map(
       ([name, text, steps]) =>
@@ -121,6 +120,6 @@ export function library() {
     .join("")}</div>`;
 }
 
-export const search = `<div class="wrap searchpage"><h1 class="d2">${heading("Search the *plan*.")}</h1><form action="/search/" role="search"><div class="q">${icon("search")}<label class="sr" for="query">Search all sections and appendices</label><input type="search" id="query" name="q" placeholder="contact, mission, kitchen, M7" maxlength="240" aria-describedby="query-help" autocomplete="off" spellcheck="false" autofocus></div><small id="query-help">Put quotation marks around an exact phrase.</small></form><p id="status" role="status"></p><div id="results"></div><noscript><p class="lede">Full-text search needs JavaScript. <a class="txt" href="/plan/">Browse the library instead.</a></p></noscript></div>`;
+export const search = `<div class="wrap searchpage"><h1 class="d2">${heading("Search *everything*.")}</h1><form action="/search/" role="search"><div class="q">${icon("search")}<label class="sr" for="query">Search all sections and appendices</label><input type="search" id="query" name="q" placeholder="contact, mission, kitchen, M7" maxlength="240" aria-describedby="query-help" autocomplete="off" spellcheck="false" autofocus></div><small id="query-help">Put quotation marks around an exact phrase.</small></form><p id="status" role="status"></p><div id="results"></div><noscript><p class="lede">Full-text search needs JavaScript. <a class="txt" href="/plan/">Browse the library instead.</a></p></noscript></div>`;
 
-export const missing = `<div class="wrap simple"><p class="kick"><span class="joint" aria-hidden="true"></span>404</p><h1 class="d2">${heading("No such *page*.")}</h1><p class="lede">The address may belong to an earlier version of the plan.</p><div class="cta"><a class="btn go" href="/plan/">Open the library</a><a class="btn" href="/search/" data-palette>${icon("search")}Search</a></div></div>`;
+export const missing = `<div class="wrap simple"><p class="kick"><span class="joint" aria-hidden="true"></span>404</p><h1 class="d2">${heading("No such *page*.")}</h1><p class="lede">This page may have moved. Search for it, or browse the full design.</p><div class="cta"><a class="btn go" href="/plan/">Open the library</a><a class="btn" href="/search/" data-palette>${icon("search")}Search</a></div></div>`;

@@ -34,7 +34,7 @@ shared reading, and the threshold a changed specification must clear to restore 
 derives the continuous sensor–actuator boundary and checks 561 actuator/error grid cells against
 an independently formulated LP comparator. Each group of 33 error levels shares one actuator bound.
 Adding a third plausible gain, 33/32, defeats exact docking on every formerly feasible row of the
-native benchmark. An agent must return that changed verdict when the factory updates its tolerance.
+native benchmark. For a continuous gain anywhere in [1,2], a read error of at most 1/64 and the same 3/4 command limit, the smallest guaranteed final position tolerance at exact rest is about 2.41624 cm. An agent must return the amended guarantee when the factory updates its tolerance.
 
 **Flagship commission.** Hand the studio an incomplete survey of a working facility, a parts
 catalog and a delivery brief. Ask it to price a legged or wheeled carrier, a two-robot handoff,
@@ -71,7 +71,7 @@ predicted ranking of two designs on a held-out landing and under a higher-fideli
 design language, the mathematical compiler, dynamics, worlds and sensing. Sections 9–12 cover
 control, learning, the studio and execution. Sections 13 onward define the evidence, development
 program, experiments and delivery gates. All commands, types and results described as contracts are
-proposed interfaces. Source observations below identify existing code. Numeric gates are design targets. Sections 11.6 and 18–20 also report measured pilot results,
+proposed interfaces. Source observations below identify existing code. Numeric gates are design targets. Sections 9.1, 11.2, 11.6 and 18–20 also report measured pilot results,
 analytic answers and scoped conclusions from the planning experiments.
 
 ### Direct navigation
@@ -160,6 +160,7 @@ can guide a probe. The files below determine what the probe should call.
 | same | `crates/fs-phs/src/interconnection.rs`, `crates/fs-tribo/src/lib.rs`, `crates/fs-matdb/src/lib.rs` | Compose effort/flow ports, select a friction law and resolve material data. Check power transfer and record the provenance of each pair parameter. |
 | same | `crates/fs-symmetry/src/lib.rs`, `crates/fs-ad/src/{ift,gradcheck}.rs` | Cyclic/circulant reference cases and implicit sensitivities. A general morphology representation or a contact-event derivative requires new admission. |
 | same | `crates/fs-tilelang/src/lib.rs`, `apps/instrument-lab/render-gpu-piano/src/{cuda,metal}.rs` | Scalar and lane-shaped kernels, plus application-specific native backend precedents. Factor reusable scheduling/driver ownership where warranted. Robotics kernels need their own implementation and qualification. |
+| franken_threed · `bf7abe16367e` | `crates/f3d-math/src/ray.rs` | Reuse normalized ray transforms under a world-distance adapter. Test differently scaled instances against analytic foreground and range-gate results (§7.1). |
 | frankensympy · `29f847c14428` | `crates/fsym-calculus/src/{sparse_jacobian,compile}.rs`, `crates/fsym-formal/src/{checker,envelope}.rs` | Generate sparse analytic formulas offline, preserve assumptions and check supported projections. First compile the planar arm Jacobian and independently test singular and regular configurations. |
 | franken_lean · `4426f8ea745a` | `crates/fln-checker/src/{admit,policy}.rs`, `crates/fln-kernel/src/lib.rs`, `SUITE.lock` | Isolated checker for a small formal profile. Admit a true port identity, reject a sign-mutated proof, list axioms and coverage. README explicitly describes a target state. |
 | franken_numpy · `e8cb85f4e5ac` | `crates/fnp-{ndarray,linalg,io}/src/lib.rs` | Host tensor layouts, independent-style dense checks and numeric NPY/NPZ exchange. Test shape/stride, endianness, units and round trip with independent fixture bytes. |
@@ -526,6 +527,10 @@ implements a power-neutral constraint on port flows and efforts. Use a transform
 and a dissipative law for copper loss or damping. A passive component must specify storage and
 any energy supplied by its moving boundary. Sum power over each physical edge once. This supplies
 an algebraic reason to detect energy appearing when a frame transform or gear ratio is wrong.
+Also test driven direction. With two unit scalar stores, efforts (2,3) and coefficient 4,
+the pinned `fs_phs::transformer` gives rates (12,−8), while `interconnect_mapped` gives
+(−12,8). Both conserve power. Using −4 in the second convention recovers the first response.
+Bind the authored shaft direction to the labeled ports and require a signed motion witness.
 
 For a DC actuator, store $L\dot i=V-Ri-k_e\omega$, $\tau=k_t i$, rotor inertia, a driver
 current limit, and a thermal capacity/resistance pair. Check $k_e,k_t$ under the declared SI
@@ -534,6 +539,14 @@ The driver determines whether recovered energy reaches the battery, heats a shun
 For a series elastic actuator add spring energy and measure shaft and output positions separately.
 Expose command latency, zero-order hold, torque-speed envelope, backlash and gearbox efficiency.
 Version lower-order torque-lag surrogates for large training runs and validate their design rankings.
+
+For coupled transmissions let $C(q)$ map joint rates into motor rates. Virtual work maps motor
+efforts back by $C^T$. One base-mounted rotor with $\theta=10(q_1+q_2)$ and torque limit 0.1 N·m
+delivers joint pairs $(t,t)$ with $|t|\le1$ N·m. The two marginal limits admit the impossible
+command $(1,-1)$ N·m. Pull rotor inertia back as $C^TJ_rC$ exactly once and derive the inertial
+bias when $C$ varies with configuration. For $J_r=0.01$ kg·m², joint rates $(1,-1)$ and $(1,1)$
+rad/s give rotor energies of zero and two joules. A diagonal approximation gives one joule
+in each case. Share the coupled map across dynamics, allocation and feasibility checks.
 
 The discrete energy residual accounts for stored change, supplied electrical and boundary work,
 and losses leaving the chosen system. Heat stored in a modeled thermal capacity belongs to stored
@@ -692,6 +705,14 @@ validity map to seed full-dynamics search. [Hatton and Choset, geometric motion 
    A failed candidate is invisible to the controller. Bounded retries restore all state including
    warm starts, queues and noise state. A failed final attempt terminates with a numerical failure code.
 
+Swept bounds must cover the link's path. The pinned sphere-sweep helper encloses straight center
+motion. A 1 m arm turning from −60° to +60° about a fixed pivot takes a spherical tip of radius
+5 cm through an obstacle centered at (1,0) m. The tip's endpoint chord padded by its radius reaches only
+$x=0.55$ m. For a known constant-axis arc of angle $|\Delta\theta|\le\pi$ and orbital radius $R$,
+expand the chord by its sagitta $R(1-\cos(|\Delta\theta|/2))$ before adding the shape radius.
+For general articulated motion, bound the path using the admitted joint motion over the interval.
+A pair discarded in broad phase never reaches the continuous narrow-phase test.
+
 A random input sampled over a physical interval must have a consistent refinement law. Reuse a
 scheduled sensor draw at its original sample stamp. For a scalar Brownian driver over duration $h$
 with stored increment $S$, draw the midpoint increment as $S/2+\sqrt{h/4}\,Z$ with an independent
@@ -815,6 +836,14 @@ for a navigation experiment even when detailed gripper contact is unresolved. Ea
 and any restrictions on redistribution travel with manifests. Ship synthetic or redistributable
 fixtures in the starter pack. Real home captures stay in operator-selected local storage.
 
+Instanced ray queries need a common distance unit. For a unit world direction $d$, an inverse
+linear instance transform $A^{-1}$ followed by direction normalization changes the ray parameter.
+Convert each hit by $s_W=s_L/\|A^{-1}d\|$ or transform the point back to world coordinates.
+The pinned FrankenThreeD primitive normalizes the transformed direction. In a two-plane test the
+opaque foreground at 2 m reports local distance 4 while the background at 3 m reports 1. A local
+comparison picks the occluded plane, and a 2.5 m world range gate can discard the foreground.
+Convert before sorting, clipping and computing optical depth. [Raycaster closest-hit and range conventions](https://threejs.org/docs/pages/Raycaster.html)
+
 ### 7.2 Scene cooking and acceptance
 
 1. Decode under declared limits for bytes, nested instances, polygons, textures and materials.
@@ -909,6 +938,14 @@ offset gives 2.5 m/s² radially inward. Use the pinned FrankenSim articulated `p
 and `point_motion` APIs with their gravity convention, then `specific_acceleration_world` and the
 sensor rotation. Test prescribed-base and floating-base receipts for gravity applied exactly once.
 
+An ideal integrating accelerometer also responds to a jump in its material point's velocity.
+Add $R_{WS}^T(v_P^+-v_P^-)$ once at each impact within the exposure to the smooth specific-force
+integral. With continuous pose, a rigid offset contributes $(\omega^+-\omega^-)\times r$ to the
+point's velocity jump. A nonrotating vertical rebound from −1 to +1 m/s during otherwise
+ballistic flight gives a mean of +200 m/s² over 10 ms. Every smooth specific-force sample is
+zero. Assign boundary events to a single sample for abutting windows. Actual instruments need
+their own bandwidth, clipping and sampling models.
+
 Qualify the encoder's sampling semantics as well as its unit conversion. A modulo-one-turn
 position delivered at 100 Hz yields identical samples at +80 and −20 turns/s, even with no
 measurement noise. A controller cannot infer direction from those samples alone. A sufficient
@@ -922,6 +959,13 @@ persistent state and cross-axis correlation. Time correlations require carrying 
 Export both the realized noise path (when requested) and the law and seed that regenerate it. A
 missing depth return carries a mask/reason. A numeric zero corresponds to a physical measurement
 only when the schema defines it that way.
+
+For a six-axis load cell specify the cut in the load path, side, sign, moment origin, frame
+and tare. A stationary 2 kg foot with a 100 N upward ground reaction gives a distal-on-proximal
+ankle force of +80.38 N with upward positive and gravity 9.81 m/s². With zero contact and
+2 m/s² upward acceleration the same untared cell reads −23.62 N. Compute the wrench across
+the cut from distal momentum balance, including gravity, other loads and moments about the
+reported point. A sole contact sum measures a different quantity. [Newton–Euler link wrench balance](https://modernrobotics.northwestern.edu/nu-gm-book-resource/8-3-newton-euler-inverse-dynamics/)
 
 A rigid contact impulse fixes an integral, while the sensor's bandwidth and overload response
 act on its input over time. A rectangular pulse of 1 N·s over 1 ms or 10 ms has peak 1,000 N
@@ -1009,6 +1053,24 @@ traction. For contact planning propose a sequence of modes and solve continuous 
 each. A relaxed or smoothed schedule is a proposal. Recheck it under the committed contact law.
 Keep differentiable model-predictive control on a bounded horizon with warm starts, solver
 budget and a last feasible control. Expose replanning time in simulated and wall-clock units.
+
+**Does a stable sampled controller survive the physics step?** Use an ideal acceleration-controlled
+slider with a 10 ms controller period $h$. Let $x$ be position error in mm and $w=hv$ in mm.
+At each control tick the policy observes both and holds $u=h^2a=-1.5(x+w)$ until the next tick.
+The exact held-input plant gives $(x',w')=(x+w+u/2,w+u)$. Replacing the position update by
+$x'=x+w'$ is one kick–drift step. The exact closed-loop spectral radius is $1/2$, while
+the single-step model has radius $(1+\sqrt3)/2>1$. Thus timestep choice reverses the stability
+decision even though the smooth plant, controller, observation period and actuation agree.
+
+Take all 64 initial pairs in $\{-3,-2,\ldots,4\}^2$ mm and test
+$\max(|x|,|w|)\le1/32$ mm at tick 16. Exact held-input dynamics pass **64/64**, one kick–drift
+step per tick passes **1/64**, and two half steps under the same command pass **15/64**.
+The two-half-step system is asymptotically stable and still misses the finite deadline on 49
+cases. A rational referee and a native binary32 kernel on the M5 Ultra and each RTX 4090
+agreed on every decision. All three device readbacks also matched the independently reconstructed
+binary32 terminal states byte for byte. Keep the controller rate fixed when refining physics.
+Use these checks for the sampled plant and its numerical lowering. A full robot needs its own
+actuator limits, contact and sensor path. [Zero-order hold discretization](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.cont2discrete.html) [Servo reproduction](planning/astra-10x-reproduction.zip)
 
 ### 9.2 Gym interface
 
@@ -1309,8 +1371,7 @@ A reproducible benchmark must survive client disconnect, duplicate submission an
 **Hardware inventory.** macOS identified the local GPU as Apple M5 Ultra, 80 GPU cores, with Metal 4
 support. On trj, the driver reported two GeForce RTX 4090 devices, each reporting 24,564 MiB and
 driver 595.99.02. The topology query reported PHB between them. These observations establish
-available targets at planning time. Section 11.6 records native results for a narrow family-screening
-kernel. Compilation, residency, numerical fidelity and performance for the robotics closed loop
+available targets at planning time. Native fixtures exercise a sampled slider (§9.1), normalization arithmetic (§11.2) and family screening (§11.6). Compilation, residency, numerical fidelity and performance for the robotics closed loop
 still require measurement on each selected device, driver, OS, compiler and operator stack.
 
 ### 11.1 Put the closed loop on the device
@@ -1616,6 +1677,12 @@ A viewer animation cannot be used as a sensor unless its sensor path independent
    At 100 ppm, clocks coincident at the start differ by 0.8 ms after 8 s. Preserve this uncertainty
    when testing whether a packet arrived before a decision. Fitting the offset to the crossing
    being scored can erase the entire crossing-time error. Retain raw source timestamps.
+   A synchronized clock can still leave trigger delay and mount translation confounded. For a
+   straight approach at speed $v$, wall coordinate $L$ and fixed sensor orientation, range is
+   $L-v(t+\delta)-b$. At +2 m/s a 20 ms exposure delay gives the same 101 range samples as a
+   40 mm forward mount offset. Reversing to −2 m/s without rotating separates the predictions
+   by 80 mm. Use independent exposure marks or motion that separates the parameters.
+   [Analysis of spatial and temporal calibration degeneracies](https://arxiv.org/abs/2201.09170)
    Fit plausible parameter distributions conditional on load, speed, temperature and wear.
 3. Test identifiability by exciting both the torque-limited and traction-limited regimes. For one
    wheel with $F=\min(k_tI/r,\mu N)$, $k_t=0.2$ N·m/A and $r=0.06$ m, currents of 1 and 2 A
@@ -1853,7 +1920,7 @@ oracle precision and justification. A published failure keeps its original thres
 | A01 · unit/frame | SI conversions exact when rational. 2R pose/torque errors ≤1e−10 in corresponding SI units on CPU f64 | Reverse joint order or change mm to m |
 | A02 · Lie maps | Pose composition round trip on a 1 m scale ≤1e−10 m and ≤1e−10 rad away from chart cut. Independently check near-straight drive position against §5.1 | Swap left/right perturbations and test an unwrapped heading with tiny yaw increments |
 | A03 · free and loaded tree | Compare analytic pendulum acceleration and small mechanism inverse dynamics at regular poses. Relative error ≤1e−8 with a dimensional absolute floor | Remove gravity or off-diagonal inertia |
-| A04 · continuous collision | Thin barrier crossed between clear endpoints, zero missed hits in frozen cases. Event time within declared bracket | Endpoint-only query |
+| A04 · continuous collision | Thin barrier on a segment and obstruction on a rotating tip's arc, zero missed hits in frozen cases. Event time within declared bracket | Endpoint-only query |
 | A05 · contact work | Two-body frictionless impact satisfies momentum and specified restitution. Dimensionless scaled residual ≤1e−8 on well-conditioned CPU fixture | Apply impulse twice or reverse normal |
 | A06 · slip and torque | Threshold fixtures match incipient-lift/load path and flat tread-force limits under the corresponding ideal assumptions | Command speed irrespective of torque |
 | A07 · sensors | Static bias-free IMU reads 1 g upward for level mounting, ideal depth plane ≤1 mm over declared range, no packet delivered before its latency | Swap optical z and ray distance |
@@ -2007,6 +2074,11 @@ erase the predicted advantage, the simpler controller wins under this mission.
 Specify an energy tank and admissible action projection at the mechanical control port. Debit the
 positive work of a learned residual over each committed interval including switching. Link the
 tank definition, measurement latency, discretization and actuator saturation to the stated bound.
+Reserve an upper bound on work the held command can supply, or locate tank exhaustion and
+change the command before committing work beyond the available energy. On a free 1 kg slider
+at +1 m/s, a sampled damper of gain 300 N·s/m holds −300 N for 10 ms. The final speed is
+−2 m/s and the force does +1.5 J of net work. Initial port power times duration predicts −3 J.
+Exercise velocity reversal and account for energy transferred by the actual mechanical port.
 Attempt a small formal proof of the algebraic tank ledger and a separate numerical test of the
 sampled plant with delay. Compare recovery range and useful work to an equally bounded conventional
 controller and to a baseline without the residual. A theorem about ledger arithmetic cannot certify
@@ -2024,14 +2096,14 @@ The unit of release is a usable vertical slice with a stated capability matrix.
 | W01 | — | Capture exact Sim, math, Torch, toolchain and asset closure. Design worker probe | Clean worker resolves a pinned owner and records source/feature IDs or returns an actionable incompatibility |
 | W02 | — | Freeze the starter cart/threshold task, physical units, analytic oracles, independent goldens and metrics | Versioned baseline with known wheel leverage, two-link power, metric deadlines and negative examples |
 | W03 | — | Define immutable design, patch, source materials, scene/task, trace and artifact schemas | Round-trip fixtures, unit/refusal examples, schema version and parent-addressed patch conflict |
-| W04 | W01,W02,W03 | Implement first typed assembly compiler into fs-ga/fs-mbd and stable channel map | 2R fixture, tree permutation, free/prescribed base, mass-support and inertia rejection, and near-straight SE(2) admission from public runner |
+| W04 | W01,W02,W03 | Implement first typed assembly compiler into fs-ga/fs-mbd and stable channel map | 2R fixture, coupled-shaft torque and rotor energy, signed port direction, tree permutation, free/prescribed base, mass-support and inertia rejection, and near-straight SE(2) admission from public runner |
 | W05 | W01,W02,W03 | Cook primitive threshold room with role tags, swept bounds and source transforms | World-space gauge and thin obstacle fixture, bounded contact error and valid spawn |
 | W06 | W04,W05 | Connect actuated cart, power ledger, rolling feature transfer and first CPU contact step | Free motion, moving/bounded contact and lip limiting cases, timeout/failure codes, no prescribed speed drive |
-| W07 | W03,W06 | Clocked encoder, IMU, battery and current observations. Register ground-truth isolation | Stationary, nonrotating free-fall and spinning offset-IMU fixtures, delayed action, packet and left/right encoder checks |
+| W07 | W03,W06 | Clocked encoder, IMU, battery and current observations. Register ground-truth isolation | Stationary, ballistic, offset-spin and impact-window IMU fixtures, delayed action, packet and left/right encoder checks |
 | W08 | W03,W07 | Transactional per-world step, deterministic streams, reset, state chunk/restore and job execution | Checkpoint at an event, cancel/resume, replay under world permutation, no partial transitions |
 | W09 | W03,W08 | CLI/MCP shared catalog, design patch, run, trace query, comparison, idempotent storage | Independent client completes §10 on small planted-stall and all-success cases, retries a submission and reads the same semantic result |
 | W10 | W02,W09 | Run cart A/B and report engineering verdict, full denominator and a high-resolution excerpt around an observed failure or completion | §13.2 frozen rules, independent CPU replay, full-cart event and invalid-pair policy |
-| W11 | W03,W05 | Mesh/height field cooker, material pairs, uncertainty, calibrated asset and scene variants | Thin wall, mirror, moving prop, visual/collider alignment and tile-boundary corpus |
+| W11 | W03,W05 | Mesh/height field cooker, material pairs, uncertainty, calibrated asset and scene variants | Thin wall, mirror, scaled-instance hit order, moving prop, visual/collider alignment and tile-boundary corpus |
 | W12 | W04,W06 | Add dog and radial legged templates, supported humanoid and contact controller baselines | Standing/stepping full-contact traces, independent reaction/work checks and fall labels for each |
 | W13 | W06,W11 | Add tracked, skid-steer and deployable wheel-leg mechanisms | Pivot/scrub budget, mode guard, lip-strike and capacity challenge, with fidelity-labeled output |
 | W14 | W07,W09,W11 | Add camera, LiDAR, force/torque and estimator pipeline | Real time-stamped arrays from geometry, moving-camera and lever-arm fixtures, sensor masks, drift report |
@@ -2053,7 +2125,7 @@ The unit of release is a usable vertical slice with a stated capability matrix.
 | W30 | W26,W29 | Calibrated release for named robot/material/scene cells | Held-out engineering prediction gates for advertised physical cells, independent replay and limits |
 | W31 | W02,W03 | Mission quantifiers, observable policy and checker ABI. Baseline tournament and symbolic reference fixtures | Independent client rejects swapped quantifiers, planted false witness and incomplete hull. Costs start at mission receipt |
 | W32 | W04,W09,W16,W31 | Convex family synthesis and realizable force authority. Use the lifted LP first | P01 recovered for adjustable and globally affine policies. Passive spring and positive load floor invalidate the original boundary. Design-dependent weight defeats a convex interpolation |
-| W33 | W07,W09,W31 | Belief-state game, causal clock and active docking probe | Positive controller and shared-history exclusion pass. Recover the P05 actuator–sensor boundary, veto equality, and reject reuse after gain support expands |
+| W33 | W07,W09,W31 | Belief-state game, causal clock and active docking probe | Positive controller and shared-history exclusion pass. Recover the P05 boundary and its open endpoint. Check finite position tolerance over continuous gains and factory tags over the declared channel |
 | W34 | W11,W14,W31 | Paired scenario search and causal counterexample minimization | Export twin worlds with matching permitted histories and distinct required decisions. Recheck reduced examples in the canonical owner |
 | W35 | W14,W31,W33 | Design, compile and price a physical probe grammar in simulation. Integrate independent measurements | Direct dwell, programmed expert and generated probes. Seed material discrepancy, shared contact and withheld law. Preserve conditional/unknown verdicts |
 | W36 | W12,W23,W24,W31 | Task-port refinement and control transport between robots | Checked interface map and fresh owner replay on wheel base and walker. Loss of authority or stale cue invalidates the affected gait |
@@ -2846,11 +2918,27 @@ same remaining commands. Their final positions have the form $c$ and $33c/32$, g
 minimum possible worst absolute error of 1/65 m. That bound is attainable for this pair even
 with zero final velocity. More generally, with bounded probes and ε > 0 a nondegenerate interval
 of hidden positive gains contains an indistinguishable pair requiring different second commands.
-An exact docking guarantee fails. For a finite position tolerance solve the amended game. Under
+An exact docking guarantee fails. The finite-tolerance result below solves the amended game. Under
 the three-gain amendment **all 34,590 nominally feasible labels on each 65,536-row native grid
 reverse**. Four exact raw-state solver queries and a CPU reconstruction of both input grids
 check the result. Bind gain support, delivery deadline, error units and target tolerance to the
 classifier's eligibility. [Docking support experiment](planning/astra-10x-reproduction.zip)
+
+For continuous constant $g\in[1,2]$, $U=3/4$, timely read error $\epsilon=1/64$ and **exact
+terminal rest**, the smallest attainable worst-case position error about the 1 m target is
+$\delta_*=(\sqrt{1745}-41)/32$ m, about **2.41624 cm**. A 2 cm requirement is infeasible.
+At 2.5 cm a rational first command $p=5/8$ already suffices. This is a minimax guarantee for
+the stated three-tick plant and observation contract.
+
+In the normalized fixture let $c=2p+u_1$. Exact rest forces $u_2=-p-u_1$ and terminal
+position is $gc$. At a positive probe, realizable $c$ lies in $[2p-U,p+U]$. If the reading
+admits gains $[a,b]$, the target also requires $(1-\delta)/a\le c\le(1+\delta)/b$. Intersect
+these two intervals at each observation. Near the optimum the widest relative ambiguity begins
+at gain 1, yielding $\epsilon/(p+\epsilon)\le\delta$. The endpoint actuator checks give
+$p+U\ge1-\delta$ and $2p-U\le(1+\delta)/2$. Equating the active limits gives
+$16\delta^2+41\delta-1=0$ and $p_*=(39+\sqrt{1745})/128$. Nonpositive probes cannot reach
+beyond $U$ in the gain-one world at rest. A raw-dynamics solver excludes 2 cm, and independent
+interval checks verify inclusion at the threshold. [Continuous-gain docking fixtures](planning/astra-10x-reproduction.zip)
 
 ### 18.11 Use geometric phase to invent locomotion
 
@@ -2994,6 +3082,16 @@ command bits for AB at the first, BC at the second, CA at the third. At each rea
 variant allows either bit. Two labels suffice separately at each reading, but a fixed factory map
 requires three. Test both counts. For action-dependent histories solve the causal policy tree with
 a common factory map and shared-prefix decisions.
+
+Price the physical precommit message as well as the number of labels. In that three-variant
+example every pair conflicts at some possible later reading. For a fixed-length one-shot
+binary message with no feedback, three labels need two clean bits, three bits if one erased
+position is known, and five bits if one unknown bit can flip. For erasure use 000, 011, 101.
+For substitution use 00000, 00111, 11001. Correcting a flip requires pairwise Hamming
+distance at least three. Across three binary words each column contributes at most two to the
+sum of the three distances, so four bits cannot achieve the required nine. A four-bit
+transmission deadline therefore rules out guaranteed operation under the last fault model.
+Check received-word sets under the declared channel before accepting a robustness or latency claim.
 
 For normalized commands $(x,y)\in[0,1]^2$, let three variants respectively require $x≥2/3$,
 $y≥2/3$ and $x+y≤1$. Every pair intersects, while the triple has empty intersection. Two labels
@@ -3275,6 +3373,15 @@ motor alone can invalidate that normal-load envelope through acceleration. Reuse
 the newly implied assumptions against the saved ones. A content hash identifies an input and a
 result. Only a dependency or implication argument licenses omitting a recheck.
 
+A claim to return the complete Pareto frontier needs a coverage test for discrete builds.
+Take three feasible options with (body cost, facility cost) equal to (0,6), (4,4), (6,0).
+All three are nondominated. Every nonzero nonnegative linear weighting prefers at least one
+extreme over (4,4), since the extremes average to (3,3). That average is unavailable as a build.
+A facility budget of four makes (4,4) the unique lowest-body-cost choice. Include a constrained
+query that recovers it. For a finite catalog check the disposition of every omitted option.
+When unresolved designs could extend the frontier, return the known candidates and the
+remaining coverage obligation.
+
 Store separate obligations for feasibility and optimality. A cost-9 cart may be the certified
 minimum while the cost-5 relay is excluded by a doorway. Widen only the relay's doorway. The
 cart and its complete successful trace remain valid, but the optimum can move to 5. Revalidate
@@ -3325,7 +3432,7 @@ including the evaluation rule. These seven belong to the original design study. 
 The combined inverse-design interface remains a hypothesis. The subsequent docking extension
 supplies a dynamic actuator–sensor family and an integration target. The analytic investigations used CPU programs and conventional solvers. The native study in
 §11.6 measured the docking classifier on all three physical GPUs. The separate §11.2 native
-probe checked the accuracy of a binary32 normalization merge on each device. End-to-end GPU simulation,
+probe checked the accuracy of a binary32 normalization merge on each device. Section 9.1 ran an ideal sampled servo on each GPU against a rational held-input reference. Full-robot GPU simulation,
 high-dimensional hybrid reachability and field outcomes require the corresponding implementation
 packages.
 
@@ -3333,7 +3440,7 @@ The portable research bundle contains the protocols, source, raw outputs, indepe
 reproduction commands and a checksum manifest. It includes the stance, material, sensing,
 docking, pusher, native Metal/CUDA and statistical fixtures, together with the three authored
 idea slates, reciprocal reviews and final responses summarized in §20.5. After extraction,
-`python3 -B verify.py --all` checks the 169-file manifest payload, rebuilds the 20 locked pusher
+`python3 -B verify.py --all` checks 178 payload digests, rebuilds the 20 locked pusher
 queries and their negative control, checks all twelve eliminated formulas against the locked
 intervals using Z3, recomputes summaries from the original paired timing rows and reproduces
 the one-term cart sensitivity experiment in §13.2. It also reruns the gain-support, wheel-stability,
@@ -3341,10 +3448,10 @@ physical-design and measurement-contract fixtures, the full 300-row planar frict
 independent decision-time and transfer counterexamples. It compares 207 recorded event times and
 156 peak pitches on the original quick grid and reconciles the 18 CUDA emitter hashes and its
 source digest to the retained terminal record. Run `python3 -B verify_negative.py` for the
-28 deliberate data and checker regressions. The verifier now rejects an independent gripper
+31 deliberate data and checker regressions, including the per-device servo counts and ordered terminal-state digests. The verifier now rejects an independent gripper
 result with incorrect decision counts or feasible pad combinations, even if the producing program
 exits normally. The bundle README gives commands for the normalization probe on Metal/CUDA and
-the optional pinned PPO, tensor-layout, catalog, Lie differential and SOS checks. The separate friction-refinement replay holds the scorer cadence fixed.
+the optional pinned PPO, tensor-layout, catalog, Lie differential, port, ray-query and SOS checks. The separate friction-refinement replay holds the scorer cadence fixed.
 These commands also permit independent inspection of the archived native results. A future studio
 release must add live benchmark artifacts produced via its public interface. [Download the reproduction bundle](planning/astra-10x-reproduction.zip)
 

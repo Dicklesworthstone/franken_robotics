@@ -54,12 +54,12 @@ export default function mount(root: HTMLElement) {
     const obs = stabilizer(features);
     const say =
       obs.length === 4
-        ? "Nothing it senses tells front from back or left from right. Weights may be tied four ways."
+        ? "All four legs match, so what one learns, all four know."
         : obs.length === 2
-          ? `One symmetry survives: ${obs[1]}. Tests may still use ${mech.length === 4 ? "all four" : "both"} on the mechanism; a policy may tie weights only along this one.`
+          ? `One symmetry survives: ${obs[1]}. What one side learns, the other side knows.`
           : mech.length > 1
-            ? "Nothing survives in what it observes, though the mechanism itself is still symmetric. Mirrored tests are fine and tied weights are not."
-            : "Neither group is left. A symmetry declared by the author would be refused at stage 5 of preflight.";
+            ? "The legs still match, but what the robot sees and carries no longer does. Each leg learns for itself."
+            : "No symmetry left. Claim one anyway and the design check turns it down.";
     $(root, "[data-mech]").textContent = groupName(mech);
     $(root, "[data-obs]").textContent = groupName(obs);
     $(root, "[data-mech-n]").textContent = mech.length === 1 ? "identity only" : mech.slice(1).join(", ");

@@ -106,22 +106,22 @@ export default function mount(root: HTMLElement) {
       const f = allocation(a0, b0, load.value, cap.value);
       const t = (f.lo + f.hi) / 2;
       const forces = [t, f.r - t, f.s - t, load.value - f.r - f.s + t].map((v) => v.toFixed(1)).join(", ");
-      info.innerHTML = `<p class="micro">Inner, with a witness</p><pre>${span}\nworst corner, payload at (+, +)\nf = (${forces}) N\nrating ${cap.value} N</pre><p>Every footprint in this box works.</p>`;
+      info.innerHTML = `<p class="micro">Works</p><pre>${span}\nhardest load, over one corner\nfeet carry ${forces} N\nlimit ${cap.value} N each</pre><p>Every stance in this box carries the load.</p>`;
     } else if (b.state === "out") {
       const f = allocation(a1, b1, load.value, cap.value);
       const need = f.r + f.s - load.value;
       const text =
         need > cap.value
-          ? `dual (0, ½, ½)\none foot must carry ${need.toFixed(1)} N\nfrom a rating of ${cap.value} N`
+          ? `one foot would have to carry ${need.toFixed(1)} N\nand its limit is ${cap.value} N`
           : f.r > 2 * cap.value
-            ? `the front pair must carry ${f.r.toFixed(1)} N\nfrom two ratings of ${cap.value} N`
+            ? `the front pair would have to carry ${f.r.toFixed(1)} N\nand their limit is ${cap.value} N each`
             : f.s > 2 * cap.value
-              ? `one side must carry ${f.s.toFixed(1)} N\nfrom two ratings of ${cap.value} N`
-              : "the payload leaves the support polygon";
-      info.innerHTML = `<p class="micro">Excluded, with a witness</p><pre>${span}\nbest corner of the box\n${text}</pre><p>No controller can balance any footprint here.</p>`;
+              ? `one side would have to carry ${f.s.toFixed(1)} N\nand its limit is ${cap.value} N a foot`
+              : "the load would be outside the feet";
+      info.innerHTML = `<p class="micro">Can’t work</p><pre>${span}\neven at its best corner\n${text}</pre><p>No controller can balance any stance in this box.</p>`;
     } else {
       const [am, bm] = at(b.x + b.w / 2, b.y + b.w / 2);
-      info.innerHTML = `<p class="micro">Unresolved</p><pre>${span}\nits best corner works, its worst does not</pre><p>Cheapest next test: solve the centre, a = ${am.toFixed(3)} m and b = ${bm.toFixed(3)} m, which settles at least a quarter of the box.</p>`;
+      info.innerHTML = `<p class="micro">Too close to call</p><pre>${span}\nits best corner works, its worst doesn’t</pre><p>Cheapest next test: the center, a = ${am.toFixed(3)} m and b = ${bm.toFixed(3)} m. It settles at least a quarter of the box.</p>`;
     }
   };
 

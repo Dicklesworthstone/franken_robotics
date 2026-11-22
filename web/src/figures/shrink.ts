@@ -2,11 +2,11 @@ import { $, $$, reduced, seen } from "./lib";
 
 const ORDER = ["a", "c", "d", "e", "b"];
 const NAMES: Record<string, string> = {
-  a: "Greased floor",
-  b: "Stiffer door",
-  c: "Heavier tray",
-  d: "Wet sole",
-  e: "Mat edge",
+  a: "greasy floor",
+  b: "stiff door",
+  c: "heavy tray",
+  d: "wet sole",
+  e: "mat edge",
 };
 export const fails = (s: string[]) =>
   (s.includes("a") && s.includes("b")) || (s.includes("c") && s.includes("d") && s.includes("e"));
@@ -81,8 +81,8 @@ export default function mount(root: HTMLElement) {
   const play = $<HTMLButtonElement>(root, "[data-run]");
   const label = play.innerHTML;
   const firstPair = log.findIndex((t, i) => t.why === "pair" || (t.why === "single" && i > 4));
-  chips.innerHTML = ORDER.map((e) => `<div class="chip" data-e="${e}"><b>${e}</b><small>${NAMES[e]}</small></div>`).join("");
-  const set = (s: string[]) => `{${s.join(", ")}}`;
+  chips.innerHTML = ORDER.map((e) => `<div class="chip" data-e="${e}"><b>${NAMES[e]}</b></div>`).join("");
+  const set = (s: string[]) => s.map((e) => NAMES[e]).join(", ");
   let n = 0;
   let timer = 0;
   const paint = () => {
@@ -100,21 +100,21 @@ export default function mount(root: HTMLElement) {
       .slice(0, n)
       .map(
         (t, i) =>
-          `<p${t.failed ? ' class="fails"' : ""}><span>${i + 1}</span><span>${t.why} ${set(t.set)}</span><em>${t.failed ? "fails" : "passes"}</em></p>`,
+          `<p${t.failed ? ' class="fails"' : ""}><span>${i + 1}</span><span>${set(t.set)}</span><em>${t.failed ? "breaks it" : "survives"}</em></p>`,
       )
       .join("");
     box.scrollTop = box.scrollHeight;
     say.textContent = done
-      ? `${set(kept)} replaces {c, d, e} after ${n} different tests. It is labelled minimum among pairs.`
+      ? `Found it in ${n} tests: ${set(kept)}. Those two alone are enough, and the robot copes with any other pair.`
       : !now
-        ? "All five edits together make the robot fail. Which of them are needed?"
+        ? "All five together break the robot. Which of them matter?"
         : now.keep && now.why !== "pair"
-          ? `Still failing without the rest, so the search continues inside ${set(now.keep)}.`
+          ? `Still breaks without the rest. Keep looking inside: ${set(now.keep)}.`
           : now.why === "pair" || (firstPair >= 0 && n > firstPair)
-            ? "Delta debugging has stopped at {c, d, e}: take any one away and the failure goes. Now the pairs."
+            ? "The quick search stopped at three. Now every pair, in case two are enough."
             : now.failed
-              ? "This one fails."
-              : "Passes, so these edits alone are not the cause.";
+              ? "This one breaks it."
+              : "The robot copes with that.";
     step.disabled = done;
   };
   const stop = () => {

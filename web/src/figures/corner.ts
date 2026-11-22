@@ -197,8 +197,8 @@ export default function mount(root: HTMLElement) {
     g.stroke();
     g.font = "500 24px JetBrains Mono, monospace";
     g.fillStyle = "rgba(255,255,255,.9)";
-    g.fillText("where the centre may be,", A * S + 30, 50);
-    g.fillText(`body turned ${Math.round(deg)}°`, A * S + 30, 84);
+    g.fillText("where its center can be,", A * S + 30, 50);
+    g.fillText(`turned ${Math.round(deg)}°`, A * S + 30, 84);
     if (follow) {
       const x = centre[0] * S;
       const y = size - centre[1] * S;
@@ -215,14 +215,14 @@ export default function mount(root: HTMLElement) {
     const L = len.value;
     const b = wide.value;
     current = complex(L, b, Number(res.value));
-    set("inner", b <= A ? "says it fits" : "says it cannot", b <= A ? "in" : "out");
+    set("inner", b <= A ? "fits" : "won’t fit", b <= A ? "in" : "out");
     const diag = Math.hypot(L, b);
-    set("outer", diag <= A ? "says it fits" : "says it cannot", diag <= A ? "in" : "out");
-    if (current.verdict === "fits") set("cell", "Fits: a path inside free cells", "in");
-    else if (current.verdict === "blocked") set("cell", "Cannot fit: no path, for any controller", "out");
-    else set("cell", "Not yet known at this cell size", "open");
+    set("outer", diag <= A ? "fits" : "won’t fit", diag <= A ? "in" : "out");
+    if (current.verdict === "fits") set("cell", "It fits, and there’s the path", "in");
+    else if (current.verdict === "blocked") set("cell", "It can’t fit. No path exists", "out");
+    else set("cell", "Too close to call at this detail", "open");
     const top = longest(b);
-    set("truth", `${L <= top ? "passes" : "does not pass"}; longest is ${top.toFixed(3)} m`, L <= top ? "in" : "out");
+    set("truth", `${L <= top ? "fits" : "won’t fit"}, up to ${top.toFixed(3)} m`, L <= top ? "in" : "out");
     slice();
   };
   const later = () => {

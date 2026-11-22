@@ -13,21 +13,18 @@ const cases: Record<string, Case> = {
     head: "frob design check quad-a --json",
     lines: [
       ["ok", "exit 0"],
-      ["", "all eight stages passed"],
-      ["dim", "evidence class and model identity attached"],
-      ["dim", "next_actions: frob control synth quad-a"],
+      ["", "all eight checks passed"],
+      ["dim", "next: frob control synth quad-a"],
     ],
   },
   knee: {
     stage: 6,
     head: "frob design check quad-a --json",
     lines: [
-      ["bad", "exit 2 · FROB-REF-131"],
-      ["", "stage 6, statics and sizing"],
-      ["", "operating point outside the envelope: *.knee"],
-      ["", "needs 31% more torque than the card allows"],
-      ["dim", "at the stepping-up point"],
-      ["warn", "repair 1: swap-actuator --joints '*.knee' --to qdd-l"],
+      ["bad", "exit 2 · check 6, sizing"],
+      ["", "the knees are too weak to climb a step"],
+      ["", "they need 31% more torque than these motors give"],
+      ["warn", "repair: swap-actuator --joints '*.knee' --to qdd-l"],
     ],
     fix: "swap-actuator '*.knee' → qdd-l",
   },
@@ -35,25 +32,23 @@ const cases: Record<string, Case> = {
     stage: 4,
     head: "frob design check mecanum-b --json",
     lines: [
-      ["bad", "exit 2 · FROB-REF-118"],
-      ["", "stage 4, motion"],
-      ["", "growth vector (2, 3); this class of base must have (3)"],
-      ["", "twist to wheel rates has rank 2, not 3"],
-      ["dim", "curvature passes here, so curvature is the wrong test"],
-      ["warn", "repair 1: flip the roller axes on one diagonal"],
+      ["bad", "exit 2 · check 4, motion"],
+      ["", "this base can't slide sideways"],
+      ["", "all four wheels carry their rollers the same way,"],
+      ["", "so it controls 2 directions out of 3"],
+      ["warn", "repair: flip the rollers on one diagonal"],
     ],
-    fix: "flip roller axes on one diagonal",
+    fix: "flip the rollers on one diagonal",
   },
   door: {
     stage: 7,
     head: "frob design check carrier-c --scene kitchen-17 --json",
     lines: [
-      ["bad", "exit 2 · FROB-REF-119"],
-      ["", "stage 7, place"],
-      ["", "no admissible route; bottleneck: door D"],
-      ["", "an impossibility cut holds for every path"],
-      ["dim", "retrofits from the catalogue are listed beside design edits"],
-      ["warn", "repair 1: narrow the track until the clearance complex passes"],
+      ["bad", "exit 2 · check 7, place"],
+      ["", "no route through kitchen 17"],
+      ["", "the tight spot is door D, on every possible path"],
+      ["dim", "fixes for the room are listed beside fixes for the robot"],
+      ["warn", "repair: narrow the track until it passes"],
     ],
     fix: "narrow the track",
   },
@@ -61,12 +56,11 @@ const cases: Record<string, Case> = {
     stage: 8,
     head: "frob design check scout-2 --task pick-side --json",
     lines: [
-      ["bad", "exit 2 · FROB-REF-120"],
-      ["", "stage 8, information: aliased-all-probes"],
-      ["", "worlds (0, 1) and (0, −1) read √2 and √2"],
-      ["", "and need opposite actions"],
-      ["dim", "the local observability test passes at both points"],
-      ["warn", "repair 1: add a beacon at (0, 2), which reads 1 or 3"],
+      ["bad", "exit 2 · check 8, information"],
+      ["", "from its two beacons, left and right look identical"],
+      ["", "both sides read √2, and they call for opposite moves"],
+      ["", "no amount of training can fix that"],
+      ["warn", "repair: add a beacon at (0, 2), which reads 1 or 3"],
     ],
     fix: "add a beacon at (0, 2)",
   },
@@ -105,7 +99,7 @@ export default function mount(root: HTMLElement) {
           if (repaired) out.innerHTML += `\n<span class="ok">applied: ${repaired}</span>`;
           repaired = "";
           fix.disabled = !c.fix;
-          fix.textContent = c.fix ? "Apply the first repair" : "Nothing to repair";
+          fix.textContent = c.fix ? "Apply the repair" : "Nothing to repair";
           return;
         }
       }

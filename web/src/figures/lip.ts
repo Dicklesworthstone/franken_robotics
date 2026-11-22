@@ -44,7 +44,7 @@ export default function mount(root: HTMLElement) {
       svg += `<text x="${(cx + ex) / 2}" y="${ey - 7}" text-anchor="middle" style="fill:${colour}">a ${a.toFixed(1)}</text><text x="${cx - 8}" y="${(cy + ey) / 2 + 4}" text-anchor="end">r−h ${b.toFixed(0)}</text>`;
       svg += `<path d="M${cx} ${cy}V${cy + 34 * S}m-5 -9 5 9 5 -9" fill="none" stroke="#fff" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="5" fill="#fff"/><circle cx="${ex}" cy="${ey}" r="4.5" fill="${ok ? "#4ade80" : "#fb7185"}"/>`;
       svg += `<text class="label" x="${x0}" y="${H - 22}" text-anchor="middle">${r} mm wheel</text><text x="${x0}" y="${H - 5}" text-anchor="middle" style="fill:${ok ? "#4ade80" : "#fb7185"}">${ok ? "gets over" : !grip && !torqueOk ? "slips, and stalls" : !grip ? "slips on the edge" : "stalls"}</text>`;
-      rows.innerHTML += `<tr><td style="color:${colour}">${r} mm</td><td>${a.toFixed(1)} mm</td><td class="${torqueOk ? "yes" : "no"}">${torque.toFixed(3)} N·m</td><td class="${grip ? "yes" : "no"}">${mu.toFixed(4)}</td><td class="${ok ? "yes" : "no"}">${ok ? "admitted" : "refused"}</td></tr>`;
+      rows.innerHTML += `<tr><td style="color:${colour}">${r} mm</td><td>${a.toFixed(1)} mm</td><td class="${torqueOk ? "yes" : "no"}">${torque.toFixed(3)} N·m</td><td class="${grip ? "yes" : "no"}">${mu.toFixed(4)}</td><td class="${ok ? "yes" : "no"}">${ok ? "gets over" : "stuck"}</td></tr>`;
     }
     view.innerHTML = `<svg class="chart" viewBox="0 0 ${width} ${H}" role="img" aria-label="Two wheels against the same lip, each with the triangle that sets its torque and friction">${svg}</svg>`;
   };

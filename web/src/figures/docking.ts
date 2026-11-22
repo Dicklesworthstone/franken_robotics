@@ -42,19 +42,19 @@ export default function mount(root: HTMLElement) {
     cert.classList.toggle("in", v === "ok");
     cert.classList.toggle("out", v !== "ok");
     $(root, "[data-verdict]").textContent = {
-      ok: "Docks with either motor",
-      late: "No policy exists",
-      authority: "This push cannot be recovered",
-      alias: "The two motors can look alike",
+      ok: "Stops on the mark with either motor",
+      late: "No controller can do it",
+      authority: "That first push can’t be undone",
+      alias: "The two motors look the same",
     }[v];
     $(root, "[data-why]").textContent = {
-      ok: `The readings ${f3(p.value)} ± ${f3(eps.value)} and ${f3(2 * p.value)} ± ${f3(eps.value)} never meet, so the second push can differ by the ½ it needs.`,
-      late: "The packet arrives after the last push is committed. For any motor and any sensor the two gains get the same three commands, and they need different ones.",
-      authority: `The first push must lie between 1 − U = ${f3(1 - U.value)} and (U + ½)/2 = ${f3((U.value + 0.5) / 2)}, or a later push exceeds the motor.`,
+      ok: `A weak motor reads ${f3(p.value)} ± ${f3(eps.value)} and a strong one ${f3(2 * p.value)} ± ${f3(eps.value)}. They never overlap, so the cart knows which it has and corrects in time.`,
+      late: "The reading lands after the last push. Both motors get the same three pushes and they need different ones, however good the sensor is.",
+      authority: `The first push has to be between ${f3(1 - U.value)} and ${f3((U.value + 0.5) / 2)}, or a later one asks for more than the motor has.`,
       alias: `Both can report ${f3(2 * p.value - eps.value)}, and they need ${f3(1 - 2 * p.value)} and ${f3(0.5 - 2 * p.value)} next. ${
         eps.value < top - E
-          ? `A harder first push, above ${f3(2 * eps.value)}, separates them.`
-          : `No first push helps: ε must be below (U + ½)/4 = ${f3(top)}.`
+          ? `A harder first push, above ${f3(2 * eps.value)}, tells them apart.`
+          : `No first push helps. With this motor the sensor error has to stay below ${f3(top)}.`
       }`,
     }[v];
   };
@@ -78,7 +78,7 @@ export default function mount(root: HTMLElement) {
       const y = 22 + i * 86;
       const hit = Math.abs(end.x - 1) < 1e-6 && Math.abs(end.v) < 1e-6;
       const tone = t < 3 ? "#e9f2ec" : hit ? "#4ade80" : "#fb7185";
-      svg += `<text x="0" y="${y + 30}">gain ${g}</text><path d="M${X(-0.06)} ${y + 46}H${W - 14}" stroke="rgb(190 240 212 / .25)" fill="none"/>`;
+      svg += `<text x="0" y="${y + 30}">${g === 1 ? "weak" : "strong"} motor</text><path d="M${X(-0.06)} ${y + 46}H${W - 14}" stroke="rgb(190 240 212 / .25)" fill="none"/>`;
       for (const [j, q] of path.entries())
         if (j && j <= t + 1e-9) svg += `<circle cx="${X(q.x).toFixed(1)}" cy="${y + 46}" r="3" fill="#98aba1"/>`;
       const cx = X(pos);
@@ -93,7 +93,7 @@ export default function mount(root: HTMLElement) {
         svg += `<text x="${(right ? cx + 38 : cx - 38).toFixed(1)}" y="${y + 24}" text-anchor="${right ? "start" : "end"}" style="fill:${tone}">${hit ? "stopped at 1" : `x ${f3(end.x)}, v ${f3(end.v)}`}</text>`;
       }
     }
-    carts.innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Two carts, one for each motor gain, driven by the same policy">${svg}</svg>`;
+    carts.innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Two carts, one with a weak motor and one with a strong one, driven by the same controller">${svg}</svg>`;
   };
   const drawChart = () => {
     const W = width;
@@ -103,12 +103,12 @@ export default function mount(root: HTMLElement) {
     // Left: the readings on a line. Right: which (U, ε) allow any policy.
     const X = (v: number) => 12 + (Math.max(-0.45, v) + 0.45) * ((pw - 24) / 2.35);
     const late = when.value === "late";
-    let svg = `<text class="label" x="12" y="18">${late ? "The reading comes too late to use" : "What the velocity packet can say"}</text>`;
+    let svg = `<text class="label" x="12" y="18">${late ? "The reading comes too late to use" : "What the sensor can tell you"}</text>`;
     const band = (g: number, y: number, c: string) => {
       const m = g * p.value;
       const a = X(m - eps.value);
       const b = X(m + eps.value);
-      svg += `<rect x="${a}" y="${y}" width="${Math.max(3, b - a)}" height="30" rx="6" fill="${c}" fill-opacity="${late ? 0.1 : 0.3}" stroke="${c}" stroke-opacity="${late ? 0.4 : 1}"/><circle cx="${X(m)}" cy="${y + 15}" r="4" fill="${c}"/><text x="${Math.min(b + 8, pw - 52)}" y="${y + 19}" style="fill:${c}">gain ${g}</text>`;
+      svg += `<rect x="${a}" y="${y}" width="${Math.max(3, b - a)}" height="30" rx="6" fill="${c}" fill-opacity="${late ? 0.1 : 0.3}" stroke="${c}" stroke-opacity="${late ? 0.4 : 1}"/><circle cx="${X(m)}" cy="${y + 15}" r="4" fill="${c}"/><text x="${Math.min(b + 8, pw - 100)}" y="${y + 19}" style="fill:${c}">${g === 1 ? "weak" : "strong"} motor</text>`;
     };
     band(1, 46, "#6cc8f7");
     band(2, 92, "#fbbf24");
@@ -124,18 +124,18 @@ export default function mount(root: HTMLElement) {
     svg += `<path class="axis" d="M12 182H${pw - 12}"/>`;
     for (const v of [0, 0.5, 1, 1.5])
       svg += `<path class="axis" d="M${X(v)} 182v5"/><text x="${X(v)}" y="201" text-anchor="middle">${v}</text>`;
-    svg += `<text x="${pw / 2}" y="222" text-anchor="middle">velocity reading</text>`;
+    svg += `<text x="${pw / 2}" y="222" text-anchor="middle">speed reading</text>`;
     const ox = wide ? W * 0.56 : 42;
     const oy = wide ? 0 : 246;
     const mw = wide ? W * 0.42 : W - 60;
     const MX = (u: number) => ox + (u - 0.5) * 2 * mw;
     const MY = (e: number) => oy + 196 - (e / 0.45) * 164;
-    svg += `<text class="label" x="${ox}" y="${oy + 18}">Where a policy exists</text><path d="M${MX(0.5)} ${MY(0)}L${MX(0.5)} ${MY(0.25)}L${MX(1)} ${MY(0.375)}L${MX(1)} ${MY(0)}Z" fill="#4ade80" fill-opacity="${late ? 0.03 : 0.16}"/><path d="M${MX(0.5)} ${MY(0.25)}L${MX(1)} ${MY(0.375)}" stroke="${late ? "#7c9086" : "#4ade80"}" stroke-width="2" stroke-dasharray="6 4" fill="none"/><path class="axis" d="M${MX(0.5)} ${MY(0.45)}V${MY(0)}H${MX(1)}"/>`;
+    svg += `<text class="label" x="${ox}" y="${oy + 18}">Where it works</text><path d="M${MX(0.5)} ${MY(0)}L${MX(0.5)} ${MY(0.25)}L${MX(1)} ${MY(0.375)}L${MX(1)} ${MY(0)}Z" fill="#4ade80" fill-opacity="${late ? 0.03 : 0.16}"/><path d="M${MX(0.5)} ${MY(0.25)}L${MX(1)} ${MY(0.375)}" stroke="${late ? "#7c9086" : "#4ade80"}" stroke-width="2" stroke-dasharray="6 4" fill="none"/><path class="axis" d="M${MX(0.5)} ${MY(0.45)}V${MY(0)}H${MX(1)}"/>`;
     for (const u of [0.5, 0.75, 1]) svg += `<text x="${MX(u)}" y="${MY(0) + 18}" text-anchor="middle">${u}</text>`;
     for (const e of [0.1, 0.2, 0.3, 0.4]) svg += `<text x="${ox - 8}" y="${MY(e) + 4}" text-anchor="end">${e}</text>`;
     const dead = late || eps.value >= (U.value + 0.5) / 4 - E;
-    svg += `<text x="${ox + mw / 2}" y="${MY(0) + 37}" text-anchor="middle">motor limit U across, sensor error ε up</text><circle cx="${MX(U.value)}" cy="${MY(eps.value)}" r="7" fill="${dead ? "#fb7185" : "#4ade80"}" stroke="#030705" stroke-width="3"/>`;
-    chart.innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Reading intervals for the two gains, and the region of motor limit and sensor error where a policy exists">${svg}</svg>`;
+    svg += `<text x="${ox + mw / 2}" y="${MY(0) + 37}" text-anchor="middle">motor strength across, sensor error up</text><circle cx="${MX(U.value)}" cy="${MY(eps.value)}" r="7" fill="${dead ? "#fb7185" : "#4ade80"}" stroke="#030705" stroke-width="3"/>`;
+    chart.innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="What the sensor reads for each motor, and the combinations of motor strength and sensor error that work">${svg}</svg>`;
   };
   const all = () => {
     side();

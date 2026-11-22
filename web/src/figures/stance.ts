@@ -34,29 +34,27 @@ export const width = (mm: number) => (isEdge(mm) ? EDGE : q(Math.round(mm), 1000
 export function argue(b: Q, passive: boolean): { covers: boolean; proof: string[] } {
   const corner = balance(b, PX, PY);
   const sc = springs(b, PX, PY);
-  const proof = ["corner (+, +): W = 400, P = (60, 30)"];
+  const proof = ["load 400 N over one corner"];
   if (passive) {
     const covers = sc[0]!.cmp(RATING) <= 0 && sc[3]!.cmp(ZERO) >= 0;
-    proof.push("equal springs: 100 ± 60/4a ± 30/4b", `f = (${sc.join(", ")}) N`);
-    proof.push(covers ? `largest ${sc[0]} N, rating 160 N` : `${sc[0]} N on one foot, rating 160 N`);
-    if (corner.ok && !covers) proof.push("commanded feet pass this body,", "so that verdict is withdrawn and", "the edited assumption is named");
+    proof.push("springs share it by distance", `feet carry ${sc.join(", ")} N`);
+    proof.push(covers ? `most ${sc[0]} N, limit 160 N` : `${sc[0]} N on one foot, limit 160 N`);
+    if (corner.ok && !covers) proof.push("active legs could carry it here,", "so the choice of springs decides it");
     return { covers, proof };
   }
   if (corner.ok) {
     proof.push(
-      `r = ${corner.r}, s = 200 + 15/b = ${corner.s}`,
-      `${corner.lo} ≤ t ≤ ${corner.hi}`,
-      `f = (${corner.f.join(", ")}) N`,
-      "sum 400, every foot in [0, 160]",
-      corner.lo.cmp(corner.hi) === 0 ? "zero reserve: the exact edge" : `t may vary by ${corner.hi.sub(corner.lo)} N`,
+      `front pair ${corner.r} N, near side ${corner.s} N`,
+      `feet carry ${corner.f.join(", ")} N`,
+      "total 400 N, every foot from 0 to 160",
+      corner.lo.cmp(corner.hi) === 0 ? "nothing to spare: the exact limit" : `${corner.hi.sub(corner.lo)} N to spare`,
     );
     return { covers: true, proof };
   }
   proof.push(
-    `r = ${corner.r}, s = 200 + 15/b = ${corner.s}`,
-    `last foot ≥ 0 needs t ≥ ${corner.lo}`,
-    "first foot allows t ≤ 160",
-    `dual (0, ½, ½): ${corner.lo} > 160`,
+    `front pair ${corner.r} N, near side ${corner.s} N`,
+    `the near foot would carry ${corner.lo} N`,
+    "and its limit is 160 N",
   );
   return { covers: false, proof };
 }
@@ -77,12 +75,12 @@ export default function mount(root: HTMLElement) {
     const cert = $(root, ".cert");
     cert.classList.toggle("in", covers);
     cert.classList.toggle("out", !covers);
-    $(root, "[data-head]").textContent = `b = ${b} m, payload anywhere in the rectangle`;
+    $(root, "[data-head]").textContent = `${b} m, load anywhere in the rectangle`;
     $(root, "[data-verdict]").textContent = covers
-      ? "Covers the whole payload rectangle"
+      ? "Carries the load anywhere"
       : passive
         ? "The springs overload a foot"
-        : "Excluded for every controller";
+        : "No controller can balance it";
     $(root, "[data-proof]").textContent = proof.join("\n");
     for (const p of $$<HTMLButtonElement>(root, "[data-b]"))
       p.setAttribute("aria-pressed", String(Math.abs(Number(p.dataset.b) - slider.value) < 0.01));

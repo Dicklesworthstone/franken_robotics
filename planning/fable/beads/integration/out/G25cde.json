@@ -1,0 +1,738 @@
+{
+ "group": "G25cde",
+ "needs": [
+  {
+   "bead": "BD-043",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the register and its record schema; N00-07 (U00) drafts the same ledger and depends on BD-043, so it is not the carrier here"
+  },
+  {
+   "bead": "BD-043",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-23"
+   ],
+   "note": "registry row of GATE-GAUNT-08 comes first; this bead supplies its Augur evidence"
+  },
+  {
+   "bead": "BD-129",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-31",
+    "N25e-33"
+   ],
+   "note": "the finite-tolerance amendment extends this bead and depends on it; not a prerequisite"
+  },
+  {
+   "bead": "BD-291",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-38",
+    "N25e-39"
+   ],
+   "note": "both are M4 extensions that depend on BD-291"
+  },
+  {
+   "bead": "BD-291",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "interval-box and alias-pair checkers of the first slice"
+  },
+  {
+   "bead": "BD-294",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14",
+    "N12-15",
+    "N12-13"
+   ],
+   "note": "N12-16 (conic-farkas) is M4, later than this M3 run: recorded as related under edges"
+  },
+  {
+   "bead": "BD-294",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-302",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28c-42"
+   ],
+   "note": "the ledger whose three columns report.campaign prints; N28c-44 (which adds the named-column refusal) depends on BD-302 and is related"
+  },
+  {
+   "bead": "BD-302",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-314",
+    "BD-317",
+    "N39b-46"
+   ],
+   "note": "higher-numbered seeds that consume report.campaign; N39b-46 adds --arms and --ablate; seed order forbids a dep"
+  },
+  {
+   "bead": "BD-302",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "M4 content, later milestone and higher seed; BD-352 depends on BD-302"
+  },
+  {
+   "bead": "BD-302",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-303"
+   ],
+   "note": "higher-numbered seed of the same milestone; the flag rule is applied across exporting verbs by BD-303"
+  },
+  {
+   "bead": "BD-358",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-16"
+   ],
+   "note": "taylor-box checker; BD-132 (interval-box) is already a dep"
+  },
+  {
+   "bead": "BD-358",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-100",
+    "BD-103",
+    "BD-104",
+    "BD-105"
+   ],
+   "note": "the analyses whose interval forms are enclosed; also reached through N25e-27"
+  },
+  {
+   "bead": "BD-359",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-17"
+   ],
+   "note": "checker for product-unreachable"
+  },
+  {
+   "bead": "BD-359",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-mission"
+   ],
+   "note": "registry row of mission.refute, where the baseline-pair option is confirmed; the verb itself is the existing dep BD-135"
+  },
+  {
+   "bead": "BD-360",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-42",
+    "N25e-43",
+    "N25e-44"
+   ],
+   "note": "the two §25.39 rules are built on this lane and depend on BD-360"
+  },
+  {
+   "bead": "BD-360",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-357"
+   ],
+   "note": "BD-357 is a consumer of the closure; lower-numbered seed, no order of work from BD-360 to it"
+  },
+  {
+   "bead": "BD-360",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N12-14",
+    "CARD-T-12"
+   ],
+   "note": "not blocking: exclusions stay Tested until a monotone-transport payload for the trace is admitted; CARD-T-12 is M5"
+  },
+  {
+   "bead": "BD-361",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "FD-FSYM-05"
+   ],
+   "note": "BD-019 is already a dep; the upstream speed-up is optional"
+  },
+  {
+   "bead": "BD-361",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-133"
+   ],
+   "note": "the frob-lemma mission-bundle writer; proof objects themselves come from N25d-18"
+  },
+  {
+   "bead": "BD-362",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-31"
+   ],
+   "note": "optimize group part 2 exposes fs-ascent at M3; fs-adjoint is only in group structure at M5 (N33b-14): recorded as related and as a gap"
+  },
+  {
+   "bead": "BD-362",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-329"
+   ],
+   "note": "the ladder receives the refined candidate; downstream, not a prerequisite of producing it"
+  },
+  {
+   "bead": "BD-363",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-35",
+    "N25e-37"
+   ],
+   "note": "the channel field extends this bead and depends on it"
+  },
+  {
+   "bead": "BD-363",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-45"
+   ],
+   "note": "owner decision with a fail-closed default (comparator only); the bead is built under the default"
+  },
+  {
+   "bead": "BD-425",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "an epic carries no dependencies; the atlas bead N25c-47 is the one governed by the envelope"
+  },
+  {
+   "bead": "BD-425",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N41-09",
+    "N25d-49"
+   ],
+   "note": "an epic carries no dependencies; the order of M6 epics is the owner's decision"
+  },
+  {
+   "bead": "BD-435",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-47"
+   ],
+   "note": "an epic carries no dependencies; its child N25c-30 depends on the decision"
+  },
+  {
+   "bead": "BD-435",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "an epic carries no dependencies; its pilot N25c-28 depends on the decision"
+  },
+  {
+   "bead": "BD-435",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N12-14"
+   ],
+   "note": "an epic carries no dependencies; its child N25c-30 depends on the composition checker"
+  },
+  {
+   "bead": "N25-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "a registry depends only on the conformance skeleton (BD-025) and the control registry (STD-TEST), both existing deps; BD-146 consumes the rows"
+  },
+  {
+   "bead": "N25-CX",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "Appendix N: no bead allocates catalogue numbers to counterexamples of the late subsections; the rows are entered under provisional names"
+  },
+  {
+   "bead": "N25-REF",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005"
+  },
+  {
+   "bead": "N25-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-137",
+    "BD-299"
+   ],
+   "note": "a registry never depends on a mechanism; both verb beads consume the refusal rows (BD-299 is M3)"
+  },
+  {
+   "bead": "N25c-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "the owner decision is M6, later than this M4 pilot; the pilot runs under the default"
+  },
+  {
+   "bead": "N25c-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-02"
+   ],
+   "note": "the claim-kind field extends this verb; until it lands the static core carries universal claims only"
+  },
+  {
+   "bead": "N25c-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-mission"
+   ],
+   "note": "the row of mission.transport, which records `static core at M4`"
+  },
+  {
+   "bead": "N25c-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-44"
+   ],
+   "note": "open question with a fail-closed default (cells stay unresolved with Tested trajectories)"
+  },
+  {
+   "bead": "N25c-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25e-02"
+   ],
+   "note": "the coupling budget and claim kinds of a transport certificate"
+  },
+  {
+   "bead": "N25c-03",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "no decision bead exists; the closed registry and its versioning rule are the home. Fail-closed here: finite-game with sub-certificates, otherwise Tested"
+  },
+  {
+   "bead": "N25c-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22b-06",
+    "N22c-12",
+    "N22b-08",
+    "N22c-20"
+   ],
+   "note": "shares the three treatments and both denominators; neither experiment blocks the other (U22b and U22c each drafted the pilot and the decision)"
+  },
+  {
+   "bead": "N25c-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "the fidelity ledger"
+  },
+  {
+   "bead": "N25c-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-178"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-06",
+    "N36-13"
+   ],
+   "note": "paired lower bound and the disclosure block; both under the harness BD-216"
+  },
+  {
+   "bead": "N25c-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-28",
+    "N25e-29"
+   ],
+   "note": "the law class generalizes the passive authority of this bead; same milestone, neither blocks"
+  },
+  {
+   "bead": "N25c-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-39",
+    "N25e-41",
+    "N25e-40"
+   ],
+   "note": "M4 work on this bead's fixture"
+  },
+  {
+   "bead": "N25c-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-38"
+   ],
+   "note": "M4 rule, later than this M3 bead"
+  },
+  {
+   "bead": "N25c-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-48"
+   ],
+   "note": "no bead carried the independently written model; written as N25c-48 (a throwaway experimental fixture of §25.14, not a product contact model)"
+  },
+  {
+   "bead": "N25c-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-41"
+   ],
+   "note": "the added trigger is measured at M4, after the M3 decision; it re-opens the record if it fires"
+  },
+  {
+   "bead": "N25c-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-054",
+    "BD-061",
+    "BD-060"
+   ],
+   "note": "design term, model compilation and module ports with their contract"
+  },
+  {
+   "bead": "N25c-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-121"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-17",
+   "n": 3,
+   "as": "gap",
+   "keys": [],
+   "note": "§18: no bead carries a contact interface card with a time-dependent relaxation law"
+  },
+  {
+   "bead": "N25c-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-351"
+   ],
+   "note": "BD-351 depends on this bead (edge recorded), not the reverse"
+  },
+  {
+   "bead": "N25c-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-experiment",
+    "NJL-05"
+   ],
+   "note": "the verb row and the task-cluster assignment"
+  },
+  {
+   "bead": "N25c-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19c-02",
+    "N19c-03"
+   ],
+   "note": "scale labels with the scale term of u_reg, and the unknown mask; BD-398 is already a dep"
+  },
+  {
+   "bead": "N25c-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-229"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N37-17",
+    "BD-305"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25a-18"
+   ],
+   "note": "the M3 decision takes this bead's reading: edge N25a-18 -> N25c-20 recorded"
+  },
+  {
+   "bead": "N25c-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-13"
+   ],
+   "note": "M1 revalidation by identity and dependency support (grades 1 and 2); SPEC-C-18 and BD-128 are already reached"
+  },
+  {
+   "bead": "N25c-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-31"
+   ],
+   "note": "a further amendment of the same game; same milestone, neither blocks"
+  },
+  {
+   "bead": "N25c-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-18"
+   ],
+   "note": "the mechanism exists only if KILL-AUGUR-TIE does not fire"
+  },
+  {
+   "bead": "N25c-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-45"
+   ],
+   "note": "owner decision with a fail-closed default (comparator only)"
+  },
+  {
+   "bead": "N25c-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-45"
+   ],
+   "note": "the reachability tool is a comparator outside the product, which the default already allows"
+  },
+  {
+   "bead": "N25c-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-180"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-229",
+    "N18b-10"
+   ],
+   "note": "interface maps of a scene and per-texel interface cards"
+  },
+  {
+   "bead": "N25c-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-17"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "funding a Moonshot pilot takes a slot under the cap of four"
+  },
+  {
+   "bead": "N25c-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19c-02",
+    "N19c-03"
+   ],
+   "note": "BD-398 is already a dep"
+  },
+  {
+   "bead": "N25c-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-187",
+    "BD-188"
+   ],
+   "note": "ray-kernel sensors and their timing"
+  },
+  {
+   "bead": "N25c-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N37-17",
+    "BD-305"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25c-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25d-47"
+   ],
+   "note": "several decision makers are admitted only after the schema decision"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-294",
+   "dep": "N12-16",
+   "as": "related",
+   "why": "need 1 of BD-294: the conic-farkas checker lands at M4, after the M3 repeat; its kinds join the next run"
+  },
+  {
+   "bead": "BD-302",
+   "dep": "N28c-44",
+   "as": "related",
+   "why": "need 1 of BD-302: N28c-44 specifies the same three reuse columns on report.campaign and depends on BD-302"
+  },
+  {
+   "bead": "BD-362",
+   "dep": "N33b-14",
+   "as": "related",
+   "why": "need 1 of BD-362: fs-adjoint's implicit-function module is exposed by the structure group at M5, later than this M4 bead"
+  },
+  {
+   "bead": "BD-351",
+   "dep": "N25c-18",
+   "as": "dep",
+   "why": "coverage (d) of U25c: BD-351 ranks the proposals that N25c-18 produces"
+  },
+  {
+   "bead": "N25a-18",
+   "dep": "N25c-20",
+   "as": "dep",
+   "why": "coverage (d) of U25c: the KILL-AUGUR-TIE decision reads the first measurement, which N25c-20 produces"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [
+  "N25c-48"
+ ],
+ "gaps": [
+  {
+   "section": "§33.9",
+   "what": "the implicit-function module of fs-adjoint is exposed only by the airlock group `structure` at M5 for frob-foundry (N33b-14); frob-synth needs it under `optimize` at M4",
+   "needed_by": [
+    "BD-362",
+    "N25d-13"
+   ]
+  },
+  {
+   "section": "Appendix N and Appendix M",
+   "what": "no bead allocates catalogue numbers to the 11 late counterexamples and the 18 late known answers of §25.29 to §25.39; N25-CX and the beads of U25e carry them with values and provisional names",
+   "needed_by": [
+    "N25-CX"
+   ]
+  },
+  {
+   "section": "§18",
+   "what": "a contact interface card that carries a time-dependent relaxation law, so that a probe on a compliant pad can be simulated on the referee",
+   "needed_by": [
+    "N25c-17"
+   ]
+  },
+  {
+   "section": "§12.4",
+   "what": "a decision by the Lemma lead on whether refinement (alternating-simulation) proofs get a proof kind of their own",
+   "needed_by": [
+    "N25c-03"
+   ]
+  }
+ ],
+ "fixes": []
+}

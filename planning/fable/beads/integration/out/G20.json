@@ -1,0 +1,432 @@
+{
+ "group": "G20",
+ "needs": [
+  {
+   "bead": "BD-078",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20b-24"
+   ],
+   "note": "the OPEN-SENS-2 decision is M2 and itself depends on BD-078; the default (Q at most 2^40, the proposed menu) is in force until it rules"
+  },
+  {
+   "bead": "BD-098",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N29a-18"
+   ],
+   "note": "the snapshot container is M2 and depends on BD-098; at M1 the Sensorium section is written into the restore set of its dependency BD-081"
+  },
+  {
+   "bead": "BD-098",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22a-03"
+   ],
+   "note": "the estimator and controller histories are stored by their owner (N22a-03, which depends on BD-098); not a prerequisite"
+  },
+  {
+   "bead": "BD-099",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-098"
+   ],
+   "note": "samples are published and delivered through the observation service and its queues"
+  },
+  {
+   "bead": "BD-099",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20a-15",
+    "N20a-16",
+    "N20a-17",
+    "N20a-19"
+   ],
+   "note": "sibling proprioceptive sensors; each of them depends on BD-099, not the reverse"
+  },
+  {
+   "bead": "BD-099",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-074"
+   ],
+   "note": "BD-099 tests the encoder on a rigid transmission; the backlash reversal row (KA-511) is owned by N20a-13 and BD-238"
+  },
+  {
+   "bead": "BD-102",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-15",
+    "N13-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-102",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-110"
+   ],
+   "note": "BD-110 depends on BD-102 (it calls the analysis at stage 5)"
+  },
+  {
+   "bead": "BD-102",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28a-04"
+   ],
+   "note": "the analysis contract with memo keys is the piece BD-102 needs; the memo graph BD-111 is a higher-numbered seed that depends on BD-110 and so on BD-102: related"
+  },
+  {
+   "bead": "BD-119",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-118 is already a dep and itself depends on BD-116 and BD-117"
+  },
+  {
+   "bead": "BD-119",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-090 (BLAKE3 host hashes over committed chunks)"
+  },
+  {
+   "bead": "BD-120",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-114 (the filter manifest with its error convention and the transition matrices)"
+  },
+  {
+   "bead": "BD-120",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-010"
+   ],
+   "note": "fs-ad is bedrock-direct, not behind the airlock; frob-lie's generic-scalar reference path (BD-010) is the admitted route to forward duals"
+  },
+  {
+   "bead": "BD-120",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28a-04"
+   ],
+   "note": "the analysis contract (memo keys, screening label for the Gramian part of A-17); the generated analyze verbs N28a-05 and the memo graph BD-111 follow and are not prerequisites"
+  },
+  {
+   "bead": "BD-134",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-129 (the docking family as a finite observation game); the comparator N25c-20 is only a cross-check"
+  },
+  {
+   "bead": "BD-134",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20b-13"
+   ],
+   "note": "the docking fixture in exact rationals (model, boundary, late-packet exclusion); its specification N10b-08 arrives through SPEC-C-19"
+  },
+  {
+   "bead": "BD-187",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-229"
+   ],
+   "note": "M3; at M2 scene packs carry class diffuse with provenance assumed"
+  },
+  {
+   "bead": "BD-187",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-237",
+    "BD-238"
+   ],
+   "note": "M3 beads that depend on BD-187"
+  },
+  {
+   "bead": "BD-187",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-188"
+   ],
+   "note": "BD-188 depends on BD-187 (seed order); at BD-187 every ray of a frame shares the sample instant"
+  },
+  {
+   "bead": "BD-188",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19a-06"
+   ],
+   "note": "zone lighting levels land at M3; at M2 automatic exposure reads a declared constant level and the row is re-run when N19a-06 lands"
+  },
+  {
+   "bead": "BD-188",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20b-43",
+    "N21a-27"
+   ],
+   "note": "the ray kernel family (per-ray instants on moving primitives) and the M2 step profile whose phase ledger reports ray-stage time"
+  },
+  {
+   "bead": "BD-189",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-17",
+    "N21a-22",
+    "N21a-09"
+   ],
+   "note": "exact-integer math mode, the exact kernel class and the one radix sort K-sort"
+  },
+  {
+   "bead": "BD-189",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-203"
+   ],
+   "note": "seed order forbids BD-189 depending on BD-203; BD-203 includes the Sensorium slabs in its fence snapshots; backend snapshot primitives come with BD-172 and BD-174, already deps"
+  },
+  {
+   "bead": "BD-190",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-030 (K-x-pred, K-g-pred and the boundary corpus)"
+  },
+  {
+   "bead": "BD-190",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25c-20"
+   ],
+   "note": "the scenario-tree linear-program comparator used as the grid's oracle"
+  },
+  {
+   "bead": "BD-190",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-10"
+   ],
+   "note": "row 15 (boundary screen) of the plan-time pilot ledger; the re-run itself is BD-030, already a dep"
+  },
+  {
+   "bead": "BD-215",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-181"
+   ],
+   "note": "the batch property reuses the batch-composition invariance test"
+  },
+  {
+   "bead": "BD-215",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-229",
+    "N19a-44"
+   ],
+   "note": "M3; the optical-against-friction separation is measured there (GATE-HAB-05), not a prerequisite of the M2 test"
+  },
+  {
+   "bead": "BD-215",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32b-10"
+   ],
+   "note": "the viewer page with attach and detach (M2); the dashboard and overlays BD-300 are M3 and not needed"
+  },
+  {
+   "bead": "BD-237",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-06"
+   ],
+   "note": "optical cards and optical volumes with schedules; the optical map itself is its dependency BD-229"
+  },
+  {
+   "bead": "BD-237",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N19c-03"
+   ],
+   "note": "the unknown mask of real-place ingestion is M5; at M3 the unknown-region rule is tested on a synthetic region"
+  },
+  {
+   "bead": "BD-238",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20b-06"
+   ],
+   "note": "the calibration self-check that is the first check of the extrinsic-bump row; BD-238 is the capstone of GATE-SENS-14 and depends on this component"
+  },
+  {
+   "bead": "BD-238",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-139"
+   ],
+   "note": "the Reality status guard and reality line (M1); the claim product type is BD-005; the guard that raises 447 is N20b-18, which depends on BD-238"
+  },
+  {
+   "bead": "BD-238",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N14a-08"
+   ],
+   "note": "preflight stage 1 (Form), where a sensor without frame, rate or clock and a failing card are refused"
+  },
+  {
+   "bead": "BD-239",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-205"
+   ],
+   "note": "2n perturbed children of one snapshot as one batch (run.fork with state perturbations), commands replayed open loop"
+  },
+  {
+   "bead": "BD-239",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-011"
+   ],
+   "note": "the retraction on the group; the error convention comes from BD-114 through BD-120"
+  },
+  {
+   "bead": "BD-240",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-07"
+   ],
+   "note": "the search-method interface with proposals over legal edits; nemesis.search (BD-273) is a higher-numbered seed and stays related"
+  },
+  {
+   "bead": "BD-240",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-126",
+    "BD-122"
+   ],
+   "note": "the mission file's declared world family, probe family and success predicate, and the task file they attach to"
+  },
+  {
+   "bead": "BD-241",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-15",
+    "N13-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-241",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-109"
+   ],
+   "note": "the first four templates; BD-246 is a higher-numbered seed (related); the all-templates run is the e2e bead N20b-03, which depends on BD-246"
+  },
+  {
+   "bead": "BD-242",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-238"
+   ],
+   "note": "per-field provenance is on the cards from BD-099 (through BD-187); BD-238 completes the failure-mode table and reads this bead's self-check through N20b-06"
+  },
+  {
+   "bead": "N20-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20b-45",
+    "N38b-05"
+   ],
+   "note": "the four late shortcuts stay pending slots L-a to L-d until the number allocation N20b-45; a registry bead does not wait on it"
+  },
+  {
+   "bead": "N20-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20b-45",
+    "N20b-20"
+   ],
+   "note": "the late answers are stated in N20b-28, -32, -39, -40, -41 and carried as pending slots by N20b-20; numbers are allocated by N20b-45"
+  },
+  {
+   "bead": "N20-KA",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the known-answer registry file, row schema and meta-test"
+  },
+  {
+   "bead": "N20-REF",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20b-45"
+   ],
+   "note": "N20-REF registers the three reserved slots with number pending; N20b-45 allocates the numbers; the file and loader are its dependency BD-005"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-102",
+   "dep": "BD-111",
+   "as": "related",
+   "why": "need 3 of BD-102 names BD-111; seed order and a cycle through BD-110 forbid a dep"
+  },
+  {
+   "bead": "BD-241",
+   "dep": "BD-246",
+   "as": "related",
+   "why": "need 2 of BD-241 names BD-246; a seed never depends on a higher-numbered seed"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

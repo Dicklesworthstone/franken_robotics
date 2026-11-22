@@ -61,7 +61,7 @@ found errors in claims that earlier revisions of this README repeated; they are 
 | Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper and had the verdicts challenged by two other model families. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus two later three-auditor sweeps. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
 | Which plan is canonical? | **A v1.0 hybrid is meant to be, and it is not assembled.** An [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) says v1.0 will replace base v0.2 at its current path and absorb the other two editions. Its Phase 1 text (§0 to §37) has completed reconciliation, and Phase 2 drafting is underway. Until it is assembled, the file at that path is still v0.2, and this README uses base-plan names. The charter keeps them (`frob-` crates; `frob`, `frobd`, `frob-mcp`) and adds `frob-verify` and `frob-tui`. Neon keeps the prefix on its own 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
 | Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. This settles base OPEN-PROG-1, which blocked the first push |
-| What happens next? | Apply the mathematical review to the v1.0 drafts, write the Phase 2 parts (verification, gates, risks, milestones, beads, appendices), assemble v1.0, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
+| What happens next? | Apply the two reviews and the completeness audit to the v1.0 drafts, write the missing Phase 2 parts (verification, the ten-fold test, the gate register, seven appendices), assemble v1.0, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
 
 The plans are written to be falsifiable. Each bet names the measurement that would kill it, and each kill
 gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
@@ -201,8 +201,8 @@ form, and no number is written as a result.
 | Inputs compiled | A [digest of Astra](planning/fable/blend/ASTRA_DIGEST.md), a [digest of Neon](planning/fable/blend/NEON_DIGEST.md) with a 24-item "doubtful or wrong" list, and a [catalog of 112 distinct ideas](planning/fable/blend/IDEA_CATALOG.md) merged from about 225 entries |
 | Phase 1 drafts | **Complete** at 21:14: [13 part files](planning/fable/blend/parts/), about 331,600 words, §0 to §37 of 47 |
 | Reconciliation | **One pass done** (21:20 to 21:24): colliding refusal codes renumbered, ten binding decisions recorded, and inventories generated: 421 gate, kill-gate and admission-gate identifiers, 141 open questions, 169 verbs, 296 refusal codes |
-| Phase 2 drafts | **In progress.** The brief covers verification, the ten-fold test, gates, risks, milestones, work packages, beads, the first session and appendices. Draft material includes upstream requests, reference assets and refusal codes: Appendix O is final, and [Appendices F to J](planning/fable/blend/parts2/P16b.md) are partly drafted (that file ends with a `CONTINUE` marker). [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
-| Reviews of the drafts | **Done, not applied.** An independent [mathematical review](planning/fable/blend/REVIEW_MATH.md) found 26 problems (2 critical, 7 major, 17 minor). A [coherence review](planning/fable/blend/REVIEW_COHERENCE.md) found 44 (9 where two binding texts cannot both be implemented), among them five different thresholds for one mixed-batch experiment, two closed registries of proof kinds, and different verb names for the same actions. Both give replacement text. The Phase 1 parts have not been edited since |
+| Phase 2 drafts | **In progress.** The brief covers verification, the ten-fold test, gates, risks, milestones, work packages, beads, the first session and appendices. Drafted so far: [§41 to §44, §46 and §47](planning/fable/blend/parts2/P14.md) (risks, open questions, milestones, work packages, first session, release rubric), [§45](planning/fable/blend/parts2/P15.md) (442 beads; a mechanical check here found 1,091 dependencies, all pointing to a lower number, one root and one sink), and [Appendices F to J and L](planning/fable/blend/parts2/P16b.md). The brief calls the [refusal registry](planning/fable/blend/APPENDIX_O_REFUSALS.md) final text for Appendix O, but the coherence review asks for changes to it (F28). Not written: §38 to §40 and Appendices A to E, K, M and N. [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
+| Reviews of the drafts | **Done, not applied.** An independent [mathematical review](planning/fable/blend/REVIEW_MATH.md) found 26 problems (2 critical, 7 major, 17 minor). A [coherence review](planning/fable/blend/REVIEW_COHERENCE.md) found 44 (9 where two binding texts cannot both be implemented), among them five different thresholds for one mixed-batch experiment, two closed registries of proof kinds, and different verb names for the same actions. Both give replacement text. A [completeness audit](planning/fable/blend/GAPFILL_1.md) of the parts against Astra and Neon offers 18 insertion blocks; of the 82 rows in its coverage table, 12 are marked missing and 11 weaker. The Phase 1 parts have not been edited since |
 | Assembly | **Not started.** The file at the base path is still v0.2 |
 
 **What the charter and drafts fix.** 43 Rust crates (38 core, 5 annex) with a 561 kLoC cap and a closed list ("a new crate is
@@ -228,12 +228,13 @@ rival, on a sealed suite, with a partial gate at M3 and the tournament at M7. If
 the report gives the number and does not use the word "ten-fold". BET-14 is the tie rule: if a short robust program
 over an incumbent engine ties, the charter's words are "say so and ship the layer".
 
-**Read the drafts as drafts.** They are unreviewed, unassembled, and refer to parts that do not exist. Two caveats
-affect what they inherit. The verdict register they bind to is contested and unadjudicated (above). And the Neon
-digest was written at 20:04, before Neon's rewrites at 20:08 and 21:51, so some of its corrections describe text that
-has since changed. The lead extracted [the difference](planning/fable/blend/NEON_DELTA_SINCE_DIGEST.diff) at 21:19,
-which covers only the first. The review also found two statements that two chapters make differently (how padded sums
-are signed, and which differential the variational step uses); those are the two critical findings.
+**Read the drafts as drafts.** They are reviewed but uncorrected, unassembled, and refer to parts that do not exist. Two
+caveats affect what they inherit. The verdict register they bind to is contested and unadjudicated (above). And both
+digests are stale. The Neon digest (20:04) predates Neon's rewrites at 20:08 and 21:51; the lead extracted
+[the difference](planning/fable/blend/NEON_DELTA_SINCE_DIGEST.diff) at 21:19, which covers only the first. The Astra
+digest (19:59) predates Astra's rewrites at 21:26 and 21:43; the completeness audit lists what the first of those
+added. The mathematical review's two critical findings are places where two chapters disagree: how padded sums are
+signed, and which differential the variational step uses.
 
 ---
 
@@ -316,9 +317,9 @@ frontier (published, not productized by mainstream robot simulators).
 **Reviewed, with corrections pending.** The [mathematical review](planning/fable/blend/REVIEW_MATH.md) of the v1.0 drafts
 confirms the Sarrus and Bennett mobilities and narrows some of the claims around them. A subgroup lattice explains
 Sarrus but not Bennett, whose mobility follows from metric conditions (F-04). The (H, K) gait atlas cannot separate trot, pace and walk with
-the ambient group the draft states (F-03). An α-theory test certifies that a root is real only under a stronger
-condition than the draft uses (F-05). Exact momentum conservation holds only for the symmetries a potential keeps
-(F-15). These concern the drafts, not base v0.2, which has not been reviewed this way.
+the ambient group the draft states (F-03). The draft's test for a real root is reversed: a ball disjoint from its
+conjugate proves that the root is not real (F-05). Exact momentum conservation holds only for the symmetries a
+potential keeps (F-15). These concern the drafts, not base v0.2, which has not been reviewed this way.
 
 Proofs are typed and the weakest link wins. A result is `Proved`, `Certified`, `Tested` or `Estimated`;
 "'Verified' is not a class and the word is not used for results" (§10.2). The base plan does not claim that the
@@ -622,8 +623,9 @@ Measurements of complete robot dynamics, sensor pipelines and the integrated des
 
 The base plan registers ten admission gates (`INT-*`, one per foundation), about fifty convergence gates and
 nine kill gates. The v1.0 drafts name 421 gate, kill-gate and admission-gate identifiers in the lead's inventory, but
-the gate register (§40) is not written and several thresholds conflict, so treat that count as provisional. "No self-certification": a gate's PASS is
-recorded by a fresh-context session, and every gate has a registered negative control that it must catch.
+the gate register (§40) is not written and several thresholds conflict, so treat that count as provisional. "No
+self-certification": a gate's PASS is recorded by a fresh-context session, and every gate has a registered negative
+control that it must catch.
 
 | Kill gate | Trigger | Fallback |
 |---|---|---|
@@ -665,8 +667,9 @@ four each) and are "not acceptance evidence".
 The v1.0 charter renames and extends the list to nine: **M0** spine and airlock; **M1** CPU referee studio plus the
 first mission slice on the CPU; **M2** batch, GPU backends and mixed batches; **M3** places, tasks, adversaries,
 qualification and the partial ten-fold gate; **M4** amortized control, co-design and mission queries at scale; **M5**
-proofs, reality and manufacture; **M6** frontier physics; **M7** the ten-fold tournament; **M8** frontier delivery. The
-work packages and beads behind them are Phase 2 parts.
+proofs, reality and manufacture; **M6** frontier physics; **M7** the ten-fold tournament; **M8** frontier delivery. Phase
+2 drafts 80 work packages ([§44](planning/fable/blend/parts2/P14.md)) and 442 beads
+([§45](planning/fable/blend/parts2/P15.md)) behind them. None has been created with `br`.
 
 ---
 
@@ -743,7 +746,7 @@ planning/fable/mor/ brenner/ duel/                  round 2 on base v0.2: audite
                                                     challenges, three-model duel
 planning/fable/graveyard/ artifact/                 graveyard harvest and decision-core compilation
 planning/fable/blend/                               v1.0 in progress: charter, digests, idea catalog, 13 draft parts,
-                                                    inventories, Phase 2 brief and first appendices, two reviews
+                                                    inventories, Phase 2 brief and parts, two reviews, gap audit
 planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers (169 payloads plus manifest)
 ```
 

@@ -54,14 +54,14 @@ found errors in claims that earlier revisions of this README repeated; they are 
 
 | Question | Answer |
 |---|---|
-| Is there a design? | **Yes, three, and a fourth in assembly.** The [base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) (3,666 lines), the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) (3,317 lines) and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,654 long lines) were written in parallel and none cites another. A [hybrid v1.0](#the-v10-hybrid-being-assembled) is drafted through §37 and not yet assembled |
+| Is there a design? | **Yes, three, and a fourth in assembly.** The [base plan v0.2](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) (3,666 lines), the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) (3,424 lines) and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) (1,694 long lines) were written in parallel and none cites another. A [hybrid v1.0](#the-v10-hybrid-being-assembled) is drafted through §37 and not yet assembled |
 | Is there a studio implementation? | **The studio is planned.** The base plan's first session (§37) is meant to end with "two honest measurements" and "a two-second humanoid rollout on the referee. It does not end with a forest of empty crates." |
 | Can I run anything? | **Only the planning checks.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. [`planning/verify_plan_math.py`](planning/verify_plan_math.py) re-checks Neon's arithmetic, crate table, bead graph and cross-references. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
 | Has anything been measured? | **Nothing of FrankenRobotics.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s; exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. A separate §11.2 experiment tested normalization arithmetic on the same three GPUs. Round-2 evidence packs also timed CPU MuJoCo on the M5 Ultra, under background load, to size the referee. No FrankenRobotics physics step, environment step or training run has been measured, and neither round ran an incumbent training loop |
-| Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper and had the verdicts challenged by two other model families. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus a later three-auditor sweep. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
+| Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper and had the verdicts challenged by two other model families. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus two later three-auditor sweeps. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
 | Which plan is canonical? | **A v1.0 hybrid is meant to be, and it is not assembled.** An [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) says v1.0 will replace base v0.2 at its current path and absorb the other two editions. Its Phase 1 text (§0 to §37) has completed reconciliation, and Phase 2 drafting is underway. Until it is assembled, the file at that path is still v0.2, and this README uses base-plan names. The charter keeps them (`frob-` crates; `frob`, `frobd`, `frob-mcp`) and adds `frob-verify` and `frob-tui`. Neon keeps the prefix on its own 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
 | Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. This settles base OPEN-PROG-1, which blocked the first push |
-| What happens next? | Write the Phase 2 parts of v1.0 (verification, gates, risks, milestones, beads, appendices), assemble it, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
+| What happens next? | Apply the mathematical review to the v1.0 drafts, write the Phase 2 parts (verification, gates, risks, milestones, beads, appendices), assemble v1.0, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
 
 The plans are written to be falsifiable. Each bet names the measurement that would kill it, and each kill
 gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
@@ -136,7 +136,7 @@ morphologies on one GPU grid.
 | **Organizing idea** | "A robot proving ground and a robot design studio built as one mathematical instrument." Algebra first, numbers last | Inverse mission design: the feasible set of designs, exclusions and the deciding experiment. Success means 10× less time to an independently accepted engineering answer | "Change the unit of computation, proof, world interaction, and verification": campaign-time quotienting, heterogeneous-morphology GPU execution, stratified certificates, spec-to-silicon packets |
 | **Shape** | Parts 0–V, §1–§38, Appendices A–J. 17 named subsystems, 28 crates plus `xtask` (361 kLoC cap) | 20 sections. Work packages W01–W43, milestones M0–M8 | 12 bounded contexts, 51 crates, 5 binaries. 16 bets, 16 North-Star scenarios, M0–M6 |
 | **Delivery seed** | 125 beads, BD-001 to BD-125 (M0–M2 detailed, M3+ as epics); a first-session script (§37) | Dependency graph of 43 work packages; a first session around a 2R arm and a wheel-on-lip fixture (§15.2) | 100 beads to one terminal sink (BD-096), checked acyclic by `verify_plan_math.py` |
-| **Evidence it carries** | Study of six sibling projects' plans, seven code audits, an idea-wizard pass (30 → 5 → 15), one internal review round | Analytic results, native pilots on the M5 Ultra and both RTX 4090s, its own audit and duel, and a reproduction bundle with 169 verified payloads | Round 1 in [`planning/`](planning/): modes-of-reasoning audit, three-model duel (90+ ideas → 39 proposals → 78 scores), Brenner session (13 killed hypotheses, K-01 to K-13), six audit passes listed in its Appendix E.2 |
+| **Evidence it carries** | Study of six sibling projects' plans, seven code audits, an idea-wizard pass (30 → 5 → 15), one internal review round | Analytic results, native pilots on the M5 Ultra and both RTX 4090s, its own audit and duel, and a reproduction bundle with 169 verified payloads | Round 1 in [`planning/`](planning/): modes-of-reasoning audit, three-model duel (90+ ideas → 39 proposals → 78 scores), Brenner session (13 killed hypotheses, K-01 to K-13), seven audit passes listed in its Appendix E.2 |
 
 **Where they agree.**
 
@@ -201,7 +201,8 @@ form, and no number is written as a result.
 | Inputs compiled | A [digest of Astra](planning/fable/blend/ASTRA_DIGEST.md), a [digest of Neon](planning/fable/blend/NEON_DIGEST.md) with a 24-item "doubtful or wrong" list, and a [catalog of 112 distinct ideas](planning/fable/blend/IDEA_CATALOG.md) merged from about 225 entries |
 | Phase 1 drafts | **Complete** at 21:14: [13 part files](planning/fable/blend/parts/), about 331,600 words, §0 to §37 of 47 |
 | Reconciliation | **One pass done** (21:20 to 21:24): colliding refusal codes renumbered, ten binding decisions recorded, and inventories generated: 421 gate, kill-gate and admission-gate identifiers, 141 open questions, 169 verbs, 296 refusal codes |
-| Phase 2 drafts | **In progress.** The brief covers verification, the ten-fold test, gates, risks, milestones, work packages, beads, the first session and appendices. Draft material includes upstream requests, reference assets and refusal codes. [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
+| Phase 2 drafts | **In progress.** The brief covers verification, the ten-fold test, gates, risks, milestones, work packages, beads, the first session and appendices. Draft material includes upstream requests, reference assets and refusal codes: Appendix O is final, and [Appendices F to J](planning/fable/blend/parts2/P16b.md) are partly drafted (that file ends with a `CONTINUE` marker). [Phase 2 brief](planning/fable/blend/PHASE2_BRIEF.md) |
+| Mathematical review | **Done, not applied.** An independent, read-only [review](planning/fable/blend/REVIEW_MATH.md) of the mathematical chapters found 26 problems (2 critical, 7 major, 17 minor) and gives replacement text. The Phase 1 parts have not been edited since |
 | Assembly | **Not started.** The file at the base path is still v0.2 |
 
 **What the charter and drafts fix.** 43 Rust crates (38 core, 5 annex) with a 561 kLoC cap and a closed list ("a new crate is
@@ -229,8 +230,10 @@ over an incumbent engine ties, the charter's words are "say so and ship the laye
 
 **Read the drafts as drafts.** They are unreviewed, unassembled, and refer to parts that do not exist. Two caveats
 affect what they inherit. The verdict register they bind to is contested and unadjudicated (above). And the Neon
-digest was written at 20:04, before Neon's last rewrite at 20:08, so some of its corrections describe text that has
-since changed. The lead has since extracted [the difference](planning/fable/blend/NEON_DELTA_SINCE_DIGEST.diff).
+digest was written at 20:04, before Neon's rewrites at 20:08 and 21:51, so some of its corrections describe text that
+has since changed. The lead extracted [the difference](planning/fable/blend/NEON_DELTA_SINCE_DIGEST.diff) at 21:19,
+which covers only the first. The review also found two statements that two chapters make differently (how padded sums
+are signed, and which differential the variational step uses); those are the two critical findings.
 
 ---
 
@@ -309,6 +312,13 @@ frontier (published, not productized by mainstream robot simulators).
 | C-13 | Estimation and control live on groups [S/F] | Euclidean filters | Invariant EKF on SE₂₊ₖ(3); control errors as g_d⁻¹·g; centroidal MPC over contact cones |
 | C-14 | Kernels are derived, dimension-typed and certified [F] | Hand-written kernels and derivatives in three languages | Straight-line programs with dimension checking and automatic differentiation; identities checked by FrankenSymPy and bound to a content hash |
 | C-15 | Evidence is a test martingale [S] | p-values at a fixed sample size | Stop at any time with the error rate intact (Ville's inequality) |
+
+**Reviewed, with corrections pending.** The [mathematical review](planning/fable/blend/REVIEW_MATH.md) of the v1.0 drafts
+confirms the Sarrus and Bennett mobilities and narrows some of the claims around them. A subgroup lattice explains
+Sarrus but not Bennett, whose mobility follows from metric conditions (F-04). The (H, K) gait atlas cannot separate trot, pace and walk with
+the ambient group the draft states (F-03). An α-theory test certifies that a root is real only under a stronger
+condition than the draft uses (F-05). Exact momentum conservation holds only for the symmetries a potential keeps
+(F-15). These concern the drafts, not base v0.2, which has not been reviewed this way.
 
 Proofs are typed and the weakest link wins. A result is `Proved`, `Certified`, `Tested` or `Estimated`;
 "'Verified' is not a class and the word is not used for results" (§10.2). The base plan does not claim that the
@@ -483,7 +493,7 @@ clusters of at most seven per task", and treats imported text as data, "never in
 
 Astra's interface has the same shape under different names (`frobot design patch`, `study plan|submit|compare`,
 `run replay|fork`, `experiment suggest`) and adds six inverse queries, among them `mission.synthesize`,
-`mission.refute` and `result.revalidate`. Neon's `frob-mcp` plans 42 tools in seven clusters with
+`mission.refute` and `result.revalidate`. Neon's `frob-mcp` plans 46 tools in seven clusters with
 `job_poll`, `job_stream` and `job_cancel`.
 
 ---
@@ -529,11 +539,12 @@ headline was "later re-measured two orders of magnitude lower".
 
 Astra combines exact calculations, numerical simulations and measured performance tests. Its reduced cart model integrates wheel, chassis and winding dynamics with penalty contact. The integrated Franken Robotics gym and design studio are planned.
 
-- **Neon's consistency checker** (verified at `d18b5a1`). `python3 -I -B planning/verify_plan_math.py` recomputes Neon's 16 numerical
-  cards, its 51-crate budget table, its 100-bead graph (no cycles, one sink), its 13 families of cross-references and
-  its worked `.fbot`, `.ftask` and JSON examples. It reported zero errors on the 1,654-line Neon plan at that revision. It checks that the
-  plan is internally consistent, which is not the same as checking that the design works, and its file path is
-  hard-coded to the author's machine (change `ROOT` to run it elsewhere).
+- **Neon's consistency checker** (passing at `1f5703d`). `python3 -I -B planning/verify_plan_math.py` recomputes Neon's 16
+  numerical cards, its 51-crate budget table, its 100-bead graph and crate layering, its 13 families of cross-references,
+  its 46 MCP tools and its worked `.fbot`, `.fmodule` and `.ftask` examples with a real recursive-descent parser. It
+  reports zero errors on the 1,694-line Neon plan. It checks that the plan is internally consistent, which is not the
+  same as checking that the design works, and its file path is hard-coded to the author's machine (change `ROOT` to run
+  it elsewhere).
 - **Incumbent timings behind round 2** (measured, under background load). Evidence packs H-01, H-11, H-15 and H-19 ran
   CPU MuJoCo 4.0.1 on the M5 Ultra to size the referee and the precision risk: for example 50,612 steps/s on one
   thread for a 27-DoF humanoid, and 410,000 steps/s on 36 threads for a Go2. They are the incumbent's numbers, and they
@@ -728,7 +739,7 @@ planning/fable/mor/ brenner/ duel/                  round 2 on base v0.2: audite
                                                     challenges, three-model duel
 planning/fable/graveyard/ artifact/                 graveyard harvest and decision-core compilation
 planning/fable/blend/                               v1.0 in progress: charter, digests, idea catalog, 13 draft parts,
-                                                    inventories, Phase 2 brief
+                                                    inventories, Phase 2 brief and first appendices, math review
 planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers (169 payloads plus manifest)
 ```
 

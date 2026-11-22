@@ -76,7 +76,7 @@ node_modules/
 
 # === Planning scratch copies ===
 # Working backups the planning agents keep beside files that git already versions.
-/planning/**/parts_backup_*/
+/planning/**/parts*_backup_*/
 
 # === Python (planning reproduction scripts, oracle capture tooling, bindings/) ===
 __pycache__/

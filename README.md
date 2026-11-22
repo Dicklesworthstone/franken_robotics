@@ -58,10 +58,10 @@ found errors in claims that earlier revisions of this README repeated; they are 
 | Is there a studio implementation? | **The studio is planned.** The base plan's first session (§37) is meant to end with "two honest measurements" and "a two-second humanoid rollout on the referee. It does not end with a forest of empty crates." At 22:18 EST on 2026-11-21 a first working slice had been started (tracker issue `frob-cys`: run a FrankenSim G1 episode from a clean checkout) and none of it was committed |
 | Can I run anything? | **Only the planning checks.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. [`planning/verify_plan_math.py`](planning/verify_plan_math.py) re-checks Neon's arithmetic, crate table, bead graph and cross-references. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
 | Has anything been measured? | **Planning experiments have run on the target hardware.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s; exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. Astra also ran normalization arithmetic (§11.2) and a sampled slider with three physics updates (§9.1) on those GPUs. Round-2 evidence packs also timed CPU MuJoCo on the M5 Ultra, under background load, to size the referee. No FrankenRobotics physics step, environment step or training run has been measured, and neither round ran an incumbent training loop |
-| Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper and had the verdicts challenged by two other model families. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus two later three-auditor sweeps. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
+| Have the plans been reviewed? | **Each by a different process.** Base: one internal three-reviewer round (§0.6; its review log, Appendix K, is cited but absent) and round 2 ("fable"), which audited its claims against incumbents, tested 24 hypotheses on paper, had the verdicts challenged by two other model families and then adjudicated the challenges. Neon: round 1 (16 claims: 9 partially supported, 6 hypothesis, 1 rejected, 0 verified; a three-model idea duel; a Brenner session) plus two later three-auditor sweeps. Astra: its own reasoning audit and a 3 × 3 duel, with five of seven audited claims verified in scope (§20.4) |
 | Which plan is canonical? | **A v1.0 hybrid is meant to be, and it is not assembled.** An [integration charter](planning/fable/blend/INTEGRATION_CHARTER.md) says v1.0 will replace base v0.2 at its current path and absorb the other two editions. Its Phase 1 text (§0 to §37) has completed reconciliation, and Phase 2 is drafted except for Appendix K. Until it is assembled, the file at that path is still v0.2, and this README uses base-plan names. The charter keeps them (`frob-` crates; `frob`, `frobd`, `frob-mcp`) and adds `frob-verify` and `frob-tui`. Neon keeps the prefix on its own 51-crate map. Astra proposes `fr-robot-*` packages and a `frobot` CLI |
 | Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. This settles base OPEN-PROG-1, which blocked the first push |
-| What happens next? | Apply the two reviews and the completeness audit to the v1.0 drafts, write Appendix K, assemble v1.0, adjudicate the contested verdicts, convert the plan to beads, then start M0 |
+| What happens next? | Apply the two reviews and the completeness audit to the v1.0 drafts, fold the adjudicated verdicts in, write Appendix K, assemble v1.0, convert the plan to beads, then start M0 |
 
 The plans are written to be falsifiable. Each bet names the measurement that would kill it, and each kill
 gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
@@ -165,19 +165,27 @@ Two independent auditors checked 76 of its 94 claims (31 verified, 39 partially 
 the other 18 are unaudited). Its answer to "which mechanisms give a tenfold faster accepted decision?" is that no
 single one does. The thesis that survives is a conjunction: decide many designs per agent turn, train few of them,
 stop early, search for failures, and measure time to an independently accepted answer against the strongest composed
-incumbent. The audited numbers bound every edition's headline:
+incumbent. The audited numbers bound every edition's headline. An adjudication at 22:19 has since revised several of
+them:
 
 - An infinitely fast environment step speeds training by at most 7.8× on one incumbent stack and 1.4× on another.
   An incumbent already measures 2.55 M humanoid steps/s. Engine speed is a parity requirement.
-- On quadrupeds the honest range tops out at about 3 to 10×. It is wider (5 to 20×) for humanoids, and only if a
-  baseline or family policy can stand in for per-design training. Nobody has measured that rank agreement; the v1.0
-  draft calls the experiment that would (about thirty trainings, 5 to 7.5 GPU-hours) the decisive early one.
-- 24 hypotheses got verdicts: 18 narrowed, 4 refuted (supercompiled kernels as a GPU lever, incremental evaluation,
-  half precision, living multiphysics in every world), 1 deferred, 1 active. The active one is H-19: "a thin layer
-  over an incumbent". The v1.0 draft states a rule for what happens if that ties (BET-14).
-- **The verdicts are contested.** Codex and Gemini each challenged the register. 16 of the 24 verdicts are contested by
-  at least one, 9 by both, and none has been adjudicated. The Phase 1 drafts of v1.0 bind to the register as written
-  and do not mention the challenges.
+- **The ten-fold question is open and unmeasured.** The register's range of 3 to 10× on quadrupeds is withdrawn as an
+  answer. Against per-design training, paper arithmetic gives about 3 to 3.5× on quadruped design cycles and about 15× on
+  humanoid ones, only if family policies can replace per-design training when designs are ranked. Nobody has measured
+  that rank agreement; the v1.0 draft calls the experiment that would (about thirty trainings, 5 to 7.5 GPU-hours) the
+  decisive early one. Against a composed incumbent that hosts the same portable methods, the expected ratio on
+  fixed-topology CUDA missions is near one.
+- 24 hypotheses have verdicts. After adjudication: 16 narrowed, 3 refuted (recursion-only kernel specialization, half
+  precision, living multiphysics in every world), 2 split (incremental evaluation, rank fidelity), 1 deferred and 2
+  active: H-18 (information, not the engine, sets the pace) and H-19, "a thin layer over an incumbent". The v1.0 draft
+  states a rule for what happens if H-19 ties (BET-14).
+- **The challenges are adjudicated.** Codex and Gemini contested 16 of the 24 verdicts, 9 of them both. The
+  [adjudication](planning/fable/brenner/deliverables/CHALLENGE_ADJUDICATION.md) ruled on 25 contests and on both
+  contests of the main question: 11 upheld, 16 partly upheld, none rejected whole, ten specific claims rejected. All 16
+  rows change and four change state. Five challenger hypotheses are admitted untested as H-25 to H-29. The adjudicator
+  took no part in the packs or the challenges but comes from the same model family as the packs, which the document
+  says. The Phase 1 drafts of v1.0 still bind to the register as first written.
 
 The idea duel on the same plan gave seven ideas 700 or more from both other models. All seven come from the Claude
 slate, and the report says so ("the same family as one of the three duellists" compiled it). The top three are a
@@ -229,7 +237,7 @@ the report gives the number and does not use the word "ten-fold". BET-14 is the 
 over an incumbent engine ties, the charter's words are "say so and ship the layer".
 
 **Read the drafts as drafts.** They are reviewed but uncorrected, unassembled, and cite an Appendix K that does not exist. Two
-caveats affect what they inherit. The verdict register they bind to is contested and unadjudicated (above). And both
+caveats affect what they inherit. All 16 contested rows of the verdict register they bind to have since been revised (above). And both
 digests are stale. The Neon digest (20:04) predates Neon's rewrites at 20:08 and 21:51; the lead extracted
 [the difference](planning/fable/blend/NEON_DELTA_SINCE_DIGEST.diff) at 21:19, which covers only the first. The Astra
 digest (19:59) predates Astra's rewrites at 21:26 and 21:43; the completeness audit lists what the first of those
@@ -523,7 +531,7 @@ below come from published figures. None is a measurement, and Phase 2 can still 
 | Quadruped, PPO training throughput | Same | ≥ 0.60 of the physics row | ≥ 0.70 | Playground reports 417 k on an A100 with MJX, at d = 5 |
 | Quadruped, time to a return threshold (cold) | One RTX 4090 | ≤ 1.25× the incumbent (re-measured on the same card); planning value 515 s | ≤ the incumbent; 410 s | Playground: about 410 s, read by eye from a figure |
 | Humanoid, physics only | One RTX 4090, 8,192 worlds | ≥ 0.67; planning value 1.7 M | ≥ 1.0; 2.55 M | MuJoCo Warp nightly: 2.55 M (RTX 6000 Ada) |
-| Mixed batch of three body plans | One RTX 4090, 8,192 worlds | ≥ 0.70 of the harmonic mean | ≥ 0.86 | Newton's Kamino solver: 0.86 |
+| Mixed batch of three body plans | One RTX 4090, 8,192 worlds | ≥ 0.70 of the harmonic mean | ≥ 0.86 | Newton's Kamino solver: 0.86 at 2,048 environments (maximal-coordinate, documented as not deterministic, GPU not stated) |
 | Quadruped physics, Metal | M5 Ultra | ≥ 0.25 of one RTX 4090 (BET-09) | ≥ 0.60 | None published on this chip; Genesis is measured beside it |
 | Humanoid physics, `batch-cpu`, `f32` | M5 Ultra, 24 threads | ≥ 0.5 of CPU MuJoCo on the same machine | ≥ 1.0 | CPU MuJoCo (`f64`): 550 k world-steps/s on 24 threads, measured here under load |
 | `design check` / `control synth` / generate and compile an interior | CPU | < 2 s p95 / < 5 s / < 60 s | `design check` after one edit: 0.2 / 0.5 / 1.0 s | |
@@ -555,7 +563,8 @@ Astra combines exact calculations, numerical simulations and measured performanc
 - **Incumbent timings behind round 2** (measured, under background load). Evidence packs H-01, H-11, H-15 and H-19 ran
   CPU MuJoCo 4.0.1 on the M5 Ultra to size the referee and the precision risk: for example 50,612 steps/s on one
   thread for a 27-DoF humanoid, and 410,000 steps/s on 36 threads for a Go2. They are the incumbent's numbers, and they
-  feed the referee-coverage arithmetic (0.1 to 2% of GPU world-seconds).
+  feed the referee-coverage arithmetic. The drafts give 0.1 to 2% of GPU world-seconds; the adjudication calls that band a
+  projection and leaves coverage unmeasured (H-11).
 
 - **A three-tick docking robot** (analytic, §18.10). A robot can move to learn which of two actuator gains,
   1 or 2, it has, before committing to its final approach. With a command limit of 3/4, a fixed probe

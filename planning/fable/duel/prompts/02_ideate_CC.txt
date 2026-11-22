@@ -1,0 +1,12 @@
+Come up with your very best ideas for improving this project to make it more robust, reliable, performant, intuitive, user-friendly, ergonomic, useful, compelling, etc. while still being obviously accretive and pragmatic. Come up with 30 ideas and then really think through each idea carefully, how it would work, how users are likely to perceive it, how we would implement it, etc; then winnow that list down to your VERY best 5 ideas. Explain each of the 5 ideas in order from best to worst and give your full, detailed rationale and justification for how and why it would make the project obviously better and why you're confident of that assessment.
+
+FOCUS for this run. The owner has read the plan and says it is not nearly ambitious enough. He wants it MUCH more radically innovative: a 10x improvement and unlock compared to ALL existing systems of this kind available today (MuJoCo, MJX, MuJoCo Warp, Newton, Isaac Lab, Genesis, Drake, and the agent-driven robot design tools built on them). So bias hard toward ideas that change what is possible or change the cost of a design decision by an order of magnitude, not ideas that polish. The users are AI agents designing robots through a CLI and MCP; the robots are legged, wheeled, tracked and hybrid; the places are terrain and interiors (homes, apartments, offices, warehouses, manufacturing plants, retail stores, commercial kitchens); the mathematics is Lie theory and abstract algebra used as working machinery; the hardware is two RTX 4090 and an Apple M5 Ultra with 256 GB unified memory.
+
+For each of your top 5 (and, briefly, for the other 25), state:
+1. The mechanism: what exactly is built, in which crate or subsystem of the plan, with which algorithm and data layout.
+2. The lever: a number, the baseline it is measured against, and why the strongest existing system cannot get the same thing cheaply.
+3. The falsifier: the cheapest observation that would show the idea does not work, and the fallback if it fails.
+4. What it needs from the sibling projects, checked against what they really have today.
+Ideas that are only slogans, that exceed the hardware, or that an existing engine with a thin wrapper already delivers should be cut during your winnowing.
+
+Write your full list of 30 (one or two lines each) and your detailed top 5 to /Users/jemanuel/projects/franken_robotics/planning/fable/duel/WIZARD_IDEAS_CC.md. Use ultrathink.

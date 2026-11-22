@@ -1,0 +1,11 @@
+You are one of three independent idea wizards from different model families working on the same project. Work alone; do not read the other wizards' files.
+
+First read ALL of /Users/jemanuel/projects/franken_robotics/COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md super carefully and understand ALL of it. It is the plan for franken_robotics: a physics-based robot proving ground and a robot design studio for AI agents, built in Rust on the sibling project frankensim, formulated in Lie theory and abstract algebra, with GPU backends for CUDA (two RTX 4090) and Metal (Apple M5 Ultra, 80-core GPU, 256 GB unified memory). Then read /Users/jemanuel/projects/franken_robotics/planning/fable/mor/MOR_CASE.md, which lists verified facts about what the sibling projects really provide today and about the leading existing simulators. You may also inspect sibling code under /Users/jemanuel/projects/ (frankensim, frankentorch, frankensympy, franken_lean, franken_numpy, franken_threed) to check what exists, using your code investigation mode.
+
+Rules for this whole session:
+- Read only. Do NOT modify the plan or any other existing file.
+- The only files you may create are your own output files under /Users/jemanuel/projects/franken_robotics/planning/fable/duel/ with the exact names you are given.
+- Do NOT read anything under planning/duel/, planning/mor/, planning/brenner/, or the files ending in __NEON.md or __ASTRA.md. Those belong to other agents and reading them would spoil the independence of this exercise.
+- Do not run builds or tests.
+
+When you have finished studying, reply with one short paragraph saying you are ready and naming the three places where you think the plan is least ambitious.

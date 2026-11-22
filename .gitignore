@@ -1,0 +1,125 @@
+# FrankenRobotics
+#
+# The repository is at plan stage. These rules also cover the layout the base plan
+# specifies (plan §26.1), so the first Cargo workspace, GPU annexes, Lean project and
+# viewer land without build output or private data leaking into commits.
+
+# === Rust build output ===
+# Matches every workspace: core, spark/ (GPU annexes), surface/ (MCP), derive/, apps/.
+target/
+**/*.rs.bk
+# Cargo runs through the build-offload shim into ${RCH_TARGET_BASE:-$TMPDIR}, never in-tree
+# (plan §26.7). Worker-local target trees and stray compiler output are a backstop.
+.rch-target/
+.rch-target-*/
+*.rlib
+*.rmeta
+rustc-ice-*.txt
+# Keep Cargo.lock tracked: frob, frobd and frob-mcp are binaries and every result names its inputs.
+
+# === GPU build products and kernel caches ===
+# Derived kernel *sources* (Rust + shared dialect) are checked in with their digests
+# (plan §20.3). Compiled device code is a cache keyed by compiler and driver: never commit it.
+*.ptx
+*.cubin
+*.fatbin
+*.metallib
+*.air
+/.kernel-cache/
+/kernel-cache/
+
+# === Lean (lean/ is a Lake project; outputs are not committed, plan §26.1) ===
+.lake/
+lean/build/
+*.olean
+*.ilean
+
+# === Viewer (Three.js replay pages) ===
+node_modules/
+/viewer/dist/
+
+# === Runs, telemetry and replays are user data, not source ===
+/runs/
+/out/
+/telemetry/
+/chronicle/
+/replays/
+*.npz
+*.crashpack
+/crashpacks/
+/artifacts/
+
+# === Private places stay private (plan §29.3) ===
+# Scan-derived scene packs, walkthrough videos and anything derived from them live under a
+# private root outside this repository. These rules are the backstop.
+/private/
+*.private.json
+*.private.*
+*.mov
+*.MOV
+*.mp4
+*.MP4
+*.heic
+*.HEIC
+
+# === Planning reproduction bundle ===
+# Unzip planning/astra-10x-reproduction.zip into an empty directory outside the repo.
+# If it is unpacked here by mistake, keep the copy out of commits.
+/astra-10x-reproduction/
+/repro/
+
+# === Python (planning reproduction scripts, oracle capture tooling) ===
+__pycache__/
+*.pyc
+.venv/
+.ruff_cache/
+.pytest_cache/
+
+# === Profiling and benchmarks ===
+*.profraw
+*.profdata
+perf.data
+perf.data.old
+flamegraph*.svg
+/criterion/
+/bench-output/
+
+# === Golden-artifact sidecars (review the diff, then re-bless) ===
+*.actual
+*.snap.new
+
+# === Agent tooling state ===
+# NTM swarm session state and hook receipts (any depth, e.g. planning/duel/.ee/).
+.ntm/
+.ee/
+.bv/
+.rch/
+.doctor/
+.agent-mail-project-id
+.agent-mail.yaml
+.claude/settings.local.json
+SESSION_*.md
+# Beads recovery artifacts (the tracker's own files under .beads/ stay tracked)
+.beads/*.orphan_*
+.beads/*.corrupt_*
+.beads/*.pre_recovery_*
+.beads/*.backup_*
+.beads/*.rebuild_*
+.beads/recovery*/
+
+# === Secrets and local settings ===
+.env
+.env.*
+*.pem
+*.key
+
+# === OS / editor ===
+.DS_Store
+._*
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.tmp
+*.bak

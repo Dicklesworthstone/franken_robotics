@@ -757,10 +757,12 @@
 /* ---------- The six cards ---------- */
 .bento {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
 }
 .bento > li {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   overflow: clip;
   border: 1px solid var(--line);
@@ -780,7 +782,10 @@
   border-bottom: 1px solid var(--line);
   background: radial-gradient(22rem 12rem at 50% 110%, color-mix(in srgb, var(--art, var(--life)) 13%, transparent), transparent 75%), #040906;
 }
+/* Out of flow: in Safari an SVG's height would otherwise widen the column it sits in, without end. */
 .bento-art svg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   transition: transform 0.8s var(--ease);
@@ -847,6 +852,7 @@
 /* ---------- The suite and the roadmap ---------- */
 .suite {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.9rem;
 }
 .suite a {

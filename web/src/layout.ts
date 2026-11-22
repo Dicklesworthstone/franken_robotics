@@ -29,29 +29,16 @@ export interface Shell {
   version: (file: string) => string;
 }
 
-const site = (path: string) =>
+const site = (path: string, inMenu = false) =>
   [
     ["/", "Overview"],
     ["/plan/", "The plan"],
     ["/search/", "Search"],
   ]
+    .filter(([to]) => !(inMenu && path === "" && to === "/"))
     .map(
       ([to, label]) =>
         `<a href="${to}"${path === to || (to === "/plan/" && path.startsWith("/plan/")) ? ' aria-current="page"' : ""}><span class="joint" aria-hidden="true"></span>${label}</a>`,
-    )
-    .join("");
-
-const siteDock = (path: string) =>
-  (
-    [
-      ["/", "home", "Overview"],
-      ["/plan/", "book", "The plan"],
-      ["/search/", "search", "Search"],
-    ] as const
-  )
-    .map(
-      ([to, name, label]) =>
-        `<li><a href="${to}"${path === to ? ' aria-current="page"' : ""}>${icon(name)}${label}</a></li>`,
     )
     .join("");
 
@@ -61,6 +48,6 @@ export function shell(o: Shell) {
     "A robotics lab for AI agents. Describe a mission and get every robot that can do it, why the others fail, and a build packet for the one you pick.";
   const full = o.path === "/" ? o.title : `${o.title} · FrankenRobotics`;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#030705"><title>${escape(full)}</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${origin + o.path}"><meta property="og:type" content="website"><meta property="og:site_name" content="FrankenRobotics"><meta property="og:title" content="${escape(full)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${host + o.path}"><meta property="og:image" content="${host + o.share.src}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${escape(o.share.alt)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escape(full)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${host + (o.share.wide ?? o.share.src)}"><meta name="twitter:image:alt" content="${escape(o.share.alt)}"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${o.version("/site.css")}">${o.head ?? ""}<script type="module" src="${o.version("/site.js")}"></script></head>
-<body${o.solid ? ' class="solid"' : ""}><a class="skip" href="#main">Skip to content</a><header class="top"><div class="bar"><a href="/" class="brand">${mark}FrankenRobotics</a><nav class="chapters" aria-label="${o.nav ? "Chapters" : "Site"}">${o.nav ?? site(o.path)}</nav><div class="tools"><a class="find" href="/search/" data-palette aria-label="Search the plan">${icon("search")}<span>Search</span><kbd>/</kbd></a><a class="btn go sm" href="${repo}">GitHub${icon("out")}</a></div><span class="progress" aria-hidden="true"><i></i></span></div></header>
-<main id="main">${o.body}</main><footer class="end"><div class="wrap"><a href="/" class="brand">${mark}FrankenRobotics</a><span>In design, in the open.</span><a href="/plan/">The plan</a><a href="/plan.md" download>Markdown</a><a href="${repo}">GitHub</a></div></footer><nav class="dock" aria-label="Quick navigation"><ul>${o.dock ?? siteDock(o.path)}</ul></nav></body></html>`;
+<body class="${[o.solid && "solid", o.dock && "docked"].filter(Boolean).join(" ")}"><a class="skip" href="#main">Skip to content</a><header class="top"><div class="bar"><a href="/" class="brand">${mark}FrankenRobotics</a><nav class="chapters" aria-label="${o.nav ? "Chapters" : "Site"}">${o.nav ?? site(o.path)}</nav><div class="tools"><a class="find" href="/search/" data-palette aria-label="Search the plan">${icon("search")}<span>Search</span><kbd>/</kbd></a><a class="btn go sm" href="${repo}">GitHub${icon("out")}</a><details class="menu"><summary aria-label="Menu">${icon("menu")}</summary><nav aria-label="Menu">${o.nav ? o.nav + site("", true) : site(o.path, true)}<a class="btn go" href="${repo}">GitHub${icon("out")}</a></nav></details></div></div><span class="progress" aria-hidden="true"><i></i></span></header>
+<main id="main">${o.body}</main><footer class="end"><div class="wrap"><a href="/" class="brand">${mark}FrankenRobotics</a><span>In design, in the open.</span><a href="/plan/">The plan</a><a href="/plan.md" download>Markdown</a><a href="${repo}">GitHub</a></div></footer>${o.dock ? `<nav class="dock" aria-label="Quick navigation"><ul>${o.dock}</ul></nav>` : ""}</body></html>`;
 }

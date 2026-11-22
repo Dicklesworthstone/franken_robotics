@@ -37,6 +37,18 @@ function scrolled() {
 addEventListener("scroll", () => (queued ||= requestAnimationFrame(scrolled)), { passive: true });
 scrolled();
 
+const menu = $(".menu");
+if (menu) {
+  addEventListener("click", (event) => {
+    if (menu.open && (!menu.contains(event.target) || event.target.closest("a"))) menu.open = false;
+  });
+  addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !menu.open) return;
+    menu.open = false;
+    $("summary", menu).focus();
+  });
+}
+
 /* ---------- Search engine ---------- */
 let engine;
 let attempts = 0;
@@ -148,7 +160,7 @@ function buildPalette() {
     "aria-expanded": "true",
     "aria-controls": "palette-hits",
     "aria-autocomplete": "list",
-    placeholder: "Search the plan, or type a section such as 25.13",
+    placeholder: matchMedia("(max-width: 599px)").matches ? "Search the plan" : "Search the plan, or type a section such as 25.13",
     autocomplete: "off",
     spellcheck: "false",
     maxlength: "240",
@@ -158,7 +170,7 @@ function buildPalette() {
   const q = el("div", { class: "q" });
   q.innerHTML = SEARCH_ICON;
   q.append(input);
-  const close = el("button", { type: "button", class: "esc", "aria-label": "Close search" }, "Esc");
+  const close = el("button", { type: "button", class: "esc", "aria-label": "Close search" }, matchMedia("(hover: none)").matches ? "Close" : "Esc");
   q.append(close);
   const key = (k, what) => el("span", {}, el("kbd", {}, k), ` ${what}`);
   const dialog = el(

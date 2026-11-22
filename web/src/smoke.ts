@@ -153,7 +153,7 @@ try {
     }
   }
 
-  /* Phones: no sideways scrolling anywhere, and the dock is there. */
+  /* Phones: no sideways scrolling anywhere, the menu opens, and the reader has its dock. */
   const phone = watch(
     await browser.newPage({ baseURL: base, viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }),
   );
@@ -166,7 +166,10 @@ try {
       await phone.waitForTimeout(60);
     }
     assert((await overflow(phone)) <= 0, `${path} scrolls sideways by ${await overflow(phone)} px`);
-    assert(await phone.locator(".dock").isVisible());
+    assert.equal(await phone.locator(".dock").isVisible(), path.startsWith("/plan/") && path !== "/plan/");
+    await phone.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+    await phone.locator(".menu summary").click();
+    assert(await phone.locator(".menu nav").isVisible());
   }
 
   /* Without JavaScript the text is all there. */

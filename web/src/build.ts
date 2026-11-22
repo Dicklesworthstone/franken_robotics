@@ -1,3 +1,4 @@
+import { blurbs } from "./blurbs";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { home, homeDock, homeNav } from "./home";
@@ -85,7 +86,7 @@ for (const entry of entries) {
     path: entry.url,
     share: share(entry.id, `${entry.label}, ${entry.title}. A robot stands on a dark grid beside the section's name.`),
     title: `${entry.label} · ${entry.title}`,
-    description: entry.summary || undefined,
+    description: blurbs[entry.id] ?? (entry.summary || undefined),
     body: reader(entry, html),
     dock: readerDock(entry),
     head: js,

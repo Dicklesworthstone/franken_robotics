@@ -1,3 +1,4 @@
+import { blurbs } from "./blurbs";
 import { escape } from "./layout";
 import { icon, title as heading } from "./parts";
 import { entries, groups, groupSlug, ref, version, words, type Entry } from "./plan";
@@ -97,23 +98,26 @@ const paths: [name: string, text: string, steps: [label: string, to: string][]][
   ],
 ];
 
+/** The subsystems first, and the rules of the document last. */
+const shelves = [...groups].sort((a, b) => Number(/^(Overview|Part 0)/.test(a)) - Number(/^(Overview|Part 0)/.test(b)));
+
 export function library() {
-  return `<section class="lib-head"><div class="lattice" aria-hidden="true"></div><span class="glow" style="width:40rem;height:40rem;left:-12rem;top:-14rem;background:#1d7a48" aria-hidden="true"></span><div class="wrap"><p class="kick"><span class="joint on" aria-hidden="true"></span>Version ${version}</p><h1 class="d2">${heading("The *full design*.")}</h1><p class="lede">Everything behind FrankenRobotics in ${entries.length - 1} sections and appendices, from the algebra of a single joint to the packet that goes to the workshop.</p><div class="cta"><a class="btn go" href="/search/" data-palette>${icon("search")}Search the text</a><a class="btn" href="/plan.md" download>Download Markdown${icon("down")}</a></div></div></section>
-<div class="wrap"><h2 class="sr">Where to start</h2><div class="paths">${paths
+  return `<section class="lib-head"><div class="lattice" aria-hidden="true"></div><span class="glow" style="width:40rem;height:40rem;left:-12rem;top:-14rem;background:#1d7a48" aria-hidden="true"></span><div class="wrap"><p class="kick"><span class="joint on" aria-hidden="true"></span>The plan, version ${version}</p><h1 class="d2">${heading("The *full design*.")}</h1><p class="lede">Everything behind FrankenRobotics in ${entries.length - 1} sections and appendices, from the algebra of a single joint to the packet that goes to the workshop.</p><div class="cta"><a class="btn go" href="/search/" data-palette>${icon("search")}Search the text</a><a class="btn" href="/plan.md" download>Download Markdown${icon("down")}</a></div></div></section>
+<div class="wrap"><h2 class="sr">Where to start</h2><div class="paths three">${paths
     .map(
       ([name, text, steps]) =>
         `<div class="path"><h3>${name}</h3><p>${text}</p><p class="steps">${steps.map(([l, to]) => `<a class="tag" href="${ref(to)}">${l}</a>`).join("")}</p></div>`,
     )
     .join("")}</div>
 <label class="filter" data-filter hidden>${icon("search")}<span class="sr">Filter sections by title</span><input type="search" placeholder="Filter by title or topic" autocomplete="off" spellcheck="false"><output aria-live="polite">${entries.length}</output></label>
-<nav class="jump" aria-label="Parts">${groups.map((g) => `<a class="tag" href="#${groupSlug(g)}">${escape(short(g))}</a>`).join("")}</nav>${groups
+<nav class="jump" aria-label="Parts">${shelves.map((g) => `<a class="tag" href="#${groupSlug(g)}">${escape(short(g))}</a>`).join("")}</nav>${shelves
     .map((g) => {
       const list = entries.filter((e) => e.group === g);
       const [part, name] = g.split(" · ");
       return `<section class="shelf" id="${groupSlug(g)}"><header><h2>${escape(name ?? part!)}</h2><span>${name ? `${escape(part!)} · ` : ""}${list.length} ${list.length === 1 ? "entry" : "entries"}</span></header><div class="cards">${list
         .map(
           (e) =>
-            `<a class="card" href="${e.url}"><span class="row"><b>${escape(e.label)}</b><span>${n(e.words)} words</span></span><strong>${escape(e.title)}</strong><p>${escape(e.summary)}</p></a>`,
+            `<a class="card" href="${e.url}"><span class="row"><b>${escape(e.label)}</b><span>${n(e.words)} words</span></span><strong>${escape(e.title)}</strong><p>${escape(blurbs[e.id] ?? e.summary)}</p></a>`,
         )
         .join("")}</div></section>`;
     })

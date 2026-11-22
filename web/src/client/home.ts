@@ -46,7 +46,7 @@ const near = new IntersectionObserver(
       void mount(e.target as HTMLElement);
     }
   },
-  { rootMargin: "420px 0px" },
+  { rootMargin: "900px 0px" },
 );
 for (const el of document.querySelectorAll<HTMLElement>("[data-fig]")) near.observe(el);
 

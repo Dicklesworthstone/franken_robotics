@@ -49,6 +49,7 @@ export default function mount(root: HTMLElement) {
   };
   play.addEventListener("click", () => (timer ? stop() : start()));
   show(0, "auto");
-  // It plays by itself the first time it is seen, until someone takes over.
+  // It plays by itself the first time it is seen, until someone takes over, and rests while it is off screen.
   if (!reduced) seen(root, () => void (!timer && i === 0 && start()));
+  new IntersectionObserver((list) => void (!list.at(-1)!.isIntersecting && stop())).observe(root);
 }

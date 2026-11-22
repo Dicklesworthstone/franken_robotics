@@ -1,3 +1,4 @@
+import heights from "./heights.json";
 import { escape } from "./layout";
 
 /** Where a section, appendix or construction of the plan is published. Filled in by the build. */
@@ -25,8 +26,8 @@ const ICONS = {
   test: '<path d="M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM12 9v4l3 2M9 2h6"/>',
   book: '<path d="M4 5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2zM4 19a2 2 0 0 0 2 2h13v-3"/>',
   list: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
-  left: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
   menu: '<path d="M4 8h16M4 16h16"/>',
+  left: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
   home: '<path d="m4 11 8-7 8 7v9H4zM10 20v-6h4v6"/>',
   check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
   star: '<path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.200-2.700-5.200 2.700 1-5.800-4.200-4.100 5.800-.8z"/>',
@@ -89,6 +90,12 @@ export function section(o: {
     : `<section class="sec" id="${o.id}" aria-labelledby="${o.id}-title"><div class="wrap"><div class="sec-head wide reveal"><div>${head}${kicker}</div>${more}</div><div class="sec-body">${o.body}</div></div></section>`;
 }
 
+/** The height a figure settles at on a phone, a tablet and a desktop, kept free until its script has drawn it. */
+const room = (name: string) => {
+  const h = (heights as Record<string, number[]>)[name];
+  return h ? ` style="--hp:${h[0]}px;--ht:${h[1]}px;--hd:${h[2]}px"` : "";
+};
+
 /** A figure: one line that says what to do with it, the thing itself, and a footnote where one helps. */
 export function figure(o: {
   name: string;
@@ -101,7 +108,7 @@ export function figure(o: {
 }) {
   return `<figure class="fig reveal ${o.className ?? ""}" id="fig-${o.name}" data-fig="${o.name}">
 <header class="fig-head"><p class="todo">${escape(o.todo)}</p>${o.kind ? `<span class="tagged ${o.kind}">${KIND[o.kind]}</span>` : ""}</header>
-<div class="fig-body">${o.body}</div>${o.note ? `
+<div class="fig-body"${room(o.name)}>${o.body}</div>${o.note ? `
 <figcaption class="fig-foot">${copy(o.note, o.ref)}</figcaption>` : ""}</figure>`;
 }
 

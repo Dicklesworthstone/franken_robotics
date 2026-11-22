@@ -7,15 +7,10 @@ export default function mount(root: HTMLElement) {
   const card = $(root, "[data-card]");
   const rest = card.innerHTML;
   let current = -1;
-  const home = card.parentElement!;
-  const holder = document.createElement("li");
-  holder.className = "inline";
   const close = () => {
     links[current]?.removeAttribute("aria-current");
     card.innerHTML = rest;
     card.classList.remove("open");
-    home.append(card);
-    holder.remove();
     current = -1;
   };
   const show = (i: number) => {
@@ -30,22 +25,13 @@ export default function mount(root: HTMLElement) {
     $(card, ".formal").textContent = li.dataset.title!;
     card.scrollTop = 0;
     card.classList.add("open");
-    if (innerWidth < 1000) {
-      a.closest("li")!.after(holder);
-      holder.append(card);
-      card.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
-    } else if (card.parentElement !== home) {
-      home.append(card);
-      holder.remove();
-    }
   };
   root.addEventListener("click", (e) => {
     const a = (e.target as Element).closest<HTMLAnchorElement>("[data-i]");
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     e.preventDefault();
-    // A second tap on the open tile closes it.
-    if (innerWidth < 1000 && Number(a.dataset.i) === current) return close();
     show(Number(a.dataset.i));
+    a.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduced ? "auto" : "smooth" });
   });
   root.addEventListener("keydown", (e) => {
     const from = (e.target as Element).closest<HTMLAnchorElement>("[data-i]");
@@ -59,7 +45,7 @@ export default function mount(root: HTMLElement) {
     show(j);
   });
   // One is open from the start, so that the panel shows what it is for.
-  if (innerWidth >= 1000) show(32);
+  show(0);
   seg(root, "tier", (t) => {
     for (const a of links) {
       const li = a.closest<HTMLElement>("li")!;

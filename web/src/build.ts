@@ -1,201 +1,148 @@
-import { mkdirSync, readFileSync, writeFileSync, cpSync, rmSync } from "node:fs";
-import { resolve, join, dirname } from "node:path";
-import MarkdownIt from "markdown-it";
-import { escape, origin, shell } from "./layout";
-import { home } from "./home";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { constructions } from "./catalogue";
+import { home, homeDock, homeNav } from "./home";
+import { origin, shell, type Shell } from "./layout";
+import { bytes, codeUnder, definitions, entries, ref, render, version, words } from "./plan";
+import { library, missing, reader, readerDock, search } from "./reader";
 
-const root = resolve(import.meta.dir, ".."),
-  out = join(root, "out");
-const src = join(root, "../COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md");
-const bytes = readFileSync(src),
-  source = bytes.toString("utf8");
-const md = new MarkdownIt({ html: false, linkify: true, typographer: false });
-md.linkify.set({ fuzzyLink: false, fuzzyEmail: false });
-// In C-32 the interval extension [c](B) is mathematical notation.
-md.inline.ruler.before("link", "interval_enclosure", (state, silent) => {
-  if (!state.src.startsWith("[c](B)", state.pos)) return false;
-  if (!silent) state.pending += "[c](B)";
-  state.pos += "[c](B)".length;
-  return true;
-});
-type Section = {
-  id: string;
-  title: string;
-  group: string;
-  label: string;
-  start: number;
-  sub: { title: string; id: string }[];
-  body: ReturnType<typeof md.parse>;
-};
-const sections: Section[] = [];
-let group = "Overview";
-function add(id: string, title: string, label: string, start: number) {
-  sections.push({ id, title, label, start, group, sub: [], body: [] });
-}
-add("introduction", "Introduction and contents", "Edition 1.0", 0);
-const tokens = md.parse(source, {});
-for (let i = 0; i < tokens.length; i++) {
-  const t = tokens[i];
-  if (t.type !== "heading_open") continue;
-  const heading = tokens[i + 1].content;
-  if (t.tag === "h1" && (heading.startsWith("PART ") || heading === "APPENDICES")) {
-    group =
-      heading === "APPENDICES"
-        ? "Appendices"
-        : heading.replace(
-            /^PART ([^.]+)\. (.+)$/,
-            (s, n, name) => "Part " + n + " · " + name[0] + name.slice(1).toLowerCase(),
-          );
-  }
-  if (t.tag !== "h2") continue;
-  const m = heading.match(/^(\d+(?:\.\d+)?)\s*[.]? (.+)$/);
-  const a = heading.match(/^Appendix ([A-O])\. (.+)$/);
-  if (m) add(m[1], m[2], "§" + m[1], t.map[0]);
-  else if (a) add("appendix-" + a[1].toLowerCase(), a[2], "Appendix " + a[1], t.map[0]);
-}
-const url = (p: Section) => "/plan/" + p.id + "/";
-const lines = source.split("\n");
-const refs = new Map<string, string>();
-// Move each part divider to its opening chapter, preserving every intervening line.
-for (const p of sections.slice(1)) {
-  let i = p.start - 1;
-  while (i > 0 && !lines[i].trim()) i--;
-  if (/^# (PART |APPENDICES$)/.test(lines[i])) p.start = i;
-}
-if (sections.length !== 71 || new Set(sections.map((p) => p.id)).size !== sections.length)
-  throw Error("Review changed plan structure");
-const chunks = sections.map((p, i) =>
-  lines.slice(p.start, sections[i + 1]?.start ?? lines.length).join("\n"),
-);
-if (chunks.join("\n") !== source) throw Error("Incomplete plan segmentation");
+const root = resolve(import.meta.dir, "..");
+const out = join(root, "out");
 // Pagefind leaves content-addressed shards from previous runs in its output directory.
 rmSync(out, { recursive: true, force: true });
-for (const [i, p] of sections.entries()) {
-  refs.set(p.id, url(p));
-  refs.set(p.label, url(p));
-  const block = md.parse(chunks[i], {}),
-    ids = new Set<string>();
-  for (let j = 0; j < block.length; j++) {
-    const t = block[j];
-    if (t.type !== "heading_open") continue;
-    const title = block[j + 1].content;
-    if (p.id !== "introduction" && (t.tag === "h1" || (t.tag === "h2" && title !== "Contents"))) {
-      block.splice(j, 3);
-      j--;
-      continue;
-    }
-    if (t.tag === "h1") {
-      t.tag = block[j + 2].tag = "p";
-      t.attrSet("class", "source-heading");
-      continue;
-    }
-    const match = title.match(/^(\d+(?:\.\d+)+|[A-O]\.\d+(?:\.\d+)*|C-\d+)\b/);
-    let id = match ? "s-" + match[1].toLowerCase() : "heading-" + (p.sub.length + 1);
-    if (ids.has(id)) id += "-" + j;
-    ids.add(id);
-    t.attrSet("id", id);
-    p.sub.push({ title, id });
-    if (match) refs.set(match[1], url(p) + "#" + id);
-  }
-  p.body = block;
-}
-md.renderer.rules.text = (ts, i) => {
-  const s = escape(ts[i].content);
-  if (
-    ts
-      .slice(0, i)
-      .reduce((n, t) => n + (t.type === "link_open" ? 1 : t.type === "link_close" ? -1 : 0), 0)
-  )
-    return s;
-  return s.replace(/§(\d+(?:\.\d+)*)|\bAppendix ([A-O])\b/g, (text, n, letter) => {
-    const href = refs.get(n ?? "appendix-" + letter.toLowerCase());
-    return href ? `<a class="xref" href="${href}">${text}</a>` : text;
-  });
-};
-function emit(path: string, data: string | Buffer) {
+
+function emit(path: string, data: string | Uint8Array) {
   const dest = join(out, path);
   mkdirSync(dirname(dest), { recursive: true });
   writeFileSync(dest, data);
 }
-function page(path: string, title: string, content: string, description?: string) {
-  emit(path + "index.html", shell(title, path, content, description));
+const hash = (data: string | Uint8Array) => Bun.hash(data).toString(16).padStart(16, "0").slice(0, 10);
+const versions = new Map<string, string>();
+/** A static file's address, with its content hash so that a deploy never mixes two versions. */
+function asset(file: string) {
+  if (!versions.has(file)) versions.set(file, `${file}?v=${hash(readFileSync(join(root, "static", file)))}`);
+  return versions.get(file)!;
 }
-const groups = [...new Set(sections.map((s) => s.group))];
-const groupslug = (g: string) => "part-" + groups.indexOf(g);
-const eyebrow = (s: string) => `<p class="eyebrow"><i></i>${escape(s)}</p>`;
-const chapterLink = (p: Section) =>
-  `<a href="${url(p)}"><small>${p.label}</small><span>${escape(p.title)}</span><b>↗</b></a>`;
-for (const [i, p] of sections.entries()) {
-  const neighbors = sections.slice(Math.max(0, i - 1), i + 2).filter((q) => q !== p);
-  const outline = p.sub.map((h) => `<a href="#${h.id}">${escape(h.title)}</a>`).join("");
-  const body = md.renderer.render(p.body, md.options, {});
-  page(
-    url(p),
-    p.label + " · " + p.title,
-    `<div class="wrap reader-layout"><aside class="reader-nav"><a class="back" href="/plan/#${groupslug(p.group)}">← Plan library</a>${eyebrow(p.group)}<details open><summary>In this part</summary><div class="part-links">${sections
-      .filter((q) => q.group === p.group)
-      .map(
-        (q) =>
-          `<a href="${url(q)}" ${p === q ? 'aria-current="page"' : ""}>${q.label} · ${escape(q.title)}</a>`,
-      )
-      .join(
-        "",
-      )}</div></details></aside><article class="reading" data-pagefind-body>${eyebrow(p.label + " / Hybrid plan v1.0")}<h1 data-pagefind-meta="title">${escape(p.title)}</h1>${outline ? `<details class="outline" data-pagefind-ignore><summary>On this page <small>${p.sub.length}</small></summary><div>${outline}</div></details>` : ""}<div class="prose">${body}</div><nav class="neighbors" aria-label="Adjacent chapters" data-pagefind-ignore>${neighbors.map((q) => `<a href="${url(q)}"><small>${q.start < p.start ? "← Previous" : "Next →"}</small>${q.label} · ${escape(q.title)}</a>`).join("")}</nav></article></div>`,
-  );
+
+/* ---------- Scripts ---------- */
+const bundle = await Bun.build({
+  entrypoints: [join(root, "src/client/home.ts")],
+  target: "browser",
+  format: "esm",
+  splitting: true,
+  minify: true,
+  naming: { entry: "[name]-[hash].[ext]", chunk: "[name]-[hash].[ext]" },
+});
+if (!bundle.success) throw new AggregateError(bundle.logs, "The figures did not bundle");
+let client = "";
+for (const file of bundle.outputs) {
+  const path = `/assets/${file.path.replace(/^\.?\//, "")}`;
+  if (file.kind === "entry-point") client = path;
+  emit(path, new Uint8Array(await file.arrayBuffer()));
 }
-page("/", "A proving ground for robots", home());
-page(
-  "/plan/",
-  "Plan library",
-  `<div class="wrap library">${eyebrow("Research library / Edition 1.0")}<h1>The hybrid <em>plan.</em></h1><p class="lede">From the algebra of a single joint to the experiment that would establish a ten-fold improvement. Read by subject or search across the entire document.</p><div class="actions"><a class="primary" href="/search/">Search the plan <b>↗</b></a><a class="secondary" href="/plan.md" download>Download Markdown ↓</a></div><nav class="part-jumps" aria-label="Jump to part">${groups.map((g) => `<a href="#${groupslug(g)}">${escape(g.split(" · ")[0])}</a>`).join("")}</nav>${groups
-    .map(
-      (g) =>
-        `<section class="shelf" id="${groupslug(g)}"><h2>${escape(g)}</h2><div>${sections
-          .filter((p) => p.group === g)
-          .map(chapterLink)
-          .join("")}</div></section>`,
-    )
-    .join("")}</div>`,
-);
-page(
-  "/search/",
-  "Search the plan",
-  `<div class="wrap searchpage">${eyebrow("Plan library")}<h1>Search the <em>plan.</em></h1><form action="/search/" role="search"><label for="query">Search all sections and appendices</label><div><input type="search" id="query" name="q" placeholder="Try “contact”, “mission” or “M7”" maxlength="240" aria-describedby="query-help" autocomplete="off" autofocus><button class="primary">Search</button></div><small id="query-help">Use quotation marks for an exact phrase.</small></form><p id="status" role="status"></p><div id="results"></div><noscript>Full-text search uses JavaScript. <a href="/plan/">Browse the complete chapter index.</a></noscript></div>`,
-);
-emit(
-  "404.html",
-  shell(
-    "Page not found",
-    "/404/",
-    `<div class="wrap library">${eyebrow("404")}<h1>Page not found.</h1><a class="primary" href="/plan/">Browse the plan →</a></div>`,
-  ),
-);
+
+/* ---------- Pages ---------- */
+/** A page's share card, drawn by `bun run stills`. A page without one yet shows the home card. */
+function share(id: string, alt: string): Shell["share"] {
+  const file = (name: string) => {
+    const path = `/media/share/${name}.jpg`;
+    const disk = join(root, path);
+    return existsSync(disk) ? `${path}?v=${hash(readFileSync(disk))}` : undefined;
+  };
+  const home = {
+    src: file("home")!,
+    wide: file("home-wide"),
+    alt: "A dark hall of robots facing a lit doorway. Those that fit it glow; the rest are dark. Headline: Every body that can do the job.",
+  };
+  if (id === "home") return home;
+  const src = file(id);
+  return src ? { src, alt } : home;
+}
+const page = (o: Omit<Shell, "version">) =>
+  emit(`${o.path}index.html`, shell({ ...o, version: asset }));
+const round = (v: number) => (Math.round(v / 1000) * 1000).toLocaleString("en-US");
+// The class is set before the first paint, so that content waits for its entrance only where scripts run.
+const js = `<script>document.documentElement.classList.add("js")</script>`;
+page({
+  path: "/",
+  share: share("home", ""),
+  title: "FrankenRobotics · Every body that can do the job",
+  description:
+    "The plan for a robotics lab that AI agents can use. State a mission, and it should return every robot that can do it, every robot that cannot and why, and the cheapest experiment that settles the rest.",
+  body: home({ ref, version, session: codeUnder("32.16", 1), sections: entries.length - 1, words: round(words) }),
+  nav: homeNav,
+  dock: homeDock,
+  head: `${js}<link rel="stylesheet" href="${asset("/home.css")}"><link rel="modulepreload" href="${client}"><script type="module" src="${client}" onerror="document.documentElement.classList.remove('js')"></script>`,
+});
+for (const entry of entries) {
+  const { html, used } = render(entry);
+  const cards: Record<string, [string, string]> = {};
+  for (const id of used) {
+    const d = definitions.get(id)!;
+    cards[id] = [d.entry.label, d.text];
+  }
+  emit(`${entry.url}definitions.json`, JSON.stringify(cards));
+  page({
+    path: entry.url,
+    share: share(entry.id, `${entry.label}, ${entry.title}. A robot stands on a dark grid beside the section's name.`),
+    title: `${entry.label} · ${entry.title}`,
+    description: entry.summary || undefined,
+    body: reader(entry, html),
+    dock: readerDock(entry),
+    head: js,
+    solid: true,
+  });
+}
+page({ path: "/plan/", share: share("library", "Every section of the plan, over a field of walking robots."), title: "Plan library", body: library(), head: js, solid: true });
+page({ path: "/search/", share: share("search", "Find anything in the plan, over a cutaway apartment."), title: "Search the plan", body: search, head: js, solid: true });
+emit("404.html", shell({ path: "/404/", share: share("home", ""), title: "Page not found", body: missing, head: js, solid: true, version: asset }));
+
+/* ---------- Files ---------- */
 emit("plan.md", bytes);
+// What the search palette can jump to without reading the index.
+const NUMBERED = /^(\d+(?:\.\d+)+|[A-O]\.\d+(?:\.\d+)*|C-\d+)\.?\s+(.+)$/;
+const jumps = entries.flatMap((e) => [
+  [e.label, e.title, e.url],
+  ...e.sub.flatMap((s) => {
+    const m = s.title.match(NUMBERED);
+    return m ? [[/^\d/.test(m[1]!) ? `§${m[1]}` : m[1]!, m[2]!, `${e.url}#${s.id}`]] : [];
+  }),
+]);
+emit(
+  "constructions.json",
+  JSON.stringify(constructions.map(({ replaces, payoff, test, crates }) => ({ replaces, payoff, test, crates }))),
+);
+emit("jump.json", JSON.stringify({ sections: jumps, ids: Object.fromEntries([...definitions].map(([id, d]) => [id, d.href])) }));
 cpSync(join(root, "static"), out, { recursive: true });
-cpSync(join(root, "media"), join(out, "media"), { recursive: true });
-for (const [font, file] of [
-  ["manrope", "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2"],
-  ["mono", "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2"],
-]) {
-  emit("fonts/" + font + ".woff2", readFileSync(join(root, "node_modules", file)));
-  emit(
-    "fonts/" + font + "-license.txt",
-    readFileSync(join(root, "node_modules", file.split("/files/")[0], "LICENSE")),
-  );
+// The still from the first site is kept in the repository and no longer published.
+cpSync(join(root, "media"), join(out, "media"), {
+  recursive: true,
+  filter: (from) => !/quadruped\.webp$|manifest\.json$/.test(from),
+});
+for (const [font, pkg, file] of [
+  ["inter-latin", "inter", "inter-latin-opsz-normal"],
+  ["inter-greek", "inter", "inter-greek-opsz-normal"],
+  ["mono-latin", "jetbrains-mono", "jetbrains-mono-latin-wght-normal"],
+  ["mono-greek", "jetbrains-mono", "jetbrains-mono-greek-wght-normal"],
+] as const) {
+  const dir = join(root, "node_modules/@fontsource-variable", pkg);
+  emit(`fonts/${font}.woff2`, readFileSync(join(dir, "files", `${file}.woff2`)));
+  if (!existsSync(join(out, `fonts/${pkg}-license.txt`))) emit(`fonts/${pkg}-license.txt`, readFileSync(join(dir, "LICENSE")));
 }
 emit(
   "sitemap.xml",
-  '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
-    ["/", "/plan/", "/search/", ...sections.map(url)]
-      .map((p) => "<url><loc>" + origin + p + "</loc></url>")
-      .join("") +
-    "</urlset>",
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${[
+    "/",
+    "/plan/",
+    "/search/",
+    ...entries.map((e) => e.url),
+  ]
+    .map((p) => `<url><loc>${origin}${p}</loc></url>`)
+    .join("")}</urlset>`,
 );
-emit("robots.txt", "User-agent: *\nAllow: /\nSitemap: " + origin + "/sitemap.xml\n");
+emit("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`);
+// Read by hosts that take a headers file; everything under these paths has a hash in its name.
+emit("_headers", "/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n");
 console.log(
-  "Published " +
-    sections.length +
-    " reader entries and " +
-    bytes.length +
-    " original Markdown bytes.",
+  `Built plan ${version}: ${entries.length} reader entries, ${definitions.size} linked identifiers, ${bytes.length} Markdown bytes.`,
 );

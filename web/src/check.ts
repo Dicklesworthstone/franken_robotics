@@ -1,7 +1,7 @@
 import { readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import assert from "node:assert/strict";
-import { origin } from "./layout";
+import { host, origin } from "./layout";
 
 const root = resolve(import.meta.dir, "..");
 const out = join(root, "out");
@@ -17,6 +17,7 @@ for (const path of new Bun.Glob("**/*.html").scanSync({ cwd: out })) {
   const url = "/" + path.replace(/index\.html$/, "");
   const links = new Set<string>();
   const ids = new Set<string>();
+  const cards = new Map<string, string>();
   let titles = 0;
   const page = new HTMLRewriter()
     .on("[id]", {
@@ -29,6 +30,11 @@ for (const path of new Bun.Glob("**/*.html").scanSync({ cwd: out })) {
     .on("[href], [src]", {
       element(el) {
         links.add((el.getAttribute("href") ?? el.getAttribute("src"))!);
+      },
+    })
+    .on("meta[property], meta[name]", {
+      element(el) {
+        cards.set((el.getAttribute("property") ?? el.getAttribute("name"))!, el.getAttribute("content") ?? "");
       },
     })
     .on("h1", {
@@ -44,6 +50,13 @@ for (const path of new Bun.Glob("**/*.html").scanSync({ cwd: out })) {
     .transform(new Response(Bun.file(join(out, path))));
   await page.text();
   assert.equal(titles, 1, url + " needs one document title.");
+  for (const key of ["og:image", "twitter:image"]) {
+    const card = cards.get(key) ?? "";
+    assert(card.startsWith(host + "/media/share/") && /\?v=\w+$/.test(card), url + " has no " + key);
+    const bytes = readFileSync(join(out, new URL(card).pathname));
+    assert(bytes.length > 20_000 && bytes[0] === 0xff && bytes[1] === 0xd8, card + " is not a JPEG");
+    assert(cards.get(key + ":alt"), url + " does not describe " + key);
+  }
   pages.set(url, { links, ids });
 }
 

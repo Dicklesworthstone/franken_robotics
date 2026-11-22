@@ -1,7 +1,7 @@
 # FrankenRobotics
 #
-# The repository is at plan stage. These rules also cover the layout the base plan
-# specifies (plan §26.1), so the first Cargo workspace, GPU annexes, Lean project and
+# The repository is at plan stage. These rules also cover the layout plan v1.0
+# specifies (§34.1), so the first Cargo workspace, GPU annexes, Lean project and
 # viewer land without build output or private data leaking into commits.
 
 # Local prototype archive. The active project is planning-only.
@@ -12,7 +12,7 @@
 target/
 **/*.rs.bk
 # Cargo runs through the build-offload shim into ${RCH_TARGET_BASE:-$TMPDIR}, never in-tree
-# (plan §26.7). Worker-local target trees and stray compiler output are a backstop.
+# (§34.7). Worker-local target trees and stray compiler output are a backstop.
 .rch-target/
 .rch-target-*/
 *.rlib
@@ -22,7 +22,7 @@ rustc-ice-*.txt
 
 # === GPU build products and kernel caches ===
 # Derived kernel *sources* (Rust + shared dialect) are checked in with their digests
-# (plan §20.3). Compiled device code is a cache keyed by compiler and driver: never commit it.
+# (§21.5). Compiled device code is a cache keyed by compiler and driver: never commit it.
 *.ptx
 *.cubin
 *.fatbin
@@ -31,7 +31,7 @@ rustc-ice-*.txt
 /.kernel-cache/
 /kernel-cache/
 
-# === Lean (lean/ is a Lake project; outputs are not committed, plan §26.1) ===
+# === Lean (lean/ is a Lake project; outputs are not committed, §34.1) ===
 .lake/
 lean/build/
 *.olean
@@ -55,7 +55,7 @@ node_modules/
 /crashpacks/
 /artifacts/
 
-# === Private places stay private (plan §29.3) ===
+# === Private places stay private (§37.6) ===
 # Scan-derived scene packs, walkthrough videos and anything derived from them live under a
 # private root outside this repository. These rules are the backstop.
 /private/
@@ -112,6 +112,9 @@ flamegraph*.svg
 .doctor/
 .agent-mail-project-id
 .agent-mail.yaml
+# Cloudflare tooling caches account identifiers here.
+/.cloudflare/
+/.wrangler/
 .claude/settings.local.json
 SESSION_*.md
 # Beads recovery artifacts (the tracker's own files under .beads/ stay tracked)

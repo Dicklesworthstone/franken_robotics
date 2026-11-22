@@ -8,7 +8,6 @@
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { chromium, type Page } from "playwright-core";
-import { constructions, stories } from "./catalogue";
 import { archetypes } from "./figures/archetypes";
 import { makers } from "./figures/bodies";
 import { envelope, verdict } from "./figures/envelope";
@@ -136,7 +135,7 @@ interface Card {
 const door = { fits: 0, wide: 0, tall: 0, long: 0 };
 for (const m of members()) door[verdict(envelope(makers[m.id]!()), m.scale, PLACES.door!)]++;
 const said = [`${door.fits} fit`, ...(["wide", "tall", "long"] as const).filter((k) => door[k]).map((k) => `${door[k]} too ${k}`)];
-const counts = [`${archetypes.length} bodies`, `${constructions.length} constructions`, `${stories.length} stories`];
+const counts = [`${archetypes.length} kinds of body`, "7 kinds of building", "256 per batch"];
 const turn = archetypes.map((a) => a.id).filter((id) => id !== "snake-crawler" && id !== "omni-3");
 const cards: Card[] = entries.map((e, i) => {
   const [, name, rest] = e.title.match(/^([A-Z][a-z]+): (.+)$/) ?? [, e.title, ""];
@@ -153,8 +152,8 @@ const cards: Card[] = entries.map((e, i) => {
   };
 });
 cards.push(
-  { id: "library", eyebrow: "Plan library", title: "Every section", sub: `${entries.length - 1} sections and appendices, cross-linked`, tag: "Library", numeral: "", colour: "#4ade80", art: "batch" },
-  { id: "search", eyebrow: "Search", title: "Find anything", sub: "Sections, constructions, gates, risks and open questions", tag: "Search", numeral: "", colour: "#6cc8f7", art: "rooms" },
+  { id: "library", eyebrow: "The plan", title: "The full design", sub: `${entries.length - 1} sections and appendices, cross-linked`, tag: "Library", numeral: "", colour: "#4ade80", art: "batch" },
+  { id: "search", eyebrow: "Search", title: "Find anything", sub: "Bodies, buildings, missions, kernels and the math", tag: "Search", numeral: "", colour: "#6cc8f7", art: "rooms" },
 );
 
 const css = `@font-face{font-family:Inter;src:url(${base}/fonts/inter-latin.woff2);font-weight:100 900}@font-face{font-family:Mono;src:url(${base}/fonts/mono-latin.woff2);font-weight:100 800}
@@ -181,20 +180,20 @@ h1 em{font-style:normal;background:linear-gradient(100deg,color-mix(in srgb,var(
 .foot{position:absolute;left:64px;bottom:46px;display:flex;gap:12px}
 .pill{font:600 19px/1 Mono;padding:12px 17px;border-radius:13px;border:1px solid color-mix(in srgb,var(--c) 44%,transparent);background:color-mix(in srgb,var(--c) 13%,#030705);color:color-mix(in srgb,var(--c) 55%,#fff)}
 .pill.b{border-color:rgb(255 255 255/.14);background:rgb(255 255 255/.05);color:#b9c7be;font-weight:500}
-</style>${c.numeral ? `<span class="num">${c.numeral}</span>` : ""}<img class="art" src="${base}/.art/${c.art}.png"><div class="veil"></div><i class="tick a"></i><i class="tick b"></i><div class="brand">${mark}FrankenRobotics</div><div class="copy"><p class="eyebrow">${escape(c.eyebrow)}</p><h1 data-fit>${escape(c.title).replace(/(\S+)$/, "<em>$1</em>").replace(/(?<![<\/\w])\w+-\w+(?![^<]*>)/g, '<span class="k">$&</span>')}<span style="margin-left:-.02em">.</span></h1>${c.sub ? `<p class="sub">${escape(c.sub)}</p>` : ""}</div><div class="foot"><span class="pill">${escape(c.tag)}</span><span class="pill b">Planning stage</span><span class="pill b">frankenrobotics.com</span></div><i class="line"></i></div>`;
+</style>${c.numeral ? `<span class="num">${c.numeral}</span>` : ""}<img class="art" src="${base}/.art/${c.art}.png"><div class="veil"></div><i class="tick a"></i><i class="tick b"></i><div class="brand">${mark}FrankenRobotics</div><div class="copy"><p class="eyebrow">${escape(c.eyebrow)}</p><h1 data-fit>${escape(c.title).replace(/(\S+)$/, "<em>$1</em>").replace(/(?<![<\/\w])\w+-\w+(?![^<]*>)/g, '<span class="k">$&</span>')}<span style="margin-left:-.02em">.</span></h1>${c.sub ? `<p class="sub">${escape(c.sub)}</p>` : ""}</div><div class="foot"><span class="pill">${escape(c.tag)}</span><span class="pill b">Robotics lab for AI agents</span><span class="pill b">frankenrobotics.com</span></div><i class="line"></i></div>`;
 
 const homeCard = (h: number) => `<div class="card" style="--c:#4ade80;--h:${h}px"><style>
 .art{position:absolute;right:-60px;top:-58px;width:1420px;height:auto;filter:brightness(1.42) contrast(1.05) saturate(1.16)}
 .veil{position:absolute;inset:0;background:linear-gradient(90deg,#030705 2%,rgb(3 7 5/.95) 26%,rgb(3 7 5/.46) 44%,transparent 57%),linear-gradient(0deg,rgb(3 7 5/.9),transparent 32%),linear-gradient(180deg,rgb(3 7 5/.62),transparent 20%),radial-gradient(560px 360px at 77% 50%,rgb(74 222 128/.13),transparent 70%)}
 .copy{position:absolute;left:64px;top:${h > 615 ? 140 : 126}px;width:720px}
-h1{margin-top:24px;font-size:106px;font-weight:800;letter-spacing:-.058em;line-height:.94;text-shadow:0 6px 40px rgb(3 7 5/.8)}
+h1{margin-top:24px;font-size:86px;font-weight:800;letter-spacing:-.058em;line-height:.94;text-shadow:0 6px 40px rgb(3 7 5/.8)}
 h1 em{font-style:normal;background:linear-gradient(100deg,#d9f75a,#4ade80 52%,#2dd4bf);-webkit-background-clip:text;color:transparent;padding:0 .06em .12em 0;margin-right:-.06em;text-shadow:none}
 .sub{margin-top:20px;width:500px;font-size:27px;line-height:1.36;font-weight:450;letter-spacing:-.018em;color:#cfdcd4}
 .foot{position:absolute;left:64px;bottom:${h > 615 ? 50 : 40}px;display:flex;gap:12px}
 .pill{font:600 18px/1 Mono;padding:12px 17px;border-radius:13px;border:1px solid rgb(74 222 128/.36);background:rgb(8 30 18/.86);color:#b9f7cf}
 .hud{position:absolute;right:54px;bottom:${h > 615 ? 48 : 38}px;font:500 18px/1.35 Mono;color:#e6f2ea;padding:11px 16px;border:1px solid rgb(255 255 255/.16);border-radius:13px;background:rgb(3 7 5/.78)}
 .hud b{color:#4ade80;font-weight:700}.hud i{font-style:normal;color:#fbbf24}
-</style><img class="art" src="${base}/.art/crowd-${h}.png"><div class="veil"></div><div class="brand">${mark}FrankenRobotics</div><span class="where">frankenrobotics.com</span><div class="copy"><p class="eyebrow">Robot design · planning stage</p><h1>Every body<br>that can<br><em>do the job</em>.</h1></div><div class="foot">${counts.map((c) => `<span class="pill">${c}</span>`).join("")}</div><span class="hud">${PLACES.door!.width.toFixed(2)} m door · <b>${said[0]}</b>${said.slice(1).map((s) => ` · <i>${s}</i>`).join("")}</span><i class="line"></i></div>`;
+</style><img class="art" src="${base}/.art/crowd-${h}.png"><div class="veil"></div><div class="brand">${mark}FrankenRobotics</div><span class="where">frankenrobotics.com</span><div class="copy"><p class="eyebrow">Robotics lab for AI agents</p><h1>Name the job.<br>Get <em>every robot</em><br>that can do it.</h1></div><div class="foot">${counts.map((c) => `<span class="pill">${c}</span>`).join("")}</div><span class="hud">${PLACES.door!.width.toFixed(2)} m door · <b>${said[0]}</b>${said.slice(1).map((s) => ` · <i>${s}</i>`).join("")}</span><i class="line"></i></div>`;
 
 const manifestPath = join(dir, "manifest.json");
 const manifest: Record<string, string> = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : {};

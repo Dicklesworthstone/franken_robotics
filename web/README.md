@@ -2,7 +2,7 @@
 
 The site presents the research plan in `../COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md`. The home page explains it in six chapters with interactive figures. The reader at `/plan/` holds every section and appendix, cross-linked and searchable.
 
-Nothing described on the site has been built. Each figure carries a badge that says what it is (computed here, a toy, a drawing, illustrative numbers, or quoted from the plan) and a title block that names its source section.
+No FrankenRobotics code has been released, and the site says so. Each figure carries a badge that says what it is (computed here, a toy, a drawing, illustrative numbers, or quoted from the plan) and a title block that names its source.
 
 ## Build and preview
 

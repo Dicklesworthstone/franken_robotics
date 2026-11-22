@@ -60,12 +60,12 @@ export const renderTest = (ref: Refs, version: string) =>
     eyebrow: "Expected ranges",
     title: "What to *expect*.",
     kicker:
-      "Against a rival that trains a policy for every design, these are the ranges the ceilings allow. Against the strongest composed rival on fixed-topology CUDA missions, the expected ratio is near one. [§2.6](§2.6)",
+      "Against a rival that trains a policy for every design, these are the ranges the ceilings allow. Against the strongest composed rival on fixed-topology CUDA missions, the expected ratio is near one unless a property inside an engine decides it, and the plan offers no range. [§2.6](§2.6)",
     body: figure({
       name: "ranges",
       no: "06.1",
       label: "Hypothesis, to be replaced by measurement",
-      title: "One class reaches past *ten*.",
+      title: "Two ranges reach past *ten*.",
       basis: "plan",
       source: [["§2.6", ref("2.6")]],
       note: "Ratios of time to a decision. They are not forecasts with probabilities.",
@@ -137,7 +137,7 @@ export const renderTest = (ref: Refs, version: string) =>
     eyebrow: "Delivery",
     title: "Nine *milestones*.",
     kicker:
-      "The first studio runs on a CPU, so it ships even if every GPU and proof foundation fails its admission. The critical path adds up to 33 weeks; M6 and M8 are per-epic and sit outside it. [§43](§43)",
+      "The first studio runs on a CPU, so it would ship even if every GPU and proof foundation failed its admission. The critical path adds up to 33 weeks; M6 and M8 are per-epic and sit outside it. [§43](§43)",
     body: figure({
       name: "milestones",
       no: "06.3",
@@ -163,10 +163,10 @@ export const renderTest = (ref: Refs, version: string) =>
     ref,
     id: "status",
     index: "06.5",
-    eyebrow: "Honest status",
+    eyebrow: "Status",
     title: "Where it *stands*.",
     kicker: `The plan is at version ${version}. No FrankenRobotics code has been released and no FrankenRobotics physics step has been measured.`,
     layout: "split",
-    body: `<div class="status"><article class="reveal"><p class="micro">Done</p><h4>The plan, and the checks behind it</h4><ul><li>A plan with 71 published sections and appendices, searchable here.</li><li>An audit of the strongest incumbents at pinned versions, with sixteen claims withdrawn.</li><li>Paper-scale pilots of the mission query, recorded with their exact counts.</li><li>A known-answer suite and a catalogue of counterexamples.</li></ul></article><article class="reveal"><p class="micro">Required before anything is called implemented</p><h4>Eight conditions, all of them</h4><ol class="eight"><li>Code in the crate the plan names</li><li>A contract with ten sections</li><li>Known answers against a pinned oracle</li><li>A claim product on every output</li><li>A CPU reference path</li><li>Reachable through the command line</li><li>Cancellation tested</li><li>A recorded pass with measured values</li></ol><p><a class="txt" href="${ref("0.2")}">Read the rule in §0.2</a></p></article><article class="reveal"><p class="micro">If the speed claim is withdrawn</p><h4>What stays</h4><p>The plan keeps the claims that never depended on speed. Any world re-runs alone on the CPU from its address. Comparisons keep error control through an agent's retries. Family answers are checked by an auditor that shares no code with their producer. Failures arrive as small replayable worlds with a cause found by intervention. Each is still to be built and tested.</p><p><a class="txt" href="${ref("39.10")}">Read it in §39.10</a></p></article></div>`,
+    body: `<div class="status"><article class="reveal"><p class="micro">Done</p><h4>The plan, and the checks behind it</h4><ul><li>A plan with 70 sections and appendices, searchable here.</li><li>An audit of the strongest incumbents at pinned versions, with sixteen claims withdrawn.</li><li>Paper-scale pilots of the mission query, recorded with their exact counts.</li><li>A known-answer suite and a catalogue of counterexamples.</li></ul></article><article class="reveal"><p class="micro">Required before anything is called implemented</p><h4>Eight conditions, all of them</h4><ol class="eight"><li>Code in the crate the plan names</li><li>A contract with ten sections</li><li>Known answers against a pinned oracle</li><li>A claim product on every output</li><li>A CPU reference path</li><li>Reachable through the command line</li><li>Cancellation tested</li><li>A recorded pass with measured values</li></ol><p><a class="txt" href="${ref("0.2")}">Read the rule in §0.2</a></p></article><article class="reveal"><p class="micro">If the speed claim is withdrawn</p><h4>What stays</h4><p>The plan keeps the claims that never depended on speed. Any world re-runs alone on the CPU from its address. Comparisons keep error control through an agent's retries. Family answers are checked by an auditor that shares no code with their producer. Failures arrive as small replayable worlds with a cause found by intervention. Each is still to be built and tested.</p><p><a class="txt" href="${ref("39.10")}">Read it in §39.10</a></p></article></div>`,
   }) +
   chapterClose;

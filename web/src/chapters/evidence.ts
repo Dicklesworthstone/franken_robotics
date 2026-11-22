@@ -121,7 +121,7 @@ export const renderEvidence = (ref: Refs) =>
     eyebrow: "NS-17",
     title: "Five hundred *retries*.",
     kicker:
-      "An agent submits design after design to the same gate. None of them is any good. Testing each at 5% lets one through within the first few dozen. Spending the error budget as α ÷ i(i + 1) keeps the whole campaign under 5%. [NS-17](§7)",
+      "An agent submits design after design to the same gate. None of them is any good. Testing each at 5% usually lets one through within the first twenty. Spending the error budget as α ÷ i(i + 1) keeps the whole campaign under 5%. [NS-17](§7)",
     body: figure({
       name: "retries",
       no: "05.4",

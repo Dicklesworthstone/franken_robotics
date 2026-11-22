@@ -36,7 +36,7 @@ const hero = (ref: Refs) => `
 <h1 class="d1" id="hero-title">${title("Every body that can *do the job*.")}</h1>
 <p class="lede">FrankenRobotics is a plan for a robotics lab that AI agents can use. State a mission and it should return the whole family: the robots that can do it, the robots that cannot and why, and the cheapest experiment that would settle the rest.</p>
 <div class="cta"><a class="btn go" href="#family">See a family answer${icon("down")}</a><a class="btn" href="/plan/">Explore the plan${icon("right")}</a></div>
-<p class="honest">Nothing has been built yet. The figures on this page run in your browser, and each one names its source in the plan.</p></div>
+<p class="honest">No FrankenRobotics code has been released. The figures on this page run in your browser, and each one says where it comes from.</p></div>
 <div class="wrap console-wrap"><div class="console"><div class="console-place"><p class="micro">Choose a place</p>${seg(
   "place",
   "Place",

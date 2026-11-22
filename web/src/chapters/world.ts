@@ -9,7 +9,7 @@ export const world: Chapter = {
   colour: "#6cc8f7",
   title: "The room is a *variable*.",
   thesis:
-    "A robot fails at a threshold, a wet mat or a corner that is four centimetres too tight. FrankenRobotics generates the places, names each hazard with its dimensions, and treats a twelve-dollar ramp as an answer on the same footing as a new gearbox.",
+    "A robot fails at a threshold, a wet mat or a corner that is four centimetres too tight. FrankenRobotics would generate the places, name each hazard with its dimensions, and treat a twelve-dollar ramp as an answer on the same footing as a new gearbox.",
   sections: [
     ["rooms", "Seven interiors"],
     ["corner", "Fits, cannot fit, not yet known"],

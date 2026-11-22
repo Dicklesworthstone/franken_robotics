@@ -10,7 +10,7 @@ export const question: Chapter = {
   colour: "#fbbf24",
   title: "Where the *day* goes.",
   thesis:
-    "A design agent edits a robot, trains a controller, watches it fail and edits again. Most of that day is training, and the rest is finding out what went wrong. FrankenRobotics starts from the clock.",
+    "A design agent edits a robot, trains a controller, watches it fail and edits again. Published figures put most of that day in training, so the plan starts by timing it.",
   sections: [
     ["what", "Six products, one model"],
     ["stories", "Twenty-four stories"],

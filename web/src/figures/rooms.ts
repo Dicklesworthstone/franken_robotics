@@ -14,6 +14,7 @@ import {
   Vector3,
 } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { $, $$, clamp, fit, loop, mix, reduced, seg } from "./lib";
 import { generate, type Finish, type Interior, type Round } from "./interiors";
 import { lit, renderer } from "./three-kit";
@@ -86,16 +87,60 @@ export default function mount(root: HTMLElement) {
   let place = "kitchen";
   let born = 0;
   let rise: { mesh: Mesh; y: number; h: number; delay: number; unit: boolean }[] = [];
+  /** When the last block has finished rising, and whether the room has since been merged. */
+  let risen = 0;
+  let settled = false;
+  let merged: BufferGeometry[] = [];
   let spans: HTMLElement[] = [];
 
   const light = (i: number) => {
     spans.forEach((s, j) => s.classList.toggle("on", i === j));
     $$(list, "li").forEach((s, j) => s.classList.toggle("on", i === j));
   };
-  const build = () => {
-    if (group) scene.remove(group);
+  // Once every block has risen the room stands still, so each opaque finish becomes a single mesh: a few dozen draw
+  // calls a frame instead of one for every block, twice over with the shadow. Glass and wire stay apart, sorted.
+  const settle = () => {
+    settled = true;
+    rise = [];
+    const sets = new Map<string, Mesh[]>();
+    for (const mesh of group!.children as Mesh[]) {
+      const m = mesh.material as MeshStandardMaterial;
+      if (m.transparent) continue;
+      const key = `${m.uuid} ${mesh.castShadow} ${mesh.receiveShadow}`;
+      const set = sets.get(key);
+      if (set) set.push(mesh);
+      else sets.set(key, [mesh]);
+    }
+    let whole = true;
+    for (const meshes of sets.values()) {
+      const parts = meshes.map((mesh) => {
+        mesh.updateMatrix();
+        return (mesh.geometry.index ? mesh.geometry.toNonIndexed() : mesh.geometry.clone()).applyMatrix4(mesh.matrix);
+      });
+      const geo = mergeGeometries(parts);
+      for (const part of parts) part.dispose();
+      if (!geo) {
+        whole = false;
+        continue;
+      }
+      merged.push(geo);
+      const one = new Mesh(geo, meshes[0]!.material);
+      one.castShadow = meshes[0]!.castShadow;
+      one.receiveShadow = meshes[0]!.receiveShadow;
+      group!.remove(...meshes);
+      group!.add(one);
+    }
+    // The rounded blocks' own geometry now lives in the merged meshes, unless a set could not be merged.
+    if (!whole) return;
     for (const geo of made) geo.dispose();
     made = [];
+  };
+  const build = () => {
+    if (group) scene.remove(group);
+    for (const geo of [...made, ...merged]) geo.dispose();
+    made = [];
+    merged = [];
+    settled = false;
     group = new Group();
     room = generate(place, seed);
     rise = [];
@@ -111,6 +156,7 @@ export default function mount(root: HTMLElement) {
       if (b.h > 0.03 && b.f !== "wall" && (b.y ?? 0) >= 0)
         rise.push({ mesh, y: b.y ?? 0, h: b.h, unit: scaled, delay: ((b.x + room.w / 2) / room.w + (b.z + room.d / 2) / room.d) * 0.4 + (b.y ?? 0) * 0.12 });
     }
+    risen = Math.max(0, ...rise.map((r) => r.delay)) + 0.45;
     scene.add(group);
     born = performance.now();
     $(root, "[data-seedno]").textContent = `seed ${seed}`;
@@ -160,6 +206,7 @@ export default function mount(root: HTMLElement) {
       r.mesh.scale.y = Math.max(0.0001, (r.unit ? r.h : 1) * e);
       r.mesh.position.y = r.y + (r.h * e) / 2;
     }
+    if (!settled && t >= risen) settle();
     mats.hazard.emissiveIntensity = reduced ? 0.8 : 0.7 + 0.35 * Math.sin(now / 420);
     gl.render(scene, camera);
     for (const [i, h] of room.hazards.entries()) {

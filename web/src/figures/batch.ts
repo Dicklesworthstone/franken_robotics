@@ -58,7 +58,7 @@ function table(seed: number): Row[] {
     const tibia = femur * (0.75 + u() * 0.65);
     const period = 0.48 + u() * 0.5;
     const duty = legs === 4 ? 0.52 + u() * 0.12 : 0.56 + u() * 0.16;
-    return {
+    const row: Row = {
       legs,
       femur,
       tibia,
@@ -72,6 +72,17 @@ function table(seed: number): Row[] {
       bend: u() < 0.5 ? 1 : -1,
       wave: legs > 4 && u() < 0.4,
     };
+    // A long stride on short legs cannot be walked tall: ride low enough that every point of the foot's path, at the
+    // top of the body's bob, is within the leg's reach.
+    const gait = { period, duty, stride: SPEED * duty * period, lift: row.lift };
+    const most = (femur + tibia) * 0.995;
+    let top = Infinity;
+    for (let k = 0; k < 96; k++) {
+      const [fx, up] = foot(k / 96, gait);
+      top = Math.min(top, 0.0275 * row.thick + up + Math.sqrt(Math.max(0, most * most - fx * fx)));
+    }
+    row.hang = Math.min(row.hang, top - 0.03 - row.lift * 0.1);
+    return row;
   });
 }
 
@@ -126,11 +137,13 @@ export default function mount(root: HTMLElement) {
     scene.add(m);
     return m;
   };
-  // Trunks and heads are made at a typical robot's proportions and stretched a little to each one's, so that their
-  // rounded edges keep close to their shape.
+  // Trunks, the decks on them and heads are each made at a typical robot's proportions and stretched a little to each
+  // one's, so that their rounded edges keep close to their shape.
   const TRUNK = [0.62, 0.13, 0.3] as const;
+  const DECK = [0.46, 0.05, 0.22] as const;
   const HEAD = [0.1, 0.1, 0.2] as const;
-  const trunks = make(new RoundedBoxGeometry(...TRUNK, 2, 0.032), std(0.4, 0.1), COUNT * 2);
+  const trunks = make(new RoundedBoxGeometry(...TRUNK, 2, 0.032), std(0.4, 0.1), COUNT);
+  const decks = make(new RoundedBoxGeometry(...DECK, 2, 0.016), std(0.4, 0.1), COUNT);
   // Limbs taper from the joint above to the joint below.
   const limbs = make(new CylinderGeometry(0.5, 0.34, 1, 12), std(0.45, 0.2), max * 2);
   const heads = make(new RoundedBoxGeometry(...HEAD, 2, 0.022), std(0.5, 0.35), COUNT);
@@ -148,8 +161,8 @@ export default function mount(root: HTMLElement) {
     let leg = 0;
     for (const [i, r] of rows.entries()) {
       shell.set("#dfe8e2").lerp(hue[r.legs]!, 0.28);
-      trunks.setColorAt(i * 2, shell);
-      trunks.setColorAt(i * 2 + 1, dark);
+      trunks.setColorAt(i, shell);
+      decks.setColorAt(i, dark);
       heads.setColorAt(i, dark);
       lamps.setColorAt(i, hue[r.legs]!);
       for (let l = 0; l < r.legs; l++, leg++) {
@@ -163,7 +176,7 @@ export default function mount(root: HTMLElement) {
     limbs.count = leg * 2;
     hubs.count = leg * 2;
     feet.count = leg;
-    for (const m of [trunks, heads, limbs, hubs, feet, lamps]) m.instanceColor!.needsUpdate = true;
+    for (const m of [trunks, decks, heads, limbs, hubs, feet, lamps]) m.instanceColor!.needsUpdate = true;
     $(root, "[data-links]").textContent = fmt(COUNT + leg * 3);
   };
 
@@ -200,8 +213,8 @@ export default function mount(root: HTMLElement) {
       // Highest over the middle of each stance, in step with this robot's own feet.
       const bob = r.lift * 0.1 * Math.cos(4 * Math.PI * (t / r.period + i * 0.137 - r.duty / 2));
       const by = r.hang + 0.03 + bob;
-      put(trunks, i * 2, bx, by + 0.02, bz, 0, r.length / TRUNK[0], (0.13 * r.thick) / TRUNK[1], r.width / TRUNK[2]);
-      put(trunks, i * 2 + 1, bx, by + 0.1 * r.thick, bz, 0, (r.length * 0.74) / TRUNK[0], 0.05 / TRUNK[1], (r.width * 0.72) / TRUNK[2]);
+      put(trunks, i, bx, by + 0.02, bz, 0, r.length / TRUNK[0], (0.13 * r.thick) / TRUNK[1], r.width / TRUNK[2]);
+      put(decks, i, bx, by + 0.1 * r.thick, bz, 0, (r.length * 0.74) / DECK[0], 0.05 / DECK[1], (r.width * 0.72) / DECK[2]);
       put(heads, i, bx + r.length / 2 + 0.04, by + 0.03, bz, 0, 0.1 / HEAD[0], (0.1 * r.thick) / HEAD[1], (r.width * 0.66) / HEAD[2]);
       put(lamps, i, bx + r.length / 2 + 0.092, by + 0.045, bz, 0, 0.012, 0.022, r.width * 0.5);
       gait.period = r.period;
@@ -233,7 +246,7 @@ export default function mount(root: HTMLElement) {
         }
       }
     }
-    for (const m of [trunks, heads, limbs, hubs, feet, lamps]) m.instanceMatrix.needsUpdate = true;
+    for (const m of [trunks, decks, heads, limbs, hubs, feet, lamps]) m.instanceMatrix.needsUpdate = true;
   };
 
   const ring = new LineLoop(

@@ -340,7 +340,9 @@ function leg(mk: Maker, o: Leg) {
         const arm = 0.08 * o.side * k;
         const side = arm + o.lateral(t);
         const D = Math.sqrt(Math.max(0, y * y + side * side - arm * arm));
-        angles = [...reach(o.l1, o.l2, x, -D, o.bend), Math.atan2(side, y) - Math.atan2(arm, -D)];
+        // Both angles sit near ±π, below the hip, so their difference is wrapped to the turn it means.
+        const roll = Math.atan2(side, y) - Math.atan2(arm, -D);
+        angles = [...reach(o.l1, o.l2, x, -D, o.bend), Math.atan2(Math.sin(roll), Math.cos(roll))];
       } else angles = [...reach(o.l1, o.l2, x, y, o.bend), o.roll?.(t) ?? 0];
     }
     return angles;
@@ -771,7 +773,22 @@ function humanoid(idle: boolean): Body {
     });
     p = mk.add({ name: `${n}.wrist.roll`, parent: p, at: [0, -0.17, 0], joint: "y", turn: () => 0, parts: [cyl(0.03, 0.03, [0, 0, 0], "steel"), ring(0.03, 0.003, [0, 0.016, 0], "glow")] });
     p = mk.add({ name: `${n}.wrist.pitch`, parent: p, at: [0, -0.03, 0], joint: "z", turn: () => 0.1, parts: [ball(0.025, [0, 0, 0], "steel")] });
-    mk.add({ name: `${n}.wrist.yaw`, parent: p, at: [0, 0, 0], joint: "x", turn: () => 0, parts: [box([0.07, 0.085, 0.032], [0, -0.06, 0], "shell"), box([0.06, 0.05, 0.026], [0.004, -0.122, 0], "dark")] });
+    // A five-fingered hand at rest, palm to the body: four fingers in two segments, curled a little towards the
+    // palm, index forwards, and a thumb set across in front of them.
+    const inward = -side;
+    const hand: Part[] = [box([0.07, 0.085, 0.032], [0, -0.06, 0], "shell"), box([0.064, 0.012, 0.03], [0, -0.1, 0], "dark")];
+    for (const [x, l] of [
+      [0.024, 0.046],
+      [0.008, 0.05],
+      [-0.008, 0.047],
+      [-0.024, 0.038],
+    ] as const) {
+      const knuckle: V3 = [x, -0.105 - 0.55 * l, inward * 0.004];
+      const tip: V3 = [x, knuckle[1] - 0.45 * l * Math.cos(0.6), inward * (0.004 + 0.45 * l * Math.sin(0.6))];
+      hand.push(strut([x, -0.104, 0], knuckle, 0.0078, "dark"), strut(knuckle, tip, 0.007, "dark"));
+    }
+    hand.push(strut([0.03, -0.05, inward * 0.01], [0.044, -0.08, inward * 0.026], 0.009, "dark"), strut([0.044, -0.08, inward * 0.026], [0.04, -0.103, inward * 0.034], 0.008, "dark"));
+    mk.add({ name: `${n}.wrist.yaw`, parent: p, at: [0, 0, 0], joint: "x", turn: () => 0, parts: hand });
 
     /*
      * The leg in three dimensions, in G1's order: hip pitch, roll and yaw, knee, ankle pitch and roll. The ankle goes

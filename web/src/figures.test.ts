@@ -207,3 +207,23 @@ test("every place generates finite geometry and numbered hazards for many seeds"
       expect(numbers).toBeNull();
     }
 });
+
+test("every piece of furniture in every room stands inside the room", () => {
+  const out: string[] = [];
+  for (const place of Object.keys(interiors))
+    for (let seed = 1; seed <= 60; seed++) {
+      const room = generate(place, seed);
+      // After the floor: walls, glass and window frames make the room. A worktop may tuck a centimetre into the wall.
+      for (const b of room.blocks.slice(1)) {
+        if (b.f === "wall" || b.f === "glass" || (b.f === "shelf" && (b.y ?? 0) > 0.3)) continue;
+        const c = Math.abs(Math.cos(b.turn ?? 0));
+        const s = Math.abs(Math.sin(b.turn ?? 0));
+        const past = Math.max(
+          Math.abs(b.x) + (b.w * c + b.d * s) / 2 - room.w / 2,
+          Math.abs(b.z) + (b.w * s + b.d * c) / 2 - room.d / 2,
+        );
+        if (past > 0.0111) out.push(`${place} seed ${seed}: ${b.f} at (${b.x.toFixed(2)}, ${b.z.toFixed(2)}) by ${past.toFixed(3)} m`);
+      }
+    }
+  expect(out).toEqual([]);
+});

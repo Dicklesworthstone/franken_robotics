@@ -162,6 +162,13 @@ class Plan {
     this.add(x, z + 0.02, 0.06, 0.04, 0.1, "steel", 0.5);
     this.add(x, z + 0.02, 1.35, 0.05, 0.75, "dark", 0.58);
   }
+  /**
+   * A door leaf `w` wide, hung on its hinge at (x, z) and swung to `turn`, the way a block's own turn goes: closed
+   * along +x at 0, along +z at −π/2. It turns about its hinge, so it never passes through the wall that holds it.
+   */
+  leaf(x: number, z: number, w: number, turn: number, thick = 0.05) {
+    this.add(x + (w / 2) * Math.cos(turn), z - (w / 2) * Math.sin(turn), w, thick, WALL, "stock2", 0, turn);
+  }
   /** A potted plant. */
   plant(x: number, z: number) {
     this.add(x, z, 0.36, 0.36, 0.38, "stock", 0, 0, "cyl");
@@ -244,8 +251,8 @@ class Plan {
       if (axis === "x") this.add((s + e) / 2, at, e - s, 0.1, h, "wall");
       else this.add(at, (s + e) / 2, 0.1, e - s, h, "wall");
     };
-    put(from, a);
-    put(b, to);
+    put(from, Math.min(a, to));
+    put(Math.max(b, from), to);
   }
   patch(x: number, z: number, w: number, d: number, turn = 0) {
     this.add(x, z, w, d, 0.012, "hazard", 0.002, turn);
@@ -286,23 +293,25 @@ const home = (u: U) => {
   p.hazard("Interior door", `${p.m(door)} clear`, "The footprint passes at one heading, or not at all", split, 1.1, 0.5);
   p.add(split, 1.1, 0.16, door, 0.025, "hazard");
   // Living room
-  const sx = split - 3.1;
+  // Kept far enough from the outside wall for the sofa, the rug and the toys.
+  const sx = Math.max(split - 3.1, -3.45);
   p.window(sx, 1.4);
   p.window(split + 3.1, 0.9);
   p.sofa(sx, -2.75, 2.1, 0.94, -1);
   p.table(sx + p.r(-0.2, 0.3), -1.2, 1.1, 0.6, 0.4);
   p.add(sx, -1.2, 2.6, 1.9, 0.014, "mat");
   p.hazard("Rug edge", `${p.mm(5, 20)} thick`, "Snagged, pushed or slipped on", sx + 1.3, -0.8, 0.12);
-  p.tv(sx, 2.95);
+  p.tv(sx, 3.3);
   p.patch(sx + 0.4, 1.3, 2, 0.04, p.r(-0.3, 0.3));
   p.hazard("Cord", `${p.mm(5, 12)} across`, "A wheel or foot snags", sx + 0.4, 1.3, 0.1);
   for (let i = 0; i < 6; i++) p.add(sx + p.r(-1.2, 1.4), p.r(0, 2.3), 0.12, 0.12, p.r(0.04, 0.14), p.pick<Finish>(["stock", "stock2", "stock3"]), 0, p.r(0, 3));
   p.hazard("Toys", `${p.mm(20, 150)} high`, "Ride-up, tip or a blocked caster", sx - 0.7, 0.8, 0.2);
   // Kitchen
-  p.counter(3.9, 2.9, 1.5, 0.6, "steel");
-  p.hob(4.2, 2.9, 1);
-  p.counter(split + 1.1, 2.95, 1.8, 0.6, "stock2");
-  p.sink(split + 1.1, 2.95, 1);
+  // The kitchen run stands against the wall.
+  p.counter(3.9, 3.2, 1.5, 0.6, "steel");
+  p.hob(4.2, 3.2, 1);
+  p.counter(split + 1.1, 3.2, 1.8, 0.6, "stock2");
+  p.sink(split + 1.1, 3.2, 1);
   p.table(2.6, 1.2, 1.1, 0.8, 0.74);
   for (const [dx, dz] of [
     [-0.75, 0],
@@ -314,7 +323,8 @@ const home = (u: U) => {
   const riser = p.r(0.15, 0.2);
   for (let i = 0; i < 6; i++) p.add(4.4, -3.2 + i * 0.27, 0.78, 0.28, riser * (6 - i), "wood");
   p.hazard("Stairs", `riser ${Math.round(riser * 1000)} mm`, "Step-height limit, toe strike, fall", 4.4, -1.6, 0.35);
-  p.bed(split + 1.6, -2.35, 1.6, 1.9, -1);
+  // The headboard against the far wall.
+  p.bed(split + 1.6, -2.47, 1.6, 1.9, -1);
   return p.done("Wheel slip at a rug edge, pitch on a threshold, strike of an underslung load");
 };
 
@@ -330,7 +340,7 @@ const apartment = (u: U) => {
   p.hazard("Corridor turn", `${p.m(hall)} wide`, "The body is too long to turn", 1.2 + hall / 2, -0.4, 0.15);
   p.patch(1.2 + hall / 2, -0.9 + hall / 2, hall, hall);
   p.hazard("Entry door closer", `${Math.round(p.r(10, 40))} N·m`, "Cannot be pushed, or closes on the robot", 1.2 + hall / 2, 2.9, 0.5);
-  p.add(1.2 + hall / 2, 3.05, hall - 0.1, 0.06, WALL, "stock2", 0, 0.35);
+  p.leaf(1.26, 3.17, hall - 0.12, 0.35, 0.06);
   p.add(3.5, -2.4, 1, 1.3, 0.02, "steel");
   p.patch(2.95, -2.4, 0.05, 1.1);
   p.hazard("Lift sill gap", p.mm(10, 35), "A caster drops in", 2.95, -2.4, 0.12);
@@ -370,9 +380,10 @@ const office = (u: U) => {
   p.add(4.7, 0.9, 1.6, 0.04, WALL, "glass");
   p.hazard("Glass partition", "full height", "Optical ranging sees nothing", 3.9, -0.6, 0.9);
   p.table(4.75, -1.8, 1.1, 2, 0.74);
-  p.partition("x", 1.9, -5.5, 1.6, -0.6, 0.85);
-  p.add(-0.6, 1.95, 0.85, 0.05, WALL, "stock2", 0, 0.5);
-  p.hazard("Door closer", `${Math.round(p.r(10, 40))} N·m`, "More push than the body has", -0.6, 1.9, 0.8);
+  // The door opens into the middle of one of the meeting rooms behind the corridor wall.
+  p.partition("x", 1.9, -5.5, 1.6, 0.1, 0.85);
+  p.leaf(-0.32, 1.975, 0.82, -0.5);
+  p.hazard("Door closer", `${Math.round(p.r(10, 40))} N·m`, "More push than the body has", 0.1, 1.9, 0.8);
   p.patch(0.8, 0.95, 3, 0.1, 0.1);
   p.hazard("Cable cover", `${p.mm(10, 20)} high`, "A small wheel stalls", 1.2, 0.95, 0.12);
   for (let i = 0; i < 4; i++) p.partition("z", -4.4 + i * 1.8, 1.9, 3.8, 4, 0.1);
@@ -387,20 +398,33 @@ const warehouse = (u: U) => {
   const p = new Plan(13, 8, u, "floor");
   const aisle = p.r(1.5, 2.6);
   const beam = p.r(1.2, 1.5);
+  // Rows of racks 0.88 m deep over their uprights, with the aisle clear between them, all inside the room.
+  const row0 = -3.5;
+  const pitch = aisle + 0.88;
   for (let row = 0; row < 3; row++) {
-    const z = -3.2 + row * (aisle + 0.95);
+    const z = row0 + row * pitch;
     for (let bay = 0; bay < 4; bay++) {
       const x = -5.1 + bay * 2.2;
-      for (const dx of [-1.05, 1.05]) for (const dz of [-0.4, 0.4]) p.add(x + dx, z + dz, 0.08, 0.08, 2.3, "stock2");
+      // Upright frames: two posts on footplates, tied across by braces.
+      for (const dx of [-1.05, 1.05]) {
+        for (const dz of [-0.4, 0.4]) {
+          p.add(x + dx, z + dz, 0.08, 0.08, 2.3, "stock2");
+          p.add(x + dx, z + dz, 0.13, 0.13, 0.012, "steel");
+        }
+        for (const y of [0.22, 0.92, 1.62]) p.add(x + dx, z, 0.035, 0.72, 0.035, "stock2", y);
+      }
+      // Each level: a beam along the front and one along the back, wire decking across them, the load on top.
       for (const y of [0.06, beam * 0.62, beam * 1.24]) {
-        p.add(x, z, 2.1, 0.86, 0.06, "stock3", y);
+        for (const dz of [-0.4, 0.4]) p.add(x, z + dz, 2.02, 0.05, 0.1, "stock3", y - 0.04);
+        p.add(x, z, 2.02, 0.76, 0.01, "wire", y + 0.05);
         for (let k = 0; k < 3; k++)
           if (u() < 0.86) p.add(x - 0.68 + k * 0.68, z, 0.58, 0.68, p.r(0.26, 0.56), p.pick<Finish>(["stock", "wood", "shelf"]), y + 0.06);
       }
     }
   }
-  p.hazard("Aisle", `${p.m(aisle)} wide`, "Turning and passing limits", -3, -3.2 + (aisle + 0.95) / 2, 0.1);
-  p.hazard("First rack beam", `${p.m(beam)} up`, "Strikes a tall body or a raised load", -0.6, -3.2 + 0.4 + (aisle + 0.95), beam * 0.62);
+  p.hazard("Aisle", `${p.m(aisle)} wide`, "Turning and passing limits", -3, row0 + pitch / 2, 0.1);
+  // The underside of the first raised beam, which is what a tall body or a raised load strikes.
+  p.hazard("First rack beam", `${p.m(beam * 0.62 - 0.04)} up`, "Strikes a tall body or a raised load", -0.6, row0 + 0.4 + pitch, beam * 0.62);
   for (let i = 0; i < 3; i++) {
     const x = 4.4 + p.r(-0.4, 1.2);
     const z = -2.6 + i * 1.5;
@@ -552,7 +576,7 @@ const kitchen = (u: U) => {
   p.add(-0.6, -2.1, 2.2, 0.65, 0.016, "mat");
   p.hazard("Anti-fatigue mat", `${p.mm(10, 20)} thick`, "Edge snag, and it slides when wet", -1.7, -2.05, 0.14);
   p.partition("z", 3, -3.3, 3.3, 0.6, 0.95);
-  p.add(3.05, 0.6, 0.05, 0.9, WALL, "stock2", 0, 0.5);
+  p.leaf(3.075, 0.15, 0.9, 0.5 - Math.PI / 2);
   p.hazard("Swing door", `${Math.round(p.r(5, 20))} N·m`, "Returns onto the robot or its load", 3, 0.6, 0.8);
   p.add(3.75, -2.2, 1.2, 1.6, 1.15, "steel");
   p.patch(3.75, -1.3, 1, 0.1);

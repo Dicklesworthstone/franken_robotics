@@ -8,7 +8,7 @@ labels: ["m1", "skeleton", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-07"
 deps: ["STD-TEST"]
 needs: ["§38.6: the known-answer registry loader of `frob-conformance` and its row schema (BD-146 wires the M1 rows)", "§42 OPEN-GAUNT-2: tolerances for the rows marked 'to set'"]
-related: ["BD-146", "BD-025"]
+related: ["BD-146", "BD-025", "N14b-29", "N14b-33", "N14b-34"]
 gates: []
 plan_refs: ["Appendix M.13", "§14.5", "§14.6", "§14.10", "§14.11", "§14.13", "§14.14", "§14.15", "§38.6"]
 ---
@@ -90,9 +90,25 @@ The rows. "Exact" means exact rational comparison, a verdict, a bit comparison o
 Counts: 32 rows. By tier: G1 26, G2 1, G3 4, G4 1; KA-272 and KA-287 to KA-289 are the G3 rows. Rows whose
 tolerance is "to set": KA-262, KA-264 (random limbs), KA-265, KA-266 (radius), KA-267, KA-269.
 
+Late known answers without a number. Two subsections added to the chapter after the catalogue was numbered
+(module capability tables with the composed quasi-static screen, and folding of fixed joints with reduced
+models) state five known answers that Appendix M does not list. They are entered in the same file as `[[ka]]`
+rows with `number = "unassigned"` and a local identifier, so that the loader, the owner-test check and the
+negative-control check cover them. The catalogue owner (Gauntlet lead) assigns numbers; until then a gate cites
+the local identifier. A local identifier is never reused once a number is assigned: the row keeps both.
+
+| Local id | Case | Truth | Tolerance | Tier · site | Negative control | Owner |
+|---|---|---|---|---|---|---|
+| `skel-late-01` | Four identical one-joint legs, each a horizontal link of 0.25 m with a torque limit of 10 N·m (so at most 40 N per foot), under a 16 kg body (156.96 N at 9.81 m/s²) on a square stance with feet at (±0.2, ±0.2) m, centre of mass centred | 39.24 N per foot: admitted, with a witness force distribution | exact (verdict and rational forces) | G1 · host | A table with one outer row tightened by 5% must violate inner ⊆ outer | N14b-29, N14b-32 (pilot N14b-27) |
+| `skel-late-02` | The same assembly with the centre of mass 0.05 m forward | The front pair must carry 0.625 × 156.96 = 98.1 N, above 2 × 40 N: excluded for every force distribution; the certificate is the vertical force balance with the pitch moment balance | exact (verdict) | G1 · host | Composition with the twist map in place of the wrench map loses the moment arm and admits the case | N14b-29, N14b-32 |
+| `skel-late-03` | The same assembly in a trot: two diagonal feet in stance | Each stance foot must carry 78.48 N against 40 N: excluded | exact (verdict) | G1 · host | A screen that ignores the stance set (always four feet) admits the case | N14b-29, N14b-32 |
+| `skel-late-04` | Fold of a welded child: parent 2 kg with rotational inertia 0.02·I kg·m² about its origin; child 1 kg with 0.01·I about its own centre at (0.3, 0, 0) m | Mass 3 kg; centre of mass (0.1, 0, 0) m; inertia diag(0.03, 0.12, 0.12) kg·m² about the parent origin and diag(0.03, 0.09, 0.09) about the combined centre | exact (rational) | G1 · host | Adding the two inertias without the offset term gives 0.03·I, wrong by 0.09 kg·m² on two axes; dropping the child gives 2 kg | N14b-33 |
+| `skel-late-05` | Reduced model of the reference humanoid: the 30-link profile `g1-reduced-30` (31.96314202 kg) against the 38-link source (33.34014202 kg), on a static support rated at 320 N | At 9.81 m/s² the reduced model weighs 313.5584 N and passes; the source assembly weighs 327.0668 N and fails. A result computed on the reduced model carries the reduction in its evidence | to set (the masses are reported figures, re-read from the primary source before a gate cites them) | G1 · host | An importer option that drops links silently must be refused by the mass accounting; the reduced profile used as the import-parity reference must be rejected | N14b-34, N14b-24 |
+
 ## Acceptance criteria
 
-- [ ] `registries/known_answers/skeleton.toml` holds exactly the 32 rows KA-261 to KA-292 with the values above.
+- [ ] `registries/known_answers/skeleton.toml` holds exactly the 32 rows KA-261 to KA-292 with the values above,
+      and the five unnumbered late rows `skel-late-01` to `skel-late-05` with `number = "unassigned"`.
 - [ ] `cargo test -p frob-conformance --test ka_registry_skeleton` passes: every row parses, every `owner_test`
       names a test that exists in the workspace, every non-empty `negative_control` has an entry in the
       negative-control registry, and no identifier is duplicated or renumbered.
@@ -104,7 +120,11 @@ tolerance is "to set": KA-262, KA-264 (random limbs), KA-265, KA-266 (radius), K
 
 ### Unit tests
 
-- `ka_registry_skeleton::row_count`: asserts 32 rows and the identifier range KA-261..=KA-292 with no gap.
+- `ka_registry_skeleton::row_count`: asserts 32 numbered rows and the identifier range KA-261..=KA-292 with no
+  gap, and five rows with `number = "unassigned"` whose local identifiers are distinct.
+- `ka_registry_skeleton::late_hand_values`: recomputes in exact rationals 156.96/4 = 39.24, 0.625 × 156.96 = 98.1,
+  156.96/2 = 78.48, the fold (3 kg; diag(0.03, 0.12, 0.12) and diag(0.03, 0.09, 0.09) kg·m²) and the two weights
+  31.96314202 × 9.81 = 313.5584 N and 33.34014202 × 9.81 = 327.0668 N to four decimals.
 - `ka_registry_skeleton::owner_tests_exist`: resolves each `owner_test` path to a compiled test name.
 - `ka_registry_skeleton::controls_registered`: each negative control maps to a registered mutant or fixture.
 - `ka_registry_skeleton::hand_values`: recomputes the closed-form rows in exact rationals inside the test:
@@ -133,6 +153,9 @@ must fail `owner_tests_exist`; a planted duplicate identifier must fail `row_cou
 - KA-282 points at a belt-law known answer that the Traction battery does not list under that name; BD-245
   writes the derivation (scrub moment μ·W·L/4 for uniformly loaded belts) and this row cites it.
 - A row is never renumbered. A retired row is tombstoned.
+- The five late rows have no catalogue number. OPEN: their numbers; owner: Gauntlet lead; fail-closed default:
+  the rows run under their local identifiers and are reported in the registry printout under "unassigned", so
+  that they cannot be mistaken for rows of another chapter.
 
 ## References
 

@@ -8,7 +8,7 @@ labels: ["m0", "delivery", "spark", "kinesis", "traction", "registry", "solid"]
 parent: "EPIC-M0"
 deps: ["N41-01"]
 needs: ["§16 to §23, §35: the keys named in the Beads column are owned by the chapter units; they are named for traceability, not as blocking dependencies"]
-related: ["N41-RISK1", "N41-RISK2", "N41-RISK4", "N41-PM", "N41-02", "N33c-37", "N23b-30", "BD-176", "N21b-34", "BD-213"]
+related: ["N41-RISK1", "N41-RISK2", "N41-RISK4", "N41-PM", "N41-02", "N41-32", "N33c-37", "N23b-30", "BD-176", "N21b-34", "BD-213"]
 gates: ["GATE-WS-07"]
 plan_refs: ["§41.3", "§41.4", "§41.5", "§16", "§18", "§21", "§35"]
 ---

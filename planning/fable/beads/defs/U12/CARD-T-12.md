@@ -6,7 +6,7 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["BD-381", "N12-06", "SPEC-C-12"]
+deps: ["BD-381", "N12-06", "SPEC-C-12", "N12-23"]
 needs: []
 related: ["BD-103", "BD-360", "N12-37", "CARD-T-15", "CARD-T-29", "BD-052"]
 gates: []

@@ -1376,9 +1376,10 @@
    "n": 1,
    "as": "related",
    "keys": [
-    "BD-124"
+    "BD-124",
+    "N33b-13"
    ],
-   "note": "this bead probes and does not admit"
+   "note": "this bead probes and does not admit; the group gate for the airlock group stats is N33b-13 (M3)"
   },
   {
    "bead": "N25a-32",
@@ -1405,9 +1406,9 @@
    "keys": [
     "N25b-09",
     "BD-362",
-    "N25d-15"
+    "N25d-22"
    ],
-   "note": "later milestones; the register of missing pieces names them"
+   "note": "later milestones (the paving driver, the trajectory optimizer, the continuation engine); the register of missing pieces names them; interval forms of the static analyses have no carrier and are reported as a gap of §28"
   },
   {
    "bead": "N25a-33",
@@ -1558,9 +1559,10 @@
    "n": 2,
    "as": "related",
    "keys": [
-    "BD-003"
+    "BD-003",
+    "N34-25"
    ],
-   "note": "the static check runs on every commit and is outside this script; BD-026 depends on it"
+   "note": "the static checks run on every commit and are outside this script (BD-003 for the manifest rules, N34-25 for the auditor rules and the shared-source scan)"
   },
   {
    "bead": "N25b-06",
@@ -1699,10 +1701,10 @@
    "n": 2,
    "as": "dep",
    "keys": [
-    "BD-124",
+    "N33b-13",
     "N25a-32"
    ],
-   "note": "fs-voi is admitted above the airlock by the group gate of BD-124; N25a-32 holds its pin facts and the reuse decision"
+   "note": "fs-voi is admitted through the airlock group stats and its group gate (N33b-13); N25a-32 holds its pin facts and the reuse decision"
   },
   {
    "bead": "N25b-13",
@@ -2059,10 +2061,515 @@
    "note": ""
   }
  ],
- "edges": [],
- "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "edges": [
+  {
+   "bead": "BD-358",
+   "dep": "N25b-09",
+   "as": "dep",
+   "why": "coverage (e)7 of U25b: BD-358 is the seed capstone of the region-certificate beads; the per-constraint paving driver is its component"
+  },
+  {
+   "bead": "BD-358",
+   "dep": "N25b-10",
+   "as": "dep",
+   "why": "coverage (e)7 of U25b: the combination of per-constraint sets into a region answer is a component of the seed capstone"
+  },
+  {
+   "bead": "BD-358",
+   "dep": "N25b-08",
+   "as": "dep",
+   "why": "coverage (e)7 of U25b: the constraint-to-parameter graph named in BD-358's scope is built and measured by N25b-08"
+  },
+  {
+   "bead": "BD-004",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "need 1 of BD-002 read in its true direction: check-generated calls the status-table generator that BD-002 supplies"
+  },
+  {
+   "bead": "N12-14",
+   "dep": "BD-288",
+   "as": "related",
+   "why": "the checker is written against the payload definition and hand-built specimens; the proposer BD-288 depends on the checker, so a dependency back would close a cycle"
+  },
+  {
+   "bead": "N25d-37",
+   "dep": "N25-KA",
+   "as": "dep",
+   "why": "coverage (d) of U25a: the M1 known-answer battery realizes rows of the registry"
+  },
+  {
+   "bead": "N25d-38",
+   "dep": "N25-KA",
+   "as": "dep",
+   "why": "coverage (d) of U25a: the M3 and M4 known-answer battery realizes rows of the registry"
+  },
+  {
+   "bead": "N25d-39",
+   "dep": "N25-KA",
+   "as": "dep",
+   "why": "coverage (d) of U25a: the M6 and M8 known-answer battery realizes rows of the registry"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N25a-16",
+   "as": "dep",
+   "why": "coverage (d) of U25b (Tether): the M3 registry freeze registers mission.revalidate with its schemas and refusal list"
+  },
+  {
+   "bead": "N25e-12",
+   "dep": "N25b-30",
+   "as": "dep",
+   "why": "new bead N25b-30: the M3 writer that lets monomial-product certificates travel as bundles"
+  },
+  {
+   "bead": "BD-294",
+   "dep": "N25b-30",
+   "as": "dep",
+   "why": "new bead N25b-30: the M3 repetition of checker independence runs over the kinds this writer emits"
+  },
+  {
+   "bead": "BD-364",
+   "dep": "N25b-30",
+   "as": "dep",
+   "why": "new bead N25b-30: the M4 writer extends the table of the M3 writer"
+  },
+  {
+   "bead": "N25a-25",
+   "dep": "N25b-30",
+   "as": "dep",
+   "why": "new bead N25b-30: the script audits monotone-transport bundles (also written into the bead file)"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N25b-18",
+   "keep": "N25a-16",
+   "note": "both specify the mission layer of mission.revalidate at M3; folded into N25a-16: doctrine D-11 and the pilot's four-state result, dependency support, the mask and its states, structural rules, withdrawal records, refusals 835 and 854, output schema name, eight acceptance criteria and tests, KA-224, KA-626, CX-287, RISK-38, OPEN-ATEL-4; deps BD-128, BD-133, BD-077, BD-205"
+  },
+  {
+   "drop": "N25b-19",
+   "keep": "N25a-17",
+   "note": "both freeze the 30-amendment campaign and build the incremental incumbent; folded into N25a-17: examples of edits and expected behaviour per category, dynamic base fixtures, complete keying of the incumbent, phase costs and dirty fraction, three potency controls, the pilot-register row, tests and considerations; deps BD-135, BD-123, BD-202, BD-111, BD-220, STD-E2E, N38a-09. The composition of N25a-17 (ten categories) is the one in force; the sealed set is run once, by N25a-26; the dependency on the engine BD-292 is not carried over (a pilot depends only on what it needs to run)"
+  },
+  {
+   "drop": "N25b-20",
+   "keep": "N25a-19",
+   "note": "both decide KILL-AUGUR-REUSE per rule; folded into N25a-19: kill-gate convention, licence-must-be-recorded rule, dependency-grade contradictions routed elsewhere, measured usefulness, not-exercised posture, cause analysis by another session, downstream list, drill and planted wrong-direction rule, seven tests, KA-224, KA-638; deps N25a-17, STD-E2E, N40-03, N25d-41. Six rule names of the registry kept (N25b-20 listed five)"
+  },
+  {
+   "drop": "N25b-21",
+   "keep": "N25a-26",
+   "note": "both are the end-to-end script of GATE-AUGUR-12 on the frozen campaign; folded into N25a-26: digest check against the pilot register, category checks, cost_bounds assertions on the cart-relay fixture, mask audit by the independent checker, withdrawal records and evidence trace, two more planted builds and the self-test script, logging fields, KA-224, KA-626. Script name mission_revalidate_campaign.sh kept"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N25a-20",
+   "other": "N25c-05",
+   "note": "both decide KILL-AUGUR-TRANSPORT at M8 on the record of the three-treatment tray experiment; one decision bead should remain"
+  },
+  {
+   "mine": "N25b-08",
+   "other": "N25e-27",
+   "note": "both are the OPEN-AUGUR-3 experiment: the constraint-to-parameter graph of the robot classes and its measured sparsity"
+  },
+  {
+   "mine": "N25a-07",
+   "other": "N25d-36",
+   "note": "both state the four proof rules with an invalid fixture each: N25a-07 as the battery in frob-mission, N25d-36 as the candidate theorem cards of PO-AUGUR-06"
+  },
+  {
+   "mine": "N25a-23",
+   "other": "N25d-32",
+   "note": "overlap: N25a-23 fires every admission refusal from the command line, N25d-32 every one of the chapter's twenty codes through the public verbs; the admission codes are exercised twice"
+  },
+  {
+   "mine": "N25a-13",
+   "other": "N25c-11",
+   "note": "both specify the passive-spring amendment that withdraws the stance cell at half-width 1/4 m: N25a-13 as the M1 revalidation case, N25c-11 as the authority amendment"
+  },
+  {
+   "mine": "BD-130",
+   "other": "N25c-11",
+   "note": "BD-130's scope includes the authority models independent-normal-force and passive-equal-spring, which N25c-11 specifies as a typed field with its lowering; seed and component, scopes to be reconciled"
+  },
+  {
+   "mine": "BD-130",
+   "other": "N25c-12",
+   "note": "BD-130's scope includes the validation grid (2,304 bodies, 11,520 states) that N25c-12 builds in frob-conformance; seed and component, scopes to be reconciled"
+  },
+  {
+   "mine": "BD-136",
+   "other": "N38b-11",
+   "note": "both build a certificate mutation corpus per proof kind with a generator: BD-136 for the gates of the mission slice, N38b-11 for the Gauntlet's own gate"
+  },
+  {
+   "mine": "BD-002",
+   "other": "N33a-07",
+   "note": "both define the format of DEPENDENCY_ADMISSION.md: BD-002 as a companion document, N33a-07 as the admission-record schema, writer and validator"
+  },
+  {
+   "mine": "N25b-09",
+   "other": "BD-358",
+   "note": "BD-358's scope restates the paving driver, the combination, the graph and the gate measurement that N25b-08 to N25b-11 specify; BD-358 is the seed capstone (edges recorded) and its Scope should say so"
+  },
+  {
+   "mine": "N25a-27",
+   "other": "N25c-06",
+   "note": "overlap with distinct scope, connected by a dependency: N25c-06 is the pilot that measures f, r and h of one amended-mission workflow, N25a-27 the script that audits registered speed comparisons and reads that record"
+  },
+  {
+   "mine": "N25a-28",
+   "other": "N25c-09",
+   "note": "overlap with distinct scope, connected by a dependency: N25c-09 places family screens on devices and host, N25a-28 is the script that asserts its placement receipts for GATE-AUGUR-15"
+  },
+  {
+   "mine": "BD-140",
+   "other": "N25d-27",
+   "note": "overlap with distinct scope: both exercise the first mission slice from the user's side at M1; BD-140 is the fresh-agent trial of GATE-AUGUR-07, N25d-27 the scripted docking demonstration"
+  },
+  {
+   "mine": "N25b-05",
+   "other": "N34-25",
+   "note": "both claim the record of GATE-WS-03: N25b-05 measures three clauses end to end, N34-25 assembles the row from four clauses"
+  }
+ ],
+ "new_beads": [
+  "N25b-30"
+ ],
+ "gaps": [
+  {
+   "section": "Appendix M and §38.6",
+   "what": "no bead assigns suite numbers to known answers of subsections added late; Augur's eighteen (§25.29 to §25.39) are registered in N25-KA under provisional tags late-01 to late-18",
+   "needed_by": [
+    "N25-KA"
+   ]
+  },
+  {
+   "section": "§12.4 (with §25.10)",
+   "what": "the alias-pair checker of BD-132 has no payload field for two observation laws and does not recompute the total-variation bound (1 + TV)/2 that a stochastic indistinguishability witness needs",
+   "needed_by": [
+    "N25b-27",
+    "BD-290"
+   ]
+  },
+  {
+   "section": "§28.4",
+   "what": "no analysis bead states that the static analyses (mass roll-up, reach and workspace, actuator envelope, self-clearance, the bound analyses of A-20 to A-23) run over a generic scalar, so that an interval, an affine form or an expression-recording value can stand in for a number",
+   "needed_by": [
+    "N25b-08",
+    "N25b-09",
+    "N25b-13",
+    "N25b-16",
+    "N25a-32"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-002",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-127",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-130",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-131",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-135",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-140",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-288",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-292",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-316",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-354",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-355",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-387",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-436",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25-KA",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-01",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-02",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-03",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-04",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-05",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-06",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-07",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-08",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-09",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-10",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-11",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-12",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-13",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-15",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-16",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-17",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-18",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-19",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-20",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-21",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-22",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-23",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-24",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-25",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-27",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-28",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-29",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-31",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-32",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-33",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "N25a-34",
+   "what": "title shortened to about 110 characters"
+  },
+  {
+   "bead": "BD-436",
+   "what": "epic: the seed dependencies BD-321 and BD-336 moved from deps to related (an epic carries no dependencies)"
+  },
+  {
+   "bead": "N25a-16",
+   "what": "kept bead of a merge: N25b-18 folded in; Scope rewritten; depends on its pilot N25a-17 (Frontier mechanism) and on BD-128, BD-133, BD-077, BD-205"
+  },
+  {
+   "bead": "N25a-17",
+   "what": "kept bead of a merge: N25b-19 folded in; Scope rewritten; deps BD-135, BD-123, BD-202, BD-111, BD-220, STD-E2E, N38a-09 added; gates gains KILL-AUGUR-REUSE"
+  },
+  {
+   "bead": "N25a-19",
+   "what": "kept bead of a merge: N25b-20 folded in; Scope rewritten; deps N25a-17, STD-E2E, N40-03, N25d-41 added"
+  },
+  {
+   "bead": "N25a-26",
+   "what": "kept bead of a merge: N25b-21 folded in; Scope rewritten; eight planted builds instead of six"
+  },
+  {
+   "bead": "N25b-18",
+   "what": "marked superseded_by N25a-16"
+  },
+  {
+   "bead": "N25b-19",
+   "what": "marked superseded_by N25a-17"
+  },
+  {
+   "bead": "N25b-20",
+   "what": "marked superseded_by N25a-19"
+  },
+  {
+   "bead": "N25b-21",
+   "what": "marked superseded_by N25a-26"
+  },
+  {
+   "bead": "BD-128",
+   "what": "overlap re-scoped: Scope rewritten against N25a-01, -03, -04, -05, -06, -07, -10, -12, -13, -33; deps on the crate skeleton N25a-01 and on exact reconstruction N25a-06 added; reference to the superseded N25b-18 replaced by N25a-16"
+  },
+  {
+   "bead": "N25a-01",
+   "what": "overlap with BD-128 re-scoped (Scope names BD-128 as the owner of the kernel modules)"
+  },
+  {
+   "bead": "N25a-06",
+   "what": "overlap with BD-128 re-scoped (this bead is the one implementation of exact reconstruction)"
+  },
+  {
+   "bead": "N25a-13",
+   "what": "overlap with BD-128 and N25b-01 re-scoped (who owns the dependency-support record and the polarity axis)"
+  },
+  {
+   "bead": "N25a-12",
+   "what": "overlap with N25b-12 re-scoped: the M1 driver and its worklist; depends on the plan-time pilot re-runs BD-041, BD-042, BD-043 (Frontier mechanism)"
+  },
+  {
+   "bead": "N25b-12",
+   "what": "overlap with N25a-12 re-scoped: the M4 worklist extends the M1 one; dep on N25a-12 added"
+  },
+  {
+   "bead": "BD-136",
+   "what": "overlap with N25a-07 and N25a-08 re-scoped: the corpus takes their fixtures; deps on both added"
+  },
+  {
+   "bead": "N25b-07",
+   "what": "overlap with N25a-02 re-scoped: runs on the admitted query; dep on N25a-02 added"
+  },
+  {
+   "bead": "N25a-02",
+   "what": "Scope names N25b-07 as the owner of refusal 877"
+  },
+  {
+   "bead": "N25a-21",
+   "what": "Scope names N25b-06 as the owner of the two-host audit; related added"
+  },
+  {
+   "bead": "N25b-06",
+   "what": "related gains N25a-21 and N25a-22 (the scripts whose answers it audits)"
+  },
+  {
+   "bead": "N25a-31",
+   "what": "Scope names N25b-09 and N25b-10 as the owners of the paving driver and the region answer"
+  },
+  {
+   "bead": "N25b-09",
+   "what": "Scope names N25a-31 as the sum-of-squares proposer inserted into its attempt order"
+  },
+  {
+   "bead": "BD-355",
+   "what": "seed capstone: depends on its pilot N25c-06 and on the family batch plan N25c-07; Scope says so"
+  },
+  {
+   "bead": "N25a-09",
+   "what": "Frontier mechanism now depends on the plan-time pilot re-runs BD-041, BD-042, BD-043"
+  },
+  {
+   "bead": "N25b-14",
+   "what": "depends directly on its pilot N17a-25 and on the decision KILL-QUOTIENT (N17a-29), on whose surviving branch it exists"
+  },
+  {
+   "bead": "N25b-22",
+   "what": "Frontier mechanism now depends on its pilot N25b-25 (moved from related)"
+  },
+  {
+   "bead": "N25b-03",
+   "what": "reference to the superseded N25b-18 replaced by N25a-16 (related and Scope)"
+  },
+  {
+   "bead": "N25b-24",
+   "what": "reference to the superseded N25b-18 replaced by N25a-16 (related)"
+  },
+  {
+   "bead": "N25a-05",
+   "what": "OPEN-AUGUR-8 brought into agreement with the decision bead N25b-02: the review marker is a separate review object, not a flag of the authorization object"
+  },
+  {
+   "bead": "N25a-25",
+   "what": "depends on the new writer bead N25b-30"
+  },
+  {
+   "bead": "N25b-10",
+   "what": "related gains BD-135, whose verb mission.show this bead extends with a membership selector"
+  }
+ ]
 }

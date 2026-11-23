@@ -8,7 +8,7 @@
    "keys": [
     "BD-094"
    ],
-   "note": "seed order: BD-081 emits the Faulted cause numerical-fault; BD-094 (higher-numbered seed) classifies it and depends on the step, not the reverse"
+   "note": "seed order (094 > 081): BD-081 emits the Faulted cause numerical-fault and BD-094 classifies it; BD-081 can be finished without the taxonomy"
   },
   {
    "bead": "BD-081",
@@ -171,10 +171,9 @@
    "n": 1,
    "as": "related",
    "keys": [
-    "N18a-19",
     "N18b-33"
    ],
-   "note": "the decision depends on BD-212's GATE-FID-01 measurements (rule 7), never the reverse; N18a-19 and N18b-33 are two drafts of the same KILL-CONTACT decision in group G18"
+   "note": "the decision depends on BD-212's GATE-FID-01 measurements (rule 7), never the reverse; N18b-33 is the kept KILL-CONTACT decision bead (N18a-19 was folded into it by its group)"
   },
   {
    "bead": "BD-212",
@@ -573,7 +572,7 @@
    "keys": [
     "N20a-07"
    ],
-   "note": "the default policy is decided later by OPEN-SENS-1 (N20b-23, N20a-12)"
+   "note": "the default policy is decided later by OPEN-SENS-1 (N20a-12)"
   },
   {
    "bead": "N16a-12",
@@ -618,7 +617,7 @@
    "keys": [
     "N36-02"
    ],
-   "note": "pinned workload records with their default capacities; the final decision (N21b-18, N21c-36) comes after measurement"
+   "note": "pinned workload records with their default capacities; the final decision (N21b-18) comes after measurement"
   },
   {
    "bead": "N16a-14",
@@ -656,7 +655,7 @@
    "keys": [
     "N21b-18"
    ],
-   "note": "the other draft of the same decision, N21c-36, depends on BD-212, which waits on this bead through N16b-03: related only"
+   "note": "the kept OPEN-SPARK-3 decision bead (N21c-36 was folded into it by its group), which this decision must not contradict"
   },
   {
    "bead": "N16a-15",
@@ -848,12 +847,12 @@
   {
    "bead": "N16b-02",
    "n": 1,
-   "as": "dep",
+   "as": "related",
    "keys": [
     "N35-09",
     "N35-10"
    ],
-   "note": "the per-world comparison and the exact bounds; the gate bead BD-177 and the threshold decision N35-11 depend on BD-212 and are related only (BD-177 moved from deps to related in the file)"
+   "note": "both carriers already depend on N16b-02 through BD-212 (N35-09 -> BD-212 -> N16b-02), so a dependency would close a cycle; N16b-02 stores the discordant counts and N35-10 evaluates the bounds at the gate. The drafted dep on the gate bead BD-177 moved to related in the file for the same reason"
   },
   {
    "bead": "N16b-03",
@@ -871,7 +870,7 @@
     "N16a-15",
     "N21b-18"
    ],
-   "note": "the capacity table and counting harness, and the two capacity decisions that block GATE-KIN-07; N21c-36 (second draft of OPEN-SPARK-3) depends on BD-212 and is related only"
+   "note": "the capacity table and counting harness, and the two capacity decisions that block GATE-KIN-07 (OPEN-KIN-3 in N16a-15, OPEN-SPARK-3 in N21b-18)"
   },
   {
    "bead": "N16b-04",
@@ -1651,22 +1650,10 @@
  ],
  "edges": [
   {
-   "bead": "BD-154",
-   "dep": "CARD-T-07",
-   "as": "related",
-   "why": "replaces the drafted dep: closes a cycle (an M2 kernel bead depending on an M5 theorem card, through which BD-159 reached BD-217 and itself)"
-  },
-  {
    "bead": "BD-177",
    "dep": "BD-212",
    "as": "related",
-   "why": "replaces the drafted dep: closes a cycle (a seed depending on a higher-numbered seed; BD-212 reaches BD-177's components through N16b-02)"
-  },
-  {
-   "bead": "N35-09",
-   "dep": "BD-212",
-   "as": "related",
-   "why": "replaces the drafted dep: closes a cycle (N16b-02 depends on N35-09 and BD-212 depends on N16b-02; the envelopes are an argument of the comparison, not a prerequisite of writing it)"
+   "why": "replaces the drafted dep: closes a cycle (BD-212 -> N16b-02 -> BD-177 as drafted; also a seed depending on a higher-numbered seed, direction rule 2). N16b-02's own dep on BD-177 was moved to related in the file as well"
   },
   {
    "bead": "BD-186",
@@ -1679,6 +1666,24 @@
    "dep": "N16a-16",
    "as": "dep",
    "why": "OPEN-PERF-4 restates the performance rows only after OPEN-KIN-1 is decided (need 1 of N16a-16)"
+  },
+  {
+   "bead": "BD-074",
+   "dep": "N16c-32",
+   "as": "related",
+   "why": "coverage (d) of U16c: the linkage transmission reads its transformer modulus n(θ) from the eliminated-loop record; BD-074 is M1 and the record M2, so not a dependency"
+  },
+  {
+   "bead": "BD-170",
+   "dep": "N16c-35",
+   "as": "related",
+   "why": "coverage (d) of U16c: the model table per slot is where the ancestor lists of N16c-35 are stored"
+  },
+  {
+   "bead": "N24a-35",
+   "dep": "N16c-20",
+   "as": "related",
+   "why": "coverage (d) of U16c: telemetry.summary gains a table kind for the tile ledger (M8, later than the verb)"
   }
  ],
  "superseded": [
@@ -1698,7 +1703,53 @@
    "note": "both decide OPEN-KIN-1; N16c-06's 40-cell grid, extra admissibility clauses, 1.15 replacement threshold, frob.frontier/1 record, device runs and reduced battery folded into N16a-16; BD-212 moved out of its deps because the decision precedes the one re-baseline"
   }
  ],
- "cross_group_duplicates": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N16b-01",
+   "other": "N38a-20",
+   "note": "both define and freeze the standard battery (scenario grid per robot class, seeds, identity); N16b-01 writes it in frob-arena, N38a-20 in frob-conformance"
+  },
+  {
+   "mine": "N16b-27",
+   "other": "VERBS-fidelity",
+   "note": "both hold the registry rows of the fidelity cluster; N16b-27 also carries the sim.run and sim.estimate extensions (overlapping VERBS-sim) and the fidelity.rank naming question"
+  },
+  {
+   "mine": "N16a-23",
+   "other": "N14a-24",
+   "note": "both record the KILL-SKEL-PORT decision from BD-385's pilot; N16a-23 decides it together with KILL-TREEOP"
+  },
+  {
+   "mine": "N16c-05",
+   "other": "N40-02",
+   "note": "both enter the Kinesis gates in registries/gates.toml; the kill-gate rows also overlap the fallback ledgers N40-24 and N40-29"
+  },
+  {
+   "mine": "N16b-24",
+   "other": "N10b-01",
+   "note": "both specify the derivative-validity labels on a step and the refusal FROB-REF-263; N10b-01 is the M4 specification part of C-16, N16b-24 the M3 mechanism"
+  },
+  {
+   "mine": "N16b-14",
+   "other": "N29a-22",
+   "note": "both specify the created-energy audit (windowed rule, flags, consequences); N29a-22 owns the monitors and the verb fidelity.energy, N16b-14 the split by contact mode on the step and GATE-FID-06"
+  },
+  {
+   "mine": "N16b-21",
+   "other": "N18b-23",
+   "note": "both run certified collision detection on sampled windows of lockstep runs to count missed contacts; N18b-23 is the verb contact.audit, N16b-21 the fidelity-ledger quantity"
+  },
+  {
+   "mine": "BD-266",
+   "other": "N23b-08",
+   "note": "both name GATE-CORTEX-15 and the model-robust or model-conditional verdict; N23b-08 applies the check to trained finalists and depends on BD-266"
+  },
+  {
+   "mine": "N16b-26",
+   "other": "BD-219",
+   "note": "one verb, sim.estimate: BD-219 is the cost and memory model, N16b-26 adds capacities, bytes per world, the expected Degraded rate and referee coverage"
+  }
+ ],
  "new_beads": [],
  "gaps": [
   {
@@ -1709,7 +1760,179 @@
     "N16c-20",
     "N16c-21"
    ]
+  },
+  {
+   "section": "§31 (with §8 and §23.19)",
+   "what": "a prototype-budget consumer that refuses a model-conditional ranking with FROB-REF-830; the build packet has BD-408, no bead carries prototype spend",
+   "needed_by": [
+    "BD-266"
+   ]
+  },
+  {
+   "section": "Appendix O (§16.19, §16.21 to §16.24)",
+   "what": "refusal codes for the seven refusals the late Kinesis subsections name in words only; N16-REF files them on interim codes (820, 602, 540, 561, 721/722) and two have no fitting code; no bead assigns new codes",
+   "needed_by": [
+    "N16-REF",
+    "N16c-15",
+    "N16c-26",
+    "N16c-30",
+    "N16c-38",
+    "N16c-43"
+   ]
   }
  ],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "BD-083",
+   "what": "seed order: BD-094, BD-098 and BD-115 (higher-numbered seeds) moved from deps to related; N16a-04 and N16a-07 added to deps; Scope rewritten so that the fixed-point cone iteration is N16a-07's and the parameter sets and digest are N16a-04's; the packet-queue mutant handed to N16c-03"
+  },
+  {
+   "bead": "N16a-07",
+   "what": "Scope rewritten: owns both implementations of the island solver trait; the fixed-point cone iteration folded in from BD-083 with dep BD-115, one acceptance line and two tests"
+  },
+  {
+   "bead": "N16a-10",
+   "what": "Scope rewritten against N16c-02 (the three retry rows are that script's; this bead keeps the step rows and the gate record); deps N16c-02 and N24a-36 added"
+  },
+  {
+   "bead": "N16c-02",
+   "what": "Scope names N16a-10 as the owner of the other rows and of the gate record; dep BD-098 added (packet queues in the restore set)"
+  },
+  {
+   "bead": "N16c-03",
+   "what": "dep BD-098 added: it runs the restore-omit-packet-queues mutant"
+  },
+  {
+   "bead": "N16a-09",
+   "what": "merged with N16c-10 (OPEN-KIN-5): content folded in, deps BD-085 and BD-123 added, Scope names the superseded draft"
+  },
+  {
+   "bead": "N16a-15",
+   "what": "merged with N16c-08 (OPEN-KIN-3): content folded in; BD-212 moved from deps to related because the decision blocks GATE-KIN-07; deps N16b-01, BD-168, BD-207, N21b-18 added; Scope rewritten"
+  },
+  {
+   "bead": "N16a-16",
+   "what": "merged with N16c-06 (OPEN-KIN-1): content folded in; BD-212 moved from deps to related because the decision precedes its one re-baseline; deps N16b-01, N16b-02, BD-172, BD-174, N36-01 added; Scope rewritten"
+  },
+  {
+   "bead": "N16c-10",
+   "what": "marked superseded_by N16a-09"
+  },
+  {
+   "bead": "N16c-08",
+   "what": "marked superseded_by N16a-15"
+  },
+  {
+   "bead": "N16c-06",
+   "what": "marked superseded_by N16a-16"
+  },
+  {
+   "bead": "N16c-11",
+   "what": "dep N16c-06 repointed to N16a-16; deps N16b-01 (battery) and N16b-14 (the audit it measures with) added"
+  },
+  {
+   "bead": "N16c-41",
+   "what": "related repointed from N16c-06 to N16a-16"
+  },
+  {
+   "bead": "N16c-42",
+   "what": "related repointed from N16c-06 to N16a-16"
+  },
+  {
+   "bead": "N16c-43",
+   "what": "related repointed from N16c-06 to N16a-16"
+  },
+  {
+   "bead": "N16c-05",
+   "what": "carrier of OPEN-KIN-3 in the GATE-KIN-07 row repointed from N16c-08 to N16a-15"
+  },
+  {
+   "bead": "N16b-03",
+   "what": "Scope rewritten against N16a-14 (this bead is the gate run and record on the frozen battery; the harness and capacity table are N16a-14's); deps N16a-14, N16a-15, N21b-18 added"
+  },
+  {
+   "bead": "N16a-14",
+   "what": "Scope and one acceptance line rewritten: the battery run and the GATE-KIN-07 record are N16b-03's"
+  },
+  {
+   "bead": "N16b-02",
+   "what": "dependency cycle: dep on the gate bead BD-177 moved to related (BD-177 depends on BD-212, which depends on this bead); the decision-agreement paragraph re-scoped so that N35-09, N35-10 and N35-11 are not prerequisites"
+  },
+  {
+   "bead": "N16b-29",
+   "what": "CARD-T-08 (M5) moved from deps to related: later milestone"
+  },
+  {
+   "bead": "N16b-24",
+   "what": "SPEC-C-16 (M4) moved from deps to related: later milestone, no gate in §40 moves this bead"
+  },
+  {
+   "bead": "N16b-27",
+   "what": "mechanism N16b-04 moved from deps to related (a registry bead depends on no mechanism)"
+  },
+  {
+   "bead": "BD-212",
+   "what": "deps N16a-16 and N16c-11 added (the one re-baseline follows the OPEN-KIN-1 and OPEN-KIN-6 decisions); Scope states that the seed is the capstone of N16b-01, N16b-02, N16b-03"
+  },
+  {
+   "bead": "BD-264",
+   "what": "deps N29b-07 and N29b-08 added: the seed is the capstone of the ledger store and audit-round beads written by the telemetry unit; Scope says so"
+  },
+  {
+   "bead": "BD-263",
+   "what": "two admission refusals added with an acceptance line and tests: a result labelled experimental-execution, and a pair across solve paths (requested by N16c-15 and N16c-38)"
+  },
+  {
+   "bead": "N16c-15",
+   "what": "dep N16b-25 added: the option needs the M2 sim.run verb"
+  },
+  {
+   "bead": "N16c-38",
+   "what": "dep N16b-25 added: the option needs the M2 sim.run verb"
+  },
+  {
+   "bead": "N16c-32",
+   "what": "dep N16b-23 added; Scope names N16b-23's closure rows as the comparison arm and the fallback"
+  },
+  {
+   "bead": "N16b-23",
+   "what": "Scope names N16c-30 and N16c-32 in place of 'another unit's bead'"
+  },
+  {
+   "bead": "N16-KA",
+   "what": "owning beads added to the ten pending rows of the late subsections, with the note that their beads count 21 answers"
+  },
+  {
+   "bead": "N16a-20",
+   "what": "Scope names the sibling script of N16b-34; related gains N16b-34 and N16b-01"
+  },
+  {
+   "bead": "N16b-34",
+   "what": "related gains N16a-20"
+  },
+  {
+   "bead": "N16a-04",
+   "what": "Scope names N16c-43 in place of 'the held-command subsection's bead'"
+  },
+  {
+   "bead": "N16a-11",
+   "what": "the one-tick linear map that N16c-42 reads made an explicit output (Scope and one acceptance line)"
+  },
+  {
+   "bead": "N16a-02",
+   "what": "Scope states that accepting --profile on sim.run at M1 is in this bead and the M2 verb is N16b-25"
+  },
+  {
+   "bead": "N16b-22",
+   "what": "related gains N16c-29 (the other four-bar pilot)"
+  },
+  {
+   "bead": "N16c-29",
+   "what": "related gains N16b-22 and N16b-23"
+  },
+  {
+   "bead": "BD-088",
+   "what": "related gains N16c-03 (registered mutants of the free-body row)"
+  }
+ ]
 }

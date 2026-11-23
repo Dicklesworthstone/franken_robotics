@@ -104,7 +104,13 @@ P(x) = s·(1, μ·t/‖t‖) with s = (n + μ·‖t‖)/(1 + μ²).
 - *Factor reuse on a fixed active set* (Frontier). For a system A·x = b solved with a reused factor, each
   column x̂ carries the bound ‖x̂ − x*‖ ≤ (‖b − A·x̂‖ + ρ)/λ, with ρ the rounding margin of the computed
   residual and λ a lower bound on the smallest eigenvalue of A; and a guard reroutes any column that crosses a
-  stick, slip or open boundary to the full solve.
+  stick, slip or open boundary to the full solve. The margin is defined as follows: the residual
+  r̂ = b − A·x̂ is formed explicitly in the working precision (never estimated from the solve), and
+  ρ = γ·‖ |A|·|x̂| + |b| ‖₂ with γ = (n + 1)·u/(1 − (n + 1)·u), n the row length and u the unit roundoff of the
+  format in which the residual is formed (2⁻²⁴ in single precision). Without ρ the expression is not a bound:
+  in single precision A = 3 and b = 1 give x̂ = 0.33333334, a computed residual of exactly 0 and a true error
+  of 9.9 × 10⁻⁹; with ρ = 2.4 × 10⁻⁷ the bound is 7.9 × 10⁻⁸. (The response-batch bead N18b-40 implements
+  this acceptance per column at M4; the definition is repeated here so that this contract stands alone.)
 - *Model-form honesty.* A design ranking that reverses between the compliant law and the hard-contact law is
   reported as a fidelity-dependent ranking and cannot be promoted.
 - *No pyramid.* A pyramid approximation of the cone is not used: the box |γₜ₁| ≤ μ·γₙ, |γₜ₂| ≤ μ·γₙ admits

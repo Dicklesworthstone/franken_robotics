@@ -8,9 +8,9 @@ labels: ["m1", "arena", "frob-conformance", "frob-spec", "frob-arena", "registry
 parent: "WP-41"
 deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§24.19 to §24.23: the known answers of the late subsections, which are stated there and have no row in the chapter's known-answer appendix (two-point traction rig 52.5 N, 0.55 N·m, 25 N and 40 N; strip model 0.525 and 0.3486; the sled hand case with dwell 0.2 s; item-bank variances 0.0975, 0.0075, 0.0085 and 0.9975 under the wrong model; pushes keyed by tick and by footfall; the parked robot's margin −0.3); the unit that drafts those subsections registers them"]
-related: ["BD-121", "BD-122", "BD-123", "BD-124", "BD-190", "BD-195", "BD-202", "BD-254", "BD-259", "BD-260", "BD-261", "BD-383", "N24a-05", "N24a-07", "N24a-08", "N24a-09", "N24a-10", "N24a-11", "N24a-16", "N24a-18", "N24a-20", "N24a-22", "N24a-34", "N24a-37", "N24a-42"]
+related: ["BD-121", "BD-122", "BD-123", "BD-124", "BD-190", "BD-195", "BD-202", "BD-254", "BD-259", "BD-260", "BD-261", "BD-383", "N24a-05", "N24a-07", "N24a-08", "N24a-09", "N24a-10", "N24a-11", "N24a-16", "N24a-18", "N24a-20", "N24a-22", "N24a-34", "N24a-37", "N24a-42", "N24c-17", "N24c-18", "N24c-19", "N24c-22", "N24c-27", "N24c-28", "N24c-29", "N24c-31", "N24c-32", "N24c-37", "N24c-38", "N24-CX", "N24c-10", "N24a-12", "N24a-33"]
 gates: []
-plan_refs: ["Appendix M.23", "§24.16", "§24.5", "§24.7", "§24.8", "§24.10", "§24.11", "§24.12", "§24.13", "§38"]
+plan_refs: ["Appendix M.23", "§24.16", "§24.5", "§24.7", "§24.8", "§24.10", "§24.11", "§24.12", "§24.13", "§24.19", "§24.20", "§24.21", "§24.22", "§24.23", "§38"]
 ---
 ## Background
 
@@ -37,8 +37,12 @@ mode, "cuda" and "metal" the device backends, "daemon" the long-running service,
 In: the thirty rows as machine-readable data; the loader and schema check; the derived-value recomputation test;
 the completeness test that ties rows to tests and controls; the mapping of rows to the beads that carry them.
 
+Also in: the eight known-answer groups of the late subsections (§24.19 to §24.23), which have no row in the
+appendix. They are registered here under local labels, in the same file and under the same loader, until
+appendix numbers are assigned (the table "Late rows" below).
+
 Out: the tests themselves (owned by the beads in the last column); the counterexample registry and the refusal-code
-registry of this chapter (written by another unit); the known answers of the late subsections (see `needs`).
+registry of this chapter (N24-CX and N24-REF).
 
 ## Technical approach
 
@@ -119,15 +123,34 @@ displaced by z into the high-grip side (μ = 0.8) of a boundary with a low-grip 
 - Peeking. The chance is computed by exact dynamic programming over the count of successes with absorption at the
   first look whose one-sided p-value is at most 0.05.
 
+**Late rows.** The subsections added to the chapter after its known-answer appendix was compiled state their known
+answers in their own text. They are registered with local labels of the form `KA-ARENA-<letter><n>` (W for the
+wrench slice, A for the task audit, I for the item bank, E for exposure domains), mirroring the local labels of the
+chapter's counterexample registry. A label is replaced by an appendix number when one is assigned; the record's
+content does not change.
+
+| Label | Where | The case | The truth (formula or value) | Tolerance | Tier | Negative control | Carried by |
+|---|---|---|---|---|---|---|---|
+| KA-ARENA-W1 | GATE-ARENA-10 | A two-point sole carrying 50 N on each point at lateral offsets ±20 mm, one point on μ = 0.25 and the other on μ = 0.8; and a sole on uniform μ = 0.4 | Largest forward force with the yaw moment free: 12.5 + 40 = 52.5 N, and it comes with a yaw moment of (40 − 12.5) N × 0.020 m = 0.55 N·m. Under a pure forward-force command (zero yaw) the two longitudinal forces are equal: 2 × 12.5 = 25 N. Uniform sole: 40 N both ways. By scalar capacity the split sole wins (52.5 against 40); at the commanded wrench it loses (25 against 40) | 10⁻⁹ in double precision for the cone program; the rig slips within 2% of each value on the referee and inside the fidelity envelope on the batch tiers | G1 · host; G3 · referee, lockstep | A scorecard that ranks the two soles by moment-free capacity when the task commands zero yaw must be rejected by `task.check` | N24c-17, N24c-18, N24c-19 |
+| KA-ARENA-W2 | GATE-ARENA-10, fixture 2 | Uniform-pressure strip model with the boundary through the centre and longitudinal traction only, μ_L = 0.25 and μ_H = 0.8, for both sole widths | Zero-yaw capacity per unit normal load (μ_L + √(μ_L·μ_H))/2 = (0.25 + √0.2)/2 = 0.3486, against 0.525 with the moment free; independent of the sole width. The closed form is a lower bound when lateral traction may also carry moment; the cone program gives the exact value | 0.525·N guided and at least 0.3486·N free, each within 2% on the referee | G1 · host; G3 · referee | A rig run guided against yaw reported as the zero-yaw capacity | N24c-19, N24c-17 |
+| KA-ARENA-A1 | GATE-ARENA-11 (hand case) | Goal region x ∈ [4.9, 5.1] m and requirement `(F (0 s 10 s) in_goal)`; a sled foil at a constant 1 m/s | The sled is inside the region for t ∈ [4.9, 5.1] s: verdict `satisfied` with a dwell of 0.2 s. Under the proposed clause `(F (0 s 10 s) (H (0 s 2 s) in_goal))` the sled's longest dwell 0.2 s < 2 s, so the verdict is `violated`; a body at rest at x = 5 m from t = 6 s satisfies it from t = 8 s | exact | G1 · host | An audit that scores only the candidate design never produces the finding | N24c-22, N24c-28, N24a-12, N24a-33 |
+| KA-ARENA-A2 | GATE-ARENA-15 (hand case) | A delivery task whose online reward over 60 s is `(H (0 s 2 s) (and clear-margin thermal-ok spill-ok))`; a parked robot | The parked robot keeps all three margins positive for the whole episode and collects the full reward, so the task is flagged `rewards-idleness`. The proposed progress atom, approach speed above 0.15 m/s on a scale of 0.50 m/s, gives the parked robot a margin of (0 − 0.15)/0.50 = −0.3; after the clause is accepted its verdict is `violated` | exact | G1 · host | A task whose idleness is marked intended (station keeping) must not be refused | N24c-27, N24c-28 |
+| KA-ARENA-I1 | GATE-ARENA-12 | Item-bank two-value fixture: D is ±1 on a fraction f = 0.1 of items and 0 elsewhere, with mean μ = 0.05 | Uniform sampling: variance f − μ² = 0.0975. Under q*: weight f on the discriminating items, variance f² − μ² = 0.0075 (ratio 13). With the defensive mixture at ε = 0.1: weight 1/(0.9/f + 0.1) = 0.1099, variance 0.1 × 0.1099 − 0.0025 = 0.0085 (ratio 11.5) | exact arithmetic (rationals; 0.1099 and 0.0085 to the printed digits) | G1 · host | A `fixed-n` request with item-bank sampling must be refused | N24c-29, N24c-31, N24c-32 |
+| KA-ARENA-I2 | GATE-ARENA-12 | The same fixture under a wrong model that places q* on items disjoint from the discriminating ones | Each discriminating item has q = ε·p and weight 10; the second moment is f × 10 = 1.0 and the variance 1.0 − 0.0025 = 0.9975, against 0.0975 under uniform sampling (10.2 times worse); the estimate stays unbiased. The provable bound 1/ε = 10 holds for the second-moment ratio (exactly 10 here), not for the variance ratio (10.23), so the gate is checked on the second moment and the variance ratio is printed beside it | exact for the moments; the mean of Ĉ over 10⁴ replays within its Monte Carlo error | G1 · host | An estimator that drops the weights is biased on this fixture | N24c-31, N24c-32, N24c-29 |
+| KA-ARENA-E1 | GATE-ARENA-14 | A push keyed by control tick 1,500 | It occurs at 3.0 s with a 2 ms step and at 1.5 s with a 1 ms step; the keying fails check 3 (rate invariance) and is refused | exact | G1 · host | The same push declared in the `process` domain occurs at 3 s at both steps | N24c-37, N24c-38 |
+| KA-ARENA-E2 | GATE-ARENA-14 | A push keyed by "the tenth footfall" | It occurs at 5.0 s under a gait period of 0.5 s and at 4.0 s under 0.4 s; the keying fails check 4 (retiming) and is refused | exact | G1 · host | The same push declared as an `event` at a gate crossing occurs at each arm's own crossing | N24c-37, N24c-38 |
+
 **Completeness test.** `cargo test -p frob-conformance known_answers::arena`: loads the file; asserts 30 records
-KA-594 … KA-623 with no gap; each record's `tests` names exist in the test tree once their owning beads have landed
+KA-594 … KA-623 with no gap and the eight late records `KA-ARENA-W1` … `KA-ARENA-E2`; each record's `tests` names exist in the test tree once their owning beads have landed
 (until then the record carries `pending: <bead key>` and the test reports the pending count instead of failing);
 each negative-control cell other than "none stated" maps to an entry of the negative-control registry attached to
 the gate it protects; KA-616 and KA-413 point at one shared fixture record and cannot diverge.
 
 ## Acceptance criteria
 
-- [ ] `arena.toml` holds exactly the thirty rows above with the values as printed; the loader round-trips it and
+- [ ] The eight late rows are present under their local labels with the values as printed, each with its owning
+      beads; the derived-value test recomputes 52.5, 0.55, 25, 0.3486, 0.0975, 0.0075, 0.1099, 0.0085 and 0.9975.
+- [ ] `arena.toml` holds exactly the thirty numbered rows above with the values as printed; the loader round-trips it and
       rejects a duplicate identifier, a missing truth and a missing negative control (other than the eleven rows
       whose source states none).
 - [ ] The derived-value test recomputes, in exact rational or double-precision arithmetic, every value in the
@@ -188,6 +211,8 @@ byte-identical across platforms.
   never to a looser bound.
 - The fillet formula and the reading of the wheel loop above are reconstructions that reproduce the printed
   values; the fixture's own derivation files (`docs/derivations/fixture-cart-sill-dock/`) are authoritative.
+- The eight late rows carry local labels because the appendix assigns them no number; assigning numbers is a
+  registry decision outside this bead, and the loader accepts either form of identifier for those rows.
 - A change to any fixture constant creates a new fixture identity; the registry then gains new rows and keeps the
   old ones attached to the old identity.
 

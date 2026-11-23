@@ -924,8 +924,8 @@
   {
    "bead": "BD-166",
    "dep": "N18a-12",
-   "as": "related",
-   "why": "coverage (d) of U18a: N18a-12 depends on BD-158 and is evaluated in these kernels; kept non-blocking so the margin rule and K-np-sdf can proceed in parallel"
+   "as": "dep",
+   "why": "coverage (d) of U18a: the margin rule the kernel applies"
   },
   {
    "bead": "BD-233",
@@ -986,6 +986,12 @@
    "dep": "N18b-17",
    "as": "related",
    "why": "coverage (d) of U18b: BD-417 is an epic; its mechanism N38a-29 carries the dependency"
+  },
+  {
+   "bead": "BD-417",
+   "dep": "N18b-16",
+   "as": "related",
+   "why": "coverage (d) of U18b: BD-417 is an epic; its own pilot N38a-28 duplicates N18b-16 (reported)"
   },
   {
    "bead": "N38a-29",
@@ -1100,6 +1106,54 @@
    "dep": "CARD-T-08",
    "as": "related",
    "why": "replaces the drafted dep: later milestone (M5)"
+  },
+  {
+   "bead": "N18b-45",
+   "dep": "N18b-43",
+   "as": "dep",
+   "why": "new bead: the test depends on the construction it exercises"
+  },
+  {
+   "bead": "N18b-45",
+   "dep": "BD-082",
+   "as": "dep",
+   "why": "new bead: the arc fixture runs under the referee's event-located step"
+  },
+  {
+   "bead": "N18b-44",
+   "dep": "N18b-45",
+   "as": "dep",
+   "why": "the final GATE-TRAC-12 record assembles the referee rows"
+  },
+  {
+   "bead": "N18a-26",
+   "dep": "N18b-42",
+   "as": "dep",
+   "why": "the decision depends on the gate-size sweep that produces its counts"
+  },
+  {
+   "bead": "N18b-23",
+   "dep": "N18b-43",
+   "as": "dep",
+   "why": "the audit's certified re-detection uses the arc-enclosing bounds"
+  },
+  {
+   "bead": "BD-167",
+   "dep": "N18a-27",
+   "as": "dep",
+   "why": "capstone depends on its component: the r_eff resolution order and the OPEN-TRAC-2 ADR"
+  },
+  {
+   "bead": "BD-167",
+   "dep": "N18a-29",
+   "as": "dep",
+   "why": "the INV-TRAC-02 check runs on the lag mechanism"
+  },
+  {
+   "bead": "N18b-15",
+   "dep": "N18b-18",
+   "as": "dep",
+   "why": "exists only on the kept branch of KILL-SOIL"
   }
  ],
  "superseded": [
@@ -1151,9 +1205,9 @@
    "note": "same end-to-end script for frob scene gen terrain families"
   },
   {
-   "mine": "N18b-43",
+   "mine": "N18b-45",
    "other": "N33c-44",
-   "note": "same arc fixture (the 1 m arm, chord against arc); NF-10 is the upstream item for the same bound"
+   "note": "same arc fixture (the 1 m arm, chord against arc), mine under the referee step, the other as the admission probe of the sibling routine; NF-10 is the upstream item for the bound of N18b-43"
   },
   {
    "mine": "N18b-25",
@@ -1191,7 +1245,214 @@
    "note": "both seed controls.toml with CX-167 to CX-183; N38b-05 should take the rows from N18-CX"
   }
  ],
- "new_beads": [],
+ "new_beads": [
+  "N18b-45"
+ ],
  "gaps": [],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "BD-154",
+   "what": "dependency on CARD-T-07 (M5, and itself dependent on BD-154) moved to related: later milestone, closed a cycle of 73 beads"
+  },
+  {
+   "bead": "N18a-16",
+   "what": "dependency on CARD-T-08 (M5) moved to related: later milestone"
+  },
+  {
+   "bead": "BD-422",
+   "what": "epic: dependencies moved to related"
+  },
+  {
+   "bead": "BD-424",
+   "what": "epic: dependencies moved to related"
+  },
+  {
+   "bead": "N18a-06",
+   "what": "epic: dependencies moved to related"
+  },
+  {
+   "bead": "N18b-08",
+   "what": "epic: dependencies moved to related"
+  },
+  {
+   "bead": "N18b-43",
+   "what": "re-scoped to the construction and the containment row; dependencies on BD-081 and BD-082 moved to related so the step can depend on the bound; referee arc-fixture rows moved to the new test bead N18b-45; title follows the scope"
+  },
+  {
+   "bead": "N18b-44",
+   "what": "Scope and text follow the split of N18b-43; depends on N18b-45"
+  },
+  {
+   "bead": "BD-367",
+   "what": "Scope rewritten as capstone over N18b-39, N18b-40, N18b-41; gate-size sweep and script assigned to N18b-42; script name aligned to contact_response.sh; stale-anchor code assigned to N18b-39"
+  },
+  {
+   "bead": "N18b-39",
+   "what": "Scope re-scoped against BD-367; depends on the pilot N18a-25; parent WP-30 (was EPIC-M4)"
+  },
+  {
+   "bead": "N18b-40",
+   "what": "Scope re-scoped against BD-367; depends on the pilot N18a-25 and on N18b-41; parent WP-30"
+  },
+  {
+   "bead": "N18b-41",
+   "what": "Scope re-scoped against BD-367; depends on the pilot N18a-25; parent WP-30"
+  },
+  {
+   "bead": "N18b-42",
+   "what": "Scope re-scoped: measures, N18a-26 decides; parent WP-30"
+  },
+  {
+   "bead": "N18b-36",
+   "what": "parent WP-30 (was EPIC-M4); depends on the open-question registry N41-OPEN2"
+  },
+  {
+   "bead": "N18a-25",
+   "what": "Scope names the component beads it funds; depends on the pilot register"
+  },
+  {
+   "bead": "N18a-26",
+   "what": "Scope re-scoped: decision only; depends on N18b-42 and N18a-25"
+  },
+  {
+   "bead": "N18a-15",
+   "what": "Scope re-scoped against N18b-28: trait, types and admission check here; registry file, status derivation, refusal payload and verb there"
+  },
+  {
+   "bead": "N18b-28",
+   "what": "Scope re-scoped against N18a-15; depends on it"
+  },
+  {
+   "bead": "N18a-27",
+   "what": "Scope re-scoped against BD-167; resolution order of r_eff gains the end-effector declaration so both beads state one order; owns the OPEN-TRAC-2 ADR"
+  },
+  {
+   "bead": "BD-167",
+   "what": "Scope re-scoped: cites the OPEN-TRAC-2 ADR of N18a-27 and uses the lag mechanism of N18a-29; depends on both"
+  },
+  {
+   "bead": "N18a-28",
+   "what": "Scope re-scoped against N18b-21 (tilt rule stated once on each side); depends on N18b-21"
+  },
+  {
+   "bead": "N18b-21",
+   "what": "Scope re-scoped against N18a-28"
+  },
+  {
+   "bead": "N18a-14",
+   "what": "Scope names N18b-38 as the experiment that decides its tolerances"
+  },
+  {
+   "bead": "N18b-38",
+   "what": "Scope re-scoped against N18a-14; depends on it"
+  },
+  {
+   "bead": "BD-085",
+   "what": "Scope re-scoped: runs the referee rows on the fixtures of N18b-32; depends on it"
+  },
+  {
+   "bead": "N18b-32",
+   "what": "tolerances of KA-388, KA-395 and KA-413 aligned with BD-085 and N18a-28 (0.5%, exact verdict at μ ± 5%, 0.5%)"
+  },
+  {
+   "bead": "N18-KA",
+   "what": "rows KA-413 and KA-414 record the tolerance their carriers set"
+  },
+  {
+   "bead": "N18b-20",
+   "what": "Scope re-scoped against N18a-10 and BD-080; depends on N18a-10"
+  },
+  {
+   "bead": "N18a-10",
+   "what": "default rim samples 16 changed to 64 with a tested window of 8, the choice of N18b-01 (16 samples cannot meet the 0.1% rolling answer); Scope names N18b-20 and N18b-21"
+  },
+  {
+   "bead": "N18b-29",
+   "what": "film branch states the blend clamp((3 − Λ)/2, 0, 1) and the cap at μ_b that BD-230 implements"
+  },
+  {
+   "bead": "N18a-18",
+   "what": "depends on the kept pilot N18b-34; states which friction form the pilot treats as primary"
+  },
+  {
+   "bead": "BD-168",
+   "what": "Scope names the margin bead N18a-12; depends on it"
+  },
+  {
+   "bead": "BD-086",
+   "what": "Scope names N18b-43, N18b-45, N18b-38 and N18b-22 in place of 'the other unit'"
+  },
+  {
+   "bead": "N18b-23",
+   "what": "Scope names BD-158, BD-166 and N18a-12; depends on N18a-12 and N18b-43"
+  },
+  {
+   "bead": "N18a-12",
+   "what": "Scope names the audit bead N18b-23"
+  },
+  {
+   "bead": "N18a-13",
+   "what": "Scope names N18b-43; depends on it"
+  },
+  {
+   "bead": "N18a-03",
+   "what": "Scope names N18b-43; depends on it"
+  },
+  {
+   "bead": "BD-158",
+   "what": "Scope names N18b-43"
+  },
+  {
+   "bead": "N18a-11",
+   "what": "Scope names N18b-43"
+  },
+  {
+   "bead": "N18a-36",
+   "what": "Scope names BD-168, N18b-20, N18b-23, N18b-24 and N18b-30"
+  },
+  {
+   "bead": "N18b-13",
+   "what": "Frontier mechanism now depends directly on its pilot N18b-11"
+  },
+  {
+   "bead": "N18b-15",
+   "what": "depends on the KILL-SOIL decision N18b-18: it exists only on the kept branch"
+  },
+  {
+   "bead": "N18a-04",
+   "what": "pilot depends on the pilot register N38a-09"
+  },
+  {
+   "bead": "N18a-07",
+   "what": "pilot depends on the pilot register N38a-09"
+  },
+  {
+   "bead": "N18a-22",
+   "what": "pilot depends on the pilot register N38a-09"
+  },
+  {
+   "bead": "N18a-24",
+   "what": "pilot depends on the pilot register N38a-09"
+  },
+  {
+   "bead": "N18a-30",
+   "what": "pilot depends on the pilot register N38a-09"
+  },
+  {
+   "bead": "N18b-33",
+   "what": "kept bead of KILL-CONTACT: content of N18a-19 folded in; depends on BD-168"
+  },
+  {
+   "bead": "N18b-34",
+   "what": "kept CL-2 pilot: content of N18a-17 folded in; the two drafts' friction forms and parameter correspondences reconciled as primary and diagnostic arms"
+  },
+  {
+   "bead": "N18b-37",
+   "what": "kept OPEN-TRAC-1 experiment: content of N18a-09 folded in; one decision rule"
+  },
+  {
+   "bead": "BD-386",
+   "what": "references to superseded keys replaced by the kept keys (also in BD-154, BD-232, N18a-15, N18a-16)"
+  }
+ ]
 }

@@ -2053,6 +2053,18 @@
   },
   {
    "bead": "BD-333",
+   "dep": "N22a-34",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: simultaneous impacts"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-35",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: the stability verdict under impact orderings"
+  },
+  {
+   "bead": "BD-333",
    "dep": "N22a-36",
    "as": "dep",
    "why": "coverage (e)1 of U22a: the GaitOrbit record"
@@ -2248,6 +2260,36 @@
    "drop": "N22c-13",
    "keep": "N22b-33",
    "note": "both are the pilot of reachable-set tables on the braking fixture; the pruning condition, erosion tests, disturbance set, simulated lane and the single-friction coverage ratio folded into N22b-33"
+  },
+  {
+   "drop": "N22c-18",
+   "keep": "N22b-16",
+   "note": "both decide KILL-ENERGY; the four premises, the fresh 10⁴ re-run, the alarm-only label with FROB-REF-451, the revalidation of evidence and the registry row folded into N22b-16; it now depends on BD-337 as well as the campaign and the pilot"
+  },
+  {
+   "drop": "N22c-19",
+   "keep": "N22b-28",
+   "note": "both decide KILL-SHIELD; the violation bound and its arithmetic fixture, the self-labelled-measurement rule, what stays under another name and the registry row folded into N22b-28; per-class outcome kept"
+  },
+  {
+   "drop": "N22c-20",
+   "keep": "N22b-08",
+   "note": "both decide KILL-SKILL; the missing-denominator rule, the Solid-layer defect rule, the rule table and the registry row folded into N22b-08"
+  },
+  {
+   "drop": "N22c-57",
+   "keep": "N22b-36",
+   "note": "both decide KILL-TUBE; fired-by-consequence when KILL-SHIELD fires, the erosion known answer, the closed-form backup domain and the registry row folded into N22b-36"
+  },
+  {
+   "drop": "N22c-55",
+   "keep": "N22b-17",
+   "note": "both decide OPEN-SHIELD-1; the source-record rule, first-principles bounds, the blocked status of gate rows and the owner's two open points folded into N22b-17; provenance labels follow the card format (`datasheet`, not `declared`)"
+  },
+  {
+   "drop": "N22c-56",
+   "keep": "N22b-27",
+   "note": "both decide OPEN-SHIELD-2; what each gate can resolve at its episode count, α in the margin's scope key (FROB-REF-457), the minimum-count refusal and the quantile-without-correction control folded into N22b-27"
   }
  ],
  "cross_group_duplicates": [
@@ -2289,5 +2331,338 @@
    ]
   }
  ],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "BD-337",
+   "what": "dependency on the decision bead N22b-16 moved to related (the mechanism being measured does not depend on the decision about it); Scope and acceptance reworded to hand the gate receipt to N22b-16"
+  },
+  {
+   "bead": "BD-249",
+   "what": "re-scoped against N22c-14: it measures GATE-REFLEX-02, computes the KILL-BASELINE trigger and drafts the record, and N22c-14 records the decision; class rule for fewer than ten designs and the refusal reason `class-withdrawn: KILL-BASELINE` aligned with N22c-14; N22c-14 added to related; label kill-gate removed; title shortened"
+  },
+  {
+   "bead": "N22c-14",
+   "what": "Scope states what BD-249 hands over; small classes labelled `undecided` as in BD-249; three downstream consequences taken over from BD-249"
+  },
+  {
+   "bead": "BD-330",
+   "what": "label kill-gate removed (the decision bead is N22c-15); related entry for superseded pilot N22c-07 dropped (N22a-27 is a dependency); title shortened"
+  },
+  {
+   "bead": "BD-331",
+   "what": "label kill-gate removed (the decision bead is N22c-16); related entry for superseded pilot N22c-08 dropped (N22a-22 is a dependency); title shortened"
+  },
+  {
+   "bead": "BD-335",
+   "what": "label kill-gate removed (the decision bead is N22c-17); related entry for superseded pilot N22c-09 dropped (N22a-28 is a dependency); title shortened"
+  },
+  {
+   "bead": "N22b-40",
+   "what": "dependency on CARD-T-18 (M5, later than this M4 bead) moved to related; dependency on the M4 specification part N10b-02 added in its place"
+  },
+  {
+   "bead": "N22a-24",
+   "what": "Frontier mechanism without its pilot: dependency on N22a-22 added; title shortened"
+  },
+  {
+   "bead": "BD-118",
+   "what": "dependency on N22a-12 (the three-outcome report it serves) added; Scope says so"
+  },
+  {
+   "bead": "N22c-50",
+   "what": "dependency on N22a-21, the predictive controller it measures, added"
+  },
+  {
+   "bead": "N22c-43",
+   "what": "kill-gate decision depended on the pilot only: dependency on the gate run N22c-42 added"
+  },
+  {
+   "bead": "N22c-26",
+   "what": "kill-gate decision depended on the pilot only: dependency on the gate run N22c-25 added"
+  },
+  {
+   "bead": "N22c-23",
+   "what": "exists only on the keep branch of KILL-MPC: dependency on the decision bead N22c-16 added"
+  },
+  {
+   "bead": "N22b-34",
+   "what": "exists only on the keep branch of KILL-SHIELD: dependency on the decision bead N22b-28 added"
+  },
+  {
+   "bead": "N22a-21",
+   "what": "dependency on the superseded pilot N22a-20 replaced by N22c-05; title shortened"
+  },
+  {
+   "bead": "N22c-15",
+   "what": "dependency on the superseded pilot N22c-07 replaced by N22a-27; title shortened"
+  },
+  {
+   "bead": "N22c-16",
+   "what": "dependency on the superseded pilot N22c-08 replaced by N22a-22; title shortened"
+  },
+  {
+   "bead": "N22c-17",
+   "what": "dependency on the superseded pilot N22c-09 replaced by N22a-28"
+  },
+  {
+   "bead": "N22c-30",
+   "what": "dependency on the superseded pilot N22c-08 replaced by N22a-22"
+  },
+  {
+   "bead": "N22c-52",
+   "what": "dependency on the superseded pilot N22c-07 replaced by N22a-27"
+  },
+  {
+   "bead": "N22c-53",
+   "what": "dependency on the superseded pilot N22c-08 replaced by N22a-22"
+  },
+  {
+   "bead": "N22c-28",
+   "what": "related entry for superseded N22c-19 replaced by N22b-28"
+  },
+  {
+   "bead": "N22c-29",
+   "what": "related entry for superseded N22c-19 replaced by N22b-28"
+  },
+  {
+   "bead": "N22c-35",
+   "what": "related entry for superseded N22c-09 replaced by N22a-28"
+  },
+  {
+   "bead": "N22c-45",
+   "what": "related entry for superseded N22c-18 replaced by N22b-16"
+  },
+  {
+   "bead": "N22c-49",
+   "what": "decision-bead column and related list point to the kept decision beads N22b-16, N22b-28, N22b-08, N22b-36"
+  },
+  {
+   "bead": "N22a-17",
+   "what": "mode names of the ledger and of N22c-51 mapped to its standings; title shortened"
+  },
+  {
+   "bead": "N22c-51",
+   "what": "mode names mapped to the standings of N22a-17"
+  },
+  {
+   "bead": "BD-049",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-050",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-051",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-114",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-116",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-251",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-252",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-334",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-440",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22-KA",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-01",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-02",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-03",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-04",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-05",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-06",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-07",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-08",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-09",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-10",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-11",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-12",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-13",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-14",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-15",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-16",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-18",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-19",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-22",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-23",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-25",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-26",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-27",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-28",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-29",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-30",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-31",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-32",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-33",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-34",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-35",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-36",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-38",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-01",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-09",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-10",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-23",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-29",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-31",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-38",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22b-41",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22c-01",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22c-02",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22c-32",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22c-39",
+   "what": "title shortened to at most 110 characters"
+  }
+ ]
 }

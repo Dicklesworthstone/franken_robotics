@@ -1,8 +1,9 @@
 # Coverage of drafting unit U00
 
 Part 0 (document control), §1 to §8 (the thesis, claims, bets, North-Star scenarios, principles) and Appendix K,
-with the Appendix M and N sections of those chapters. 100 bead files: `EPIC-PROGRAM`; `BET-01` to `BET-37`;
-`NS-01` to `NS-24`; `N00-01` to `N00-36`; `N00-KA`; `N00-CX`. The unit owns no seed bead.
+with the Appendix M and N sections of those chapters. 101 bead files: `EPIC-PROGRAM`; `BET-01` to `BET-37`;
+`NS-01` to `NS-24`; `N00-01` to `N00-37`; `N00-KA`; `N00-CX`. The unit owns no seed bead. `N00-37` was added
+in the integration pass (see (e) item 15).
 
 ## (a) Subsections and the beads that carry them
 
@@ -34,7 +35,7 @@ with the Appendix M and N sections of those chapters. 100 bead files: `EPIC-PROG
 | §2.6 | The expected range, by mission class | N00-20 (six ranges, pre-registered and scored) |
 | §2.7 | What the program does first because of this | N00-09 (order of first evidence and the ordering assertions); BET-17 |
 | §3 | Twelve principles | N00-21 (each with its enforcers and the exit-review rule); EPIC-PROGRAM |
-| §4 | Bets, each with its falsifier | N00-28 (register, definitions, verdict rule, order of testing); BET-01 to BET-37 (one each) |
+| §4 | Bets, each with its falsifier | N00-28 (register, definitions, verdict rule, order of testing); BET-01 to BET-37 (one each); N00-37 (the measurement of BET-24's clause (b), which no gate carries) |
 | §5 | Readers | N00-04 |
 | §6.1 | Goals | N00-22 (GOAL-01 to GOAL-43) |
 | §6.2 | Non-goals | N00-23 (NONGOAL-01 to NONGOAL-16 with guards) |
@@ -198,3 +199,12 @@ Part 0 and §1 to §8 define no gate of their own. The gates these chapters name
     run before any change of scope; every other bead with a script depends on it.
 14. **Size.** 100 beads is above the typical 20 to 45 because the brief fixes 62 keyed beads (one per bet, one
     per scenario, the root epic) before any registry or rule bead.
+15. **Integration pass.** BET-24's clause (b) (designs accepted by requirement verdicts against designs accepted
+    by a reward threshold, on sealed variants) is defined only in the bet's row; no gate and no bead of the
+    task chapter measured it. `N00-37` now runs it and BET-24 depends on it. BET-13, BET-14 and NS-24 no
+    longer depend on the M7 epics BD-428 to BD-433 (nothing depends on an epic): they depend on the tournament
+    bead N39b-13 and the gate records N40-15, N40-16 and N40-21, and keep the epics as `related`. BET-30 now
+    depends on BET-07, whose verdict is the input of its clause (b). Every bet depends on the bead that decides
+    each of its kill gates; the result file `integration/out/G00.json` lists those edges and the overlaps with
+    other units' beads (the pilot ledger, the plan-time check ledger, the capability registry, the bet
+    register, the schedule gate, the ceiling calculators, the foundation fact probes, scenario scripts).

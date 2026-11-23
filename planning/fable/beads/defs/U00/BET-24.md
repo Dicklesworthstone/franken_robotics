@@ -29,6 +29,11 @@ the mission.
 
 In: pre-registration, readings at M1 (the monitors) and M3 (requirement writing; streaming monitors; acceptance
 comparison), verdict and decision record. Out: the language, the evaluators, the tasks, the training pilot.
+Also out: running the acceptance comparison of clause (b). N00-37 registers it, runs both acceptance rules on
+the design corpus, scores the accepted designs on the sealed variants and writes the sealed-variant ledger with
+its summary record; this bead reads that summary. Its field `clause_b` decides the clause: `not lower` falsifies
+it, `lower` does not, and `lower, not significant`, `not run: unreachable` or `void: control not caught` leave
+the clause unmeasured, so the bet stays `Untested` on it.
 
 ## Technical approach
 

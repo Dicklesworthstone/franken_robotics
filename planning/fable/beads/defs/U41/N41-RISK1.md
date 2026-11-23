@@ -8,7 +8,7 @@ labels: ["m0", "delivery", "suite", "workspace", "registry", "solid"]
 parent: "EPIC-M0"
 deps: ["N41-01"]
 needs: ["§33: the keys named in the Beads column are owned by the suite, workspace and upstream units; they are named here for traceability and are not blocking dependencies of this registry"]
-related: ["N41-RISK2", "N41-RISK3", "N41-RISK4", "N41-PM", "N41-02", "BD-044", "N33b-05", "BD-031", "BD-008", "N34-04", "N33c-38"]
+related: ["N41-RISK2", "N41-RISK3", "N41-RISK4", "N41-PM", "N41-02", "N41-32", "BD-044", "N33b-05", "BD-031", "BD-008", "N34-04", "N33c-38"]
 gates: ["GATE-WS-07"]
 plan_refs: ["§41.3", "§41.4", "§41.5", "§33", "§34"]
 ---

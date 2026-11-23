@@ -6,7 +6,7 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["BD-381", "N12-23", "N12-24", "N12-06", "SPEC-C-06"]
+deps: ["BD-381", "N12-23", "N12-24", "N12-06", "SPEC-C-06", "N12-51"]
 needs: ["§18.5: the list of contact laws admitted on lockstep tiers and their convex potentials (BD-080, BD-167)", "§15.6: the joint-level stiction, backlash and stop rows whose terms enter the same objective (BD-084, BD-155)"]
 related: ["CARD-T-07", "N12-16", "BD-379"]
 gates: []
@@ -36,9 +36,17 @@ meaning and no convexity statement.
 
 ## Scope
 
-In: the Lean lemma and its capsule; the per-law convexity certificates (one per admitted law); the card's
-statement and registry row. Out: the laws and the solver (contact beads); the per-parameter-row tests; the
-projection identities (CARD-T-07).
+In: the Lean lemma and its capsule; the card's statement document and registry row; the check, at M5, that every
+law admitted on a lockstep tier by then has a per-law convexity receipt under this card's instance route.
+Out: the per-law convexity certificates themselves, their generator and the admission guard, which are N12-51 at
+M2 (the default contact law and the joint rows are admitted on lockstep tiers at M2, and PO-KIN-01 needs them
+certified per law then; steps 2 and 3 below state that work and it is carried out there); the laws and the solver
+(contact and actuator beads); the per-parameter-row tests; the projection identities (CARD-T-07).
+
+Order of work. The beads that implement or use the theorem (the contact laws, the joint rows, the batched solve)
+are `related`, never dependencies of this card. Its dependencies are the card registry, the specification of the
+contact construction, the Lean lane with its pilot and statement binding, and N12-51, whose receipts the card's
+row cites. A bead at M2 that needs a law's convexity certificate depends on N12-51, not on this card.
 
 ## Technical approach
 
@@ -77,7 +85,9 @@ theorem psd_add_sum … -- a positive-definite A plus finitely many PSD terms is
 - [ ] `psd_congr` and the sum lemma are compiled by stock Lean, re-checked by `fln`, bound to their registered
       statements and sealed; no `sorry`, no axiom outside the whitelist, no `native_decide`.
 - [ ] Each law admitted on a lockstep tier has a convexity certificate that `frob-verify` accepts; a planted
-      non-convex law (a potential with a negative-curvature piece) is rejected and cannot be registered.
+      non-convex law (a potential with a negative-curvature piece) is rejected and cannot be registered. (The
+      certificates and the guard are delivered by N12-51 at M2; this card re-reads the receipts for every law
+      admitted by M5 and fails if one is missing or bound to a stale definition hash.)
 - [ ] Negative controls: the lemma with H's hypothesis removed fails to compile; a per-law certificate with one
       Gram entry changed is rejected; a weakened statement (PSD only for diagonal H) fails the binding check.
 - [ ] Registry row shows both routes with their classes, hashes and checker identities.

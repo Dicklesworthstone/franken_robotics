@@ -1182,11 +1182,11 @@
   {
    "bead": "N25d-31",
    "n": 1,
-   "as": "related",
+   "as": "dep",
    "keys": [
-    "BD-357"
+    "N25b-07"
    ],
-   "note": "M4, later; BD-128 is already a dep. Until BD-357 the first repair of FROB-REF-877 names the conflict without the minimal subset"
+   "note": "N25b-07 carries the minimal conflicting subset behind FROB-REF-877 at M1; BD-128 is already a dep and BD-357 (M4) only extends the search"
   },
   {
    "bead": "N25d-31",
@@ -2094,6 +2094,162 @@
    "dep": "BD-376",
    "as": "related",
    "why": "need 2 of N25e-24: BD-376 is the M4 verb-set capstone; a component does not depend on it"
+  },
+  {
+   "bead": "BD-436",
+   "dep": "N25c-01",
+   "as": "related",
+   "why": "coverage (d) of U25c: Augur-side child of the skill-transport epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-436",
+   "dep": "N25c-02",
+   "as": "related",
+   "why": "coverage (d) of U25c: Augur-side child of the skill-transport epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-436",
+   "dep": "N25c-03",
+   "as": "related",
+   "why": "coverage (d) of U25c: Augur-side child of the skill-transport epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-436",
+   "dep": "N25c-04",
+   "as": "related",
+   "why": "coverage (d) of U25c: Augur-side child of the skill-transport epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-436",
+   "dep": "N25c-05",
+   "as": "related",
+   "why": "coverage (d) of U25c: Augur-side child of the skill-transport epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-130",
+   "dep": "N25c-10",
+   "as": "related",
+   "why": "coverage (d) of U25c: GATE-AUGUR-02 reads this bead's rows, but the bead depends on BD-130, so a dep would close a cycle"
+  },
+  {
+   "bead": "BD-130",
+   "dep": "N25c-11",
+   "as": "related",
+   "why": "coverage (d) of U25c: GATE-AUGUR-02 reads this bead's rows, but the bead depends on BD-130, so a dep would close a cycle"
+  },
+  {
+   "bead": "BD-130",
+   "dep": "N25c-12",
+   "as": "related",
+   "why": "coverage (d) of U25c: GATE-AUGUR-02 reads this bead's rows, but the bead depends on BD-130, so a dep would close a cycle"
+  },
+  {
+   "bead": "BD-354",
+   "dep": "N25c-06",
+   "as": "dep",
+   "why": "coverage (d) of U25c: GATE-AUGUR-14 reads the f, r, h and floor that N25c-06 measures on the family workflow"
+  },
+  {
+   "bead": "BD-355",
+   "dep": "N25c-07",
+   "as": "dep",
+   "why": "coverage (d) of U25c: the parity workloads of GATE-AUGUR-15 run on the family batch plan"
+  },
+  {
+   "bead": "BD-355",
+   "dep": "N25c-08",
+   "as": "dep",
+   "why": "coverage (d) of U25c: reuse certificates are a component of family execution at GATE-AUGUR-15"
+  },
+  {
+   "bead": "BD-355",
+   "dep": "N25c-09",
+   "as": "dep",
+   "why": "coverage (d) of U25c: the placement rule and the checker queue are a component of family execution; N25c-09's drafted dep on BD-355 was moved to related"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "BD-425",
+   "as": "related",
+   "why": "replaces the drafted dep: nothing depends on an epic"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N25c-46",
+   "as": "dep",
+   "why": "the M6 exit review reads the geometric-phase epic through its kill-gate decision, which follows the pilot and GATE-AUGUR-20"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "BD-426",
+   "as": "related",
+   "why": "replaces the drafted dep: nothing depends on an epic"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N25d-05",
+   "as": "dep",
+   "why": "the M6 exit review reads the symmetry-at-contact epic through its kill-gate decision"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "BD-435",
+   "as": "related",
+   "why": "replaces the drafted dep: nothing depends on an epic"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N25c-35",
+   "as": "dep",
+   "why": "the M8 exit review reads the facility epic through its kill-gate decision and stop rule"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "BD-437",
+   "as": "related",
+   "why": "replaces the drafted dep: nothing depends on an epic"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N25d-25",
+   "as": "dep",
+   "why": "the M8 exit review reads the continuation epic through its kill-gate decision"
+  },
+  {
+   "bead": "N38b-45",
+   "dep": "BD-437",
+   "as": "related",
+   "why": "replaces the drafted dep: nothing depends on an epic"
+  },
+  {
+   "bead": "N38b-45",
+   "dep": "N25d-23",
+   "as": "dep",
+   "why": "the adopted known answers on certified roots run through the α-certified root mechanism"
+  },
+  {
+   "bead": "N25c-42",
+   "dep": "N10a-16",
+   "as": "related",
+   "why": "both pilots measure holonomy on a three-link body; see cross_group_duplicates"
+  },
+  {
+   "bead": "N25c-47",
+   "dep": "N10a-16",
+   "as": "dep",
+   "why": "the C-08 pilot's second stage states the funding condition of the shape-space atlas; a Moonshot mechanism depends on its pilot"
+  },
+  {
+   "bead": "BD-358",
+   "dep": "N25b-09",
+   "as": "dep",
+   "why": "BD-358 is the capstone of GATE-AUGUR-09; N25b-09 builds its paving driver (see cross_group_duplicates)"
+  },
+  {
+   "bead": "BD-358",
+   "dep": "N25b-10",
+   "as": "dep",
+   "why": "BD-358 is the capstone of GATE-AUGUR-09; N25b-10 builds its region answers (see cross_group_duplicates)"
   }
  ],
  "superseded": [],
@@ -2107,6 +2263,76 @@
    "mine": "N25e-27",
    "other": "N25b-08",
    "note": "both are the experiment that settles OPEN-AUGUR-3 (the constraint-to-parameter graph of the robot classes); U25d's coverage asks for one bead"
+  },
+  {
+   "mine": "N25c-05",
+   "other": "N25a-20",
+   "note": "true duplicate: both are the kill-gate decision KILL-AUGUR-TRANSPORT at M8 on the tray experiment's record"
+  },
+  {
+   "mine": "N25c-19",
+   "other": "N19c-05",
+   "note": "true duplicate: both specify the verb scene.probe-request at M5"
+  },
+  {
+   "mine": "BD-358",
+   "other": "N25b-09",
+   "note": "seed and component: BD-358's Scope lists the per-constraint paving driver with contractors that N25b-09 specifies; BD-358 should be reduced to the capstone of GATE-AUGUR-09"
+  },
+  {
+   "mine": "BD-358",
+   "other": "N25b-10",
+   "note": "seed and component: BD-358's Scope lists combination by cylinders, the monotone-first rule and dual witnesses that N25b-10 specifies; N25b-11 (the gate script) already depends on BD-358"
+  },
+  {
+   "mine": "N25c-20",
+   "other": "N10b-10",
+   "note": "overlap: both run the docking family against a scenario-tree linear program (51 solves); N10b-10 is the construction's pilot at M2, N25c-20 the M1 comparator that also discharges PO-AUGUR-01"
+  },
+  {
+   "mine": "N25c-42",
+   "other": "N10a-16",
+   "note": "overlap: both are paper-scale holonomy pilots on a three-link body and a wheeled base; N10a-16 (construction C-08, M3) and N25c-42 (KILL-AUGUR-PHASE, M6)"
+  },
+  {
+   "mine": "N25c-18",
+   "other": "N28c-13",
+   "note": "overlap: both specify measurement proposals of experiment.suggest by decision partition with the direct measurement as comparator; BD-351 ranks them"
+  },
+  {
+   "mine": "BD-302",
+   "other": "N28c-44",
+   "note": "overlap: both specify the three named reuse columns of report.campaign and the refusal of an unnamed reuse figure"
+  },
+  {
+   "mine": "N25d-27",
+   "other": "NS-22",
+   "note": "overlap: two demo files for the docking slice at M1 (demos/augur-docking and demos/ns-22), both replaying the worked example through the public verbs"
+  },
+  {
+   "mine": "N25d-32",
+   "other": "N25a-23",
+   "note": "overlap: both trigger the admission refusals of a mission query from the command line and assert code, pointer and first repair; N25d-32 covers all twenty codes"
+  },
+  {
+   "mine": "N25d-36",
+   "other": "N25a-07",
+   "note": "overlap: both pair each of the four proof rules with a deliberately invalid fixture; N25d-36 adds the candidate theorem cards"
+  },
+  {
+   "mine": "N25e-29",
+   "other": "BD-132",
+   "note": "overlap: BD-132 already checks the multilinear-vertex specimen of the stance family; N25e-29 specifies the law-object rules of lp-primal, which the Lemma unit may prefer to own"
+  },
+  {
+   "mine": "N25c-31",
+   "other": "N25b-24",
+   "note": "overlap: both specify the smallest priced world edit that restores a mission in one repair budget; N25b-24 at M4 for one robot, N25c-31 at M8 with robot edits, the site and the comparator"
+  },
+  {
+   "mine": "N25c-11",
+   "other": "N25a-13",
+   "note": "overlap: both carry the passive-spring amendment of the stance family (withdrawal of the cell at b = 1/4 m); N25c-11 as an authority model in certificates, N25a-13 as M1 revalidation"
   }
  ],
  "new_beads": [
@@ -2157,7 +2383,301 @@
     "N25e-02",
     "N25e-05"
    ]
+  },
+  {
+   "section": "§32.6 and Appendix J",
+   "what": "registry rows for three analysis verbs that the late Augur rules introduce (analyze.sweep-monotone, analyze.constraint-graph, analyze.regressor-identity); VERBS-analyze has the 26 rows of A-01 to A-26 only",
+   "needed_by": [
+    "N25e-08",
+    "N25e-27",
+    "N25e-19"
+   ]
   }
  ],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "BD-425",
+   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them)"
+  },
+  {
+   "bead": "BD-426",
+   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them)"
+  },
+  {
+   "bead": "BD-435",
+   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them)"
+  },
+  {
+   "bead": "BD-437",
+   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them)"
+  },
+  {
+   "bead": "N25d-39",
+   "what": "deps on the epics BD-425 and BD-435 moved to related and replaced by the mechanism beads N25c-43, N25c-44 and N25c-30; title shortened"
+  },
+  {
+   "bead": "N25c-09",
+   "what": "dep on the capstone BD-355 moved to related (a component does not depend on its capstone; BD-355 consumes this bead)"
+  },
+  {
+   "bead": "N25e-19",
+   "what": "Frontier mechanism without its pilot: N25e-18 moved from related to deps"
+  },
+  {
+   "bead": "N25c-03",
+   "what": "Moonshot mechanism now depends on the owner decision N25d-49, as the other five Augur Moonshot items do (coverage (e) 12 of U25d)"
+  },
+  {
+   "bead": "N25c-06",
+   "what": "Scope rewritten against N25d-30: this bead is the timing before any family kernel and the go or no-go"
+  },
+  {
+   "bead": "N25d-30",
+   "what": "Scope rewritten against N25c-06 (now a dep): this bead is the timing by stage on both backends once the kernels exist; title shortened"
+  },
+  {
+   "bead": "N25c-22",
+   "what": "Scope rewritten against N25d-27: this bead measures GATE-AUGUR-03; the demonstration cites its record"
+  },
+  {
+   "bead": "N25d-27",
+   "what": "Scope rewritten against N25c-22 and N25c-20 (both now deps): demonstration form and the GATE-AUGUR-05 audit; title shortened"
+  },
+  {
+   "bead": "N25d-34",
+   "what": "Scope names the beads that write each template's pair (N25c-10 and N25c-20 now deps); this bead keeps the register and the harness; title shortened"
+  },
+  {
+   "bead": "N25c-10",
+   "what": "Scope: its two-lowerings comparison discharges PO-AUGUR-01 for the stance family; register and harness are N25d-34"
+  },
+  {
+   "bead": "N25c-20",
+   "what": "Scope names N25d-34 (register of PO-AUGUR-01), N25d-27 (the demonstration that uses its bundle) and N25a-18 (the kill decision)"
+  },
+  {
+   "bead": "N25d-31",
+   "what": "826 and 881 mapping made the same as in N25-REF and N25e-45 (the verb presents 881 and cites 826); Scope names N25-REF; title shortened"
+  },
+  {
+   "bead": "N25d-32",
+   "what": "Scope names BD-136 and N25-REF in place of pointers; title shortened"
+  },
+  {
+   "bead": "N25d-40",
+   "what": "Scope names N38a-09 in place of a pointer to needs; title shortened"
+  },
+  {
+   "bead": "N25d-48",
+   "what": "Scope names N41-03 in place of a pointer to needs; the rows of OPEN-AUGUR-3 and OPEN-AUGUR-8 name N25e-27 (N25b-08) and N25b-02 as carriers"
+  },
+  {
+   "bead": "N25d-41",
+   "what": "kill-gate rows name the decision beads as carriers (N25a-18, N25b-04, N25b-17, N25c-16, N25c-27, N25c-40, N25c-05, N25c-35, N25c-46 and others); Scope names N40-10 and N40-29 for the late rows"
+  },
+  {
+   "bead": "N25e-39",
+   "what": "three-law probe made consistent with BD-291 and N25c-13: under the largest-gap tie-break the verb returns r = 3 at 125 ms and lists r = 2 as the equal-cost alternative"
+  },
+  {
+   "bead": "N25e-41",
+   "what": "step 7 asserts the same three-law result as BD-291, N25c-13 and N25e-39"
+  },
+  {
+   "bead": "N25e-45",
+   "what": "extended with a sixth row, the refusal of a connection requested outside its qualified stratum (§25.19 had no code); title, Background, Scope, approach, acceptance and tests updated"
+  },
+  {
+   "bead": "N25c-43",
+   "what": "its uncoded refusal now points at the row fixed in N25e-45 (added to deps), with the interim detail string"
+  },
+  {
+   "bead": "N25c-15",
+   "what": "depends on the new bead N25c-48 for the hidden model; Scope and Considerations name it"
+  },
+  {
+   "bead": "BD-043",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-360",
+   "what": "title shortened to at most 110 characters; Scope and approach name N25e-42, N25e-43 and the N12-14 checker in place of pointers to needs"
+  },
+  {
+   "bead": "BD-361",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BD-362",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-03",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-04",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-06",
+   "what": "title shortened to at most 110 characters; Scope names N25e-20 as the owner of the strategy `placement`"
+  },
+  {
+   "bead": "N25d-07",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-08",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-11",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-12",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-13",
+   "what": "title shortened to at most 110 characters; approach names the derivative-program bead N21a-20 in place of a pointer to needs"
+  },
+  {
+   "bead": "N25d-14",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-15",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-16",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-17",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-18",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-19",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-20",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-21",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-22",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-24",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-25",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-26",
+   "what": "title shortened to at most 110 characters; Scope names N41-29 in place of a pointer to needs"
+  },
+  {
+   "bead": "N25d-28",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-29",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-35",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-36",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-37",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-38",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-42",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-43",
+   "what": "title shortened to at most 110 characters; Scope names the reconstruction bead N25a-06 in place of a pointer to needs"
+  },
+  {
+   "bead": "N25d-44",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-45",
+   "what": "title shortened to at most 110 characters; Scope names the kill-gate decision bead N25a-18"
+  },
+  {
+   "bead": "N25d-46",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-47",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N25d-49",
+   "what": "title shortened to at most 110 characters; Scope names NAB-21, N36-20 and N21c-35 in place of a pointer to needs"
+  },
+  {
+   "bead": "N25d-23",
+   "what": "Scope names the checker bead N12-19 in place of a pointer to needs"
+  },
+  {
+   "bead": "N25d-02",
+   "what": "the surface default names the registry rows VERBS-analyze and VERBS-gait in place of a pointer to needs"
+  },
+  {
+   "bead": "N25d-10",
+   "what": "Scope names N25e-44 for the acceptance tests of GATE-AUGUR-35"
+  },
+  {
+   "bead": "N25c-21",
+   "what": "Scope names N25e-31 and N25e-32 for the finite-tolerance game"
+  },
+  {
+   "bead": "N25c-37",
+   "what": "Scope names N25e-35 for the channel code"
+  },
+  {
+   "bead": "N25c-02",
+   "what": "Scope names N25e-02 for chance and expectation claims"
+  },
+  {
+   "bead": "N25c-11",
+   "what": "Scope names N25e-28 and N25e-29 for the law class"
+  },
+  {
+   "bead": "N25c-18",
+   "what": "Considerations: BD-351's dependency on this bead is recorded, no longer a request"
+  },
+  {
+   "bead": "BD-129",
+   "what": "Scope names N25e-31 to N25e-33 for the finite-tolerance game"
+  }
+ ]
 }

@@ -133,9 +133,11 @@
    "as": "dep",
    "keys": [
     "N39a-27",
+    "N39a-29",
+    "N39a-33",
     "N40-19"
    ],
-   "note": "the pooled ratio of restricted mean times with its censoring rule; the pre-analysis known answers and the smallest suite that can certify (GATE-TENFOLD-10); the protocol's decision rule is its dependency BD-314"
+   "note": "the pooled ratio of restricted mean times with its censoring rule; Holm's step-down for multiplicity; the pre-analysis with its reachability conditions; the pre-analysis known answers and the smallest suite that can certify (GATE-TENFOLD-10); the protocol's decision rule is its dependency BD-314"
   },
   {
    "bead": "BET-13",
@@ -192,7 +194,6 @@
    "n": 2,
    "as": "dep",
    "keys": [
-    "N23a-22",
     "N23b-24"
    ],
    "note": "the owner decision OPEN-CORTEX-1 (two beads of the Cortex group carry it)"
@@ -1193,7 +1194,6 @@
    "n": 1,
    "as": "dep",
    "keys": [
-    "N23a-22",
     "N23b-24"
    ],
    "note": "the owner decision OPEN-CORTEX-1 (two beads of the Cortex group carry it)"
@@ -1274,12 +1274,6 @@
    "why": "rule 7: the bet verdict reads the kill-gate decision KILL-METAL"
   },
   {
-   "bead": "BET-09",
-   "dep": "N21c-33",
-   "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-METAL (second bead of the Spark group for the same decision)"
-  },
-  {
    "bead": "BET-11",
    "dep": "N12-31",
    "as": "dep",
@@ -1352,28 +1346,16 @@
    "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SPEC-REWARD"
   },
   {
-   "bead": "BET-24",
-   "dep": "N24c-12",
-   "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SPEC-REWARD (second bead of the Arena group for the same decision)"
-  },
-  {
    "bead": "BET-25",
-   "dep": "N22c-18",
+   "dep": "N22b-16",
    "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-ENERGY (second bead of the Reflex group; N22b-16 is already reached)"
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-ENERGY"
   },
   {
    "bead": "BET-25",
    "dep": "N22b-28",
    "as": "dep",
    "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SHIELD"
-  },
-  {
-   "bead": "BET-25",
-   "dep": "N22c-19",
-   "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SHIELD (second bead of the Reflex group for the same decision)"
   },
   {
    "bead": "BET-26",
@@ -1451,19 +1433,13 @@
    "bead": "BET-33",
    "dep": "N28b-36",
    "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-REUSE (second bead of the Atelier group for the same decision)"
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-REUSE"
   },
   {
    "bead": "BET-33",
    "dep": "N25a-19",
    "as": "dep",
    "why": "rule 7: the bet verdict reads the kill-gate decision KILL-AUGUR-REUSE"
-  },
-  {
-   "bead": "BET-33",
-   "dep": "N25b-20",
-   "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-AUGUR-REUSE (second bead of the Augur group for the same decision)"
   },
   {
    "bead": "BET-34",
@@ -1476,11 +1452,1057 @@
    "dep": "N18a-34",
    "as": "dep",
    "why": "rule 7: the bet verdict reads the kill-gate decision KILL-FILM"
+  },
+  {
+   "bead": "BET-13",
+   "dep": "N39b-13",
+   "as": "dep",
+   "why": "rule 9, nothing depends on an epic: replaces the drafted dependency on the M7 epics BD-429, BD-432, BD-433; the tournament and its record of GATE-TENFOLD-07"
+  },
+  {
+   "bead": "BET-13",
+   "dep": "N40-16",
+   "as": "dep",
+   "why": "rule 9, nothing depends on an epic: replaces the drafted dependency on the M7 epics BD-429, BD-432, BD-433; the program-gate record of GATE-TENFOLD-07 with the written rules applied per cell"
+  },
+  {
+   "bead": "BET-13",
+   "dep": "N40-15",
+   "as": "dep",
+   "why": "the program-gate record of GATE-TENFOLD-06 with its outcome rules applied (the M3 reading of the bet)"
+  },
+  {
+   "bead": "BET-14",
+   "dep": "N39b-13",
+   "as": "dep",
+   "why": "rule 9, nothing depends on an epic: replaces the drafted dependency on the M7 epics BD-430, BD-432, BD-433; the tournament, its record of GATE-TENFOLD-07 and the M7 row of GATE-TENFOLD-13"
+  },
+  {
+   "bead": "BET-14",
+   "dep": "N40-16",
+   "as": "dep",
+   "why": "rule 9, nothing depends on an epic: replaces the drafted dependency on the M7 epics BD-430, BD-432, BD-433; the program-gate record of GATE-TENFOLD-07"
+  },
+  {
+   "bead": "BET-14",
+   "dep": "N40-15",
+   "as": "dep",
+   "why": "the program-gate record of GATE-TENFOLD-06 (arm C at M3)"
+  },
+  {
+   "bead": "NS-24",
+   "dep": "N39b-13",
+   "as": "dep",
+   "why": "rule 9, nothing depends on an epic: replaces the drafted dependency on the M7 epics BD-428 to BD-433; the tournament whose ledger and published report the scenario checks"
+  },
+  {
+   "bead": "NS-24",
+   "dep": "N40-16",
+   "as": "dep",
+   "why": "rule 9, nothing depends on an epic: replaces the drafted dependency on the M7 epics BD-428 to BD-433; the program-gate record of GATE-TENFOLD-07"
+  },
+  {
+   "bead": "NS-24",
+   "dep": "N40-21",
+   "as": "dep",
+   "why": "rule 9, nothing depends on an epic: replaces the drafted dependency on the M7 epics BD-428 to BD-433; the record of GATE-TENFOLD-12 (suite hygiene), one of the events the scenario verifies"
+  },
+  {
+   "bead": "NS-24",
+   "dep": "N40-22",
+   "as": "dep",
+   "why": "the record of GATE-TENFOLD-13 (recovery ratios), printed in the report the scenario checks"
+  },
+  {
+   "bead": "BET-30",
+   "dep": "N23b-02",
+   "as": "related",
+   "why": "M8 addendum: the kill-gate decision KILL-GATREE; later than this M4 bead"
+  },
+  {
+   "bead": "BET-04",
+   "dep": "N33c-14",
+   "as": "related",
+   "why": "the M2 reading of fallback (b) of KILL-FSIM; later than this M0 bead, which is re-read at every pin move"
+  },
+  {
+   "bead": "N00-28",
+   "dep": "N40-24",
+   "as": "related",
+   "why": "need 2 of N00-28: the fallback ledger of the body's 35 kill gates; M1, later than this M0 bead"
+  },
+  {
+   "bead": "N00-28",
+   "dep": "N40-25",
+   "as": "related",
+   "why": "need 2 of N00-28: the fallback ledger of control, learning and tasks; M1, later than this M0 bead"
+  },
+  {
+   "bead": "N00-28",
+   "dep": "N40-26",
+   "as": "related",
+   "why": "need 2 of N00-28: the fallback ledger of Augur, synthesis, Nemesis, Autopsy and Atelier; M1, later than this M0 bead"
+  },
+  {
+   "bead": "N00-28",
+   "dep": "N40-28",
+   "as": "related",
+   "why": "need 2 of N00-28: the fallback ledger of the ten-fold test; M1, later than this M0 bead"
+  },
+  {
+   "bead": "N00-34",
+   "dep": "NAB-10",
+   "as": "related",
+   "why": "need 1 of N00-34: the citation lint consumes the re-read marks this review writes; not a prerequisite"
+  },
+  {
+   "bead": "NS-08",
+   "dep": "N18b-09",
+   "as": "related",
+   "why": "the Traction group's script runs the same scenario (stages ns08-rigid and ns08-soil); overlap reported"
+  },
+  {
+   "bead": "NS-11",
+   "dep": "N12-36",
+   "as": "related",
+   "why": "the Lemma group's coverage script also runs NS-11; overlap reported"
+  },
+  {
+   "bead": "NS-20",
+   "dep": "N31b-14",
+   "as": "related",
+   "why": "the Foundry group's script is an end-to-end script for the same scenario; overlap reported"
+  },
+  {
+   "bead": "NS-20",
+   "dep": "N31a-57",
+   "as": "related",
+   "why": "the export-and-packet script also demonstrates NS-20"
+  },
+  {
+   "bead": "NS-24",
+   "dep": "N39b-17",
+   "as": "related",
+   "why": "the tournament's dress rehearsal on the development pool; NS-24's rehearsal lane is a two-mission demonstration of the report path"
+  },
+  {
+   "bead": "BD-147",
+   "dep": "NS-01",
+   "as": "dep",
+   "why": "the M1 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-147",
+   "dep": "NS-07",
+   "as": "dep",
+   "why": "the M1 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-147",
+   "dep": "NS-13",
+   "as": "dep",
+   "why": "the M1 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-147",
+   "dep": "NS-22",
+   "as": "dep",
+   "why": "the M1 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "NS-02",
+   "as": "dep",
+   "why": "the M2 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "NS-10",
+   "as": "dep",
+   "why": "the M2 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "NS-14",
+   "as": "dep",
+   "why": "the M2 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "NS-03",
+   "as": "dep",
+   "why": "the M3 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "NS-04",
+   "as": "dep",
+   "why": "the M3 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "NS-09",
+   "as": "dep",
+   "why": "the M3 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "NS-15",
+   "as": "dep",
+   "why": "the M3 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "NS-16",
+   "as": "dep",
+   "why": "the M3 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "NS-17",
+   "as": "dep",
+   "why": "the M3 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "NS-05",
+   "as": "dep",
+   "why": "the M4 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "NS-06",
+   "as": "dep",
+   "why": "the M4 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "NS-08",
+   "as": "dep",
+   "why": "the M4 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "NS-18",
+   "as": "dep",
+   "why": "the M4 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "NS-19",
+   "as": "dep",
+   "why": "the M4 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "NS-23",
+   "as": "dep",
+   "why": "the M4 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "NS-11",
+   "as": "dep",
+   "why": "the M5 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "NS-12",
+   "as": "dep",
+   "why": "the M5 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "NS-20",
+   "as": "dep",
+   "why": "the M5 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "NS-21",
+   "as": "dep",
+   "why": "the M5 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-434",
+   "dep": "NS-24",
+   "as": "dep",
+   "why": "the M7 exit demonstrates this scenario (rule 4: an exit review depends on what it reviews)"
+  },
+  {
+   "bead": "BD-044",
+   "dep": "BET-04",
+   "as": "dep",
+   "why": "the M0 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "BET-01",
+   "as": "dep",
+   "why": "the M2 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "BET-02",
+   "as": "dep",
+   "why": "the M2 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "BET-08",
+   "as": "dep",
+   "why": "the M2 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "BET-09",
+   "as": "dep",
+   "why": "the M2 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "BET-18",
+   "as": "dep",
+   "why": "the M2 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-03",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-05",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-06",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-20",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-21",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-22",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-24",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-31",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-32",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-34",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "BET-36",
+   "as": "dep",
+   "why": "the M3 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-07",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-10",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-15",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-16",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-17",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-19",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-23",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-25",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-26",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-27",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-30",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-33",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-35",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BET-37",
+   "as": "dep",
+   "why": "the M4 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "BET-11",
+   "as": "dep",
+   "why": "the M5 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "BET-28",
+   "as": "dep",
+   "why": "the M5 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "BET-29",
+   "as": "dep",
+   "why": "the M5 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-434",
+   "dep": "BET-13",
+   "as": "dep",
+   "why": "the M7 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "BD-434",
+   "dep": "BET-14",
+   "as": "dep",
+   "why": "the M7 exit records this bet's verdict, read at that exit (rule 4)"
+  },
+  {
+   "bead": "NAB-09",
+   "dep": "N00-01",
+   "as": "related",
+   "why": "rule 5: the source register is data entry and comes first; N00-01 depends on it (need 2 of N00-01), so a dependency in this direction would close a cycle"
+  },
+  {
+   "bead": "NAB-15",
+   "dep": "N00-06",
+   "as": "related",
+   "why": "rule 5: the plan-check source records and the archive digest come first; N00-06 depends on them (need 1 of N00-06)"
+  },
+  {
+   "bead": "NAB-12",
+   "dep": "N00-13",
+   "as": "related",
+   "why": "rule 5: source records come first; the capability register cites them by key and depends on NAB-12"
+  },
+  {
+   "bead": "NAB-13",
+   "dep": "N00-11",
+   "as": "related",
+   "why": "rule 5: source records come first; the hypothesis rows resolve their figures to them and depend on NAB-13"
+  },
+  {
+   "bead": "NAB-13",
+   "dep": "N00-12",
+   "as": "related",
+   "why": "rule 5: source records come first; the hypothesis rows resolve their figures to them and depend on NAB-13"
+  },
+  {
+   "bead": "NAB-12",
+   "dep": "N00-34",
+   "as": "related",
+   "why": "the re-read review works through these records and depends on them; its marks are appended afterwards"
+  },
+  {
+   "bead": "NAB-13",
+   "dep": "N00-34",
+   "as": "related",
+   "why": "the re-read review works through these records and depends on them; its marks are appended afterwards"
+  },
+  {
+   "bead": "N38a-12",
+   "dep": "N00-KA",
+   "as": "related",
+   "why": "rule 5: the registry skeleton comes first; the rows of N00-KA depend on it"
+  },
+  {
+   "bead": "N40-11",
+   "dep": "BET-12",
+   "as": "related",
+   "why": "rule 7: BET-12 decides on this gate's measurement and depends on N40-11; the registered falsifier that N40-11's need 3 asks for is a row of the bet register"
+  },
+  {
+   "bead": "N40-11",
+   "dep": "N00-28",
+   "as": "dep",
+   "why": "need 3 of N40-11: the bet register holds BET-12's registered falsifier and attribution rule before M1 starts"
+  },
+  {
+   "bead": "N30b-18",
+   "dep": "BET-28",
+   "as": "related",
+   "why": "rule 7: the bet verdict reads this kill-gate decision and depends on it; the ledger row the decision closes is in the bet register N00-28"
+  },
+  {
+   "bead": "N32b-19",
+   "dep": "N00-02",
+   "as": "dep",
+   "why": "the capability registry and its status function are built at M0 by N00-02; the M1 verb reads them (the two beads overlap, reported)"
+  },
+  {
+   "bead": "N39a-38",
+   "dep": "N00-09",
+   "as": "dep",
+   "why": "need 2 of N39a-38: the funding record per work package, which this gate measurement reads"
+  },
+  {
+   "bead": "N40-18",
+   "dep": "N00-09",
+   "as": "dep",
+   "why": "need 2 of N40-18: the recorded justification per work package, which this gate reads"
   }
  ],
  "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N00-07",
+   "other": "N38a-09",
+   "note": "true duplicate: both create frob-conformance/registry/pilots.toml with its schema, registration before the run, and the funding refusal for a Frontier or Moonshot mechanism without a pilot (GATE-GAUNT-08). N00-07 also holds the completeness check, the twenty plan-time rows as history and the seed list of pilots still to run; N38a-09 also holds the printout. One file and one rule must remain (coverage (e) item 1 of U00)"
+  },
+  {
+   "mine": "N00-06",
+   "other": "N38a-10",
+   "note": "the same plan-time checks held as ledger rows twice: N00-06 has nine check records with re-run status, consistency assertions and the citation rule (Appendix K.3); N38a-10 has twenty pilot rows with expected values and limits (§38.5). The re-run status should live in one ledger"
+  },
+  {
+   "mine": "N00-06",
+   "other": "NAB-15",
+   "note": "overlap with distinct scope: NAB-15 enters the same checks as 25 source records with the reproduction archive's commit and digest; N00-06 holds their re-run status and depends on NAB-15"
+  },
+  {
+   "mine": "N00-35",
+   "other": "N38a-11",
+   "note": "both re-run the contact-Hessian conditioning check (row 20 of the plan-time ledger; one of the three checks of N00-35 whose scripts were not retained). N00-35 alone covers the CPU reference rates and the Metal limits"
+  },
+  {
+   "mine": "N00-02",
+   "other": "N32b-19",
+   "note": "both define registries/capabilities.toml, the status computation from the gate register and the dispatch that raises FROB-REF-724. N00-02 (M0): the registry schema, the eight conditions and two riders, the status function and the per-bead checklist text. N32b-19 (M1): the verb's output schema, the per-device section and the MCP resource. N32b-19 should depend on N00-02 and drop the registry and status function"
+  },
+  {
+   "mine": "N00-28",
+   "other": "N40-31",
+   "note": "both register the 37 bets with deciding gates, kill gates and milestones and compute a bet status from gate records: N00-28 as registry/bets.toml with the pre-registration check and the verdict function (M0); N40-31 as rows of the gate register with the check that each bet has a decider (M1). One register should own the rows"
+  },
+  {
+   "mine": "BET-12",
+   "other": "N40-11",
+   "note": "both evaluate the schedule gate at the M1 exit. N40-11: the elapsed-time computation, the cause attribution of blocked time, the gate record and the pause. BET-12: the registered falsifier, the bet verdict and the trigger of the re-plan. BET-12 depends on N40-11; N40-11 must not depend on BET-12 (its need 3 is met by the bet register N00-28)"
+  },
+  {
+   "mine": "N00-17",
+   "other": "N36-04",
+   "note": "both implement the Amdahl ceiling calculators in frob-conformance with exact known answers (N00-17: nine calculators and two scale helpers, KA-009 to KA-016; N36-04: seven functions, KA-818 to KA-820). One module should hold the arithmetic"
+  },
+  {
+   "mine": "N00-17",
+   "other": "N39a-37",
+   "note": "both compute the thesis ceilings from a measured phase ledger (N39a-37: six calculators over ledger records, M1). N39a-37 should call the functions of N00-17 (M0) and keep only the ledger binding and the ceiling record"
+  },
+  {
+   "mine": "N00-09",
+   "other": "N39a-38",
+   "note": "both check work-package funding against ceilings and the 10% lever rule: N00-09 defines the funding record and its admission refusals; N39a-38 measures GATE-TENFOLD-09 with a funding-rule check and an order-rule check. N39a-38 should read the record of N00-09 (edge recorded)"
+  },
+  {
+   "mine": "N00-16",
+   "other": "N33a-09",
+   "note": "both build a registry of sibling-code facts with paths and a runner that re-reads them at the pinned commits and marks stale facts (N00-16: tools/oracle/recheck_foundation_facts.sh over the facts of the thesis chapter; N33a-09: fact probes in frob-conformance over the facts of the Suite chapter). One registry and one runner, with rows from both chapters"
+  },
+  {
+   "mine": "N00-33",
+   "other": "N38b-28",
+   "note": "both register negative controls for KA-009 to KA-013, KA-015, KA-016, KA-019 to KA-021 and KA-023 to KA-026. N38b-28's own need says the thesis unit's bead takes precedence where they differ; N38b-28 should keep the rule, the boundary rows and KA-033"
+  },
+  {
+   "mine": "N00-08",
+   "other": "N41-17",
+   "note": "check H-2 of N00-08 (typed close reasons that cite a test, with its failure signals) and the lifecycle checks of N41-17 (typed close reasons citing a test log) are the same check over the tracker export, at M0 and M1"
+  },
+  {
+   "mine": "N00-01",
+   "other": "N12-08",
+   "note": "both test the ban on the word `verified`: N00-01 lints contracts, documents, templates and tool output in general; N12-08 tests frob-lemma's output. Distinct scope; related"
+  },
+  {
+   "mine": "N00-15",
+   "other": "N39b-15",
+   "note": "both lint where the word ten-fold may appear: N00-15 through the gate-conditioned claims lint over the differentiators, N39b-15 with the limits block and the citation syntax of the report. N39b-15 registers its rules in the registry of N00-15; distinct scope"
+  },
+  {
+   "mine": "N00-27",
+   "other": "N37-25",
+   "note": "both test the claim product at M1 under GATE-SAFE-08: N00-27 as a battery of the fourteen claim rules with KA-027 to KA-032 and a per-surface sweep; N37-25 with random evidence sets through the real serializer and the class-raising API scan (rule 5). Rule 5 is tested twice"
+  },
+  {
+   "mine": "N00-29",
+   "other": "N34-12",
+   "note": "the index runner of N00-29 and scripts/e2e/demos.sh of N34-12 both run every demo.yaml and check its outputs. N00-29 adds the North-Star conventions, the script skeleton and the fresh-agent rule; one runner should remain"
+  },
+  {
+   "mine": "N00-14",
+   "other": "N39b-08",
+   "note": "both audit the installed incumbents at M0: N00-14 turns each documented absence and not-found item into an executed check on trj; N39b-08 writes the audit record per incumbent with its capability table and records GATE-TENFOLD-01. Distinct scope; the capability table of N39b-08 should be the register of N00-13"
+  },
+  {
+   "mine": "N00-20",
+   "other": "N39a-26",
+   "note": "both attribute measured phase savings to the eight levers: N00-20 pre-registers the lever register and expected ranges and scores them at M3 and M7; N39a-26 computes the removable share and the saving table per lever from a ledger. Distinct scope; N00-20's scoring should read N39a-26's tables"
+  },
+  {
+   "mine": "NS-08",
+   "other": "N18b-09",
+   "note": "two end-to-end scripts for scenario NS-08 (tracks on rubble): NS-08 with its demo.yaml, and stages ns08-rigid and ns08-soil of N18b-09. The seed BD-365 also names NS-08 on rigid ground in its done-condition"
+  },
+  {
+   "mine": "NS-11",
+   "other": "N12-36",
+   "note": "scripts/e2e/lemma_coverage.sh of N12-36 also runs NS-11, and the seed BD-379 carries the NS-11 demonstration on K-cay-step; NS-11 holds the demo.yaml and the offline re-check"
+  },
+  {
+   "mine": "NS-18",
+   "other": "BD-369",
+   "note": "the seed's done-condition names NS-18; NS-18 depends on it and holds only the demo inputs, demo.yaml and the script. Capstone and its demonstration, not a duplicate"
+  },
+  {
+   "mine": "NS-20",
+   "other": "N31b-14",
+   "note": "true duplicate of the scenario script: N31b-14 is titled as the end-to-end script of North-Star NS-20 (qualified design to a verified .fbuild through the six Foundry verbs, with the demonstration manifest); NS-20 specifies the same script and demos/ns-20/demo.yaml"
+  },
+  {
+   "mine": "NS-24",
+   "other": "N39b-17",
+   "note": "overlap with distinct scope: N39b-17 is the tournament's freeze and dress rehearsal on the development pool; the rehearsal lane of NS-24 is a two-mission demonstration of clock, receipts and report with toy arms, labelled `rehearsal: unsealed`"
+  },
+  {
+   "mine": "BET-01",
+   "other": "BD-221",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-KIR. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-KIR decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-02",
+   "other": "N21b-34",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-D1. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-D1 decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-03",
+   "other": "N18b-33",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-CONTACT. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-CONTACT decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-04",
+   "other": "N33b-05",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-FSIM. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-FSIM decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-05",
+   "other": "N28a-22",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-STATIC. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-STATIC decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-06",
+   "other": "BD-249",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-BASELINE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-BASELINE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-06",
+   "other": "N22c-14",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-BASELINE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-BASELINE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-07",
+   "other": "N23a-33",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-EQUIV. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-EQUIV decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-09",
+   "other": "N21b-08",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-METAL. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-METAL decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-11",
+   "other": "N12-31",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-LEMMA. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-LEMMA decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-13",
+   "other": "N39b-06",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-TENFOLD-SPEED. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-TENFOLD-SPEED decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-14",
+   "other": "N39b-07",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-TENFOLD-TIE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-TENFOLD-TIE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-14",
+   "other": "N25a-18",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-AUGUR-TIE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-AUGUR-TIE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-15",
+   "other": "N23a-26",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-FAMILY. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-FAMILY decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-16",
+   "other": "N23a-30",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-INHERIT. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-INHERIT decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-17",
+   "other": "BD-328",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-RANK. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-RANK decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-17",
+   "other": "N16b-12",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-RANK. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-RANK decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-18",
+   "other": "N17b-10",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-PHYLUM. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-PHYLUM decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-18",
+   "other": "N21b-19",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-BUCKET. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-BUCKET decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-19",
+   "other": "N25a-18",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-AUGUR-TIE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-AUGUR-TIE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-19",
+   "other": "N25b-04",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-AUGUR-FALSECERT. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-AUGUR-FALSECERT decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-20",
+   "other": "BD-289",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-AUGUR-REGION. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-AUGUR-REGION decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-22",
+   "other": "N26a-12",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-NEMESIS. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-NEMESIS decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-22",
+   "other": "N26a-35",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-MCW. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-MCW decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-23",
+   "other": "N27b-11",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-AUTOPSY. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-AUTOPSY decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-24",
+   "other": "N24a-15",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-SPEC-REWARD. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-SPEC-REWARD decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-25",
+   "other": "N22b-16",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-ENERGY. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-ENERGY decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-25",
+   "other": "N22b-28",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-SHIELD. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-SHIELD decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-26",
+   "other": "N22c-17",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-GAIT. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-GAIT decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-27",
+   "other": "N22c-16",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-MPC. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-MPC decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-27",
+   "other": "N23a-21",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-DISTILL. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-DISTILL decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-28",
+   "other": "N30b-18",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-BAND. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-BAND decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-29",
+   "other": "N31b-15",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-TOPOPT. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-TOPOPT decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-29",
+   "other": "N31b-18",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-TOLERANCE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-TOLERANCE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-29",
+   "other": "N31b-19",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-PACKET. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-PACKET decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-30",
+   "other": "N23a-33",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-EQUIV. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-EQUIV decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-30",
+   "other": "N13-24",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-MARROW-BLOCKS. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-MARROW-BLOCKS decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-31",
+   "other": "N17a-29",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-QUOTIENT. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-QUOTIENT decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-32",
+   "other": "N26a-32",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-RARE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-RARE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-33",
+   "other": "N28a-24",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-REUSE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-REUSE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-33",
+   "other": "N28b-36",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-REUSE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-REUSE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-33",
+   "other": "N25a-19",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-AUGUR-REUSE. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-AUGUR-REUSE decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-34",
+   "other": "N16b-19",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-SHADOW. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-SHADOW decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-35",
+   "other": "N21c-11",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-FLEET. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-FLEET decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-36",
+   "other": "N18a-34",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-FILM. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-FILM decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  },
+  {
+   "mine": "BET-37",
+   "other": "N19b-42",
+   "note": "overlap with distinct scope, no merge: both record the decision KILL-RETROFIT. The kill-gate bead applies the trigger and writes the kill ADR; the bet bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict. The bet bead's acceptance line \"the KILL-RETROFIT decision recorded\" means on record by the other bead. The dependency of the bet on this bead is in place."
+  }
+ ],
+ "new_beads": [
+  "N00-37"
+ ],
  "gaps": [],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "BET-13",
+   "what": "dependencies on the epics BD-429, BD-432 and BD-433 moved to related (nothing depends on an epic); the task beads N39b-13, N40-16 and N40-15 are recorded under edges"
+  },
+  {
+   "bead": "BET-14",
+   "what": "dependencies on the epics BD-430, BD-432 and BD-433 moved to related; the task beads N39b-13, N40-16 and N40-15 are recorded under edges"
+  },
+  {
+   "bead": "NS-24",
+   "what": "dependencies on the epics BD-428 to BD-433 moved to related; the task beads N39b-13, N40-16, N40-21 and N40-22 are recorded under edges"
+  },
+  {
+   "bead": "BET-07",
+   "what": "Scope rewritten: overlap with BET-30 (same gate GATE-CORTEX-03, same kill gate KILL-EQUIV) separated; names the beads that hold the rest"
+  },
+  {
+   "bead": "BET-30",
+   "what": "Scope rewritten against BET-07; BET-07 moved from related to deps (clause (b) takes BET-07's verdict as input)"
+  },
+  {
+   "bead": "BET-13",
+   "what": "Scope rewritten: overlap with BET-14 (same gates GATE-TENFOLD-06 and -07) separated; names the beads that hold the rest"
+  },
+  {
+   "bead": "BET-14",
+   "what": "Scope rewritten against BET-13 and BET-19 (shared decision KILL-AUGUR-TIE); names the beads that hold the rest"
+  },
+  {
+   "bead": "BET-19",
+   "what": "Scope rewritten against BET-14 (shared decision KILL-AUGUR-TIE); names the beads that hold the rest"
+  },
+  {
+   "bead": "BET-24",
+   "what": "Scope extended: the acceptance comparison of clause (b) is run by the new bead N00-37, and the reading of its record is stated"
+  },
+  {
+   "bead": "BET-02",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-15",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-16",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-20",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-22",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-25",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-31",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-32",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "BET-33",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "EPIC-PROGRAM",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-09",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-11",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-12",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-16",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-17",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-18",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-20",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-23",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-26",
+   "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N00-29",
+   "what": "title shortened to at most 110 characters"
+  }
+ ]
 }

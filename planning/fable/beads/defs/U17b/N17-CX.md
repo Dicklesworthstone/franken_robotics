@@ -36,7 +36,15 @@ with r = E[L]/L_max.
 
 In: the fourteen registry records and the two unnumbered ones; for each, a planted control (mutation or input) wired
 to a named test target; the check that every record is exercised by at least one gate run.
-Out: the mechanisms and their own tests (the catching bead is named per row). The known answers of the chapter are
+Out: the mechanisms and their own tests (the catching bead is named per row). Where a row names a seed bead, the
+planted control is wired to the test target of the component bead that carries the mechanism, and the seed bead
+is the capability it belongs to: CX-153 in N17a-23 (orbit representatives) with N17a-19 (splits); CX-154 and
+CX-157 in N17a-26 (the mission digest), measured by N17a-27 and N17a-28; CX-155 in the replay audit N17a-28;
+CX-156 in N17a-24 (result transport); CX-158 and CX-159 also in N17a-26 (memo entries of the digest); CX-160
+and CX-161 in N17a-04 and N17a-05 (bucket arithmetic and planner), asserted from the user's side by N17a-08;
+CX-162 also in N17a-04; CX-163 in N17a-11 and N17a-13 (the family-lane pilot and measurement); CX-164 in N17a-15
+and N17a-16 (survivor specialization) and in N17b-24 and N17b-27 for the limb-archetype level; CX-166 in N17a-19,
+exercised by N17a-21. The known answers of the chapter are
 the registry `N17-KA` (written by the unit that owns the first half of the chapter).
 
 ## Technical approach

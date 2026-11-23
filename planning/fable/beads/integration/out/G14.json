@@ -486,9 +486,11 @@
   {
    "bead": "N14a-01",
    "n": 1,
-   "as": "none",
-   "keys": [],
-   "note": "satisfied inside the bead: it adds `frob_design::exact::Ratio` when frob-core (its dependency BD-005) exports none; no bead puts an exact rational in frob-core"
+   "as": "dep",
+   "keys": [
+    "N13-10"
+   ],
+   "note": "the host exact-arithmetic kernel `frob_lie::exact::{Int, Rational}` in layer 1, which parses the design language's decimals and ratios; the bead now uses it instead of adding a private rational type"
   },
   {
    "bead": "N14a-01",
@@ -1692,5 +1694,294 @@
    ]
   }
  ],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "BD-055",
+   "what": "title shortened from 119 to 107 characters"
+  },
+  {
+   "bead": "BD-059",
+   "what": "title shortened from 111 to 108 characters"
+  },
+  {
+   "bead": "BD-066",
+   "what": "title shortened from 113 to 108 characters"
+  },
+  {
+   "bead": "BD-144",
+   "what": "title shortened from 112 to 109 characters"
+  },
+  {
+   "bead": "BD-225",
+   "what": "title shortened from 113 to 109 characters"
+  },
+  {
+   "bead": "BD-227",
+   "what": "title shortened from 111 to 107 characters"
+  },
+  {
+   "bead": "BD-245",
+   "what": "title shortened from 116 to 109 characters"
+  },
+  {
+   "bead": "N14-REF",
+   "what": "title shortened from 111 to 108 characters"
+  },
+  {
+   "bead": "N14a-03",
+   "what": "title shortened from 113 to 105 characters"
+  },
+  {
+   "bead": "N14a-07",
+   "what": "title shortened from 112 to 108 characters"
+  },
+  {
+   "bead": "N14a-08",
+   "what": "title shortened from 111 to 107 characters"
+  },
+  {
+   "bead": "N14a-09",
+   "what": "title shortened from 114 to 110 characters"
+  },
+  {
+   "bead": "N14a-12",
+   "what": "title shortened from 117 to 110 characters"
+  },
+  {
+   "bead": "N14a-15",
+   "what": "title shortened from 114 to 108 characters"
+  },
+  {
+   "bead": "N14a-16",
+   "what": "title shortened from 112 to 110 characters"
+  },
+  {
+   "bead": "N14a-17",
+   "what": "title shortened from 112 to 107 characters"
+  },
+  {
+   "bead": "N14a-18",
+   "what": "title shortened from 112 to 106 characters"
+  },
+  {
+   "bead": "N14a-21",
+   "what": "title shortened from 115 to 108 characters"
+  },
+  {
+   "bead": "N14a-29",
+   "what": "title shortened from 115 to 106 characters"
+  },
+  {
+   "bead": "N14a-30",
+   "what": "title shortened from 118 to 107 characters"
+  },
+  {
+   "bead": "N14a-31",
+   "what": "title shortened from 116 to 110 characters"
+  },
+  {
+   "bead": "N14a-33",
+   "what": "title shortened from 115 to 106 characters"
+  },
+  {
+   "bead": "N14b-01",
+   "what": "title shortened from 113 to 108 characters"
+  },
+  {
+   "bead": "N14b-12",
+   "what": "title shortened from 111 to 107 characters"
+  },
+  {
+   "bead": "N14b-34",
+   "what": "title shortened from 112 to 108 characters"
+  },
+  {
+   "bead": "BD-063",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_incremental_compile.sh, which sources the shared helper"
+  },
+  {
+   "bead": "BD-117",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/reflex_wheeled_baseline.sh, which sources the shared helper"
+  },
+  {
+   "bead": "BD-144",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/phylum_pilot_m1.sh, which sources the shared helper"
+  },
+  {
+   "bead": "BD-185",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/phylum_template_arm.sh, which sources the shared helper"
+  },
+  {
+   "bead": "BD-225",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/hab_interior_grammar.sh, which sources the shared helper"
+  },
+  {
+   "bead": "BD-226",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/hab_interior_five.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14-CX",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_controls.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14a-15",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/pilot_skel_substitution.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14a-16",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/decide_kill_skel_subst.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14a-23",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/pilot_skel_limb_port.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14a-24",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/decide_kill_skel_port.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-01",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_generator.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-05",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_variants.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-07",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/reflex_wheeled_evidence.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-08",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/reflex_multileg_evidence.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-09",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/reflex_frontier_evidence.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-16",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_kill_alias_decision.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-17",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_stage8_family.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-21",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_export_glb.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-22",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_import_sdf.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-25",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_invariants.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-26",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_registry_preregistration.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-31",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_kill_cell_decision.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14b-33",
+   "what": "dependency STD-E2E added: the bead owns scripts/e2e/skel_fold.sh, which sources the shared helper"
+  },
+  {
+   "bead": "N14-REF",
+   "what": "BD-058 moved from deps to related: a registry bead does not depend on a mechanism (the edit engine)"
+  },
+  {
+   "bead": "BD-059",
+   "what": "BD-063 moved from deps to related: a seed does not depend on a higher-numbered seed; BD-063 fills the invalidation set of a patch result when it lands, as it does for design.edit"
+  },
+  {
+   "bead": "BD-065",
+   "what": "BD-074 moved from deps to related: a seed does not depend on a higher-numbered seed; the transmission block the importer writes is the schema of N14a-04, reached through BD-061"
+  },
+  {
+   "bead": "N14-REF",
+   "what": "row FROB-REF-107 now states both stages (stage 1 for a missing `limits` member, stage 3 for an empty range), agreeing with N14a-04 (coverage (e) 6 of U14a)"
+  },
+  {
+   "bead": "N14b-10",
+   "what": "stage 1 row of the stage table lists the missing-`limits` case of FROB-REF-107, agreeing with N14a-04 and N14-REF"
+  },
+  {
+   "bead": "N14a-25",
+   "what": "overlap with N14b-21 re-scoped: this bead keeps the URDF and MJCF writers, the reverse loss report and the verb; the GLB writer, `--format glb` and the `--visuals glb` path are N14b-21's; title changed to match (was \"frob-io: URDF and MJCF export with the reverse loss report, and GLB export of visuals (verb design.export)\")"
+  },
+  {
+   "bead": "N14b-21",
+   "what": "overlap with N14a-25 re-scoped: this bead owns the GLB writer, `--format glb` and the `--visuals glb` path; the verb and the text writers are N14a-25's, added as a dependency (the Scope had named BD-066)"
+  },
+  {
+   "bead": "N14a-31",
+   "what": "overlap with N14b-24 re-scoped: this script owns the MJCF rows of GATE-SKEL-01, the MJCF convention files and the export round trips; the URDF rows, special fixtures and the combined record are N14b-24's"
+  },
+  {
+   "bead": "N14b-24",
+   "what": "overlap with N14a-31 re-scoped: this script owns the URDF rows, the special fixtures, GATE-SKEL-11's outside rows and the combined GATE-SKEL-01 record; it reads N14a-31's MJCF rows (dependency added) instead of re-measuring them"
+  },
+  {
+   "bead": "BD-065",
+   "what": "end-to-end section now names N14b-24's script `skel_import_export.sh` (it named a second script, `skel_import_urdf.sh`, that no bead owned)"
+  },
+  {
+   "bead": "N14a-08",
+   "what": "overlap with N14b-18 re-scoped: this bead keeps the crate-level stage-1 defect fixtures and the three stage-1 first rejection fixtures; the 100-defect gate corpus, labels and registration are N14b-18's, which takes these files as its stage-1 rows"
+  },
+  {
+   "bead": "N14b-18",
+   "what": "overlap with N14a-08 re-scoped: the corpus takes N14a-08's stage-1 fixtures (and its three first rejection fixtures) as its stage-1 rows; dependency N14a-08 added"
+  },
+  {
+   "bead": "N14a-27",
+   "what": "Scope states that the stages 1 to 6 row of GATE-SKEL-04 is recorded by N14b-19's script; this script only logs stage 1's counts on N14a-08's fixtures (related N14b-19 added)"
+  },
+  {
+   "bead": "N14b-19",
+   "what": "Scope states that this script alone records the stages 1 to 6 row of GATE-SKEL-04; N14a-27's stage-1 step records none (related N14a-27 added)"
+  },
+  {
+   "bead": "N14a-07",
+   "what": "overlap with BD-063 re-scoped: the `Tracked` term view and per-stage `ReadSet` are introduced here, because BD-063 depends on the functors that read through them; Scope, step 1, one acceptance line and one test added"
+  },
+  {
+   "bead": "BD-063",
+   "what": "overlap with N14a-07 re-scoped: the tracked view type is N14a-07's; this bead keeps influence records, write sets, the memo graph, the invalidation set and PO-SKEL-03; the three functor beads are named in its Scope"
+  },
+  {
+   "bead": "BD-109",
+   "what": "overlap with N14a-21 re-scoped: the verb design.new is N14a-21's; this bead supplies the catalog and the instantiation function it calls"
+  },
+  {
+   "bead": "N14a-21",
+   "what": "Scope states the split with BD-109: this bead owns the verb design.new and is tested with a synthetic template; BD-109 supplies the catalog"
+  },
+  {
+   "bead": "N14-KA",
+   "what": "five late known answers of §14.16 and §14.17 (two stance cases, the trot case, the fold hand case, the 320 N reduced-model case) added as unnumbered rows with their owners, as coverage (e) 14 of U14b asks"
+  },
+  {
+   "bead": "BD-059",
+   "what": "acceptance states how the `require` row and the invalidation set are met before the later seeds BD-103 and BD-063 land (synthetic analysis under the analysis contract N28a-04; conservative `invalidation: \"all\"`)"
+  },
+  {
+   "bead": "N14b-04",
+   "what": "Scope states the order with BD-243 (the drafted cycle BD-243 → BD-246 → N14b-04 → BD-243): the snake-crawler term is committed first as BD-243's fixture; this bead keeps its dependency on BD-243"
+  },
+  {
+   "bead": "N14b-18",
+   "what": "defect row 118: the `roller angle zero` defect replaced by four parallel omni wheels, because N14a-05 refuses a zero roller angle at stage 1 with FROB-REF-121 and the defect would not be owned by stage 4"
+  },
+  {
+   "bead": "N14a-01",
+   "what": "the exact rational type is `frob_lie::exact::Rational` of N13-10 (dependency through need 1) instead of a private `frob_design::exact::Ratio`: one rational type across layers 1 and 2"
+  }
+ ]
 }

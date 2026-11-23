@@ -8,7 +8,7 @@ labels: ["m0", "delivery", "safety", "arena", "lemma", "registry", "solid"]
 parent: "EPIC-M0"
 deps: ["N41-01"]
 needs: ["§24 to §29, §37: the keys named in the Beads column are owned by the chapter units; they are named for traceability, not as blocking dependencies"]
-related: ["N41-RISK1", "N41-RISK2", "N41-RISK3", "N41-PM", "BD-260", "BD-261", "BD-132", "BD-345", "BD-292", "N34-25"]
+related: ["N41-RISK1", "N41-RISK2", "N41-RISK3", "N41-PM", "N41-32", "BD-260", "BD-261", "BD-132", "BD-345", "BD-292", "N34-25"]
 gates: []
 plan_refs: ["§41.3", "§41.4", "§12", "§24", "§28", "§29", "§37"]
 ---

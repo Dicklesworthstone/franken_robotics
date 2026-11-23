@@ -8,7 +8,7 @@ labels: ["m1", "sinew", "frob-actuate", "frob-conformance", "solid", "registry",
 parent: "WP-09"
 deps: ["STD-TEST"]
 needs: ["§15.10: the bead that implements the bus and battery (rows KA-324 to KA-328) and its gate GATE-SINEW-07", "§15.15: the coupled-transmission known answer and GATE-SINEW-10, whose rows are indexed with the late subsections and not in this block"]
-related: ["BD-025", "BD-146", "BD-069", "BD-072", "BD-073", "BD-076", "BD-070", "BD-071", "BD-074", "BD-075", "BD-084", "BD-419", "N15a-12", "N15a-14", "N15a-16", "N15a-18", "N15a-23", "N15a-24"]
+related: ["BD-025", "BD-146", "BD-069", "BD-072", "BD-073", "BD-076", "BD-070", "BD-071", "BD-074", "BD-075", "BD-084", "BD-419", "N15a-12", "N15a-14", "N15a-16", "N15a-18", "N15a-23", "N15a-24", "N15b-03", "N15b-30", "N15b-10", "N15b-11", "N15b-12", "N15b-13", "N15-CX", "N15b-08", "N15b-15", "N15b-21", "N15b-22", "N15b-36", "N15b-32", "N15b-35", "N15b-37"]
 gates: ["GATE-SINEW-01", "GATE-SINEW-02", "GATE-SINEW-03", "GATE-SINEW-04", "GATE-SINEW-05", "GATE-SINEW-06", "GATE-SINEW-07", "GATE-SINEW-08", "GATE-SINEW-09"]
 plan_refs: ["Appendix M M.14", "§15.5", "§15.6", "§15.7", "§15.8", "§15.9", "§15.10", "§15.13", "§15.14", "§38.6"]
 ---
@@ -52,16 +52,16 @@ fixtures), which are cited by Sinew beads and registered by their own chapters.
 | KA | Case | Truth | Tolerance | Tier · site | Negative control | Owner |
 |---|---|---|---|---|---|---|
 | 293 | Brushed or q-axis motor in port-Hamiltonian form: x = (φ, p), H = φ²/(2L) + p²/(2J_r), J = [[0, −k], [k, 0]], R = diag(R_w, b), u = (v, −τ_load) | L·di/dt = v − R_w·i − k·ω; J_r·dω/dt = k·i − b·ω − τ_load; Ḣ = v·i − τ_load·ω − R_w·i² − b·ω² | exact (polynomial identity) | G0 · host | none stated | N15a-05 |
-| 294 | Passivity and second law over 10⁶ random operating points in all four quadrants (INV-SINEW-01, -03) | Every loss nonnegative; entropy production P_loss/T_w + G·(T_w − T_amb)²/(T_w·T_amb) nonnegative each step; every catalog card passes `actuator.check` | exact (sign); GATE-SINEW-08 | G0 · all tiers | The single-multiplier gear fixture, which must refuse | N15a-23, BD-069 |
+| 294 | Passivity and second law over 10⁶ random operating points in all four quadrants (INV-SINEW-01, -03) | Every loss nonnegative; entropy production P_loss/T_w + G·(T_w − T_amb)²/(T_w·T_amb) nonnegative each step; every catalog card passes `actuator.check` | exact (sign); GATE-SINEW-08 | G0 · all tiers | The single-multiplier gear fixture, which must refuse | N15a-23, N15b-32, BD-069 |
 | 295 | Port energy balance of an actuator: electrical energy in against mechanical work out, copper, friction and gear loss and the change in stored magnetic and thermal energy | The balance closes each step to a recorded residual | 10⁻⁹ relative on the referee; 10⁻⁴ relative per episode on single-precision tiers (GATE-SINEW-02) | G1 · all tiers | Stored heat also counted as a loss, which produces a false defect | BD-076, N15a-07 |
-| 296 | Batched L1 and L2 kernels against the referee components on a 10⁴-case battery | Agreement | 10⁻⁴ relative (GATE-SINEW-03) | G2 · lockstep | none stated | N15a-07, BD-151 |
+| 296 | Batched L1 and L2 kernels against the referee components on a 10⁴-case battery | Agreement | 10⁻⁴ relative (GATE-SINEW-03) | G2 · lockstep | none stated | N15a-07, BD-151, N15b-35 |
 | 297 | A torque ramp r·t on a joint at rest with breakaway τ_s | Motion begins at t = τ_s/r | within one step (GATE-SINEW-04) | G1 · all tiers (referee exact) | none stated | N15a-12 |
 | 298 | A mass on a spring of stiffness k with Coulomb friction τ_c, released from rest | Amplitude falls by 4·τ_c/k per cycle; motion ends inside the band of half-width τ_s/k | loss per cycle within 2% (GATE-SINEW-04) | G1 · all tiers (referee exact) | none stated | N15a-12 |
 | 299 | A held load τ below the stiction bound on a convex tier | Creep at ε·τ/τ_b; drift at most ε·t over a time t | bound (GATE-SINEW-04) | G1 · lockstep | none stated | N15a-08, N15a-12 |
 | 300 | A motor reversal smaller than the backlash gap | Zero output motion | exact on the referee; batched tiers within their stated regularization (GATE-SINEW-04) | G1 · all tiers (referee exact) | Backlash modelled as a dead zone on the torque command | N15a-09, N15a-12 |
 | 301 | A slow sinusoid through a gap β | An input–output loop of width β | within 1% (GATE-SINEW-04) | G1 · all tiers (referee exact) | Backlash modelled as a dead zone on the torque command | N15a-12 |
 | 302 | A rotor of reflected inertia J₁ = N²·J_r closing the gap at relative speed Δω onto a link of inertia J₂ at rest, no restitution | Common speed J₁·Δω/(J₁ + J₂); energy lost ½·J₁·J₂/(J₁ + J₂)·Δω². With N = 9, J_r = 10⁻⁴ kg·m², J₂ = 0.02 kg·m², Δω = 2 rad/s (illustrative): 0.577 rad/s and 0.0115 J | within 1% (GATE-SINEW-04) | G1 · all tiers (referee exact) | Backlash as a dead zone, which produces no impact | N15a-09, N15a-12 |
-| 303 | Rotor elimination with twelve backlash joints on a quadruped (PO-SINEW-02) | The eliminated solve equals the full solve; the dense factorization has the size it has with none (18 velocities, not 30) | exact rational on small cases; round-off on 10⁴ random cases, to set (GATE-SINEW-09) | G1 · host | none stated | N15b-08 |
+| 303 | Rotor elimination with twelve backlash joints on a quadruped (PO-SINEW-02) | The eliminated solve equals the full solve; the dense factorization has the size it has with none (18 velocities, not 30) | exact rational on small cases; round-off on 10⁴ random cases, to set (GATE-SINEW-09) | G1 · host | none stated | N15b-08, N15b-37 |
 | 304 | Winding with one thermal node at constant current, s = I²·R₀·α below G | Stable equilibrium T = T_amb + P_amb/(G − s), time constant C/(G − s); both exceed the constant-resistance values P_amb/G and C/G by 1/(1 − s/G) | within 0.5% (GATE-SINEW-05) | G1 · all tiers | The constant-resistance model | N15a-14, BD-072 |
 | 305 | Worked card (R₀ = 0.20 Ω at 25 °C, α = 0.00393 K⁻¹, G = 0.80 W/K, C = 120 J/K, ambient 25 °C, limit 155 °C) at a constant 20 A | 80 W when cold; s = 0.314 W/K; rise 80/(0.80 − 0.314) = 164.7 K, so 190 °C, outside the limit; loss at equilibrium 132 W; time constant 247 s. Constant resistance: 100 K, 125 °C, 150 s | within 0.5% (GATE-SINEW-05) | G1 · all tiers | The constant-resistance model, which puts the point inside the limit | N15a-14, BD-072 |
 | 306 | Same card: time from cold to the 155 °C limit at 20 A | 385 s (constant resistance: never) | within 0.5% (GATE-SINEW-05) | G1 · all tiers | The constant-resistance model | N15a-14, BD-072 |
@@ -70,7 +70,7 @@ fixtures), which are cited by Sinew beads and registered by their own chapters.
 | 309 | Same card at 35 A | No equilibrium; growth rate (s − G)/C = 0.00136 s⁻¹; limit reached at 61 s. Constant resistance: equilibrium 306 K above ambient, limit at 83 s | within 0.5% (GATE-SINEW-05) | G1 · all tiers | The constant-resistance model | N15a-14, BD-072 |
 | 310 | Holding torque with flux coefficient α_B = −0.0011 K⁻¹: P(T) = I₀²·R₀·[1 + α·(T − T₀)]/[1 + α_B·(T − T₀)]² | Limit reached at 15.9 A cold-equivalent, 30% below 22.8 A; no equilibrium above 16.5 A (the tangency), where the slope estimate √(G/(R₀·(α − 2·α_B))) says 25.5 A | tangency within 1% (GATE-SINEW-05) | G1 · host | The slope estimate at T₀ used in place of the tangency | N15a-14 |
 | 311 | Winding and housing in series (two-node network) | A stable equilibrium exists iff s < G_wh·G_ha/(G_wh + G_ha): the conductance matrix with s subtracted from the winding's diagonal entry stays positive definite | exact (condition; GATE-SINEW-05) | G1 · host | none stated | N15a-14 |
-| 312 | Same card: 20 s from cold at 20 A | Rise 164.7·(1 − e^(−20/247)) = 12.8 K | to set | G1 · all tiers | An evaluation that starts every episode at ambient and so never meets derating | N15a-15 |
+| 312 | Same card: 20 s from cold at 20 A | Rise 164.7·(1 − e^(−20/247)) = 12.8 K | to set | G1 · all tiers | An evaluation that starts every episode at ambient and so never meets derating | N15a-15, BD-072 |
 | 313 | Static check of a design sized to hold 20 A on the card | Admitted by the constant-resistance check; refused by the corrected one (FROB-REF-132) | exact (verdict) | G1 · host | The constant-resistance check | BD-072, N15a-26 |
 | 314 | Voltage limit of a three-phase bridge in power-invariant dq coordinates | V_lim = V_bus/√2: 33.9 V at V_bus = 48 V | within 0.5% (GATE-SINEW-06) | G1 · host | none stated | N15a-02, N15a-16 |
 | 315 | Base speed, non-salient lossless case (card: λ = 0.010 V·s, L = 100 µH, I_max = 40 A, V_bus = 48 V) | V_lim/√(λ² + (L·I_max)²) = 3,151 rad/s electrical | within 0.5% (GATE-SINEW-06) | G1 · host | none stated | N15a-16, BD-073 |
@@ -82,20 +82,20 @@ fixtures), which are cited by Sinew beads and registered by their own chapters.
 | 321 | Screw with lead angle a and friction angle φ | η_f = tan a/tan(a + φ); η_b = tan(a − φ)/tan a; locks exactly when φ ≥ a | to set | G1 · host | none stated | N15a-17, N15a-18 |
 | 322 | Symmetric differential, q₁ = (θ₁ + θ₂)/2, q₂ = (θ₁ − θ₂)/2, rotor inertias J₁ and J₂ | Reflected inertia T⁻ᵀ·diag(J_r)·T⁻¹ = [[J₁ + J₂, J₁ − J₂], [J₁ − J₂, J₁ + J₂]]: equal rotors decouple, unequal ones do not; q̇ = T·θ̇ with τ_actuator = Tᵀ·τ_joint conserves power | exact | G1 · host | Reflected rotor inertia taken as diagonal in joint space | N15a-18, BD-074 |
 | 323 | Ideal gear law (PO-SINEW-03) | f₂ = r·f₁ and e₁ = −r·e₂ imply e₁·f₁ + e₂·f₂ = 0 | exact (polynomial identity) | G0 · host | none stated | N15a-18 |
-| 324 | Bus with source voltage E and series resistance R under a power demand P | Deliverable only if P ≤ E²/(4·R); then V = [E + √(E² − 4·R·P)]/2. With E = 48 V and R = 0.08 Ω: ceiling 7,200 W; at 1,800 W the bus sits at 44.8 V and carries 40.2 A | within 0.1% (GATE-SINEW-07) | G1 · all tiers | A step that completes at the requested power above the ceiling | BD-075 |
-| 325 | A demand above the bus ceiling | A brownout event in 100 of 100 trials and never a completed step; stage 6 refuses the design with FROB-REF-133 | exact (counts, verdict; GATE-SINEW-07) | G4 · all tiers | A kernel that clips the demand | BD-075 |
-| 326 | Power requested from an exhausted battery (INV-SINEW-04) | Exhaustion is an event; the request refuses (FROB-REF-135); state of charge is never clipped | exact (verdict; GATE-SINEW-07) | G4 · all tiers | An empty battery that keeps supplying commanded power | BD-075 |
-| 327 | Current step on the two-RC battery, V = OCV(z) − R₀·I − V₁ − V₂ | An immediate drop I·R₀ followed by two exponentials with time constants R₁·C₁ and R₂·C₂ | drop and both time constants within 1% (GATE-SINEW-07) | G1 · all tiers | none stated | BD-075, BD-071 |
-| 328 | Constant-current discharge of capacity Q at current I | Discharge time Q/I | to set | G1 · all tiers | none stated | BD-075 |
+| 324 | Bus with source voltage E and series resistance R under a power demand P | Deliverable only if P ≤ E²/(4·R); then V = [E + √(E² − 4·R·P)]/2. With E = 48 V and R = 0.08 Ω: ceiling 7,200 W; at 1,800 W the bus sits at 44.8 V and carries 40.2 A | within 0.1% (GATE-SINEW-07) | G1 · all tiers | A step that completes at the requested power above the ceiling | BD-075, N15b-30 |
+| 325 | A demand above the bus ceiling | A brownout event in 100 of 100 trials and never a completed step; stage 6 refuses the design with FROB-REF-133 | exact (counts, verdict; GATE-SINEW-07) | G4 · all tiers | A kernel that clips the demand | BD-075, N15b-30 |
+| 326 | Power requested from an exhausted battery (INV-SINEW-04) | Exhaustion is an event; the request refuses (FROB-REF-135); state of charge is never clipped | exact (verdict; GATE-SINEW-07) | G4 · all tiers | An empty battery that keeps supplying commanded power | N15b-03, BD-075, N15b-30 |
+| 327 | Current step on the two-RC battery, V = OCV(z) − R₀·I − V₁ − V₂ | An immediate drop I·R₀ followed by two exponentials with time constants R₁·C₁ and R₂·C₂ | drop and both time constants within 1% (GATE-SINEW-07) | G1 · all tiers | none stated | N15b-03, N15b-30 |
+| 328 | Constant-current discharge of capacity Q at current I | Discharge time Q/I | to set | G1 · all tiers | none stated | N15b-03, N15b-30 |
 | 329 | DC motor stall torque | η·N·k_t·min(I_max, V_lim/R) | within 1% (GATE-SINEW-01) | G1 · all tiers | none stated | BD-070, N15a-24 |
 | 330 | DC motor no-load speed | V_lim/(k_e·N) | within 1% (GATE-SINEW-01) | G1 · all tiers | none stated | BD-070, N15a-24 |
 | 331 | Electrical time constant of a DC motor step | L/R | within 1% (GATE-SINEW-01) | G1 · all tiers | none stated | BD-071, N15a-24 |
 | 332 | Mechanical time constant of a DC motor step | J·R/(k_t·k_e) | within 1% (GATE-SINEW-01) | G1 · all tiers | none stated | BD-070, N15a-24 |
 | 333 | Constant-resistance thermal steady state | Rise P/G (ΔT = P·R_th) | within 1% (GATE-SINEW-01) | G1 · all tiers | none stated | BD-071, N15a-06, N15a-24 |
-| 334 | Hover of the rotor port (Moonshot) | Thrust equals weight; ideal induced power T^(3/2)/√(2·ρ·A); the energy ledger closes for the hovering body | to set (KILL-SINEW-ROTOR fires if the answer or the port balance fails) | G1 · referee | none stated | BD-419 |
+| 334 | Hover of the rotor port (Moonshot) | Thrust equals weight; ideal induced power T^(3/2)/√(2·ρ·A); the energy ledger closes for the hovering body | to set (KILL-SINEW-ROTOR fires if the answer or the port balance fails) | G1 · referee | none stated | N15b-22, N15b-36 |
 | 335 | Two-mass resonance of a series-elastic drive (Frontier) | Frequency √(k·(J₁ + J₂)/(J₁·J₂)) | within 1% at the referee step (pilot falsifier) | G1 · referee | none stated | N15b-19, N15b-18 |
-| 336 | A single hydraulic cylinder through an orifice (Moonshot) | Steady speed equals its closed form (not written in the chapter; the pilot's derivation file records v = (C_d·A_o/A_p)·√(2·(p_s − F/A_p)/ρ)); the port balance closes | to set (set by the pilot) | G1 · referee | none stated | N15b-21, N15b-20 |
-| 337 | Battery ageing law (Frontier) against one published capacity-fade curve, from that publication's own coefficients | The curve is reproduced | error at most 10% of the fade (pilot falsifier) | G2 · host | none stated | the ageing pilot of the other Sinew unit |
+| 336 | A single hydraulic cylinder through an orifice (Moonshot) | Steady speed equals its closed form (not written in the chapter; the pilot's derivation file records v = (C_d·A_o/A_p)·√(2·(p_s − F/A_p)/ρ)); the port balance closes | to set (set by the pilot) | G1 · referee | none stated | N15b-21 |
+| 337 | Battery ageing law (Frontier) against one published capacity-fade curve, from that publication's own coefficients | The curve is reproduced | error at most 10% of the fade (pilot falsifier) | G2 · host | none stated | N15b-15 |
 
 3. **Controls for rows that state none.** For each `none stated` row the owning bead's test plan names a mutant
    (for example: KA-297, a breakaway level equal to the Coulomb level; KA-315 to KA-318, the circumscribed circle
@@ -149,10 +149,11 @@ entered as 100 K, the constant-resistance value): `ka_rows_recompute` must rejec
 
 - Tolerances marked `to set` (rows 303 in part, 312, 321, 328, 334, 336) are an open item of the verification
   program; the owning bead proposes the value at first measurement and it is recorded with the gate.
-- Rows 324 to 328 and 337 belong to subsections drafted by the other Sinew unit; they are registered here because
-  the chapter's registry is one bead, and their owner column points at that unit's beads.
+- Rows 324 to 328 and 337 are registered here because the chapter's registry is one bead; their owners are the
+  bus (BD-075), the battery element (N15b-03), the power-path script (N15b-30) and the ageing pilot (N15b-15).
 - The coupled-transmission known answer of the late subsection (the one-rotor table of GATE-SINEW-10) is not in
-  this numbered block; it is indexed with the late subsections and carried by the other unit.
+  this numbered block; it has no KA number yet and is carried, with its values, by N15b-10, N15b-11 and
+  N15b-12 and measured by N15b-13. When the catalogue owner assigns numbers, the rows are added here.
 
 ## References
 

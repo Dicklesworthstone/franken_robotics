@@ -8,7 +8,7 @@ labels: ["m3", "nemesis", "frob-nemesis", "frob-conformance", "solid", "registry
 parent: "WP-55"
 deps: ["STD-TEST"]
 needs: ["§26.10: the bead that implements the screening audit and carries KA-668 (seed bead BD-345 at M4)", "§26.11: the tests of coverage selection that carry KA-669 (seed bead BD-278)", "§26.5, §26.7: the tests of the oracle and the shrinker in their seed beads (BD-271, BD-274) that carry KA-660, KA-661 and KA-663 beside the component beads named below"]
-related: ["BD-270", "BD-271", "BD-272", "BD-273", "BD-274", "BD-275", "BD-276", "BD-277", "BD-278", "BD-345", "BD-318", "N26a-04", "N26a-13", "N26a-14", "N26a-15", "N26a-18", "N26a-21", "N26a-24", "N26a-27", "N26-CX", "N26-REF"]
+related: ["BD-270", "BD-271", "BD-272", "BD-273", "BD-274", "BD-275", "BD-276", "BD-277", "BD-278", "BD-345", "BD-318", "N26a-04", "N26a-13", "N26a-14", "N26a-15", "N26a-18", "N26a-21", "N26a-24", "N26a-27", "N26-CX", "N26-REF", "N26b-02", "N26b-06", "N26b-07", "N26b-10", "N26b-12", "N26b-16", "N26b-17"]
 gates: []
 plan_refs: ["Appendix M M.25", "§26.14", "§26.3", "§26.5", "§26.6", "§26.7", "§26.9", "§26.10", "§26.11", "§38.6", "§10 C-27", "§10 C-28"]
 ---
@@ -36,10 +36,16 @@ measurement: no row has been run on FrankenRobotics code.
 
 ## Scope
 
-In: the eleven registry records; one derivation file per derived truth; the map from row to owning bead; seeding
-each stated negative control into the negative-control registry.
-Out: the tests themselves (owned by the beads in the last column); the chapter's counterexample catalogue and
-refusal registry (`N26-CX`, `N26-REF`, written by the other half of the chapter).
+In: the eleven registry records; a derivation path per derived truth; the derivation files that no proof
+obligation covers (the gambler's-ruin formula, the Good–Turing expectations, the delta-debugging reference
+traces, the box-cone and penetration-pump arithmetic); the map from row to owning bead; seeding each stated
+negative control into the negative-control registry.
+Out: the tests themselves (owned by the beads in the last column); the derivation files of the four proof
+obligations, which three rows point at and do not restate (N26b-16: 1-minimality and the 78-test bound for
+KA-663, the zero-failure count for KA-664, the weight bound for KA-665, the coverage certificate for KA-669);
+the runner that executes the eleven rows with their controls (N26b-17), whose registry view names tests and
+controls by row number and reads truth, tolerance, tier, site and derivation path from the records here; the
+chapter's counterexample catalogue and refusal registry (`N26-CX`, `N26-REF`).
 
 ## Technical approach
 
@@ -57,8 +63,8 @@ fields of the table, the derivation path and the owning test's path.
 | KA-665 | Rare failures | Gaussian tail by defensive mixture q = ε·p + (1 − ε)·p_shifted, shift 4, ε = 0.1; w = 1/(ε + (1 − ε)·exp(4z − 8)) | P(z > 4) = 3.167 × 10⁻⁵ recovered inside the confidence sequence; every weight at most 1/ε = 10 (9.970 at z = 0; 1 at z = 2; 3.727 × 10⁻⁴ at z = 4) | inside the confidence sequence | G0 · host | A mixture without its nominal share on a mis-centred proposal (failure when \|z\| > 4, truth 6.334 × 10⁻⁵, proposal shifted to +4 only) | BD-276, N26a-24, N26a-25, N26a-30 |
 | KA-666 | Rare failures | Splitting on a biased random walk: up-probability 0.4, start at level 1; P(reach b before 0 from a) = (1 − 1.5ᵃ)/(1 − 1.5ᵇ) | Probability of reaching level 20 before level 0 is 0.5/(1.5²⁰ − 1) = 1.504 × 10⁻⁴ (level-to-level factors for levels 2, 4, 8, 16, 20: 0.4, 0.3077, 0.1649, 0.03755, 0.1973) | inside the estimator's interval | G0 · host | A walk with no noise after the fork returns identical children and is refused | BD-277, N26a-28, N26a-29, N26a-31 |
 | KA-667 | Rare failures | Good–Turing monitor on a synthetic catalogue with known mode probabilities (1/2, 1/4, 1/8, 1/16, 1/32, 1/32) | Unseen mass inside its interval; exact expectations at N = 20: E[N₁/N] = Σ pᵢ(1 − pᵢ)¹⁹ = 0.0635, realized unseen mass Σ pᵢ(1 − pᵢ)²⁰ = 0.0598 | inside the interval | G0 · host | A monitor that counts distinct modes instead of modes seen once (0.230 at N = 20) | N26a-27 |
-| KA-668 | Screening audit | A deliberately biased screen with a planted winner; exact bound 1 − δ^(1/m) | The planted winner's removal is reported; no top-k design among 30 audited discards bounds the false-discard rate at 9.5% with 95% confidence, and 59 bound it at 5.0% (the approximation ln(1/δ)/m gives 10.0% at m = 30 and is not used) | exact (verdict); printed digits for the bounds | G0 · host | A screen with no bias passes | Expected from the screening-audit bead (BD-345) |
-| KA-669 | Coverage selection | Worked instance: 40 modes of total weight 100; greedy gains 31, 22, 14, 9, 6, 4; the six largest remaining gains sum to 12 | 86 covered; OPT₆ ≤ 86 + 12 = 98; the selection is within 86/98 = 88% of the best six-scene battery, against a worst-case guarantee of 1 − 1/e = 63% | exact | G1 · host | A selection that double-counts a mode | Expected from the coverage bead (BD-278) |
+| KA-668 | Screening audit | A deliberately biased screen with a planted winner; exact bound 1 − δ^(1/m) | The planted winner's removal is reported; no top-k design among 30 audited discards bounds the false-discard rate at 9.5% with 95% confidence, and 59 bound it at 5.0% (the approximation ln(1/δ)/m gives 10.0% at m = 30 and is not used) | exact (verdict); printed digits for the bounds | G0 · host | A screen with no bias passes | N26b-02 (bound), N26b-06 (planted screens), N26b-07 (script); applied to the cascade by BD-345 |
+| KA-669 | Coverage selection | Worked instance: 40 modes of total weight 100; greedy gains 31, 22, 14, 9, 6, 4; the six largest remaining gains sum to 12 | 86 covered; OPT₆ ≤ 86 + 12 = 98; the selection is within 86/98 = 88% of the best six-scene battery, against a worst-case guarantee of 1 − 1/e = 63% | exact | G1 · host | A selection that double-counts a mode | N26b-10 (certificate and worked instance), BD-278, N26b-12 (script) |
 
 **Known answers of the two constructions, cited by the chapter's beads** (registered with the constructions'
 specification beads; listed here so a reader of one chapter finds them):
@@ -73,10 +79,13 @@ specification beads; listed here so a reader of one chapter finds them):
 | KA-143 | Impossible-world control: a doorway narrower than the body | Rejected as a counterexample for lack of a solvability witness | N26a-13 |
 | KA-144 | Replay control of a stored counterexample file | The stored world reproduces its state hash | N26a-19 |
 
-**Derivations on file** (`docs/derivations/nemesis/`): the zero-failure count and its two approximations; the
-weight bound and unbiasedness of the defensive mixture; the gambler's-ruin formula for the walk; the Good–Turing
-expectations; the delta-debugging reference traces (generated by a 60-line reference script kept with the
-derivation, independent of the product code); the box-cone and penetration-pump arithmetic.
+**Derivations on file** (`docs/derivations/nemesis/`). Written by this bead: the gambler's-ruin formula for the
+walk; the Good–Turing expectations; the delta-debugging reference traces (generated by a 60-line reference script
+kept with the derivation, independent of the product code); the box-cone and penetration-pump arithmetic.
+Written by the derivations bead N26b-16 and referenced from the records here by path: the zero-failure count and
+its two approximations (`po-nemesis-04-zero-failure.md`); the weight bound and unbiasedness of the defensive
+mixture (`po-nemesis-02-weight-bound.md`); 1-minimality and the pair-check count
+(`po-nemesis-01-one-minimal.md`); the coverage certificate (`po-nemesis-03-coverage-certificate.md`).
 
 **Negative-control seeding.** Each row's control is entered in the negative-control registry with the test that
 must fail under it, so the program-wide check "every gate has a registered negative control that it catches"
@@ -92,8 +101,9 @@ finds one for every Nemesis gate.
       delta-debugging test counts.
 - [ ] Each of the eleven negative controls is registered and its owning test fails under it (demonstrated once
       per control and recorded).
-- [ ] The two rows owned outside this unit (KA-668, KA-669) have an owning test path filled in by their beads
-      before the M3 and M4 exits; until then the registry marks them `pending owner`.
+- [ ] The two rows whose tests are in the second half of the chapter have their owning test path filled in by
+      their beads (KA-669 by N26b-10 before the M3 exit; KA-668 by N26b-02 and N26b-07 before the M4 exit); until
+      then the registry marks them `pending owner`.
 - [ ] The reference script for the delta-debugging traces is independent of `frob-nemesis` and its output is
       pinned.
 

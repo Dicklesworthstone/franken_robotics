@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "frob-core", "frob-cert", "solid", "registry"]
 parent: "WP-36"
 deps: ["BD-005", "BD-022"]
 needs: ["§34: the refusal type and registry loader in frob-core, where an unknown code is a load-time error (BD-005)", "§11.5: the mass plausibility bounds per part class that trigger FROB-REF-168 (BD-055, BD-062)", "§10 C-16: the grazing and degeneracy tests that trigger FROB-REF-263 (BD-082, BD-334)"]
-related: ["N12-KA", "N12-CX", "N12-02", "N12-03", "N12-05", "N12-08"]
+related: ["N12-KA", "N12-CX", "N12-02", "N12-03", "N12-05", "N12-08", "N13-03", "N13-04", "N13-REF"]
 gates: []
 plan_refs: ["§12.7", "Appendix O", "§11.5", "§10 C-16", "§32.4 (exit codes)", "§9 D-11"]
 ---
@@ -42,7 +42,7 @@ with a true flag).
 
 | Code | Meaning | Trigger (who raises it) | Pointer | Ranked repairs | Retry | Exit |
 |---|---|---|---|---|---|---|
-| FROB-REF-168 | A solid body exceeds the mass plausibility bound of its part class and no fill is declared | Model compilation: a body without a declared wall thickness is solid; when its mass exceeds the plausibility bound of its part class and the design does not declare the fill as intended, the compiler refuses. Reason: a solid default for an enclosure is wrong by an order of magnitude (an aluminium box of 0.4 × 0.3 × 0.2 m at 2,700 kg/m³ is 64.8 kg solid and 3.45 kg with a 2.5 mm wall, a ratio of 18.8) | The body and its `fill` field | 1. Declare a wall thickness (the body becomes a shell, computed as the difference of the outer solid and its inward offset). 2. Declare the solid fill as intended. 3. Change the material or the part class | after-change | 3 |
+| FROB-REF-168 | A solid body exceeds the mass plausibility bound of its part class and no fill is declared | Model compilation, at design-check stage 2 and in importers that synthesize a fill, under the rule that decision bead N13-03 settles and N13-04 raises. In force until that decision is recorded (its option B, the fail-closed default): the design language has no default fill (an absent fill is its own refusal, FROB-REF-105), so the conventions sentence "a body without a wall thickness is solid" is read as "a body whose written fill is `solid` has no wall"; a written `solid` with no statement of intent is refused when its solid mass exceeds the bound; the bound is one quarter of the design's `mass_max` for every body until a part-class table is approved; a design without `mass_max` is not evaluated and gets the advisory text only. Reason: a solid enclosure is wrong by an order of magnitude (an aluminium box of 0.4 × 0.3 × 0.2 m at 2,700 kg/m³ is 64.8 kg solid and 3.45 kg with a 2.5 mm wall, a ratio of 18.8) | The body and its `fill` field; returned: the body path, the solid mass, the bound and `mass_max` | 1. Declare `{shell: t}` with a wall thickness (the body becomes a shell, computed as the difference of the outer solid and its inward offset). 2. Declare `{lattice: φ}`. 3. Declare the solid fill as intended, `{solid: {intended: true}}`. 4. Change the material or the Region | after-change | 3 |
 | FROB-REF-263 | A derivative is requested near grazing, at an ambiguous event order, across a change of active set or at frictional degeneracy. The reply carries the offending state and directions | Event-derivative queries: the transversality number, normalized by the guard's declared scale and the model's time scale, is below threshold (grazing); two events not tied by a symmetry of the nominal state fall within the event-time resolution of each other; the active set changes under the requested perturbation; frictional degeneracy | The event identities, the offending state and the perturbation directions | 1. Request a `one-sided` or `finite-difference` derivative with events re-located on both sides. 2. Move the nominal state away from the grazing or degenerate configuration. 3. Use a derivative-free search for this orbit | after-change | 3 |
 | FROB-REF-823 | Unknown proof kind | The auditor's registry lookup (`kind.unknown`, `kind.version-unknown`, `kind.out-of-scope`, `kind.disabled`): the bundle names a kind, a version or a scope that the closed registry `frob.cert.kinds/1` does not contain, even when every hash is consistent | `proof.kind` | 1. Re-emit the certificate with a registered kind. 2. Use an auditor build whose registry version matches the bundle's. 3. If the kind was disabled after a false certificate, re-derive with another kind or report the cell `Tested` | after-change | 3 |
 | FROB-REF-826 | The quantifier prefix, domain or assumption set of a certificate does not match the query it is offered for | The auditor's query-match rule (`query.prefix`, `query.domain`, `query.assumptions`) and the producer when asked to attach a certificate to a different query. Example: evidence in the order "for every world some policy" offered for "one policy for every world" | `claim.quantifiers`, `domain` or `assumptions` | 1. Offer the certificate for the query it was made for. 2. Re-derive the certificate for the query asked. 3. Weaken the claim to the statement the certificate supports and say so | after-change | 3 |
@@ -82,8 +82,10 @@ derivative-dependent analyses for 263).
 `ref833_flag_missing`; `ref834_class_above_input`; `ref834_certified_without_receipt`.
 `crates/frob-lemma/tests/refusals.rs`: `ref835_reuse_without_implication`; `ref835_hash_match_is_not_enough`.
 Cross-subsystem fixtures (run where the owning mechanisms exist): `ref168_solid_enclosure` (the aluminium box:
-64.8 kg solid against 3.45 kg as a 2.5 mm shell); `ref263_grazing_ball` (a ball whose apex touches a ceiling
-returns `refused`, not a matrix).
+64.8 kg solid against 3.45 kg as a 2.5 mm shell; refused when written `solid` without intent in a design whose
+`mass_max` is below 259.2 kg, four times its solid mass, and accepted as a shell or as an intended solid; the
+mechanism's own fixture is the 22.68 kg torso in a 14 kg design, N13-04); `ref263_grazing_ball` (a ball whose
+apex touches a ceiling returns `refused`, not a matrix).
 
 ### End-to-end script and logging
 
@@ -106,6 +108,11 @@ Determinism: codes and pointers are identical across platforms.
   FROB-REF-833. The two are kept distinct on purpose: one is about import, the other about checking.
 - The mission side has its own code for a transport with a missing side condition; the auditor reports
   FROB-REF-829 for the bundle that carries such a transport.
+- FROB-REF-168 is listed in the proofs chapter's table and ruled by the inertia convention. This bead enters its
+  row once, with the wording of the fail-closed default above; the Marrow registry N13-REF cross-references the
+  code and adds no row. When N13-03 records its decision the row is amended to the ADR's text in the same
+  commit, or tombstoned and never reused if the decision removes the refusal. The mechanism and its fixture are
+  N13-04; a registry row does not wait for the mechanism that raises it.
 - Messages are data imported into agent context; they contain no instructions and no scene content.
 
 ## References

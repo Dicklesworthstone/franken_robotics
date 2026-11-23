@@ -1973,5 +1973,270 @@
    ]
   }
  ],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "N23a-22",
+   "what": "duplicate decision bead: marked superseded_by N23b-24 after its content was folded in"
+  },
+  {
+   "bead": "N23a-09",
+   "what": "duplicate decision bead: marked superseded_by N23b-25 after its content was folded in"
+  },
+  {
+   "bead": "N23b-26",
+   "what": "duplicate decision bead: marked superseded_by N23a-29 after its content was folded in"
+  },
+  {
+   "bead": "N23b-24",
+   "what": "kept bead of OPEN-CORTEX-1: memo in six parts, break-even figures, early-stop floor, envelope row, options and tests of N23a-22 folded in"
+  },
+  {
+   "bead": "N23b-25",
+   "what": "kept bead of OPEN-CORTEX-2 (with OPEN-CORTEX-5): library-interface study, tight-bounds arms, decision rule, ADR and deps of N23a-09 folded in; defaults file unified to registries/defaults.toml"
+  },
+  {
+   "bead": "N23a-29",
+   "what": "kept bead of OPEN-CORTEX-3: cost arithmetic, bounds on k and m, enforcement, keyed audit selection, tests, script and the pilot dependency of N23b-26 folded in; reset convention aligned with the mechanism N23a-28 (one reset in k + 1 children)"
+  },
+  {
+   "bead": "BD-321",
+   "what": "dep N23a-22 (superseded) replaced by N23b-24"
+  },
+  {
+   "bead": "N23a-23",
+   "what": "dep N23a-22 (superseded) replaced by N23b-24"
+  },
+  {
+   "bead": "N23a-24",
+   "what": "dep N23a-22 (superseded) replaced by N23b-24"
+  },
+  {
+   "bead": "N23a-26",
+   "what": "dep N23a-22 (superseded) replaced by N23b-24"
+  },
+  {
+   "bead": "BD-197",
+   "what": "dep N23a-09 (superseded) replaced by N23b-25"
+  },
+  {
+   "bead": "BD-198",
+   "what": "BD-201 moved from deps to related: seed order (a seed never depends on a higher seed); it also closed a cycle"
+  },
+  {
+   "bead": "N23b-33",
+   "what": "dep on its capstone BD-198 moved to related; train.status belongs to N23a-14, added to deps"
+  },
+  {
+   "bead": "N23b-09",
+   "what": "dep on its capstone BD-198 moved to related (BD-198 uses this report); N23a-13 added to deps"
+  },
+  {
+   "bead": "N23b-38",
+   "what": "dep on the epic BD-422 moved to related; the reverse sweep N16c-25 is the carrier"
+  },
+  {
+   "bead": "BD-198",
+   "what": "deps N23b-09 (evaluation report used by the gate record) and N23b-30 (sampler receipt required by train.start) added"
+  },
+  {
+   "bead": "N23b-29",
+   "what": "dep N23a-08 added: the sampler composes the registered action laws"
+  },
+  {
+   "bead": "N23a-27",
+   "what": "dep N10b-14 added: the transport contract of construction C-23 is specified first"
+  },
+  {
+   "bead": "BD-197",
+   "what": "key listed in both deps and related removed from related"
+  },
+  {
+   "bead": "N23b-02",
+   "what": "key listed in both deps and related removed from related"
+  },
+  {
+   "bead": "N23b-14",
+   "what": "key listed in both deps and related removed from related"
+  },
+  {
+   "bead": "N23b-23",
+   "what": "key listed in both deps and related removed from related"
+  },
+  {
+   "bead": "N23b-37",
+   "what": "key listed in both deps and related removed from related"
+  },
+  {
+   "bead": "BD-320",
+   "what": "Scope rewritten against N23a-23 and N23a-25: this bead keeps the artifact, pretraining, the refusal at scoring paths and the verb; the registration and the exact membership predicate are N23a-23 (dep added)"
+  },
+  {
+   "bead": "N23a-23",
+   "what": "Scope rewritten against BD-320: owns the registered class and the one membership predicate; its script no longer calls policy.apply, which depends on it"
+  },
+  {
+   "bead": "N23a-25",
+   "what": "Scope rewritten: the verb calls the membership check that BD-320 exposes; keys named in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-24",
+   "what": "Scope rewritten against BD-328: this bead produces the family policy's score table and the frob-learn refusal; statistics, ledger, verb and the record of GATE-CORTEX-12 are BD-328"
+  },
+  {
+   "bead": "BD-328",
+   "what": "Scope rewritten against N23a-24: capstone of the calibration, reads the score table of N23a-24 (dep added)"
+  },
+  {
+   "bead": "N23b-16",
+   "what": "carrier map corrected: the five kill gates of §23.1 to §23.13 are decided by N23a-16, -21, -26, -30, -33; parity clauses of GATE-CORTEX-08 are N23a-19"
+  },
+  {
+   "bead": "N23b-19",
+   "what": "Scope: KILL-FAMILY is decided by N23a-26, not by BD-321"
+  },
+  {
+   "bead": "N23b-33",
+   "what": "Scope names N23a-14 as the owner of train.status and BD-198 as a consumer"
+  },
+  {
+   "bead": "N23b-29",
+   "what": "Scope: the receipt check is a function that train.start (N23a-14) calls; the laws it composes are N23a-08"
+  },
+  {
+   "bead": "BD-323",
+   "what": "Scope and Considerations: the privileged-teacher path checks its row of KILL-ALTALGO (N23b-23, related)"
+  },
+  {
+   "bead": "N23a-27",
+   "what": "Scope names N10b-14 and the family beads; Considerations state the fail-closed reading while edit records carry no correspondence"
+  },
+  {
+   "bead": "BD-198",
+   "what": "Scope names the beads it uses (N23b-15, N23b-33, N23b-09, N23b-30) and the interim for the task family"
+  },
+  {
+   "bead": "N23b-23",
+   "what": "the dependency rule names the build bead of each algorithm"
+  },
+  {
+   "bead": "BD-324",
+   "what": "Scope names the build bead of each algorithm"
+  },
+  {
+   "bead": "BD-192",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "BD-196",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "BD-197",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "BD-321",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "BD-322",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "BD-326",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-03",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-05",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-08",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-13",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-14",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-18",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-19",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-20",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-21",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-26",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-30",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-33",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-34",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-35",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-36",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23b-09",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23b-31",
+   "what": "Scope names the bead that has the rest, in place of \"another unit\""
+  },
+  {
+   "bead": "N23-KA",
+   "what": "five late known answers of §23.25 to §23.29 added as provisional rows KA-23-L1 to L5 (requested by U23b); Scope and carriers name beads in place of \"another unit\"; title updated"
+  },
+  {
+   "bead": "N23-REF",
+   "what": "raising-site column corrected to the beads that raise each code (N23a-03, -05, -08, -13, -18, -24, -25, -27); 547 against 617 added to the neighbouring-code note, as BD-193 settles it"
+  },
+  {
+   "bead": "BD-192",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N23a-06",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N23a-12",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N23a-34",
+   "what": "title shortened to 110 characters or fewer"
+  }
+ ]
 }

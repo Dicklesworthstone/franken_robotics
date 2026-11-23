@@ -6,9 +6,9 @@ priority: 4
 milestone: "M8"
 labels: ["m8", "lemma", "frob-lemma", "moonshot"]
 parent: "EPIC-M8"
-deps: ["BD-381", "CARD-T-06", "FD-FLN-01", "N12-06"]
+deps: ["BD-381", "CARD-T-06", "FD-FLN-01", "N12-06", "N12-23"]
 needs: []
-related: ["BD-384", "CARD-T-01", "N12-23"]
+related: ["BD-384", "CARD-T-01"]
 gates: []
 plan_refs: ["§12.3 (T-13)", "§12.1", "§12.5", "§10 C-05", "§10 C-36", "Appendix C (deferred: general Lean theorems on Lie groups)", "Appendix F (FD-FLN-01)"]
 ---

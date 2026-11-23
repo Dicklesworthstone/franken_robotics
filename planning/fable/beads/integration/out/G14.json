@@ -1,0 +1,1696 @@
+{
+ "group": "G14",
+ "needs": [
+  {
+   "bead": "BD-054",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-17",
+    "N34-18"
+   ],
+   "note": "raw-byte reader and explicit-sort writer; the GATE-WS-05 script N34-21 is a test, not a prerequisite"
+  },
+  {
+   "bead": "BD-054",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-19"
+   ],
+   "note": "format-registry types and row schema; the final FMT-FBOT row and its round trips (BD-141) depend on this bead: related"
+  },
+  {
+   "bead": "BD-054",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "satisfied inside the bead: `reduced` is already in its top-level key list; N14b-34 defines the block's contents and depends on this bead"
+  },
+  {
+   "bead": "BD-055",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-075"
+   ],
+   "note": "BD-075 depends on this bead: the schema comes first, the bus model gives the fields their meaning"
+  },
+  {
+   "bead": "BD-055",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-099",
+    "BD-078"
+   ],
+   "note": "both depend on this bead (schema first)"
+  },
+  {
+   "bead": "BD-055",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "seed order (a seed never depends on a higher-numbered seed): card identifiers are typed here as references and resolved when a card is bound (N15a-03, on BD-069)"
+  },
+  {
+   "bead": "BD-057",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-141",
+    "N34-24"
+   ],
+   "note": "both depend on this bead; FROB-REF-892/-893 are raised at the verb boundary by N34-24"
+  },
+  {
+   "bead": "BD-057",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14b-01"
+   ],
+   "note": "the generator of the open modular class is N14b-01; BD-109 depends on this bead (through BD-064) and BD-246 is M3: related"
+  },
+  {
+   "bead": "BD-057",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-137"
+   ],
+   "note": "BD-137 registers the verb after it exists and depends on this bead"
+  },
+  {
+   "bead": "BD-059",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-09"
+   ],
+   "note": "the M1 admission transaction with FROB-REF-803 and -805; BD-211 is M2 and depends on this bead: related"
+  },
+  {
+   "bead": "BD-059",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14a-21"
+   ],
+   "note": "design.new creates the named design and its head pointer; BD-113 (lineage graph, design.diff) depends on this bead: related"
+  },
+  {
+   "bead": "BD-059",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-292",
+    "BD-111"
+   ],
+   "note": "consumers of the survival lists; BD-292 is M3"
+  },
+  {
+   "bead": "BD-059",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-195",
+    "BD-262"
+   ],
+   "note": "later milestones (M2, M3); consumers of the settled-pose requirement"
+  },
+  {
+   "bead": "BD-059",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N28a-04"
+   ],
+   "note": "the analysis contract through which a patch names and runs an analysis; A-11 (BD-103) and A-13 (BD-104) are higher-numbered seeds: related, and the `require` row runs on a synthetic analysis until A-11 lands"
+  },
+  {
+   "bead": "BD-061",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "BD-063 depends on this bead (seed edge); the tracked view type is delivered by its dependency N14a-07 after re-scoping"
+  },
+  {
+   "bead": "BD-061",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "FD-FSIM-01"
+   ],
+   "note": "upstream item at M2 that depends on this bead; the admission test INT-FSIM-03 is its existing dependency BD-032"
+  },
+  {
+   "bead": "BD-061",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-148"
+   ],
+   "note": "M2 consumer that depends on this bead"
+  },
+  {
+   "bead": "BD-062",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency N14a-03, which resolves the material card and takes BD-069 and BD-068 as dependencies; a direct edge to those higher-numbered seeds is not allowed"
+  },
+  {
+   "bead": "BD-062",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-100"
+   ],
+   "note": "consumer; depends on this bead"
+  },
+  {
+   "bead": "BD-062",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-109",
+    "BD-246"
+   ],
+   "note": "consumers that measure the second clause of GATE-SKEL-07; BD-109 depends on this bead, BD-246 is M3"
+  },
+  {
+   "bead": "BD-063",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-09",
+    "N14a-10",
+    "N14a-11"
+   ],
+   "note": "the three functors, as BD-061 and BD-062 already are"
+  },
+  {
+   "bead": "BD-063",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28b-37",
+    "N28b-38"
+   ],
+   "note": "both depend on this bead: the compile memo graph is built in frob-model first and the general trait and store follow"
+  },
+  {
+   "bead": "BD-066",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14b-20"
+   ],
+   "note": "N14b-24 is the end-to-end bead that depends on this one: related"
+  },
+  {
+   "bead": "BD-066",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14b-33",
+    "N14b-34"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-066",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-067",
+    "BD-039"
+   ],
+   "note": "BD-067 (on BD-039) depends on this bead by its seed edge; the parity rows are measured by N14a-31, which depends on both"
+  },
+  {
+   "bead": "BD-066",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N18a-20"
+   ],
+   "note": "N18a-20 depends on this bead"
+  },
+  {
+   "bead": "BD-066",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N37-04"
+   ],
+   "note": "the `Untrusted` text type at M1; the import limits N37-05 (M1) and BD-304, BD-307 (M3) depend on this bead: related"
+  },
+  {
+   "bead": "BD-066",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "BD-074"
+   ],
+   "note": "seed order: the `coupling` transmission field the importer writes is the schema of N14a-04, reached through BD-062 and BD-061; the laws are BD-074"
+  },
+  {
+   "bead": "BD-077",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-077",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-111"
+   ],
+   "note": "consumer that applies the dispositions outside the compiler"
+  },
+  {
+   "bead": "BD-077",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-171"
+   ],
+   "note": "M2"
+  },
+  {
+   "bead": "BD-077",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N32a-09"
+   ],
+   "note": "the M1 admission transaction; BD-211 is M2 and BD-137 depends on this bead: related"
+  },
+  {
+   "bead": "BD-109",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-21"
+   ],
+   "note": "N14a-21 owns the verb and is tested with a synthetic template, so it does not need the catalog"
+  },
+  {
+   "bead": "BD-117",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-185",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-225",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-227",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-162",
+    "BD-163"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-227",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "consumer: the report verbs call this bead's check (edge BD-302 → BD-227 recorded)"
+  },
+  {
+   "bead": "BD-227",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N19-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-227",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-254",
+    "N19a-38"
+   ],
+   "note": "consumers; N19a-38 exports the incidence table and depends on this bead"
+  },
+  {
+   "bead": "BD-227",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N19c-30"
+   ],
+   "note": "owner decision that depends on this bead; until it is made every dimension stays `assumed`"
+  },
+  {
+   "bead": "BD-227",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "BD-312"
+   ],
+   "note": "registers the verb after it exists and depends on this bead"
+  },
+  {
+   "bead": "BD-245",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-01",
+    "N18b-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-245",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-154",
+    "N18a-28",
+    "N18a-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-245",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N18a-15",
+    "N18b-28"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-245",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N18b-20",
+    "N18b-21"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-245",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-153",
+    "BD-159"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-245",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N18b-05",
+    "N18b-06"
+   ],
+   "note": "M4; both depend on this bead"
+  },
+  {
+   "bead": "N14-CX",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-025 (the negative-control registry and its record schema)"
+  },
+  {
+   "bead": "N14-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the registry loader and row schema; BD-146 consumes the M1 rows: related"
+  },
+  {
+   "bead": "N14-KA",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38b-27"
+   ],
+   "note": "the decision fills the `to set` tolerances after the rows exist; a registry does not wait for it"
+  },
+  {
+   "bead": "N14-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-01",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "satisfied inside the bead: it adds `frob_design::exact::Ratio` when frob-core (its dependency BD-005) exports none; no bead puts an exact rational in frob-core"
+  },
+  {
+   "bead": "N14a-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-03"
+   ],
+   "note": "the single import path `frob_core::qty`; the frob-units decision is its existing dependency BD-031"
+  },
+  {
+   "bead": "N14a-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-01",
+    "BD-060"
+   ],
+   "note": "consumers of this bead's port instances (edge N15b-01 → N14a-02 recorded)"
+  },
+  {
+   "bead": "N14a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-110"
+   ],
+   "note": "consumer: stage 5 runs the junction check"
+  },
+  {
+   "bead": "N14a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-068"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-03",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N33a-30"
+   ],
+   "note": "M2; the schema names a mesh by content hash only, so loading is not needed to finish this bead"
+  },
+  {
+   "bead": "N14a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-074"
+   ],
+   "note": "BD-074 depends on this bead"
+  },
+  {
+   "bead": "N14a-04",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-084"
+   ],
+   "note": "BD-084 depends on this bead"
+  },
+  {
+   "bead": "N14a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-167",
+    "BD-245"
+   ],
+   "note": "later milestones (M2, M3); BD-245 depends on this bead"
+  },
+  {
+   "bead": "N14a-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N18b-28"
+   ],
+   "note": "sibling surface: the selector schema and FROB-REF-121 do not call the admission table"
+  },
+  {
+   "bead": "N14a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": "lever moves become `set-lever` edits and INV-SKEL-08 is tested over the edit engine"
+  },
+  {
+   "bead": "N14a-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-341",
+    "BD-360"
+   ],
+   "note": "M4 consumers"
+  },
+  {
+   "bead": "N14a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-060"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "BD-063 depends on this bead; after re-scoping this bead introduces the tracked view type itself"
+  },
+  {
+   "bead": "N14a-07",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already a direct dependency (BD-056)"
+  },
+  {
+   "bead": "N14a-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-110"
+   ],
+   "note": "the runner calls stage 1 (edge BD-110 → N14a-08 recorded)"
+  },
+  {
+   "bead": "N14a-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-060"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-08",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N15a-03",
+    "BD-069"
+   ],
+   "note": "N15a-03 raises FROB-REF-130 and -134 at stage 1 when a card is bound; the checks themselves are BD-069"
+  },
+  {
+   "bead": "N14a-08",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N13-34"
+   ],
+   "note": "N13-34 adds this refusal to stage 1 and depends on the stage runner BD-110, which depends on this bead; a dependency would close a cycle"
+  },
+  {
+   "bead": "N14a-08",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N14-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15a-08",
+    "N15a-09"
+   ],
+   "note": "the stiction and backlash row descriptors (FROB-REF-241 is raised in N15a-09); BD-084 is the capstone that assembles the rows into the referee solve: related"
+  },
+  {
+   "bead": "N14a-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-074"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-09",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-075"
+   ],
+   "note": "consumer of the membership tables"
+  },
+  {
+   "bead": "N14a-09",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-099",
+    "BD-078"
+   ],
+   "note": "consumers of the sensor channel table; card reading is BD-069, already a dependency"
+  },
+  {
+   "bead": "N14a-09",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N13-34"
+   ],
+   "note": "N13-34 depends on the compile pipeline and on BD-110; a dependency would close a cycle"
+  },
+  {
+   "bead": "N14a-09",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "BD-063 depends on this functor (seed order); the tracked view type itself now comes from N14a-07, an existing dependency"
+  },
+  {
+   "bead": "N14a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-100",
+    "BD-103",
+    "BD-110"
+   ],
+   "note": "consumers (edge BD-110 → N14a-10 recorded)"
+  },
+  {
+   "bead": "N14a-10",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already a direct dependency (BD-069)"
+  },
+  {
+   "bead": "N14a-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "BD-063 depends on this functor (seed order); the tracked view type itself now comes from N14a-07, an existing dependency"
+  },
+  {
+   "bead": "N14a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-15",
+    "N13-16"
+   ],
+   "note": "the algorithm in frob-algebra::symmetry; BD-102 is already a direct dependency and BD-048 is reached through it"
+  },
+  {
+   "bead": "N14a-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-110"
+   ],
+   "note": "consumer (edge BD-110 → N14a-11 recorded)"
+  },
+  {
+   "bead": "N14a-11",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "BD-063 depends on this functor (seed order); the tracked view type itself now comes from N14a-07, an existing dependency"
+  },
+  {
+   "bead": "N14a-11",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-122"
+   ],
+   "note": "the task-level restriction is an optional input; no acceptance criterion needs a task file"
+  },
+  {
+   "bead": "N14a-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-170",
+    "BD-171",
+    "BD-148"
+   ],
+   "note": "M2 consumers"
+  },
+  {
+   "bead": "N14a-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-105",
+    "BD-101",
+    "BD-107",
+    "BD-332"
+   ],
+   "note": "consumers of the views"
+  },
+  {
+   "bead": "N14a-12",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "BD-063 depends on this functor (seed order); the tracked view type itself now comes from N14a-07, an existing dependency"
+  },
+  {
+   "bead": "N14a-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-100",
+    "BD-110"
+   ],
+   "note": "consumers: stage 2 calls these checks (edge BD-100 → N14a-13 recorded)"
+  },
+  {
+   "bead": "N14a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-065",
+    "BD-066"
+   ],
+   "note": "consumers; BD-066 depends on this bead"
+  },
+  {
+   "bead": "N14a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-16"
+   ],
+   "note": "GeometryKernel at M1; BD-079 is the consumer that runs INT-FSIM-08: related; mesh exchange and distance fields are first admitted at M2 (N33a-30): related, reported as a gap"
+  },
+  {
+   "bead": "N14a-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-079"
+   ],
+   "note": "consumer; depends on the model compiler"
+  },
+  {
+   "bead": "N14a-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-171"
+   ],
+   "note": "M2"
+  },
+  {
+   "bead": "N14a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-109"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "not blocking: the pilot uses two cold compiles until `--no-memo` exists"
+  },
+  {
+   "bead": "N14a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-147"
+   ],
+   "note": "the exit review reads this record (edge BD-147 → N14a-16 recorded)"
+  },
+  {
+   "bead": "N14a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-077"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14a-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-17",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-113"
+   ],
+   "note": "context only: BD-113 builds on patches and the conformance test does not call it"
+  },
+  {
+   "bead": "N14a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-19"
+   ],
+   "note": "the format registry's version rule and types; the registry rows (BD-141) depend on the formats: related"
+  },
+  {
+   "bead": "N14a-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-113"
+   ],
+   "note": "BD-113 depends on this bead through BD-059"
+  },
+  {
+   "bead": "N14a-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-203",
+    "N28b-05"
+   ],
+   "note": "M2 and M3: replay of old runs across a migration"
+  },
+  {
+   "bead": "N14a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-11"
+   ],
+   "note": "the airlock crate skeleton and group registry; the trait is written in this bead if the decision is reuse"
+  },
+  {
+   "bead": "N14a-19",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already a direct dependency (BD-031)"
+  },
+  {
+   "bead": "N14a-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-147"
+   ],
+   "note": "the exit review reads this record (edge BD-147 → N14a-20 recorded)"
+  },
+  {
+   "bead": "N14a-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-109"
+   ],
+   "note": "BD-109 depends on this bead; the verb is tested with a synthetic template until the catalog lands"
+  },
+  {
+   "bead": "N14a-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-135"
+   ],
+   "note": "not blocking: `--from-cell` is exercised when mission cells exist"
+  },
+  {
+   "bead": "N14a-21",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-09"
+   ],
+   "note": "the M1 admission transaction; BD-137 and BD-138 register the verbs after they exist (edge BD-137 → N14a-21 recorded); BD-211 is M2"
+  },
+  {
+   "bead": "N14a-21",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-113"
+   ],
+   "note": "BD-113 builds on patches; the named design and its head are created by this bead"
+  },
+  {
+   "bead": "N14a-21",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "the `products` section and `--no-memo`"
+  },
+  {
+   "bead": "N14a-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-385"
+   ],
+   "note": "consumer: the run-time route's pilot"
+  },
+  {
+   "bead": "N14a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14a-13"
+   ],
+   "note": "the check itself; the stage that calls it is BD-100"
+  },
+  {
+   "bead": "N14a-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-385"
+   ],
+   "note": "BD-385 depends on this paper pilot (edge recorded), not the reverse"
+  },
+  {
+   "bead": "N14a-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads this record (edge BD-412 → N14a-24 recorded)"
+  },
+  {
+   "bead": "N14a-24",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already a direct dependency (BD-385)"
+  },
+  {
+   "bead": "N14a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14b-20"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N14b-21"
+   ],
+   "note": "after re-scoping, the GLB writer and `--format glb` are N14b-21 (M2), which depends on this bead"
+  },
+  {
+   "bead": "N14a-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N37-23"
+   ],
+   "note": "the M1 form of the no-authorization flags on exports; BD-303 (M3) depends on this bead: related"
+  },
+  {
+   "bead": "N14a-25",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-137"
+   ],
+   "note": "BD-137 registers the verb after it exists and depends on this bead"
+  },
+  {
+   "bead": "N14a-25",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N14a-09"
+   ],
+   "note": "same milestone and no cycle, so the exporter waits for the binding section instead of shipping the degraded listing"
+  },
+  {
+   "bead": "N14a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-04",
+    "BD-039"
+   ],
+   "note": "the oracle register and its rules under tools/oracle; BD-067 depends on this bead through BD-054: related"
+  },
+  {
+   "bead": "N14a-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N34-21"
+   ],
+   "note": "shared convention: the two corpora must not disagree; not blocking"
+  },
+  {
+   "bead": "N14a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-110"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-109"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14b-01",
+    "BD-109"
+   ],
+   "note": "BD-246 is M3: related"
+  },
+  {
+   "bead": "N14a-28",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "not a bead: a host tool; the client script under tools/client-js is delivered by its dependency BD-057, and without the runtime the row is recorded `not run`"
+  },
+  {
+   "bead": "N14a-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-024"
+   ],
+   "note": "BD-203 (replay) is M2: related; the replay step is logged as partial until it lands"
+  },
+  {
+   "bead": "N14a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-060",
+    "N15b-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14b-01",
+    "BD-063"
+   ],
+   "note": "the generator is N14b-01"
+  },
+  {
+   "bead": "N14a-30",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14b-20"
+   ],
+   "note": "N14b-24 assembles the combined gate record from this script's MJCF rows and depends on this bead after re-scoping: related"
+  },
+  {
+   "bead": "N14a-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-110"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-225",
+    "BD-163"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-024",
+    "BD-159",
+    "BD-208"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18b-28",
+    "N18b-20"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14a-33",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-117"
+   ],
+   "note": "not blocking: a fixed open-loop command file is the stated alternative"
+  },
+  {
+   "bead": "N14b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-47"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14b-04",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§33: no bead admits `fs-mbd::tri_wheel_cluster` as an oracle; the admission-record mechanism exists (N33a-07) and the row stays `blocked: admission` until someone runs the test"
+  },
+  {
+   "bead": "N14b-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16b-23",
+    "FD-FSIM-22"
+   ],
+   "note": "not blocking: a variant is labelled `physics: not available` until its mechanism exists; loop closures in general are N16b-23 and upstream dynamic rods FD-FSIM-22; no bead carries a closure through a grasped payload or a rod as a generalized joint (reported as a gap)"
+  },
+  {
+   "bead": "N14b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-20",
+    "N22c-05",
+    "N22c-06"
+   ],
+   "note": "the pilots of the Frontier rows; the Reflex group wrote them twice (N22a-20 and N22c-05/-06)"
+  },
+  {
+   "bead": "N14b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-30",
+    "N33a-16"
+   ],
+   "note": "the geometry group's traits; the admission row for the GLB path is this bead's own first step, written with the record mechanism N33a-07"
+  },
+  {
+   "bead": "N14b-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32b-10",
+    "BD-191"
+   ],
+   "note": "consumers of the exported file"
+  },
+  {
+   "bead": "N14b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N14b-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "an M0 owner decision; its default (one device, one hour per GPU job) is in force until it is made"
+  },
+  {
+   "bead": "N14b-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-03"
+   ],
+   "note": "the contract of the pseudo-inertia and its transform law; the type and its exact test are its existing dependency BD-051"
+  },
+  {
+   "bead": "N14b-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-41"
+   ],
+   "note": ""
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-243",
+   "dep": "BD-246",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (BD-243 → BD-246 → N14b-04 → BD-243); a seed never depends on a higher-numbered seed, and N14b-04 needs A-09 for the snake-crawler's stage 4"
+  },
+  {
+   "bead": "N20a-41",
+   "dep": "BD-244",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (BD-244 → BD-240 → N20a-41 → BD-244); BD-244 → BD-240 is the seed's own edge and stage 8's use of the verb is in N14b-13 and BD-244"
+  },
+  {
+   "bead": "BD-385",
+   "dep": "N14a-23",
+   "as": "dep",
+   "why": "coverage (d) of U14a: the tree-operator pilot builds on the paper pilot of the limb port interface"
+  },
+  {
+   "bead": "BD-110",
+   "dep": "N14a-08",
+   "as": "dep",
+   "why": "stage 1 of design.check is the validate stage of N14a-08 (need 1 of N14a-08)"
+  },
+  {
+   "bead": "BD-110",
+   "dep": "N14a-10",
+   "as": "dep",
+   "why": "stage 6 reads the budget findings of N14a-10, FROB-REF-115 (need 1 of N14a-10)"
+  },
+  {
+   "bead": "BD-110",
+   "dep": "N14a-11",
+   "as": "dep",
+   "why": "stage 5 calls the assertion comparison of N14a-11, FROB-REF-109 (need 2 of N14a-11)"
+  },
+  {
+   "bead": "BD-110",
+   "dep": "N14b-10",
+   "as": "dep",
+   "why": "the runner implements the staging contract of N14b-10 (stage table, statuses, options, budgets)"
+  },
+  {
+   "bead": "BD-110",
+   "dep": "N14b-11",
+   "as": "dep",
+   "why": "stage 4's dispatch and FROB-REF-118 are N14b-11"
+  },
+  {
+   "bead": "BD-100",
+   "dep": "N14a-13",
+   "as": "dep",
+   "why": "stage 2 calls the declared-body consistency and mass-support checks of N14a-13 (need 1 of N14a-13)"
+  },
+  {
+   "bead": "BD-147",
+   "dep": "N14a-16",
+   "as": "dep",
+   "why": "the M1 exit review reads the KILL-SKEL-SUBST decision record (need 1 of N14a-16)"
+  },
+  {
+   "bead": "BD-147",
+   "dep": "N14a-20",
+   "as": "dep",
+   "why": "the M1 exit review reads the KILL-SKEL-SEXPR decision record (need 1 of N14a-20)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N14a-24",
+   "as": "dep",
+   "why": "the M5 exit review reads the KILL-SKEL-PORT decision record (need 1 of N14a-24)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N14b-16",
+   "as": "dep",
+   "why": "the M3 exit review reads the KILL-SKEL-ALIAS decision record"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N14b-31",
+   "as": "dep",
+   "why": "the M4 exit review reads the KILL-SKEL-CELL decision record"
+  },
+  {
+   "bead": "BD-137",
+   "dep": "N14a-21",
+   "as": "dep",
+   "why": "the M1 verb registration covers design.new and design.show (need 3 of N14a-21)"
+  },
+  {
+   "bead": "BD-302",
+   "dep": "BD-227",
+   "as": "dep",
+   "why": "the report verbs call the realism-claim check behind FROB-REF-312 (need 2 of BD-227)"
+  },
+  {
+   "bead": "N15b-01",
+   "dep": "N14a-02",
+   "as": "dep",
+   "why": "the junction checks consume the port signatures and port instances of N14a-02 (need 1 of N14a-02)"
+  },
+  {
+   "bead": "BD-065",
+   "dep": "N37-04",
+   "as": "dep",
+   "why": "the URDF reader constructs `Untrusted` text, as BD-066 does"
+  },
+  {
+   "bead": "BD-117",
+   "dep": "BD-109",
+   "as": "dep",
+   "why": "its done-condition runs the diff-drive and mecanum archetypes"
+  },
+  {
+   "bead": "N14a-21",
+   "dep": "N14a-09",
+   "as": "dep",
+   "why": "acceptance: the `channels` section and the summary counts of design.show"
+  },
+  {
+   "bead": "N14a-21",
+   "dep": "N14a-10",
+   "as": "dep",
+   "why": "acceptance: the `budget` section of design.show"
+  },
+  {
+   "bead": "N14a-21",
+   "dep": "N14a-11",
+   "as": "dep",
+   "why": "acceptance: the `symmetry` section and both group names in the summary"
+  },
+  {
+   "bead": "N14a-21",
+   "dep": "N14a-12",
+   "as": "dep",
+   "why": "acceptance: the `shape` section of design.show"
+  },
+  {
+   "bead": "N14a-21",
+   "dep": "N14a-13",
+   "as": "dep",
+   "why": "acceptance: the `mass` section covers declared and massless bodies"
+  },
+  {
+   "bead": "N14a-21",
+   "dep": "N14a-14",
+   "as": "dep",
+   "why": "acceptance: the `collision` section of design.show"
+  },
+  {
+   "bead": "N14a-21",
+   "dep": "BD-057",
+   "as": "dep",
+   "why": "acceptance: the same file as an S-expression gives the same DesignId"
+  },
+  {
+   "bead": "N32a-09",
+   "dep": "BD-059",
+   "as": "related",
+   "why": "the admission transaction is finished without design.patch; BD-059 depends on it"
+  },
+  {
+   "bead": "BD-058",
+   "dep": "N14a-06",
+   "as": "related",
+   "why": "N14a-06 depends on BD-058 (lever moves become `set-lever` edits); the lever and lock records BD-058 reads are parsed by BD-055"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N14a-24",
+   "other": "N16a-23",
+   "note": "both decide KILL-SKEL-PORT (N16a-23 decides it together with KILL-TREEOP)"
+  },
+  {
+   "mine": "N14b-18",
+   "other": "N28a-12",
+   "note": "both build the seeded-defect corpus for preflight stages 1 to 6"
+  },
+  {
+   "mine": "N14b-01",
+   "other": "N28a-12",
+   "note": "N28a-12 also contains a generator of random valid designs"
+  },
+  {
+   "mine": "BD-227",
+   "other": "N19a-31",
+   "note": "BD-227 lists the 59 hazard rows of all seven registry files in its scope; N19a-31 to N19a-37 each write one file's rows (they depend on BD-227 for the loader and the verb)"
+  },
+  {
+   "mine": "BD-227",
+   "other": "NEG-28",
+   "note": "the consolidated list of the same 59 hazards"
+  },
+  {
+   "mine": "N14b-10",
+   "other": "BD-110",
+   "note": "stage table, statuses, `--stages`/`--all`/`--strict-data` and timing budgets are specified in both; edge BD-110 → N14b-10 recorded"
+  },
+  {
+   "mine": "N14a-11",
+   "other": "BD-102",
+   "note": "both name the stage-5 assertion check behind FROB-REF-109; N14a-11 depends on BD-102"
+  },
+  {
+   "mine": "N14b-13",
+   "other": "N20a-41",
+   "note": "N20a-41 also specifies the design-check labels `aliased-passive`/`aliased-all-probes` and refusal 120"
+  },
+  {
+   "mine": "N14a-02",
+   "other": "N15b-01",
+   "note": "port signatures and port instances adjoin the junction checks (coverage (e) 12 of U14a)"
+  },
+  {
+   "mine": "N14a-10",
+   "other": "BD-100",
+   "note": "per-subtree mass summaries adjoin the A-02 mass roll-up (coverage (e) 12 of U14a)"
+  },
+  {
+   "mine": "N14a-09",
+   "other": "N13-34",
+   "note": "the turn-state declaration per revolute coordinate adjoins the periodic/lifted typing rule and its stage-1 refusal"
+  },
+  {
+   "mine": "N14a-09",
+   "other": "N15a-03",
+   "note": "N15a-03 also resolves card references, keeps the bound-card record with overrides and records which card fields a product read"
+  },
+  {
+   "mine": "N14b-34",
+   "other": "ROBOT-fsim-g1",
+   "note": "both define the profile `g1-reduced-30`; ROBOT-fsim-g1 depends on N14b-34"
+  },
+  {
+   "mine": "N14b-06",
+   "other": "NEG-31",
+   "note": "two end-to-end scripts that instantiate and preflight every archetype (skel_archetypes.sh, zoo_goldens.sh)"
+  },
+  {
+   "mine": "N14b-26",
+   "other": "N40-23",
+   "note": "Skeleton kill gates are registered in both (pre-registration against the fallback ledger; also N40-02 for gate rows and N40-29 for KILL-SKEL-CELL)"
+  },
+  {
+   "mine": "BD-245",
+   "other": "N18b-06",
+   "note": "the scrub-moment derivation μ·W·L/4 is written in both (coverage (e) 2 of U14a)"
+  },
+  {
+   "mine": "BD-144",
+   "other": "N17a-17",
+   "note": "both report padding and a bucket histogram on 1,000 generated designs at M1"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [
+  {
+   "section": "§33.3",
+   "what": "no bead admits `fs-mbd::tri_wheel_cluster` as an oracle (first use at M3); until then the tri-wheel-stair row is `blocked: admission`",
+   "needed_by": [
+    "N14b-04"
+   ]
+  },
+  {
+   "section": "§33.3",
+   "what": "the airlock's mesh exchange and signed-distance queries are first admitted at M2 (N33a-30), but mesh Regions and mesh shells are M1 work; no M1 bead delivers them",
+   "needed_by": [
+    "N14a-14",
+    "N14a-03"
+   ]
+  },
+  {
+   "section": "§16",
+   "what": "the variant mechanisms of §14.10 owned by Dynamics have no bead: a loop closed at run time through a grasped payload (dual-arm base, Frontier) and a rod as a generalized joint (continuum arm, Moonshot)",
+   "needed_by": [
+    "N14b-05"
+   ]
+  }
+ ],
+ "fixes": []
+}

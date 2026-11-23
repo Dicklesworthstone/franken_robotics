@@ -32,8 +32,22 @@ in scope and reuse across amendments, not in solve speed; expected ratio 1 to 3 
 
 ## Scope
 
-In: pre-registration, readings at M1 (the CPU slice), M3 (the envelope stratum of the partial gate) and M4
-(scale), verdict and decision record. Out: the mission engine, checkers, bundles and fixtures.
+In: pre-registration; readings at M1 (the CPU slice), M3 (the envelope stratum of the partial gate) and M4
+(scale) of one question: do mission queries over a family reach a witnessed answer that a matched reducer does
+not reach at comparable cost, and are the accepted answers sound. Also in: this bet's verdict and its decision
+records.
+
+Out, and where it is:
+
+- What a tie on the family strata means for the engine thesis: BET-14. Both bets read the one decision
+  KILL-AUGUR-TIE; this bead decides only the consequence for mission queries (the conventional program ships
+  behind the same verbs, schema and checker).
+- Region certificates on continuous families (BET-20).
+- The scenarios seen from the user's side (NS-13 for the stance query, NS-22 for the docking fixture).
+- The mission engine, checkers, bundles and fixtures (BD-129 to BD-136 at M1; BD-355 at M4); the matched
+  reducers used as competing arms (N25c-20, N25c-13).
+- Applying the triggers of KILL-AUGUR-TIE (N25a-18) and KILL-AUGUR-FALSECERT (N25b-04) and writing their ADRs.
+  This bead reads those decisions.
 
 ## Technical approach
 

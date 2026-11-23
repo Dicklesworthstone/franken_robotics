@@ -6,9 +6,9 @@ priority: 1
 milestone: "M4"
 labels: ["m4", "cortex", "marrow", "sensorium", "frob-learn", "frontier", "bet", "gate"]
 parent: "WP-29"
-deps: ["N00-28", "N00-07", "BD-241", "BD-325", "BD-326", "STD-E2E"]
+deps: ["N00-28", "N00-07", "BD-241", "BD-325", "BD-326", "BET-07", "STD-E2E"]
 needs: ["§23.13: the third arm of the equivariance experiment on a robot with asymmetric sensing (a Γ_mech-constrained policy against a Γ_obs-constrained one)"]
-related: ["BET-07", "BD-102", "BD-246", "BD-439", "NS-05", "N00-12"]
+related: ["BD-102", "BD-246", "BD-439", "NS-05", "N00-12"]
 gates: ["GATE-MARROW-03", "GATE-MARROW-04", "GATE-CORTEX-03", "KILL-EQUIV", "KILL-MARROW-BLOCKS"]
 plan_refs: ["§4 (BET-30)", "§40.5", "§0.8 (H-24)", "§13.10", "§23.23"]
 ---
@@ -29,8 +29,22 @@ its epic closes.
 
 ## Scope
 
-In: pre-registration, the M4 reading, the M8 addendum, verdict and decision record. Out: the symmetry analysis,
-equivariant layers, the experiments.
+In: pre-registration; the M4 reading of the one question this bet adds to BET-07, namely whether Γ_obs and not
+the larger Γ_mech is the group a policy must be tied under. It is read on the diagnostic arm of the three-arm
+experiment (a robot with asymmetric sensing, clause (a)) and on the gates of the symmetry analysis and of the
+exact block construction (GATE-MARROW-03, GATE-MARROW-04). Also in: the M8 addendum for the tree policy, this
+bet's verdict and its decision record `docs/adr/bet-30-m4.md`.
+
+Out, and where it is:
+
+- Whether an equivariant policy is worth having at all on a symmetric robot (more than 0.7× the steps of the
+  unconstrained arm, or no better than augmentation): BET-07. Both bets read one record of GATE-CORTEX-03 and
+  one decision KILL-EQUIV. Clause (b) here takes BET-07's verdict as its input and does not decide it again,
+  which is why this bead depends on BET-07.
+- The symmetry analysis (BD-102, BD-241, BD-246); the equivariant maps (BD-325); the experiment with its
+  diagnostic arm (BD-326); the tree policy at M8 (BD-439).
+- Applying the triggers of KILL-EQUIV (N23a-33) and KILL-MARROW-BLOCKS (N13-24) and writing their ADRs. This
+  bead reads those decisions.
 
 ## Technical approach
 

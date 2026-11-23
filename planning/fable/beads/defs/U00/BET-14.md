@@ -6,9 +6,9 @@ priority: 1
 milestone: "M7"
 labels: ["m7", "tenfold", "frob-conformance", "solid", "bet", "gate", "owner-decision"]
 parent: "WP-77"
-deps: ["N00-28", "N00-19", "BD-315", "BD-317", "BD-430", "BD-432", "BD-433", "STD-E2E"]
+deps: ["N00-28", "N00-19", "BD-315", "BD-317", "STD-E2E"]
 needs: ["§39.22: three arms (ours; the composed incumbent; our layer over the incumbent engine), the recovery ratios r_T and r_C with 95% intervals, the three single-change phase ablations and the one-receipt pipeline for the layer arm (GATE-TENFOLD-13)", "§25.27: KILL-AUGUR-TIE, the tie rule read on the family strata"]
-related: ["BET-13", "BET-19", "N00-14", "N00-12", "N00-15", "N00-20", "NS-24", "BD-301"]
+related: ["BET-13", "BET-19", "N00-14", "N00-12", "N00-15", "N00-20", "NS-24", "BD-301", "BD-430", "BD-432", "BD-433"]
 gates: ["GATE-TENFOLD-06", "GATE-TENFOLD-07", "GATE-TENFOLD-13", "KILL-TENFOLD-TIE", "KILL-AUGUR-TIE"]
 plan_refs: ["§4 (BET-14)", "§40.5", "§1.4", "§2.6", "§0.8 (H-19)", "§6.3", "§39.22", "§43.12"]
 ---
@@ -35,9 +35,23 @@ on elapsed time (r_T) and on compute (r_C), each with a 95% interval. Tier: Soli
 
 ## Scope
 
-In: pre-registration, the readings at M3 and M7 per stratum, the tie statement, the consequences and the
-decision records. Out: the arms, the adapter through which rival stacks drive this environment, the ablations,
-the estimator.
+In: pre-registration; the readings at M3 and M7, per stratum, of one question: does the composed incumbent, or
+this project's layer over the incumbent engine, reach the same accepted scope within a factor of 1.5, or
+recover at least 0.8 of the gain on elapsed time and on compute. Also in: the tie statement, the consequences,
+and the decision records `docs/adr/bet-14-m3.md` and `docs/adr/bet-14-m7.md`.
+
+Out, and where it is:
+
+- The size of the ratio against the rival and where the word "ten-fold" may be used: BET-13, which reads the
+  same records of GATE-TENFOLD-06 and GATE-TENFOLD-07 for a different question.
+- What a tie on the family strata means for mission queries themselves: BET-19. Both bets read the one decision
+  KILL-AUGUR-TIE; this bead takes from it only whether the stratum counts as a tie for the engine question.
+- The tournament seen from the user's side (NS-24).
+- The arms and the adapter through which rival stacks drive this environment (BD-315); the three-arm
+  statistics (N39b-43); the one-receipt pipeline of arm W (N39b-44); the ablations (N39b-45); the record of
+  GATE-TENFOLD-13 (N40-22).
+- Applying the triggers of KILL-TENFOLD-TIE (N39b-07) and KILL-AUGUR-TIE (N25a-18) and writing their ADRs. This
+  bead reads those decisions.
 
 ## Technical approach
 

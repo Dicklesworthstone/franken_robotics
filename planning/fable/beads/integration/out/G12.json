@@ -1,10 +1,842 @@
 {
  "group": "G12",
- "needs": [],
- "edges": [],
+ "needs": [
+  {
+   "bead": "BD-132",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25b-01",
+    "BD-128",
+    "BD-133"
+   ],
+   "note": "the auditor defines the per-kind payload fields itself (N12-02, N12-03 and this bead); N25b-01's producer-side types follow them and BD-133 depends on this bead, so a dependency would close a cycle"
+  },
+  {
+   "bead": "BD-364",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-133"
+   ],
+   "note": "the M1 writer this bead extends to the M4 kinds"
+  },
+  {
+   "bead": "BD-364",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-357"
+   ],
+   "note": "seed order holds (364 > 357); BD-357's own need for BD-364 is the reverse direction and stays related"
+  },
+  {
+   "bead": "BD-379",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "the manifest frob.kernel/1 with its identities field is N21b-01; BD-014 only consumes the manifest"
+  },
+  {
+   "bead": "BD-379",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-16"
+   ],
+   "note": "the proof_digest slot is metadata of frob.kir/1 as defined in N21a-16 (M2); BD-018 (version 0) has no such slot"
+  },
+  {
+   "bead": "BD-382",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-022",
+    "N32-REF"
+   ],
+   "note": "envelope, --key and exit 8 are in BD-022; the over-budget and parked-verb refusals are FROB-REF-701 and FROB-REF-724 of the Tether registry N32-REF"
+  },
+  {
+   "bead": "CARD-T-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-050",
+    "BD-153"
+   ],
+   "note": "direction rule 6: these implement the object the theorem is about; the card never depends on them"
+  },
+  {
+   "bead": "CARD-T-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18a-16",
+    "BD-080",
+    "BD-167"
+   ],
+   "note": "direction rule 6; the law CL-1 itself is N18a-16; the per-law certificates are issued in the new bead N12-51"
+  },
+  {
+   "bead": "CARD-T-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-084",
+    "BD-155"
+   ],
+   "note": "direction rule 6: the joint rows are what the theorem is about"
+  },
+  {
+   "bead": "CARD-T-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N13-16",
+    "BD-102",
+    "BD-048"
+   ],
+   "note": "direction rule 6; the induced signed-permutation representations are computed in N13-16 and exposed by BD-102"
+  },
+  {
+   "bead": "CARD-T-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-10"
+   ],
+   "note": "BD-438 is an epic; the card's Moonshot route is piloted by N31b-10 (bit-vector queries on a Q15 loop), which is the dependency; the exporter N31a-45 uses the theorem and already depends on the card"
+  },
+  {
+   "bead": "CARD-T-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21a-26",
+    "N21a-16"
+   ],
+   "note": "the fixed-point types are reserved words of frob.kir/1 (N21a-16) and defined in N21a-26, not in BD-018; they are the object of the theorem, not a prerequisite of the card"
+  },
+  {
+   "bead": "CARD-T-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-241"
+   ],
+   "note": "direction rule 6: BD-241 computes the group action the identity is about"
+  },
+  {
+   "bead": "CARD-T-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-062"
+   ],
+   "note": "direction rule 6: the model compiler produces the inertias the card certifies"
+  },
+  {
+   "bead": "CARD-T-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-22"
+   ],
+   "note": "the pilot is M4 and the card M3; the card runs arm E itself on its one fixture, as its acceptance says"
+  },
+  {
+   "bead": "CARD-T-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-17"
+   ],
+   "note": "pilot C-10, M4 like the card"
+  },
+  {
+   "bead": "CARD-T-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-349"
+   ],
+   "note": "direction rule 6: the decision core uses the theorem"
+  },
+  {
+   "bead": "CARD-T-27",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-371"
+   ],
+   "note": "direction rule 6: specialized kernels rely on the theorem"
+  },
+  {
+   "bead": "CARD-T-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N10a-21",
+    "N21a-13"
+   ],
+   "note": "the C-14 derivation pilot was drafted twice (N10a-21 by the construction unit, N21a-13 by the kernel unit); both are M0 pilots and either carries the need"
+  },
+  {
+   "bead": "CARD-T-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-054",
+    "BD-061"
+   ],
+   "note": "direction rule 6: the design compiler implements the wiring the theorem is about"
+  },
+  {
+   "bead": "CARD-T-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-041"
+   ],
+   "note": "the M0 pilot re-run of the docking closed form is the earlier piece; the full pilot N10b-10 (scenario-tree program and the stale-read race) is M2, later than this M1 card, and BD-129 implements the family: both related under edges"
+  },
+  {
+   "bead": "CARD-T-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-24"
+   ],
+   "note": "the dominance pilot, M4 like the card"
+  },
+  {
+   "bead": "CARD-T-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25d-21"
+   ],
+   "note": "BD-437 is an epic; the pilot of the continuation lane is N25d-21; the lane itself (N25d-23) uses the theorem and already depends on the card"
+  },
+  {
+   "bead": "N12-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-02"
+   ],
+   "note": "the pinned rows of frankensympy and franken_lean are rows of the stack lock (N33a-02); BD-031 chooses the toolchain and holds no pin"
+  },
+  {
+   "bead": "N12-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-141"
+   ],
+   "note": "BD-141 is M1, later than this M0 bead, and already depends on it through BD-133 and BD-132; the format row cites this schema"
+  },
+  {
+   "bead": "N12-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-292"
+   ],
+   "note": "BD-292 is M3 and consumes the polarity record; not a prerequisite"
+  },
+  {
+   "bead": "N12-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-08"
+   ],
+   "note": "the registry loader and schema check of check-contracts is N34-08; BD-004 only assembles the six checks"
+  },
+  {
+   "bead": "N12-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "the negative-control registry exists from BD-025; BD-146 consumes registries and stays related"
+  },
+  {
+   "bead": "N12-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-25"
+   ],
+   "note": "the permitted wordings of all seven claim kinds are the claim registry N00-25 (M0); the report verbs BD-302 are M3 consumers"
+  },
+  {
+   "bead": "N12-10",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-019 (INT-FSYM-01)"
+  },
+  {
+   "bead": "N12-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-12"
+   ],
+   "note": "fs-blake3 is on the bedrock-direct list with its admission smoke test (N33a-12), which itself depends on BD-006"
+  },
+  {
+   "bead": "N12-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-314",
+    "BD-317"
+   ],
+   "note": "M3 consumers of the count; a dependency on later work is wrong"
+  },
+  {
+   "bead": "N12-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "M3 consumer that prints the count"
+  },
+  {
+   "bead": "N12-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": "the receipt format the checker must read is defined at M1 by BD-124"
+  },
+  {
+   "bead": "N12-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-288"
+   ],
+   "note": "the producer depends on the checker of the kind it emits, not the reverse; specimens are built by hand"
+  },
+  {
+   "bead": "N12-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-10"
+   ],
+   "note": "N25e-10 needs this checker (its own need 1); the reverse would close a cycle"
+  },
+  {
+   "bead": "N12-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-128",
+    "BD-357"
+   ],
+   "note": "producers of the proof objects; BD-357 is M4, later than this M3 bead"
+  },
+  {
+   "bead": "N12-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-233"
+   ],
+   "note": "BD-233 depends on this bead through N19b-31 and CARD-T-31; the checker reads only what a bundle embeds"
+  },
+  {
+   "bead": "N12-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-289"
+   ],
+   "note": "the M3 pilot that decides KILL-AUGUR-REGION comes before the taylor-box checker; BD-358 needs this checker and stays related"
+  },
+  {
+   "bead": "N12-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-361"
+   ],
+   "note": "producer of interval-root certificates; depends on the checker, not the reverse"
+  },
+  {
+   "bead": "N12-16",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-115",
+    "BD-251"
+   ],
+   "note": "producers of conic certificates; the checker is finished on hand-built specimens"
+  },
+  {
+   "bead": "N12-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-337",
+    "N22b-14"
+   ],
+   "note": "BD-337 depends on this checker (recorded under edges); N22b-14 specifies the same checker a second time (cross-group duplicate)"
+  },
+  {
+   "bead": "N12-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-359"
+   ],
+   "note": "BD-359 depends on this checker; the reverse would close a cycle"
+  },
+  {
+   "bead": "N12-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-349",
+    "BD-371"
+   ],
+   "note": "both already depend on this bead through BD-285 and CARD-T-24"
+  },
+  {
+   "bead": "N12-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-049",
+    "BD-285"
+   ],
+   "note": "producers of the counts; BD-285 already depends on this bead"
+  },
+  {
+   "bead": "N12-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-332"
+   ],
+   "note": "producer of the enumeration; same milestone, and the auditor re-derives the lattice itself"
+  },
+  {
+   "bead": "N12-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22b-33"
+   ],
+   "note": "BD-440 is an epic; the checker is funded after the tube pilot N22b-33 (N22c-13 is the same pilot drafted by the other control unit); the table builder and lookup (N22b-34, N22b-35) emit the kind"
+  },
+  {
+   "bead": "N12-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25d-21"
+   ],
+   "note": "BD-437 is an epic; the checker is funded after the continuation pilot N25d-21"
+  },
+  {
+   "bead": "N12-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "the identities field of the manifest is N21b-01; the kernel library of M2 arrives through its dependency BD-221"
+  },
+  {
+   "bead": "N12-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-018",
+    "N21a-16"
+   ],
+   "note": "square-root and select nodes are in BD-018 (already upstream); the proof_digest slot is in frob.kir/1 as defined by N21a-16"
+  },
+  {
+   "bead": "N12-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-180"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N12-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-087",
+    "SPEC-C-36"
+   ],
+   "note": "arm A states the four update equations in the bead itself and runs on paper; the oracle and the specification carry the same equations and do not block the pilot"
+  },
+  {
+   "bead": "N12-22",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "arm D states the bouncing-ball flow, guard, reset and expected matrix in the bead itself; BD-082 holds no saltation expression"
+  },
+  {
+   "bead": "N12-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-018",
+    "N21a-16"
+   ],
+   "note": "canonical serialization and content hash from BD-018, in the frob.kir/1 form of N21a-16 that M5 kernels use"
+  },
+  {
+   "bead": "N12-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-12",
+    "N25a-32"
+   ],
+   "note": "FrankenSymPy's consumer arrives through its dependency N12-10; fs-ivl is bedrock-direct (N33a-12); fs-checker has pin facts only (N25a-32) and no admission: N33b-09 forbids any cargo edge to it (reported under gaps; the bead now runs that arm out of process or records it not run)"
+  },
+  {
+   "bead": "N12-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-316",
+    "BD-127",
+    "BD-129"
+   ],
+   "note": "rule 7: the decision depends on the beads that produce the comparator runs it reads"
+  },
+  {
+   "bead": "N12-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-135"
+   ],
+   "note": "rule 4: the script drives mission.synthesize"
+  },
+  {
+   "bead": "N12-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "rule 5: a registry depends on the skeleton (BD-025, already a dependency); BD-146 consumes the seeds"
+  },
+  {
+   "bead": "N12-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "rule 5: the loader exists from BD-025 and STD-TEST, already dependencies; BD-146 consumes the rows"
+  },
+  {
+   "bead": "N12-REF",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005"
+  },
+  {
+   "bead": "N12-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N13-03",
+    "N13-04",
+    "BD-055",
+    "BD-062"
+   ],
+   "note": "rule 5: a registry never depends on the mechanism that raises its code; the rule is decided in N13-03 and raised by N13-04"
+  },
+  {
+   "bead": "N12-REF",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N10b-01",
+    "BD-082",
+    "BD-334"
+   ],
+   "note": "rule 5; the refusal and its nine labels are specified in N10b-01"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "SPEC-C-31",
+   "dep": "BD-337",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "BD-154",
+   "dep": "CARD-T-07",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "N16b-29",
+   "dep": "CARD-T-08",
+   "as": "related",
+   "why": "replaces the drafted dep: the card is M5 (Lean route) and the bead M2; the M2 prerequisite is N12-51"
+  },
+  {
+   "bead": "N18a-16",
+   "dep": "CARD-T-08",
+   "as": "related",
+   "why": "replaces the drafted dep: the card is M5 and the bead M2; the M2 prerequisite is N12-51"
+  },
+  {
+   "bead": "N16b-29",
+   "dep": "N12-51",
+   "as": "dep",
+   "why": "PO-KIN-01 links the per-law convexity certificate of CL-1, issued by N12-51 at M2"
+  },
+  {
+   "bead": "N18a-16",
+   "dep": "N12-51",
+   "as": "dep",
+   "why": "a law is admitted on a lockstep tier only with its convexity certificate (N12-51), which is written from the potential's formula"
+  },
+  {
+   "bead": "N17a-23",
+   "dep": "CARD-T-24",
+   "as": "related",
+   "why": "replaces the drafted dep: the card is M4 and the bead M3; the bead states the count formula itself"
+  },
+  {
+   "bead": "N22b-40",
+   "dep": "CARD-T-18",
+   "as": "related",
+   "why": "replaces the drafted dep: the card is M5 and the bead M4; the bead tests the identity numerically"
+  },
+  {
+   "bead": "CARD-T-30",
+   "dep": "N10b-10",
+   "as": "related",
+   "why": "need 1 of CARD-T-30: the full C-19 pilot is M2, later than the M1 card"
+  },
+  {
+   "bead": "CARD-T-30",
+   "dep": "BD-129",
+   "as": "related",
+   "why": "need 1 of CARD-T-30: direction rule 6, the docking family implements the object"
+  },
+  {
+   "bead": "CARD-T-14",
+   "dep": "N31a-45",
+   "as": "related",
+   "why": "need 1 of CARD-T-14: the exporter uses the theorem and depends on the card"
+  },
+  {
+   "bead": "CARD-T-34",
+   "dep": "N25d-23",
+   "as": "related",
+   "why": "need 1 of CARD-T-34: the continuation lane uses the theorem and depends on the card"
+  },
+  {
+   "bead": "N12-01",
+   "dep": "BD-031",
+   "as": "related",
+   "why": "need 1 of N12-01: the toolchain choice is connected, the pins are in N33a-02"
+  },
+  {
+   "bead": "N12-06",
+   "dep": "BD-004",
+   "as": "related",
+   "why": "need 1 of N12-06: the check itself is N34-08"
+  },
+  {
+   "bead": "N12-07",
+   "dep": "BD-146",
+   "as": "related",
+   "why": "need 1 of N12-07: consumer of the registry"
+  },
+  {
+   "bead": "N12-08",
+   "dep": "BD-302",
+   "as": "related",
+   "why": "need 1 of N12-08: M3 consumer of the wording"
+  },
+  {
+   "bead": "N12-16",
+   "dep": "BD-358",
+   "as": "related",
+   "why": "need 1 of N12-16: BD-358 depends on this checker"
+  },
+  {
+   "bead": "N12-19",
+   "dep": "N22b-35",
+   "as": "related",
+   "why": "need 1 of N12-19: emits tube-inclusion bundles; also specifies the same checker"
+  },
+  {
+   "bead": "BD-382",
+   "dep": "N12-32",
+   "as": "related",
+   "why": "kept: the decision depends on this bead"
+  },
+  {
+   "bead": "BD-133",
+   "dep": "N12-05",
+   "as": "dep",
+   "why": "coverage (d) of U12: the family-certificate type the writer serializes"
+  },
+  {
+   "bead": "BD-337",
+   "dep": "N12-17",
+   "as": "dep",
+   "why": "coverage (d) of U12: a bundle writer depends on the checker of the kind it emits (valid once SPEC-C-31 no longer depends on BD-337)"
+  },
+  {
+   "bead": "BD-359",
+   "dep": "N12-17",
+   "as": "dep",
+   "why": "coverage (d) of U12: checker of product-unreachable"
+  },
+  {
+   "bead": "BD-359",
+   "dep": "N12-05",
+   "as": "dep",
+   "why": "coverage (d) of U12: the family-certificate type"
+  },
+  {
+   "bead": "BD-383",
+   "dep": "N12-13",
+   "as": "dep",
+   "why": "coverage (d) of U12: checker of sample-coverage, which the campaign replay extends"
+  },
+  {
+   "bead": "BD-355",
+   "dep": "N12-30",
+   "as": "dep",
+   "why": "coverage (d) of U12: the M4 family batches extend specialized projections and exist only if KILL-FAMILYCERT does not fire"
+  }
+ ],
  "superseded": [],
  "cross_group_duplicates": [],
- "new_beads": [],
+ "new_beads": [
+  "N12-51"
+ ],
  "gaps": [],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "CARD-T-05",
+   "what": "direction rule 6: BD-047 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-06",
+   "what": "direction rule 6: BD-087 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-07",
+   "what": "direction rule 6: BD-154 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-09",
+   "what": "direction rule 6: BD-018 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-10",
+   "what": "direction rule 6: BD-102 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-11",
+   "what": "direction rule 6: BD-046 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-12",
+   "what": "direction rule 6: BD-052 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-15",
+   "what": "direction rule 6: BD-074 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-16",
+   "what": "direction rule 6: BD-011 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-17",
+   "what": "direction rule 6: BD-333 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-19",
+   "what": "direction rule 6: BD-051 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-20",
+   "what": "direction rule 6: BD-243 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-22",
+   "what": "direction rule 6: BD-130 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-23",
+   "what": "direction rule 6: BD-129 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-24",
+   "what": "direction rule 6: BD-049, BD-285 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-25",
+   "what": "direction rule 6: BD-332 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-26",
+   "what": "direction rule 6: BD-124 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-28",
+   "what": "direction rule 6: BD-337 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-29",
+   "what": "direction rule 6: BD-060 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-30",
+   "what": "direction rule 6: BD-134 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-31",
+   "what": "direction rule 6: BD-233 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-32",
+   "what": "direction rule 6: BD-359 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-33",
+   "what": "direction rule 6: BD-150 moved from deps to related; Scope states the order of work and where live-output acceptance lines run"
+  },
+  {
+   "bead": "CARD-T-09",
+   "what": "SPEC-C-21 (M2) moved from deps to related: an M0 card cannot depend on an M2 specification, and C-21 relies on the card, not the reverse"
+  }
+ ]
 }

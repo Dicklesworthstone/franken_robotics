@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-14"
-deps: ["BD-025"]
+deps: ["BD-025", "STD-E2E"]
 needs: ["§38.11: the negative-control registry `frob-conformance/registry/controls.toml` and its record schema"]
 related: ["N14-REF", "N14b-18", "N14b-25", "N14b-26", "BD-146"]
 gates: []

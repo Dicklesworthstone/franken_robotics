@@ -65,8 +65,12 @@ production type when the implementing bead binds it), `verb` (`foundry.optimize`
 `generic_comparator` (the off-the-shelf method named in the pilot paragraph of this bead). Doctrine D-2 (no
 ornamental mathematics) is checked on these fields: a construction with no verb or no failing test is moved to the
 parked register by a decision record. The part beads N10c-06 and N10c-07 add their statements and tests to the
-same row. The contract `docs/math/C-35.md` follows the ten-section template `docs/math/TEMPLATE.md` of the same
-bead.
+same row. The contract `docs/math/C-35.md` has the ten sections of the template `docs/math/TEMPLATE.md` of the
+same bead, in the template's order (object and definitions; what it replaces and the payoff; conventions;
+statements; formulas; fixtures and known answers; failure cases, refusals and retirement; non-claims; foundations;
+implementation map); content that this bead lists under other headings goes into the template section that
+matches. Statement identifiers are entered in the contract and in the register with the construction prefix
+(`C-35.S1` and so on, as the template requires); the tables of this bead and of its part beads abbreviate them.
 
 Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
 N10a-01). This bead is written before the code it specifies and does not depend on BD-400 (load cases and spectra,

@@ -8,7 +8,7 @@ labels: ["m1", "arena", "frob-arena", "frob-spec", "registry", "test", "solid"]
 parent: "WP-41"
 deps: ["BD-005"]
 needs: []
-related: ["BD-122", "N24c-01", "N24c-03", "N24c-05", "BD-124", "BD-259", "BD-261", "N24-CX", "BD-137", "BD-312"]
+related: ["BD-122", "BD-124", "BD-259", "BD-261", "N24-CX", "BD-137", "BD-312", "N24a-12", "N24a-16", "N24a-31"]
 gates: ["GATE-ARENA-03"]
 plan_refs: ["§24.14", "§24.5", "§24.7", "§24.10", "§24.12", "§24.13", "§32.4", "§35.11", "Appendix O"]
 ---
@@ -48,20 +48,20 @@ Out: implementing the mechanisms that raise them (the beads named per row).
 
 | Code | Meaning | Trigger | Ranked repairs | Exit | Raised by |
 |---|---|---|---|---|---|
-| FROB-REF-502 | An evaluation reuses a scene from the policy's training manifest (carried from the scene-split rule) | At scoring time a battery scene's split group intersects the training manifest of the candidate's lineage, or the lineage has a node with no manifest | Evaluate on the held-out side of the split; publish a battery version without the scene (a recorded event that changes the battery identity); report the score as in-distribution, not held-out | 3 | N24c-05 |
+| FROB-REF-502 | An evaluation reuses a scene from the policy's training manifest (carried from the scene-split rule) | At scoring time a battery scene's split group intersects the training manifest of the candidate's lineage, or the lineage has a node with no manifest | Evaluate on the held-out side of the split; publish a battery version without the scene (a recorded event that changes the battery identity); report the score as in-distribution, not held-out | 3 | N24a-31 |
 | FROB-REF-520 | An atom has no scale and is not declared exact | `(atom …)` without `:scale <quantity>` or `:exact`; `:exact` on a non-integer signal | Add a scale of the expression's dimension; declare `:exact` if the signal is integer-valued | 3 | BD-122 |
 | FROB-REF-523 | A future-time operator appears in an online signal | `G`, `F` or `U` inside `(online …)` | Move the formula into the verdict; rewrite as past time (G over [0, T] at 0 equals H over [0, T] at T) | 3 | BD-122 |
 | FROB-REF-525 | A signal is read across clocks without a declared reduction, or its channel kind does not admit the reduction | A faster-clock signal with no `last`, `min` or `max`; an interval-extremum channel reduced by another reduction | Declare the reduction; use the extremum matching the channel kind | 3 | BD-122 |
 | FROB-REF-526 | The episode horizon is shorter than the reach of the verdict | Reach (the sum of nested window ends) exceeds the task's horizon | Lengthen the horizon; shorten a window | 3 | BD-122 |
 | FROB-REF-528 | An online window exceeds its capacity | An online window longer than 4,096 requirement ticks (TARGET) | Shorten the window; move the formula to the verdict (offline only); use a slower requirement clock | 3 | BD-122 |
-| FROB-REF-529 | No settled-pose cache for this model and task | A run is started for a (model, spawn specification, contact law, kernel versions) key with no cache; a design edit changed the key | Run `task.settle` for this model and task; settle the edited model | 3 | N24c-03 |
+| FROB-REF-529 | No settled-pose cache for this model and task | A run is started for a (model, spawn specification, contact law, kernel versions) key with no cache; a design edit changed the key | Run `task.settle` for this model and task; settle the edited model | 3 | N24a-16 |
 | FROB-REF-530 | A run offered as a fixture run does not match the fixture's recorded hash | The recomputed hash of constants, seeds, input table and rule differs from the hash written to the ledger before the fixture's first run | Re-run from the registered fixture identity; register the changed fixture under a new identity; cite the run as an ordinary run | 3 | The cart fixture bead |
 | FROB-REF-532 | A fixed-n study has no pre-analysis, or names a verdict it cannot reach | A `fixed-n` plan without the reachability pre-analysis, or whose declared verdict set contains a verdict unreachable at the declared n and level (a practical tie at n = 64 with a five-point margin) | Run `eval.preanalyze`; raise n to the first n at which the verdict is reachable (86 for the tie); remove the verdict from the declared set | 3 | The study-types bead |
 | FROB-REF-533 | Paired statistics requested under an uncontrolled determinism class | A paired study with an arm that is not class D2 on one backend, nor D3 with decision-level equivalence recorded for the task; any D4 arm | Run both arms under a replayable profile on one backend; record decision-level equivalence; compare unpaired by declaration | 3 | The study-types bead |
 | FROB-REF-535 | Dimension mismatch inside an atom | The two sides of a comparison, or the terms of a sum, have different dimensions | Correct the unit of the offending term | 3 | BD-122 |
 | FROB-REF-536 | A temporal operator has no finite window | A missing or unbounded window on H, O, S, G, F or U | Add a finite window | 3 | BD-122 |
 | FROB-REF-538 | A window bound is not a multiple of the clock period and no rounding is declared | A bound that is not an integer multiple of the requirement period, compared in exact rationals | Declare `:round inward` or `:round outward`; change the bound to a multiple; change the requirement clock | 3 | BD-122 |
-| FROB-REF-539 | A requirement has no labelled examples, or the monitor disagrees with a label | Fewer than two satisfied and two violated examples; an example whose monitor verdict differs from its label; a vacuous hard-limit atom | Correct the formula at the binding atom reported; correct the label; add a near-boundary example | 3 | BD-122 (absence), N24c-01 (disagreement) |
+| FROB-REF-539 | A requirement has no labelled examples, or the monitor disagrees with a label | Fewer than two satisfied and two violated examples; an example whose monitor verdict differs from its label; a vacuous hard-limit atom | Correct the formula at the binding atom reported; correct the label; add a near-boundary example | 3 | BD-122 (absence), N24a-12 (disagreement) |
 | FROB-REF-552 | A request mixes study types | A fixed-n interval asked of an anytime study at its stopping time; a fixed-n study stopped on a running p-value; one study declared with both types | Declare one type before the first episode; open a second study for the other inference | 3 | The study-types bead |
 | FROB-REF-840 | A session without `qual:admin` asks for sealed confirmation data before close | Any verb asked for a sealed world address, per-unit outcome, trace or still of an open campaign; the attempt is logged | Read `eval.ledger` (index, levels, receipts); wait for the campaign to close | 3 | The firewall bead |
 | FROB-REF-841 | A confirmation request was not committed first, or differs from its commitment | A run step with no prior commitment record, or whose request hash differs from the committed one | Commit the request, then submit it unchanged; submit a new request (which consumes the next index) | 3; 7 when the same idempotency key carries different content | The qualification-lane bead |
@@ -119,7 +119,7 @@ sealed world), 844 (a forced cluster collision), 845 (a report saying "qualified
 
 ### End-to-end script and logging
 The codes are exercised from the user's side by the capability scripts: `scripts/e2e/arena_task_file.sh` (the
-nine language codes), `scripts/e2e/arena_m1_families.sh` (529), `scripts/e2e/arena_split_check.sh` (502), and the
+nine language codes), `scripts/e2e/arena_m1_families.sh` (529), `scripts/e2e/gate_arena_02_scene_split.sh` (502), and the
 qualification lane's script (840 to 845). Each logs `refusal` events with `code_expected`, `code_observed`,
 `pointer` and the first repair. A registry step in `arena_task_file.sh` compares `frob capabilities --json` with
 this table.

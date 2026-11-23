@@ -106,20 +106,24 @@ bead; the beads of this unit register controls for KA-343, -345, -348, -356 to -
 
 The six late subsections of the chapter state known answers that the suite's table for this chapter does not
 number. They are listed here so that they are not lost; each takes the next free numbers when its owning bead
-registers it (numbers are append-only), and each is owned by the bead of its subsection.
+registers it (numbers are append-only), and each is owned by the beads named in its last column. Where the
+late subsections' own beads count these answers one by one they come to 21 (the two hand cases and three planted
+controls of decoupled stepping, the two branches of each four-bar, the three counts of the ancestor ledger and the
+four rows of the held-command table are each one row below); the owning beads register them at the finer
+count.
 
-| Subsection | Case | Truth | Control |
-|---|---|---|---|
-| Row-class solve queues | Digests with queues on | Equal to the masked path, bit for bit | A kernel that sizes a reduction tree by the class bound |
-| Row-class solve queues | Trot fixture, four samples per foot, C = 24 (class bounds 6, 12, 24) | Per-step assignment follows the alternation of 8 and 16 active contacts | A sort made at reset (caught by a truncation flag or by zero saving) |
-| Decoupled stepping | Two robots at rest, 0.10 m gap, each able to accelerate at 5 m/s² | Gap closes at t = √0.02 s = 0.141 s; a 20 ms tile is certified with γ = 0.098 m; a 0.2 s tile is not | A bound from current velocities alone |
-| Decoupled stepping | Head-on at 1.5 m/s each from a 3.0 m gap | Earliest contact at 1.0 s; fifty 20 ms tiles certified; merge when the gap falls below 0.06 m | A message with latency shorter than the tile; a lidar that sees the other robot; a thrown prop |
-| Step adjoints | Φ(v; z) = ½·m·(v − z)² + ½·g_c·v² | dv⁺/dz = m/(m + g_c): 1/4 at m = 2, g_c = 6; 1 with the contact open; one-sided values 1 and 1/4 at the boundary | A derivative returned without the label `one-sided` |
-| Step adjoints | 1 kg block, μ = 0.5, pushed for one step of 0.01 s | Breakaway 4.905 N; at 4 N, v⁺ = 0 and dv⁺/du = 0; at 6 N, v⁺ = 0.01095 m/s and dv⁺/du = 0.01 s/kg; regularized stick derivative about 2.0 × 10⁻⁴ s/kg | A zero gradient read as a stationary point |
-| Loop elimination | Parallelogram a = c = 1, b = d = 2 | Open branch: φ = θ, n = 1; crossed branch at θ = 90°: coupler end (1.2, −0.6), φ = −143.13° | The crossed-branch root for a knee assembled open |
-| Loop elimination | Crank-rocker (1, 3, 2.5, 3) at θ = 90° | φ = 98.857°, n = 0.3722 (open); φ = −135.727°, n = −0.1722 (crossed); the parallelogram at θ = 0 is refused | A loop driven through its toggle |
-| Ancestor-sparse assembly | Quadruped n = 18; humanoid n = 35; a chain | Factor counts 375 against 969 (2.58) and 1,742 against 7,140 (4.10); foot row 45 against 171 and 78 against 630; a chain's ratio is exactly 1 | A factor that skips the filled entry of the three-coordinate case |
-| Held command | Slider with u = −(3/2)·(x + w), 64 initial pairs, deadline tick 16 | Exact hold: radius 1/2, 64 of 64; one semi-implicit step: (1 + √3)/2 ≈ 1.366, 1 of 64; two steps: (5 + √57)/16 ≈ 0.784, 15 of 64; d = 3, 4, 8, 16, 32: radii 1/2, 1/4, 0.395, 0.451, 0.476, 64 of 64 | A study that halves the control period with the step |
+| Subsection | Case | Truth | Control | Owning beads (mechanism or fixture, gate script) |
+|---|---|---|---|---|
+| Row-class solve queues | Digests with queues on | Equal to the masked path, bit for bit | A kernel that sizes a reduction tree by the class bound | N16c-13, N16c-16 |
+| Row-class solve queues | Trot fixture, four samples per foot, C = 24 (class bounds 6, 12, 24) | Per-step assignment follows the alternation of 8 and 16 active contacts | A sort made at reset (caught by a truncation flag or by zero saving) | N16c-13, N16c-16 |
+| Decoupled stepping | Two robots at rest, 0.10 m gap, each able to accelerate at 5 m/s² | Gap closes at t = √0.02 s = 0.141 s; a 20 ms tile is certified with γ = 0.098 m; a 0.2 s tile is not | A bound from current velocities alone | N16c-19, N16c-21 |
+| Decoupled stepping | Head-on at 1.5 m/s each from a 3.0 m gap | Earliest contact at 1.0 s; fifty 20 ms tiles certified; merge when the gap falls below 0.06 m | A message with latency shorter than the tile; a lidar that sees the other robot; a thrown prop | N16c-19, N16c-21 |
+| Step adjoints | Φ(v; z) = ½·m·(v − z)² + ½·g_c·v² | dv⁺/dz = m/(m + g_c): 1/4 at m = 2, g_c = 6; 1 with the contact open; one-sided values 1 and 1/4 at the boundary | A derivative returned without the label `one-sided` | N16c-25, N16c-27 |
+| Step adjoints | 1 kg block, μ = 0.5, pushed for one step of 0.01 s | Breakaway 4.905 N; at 4 N, v⁺ = 0 and dv⁺/du = 0; at 6 N, v⁺ = 0.01095 m/s and dv⁺/du = 0.01 s/kg; regularized stick derivative about 2.0 × 10⁻⁴ s/kg | A zero gradient read as a stationary point | N16c-25, N16c-27 |
+| Loop elimination | Parallelogram a = c = 1, b = d = 2 | Open branch: φ = θ, n = 1; crossed branch at θ = 90°: coupler end (1.2, −0.6), φ = −143.13° | The crossed-branch root for a knee assembled open | N16c-31, N16c-33 |
+| Loop elimination | Crank-rocker (1, 3, 2.5, 3) at θ = 90° | φ = 98.857°, n = 0.3722 (open); φ = −135.727°, n = −0.1722 (crossed); the parallelogram at θ = 0 is refused | A loop driven through its toggle | N16c-31, N16c-33 |
+| Ancestor-sparse assembly | Quadruped n = 18; humanoid n = 35; a chain | Factor counts 375 against 969 (2.58) and 1,742 against 7,140 (4.10); foot row 45 against 171 and 78 against 630; a chain's ratio is exactly 1 | A factor that skips the filled entry of the three-coordinate case | N16c-35, N16c-39 |
+| Held command | Slider with u = −(3/2)·(x + w), 64 initial pairs, deadline tick 16 | Exact hold: radius 1/2, 64 of 64; one semi-implicit step: (1 + √3)/2 ≈ 1.366, 1 of 64; two steps: (5 + √57)/16 ≈ 0.784, 15 of 64; d = 3, 4, 8, 16, 32: radii 1/2, 1/4, 0.395, 0.451, 0.476, 64 of 64 | A study that halves the control period with the step | N16c-41, N16c-45 |
 
 ## Acceptance criteria
 

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M7"
 labels: ["m7", "tenfold", "frob-conformance", "solid", "bet", "gate", "owner-decision"]
 parent: "WP-77"
-deps: ["N00-28", "N00-19", "N00-20", "BD-314", "BD-317", "BD-429", "BD-432", "BD-433", "STD-E2E"]
+deps: ["N00-28", "N00-19", "N00-20", "BD-314", "BD-317", "STD-E2E"]
 needs: ["§39.7 and §39.20: the decision rule on the pooled ratio of restricted mean times, its censoring rule, multiplicity control, power analysis and the pre-analysis known answers (GATE-TENFOLD-10)", "§39.10: the outcome rules written in advance, per range of the ratio", "§39.8: the ceiling computed before the test (GATE-TENFOLD-09)"]
-related: ["BET-14", "BET-17", "BD-143", "BD-428", "BD-430", "BD-431", "NS-24", "N00-17", "N00-18"]
+related: ["BET-14", "BET-17", "BD-143", "BD-428", "BD-430", "BD-431", "NS-24", "N00-17", "N00-18", "BD-429", "BD-432", "BD-433"]
 gates: ["GATE-TENFOLD-06", "GATE-TENFOLD-07", "KILL-TENFOLD-SPEED"]
 plan_refs: ["§4 (BET-13)", "§40.5", "§2.1", "§2.6", "§39", "§43.6", "§43.10", "§47.1"]
 ---
@@ -37,9 +37,21 @@ power computed before the suite is opened. Tier: Solid as a measurement; it depe
 
 ## Scope
 
-In: pre-registration, the partial reading at M3, the tournament reading at M7, the wording that follows each
-range of the ratio, and the decision records. Out: the protocol, suite, arms, estimator, adjudication and
-publication (the ten-fold beads).
+In: pre-registration; the partial reading at M3 and the tournament reading at M7 of one question: per mission
+class and stratum, does the pooled ratio of restricted mean times against the strongest composed rival confirm
+10, or fall under 3. Also in: the wording that follows each range of the ratio, and the decision records
+`docs/adr/bet-13-m3.md` and `docs/adr/bet-13-m7.md`.
+
+Out, and where it is:
+
+- Whether the gain needs this engine: the ablation arm, the composed incumbent, the tie test, the recovery
+  ratios of GATE-TENFOLD-13, KILL-TENFOLD-TIE and KILL-AUGUR-TIE. That is BET-14, which reads the same records
+  of GATE-TENFOLD-06 and GATE-TENFOLD-07 for a different question.
+- The tournament seen from the user's side (NS-24).
+- The protocol, suite, arms, estimator, adjudication and publication: BD-314 to BD-317 and the gate record
+  N40-15 for the partial gate; N39b-13 and the gate record N40-16 for the tournament.
+- Applying the trigger of KILL-TENFOLD-SPEED and writing the kill-gate ADR (N39b-06). This bead reads that
+  decision.
 
 ## Technical approach
 

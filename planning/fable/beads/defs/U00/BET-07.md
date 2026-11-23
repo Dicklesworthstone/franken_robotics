@@ -26,8 +26,21 @@ network costs structure and can hurt when sensors, payload or task break the sym
 
 ## Scope
 
-In: pre-registration, the M4 reading of the three-arm experiment, verdict and decision record. Out: the
-equivariant layers, the training runs, the symmetry analysis.
+In: pre-registration; the M4 reading of the three-arm experiment on a robot whose sensing keeps the symmetry
+(the equivariant arm against the unaugmented arm and against the augmented arm); this bet's verdict and its
+decision record `docs/adr/bet-07-m4.md`.
+
+Out, and where it is:
+
+- Which group the policy is tied under. Whether the observation-preserving subgroup Γ_obs, and not the larger
+  mechanical group Γ_mech, is the right constraint; the diagnostic arm on a robot with asymmetric sensing; the
+  gates of the symmetry analysis and of the exact block construction; the M8 tree-policy reading: all of these
+  are BET-30. BET-30 reads the same record of GATE-CORTEX-03 and the same decision KILL-EQUIV for a different
+  question, takes this bead's verdict as the input of its clause (b), and depends on this bead.
+- The experiment and its gate record (BD-326); the equivariant maps (BD-325); the symmetry analysis (BD-102,
+  BD-241).
+- Applying the trigger of KILL-EQUIV and writing the kill-gate ADR (N23a-33). This bead reads that decision and
+  records the bet verdict beside it.
 
 ## Technical approach
 

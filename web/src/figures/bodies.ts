@@ -8,7 +8,7 @@
  * waits on the spot: legs mark time and wheels hold still, which is how the crowd stands in front of the door.
  */
 export type V3 = [number, number, number];
-export type Solid = "box" | "cyl" | "ball" | "cap" | "tire" | "ring" | "barrel" | "gear" | "hex" | "coil" | "arc" | "pulley" | "bellows" | "fins" | "bolts";
+export type Solid = "box" | "cyl" | "ball" | "cap" | "tire" | "ring" | "barrel" | "gear" | "hex" | "coil" | "arc" | "fender" | "pulley" | "bellows" | "fins" | "bolts";
 export type Mat = "shell" | "dark" | "steel" | "rubber" | "glow" | "amber" | "lens";
 
 export interface Part {
@@ -19,6 +19,7 @@ export interface Part {
    * ring: radius, tube radius, radius. barrel: middle radius, length, end radius.
    * gear: pitch radius, face width, teeth (involute, 20°, tooth 0 on local x). hex: radius to a corner, height.
    * coil: radius to the wire's centre, length, turns. arc: radius, tube radius, sweep about local y from local x.
+   * fender: radius to the middle of its sheet, width, sweep as an arc's; the sheet is SHEET of its radius thick.
    * pulley: radius, width, depth of its groove. bellows: radius, length, folds. fins: radius, length, fins.
    * bolts: radius of their circle (0 for one at the middle), radius of a head, how many; heads face local +y.
    */
@@ -109,6 +110,9 @@ const cap = (r: number, l: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ 
 const ring = (r: number, tube: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ s: "ring", d: [r, tube, r], p, m, r: lay(axis) });
 const tire = (r: number, w: number, rim: number, p: V3, m: Mat, axis: Axis = "z"): Part => ({ s: "tire", d: [r, w, rim], p, m, r: lay(axis) });
 
+/** How thick a fender's sheet is, as a fraction of its radius. */
+export const SHEET = 0.06;
+
 /** How far a round solid reaches from its axis, and half its length along the axis. */
 export function girth(p: Part): [r: number, h: number] {
   const [a, b, c] = p.d;
@@ -116,6 +120,8 @@ export function girth(p: Part): [r: number, h: number] {
     case "ring":
     case "arc":
       return [a + b, b];
+    case "fender":
+      return [a * (1 + SHEET / 2), b / 2];
     case "tire":
       return [a, b / 2];
     case "gear":
@@ -258,6 +264,55 @@ function vent(n: number, p: V3, along: Axis, across: Axis, len: number, pitch: n
 }
 /** A cable through the given points, its bends rounded by the capsules that make it. */
 const cable = (pts: V3[], r = 0.0035, m: Mat = "rubber"): Part[] => pts.slice(1).map((b, i) => ({ ...strut(pts[i]!, b, r, m), fine: true }));
+/** Moves p by k along a face's outward axis. */
+const nudge = (p: V3, face: Face, k: number): V3 => {
+  const q: V3 = [...p];
+  const i = axisIndex(face);
+  q[i] = q[i]! + (face[0] === "-" ? -k : k);
+  return q;
+};
+/**
+ * A camera of radius r looking forward from a face it is set into at p. Far off it is a glass ball. Close up, inside
+ * that ball, it is a dark housing standing proud of the face, a steel bezel with a rubber seal inside it, and the
+ * domed front element of the lens.
+ */
+const eye = (r: number, p: V3): Part[] => [
+  { ...ball(r, p, "lens"), coarse: true },
+  ...fine([
+    cyl(r, r * 0.9, nudge(p, "x", -r * 0.1), "dark", "x"),
+    ring(r * 0.84, r * 0.14, nudge(p, "x", r * 0.36), "steel", "x"),
+    ring(r * 0.7, r * 0.05, nudge(p, "x", r * 0.42), "rubber", "x"),
+    ball(r * 0.74, nudge(p, "x", r * 0.04), "lens"),
+  ]),
+];
+/**
+ * A light bar of size d on a face. Far off it is a glowing slab. Close up the same light is a diffuser set back into
+ * a dark frame whose front is flush with the slab's, so that the frame adds nothing to how far the slab reaches out.
+ */
+function lamp(d: V3, p: V3, face: Face): Part[] {
+  const i = axisIndex(face);
+  const [j, k] = [0, 1, 2].filter((n) => n !== i) as [number, number];
+  const rim = Math.min(0.0025, 0.18 * Math.min(d[j]!, d[k]!));
+  const sunk = Math.min(0.0012, d[i]! * 0.3);
+  const lit: V3 = [...d];
+  lit[i] = d[i]! - sunk;
+  const bar = (along: number, n: number, e: number): Part => {
+    const size: V3 = [...d];
+    size[along] = along === j ? d[j]! + 2 * rim : d[k]!;
+    size[n] = rim;
+    const q: V3 = [...p];
+    q[n] = q[n]! + e * (d[n]! / 2 + rim / 2);
+    return { s: "box", d: size, p: q, m: "dark", fine: true };
+  };
+  return [
+    { s: "box", d, p, m: "glow", coarse: true },
+    { s: "box", d: lit, p: nudge(p, face, -sunk / 2), m: "glow", fine: true },
+    bar(j, k, -1),
+    bar(j, k, 1),
+    bar(k, j, -1),
+    bar(k, j, 1),
+  ];
+}
 
 /** A bent tube: radius R round local y, tube radius tube, from local x through `sweep` radians. */
 const arc = (R: number, tube: number, sweep: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ s: "arc", d: [R, tube, sweep], p, m, r: lay(axis), fine: true });
@@ -830,8 +885,8 @@ export interface QuadSpec {
 }
 /**
  * Close-up detail on a quadruped's long body of length L and width W whose shell's top is at `top`: panel lines down
- * its flanks, screws in the deck's corners, vents towards the tail, rings round both camera lenses, and a charging
- * port with its power button on the tail.
+ * its flanks, screws in the deck's corners, vents towards the tail, and a charging port with its power button on the
+ * tail.
  */
 function hull(L: number, W: number, top: number, k: number): Part[] {
   const side = W * 0.58;
@@ -842,7 +897,6 @@ function hull(L: number, W: number, top: number, k: number): Part[] {
       seamOn(shell, [0, 0.02, 0], [-L * 0.16, -0.04 * k, s * side], [-L * 0.16, 0.08 * k, s * side]),
       seamOn(shell, [0, 0.02, 0], [-L * 0.45, 0.05 * k, s * side], [L * 0.45, 0.05 * k, s * side]),
       ...vent(6, [(-0.59 * L + 0.06 * k) / 2, 0.012 * k, s * (side + 0.0004)], "x", "y", 0.04 * k, 0.012, s > 0 ? "z" : "-z"),
-      { ...ring(0.0215, 0.0026, [L / 2 + 0.1085, 0.022, s * 0.046], "steel", "x"), fine: true },
     ]),
     ...screws([L * 0.64, 0.024, W * 0.78], [0, top + 0.008, 0], "y", 0.012),
     ...fine([
@@ -875,9 +929,8 @@ export function walker(q: QuadSpec, idle = false): Body {
       ...twin((s) => [box([L * 0.5, 0.012, 0.014], [0, top + 0.026, s * W * 0.3], "steel")]),
       // Both ends carry the same block; only the sensors tell front from back.
       ...twin((e) => [box([0.12, 0.1, 0.17], [e * (L / 2 + 0.04), 0.03, 0], "dark"), box([0.02, 0.064, 0.176], [e * (L / 2 + 0.098), 0.03, 0], "shell")]),
-      box([0.012, 0.022, 0.11], [L / 2 + 0.112, 0.062, 0], "glow"),
-      ball(0.019, [L / 2 + 0.104, 0.022, -0.046], "lens"),
-      ball(0.019, [L / 2 + 0.104, 0.022, 0.046], "lens"),
+      ...lamp([0.012, 0.022, 0.11], [L / 2 + 0.112, 0.062, 0], "x"),
+      ...twin((s) => eye(0.019, [L / 2 + 0.104, 0.022, s * 0.046])),
       ...hull(L, W, top, k),
     ]),
   );
@@ -982,11 +1035,16 @@ function biped(idle: boolean): Body {
       box([0.22, 0.15, 0.24], [0, 0.1, 0], "shell"),
       box([0.16, 0.06, 0.3], [0, 0.005, 0], "dark"),
       box([0.08, 0.07, 0.17], [0.1, 0.205, 0], "dark"),
-      ball(0.018, [0.14, 0.212, -0.04], "lens"),
-      ball(0.018, [0.14, 0.212, 0.04], "lens"),
+      ...twin((s) => eye(0.018, [0.14, 0.212, s * 0.04])),
       box([0.008, 0.012, 0.11], [0.141, 0.182, 0], "glow"),
-      box([0.12, 0.01, 0.16], [-0.03, 0.18, 0], "glow"),
+      ...lamp([0.12, 0.01, 0.16], [-0.03, 0.18, 0], "y"),
       box([0.08, 0.1, 0.18], [-0.12, 0.11, 0], "dark"),
+      // Close up: panel lines and vents down the flanks, and the top's screws.
+      ...twin((s) => [
+        ...[0.06, -0.06].map((x) => seamOn([0.22, 0.15, 0.24], [0, 0.1, 0], [x, 0.03, s * 0.12], [x, 0.17, s * 0.12])),
+        ...vent(5, [0, 0.1, s * 0.1204], "x", "y", 0.05, 0.012, s > 0 ? "z" : "-z"),
+      ]),
+      ...screws([0.22, 0.15, 0.24], [0, 0.1, 0], "y", 0.012),
     ]),
   );
   for (const side of [-1, 1] as const) {
@@ -1034,6 +1092,10 @@ function humanoid(idle: boolean): Body {
       box([0.16, 0.12, 0.24], [0, -0.01, 0], "shell"),
       box([0.12, 0.07, 0.3], [0, -0.055, 0], "dark"),
       ring(0.07, 0.005, [0, 0.05, 0], "glow"),
+      // The pelvis's cover screwed on at its corners with panel lines down its front, and a vent behind.
+      ...screws([0.16, 0.12, 0.24], [0, -0.01, 0], "x", 0.012),
+      ...twin((s) => [seamOn([0.16, 0.12, 0.24], [0, -0.01, 0], [0.08, -0.06, s * 0.07], [0.08, 0.04, s * 0.07])]),
+      ...vent(5, [-0.0804, -0.01, 0], "z", "y", 0.05, 0.012, "-x"),
     ]),
   );
   const yaw = mk.add({
@@ -1075,10 +1137,8 @@ function humanoid(idle: boolean): Body {
       cyl(0.034, 0.07, [0, 0.02, 0], "dark"),
       cap(0.085, 0.05, [0, 0.13, 0], "shell"),
       box([0.06, 0.08, 0.15], [0.056, 0.13, 0], "dark"),
-      ball(0.017, [0.084, 0.14, -0.034], "lens"),
-      ball(0.017, [0.084, 0.14, 0.034], "lens"),
+      ...twin((s) => eye(0.017, [0.084, 0.14, s * 0.034])),
       box([0.008, 0.01, 0.1], [0.088, 0.112, 0], "glow"),
-      ...fine(twin((s) => [ring(0.0192, 0.0022, [0.0866, 0.14, s * 0.034], "steel", "x")])),
       ...fine([cyl(0.0365, 0.008, [0, -0.008, 0], "steel")]),
     ],
   });
@@ -1176,9 +1236,22 @@ function humanoid(idle: boolean): Body {
       at: [0, -0.06, side * 0.1],
       joint: "z",
       turn: (t) => solve(t)[0]!,
-      parts: [cyl(0.06, 0.07, [0, 0, 0], "dark", "z"), ring(0.055, 0.004, [0, 0, side * 0.037], "glow", "z")],
+      parts: [
+        cyl(0.06, 0.07, [0, 0, 0], "dark", "z"),
+        ring(0.055, 0.004, [0, 0, side * 0.037], "glow", "z"),
+        // The drive's cover: a circle of screws round a steel cap.
+        bolts(0.042, 0.0022, 8, [0, 0, side * (0.035 + 0.0012)], side > 0 ? "z" : "-z"),
+        { ...cyl(0.02, 0.003, [0, 0, side * 0.0355], "steel", "z"), fine: true },
+      ],
     });
-    q = mk.add({ name: `${n}.hip.roll`, parent: q, at: [0, 0, 0], joint: "x", turn: (t) => solve(t)[1]!, parts: [box([0.09, 0.07, 0.07], [0, -0.05, 0], "steel")] });
+    q = mk.add({
+      name: `${n}.hip.roll`,
+      parent: q,
+      at: [0, 0, 0],
+      joint: "x",
+      turn: (t) => solve(t)[1]!,
+      parts: [box([0.09, 0.07, 0.07], [0, -0.05, 0], "steel"), ...screws([0.09, 0.07, 0.07], [0, -0.05, 0], "x", 0.01, 0.0018)],
+    });
     q = mk.add({
       name: `${n}.hip.yaw`,
       parent: q,
@@ -1278,8 +1351,7 @@ function diffDrive(idle: boolean): Body {
       cyl(0.047, 0.024, [0.02, 0.218, 0], "lens"),
       cyl(0.052, 0.012, [0.02, 0.236, 0], "steel"),
       box([0.03, 0.045, 0.1], [0.152, 0.08, 0], "dark"),
-      ball(0.016, [0.166, 0.085, -0.026], "lens"),
-      ball(0.016, [0.166, 0.085, 0.026], "lens"),
+      ...twin((s) => eye(0.016, [0.166, 0.085, s * 0.026])),
       ...twin((s) => [cyl(0.03, 0.06, [0, 0, s * 0.15], "steel", "z")]),
       // The lidar's emitter goes round and round its window; screws hold the window's ring.
       { s: "box", d: [0.003, 0.012, 0.016], p: [0.02 + 0.0478, 0.218, 0], m: "glow", fine: true, spin: { at: [0.02, 0.218, 0], axis: [0, 1, 0], angle: (t) => TAU * 1.5 * t } },
@@ -1294,7 +1366,8 @@ function diffDrive(idle: boolean): Body {
         { ...arc(0.171, 0.007, 2.4, [0, 0.02, 0], "rubber"), r: [0, -1.2, 0] },
         ...twin((s) => [box([0.004, 0.012, 0.03], [-0.165, 0.03, s * 0.03], "steel", [0, s * 0.18, 0])]),
       ]),
-      ...[0.9, -0.9, Math.PI].map((a) => seam([Math.cos(a) * 0.165, 0.012, -Math.sin(a) * 0.165], [Math.cos(a) * 0.165, 0.138, -Math.sin(a) * 0.165])),
+      // The back's panel lines frame the vent as a hatch.
+      ...[0.9, -0.9, Math.PI - 0.36, Math.PI + 0.36].map((a) => seam([Math.cos(a) * 0.165, 0.012, -Math.sin(a) * 0.165], [Math.cos(a) * 0.165, 0.138, -Math.sin(a) * 0.165])),
       ...Array.from({ length: 7 }, (_, i) => {
         const a = Math.PI + (i - 3) * 0.07;
         return { ...box([0.0016, 0.05, 0.005], [Math.cos(a) * 0.1654, 0.085, -Math.sin(a) * 0.1654], "dark", [0, a, 0]), fine: true };
@@ -1449,23 +1522,31 @@ function ackermann(idle: boolean): Body {
     ];
   };
   // A wheel arch on the body over the top of each wheel, 0.135 round its axle, clear of a front wheel at full lock,
-  // and kept inside the circle the wheels already sweep so that the body is no larger than it was.
-  const arch = (x: number, s: 1 | -1): Part[] =>
-    Array.from({ length: 5 }, (_, i) => {
+  // and kept inside the circle the wheels already sweep so that the body is no larger than it was. Far off it is five
+  // flat panels; close up, one smooth sheet.
+  const arch = (x: number, s: 1 | -1): Part[] => [
+    ...Array.from({ length: 5 }, (_, i): Part => {
       const [a0, a1] = [0.85 + (i / 5) * 1.44, 0.85 + ((i + 1) / 5) * 1.44];
-      return slab([x + 0.135 * Math.cos(a0), 0.135 * Math.sin(a0), s * 0.1925], [x + 0.135 * Math.cos(a1), 0.135 * Math.sin(a1), s * 0.1925], 0.008, 0.085, "shell");
-    });
+      const panel = slab([x + 0.135 * Math.cos(a0), 0.135 * Math.sin(a0), s * 0.1925], [x + 0.135 * Math.cos(a1), 0.135 * Math.sin(a1), s * 0.1925], 0.008, 0.085, "shell");
+      return { ...panel, coarse: true };
+    }),
+    { s: "fender", d: [0.1348, 0.085, 1.44], p: [x, 0, s * 0.1925], r: [Math.PI / 2, 0.85, 0], m: "shell", fine: true },
+  ];
   mk.add(
     trunk([
       // The body rides above the wheels so that the front pair can steer under it.
       box([0.36, 0.04, 0.18], [-0.03, 0.06, 0], "dark"),
       box([0.7, 0.09, 0.3], [0, 0.155, 0], "shell"),
+      ...screws([0.7, 0.09, 0.3], [0, 0.155, 0], "x", 0.012),
+      // The bonnet's outline.
+      seamOn([0.7, 0.09, 0.3], [0, 0.155, 0], [0.13, 0.2, -0.13], [0.13, 0.2, 0.13]),
+      ...twin((s) => [seamOn([0.7, 0.09, 0.3], [0, 0.155, 0], [0.13, 0.2, s * 0.13], [0.34, 0.2, s * 0.13])]),
       box([0.62, 0.02, 0.26], [0, 0.105, 0], "dark"),
       box([0.34, 0.06, 0.25], [-0.06, 0.23, 0], "dark"),
       box([0.3, 0.012, 0.23], [-0.06, 0.264, 0], "shell"),
       box([0.012, 0.034, 0.2], [0.112, 0.23, 0], "lens"),
-      box([0.02, 0.024, 0.2], [0.352, 0.16, 0], "glow"),
-      ...twin((s) => [ball(0.016, [0.348, 0.135, s * 0.09], "lens"), box([0.02, 0.03, 0.07], [-0.352, 0.165, s * 0.095], "amber")]),
+      ...lamp([0.02, 0.024, 0.2], [0.352, 0.16, 0], "x"),
+      ...twin((s) => [...eye(0.016, [0.348, 0.135, s * 0.09]), box([0.02, 0.03, 0.07], [-0.352, 0.165, s * 0.095], "amber")]),
       ...twin((s) => [box([0.12, 0.012, 0.04], [L / 2, 0.035, s * 0.07], "steel"), box([0.12, 0.012, 0.04], [-L / 2, 0.035, s * 0.07], "steel")]),
       cyl(0.022, 2 * wz - 0.08, [-L / 2, 0, 0], "steel", "z"),
       cyl(0.04, 0.09, [-L / 2, 0, 0], "dark", "z"),
@@ -1480,19 +1561,21 @@ function ackermann(idle: boolean): Body {
         // The drive: a finned motor ahead of the differential.
         { s: "fins", d: [0.03, 0.07, 16], p: [-L / 2 + 0.085, 0.005, 0], r: lay("x"), m: "dark" },
         cyl(0.022, 0.012, [-L / 2 + 0.045, 0.005, 0], "steel", "x"),
-        // Front suspension: upper and lower wishbones from rails under the nose to ball joints at the ends of each
-        // kingpin, the lower rails hung from the upper by a plate at the front, and a short coil-over from each upper
-        // arm up to the floor of the body.
+        // Front suspension: upper and lower wishbones of tube, on rubber bushes where they pivot on rails under the
+        // nose, out to ball joints at the ends of each kingpin; the lower rails hung from the upper by a plate screwed
+        // on at the front, and a short coil-over from each upper arm up to the floor of the body.
         ...twin((s) =>
           [-0.05, 0.05].flatMap((y) => [
-            slab([L / 2 - 0.05, y * 0.9, s * 0.05], [L / 2, y, s * (kz - 0.012)], 0.012, 0.008, "steel"),
-            slab([L / 2 + 0.04, y * 0.9, s * 0.05], [L / 2, y, s * (kz - 0.012)], 0.012, 0.008, "steel"),
+            strut([L / 2 - 0.05, y * 0.9, s * 0.05], [L / 2, y, s * (kz - 0.012)], 0.005, "steel"),
+            strut([L / 2 + 0.04, y * 0.9, s * 0.05], [L / 2, y, s * (kz - 0.012)], 0.005, "steel"),
+            ...[L / 2 - 0.05, L / 2 + 0.04].map((x) => cyl(0.0075, 0.014, [x, y * 0.9, s * 0.05], "rubber", "x")),
             ball(0.011, [L / 2, y + Math.sign(y) * 0.004, s * kz], "dark"),
           ]),
         ),
         ...twin((s) => [
           box([0.12, 0.012, 0.04], [L / 2, -0.045, s * 0.07], "steel"),
-          box([0.008, 0.09, 0.04], [L / 2 + 0.056, -0.005, s * 0.07], "steel"),
+          box([0.008, 0.09, 0.04], [L / 2 + 0.056, -0.005, s * 0.07], "dark"),
+          ...[-0.03, 0.02].map((y) => bolts(0, 0.0018, 1, [L / 2 + 0.06 + 0.001, y, s * 0.07], "x")),
           ball(0.006, [L / 2 - 0.028, 0.05, s * 0.085], "dark"),
           cyl(0.0045, 0.03, [L / 2 - 0.028, 0.062, s * 0.085], "steel"),
           coil(0.0115, 0.042, 6, [L / 2 - 0.028, 0.073, s * 0.085], "amber"),
@@ -1573,11 +1656,12 @@ function mecanum(idle: boolean): Body {
   mk.add(
     trunk([
       box([0.62, 0.1, 0.3], [0, 0.085, 0], "shell"),
+      ...screws([0.62, 0.1, 0.3], [0, 0.085, 0], "x", 0.012),
       box([0.56, 0.05, 0.28], [0, 0.015, 0], "dark"),
       box([0.48, 0.03, 0.24], [0, 0.148, 0], "dark"),
       box([0.36, 0.008, 0.16], [0, 0.167, 0], "steel"),
-      box([0.014, 0.03, 0.22], [0.312, 0.09, 0], "glow"),
-      ...twin((s) => [ball(0.016, [0.31, 0.055, s * 0.08], "lens")]),
+      ...lamp([0.014, 0.03, 0.22], [0.312, 0.09, 0], "x"),
+      ...twin((s) => eye(0.016, [0.31, 0.055, s * 0.08])),
       ...[X, -X].flatMap((x) => twin((s) => [cyl(0.028, 0.06, [x, 0, s * 0.15], "steel", "z")])),
       // Rubber bumpers fore and aft between the wheels, tail lights, an emergency stop, and rails on the deck.
       ...[1, -1].map((e) => box([0.024, 0.03, 0.27], [e * 0.316, 0.02, 0], "rubber")),
@@ -1659,6 +1743,11 @@ function omni(idle: boolean): Body {
         return [
           { s: "fins" as const, d: [0.024, 0.05, 14] as V3, p: [c * 0.08, 0.008, sn * 0.08] as V3, r: aim([c, 0, sn]), m: "dark" as const, fine: true },
           ...[-0.22, 0.22].map((d) => seam([Math.cos(a + Math.PI / 3 + d) * 0.2, 0.034, Math.sin(a + Math.PI / 3 + d) * 0.2], [Math.cos(a + Math.PI / 3 + d) * 0.2, 0.116, Math.sin(a + Math.PI / 3 + d) * 0.2])),
+          // A vent over each wheel, where its motor sits.
+          ...[-2, -1, 0, 1, 2].map((k): Part => {
+            const b = a + k * 0.045;
+            return { ...box([0.0016, 0.04, 0.005], [Math.cos(b) * 0.2004, 0.085, Math.sin(b) * 0.2004], "dark", [0, -b, 0]), fine: true };
+          }),
         ];
       }),
       bolts(0.13, 0.0022, 9, [0, 0.15 + 0.0012, 0], "y"),
@@ -1722,9 +1811,15 @@ function swerve(idle: boolean): Body {
       box([0.5, 0.08, 0.5], [0, 0.17, 0], "shell"),
       box([0.36, 0.05, 0.36], [0, 0.115, 0], "dark"),
       box([0.44, 0.04, 0.44], [0, 0.225, 0], "dark"),
-      box([0.3, 0.008, 0.3], [0, 0.248, 0], "steel"),
+      { ...box([0.3, 0.008, 0.3], [0, 0.248, 0], "steel"), coarse: true },
       box([0.508, 0.012, 0.508], [0, 0.16, 0], "glow"),
       ...screws([0.44, 0.04, 0.44], [0, 0.225, 0], "y", 0.01),
+      // Close up the payload plate on top is a millimetre thinner, and tapped on a 50 mm grid whose holes' rims come
+      // no higher than the plate did.
+      ...fine([
+        box([0.3, 0.007, 0.3], [0, 0.2475, 0], "steel"),
+        ...Array.from({ length: 25 }, (_, i) => cyl(0.0032, 0.0008, [(Math.floor(i / 5) - 2) * 0.05, 0.2516, ((i % 5) - 2) * 0.05], "dark")),
+      ]),
       ...[-1, 1].flatMap((s) => [-0.2501, 0.2501].map((z) => seamOn([0.5, 0.08, 0.5], [0, 0.17, 0], [0.08 * s, 0.13, z], [0.08 * s, 0.21, z]))),
     ]),
   );
@@ -1788,15 +1883,15 @@ function tracked(idle: boolean): Body {
   mk.add(
     trunk([
       box([0.5, 0.12, 0.27], [0, 0.11, 0], "shell"),
+      ...screws([0.5, 0.12, 0.27], [0, 0.11, 0], "x", 0.012),
       box([0.4, 0.05, 0.22], [0, 0.19, 0], "dark"),
-      box([0.02, 0.04, 0.16], [0.255, 0.11, 0], "glow"),
+      ...lamp([0.02, 0.04, 0.16], [0.255, 0.11, 0], "x"),
       cyl(0.016, 0.12, [-0.08, 0.27, 0], "steel"),
       box([0.08, 0.06, 0.12], [-0.06, 0.34, 0], "dark"),
-      ...twin((s) => [ball(0.014, [-0.018, 0.345, s * 0.03], "lens")]),
+      ...twin((s) => eye(0.014, [-0.018, 0.345, s * 0.03])),
       box([0.004, 0.008, 0.08], [-0.018, 0.322, 0], "glow"),
-      // Lens rings, the pan-and-tilt yoke under the camera head, screws on the deck, and panel lines on the hull.
+      // The pan-and-tilt yoke under the camera head, screws on the deck, and panel lines on the hull.
       ...twin((s) => [
-        { ...ring(0.0155, 0.002, [-0.018, 0.345, s * 0.03], "steel", "x"), fine: true },
         // The tilt yoke: a cheek either side of the head, its pivot boss and screws, on a crossbar the mast turns.
         { ...box([0.036, 0.048, 0.005], [-0.06, 0.326, s * 0.0635], "steel"), fine: true },
         { ...cyl(0.01, 0.004, [-0.06, 0.34, s * 0.068], "dark", "z"), fine: true },
@@ -1958,9 +2053,8 @@ function wheelLeg(idle: boolean): Body {
       box([L * 0.64, 0.024, W * 0.78], [0, top + 0.008, 0], "dark"),
       box([L * 0.26, 0.008, W * 0.22], [-L * 0.08, top + 0.022, 0], "glow"),
       ...twin((e) => [box([0.12, 0.1, 0.17], [e * (L / 2 + 0.04), 0.03, 0], "dark"), box([0.02, 0.064, 0.176], [e * (L / 2 + 0.098), 0.03, 0], "shell")]),
-      box([0.012, 0.022, 0.11], [L / 2 + 0.112, 0.062, 0], "glow"),
-      ball(0.019, [L / 2 + 0.104, 0.022, -0.046], "lens"),
-      ball(0.019, [L / 2 + 0.104, 0.022, 0.046], "lens"),
+      ...lamp([0.012, 0.022, 0.11], [L / 2 + 0.112, 0.062, 0], "x"),
+      ...twin((s) => eye(0.019, [L / 2 + 0.104, 0.022, s * 0.046])),
       ...hull(L, W, top, 1),
     ]),
   );
@@ -2012,8 +2106,9 @@ function triwheel(idle: boolean): Body {
       box([0.188, 0.012, 0.148], [0, 0.566, 0], "shell"),
       box([0.05, 0.004, 0.018], [-0.045, 0.5725, 0], "dark"),
       box([0.024, 0.2, 0.2], [0.172, 0.39, 0], "dark"),
+      ...screws([0.024, 0.2, 0.2], [0.172, 0.39, 0], "x", 0.01),
       box([0.008, 0.03, 0.16], [0.186, 0.45, 0], "glow"),
-      ...twin((s) => [ball(0.016, [0.184, 0.35, s * 0.05], "lens")]),
+      ...twin((s) => eye(0.016, [0.184, 0.35, s * 0.05])),
       box([0.03, 0.045, 0.3], [0.178, 0.205, 0], "rubber"),
       // A telescopic handle: sleeves down the back, steel tubes out of them, a rubber grip across.
       ...twin((s) => [
@@ -2104,6 +2199,7 @@ function rocker(idle: boolean): Body {
   mk.add(
     trunk([
       box([0.46, 0.14, 0.32], [0, 0.24, 0], "shell"),
+      ...screws([0.46, 0.14, 0.32], [0, 0.24, 0], "x", 0.012),
       box([0.4, 0.05, 0.28], [0, 0.15, 0], "dark"),
       box([0.5, 0.02, 0.46], [-0.04, 0.325, 0], "dark"),
       box([0.44, 0.008, 0.4], [-0.04, 0.338, 0], "steel"),
@@ -2113,20 +2209,19 @@ function rocker(idle: boolean): Body {
         .map(([c, k]) => box([0.0935, 0.004, 0.117], [-0.208 + c * 0.1055, 0.344, -0.1245 + k * 0.1245], "dark")),
       cyl(0.016, 0.26, [0.18, 0.46, 0], "steel"),
       box([0.09, 0.07, 0.15], [0.2, 0.61, 0], "shell"),
-      ...twin((s) => [ball(0.016, [0.246, 0.615, s * 0.04], "lens")]),
-      box([0.008, 0.014, 0.1], [0.247, 0.588, 0], "glow"),
+      ...twin((s) => eye(0.016, [0.246, 0.615, s * 0.04])),
+      ...lamp([0.008, 0.014, 0.1], [0.247, 0.588, 0], "x"),
       cyl(0.008, 0.1, [-0.2, 0.39, 0.13], "steel"),
       cyl(0.06, 0.012, [-0.2, 0.445, 0.13], "shell"),
       cyl(0.012, 0.02, [-0.2, 0.46, 0.13], "dark"),
-      box([0.012, 0.03, 0.2], [0.232, 0.24, 0], "glow"),
-      // Close up: the dish's feed held over it on three struts, rings round the mast camera's lenses, the deck's
-      // screws, panel lines on the body, and the links that carry the differential bar down to each rocker.
+      ...lamp([0.012, 0.03, 0.2], [0.232, 0.24, 0], "x"),
+      // Close up: the dish's feed held over it on three struts, the deck's screws, panel lines on the body, and the
+      // links that carry the differential bar down to each rocker.
       ...Array.from({ length: 3 }, (_, i) => {
         const a = (i / 3) * TAU + 0.5;
         return { ...strut([-0.2 + Math.cos(a) * 0.056, 0.452, 0.13 + Math.sin(a) * 0.056], [-0.2, 0.495, 0.13], 0.0016, "steel"), fine: true };
       }),
       ...fine([cyl(0.009, 0.012, [-0.2, 0.5, 0.13], "dark"), cyl(0.0035, 0.03, [-0.2, 0.48, 0.13], "steel")]),
-      ...fine(twin((s) => [ring(0.0175, 0.002, [0.2455, 0.615, s * 0.04], "steel", "x")])),
       ...screws([0.5, 0.02, 0.46], [-0.04, 0.325, 0], "y", 0.012),
       ...twin((s) => [0.12, -0.12].map((x) => seamOn([0.46, 0.14, 0.32], [0, 0.24, 0], [x, 0.17, s * 0.1603], [x, 0.31, s * 0.1603]))),
       ...twin((s) => [
@@ -2204,10 +2299,11 @@ function manipulator(idle: boolean): Body {
   mk.add(
     trunk([
       box([0.58, 0.16, 0.38], [0, 0.1, 0], "shell"),
+      ...screws([0.58, 0.16, 0.38], [0, 0.1, 0], "x", 0.012),
       box([0.6, 0.03, 0.36], [0, 0.02, 0], "dark"),
       box([0.52, 0.02, 0.32], [0, 0.19, 0], "dark"),
-      box([0.014, 0.04, 0.28], [0.296, 0.1, 0], "glow"),
-      ...twin((s) => [ball(0.016, [0.292, 0.145, s * 0.1], "lens")]),
+      ...lamp([0.014, 0.04, 0.28], [0.296, 0.1, 0], "x"),
+      ...twin((s) => eye(0.016, [0.292, 0.145, s * 0.1])),
       cyl(0.078, 0.022, [0.14, 0.205, 0.1], "steel"),
       ring(0.078, 0.004, [0.14, 0.205, 0.1], "glow"),
       cyl(0.045, 0.03, [-0.23, -0.035, 0], "dark"),
@@ -2257,24 +2353,53 @@ function manipulator(idle: boolean): Body {
     });
     at = [0, len + 0.03, 0];
   }
+  // How far each finger's links lean out from upright: the gripper opens and closes twice in the arm's cycle.
+  const lean = (t: number) => (idle ? 0.2 : 0.24 - 0.24 * Math.cos(1.4 * t));
+  const reach = 0.026;
+  /** Where a pin at p on the housing carries the far end of its link. */
+  const swing = (p: V3, s: number, t: number): V3 => [p[0], p[1] + reach * Math.cos(lean(t)), p[2] + s * reach * Math.sin(lean(t))];
   mk.add({
     name: "gripper",
     parent: p,
     at,
     joint: "fixed",
-    // A parallel gripper inside the old one's bounds: its housing with dark end caps and a light line, the rail the
-    // fingers ride on, and steel fingers with rubber pads facing each other.
+    // A parallel gripper: its housing with dark end caps and a light line. Far off its fingers stand still. Close up
+    // each finger rides on a parallelogram of links, an inner and an outer pair, that turn on pins in lugs on the
+    // housing, so the finger stays upright as it opens and closes, its rubber pad facing the other's.
     parts: [
       cyl(0.03, 0.02, [0, 0, 0], "steel"),
       box([0.05, 0.03, 0.086], [0, 0.022, 0], "shell"),
       box([0.004, 0.006, 0.05], [0.023, 0.022, 0], "glow"),
       box([0.03, 0.006, 0.09], [0, 0.04, 0], "dark"),
-      ...twin((s) => [
-        box([0.05, 0.03, 0.012], [0, 0.022, s * 0.049], "dark"),
-        box([0.026, 0.07, 0.014], [0, 0.075, s * 0.042], "steel"),
-        box([0.018, 0.016, 0.01], [0, 0.102, s * 0.036], "steel"),
-        box([0.022, 0.04, 0.006], [0, 0.088, s * 0.032], "rubber"),
-      ]),
+      ...twin((s) => {
+        const pins: V3[] = [
+          [0, 0.047, s * 0.012],
+          [0, 0.047, s * 0.03],
+        ];
+        const [inner, outer] = pins as [V3, V3];
+        const top = (t: number) => swing(inner, s, t);
+        return [
+          box([0.05, 0.03, 0.012], [0, 0.022, s * 0.049], "dark"),
+          ...[box([0.026, 0.07, 0.014], [0, 0.075, s * 0.042], "steel"), box([0.018, 0.016, 0.01], [0, 0.102, s * 0.036], "steel"), box([0.022, 0.04, 0.006], [0, 0.088, s * 0.032], "rubber")].map(
+            (q) => ({ ...q, coarse: true }),
+          ),
+          ...fine(
+            pins.flatMap((q) => [
+              box([0.009, 0.008, 0.008], [q[0], q[1] - 0.002, q[2]], "steel"),
+              cyl(0.0022, 0.016, q, "steel", "x"),
+              // Each link is a pair of plates, one either side of its lug.
+              ...[-1, 1].map((e): Part => ({ ...box([0.0015, reach, 0.006], q, "dark"), span: (t) => [add(q, [e * 0.006, 0, 0]), add(swing(q, s, t), [e * 0.006, 0, 0])] })),
+            ]),
+          ),
+          ...fine([
+            // The pins at the links' far ends, and the finger's block between them.
+            ...pins.map((q) => bar(0.0022, "steel", (t) => [add(swing(q, s, t), [-0.008, 0, 0]), add(swing(q, s, t), [0.008, 0, 0])])),
+            { ...box([0.009, 0.024, 0.008], [0, 0.073, s * 0.021], "steel"), span: (t: number) => [add(swing(inner, s, t), [0, 0, -s * 0.003]), add(swing(outer, s, t), [0, 0, s * 0.003])] as [V3, V3] },
+            { ...box([0.014, 0.039, 0.005], [0, 0.09, s * 0.012], "steel"), span: (t: number) => [add(top(t), [0, -0.003, 0]), add(top(t), [0, 0.036, 0])] as [V3, V3] },
+            { ...box([0.014, 0.026, 0.003], [0, 0.094, s * 0.008], "rubber"), span: (t: number) => [add(top(t), [0, 0.008, -s * 0.004]), add(top(t), [0, 0.034, -s * 0.004])] as [V3, V3] },
+          ]),
+        ];
+      }),
     ],
   });
   return { links: mk.links, height: r, speed: v, travel: idle ? undefined : (t) => ({ x: v * t, z: 0, yaw: 0 }), cycle: (TAU / 0.7) * 1, size: 0.9 };
@@ -2416,7 +2541,7 @@ function snake(idle: boolean): Body {
               cap(0.046, 0.05, [0.03, 0.012, 0], "shell", "x"),
               box([0.03, 0.036, 0.074], [0.088, 0.018, 0], "dark"),
               box([0.006, 0.008, 0.05], [0.104, 0.002, 0], "glow"),
-              ...twin((s) => [ball(0.011, [0.1, 0.026, s * 0.02], "lens")]),
+              ...twin((s) => eye(0.011, [0.1, 0.026, s * 0.02])),
             ]),
       ],
     });
@@ -2472,12 +2597,15 @@ function balancer(idle: boolean): Body {
   const [m, l, Ic, M, J] = [10, 0.2, 0.25, 2.4, 0.03];
   const gain = (m * (r + l) + M * r + J / r) / (m * 9.81 * l + w * w * (Ic + m * l * l + m * r * l));
   const pitch = (t: number) => -gain * (-A * w * w * Math.sin(w * t));
-  // A fender's arc over a wheel, clear of the tyre.
-  const fender = (s: 1 | -1): Part[] =>
-    Array.from({ length: 6 }, (_, i) => {
+  // A fender's arc over a wheel, clear of the tyre: far off six flat panels, close up one smooth sheet.
+  const fender = (s: 1 | -1): Part[] => [
+    ...Array.from({ length: 6 }, (_, i): Part => {
       const [a0, a1] = [0.42 + (i / 6) * 2.3, 0.42 + ((i + 1) / 6) * 2.3];
-      return slab([0.172 * Math.cos(a0), 0.172 * Math.sin(a0), s * 0.17], [0.172 * Math.cos(a1), 0.172 * Math.sin(a1), s * 0.17], 0.012, 0.066, "dark");
-    });
+      const panel = slab([0.172 * Math.cos(a0), 0.172 * Math.sin(a0), s * 0.17], [0.172 * Math.cos(a1), 0.172 * Math.sin(a1), s * 0.17], 0.012, 0.066, "dark");
+      return { ...panel, coarse: true };
+    }),
+    { s: "fender", d: [0.172, 0.066, 2.3], p: [0, 0, s * 0.17], r: [Math.PI / 2, 0.42, 0], m: "dark", fine: true },
+  ];
   mk.add(
     trunk([
       // The drive pod between the wheels: battery and both motors, low.
@@ -2488,6 +2616,12 @@ function balancer(idle: boolean): Body {
       box([0.13, 0.3, 0.21], [0, 0.24, 0], "shell"),
       box([0.012, 0.13, 0.15], [0.066, 0.27, 0], "dark"),
       box([0.004, 0.008, 0.1], [0.073, 0.315, 0], "glow"),
+      ...fine([
+        // Read from in front, where the robot's left (+z) is on the reader's left.
+        ...[0.06, 0.04, 0.07].map((w, i) => box([0.001, 0.003, w], [0.0725, 0.292 - i * 0.012, 0.05 - w / 2], "glow")),
+        ...[0, 1, 2, 3].map((i) => box([0.001, 0.008, 0.006], [0.0725, 0.284, -0.054 + i * 0.008], "glow")),
+        box([0.001, 0.002, 0.1], [0.0725, 0.226, 0], "glow"),
+      ]),
       strut([-0.097, 0.35, -0.06], [-0.097, 0.35, 0.06], 0.009, "dark"),
       // The neck, the head with its visor and eyes, and a lidar on top.
       cyl(0.028, 0.06, [0, 0.42, 0], "steel"),
@@ -2496,18 +2630,17 @@ function balancer(idle: boolean): Body {
       box([0.004, 0.008, 0.14], [0.092, 0.465, 0], "glow"),
       cyl(0.04, 0.034, [0, 0.567, 0], "dark"),
       ring(0.04, 0.004, [0, 0.572, 0], "glow"),
-      // Close up: the lidar's emitter going round, rings round the eyes, panel lines and vents
-      // down the torso's sides, and the screws of the pod's cover.
+      // Close up: the lidar's emitter going round, panel lines and vents down the torso's sides, and the screws of the
+      // pod's cover.
       { s: "box", d: [0.003, 0.009, 0.014], p: [0.0408, 0.578, 0], m: "glow", fine: true, spin: { at: [0, 0.578, 0], axis: [0, 1, 0], angle: (t) => TAU * 1.5 * t } },
       ...twin((s) => [
-        { ...ring(0.0175, 0.002, [0.0925, 0.505, s * 0.045], "steel", "x"), fine: true },
         seamOn([0.13, 0.3, 0.21], [0, 0.24, 0], [0.03, 0.09, s * 0.1053], [0.03, 0.39, s * 0.1053]),
         ...vent(6, [-0.03, 0.3, s * 0.1054], "y", "x", 0.04, 0.012, s > 0 ? "z" : "-z"),
       ]),
       ...screws([0.22, 0.03, 0.262], [0, 0.075, 0], "y", 0.012),
       ...twin((s) => [
         cyl(0.055, 0.024, [0, 0, s * 0.135], "steel", "z"),
-        ball(0.016, [0.09, 0.505, s * 0.045], "lens"),
+        ...eye(0.016, [0.09, 0.505, s * 0.045]),
         strut([-0.065, 0.35, s * 0.06], [-0.097, 0.35, s * 0.06], 0.009, "dark"),
         ...fender(s),
         slab([0, 0.185, s * 0.105], [0, 0.185, s * 0.15], 0.05, 0.012, "dark"),
@@ -2538,12 +2671,16 @@ export const makers: Record<string, (idle?: boolean) => Body> = {
     mk.add(
       trunk([
         box([0.52, 0.09, 0.24], [0, 0.01, 0], "shell"),
+        ...twin((s) => [
+          ...[0.12, -0.12].map((x) => seamOn([0.52, 0.09, 0.24], [0, 0.01, 0], [x, -0.03, s * 0.12], [x, 0.05, s * 0.12])),
+          ...vent(6, [0, 0.01, s * 0.1204], "x", "y", 0.04, 0.012, s > 0 ? "z" : "-z"),
+        ]),
         box([0.4, 0.04, 0.2], [0, -0.045, 0], "dark"),
         box([0.36, 0.04, 0.17], [0, 0.07, 0], "dark"),
         ...twin((e) => [box([0.1, 0.07, 0.13], [e * 0.3, 0.01, 0], "dark")]),
         box([0.2, 0.01, 0.08], [0, 0.095, 0], "glow"),
         box([0.008, 0.018, 0.09], [0.352, 0.025, 0], "glow"),
-        ...twin((s) => [ball(0.014, [0.35, 0.0, s * 0.035], "lens")]),
+        ...twin((s) => eye(0.014, [0.35, 0.0, s * 0.035])),
       ]),
     );
     for (const x of [1, -1])

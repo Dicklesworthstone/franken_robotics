@@ -29,12 +29,13 @@ test("what is drawn only close up lies inside the size the door test measures", 
     const body = makers[a.id]!();
     const plain = envelope(body);
     const close = envelope(body, true);
-    expect({ id: a.id, width: close.width - plain.width, height: close.height - plain.height, circle: close.circle - plain.circle }).toEqual({
-      id: a.id,
-      width: expect.closeTo(0, 9) as unknown as number,
-      height: expect.closeTo(0, 9) as unknown as number,
-      circle: expect.closeTo(0, 9) as unknown as number,
-    });
+    // Close up may stop short of the crowd's stand-in for a part, as a lens stops short of its glass ball or a
+    // gripper's fingers close inside the still ones that stand open far off, but never reaches past it, nor falls
+    // more than a few centimetres short.
+    for (const k of ["width", "height", "circle"] as const) {
+      const over = close[k] - plain[k];
+      expect({ id: a.id, k, over: over <= 1e-9 && over > -0.05 }).toEqual({ id: a.id, k, over: true });
+    }
   }
 });
 
@@ -108,6 +109,7 @@ test("every solid has finite geometry at every level of detail", () => {
     hex: [0.006, 0.004, 0.006],
     coil: [0.02, 0.08, 7],
     arc: [0.05, 0.004, 2],
+    fender: [0.135, 0.085, 1.44],
     pulley: [0.03, 0.02, 0.004],
     bellows: [0.02, 0.06, 6],
     fins: [0.03, 0.06, 18],

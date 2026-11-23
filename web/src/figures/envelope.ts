@@ -1,5 +1,5 @@
 import { Euler, Matrix4, Quaternion, Vector3 } from "three";
-import { girth, shoes, type Body, type Link, type Part } from "./bodies";
+import { girth, SHEET, shoes, type Body, type Link, type Part } from "./bodies";
 
 const AXIS = { x: new Vector3(1, 0, 0), y: new Vector3(0, 1, 0), z: new Vector3(0, 0, 1) };
 const ONE = new Vector3(1, 1, 1);
@@ -139,13 +139,27 @@ export function envelope(body: Body, close = false): Envelope {
       e.half = Math.max(e.half, Math.abs(centre.z) + h * Math.abs(axis.z) + r);
       e.top = Math.max(e.top, centre.y + h * Math.abs(axis.y) + r);
       for (const end of [-h, h]) e.radius = Math.max(e.radius, Math.hypot(centre.x + axis.x * end, centre.z + axis.z * end) + r);
+    } else if (p.s === "arc" || p.s === "fender") {
+      // A bent tube or a fender reaches only as far round as it sweeps: the corners of its section, all the way round,
+      // pushed out a little so that the polygon through them holds the curve between.
+      const [R, b, sweep] = p.d;
+      const [lo, hi, half] = p.s === "arc" ? [R - b, R + b, b] : [R * (1 - SHEET / 2), R * (1 + SHEET / 2), b / 2];
+      const out = 1 / Math.cos(sweep / 64);
+      for (let a = 0; a <= 32; a++) {
+        const angle = (a / 32) * sweep;
+        for (const r of [lo, hi * out])
+          for (const h of [-half, half]) {
+            v.set(r * Math.cos(angle), h, -r * Math.sin(angle)).applyMatrix4(m);
+            point(v.x, v.y, v.z);
+          }
+      }
     } else if (p.s !== "box") {
       // Round solids: a cylinder reaches h·|a·u| + r·√(1 − (a·u)²) along any direction u.
       axis.setFromMatrixColumn(m, 1);
       centre.setFromMatrixPosition(m);
       const [r, half] = girth(p);
-      // A span stretches the solid along its axis; a ring or an arc has no length to stretch.
-      const h = p.s === "ring" || p.s === "arc" ? half : half * (len / p.d[1]);
+      // A span stretches the solid along its axis; a ring has no length to stretch.
+      const h = p.s === "ring" ? half : half * (len / p.d[1]);
       e.half = Math.max(e.half, Math.abs(centre.z) + h * Math.abs(axis.z) + r * Math.sqrt(Math.max(0, 1 - axis.z ** 2)));
       e.top = Math.max(e.top, centre.y + h * Math.abs(axis.y) + r * Math.sqrt(Math.max(0, 1 - axis.y ** 2)));
       for (const end of [-h, h])

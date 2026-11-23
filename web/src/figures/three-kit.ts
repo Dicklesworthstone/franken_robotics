@@ -26,7 +26,7 @@ import {
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { type Mat, rounding, type Solid } from "./bodies";
+import { type Mat, rounding, SHEET, type Solid } from "./bodies";
 
 /** A renderer on the figure's own canvas, or a sentence in its place where WebGL is missing. */
 export function renderer(canvas: HTMLCanvasElement) {
@@ -242,7 +242,7 @@ export function shapeOf(s: Solid, d: readonly [number, number, number], q: 0 | 1
       return new SphereGeometry(a, [9, 14, 40][q]!, [6, 9, 26][q]!);
     case "cyl": {
       const r = Math.max(a, c);
-      if (fine) return turned(a, b, c, round(r * 700, 20, 96));
+      if (fine) return turned(a, b, c, round(r * 1000, 24, 96));
       return new CylinderGeometry(a, c, b, round(r * 260, q ? 10 : 7, q ? 22 : 14));
     }
     case "cap":
@@ -250,7 +250,7 @@ export function shapeOf(s: Solid, d: readonly [number, number, number], q: 0 | 1
     case "tire":
       return fine ? tread(a, b, c) : new LatheGeometry(tireProfile(a, b, c, false), q ? 18 : 12);
     case "ring":
-      return new TorusGeometry(a, b, [3, 4, 12][q]!, fine ? round(a * 800, 32, 128) : round(a * 220, q ? 12 : 8, q ? 24 : 16)).rotateX(Math.PI / 2);
+      return new TorusGeometry(a, b, [3, 4, 12][q]!, fine ? round(a * 1600, 48, 128) : round(a * 220, q ? 12 : 8, q ? 24 : 16)).rotateX(Math.PI / 2);
     case "barrel":
       return new LatheGeometry(barrelProfile(a, b, c, [2, 3, 8][q]!), [5, 7, 18][q]!);
     case "gear": {
@@ -262,6 +262,16 @@ export function shapeOf(s: Solid, d: readonly [number, number, number], q: 0 | 1
       return flat(new CylinderGeometry(a, a, b, 6));
     case "coil":
       return fine ? new TubeGeometry(new Helix(a, b, c), Math.round(c * 28), a * WIRE, 8) : new CylinderGeometry(a, a, b, 10, 1, true);
+    case "fender": {
+      // A sector of a ring, extruded across its width with its edges eased.
+      const [lo, hi] = [a * (1 - SHEET / 2), a * (1 + SHEET / 2)];
+      const shape = new Shape().moveTo(hi, 0);
+      shape.absarc(0, 0, hi, 0, c, false);
+      shape.lineTo(lo * Math.cos(c), lo * Math.sin(c));
+      shape.absarc(0, 0, lo, c, 0, true);
+      shape.closePath();
+      return plate(shape, b, a * SHEET * 0.3, fine ? round(a * 200 * c, 16, 64) : 8);
+    }
     case "arc":
       return new TorusGeometry(a, b, fine ? 10 : 4, fine ? round(a * 600 * (c / Math.PI), 8, 64) : 6, c).rotateX(-Math.PI / 2);
     case "pulley": {

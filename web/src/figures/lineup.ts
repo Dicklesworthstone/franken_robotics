@@ -92,6 +92,16 @@ const PAINT: Record<Mat, string> = {
   amber: "#fbbf24",
   lens: "#07120e",
 };
+/** How each finish takes the light, as roughness and metalness: lacquer, anodised metal, steel, rubber, glass. */
+const SURFACE: Record<Mat, readonly [number, number]> = {
+  shell: [0.38, 0.04],
+  dark: [0.5, 0.4],
+  steel: [0.3, 0.7],
+  rubber: [0.88, 0],
+  glow: [0.4, 0],
+  amber: [0.4, 0.2],
+  lens: [0.08, 0.3],
+};
 function shape(p: Part, fine: boolean): BufferGeometry {
   const geo = shapeOf(p.s, p.d, fine ? 1 : 0);
   const flat = geo.index ? geo.toNonIndexed() : geo;
@@ -107,6 +117,7 @@ function shape(p: Part, fine: boolean): BufferGeometry {
     "color",
     new Float32BufferAttribute(Array.from({ length: n }, () => [tint.r, tint.g, tint.b]).flat(), 3),
   );
+  flat.setAttribute("surface", new Float32BufferAttribute(Array.from({ length: n }, () => SURFACE[p.m]).flat(), 2));
   return flat;
 }
 
@@ -202,6 +213,17 @@ export default function mount(root: HTMLElement) {
         else group.users.push([b, l, -1]);
       }
   const plain = new MeshStandardMaterial({ vertexColors: true, roughness: 0.42, metalness: 0.12 });
+  // Every vertex carries its own roughness and metalness, so steel, rubber, paint and glass read apart without
+  // splitting the crowd into more draw calls.
+  plain.onBeforeCompile = (shader) => {
+    shader.vertexShader = shader.vertexShader
+      .replace("#include <common>", "#include <common>\nattribute vec2 surface;\nvarying vec2 vSurface;")
+      .replace("#include <color_vertex>", "#include <color_vertex>\n\tvSurface = surface;");
+    shader.fragmentShader = shader.fragmentShader
+      .replace("#include <common>", "#include <common>\nvarying vec2 vSurface;")
+      .replace("#include <roughnessmap_fragment>", "#include <roughnessmap_fragment>\n\troughnessFactor = vSurface.x;")
+      .replace("#include <metalnessmap_fragment>", "#include <metalnessmap_fragment>\n\tmetalnessFactor = vSurface.y;");
+  };
   const bright = new MeshBasicMaterial({ toneMapped: false });
   const meshes: InstancedMesh[] = [];
   for (const { parts, lamp, users } of groups.values()) {

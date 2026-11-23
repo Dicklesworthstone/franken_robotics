@@ -15,7 +15,7 @@ import {
 } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { $, $$, clamp, fit, loop, mix, reduced, seg } from "./lib";
-import { generate, type Finish, type Interior } from "./interiors";
+import { generate, type Finish, type Interior, type Round } from "./interiors";
 import { lit, renderer } from "./three-kit";
 
 export default function mount(root: HTMLElement) {
@@ -62,11 +62,15 @@ export default function mount(root: HTMLElement) {
   mats.hazard.emissiveIntensity = 0.9;
 
   const unit = new BoxGeometry(1, 1, 1);
-  const round = { cyl: new CylinderGeometry(0.5, 0.5, 1, 28), ball: new SphereGeometry(0.5, 24, 16) };
+  const round: Record<Round, BufferGeometry> = {
+    cyl: new CylinderGeometry(0.5, 0.5, 1, 28),
+    ball: new SphereGeometry(0.5, 24, 16),
+    rod: new CylinderGeometry(0.5, 0.5, 1, 20).rotateZ(Math.PI / 2),
+  };
   // Furniture and stock get softened edges, made at their own size so that the bevel keeps its shape.
   const soft = new Set<Finish>(["wood", "fabric", "steel", "shelf", "stock", "stock2", "stock3", "dark", "green"]);
   let made: BufferGeometry[] = [];
-  const shape = (b: { w: number; h: number; d: number; f: Finish; s?: "cyl" | "ball" }) => {
+  const shape = (b: { w: number; h: number; d: number; f: Finish; s?: Round }) => {
     if (b.s) return [round[b.s], true] as const;
     const r = Math.min(0.025, Math.min(b.w, b.h, b.d) * 0.2);
     if (!soft.has(b.f) || r < 0.006) return [unit, true] as const;

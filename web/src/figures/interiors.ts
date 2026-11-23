@@ -28,9 +28,10 @@ export interface Block {
   h: number;
   f: Finish;
   turn?: number;
-  /** Round things: a cylinder or a ball that fills the block's box. */
-  s?: "cyl" | "ball";
+  s?: Round;
 }
+/** Round things that fill a block's box: a cylinder standing up, a ball, or a rod lying along the block's width. */
+export type Round = "cyl" | "ball" | "rod";
 export interface Hazard {
   name: string;
   size: string;
@@ -66,7 +67,7 @@ class Plan {
     this.add(0, d / 2 + 0.06, w + 0.24, 0.12, 0.12, "wall");
     this.add(w / 2 + 0.06, 0, 0.12, d, 0.12, "wall");
   }
-  add(x: number, z: number, w: number, d: number, h: number, f: Finish, y = 0, turn = 0, s?: "cyl" | "ball") {
+  add(x: number, z: number, w: number, d: number, h: number, f: Finish, y = 0, turn = 0, s?: Round) {
     this.blocks.push(s ? { x, z, w, d, h, f, y, turn, s } : { x, z, w, d, h, f, y, turn });
   }
 
@@ -117,6 +118,29 @@ class Plan {
     this.add(x, z, w, d, 0.78, f, 0.08);
     this.add(x, z, w + 0.02, d + 0.02, 0.04, "dark", 0.86);
   }
+  /**
+   * A four-burner hob set in a worktop at (x, z), whose back is on the side `back` points to along z, with its
+   * knobs and an oven under it on the cabinet front.
+   */
+  hob(x: number, z: number, back: 1 | -1, front = 0.3) {
+    for (const dx of [-0.15, 0.15])
+      for (const dz of [-0.13, 0.13]) {
+        this.add(x + dx, z + dz, 0.19, 0.19, 0.012, "steel", 0.9, 0, "cyl");
+        this.add(x + dx, z + dz, 0.08, 0.08, 0.022, "dark", 0.9, 0, "cyl");
+      }
+    const face = z - back * front;
+    for (const dx of [-0.225, -0.075, 0.075, 0.225]) this.add(x + dx, face - back * 0.015, 0.03, 0.045, 0.045, "dark", 0.74, Math.PI / 2, "rod");
+    this.add(x, face - back * 0.005, 0.56, 0.01, 0.46, "dark", 0.2);
+    this.add(x, face - back * 0.03, 0.48, 0.025, 0.025, "steel", 0.62, 0, "rod");
+    for (const dx of [-0.2, 0.2]) this.add(x + dx, face - back * 0.017, 0.02, 0.024, 0.02, "steel", 0.625);
+  }
+  /** A sink in a worktop `d` deep at (x, z), its tap at the back (`back` along z) and its spout over the bowl. */
+  sink(x: number, z: number, back: 1 | -1, d = 0.6) {
+    this.add(x, z, 0.54, d - 0.18, 0.008, "steel", 0.9);
+    this.add(x, z - back * 0.01, 0.46, d - 0.28, 0.004, "dark", 0.908);
+    this.add(x, z + back * (d / 2 - 0.06), 0.04, 0.04, 0.24, "steel", 0.9, 0, "cyl");
+    this.add(x, z + back * (d / 2 - 0.135), 0.15, 0.026, 0.026, "steel", 1.11, Math.PI / 2, "rod");
+  }
   /** An office desk: a top on two end panels with a panel across the back. */
   desk(x: number, z: number, w: number, d: number, h: number) {
     this.add(x, z, w, d, 0.03, "wood", h - 0.03);
@@ -148,7 +172,7 @@ class Plan {
   turned(x: number, z: number, turn: number) {
     const c = Math.cos(turn);
     const s = Math.sin(turn);
-    return (dx: number, dz: number, w: number, d: number, h: number, f: Finish, y = 0, spin = 0, round?: "cyl" | "ball") =>
+    return (dx: number, dz: number, w: number, d: number, h: number, f: Finish, y = 0, spin = 0, round?: Round) =>
       this.add(x + dx * c + dz * s, z - dx * s + dz * c, w, d, h, f, y, turn + spin, round);
   }
   /** A block pallet, 1.2 m by 0.9 m: deck boards on stringers on nine blocks, with fork openings on all four sides. */
@@ -276,7 +300,9 @@ const home = (u: U) => {
   p.hazard("Toys", `${p.mm(20, 150)} high`, "Ride-up, tip or a blocked caster", sx - 0.7, 0.8, 0.2);
   // Kitchen
   p.counter(3.9, 2.9, 1.5, 0.6, "steel");
+  p.hob(4.2, 2.9, 1);
   p.counter(split + 1.1, 2.95, 1.8, 0.6, "stock2");
+  p.sink(split + 1.1, 2.95, 1);
   p.table(2.6, 1.2, 1.1, 0.8, 0.74);
   for (const [dx, dz] of [
     [-0.75, 0],
@@ -309,6 +335,8 @@ const apartment = (u: U) => {
   p.patch(2.95, -2.4, 0.05, 1.1);
   p.hazard("Lift sill gap", p.mm(10, 35), "A caster drops in", 2.95, -2.4, 0.12);
   p.counter(-2.7, -2.95, 2.4, 0.5, "steel");
+  p.hob(-3.35, -2.95, -1, 0.25);
+  p.sink(-2.05, -2.95, -1, 0.5);
   const galley = p.r(0.8, 1.0);
   p.counter(-2.7, -2.45 + galley, 2.4, 0.5, "stock2");
   p.hazard("Compact galley", `${p.m(galley)} aisle`, "No room to turn with a payload", -2.7, -2.7 + galley / 2 + 0.25, 0.1);
@@ -393,8 +421,19 @@ const warehouse = (u: U) => {
 const plant = (u: U) => {
   const p = new Plan(12, 8, u, "floor");
   const belt = p.r(0.6, 0.9);
+  // A belt between two drums, inside side channels, on braced legs, with its drive motor at the far end.
   p.add(-1.2, -1.2, 7.2, 0.8, 0.12, "belt", belt);
-  for (let i = 0; i < 5; i++) for (const dz of [-0.35, 0.35]) p.add(-4.4 + i * 1.6, -1.2 + dz, 0.08, 0.08, belt, "steel");
+  for (const x of [-4.8, 2.4]) p.add(x, -1.2, 0.8, 0.12, 0.12, "belt", belt, Math.PI / 2, "rod");
+  for (const dz of [-0.43, 0.43]) p.add(-1.2, -1.2 + dz, 7.3, 0.05, 0.18, "steel", belt - 0.04);
+  for (let i = 0; i < 5; i++) {
+    for (const dz of [-0.35, 0.35]) {
+      p.add(-4.4 + i * 1.6, -1.2 + dz, 0.08, 0.08, belt, "steel");
+      p.add(-4.4 + i * 1.6, -1.2 + dz, 0.15, 0.15, 0.012, "steel");
+    }
+    p.add(-4.4 + i * 1.6, -1.2, 0.05, 0.62, 0.05, "steel", 0.16);
+  }
+  p.add(2.4, -1.705, 0.16, 0.1, 0.18, "dark", belt - 0.03);
+  p.add(2.4, -1.885, 0.26, 0.17, 0.17, "dark", belt - 0.025, Math.PI / 2, "rod");
   for (let i = 0; i < 6; i++) p.add(-4.4 + i * 1.2 + p.r(-0.2, 0.2), -1.2, 0.4, 0.4, 0.3, p.pick<Finish>(["stock", "stock3"]), belt + 0.12);
   p.hazard("Conveyor", `${p.r(0.1, 1).toFixed(1)} m/s at ${belt.toFixed(2)} m`, "Placement error on a moving target", 0.6, -1.2, belt + 0.5);
   for (const [x, z] of [
@@ -402,9 +441,18 @@ const plant = (u: U) => {
     [-1, -3.1],
     [2.2, -3],
   ] as const) {
+    // A machine cell: a sliding door with its window and handle, a control panel, and a stack light on top.
     p.add(x, z, 1.7, 1.1, 1.1, "steel");
-    p.add(x, z + 0.5, 0.9, 0.12, 0.5, "dark", 0.5);
-    p.add(x + 0.6, z, 0.3, 0.3, 0.4, "stock3", 1.1);
+    p.add(x - 0.05, z + 0.5, 0.9, 0.12, 0.5, "dark", 0.5);
+    p.add(x + 0.48, z + 0.566, 0.03, 0.03, 0.36, "steel", 0.57, 0, "cyl");
+    p.add(x - 0.66, z + 0.58, 0.3, 0.06, 0.36, "dark", 0.62);
+    p.add(x - 0.66, z + 0.612, 0.22, 0.006, 0.15, "stock2", 0.78);
+    for (const dx of [-0.06, 0.06]) p.add(x - 0.66 + dx, z + 0.62, 0.025, 0.035, 0.035, "stock3", 0.68, Math.PI / 2, "rod");
+    p.add(x + 0.6, z - 0.3, 0.12, 0.12, 0.03, "dark", 1.1, 0, "cyl");
+    p.add(x + 0.6, z - 0.3, 0.035, 0.035, 0.22, "steel", 1.13, 0, "cyl");
+    p.add(x + 0.6, z - 0.3, 0.1, 0.1, 0.09, "green", 1.35, 0, "cyl");
+    p.add(x + 0.6, z - 0.3, 0.1, 0.1, 0.09, "stock3", 1.44, 0, "cyl");
+    p.add(x + 0.6, z - 0.3, 0.1, 0.1, 0.02, "dark", 1.53, 0, "cyl");
   }
   for (let i = 0; i < 9; i++) p.add(-5 + i * 0.9, 0.9, 0.05, 0.05, 0.95, "stock3");
   for (const y of [0.35, 0.7, 0.92]) p.add(-1.4, 0.9, 7.3, 0.03, 0.03, "stock3", y);
@@ -463,11 +511,28 @@ const kitchen = (u: U) => {
   const aisle = p.r(0.9, 1.2);
   const z1 = -0.9;
   p.add(-1, -2.85, 6, 0.75, 0.9, "steel");
+  // A line of two-burner ranges: cast-iron grates over the burners, knobs and an oven door on the front.
+  const face = -2.85 + 0.375;
   for (let i = 0; i < 4; i++) {
     const x = -3.2 + i * 1.3;
     p.add(x, -2.85, 1, 0.6, 0.06, "dark", 0.9);
+    for (const dx of [-0.24, 0.24]) {
+      p.add(x + dx, -2.85, 0.24, 0.24, 0.012, "steel", 0.96, 0, "cyl");
+      p.add(x + dx, -2.85, 0.11, 0.11, 0.02, "dark", 0.96, 0, "cyl");
+      p.add(x + dx, -2.85, 0.03, 0.5, 0.022, "dark", 0.98);
+      p.add(x + dx, face + 0.02, 0.04, 0.055, 0.055, "dark", 0.74, Math.PI / 2, "rod");
+    }
+    for (const dz of [-0.2, 0.2]) p.add(x, -2.85 + dz, 0.94, 0.03, 0.022, "dark", 0.98);
+    for (const dx of [-0.46, 0, 0.46]) p.add(x + dx, -2.85, 0.03, 0.5, 0.022, "dark", 0.98);
+    p.add(x, face + 0.006, 0.9, 0.012, 0.5, "steel", 0.14);
+    p.add(x, face + 0.014, 0.52, 0.006, 0.2, "dark", 0.32);
+    p.add(x, face + 0.045, 0.72, 0.03, 0.03, "steel", 0.56, 0, "rod");
+    for (const dx of [-0.3, 0.3]) p.add(x + dx, face + 0.025, 0.024, 0.03, 0.024, "steel", 0.563);
     if (u() < 0.8) {
-      p.add(x, -2.85, 0.4, 0.4, p.r(0.2, 0.34), "steel", 0.96, 0, "cyl");
+      // A stockpot on the left burner, with its two handles.
+      const h = p.r(0.2, 0.34);
+      p.add(x - 0.24, -2.85, 0.4, 0.4, h, "steel", 1.002, 0, "cyl");
+      p.add(x - 0.24, -2.85, 0.5, 0.05, 0.025, "steel", 1.002 + h - 0.06);
     }
   }
   p.add(-1, -3.15, 6, 0.3, 0.1, "steel", 1.7);

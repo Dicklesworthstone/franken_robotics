@@ -1,0 +1,1197 @@
+{
+ "group": "G18",
+ "needs": [
+  {
+   "bead": "BD-086",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-43"
+   ],
+   "note": "the construction; its referee gate rows are now N18b-45, which depends on BD-086's sibling step beads, not the reverse"
+  },
+  {
+   "bead": "BD-156",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-179",
+    "N21b-38"
+   ],
+   "note": "GATE-SPARK-18 is measured on these kernels by beads that depend on BD-156; not a prerequisite"
+  },
+  {
+   "bead": "BD-161",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-43"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-167",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "the .fcard container; the interface kind is added on it"
+  },
+  {
+   "bead": "BD-167",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-154"
+   ],
+   "note": "already in deps"
+  },
+  {
+   "bead": "BD-168",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-20"
+   ],
+   "note": "the scenario grid with a recorded identity; BD-212 freezes it afterwards and depends on BD-168; the wheeled and tracked lists are N38b-37 (OPEN-GAUNT-7)"
+  },
+  {
+   "bead": "BD-168",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-172",
+    "BD-174"
+   ],
+   "note": "GPU rows follow the back ends; under the no-GPU variant of M2 the rows are recorded not-run"
+  },
+  {
+   "bead": "BD-365",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-172",
+    "BD-174"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-365",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-247"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-365",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-165",
+    "BD-225"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-366",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-376"
+   ],
+   "note": "BD-376 registers the M4 verbs and already depends on BD-366; seed order forbids the reverse"
+  },
+  {
+   "bead": "BD-366",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-229"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-367",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-39",
+    "N18-REF"
+   ],
+   "note": "N18b-39 raises the stale-anchor refusal and appends its code in the 2xx block; N18-REF lists it among the uncoded refusals"
+  },
+  {
+   "bead": "BD-422",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16c-25",
+    "N16c-26",
+    "N16c-24",
+    "N16c-23",
+    "N16c-27",
+    "N16c-28"
+   ],
+   "note": "BD-422 is an epic and carries no dependencies; these are its mechanism, pilot, gate script and kill decision"
+  },
+  {
+   "bead": "N18-CX",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "already in deps: BD-025 creates controls.toml and its loader; N38b-05 seeds the registry from the chapter registries and depends on this bead"
+  },
+  {
+   "bead": "N18-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": "the refusal block and exit-code table (M0), a component of BD-022 which is already a dependency"
+  },
+  {
+   "bead": "N18a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-43"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-227"
+   ],
+   "note": "the hazard registries the corpus is drawn from; the corpus itself is registered by this pilot (consolidated list: NEG-28)"
+  },
+  {
+   "bead": "N18a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-OPEN2"
+   ],
+   "note": "N18a-09 is superseded by N18b-37, which records the decision and carries this dependency on the open-question registry"
+  },
+  {
+   "bead": "N18a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-43"
+   ],
+   "note": "N18b-43 no longer depends on the transactional step beads, so this closes no cycle"
+  },
+  {
+   "bead": "N18a-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18b-28",
+    "N18b-29"
+   ],
+   "note": "the verbs read this registry and depend on N18a-15; the reverse would be a cycle"
+  },
+  {
+   "bead": "N18a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "already in deps; N18a-19 is superseded by N18b-33, which also depends on BD-212"
+  },
+  {
+   "bead": "N18a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-OPEN2"
+   ],
+   "note": "the registry row of OPEN-TRAC-2; the ADR is written by this bead and cited by BD-167 at GATE-TRAC-04 (BD-167 depends on N18a-27)"
+  },
+  {
+   "bead": "N18a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-21"
+   ],
+   "note": "the lint on tilt-bearing patches checks the reductions N18b-21 registers; the reverse direction would cycle through BD-212 and BD-168"
+  },
+  {
+   "bead": "N18a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-36"
+   ],
+   "note": "the owner decision OPEN-TRAC-3 (M4) precedes an admitted Stribeck card (M6)"
+  },
+  {
+   "bead": "N18a-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15a-08",
+    "N15a-09",
+    "N14a-09"
+   ],
+   "note": "descriptors and row laws both follow SPEC-C-37, already a dependency of both sides; N15a-09 reuses the row form defined here, so a dep either way risks a cycle"
+  },
+  {
+   "bead": "N18a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-27"
+   ],
+   "note": "the low-friction-crossing task family; its capstone BD-253 is already a dependency"
+  },
+  {
+   "bead": "N18a-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-28",
+    "N18b-29"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-10",
+    "N18a-02"
+   ],
+   "note": "sample spheres and the moving-against-static test; the gap error bound"
+  },
+  {
+   "bead": "N18b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-080"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-154"
+   ],
+   "note": "later milestone (M2); the batched cone is the hand-off, not a prerequisite of the M1 referee path"
+  },
+  {
+   "bead": "N18b-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-109"
+   ],
+   "note": "the archetype consumes this law (edge BD-109 -> N18b-02 recorded); the law is finished on a hand-built fixture"
+  },
+  {
+   "bead": "N18b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-154"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-154"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-153"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-06",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-245",
+    "BD-246"
+   ],
+   "note": "BD-245 already in deps"
+  },
+  {
+   "bead": "N18b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-093"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "FD-FSIM-04"
+   ],
+   "note": "N18b-08 is an epic and carries no dependencies"
+  },
+  {
+   "bead": "N18b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16a-15",
+    "N16c-08",
+    "N18b-20"
+   ],
+   "note": "N18b-08 is an epic and carries no dependencies; OPEN-KIN-3 is decided by two beads of G16 (reported there)"
+  },
+  {
+   "bead": "N18b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-229"
+   ],
+   "note": "already in deps"
+  },
+  {
+   "bead": "N18b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-230"
+   ],
+   "note": "the film row of a region whose card carries a film; same milestone, BD-230 does not depend on N18b-10"
+  },
+  {
+   "bead": "N18b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-229"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-081"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-229"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "NAB-09"
+   ],
+   "note": "the source register in which the published curves are entered with a reading mark before the pilot compares against them"
+  },
+  {
+   "bead": "N18b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-159",
+    "N18a-29"
+   ],
+   "note": "the batched step that applies a force from committed state, and the shared lag mechanism for state-dependent contact quantities"
+  },
+  {
+   "bead": "N18b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-208",
+    "BD-092"
+   ],
+   "note": "the energy ledger on batched tiers and on the referee; the terrain line is added to them"
+  },
+  {
+   "bead": "N18b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-09"
+   ],
+   "note": "per-world mutable pools and INV-HAB-03"
+  },
+  {
+   "bead": "N18b-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-164",
+    "N19a-09"
+   ],
+   "note": "the brick pool and the per-world mutable pools"
+  },
+  {
+   "bead": "N18b-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-081"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-203",
+    "BD-205"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review records the decision and depends on it (edge BD-378 -> N18b-18 recorded)"
+  },
+  {
+   "bead": "N18b-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-159"
+   ],
+   "note": "BD-159 implements the run-time flags and consumes the three admitted responses defined here (its own need points at this bead); a dep would close a cycle"
+  },
+  {
+   "bead": "N18b-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16-REF"
+   ],
+   "note": "the registry rows of FROB-REF-721 and -722"
+  },
+  {
+   "bead": "N18b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-080",
+    "BD-035"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": "already in deps; BD-262 (M3) is later and must call this rule: edge BD-262 -> N18b-22 recorded"
+  },
+  {
+   "bead": "N18b-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-263"
+   ],
+   "note": "the promotion rule that holds the provisional/established labels is M3; the label defined here is one of its blocking conditions"
+  },
+  {
+   "bead": "N18b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-158",
+    "BD-166",
+    "N18a-12",
+    "N18a-02"
+   ],
+   "note": "the kernels, the speculative margin the audit measures, and the gap error bound"
+  },
+  {
+   "bead": "N18b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-079"
+   ],
+   "note": "already in deps"
+  },
+  {
+   "bead": "N18b-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-38"
+   ],
+   "note": "one kernel and one fixture identity serve PO-TRAC-03 and PO-NUM-02; N21b-38 depends on BD-156 (reported as a cross-group overlap)"
+  },
+  {
+   "bead": "N18b-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-38",
+    "N35-29",
+    "N21b-23"
+   ],
+   "note": "the run-time limit and FROB-REF-248 are the numerics unit's; this bead is the admission-time counterpart, neither blocks the other"
+  },
+  {
+   "bead": "N18b-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-15"
+   ],
+   "note": "the trait, registry and admission table this verb reads"
+  },
+  {
+   "bead": "N18b-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-159"
+   ],
+   "note": "later milestone (M2); at M1 the verb reports the referee column only"
+  },
+  {
+   "bead": "N18b-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-154"
+   ],
+   "note": "later milestone (M2); the cone branch lands with BD-167, which depends on both"
+  },
+  {
+   "bead": "N18b-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-230"
+   ],
+   "note": "later milestone (M3); the film branch lands with BD-230"
+  },
+  {
+   "bead": "N18b-30",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-230"
+   ],
+   "note": "later milestone (M3); the film steps are skipped with a logged reason until then"
+  },
+  {
+   "bead": "N18b-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-018"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-202"
+   ],
+   "note": "later milestone (M2); the full sole-strip rig is the Arena fixture"
+  },
+  {
+   "bead": "N18b-32",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N24b-11",
+    "N24a-20",
+    "N18a-28"
+   ],
+   "note": "later milestone (M2); the row is registered at M1 and runs when the metric exists"
+  },
+  {
+   "bead": "N18b-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "already in deps"
+  },
+  {
+   "bead": "N18b-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "the exit review records the decision and depends on it (edge BD-224 -> N18b-33 recorded)"
+  },
+  {
+   "bead": "N18b-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N18a-18"
+   ],
+   "note": "N18a-18 is the production law and depends on this pilot"
+  },
+  {
+   "bead": "N18b-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-16"
+   ],
+   "note": "the force-torque reading that counts each impulse once; BD-418 is an epic (related only), its mechanism bead N38a-31 depends on the pilot (edge recorded)"
+  },
+  {
+   "bead": "N18b-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-25",
+    "N20a-32",
+    "N20b-26"
+   ],
+   "note": "sibling owner decisions on the same footing; none blocks another"
+  },
+  {
+   "bead": "N18b-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-163",
+    "BD-225"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "device budgets; the world-bank admission cap is a figure of BD-236 (same milestone, related)"
+  },
+  {
+   "bead": "N18b-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-14",
+    "BD-086",
+    "BD-093"
+   ],
+   "note": "the migration algorithm, the sill fixture and its wiring in the transaction"
+  },
+  {
+   "bead": "N18b-39",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-367"
+   ],
+   "note": "BD-367 is the capstone and depends on this bead; the pilot N18a-25 is now a direct dependency"
+  },
+  {
+   "bead": "N18b-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-367"
+   ],
+   "note": "BD-367 is the capstone and depends on this bead"
+  },
+  {
+   "bead": "N18b-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18b-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N18b-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "already in deps"
+  },
+  {
+   "bead": "N18b-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-367"
+   ],
+   "note": "already in deps; the first trigger's pilot is N18a-25 and the decision record is N18a-26, which depends on this bead"
+  },
+  {
+   "bead": "N18b-43",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18a-13"
+   ],
+   "note": "N18a-13 calls this construction and depends on it"
+  },
+  {
+   "bead": "N18b-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069",
+    "N14a-04"
+   ],
+   "note": "actuator limits from cards and joint speed limits from the joint block"
+  },
+  {
+   "bead": "N18b-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-158"
+   ],
+   "note": ""
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-153",
+   "dep": "N18a-16",
+   "as": "dep",
+   "why": "coverage (d) of U18a: the CL-1 law the kernels evaluate"
+  },
+  {
+   "bead": "BD-093",
+   "dep": "N18a-14",
+   "as": "dep",
+   "why": "coverage (d) of U18a: the migration algorithm it wires in"
+  },
+  {
+   "bead": "BD-166",
+   "dep": "N18a-10",
+   "as": "dep",
+   "why": "coverage (d) of U18a: the sample criterion"
+  },
+  {
+   "bead": "BD-166",
+   "dep": "N18a-12",
+   "as": "related",
+   "why": "coverage (d) of U18a: N18a-12 depends on BD-158 and is evaluated in these kernels; kept non-blocking so the margin rule and K-np-sdf can proceed in parallel"
+  },
+  {
+   "bead": "BD-233",
+   "dep": "N18a-03",
+   "as": "dep",
+   "why": "coverage (d) of U18a: the pairwise predicate"
+  },
+  {
+   "bead": "N19b-33",
+   "dep": "N18a-03",
+   "as": "dep",
+   "why": "the verb contact.clearance returns the three answers of this predicate"
+  },
+  {
+   "bead": "BD-084",
+   "dep": "N18a-32",
+   "as": "dep",
+   "why": "coverage (d) of U18a: the row laws"
+  },
+  {
+   "bead": "BD-155",
+   "dep": "N18a-32",
+   "as": "dep",
+   "why": "coverage (d) of U18a: the row laws"
+  },
+  {
+   "bead": "BD-168",
+   "dep": "N18a-12",
+   "as": "dep",
+   "why": "coverage (d) of U18a: the margin the tunnelling audit measures"
+  },
+  {
+   "bead": "BD-266",
+   "dep": "N18a-18",
+   "as": "related",
+   "why": "coverage (d) of U18a: BD-266 may use CL-2 as its second arm; not blocking"
+  },
+  {
+   "bead": "BD-367",
+   "dep": "N18b-39",
+   "as": "dep",
+   "why": "coverage (d) of U18b: capstone depends on its component"
+  },
+  {
+   "bead": "BD-367",
+   "dep": "N18b-40",
+   "as": "dep",
+   "why": "coverage (d) of U18b: capstone depends on its component"
+  },
+  {
+   "bead": "BD-367",
+   "dep": "N18b-41",
+   "as": "dep",
+   "why": "coverage (d) of U18b: capstone depends on its component"
+  },
+  {
+   "bead": "BD-417",
+   "dep": "N18b-17",
+   "as": "related",
+   "why": "coverage (d) of U18b: BD-417 is an epic; its mechanism N38a-29 carries the dependency"
+  },
+  {
+   "bead": "N38a-29",
+   "dep": "N18b-17",
+   "as": "dep",
+   "why": "coverage (d) of U18b: the batch-tier rut state builds on the per-world rut field"
+  },
+  {
+   "bead": "BD-418",
+   "dep": "N18b-35",
+   "as": "related",
+   "why": "coverage (d) of U18b: BD-418 is an epic; its mechanism N38a-31 carries the dependency"
+  },
+  {
+   "bead": "N38a-31",
+   "dep": "N18b-35",
+   "as": "dep",
+   "why": "coverage (d) of U18b: the tactile mechanism depends on its pilot"
+  },
+  {
+   "bead": "BD-117",
+   "dep": "N18b-01",
+   "as": "dep",
+   "why": "coverage (d) of U18b"
+  },
+  {
+   "bead": "BD-117",
+   "dep": "N18b-02",
+   "as": "dep",
+   "why": "coverage (d) of U18b"
+  },
+  {
+   "bead": "BD-109",
+   "dep": "N18b-01",
+   "as": "dep",
+   "why": "coverage (d) of U18b"
+  },
+  {
+   "bead": "BD-109",
+   "dep": "N18b-02",
+   "as": "dep",
+   "why": "coverage (d) of U18b"
+  },
+  {
+   "bead": "BD-085",
+   "dep": "N18b-32",
+   "as": "dep",
+   "why": "coverage (d) of U18b: the battery fixtures"
+  },
+  {
+   "bead": "BD-161",
+   "dep": "N18b-32",
+   "as": "dep",
+   "why": "coverage (d) of U18b: the battery fixtures"
+  },
+  {
+   "bead": "BD-082",
+   "dep": "N18b-43",
+   "as": "dep",
+   "why": "coverage (d) of U18b: the swept bound of step T4.2; N18b-43 no longer depends on BD-081 or BD-082"
+  },
+  {
+   "bead": "BD-081",
+   "dep": "N18b-43",
+   "as": "related",
+   "why": "coverage (d) of U18b: the broad phase is in BD-082, which depends on BD-081"
+  },
+  {
+   "bead": "BD-212",
+   "dep": "N18b-33",
+   "as": "related",
+   "why": "replaces any dep: the decision depends on the measurement, never the reverse"
+  },
+  {
+   "bead": "BD-262",
+   "dep": "N18b-22",
+   "as": "dep",
+   "why": "coverage (d) of U18b: comparison verbs call the capacity-bias rule"
+  },
+  {
+   "bead": "BD-245",
+   "dep": "N18b-06",
+   "as": "related",
+   "why": "coverage (d) and (e) item 9 of U18b: N18b-06 (M4) replaces the fallback belt form of BD-245 (M3)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N18b-33",
+   "as": "dep",
+   "why": "the M2 exit review records KILL-CONTACT as an ADR"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N18b-18",
+   "as": "dep",
+   "why": "the M4 exit review records KILL-SOIL as an ADR"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N18a-26",
+   "as": "dep",
+   "why": "the M4 exit review records KILL-RESPONSE as an ADR"
+  },
+  {
+   "bead": "BD-154",
+   "dep": "CARD-T-07",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "N18a-16",
+   "dep": "CARD-T-08",
+   "as": "related",
+   "why": "replaces the drafted dep: later milestone (M5)"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N18a-19",
+   "keep": "N18b-33",
+   "note": "both decide KILL-CONTACT; measurement list, outcome consequences, rule fixtures, record fields and considerations folded into N18b-33"
+  },
+  {
+   "drop": "N18a-17",
+   "keep": "N18b-34",
+   "note": "both are the CL-2 pilot; the law form of the production bead, the card mapping, scenarios, tests and record folded into N18b-34"
+  },
+  {
+   "drop": "N18a-09",
+   "keep": "N18b-37",
+   "note": "both run the OPEN-TRAC-1 measurement; predicted magnitudes, tree prototype, paired stage timing, decision rule and controls folded into N18b-37"
+  },
+  {
+   "drop": "N18a-39",
+   "keep": "N18b-42",
+   "note": "both are the end-to-end script of contact.response and the GATE-TRAC-11 record; steps, mutants, self-test and cancel checks folded into N18b-42"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N18b-35",
+   "other": "N38a-30",
+   "note": "same pilot: a fingertip pad as 2x2 and 4x4 contacts against one patch on strict"
+  },
+  {
+   "mine": "N18b-16",
+   "other": "N38a-28",
+   "note": "same pilot: the rut leak fixture on batch-cpu (mine at M4, the other at M6 under BD-417)"
+  },
+  {
+   "mine": "N18b-17",
+   "other": "N38a-29",
+   "note": "per-world rut state with zero leak: mine on strict and batch-cpu at M4, the other on the batch tiers at M6; overlap, scopes to be divided"
+  },
+  {
+   "mine": "BD-165",
+   "other": "N19a-28",
+   "note": "both define the terrain families with a scalar difficulty and the curriculum grid; N19a-28 (and N19a-27) are components that depend on the seed"
+  },
+  {
+   "mine": "N18a-41",
+   "other": "N19a-30",
+   "note": "same end-to-end script for frob scene gen terrain families"
+  },
+  {
+   "mine": "N18b-43",
+   "other": "N33c-44",
+   "note": "same arc fixture (the 1 m arm, chord against arc); NF-10 is the upstream item for the same bound"
+  },
+  {
+   "mine": "N18b-25",
+   "other": "N21b-38",
+   "note": "K-scale-diag and K-scale are one kernel; PO-TRAC-03 and PO-NUM-02 are one identity on one fixture"
+  },
+  {
+   "mine": "N18a-32",
+   "other": "N15a-08",
+   "note": "the stiction row law (convex potential, Stribeck bound) is specified in both; N15a-09 likewise for backlash rows"
+  },
+  {
+   "mine": "N18a-28",
+   "other": "N24b-11",
+   "note": "the load-weighted, quadrature-invariant slip metric is specified in both (and again in N24a-20)"
+  },
+  {
+   "mine": "N18a-03",
+   "other": "N19b-33",
+   "note": "the three-answer enclosure decision per time slab: mechanism in mine, the verb in the other, which also claims the deciding step"
+  },
+  {
+   "mine": "N18b-06",
+   "other": "BD-245",
+   "note": "the belt law: BD-245 delivers law name bindings and a fallback form at M3, N18b-06 the funded belt model at M4; N18b-02 and the roller-wheel law likewise"
+  },
+  {
+   "mine": "N18a-22",
+   "other": "N10a-14",
+   "note": "pilot of the hard-contact batch law (and of factor reuse, see N18a-25) on the contact known answers"
+  },
+  {
+   "mine": "N18-CX",
+   "other": "N38b-05",
+   "note": "both seed controls.toml with CX-167 to CX-183; N38b-05 should take the rows from N18-CX"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

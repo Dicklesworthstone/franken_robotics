@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "frob-cert", "frob-shield", "solid", "test"]
 parent: "WP-65"
-deps: ["N12-17", "BD-337", "N12-06", "SPEC-C-31"]
+deps: ["N12-17", "N12-06", "SPEC-C-31"]
 needs: []
-related: ["CARD-T-29", "CARD-T-19", "BD-338", "N12-05"]
+related: ["CARD-T-29", "CARD-T-19", "BD-338", "N12-05", "BD-337"]
 gates: []
 plan_refs: ["§12.3 (T-28)", "§12.7", "§10 C-31 (tier 1)", "§22.11", "Appendix D.7 (energy budget)"]
 ---
@@ -44,6 +44,16 @@ In: statement document, registry row, the per-budget `energy-budget` certificate
 and mutants. Out: the `.fenergy` artifact, its monitor kernel and `shield.budget` (the energy-budget tier bead);
 the auditor's checker (N12-17); tube inclusion and runtime filters (the other two tiers); any claim about a
 physical robot.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the energy-budget tier `shield.budget` with its `.fenergy` artifact (BD-337) is `related`, not a dependency (a
+card that waited for its implementer would close a loop, because the implementer's own acceptance runs the card's
+law tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the
+route is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry row, its
+specimens and mutants, and every acceptance line that its own fixtures decide. An acceptance line that can only be
+observed on live output (the certificate `shield.budget` emits for a budget) is run inside the implementing bead,
+with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
+registry row for that output.
 
 ## Technical approach
 

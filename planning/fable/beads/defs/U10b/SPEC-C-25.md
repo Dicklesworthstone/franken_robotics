@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "spine", "spec", "solid", "frontier", "frob-arena", "test"]
 parent: "WP-50"
-deps: ["BD-025", "BD-124", "SPEC-C-15", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "SPEC-C-15", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-25", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-132 to KA-135 and CX-062; this bead binds them to tests and registers the controls the appendix leaves unstated", "§38.7: the metamorphic-relation registry row MR-33 (tier-corrected estimate) in `frob-conformance/registry/relations.toml` (Gauntlet beads); this bead supplies its statement and control"]
-related: ["N10b-17", "BD-262", "BD-263", "BD-264", "BD-212", "BD-214", "BD-268", "SPEC-C-15", "SPEC-C-26"]
+related: ["N10b-17", "BD-262", "BD-263", "BD-264", "BD-212", "BD-214", "BD-268", "SPEC-C-15", "SPEC-C-26", "BD-124"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-25", "§10 C-15", "§16.8", "§29.11", "§38.7 MR-33", "Appendix B.5", "Appendix D.8", "Appendix E GB-15", "Appendix F FD-FSIM-17", "Appendix M.9 KA-132 to KA-135", "Appendix N.7 CX-062"]
 ---
@@ -46,6 +46,17 @@ the construction register.
 Out: the tier-correction ledger, propensity logging and the promotion rule as product features (BD-263,
 BD-264); the anytime-valid machinery itself (SPEC-C-15, BD-124, BD-262); the batched multilevel entry point in
 the sibling library (an upstream work item, FD-FSIM-17); the pilot (N10b-17).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-124 (the two study types of
+`frob-arena`): that bead is listed in `related` and is not a prerequisite. The law suite is generic over its
+subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-arena`
+does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

@@ -1,0 +1,984 @@
+{
+ "group": "G17",
+ "needs": [
+  {
+   "bead": "BD-170",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-148",
+    "N14b-33"
+   ],
+   "note": "BD-148 (already a dep) is the packed lowering with the single cast; N14b-33 is the exact fold of welded links it rounds"
+  },
+  {
+   "bead": "BD-184",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-08"
+   ],
+   "note": "the gate's incumbent clause is recorded on the frozen revisions; BD-040 (interim incumbents) is already a dep"
+  },
+  {
+   "bead": "BD-186",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16c-16"
+   ],
+   "note": "arm E is run by N16c-16, which depends on this experiment; here it is reported or marked not run"
+  },
+  {
+   "bead": "BD-186",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-354"
+   ],
+   "note": "BD-354 is M4; at M2 the ceiling is computed by hand in this bead and logged"
+  },
+  {
+   "bead": "BD-285",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-12",
+    "VERBS-phylum"
+   ],
+   "note": "the registry entry exists from M2 in the cluster registry; BD-312 depends on this bead (through BD-286, BD-287) and is related only"
+  },
+  {
+   "bead": "BD-285",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17b-04"
+   ],
+   "note": "the verb phylum.sweep is N17b-04, not BD-184 (the latency gate); BD-285 adds the quotient option to it"
+  },
+  {
+   "bead": "BD-285",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-286",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-24"
+   ],
+   "note": "N17a-24 carries the address mapping and the rule that unmapped per-address results are not shared; the scene-generator operation itself is reported as a gap of §19"
+  },
+  {
+   "bead": "BD-286",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28a-10"
+   ],
+   "note": "A-23, the joint time-indexed bus schedule, is the time-resolved bus analysis a bus-dependent result is keyed on"
+  },
+  {
+   "bead": "BD-287",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-12",
+    "VERBS-phylum"
+   ],
+   "note": "the entry is registered at M2 by the cluster registry; BD-312 depends on BD-287 and is related only"
+  },
+  {
+   "bead": "BD-287",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-342",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-10"
+   ],
+   "note": "N28b-10 is the design benchmark with briefs and the acceptance rule; the ten-fold beads are a different suite"
+  },
+  {
+   "bead": "BD-342",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-320"
+   ],
+   "note": "optional shared controller; the synthesized baseline controller is used until a family policy exists"
+  },
+  {
+   "bead": "BD-353",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-197"
+   ],
+   "note": "a specialist for one design comes from the PPO trainer BD-197 (M2), the minimal piece; the fine-tuned and inherited routes (N23a-25, BD-321, BD-323) are Frontier alternatives and are related"
+  },
+  {
+   "bead": "BD-353",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-243",
+    "N33b-18"
+   ],
+   "note": "A-16 (N33b-18, registered by BD-243) only receives the stencil on the fallback branch"
+  },
+  {
+   "bead": "BD-356",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16c-17",
+    "N16c-14"
+   ],
+   "note": "lanes can be built without queues; the alone-and-together measurement is N17a-13, which depends on the KILL-ROWQUEUE decision"
+  },
+  {
+   "bead": "BD-356",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-17"
+   ],
+   "note": "the device-side pool of shared constants that a lane references by index"
+  },
+  {
+   "bead": "N17-CX",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-05"
+   ],
+   "note": "N38b-05 owns the append-only catalogue file and assigns the numbers of the two late entries"
+  },
+  {
+   "bead": "N17-REF",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-285",
+    "N23a-31"
+   ],
+   "note": "a registry never depends on a raising site; the weight-tie site is the equivariant policy layer N23a-31, which does not yet cite the code (reported as a gap)"
+  },
+  {
+   "bead": "N17-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-287",
+    "N17a-20",
+    "N23a-25"
+   ],
+   "note": "a registry never depends on a raising site; the generator-side test is N17a-20 and the scoring site is policy.apply (N23a-25)"
+  },
+  {
+   "bead": "N17a-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-18",
+    "N16a-15",
+    "NEG-11"
+   ],
+   "note": "the fit ships with the DESIGN capacity defaults; the decisions that freeze the table read the planner and depend on this bead through BD-171"
+  },
+  {
+   "bead": "N17a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17b-11"
+   ],
+   "note": "the bead implements the fail-closed default (32 on CUDA); the decision N17b-11 depends on it through BD-171 and BD-170, so a dep would close a cycle"
+  },
+  {
+   "bead": "N17a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17b-11"
+   ],
+   "note": "the planner ships with the default set and the 25% limit; N17b-11 reads the planner (through BD-171) and cannot be its prerequisite; the pilot BD-144 is already a dep"
+  },
+  {
+   "bead": "N17a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17b-11"
+   ],
+   "note": "N17b-11 consumes this bead's data: the dependency runs the other way and is recorded under edges"
+  },
+  {
+   "bead": "N17a-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-219",
+    "N16b-26"
+   ],
+   "note": "one byte model printed by two verbs: a shared table, not an order of work; BD-219 depends on BD-171, which wires this bead"
+  },
+  {
+   "bead": "N17a-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-12",
+    "VERBS-phylum"
+   ],
+   "note": "BD-171 is already a dep; the registry entry is the cluster registry's; BD-222 is the M2 surface capstone behind the head-to-head and stays related"
+  },
+  {
+   "bead": "N17a-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-20"
+   ],
+   "note": "the slot-dispatch pilot is the pilot of this Frontier mechanism; the KILL-SLOT decision is M3 and is not a prerequisite"
+  },
+  {
+   "bead": "N17a-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-295"
+   ],
+   "note": "BD-295 is M3 and calls this module: the dependency runs the other way and is recorded under edges"
+  },
+  {
+   "bead": "N17a-09",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17b-04"
+   ],
+   "note": "the verb phylum.sweep is N17b-04; BD-184 is the latency gate and is not needed"
+  },
+  {
+   "bead": "N17a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-159"
+   ],
+   "note": "stage 5 of the batched step writes the compacted active-contact list per world, which the guard test reads"
+  },
+  {
+   "bead": "N17a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16c-17"
+   ],
+   "note": "the queues comparison runs only where KILL-ROWQUEUE kept queues; the decision bead stands on the mechanism and GATE-KIN-08"
+  },
+  {
+   "bead": "N17a-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-18",
+    "BD-371"
+   ],
+   "note": "both decide at M4 and read this pilot; the device unit's own share measurement and pilot (N21c-16, N21c-17) duplicate this bead: reported"
+  },
+  {
+   "bead": "N17a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17b-24"
+   ],
+   "note": "N17b-24 runs the four arms at M2 in the shared harness; this M3 bead reads arms (a) to (c) from its record"
+  },
+  {
+   "bead": "N17a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-18"
+   ],
+   "note": "exists only on the not-fired branch of KILL-SPECIALIZE"
+  },
+  {
+   "bead": "N17a-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-341"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-16",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N17b-04"
+   ],
+   "note": "the verb and its specialize_survivors option are N17b-04, not BD-184"
+  },
+  {
+   "bead": "N17a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17b-11"
+   ],
+   "note": "N17b-11 (M2) reads this M1 pilot: the dependency runs the other way and is recorded under edges"
+  },
+  {
+   "bead": "N17a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-320",
+    "N23a-25"
+   ],
+   "note": "raised by Cortex at M4; this bead offers the admission predicate and does not wait for it"
+  },
+  {
+   "bead": "N17a-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-320"
+   ],
+   "note": "BD-320 (M4) records the split: the dependency runs the other way and is recorded under edges"
+  },
+  {
+   "bead": "N17a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23a-25",
+    "BD-320",
+    "BD-321"
+   ],
+   "note": "M4 callers of the support test; the edge N23a-25 on N17a-20 is recorded under edges"
+  },
+  {
+   "bead": "N17a-20",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28b-12",
+    "N28a-33"
+   ],
+   "note": "M4 consumers of the out-of-distribution label"
+  },
+  {
+   "bead": "N17a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-12",
+    "VERBS-phylum"
+   ],
+   "note": "BD-312 is the M3 surface capstone and depends on BD-287; related only"
+  },
+  {
+   "bead": "N17a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "optional: the canonical form is computed in this crate; fs-regime is consumed only as a cross-check if admitted"
+  },
+  {
+   "bead": "N17a-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38a-16"
+   ],
+   "note": "the conformance runner exercises this bead's scaling map; a mechanism does not depend on its test"
+  },
+  {
+   "bead": "N17a-22",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "delivered by its dependency SPEC-C-21, which binds KA-119 to KA-122 to law tests (rows loaded by N10-KA2)"
+  },
+  {
+   "bead": "N17a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N12-18"
+   ],
+   "note": "M4 and optional: the count is Tested at M3 and Certified once the checker exists"
+  },
+  {
+   "bead": "N17a-24",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§19: no Habitat bead maps a world address through an isometry; BD-241 (already a dep) builds image worlds for its test but returns no address in the scene family. Fail-closed: unmapped per-address results are re-run"
+  },
+  {
+   "bead": "N17a-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-262"
+   ],
+   "note": "eval.compare consumes the void-pairing rule; same milestone, not blocking"
+  },
+  {
+   "bead": "N17a-24",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N38a-16"
+   ],
+   "note": "the conformance runner exercises this bead; a mechanism does not depend on its test"
+  },
+  {
+   "bead": "N17a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "the manifest and its stage signature are N21b-01 (a dependency of BD-014, which the need names)"
+  },
+  {
+   "bead": "N17a-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-122"
+   ],
+   "note": "BD-122 is the task file; it has no explicit read-set field, so the read set is derived here from the file's terms"
+  },
+  {
+   "bead": "N17a-26",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-04"
+   ],
+   "note": "the verb is N17b-04; its quotient option is added by BD-285, already a dep"
+  },
+  {
+   "bead": "N17a-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-30",
+    "N24b-02"
+   ],
+   "note": "no bead defined the campaign corpus: new bead N17a-30 builds it from the design corpus (BD-248, already a dep) under the corpus registry N24b-02"
+  },
+  {
+   "bead": "N17a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17b-04"
+   ],
+   "note": "the verb is N17b-04; its quotient option is added by BD-285, already a dep"
+  },
+  {
+   "bead": "N17a-28",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-345",
+    "N26b-03"
+   ],
+   "note": "M4 convention reused, not awaited: the planted winners come from the design corpus BD-248 through N17a-30"
+  },
+  {
+   "bead": "N17b-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17b-08"
+   ],
+   "note": "the freeze is M2; the M1 pilot runs on the candidate the incumbent harness BD-039 (a dep) already pins"
+  },
+  {
+   "bead": "N17b-02",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-149 and BD-150 are already dependencies; the masked form is added in this bead if they emit a per-kind form"
+  },
+  {
+   "bead": "N17b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-144",
+    "N17a-17"
+   ],
+   "note": "BD-287 is M3 (related); the M1 pieces are BD-144's sampler (already a dep) and the prototype grammars of N17a-17"
+  },
+  {
+   "bead": "N17b-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-246",
+    "BD-245"
+   ],
+   "note": "both M3; the workload defines kinematic limb types itself and is regenerated later"
+  },
+  {
+   "bead": "N17b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-214"
+   ],
+   "note": "the referee_coverage block and its schema"
+  },
+  {
+   "bead": "N17b-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-211"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-09"
+   ],
+   "note": "BD-295 is M3 (related); the M2 piece, the slot table with the job cap and the reserve, is N17a-09"
+  },
+  {
+   "bead": "N17b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-02"
+   ],
+   "note": "capture counters; the kernel-cache compile counters come from BD-173, already a dep"
+  },
+  {
+   "bead": "N17b-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-295"
+   ],
+   "note": "bead superseded by N17a-10, which carries this link"
+  },
+  {
+   "bead": "N17b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the classes must exist before one is assigned; N44-01 lists the same request (reported)"
+  },
+  {
+   "bead": "N17b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-08"
+   ],
+   "note": "the M0 rival audit pins the revisions; the pre-sealing audit N39b-37 is M3 and related"
+  },
+  {
+   "bead": "N17b-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-19"
+   ],
+   "note": "KILL-BUCKET defers to this decision: the dependency runs the other way and is recorded under edges"
+  },
+  {
+   "bead": "N17b-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "the exit review depends on the decision, not the reverse: recorded under edges"
+  },
+  {
+   "bead": "N17b-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-18",
+    "N21c-36"
+   ],
+   "note": "one decision seen from two chapters, to be closed by one record: reported as a cross-group duplicate"
+  },
+  {
+   "bead": "N17b-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-222",
+    "BD-312",
+    "BD-376"
+   ],
+   "note": "consumers of the registry; a registry does not depend on them"
+  },
+  {
+   "bead": "N17b-13",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-111 and BD-220 are already dependencies"
+  },
+  {
+   "bead": "N17b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28c-42"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-31"
+   ],
+   "note": "M3 admission of the Archive group, used as the differential oracle"
+  },
+  {
+   "bead": "N17b-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28c-27"
+   ],
+   "note": "the M1 decision that defines a stratum; the ledger N28b-22 (M4) shares the partition and is related"
+  },
+  {
+   "bead": "N17b-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-343",
+    "N28b-04"
+   ],
+   "note": "consumers of the merge function of N17b-17"
+  },
+  {
+   "bead": "N17b-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-258"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-31"
+   ],
+   "note": "BD-341 is M4 (related); the pilot reaches the suite's optimizer through the airlock group admitted at M3"
+  },
+  {
+   "bead": "N17b-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28b-09"
+   ],
+   "note": "consumer; it already depends on this decision through BD-353"
+  },
+  {
+   "bead": "N17b-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review depends on the decision: recorded under edges"
+  },
+  {
+   "bead": "N17b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-06"
+   ],
+   "note": "the lever interface for optimizers carries each lever's manifold and retraction"
+  },
+  {
+   "bead": "N17b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-207"
+   ],
+   "note": "T1 contact-made and contact-broken events of every world (changes of the active-contact mask) give the first differing step"
+  },
+  {
+   "bead": "N17b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-17"
+   ],
+   "note": "N24a-17 is the metric registry; it has no smoothness attribute yet (reported as a gap of §24.8)"
+  },
+  {
+   "bead": "N17b-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-246"
+   ],
+   "note": "M3; the M1 pilot counts the first archetypes and the generated designs only"
+  },
+  {
+   "bead": "N17b-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-248"
+   ],
+   "note": "M3; the repeat on the corpus is recorded by N17b-27"
+  },
+  {
+   "bead": "N17b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-17"
+   ],
+   "note": "the device unit's three-arm pilot and harness at M2; N17a-15 (M3) repeats the reading for Phylum and is related"
+  },
+  {
+   "bead": "N17b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-12"
+   ],
+   "note": "LimbView and the limb permutation; the canonical link order of BD-148 arrives through BD-170"
+  },
+  {
+   "bead": "N17b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14a-02"
+   ],
+   "note": "port signatures on the design term; the port packet N14a-22 is M5 and not needed"
+  },
+  {
+   "bead": "N17b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17b-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-385"
+   ],
+   "note": "M5; out of scope until the route exists"
+  },
+  {
+   "bead": "N17b-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-248"
+   ],
+   "note": "M3; the coverage clause is measured on interim populations and the gate stays partial"
+  },
+  {
+   "bead": "N17b-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N17b-28",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "the exit review depends on the decision: recorded under edges"
+  },
+  {
+   "bead": "N17b-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-17",
+    "N24a-18"
+   ],
+   "note": "BD-254 (the scorecard verb) is already a dep"
+  },
+  {
+   "bead": "N17b-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-328"
+   ],
+   "note": "without a row the standing is unmeasured; not blocking"
+  }
+ ],
+ "edges": [],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

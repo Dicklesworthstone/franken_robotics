@@ -8,7 +8,7 @@ labels: ["m5", "foundry", "frob-conformance", "frontier", "registry", "test"]
 parent: "WP-70"
 deps: ["STD-TEST"]
 needs: ["§38.6: the known-answer registry format of the conformance crate (identifier, case, truth with derivation, tolerance, verification tier, negative control, the test that carries it) and its check that every row has a test and a control", "§31.21, §31.22 and §31.23: the known answers stated in those subsections (the tube reproduced from each export; the unit-error ratio 10⁹; the stale-verdict case; the damage ratios 1.61 and 2.59; the cantilevered tube sizing case), whose tests are drafted by unit U31b"]
-related: ["BD-400", "BD-401", "BD-402", "BD-403", "BD-404", "BD-405", "BD-406", "BD-407", "BD-408", "BD-423", "BD-438", "N31a-07", "N31a-08", "N31a-09", "N31a-10", "N31a-12", "N31a-16", "N31a-18", "N31a-19", "N31a-20", "N31a-21", "N31a-23", "N31a-24", "N31a-28", "N31a-32", "N31a-33", "N31a-35", "N31a-40", "N31a-41", "N31a-45", "N31a-47", "N31a-48", "N31a-49", "N31-CX", "N31-REF", "SPEC-C-35"]
+related: ["BD-400", "BD-401", "BD-402", "BD-403", "BD-404", "BD-405", "BD-406", "BD-407", "BD-408", "BD-423", "BD-438", "N31a-07", "N31a-08", "N31a-09", "N31a-10", "N31a-12", "N31a-16", "N31a-18", "N31a-19", "N31a-20", "N31a-21", "N31a-23", "N31a-24", "N31a-28", "N31a-32", "N31a-33", "N31a-35", "N31a-40", "N31a-41", "N31a-45", "N31a-47", "N31a-48", "N31a-49", "N31a-60", "N31a-61", "N31-CX", "N31-REF", "SPEC-C-35"]
 gates: []
 plan_refs: ["§31.18", "Appendix M.30", "§10 C-35", "Appendix D", "Appendix E GB-37", "Appendix E GB-38", "§38.6", "§31.21", "§31.22", "§31.23"]
 ---
@@ -56,14 +56,14 @@ registry of the chapter (registry beads of unit U31b).
 | KA-744 | Mass properties of a tube: ρ = 2,700 kg/m³, radii 15 and 13 mm, length 0.20 m | Mass 0.0950 kg; axial inertia 1.87 × 10⁻⁵ kg·m²; transverse inertia 3.26 × 10⁻⁴ kg·m² | To the printed digits | G1 · host | The volume enclosure must contain the exact volume (3.5186 × 10⁻⁵ m³) | N31a-23; N31a-40; N31a-17; N31a-57 |
 | KA-745 | Tolerance allocation: sensitivities 1 and 4, equal cost, k = 3, √B = 10 µm | 16.0 µm and 6.35 µm (15.9904 and 6.3458); equal tolerances 7.28 µm; 19.9% cheaper under the 1/t cost model | To the printed digits; 10⁻⁹ against the closed form in GATE-FOUNDRY-08 | G1 · host | q = x² at nominal zero: refused (FROB-REF-165), then fails the band-extreme check | N31a-32; N31a-33; N31a-56 |
 | KA-746 | Voltage drop: copper, 1 m each way, 0.5 mm², 10 A, 24 V bus | 0.0688 Ω; 0.688 V (2.9%); 6.9 W; 20 A/mm² | To the printed digits | G1 · host | Halving the area doubles the drop | N31a-41; N31a-57 |
-| KA-747 | Cable slack: offset 15 mm, joint range 2.4 rad | 36 mm | Exact | G1 · host | None stated in the plan. Registered here (DESIGN): the degrees-for-radians mutation gives 2,063 mm | N31a-41; N31a-57 |
+| KA-747 | Cable slack: offset 15 mm, joint range 2.4 rad | 36 mm | Exact | G1 · host | None stated in the plan. Registered here (DESIGN): the degrees-for-radians mutation gives 2,063 mm; the opposite mistake (the range read as degrees) gives 0.628 mm; both must fail | N31a-41; N31a-57 |
 | KA-748 | STEP round trip of a tetrahedron | 18 instances; bit-exact replay | Exact | G5 · host | An open shell is refused; a part above the bound is refused with the bound stated | N31a-35; N31a-57 |
 | KA-749 | Fixed point, Q15: (−1)·(−1); negation of −32768; an integrator adding 400 counts per tick from zero | 0x8000·0x8000 = 0x40000000 shifts to 0x8000 and reads as −1; the negation overflows; the integrator overflows sixteen bits at tick 82, and without a clamp the one-step query returns the state 32,400 at once. Each counterexample is found; the clamped controller is certified | Exact | G1 · host | A widened input range breaks a certificate | N31a-45; N31a-46; N31a-58; CARD-T-14 |
-| KA-750 | Averaged growth: ż = ε·a·x², x = sin ωt | z(T) = ε·a·T/2 over whole periods | 5% at a compression of 50 in steps (the pilot falsifier) | G1 · host | None stated in the plan. Registered here (DESIGN): averaging over a non-integer number of periods without a half-width (0.4% bias at 20.125 periods) must be flagged | N31a-47; N31a-59 |
+| KA-750 | Averaged growth: ż = ε·a·x², x = sin ωt | z(T) = ε·a·T/2 over whole periods | 5% at a compression of 50 in steps (the pilot falsifier) | G1 · host | None stated in the plan. Registered here (DESIGN): averaging over a non-integer number of periods without a half-width (0.4% bias at 20.125 periods) must be flagged; averaging x before squaring (⟨x⟩² = 0) gives zero growth and must fail | N31a-47; N31a-59 |
 | KA-751 | Wear feedback: β̇ = ε·(c₀ + c₁·β) | β(t) = (β₀ + c₀/c₁)·exp(ε·c₁·t) − c₀/c₁ | The plan says "to set"; set here to 5% at a compression of at least 50, as for KA-750 and GATE-FOUNDRY-12 | G1 · host | A planted gait collapse at β* must force full resolution before β* | N31a-48; N31a-49; N31a-59 |
 | KA-752 | Rate averaging: insulation life halves per 10 K; half the time at T_ref and half at T_ref + 20 K | Life is consumed at 2.5/τ_ref, not 2.0/τ_ref | Exact | G1 · host | Averaging the input (evaluating the law at the mean temperature) is caught | N31a-48; N31a-59 |
 | KA-753 | Cell fade: 1% per √month calendar, 0.5% per 100 cycles; 9 months, 300 cycles | 3% + 1.5% = 4.5% | Exact | G1 · host | None stated in the plan. Registered here (DESIGN): calendar fade linear in time gives 9% + 1.5% | N31a-48; N31a-59 |
-| KA-754 | Quasi-static superposition limit | With the first natural frequency at least five times the highest loaded frequency, the dynamic amplification 1/(1 − (f/f₁)²) is at most 25/24 = 1.042 | To the printed digits | G1 · host | None stated in the plan. Registered here (DESIGN): a ratio of 4.17 gives 1.061 and must fail the separation test | N31a-12; N31a-53 |
+| KA-754 | Quasi-static superposition limit | With the first natural frequency at least five times the highest loaded frequency, the dynamic amplification 1/(1 − (f/f₁)²) is at most 25/24 = 1.042 | To the printed digits | G1 · host | None stated in the plan. Registered here (DESIGN): a ratio of 4.17 gives 1.061 and must fail the separation test; a ratio of 3 gives 1.125 and superposition is refused (FROB-REF-262) | N31a-12; N31a-53 |
 
 **Part 2. Numbered answers of the structure construction (C-35) that bind the same tests.**
 
@@ -112,6 +112,15 @@ home.**
 | F-20 | Q15 gain 3/10 | 9,830 counts; error 1.22 × 10⁻⁵ | N31a-46 |
 | F-21 | Lifecycle step counts | 1.8 × 10⁹ steps for 1,000 h at 500 Hz; 2.25 × 10⁶ compressed; ratio 800; 3.6 × 10⁶ for the gate | N31a-47; N31a-50 |
 | F-22 | Planted collapse: c₀ = 10⁻³, c₁ = 50, ε = 10⁻⁴, β* = 0.02 | t* = ln(1001)/0.005 = 1,381.8 s | N31a-49 |
+| F-23 | Section forces, self-weight: member of 0.54 kg/m, 0.20 m, held at one end under 9.80665 m/s² | Root shear 1.05912 N and moment 0.105912 N·m; 0.52956 N and 0.026478 N·m at mid-length | N31a-60 |
+| F-24 | Section forces, spin: 0.5 kg/m, 0.3 m, 10 rad/s about the held end | Axial force μ·ω²·(L² − s²)/2: 2.25 N at the root, 1.6875 N at 0.15 m; 8.25 N at the root with a 0.2 kg end lump | N31a-60 |
+| F-25 | Section forces, angular acceleration: the same member at 20 rad/s² | Root shear μ·α·L²/2 = 0.45 N; root moment μ·α·L³/3 = 0.09 N·m | N31a-60 |
+| F-26 | Offset port: 0.4 m member, 50 N at the end, 100 N on a 30 mm arm at 0.25 m | Root shear 150 N, moment 45 N·m, torque 3 N·m; the torque drops to 0 distal of the port | N31a-60 |
+| F-27 | Mid-span maximum: 0.5 kg/m, 0.4 m, 40 m/s² transverse, 4 N at each end | Moment 0 at both ends and μ·a·L²/8 = 0.4 N·m at mid-span; sampling allowance 1/256 of the peak | N31a-60 |
+| F-28 | Rectangular section 20 × 10 mm in torsion; 10 × 10 mm | 2.037 MPa per N·m and J = 4.578 × 10⁻⁹ m⁴; 4.811 MPa per N·m | N31a-60 |
+| F-29 | Saving against the two beam references: a 0.3 m tube at 2,700 kg/m³ and mean radius 15 mm, stock wall 2.0 mm (0.15268 kg), continuous wall 1.845 mm (0.14087 kg), part 0.125 kg | 11.3% against the continuous wall (the figure reported); 18.1% against stock | N31a-61 |
+| F-30 | Notch stress in beam form: tube of mean radius 15 mm and wall 2 mm, 300 N axial, 30 N·m bending, notch factor 2 | 2 × (1.5915 + 21.2207) = 45.62 MPa on the tension side; −39.26 MPa opposite | N31a-61 |
+| F-31 | Fatigue-governed stock choice: curve of KA-741, 3,600 reversed cycles per campaign hour, 2,000 h, scatter 4, amplitude 60 MPa at a 1.5 mm wall | Utilizations 1.5552, 0.6561, 0.3359, 0.1944 at walls 1.5, 2.0, 2.5, 3.0 mm against 0.25: choice 3.0 mm; continuous wall 2.759 mm | N31a-61 |
 
 **Registry mechanics.** Each entry: `id`, `case`, `truth` (value and formula), `tolerance`, `tier`,
 `negative_control`, `derivation` (a file under `docs/derivations/foundry/`), `tests` (fully qualified test
@@ -122,7 +131,7 @@ are never produced by running the code under test.
 
 ## Acceptance criteria
 
-- [ ] The registry file has 18 entries for KA-737 to KA-754, 4 for KA-168 to KA-171, 6 for Part 3 and 22 for Part 4, each with truth, tolerance, tier, control and derivation.
+- [ ] The registry file has 18 entries for KA-737 to KA-754, 4 for KA-168 to KA-171, 6 for Part 3 and 31 for Part 4, each with truth, tolerance, tier, control and derivation.
 - [ ] Every entry of Parts 1, 2 and 4 names at least one existing test; Part 3 entries name the tests of unit U31b's beads once those exist and are otherwise marked `pending: U31b`.
 - [ ] The four rows the plan leaves without a control (KA-747, KA-750, KA-753, KA-754) have a registered control, and the two rows marked "to set" (KA-739, KA-751) have a tolerance.
 - [ ] Each derivation file exists and its final numbers equal the registry's.
@@ -133,7 +142,7 @@ are never produced by running the code under test.
 
 ### Unit tests
 `cargo test -p frob-conformance registry::foundry`:
-- `foundry_registry_counts` (18, 4, 6, 22).
+- `foundry_registry_counts` (18, 4, 6, 31).
 - `every_entry_has_derivation_test_and_control`.
 - `tests_named_in_registry_exist`.
 - `expected_values_match_registry` (parses the expected constants of the named tests).
@@ -160,6 +169,9 @@ registry check is a host test, identical everywhere.
   the mutation test has a full expected table.
 - Part 4 exists because the mechanism beads introduce fixtures the plan does not number; registering them
   keeps "every test has an oracle that was not regenerated" true for them as well.
+- The derivations bead of unit U31b proposes controls for the same four rows; where its proposal differs
+  from the one first written here (KA-747, KA-750, KA-754) both are registered, so the two beads agree row
+  for row. The proposals stay marked not gate-eligible until the registry owner accepts them.
 
 ## References
 

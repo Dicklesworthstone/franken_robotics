@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "frob-cert", "frob-gait", "frontier", "test"]
 parent: "WP-64"
-deps: ["N12-18", "BD-332", "N12-06", "SPEC-C-10"]
+deps: ["N12-18", "N12-06", "SPEC-C-10"]
 needs: ["§0.7: the paper-scale pilot of the gait construction (trot and bound orbits of one quadruped, continued in one design parameter) owned by the gait work"]
-related: ["CARD-T-24", "BD-048", "BD-333"]
+related: ["CARD-T-24", "BD-048", "BD-333", "BD-332"]
 gates: []
 plan_refs: ["§12.3 (T-25)", "§10 C-10", "§22.9", "Appendix D.5 (H/K theorem)"]
 ---
@@ -37,6 +37,15 @@ gaits. Rejected alternative: hand-tuned phase-offset tables per robot.
 In: statement document, registry row, the per-atlas `group-enumeration` certificate bound to this card, fixtures
 and mutants. Out: computing the ambient group (symmetry analysis); the atlas, phase relations and max-plus
 timing (the gait-atlas bead); orbits and their stability; the auditor's checker (N12-18).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the gait atlas (BD-332) is `related`, not a dependency (a card that waited for its implementer would close a loop,
+because the implementer's own acceptance runs the card's law tests). What the card does depend on is in `deps`:
+the card registry, its specification, its pilot where the route is Frontier, and Lemma's own proof machinery. It
+closes on its statement document, its registry row, its specimens and mutants, and every acceptance line that its
+own fixtures decide. An acceptance line that can only be observed on live output (the per-atlas certificate and
+the atlas built from an accepted enumeration) is run inside the implementing bead, with this card's law tests, as
+part of that bead's acceptance; the receipt produced there is what moves the registry row for that output.
 
 ## Technical approach
 

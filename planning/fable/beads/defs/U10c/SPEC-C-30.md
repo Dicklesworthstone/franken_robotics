@@ -1,14 +1,14 @@
 ---
 key: "SPEC-C-30"
-title: "spec C-30: requirements as temporal logic over unit-normalized predicates: contract, law tests, registry entries"
+title: "spec C-30: requirements as temporal logic over unit-normalized predicates: contract, law tests, registry rows"
 type: "task"
 priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "solid", "arena", "frob-spec", "test"]
 parent: "WP-41"
-deps: ["BD-121", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-122", "BD-194", "BD-255", "BD-257", "N10-CX", "SPEC-C-31", "N10c-10"]
+related: ["BD-122", "BD-194", "BD-255", "BD-257", "N10-CX", "SPEC-C-31", "N10c-10", "BD-121"]
 gates: ["GATE-ARENA-03", "GATE-CORTEX-10"]
 plan_refs: ["§10 C-30", "§24.5", "§24.6", "§38.7 MR-19 MR-20", "Appendix D.7", "Appendix I.8", "Appendix M.9", "Appendix N.7"]
 ---
@@ -44,6 +44,28 @@ Out: the requirement language implementation and its three evaluators (BD-121); 
 `task.verdict` (BD-122); verdicts on batched tiers and `frob.verdict/1` on devices (BD-255); the reward-term pilot
 and KILL-SPEC-REWARD (BD-257); the refusal codes of the language (owned by the Arena chapter); recording
 GATE-ARENA-03 and GATE-CORTEX-10.
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-30: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`task.check`; also `task.verdict`), `failing_test`
+(a test of `frob-spec::laws_c30` with its registered control), `payoff.gate` (GATE-ARENA-03), `statements`,
+`known_answers` (KA-149 to KA-152), `cards` (none), `gates`, `pilot` left empty (the construction is Solid) and
+`generic_comparator` only if this bead claims an advantage over a named generic method. Doctrine D-2 (no
+ornamental mathematics) is checked on these fields: a construction with no verb or no failing test is moved to the
+parked register by a decision record. The contract `docs/math/C-30.md` follows the ten-section template
+`docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-121 (the requirement
+language core, which creates `frob-spec`, implements this construction and depends on this bead): that bead is
+listed in `related` and is not a prerequisite. The law suite is generic over its subject trait and closes on the
+exact reference model and the mutants in its own test support. If `frob-spec` does not exist when this bead
+starts, the suite and its support files are written under `crates/frob-conformance/tests/` with the same file
+names (that crate exists from BD-025) and the commands below read `-p frob-conformance`; the bead that implements
+the construction moves them into the owning crate, binds its production types to the subject trait and runs the
+unchanged suite as part of its own acceptance. A criterion or script step below that names production code or a
+verb of an implementing bead is owed at that bead's acceptance and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -142,6 +164,9 @@ success over the shaped reward across five seeds, requirements stay acceptance m
 - [ ] MR-19 and MR-20 are registered; controls from CX-072 and CX-073 are attached to GATE-ARENA-03 and
       GATE-CORTEX-10.
 - [ ] `scripts/e2e/spec_c30.sh` exits 0.
+- [ ] Row C-30 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 
@@ -197,9 +222,9 @@ the bit-equality laws on each backend.
 
 ## Considerations
 
-- The dependency on BD-121 follows the rule that a specification's law tests live in the crate that implements
-  the construction; BD-121 also creates that crate. If the load step orders them the other way, the reference
-  model and the suite can be written first and bound when the crate exists.
+- Order against BD-121 (settled): BD-121 implements this construction and creates `frob-spec`, so it depends on
+  this bead and this bead does not depend on it. The reference model and the suite are written first and are
+  bound by BD-121 when the crate exists, as the Scope states.
 - Guard band: the owning chapter decides atoms on a device only outside a band of 2⁻²¹ around zero and re-evaluates
   inside it on the CPU with the declared comparator. FACT (planning archive, to be re-run): an unguarded
   single-precision strict comparison on a 65,536-case boundary screen gave 452 false admissions and 23,438 false

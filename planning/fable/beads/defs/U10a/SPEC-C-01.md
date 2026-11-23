@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-lie", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-010", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-046", "BD-061", "BD-101", "N10a-12", "CARD-T-11", "N10-KA1"]
+related: ["BD-046", "BD-061", "BD-101", "N10a-12", "CARD-T-11", "N10-KA1", "BD-010"]
 gates: ["GATE-MARROW-01", "GATE-ATEL-02"]
 plan_refs: ["§10 C-01", "§13.1", "§13.7", "§13.8", "§12.3 T-11", "Appendix D.1", "Appendix M KA-037 to KA-039", "Appendix N CX-019"]
 ---
@@ -51,6 +51,17 @@ answers KA-037 to KA-039; the statement of theorem card T-11 as this constructio
 Out: the production classifier and joint maps (BD-046); the kinematic functor and referee lowering (BD-061);
 the mobility analysis and its verb (BD-101); the lattice-mobility pilot (N10a-12); stratified state spaces at
 singular poses, unilateral contacts and mode changes (construction C-16, another unit).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-010 (creates `frob-lie` with
+the group traits): that bead is listed in `related` and is not a prerequisite. The law suite is generic over its
+subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-lie` does
+not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

@@ -408,6 +408,1701 @@
     "N20b-45"
    ],
    "note": "N20-REF registers the three reserved slots with number pending; N20b-45 allocates the numbers; the file and loader are its dependency BD-005"
+  },
+  {
+   "bead": "N20a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-02"
+   ],
+   "note": "the crate map that places frob-sense in layer 3; check-layers (BD-003) reads it"
+  },
+  {
+   "bead": "N20a-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21a-04"
+   ],
+   "note": "the kernel library index is M2; the ray and sensor kernels arrive with N20b-43, N20b-44 and N20b-30, not with the crate skeleton"
+  },
+  {
+   "bead": "N20a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-090"
+   ],
+   "note": "channel kinds of the ledger schema, under which mask-reason counts are integer histograms"
+  },
+  {
+   "bead": "N20a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-192"
+   ],
+   "note": "the gym (M2) consumes the mask type; it is not a prerequisite of it"
+  },
+  {
+   "bead": "N20a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-192",
+    "N23a-03"
+   ],
+   "note": "consumers at M2: the gym's access classes build on this bead's namespace and schema types"
+  },
+  {
+   "bead": "N20a-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22a-03"
+   ],
+   "note": "the estimator writes its beliefs into the belief namespace; consumer, and an overlap on the namespace types reported as a cross-group pair"
+  },
+  {
+   "bead": "N20a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-22",
+    "N35-23"
+   ],
+   "note": "addressed streams on the host and the stream registry (M1); the device kernel K-x-philox (BD-180) is M2 and used by N20b-44"
+  },
+  {
+   "bead": "N20a-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16c-01"
+   ],
+   "note": "the dyadic refinement law for interval-acting random drivers; the dyadic grid itself is N16a-06"
+  },
+  {
+   "bead": "N20a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "the card format with the driver fields control_rate and latency"
+  },
+  {
+   "bead": "N20a-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22a-07"
+   ],
+   "note": "the controller record carries the decision-to-command latency; frob-sense takes the value as an input and cannot wait on a higher-layer crate"
+  },
+  {
+   "bead": "N20a-05",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28a-08"
+   ],
+   "note": "A-21 consumes the instants; it is not a prerequisite"
+  },
+  {
+   "bead": "N20a-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20a-49",
+    "N13-06"
+   ],
+   "note": "the window convention is contradictory between §11.8 and §20.4.3; N20a-06 implements [open, close) behind one function and the decision bead N20a-49 rules; N13-06 tests the other boundary"
+  },
+  {
+   "bead": "N20a-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-192"
+   ],
+   "note": "consumer: the gym reads the final observation delivered at an episode end"
+  },
+  {
+   "bead": "N20a-07",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the retraction is its dependency BD-011; the per-link step twist is formed in this bead from the two committed poses of its dependency BD-081"
+  },
+  {
+   "bead": "N20a-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the frob-lemma writer and the poly-identity checker for the Certified identity of PO-SENS-03"
+  },
+  {
+   "bead": "N20a-08",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-069 (driver latency on the card)"
+  },
+  {
+   "bead": "N20a-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22a-03"
+   ],
+   "note": "the out-of-sequence rule of the estimator is a consumer of delivered packets; N22a-03 depends on BD-098"
+  },
+  {
+   "bead": "N20a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N20b-21"
+   ],
+   "note": "the kill-gate record with its ADR rule, and the KILL-SCHED row of the Sensorium gate registry"
+  },
+  {
+   "bead": "N20a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-161"
+   ],
+   "note": "superseded by N20b-23, which carries this dependency"
+  },
+  {
+   "bead": "N20a-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-116",
+    "BD-117"
+   ],
+   "note": "superseded by N20b-23, which carries this dependency"
+  },
+  {
+   "bead": "N20a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-074"
+   ],
+   "note": "gear ratio and backlash gap of the transmission card; the engaged side is the row state of its dependency BD-084"
+  },
+  {
+   "bead": "N20a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20b-40"
+   ],
+   "note": "N20b-40 extends this model and depends on it"
+  },
+  {
+   "bead": "N20a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20b-39"
+   ],
+   "note": "the jump term is an extension written on BD-099's point-acceleration model; both are joined in N20b-42 and BD-238"
+  },
+  {
+   "bead": "N20a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20b-44"
+   ],
+   "note": "K-sense-imu: the batched point-acceleration kernel derived from the referee expression"
+  },
+  {
+   "bead": "N20a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-075"
+   ],
+   "note": "battery terminal voltage and current on the shared bus; winding current and temperatures come from its dependency BD-071"
+  },
+  {
+   "bead": "N20a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-080",
+    "BD-159"
+   ],
+   "note": "the normal force of a foot contact on the referee step and on the batched step"
+  },
+  {
+   "bead": "N20a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20b-28",
+    "N20b-29"
+   ],
+   "note": "M2 extensions that depend on this bead"
+  },
+  {
+   "bead": "N20a-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20b-41"
+   ],
+   "note": "M2 extension that depends on this bead"
+  },
+  {
+   "bead": "N20a-16",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-047"
+   ],
+   "note": "typed wrenches and the frame maps; the coadjoint sign is fixed by its dependency BD-011"
+  },
+  {
+   "bead": "N20a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-11"
+   ],
+   "note": "the load-weighted slip distance over the contact quadrature (the same metric is also drafted as N24a-20)"
+  },
+  {
+   "bead": "N20a-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-230"
+   ],
+   "note": "the film law is M3; at M2 slip is forced with a low-friction interface card"
+  },
+  {
+   "bead": "N20a-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-07"
+   ],
+   "note": "the rolling distribution that maps wheel rates to body twist"
+  },
+  {
+   "bead": "N20a-18",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "a funding condition (no registered task needs tactile sensing before M6), not a prerequisite bead"
+  },
+  {
+   "bead": "N20a-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-30",
+    "BD-154"
+   ],
+   "note": "the micro-patch pad pilot (whether a tier resolves pressure over an area) and the four-dimensional contact rows"
+  },
+  {
+   "bead": "N20a-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20a-24"
+   ],
+   "note": "M3; at M2 only the deterministic cut law is active"
+  },
+  {
+   "bead": "N20a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-06"
+   ],
+   "note": "optical cards with their declared conditionals on latents; the latent join is its dependency BD-229"
+  },
+  {
+   "bead": "N20a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the poly-identity checker for the mirror-return identity of PO-SENS-04"
+  },
+  {
+   "bead": "N20a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-11"
+   ],
+   "note": "det_exp of the kernel dialect"
+  },
+  {
+   "bead": "N20a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-06"
+   ],
+   "note": "zone lighting levels and emission on optical cards"
+  },
+  {
+   "bead": "N20a-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19b-05"
+   ],
+   "note": "the wetness latent of film patches; region identifiers and the latent join are its dependency BD-229"
+  },
+  {
+   "bead": "N20a-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-227"
+   ],
+   "note": "hazard registries are M3; the pilot fixes its speed range from the plan's hazard lists and records it in the protocol"
+  },
+  {
+   "bead": "N20a-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-08"
+   ],
+   "note": "K-scan and K-compact with the overflow flag"
+  },
+  {
+   "bead": "N20a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N20b-21"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19b-24",
+    "N19b-23"
+   ],
+   "note": "the RGB epic's pilot and its short plan with the kill gate and funding decision"
+  },
+  {
+   "bead": "N20a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33a-11"
+   ],
+   "note": "the airlock skeleton and its feature-group registry; no bead admits the tracer group, which this bead does behind the epic's funding decision"
+  },
+  {
+   "bead": "N20a-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "a funding condition (no registered task needs these models before M5), not a prerequisite bead"
+  },
+  {
+   "bead": "N20a-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-30",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "a funding condition, not a prerequisite bead"
+  },
+  {
+   "bead": "N20a-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N41-09"
+   ],
+   "note": "the owner decision on the order of late items under the cap of four"
+  },
+  {
+   "bead": "N20a-31",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-270",
+    "N26a-02"
+   ],
+   "note": "Nemesis lists the fault events of this bead as legal edits with bounds; consumer"
+  },
+  {
+   "bead": "N20a-31",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20b-06",
+    "BD-242"
+   ],
+   "note": "N20b-06 (the self-check) depends on this bead's bump event; the recovery row is measured there and in BD-238"
+  },
+  {
+   "bead": "N20a-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-25",
+    "N18b-36"
+   ],
+   "note": "superseded by N20b-26; the sibling decisions are taken in the same owner ruling"
+  },
+  {
+   "bead": "N20a-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-387"
+   ],
+   "note": "superseded by N20b-26; dataset admission is M5"
+  },
+  {
+   "bead": "N20a-32",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "NAB-09"
+   ],
+   "note": "superseded by N20b-26, which carries this dependency"
+  },
+  {
+   "bead": "N20a-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-191",
+    "BD-300"
+   ],
+   "note": "the stills verbs and the viewer overlays call this bead's renderer and depend on it"
+  },
+  {
+   "bead": "N20a-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-05"
+   ],
+   "note": "the privacy field of the ScenePack provenance block (M2); the mark lattice N37-17 is M3"
+  },
+  {
+   "bead": "N20a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-04"
+   ],
+   "note": "route graphs of a scene pack"
+  },
+  {
+   "bead": "N20a-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-111"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-34",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N22b-25"
+   ],
+   "note": "M4 consumer of the weak-direction profile"
+  },
+  {
+   "bead": "N20a-34",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-110"
+   ],
+   "note": "stage aggregation with ranked repairs; the stage that hosts the warning is BD-244 (related: it depends on BD-240)"
+  },
+  {
+   "bead": "N20a-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-03",
+    "N22a-02"
+   ],
+   "note": "superseded by N20b-35, which carries these dependencies"
+  },
+  {
+   "bead": "N20a-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-279"
+   ],
+   "note": "superseded by N20b-35; autopsy.intervene on forks of its dependency BD-205"
+  },
+  {
+   "bead": "N20a-35",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N20b-32"
+   ],
+   "note": "superseded by N20b-35, which already depends on N20b-32"
+  },
+  {
+   "bead": "N20a-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": "the typed-edit engine with move-sensor and its invalidation set"
+  },
+  {
+   "bead": "N20a-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28b-07"
+   ],
+   "note": "continuous optimizers behind the ask/tell interface; mounts as variables are N20b-36"
+  },
+  {
+   "bead": "N20a-36",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-241"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-36",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N22a-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-126"
+   ],
+   "note": "the mission file's world set, deadline, probe family and success predicate"
+  },
+  {
+   "bead": "N20a-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the bundle writer; the alias-pair checker is its dependency BD-132"
+  },
+  {
+   "bead": "N20a-38",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-215"
+  },
+  {
+   "bead": "N20a-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-04"
+   ],
+   "note": "route graphs; region and fixture identities are its dependency BD-229"
+  },
+  {
+   "bead": "N20a-39",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-225 (the interior grammar and its module instances)"
+  },
+  {
+   "bead": "N20a-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-048",
+    "N13-02"
+   ],
+   "note": "finite groups and isometries with explicit determinant"
+  },
+  {
+   "bead": "N20a-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25c-23",
+    "N25b-27"
+   ],
+   "note": "the mission chapter consumes the success values; N25b-27 states the same bound and is reported as a cross-group pair"
+  },
+  {
+   "bead": "N20a-40",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-34"
+   ],
+   "note": "N25e-34 (error_dependence on sensor cards, the joint error law) depends on BD-240 and so on this bead; N20a-40 covers independent and fully dependent reads and takes a declared channel law as input"
+  },
+  {
+   "bead": "N20a-41",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-290",
+    "N25c-23"
+   ],
+   "note": "consumers that price the separating changes"
+  },
+  {
+   "bead": "N20a-41",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N19b-38"
+   ],
+   "note": "the retrofit catalogue is M4; at M3 scene-side changes are listed unpriced"
+  },
+  {
+   "bead": "N20a-41",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N23a-14",
+    "BD-341"
+   ],
+   "note": "consumers that must consult the standing-witness registry"
+  },
+  {
+   "bead": "N20a-41",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-292"
+   ],
+   "note": "the revalidation engine that decides whether a standing witness survives an edit"
+  },
+  {
+   "bead": "N20a-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-253"
+   ],
+   "note": "the M3 task families with their world sets and success predicates"
+  },
+  {
+   "bead": "N20a-42",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N26a-07"
+   ],
+   "note": "the pilot runs a plain randomized search of its own; the search-method interface is the mechanism's (BD-240)"
+  },
+  {
+   "bead": "N20a-42",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N20b-21"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-36"
+   ],
+   "note": "telemetry.query (M1); telemetry.divergence (BD-206) and run.fork (BD-205) are M2 and serve the device rows run under BD-189"
+  },
+  {
+   "bead": "N20a-44",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "the M1 conformance run of registered known answers"
+  },
+  {
+   "bead": "N20a-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-45",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-36"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-46",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20b-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-46",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-36",
+    "BD-191",
+    "N24a-40"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-46",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-119"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-47",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-244",
+    "N20a-34"
+   ],
+   "note": "M3 stage of an M1 script; the warning rows are added when N20a-34 lands"
+  },
+  {
+   "bead": "N20a-48",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-026"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20a-48",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23a-14"
+   ],
+   "note": "train.start is M2; the refusal-445 rows are an M3 stage of this M1 script"
+  },
+  {
+   "bead": "N20a-48",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-369",
+    "BD-292"
+   ],
+   "note": "M3 and M4 verbs used by later stages of the script"
+  },
+  {
+   "bead": "N20b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-01",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "§24: no Arena bead gives task terms a declared transformation kind or the goal set an invariance group (BD-122 has neither); N20b-01 fails closed with Undeclared"
+  },
+  {
+   "bead": "N20b-01",
+   "n": 3,
+   "as": "gap",
+   "keys": [],
+   "note": "§19: no Habitat bead declares the group of world isometries under which a scene family is invariant in law; N20b-01 fails closed"
+  },
+  {
+   "bead": "N20b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23a-31",
+    "N23a-32"
+   ],
+   "note": "M4 consumers that must take the guarded handle"
+  },
+  {
+   "bead": "N20b-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-285"
+   ],
+   "note": "consumer: orbit deduplication of closed-loop results must take the guarded handle"
+  },
+  {
+   "bead": "N20b-02",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N22a-31",
+    "BD-327"
+   ],
+   "note": "M4 consumers (symmetric gait orbits, symmetric controllers) that must take the guarded handle"
+  },
+  {
+   "bead": "N20b-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23a-32"
+   ],
+   "note": "M4; until a consumer verb exists the script exercises FROB-REF-443 through sense.symmetry --license-check"
+  },
+  {
+   "bead": "N20b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-31"
+   ],
+   "note": "the fault events (stuck, dead, extrinsic bump) as scheduled world events; Nemesis lists them as legal edits (BD-270, related)"
+  },
+  {
+   "bead": "N20b-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-238"
+   ],
+   "note": "BD-238 is the capstone of GATE-SENS-14 and depends on this bead for the bump row's first check"
+  },
+  {
+   "bead": "N20b-06",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N22b-25"
+   ],
+   "note": "M4 consumer of the extrinsics-suspect flag"
+  },
+  {
+   "bead": "N20b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-29",
+    "BD-390"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N30b-03",
+    "N30b-10"
+   ],
+   "note": "the calibration record (identity, receipts) and the expiry triggers"
+  },
+  {
+   "bead": "N20b-08",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-388"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": "the host form of addressed streams is N35-22 (M1); the named BD-180 is the M2 device kernel, used by N20b-12"
+  },
+  {
+   "bead": "N20b-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-200"
+   ],
+   "note": "M2; the later-phase twin on batched tiers is exercised by N20b-12"
+  },
+  {
+   "bead": "N20b-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-192",
+    "N23a-03"
+   ],
+   "note": "M2 consumers; N23a-03 specifies the same frozen actor schema and is reported as a cross-group pair"
+  },
+  {
+   "bead": "N20b-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23b-31",
+    "N23b-32"
+   ],
+   "note": "the learning unit registers its four leaks in this bead's leak registry"
+  },
+  {
+   "bead": "N20b-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23b-09"
+   ],
+   "note": "the evaluation report is the consumer that must refuse without a receipt"
+  },
+  {
+   "bead": "N20b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20-REF"
+   ],
+   "note": "the reserved slot causal-receipt-missing; its number is allocated by N20b-45"
+  },
+  {
+   "bead": "N20b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "CARD-T-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28b-32",
+    "N25a-13"
+   ],
+   "note": "consumers: revalidation must honour this bead's binding record"
+  },
+  {
+   "bead": "N20b-14",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-030 is already a dep; its M2 successor is BD-190, which depends on this bead"
+  },
+  {
+   "bead": "N20b-16",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-098 and BD-189 are already deps"
+  },
+  {
+   "bead": "N20b-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-238"
+   ],
+   "note": "M3; the profile prints whatever provenance the cards carry and gains the completed fields when BD-238 lands"
+  },
+  {
+   "bead": "N20b-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-137",
+    "BD-222",
+    "BD-312"
+   ],
+   "note": "the per-milestone verb beads depend on verb implementations; a registry bead does not depend on them"
+  },
+  {
+   "bead": "N20b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-138"
+   ],
+   "note": "the surface owner assigns clusters; N20b-17 proposes the split of eight verbs"
+  },
+  {
+   "bead": "N20b-18",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005 (the claim product)"
+  },
+  {
+   "bead": "N20b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-393",
+    "BD-139"
+   ],
+   "note": "ground.band (M5) is the consumer that checks this guard; the M1 Reality status guard is BD-139"
+  },
+  {
+   "bead": "N20b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-078",
+    "BD-098",
+    "BD-189",
+    "N20a-06",
+    "N20a-07",
+    "N20a-08"
+   ],
+   "note": "the beads whose tests carry INV-SENS-02 to -04 and PO-SENS-01, -02"
+  },
+  {
+   "bead": "N20b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-237",
+    "BD-188",
+    "N20a-21",
+    "N20a-07"
+   ],
+   "note": "PO-SENS-04 is carried by N20a-21 and PO-SENS-03 by N20a-07"
+  },
+  {
+   "bead": "N20b-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-120",
+    "BD-239",
+    "BD-134",
+    "BD-240",
+    "N20a-37",
+    "CARD-T-23",
+    "CARD-T-30"
+   ],
+   "note": "PO-SENS-07 is carried by N20a-37"
+  },
+  {
+   "bead": "N20b-19",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20b-45"
+   ],
+   "note": "the battery runs the late answers under their pending slots until N20b-45 allocates numbers"
+  },
+  {
+   "bead": "N20b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-02"
+   ],
+   "note": "the gate register file and its generated printout"
+  },
+  {
+   "bead": "N20b-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20a-11",
+    "N20a-27",
+    "N20a-43"
+   ],
+   "note": "the three decision beads; they depend on this registry bead, and BD-189, BD-188 and BD-240 record their outcomes"
+  },
+  {
+   "bead": "N20b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-176",
+    "BD-177"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-23",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-212"
+  },
+  {
+   "bead": "N20b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20a-07"
+   ],
+   "note": "the three intra-step policies; their device form is its dependency BD-189"
+  },
+  {
+   "bead": "N20b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-17"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-200"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-254"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15b-25",
+    "N18b-36"
+   ],
+   "note": "sibling owner decisions taken in the same ruling"
+  },
+  {
+   "bead": "N20b-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N37-17",
+    "NAB-09"
+   ],
+   "note": "the licence marks and the source register with licences"
+  },
+  {
+   "bead": "N20b-26",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-387"
+   ],
+   "note": "M5; the decision at M4 names which fields may later become measured"
+  },
+  {
+   "bead": "N20b-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-237 is already a dep"
+  },
+  {
+   "bead": "N20b-27",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "admission is its dependency BD-387; the measured card itself is external evidence, not a bead"
+  },
+  {
+   "bead": "N20b-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20a-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-29",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§18: the interface-card schema of BD-167 has no optional pulse-model field (shape, duration, provenance); N20b-29 defines the field and needs the contact chapter's schema to accept it"
+  },
+  {
+   "bead": "N20b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-11"
+   ],
+   "note": "the verdict record with four values; the language core is its dependency BD-121"
+  },
+  {
+   "bead": "N20b-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N16a-07",
+    "N18a-16"
+   ],
+   "note": "the contact-space inverse inertia of the impulse solve (effective mass) and the compliant law's stiffness"
+  },
+  {
+   "bead": "N20b-29",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N20-REF"
+   ],
+   "note": "the reserved slot sens-peak-load-ungraded; its number is allocated by N20b-45"
+  },
+  {
+   "bead": "N20b-30",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-159 (stages 7 to 9 of the batched step)"
+  },
+  {
+   "bead": "N20b-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20a-16",
+    "N20b-41"
+   ],
+   "note": "the port reading and its batched cut expression"
+  },
+  {
+   "bead": "N20b-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-227"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-055",
+    "BD-062"
+   ],
+   "note": "payload envelopes in the design file and collision primitives per link"
+  },
+  {
+   "bead": "N20b-32",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N19a-04",
+    "N22a-10"
+   ],
+   "note": "route graphs and the gait clock with planned footsteps, from which the nominal pose trajectory is built"
+  },
+  {
+   "bead": "N20b-32",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-237"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20-REF"
+   ],
+   "note": "the reserved slot sens-lead-too-short; its number is allocated by N20b-45"
+  },
+  {
+   "bead": "N20b-33",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-243 (A-14 in the analysis registry)"
+  },
+  {
+   "bead": "N20b-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20a-36"
+   ],
+   "note": "N20a-36 reads this pilot's classification and depends on it"
+  },
+  {
+   "bead": "N20b-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-279"
+   ],
+   "note": "interventions on forks of its dependency BD-205"
+  },
+  {
+   "bead": "N20b-35",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-07"
+   ],
+   "note": "continuous optimizers behind the ask/tell interface; opt.start is its dependency BD-341"
+  },
+  {
+   "bead": "N20b-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-100",
+    "N19b-34"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-36",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N14a-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-37",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-262"
+  },
+  {
+   "bead": "N20b-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N44-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-37",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-225",
+    "BD-227",
+    "N19b-05"
+   ],
+   "note": "interior grammar scenes, hazard registries and film patches for the wet tiles"
+  },
+  {
+   "bead": "N20b-38",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review reads this decision; it depends on it, not the reverse"
+  },
+  {
+   "bead": "N20b-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-082"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20a-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-37"
+   ],
+   "note": "the witness object and checker; the M1 verb form is its dependency BD-134; BD-240 is M3 and registers the pair in the full verb"
+  },
+  {
+   "bead": "N20b-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N13-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-40",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-074"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-40",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N22a-03"
+   ],
+   "note": "consumer: the estimator must treat an ambiguous velocity as unresolved"
+  },
+  {
+   "bead": "N20b-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-41",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-150"
+   ],
+   "note": "per-link spatial accelerations in kernel form; the referee values come from its dependency BD-080"
+  },
+  {
+   "bead": "N20b-41",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-047"
+  },
+  {
+   "bead": "N20b-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-134"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19c-38"
+   ],
+   "note": "the scene-side rule for scaled instances; N19c-39 writes the same conversion for frob-sense and is reported as a cross-group pair"
+  },
+  {
+   "bead": "N20b-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-149",
+    "BD-150"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N20b-44",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-11"
+   ],
+   "note": "det_* functions for the normal-variate construction; addressed uniforms are its dependency BD-180"
   }
  ],
  "edges": [
@@ -422,6 +2117,78 @@
    "dep": "BD-246",
    "as": "related",
    "why": "need 2 of BD-241 names BD-246; a seed never depends on a higher-numbered seed"
+  },
+  {
+   "bead": "N23a-03",
+   "dep": "N20a-03",
+   "as": "dep",
+   "why": "need 1 of N20a-03: the gym's access classes and frozen actor schema are built on the namespace and schema types of N20a-03"
+  },
+  {
+   "bead": "N28a-08",
+   "dep": "N20a-05",
+   "as": "dep",
+   "why": "need 3 of N20a-05: A-21 composes the seven instants, whose fields and order constraints are defined by N20a-05"
+  },
+  {
+   "bead": "N20b-40",
+   "dep": "N20a-13",
+   "as": "dep",
+   "why": "need 2 of N20a-13 and coverage (d) of U20a: sampled-encoder unwrapping extends the joint encoder model"
+  },
+  {
+   "bead": "N23a-14",
+   "dep": "N20a-41",
+   "as": "related",
+   "why": "need 3 of N20a-41: train.start consults the standing-witness registry (FROB-REF-445); train.start is M2 and the registry M3"
+  },
+  {
+   "bead": "BD-341",
+   "dep": "N20a-41",
+   "as": "dep",
+   "why": "need 3 of N20a-41: opt.start must consult the standing-witness registry before admitting a run (FROB-REF-445)"
+  },
+  {
+   "bead": "N23a-31",
+   "dep": "N20b-02",
+   "as": "dep",
+   "why": "need 2 of N20b-02: weight tying takes the guarded Γ_obs handle (INV-SENS-08, FROB-REF-443)"
+  },
+  {
+   "bead": "N23a-32",
+   "dep": "N20b-02",
+   "as": "dep",
+   "why": "need 2 of N20b-02: symmetry augmentation takes the guarded Γ_obs handle (INV-SENS-08, FROB-REF-443)"
+  },
+  {
+   "bead": "BD-285",
+   "dep": "N20b-02",
+   "as": "dep",
+   "why": "need 3 of N20b-02: campaign quotienting of closed-loop results takes the guarded Γ_obs handle (INV-SENS-08)"
+  },
+  {
+   "bead": "N23b-31",
+   "dep": "N20b-10",
+   "as": "dep",
+   "why": "need 2 of N20b-10 and coverage (d) of U20b: rule E-10 registers four further planted leaks in the leak registry of N20b-10"
+  },
+  {
+   "bead": "N23b-09",
+   "dep": "N20b-12",
+   "as": "dep",
+   "why": "need 1 of N20b-12 and coverage (d) of U20b: a policy's first evaluation is recorded only with a passing causal-policy receipt"
+  },
+  {
+   "bead": "N20b-13",
+   "dep": "N10b-08",
+   "as": "dep",
+   "why": "the specification of the docking fixture and its closed-form boundary (spec C-19 part) comes first"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N20b-38",
+   "as": "dep",
+   "why": "need 1 of N20b-38: KILL-VISIBILITY is due at M4 and the exit review requires its decision record"
   }
  ],
  "superseded": [],

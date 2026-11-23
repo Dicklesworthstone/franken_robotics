@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "spine", "spec", "frontier", "reflex", "safety", "frob-shield", "test"]
 parent: "WP-65"
-deps: ["BD-337", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-132", "BD-092", "BD-208", "BD-338", "BD-339", "BD-340", "N10c-02", "N10c-03", "N10-CX", "SPEC-C-38", "N10c-10", "CARD-T-28"]
+related: ["BD-132", "BD-092", "BD-208", "BD-338", "BD-339", "BD-340", "N10c-02", "N10c-03", "N10-CX", "SPEC-C-38", "N10c-10", "CARD-T-28", "BD-337"]
 gates: ["GATE-SHIELD-01"]
 plan_refs: ["§10 C-31", "§22.11", "§12.3 T-28", "§12.4", "§12.7", "§38.7 MR-22", "Appendix D.7", "Appendix E GB-26", "Appendix I.15", "Appendix M.9", "Appendix N.7"]
 ---
@@ -53,6 +53,29 @@ Out: the `.fenergy` format, the exact-integer monitor kernel `K-energy-monitor`,
 and the verbs `shield.budget` and `shield.check` (BD-337); the auditor's checker for that kind (BD-132, BD-337);
 tier 3 (N10c-02; mechanism BD-338, BD-339, BD-340); tier 2 (N10c-03; mechanism BD-440); recording GATE-SHIELD-01
 and deciding KILL-ENERGY (BD-337).
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-31: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`shield.budget`; also `shield.check`, `shield.fit`,
+`shield.report`), `failing_test` (a test of `frob-shield::laws_c31_budget` with its registered control),
+`payoff.gate` (GATE-SHIELD-01), `statements`, `known_answers` (KA-153 to KA-156), `cards` (T-28), `gates`, `pilot`
+(the record `PILOT-C-31` of the pilot register, required because the tier is Frontier) and `generic_comparator`
+(the off-the-shelf method named in the pilot paragraph of this bead). Doctrine D-2 (no ornamental mathematics) is
+checked on these fields: a construction with no verb or no failing test is moved to the parked register by a
+decision record. The part beads N10c-02 and N10c-03 add their statements and tests to the same row. The contract
+`docs/math/C-31.md` follows the ten-section template `docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-337 (`shield.budget`, which
+creates `frob-shield` and implements tier 1): that bead is listed in `related` and is not a prerequisite. The law
+suite is generic over its subject trait and closes on the exact reference model and the mutants in its own test
+support. If `frob-shield` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -152,6 +175,9 @@ claim is withdrawn and the monitor remains as an alarm of class Estimated.
       discrepancy described under Considerations.
 - [ ] MR-22 and the controls from CX-076 are registered and attached to GATE-SHIELD-01.
 - [ ] `scripts/e2e/spec_c31_budget.sh` exits 0.
+- [ ] Row C-31 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

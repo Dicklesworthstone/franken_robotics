@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["BD-381", "BD-052", "N12-06", "SPEC-C-12"]
+deps: ["BD-381", "N12-06", "SPEC-C-12"]
 needs: []
-related: ["BD-103", "BD-360", "N12-37", "CARD-T-15", "CARD-T-29"]
+related: ["BD-103", "BD-360", "N12-37", "CARD-T-15", "CARD-T-29", "BD-052"]
 gates: []
 plan_refs: ["§12.3 (T-12)", "§10 C-12", "§12.1 (Order.FixedPoints re-checks)", "Appendix D.5 (Kleene iteration)", "Appendix E GB-03"]
 ---
@@ -37,6 +37,16 @@ In: the registered statement, the Lean proof and its capsule (written within BD-
 row, the binding of the co-design closure analysis to the card. Out: the poset and Kleene implementation (the
 algebra crate bead); the co-design closure analysis and the co-design synthesis lane; the continuous (ω-complete)
 case, which is not needed and not claimed.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the poset and Kleene-iteration code of `frob-algebra` (BD-052) is `related`, not a dependency (a card that waited
+for its implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What
+the card does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier,
+and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants,
+and every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live
+output (the closure analysis citing the card only for monotone fragments) is run inside the implementing bead,
+with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
+registry row for that output.
 
 ## Technical approach
 

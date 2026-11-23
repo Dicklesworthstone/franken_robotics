@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "frob-cert", "frob-mission", "frontier", "test"]
 parent: "WP-66"
-deps: ["N12-17", "BD-359", "N12-06", "SPEC-C-40"]
+deps: ["N12-17", "N12-06", "SPEC-C-40"]
 needs: ["§0.7: the paper-scale pilot of the dominance construction (one contact transition, a sole exchange over a split-grip strip, against a reachability tool on the same product model), owned by the mission work"]
-related: ["BD-293", "BD-262", "N12-16", "CARD-T-28"]
+related: ["BD-293", "BD-262", "N12-16", "CARD-T-28", "BD-359"]
 gates: []
 plan_refs: ["§12.3 (T-32)", "§10 C-40", "§25.16", "Appendix D.6 (dominance by unreachability)"]
 ---
@@ -37,6 +37,16 @@ admit the impossible pair); pairing by seed and assuming the worlds match.
 In: statement document, registry row, the per-cell `product-unreachable` certificates bound to this card, the
 reference fixture, mutants. Out: building product systems and searching for witnesses (the product-dominance
 bead); the auditor's checker (N12-17); the statistical paired comparison used as the fallback.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+product-system dominance in `frob-mission` (BD-359) is `related`, not a dependency (a card that waited for its
+implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
+does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(per-cell certificates of a product system built by that mechanism) is run inside the implementing bead, with this
+card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the registry row for
+that output.
 
 ## Technical approach
 

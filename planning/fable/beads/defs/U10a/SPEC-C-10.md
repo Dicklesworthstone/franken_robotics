@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "reflex", "frob-gait", "frob-algebra", "frontier", "spine", "spec", "test"]
 parent: "WP-64"
-deps: ["BD-049", "BD-025", "N10a-01", "SPEC-C-09", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "SPEC-C-09", "STD-TEST", "STD-E2E"]
 needs: ["§10 C-16: hybrid orbits, saltation and the coupled solve for simultaneous touchdowns (SPEC-C-16, another unit)", "§33: the airlock entry for fs-tropical (max_cycle_mean, critical_circuit) and fs-spectral::floquet", "§22.9: the bead that creates crate frob-gait (BD-332 or BD-333 lands first; the law suite is created with the crate skeleton if neither has)"]
-related: ["BD-332", "BD-333", "BD-335", "N10a-17", "CARD-T-25", "N10-KA1"]
+related: ["BD-332", "BD-333", "BD-335", "N10a-17", "CARD-T-25", "N10-KA1", "BD-049"]
 gates: ["GATE-ATEL-02", "GATE-GAIT-01", "GATE-GAIT-03"]
 plan_refs: ["§10 C-10", "§13.4", "§13.6", "§22.9", "§28.4 A-04", "§12.3 T-25", "Appendix D.2", "Appendix D.5", "Appendix M KA-072 KA-073", "Appendix N CX-034 CX-035"]
 ---
@@ -49,6 +49,18 @@ T-25.
 Out: the atlas and its verb (BD-332); orbit computation, return maps and Floquet multipliers (BD-333,
 construction C-16); continuation in morphology (BD-335); the pilot (N10a-17); the subgroup-lattice code itself
 (BD-049), which this suite calls and independently re-derives.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-049 (orbit counts and
+subgroup lattices in `frob-algebra`): that bead is listed in `related` and is not a prerequisite. The law suite is
+generic over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-gait` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then. Until BD-049 lands, the calls the suite makes into the production
+subgroup lattice run on the independent re-derivation in its test support.
 
 ## Technical approach
 

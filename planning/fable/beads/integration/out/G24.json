@@ -1,0 +1,984 @@
+{
+ "group": "G24",
+ "needs": [
+  {
+   "bead": "BD-067",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-35"
+   ],
+   "note": "the decision names the development-oracle release whose captures this bead pins"
+  },
+  {
+   "bead": "BD-067",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-003",
+    "N38a-05"
+   ],
+   "note": "check-deps enforces the firewall; N38a-05 carries the out-of-process rule for foreign tools"
+  },
+  {
+   "bead": "BD-126",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25d-42"
+   ],
+   "note": "the schema takes the form the decision fixes (default: reference .ftask terms by identifier)"
+  },
+  {
+   "bead": "BD-126",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20a-05"
+   ],
+   "note": "the seven instants as named fields"
+  },
+  {
+   "bead": "BD-126",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-109"
+   ],
+   "note": "the template catalogue that a design_domain names; grammars (BD-287, M3) are later and not blocking"
+  },
+  {
+   "bead": "BD-191",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-33"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-191",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32b-11",
+    "N32b-12"
+   ],
+   "note": "M3, later than this M2 verb; an overlay whose function is not registered is refused with the list of available ones"
+  },
+  {
+   "bead": "BD-191",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N19a-05"
+   ],
+   "note": "the privacy field of the scene pack at M2; the private mark and its enforcement (BD-305, N29b-14, M3) are recorded as related edges"
+  },
+  {
+   "bead": "BD-194",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-02"
+   ],
+   "note": "the action space descriptor with design-relative roles that a term's entry names; the table itself is written at export (N23a-13, related edge)"
+  },
+  {
+   "bead": "BD-194",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-200"
+   ],
+   "note": "seed order: BD-194 is a seed dependency of BD-201 beside BD-200; a term only declares the card field its range traces to"
+  },
+  {
+   "bead": "BD-194",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-195"
+   ],
+   "note": "seed order; the reset section is part of the task schema delivered by BD-122"
+  },
+  {
+   "bead": "BD-201",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-24"
+   ],
+   "note": "streams keyed by the entity they perturb, here physical time; the exposure-table lowering of the same draw (N24c-36) is a related edge because KILL-EXPODOMAIN may remove it"
+  },
+  {
+   "bead": "BD-202",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24c-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-202",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-195"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-202",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N19a-15"
+   ],
+   "note": "region labels in the scene field at M2, joined with the interface cards of its dependency BD-167; the full interface map (BD-229) is M3 and a related edge"
+  },
+  {
+   "bead": "BD-202",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N22a-07"
+   ],
+   "note": "ControllerId as a content hash freezes the controller; the crawl itself is the low-speed walk of its dependency BD-116"
+  },
+  {
+   "bead": "BD-253",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-04",
+    "N19a-07"
+   ],
+   "note": "route graphs, goals and task regions; articulated doors with parameter tables"
+  },
+  {
+   "bead": "BD-253",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-271",
+    "N26a-13"
+   ],
+   "note": "seed order (BD-271 is a higher seed); the infeasible columns are filled once the oracle exists and print zero with reason until then"
+  },
+  {
+   "bead": "BD-254",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-271",
+    "N26a-13"
+   ],
+   "note": "seed order; the gate plants its infeasible scenario with an attached witness, so the oracle is not needed to close GATE-ARENA-07"
+  },
+  {
+   "bead": "BD-254",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-094",
+    "BD-092",
+    "BD-208"
+   ],
+   "note": "failure taxonomy; energy ledger on the referee and on the batched tiers"
+  },
+  {
+   "bead": "BD-254",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-106"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-254",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-251"
+   ],
+   "note": "fallback events with their kind"
+  },
+  {
+   "bead": "BD-256",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N37-11",
+    "N32b-03"
+   ],
+   "note": "the path jail and agent namespaces; the capstone BD-258 is a higher seed and stays a related edge"
+  },
+  {
+   "bead": "BD-259",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24c-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-259",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N24c-22"
+   ],
+   "note": "N24c-22 installs the audit-record refusal in the qualification admission path and depends on BD-259; a dep here would close a cycle"
+  },
+  {
+   "bead": "BD-259",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-16"
+   ],
+   "note": "the bounded synchronous wait of long verbs; the MCP tool is generated by BD-298 after the verb exists (related edge, higher seed)"
+  },
+  {
+   "bead": "BD-260",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24c-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-261",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32b-01"
+   ],
+   "note": "the scope catalogue in which qual:admin and qual:run are registered; minting and attenuation come with its dependency BD-258"
+  },
+  {
+   "bead": "BD-261",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N37-11",
+    "BD-091"
+   ],
+   "note": "store roots as retained directory handles; the chunk-publishing transaction that writes under a root"
+  },
+  {
+   "bead": "N24-KA",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the eight late known-answer groups are now registered in N24-KA itself under local labels (KA-ARENA-L1 to -L8), with the beads that carry them listed as related"
+  },
+  {
+   "bead": "N24a-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N24c-36"
+   ],
+   "note": "M2, later than this M1 schema; the draw field is an optional addition that N24c-36 makes to frob.task/1"
+  },
+  {
+   "bead": "N24a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23b-31"
+   ],
+   "note": "M2, later; the contract digest is a reserved TaskId input that N23b-31 fills"
+  },
+  {
+   "bead": "N24a-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-159"
+   ],
+   "note": "M2, later; registration of the kernel in the last stage of the batched step is done by BD-255"
+  },
+  {
+   "bead": "N24a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N24c-15"
+   ],
+   "note": "M2, later, and N24c-15 measures this mechanism; the default 2^-21 holds until decided"
+  },
+  {
+   "bead": "N24a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-task"
+   ],
+   "note": "the registry row of task.settle at M1; BD-255 (M3) only names the verb and stays related"
+  },
+  {
+   "bead": "N24a-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-271",
+    "N26a-13"
+   ],
+   "note": "M3, later; the two columns exist from M1 and stay empty until the oracle supplies witnesses"
+  },
+  {
+   "bead": "N24a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "battery manifests and identity at M1; BD-254 is the M3 capstone that depends on this bead"
+  },
+  {
+   "bead": "N24a-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-123"
+   ],
+   "note": "the registry lists the fixture as the threshold-delivery task; a registry does not wait for the mechanism"
+  },
+  {
+   "bead": "N24a-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-202"
+   ],
+   "note": "M2, later; the registry lists the fixture as the split-grip task"
+  },
+  {
+   "bead": "N24a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-055",
+    "N15b-03"
+   ],
+   "note": "payload bodies with mount in the design file; the battery element whose state of charge the task reports"
+  },
+  {
+   "bead": "N24a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-227"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24a-30",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§15 and §14.4: no bead carries a gripper or payload-attachment card with a retention limit (a force and a moment); BD-055 payloads have mount and removable only"
+  },
+  {
+   "bead": "N24a-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-348"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-19"
+   ],
+   "note": "DesignSplit is N17a-19, a component of BD-287"
+  },
+  {
+   "bead": "N24a-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29b-20",
+    "N29b-21",
+    "N29b-22"
+   ],
+   "note": "the two row quantities in frob-contact and frob-dyn, and the ledger line that stores them"
+  },
+  {
+   "bead": "N24a-38",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19b-13"
+   ],
+   "note": "M6, later; the class reports unavailable until the feature exists"
+  },
+  {
+   "bead": "N24a-38",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22a-29",
+    "BD-333"
+   ],
+   "note": "M4, later; the class reports unavailable until frob-gait exists"
+  },
+  {
+   "bead": "N24a-38",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-394"
+   ],
+   "note": "M5, later; the class reports unavailable until calibrated cells exist"
+  },
+  {
+   "bead": "N24a-38",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N19a-07"
+   ],
+   "note": "door and gate models with closer torque (the closing force); the hazard limit comes with its dependency BD-227; the pinch-zone tag itself is reported as a gap"
+  },
+  {
+   "bead": "N24a-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-33"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24a-40",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32b-11",
+    "N32b-12"
+   ],
+   "note": "M3, later; the verb returns the stored value buffer of whichever overlays are registered"
+  },
+  {
+   "bead": "N24a-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32b-13"
+   ],
+   "note": "the packaged single-file page bundle within its byte budget (which depends on the page N32b-10)"
+  },
+  {
+   "bead": "N24a-41",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32b-43",
+    "N32b-32"
+   ],
+   "note": "M3 gate and kill-gate decision that measure this writer; they depend on it"
+  },
+  {
+   "bead": "N24a-41",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-205",
+    "N27a-07",
+    "BD-280",
+    "N32b-41"
+   ],
+   "note": "fork content stays switched off until the fork-harness gates have a recorded pass; the M2 writer delivers the parent world and N32b-41 (M3) extends it to forks and tables"
+  },
+  {
+   "bead": "N24a-41",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": "the registry maps the four packet refusals to codes"
+  },
+  {
+   "bead": "N24a-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20b-13",
+    "BD-125"
+   ],
+   "note": "the exact rational docking simulator and the timed-docking family that records its runs on the host at M1; BD-190 is the M2 device form and stays related"
+  },
+  {
+   "bead": "N24a-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-07",
+    "BD-161"
+   ],
+   "note": "the event impulse solve credits boundary work p·w_s to the ledger on the referee; the strict profile does the same on batch-cpu"
+  },
+  {
+   "bead": "N24b-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16b-01",
+    "N38a-20",
+    "BD-212"
+   ],
+   "note": "M2, later; they write their manifest in this bead's format and depend on it"
+  },
+  {
+   "bead": "N24b-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-275"
+   ],
+   "note": "M3, later; the hard battery is wired by BD-254"
+  },
+  {
+   "bead": "N24b-01",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-278",
+    "N26b-11"
+   ],
+   "note": "M3, later; the covering battery is wired by BD-254"
+  },
+  {
+   "bead": "N24b-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N26b-03",
+    "BD-248"
+   ],
+   "note": "N26b-03 is M4; the registry stores planted winners that BD-248 authors"
+  },
+  {
+   "bead": "N24b-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-248",
+    "N27b-09"
+   ],
+   "note": "content authored by BD-248 into this registry; the attribution gate reads it"
+  },
+  {
+   "bead": "N24b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-16"
+   ],
+   "note": "the settled-pose cache core and task.settle on the CPU at M1; BD-195 (M2) is the batched form and stays related"
+  },
+  {
+   "bead": "N24b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-090"
+   ],
+   "note": "channel declarations; the interval-extremum kind itself is missing from BD-090 and reported as a gap"
+  },
+  {
+   "bead": "N24b-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23b-34"
+   ],
+   "note": "M2, later; it registers a further rule under this verb and depends on it"
+  },
+  {
+   "bead": "N24b-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39a-33"
+   ],
+   "note": "M3, later; it registers a further rule under this verb and depends on it"
+  },
+  {
+   "bead": "N24b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": "addressed random streams on the host at M1; BD-180 is the M2 device kernel"
+  },
+  {
+   "bead": "N24b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-15",
+    "N18b-28"
+   ],
+   "note": "the law registry and the law-admission table per tier and profile"
+  },
+  {
+   "bead": "N24b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23b-05",
+    "BD-267"
+   ],
+   "note": "M3, later; the detectors reuse these variants and depend on them"
+  },
+  {
+   "bead": "N24b-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "BD-212 is the capstone that freezes the envelope and counts these rows; provisional bands hold until the freeze, and BD-212 depends on this bead"
+  },
+  {
+   "bead": "N24b-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-10",
+    "N24c-15"
+   ],
+   "note": "the guard-band mechanism and the per-backend decision"
+  },
+  {
+   "bead": "N24b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24c-22"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24c-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18a-28"
+   ],
+   "note": "patch quadrature is N18a-28, which reaches this bead through BD-212 and BD-202, so a dep would close a cycle; the contact samples come with its dependency BD-080"
+  },
+  {
+   "bead": "N24b-11",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-090 (channel kind cumulative-counter)"
+  },
+  {
+   "bead": "N24b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-15"
+   ],
+   "note": "per-point region lookup in the scene field; friction per region from its dependency BD-167; patch quadrature (N18a-28) is a related edge because a dep would close a cycle through BD-212 and BD-202"
+  },
+  {
+   "bead": "N24b-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N24c-19"
+   ],
+   "note": "N24c-19 reuses this rig with the yaw guide released and depends on it"
+  },
+  {
+   "bead": "N24b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-16",
+    "N18a-15"
+   ],
+   "note": "the compliant law CL-1 and the registry that makes a law selectable"
+  },
+  {
+   "bead": "N24b-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18a-28"
+   ],
+   "note": "patch quadrature and its refinement"
+  },
+  {
+   "bead": "N24b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-01"
+   ],
+   "note": "the determinism classes as a type at M0, enough for refusal 533 on the referee; the licence table (N35-07) and the D3 equivalence record (BD-177) are M2 and recorded as related edges"
+  },
+  {
+   "bead": "N24b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28a-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24c-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-009"
+   ],
+   "note": "the Ledger adapter on FrankenSQLite"
+  },
+  {
+   "bead": "N24b-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N24c-22"
+   ],
+   "note": "N24c-22 depends on BD-259, whose component this bead is; admission exposes the hook and N24c-22 installs the refusal"
+  },
+  {
+   "bead": "N24b-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-31",
+    "N22c-32",
+    "N22a-25"
+   ],
+   "note": "the planner-record condition is installed in the qualification path by N22a-25 and N22c-32, which depend on BD-259; N22c-31 reaches this bead through BD-252 and N22a-25, so a dep would close a cycle"
+  },
+  {
+   "bead": "N24b-16",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-113"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19c-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": "WorldAddr with its namespace word on the host; the device kernel is its dependency BD-180"
+  },
+  {
+   "bead": "N24b-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N24c-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "the report verbs call this bead's standing check; BD-302 depends on it (edge recorded)"
+  },
+  {
+   "bead": "N24b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-02",
+    "N12-03"
+   ],
+   "note": "the proof-kind registry row and the bundle schema field"
+  },
+  {
+   "bead": "N24b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-271"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-275"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-298"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24b-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-14",
+    "N23a-08"
+   ],
+   "note": "train.start and the registered action laws"
+  },
+  {
+   "bead": "N24c-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-13"
+   ],
+   "note": "the frob.policy/1 manifest with trained_on.scenes"
+  },
+  {
+   "bead": "N24c-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-04"
+   ],
+   "note": "the route graph of a scene pack; the signed corridor distance is computed by this bead and recorded as a channel (no Habitat bead exposes the query: reported as a gap)"
+  },
+  {
+   "bead": "N24c-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-31"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24c-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22b-24"
+   ],
+   "note": "M4, later than this M3 gate: the milestone conflict is reported as a gap; the backup law is recorded as unavailable for a class until its backup controller exists"
+  },
+  {
+   "bead": "N24c-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-25"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N24c-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19a-09"
+   ],
+   "note": "M3, later; at M2 the lazily sampled cache lives in this bead and is part of the checkpoint"
+  },
+  {
+   "bead": "N24c-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-04",
+    "BD-060"
+   ],
+   "note": "task regions of the scene and typed ports of the design; crossing events are derived here and recorded as event channels"
+  }
+ ],
+ "edges": [],
+ "superseded": [
+  {
+   "drop": "N24c-12",
+   "keep": "N24a-15",
+   "note": "both decide KILL-SPEC-REWARD; the uses table, pilot description, record, branch details, controls and the rejected four-of-five rule folded into N24a-15, which keeps the rule the pilot BD-257 registers (all five differences positive)"
+  },
+  {
+   "drop": "N24c-11",
+   "keep": "N24a-33",
+   "note": "both are the requirement-writing pilot on paper; the fifty-statement set, the measures r and r4, falsifier, ceiling, fallbacks, scoring-script checks and planted drafts folded into N24a-33 as its extended set"
+  },
+  {
+   "drop": "N24c-05",
+   "keep": "N24a-31",
+   "note": "both are the scoring-time scene-split check of GATE-ARENA-02; manifest-unknown detail, the 100-of-100 measurement, exhaustive property test, sampled-check control and the labelled mode folded into N24a-31; one label (in-sample) and one script name kept"
+  },
+  {
+   "drop": "N24c-03",
+   "keep": "N24a-16",
+   "note": "both deliver the settled-pose cache and verb task.settle on the referee at M1; key detail, stream names, verb inputs, cancellation, pairing context, tests and controls folded into N24a-16; the reading that keeps failed draws in a usable cache is recorded there as not adopted"
+  },
+  {
+   "drop": "N24c-01",
+   "keep": "N24a-12",
+   "note": "both are the example stage of task.check; trace storage, output fields, GATE-ARENA-09 clause, tests and controls folded into N24a-12; differing rule choices (deletion mutant, near-boundary refusal, exact atoms, vacuity classes) settled and stated there"
+  }
+ ],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

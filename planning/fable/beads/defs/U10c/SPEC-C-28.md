@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "spine", "spec", "frontier", "nemesis", "frob-nemesis", "test"]
 parent: "WP-55"
-deps: ["BD-270", "BD-052", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-271", "BD-272", "BD-274", "BD-275", "BD-279", "BD-293", "BD-369", "N10-CX", "SPEC-C-29", "SPEC-C-33", "N10c-10"]
+related: ["BD-271", "BD-272", "BD-274", "BD-275", "BD-279", "BD-293", "BD-369", "N10-CX", "SPEC-C-29", "SPEC-C-33", "N10c-10", "BD-270", "BD-052"]
 gates: ["GATE-NEMESIS-03", "GATE-NEMESIS-01"]
 plan_refs: ["§10 C-28", "§26.7", "§12.3", "Appendix D.6", "Appendix I.11", "Appendix M.9", "Appendix N.7"]
 ---
@@ -52,6 +52,28 @@ Out: the shrinker itself, the `.fmcw` writer and the verb `nemesis.shrink` (BD-2
 `nemesis.oracle` (BD-271); the legality set and edit vocabulary (BD-270); the artifact guard (BD-272); the
 hard-world set (BD-275); recording GATE-NEMESIS-03 and deciding KILL-MCW (BD-274); the retrofit search on a
 `.fmcw` (BD-369); attribution on the passing neighbours (construction C-29, beads SPEC-C-29 and BD-279).
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-28: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`nemesis.shrink`; also `nemesis.oracle`),
+`failing_test` (a test of `frob-nemesis::laws_c28` with its registered control), `payoff.gate` (GATE-NEMESIS-03),
+`statements`, `known_answers` (KA-142 to KA-144), `cards` (none), `gates`, `pilot` (the record `PILOT-C-28` of the
+pilot register, required because the tier is Frontier) and `generic_comparator` (the off-the-shelf method named in
+the pilot paragraph of this bead). Doctrine D-2 (no ornamental mathematics) is checked on these fields: a
+construction with no verb or no failing test is moved to the parked register by a decision record. The contract
+`docs/math/C-28.md` follows the ten-section template `docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-270 (the search space and
+legality profile of `frob-nemesis`) or BD-052 (posets and antichains in `frob-algebra`): those beads are listed in
+`related` and are not prerequisites. The law suite is generic over its subject trait and closes on the exact
+reference model and the mutants in its own test support. If `frob-nemesis` does not exist when this bead starts,
+the suite and its support files are written under `crates/frob-conformance/tests/` with the same file names (that
+crate exists from BD-025) and the commands below read `-p frob-conformance`; the bead that implements the
+construction moves them into the owning crate, binds its production types to the subject trait and runs the
+unchanged suite as part of its own acceptance. A criterion or script step below that names production code or a
+verb of an implementing bead is owed at that bead's acceptance and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -158,6 +180,9 @@ traps receive a witness). This bead records neither gate; it supplies their know
 - [ ] Controls seeded from CX-067 and CX-068 are in the control registry, attached to their gates.
 - [ ] The pilot record is in the pilot register with its falsifier, ceiling and fallback.
 - [ ] `scripts/e2e/spec_c28.sh` exits 0 and its log has no failed assertion.
+- [ ] Row C-28 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

@@ -1,0 +1,1977 @@
+{
+ "group": "G23",
+ "needs": [
+  {
+   "bead": "BD-192",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-194"
+   ],
+   "note": "BD-194 depends on BD-192 (seed order): the fixtures here use hand-built synthetic task programs and N23a-34 re-measures GATE-CORTEX-06 through real .ftask files"
+  },
+  {
+   "bead": "BD-197",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-29"
+   ],
+   "note": "the trainer's likelihood reads the sampler manifest of N23b-29; the joint-law battery N23b-30 is a test that adds rule P-12 to the battery and is related, not blocking"
+  },
+  {
+   "bead": "BD-198",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-15"
+   ],
+   "note": "the GATE-CORTEX-01 record is built with the TrainingGateRecord type and checker"
+  },
+  {
+   "bead": "BD-198",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-33"
+   ],
+   "note": "the capstone depends on the attainment procedure; N23b-33's drafted dep on BD-198 is replaced by N23a-14, which owns train.status"
+  },
+  {
+   "bead": "BD-218",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "class E1 for a named gate measurement; N21c-35 ratifies the classes E0 to E3 (OPEN-SPARK-2) and N44-01 records the ruling on this package's request; enforcement (meter and refusal) is N36-20"
+  },
+  {
+   "bead": "BD-218",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the resource table of the phase ledger, where the learner's share of train is recorded; BD-143 (the incumbent's ledger) is the comparison row and stays related"
+  },
+  {
+   "bead": "BD-218",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-196 is already delivered through the dependency BD-198; the decision that reads this measurement is N23a-16, which already depends on this bead"
+  },
+  {
+   "bead": "BD-267",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-eval"
+   ],
+   "note": "the registry row of eval.detect; BD-312 (the M3 registration capstone, a higher seed) depends on this verb and stays related"
+  },
+  {
+   "bead": "BD-267",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-308"
+   ],
+   "note": "seed order: BD-308 is a higher seed and applies the claim product at every verb boundary, this one included"
+  },
+  {
+   "bead": "BD-301",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-036"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-301",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-003"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-301",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-304"
+   ],
+   "note": "seed order: BD-304 is a higher seed; it marks this verb's echoed text when it lands"
+  },
+  {
+   "bead": "BD-301",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N23b-31"
+   ],
+   "note": "the reward-consumption record uses the contract type of N23b-31; N23b-32 is the end-to-end probe (its adapter rows wait for this bead) and stays related"
+  },
+  {
+   "bead": "BD-320",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-train"
+   ],
+   "note": "the registry row of train.family; BD-376 (the M4 registration capstone) depends on this verb and stays related"
+  },
+  {
+   "bead": "BD-320",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23a-25",
+    "BD-322"
+   ],
+   "note": "not a prerequisite: policy.apply is N23a-25, which already depends on this bead and calls its membership check; BD-322 depends on this bead by its seed"
+  },
+  {
+   "bead": "BD-320",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-252",
+    "BD-331"
+   ],
+   "note": "the fallback is offered at policy.apply (N23a-25), which carries the dependency on BD-252; BD-331 is a higher seed"
+  },
+  {
+   "bead": "BD-320",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N17a-20"
+   ],
+   "note": "phylum.generate --locate and the support predicate are N17a-20; the generator BD-287 is already a direct dependency"
+  },
+  {
+   "bead": "BD-321",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-19"
+   ],
+   "note": "the pilot of this Frontier mechanism"
+  },
+  {
+   "bead": "BD-321",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-329"
+   ],
+   "note": "BD-329 is a higher seed and already depends on this bead (through N28a-33)"
+  },
+  {
+   "bead": "BD-322",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-20"
+   ],
+   "note": "the pilot of this Frontier mechanism"
+  },
+  {
+   "bead": "BD-322",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-17"
+   ],
+   "note": "the sealed key, commitment and close-time reveal that seal the four blind pairs; the lane's verb BD-259 is not needed"
+  },
+  {
+   "bead": "BD-323",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-21"
+   ],
+   "note": "the pilot of this Frontier mechanism"
+  },
+  {
+   "bead": "BD-323",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-15"
+   ],
+   "note": "the record type that requires the shuffled-label control"
+  },
+  {
+   "bead": "BD-324",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "about 60 GPU-hours in six pilots; N21c-35 ratifies the classes E0 to E3 (OPEN-SPARK-2) and N44-01 records the ruling on this package's request; enforcement (meter and refusal) is N36-20"
+  },
+  {
+   "bead": "BD-324",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "BD-324",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-143"
+   ],
+   "note": "training's share of the incumbent loop sets every algorithm's ceiling"
+  },
+  {
+   "bead": "BD-326",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-22"
+   ],
+   "note": "the pilot of this Frontier experiment"
+  },
+  {
+   "bead": "BD-326",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-33"
+   ],
+   "note": "steps to the threshold are read under the attainment rule"
+  },
+  {
+   "bead": "BD-328",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-08"
+   ],
+   "note": "OPEN-PROG-4, the owner's approval of compute for the rank-agreement experiment"
+  },
+  {
+   "bead": "BD-328",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-329",
+    "BD-345"
+   ],
+   "note": "both are higher seeds that read this bead's record and already depend on it (BD-345 through N28b-22)"
+  },
+  {
+   "bead": "BD-328",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-265"
+   ],
+   "note": "the tier-pair form of the verb, which this bead extends to rung pairs; BD-266 is a different check and stays related"
+  },
+  {
+   "bead": "BD-328",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N39a-26"
+   ],
+   "note": "the lost-factor records of the ten-fold ledger"
+  },
+  {
+   "bead": "BD-439",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23b-24",
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "an epic carries no dependencies: the envelope is a precondition of the pilot N23b-01 and of the pretraining approval N23b-24, which carry the edges"
+  },
+  {
+   "bead": "BD-439",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-010",
+    "BD-032"
+   ],
+   "note": "an epic carries no dependencies; the tasks split from it when M8 opens depend on the Lie facade and the fs-ga admission"
+  },
+  {
+   "bead": "N23-CX",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the registry schema and the rule for control identifiers are in its dependency BD-025; N38b-05 seeds the registry from this bead's records"
+  },
+  {
+   "bead": "N23-CX",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-192",
+    "BD-193",
+    "BD-194",
+    "BD-197",
+    "BD-198",
+    "BD-199",
+    "BD-255",
+    "BD-323"
+   ],
+   "note": "a registry never depends on a mechanism; each mechanism exposes the build switch named in its row"
+  },
+  {
+   "bead": "N23-KA",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the five late known answers are now provisional rows KA-23-L1 to L5 of this registry (carriers N23b-30, N23b-32, N23b-34, N23b-35, N23b-38); N23b-18 executes them"
+  },
+  {
+   "bead": "N23-REF",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§32.4 / Appendix O: no bead assigns refusal codes to refusals that late subsections state in words; this registry carries the three rows under candidates 558, 559, 570 behind one constant each until that is settled"
+  },
+  {
+   "bead": "N23-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-192",
+    "BD-193",
+    "BD-197",
+    "BD-198",
+    "BD-322",
+    "N23a-03",
+    "N23a-08",
+    "N23a-13",
+    "N23a-27"
+   ],
+   "note": "a registry never depends on a mechanism; the raising sites inside the seeds are N23a-03 (524), N23a-08 (527), N23a-13 and N23a-27 (531)"
+  },
+  {
+   "bead": "N23-REF",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-269",
+    "N23a-18"
+   ],
+   "note": "a registry never depends on a mechanism; the Cortex raising site of 867 is N23a-18 and the profile is BD-269 (M3)"
+  },
+  {
+   "bead": "N23-REF",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-263",
+    "BD-408",
+    "N23b-08"
+   ],
+   "note": "a registry never depends on a mechanism; the 830 check function and its call at promotion are N23b-08"
+  },
+  {
+   "bead": "N23a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23b-31",
+    "N23b-32"
+   ],
+   "note": "N23b-31 extends these access classes to every step output and depends on this bead through BD-192"
+  },
+  {
+   "bead": "N23a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-200",
+    "N23b-03"
+   ],
+   "note": "the admission pass only checks that each range names its card field; the draws (BD-200) and the resolved-value record (N23b-03) depend on this bead's consumers, so a dependency would close a cycle"
+  },
+  {
+   "bead": "N23a-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23b-29",
+    "N23b-30"
+   ],
+   "note": "the sampler N23b-29 composes the laws registered here and depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N23a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-29"
+   ],
+   "note": "train.start calls the qualification-receipt check and reads the sampler manifest of N23b-29; the battery that writes receipts (N23b-30) is a test and stays related"
+  },
+  {
+   "bead": "N23a-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23b-33",
+    "N23b-34"
+   ],
+   "note": "N23b-33 adds the two fields and the look table to this verb's output and depends on this bead"
+  },
+  {
+   "bead": "N23a-14",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "VERBS-train"
+   ],
+   "note": "the registry rows of train.start, train.status and train.stop; BD-222 (the M2 registration capstone) depends on these verbs and stays related"
+  },
+  {
+   "bead": "N23a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-22"
+   ],
+   "note": "the M2 admission of the FrankenTorch host crates; the two beads overlap on the bridge module (reported)"
+  },
+  {
+   "bead": "N23a-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-269"
+   ],
+   "note": "BD-269 is M3 and depends on this bead through BD-198"
+  },
+  {
+   "bead": "N23a-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the resource table of the phase ledger, which holds the learner's share of train"
+  },
+  {
+   "bead": "N23a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-199"
+   ],
+   "note": "BD-199 measures two-card scaling on this bead's reducer and depends on it"
+  },
+  {
+   "bead": "N23a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-27"
+   ],
+   "note": "the pilot of the baseline-plus-residual rung (N22c-07 drafts the same pilot in U22c; whichever G22 keeps)"
+  },
+  {
+   "bead": "N23a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22a-16"
+   ],
+   "note": "the wrapper u = limit(u_base + Δ) with the residual-saturated flag is N22a-16 (M3); BD-330 is the capstone that trains this head and depends on this bead"
+  },
+  {
+   "bead": "N23a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "superseded by N23b-24, which carries the same dependency"
+  },
+  {
+   "bead": "N23a-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23b-19"
+   ],
+   "note": "superseded by N23b-24; the pilot depends on the envelope decision, not the reverse"
+  },
+  {
+   "bead": "N23a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-19",
+    "N17a-20"
+   ],
+   "note": "DesignSplit and the generator-support check; the generator BD-287 is already a direct dependency"
+  },
+  {
+   "bead": "N23a-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-310"
+   ],
+   "note": "the rank-agreement pilot of this Frontier rung; BD-328 (the rung verb and ledger) consumes this bead's score table and depends on it, so it stays related"
+  },
+  {
+   "bead": "N23a-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-35"
+   ],
+   "note": "the winner check that selection requires"
+  },
+  {
+   "bead": "N23a-24",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-329",
+    "BD-345"
+   ],
+   "note": "both consume the record downstream of BD-328, which depends on this bead"
+  },
+  {
+   "bead": "N23a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-20"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23a-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-252"
+   ],
+   "note": "the fallback named in the ranked repairs of FROB-REF-534"
+  },
+  {
+   "bead": "N23a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-19"
+   ],
+   "note": "the pilot record is one of the two inputs of the trigger"
+  },
+  {
+   "bead": "N23a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-20"
+   ],
+   "note": "the pilot of this Frontier mechanism"
+  },
+  {
+   "bead": "N23a-27",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "§14.7: no bead makes a typed edit declare its parent-to-child correspondence (frames, actuator roles, sensor channels, contact roles, phase clocks); BD-058 and N14a-17 carry the symmetry effect and the invalidation scope only"
+  },
+  {
+   "bead": "N23a-28",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-341",
+    "BD-342"
+   ],
+   "note": "the search and archive consume the origin label this bead writes; they do not block it"
+  },
+  {
+   "bead": "N23a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-20"
+   ],
+   "note": "the pilot of this Frontier mechanism"
+  },
+  {
+   "bead": "N23a-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-20"
+   ],
+   "note": "the pilot's ten-edit chain is the evidence the decision reads"
+  },
+  {
+   "bead": "N23a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-20"
+   ],
+   "note": "the pilot record is an input of the trigger"
+  },
+  {
+   "bead": "N23a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-22"
+   ],
+   "note": "the pilot of this Frontier mechanism"
+  },
+  {
+   "bead": "N23a-34",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23b-32"
+   ],
+   "note": "the E-10 steps are the script of N23b-32; they do not block this script"
+  },
+  {
+   "bead": "N23a-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-30",
+    "N23b-33"
+   ],
+   "note": "train.start refuses without the sampler receipt that N23b-30 writes, and the script asserts the attained field of N23b-33; the cadence gate N23b-34 has its own script and is related"
+  },
+  {
+   "bead": "N23a-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-320"
+   ],
+   "note": "train.family, exercised here through its envelope refusal"
+  },
+  {
+   "bead": "N23b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "about 90 GPU-hours; N21c-35 ratifies the classes E0 to E3 (OPEN-SPARK-2) and N44-01 records the ruling on this package's request; enforcement (meter and refusal) is N36-20"
+  },
+  {
+   "bead": "N23b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "N23b-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-442"
+   ],
+   "note": "the exit review records this decision and depends on it, not the reverse"
+  },
+  {
+   "bead": "N23b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-122"
+   ],
+   "note": "until a dedicated code exists the task-form refusal of the task checker is raised with pointer randomization[i].target; the missing code is reported with the other unassigned codes"
+  },
+  {
+   "bead": "N23b-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-235"
+   ],
+   "note": "BD-235 is M3; until it lands the record labels the split seed-holdout"
+  },
+  {
+   "bead": "N23b-03",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-279",
+    "BD-283"
+   ],
+   "note": "both are M3 readers of the resolved values"
+  },
+  {
+   "bead": "N23b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-180"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-266"
+   ],
+   "note": "the variant step plans are built by BD-266 and reused here"
+  },
+  {
+   "bead": "N23b-05",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-386"
+   ],
+   "note": "BD-386 is M5; the hard-contact arm joins where it is built"
+  },
+  {
+   "bead": "N23b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069",
+    "BD-070"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-167",
+    "BD-229"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-06",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-208 is already a direct dependency"
+  },
+  {
+   "bead": "N23b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-266"
+   ],
+   "note": "the pyramid-cone variant step plan"
+  },
+  {
+   "bead": "N23b-07",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-208 is already a direct dependency"
+  },
+  {
+   "bead": "N23b-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-119",
+    "N23b-32"
+   ],
+   "note": "the causal test and the four planted-leak fixtures"
+  },
+  {
+   "bead": "N23b-07",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-201",
+    "BD-123"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-263"
+   ],
+   "note": "this bead adds the 830 check to the promotion site"
+  },
+  {
+   "bead": "N23b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-408",
+    "BD-352"
+   ],
+   "note": "later milestones; until they exist the check is exercised through eval.promote"
+  },
+  {
+   "bead": "N23b-08",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-346"
+   ],
+   "note": "BD-346 is M4 and calls this check"
+  },
+  {
+   "bead": "N23b-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-235"
+   ],
+   "note": "BD-235 is M3; until then the split is labelled seed-holdout"
+  },
+  {
+   "bead": "N23b-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-254"
+   ],
+   "note": "BD-125 is already a direct dependency; BD-254 is M3"
+  },
+  {
+   "bead": "N23b-09",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-262"
+   ],
+   "note": "BD-262 is M3 and reads this report"
+  },
+  {
+   "bead": "N23b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-269"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-10",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "the method-experiment register with its six parts"
+  },
+  {
+   "bead": "N23b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "N23b-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-039"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-172",
+    "BD-173"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-039",
+    "BD-314"
+   ],
+   "note": "the pins and the frozen rival configuration; BD-315 reuses this bead's setup and stays related"
+  },
+  {
+   "bead": "N23b-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the resource table that records the learner's share; the learner-swap diagnostic N39a-22 reads these runs and is related"
+  },
+  {
+   "bead": "N23b-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-210",
+    "BD-295"
+   ],
+   "note": "the fallback is specified here and built only on the firing branch, where these two are its prerequisites"
+  },
+  {
+   "bead": "N23b-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-314",
+    "BD-315",
+    "N39a-24"
+   ],
+   "note": "the rollout-transport ledger line is specified here; BD-315 depends on this bead through BD-301"
+  },
+  {
+   "bead": "N23b-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-319"
+   ],
+   "note": "the exit review depends on this decision (through BD-315), not the reverse"
+  },
+  {
+   "bead": "N23b-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-198"
+   ],
+   "note": "BD-198 builds its record with this type and depends on this bead"
+  },
+  {
+   "bead": "N23b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the gate recorder of §38.13, which refuses PASS without caught controls"
+  },
+  {
+   "bead": "N23b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-18"
+   ],
+   "note": "the gate-row schema; two units drafted it (N40-01 for §40.1, N38b-18 for §38.13), whichever is kept"
+  },
+  {
+   "bead": "N23b-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-198",
+    "BD-196",
+    "BD-326",
+    "BD-192",
+    "BD-197",
+    "BD-193",
+    "BD-255",
+    "BD-321",
+    "BD-322",
+    "BD-323",
+    "BD-199",
+    "N23a-16",
+    "N23a-21",
+    "N23a-26",
+    "N23a-30",
+    "N23a-33",
+    "N23a-19"
+   ],
+   "note": "a registry never depends on a mechanism; the five kill gates are decided by N23a-16, -21, -26, -30, -33 and the parity clauses of GATE-CORTEX-08 are N23a-19 (carrier map corrected)"
+  },
+  {
+   "bead": "N23b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-13"
+   ],
+   "note": "the manifest, mapping table and role-matched loading are N23a-13; the rows for BD-320 and BD-322 (M4) are skipped until those land"
+  },
+  {
+   "bead": "N23b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-328",
+    "BD-329",
+    "N23a-24"
+   ],
+   "note": "M4; the INV-CORTEX-06 row runs when they land"
+  },
+  {
+   "bead": "N23b-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-215"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23-KA"
+   ],
+   "note": "the registry whose rows this battery executes"
+  },
+  {
+   "bead": "N23b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-255"
+   ],
+   "note": "BD-255 is M3; the row is skipped with a reason until then"
+  },
+  {
+   "bead": "N23b-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N23b-08",
+    "N23b-35"
+   ],
+   "note": "both are M3; their rows are skipped with a reason until then"
+  },
+  {
+   "bead": "N23b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "N23b-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-310",
+    "BD-145"
+   ],
+   "note": "BD-310 reuses this pilot's specialists when it has run; it does not block this pilot"
+  },
+  {
+   "bead": "N23b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "about 70 GPU-hours; N21c-35 ratifies the classes E0 to E3 (OPEN-SPARK-2) and N44-01 records the ruling on this package's request; enforcement (meter and refusal) is N36-20"
+  },
+  {
+   "bead": "N23b-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-322"
+   ],
+   "note": "BD-322 depends on this pilot, not the reverse"
+  },
+  {
+   "bead": "N23b-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "N23b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-22"
+   ],
+   "note": "the sampling-controller pilot whose demonstrations and specialists are reused (N22c-08 drafts the same pilot in U22c; whichever G22 keeps)"
+  },
+  {
+   "bead": "N23b-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-323"
+   ],
+   "note": "BD-323 depends on this pilot, not the reverse"
+  },
+  {
+   "bead": "N23b-21",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "N23b-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-326",
+    "BD-325"
+   ],
+   "note": "both depend on this pilot (edges recorded), not the reverse"
+  },
+  {
+   "bead": "N23b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "N23b-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review records this decision and depends on it, not the reverse"
+  },
+  {
+   "bead": "N23b-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23a-37",
+    "N23a-38",
+    "N23a-39",
+    "N36-12",
+    "BD-323",
+    "N23b-04"
+   ],
+   "note": "not a prerequisite of the decision: the build beads depend on it. SAC, TD3 and evolution strategies had no build bead (written now as N23a-37, -38, -39); asynchronous sharding is N36-12; the privileged-teacher path is inside BD-323, which checks its row and stays related"
+  },
+  {
+   "bead": "N23b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the general envelope ruling, of which this is the pretraining instance"
+  },
+  {
+   "bead": "N23b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-20",
+    "BD-219"
+   ],
+   "note": "the admission refusal for a job above the class in force is N36-20, fed by the estimate of BD-219; BD-297 is related"
+  },
+  {
+   "bead": "N23b-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-197"
+   ],
+   "note": "BD-197 reads the default from this record and depends on this bead"
+  },
+  {
+   "bead": "N23b-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-194",
+    "BD-201"
+   ],
+   "note": "they read the recorded defaults; the fail-closed values are fixed by the plan, so nothing waits"
+  },
+  {
+   "bead": "N23b-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-322"
+   ],
+   "note": "superseded by N23a-29; BD-322 depends on the decision"
+  },
+  {
+   "bead": "N23b-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-342"
+   ],
+   "note": "superseded by N23a-29; the archive consumes the origin labels"
+  },
+  {
+   "bead": "N23b-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N41-07"
+   ],
+   "note": "N41-07 depends on BD-301, which depends on this decision: a dependency would close a cycle; the default (built and gated for the test and for conformance only) holds until the owner rules"
+  },
+  {
+   "bead": "N23b-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-003"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-142"
+   ],
+   "note": "BD-040 is already a direct dependency; BD-142 completes the baseline"
+  },
+  {
+   "bead": "N23b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "class E1 for the ten paired runs; N21c-35 ratifies the classes E0 to E3 (OPEN-SPARK-2) and N44-01 records the ruling on this package's request; enforcement (meter and refusal) is N36-20"
+  },
+  {
+   "bead": "N23b-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-197"
+   ],
+   "note": "BD-197 reads this bead's manifest and depends on it"
+  },
+  {
+   "bead": "N23b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "the registry row with candidate code 558"
+  },
+  {
+   "bead": "N23b-29",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-180 is already a direct dependency"
+  },
+  {
+   "bead": "N23b-30",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N33c-37",
+    "N33c-40",
+    "N41-31"
+   ],
+   "note": "the foundation-fact rows read this battery's record; N33c-37 drafts the same planted sampler (reported)"
+  },
+  {
+   "bead": "N23b-30",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-037",
+    "FD-FSIM-32",
+    "FDEF-06"
+   ],
+   "note": "the upstream item and its defect report re-run and copy this battery; they depend on it"
+  },
+  {
+   "bead": "N23b-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-194"
+   ],
+   "note": "BD-122 is already a direct dependency"
+  },
+  {
+   "bead": "N23b-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-111",
+    "BD-220",
+    "BD-128",
+    "BD-133"
+   ],
+   "note": "the key schema and assumption sets into which this bead adds the contract digest"
+  },
+  {
+   "bead": "N23b-31",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "the registry row with candidate code 559"
+  },
+  {
+   "bead": "N23b-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-301"
+   ],
+   "note": "BD-301 is M3; the adapter rows are skipped until then"
+  },
+  {
+   "bead": "N23b-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-134",
+    "BD-111"
+   ],
+   "note": "BD-129 is already a direct dependency"
+  },
+  {
+   "bead": "N23b-33",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-124 is already a direct dependency"
+  },
+  {
+   "bead": "N23b-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23a-14"
+   ],
+   "note": "train.status is built by N23a-14, not by BD-198; the drafted dep on BD-198 (its capstone) moves to related"
+  },
+  {
+   "bead": "N23b-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-eval"
+   ],
+   "note": "BD-124 is already a direct dependency; the cadence arguments go into the registry row of eval.preanalyze, and BD-222 (the M2 registration capstone) stays related"
+  },
+  {
+   "bead": "N23b-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-328",
+    "BD-329"
+   ],
+   "note": "BD-265 is already a direct dependency; the two M4 beads depend on this one"
+  },
+  {
+   "bead": "N23b-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-329",
+    "BD-352"
+   ],
+   "note": "M4 consumers of k_c(m)"
+  },
+  {
+   "bead": "N23b-35",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "the registry row with candidate code 570"
+  },
+  {
+   "bead": "N23b-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16c-28",
+    "N16c-27"
+   ],
+   "note": "the pilot runs on an incumbent simulator; the step-adjoint gate and its kill gate are read by the decision N23b-37"
+  },
+  {
+   "bead": "N23b-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "a design-campaign class; N21c-35 ratifies the classes E0 to E3 (OPEN-SPARK-2) and N44-01 records the ruling on this package's request; enforcement (meter and refusal) is N36-20"
+  },
+  {
+   "bead": "N23b-36",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 is the pilot register of §38.5 (N00-07 drafts the same ledger; duplicate is G38/G00's to settle)"
+  },
+  {
+   "bead": "N23b-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16c-28"
+   ],
+   "note": "BD-422 is an epic; the decision KILL-STEPADJOINT (which follows the gate measurement N16c-27) is its task bead"
+  },
+  {
+   "bead": "N23b-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-353"
+   ],
+   "note": "the paired-stencil gate and the inputs of KILL-FDGRAD (first reading N17b-20)"
+  },
+  {
+   "bead": "N23b-37",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-427"
+   ],
+   "note": "the exit review records this decision and depends on it, not the reverse"
+  },
+  {
+   "bead": "N23b-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16c-25"
+   ],
+   "note": "BD-422 is an epic; the reverse sweep with validity labels is N16c-25 (the drafted dep on BD-422 moves to related)"
+  },
+  {
+   "bead": "N23b-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-169"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-38",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23a-14",
+    "VERBS-train"
+   ],
+   "note": "the two arguments extend train.start (N23a-14) and its registry row; the registry is complete at M5 and no M6 verb-set bead is needed"
+  },
+  {
+   "bead": "N23b-38",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-219"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-263"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-39",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-341"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-054",
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N23b-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-170"
+   ],
+   "note": "BD-183 is already a direct dependency"
+  },
+  {
+   "bead": "N23b-41",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the attention, masked-softmax and layer-normalization kernels with their backward passes are built in this bead on the kernel framework of BD-196, already a direct dependency"
+  },
+  {
+   "bead": "N23b-41",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23a-15"
+   ],
+   "note": "the bridge that makes FrankenTorch the CPU trainer and gradient oracle"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-199",
+   "dep": "N23a-19",
+   "as": "dep",
+   "why": "coverage (d) of U23a: the normalization rule precedes the two-card measurement"
+  },
+  {
+   "bead": "BD-320",
+   "dep": "N23a-23",
+   "as": "dep",
+   "why": "coverage (d) of U23a: the registered generator, split and support precede pretraining"
+  },
+  {
+   "bead": "BD-320",
+   "dep": "N23b-24",
+   "as": "dep",
+   "why": "coverage (d) of U23a asked for N23a-22, now superseded by N23b-24 (already drafted)"
+  },
+  {
+   "bead": "BD-328",
+   "dep": "N23a-24",
+   "as": "dep",
+   "why": "coverage (d) of U23a: the three-way score table feeds eval.rank-agreement"
+  },
+  {
+   "bead": "BD-330",
+   "dep": "N23a-20",
+   "as": "dep",
+   "why": "coverage (d) of U23a: rung R3 trains the residual head"
+  },
+  {
+   "bead": "BD-301",
+   "dep": "N23a-34",
+   "as": "related",
+   "why": "coverage (d) of U23a; a mechanism never depends on an end-to-end bead: the battery it reuses comes from BD-192"
+  },
+  {
+   "bead": "BD-269",
+   "dep": "N23a-18",
+   "as": "dep",
+   "why": "coverage (d) of U23a: the Cortex half of the D4 profile"
+  },
+  {
+   "bead": "N23a-18",
+   "dep": "BD-269",
+   "as": "related",
+   "why": "coverage (d) of U23a: BD-269 is M3"
+  },
+  {
+   "bead": "BD-198",
+   "dep": "N23b-15",
+   "as": "dep",
+   "why": "coverage (d) of U23b"
+  },
+  {
+   "bead": "BD-198",
+   "dep": "N23b-33",
+   "as": "dep",
+   "why": "coverage (d) of U23b"
+  },
+  {
+   "bead": "BD-197",
+   "dep": "N23b-25",
+   "as": "dep",
+   "why": "coverage (d) of U23b: the default action law is read from the decision (N23a-09 is superseded by N23b-25)"
+  },
+  {
+   "bead": "BD-197",
+   "dep": "N23b-29",
+   "as": "dep",
+   "why": "coverage (d) of U23b: rule P-12"
+  },
+  {
+   "bead": "BD-197",
+   "dep": "N23b-30",
+   "as": "related",
+   "why": "coverage (d) of U23b: the joint-law battery is a test of the sampler, not a prerequisite of the trainer"
+  },
+  {
+   "bead": "BD-322",
+   "dep": "N23b-20",
+   "as": "dep",
+   "why": "coverage (d) of U23b: the inheritance pilot"
+  },
+  {
+   "bead": "BD-322",
+   "dep": "N23a-29",
+   "as": "dep",
+   "why": "coverage (d) of U23b asked for N23b-26, now superseded by N23a-29 (already drafted)"
+  },
+  {
+   "bead": "N23a-25",
+   "dep": "BD-320",
+   "as": "dep",
+   "why": "coverage (d) of U23b: policy.apply calls the membership check (already drafted)"
+  },
+  {
+   "bead": "BD-323",
+   "dep": "N23b-21",
+   "as": "dep",
+   "why": "coverage (d) of U23b: the distillation pilot"
+  },
+  {
+   "bead": "BD-326",
+   "dep": "N23b-22",
+   "as": "dep",
+   "why": "coverage (d) of U23b: the equivariance pilot"
+  },
+  {
+   "bead": "BD-325",
+   "dep": "N23b-22",
+   "as": "dep",
+   "why": "coverage (d) of U23b: the equivariance pilot precedes the block layers"
+  },
+  {
+   "bead": "N36-12",
+   "dep": "N23b-23",
+   "as": "dep",
+   "why": "coverage (d) of U23b: asynchronous sharding is built only if its row of KILL-ALTALGO is funded"
+  },
+  {
+   "bead": "BD-323",
+   "dep": "N23b-23",
+   "as": "related",
+   "why": "coverage (d) of U23b: only the privileged-teacher path waits for its row; the bead exists on both branches"
+  },
+  {
+   "bead": "N23b-29",
+   "dep": "N23a-08",
+   "as": "dep",
+   "why": "the sampler composes the registered action laws (rule 10: the interface comes first)"
+  },
+  {
+   "bead": "N23b-33",
+   "dep": "N23a-14",
+   "as": "dep",
+   "why": "train.status belongs to N23a-14"
+  },
+  {
+   "bead": "N23b-33",
+   "dep": "BD-198",
+   "as": "related",
+   "why": "replaces the drafted dep: a component does not depend on its capstone"
+  },
+  {
+   "bead": "BD-198",
+   "dep": "N23b-09",
+   "as": "dep",
+   "why": "the gate record uses the five-seed report, interquartile mean and estimated-state twin"
+  },
+  {
+   "bead": "N23b-09",
+   "dep": "N23a-13",
+   "as": "dep",
+   "why": "the report evaluates exported policies bound through their manifest"
+  },
+  {
+   "bead": "N23b-09",
+   "dep": "BD-198",
+   "as": "related",
+   "why": "replaces the drafted dep: a component does not depend on its capstone"
+  },
+  {
+   "bead": "BD-198",
+   "dep": "N23b-30",
+   "as": "dep",
+   "why": "train.start refuses without the sampler receipt that the battery writes"
+  },
+  {
+   "bead": "BD-198",
+   "dep": "BD-201",
+   "as": "related",
+   "why": "replaces the drafted dep: seed order (the task terms come through BD-197 and BD-194)"
+  },
+  {
+   "bead": "N23a-27",
+   "dep": "N10b-14",
+   "as": "dep",
+   "why": "the transport contract of construction C-23 is specified first (rule 6)"
+  },
+  {
+   "bead": "N23b-38",
+   "dep": "BD-422",
+   "as": "related",
+   "why": "replaces the drafted dep: nothing depends on an epic; N16c-25 is the carrier"
+  },
+  {
+   "bead": "N23a-37",
+   "dep": "N23b-23",
+   "as": "dep",
+   "why": "built only if its row of KILL-ALTALGO is funded"
+  },
+  {
+   "bead": "N23a-38",
+   "dep": "N23b-23",
+   "as": "dep",
+   "why": "built only if its row of KILL-ALTALGO is funded"
+  },
+  {
+   "bead": "N23a-39",
+   "dep": "N23b-23",
+   "as": "dep",
+   "why": "built only if its row of KILL-ALTALGO is funded"
+  },
+  {
+   "bead": "BD-310",
+   "dep": "N23b-19",
+   "as": "related",
+   "why": "the rank-agreement pilot reuses the family pilot's specialists when they exist"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N23a-16",
+   "as": "dep",
+   "why": "the M2 exit review records KILL-LEARNKERN"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N23a-21",
+   "as": "dep",
+   "why": "the M4 exit review records KILL-DISTILL"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N23a-26",
+   "as": "dep",
+   "why": "the M4 exit review records KILL-FAMILY"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N23a-30",
+   "as": "dep",
+   "why": "the M4 exit review records KILL-INHERIT"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N23a-33",
+   "as": "dep",
+   "why": "the M4 exit review records KILL-EQUIV"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N23b-23",
+   "as": "dep",
+   "why": "the M4 exit review records KILL-ALTALGO"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N23b-14",
+   "as": "dep",
+   "why": "the M3 exit review records KILL-GYMADAPT"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N23b-37",
+   "as": "dep",
+   "why": "the M6 exit review records KILL-SHORTGRAD"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N23b-02",
+   "as": "dep",
+   "why": "the M8 exit review records KILL-GATREE"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "BD-198",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "BD-181",
+   "dep": "BD-198",
+   "as": "related",
+   "why": "replaces the drafted dep: seed order (a seed never depends on a higher seed)"
+  },
+  {
+   "bead": "N35-11",
+   "dep": "BD-219",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "BD-154",
+   "dep": "CARD-T-07",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N23a-22",
+   "keep": "N23b-24",
+   "note": "both are the owner decision OPEN-CORTEX-1; the six-part memo, the envelope row, the early-stop floor, options and tests of N23a-22 folded into N23b-24"
+  },
+  {
+   "drop": "N23a-09",
+   "keep": "N23b-25",
+   "note": "both decide OPEN-CORTEX-2; the library-interface study, tight-bounds arms, decision rule and ADR of N23a-09 folded into N23b-25, which also records OPEN-CORTEX-5"
+  },
+  {
+   "drop": "N23b-26",
+   "keep": "N23a-29",
+   "note": "both decide OPEN-CORTEX-3; enforcement, keyed audit selection, bounds on k and m and tests of N23b-26 folded into N23a-29; cost formula reconciled with the mechanism N23a-28"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N23a-15",
+   "other": "N33a-22",
+   "note": "both build the frankentorch feature of frob-learn and its bridge module; N33a-22 should keep the admission record and controls, N23a-15 the learner, oracle and interchange"
+  },
+  {
+   "mine": "N23b-30",
+   "other": "N33c-37",
+   "note": "both build the planted linear-phase sampler; one fixture should serve the battery and GATE-WS-06"
+  },
+  {
+   "mine": "N23b-01",
+   "other": "N10b-16",
+   "note": "the same pilot: three arms (plain transformer against two geometric-algebra variants) before BD-439 is funded"
+  },
+  {
+   "mine": "N23b-20",
+   "other": "N10b-15",
+   "note": "two pilots of policy transport before BD-322; N10b-15's 12 pairs with 4 blind are also the experiment of GATE-CORTEX-13 in BD-322"
+  },
+  {
+   "mine": "N23a-27",
+   "other": "N10b-14",
+   "note": "N10b-14 specifies the transport along a typed edit that N23a-27 implements, with the same types and refusal"
+  },
+  {
+   "mine": "N23b-13",
+   "other": "N39a-22",
+   "note": "both report learner-swap figures from an external PPO driven through the adapter"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [
+  {
+   "section": "§14.7",
+   "what": "no bead makes each typed edit declare its parent-to-child correspondence of frames, actuator roles, sensor channels, contact roles and phase clocks in the edit record of design.edit (C-23 and §23.12 need it)",
+   "needed_by": [
+    "N23a-27",
+    "BD-322"
+   ]
+  },
+  {
+   "section": "§32.4",
+   "what": "no bead assigns Appendix O refusal codes to refusals that late subsections state in words: Cortex has three (candidates 558, 559, 570 in N23-REF) and §24.14 one (randomizing a numerical parameter)",
+   "needed_by": [
+    "N23-REF",
+    "N23b-29",
+    "N23b-31",
+    "N23b-35",
+    "N23b-03"
+   ]
+  }
+ ],
+ "fixes": []
+}

@@ -351,12 +351,1365 @@
     "N00-07"
    ],
    "note": "pilot register and funding rule; the two beads overlap (another group's pair)"
+  },
+  {
+   "bead": "N16-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "registry skeleton: row schema, rules, derivation files"
+  },
+  {
+   "bead": "N16-KA",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the negative-control registry's rules and runner; the registry file itself is its dependency BD-025"
+  },
+  {
+   "bead": "N16-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": "envelope, refusal block and exit-code table; the one-code-one-exit test at its gate is BD-299 (M3, later)"
+  },
+  {
+   "bead": "N16a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-03"
+   ],
+   "note": "typed throughput units and the ordering check"
+  },
+  {
+   "bead": "N16a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-sim"
+   ],
+   "note": "the registry row of sim.run; the M2 rows and the full verb (N16b-27, N16b-25) are later and not blocking"
+  },
+  {
+   "bead": "N16a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-148",
+    "N17a-02"
+   ],
+   "note": "later milestone (M2): at M1 the identity carries the referee's model; the ShapeClassId field is filled when the packed lowering lands"
+  },
+  {
+   "bead": "N16a-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "the kernel manifest that defines KernelId"
+  },
+  {
+   "bead": "N16a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-15"
+   ],
+   "note": "law registry with parameter classes"
+  },
+  {
+   "bead": "N16a-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16c-43"
+   ],
+   "note": "later milestone (M2) and a consumer: N16c-43 applies the two parameter sets to refinement studies"
+  },
+  {
+   "bead": "N16a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N18b-21"
+   ],
+   "note": "later milestone (M2); the register names the response, the reduction itself is not needed to finish it"
+  },
+  {
+   "bead": "N16a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-21"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18-KA"
+   ],
+   "note": "registry row of KA-396; the batteries that run the rod (BD-085, N18b-32) share the fixture and BD-085 depends on this bead through BD-082"
+  },
+  {
+   "bead": "N16a-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N16-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15a-16"
+   ],
+   "note": "the static envelope library; actuator.envelope (BD-073) is its verb"
+  },
+  {
+   "bead": "N16a-08",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-092"
+  },
+  {
+   "bead": "N16a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-123"
+   ],
+   "note": "the decision reads the sill fixture's referee run"
+  },
+  {
+   "bead": "N16a-10",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-024 (sim.run --tier referee) and N16a-02 (profiles and their admission on the verb); the full M2 verb N16b-25 is later"
+  },
+  {
+   "bead": "N16a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-36"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15b-11",
+    "N15a-04"
+   ],
+   "note": "reflected rotor inertia from the lowering and the L1 level of the ladder; the batched actuator kernels (BD-151) run beside it"
+  },
+  {
+   "bead": "N16a-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N13-REF"
+   ],
+   "note": "registry row of FROB-REF-212; the bound itself is its dependency BD-011"
+  },
+  {
+   "bead": "N16a-11",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N20a-07"
+   ],
+   "note": "the default policy is decided later by OPEN-SENS-1 (N20b-23, N20a-12)"
+  },
+  {
+   "bead": "N16a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-13",
+    "N35-14"
+   ],
+   "note": "padding-neutral reductions and the eight-condition audit"
+  },
+  {
+   "bead": "N16a-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-23"
+   ],
+   "note": "the K-x-digest contract; the digest chain and device snapshots (BD-203) are not needed for the batch-cpu rows"
+  },
+  {
+   "bead": "N16a-13",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-148"
+  },
+  {
+   "bead": "N16a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16c-37",
+    "N16c-35"
+   ],
+   "note": "sibling mechanism on the same support paths; neither blocks the other"
+  },
+  {
+   "bead": "N16a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-02"
+   ],
+   "note": "pinned workload records with their default capacities; the final decision (N21b-18, N21c-36) comes after measurement"
+  },
+  {
+   "bead": "N16a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N16b-01",
+    "N16b-03"
+   ],
+   "note": "the rate on the frozen battery is measured by N16b-03, which depends on this bead; the counting harness needs no battery"
+  },
+  {
+   "bead": "N16a-14",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-219",
+    "N16b-26"
+   ],
+   "note": "consumers of the byte formula"
+  },
+  {
+   "bead": "N16a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-18"
+   ],
+   "note": "the other draft of the same decision, N21c-36, depends on BD-212, which waits on this bead through N16b-03: related only"
+  },
+  {
+   "bead": "N16a-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N17b-11"
+   ],
+   "note": "N17b-11 reads the M2 profile (BD-217), which sits after BD-212; OPEN-KIN-3 blocks GATE-KIN-07 and cannot wait for it"
+  },
+  {
+   "bead": "N16a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-01"
+   ],
+   "note": "the target rows as data; OPEN-PERF-4 (N36-26) restates them after this decision and should depend on it"
+  },
+  {
+   "bead": "N16a-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-02",
+    "N16b-01"
+   ],
+   "note": "ledger quantities and the battery; BD-212 moved to related in the file because the decision precedes its one re-baseline"
+  },
+  {
+   "bead": "N16a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-176"
+   ],
+   "note": "consumer: spark.check reuses the state files and depends on this bead through BD-159"
+  },
+  {
+   "bead": "N16a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-25",
+    "N16b-26"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-204"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-25"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16a-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17b-04"
+   ],
+   "note": "phylum.sweep defines the sweep file the --designs option accepts"
+  },
+  {
+   "bead": "N16a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-01"
+   ],
+   "note": "N38a-20 specifies the same battery (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "N16a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-214"
+   ],
+   "note": "the script reads both figures"
+  },
+  {
+   "bead": "N16a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09",
+    "N00-07"
+   ],
+   "note": "pilot register and funding rule; the two beads overlap (another group's pair)"
+  },
+  {
+   "bead": "N16a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N16c-05"
+   ],
+   "note": "the kill-gate record rule and the registered Kinesis rows"
+  },
+  {
+   "bead": "N16a-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N14a-24"
+   ],
+   "note": "the same KILL-SKEL-PORT decision drafted by the chapter that owns the gate (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "N16a-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17-REF",
+    "N17a-02"
+   ],
+   "note": "the refusal the fallback relies on"
+  },
+  {
+   "bead": "N16a-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-177"
+   ],
+   "note": "needs the whole decision-level test"
+  },
+  {
+   "bead": "N16a-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17a-05"
+   ],
+   "note": "the planner; no bead admits a bucket above 64, which this bead does itself if KILL-TREEOP funds the route"
+  },
+  {
+   "bead": "N16a-24",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N14a-22"
+   ],
+   "note": "conditional on KILL-SKEL-PORT, which its dependency N16a-23 records"
+  },
+  {
+   "bead": "N16a-24",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N16c-37",
+    "N16c-40"
+   ],
+   "note": "the mechanism and the decision that keeps or removes it"
+  },
+  {
+   "bead": "N16b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-01",
+    "N24c-04"
+   ],
+   "note": "battery manifests with identity, and eval.run with its battery selector"
+  },
+  {
+   "bead": "N16b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-37"
+   ],
+   "note": "the decision supplies the scenario lists of the four non-legged classes"
+  },
+  {
+   "bead": "N16b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-09",
+    "N35-10"
+   ],
+   "note": "the per-world comparison and the exact bounds; the gate bead BD-177 and the threshold decision N35-11 depend on BD-212 and are related only (BD-177 moved from deps to related in the file)"
+  },
+  {
+   "bead": "N16b-03",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-159 (flag, reason and the three caller policies); N21b-23 is the device counterpart"
+  },
+  {
+   "bead": "N16b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16a-14",
+    "N16a-15",
+    "N21b-18"
+   ],
+   "note": "the capacity table and counting harness, and the two capacity decisions that block GATE-KIN-07; N21c-36 (second draft of OPEN-SPARK-3) depends on BD-212 and is related only"
+  },
+  {
+   "bead": "N16b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "registry row of FROB-REF-830"
+  },
+  {
+   "bead": "N16b-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18-REF"
+   ],
+   "note": "registry row of FROB-REF-822; the rule that sets the label (N18b-22) shares the label vocabulary and is not blocking"
+  },
+  {
+   "bead": "N16b-04",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-213"
+   ],
+   "note": "BD-213 depends on N16b-04 for the adjudicator rule; the coverage figure reaches the label rule as data"
+  },
+  {
+   "bead": "N16b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28c-01"
+   ],
+   "note": "the contract and the table artifact type; the DC-01 record itself (BD-309) depends on BD-263 and so on this bead"
+  },
+  {
+   "bead": "N16b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "airlock group stats with fs-uq"
+  },
+  {
+   "bead": "N16b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-08",
+    "N21c-35"
+   ],
+   "note": "owner decisions on compute"
+  },
+  {
+   "bead": "N16b-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-328"
+   ],
+   "note": "later milestone (M4): BD-328 decides KILL-RANK proper; this bead records the tier-pair reading at M3"
+  },
+  {
+   "bead": "N16b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-18"
+   ],
+   "note": "CL-2 as a model-form arm; CL-H as a batch law (BD-386) is M5 and joins the arms when it lands"
+  },
+  {
+   "bead": "N16b-13",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-154 (the pyramid as a labelled mutant and model-form arm)"
+  },
+  {
+   "bead": "N16b-13",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N16c-43"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-22",
+    "N29b-02"
+   ],
+   "note": "the monitor with its window and denominator and the verb fidelity.energy; BD-208 is already a dependency. N29a-22 overlaps this bead (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "N16b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29b-22"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-15",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-154"
+  },
+  {
+   "bead": "N16b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-176"
+   ],
+   "note": "the divergence ledger; already reached through BD-204"
+  },
+  {
+   "bead": "N16b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-209"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-15",
+    "N33a-16"
+   ],
+   "note": "the Integrator group over fs-time and the geometry group that exposes certified_ccd"
+  },
+  {
+   "bead": "N16b-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18b-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-061",
+    "BD-101"
+   ],
+   "note": "the compiled model with its closure list, and mobility analysis A-01"
+  },
+  {
+   "bead": "N16b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16a-05"
+   ],
+   "note": "the limit register holds the kinematic-loop limit; the coverage report (BD-213) prints the cause"
+  },
+  {
+   "bead": "N16b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-REF"
+   ],
+   "note": "registry row of FROB-REF-263; the M4 specification part N10b-01 overlaps this bead (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "N16b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-20"
+   ],
+   "note": "derivative programs per kernel and their record in the manifest"
+  },
+  {
+   "bead": "N16b-24",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32b-10"
+   ],
+   "note": "the viewer page with its timeline, on which the pacing rule is tested"
+  },
+  {
+   "bead": "N16b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-170"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-14",
+    "N36-16"
+   ],
+   "note": "bytes per world and per scene; the estimate verb itself is its dependency BD-219"
+  },
+  {
+   "bead": "N16b-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NJL-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": "registry row of FROB-REF-724; capability scopes (N32b-01) are a mechanism and a registry bead does not depend on one"
+  },
+  {
+   "bead": "N16b-28",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-081 (fault injection between checks and commit) and BD-083 (the forced-retry seam)"
+  },
+  {
+   "bead": "N16b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16a-14"
+   ],
+   "note": "the forced-overflow test at every capacity; the flag is its dependency BD-159"
+  },
+  {
+   "bead": "N16b-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-16"
+   ],
+   "note": "CARD-T-08 (M5) moved from deps to related in the file"
+  },
+  {
+   "bead": "N16b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16b-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-083",
+    "N16c-01",
+    "N16a-07",
+    "N16a-06"
+   ],
+   "note": "the mechanisms whose tests own the provoking fixtures for 221, 223, 224 and 220"
+  },
+  {
+   "bead": "N16b-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16a-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-22",
+    "N35-24"
+   ],
+   "note": "addressed streams on the host at M1, keyed by the perturbed entity; BD-180 is the M2 device kernel (later, related)"
+  },
+  {
+   "bead": "N16c-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-02"
+   ],
+   "note": "tier targets and hash-named receipts; BD-146 collects this bead's gate rows and controls and is the consumer, not a prerequisite"
+  },
+  {
+   "bead": "N16c-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N40-03"
+   ],
+   "note": "the gate record schema and the kill-gate record; BD-025 is already a dependency"
+  },
+  {
+   "bead": "N16c-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-01",
+    "N36-02"
+   ],
+   "note": "superseded by N16a-16, which carries the edge; OPEN-PERF-4 (N36-26) follows the decision"
+  },
+  {
+   "bead": "N16c-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "superseded by N16a-16, which depends on the battery (N16b-01) and the ledger quantities (N16b-02) and keeps BD-212 as related: the frontier precedes its re-baseline"
+  },
+  {
+   "bead": "N16c-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19a-07"
+   ],
+   "note": "later milestone (M3); the M2 profile is read on the scenes that exist and the idle-fixture case is re-read when the fixture library lands"
+  },
+  {
+   "bead": "N16c-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-18"
+   ],
+   "note": "superseded by N16a-15, which carries the edge"
+  },
+  {
+   "bead": "N16c-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "superseded by N16a-15, which depends on the battery (N16b-01) and keeps BD-212 as related: the decision blocks GATE-KIN-07"
+  },
+  {
+   "bead": "N16c-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-23"
+   ],
+   "note": "the KILL-HARDCONTACT decision; the GATE-TRAC-09 record comes from its dependency BD-386"
+  },
+  {
+   "bead": "N16c-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29b-02"
+   ],
+   "note": "the monitor with its window and denominator"
+  },
+  {
+   "bead": "N16c-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "BD-212's re-baseline follows this decision (edge BD-212 -> N16c-11 recorded); the battery it measures on is N16b-01, added to deps in the file"
+  },
+  {
+   "bead": "N16c-12",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "not a prerequisite: the bound is tabulated for four stated batch sizes and for whatever campaign sizes are on file; design campaigns arrive at M4"
+  },
+  {
+   "bead": "N16c-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01",
+    "N35-13"
+   ],
+   "note": "manifest footprints (no kernel touches another world's rows) and anchored reductions"
+  },
+  {
+   "bead": "N16c-14",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-172 and BD-174 (the step plan frob.stepplan/1 on each backend)"
+  },
+  {
+   "bead": "N16c-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-263"
+   ],
+   "note": "later milestone (M3): the promotion rule refuses the label when it lands; until then the claim product refuses the citation"
+  },
+  {
+   "bead": "N16c-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-16",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-186; arm E is optional in that study, so BD-186 must not depend back on this bead"
+  },
+  {
+   "bead": "N16c-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-04"
+   ],
+   "note": "route graphs of the scene pack; the actor mechanism (N38a-33, component of epic BD-421) is not needed, a host script generates positions"
+  },
+  {
+   "bead": "N16c-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-43",
+    "N18a-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15a-16"
+   ],
+   "note": "speed and torque envelopes from the cards, from which the caps are derived"
+  },
+  {
+   "bead": "N16c-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N20a-08",
+    "N20a-05"
+   ],
+   "note": "link model with latency and the sensor instants; the clock contract is its dependency BD-189"
+  },
+  {
+   "bead": "N16c-19",
+   "n": 4,
+   "as": "gap",
+   "keys": [],
+   "note": "§25.17: no bead describes a world with several robots and free props as a scene"
+  },
+  {
+   "bead": "N16c-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-24"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-20",
+   "n": 3,
+   "as": "gap",
+   "keys": [],
+   "note": "§25.17: no bead admits a multi-robot scene into sim.run or a multi-robot shape class"
+  },
+  {
+   "bead": "N16c-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-28"
+   ],
+   "note": "the pilot defines the two-carrier fixture; N25c-34 runs the same fixture for GATE-AUGUR-24 (related)"
+  },
+  {
+   "bead": "N16c-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-225"
+   ],
+   "note": "the warehouse archetype; placing sixteen robots in it needs the multi-robot scene description reported as a gap"
+  },
+  {
+   "bead": "N16c-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-20"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-20"
+   ],
+   "note": "the instance-certificate pipeline per kernel family; its gate bead BD-379 is already a dependency"
+  },
+  {
+   "bead": "N16c-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18a-32",
+    "BD-155"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-16",
+    "N20b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N13-30"
+   ],
+   "note": "affine-invariant operations and the log-Cholesky chart; the cone itself is its dependency BD-051"
+  },
+  {
+   "bead": "N16c-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N14b-03",
+    "BD-246"
+   ],
+   "note": "later milestone (M3): the census runs on the archetype table and the M1 archetypes and is restated at M3"
+  },
+  {
+   "bead": "N16c-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-063"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-32",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-074 is already a dependency; reading n(θ) from the eliminated-loop record is a change this bead makes to the linkage transmission"
+  },
+  {
+   "bead": "N16c-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-246"
+   ],
+   "note": "later milestone (M3); the matched share is restated then"
+  },
+  {
+   "bead": "N16c-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-170"
+   ],
+   "note": "the lists are a product of the packed lowering (its dependency BD-148); BD-170's model table stores them per slot and is the consumer"
+  },
+  {
+   "bead": "N16c-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-212",
+    "N16b-01"
+   ],
+   "note": "the pilot runs before the freeze on the scenario list as it stands and is re-read afterwards"
+  },
+  {
+   "bead": "N16c-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-25"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-07"
+   ],
+   "note": "the licence check per determinism class; eval.compare on the CPU is its dependency BD-124"
+  },
+  {
+   "bead": "N16c-38",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-263"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N16c-41",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-255"
+   ],
+   "note": "later milestone (M3); at M2 the fixture evaluates the predicate itself"
+  },
+  {
+   "bead": "N16c-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-11"
+   ],
+   "note": "the default integrator publishes its one-step linear map; the transactional profiles' map comes with BD-161, already reached"
+  },
+  {
+   "bead": "N16c-42",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-122"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N16c-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-04"
+   ],
+   "note": "N16a-04 owns the two typed sets and the digest; BD-083 only asserts the digest across attempts"
+  },
+  {
+   "bead": "N16c-43",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-266"
+   ],
+   "note": "later milestone (M3) and a consumer: BD-266 builds its step arm through this study type via N16b-13"
+  },
+  {
+   "bead": "N16c-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-08",
+    "N24b-07"
+   ],
+   "note": "the fidelity-dependence variants and the pre-registered rule with both runs kept"
+  },
+  {
+   "bead": "N16c-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-10"
+   ],
+   "note": "the plan-time pilot ledger with the recorded expected values; the device re-run is step 4 of this bead"
   }
  ],
- "edges": [],
- "superseded": [],
+ "edges": [
+  {
+   "bead": "BD-154",
+   "dep": "CARD-T-07",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (an M2 kernel bead depending on an M5 theorem card, through which BD-159 reached BD-217 and itself)"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "BD-212",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (a seed depending on a higher-numbered seed; BD-212 reaches BD-177's components through N16b-02)"
+  },
+  {
+   "bead": "N35-09",
+   "dep": "BD-212",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (N16b-02 depends on N35-09 and BD-212 depends on N16b-02; the envelopes are an argument of the comparison, not a prerequisite of writing it)"
+  },
+  {
+   "bead": "BD-186",
+   "dep": "N16c-16",
+   "as": "related",
+   "why": "arm E is optional in the head-to-head and is submitted by N16c-16, which depends on BD-186; a dependency back would close a cycle"
+  },
+  {
+   "bead": "N36-26",
+   "dep": "N16a-16",
+   "as": "dep",
+   "why": "OPEN-PERF-4 restates the performance rows only after OPEN-KIN-1 is decided (need 1 of N16a-16)"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N16c-10",
+   "keep": "N16a-09",
+   "note": "both decide OPEN-KIN-5; N16c-10's resolution arithmetic, stricter raise rule (half the refusals at 20% cost), accumulation-time known answer, four unit tests, three acceptance lines and dependency BD-085 folded into N16a-09"
+  },
+  {
+   "drop": "N16c-08",
+   "keep": "N16a-15",
+   "note": "both decide OPEN-KIN-3; N16c-08's byte table with referee fit, forced-overflow sweep, multiples-of-8 rule with hysteresis, device runs, three unit tests and dependencies BD-168, BD-207 folded into N16a-15; BD-212 moved out of its deps because the decision blocks GATE-KIN-07"
+  },
+  {
+   "drop": "N16c-06",
+   "keep": "N16a-16",
+   "note": "both decide OPEN-KIN-1; N16c-06's 40-cell grid, extra admissibility clauses, 1.15 replacement threshold, frob.frontier/1 record, device runs and reduced battery folded into N16a-16; BD-212 moved out of its deps because the decision precedes the one re-baseline"
+  }
+ ],
  "cross_group_duplicates": [],
  "new_beads": [],
- "gaps": [],
+ "gaps": [
+  {
+   "section": "§25.17 (with §19.7)",
+   "what": "a scene description for a world with several robots and free props, and its admission by sim.run (or a multi-robot shape class); the facility epic's beads (N25c-28 to N25c-35) compose missions and none builds or admits the multi-robot world that §16.20 steps",
+   "needed_by": [
+    "N16c-19",
+    "N16c-20",
+    "N16c-21"
+   ]
+  }
+ ],
  "fixes": []
 }

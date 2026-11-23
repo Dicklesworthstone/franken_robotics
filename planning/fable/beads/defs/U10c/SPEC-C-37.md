@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "solid", "traction", "sinew", "frob-contact", "frob-actuate", "test"]
 parent: "WP-10"
-deps: ["BD-050", "BD-069", "BD-079", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-084", "BD-115", "BD-154", "BD-155", "BD-167", "N10c-08", "N10-CX", "N10c-10", "CARD-T-07"]
+related: ["BD-084", "BD-115", "BD-154", "BD-155", "BD-167", "N10c-08", "N10-CX", "N10c-10", "CARD-T-07", "BD-050", "BD-069", "BD-079"]
 gates: ["GATE-SINEW-04", "GATE-TRAC-04"]
 plan_refs: ["§10 C-37", "§10 C-06", "§18.6", "§18.7", "§15.6", "§12.3 T-07", "Appendix D.3", "Appendix E GB-20", "Appendix I.1", "Appendix M.9", "Appendix N.7"]
 ---
@@ -48,6 +48,29 @@ Out: joint-level rows in the referee solve (BD-084, at M1) and on the batched ti
 cone in the `Cone` trait and the cone kernels (BD-154, at M2); rolling and torsional rows with interface cards
 (BD-167); the cone-program solver (BD-115); recording GATE-SINEW-04 and GATE-TRAC-04 and deciding
 KILL-SINEW-ROWS. The production bindings of this law suite therefore arrive in two stages: rows at M1, cone at M2.
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-37: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`sim.run`; also `contact.laws`), `failing_test` (a
+test of `frob-contact::laws_c37_cone4` with its registered control), `payoff.gate` (GATE-SINEW-04), `statements`,
+`known_answers` (KA-178 to KA-182), `cards` (T-07), `gates`, `pilot` left empty (the construction is Solid) and
+`generic_comparator` only if this bead claims an advantage over a named generic method. Doctrine D-2 (no
+ornamental mathematics) is checked on these fields: a construction with no verb or no failing test is moved to the
+parked register by a decision record. The contract `docs/math/C-37.md` follows the ten-section template
+`docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-050 (the `Cone` trait of
+`frob-algebra`), BD-069 (actuator cards, the first seed in `frob-actuate`) or BD-079 (collision primitives, the
+first seed in `frob-contact`): those beads are listed in `related` and are not prerequisites. The law suite is
+generic over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-contact` or `frob-actuate` do not exist when this bead starts, the suite and its support files are written
+under `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands
+below read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate,
+binds its production types to the subject trait and runs the unchanged suite as part of its own acceptance. A
+criterion or script step below that names production code or a verb of an implementing bead is owed at that bead's
+acceptance and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -133,6 +156,9 @@ profile, and smooth-model results carry a flag.
       were printed with no control).
 - [ ] The control from CX-089 is attached to GATE-TRAC-04.
 - [ ] `scripts/e2e/spec_c37.sh` exits 0.
+- [ ] Row C-37 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

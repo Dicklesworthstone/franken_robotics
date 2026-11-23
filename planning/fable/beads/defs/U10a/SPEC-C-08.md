@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "atelier", "marrow", "frob-analyze", "frontier", "spine", "spec", "test"]
 parent: "WP-11"
-deps: ["BD-011", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["§28.4: the bead that creates crate frob-analyze (the curvature-sign law lives in crates/frob-lie/tests/, the holonomy fixtures in crates/frob-analyze/tests/)", "§25.19: the shape-space atlas for locomotion by geometric phase (Moonshot; BD-425), which is funded only on the conditions stated below"]
-related: ["BD-243", "BD-425", "N10a-16", "SPEC-C-04", "SPEC-C-07", "CARD-T-20", "N10-KA1"]
+related: ["BD-243", "BD-425", "N10a-16", "SPEC-C-04", "SPEC-C-07", "CARD-T-20", "N10-KA1", "BD-011"]
 gates: ["GATE-MARROW-01", "GATE-MARROW-04", "GATE-ATEL-02"]
 plan_refs: ["§10 C-08", "§11.1", "§11.6", "§13.8", "§28.4 A-09", "§12.3 T-20", "§38.7 MR-41", "Appendix C.1.4", "Appendix D.1", "Appendix M KA-064 KA-065", "Appendix N CX-030"]
 ---
@@ -53,6 +53,17 @@ of T-20.
 Out: the analysis A-09 and its verb (BD-243); the pilot against direct collocation (N10a-16); the shape-space
 atlas (Moonshot); minimum-perturbation coordinate optimization as a production feature (the contract requires
 it of any consumer and tests chart independence).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-011 (the production
+retractions of `frob-lie`): that bead is listed in `related` and is not a prerequisite. The law suite is generic
+over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-lie` or `frob-analyze` do not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

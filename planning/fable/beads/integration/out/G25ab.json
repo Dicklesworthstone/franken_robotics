@@ -1,0 +1,2068 @@
+{
+ "group": "G25ab",
+ "needs": [
+  {
+   "bead": "BD-002",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-003",
+    "BD-004"
+   ],
+   "note": "seed order: BD-003 and BD-004 are the consumers (check-generated calls this bead's status-table generator); the dependency runs from them to BD-002"
+  },
+  {
+   "bead": "BD-002",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38b-19",
+    "BD-025"
+   ],
+   "note": "seed order; the recorder that writes gate rows and refuses a self-certified pass is N38b-19 inside the BD-025 crate, and it reads the registry files this bead creates"
+  },
+  {
+   "bead": "BD-021",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-06"
+   ],
+   "note": "N12-06 already depends on BD-021 (the registry is built on the crate skeleton); a dependency back would close a cycle"
+  },
+  {
+   "bead": "BD-021",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-07"
+   ],
+   "note": "the doorway scan (rule doorway.unlisted-allow) is delivered by N34-07 (xtask check-unsafe), not by BD-004, which only assembles the six checks"
+  },
+  {
+   "bead": "BD-021",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N12-11"
+   ],
+   "note": "N12-11 is the test that records GATE-LEMMA-06 and already depends on BD-021; a mechanism does not depend on its test"
+  },
+  {
+   "bead": "BD-026",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "N12-02 already depends on BD-026: the registry and dispatch are built inside the crate this bead creates"
+  },
+  {
+   "bead": "BD-026",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N12-03"
+   ],
+   "note": "N12-03 already depends on BD-026"
+  },
+  {
+   "bead": "BD-026",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N12-04"
+   ],
+   "note": "later milestone (M1) and N12-04 already depends on BD-026"
+  },
+  {
+   "bead": "BD-026",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-003"
+   ],
+   "note": "check-deps must exist to enforce the empty dependency table and rule L-9 on every commit"
+  },
+  {
+   "bead": "BD-027",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "the two checkers register in the closed registry and are reached through its dispatch"
+  },
+  {
+   "bead": "BD-027",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-03"
+   ],
+   "note": "the writer writes against the schema; the generic rules and the Merkle root are N12-03's"
+  },
+  {
+   "bead": "BD-027",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-06"
+   ],
+   "note": "prove.list prints the card registry"
+  },
+  {
+   "bead": "BD-027",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-005"
+   ],
+   "note": "made direct; it was reached only through BD-022"
+  },
+  {
+   "bead": "BD-127",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-45"
+   ],
+   "note": "the two fs-sos probes at the pin are N33c-45; N33c-48 only records GATE-WS-09"
+  },
+  {
+   "bead": "BD-127",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-003"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-128",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-135"
+   ],
+   "note": "seed order; BD-135 depends on this core through N25a-09"
+  },
+  {
+   "bead": "BD-128",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-288"
+   ],
+   "note": "later milestone (M3) and seed order; BD-288 builds on this core"
+  },
+  {
+   "bead": "BD-128",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N12-05"
+   ],
+   "note": "N12-05 already depends on BD-128 (the family certificate is built on the polarity record this core defines)"
+  },
+  {
+   "bead": "BD-130",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-28",
+    "N25e-29"
+   ],
+   "note": "the law-class rule is out of this bead's scope; N25e-28 and N25e-29 extend the stance lowering and its lp-primal certificate and are measured by their own gate"
+  },
+  {
+   "bead": "BD-130",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "seed order; BD-133 (which depends on both) is where proofs meet the checker"
+  },
+  {
+   "bead": "BD-131",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "seed order; BD-133 is where proofs meet the checker"
+  },
+  {
+   "bead": "BD-131",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38a-04",
+    "N25d-45"
+   ],
+   "note": "optional comparison instrument: registered in the oracle register (N38a-04) if the owner admits one as a comparator (decision N25d-45); not blocking"
+  },
+  {
+   "bead": "BD-133",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-03"
+   ],
+   "note": "made direct; it was reached only through BD-132"
+  },
+  {
+   "bead": "BD-133",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-05"
+   ],
+   "note": "a mission bundle is a family certificate; the writer needs its type"
+  },
+  {
+   "bead": "BD-133",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-04"
+   ],
+   "note": "prove.verify and the check-before-answer step read the verdict and report contract"
+  },
+  {
+   "bead": "BD-135",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-291"
+   ],
+   "note": "later milestone (M3), seed order, and BD-291 depends on BD-135"
+  },
+  {
+   "bead": "BD-135",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-297"
+   ],
+   "note": "later milestone (M3); until then the interval is marked uncalibrated"
+  },
+  {
+   "bead": "BD-135",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25d-46"
+   ],
+   "note": "the fail-closed default (exit 2, resolution-unmet) is built here; the decision changes one constant if it goes the other way"
+  },
+  {
+   "bead": "BD-135",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-138"
+   ],
+   "note": "seed order; BD-138 generates tools from the registry entries this bead writes and already depends on it"
+  },
+  {
+   "bead": "BD-136",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-136",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-136",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25-REF"
+   ],
+   "note": "registry of expected refusal codes"
+  },
+  {
+   "bead": "BD-136",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N25a-02",
+    "N25a-03",
+    "N25a-04",
+    "N25a-11",
+    "N25a-07",
+    "N25a-08"
+   ],
+   "note": "the admission and prefix mechanisms the corpus mutates, and the invalid fixtures (N25a-07) and twelve shortcut fixtures (N25a-08) the corpus must contain"
+  },
+  {
+   "bead": "BD-140",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-31"
+   ],
+   "note": "the default (the agent the project is developed with at the gate's date, pinned) lets the gate run before the owner decides"
+  },
+  {
+   "bead": "BD-140",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-137 (direct), which depends on BD-022"
+  },
+  {
+   "bead": "BD-288",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14"
+   ],
+   "note": "a transport is accepted only when the auditor's monotone-transport rule re-checks it"
+  },
+  {
+   "bead": "BD-288",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25b-30"
+   ],
+   "note": "BD-133 writes only the first-slice kinds and BD-364 the M4 kinds; the M3 writer mapping was carried by no bead and is the new bead N25b-30"
+  },
+  {
+   "bead": "BD-288",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-288",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N25e-07",
+    "N25e-08"
+   ],
+   "note": "the no-fill rule consumes this mechanism (a fill is a licensed monotone proof step); they depend on BD-288, not the reverse"
+  },
+  {
+   "bead": "BD-289",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the protocol is frozen in the pilot register before execution"
+  },
+  {
+   "bead": "BD-289",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-24"
+   ],
+   "note": "later milestone (M4); the weak-variable enclosure extends the mechanism this pilot decides"
+  },
+  {
+   "bead": "BD-290",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-238"
+   ],
+   "note": "made direct; it was reached only through a long chain"
+  },
+  {
+   "bead": "BD-290",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-291"
+   ],
+   "note": "seed order; the direct-measurement comparator is listed by hand here until BD-291 offers it"
+  },
+  {
+   "bead": "BD-290",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-235",
+    "BD-259"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "BD-292",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "later milestone (M4), seed order, and BD-347 depends on BD-292"
+  },
+  {
+   "bead": "BD-292",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-063",
+    "BD-077"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-292",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-205"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-292",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N12-05"
+   ],
+   "note": "N12-05 carries the reuse-by-implication record and the refusal FROB-REF-835"
+  },
+  {
+   "bead": "BD-293",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-312"
+   ],
+   "note": "seed order; BD-312 registers the verb and already depends on BD-293"
+  },
+  {
+   "bead": "BD-293",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-274 is already a direct dependency"
+  },
+  {
+   "bead": "BD-293",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-225",
+    "BD-227"
+   ],
+   "note": "made direct: the ten planted reversals are authored from these primitives and registries"
+  },
+  {
+   "bead": "BD-316",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-27",
+    "N39b-29",
+    "N39b-31"
+   ],
+   "note": "the run cannot start without an adjudicator, an approved compute class and a pinned agent (under the default for OPEN-TENFOLD-4 the gate is recorded as not run)"
+  },
+  {
+   "bead": "BD-316",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-316",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-298"
+   ],
+   "note": "made direct; it was reached only through BD-313"
+  },
+  {
+   "bead": "BD-316",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "BD-314 is already a direct dependency"
+  },
+  {
+   "bead": "BD-354",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-38"
+   ],
+   "note": "the mission-subsystem check specializes the program-wide registration and order rules that N39a-38 builds at M1"
+  },
+  {
+   "bead": "BD-354",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-355",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-178"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "BD-355",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-053"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "BD-355",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "needed only where a run exceeds the default class; the screens fit one device and one hour"
+  },
+  {
+   "bead": "BD-357",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-364"
+   ],
+   "note": "seed order; BD-364 writes and re-checks the bundles of the answers this bead produces"
+  },
+  {
+   "bead": "BD-357",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-345"
+   ],
+   "note": "an independent check on cuts in later campaigns; not needed to finish"
+  },
+  {
+   "bead": "BD-387",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-389"
+   ],
+   "note": "seed order; BD-389 depends on BD-387"
+  },
+  {
+   "bead": "BD-387",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-392"
+   ],
+   "note": "seed order; BD-392 depends on BD-387"
+  },
+  {
+   "bead": "BD-387",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-394"
+   ],
+   "note": "seed order; BD-394 depends on BD-387"
+  },
+  {
+   "bead": "BD-387",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-139"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-436",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25c-02",
+    "N25c-01"
+   ],
+   "note": "children of the epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-436",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22b-07",
+    "N22b-06",
+    "N22b-08"
+   ],
+   "note": "children of the epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-436",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25e-02",
+    "N25e-04",
+    "N25e-06"
+   ],
+   "note": "children of the epic; an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-436",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N25d-49"
+   ],
+   "note": "an epic carries no dependencies; the children depend on the funding decision"
+  },
+  {
+   "bead": "N25-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12",
+    "N38b-04"
+   ],
+   "note": "a registry depends only on the registry skeleton: the known-answer row schema and loader (N38a-12) and the rules of the negative-control registry (N38b-04); BD-146 is the M1 battery that runs the rows"
+  },
+  {
+   "bead": "N25-KA",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "Appendix M and §38.6: no bead assigns suite numbers to known answers of subsections added late; the eighteen stay under provisional tags late-01 to late-18"
+  },
+  {
+   "bead": "N25-KA",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "N38a-12 fixes the derivation-file rule and layout; the files themselves are written by the batteries N25d-37 to N25d-39"
+  },
+  {
+   "bead": "N25-KA",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N25d-37",
+    "N25d-38",
+    "N25d-39"
+   ],
+   "note": "the batteries hold the tests the rows are bound to and depend on this registry, not the reverse"
+  },
+  {
+   "bead": "N25a-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-06"
+   ],
+   "note": "later milestone (M4); this bead fixes only the Candidate type"
+  },
+  {
+   "bead": "N25a-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-026"
+   ],
+   "note": "BD-003 is already a direct dependency; BD-026 made direct so that the no-edge assertion has a crate to refer to"
+  },
+  {
+   "bead": "N25a-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25b-07"
+   ],
+   "note": "N25b-07 runs after admission on the admitted query and depends on this bead"
+  },
+  {
+   "bead": "N25a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-28"
+   ],
+   "note": "N25e-28 adds the law field and its refusal on top of this admission"
+  },
+  {
+   "bead": "N25a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "the auditor repeats the prefix check in separate code; frob-mission never links it"
+  },
+  {
+   "bead": "N25a-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25c-30",
+    "N25d-47"
+   ],
+   "note": "later milestone (M8); version 1 refuses more than one decision maker"
+  },
+  {
+   "bead": "N25a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-081",
+    "BD-082",
+    "BD-083"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "the partition proof is re-checked by the auditor through BD-133; this bead only emits the object"
+  },
+  {
+   "bead": "N25a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-005"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25a-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "the auditor re-checks what this bead reconstructs, through BD-133; frob-mission never links it"
+  },
+  {
+   "bead": "N25a-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-43"
+   ],
+   "note": "the decision reads the failure rate this bead records and depends on it"
+  },
+  {
+   "bead": "N25a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "the battery re-runs its fixtures through the auditor"
+  },
+  {
+   "bead": "N25a-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-06"
+   ],
+   "note": "the four rules are entered in the card registry as candidate cards; N25d-36 states the same cards (cross-group duplicate, reported)"
+  },
+  {
+   "bead": "N25a-07",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N12-14"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25-CX"
+   ],
+   "note": "registry"
+  },
+  {
+   "bead": "N25a-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-291"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25a-08",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-363"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-08",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-359"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-08",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-361"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-08",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N25c-44"
+   ],
+   "note": "BD-425 is an epic and cannot be a carrier; its mechanism is N25c-44, at a later milestone (M6)"
+  },
+  {
+   "bead": "N25a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-290"
+   ],
+   "note": "later milestone (M3) and BD-290 depends on this bead through BD-135"
+  },
+  {
+   "bead": "N25a-09",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25e-11",
+    "N25e-15"
+   ],
+   "note": "later milestones (M3, M4)"
+  },
+  {
+   "bead": "N25a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-43"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-31"
+   ],
+   "note": "N25e-31 uses the attained-infimum claim defined here"
+  },
+  {
+   "bead": "N25a-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-259"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25a-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N12-13"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25a-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-357"
+   ],
+   "note": "later milestone (M4) and BD-357 depends on this driver"
+  },
+  {
+   "bead": "N25a-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-360",
+    "BD-361",
+    "BD-362"
+   ],
+   "note": "later milestone (M4); the lanes plug into this driver"
+  },
+  {
+   "bead": "N25a-12",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25e-24"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-32"
+   ],
+   "note": "the registry entry and envelope of result.revalidate at M1 are N28b-32; BD-137 registers the M1 set"
+  },
+  {
+   "bead": "N25a-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-111"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-129"
+   ],
+   "note": "the truths come from this bead's own exact evaluator; the replay through the public query happens in BD-140, which depends on BD-129"
+  },
+  {
+   "bead": "N25a-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-09",
+    "N25e-08"
+   ],
+   "note": "they reuse the band family of this corpus"
+  },
+  {
+   "bead": "N25a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-16",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28c-29",
+    "BD-312"
+   ],
+   "note": "the default (two verbs over one engine) is built; BD-312 registers the verb at the freeze"
+  },
+  {
+   "bead": "N25a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "later milestone (M4); BD-377 inherits the campaign"
+  },
+  {
+   "bead": "N25a-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28b-35"
+   ],
+   "note": "later milestone (M4); the M4 gate uses a freshly frozen campaign"
+  },
+  {
+   "bead": "N25a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25d-45"
+   ],
+   "note": "the decision on OPEN-AUGUR-4 fixes what counts as the conventional program"
+  },
+  {
+   "bead": "N25a-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N12-30"
+   ],
+   "note": "sibling decision read on the same record"
+  },
+  {
+   "bead": "N25a-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-07"
+   ],
+   "note": "program-level form of the same rule"
+  },
+  {
+   "bead": "N25a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-04",
+    "N25c-01"
+   ],
+   "note": "the decision reads the record of the pilot and of the pre-registered experiment"
+  },
+  {
+   "bead": "N25a-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22b-08"
+   ],
+   "note": "sibling decision"
+  },
+  {
+   "bead": "N25a-20",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25e-06"
+   ],
+   "note": "sibling decision"
+  },
+  {
+   "bead": "N25a-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-29",
+    "N25e-30"
+   ],
+   "note": "measured by their own script; this script only asserts the law object when present"
+  },
+  {
+   "bead": "N25a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25b-07"
+   ],
+   "note": "the script fires refusal 877 through the mechanism"
+  },
+  {
+   "bead": "N25a-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25d-46"
+   ],
+   "note": "the script follows the default and changes in one place"
+  },
+  {
+   "bead": "N25a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the recorder that writes the gate row and refuses a self-certified pass is N38b-19, inside the BD-025 crate"
+  },
+  {
+   "bead": "N25a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25a-26",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the recorder is N38b-19, inside the BD-025 crate"
+  },
+  {
+   "bead": "N25a-26",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N28b-32"
+   ],
+   "note": "the script calls frob result revalidate; its registry entry is N28b-32"
+  },
+  {
+   "bead": "N25a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-38"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-27",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-216 is already a direct dependency"
+  },
+  {
+   "bead": "N25a-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25c-06"
+   ],
+   "note": "the audit reads this first real registered record"
+  },
+  {
+   "bead": "N25a-27",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the recorder is N38b-19, inside the BD-025 crate"
+  },
+  {
+   "bead": "N25a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-178"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25a-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "needed only where a run exceeds the default class"
+  },
+  {
+   "bead": "N25a-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N38a-02"
+   ],
+   "note": "the recorder is N38b-19 and sites and receipts are N38a-02; the merge of the two site records is done by this script"
+  },
+  {
+   "bead": "N25a-28",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N25c-09",
+    "N25c-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-392"
+   ],
+   "note": "until it lands the positive read path is marked not run"
+  },
+  {
+   "bead": "N25a-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-388"
+   ],
+   "note": "the script carries its own minimal generator"
+  },
+  {
+   "bead": "N25a-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-305"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25a-30",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-16"
+   ],
+   "note": "a pilot depends only on what it needs to run; the comparison is made once the checker exists"
+  },
+  {
+   "bead": "N25a-30",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25b-08",
+    "N25e-27"
+   ],
+   "note": "the measured sparsity bounds the ceiling and is quoted when available; the pilot runs without it"
+  },
+  {
+   "bead": "N25a-30",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-09",
+    "N00-05"
+   ],
+   "note": "the pilot is registered with a frozen protocol in the pilot register; the append-only review log is N00-05"
+  },
+  {
+   "bead": "N25a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-31",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-364"
+   ],
+   "note": "BD-364 writes sos-gram at M4 and depends on the mechanisms it serializes"
+  },
+  {
+   "bead": "N25a-31",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25b-09"
+   ],
+   "note": "the paving driver is N25b-09; BD-358 is the capstone of the region-certificate beads"
+  },
+  {
+   "bead": "N25a-31",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N25b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25a-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-124"
+   ],
+   "note": "this bead probes and does not admit"
+  },
+  {
+   "bead": "N25a-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-02"
+   ],
+   "note": "the stack lock fixes the pinned commit each probe reads"
+  },
+  {
+   "bead": "N25a-32",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-026"
+   ],
+   "note": "a pattern, never a dependency"
+  },
+  {
+   "bead": "N25a-32",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N25b-09",
+    "BD-362",
+    "N25d-15"
+   ],
+   "note": "later milestones; the register of missing pieces names them"
+  },
+  {
+   "bead": "N25a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-022"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25a-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-46",
+    "N25d-48"
+   ],
+   "note": "the defaults are built; N25d-48 keeps the register that holds OPEN-AUGUR-11"
+  },
+  {
+   "bead": "N25a-34",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-291"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25a-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-137"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-132",
+    "N12-13",
+    "N12-14",
+    "N12-15",
+    "N12-16",
+    "N12-17",
+    "N12-19"
+   ],
+   "note": "the checkers read the payloads these types carry and depend on this bead; the field lists are shared through the schema"
+  },
+  {
+   "bead": "N25b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-126"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-308"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25b-02",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N00-25"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "made direct; N12-02 carries the per-kind status field and the kind.disabled rule"
+  },
+  {
+   "bead": "N25b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29b-10"
+   ],
+   "note": "the citation guard raises FROB-REF-869 on a withdrawn or tombstoned closure"
+  },
+  {
+   "bead": "N25b-03",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-316"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25b-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-316",
+    "BD-317"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N25b-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N25d-41"
+   ],
+   "note": "the kill-gate record convention (N40-03) and the Augur rows of the gate register (N25d-41)"
+  },
+  {
+   "bead": "N25b-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-34"
+   ],
+   "note": "later milestone (M1); the fourth clause is read from it when it exists"
+  },
+  {
+   "bead": "N25b-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-003"
+   ],
+   "note": "the static check runs on every commit and is outside this script; BD-026 depends on it"
+  },
+  {
+   "bead": "N25b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-129",
+    "BD-130",
+    "BD-131"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25b-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N12-35"
+   ],
+   "note": "the seeded-defect half of the second-machine gate is its own script"
+  },
+  {
+   "bead": "N25b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25-REF"
+   ],
+   "note": "registry"
+  },
+  {
+   "bead": "N25b-07",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-126 is already a direct dependency"
+  },
+  {
+   "bead": "N25b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-100",
+    "BD-103",
+    "BD-104",
+    "BD-105"
+   ],
+   "note": "made direct; none of the four states a generic-scalar form, reported as a gap of §28"
+  },
+  {
+   "bead": "N25b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-24",
+    "N25e-27"
+   ],
+   "note": "N25e-24 (M4) reads this bead's weight record; N25e-27 is a cross-group duplicate of this experiment, reported"
+  },
+  {
+   "bead": "N25b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-24"
+   ],
+   "note": "the weak-variable rule extends this driver and depends on it"
+  },
+  {
+   "bead": "N25b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-16",
+    "N12-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-10",
+    "N25e-11"
+   ],
+   "note": "an extension of the monotone-bounds step by its own beads"
+  },
+  {
+   "bead": "N25b-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25e-24"
+   ],
+   "note": "an extension by its own bead"
+  },
+  {
+   "bead": "N25b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-364"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-25"
+   ],
+   "note": "reads the same fixture with its own thresholds"
+  },
+  {
+   "bead": "N25b-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-351"
+   ],
+   "note": "experiment.suggest reads this bead's unresolved cells"
+  },
+  {
+   "bead": "N25b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-124",
+    "N25a-32"
+   ],
+   "note": "fs-voi is admitted above the airlock by the group gate of BD-124; N25a-32 holds its pin facts and the reuse decision"
+  },
+  {
+   "bead": "N25b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-054"
+   ],
+   "note": "BD-060 is already a direct dependency; BD-054 made direct"
+  },
+  {
+   "bead": "N25b-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-100",
+    "BD-103",
+    "BD-108"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25b-13",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25e-11",
+    "N25e-10"
+   ],
+   "note": "a further screen by its own beads"
+  },
+  {
+   "bead": "N25b-14",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-285 is already a direct dependency"
+  },
+  {
+   "bead": "N25b-14",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-111 and BD-220 are already direct dependencies"
+  },
+  {
+   "bead": "N25b-14",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-203"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25b-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-360"
+   ],
+   "note": "the starter's sizing uses the closure analysis A-10 of BD-103, already a dependency; the full lane is not required"
+  },
+  {
+   "bead": "N25b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-109"
+   ],
+   "note": "BD-246 is already a direct dependency; BD-109 made direct"
+  },
+  {
+   "bead": "N25b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-100",
+    "BD-103",
+    "BD-108"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N25d-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N17a-29",
+    "BD-285"
+   ],
+   "note": "sibling decision KILL-QUOTIENT (N17a-29), read beside this one"
+  },
+  {
+   "bead": "N25b-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "BD-292 is already a direct dependency; BD-347 is a later milestone (M4)"
+  },
+  {
+   "bead": "N25b-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-312"
+   ],
+   "note": "BD-312 registers the verb at the freeze"
+  },
+  {
+   "bead": "N25b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25b-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N25b-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N25d-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-347",
+    "N28b-35"
+   ],
+   "note": "BD-292 is already a direct dependency; the studio's gate is read at M4"
+  },
+  {
+   "bead": "N25b-22",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-270 is already a direct dependency"
+  },
+  {
+   "bead": "N25b-22",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-255 (direct), which builds on BD-121"
+  },
+  {
+   "bead": "N25b-22",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25-REF"
+   ],
+   "note": "registry"
+  },
+  {
+   "bead": "N25b-23",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-273 and BD-274 are already direct dependencies"
+  },
+  {
+   "bead": "N25b-23",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-094 is already a direct dependency"
+  },
+  {
+   "bead": "N25b-23",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-262 is already a direct dependency"
+  },
+  {
+   "bead": "N25b-24",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-369 is already a direct dependency"
+  },
+  {
+   "bead": "N25b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25a-09"
+   ],
+   "note": "BD-135 is already a direct dependency; the binding constraint and the smallest admitted change are computed by N25a-09"
+  },
+  {
+   "bead": "N25b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-04",
+    "N38a-05"
+   ],
+   "note": "no bead delivers a collocation tool; the pilot runs a pinned foreign tool registered in the oracle register (N38a-04) and kept out of process (N38a-05)"
+  },
+  {
+   "bead": "N25b-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-271"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N25b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N25d-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N26a-35",
+    "BD-274"
+   ],
+   "note": "sibling decision KILL-MCW (N26a-35), read beside this one"
+  },
+  {
+   "bead": "N25b-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-240 is already a direct dependency"
+  },
+  {
+   "bead": "N25b-27",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-34"
+   ],
+   "note": "the declaration on sensor cards is its own bead; the enumerator here takes the joint law as given"
+  },
+  {
+   "bead": "N25b-27",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-132 is already a direct dependency; the two observation laws it would need for the stochastic case are reported as a gap of §12.4"
+  },
+  {
+   "bead": "N25b-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25-REF"
+   ],
+   "note": "registry"
+  },
+  {
+   "bead": "N25b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-080",
+    "BD-167"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25b-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N20a-43"
+   ],
+   "note": "BD-240 is already a direct dependency; the sibling decision KILL-ALIAS is N20a-43"
+  },
+  {
+   "bead": "N25b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N25d-41"
+   ],
+   "note": ""
+  }
+ ],
+ "edges": [],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-22", "N12-20", "BD-333", "N12-06", "SPEC-C-16"]
+deps: ["N12-22", "N12-20", "N12-06", "SPEC-C-16"]
 needs: []
-related: ["CARD-T-18", "BD-334", "BD-082", "N12-REF", "BD-379"]
+related: ["CARD-T-18", "BD-334", "BD-082", "N12-REF", "BD-379", "BD-333"]
 gates: []
 plan_refs: ["§12.3 (T-17)", "§10 C-16", "§12.7 (FROB-REF-263)", "Appendix D.2 (saltation matrix)"]
 ---
@@ -40,6 +40,16 @@ In: statement document, registry row, per-event-class certificates on a model's 
 mutants. Out: deriving the kernels and the return map (the gait-orbit beads); the refusal near grazing and at
 ambiguous event order (the event-derivative code raises FROB-REF-263); the symmetry–event identity
 (CARD-T-18); validation of every `saltation` derivative by perturbation and event re-location (a test).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the hybrid gait-orbit code that derives saltation kernels (BD-333) is `related`, not a dependency (a card that
+waited for its implementer would close a loop, because the implementer's own acceptance runs the card's law
+tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the route
+is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens
+and mutants, and every acceptance line that its own fixtures decide. An acceptance line that can only be observed
+on live output (the per-event-class certificates on a model's saltation kernels, the planar-biped event class
+included) is run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the
+receipt produced there is what moves the registry row for that output.
 
 ## Technical approach
 

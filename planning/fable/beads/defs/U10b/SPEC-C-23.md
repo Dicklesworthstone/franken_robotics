@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "spine", "spec", "frontier", "frob-learn", "test"]
 parent: "WP-61"
-deps: ["BD-025", "BD-192", "SPEC-C-21", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "SPEC-C-21", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-23", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load row KA-128 and CX-060; this bead binds them to tests and sets the round-off bound the appendix leaves `to set`", "§10 C-09: the observation-preserving group Γ_obs and its orbit labels from the specification bead SPEC-C-09 (unit U10a); cited for the weight tying", "§23.22: the family-policy pilot (Pilot 1 of this construction, shared with construction C-26: one class, 40 designs) is executed by the rank-agreement pilot beads BD-145 and BD-310 and the Cortex pilot of BD-320; they must carry the protocol stated in this bead"]
-related: ["N10b-14", "N10b-15", "N10b-11", "BD-320", "BD-321", "BD-322", "BD-145", "BD-310", "BD-328", "BD-196", "SPEC-C-09", "SPEC-C-24", "SPEC-C-26"]
+related: ["N10b-14", "N10b-15", "N10b-11", "BD-320", "BD-321", "BD-322", "BD-145", "BD-310", "BD-328", "BD-196", "SPEC-C-09", "SPEC-C-24", "SPEC-C-26", "BD-192"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-23", "§9 D-10", "§23.7", "§23.11", "§23.22", "§23.23", "§38.7 MR-23", "Appendix E GB-28", "Appendix I.14", "Appendix M.9 KA-128", "Appendix N.7 CX-060"]
 ---
@@ -49,6 +49,17 @@ it.
 Out: networks, pretraining and the mapping table as product features (BD-320); the held-out experiment and its
 gate (BD-321); inheritance (N10b-14, BD-322); rank agreement (SPEC-C-26, BD-328); on-device network kernels
 (BD-196).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-192 (the vectorized
+environment of `frob-learn`): that bead is listed in `related` and is not a prerequisite. The law suite is generic
+over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-learn` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

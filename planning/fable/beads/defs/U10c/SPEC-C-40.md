@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "spine", "spec", "frontier", "augur", "frob-mission", "frob-cert", "test"]
 parent: "WP-66"
-deps: ["BD-128", "BD-026", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-132", "BD-161", "BD-262", "BD-359", "SPEC-C-32", "N10-CX", "N10c-10", "CARD-T-32"]
+related: ["BD-132", "BD-161", "BD-262", "BD-359", "SPEC-C-32", "N10-CX", "N10c-10", "CARD-T-32", "BD-128", "BD-026"]
 gates: ["GATE-AUGUR-16"]
 plan_refs: ["§10 C-40", "§25.16", "§12.3 T-32", "§12.4", "Appendix D.6", "Appendix M.9", "Appendix N.7"]
 ---
@@ -54,6 +54,28 @@ controls seeded from CX-094 to CX-097.
 Out: product-system dominance as a mechanism, its pilot and KILL-AUGUR-DOMINANCE (BD-359); the auditor's
 `product-unreachable` checker (BD-132 and BD-359); the strict CPU profile used for per-case replay (BD-161); the
 paired statistical comparison that is the fallback (BD-262); recording GATE-AUGUR-16.
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-40: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (the paired-dominance verb of the mission surface),
+`failing_test` (a test of `frob-mission::laws_c40` with its registered control), `payoff.gate` (GATE-AUGUR-16),
+`statements`, `known_answers` (KA-189, KA-190), `cards` (T-32), `gates`, `pilot` (the record `PILOT-C-40` of the
+pilot register, required because the tier is Frontier) and `generic_comparator` (the off-the-shelf method named in
+the pilot paragraph of this bead). Doctrine D-2 (no ornamental mathematics) is checked on these fields: a
+construction with no verb or no failing test is moved to the parked register by a decision record. The contract
+`docs/math/C-40.md` follows the ten-section template `docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-128 (the `frob-mission`
+core) or BD-026 (the auditor crate `frob-cert`): those beads are listed in `related` and are not prerequisites.
+The law suite is generic over its subject trait and closes on the exact reference model and the mutants in its own
+test support. If `frob-mission` or `frob-cert` do not exist when this bead starts, the suite and its support files
+are written under `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and
+the commands below read `-p frob-conformance`; the bead that implements the construction moves them into the
+owning crate, binds its production types to the subject trait and runs the unchanged suite as part of its own
+acceptance. A criterion or script step below that names production code or a verb of an implementing bead is owed
+at that bead's acceptance and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -124,6 +146,9 @@ by replay, with the product lowering kept only as the rule for space-indexed sha
 - [ ] KA-189 and KA-190 are registered with derivation files; controls from CX-094 to CX-097 are attached to
       GATE-AUGUR-16.
 - [ ] `scripts/e2e/spec_c40.sh` exits 0.
+- [ ] Row C-40 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

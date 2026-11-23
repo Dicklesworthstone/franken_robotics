@@ -1273,6 +1273,771 @@
     "N38b-04"
    ],
    "note": "STD-TEST is already a dep"
+  },
+  {
+   "bead": "N25d-35",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-026"
+  },
+  {
+   "bead": "N25d-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "STD-TEST is already a dep"
+  },
+  {
+   "bead": "N25d-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-06"
+   ],
+   "note": "the card and claim registry with its admission rule"
+  },
+  {
+   "bead": "N25d-36",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-288"
+   ],
+   "note": "M3, later; rule 3's candidate card is stated at M1 and its checking rule is exercised when BD-288 lands"
+  },
+  {
+   "bead": "N25d-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25-KA",
+    "N38a-12"
+   ],
+   "note": "the chapter's rows and the registry schema with its rules"
+  },
+  {
+   "bead": "N25d-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25-KA"
+   ],
+   "note": "the schema N38a-12 is reached through N25d-37"
+  },
+  {
+   "bead": "N25d-38",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-290, BD-291, BD-359, BD-363, BD-357 and BD-355"
+  },
+  {
+   "bead": "N25d-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25c-43",
+    "N25c-44"
+   ],
+   "note": "the connection and the inverse query whose verbs the rows run through; BD-425 is an epic and was removed from deps"
+  },
+  {
+   "bead": "N25d-39",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25c-30"
+   ],
+   "note": "the stage-composition bead that carries the handoff information fixture; BD-435 is an epic and was removed from deps"
+  },
+  {
+   "bead": "N25d-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the register and its record schema; N00-07 (U00) drafts the same ledger and depends on this bead"
+  },
+  {
+   "bead": "N25d-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19"
+   ],
+   "note": "the gate record and the recorder that refuses a pass without a caught control"
+  },
+  {
+   "bead": "N25d-41",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-10",
+    "N40-29"
+   ],
+   "note": "the program register folds in the gates and kill gates of the late subsections; same file, not blocking"
+  },
+  {
+   "bead": "N25d-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-42",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-121",
+    "BD-122"
+   ],
+   "note": "the decision's test reads .ftask requirement terms through the one reader"
+  },
+  {
+   "bead": "N25d-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-06"
+   ],
+   "note": "the decision reads the counters that the reconstruction step produces"
+  },
+  {
+   "bead": "N25d-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N41-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25b-12"
+   ],
+   "note": "the census counts the worklist's typed explanations"
+  },
+  {
+   "bead": "N25d-44",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "the rule for adding a kind; N12-19 (tube-inclusion, M8, parked) is what a widening decision would fund"
+  },
+  {
+   "bead": "N25d-44",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N22b-33",
+    "N22b-36"
+   ],
+   "note": "the M8 pilot and KILL-TUBE decision of reachable-set tables; BD-440 is an epic"
+  },
+  {
+   "bead": "N25d-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-45",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-315"
+   ],
+   "note": "the rival arm is where an engine runs under the default; it is not a measurement this decision waits for"
+  },
+  {
+   "bead": "N25d-45",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N41-03"
+   ],
+   "note": "the register row; the owner's answer is this bead's own outcome"
+  },
+  {
+   "bead": "N25d-46",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": "the exit-code table; BD-022 is already a dep"
+  },
+  {
+   "bead": "N25d-46",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-135"
+   ],
+   "note": "BD-135 writes the entry under the default; neither waits for the other"
+  },
+  {
+   "bead": "N25d-46",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N41-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-47",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-28"
+   ],
+   "note": "the decision reads the pilot's fixture files"
+  },
+  {
+   "bead": "N25d-47",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-098"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-47",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N41-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-48",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03",
+    "N41-OPEN5"
+   ],
+   "note": "the register and the part of registries/open.toml that holds the Augur rows"
+  },
+  {
+   "bead": "N25d-48",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-27",
+    "N25b-08"
+   ],
+   "note": "M3 experiments, later than this M1 bead; U25b and U25e each drafted one"
+  },
+  {
+   "bead": "N25d-48",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N25b-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-48",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N34-25"
+   ],
+   "note": "the dependency check behind GATE-WS-03; BD-026 is reached through BD-132"
+  },
+  {
+   "bead": "N25d-49",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-09",
+    "N41-03"
+   ],
+   "note": "the owner's order under the cap of four, and the register"
+  },
+  {
+   "bead": "N25d-49",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-20",
+    "N21c-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-49",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "NAB-21"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25d-49",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-412",
+    "BD-434"
+   ],
+   "note": "exit reviews read the owner-input items; a work bead does not depend on an exit review"
+  },
+  {
+   "bead": "N25e-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-02"
+   ],
+   "note": "N25c-02 is the static core; BD-436 is an epic"
+  },
+  {
+   "bead": "N25e-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-mission"
+   ],
+   "note": "the row that records `static core at M4`; BD-376 defers mission.transport to a later verb set"
+  },
+  {
+   "bead": "N25e-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02",
+    "N12-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-01"
+   ],
+   "note": "N25c-01 builds the tray fixture with the planted ramp-crest loss; BD-436 is an epic"
+  },
+  {
+   "bead": "N25e-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-180",
+    "BD-200"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-02",
+    "VERBS-mission"
+   ],
+   "note": "the verb's static core and its registry row; BD-436 is an epic and BD-376 does not register this verb"
+  },
+  {
+   "bead": "N25e-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-08",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-266"
+  },
+  {
+   "bead": "N25e-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14",
+    "N12-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-357"
+   ],
+   "note": "the M1 worklist of BD-128 is already a dep; BD-357 extends it at M4, later than this M3 bead"
+  },
+  {
+   "bead": "N25e-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28c-37",
+    "N28c-35"
+   ],
+   "note": "this bead defines the `controller-limited` label; the escalation rule is its consumer (N28c-37 names the label as a need of its own)"
+  },
+  {
+   "bead": "N25e-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-eval"
+   ],
+   "note": "the row of eval.compare, which gains --bracket; BD-376 wires the M4 schemas and follows the mechanisms"
+  },
+  {
+   "bead": "N25e-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-314",
+    "BD-317"
+   ],
+   "note": "the sealing protocol and the adjudication of accepted decisions"
+  },
+  {
+   "bead": "N25e-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-143",
+    "BD-352"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-116"
+   ],
+   "note": "either source serves; the baseline controller is the M1 one. BD-332 is recorded as related"
+  },
+  {
+   "bead": "N25e-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-19",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the extraction pass is in this bead's own scope; frob-kir v0 (BD-018) is already a dep"
+  },
+  {
+   "bead": "N25e-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-332",
+    "BD-336"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-167"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-352"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-254",
+    "BD-253"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-21",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-246"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-16"
+   ],
+   "note": "BD-132 is already a dep"
+  },
+  {
+   "bead": "N25e-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-mission"
+   ],
+   "note": "the rows of the mission verbs, which gain --split-cap and the result fields; BD-376 is the M4 verb-set capstone and follows"
+  },
+  {
+   "bead": "N25e-25",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-289"
+  },
+  {
+   "bead": "N25e-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-246"
+   ],
+   "note": "used where the templates exist by M3; the first four archetypes (BD-109) are already a dep"
+  },
+  {
+   "bead": "N25e-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-289"
+   ],
+   "note": "the pilot family's lowered constraint expressions"
+  },
+  {
+   "bead": "N25e-28",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-126 is already a dep; the field itself is added by this bead"
+  },
+  {
+   "bead": "N25e-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-132"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N25e-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "CARD-T-22"
+   ],
+   "note": "BD-132 is already a dep"
+  },
+  {
+   "bead": "N25e-31",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-128 and BD-135"
+  },
+  {
+   "bead": "N25e-32",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-132"
+  },
+  {
+   "bead": "N25e-34",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-238 is already a dep; the field itself is added by this bead"
+  },
+  {
+   "bead": "N25e-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-290"
+   ],
+   "note": "the alias fixtures and the repeated-read table that the rule amends"
+  },
+  {
+   "bead": "N25e-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-126"
+   ],
+   "note": "the schema this bead extends with channel and bit time"
+  },
+  {
+   "bead": "N25e-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25e-45"
+   ],
+   "note": "the refusal row; the code-certificate rule is specified in this bead on the finite-game and alias-pair rules of BD-132, already a dep"
+  },
+  {
+   "bead": "N25e-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-126"
+   ],
+   "note": "the schema this bead extends with scope"
+  },
+  {
+   "bead": "N25e-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-03"
+   ],
+   "note": "the generic rules of the bundle schema, to which this bead adds the one-value-per-scope rule"
+  },
+  {
+   "bead": "N25e-39",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-291"
+  },
+  {
+   "bead": "N25e-41",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25c-16"
+   ],
+   "note": "the decision is taken at M3; this M4 record is its added trigger and re-opens the decision if it fires. BD-291 is already a dep"
+  },
+  {
+   "bead": "N25e-42",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-103"
+   ],
+   "note": "shares the contraction constant; BD-103 is already reached through BD-360"
+  },
+  {
+   "bead": "N25e-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-126"
+   ],
+   "note": "the schema whose objective claims gain the answer-side downgrade"
+  },
+  {
+   "bead": "N25e-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-03"
+   ],
+   "note": "the append-only and tombstone rule for identifiers; the loader BD-005 is already a dep and the allocation is this bead's own decision"
   }
  ],
  "edges": [
@@ -1311,10 +2076,39 @@
    "dep": "N00-29",
    "as": "related",
    "why": "need 1 of N25d-27: the demo harness and index in which this slice demonstration is listed"
+  },
+  {
+   "bead": "N25e-15",
+   "dep": "BD-376",
+   "as": "related",
+   "why": "need 2 of N25e-15: BD-376 is the M4 verb-set capstone; a component does not depend on it"
+  },
+  {
+   "bead": "N25e-18",
+   "dep": "BD-332",
+   "as": "related",
+   "why": "need 1 of N25e-18: the gait atlas is the alternative source of the nominal trot"
+  },
+  {
+   "bead": "N25e-24",
+   "dep": "BD-376",
+   "as": "related",
+   "why": "need 2 of N25e-24: BD-376 is the M4 verb-set capstone; a component does not depend on it"
   }
  ],
  "superseded": [],
- "cross_group_duplicates": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N25d-48",
+   "other": "N41-OPEN5",
+   "note": "overlap: both enter the eleven Augur rows of registries/open.toml; N25d-48 also carries the defaults-in-force battery"
+  },
+  {
+   "mine": "N25e-27",
+   "other": "N25b-08",
+   "note": "both are the experiment that settles OPEN-AUGUR-3 (the constraint-to-parameter graph of the robot classes); U25d's coverage asks for one bead"
+  }
+ ],
  "new_beads": [
   "N25c-48"
  ],
@@ -1353,6 +2147,15 @@
    "what": "retrofit kit fields for installation time, access constraints, calibration, tolerances and maintenance, which the priced world-edit grammar of §25.17 reads",
    "needed_by": [
     "N25c-31"
+   ]
+  },
+  {
+   "section": "§32.6",
+   "what": "the M4 verb-set bead BD-376 does not register the static-core form of mission.transport (it defers the verb to a later verb set), while §25.11 delivers that form at M4 (N25c-02) and VERBS-mission records `static core at M4`",
+   "needed_by": [
+    "N25c-02",
+    "N25e-02",
+    "N25e-05"
    ]
   }
  ],

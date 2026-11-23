@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "frob-lemma", "frob-analyze", "frontier", "test"]
 parent: "EPIC-M3"
-deps: ["BD-027", "BD-243", "N12-06", "SPEC-C-08"]
+deps: ["BD-027", "N12-06", "SPEC-C-08"]
 needs: ["§0.7: the paper-scale budget pilot arm for the truncated-series identity (N12-22, arm E, which is scheduled at M4; at M3 this card runs that arm itself on its one fixture before any other work)"]
-related: ["N12-22", "BD-425", "CARD-T-16"]
+related: ["N12-22", "BD-425", "CARD-T-16", "BD-243"]
 gates: []
 plan_refs: ["§12.3 (T-20)", "§11.6", "§10 C-08", "Appendix D.1 (curvature of the connection, reconstruction)"]
 ---
@@ -40,6 +40,16 @@ fixture and on a general polynomial connection of bounded degree), specimen and 
 connections for real robots and the curvature analysis itself (the static-analysis bead); large loops (which keep
 the ordered product and do not use the area formula); minimum-perturbation coordinates; dynamic walking, for
 which curvature is a diagnostic and not a predictor.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the connection-curvature analysis A-09 (BD-243) is `related`, not a dependency (a card that waited for its
+implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
+does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(the certificate on the analysis's formula as implemented) is run inside the implementing bead, with this card's
+law tests, as part of that bead's acceptance; the receipt produced there is what moves the registry row for that
+output.
 
 ## Technical approach
 

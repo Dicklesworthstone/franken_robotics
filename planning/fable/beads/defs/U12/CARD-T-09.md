@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "lemma", "frob-kir", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-018", "N12-06", "SPEC-C-14", "SPEC-C-21"]
+deps: ["N12-06", "SPEC-C-14"]
 needs: []
-related: ["BD-021", "N12-20", "CARD-T-10"]
+related: ["BD-021", "N12-20", "CARD-T-10", "BD-018", "SPEC-C-21"]
 gates: []
 plan_refs: ["§12.3 (T-09)", "§10 C-14", "§10 C-21", "§21.7", "§21.14 (PO-SPARK-01)", "Appendix D.5 (similarity rescaling)"]
 ---
@@ -38,6 +38,16 @@ checker. Rejected alternative: unit annotations in comments, or a run-time unit 
 In: the card's statement and registry row; the binding of the type checker's verdict to the card (a `checked`
 status per kernel); the negative fixtures. Out: the type checker itself (the kernel-IR bead); the power-of-two
 metamorphic test (the canonical-form and determinism beads); units at public APIs.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the kernel IR with its dimension checker (BD-018) is `related`, not a dependency (a card that waited for its
+implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
+does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(`dimension_check: pass` on every kernel of the library, and the registry count of kernels checked) is run inside
+the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there
+is what moves the registry row for that output.
 
 ## Technical approach
 

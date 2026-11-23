@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "spine", "spec", "frontier", "frob-gait", "frob-dyn", "test"]
 parent: "WP-64"
-deps: ["BD-025", "BD-081", "BD-332", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template `docs/math/TEMPLATE.md` and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-16", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-092, KA-093 and CX-041; this bead binds the rows to tests and creates a row only if it is absent"]
-related: ["N10b-01", "N10b-02", "N10b-03", "BD-082", "BD-333", "BD-334", "BD-335", "BD-426", "CARD-T-17", "CARD-T-18", "SPEC-C-10", "SPEC-C-09"]
+related: ["N10b-01", "N10b-02", "N10b-03", "BD-082", "BD-333", "BD-334", "BD-335", "BD-426", "CARD-T-17", "CARD-T-18", "SPEC-C-10", "SPEC-C-09", "BD-081", "BD-332"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-16", "§9 D-8", "§9 D-15", "§12.3 T-17", "§22.9", "Appendix D.2", "Appendix E GB-27", "Appendix M.9 KA-092 KA-093", "Appendix N.7 CX-041"]
 ---
@@ -58,6 +58,17 @@ construction register.
 Out: labels and refusals (N10b-01); the symmetry–event identity and strata (N10b-02); the pilot (N10b-03); the
 shooting solver, monodromy assembly, `gait.orbit`, `gait.gradient`, `gait.continue` and their gates (BD-333,
 BD-334, BD-335); event location itself (BD-082); the gait atlas (C-10, BD-332).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-081 (the transactional
+referee step of `frob-dyn`) or BD-332 (the gait atlas, the first seed in `frob-gait`): those beads are listed in
+`related` and are not prerequisites. The law suite is generic over its subject trait and closes on the exact
+reference model and the mutants in its own test support. If `frob-dyn` or `frob-gait` do not exist when this bead
+starts, the suite and its support files are written under `crates/frob-conformance/tests/` with the same file
+names (that crate exists from BD-025) and the commands below read `-p frob-conformance`; the bead that implements
+the construction moves them into the owning crate, binds its production types to the subject trait and runs the
+unchanged suite as part of its own acceptance. A criterion or script step below that names production code or a
+verb of an implementing bead is owed at that bead's acceptance and is logged `pending` here until then.
 
 ## Technical approach
 

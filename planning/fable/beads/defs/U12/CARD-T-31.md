@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "frob-cert", "frob-scene", "solid", "test"]
 parent: "WP-53"
-deps: ["N12-15", "BD-233", "N12-06", "SPEC-C-33"]
+deps: ["N12-15", "N12-06", "SPEC-C-33"]
 needs: []
-related: ["BD-234", "BD-104", "BD-369"]
+related: ["BD-234", "BD-104", "BD-369", "BD-233"]
 gates: []
 plan_refs: ["§12.3 (T-31)", "§10 C-33", "§19.11", "Appendix D.3 (clearance sandwich, swept right-angle corner)"]
 ---
@@ -39,6 +39,16 @@ In: statement document, registry row, the per-verdict `complex-connectivity` cer
 fixtures and mutants, the class rule relative to the complex's own evidence. Out: building the complexes and the
 enclosure tests behind each cell (the clearance-complex bead); the auditor's checker (N12-15); feasibility tags
 for generated scenes; the retrofit search that consumes a named bottleneck.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the clearance complexes `.fclear` (BD-233) is `related`, not a dependency (a card that waited for its implementer
+would close a loop, because the implementer's own acceptance runs the card's law tests). What the card does depend
+on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and Lemma's own
+proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and every
+acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(certificates on the complexes of each reference interior) is run inside the implementing bead, with this card's
+law tests, as part of that bead's acceptance; the receipt produced there is what moves the registry row for that
+output.
 
 ## Technical approach
 

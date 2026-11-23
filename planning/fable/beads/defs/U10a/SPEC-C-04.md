@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "kinesis", "frob-dyn", "solid", "spine", "spec", "test"]
 parent: "WP-10"
-deps: ["BD-007", "BD-047", "BD-025", "N10a-01", "SPEC-C-02", "STD-TEST", "STD-E2E"]
+deps: ["BD-007", "BD-025", "N10a-01", "SPEC-C-02", "STD-TEST", "STD-E2E"]
 needs: ["§16: the bead that creates crate frob-dyn (the law suite lands in crates/frob-dyn/tests/ and runs first against the referee through frob-fsim)"]
-related: ["BD-088", "BD-089", "BD-150", "BD-385", "CARD-T-16", "CARD-T-33", "SPEC-C-05", "N10-KA1"]
+related: ["BD-088", "BD-089", "BD-150", "BD-385", "CARD-T-16", "CARD-T-33", "SPEC-C-05", "N10-KA1", "BD-047"]
 gates: ["GATE-KIN-01", "GATE-KIN-02", "GATE-KIN-03", "GATE-MARROW-04"]
 plan_refs: ["§10 C-04", "§11.2", "§13.3", "§13.10", "§16", "§12.3 T-16 T-33", "Appendix D.1", "Appendix I.1", "Appendix M KA-047 to KA-051", "Appendix N CX-023 CX-024"]
 ---
@@ -48,6 +48,19 @@ tolerances and controls for KA-047 to KA-051.
 Out: the referee step and batched kernels (BD-080, BD-150, BD-159); parity gates against oracles (BD-089,
 GATE-KIN-02, -03); the tree-operator route for larger mechanisms (BD-385, Frontier); time stepping
 (SPEC-C-05); contact (SPEC-C-06).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-047 (the production
+frame-typed twists and wrenches): that bead is listed in `related` and is not a prerequisite. The law suite is
+generic over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-dyn` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then. The referee oracle BD-007 (the sibling tree dynamics behind the airlock
+crate `frob-fsim`, M0) stays a dependency: the suite runs against it as an independent oracle, and it is not an
+implementation of this construction in `frob-dyn`.
 
 ## Technical approach
 

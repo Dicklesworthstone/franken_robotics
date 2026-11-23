@@ -6,9 +6,9 @@ priority: 4
 milestone: "M8"
 labels: ["m8", "lemma", "spine", "spec", "moonshot", "frob-learn", "test"]
 parent: "WP-79"
-deps: ["BD-025", "BD-192", "SPEC-C-23", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "SPEC-C-23", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-24", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load row KA-131 and CX-061; this bead binds them to tests and sets the round-off bound the appendix leaves `to set`", "§10 C-04: the order of the tree recursions (outward kinematics, inward forces) from the specification bead SPEC-C-04 (unit U10a), which fixes the order of message passing"]
-related: ["N10b-16", "BD-439", "BD-320", "BD-325", "BD-326", "SPEC-C-04", "SPEC-C-09", "SPEC-C-02"]
+related: ["N10b-16", "BD-439", "BD-320", "BD-325", "BD-326", "SPEC-C-04", "SPEC-C-09", "SPEC-C-02", "BD-192"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-24", "§9 D-6", "§9 D-10", "§11.4", "§23.14", "§23.23", "Appendix C", "Appendix M.9 KA-131", "Appendix N.7 CX-061"]
 ---
@@ -48,6 +48,17 @@ registry row KA-131; controls from CX-061; row C-24 of the construction register
 Out: the three-arm experiment (N10b-16); the epic that scales it if the pilot passes (BD-439); the family
 policy and its tokens (SPEC-C-23, BD-320); equivariant linear maps by irreducible blocks for finite groups
 (BD-325), which is a different mechanism for a different group.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-192 (the vectorized
+environment of `frob-learn`): that bead is listed in `related` and is not a prerequisite. The law suite is generic
+over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-learn` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

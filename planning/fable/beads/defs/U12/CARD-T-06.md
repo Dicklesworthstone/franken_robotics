@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-22", "N12-20", "BD-087", "N12-06", "CARD-T-04", "SPEC-C-36"]
+deps: ["N12-22", "N12-20", "N12-06", "CARD-T-04", "SPEC-C-36"]
 needs: []
-related: ["BD-379", "BD-384", "CARD-T-02", "CARD-T-13", "N12-21"]
+related: ["BD-379", "BD-384", "CARD-T-02", "CARD-T-13", "N12-21", "BD-087"]
 gates: []
 plan_refs: ["§12.3 (T-06)", "§10 C-05", "§10 C-36", "§7 NS-11", "Appendix D.2 (trapezoidal variational step)"]
 ---
@@ -39,6 +39,16 @@ In: statement document, registry row, the instance certificate on the free-body 
 documented downgrade), specimen and mutants. Out: the step's implementation (the variational-step oracle and the
 articulated variational integrator beads); energy behaviour (measured, not certified); the general theorem on
 matrix Lie groups (CARD-T-13); the articulated case (no claim).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the free-body variational step of `frob-dyn` (BD-087) is `related`, not a dependency (a card that waited for its
+implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
+does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output (a
+certificate bound to the content hash of the free-body step kernel as built) is run inside the implementing bead,
+with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
+registry row for that output.
 
 ## Technical approach
 

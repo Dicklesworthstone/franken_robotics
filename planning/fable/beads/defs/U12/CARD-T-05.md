@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-027", "BD-047", "N12-06", "CARD-T-04", "SPEC-C-02"]
+deps: ["BD-027", "N12-06", "CARD-T-04", "SPEC-C-02"]
 needs: []
-related: ["BD-076", "BD-092", "CARD-T-15", "CARD-T-29"]
+related: ["BD-076", "BD-092", "CARD-T-15", "CARD-T-29", "BD-047"]
 gates: []
 plan_refs: ["§12.3 (T-05)", "§11.1 (wrench)", "§11.3", "§10 C-02", "Appendix D.1 (power pairing, three typed frame maps)"]
 ---
@@ -35,6 +35,16 @@ function accepts one where another is expected. Rejected alternative: one "trans
 In: statement document, registry row, instance certificate on the frame-map kernels, specimen and mutants.
 Out: the typed API (the frame-typed transform bead); the certificate machinery; the port energy balance check
 (the actuator and ledger beads); the reflection case (the parity map of CARD-T-16).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the frame-typed transforms and typed maps of `frob-lie` (BD-047) is `related`, not a dependency (a card that
+waited for its implementer would close a loop, because the implementer's own acceptance runs the card's law
+tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the route
+is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens
+and mutants, and every acceptance line that its own fixtures decide. An acceptance line that can only be observed
+on live output (a certificate bound to the content hashes of the frame-map kernels as built) is run inside the
+implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there is
+what moves the registry row for that output.
 
 ## Technical approach
 

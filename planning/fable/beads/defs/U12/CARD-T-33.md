@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-22", "N12-20", "BD-150", "N12-06", "SPEC-C-04"]
+deps: ["N12-22", "N12-20", "N12-06", "SPEC-C-04"]
 needs: []
-related: ["BD-379", "N12-21", "CARD-T-04", "BD-088"]
+related: ["BD-379", "N12-21", "CARD-T-04", "BD-088", "BD-150"]
 gates: []
 plan_refs: ["§12.3 (T-33)", "§10 C-04", "§10 C-11 (product of exponentials)", "§41 RISK-07"]
 ---
@@ -38,6 +38,16 @@ In: statement document, registry row, the per-limb certificates on the derived m
 the documented downgrade), specimen and mutants. Out: deriving the recursion kernels (the kernel-derivation
 beads); floating-base coupling across limbs through the base (certified only if within budget; otherwise
 `Tested`); contact terms; the numerical skewness test of the dynamics battery.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the derived mass-matrix and bias kernels (BD-150) is `related`, not a dependency (a card that waited for its
+implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
+does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(the per-limb certificates on each reference robot's kernels) is run inside the implementing bead, with this
+card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the registry row for
+that output.
 
 ## Technical approach
 

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "lemma", "spine", "spec", "solid", "autopsy", "frob-chronicle", "frob-autopsy", "test"]
 parent: "WP-51"
-deps: ["BD-090", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-203", "BD-205", "BD-279", "BD-283", "N10c-01", "SPEC-C-28", "N10-CX", "N10c-10"]
+related: ["BD-203", "BD-205", "BD-279", "BD-283", "N10c-01", "SPEC-C-28", "N10-CX", "N10c-10", "BD-090"]
 gates: ["GATE-AUTOPSY-01", "GATE-AUTOPSY-02"]
 plan_refs: ["§10 C-29", "§27.3", "§27.4", "§27.5", "§29.8", "§38.7 MR-08", "Appendix I.12", "Appendix M.9", "Appendix N.7"]
 ---
@@ -51,6 +51,29 @@ entries for KA-145 and the control seeded from CX-071; the metamorphic relation 
 Out: the fork mechanism and its five-way classification (BD-205); in-kernel digests and snapshots (BD-203);
 interventions and the placebo fork as a verb (`autopsy.intervene`, BD-279); design-parameter re-runs (`autopsy.rerun`,
 BD-283); every attribution statistic (N10c-01); recording GATE-AUTOPSY-01 and -02 (BD-205).
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-29: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`run.fork`; also `autopsy.intervene`,
+`autopsy.attribute`, `autopsy.rerun`), `failing_test` (a test of `frob-chronicle::laws_c29` with its registered
+control), `payoff.gate` (GATE-AUTOPSY-01), `statements`, `known_answers` (KA-145 to KA-148), `cards` (none),
+`gates`, `pilot` left empty (the construction is Solid) and `generic_comparator` only if this bead claims an
+advantage over a named generic method. Doctrine D-2 (no ornamental mathematics) is checked on these fields: a
+construction with no verb or no failing test is moved to the parked register by a decision record. The part bead
+N10c-01 adds their statements and tests to the same row. The contract `docs/math/C-29.md` follows the ten-section
+template `docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-090 (the ledger schema of
+`frob-chronicle`): that bead is listed in `related` and is not a prerequisite. The law suite is generic over its
+subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-chronicle`
+does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -131,6 +154,9 @@ thermal counterexample of GATE-AUTOPSY-06 (M3) measures S8 on a real model. This
 - [ ] KA-145 is registered with a derivation file, tolerance `exact (digest)` and a control.
 - [ ] MR-08 and the control seeded from CX-071 are registered and attached to GATE-AUTOPSY-01 and GATE-AUTOPSY-02.
 - [ ] `scripts/e2e/spec_c29.sh` exits 0.
+- [ ] Row C-29 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

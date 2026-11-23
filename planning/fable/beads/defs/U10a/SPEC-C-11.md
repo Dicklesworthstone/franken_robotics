@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "atelier", "marrow", "frob-analyze", "frob-lie", "solid", "frontier", "moonshot", "spine", "spec", "test"]
 parent: "WP-11"
-deps: ["BD-010", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["§28.4: the bead that creates crate frob-analyze (the law suite lands in crates/frob-analyze/tests/)", "§33 INT-FSYM-02: admission of FrankenSymPy's polynomial solvers used at build time for elimination (decided with BD-105)", "§10 C-34: linkage synthesis, with which the Study-quadric part [M] is piloted (SPEC-C-34, another unit)"]
-related: ["BD-105", "BD-116", "BD-361", "BD-437", "N10a-18", "SPEC-C-01", "N10-KA1"]
+related: ["BD-105", "BD-116", "BD-361", "BD-437", "N10a-18", "SPEC-C-01", "N10-KA1", "BD-010"]
 gates: ["GATE-ATEL-02"]
 plan_refs: ["§10 C-11", "§12.1", "§28.4 A-05 A-06", "Appendix C.1.3", "Appendix C.1.4", "Appendix D.1", "Appendix M KA-074"]
 ---
@@ -54,6 +54,17 @@ and its singular locus; the register row; the tolerance and control of KA-074.
 
 Out: the workspace and singularity analyses and the derived leg kernel (BD-105); the certified-solver pilot
 (N10a-18); linkage synthesis lanes (BD-361, BD-437; construction C-34); admission of the symbolic tools.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-010 (creates `frob-lie`):
+that bead is listed in `related` and is not a prerequisite. The law suite is generic over its subject trait and
+closes on the exact reference model and the mutants in its own test support. If `frob-lie` or `frob-analyze` do
+not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

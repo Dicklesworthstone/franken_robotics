@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "lemma", "spark", "frob-kir", "frontier", "spine", "spec", "test"]
 parent: "WP-05"
-deps: ["BD-018", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["§33 INT-FSYM-01: admission of FrankenSymPy as the build-time derivation engine and certificate checker (BD-019)", "§10 C-21: the similarity rescaling test that exercises dimensional homogeneity in floating point (SPEC-C-21, another unit)"]
-related: ["BD-019", "BD-020", "BD-021", "BD-053", "BD-149", "BD-150", "BD-221", "BD-371", "BD-379", "N10a-21", "N10a-03", "N10a-04", "CARD-T-09", "CARD-T-27", "N10-KA1"]
+related: ["BD-019", "BD-020", "BD-021", "BD-053", "BD-149", "BD-150", "BD-221", "BD-371", "BD-379", "N10a-21", "N10a-03", "N10a-04", "CARD-T-09", "CARD-T-27", "N10-KA1", "BD-018"]
 gates: ["GATE-SPARK-00", "GATE-SPARK-02", "GATE-LEMMA-00", "GATE-LEMMA-01"]
 plan_refs: ["§10 C-14", "§9 D-7 D-8", "§21.6", "§21.7", "§12.3 T-09 T-27", "§12.4", "§35", "§38.7", "Appendix M KA-085 to KA-087", "Appendix N CX-039"]
 ---
@@ -53,6 +53,17 @@ Out: the straight-line representation, emitters and dimension checker as code (B
 subprocess (BD-019); predicate classes and the select lint (BD-053); certificate coverage for derived kernels
 (BD-379); survivor specialization (BD-371); the measurement against the kill gate (BD-221); the pilot
 (N10a-21).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-018 (`frob-kir` v0, which
+implements this construction and depends on this bead): that bead is listed in `related` and is not a
+prerequisite. The law suite is generic over its subject trait and closes on the exact reference model and the
+mutants in its own test support. If `frob-kir` does not exist when this bead starts, the suite and its support
+files are written under `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025)
+and the commands below read `-p frob-conformance`; the bead that implements the construction moves them into the
+owning crate, binds its production types to the subject trait and runs the unchanged suite as part of its own
+acceptance. A criterion or script step below that names production code or a verb of an implementing bead is owed
+at that bead's acceptance and is logged `pending` here until then.
 
 ## Technical approach
 

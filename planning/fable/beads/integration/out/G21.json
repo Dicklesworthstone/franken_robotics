@@ -270,9 +270,9 @@
    "as": "dep",
    "keys": [
     "BD-008",
-    "BD-160"
+    "N33a-12"
    ],
-   "note": "INT-ASUP-01 admits the capability context; fs-exec, whose executor mints the drain report, is first consumed by the batch-cpu tile program BD-160"
+   "note": "INT-ASUP-01 admits asupersync and its capability context; fs-exec, whose executor mints the drain report, is admitted on the bedrock-direct list"
   },
   {
    "bead": "BD-175",
@@ -291,6 +291,15 @@
     "N21b-23"
    ],
    "note": "the Spark-side fault states and caller policies; the status word itself comes with the batched step BD-159, already upstream through BD-172"
+  },
+  {
+   "bead": "BD-176",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "seed order: BD-212 is the later seed and its strata bead depends on BD-177 and so on BD-176"
   },
   {
    "bead": "BD-178",
@@ -337,6 +346,1613 @@
     "N21b-28"
    ],
    "note": "capstone component"
+  },
+  {
+   "bead": "BD-179",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "seed order"
+  },
+  {
+   "bead": "BD-217",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the envelope decision blocks GATE-SPARK-03 and -04 as specified; the default (one device, one hour) holds until it is recorded"
+  },
+  {
+   "bead": "BD-217",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-08"
+   ],
+   "note": "the decision depends on this bead's GATE-SPARK-04 record, never the reverse (N21c-33 is superseded by N21b-08)"
+  },
+  {
+   "bead": "BD-217",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N36-27",
+    "N36-28"
+   ],
+   "note": "the KILL-PARITY decision and its fallback depend on this bead's measurement"
+  },
+  {
+   "bead": "BD-217",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N36-24",
+    "N36-25"
+   ],
+   "note": "both are frozen before any paired run"
+  },
+  {
+   "bead": "BD-217",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N21c-34"
+   ],
+   "note": "the measurement does not wait for ratification; the exploratory label is the default implemented by N21a-02"
+  },
+  {
+   "bead": "BD-221",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-31",
+    "N12-21"
+   ],
+   "note": "later milestone (M5): the certificate fallback is read, not awaited"
+  },
+  {
+   "bead": "BD-221",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "the exit review depends on this decision"
+  },
+  {
+   "bead": "BD-221",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-216"
+   ],
+   "note": "the paired lower bound of the performance harness"
+  },
+  {
+   "bead": "BD-370",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-35"
+   ],
+   "note": "without the peer link fleet.plan is advisory and GATE-SPARK-13 cannot be measured"
+  },
+  {
+   "bead": "BD-370",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the gate needs an approved envelope of class E1 or E2"
+  },
+  {
+   "bead": "BD-370",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N19c-24",
+    "BET-35"
+   ],
+   "note": "not measured here; BET-35 depends on this bead"
+  },
+  {
+   "bead": "BD-370",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review depends on this bead"
+  },
+  {
+   "bead": "BD-371",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-17"
+   ],
+   "note": "the Frontier mechanism depends on its pilot"
+  },
+  {
+   "bead": "BD-371",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-16"
+   ],
+   "note": "the profile clause of KILL-SPECIALIZE"
+  },
+  {
+   "bead": "BD-371",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-18"
+   ],
+   "note": "this bead exists only if the first reading says proceed"
+  },
+  {
+   "bead": "BD-371",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N21c-19",
+    "N21c-20"
+   ],
+   "note": "capstone components: the fence and the cohort switch-over"
+  },
+  {
+   "bead": "BD-371",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N17a-16"
+   ],
+   "note": "Phylum's promotion rule already depends on BD-371"
+  },
+  {
+   "bead": "BD-371",
+   "n": 6,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-352"
+  },
+  {
+   "bead": "BD-441",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-442"
+   ],
+   "note": "an epic carries no dependencies; the exit review should depend on the decision bead N21c-22 (edge recorded)"
+  },
+  {
+   "bead": "N21-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-030",
+    "N21b-30",
+    "N21a-05",
+    "N21a-10",
+    "BD-013",
+    "N21b-36",
+    "BD-171"
+   ],
+   "note": "a registry never depends on a mechanism; these beads own the tests the rows name"
+  },
+  {
+   "bead": "N21-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-36"
+   ],
+   "note": "a registry never depends on a mechanism; N21b-36 carries KA-527 and KA-528 on devices"
+  },
+  {
+   "bead": "N21-KA",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-08",
+    "N21c-09"
+   ],
+   "note": "carriers of KA-539 and KA-550; later milestone and a registry never depends on a mechanism"
+  },
+  {
+   "bead": "N21-KA",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-171",
+    "N21b-18"
+   ],
+   "note": "carriers of KA-547 and KA-548"
+  },
+  {
+   "bead": "N21-REF",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-23",
+    "N21b-29",
+    "BD-176",
+    "N21b-07",
+    "N21b-36",
+    "N21b-16",
+    "N21b-12",
+    "N21b-11",
+    "N21b-24",
+    "N21a-05"
+   ],
+   "note": "a registry never depends on a mechanism; these are the raising sites"
+  },
+  {
+   "bead": "N21-REF",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the code is assigned by this registry bead itself (proposed FROB-REF-619, raised by N21c-39); no bead owns Appendix O as a whole, the refusal type is in BD-005, an existing dependency"
+  },
+  {
+   "bead": "N21a-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-34"
+   ],
+   "note": "this bead implements the fail-closed default; the mechanism never depends on the decision about it"
+  },
+  {
+   "bead": "N21a-01",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-001 (the one toolchain file and the stack lock)"
+  },
+  {
+   "bead": "N21a-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-178",
+    "N21b-28"
+   ],
+   "note": "later milestone; the M2 placement validation is N21c-28, which depends on this bead"
+  },
+  {
+   "bead": "N21a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-05"
+   ],
+   "note": "the identity comparison and the FROB-REF-606 rule are called from the dispatcher"
+  },
+  {
+   "bead": "N21a-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N21-REF"
+   ],
+   "note": "later milestone (the registry is M2); the internal-family row is entered there when N21c-28 lands"
+  },
+  {
+   "bead": "N21a-02",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N21c-34"
+   ],
+   "note": "this bead implements the default label, not the decision"
+  },
+  {
+   "bead": "N21a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-24"
+   ],
+   "note": "adjacent register; each cites the other"
+  },
+  {
+   "bead": "N21a-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-34"
+   ],
+   "note": "the record states the default; ratification is the owner's"
+  },
+  {
+   "bead": "N21a-03",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-02",
+    "N21c-32"
+   ],
+   "note": "the gate register file and the Spark rows that the enforcement links resolve against"
+  },
+  {
+   "bead": "N21a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N21a-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-176"
+   ],
+   "note": "the index is data and is finished without the check; its currency column is read from the check ledger when that exists"
+  },
+  {
+   "bead": "N21a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N21a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-28"
+   ],
+   "note": "the whole-denominator transfer-byte counter a materializing copy is charged to; BD-178 is its capstone and the script step lives in N21b-31"
+  },
+  {
+   "bead": "N21a-05",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-193"
+   ],
+   "note": "consumer: tensor views for learners build on the same converter"
+  },
+  {
+   "bead": "N21a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N21a-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-181"
+   ],
+   "note": "the run-time gate tests the same property; not a prerequisite"
+  },
+  {
+   "bead": "N21a-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-39",
+    "N21c-40",
+    "N21c-43"
+   ],
+   "note": "consumers of the two-limb reduce and the device re-run; N21c-41 completes the operator"
+  },
+  {
+   "bead": "N21a-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "the numerical contract of the manifest"
+  },
+  {
+   "bead": "N21a-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-159",
+    "N21b-23"
+   ],
+   "note": "consumers of the overflow flag; both already depend on this bead through BD-152"
+  },
+  {
+   "bead": "N21a-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N21a-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-158"
+   ],
+   "note": "consumer: K-bp-sort calls this kernel and already depends on it through BD-152"
+  },
+  {
+   "bead": "N21a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-42",
+    "N21c-43"
+   ],
+   "note": "consumers: N21c-42 configures rule 7 for the library and the gate script runs the lint"
+  },
+  {
+   "bead": "N21a-10",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-029, whose arithmetic block is filled by N21c-02"
+  },
+  {
+   "bead": "N21a-10",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-12"
+   ],
+   "note": "the wiring of the lint into the cache's store path is in this bead's scope"
+  },
+  {
+   "bead": "N21a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": "the host-side normal construction over fs-rand that det_normal is ported from and tested against bit for bit; BD-180 is the device-side consumer (related, recorded as an edge)"
+  },
+  {
+   "bead": "N21a-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-12"
+   ],
+   "note": "fs-math and fs-rand are on the bedrock-direct list admitted there"
+  },
+  {
+   "bead": "N21a-11",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-017"
+   ],
+   "note": "the probe result sets whether D1 across backends may be claimed"
+  },
+  {
+   "bead": "N21a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the bundle writer (BD-021's certificates are upstream of it)"
+  },
+  {
+   "bead": "N21a-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33c-13",
+    "BD-038"
+   ],
+   "note": "the same isolation pattern, written separately in the derive annex"
+  },
+  {
+   "bead": "N21a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-12"
+   ],
+   "note": "fs-ad is admitted on the bedrock-direct list"
+  },
+  {
+   "bead": "N21a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-216"
+   ],
+   "note": "later milestone; the pilot computes the statistic with its own script"
+  },
+  {
+   "bead": "N21a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-21",
+    "N12-31"
+   ],
+   "note": "later milestone (M5)"
+  },
+  {
+   "bead": "N21a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "the conformance crate and its registry, where the differential corpus is registered"
+  },
+  {
+   "bead": "N21a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-09"
+   ],
+   "note": "the posture register row for frankenjax and the deny rule"
+  },
+  {
+   "bead": "N21a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-27"
+   ],
+   "note": "the pilot runs only if the profile's arithmetic share asks"
+  },
+  {
+   "bead": "N21a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-148",
+    "N17a-02"
+   ],
+   "note": "a shared vocabulary of capacity names; frob-kir sits below frob-model and does not wait for it"
+  },
+  {
+   "bead": "N21a-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-148"
+   ],
+   "note": "BD-148 builds on the IR (it depends on BD-018); the layouts are a shared convention"
+  },
+  {
+   "bead": "N21a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-02",
+    "N21c-41",
+    "N21c-42"
+   ],
+   "note": "the exact mode is 32-bit only; the fingerprint record and the two-limb rule govern later kernels (two of the carriers are M2)"
+  },
+  {
+   "bead": "N21a-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-180"
+   ],
+   "note": "later milestone; BD-180 writes Philox in these operators"
+  },
+  {
+   "bead": "N21a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-016"
+   ],
+   "note": "INT-FT-01's admission record states the gateway limits"
+  },
+  {
+   "bead": "N21a-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "the fingerprint record holds thread-group memory and the largest single buffer"
+  },
+  {
+   "bead": "N21a-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N21a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-18",
+    "CARD-T-27"
+   ],
+   "note": "later milestone (M4): the independent checker replays the traces this bead emits; the trace format is defined here"
+  },
+  {
+   "bead": "N21a-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-371"
+   ],
+   "note": "later milestone; consumer of the exact constant folding"
+  },
+  {
+   "bead": "N21a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-12"
+   ],
+   "note": "fs-ad is admitted on the bedrock-direct list"
+  },
+  {
+   "bead": "N21a-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-334"
+   ],
+   "note": "later milestone; consumers of derivative kernels"
+  },
+  {
+   "bead": "N21a-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N21a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-36"
+   ],
+   "note": "the hand-written primitives and K-canary; the IR lowering must equal them bit for bit"
+  },
+  {
+   "bead": "N21a-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-208",
+    "BD-179"
+   ],
+   "note": "consumers of the pair"
+  },
+  {
+   "bead": "N21a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-172"
+   ],
+   "note": "the step-plan record frob.stepplan/1 over which the statistics data-flow check runs"
+  },
+  {
+   "bead": "N21a-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N35-07"
+   ],
+   "note": "the licence table reads the classes declared here; the class type itself (N35-01, M0) is recorded as an edge"
+  },
+  {
+   "bead": "N21a-22",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-178",
+    "N21b-30"
+   ],
+   "note": "consumers: the planner's small-job rule cites representation before placement"
+  },
+  {
+   "bead": "N21a-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-203",
+    "BD-206"
+   ],
+   "note": "consumers; BD-203 is the capstone of the digest kernels and should depend on this bead (edge recorded)"
+  },
+  {
+   "bead": "N21a-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-170",
+    "N21b-15"
+   ],
+   "note": "the active counts are an input slab named in the manifest; the kernel is tested on synthetic counts and does not wait for the variant table"
+  },
+  {
+   "bead": "N21a-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": "WorldAddr and its words are defined there (M1)"
+  },
+  {
+   "bead": "N21a-24",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-030 is already a dependency (and of N21b-40, which supersedes this bead)"
+  },
+  {
+   "bead": "N21a-24",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-017 is already a dependency (and of N21b-40, which supersedes this bead)"
+  },
+  {
+   "bead": "N21a-24",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-043"
+   ],
+   "note": "BD-043 re-runs the plan-time screen; the gate script reproduces the pilot's counts independently; carried to N21b-40 as related"
+  },
+  {
+   "bead": "N21a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-32"
+   ],
+   "note": "the M0 form of spark.check; BD-176 completes it at M2 (later milestone)"
+  },
+  {
+   "bead": "N21a-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-020"
+   ],
+   "note": "BD-020 has its own script; this one runs the CPU half of the same known answer"
+  },
+  {
+   "bead": "N21a-26",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-438 is an epic and nothing depends on an epic; the lowering is withheld, so nothing here waits on the consumer"
+  },
+  {
+   "bead": "N21a-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-005"
+   ],
+   "note": "frob-core carries the no-authorization flags"
+  },
+  {
+   "bead": "N21a-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-216 is already a dependency"
+  },
+  {
+   "bead": "N21a-27",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-16"
+   ],
+   "note": "consumer: reads this profile"
+  },
+  {
+   "bead": "N21a-27",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-219",
+    "N36-18"
+   ],
+   "note": "BD-219 already depends on this bead through BD-217; N36-18 measures bytes touched per launch on the same runs"
+  },
+  {
+   "bead": "N21a-27",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "FD-FT-01"
+   ],
+   "note": "upstream item; the interim posture (one batch per kernel in profiling mode, N21b-06) is already upstream through BD-174"
+  },
+  {
+   "bead": "N21b-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "later milestone (M3): capability scopes; until then eviction is a local operator action"
+  },
+  {
+   "bead": "N21b-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-295"
+   ],
+   "note": "BD-295 consumes the refill interface defined here (reverse edge recorded)"
+  },
+  {
+   "bead": "N21c-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "BD-029 is the capstone and depends on this probe bead; the probes return typed values and do not wait for the record"
+  },
+  {
+   "bead": "N21c-01",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-015 is already a dependency"
+  },
+  {
+   "bead": "N21c-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "BD-029 is the capstone and depends on this probe bead"
+  },
+  {
+   "bead": "N21c-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-36"
+   ],
+   "note": "the canary results copied into the arithmetic block"
+  },
+  {
+   "bead": "N21c-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N33c-39",
+    "N33c-40"
+   ],
+   "note": "consumers: GATE-WS-06 reads the language version and the atomic probe from the fingerprint"
+  },
+  {
+   "bead": "N21c-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "BD-029 is the capstone and depends on this experiment for its peer field"
+  },
+  {
+   "bead": "N21c-03",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-015 is already a dependency"
+  },
+  {
+   "bead": "N21c-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-138",
+    "BD-298"
+   ],
+   "note": "later milestones; the MCP generator consumes the registry row of this verb"
+  },
+  {
+   "bead": "N21c-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-300"
+   ],
+   "note": "later milestone; the panel reads this verb"
+  },
+  {
+   "bead": "N21c-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-173"
+   ],
+   "note": "later milestone; consumer (BD-173 depends on this bead: need 6 of BD-173)"
+  },
+  {
+   "bead": "N21c-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-176"
+   ],
+   "note": "later milestone; consumer (reverse edge recorded)"
+  },
+  {
+   "bead": "N21c-05",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-219",
+    "BD-297"
+   ],
+   "note": "later milestones; consumers (reverse edge recorded for BD-219)"
+  },
+  {
+   "bead": "N21c-05",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-216"
+   ],
+   "note": "later milestone; consumer (reverse edge recorded)"
+  },
+  {
+   "bead": "N21c-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-313"
+   ],
+   "note": "later milestone; consumer"
+  },
+  {
+   "bead": "N21c-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N36-19"
+   ],
+   "note": "N36-19 extends the estimator BD-219, which is already a dependency; the role table cites its arithmetic and does not wait for it"
+  },
+  {
+   "bead": "N21c-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-35"
+   ],
+   "note": "later milestone; the peer link must carry every item through this bundle writer (reverse edge recorded)"
+  },
+  {
+   "bead": "N21c-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-305"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N21c-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-225",
+    "BD-226",
+    "BD-228"
+   ],
+   "note": "later milestone (M3); this bead covers the M2 terrain generators until then"
+  },
+  {
+   "bead": "N21c-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-177"
+   ],
+   "note": "the decision-level test that compares a tolerance replay"
+  },
+  {
+   "bead": "N21c-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the resource table, the 2% closure rule and the ledger record; report.campaign (BD-302) is already a dependency"
+  },
+  {
+   "bead": "N21c-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-34"
+   ],
+   "note": "read beside this pilot's result; neither waits for the other"
+  },
+  {
+   "bead": "N21c-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the pilot runs on one card for one hour under the default; an approved envelope only widens it"
+  },
+  {
+   "bead": "N21c-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-34",
+    "N32b-36"
+   ],
+   "note": "decided together; two owner decisions that cite each other"
+  },
+  {
+   "bead": "N21c-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review depends on the decisions"
+  },
+  {
+   "bead": "N21c-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-20"
+   ],
+   "note": "the envelope meter and FROB-REF-761; sim.estimate (BD-219) is already a dependency"
+  },
+  {
+   "bead": "N21c-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-211"
+   ],
+   "note": "the canonical request digest and idempotency binding"
+  },
+  {
+   "bead": "N21c-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-35"
+   ],
+   "note": "without the link the plan is advisory and the core is still finished and tested; the capstone BD-370 depends on the link"
+  },
+  {
+   "bead": "N21c-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-35"
+   ],
+   "note": "the recovery rules run over the link's transport and heartbeat"
+  },
+  {
+   "bead": "N21c-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-23",
+    "N32a-09"
+   ],
+   "note": "job.find recovery by key and the atomic admission binding behind INV-TETHER-05"
+  },
+  {
+   "bead": "N21c-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-35"
+   ],
+   "note": "optional: without a link the verb reports the local machine and marks the other standalone"
+  },
+  {
+   "bead": "N21c-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "namespaces and scopes"
+  },
+  {
+   "bead": "N21c-15",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-298"
+   ],
+   "note": "the MCP surface that generates fleet_status and its task cluster"
+  },
+  {
+   "bead": "N21c-16",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-217 is already a dependency; the per-stage breakdown comes from its profile bead N21a-27"
+  },
+  {
+   "bead": "N21c-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17b-24"
+   ],
+   "note": "consumer: adds a fourth arm to this harness (reverse edge recorded)"
+  },
+  {
+   "bead": "N21c-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-20"
+   ],
+   "note": "the standard battery's frozen scenario grid and seeds as the pinned episode corpus"
+  },
+  {
+   "bead": "N21c-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17a-16",
+    "N17a-15"
+   ],
+   "note": "Phylum's statement of the same gate and its promotion rule; §21 governs"
+  },
+  {
+   "bead": "N21c-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review depends on the decisions"
+  },
+  {
+   "bead": "N21c-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-371"
+   ],
+   "note": "BD-371 is the capstone and depends on this fence, which is tested with script-written pairs"
+  },
+  {
+   "bead": "N21c-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-371"
+   ],
+   "note": "BD-371 is the capstone; a component never depends on its capstone (tested with script-written pairs, as the fence is)"
+  },
+  {
+   "bead": "N21c-20",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-352 is already a dependency"
+  },
+  {
+   "bead": "N21c-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-181"
+   ],
+   "note": "the invariance test that must hold across the switch"
+  },
+  {
+   "bead": "N21c-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-18",
+    "N21a-27"
+   ],
+   "note": "the per-launch bytes-touched figure and the M2 profile"
+  },
+  {
+   "bead": "N21c-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-442"
+   ],
+   "note": "the exit review depends on this decision (edge recorded)"
+  },
+  {
+   "bead": "N21c-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-25"
+   ],
+   "note": "sim.run with options on all tiers; the --step-plan option and its schema are this bead's own surface, as --decouple is N16c-20's"
+  },
+  {
+   "bead": "N21c-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-174"
+   ],
+   "note": "for a later Metal port only"
+  },
+  {
+   "bead": "N21c-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N34-07",
+    "N21a-01"
+   ],
+   "note": "the allow-lists sit beside the capsule registry; a shared policy file, not a prerequisite"
+  },
+  {
+   "bead": "N21c-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "FD-FT-01"
+   ],
+   "note": "upstream item; the reason for the deny rule"
+  },
+  {
+   "bead": "N21c-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-269"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N21c-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-179",
+    "N21b-38"
+   ],
+   "note": "the mechanism used instead; the refuting calculation does not wait for it"
+  },
+  {
+   "bead": "N21c-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-252"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N21c-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-205"
+   ],
+   "note": "the mechanism used instead; the refuting calculation does not wait for it"
+  },
+  {
+   "bead": "N21c-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-10",
+    "N21b-11",
+    "N21a-06",
+    "N21a-22",
+    "N21b-02",
+    "N21b-29",
+    "N21a-12",
+    "BD-018",
+    "N21a-16",
+    "BD-053",
+    "N21a-18"
+   ],
+   "note": "a register never depends on the mechanisms whose test names it lists"
+  },
+  {
+   "bead": "N21c-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-02"
+   ],
+   "note": "the M0 boundary check with the twelve fields, which this bead completes at M2; the receipt type is BD-014's (already a dependency); FD-FSIM-09 is the upstream item"
+  },
+  {
+   "bead": "N21c-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-308"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N21c-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "carried by N21a-06, which supersedes this bead"
+  },
+  {
+   "bead": "N21c-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-36"
+   ],
+   "note": "the canary kernels whose fast-math failure is planted"
+  },
+  {
+   "bead": "N21c-30",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21a-10"
+   ],
+   "note": "later milestone; the dialect bead registers the mask mutant itself"
+  },
+  {
+   "bead": "N21c-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-175",
+    "N21b-07"
+   ],
+   "note": "the injected launch failure on CUDA and the gateway's fault seam with the fence-disabled control; BD-174 is already a dependency"
+  },
+  {
+   "bead": "N21c-31",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-19"
+   ],
+   "note": "later milestone; the row is activated with the fence"
+  },
+  {
+   "bead": "N21c-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-02"
+   ],
+   "note": "the register file and its lint"
+  },
+  {
+   "bead": "N21c-32",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "not a prerequisite: GATE-SPARK-15 to -22 are entered through N40-02 by the numerics and performance units; this register stops at -14 and -23"
+  },
+  {
+   "bead": "N21c-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "the exit review depends on the decision; carried by N21b-08"
+  },
+  {
+   "bead": "N21c-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "an input read by the decision; already upstream of N21b-08 through BD-217"
+  },
+  {
+   "bead": "N21c-34",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-308"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N21c-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "later milestone; the exit review reads this row"
+  },
+  {
+   "bead": "N21c-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-219",
+    "N36-20"
+   ],
+   "note": "the enforcement reads this decision's record; the mechanism never depends on the decision's outcome and the decision does not wait for it"
+  },
+  {
+   "bead": "N21c-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-296"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N21c-35",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N44-01"
+   ],
+   "note": "a second owner decision on the same envelope classes; each cites the other (reported as a cross-group overlap)"
+  },
+  {
+   "bead": "N21c-36",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-144 is already a dependency (also of N21b-18, which supersedes this bead)"
+  },
+  {
+   "bead": "N21c-36",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16b-03",
+    "BD-212"
+   ],
+   "note": "the capacity statistic is measured on batch-cpu by the decision's own script; GATE-KIN-07 on the standard battery confirms it later and is not awaited (BD-212 lies downstream of the variants gate)"
+  },
+  {
+   "bead": "N21c-36",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-183"
+   ],
+   "note": "BD-183 already depends on N21b-18, which supersedes this bead"
+  },
+  {
+   "bead": "N21c-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-07",
+    "N21a-01"
+   ],
+   "note": "the capsule registry, its SAFETY.md rules and the check that enforces them; carried to N21b-03"
+  },
+  {
+   "bead": "N21c-37",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-172"
+   ],
+   "note": "BD-172 depends on the kept decision bead N21b-03"
+  },
+  {
+   "bead": "N21c-38",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "FD-FT-01"
+   ],
+   "note": "upstream item; no milestone waits on it"
+  },
+  {
+   "bead": "N21c-38",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "the exit review depends on the decision"
+  },
+  {
+   "bead": "N21c-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-22"
+   ],
+   "note": "the chunk-length rule the bound enters as a third limit"
+  },
+  {
+   "bead": "N21c-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21-REF"
+   ],
+   "note": "the proposed code FROB-REF-619 is a row of the chapter registry"
+  },
+  {
+   "bead": "N21c-40",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-207 is already a dependency"
+  },
+  {
+   "bead": "N21c-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-211"
+   ],
+   "note": "64-bit integers as strings at the agent boundary"
+  },
+  {
+   "bead": "N21c-41",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-207"
+   ],
+   "note": "first consumer of wide sums"
+  },
+  {
+   "bead": "N21c-42",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-178 is already a dependency"
   }
  ],
  "edges": [
@@ -345,6 +1961,72 @@
    "dep": "BD-031",
    "as": "related",
    "why": "BD-018 need 1: INT-TOOLCHAIN-01 confirms the fs-qty coupling after the fact; BD-031 already depends on BD-018"
+  },
+  {
+   "bead": "N21a-11",
+   "dep": "BD-180",
+   "as": "related",
+   "why": "N21a-11 need 1: BD-180 consumes det_normal; neither blocks the other"
+  },
+  {
+   "bead": "N21a-22",
+   "dep": "N35-01",
+   "as": "dep",
+   "why": "N21a-22 need 2: the determinism classes D0 to D4 as a type, which the per-class determinism declarations use"
+  },
+  {
+   "bead": "BD-203",
+   "dep": "N21a-23",
+   "as": "dep",
+   "why": "N21a-23 need 1 and BD-172 need 7: K-x-digest's mixing contract is a component of the digest-chain seed"
+  },
+  {
+   "bead": "N21a-25",
+   "dep": "BD-176",
+   "as": "related",
+   "why": "N21a-25 need 1: later milestone"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "BD-441",
+   "as": "related",
+   "why": "replaces the drafted dep: nothing depends on an epic (rule 9)"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N21c-22",
+   "as": "dep",
+   "why": "the M8 exit review checks the fused-kernel epic through its KILL-MEGA decision bead"
+  },
+  {
+   "bead": "BD-176",
+   "dep": "N21c-05",
+   "as": "dep",
+   "why": "coverage (d) of U21c: the check ledger keys currency on the identity digest and calls the currency functions"
+  },
+  {
+   "bead": "BD-219",
+   "dep": "N21c-05",
+   "as": "dep",
+   "why": "coverage (d) of U21c: the estimator's calibration strata key on the identity digest"
+  },
+  {
+   "bead": "BD-216",
+   "dep": "N21c-05",
+   "as": "dep",
+   "why": "coverage (d) of U21c: the disclosure block carries the fingerprint digest and checks its currency"
+  },
+  {
+   "bead": "N32a-35",
+   "dep": "N21c-08",
+   "as": "dep",
+   "why": "coverage (d) of U21c and N21c-08 need 1: the peer link carries only what the transfer allow-list and bundle writer admit"
+  },
+  {
+   "bead": "N17b-24",
+   "dep": "N21c-17",
+   "as": "dep",
+   "why": "coverage (d) of U21c: the limb-archetype pilot adds a fourth arm to this harness and reads its three baseline arms"
   }
  ],
  "superseded": [],

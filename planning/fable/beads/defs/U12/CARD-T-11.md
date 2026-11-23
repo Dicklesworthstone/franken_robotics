@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lie", "solid", "test"]
 parent: "WP-03"
-deps: ["BD-046", "BD-027", "N12-06", "SPEC-C-01"]
+deps: ["BD-027", "N12-06", "SPEC-C-01"]
 needs: []
-related: ["BD-101", "BD-054", "CARD-T-16"]
+related: ["BD-101", "BD-054", "CARD-T-16", "BD-046"]
 gates: []
 plan_refs: ["§12.3 (T-11)", "§10 C-01", "§13.9 (kernel class Exact)", "§14.4 (joint field)", "Appendix D.1 (bracket on se(3))", "Appendix I.1"]
 ---
@@ -37,6 +37,16 @@ hand-written code path per case, where the class is whatever the author typed.
 In: statement document, registry row, the witness format for both verdicts, the certificate per reference joint,
 fixtures. Out: the classification algorithm and generated joint maps (the joint-subgroup bead of the algebra
 crate); lattice-based mobility (Frontier, with its own pilot); joint limits and loop closures.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the joint-subgroup classification of `frob-lie` (BD-046) is `related`, not a dependency (a card that waited for
+its implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the
+card does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(the certificate per reference joint and the design compiler's refusal of a joint whose stated class differs) is
+run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt
+produced there is what moves the registry row for that output.
 
 ## Technical approach
 

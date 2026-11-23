@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "spine", "spec", "solid", "atelier", "frob-opt", "test"]
 parent: "WP-59"
-deps: ["BD-262", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-291", "BD-341", "BD-344", "BD-349", "BD-351", "N10c-09", "N10-CX", "N10c-10"]
+related: ["BD-291", "BD-341", "BD-344", "BD-349", "BD-351", "N10c-09", "N10-CX", "N10c-10", "BD-262"]
 gates: ["GATE-ATEL-15"]
 plan_refs: ["§10 C-39", "§28.9", "§28.16", "§28.17", "§30.15", "Appendix D.8", "Appendix E GB-36", "Appendix M.9"]
 ---
@@ -50,6 +50,29 @@ and the pilot record of the construction.
 Out: the verb `experiment.suggest` and its ranking in the product (BD-351); the decision-core table for "which
 experiment next, or stop" (BD-349); registered predictions and their scoring (BD-344); optimization and racing
 (BD-341); probe design (N10c-09, BD-291); recording GATE-ATEL-15 and deciding KILL-VOI (BD-351).
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-39: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`experiment.suggest`; also `mission.distinguish`),
+`failing_test` (a test of `frob-opt::laws_c39_evsi` with its registered control), `payoff.gate` (GATE-ATEL-15),
+`statements`, `known_answers` (KA-187, KA-188), `cards` (none), `gates`, `pilot` (the record `PILOT-C-39` of the
+pilot register, required because the tier is Frontier) and `generic_comparator` (the off-the-shelf method named in
+the pilot paragraph of this bead). Doctrine D-2 (no ornamental mathematics) is checked on these fields: a
+construction with no verb or no failing test is moved to the parked register by a decision record. The part bead
+N10c-09 adds their statements and tests to the same row. The contract `docs/math/C-39.md` follows the ten-section
+template `docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-262 (`eval.compare` on
+devices, the first seed in `frob-opt`): that bead is listed in `related` and is not a prerequisite. The law suite
+is generic over its subject trait and closes on the exact reference model and the mutants in its own test support.
+If `frob-opt` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -113,6 +136,9 @@ information is a stop rule only and `experiment.suggest` lists proposals unranke
 - [ ] KA-187 is registered with a derivation file, a stated tolerance and the control named below (the row was
       printed with neither); the pilot record is in the pilot register.
 - [ ] `scripts/e2e/spec_c39_evsi.sh` exits 0.
+- [ ] Row C-39 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "traction", "frob-contact", "registry", "test"]
 parent: "WP-10"
-deps: ["BD-005", "BD-022"]
+deps: ["BD-005", "BD-022", "N32a-03"]
 needs: ["§32.4: the envelope's refusal block and the exit-code table (verb-surface unit); every code here maps to exactly one exit code"]
 related: ["N18-CX", "N18b-28", "N18b-26", "N18b-27", "N18b-22", "N18b-12"]
 gates: []

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "spine", "spec", "frontier", "habitat", "frob-scene", "test"]
 parent: "WP-53"
-deps: ["BD-162", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-104", "BD-132", "BD-233", "BD-234", "BD-369", "SPEC-C-28", "SPEC-C-31", "N10-CX", "N10c-10", "CARD-T-31"]
+related: ["BD-104", "BD-132", "BD-233", "BD-234", "BD-369", "SPEC-C-28", "SPEC-C-31", "N10-CX", "N10c-10", "CARD-T-31", "BD-162"]
 gates: ["GATE-HAB-10"]
 plan_refs: ["§10 C-33", "§19.11", "§12.3 T-31", "§12.4", "§38.7 MR-29", "Appendix D.3", "Appendix M.9", "Appendix N.7"]
 ---
@@ -51,6 +51,28 @@ CX-081.
 Out: the `.fclear` format, the builder with local refinement, the verb `scene.fit` and the enclosure tests
 (BD-233); feasibility tags for generated scenes (BD-234); the auditor's `complex-connectivity` checker (BD-132
 and BD-233); the retrofit search (BD-369); recording GATE-HAB-10 and deciding KILL-FCLEAR (BD-233).
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-33: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`scene.fit`), `failing_test` (a test of
+`frob-scene::laws_c33` with its registered control), `payoff.gate` (GATE-HAB-10), `statements`, `known_answers`
+(KA-161 to KA-163), `cards` (T-31), `gates`, `pilot` (the record `PILOT-C-33` of the pilot register, required
+because the tier is Frontier) and `generic_comparator` (the off-the-shelf method named in the pilot paragraph of
+this bead). Doctrine D-2 (no ornamental mathematics) is checked on these fields: a construction with no verb or no
+failing test is moved to the parked register by a decision record. The contract `docs/math/C-33.md` follows the
+ten-section template `docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-162 (the scene manifest of
+`frob-scene`): that bead is listed in `related` and is not a prerequisite. The law suite is generic over its
+subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-scene`
+does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -129,6 +151,9 @@ route-graph traversability check for a nominal footprint, labelled heuristic.
 - [ ] KA-161 to KA-163 are registered with derivation files; MR-29 and the control from CX-081 are attached to
       GATE-HAB-10.
 - [ ] `scripts/e2e/spec_c33.sh` exits 0.
+- [ ] Row C-33 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

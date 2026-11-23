@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "traction", "marrow", "frob-algebra", "frob-contact", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-050", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["§18.16: the contact known-answer battery, whose rows are the 'known answers of the contact chapter' this construction's test names (BD-085 on the referee, BD-168 on batched tiers)", "§18.19: the definition of the rounding margin ρ of a computed residual, used in the factor-reuse bound", "§10 C-37: the four-dimensional contact cone with a spin component and the joint-level rows (SPEC-C-37, another unit)"]
-related: ["BD-079", "BD-080", "BD-085", "BD-115", "BD-153", "BD-266", "BD-367", "BD-386", "N10a-14", "CARD-T-07", "CARD-T-08", "N10-KA1"]
+related: ["BD-079", "BD-080", "BD-085", "BD-115", "BD-153", "BD-266", "BD-367", "BD-386", "N10a-14", "CARD-T-07", "CARD-T-08", "N10-KA1", "BD-050"]
 gates: ["GATE-MARROW-01", "GATE-TRAC-01", "GATE-TRAC-09"]
 plan_refs: ["§10 C-06", "§13.1", "§13.8", "§18", "§12.3 T-07 T-08", "Appendix D.3", "Appendix I.1", "Appendix M KA-055 to KA-057", "Appendix N CX-026"]
 ---
@@ -56,6 +56,17 @@ Out: the `Cone` trait and its instances (BD-050); the cone-program solver (BD-11
 (BD-079); the referee step and contact battery (BD-080, BD-085); the model-form rank check (BD-266); the
 response batch (BD-367) and the hard-contact batch law (BD-386); the four-dimensional cone and joint rows
 (construction C-37).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-050 (the `Cone` trait and
+the friction cone of `frob-algebra`): that bead is listed in `related` and is not a prerequisite. The law suite is
+generic over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-algebra` or `frob-contact` do not exist when this bead starts, the suite and its support files are written
+under `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands
+below read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate,
+binds its production types to the subject trait and runs the unchanged suite as part of its own acceptance. A
+criterion or script step below that names production code or a verb of an implementing bead is owed at that bead's
+acceptance and is logged `pending` here until then.
 
 ## Technical approach
 

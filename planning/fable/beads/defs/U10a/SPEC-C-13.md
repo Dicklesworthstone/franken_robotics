@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "reflex", "frob-control", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-12"
-deps: ["BD-045", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["§22: the bead that creates crate frob-control (BD-114 or BD-115 lands first; the law suite is created with the crate skeleton if neither has)", "§10 C-20: observability modulo a gauge, which states that position and yaw are gauge freedoms (SPEC-C-20, another unit)", "§10 C-31 and C-32: barrier certificates for reduced-order templates and the separating dual witness (SPEC-C-31, SPEC-C-32, another unit)"]
-related: ["BD-114", "BD-115", "BD-116", "BD-117", "BD-118", "BD-249", "BD-251", "N10a-20", "SPEC-C-04", "SPEC-C-06", "N10-KA1"]
+related: ["BD-114", "BD-115", "BD-116", "BD-117", "BD-118", "BD-249", "BD-251", "N10a-20", "SPEC-C-04", "SPEC-C-06", "N10-KA1", "BD-045"]
 gates: ["GATE-REFLEX-01", "GATE-REFLEX-03", "GATE-REFLEX-05"]
 plan_refs: ["§10 C-13", "§22.3", "§22.4", "§22.5", "§6 GOAL-13", "§4 BET-06", "Appendix D.7", "Appendix M KA-081 to KA-084", "Appendix N CX-038"]
 ---
@@ -46,6 +46,17 @@ the register row; tolerances and controls for KA-081 to KA-084.
 Out: the invariant filter and its verb (BD-114); the cone-program solver (BD-115); baseline controllers and
 synthesis (BD-116, BD-117, BD-118); control programs with layer records (BD-251); the synthesis pilot
 (N10a-20); observability and gauge analysis (construction C-20); certificates (constructions C-31, C-32).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-045 (the extended pose
+groups of `frob-lie`): that bead is listed in `related` and is not a prerequisite. The law suite is generic over
+its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-control` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

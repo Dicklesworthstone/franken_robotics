@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-21", "N12-22", "N12-20", "BD-102", "N12-06", "SPEC-C-09"]
+deps: ["N12-21", "N12-22", "N12-20", "N12-06", "SPEC-C-09"]
 needs: ["§13.4: the signed-permutation representations ρ on configuration, velocity, action and observation spaces computed from the parity rule (BD-048, BD-102)"]
-related: ["CARD-T-16", "CARD-T-18", "CARD-T-09", "BD-241", "BD-379"]
+related: ["CARD-T-16", "CARD-T-18", "CARD-T-09", "BD-241", "BD-379", "BD-102"]
 gates: []
 plan_refs: ["§12.3 (T-10)", "§10 C-09", "§11.4", "§13.4", "Appendix D.5 (equivariance of the dynamics)"]
 ---
@@ -43,6 +43,16 @@ In: statement document, registry row, the per-generator certificates or test rec
 the fixture with a wrong parity table. Out: computing the groups and representations (the symmetry analysis
 beads); the floating-point metamorphic test (the conformance relations); equivariant networks; the event case
 (CARD-T-18).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the symmetry analysis that computes the groups and their representations (BD-102) is `related`, not a dependency
+(a card that waited for its implementer would close a loop, because the implementer's own acceptance runs the
+card's law tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot
+where the route is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry
+row, its specimens and mutants, and every acceptance line that its own fixtures decide. An acceptance line that
+can only be observed on live output (the per-generator certificates or test records for a reference model's step
+kernels) is run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the
+receipt produced there is what moves the registry row for that output.
 
 ## Technical approach
 

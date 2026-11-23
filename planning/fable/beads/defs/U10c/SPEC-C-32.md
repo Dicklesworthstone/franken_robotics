@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "frontier", "augur", "frob-mission", "frob-cert", "test"]
 parent: "WP-42"
-deps: ["BD-128", "BD-026", "STD-TEST", "STD-E2E"]
+deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-042", "BD-115", "BD-130", "BD-132", "BD-133", "BD-382", "N10c-04", "N10-CX", "SPEC-C-40", "N10c-10", "CARD-T-21", "CARD-T-22"]
+related: ["BD-042", "BD-115", "BD-130", "BD-132", "BD-133", "BD-382", "N10c-04", "N10-CX", "SPEC-C-40", "N10c-10", "CARD-T-21", "CARD-T-22", "BD-128", "BD-026"]
 gates: ["GATE-AUGUR-02", "GATE-LEMMA-03"]
 plan_refs: ["§10 C-32", "§25.13", "§25.5", "§12.3 T-21 T-22", "§12.4", "§12.7", "Appendix D.6", "Appendix E GB-31", "Appendix I.4", "Appendix M.8", "Appendix M.9", "Appendix N.7"]
 ---
@@ -56,6 +56,29 @@ Out: the stance-family solver and the verb path (`mission.synthesize`, `mission.
 checkers for `lp-primal` and `lp-farkas` (BD-132); bundle writing (BD-133); the cone-program solver that produces
 duals (BD-115); the Lean statement of Farkas soundness and the reflectors (BD-382); region certificates by
 enclosure (N10c-04); recording GATE-AUGUR-02 and GATE-LEMMA-03.
+
+Register row (the shared rule of N10a-01). The construction register
+`frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
+are empty; this bead fills row C-32: `rust_type` (the subject trait of the law suite below, replaced by the
+production type when the implementing bead binds it), `verb` (`mission.refute`; also `mission.synthesize`,
+`prove.bundle`, `prove.verify`), `failing_test` (a test of `frob-mission::laws_c32` with its registered control),
+`payoff.gate` (GATE-AUGUR-02), `statements`, `known_answers` (KA-157 to KA-160), `cards` (T-21, T-22), `gates`,
+`pilot` (the record `PILOT-C-32` of the pilot register, required because the tier is Frontier) and
+`generic_comparator` (the off-the-shelf method named in the pilot paragraph of this bead). Doctrine D-2 (no
+ornamental mathematics) is checked on these fields: a construction with no verb or no failing test is moved to the
+parked register by a decision record. The part bead N10c-04 adds their statements and tests to the same row. The
+contract `docs/math/C-32.md` follows the ten-section template `docs/math/TEMPLATE.md` of the same bead.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-128 (the `frob-mission`
+core) or BD-026 (the auditor crate `frob-cert`): those beads are listed in `related` and are not prerequisites.
+The law suite is generic over its subject trait and closes on the exact reference model and the mutants in its own
+test support. If `frob-mission` or `frob-cert` do not exist when this bead starts, the suite and its support files
+are written under `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and
+the commands below read `-p frob-conformance`; the bead that implements the construction moves them into the
+owning crate, binds its production types to the subject trait and runs the unchanged suite as part of its own
+acceptance. A criterion or script step below that names production code or a verb of an implementing bead is owed
+at that bead's acceptance and is logged `pending` here until then.
 
 ## Technical approach
 
@@ -155,6 +178,9 @@ specimen bundle is also part of GATE-LEMMA-04 and GATE-AUGUR-05.
       recomputed in this repository and recorded as re-run.
 - [ ] Controls from CX-077, CX-078, CX-079 and CX-016 are attached to GATE-AUGUR-02 and GATE-LEMMA-03.
 - [ ] `scripts/e2e/spec_c32.sh` exits 0.
+- [ ] Row C-32 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
+      Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
+      obligation for the row (fields not yet due are reported `pending` under the grace rule of N10a-01).
 
 ## Test plan
 

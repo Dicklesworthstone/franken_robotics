@@ -529,6 +529,705 @@
     "BD-274"
    ],
    "note": "nemesis.shrink writes the .fmcw the retrofit search starts from"
+  },
+  {
+   "bead": "N00-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N34-08"
+   ],
+   "note": "shares the CONTRACT.md convention only; this lint is a test in frob-conformance and does not need the xtask check (the six checks are BD-004, already related)"
+  },
+  {
+   "bead": "N00-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "NAB-09"
+   ],
+   "note": "registries/sources.toml with its schema and loader; registry first (rule 5)"
+  },
+  {
+   "bead": "N00-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N41-26",
+    "N41-27"
+   ],
+   "note": "the readers of this registry; they are M1, later than this M0 bead, and depend on it"
+  },
+  {
+   "bead": "N00-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-18",
+    "N40-01"
+   ],
+   "note": "the gate record and its statuses (two beads, of the Gauntlet group and the register group, carry the record of registries/gates.toml)"
+  },
+  {
+   "bead": "N00-02",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": "the registry row of FROB-REF-724; raising it at dispatch is also claimed by N32b-19 (reported as a cross-group overlap)"
+  },
+  {
+   "bead": "N00-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-02"
+   ],
+   "note": "the crate map as data (43 crates with layer, rank, tier and cap)"
+  },
+  {
+   "bead": "N00-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-09"
+   ],
+   "note": "M1, later than this M0 bead; the same kind of agreement lint over another register"
+  },
+  {
+   "bead": "N00-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32b-17"
+   ],
+   "note": "the generated agent guide that hosts the reader map as its first page"
+  },
+  {
+   "bead": "N00-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-15"
+   ],
+   "note": "the reproduction archive pinned by commit and digest, with the 25 check records; registry first (rule 5)"
+  },
+  {
+   "bead": "N00-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38a-10"
+   ],
+   "note": "the same plan-time checks held as twenty pilot rows by the Gauntlet group; reported as a cross-group overlap, not blocking"
+  },
+  {
+   "bead": "N00-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "cross-group duplicate: both beads create frob-conformance/registry/pilots.toml and the funding rule; reported, not blocking until the lead keeps one"
+  },
+  {
+   "bead": "N00-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N44-04",
+    "N44-01"
+   ],
+   "note": "the callers of the refusal (the work-package checks and the envelope requests); they read this ledger, it does not wait for them"
+  },
+  {
+   "bead": "N00-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-02"
+   ],
+   "note": "the per-crate caps as data, read by check H-4; the list of six checks is its dependency BD-004"
+  },
+  {
+   "bead": "N00-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N41-16",
+    "N41-17"
+   ],
+   "note": "the tracker script calls check H-2 at each milestone; N41-17 (M1) checks typed close reasons too (reported as a cross-group overlap)"
+  },
+  {
+   "bead": "N00-08",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-037"
+   ],
+   "note": "registries/upstream.toml with interim posture and switch-over rule per item, read by check H-5"
+  },
+  {
+   "bead": "N00-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-38",
+    "N40-18",
+    "N39a-39",
+    "N39b-09"
+   ],
+   "note": "these beads read the funding record this bead defines and so depend on it; a dependency from here would close a cycle; the 10% rule itself is stated in this bead"
+  },
+  {
+   "bead": "N00-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N44-01",
+    "N21c-35"
+   ],
+   "note": "the envelope requests of the work packages with the owner's rulings, and the definition of classes E0 to E3"
+  },
+  {
+   "bead": "N00-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "NAB-32"
+   ],
+   "note": "two registers that cite each other; the killed-idea register needs this bead's verdict states, so the dependency runs from there to here"
+  },
+  {
+   "bead": "N00-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-12",
+    "NAB-13"
+   ],
+   "note": "the source records every published figure in the rows must resolve to"
+  },
+  {
+   "bead": "N00-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-12",
+    "NAB-13"
+   ],
+   "note": "the source records every published figure in the rows must resolve to"
+  },
+  {
+   "bead": "N00-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-12"
+   ],
+   "note": "the source records on incumbent engines that the 21 rows cite by key (schema NAB-09 is reached through it)"
+  },
+  {
+   "bead": "N00-14",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-039 (comparator registry, pinned environments, launcher); the timed baseline BD-040 is already related"
+  },
+  {
+   "bead": "N00-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-18",
+    "N40-01"
+   ],
+   "note": "the gate record and its statuses, which decide whether a bracketed condition is printed"
+  },
+  {
+   "bead": "N00-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N33a-09",
+    "N33a-02",
+    "N33c-40",
+    "N33c-48"
+   ],
+   "note": "the Suite group's fact probes, foundation rows and the gates of the later facts; cross-references by fact, and N33a-09 overlaps this bead (reported)"
+  },
+  {
+   "bead": "N00-16",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered: the stack lock is BD-001, a dependency of its dependency BD-006"
+  },
+  {
+   "bead": "N00-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-38",
+    "N40-18"
+   ],
+   "note": "the callers of the calculators; M1, later than this M0 bead"
+  },
+  {
+   "bead": "N00-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-23",
+    "N39a-24"
+   ],
+   "note": "the thirteen phases with exclusive attribution, and the ledger record with the 2% closure rule; the parity-baseline records are its dependencies BD-040 and BD-143"
+  },
+  {
+   "bead": "N00-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block frob.perf.disclosure/1"
+  },
+  {
+   "bead": "N00-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-03",
+    "N39a-27"
+   ],
+   "note": "the contract states the estimand; the estimator is built against it at M3, so the dependency runs from the scorer to this bead"
+  },
+  {
+   "bead": "N00-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-23",
+    "N39a-24"
+   ],
+   "note": "the phase-ledger schema a conforming report must carry"
+  },
+  {
+   "bead": "N00-19",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N40-19",
+    "N39b-34",
+    "N39a-13"
+   ],
+   "note": "M3, later than this M1 bead; the conformance test reads their records once they exist"
+  },
+  {
+   "bead": "N00-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-45",
+    "N39b-43"
+   ],
+   "note": "M3, later than this M1 bead; the M3 and M7 scoring reads their results"
+  },
+  {
+   "bead": "N00-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28c-42"
+   ],
+   "note": "M3, later than this M1 bead"
+  },
+  {
+   "bead": "N00-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-05"
+   ],
+   "note": "the exit protocol runs this bead's check at every exit; a shared procedure, neither blocks the other"
+  },
+  {
+   "bead": "N00-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-02"
+   ],
+   "note": "the gate rows every goal must trace to (the record schema N40-01 is reached through it)"
+  },
+  {
+   "bead": "N00-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N41-16"
+   ],
+   "note": "both read the tracker export; the goal-carried check can run beside the hygiene checks"
+  },
+  {
+   "bead": "N00-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-03"
+   ],
+   "note": "the tier-feature rule of check-deps and the workspace's feature table"
+  },
+  {
+   "bead": "N00-23",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-003 (check-deps), which reads this bead's deny lists"
+  },
+  {
+   "bead": "N00-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N35-18",
+    "N21a-10"
+   ],
+   "note": "the full ban table and the completed lint are M2, later than this M1 bead; the M0 lint for the banned constructs is its dependency BD-013"
+  },
+  {
+   "bead": "N00-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block and its completeness check"
+  },
+  {
+   "bead": "N00-24",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N32a-15",
+    "BD-296"
+   ],
+   "note": "budgets and admission (M2) and the daemon's admission guard (M3) are later than this M1 bead; guard 1 is asserted from the job manifest once they exist"
+  },
+  {
+   "bead": "N00-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-18",
+    "N40-01"
+   ],
+   "note": "the gate record takes its claim kinds from this registry, so the dependency runs from the gate record to here"
+  },
+  {
+   "bead": "N00-25",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005 (evidence classes and the claim product in frob-core)"
+  },
+  {
+   "bead": "N00-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the frob-lemma writer and the first checkers that create Certified evidence; classes are its dependency BD-005, claims its dependency BD-021"
+  },
+  {
+   "bead": "N00-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N37-25",
+    "BD-308"
+   ],
+   "note": "the measurement of GATE-SAFE-08 at M1 tests this mechanism and depends on it (rule 4); the full boundary is M3"
+  },
+  {
+   "bead": "N00-26",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "actuator and interface cards with per-field provenance; sensor cards with provenance (BD-238) are M3 and not needed for the M1 form"
+  },
+  {
+   "bead": "N00-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-13",
+    "N28b-32"
+   ],
+   "note": "revalidation of mission cells at M1 and the registry entry of result.revalidate"
+  },
+  {
+   "bead": "N00-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-22",
+    "N24c-04"
+   ],
+   "note": "the scorecard with outcome columns and two denominators, and the verbs that print it"
+  },
+  {
+   "bead": "N00-27",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-205",
+    "N27a-05"
+   ],
+   "note": "forks are M2, later than this M1 bead; the last sentence of rule 9 is tested when they land"
+  },
+  {
+   "bead": "N00-27",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-336"
+   ],
+   "note": "skill artifacts are M4, later than this M1 bead; rule 12 is tested on them then"
+  },
+  {
+   "bead": "N00-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-18",
+    "N40-01"
+   ],
+   "note": "the gate record and its statuses, which the verdict function reads"
+  },
+  {
+   "bead": "N00-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-23",
+    "N40-27"
+   ],
+   "note": "the kill-gate record format and the two fallback ledgers that exist at M0; the four ledgers of M1 are recorded as related edges"
+  },
+  {
+   "bead": "N00-28",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "M1, later than this M0 bead; the pre-registration check reads the method-experiment register once it exists"
+  },
+  {
+   "bead": "N00-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-002 (the demo.yaml schema ships with the companion documents)"
+  },
+  {
+   "bead": "N00-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N34-12",
+    "N41-27"
+   ],
+   "note": "the demo runner and the release checker read the demo files and depend on this bead; N34-12 overlaps the index runner (reported)"
+  },
+  {
+   "bead": "N00-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-023"
+   ],
+   "note": "frob-mcp v0, for the lane of the skeleton that drives a demonstration over MCP; frob --json is its dependency BD-022"
+  },
+  {
+   "bead": "N00-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-09"
+   ],
+   "note": "the source register that re-read sources are appended to"
+  },
+  {
+   "bead": "N00-32",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "not a prerequisite: the review reads bead definitions, which exist once the beads are loaded, and each unit's coverage file maps the late subsections to keys"
+  },
+  {
+   "bead": "N00-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the control runner and the five rules of the negative-control registry"
+  },
+  {
+   "bead": "N00-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the known-answer registry's row rules and eligibility states; the decisions OPEN-GAUNT-3 (N38b-28) and OPEN-GAUNT-2 (N38b-27) defer to this bead for its fourteen rows"
+  },
+  {
+   "bead": "N00-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-09",
+    "NAB-12",
+    "NAB-13",
+    "NAB-14"
+   ],
+   "note": "the register with its re-read flag and the source records to re-read; the citation lint NAB-10 consumes the result and is not a prerequisite"
+  },
+  {
+   "bead": "N00-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-219",
+    "N38b-54"
+   ],
+   "note": "consumers of the re-measured limits; later than this M0 bead"
+  },
+  {
+   "bead": "N00-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-38",
+    "N18b-25"
+   ],
+   "note": "consumers of the conditioning numbers; M2, later than this M0 bead"
+  },
+  {
+   "bead": "N00-CX",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-025 (the negative-control registry and the no-control check); the runner N38b-04 and the seeding tool N38b-05 read this bead's entries"
+  },
+  {
+   "bead": "N00-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the registry skeleton: row schema, loader and the generated printout (rule 5)"
+  },
+  {
+   "bead": "NS-06",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-343 (design.bisect), which depends on BD-113 (the lineage graph over typed patches)"
+  },
+  {
+   "bead": "NS-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-067"
+   ],
+   "note": "the model manifest with source, commit, licence and redistribution rule of each reference robot"
+  },
+  {
+   "bead": "NS-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-12"
+   ],
+   "note": "soil laws and soil cards with validity ranges; which measured tables ship is OPEN-TRAC-3 (N18b-36)"
+  },
+  {
+   "bead": "NS-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19c-09"
+   ],
+   "note": "the owner decision OPEN-HAB-5"
+  },
+  {
+   "bead": "NS-12",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-398 (INT-FDGR-01), which depends on the schema pilot N33a-25"
+  },
+  {
+   "bead": "NS-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-13"
+   ],
+   "note": "revalidation of mission cells at M1 (the passive-spring amendment)"
+  },
+  {
+   "bead": "NS-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-22",
+    "N23b-24"
+   ],
+   "note": "the owner decision OPEN-CORTEX-1 (two beads of the Cortex group carry it)"
+  },
+  {
+   "bead": "NS-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-26",
+    "N41-10"
+   ],
+   "note": "the decision OPEN-GAUNT-1 (two beads carry it)"
+  },
+  {
+   "bead": "NS-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-18",
+    "N39b-20",
+    "N40-17"
+   ],
+   "note": "the kit builder, replication level 2, and the record of GATE-TENFOLD-08"
+  },
+  {
+   "bead": "NS-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N41-06",
+    "N39b-24"
+   ],
+   "note": "the owner decision OPEN-PROG-2 and the kill-gate decision KILL-TENFOLD-ADJ that labels a result without a neutral simulator"
   }
  ],
  "edges": [
@@ -540,15 +1239,9 @@
   },
   {
    "bead": "BET-03",
-   "dep": "N18a-19",
-   "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-CONTACT"
-  },
-  {
-   "bead": "BET-03",
    "dep": "N18b-33",
    "as": "dep",
-   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-CONTACT (second bead of the Traction group for the same decision)"
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-CONTACT"
   },
   {
    "bead": "BET-04",

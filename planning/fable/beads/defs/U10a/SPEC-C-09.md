@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-algebra", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-048", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["§20.13: the observation-term transformation declarations that Γ_obs filters on (BD-241)", "§14.7: the design constructors mirror and radial with their declared generators (BD-056)"]
-related: ["BD-102", "BD-241", "BD-325", "BD-326", "BD-327", "N10a-10", "SPEC-C-10", "SPEC-C-22", "CARD-T-10", "CARD-T-16", "N10-KA1"]
+related: ["BD-102", "BD-241", "BD-325", "BD-326", "BD-327", "N10a-10", "SPEC-C-10", "SPEC-C-22", "CARD-T-10", "CARD-T-16", "N10-KA1", "BD-048"]
 gates: ["GATE-MARROW-03", "GATE-MARROW-04", "GATE-REFLEX-07", "GATE-CORTEX-03"]
 plan_refs: ["§10 C-09", "§9 D-14", "§11.4", "§13.2", "§13.4", "§13.8", "§13.10", "§12.3 T-10 T-16", "§38.7", "Appendix D.5", "Appendix E GB-02", "Appendix M KA-066 KA-068 to KA-071", "Appendix N CX-031 to CX-033"]
 ---
@@ -61,6 +61,17 @@ to KA-071; the statement of T-10.
 Out: the production symmetry computation and its verb (BD-102, BD-241); representation theory (N10a-10); the
 equivariant layers (BD-325) and the three-arm experiment (BD-326); symmetric controllers (BD-327); orbit
 deduplication (construction C-22, another unit); gait enumeration (SPEC-C-10).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-048 (finite groups and
+characters in `frob-algebra`): that bead is listed in `related` and is not a prerequisite. The law suite is
+generic over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-algebra` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-cert", "frob-sense", "frontier", "test"]
 parent: "WP-42"
-deps: ["BD-132", "BD-134", "N12-06", "SPEC-C-19"]
+deps: ["BD-132", "N12-06", "SPEC-C-19"]
 needs: ["§0.7: the paper-scale pilot of the information construction (the docking family against an independently written scenario-tree linear program, and one planted stale-read race), owned by the mission and sensing work (BD-041, BD-129)"]
-related: ["CARD-T-23", "BD-240", "BD-290", "BD-098"]
+related: ["CARD-T-23", "BD-240", "BD-290", "BD-098", "BD-134"]
 gates: []
 plan_refs: ["§12.3 (T-30)", "§10 C-19", "§20.12", "§25.10", "§25.5.2 (alias-pair)"]
 ---
@@ -38,6 +38,16 @@ In: statement document, registry row, the `alias-pair` certificates bound to thi
 kernel class versus floating point), fixtures and mutants. Out: the checker (BD-132); searching for witnesses
 (the alias-witness search); the packet model and clock contract; label counts and schedule classes (other
 objects of the same construction).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the late-packet alias witness of `frob-sense` (BD-134) is `related`, not a dependency (a card that waited for its
+implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
+does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(witnesses found by the alias mechanism and their export by the mission verbs) is run inside the implementing
+bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
+registry row for that output.
 
 ## Technical approach
 

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-cert", "frob-lemma", "solid", "test"]
 parent: "WP-42"
-deps: ["BD-132", "BD-129", "N12-06", "SPEC-C-19"]
+deps: ["BD-132", "N12-06", "SPEC-C-19"]
 needs: []
-related: ["BD-041", "BD-134", "N12-39", "CARD-T-30", "N12-35", "N12-05"]
+related: ["BD-041", "BD-134", "N12-39", "CARD-T-30", "N12-35", "N12-05", "BD-129"]
 gates: []
 plan_refs: ["§12.3 (T-23)", "§10 C-19", "§10 C-17", "§10 C-18", "§12.7", "Appendix D.6 (docking boundary)"]
 ---
@@ -41,6 +41,16 @@ In: statement document, registry row, the per-cell certificates on the instance 
 inclusions, `alias-pair` for exclusions) bound to this card, the boundary cases, the registered mutations.
 Out: the solver for the family and its scenario-tree comparator (the docking-family bead); the checkers
 (BD-132); the Lean theorem (N12-39); the three-gain amendment (polarity, N12-05).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the docking-family solver of `frob-mission` (BD-129) is `related`, not a dependency (a card that waited for its
+implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
+does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
+Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
+every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
+(bundles emitted by the solver itself and the grid classification run through them) is run inside the implementing
+bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
+registry row for that output.
 
 ## Technical approach
 

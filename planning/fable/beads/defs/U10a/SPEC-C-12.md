@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "skeleton", "frob-design", "frob-model", "frontier", "spine", "spec", "test"]
 parent: "WP-07"
-deps: ["BD-054", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["§10 C-38: port-Hamiltonian actuator components, the target of the dynamic functor (SPEC-C-38, another unit)", "§29.9: the energy ledger, which reads the port structure at run time (BD-092)"]
-related: ["BD-056", "BD-060", "BD-061", "BD-062", "BD-063", "BD-076", "BD-077", "N10a-11", "N10a-19", "SPEC-C-02", "SPEC-C-09", "CARD-T-15", "CARD-T-29", "N10-KA1"]
+related: ["BD-056", "BD-060", "BD-061", "BD-062", "BD-063", "BD-076", "BD-077", "N10a-11", "N10a-19", "SPEC-C-02", "SPEC-C-09", "CARD-T-15", "CARD-T-29", "N10-KA1", "BD-054"]
 gates: ["GATE-SKEL-02", "GATE-SKEL-06", "GATE-SINEW-02", "GATE-CHRON-03"]
 plan_refs: ["§10 C-12", "§9 D-11", "§14.6", "§14.14", "§12.3 T-15 T-29", "§38.7", "Appendix C.1", "Appendix D.4", "Appendix M KA-075 KA-076 KA-078 KA-079", "Appendix N CX-037"]
 ---
@@ -50,6 +50,17 @@ statements of T-15 and T-29.
 Out: the term model, constructors and module format (BD-054, BD-056, BD-060); the functors' implementations
 (BD-061, BD-062, BD-063); the port energy-balance check on the referee (BD-076); the budget functor, shared
 resources and invalidation (N10a-11); the pilot (N10a-19).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-054 (the design term model
+of `frob-design`): that bead is listed in `related` and is not a prerequisite. The law suite is generic over its
+subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-design`
+does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

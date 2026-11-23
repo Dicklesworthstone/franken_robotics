@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-027", "BD-011", "N12-06", "CARD-T-04"]
+deps: ["BD-027", "N12-06", "CARD-T-04"]
 needs: []
-related: ["BD-010", "BD-102", "CARD-T-10", "CARD-T-05", "CARD-T-18"]
+related: ["BD-010", "BD-102", "CARD-T-10", "CARD-T-05", "CARD-T-18", "BD-011"]
 gates: []
 plan_refs: ["§12.3 (T-16)", "§11.2", "§11.4", "§13.3", "§10 C-04", "§10 C-09", "Appendix D.1 (algebra adjoint and coadjoint, reflection parity)"]
 ---
@@ -42,6 +42,16 @@ prose and trusting each recursion's author.
 In: statement document, registry row, the certificates on the convention kernels (ad, ad*, the parity map),
 specimen and mutants. Out: checking the conventions against the sibling's façade at M0 (the algebra crate's
 obligation); the group-level statements (CARD-T-04, CARD-T-05); step equivariance (CARD-T-10).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the retractions and coadjoint convention of `frob-lie` (BD-011) is `related`, not a dependency (a card that waited
+for its implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What
+the card does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier,
+and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants,
+and every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live
+output (certificates bound to the content hashes of the convention kernels as built) is run inside the
+implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there is
+what moves the registry row for that output.
 
 ## Technical approach
 

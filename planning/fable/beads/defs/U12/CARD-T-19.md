@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-algebra", "solid", "test"]
 parent: "WP-03"
-deps: ["BD-027", "BD-051", "N12-06", "SPEC-C-03"]
+deps: ["BD-027", "N12-06", "SPEC-C-03"]
 needs: ["§14.5: inertia derived from geometry and material, with the shell rule in exact rationals (BD-062)"]
-related: ["BD-382", "BD-065", "BD-066", "N12-REF", "CARD-T-28"]
+related: ["BD-382", "BD-065", "BD-066", "N12-REF", "CARD-T-28", "BD-051"]
 gates: []
 plan_refs: ["§12.3 (T-19)", "§11.5", "§10 C-03", "§12.7 (FROB-REF-168)", "Appendix D.1 (pseudo-inertia, shell rule, mass-support bound)"]
 ---
@@ -41,6 +41,16 @@ the inequality), specimens and mutants, the binding to the importer's refusals. 
 mass-support predicate as library code (the algebra crate bead); geometry-derived inertia and the shell rule
 (the model compiler); the plausibility refusal for solid enclosures (FROB-REF-168, raised by the compiler);
 Riemannian identification on the cone (Frontier, separate pilot).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the pseudo-inertia cone of `frob-algebra` (BD-051), like the model compiler that derives inertia is `related`, not
+a dependency (a card that waited for its implementer would close a loop, because the implementer's own acceptance
+runs the card's law tests). What the card does depend on is in `deps`: the card registry, its specification, its
+pilot where the route is Frontier, and Lemma's own proof machinery. It closes on its statement document, its
+registry row, its specimens and mutants, and every acceptance line that its own fixtures decide. An acceptance
+line that can only be observed on live output (the per-body certificates of each reference robot and the
+importer's refusal of a failing body) is run inside the implementing bead, with this card's law tests, as part of
+that bead's acceptance; the receipt produced there is what moves the registry row for that output.
 
 ## Technical approach
 

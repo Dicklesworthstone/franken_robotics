@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "frob-arena", "solid", "test"]
 parent: "WP-41"
-deps: ["BD-124", "N12-06", "SPEC-C-15"]
+deps: ["N12-06", "SPEC-C-15"]
 needs: []
-related: ["BD-381", "BD-259", "N12-13", "BD-383", "N12-37"]
+related: ["BD-381", "BD-259", "N12-13", "BD-383", "N12-37", "BD-124"]
 gates: []
 plan_refs: ["§12.3 (T-26)", "§10 C-15", "§24.12", "§24.13", "§0.7 (a frozen decision rule is enumerated before sampling)", "Appendix D.8 (error budget for retries)"]
 ---
@@ -39,6 +39,16 @@ In: statement document, registry row, the exact enumeration test for reachable v
 exact-rational check of the level series, the registered Lean statement. Out: the study runner and
 `eval.preanalyze` (the study-type bead); the qualification lane; the receipt arithmetic checker (N12-13); the
 Lean proof (written in BD-381's first batch).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the study types of `frob-arena` (BD-124) is `related`, not a dependency (a card that waited for its implementer
+would close a loop, because the implementer's own acceptance runs the card's law tests). What the card does depend
+on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and Lemma's own
+proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and every
+acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output (the
+enumeration of a declared study rule at admission, and the refusal of a study that needs an unreachable verdict)
+is run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt
+produced there is what moves the registry row for that output.
 
 ## Technical approach
 

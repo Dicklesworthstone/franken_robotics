@@ -1,0 +1,2293 @@
+{
+ "group": "G22",
+ "needs": [
+  {
+   "bead": "BD-049",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-16"
+   ],
+   "note": "Γ_obs with its action on named slots comes from N13-16; BD-102 is the analysis verb over the same group and stays related"
+  },
+  {
+   "bead": "BD-050",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-050",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N13-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-051",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-052",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-116",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22b-24"
+   ],
+   "note": "later milestone (M4); until it lands the fallback of last resort is the posture freeze under the driver's joint PD"
+  },
+  {
+   "bead": "BD-116",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-070",
+    "BD-073"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-249",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-248"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "BD-249",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-07",
+    "N38b-19"
+   ],
+   "note": "the method-experiment register (six parts written before the first run) is the pre-registration record; the gate recorder writes the ledger row"
+  },
+  {
+   "bead": "BD-251",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-16"
+   ],
+   "note": "the conic-farkas checker lands at M4; at M3 the planted polyhedral case is audited by lp-farkas of BD-132 (already a dependency) and second-order-cone certificates are checked exactly in process"
+  },
+  {
+   "bead": "BD-251",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-133"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-251",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N22c-52"
+   ],
+   "note": "OPEN-REFLEX-3 blocks GATE-REFLEX-05"
+  },
+  {
+   "bead": "BD-251",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "the `smoke` battery manifest"
+  },
+  {
+   "bead": "BD-252",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-31",
+    "N22c-32"
+   ],
+   "note": "both depend on BD-252; `--freeze` answers capability-not-implemented until they land"
+  },
+  {
+   "bead": "BD-252",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-24"
+   ],
+   "note": "later milestone (M6); it depends on BD-252"
+  },
+  {
+   "bead": "BD-252",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N23a-25"
+   ],
+   "note": "later milestone (M4); the out-of-support refusal of policy.apply triggers the fallback role"
+  },
+  {
+   "bead": "BD-252",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-323"
+   ],
+   "note": "BD-323 (M4) depends on BD-252"
+  },
+  {
+   "bead": "BD-252",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N22c-53"
+   ],
+   "note": "the M4 experiment depends on BD-252; the 20 ms default is in force"
+  },
+  {
+   "bead": "BD-327",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-control"
+   ],
+   "note": "the registry row of control.symmetry; BD-376 is the M4 capstone and already depends on BD-327"
+  },
+  {
+   "bead": "BD-327",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "BD-327",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-025",
+    "N22-CX"
+   ],
+   "note": "the negative-control registry and the chapter's counterexample rows; BD-377 is the M4 conformance capstone, related only"
+  },
+  {
+   "bead": "BD-330",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-20"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-330",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-33"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-330",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N22c-52"
+   ],
+   "note": "the M4 measurement runs at the decided authority"
+  },
+  {
+   "bead": "BD-330",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-328"
+   ],
+   "note": "the specialists of the calibration set are reused"
+  },
+  {
+   "bead": "BD-331",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22c-53"
+   ],
+   "note": "OPEN-REFLEX-4 blocks GATE-REFLEX-06"
+  },
+  {
+   "bead": "BD-331",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22c-31"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-331",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-066"
+   ],
+   "note": "MJCF import with a loss report"
+  },
+  {
+   "bead": "BD-331",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N36-13",
+    "BD-172",
+    "BD-174"
+   ],
+   "note": "the disclosure block and the two device backends"
+  },
+  {
+   "bead": "BD-331",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-323"
+   ],
+   "note": "GATE-CORTEX-14's figure is measured there and read by the bet's decision; it does not block this gate"
+  },
+  {
+   "bead": "BD-334",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22c-54"
+   ],
+   "note": "OPEN-GAIT-2 blocks GATE-GAIT-02"
+  },
+  {
+   "bead": "BD-334",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-341"
+   ],
+   "note": "the route a refused gradient is sent to; not a prerequisite"
+  },
+  {
+   "bead": "BD-334",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "VERBS-gait"
+   ],
+   "note": "the registry row of gait.gradient; BD-376 is the capstone and already depends on BD-334"
+  },
+  {
+   "bead": "BD-334",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "the M4 conformance capstone collects the suite; the registry itself (BD-025) is already a dependency"
+  },
+  {
+   "bead": "BD-334",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N22c-36"
+   ],
+   "note": "the event-section path; N22c-37 depends on BD-334 and is recorded as related in edges"
+  },
+  {
+   "bead": "BD-335",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-gait"
+   ],
+   "note": "the registry row of gait.continue; BD-376 already depends on BD-335"
+  },
+  {
+   "bead": "BD-335",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "BD-377 depends on BD-335 through BD-352"
+  },
+  {
+   "bead": "BD-335",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-352",
+    "BD-345"
+   ],
+   "note": "consumers of the screening table; BD-352 depends on BD-335"
+  },
+  {
+   "bead": "BD-335",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-322"
+   ],
+   "note": "the learning-side counterpart, used for accounting only"
+  },
+  {
+   "bead": "BD-336",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-skill"
+   ],
+   "note": "the registry rows of the skill verbs; BD-376 gains BD-336 as a dependency (edges)"
+  },
+  {
+   "bead": "BD-336",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "BD-337",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-shield"
+   ],
+   "note": "the registry rows of shield.budget and shield.check; BD-376 gains BD-337 as a dependency (edges)"
+  },
+  {
+   "bead": "BD-337",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "BD-338",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-shield"
+   ],
+   "note": "the registry rows of shield.fit and shield.check; BD-376 gains BD-338 as a dependency (edges)"
+  },
+  {
+   "bead": "BD-338",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-28"
+   ],
+   "note": "N22c-28 extends shield.fit and depends on BD-338"
+  },
+  {
+   "bead": "BD-338",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N22c-44"
+   ],
+   "note": "N22c-44 extends shield.fit and depends on BD-338"
+  },
+  {
+   "bead": "BD-338",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "BD-339",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22c-27"
+   ],
+   "note": "the pre-slip aliasing fixture; BET-25 is the bet's decision bead and depends on BD-339"
+  },
+  {
+   "bead": "BD-339",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the penalty-trained comparison arm is trained inside BD-339 with the trainer of its dependency BD-198; BET-25 is the bet's decision bead, which depends on BD-339"
+  },
+  {
+   "bead": "BD-339",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N20a-03",
+    "BD-090"
+   ],
+   "note": "the four namespaces with declared access and the telemetry streams the evaluator reads"
+  },
+  {
+   "bead": "BD-340",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-shield"
+   ],
+   "note": "the registry row of shield.report; BD-376 already depends on BD-340"
+  },
+  {
+   "bead": "BD-340",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "the negative-control registry; BD-377 is the M4 conformance capstone, related only"
+  },
+  {
+   "bead": "BD-440",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N41-09"
+   ],
+   "note": "an epic carries no dependencies; the edge is placed on its first mechanism child N22b-34 (edges)"
+  },
+  {
+   "bead": "BD-440",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-35"
+   ],
+   "note": "the owner-input calendar lists the question; an epic carries no dependencies"
+  },
+  {
+   "bead": "N22-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-04"
+   ],
+   "note": "N22c-04 registers the eight provisional rows (KA-R22-a to -h); two registries, neither blocks the other"
+  },
+  {
+   "bead": "N22a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-01"
+   ],
+   "note": "N16a-01 creates the frob-dyn crate skeleton (it depends on BD-007)"
+  },
+  {
+   "bead": "N22a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-024"
+   ],
+   "note": "sim.run exists at M0 and takes the option; BD-125 and eval.run (N24c-04) consume the option and stay related"
+  },
+  {
+   "bead": "N22a-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29-REF"
+   ],
+   "note": "the Chronicle refusal registry"
+  },
+  {
+   "bead": "N22a-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-control"
+   ],
+   "note": "the registry row of control.estimate; BD-137 is the M1 capstone and gains N22a-04 as a dependency (edges)"
+  },
+  {
+   "bead": "N22a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N22c-49"
+   ],
+   "note": "the gate recorder and the Reflex rows of gates.toml"
+  },
+  {
+   "bead": "N22a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-099"
+   ],
+   "note": "sensor cards on the referee; the full IMU chain N20a-14 is M2"
+  },
+  {
+   "bead": "N22a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N12-16"
+   ],
+   "note": "later milestone (M4); until then certificates are checked exactly in process"
+  },
+  {
+   "bead": "N22a-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-167"
+   ],
+   "note": "interface cards by material pair land at M2; at M1 μ_min is the contact law's parameter on the referee"
+  },
+  {
+   "bead": "N22a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-125"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N22c-49"
+   ],
+   "note": "the gate recorder and the Reflex rows of gates.toml"
+  },
+  {
+   "bead": "N22a-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-118"
+   ],
+   "note": "BD-118 serves this report and gains N22a-12 as a dependency"
+  },
+  {
+   "bead": "N22a-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-50"
+   ],
+   "note": "later milestone (M3); the default (single-step program on every tier) is in force"
+  },
+  {
+   "bead": "N22a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-151"
+   ],
+   "note": "the actuator kernels on batched tiers; the envelope itself is BD-073, already a dependency"
+  },
+  {
+   "bead": "N22a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18a-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "cards with per-field provenance; the envelope is BD-073, already a dependency"
+  },
+  {
+   "bead": "N22a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-13",
+    "N24c-02"
+   ],
+   "note": "hard-limit atoms and the verdict verb that fails the run"
+  },
+  {
+   "bead": "N22a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-52"
+   ],
+   "note": "the default ρ = 0.3 is in force for the wrapper; the gate bead BD-251 takes the dependency"
+  },
+  {
+   "bead": "N22a-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23a-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-265"
+   ],
+   "note": "the rank-agreement record with permitted use and FROB-REF-537 at M3; the M4 ledger N28b-22 is related (edges)"
+  },
+  {
+   "bead": "N22a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22c-51"
+   ],
+   "note": "OPEN-REFLEX-2 blocks GATE-REFLEX-04"
+  },
+  {
+   "bead": "N22a-17",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-328"
+   ],
+   "note": "later milestone (M4); it measures the gate this bead reads"
+  },
+  {
+   "bead": "N22a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-control"
+   ],
+   "note": "the registry row of control.ladder; BD-312 is the M3 capstone and gains N22a-18 as a dependency (edges)"
+  },
+  {
+   "bead": "N22a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-118"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N22a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-067"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-50"
+   ],
+   "note": "N22c-50 measures this controller on device and depends on it"
+  },
+  {
+   "bead": "N22a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-118"
+   ],
+   "note": "the dispatch this class registers into; BD-247 integrates the row and gains N22a-21 as a dependency (edges)"
+  },
+  {
+   "bead": "N22a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "BD-039, already a dependency, runs the incumbent with the block"
+  },
+  {
+   "bead": "N22a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01",
+    "N21a-04"
+   ],
+   "note": "the manifest with its stage signature and the kernel library index"
+  },
+  {
+   "bead": "N22a-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-151"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-53"
+   ],
+   "note": "later milestone (M4); the 20 ms default is in force"
+  },
+  {
+   "bead": "N22a-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-217",
+    "BD-218"
+   ],
+   "note": "measured figures replace the TARGET rows when they exist; not a prerequisite"
+  },
+  {
+   "bead": "N22a-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-32",
+    "N22c-31"
+   ],
+   "note": "both depend on this bead through BD-252; the hook refuses by default until the lane exists"
+  },
+  {
+   "bead": "N22a-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22a-25",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-352",
+    "BD-372"
+   ],
+   "note": "both already depend on this bead"
+  },
+  {
+   "bead": "N22a-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-31"
+   ],
+   "note": "N22c-31 depends on BD-252; the script asserts capability-not-implemented until it lands"
+  },
+  {
+   "bead": "N22a-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-323"
+   ],
+   "note": "later milestone (M4); the script uses a placeholder job"
+  },
+  {
+   "bead": "N22a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22a-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-078"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16a-03"
+   ],
+   "note": "the step-plan identity that the cold-start option enters; the batched step BD-159 is already a dependency"
+  },
+  {
+   "bead": "N22a-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-208"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10b-01"
+   ],
+   "note": "SPEC-C-16 is already a dependency"
+  },
+  {
+   "bead": "N22a-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-20"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-102",
+    "N13-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22b-37"
+   ],
+   "note": "Γ_use is built in N22b-37; the verb BD-327 is the capstone and stays related"
+  },
+  {
+   "bead": "N22a-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-11"
+   ],
+   "note": "N33b-11 admits the `spectral` group at M3; BD-333 is the capstone and gains this bead as a dependency (edges)"
+  },
+  {
+   "bead": "N22a-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-048"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N22a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-161"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N22a-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10b-01"
+   ],
+   "note": "SPEC-C-16 is already a dependency; CARD-T-17 is M5 and stays related"
+  },
+  {
+   "bead": "N22a-33",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "FD-FSIM-20"
+   ],
+   "note": "the upstream item depends on BD-333; the referee route is off the critical path (OPEN-GAIT-1)"
+  },
+  {
+   "bead": "N22a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-07",
+    "BD-161"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16a-07"
+   ],
+   "note": "the coupled solve assembles W = J·P·Jᵀ per island"
+  },
+  {
+   "bead": "N22a-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the rational-ldlt checker is in BD-027 (M0)"
+  },
+  {
+   "bead": "N22a-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-050",
+    "BD-115"
+   ],
+   "note": "already dependencies"
+  },
+  {
+   "bead": "N22a-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-376"
+   ],
+   "note": "the M4 capstone registers the schema; it does not block the record"
+  },
+  {
+   "bead": "N22a-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-113"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N22a-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-219",
+    "BD-210"
+   ],
+   "note": "budgets from sim.estimate and the job protocol with cancellation"
+  },
+  {
+   "bead": "N22a-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-333"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N22a-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22c-36"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-38",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22c-54"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22c-36",
+    "N22c-37"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-39",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-328",
+    "N28b-22"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22a-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-058"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-22",
+    "BD-141"
+   ],
+   "note": "the round-trip harness and the format registry at M1; BD-410 is the capstone and depends on BD-336"
+  },
+  {
+   "bead": "N22b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-16",
+    "BD-132"
+   ],
+   "note": "conic-farkas is N12-16 (M4); lp-farkas is BD-132; BD-251 shares the need and is already a dependency"
+  },
+  {
+   "bead": "N22b-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25c-02"
+   ],
+   "note": "BD-436 is an epic; N25c-02 holds the Augur-side checker and already depends on this bead through BD-336"
+  },
+  {
+   "bead": "N22b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the owner's compute-envelope decision"
+  },
+  {
+   "bead": "N22b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-320"
+   ],
+   "note": "train.family supplies treatment 2; BD-321 is already a dependency"
+  },
+  {
+   "bead": "N22b-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25c-02"
+   ],
+   "note": "BD-436 is an epic; mission.transport is N25c-02"
+  },
+  {
+   "bead": "N22b-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N23b-24"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-442"
+   ],
+   "note": "the exit review records the decision and gains this bead as a dependency (edges)"
+  },
+  {
+   "bead": "N22b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-22",
+    "BD-141"
+   ],
+   "note": "BD-410 is the capstone and depends on BD-337"
+  },
+  {
+   "bead": "N22b-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-387",
+    "N30b-38"
+   ],
+   "note": "later milestone (M5); until then the class stays `assumed`"
+  },
+  {
+   "bead": "N22b-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-150"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-078",
+    "N20a-08"
+   ],
+   "note": "the clock contract and the link model's delay distribution"
+  },
+  {
+   "bead": "N22b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-04",
+    "N21b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-45"
+   ],
+   "note": "N22c-45 depends on BD-337, which depends on this bead"
+  },
+  {
+   "bead": "N22b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-15",
+    "BD-167"
+   ],
+   "note": "the law registry and the verb contact.laws"
+  },
+  {
+   "bead": "N22b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-025",
+    "N22-CX"
+   ],
+   "note": "BD-377 is the M4 conformance capstone, related only"
+  },
+  {
+   "bead": "N22b-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review records the decision and gains this bead as a dependency (edges)"
+  },
+  {
+   "bead": "N22b-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-38"
+   ],
+   "note": "later milestone (M5)"
+  },
+  {
+   "bead": "N22b-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069",
+    "BD-167"
+   ],
+   "note": "cards with per-field provenance and interface cards; no bead adds an absorber card kind (reported under gaps)"
+  },
+  {
+   "bead": "N22b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22b-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "inside the default envelope; recorded with the pilot"
+  },
+  {
+   "bead": "N22b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-01"
+   ],
+   "note": "the trait is declared in N22a-01 of this chapter"
+  },
+  {
+   "bead": "N22b-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-28"
+   ],
+   "note": "N22c-28 depends on BD-338, which depends on this bead"
+  },
+  {
+   "bead": "N22b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-04",
+    "BD-152"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-01"
+   ],
+   "note": "`Proposed` and `Checked` are defined in N22a-01"
+  },
+  {
+   "bead": "N22b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22b-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-44",
+    "N22c-45"
+   ],
+   "note": "N22c-44 depends on BD-338, which depends on this bead"
+  },
+  {
+   "bead": "N22b-24",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "§12.3: no numbered theorem card carries the continuous-time damping identity dH/dt ≤ −yᵀ·K_d·y"
+  },
+  {
+   "bead": "N22b-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22c-28",
+    "N22c-27"
+   ],
+   "note": "the rule (N22c-28) depends on BD-338, which depends on this bead; the fixture tests it"
+  },
+  {
+   "bead": "N22b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-03",
+    "BD-090"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22b-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-319"
+   ],
+   "note": "the exit review records the answer and gains this bead as a dependency (edges)"
+  },
+  {
+   "bead": "N22b-28",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review records the decision and gains this bead as a dependency (edges)"
+  },
+  {
+   "bead": "N22b-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N22b-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-197",
+    "N23a-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-194"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N22b-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22b-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-442"
+   ],
+   "note": "the exit review records the decision and gains this bead as a dependency (edges)"
+  },
+  {
+   "bead": "N22b-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-163",
+    "N13-16"
+   ],
+   "note": "the compiled scene fields for the direct invariance test, and the context stabilizers"
+  },
+  {
+   "bead": "N22b-37",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "the chapter's refusal registry (M1) carries the row"
+  },
+  {
+   "bead": "N22b-38",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-326",
+    "N23a-32"
+   ],
+   "note": "Cortex owns augmentation and paired tests; not a prerequisite"
+  },
+  {
+   "bead": "N22b-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-122",
+    "N22c-04"
+   ],
+   "note": "the task file format, and the chapter's fixture pack that carries the two fixtures"
+  },
+  {
+   "bead": "N22b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "CARD-T-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-33",
+    "N22a-30"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22b-40",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25d-02"
+   ],
+   "note": "BD-426 is an epic; N25d-02 reuses the test and depends on BD-327"
+  },
+  {
+   "bead": "N22c-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "lp-farkas covers the orthant case at M1; the second-order-cone checker N12-16 is M4 and related (edges)"
+  },
+  {
+   "bead": "N22c-03",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§12.3: no numbered theorem card carries the continuous-time damping identity"
+  },
+  {
+   "bead": "N22c-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22-KA"
+   ],
+   "note": "two registries of the same rows; neither blocks the other"
+  },
+  {
+   "bead": "N22c-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22b-07"
+   ],
+   "note": "BD-436 is an epic; the measurement is N22b-07"
+  },
+  {
+   "bead": "N22c-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22c-22",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "an identifier, not a prerequisite: N22c-22 itself carries the upstream change; the missing Appendix F number is reported under gaps"
+  },
+  {
+   "bead": "N22c-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22c-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "VERBS-control"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22c-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22c-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-30"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22c-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-335",
+    "BD-334"
+   ],
+   "note": "the catalogue and the 100-case suite are the battery; their autonomous members are added by N22c-36"
+  },
+  {
+   "bead": "N22c-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of §38.5 (M0); the pilot is registered there before it runs"
+  },
+  {
+   "bead": "N22c-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-201"
+   ],
+   "note": "the terrain-traversal task family"
+  },
+  {
+   "bead": "N22c-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22c-41",
+    "BD-335"
+   ],
+   "note": "multi-mode members are registered by N22c-41 in the catalogue of BD-335"
+  },
+  {
+   "bead": "N22c-44",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§12.3: no numbered theorem card carries the continuous-time damping identity"
+  },
+  {
+   "bead": "N22c-45",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22a-16"
+   ],
+   "note": "the residual wrapper defines no work allowance; the rule applies if one is added"
+  },
+  {
+   "bead": "N22c-50",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-172",
+    "BD-174"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N22c-55",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069",
+    "BD-167"
+   ],
+   "note": "cards with per-field provenance and interface cards; no bead adds an absorber card kind (reported under gaps)"
+  },
+  {
+   "bead": "N22c-55",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-387",
+    "N30b-38"
+   ],
+   "note": "later milestone (M5)"
+  },
+  {
+   "bead": "N22c-57",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22b-35"
+   ],
+   "note": "BD-440 is an epic; the measurement is N22b-35"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "SPEC-C-31",
+   "dep": "BD-337",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "CARD-T-28",
+   "dep": "BD-337",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-29",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: the seed is the capstone of the stride map"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-30",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: stride-map Jacobians"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-31",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: symmetric shooting"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-32",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: monodromy and multipliers"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-33",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: saltation and event-located tangent maps"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-36",
+   "as": "dep",
+   "why": "coverage (e)1 of U22a: the GaitOrbit record"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N22a-28",
+   "as": "dep",
+   "why": "coverage (d) of U22c: a Frontier mechanism depends on its pilot (N22c-09 superseded by N22a-28)"
+  },
+  {
+   "bead": "BD-247",
+   "dep": "N22c-05",
+   "as": "dep",
+   "why": "coverage (d) of U22c: pilot of the predictive and biped routes"
+  },
+  {
+   "bead": "BD-247",
+   "dep": "N22c-06",
+   "as": "dep",
+   "why": "coverage (d) of U22c: pilot of the hybrid and arm routes"
+  },
+  {
+   "bead": "BD-247",
+   "dep": "N22a-21",
+   "as": "dep",
+   "why": "need 2 of N22a-21: BD-247 integrates the predictive legged row"
+  },
+  {
+   "bead": "GB-26",
+   "dep": "N22b-09",
+   "as": "dep",
+   "why": "its dependency N22c-10 is superseded by N22b-09"
+  },
+  {
+   "bead": "BD-376",
+   "dep": "BD-336",
+   "as": "dep",
+   "why": "coverage (d) of U22b: the M4 verb set includes the skill verbs"
+  },
+  {
+   "bead": "BD-376",
+   "dep": "BD-337",
+   "as": "dep",
+   "why": "coverage (d) of U22b: the M4 verb set includes shield.budget"
+  },
+  {
+   "bead": "BD-376",
+   "dep": "BD-338",
+   "as": "dep",
+   "why": "coverage (d) of U22b: the M4 verb set includes shield.fit and shield.check"
+  },
+  {
+   "bead": "BD-137",
+   "dep": "N22a-04",
+   "as": "dep",
+   "why": "need 2 of N22a-04: the M1 verb set includes control.estimate"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N22a-18",
+   "as": "dep",
+   "why": "need 1 of N22a-18: the M3 verb set includes control.ladder"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N22b-16",
+   "as": "dep",
+   "why": "need 1 of N22b-16: the M4 exit review records KILL-ENERGY"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N22b-28",
+   "as": "dep",
+   "why": "need 1 of N22b-28: the M4 exit review records KILL-SHIELD"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N22c-15",
+   "as": "dep",
+   "why": "the M4 exit review lists KILL-RESIDUAL in its gates"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N22c-16",
+   "as": "dep",
+   "why": "the M4 exit review lists KILL-MPC in its gates"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N22c-17",
+   "as": "dep",
+   "why": "the M4 exit review lists KILL-GAIT in its gates"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N22c-14",
+   "as": "dep",
+   "why": "the M3 exit review lists KILL-BASELINE in its gates"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N22b-27",
+   "as": "dep",
+   "why": "need 1 of N22b-27: the M3 exit review records OPEN-SHIELD-2"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N22b-08",
+   "as": "dep",
+   "why": "need 1 of N22b-08: the M8 exit review records KILL-SKILL"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N22b-36",
+   "as": "dep",
+   "why": "need 1 of N22b-36: the M8 exit review records KILL-TUBE"
+  },
+  {
+   "bead": "BD-334",
+   "dep": "N22c-37",
+   "as": "related",
+   "why": "need 5 of BD-334: N22c-37 depends on BD-334"
+  },
+  {
+   "bead": "N22a-17",
+   "dep": "N28b-22",
+   "as": "related",
+   "why": "need 1 of N22a-17: the M4 ledger is later than this M3 bead"
+  },
+  {
+   "bead": "N22c-02",
+   "dep": "N12-16",
+   "as": "related",
+   "why": "need 1 of N22c-02: the second-order-cone checker is M4"
+  },
+  {
+   "bead": "N22b-34",
+   "dep": "N41-09",
+   "as": "dep",
+   "why": "need 1 of epic BD-440 placed on its first mechanism child: the owner's order of Moonshot activation"
+  },
+  {
+   "bead": "N22c-36",
+   "dep": "N22a-07",
+   "as": "dep",
+   "why": "the phase source is a field of the ControllerId record"
+  },
+  {
+   "bead": "BD-328",
+   "dep": "N22c-51",
+   "as": "dep",
+   "why": "§22.19: OPEN-REFLEX-2 blocks GATE-REFLEX-04, which BD-328 measures"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N22c-08",
+   "keep": "N22a-22",
+   "note": "both are the pilot of the sampling controller on the thirty-design set; the traverse statistic, bootstrap interval, KA-558/KA-559, two more negative controls and the planning-step and spline cautions folded into N22a-22"
+  },
+  {
+   "drop": "N22c-07",
+   "keep": "N22a-27",
+   "note": "both are the pilot of the bounded residual against end-to-end training; first-crossing counts, saturation reporting, the zero-baseline control and three analysis tests folded into N22a-27"
+  },
+  {
+   "drop": "N22c-09",
+   "keep": "N22a-28",
+   "note": "both are the pilot of orbit continuation over twenty perturbed quadrupeds; the rimless-wheel tool check (KA-560), outcome classifier tests, the fold control and the step cap folded into N22a-28"
+  },
+  {
+   "drop": "N22a-20",
+   "keep": "N22c-05",
+   "note": "one four-class pilot of the Frontier baseline routes against two two-class pilots; kept as N22c-05 (predictive, biped; M2) and N22c-06 (hybrid, arm on a base; M3) so that no bead exceeds five days; the derived-constants rule, five-seed falsifier, oracle fallback, constant audit and harness controls folded into both"
+  },
+  {
+   "drop": "N22c-10",
+   "keep": "N22b-09",
+   "note": "both are the pilot of the energy budget; the 10³ randomized sweep, the per-run exceedance predicate, the late-cutoff control and the outward-rounded card figures folded into N22b-09"
+  },
+  {
+   "drop": "N22c-11",
+   "keep": "N22b-19",
+   "note": "both are the pilot of the reduced-order barrier shield; the half-plane configuration, the inter-sample margin term, the zero-margin control and three tests folded into N22b-19"
+  },
+  {
+   "drop": "N22c-12",
+   "keep": "N22b-06",
+   "note": "both are the pilot of learned skill transport on 24 bodies; the skill's assumptions, break-even and scale arithmetic, KA-565 and the shuffled-descriptor control folded into N22b-06"
+  },
+  {
+   "drop": "N22c-13",
+   "keep": "N22b-33",
+   "note": "both are the pilot of reachable-set tables on the braking fixture; the pruning condition, erosion tests, disturbance set, simulated lane and the single-friction coverage ratio folded into N22b-33"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N22b-14",
+   "other": "N12-17",
+   "note": "both write the offline checker of proof kind `energy-budget` in frob-cert; N22b-14 also has the bundle writer and the mutation corpus"
+  },
+  {
+   "mine": "N22b-35",
+   "other": "N12-19",
+   "note": "both write the checker of proof kind `tube-inclusion` (N12-19 parks it at M8 with alpha-root); N22b-35 also has the belief-set lookup and GATE-SHIELD-05"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [
+  {
+   "section": "§12.3",
+   "what": "a numbered theorem card (polynomial identity) for the continuous-time damping-injection statement dH/dt ≤ −yᵀ·K_d·y, which PO-SHIELD-04 and GATE-SHIELD-07 cite; no CARD-T bead carries it",
+   "needed_by": [
+    "N22b-24",
+    "N22c-03",
+    "N22c-44"
+   ]
+  },
+  {
+   "section": "Appendix F",
+   "what": "an upstream work-item identifier for the input-affine (bilinear) EDMD fit in fs-surrogate of §22.20; N22c-22 carries the work under a local key and no FD-FSIM row exists",
+   "needed_by": [
+    "N22c-22"
+   ]
+  },
+  {
+   "section": "§15.3 and §18",
+   "what": "an absorber card kind in the card catalogue (force-displacement lower envelope, stroke, force limit, per-field provenance) from which W_abs of §22.11 is read; BD-069 has actuator cards and BD-167 interface cards by material pair, neither names an absorber",
+   "needed_by": [
+    "N22b-11",
+    "N22b-17"
+   ]
+  }
+ ],
+ "fixes": []
+}

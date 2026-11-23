@@ -10,7 +10,7 @@ Checks run over the whole directory when this file was written:
 - Every card of Appendix E was compared with its bead number by number: 818 numeric tokens across the 41 cards, all present in the bead (one written in another form: 0.88 appears as 88% in GB-08); every section, construction, gate, kill-gate and refusal identifier in a card's "Supports" line is present in its bead; all 41 beads carry the five fields (Equation, Substituted, Intuition, Assumptions, Flip), both lanes and at least one planted control.
 - The 59 rows of table G.3 were compared with NEG-28 cell by cell (hazard, dimension, mechanism, failure): all present; four cells differ only by a dropped section pointer.
 - The 18 rows of table G.4 were compared with the `ZOO-…` beads: actuated count, group and every construction, analysis and card identifier present.
-- The 54 verb names used by the unit's scripts and tests all exist in the verb-registry beads of unit UJL.
+- The 54 two-part verb names used by the unit's scripts and tests (`actuator.thermal`, `design.check`, `scene.import` and so on) all exist in the verb-registry beads of unit UJL.
 
 ## (a) Subsections and the beads that carry them
 
@@ -165,7 +165,7 @@ Every hazard has at least one cover (59 of 59); six are covered by a refusal alo
 
 Every archetype bead adds `zoo/<name>.fbot` and `zoo/<name>.expect.toml` (morphology, symmetry and its breakers, what each preflight stage must report, known answers, control variants) and depends on NEG-30 and on the design-language bead that writes its template.
 
-| # | Archetype | Bead | Actuated | Γ_mech as built | Milestone | Template bead | Known answers of Appendix M cited | Refusals a control variant must raise | Reference robots |
+| # | Archetype | Bead | Actuated | Γ_mech as built | Milestone | Template bead | Known answers of Appendix M cited | Refusal codes its controls and variants must raise | Reference robots |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | `quad-mammal` | ZOO-quad-mammal | 12 | C₂ × C₂ | M1 | BD-109 | KA-096, KA-270, KA-276 | FROB-REF-105, FROB-REF-109 | ROBOT-go1, -go2, -a1, -anymal-b, -anymal-c, -spot; -barkour (import parity only) |
 | 2 | `quad-sprawl` | ZOO-quad-sprawl | 12 | C₂ × C₂ | M3 | N14b-02 | KA-270 | FROB-REF-132 | none on file |
@@ -347,4 +347,4 @@ Further points for the lead:
 17. G.4 row 18 names the open-loop pole's closed form and the specification does not write it. Done: ZOO-balancer-2w carries a candidate derivation, marks the row `blocked: derivation` until the derivation file is on record, and supports no gate with it meanwhile.
 18. Several archetype rows have no known answer in Appendix M beyond the group on file (KA-270). Done: each `ZOO-…` bead derives its own closed-form rows inline and plants a control for each; they are listed in (c) as new known answers.
 19. Appendix M and Appendix N have no sections for Appendix E or G, and neither appendix defines a refusal code. Done: no `-KA`, `-CX` or `-REF` registry bead for this unit; values are inline and counted in (c).
-20. The dynamic rows of some cards cannot be reproduced value for value by a simulation (GB-21's film times on a real contact solve, GB-34's rescue counts, GB-16's shares before the performance rows are measured). Done: the reference lane recomputes the card's arithmetic exactly; the mechanism lane checks the mechanism against the same closed form or on a `synthetic` fixture built to have the card's counts; TARGET and illustrative inputs are tagged so, and a card with an unre-read FACT input reports `citable = false`.
+20. Some cards substitute illustrative outcomes that no real run would return value for value (GB-34's 164, 38 and 12 rescues of 200; GB-33's greedy gains; GB-35's residual of 0.04 and score of 0.74; GB-36's variance components). Done: the reference lane recomputes the card's arithmetic; the mechanism lane hands the real routine a `synthetic` table or instance that holds the card's counts and compares the rates, bounds, labels and rankings it returns. Cards that rest on TARGET or FACT inputs (GB-09, GB-16, GB-18, GB-22, GB-24, GB-25, GB-28, GB-40, GB-41) tag each input, and a card with a FACT input not yet re-read from its source reports `citable = false`: its arithmetic runs and no gate may cite it.

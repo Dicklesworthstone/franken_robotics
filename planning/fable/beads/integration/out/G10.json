@@ -1,0 +1,1551 @@
+{
+ "group": "G10",
+ "needs": [
+  {
+   "bead": "N09-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-042",
+    "BD-030",
+    "BD-043",
+    "BD-041"
+   ],
+   "note": "a registry depends only on the conformance skeleton (rule 5); the pilot re-runs upgrade the rows from fact-pending-rerun and do not block data entry"
+  },
+  {
+   "bead": "N10-KA2",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-16",
+    "SPEC-C-17",
+    "SPEC-C-18",
+    "SPEC-C-19",
+    "SPEC-C-20",
+    "SPEC-C-21",
+    "SPEC-C-22",
+    "SPEC-C-23",
+    "SPEC-C-24",
+    "SPEC-C-25",
+    "SPEC-C-26",
+    "SPEC-C-27"
+   ],
+   "note": "registry first (rule 5): the specification beads depend on this registry and set the open tolerances and controls; several are later milestones"
+  },
+  {
+   "bead": "N10-KA3",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-28",
+    "SPEC-C-29",
+    "SPEC-C-30",
+    "SPEC-C-31",
+    "SPEC-C-32",
+    "SPEC-C-33",
+    "SPEC-C-34",
+    "SPEC-C-35",
+    "SPEC-C-36",
+    "SPEC-C-37",
+    "SPEC-C-38",
+    "SPEC-C-39",
+    "SPEC-C-40"
+   ],
+   "note": "registry first (rule 5): the specification beads bind the rows and set the open tolerances and controls; several are later milestones"
+  },
+  {
+   "bead": "N10a-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-16",
+    "SPEC-C-17",
+    "SPEC-C-18",
+    "SPEC-C-19",
+    "SPEC-C-20",
+    "SPEC-C-21",
+    "SPEC-C-22",
+    "SPEC-C-23",
+    "SPEC-C-24",
+    "SPEC-C-25",
+    "SPEC-C-26",
+    "SPEC-C-27",
+    "SPEC-C-28",
+    "SPEC-C-29",
+    "SPEC-C-30",
+    "SPEC-C-31",
+    "SPEC-C-32",
+    "SPEC-C-33",
+    "SPEC-C-34",
+    "SPEC-C-35",
+    "SPEC-C-36",
+    "SPEC-C-37",
+    "SPEC-C-38",
+    "SPEC-C-39",
+    "SPEC-C-40"
+   ],
+   "note": "the register and template come first: SPEC-C-16 to SPEC-C-40 depend on this bead and fill their rows, so a dependency here would close a cycle"
+  },
+  {
+   "bead": "N10a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "N38a-09 owns pilots.toml and the funding rule at M0; N00-07 (U00) describes the same file and is for its integrators to merge"
+  },
+  {
+   "bead": "N10a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "the method-experiment register is M1 (GATE-GAUNT-09 is M1) and this bead is M0; its comparator validators read the records once they exist"
+  },
+  {
+   "bead": "N10a-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N41-09"
+   ],
+   "note": "owner decision at M5, later than this M0 bead; the fail-closed default (queue order as registered, cap of four) is carried in the bead"
+  },
+  {
+   "bead": "N10a-02",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N40-06"
+   ],
+   "note": "registries/milestones.toml carries the critical-path list the Moonshot check reads"
+  },
+  {
+   "bead": "N10a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-221"
+   ],
+   "note": "decision at M2, later than this M0 lint; the lint implements the fallback behaviour against a synthetic decision record"
+  },
+  {
+   "bead": "N10a-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-159"
+   ],
+   "note": "M2 mechanism, later than this M0 lint; the D-3 lint is re-run on the batched layout from M2"
+  },
+  {
+   "bead": "N10a-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-16",
+    "N10b-01"
+   ],
+   "note": "both M4, later than this M2 check; the check states its own label set and follows the C-16 contract when it lands"
+  },
+  {
+   "bead": "N10a-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-334"
+   ],
+   "note": "M4 mechanism, later than this M2 check; the D-15 check is re-run on gait.gradient at M4"
+  },
+  {
+   "bead": "N10a-04",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28a-16"
+   ],
+   "note": "the regime atlas A-26 is M4, later than this M2 check; it reports where each label applied and is not a prerequisite"
+  },
+  {
+   "bead": "N10a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38a-14",
+    "N38a-16",
+    "N38a-17",
+    "N38a-18"
+   ],
+   "note": "the relation registry and its rows are M2 (GATE-GAUNT-03 is M2), later than this M1 check; the ten records are written in the registry format and loaded at M2"
+  },
+  {
+   "bead": "N10a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "BD-146 delivers the M1 catalogue seeds and the join onto the control registry that this check reads"
+  },
+  {
+   "bead": "N10a-05",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N09-CX",
+    "N10-CX"
+   ],
+   "note": "N09-CX did not exist and is written by this integration (new bead); both registries are data entry that the coverage check reads"
+  },
+  {
+   "bead": "N10a-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-27",
+    "N12-11"
+   ],
+   "note": "BD-005 (the claim-product type) is already a dependency; the claim-rule battery (KA-027 to KA-032) and the compile-fail suite are sibling tests of the same type"
+  },
+  {
+   "bead": "N10a-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-027",
+    "BD-132"
+   ],
+   "note": "the check re-asserts the auditor rejection of a changed quantifier on real bundles: a test follows the mechanism (rule 4)"
+  },
+  {
+   "bead": "N10a-06",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-126"
+   ],
+   "note": "the schema walk needs the mission schema with its quantifier prefix and assumption set"
+  },
+  {
+   "bead": "N10a-06",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-137"
+   ],
+   "note": "the walk runs over every verb registered at M1"
+  },
+  {
+   "bead": "N10a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-128",
+    "BD-135"
+   ],
+   "note": "the answer-shape walk and the fault injection run on the set-valued mission outputs and their budget stops"
+  },
+  {
+   "bead": "N10a-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-233"
+   ],
+   "note": "M3 mechanism, later than this M1 check; the check is re-run when clearance verdicts land"
+  },
+  {
+   "bead": "N10a-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-121"
+   ],
+   "note": "the predicate audit reads the declared comparators of requirement predicates"
+  },
+  {
+   "bead": "N10a-07",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N13-10"
+   ],
+   "note": "N13-10 delivers the predicate classes Exact, Guarded and Plain at M1; the kernel side is already delivered by its dependencies BD-053 and BD-030; the four-class manifest N21a-22 is M2 and related"
+  },
+  {
+   "bead": "N10a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-18"
+   ],
+   "note": "the implication-record check uses the polarity table of the C-18 contract"
+  },
+  {
+   "bead": "N10a-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-292"
+   ],
+   "note": "M3 mechanism, later than this M1 check; the reuse check is repeated on it at M3"
+  },
+  {
+   "bead": "N10a-08",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-327"
+   ],
+   "note": "M4 mechanism, later than this M1 check; the reduction check is repeated on it at M4"
+  },
+  {
+   "bead": "N10a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-27"
+   ],
+   "note": "the lane separation and the arithmetic known answers come from the C-27 contract"
+  },
+  {
+   "bead": "N10a-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-261"
+   ],
+   "note": "the read-isolation check runs against the sealed lane and its firewall: a test follows the mechanism (rule 4)"
+  },
+  {
+   "bead": "N10a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution; BD-025 (the crate) is already a dependency"
+  },
+  {
+   "bead": "N10a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-391"
+   ],
+   "note": "BD-391 is the consumer this pilot gates: it depends on the pilot (edge recorded), not the reverse"
+  },
+  {
+   "bead": "N10a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-14",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-168 (the contact battery on batched tiers), which depends on BD-085 and the row fixtures N18b-32"
+  },
+  {
+   "bead": "N10a-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N18b-40"
+   ],
+   "note": "N18b-40 is a part of the response-batch mechanism this pilot gates; the definition of the margin is now stated in the pilot and in SPEC-C-06"
+  },
+  {
+   "bead": "N10a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25c-47"
+   ],
+   "note": "the atlas feature is M6 and is funded on this pilot: it depends on the pilot (edge recorded); BD-425 is an epic and takes no edge"
+  },
+  {
+   "bead": "N10a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-16"
+   ],
+   "note": "the saltation matrix and the simultaneity rule come from the C-16 contract; the gait mechanisms N22a-32 to N22a-34 are what the pilot gates and stay related"
+  },
+  {
+   "bead": "N10a-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33b-11"
+   ],
+   "note": "N33b-11 admits the airlock group spectral (Floquet analysis of a supplied monodromy) at M3"
+  },
+  {
+   "bead": "N10a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-127",
+    "N33a-32"
+   ],
+   "note": "BD-127 admits fs-ivl behind the airlock; N33a-32 is the M0 admission step of INT-FSYM-02"
+  },
+  {
+   "bead": "N10a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-06",
+    "N38b-35"
+   ],
+   "note": "N38a-06 is the development-oracle lane for pilots that run before the CPU referee; N38b-35 decides OPEN-GAUNT-4 (the release)"
+  },
+  {
+   "bead": "N10a-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-067"
+   ],
+   "note": "the pinned, dated reference-robot fixtures"
+  },
+  {
+   "bead": "N10a-20",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-118"
+   ],
+   "note": "BD-118 is the production synthesizer this pilot gates: it depends on the pilot (edge recorded); the pilot runs its own prototype under the same three-outcome report"
+  },
+  {
+   "bead": "N10a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-095, KA-097, CX-043)"
+  },
+  {
+   "bead": "N10b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-REF"
+   ],
+   "note": "N12-REF is the Lemma refusal registry that holds the row of FROB-REF-263; this part supplies its trigger conditions and repairs"
+  },
+  {
+   "bead": "N10b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-094, KA-096, CX-035, CX-042)"
+  },
+  {
+   "bead": "N10b-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38-KA"
+   ],
+   "note": "N38-KA registers the adopted row (45 strata, 324 transitions); N38b-40 runs it at M1 and is related"
+  },
+  {
+   "bead": "N10b-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-333",
+    "BD-334",
+    "BD-335"
+   ],
+   "note": "not a prerequisite of the pilot: the three gait mechanisms depend on it (edges recorded); WP-64 is an epic and takes no edge"
+  },
+  {
+   "bead": "N10b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-101, KA-102, CX-044)"
+  },
+  {
+   "bead": "N10b-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "N12-02 is the closed proof-kind registry frob.cert.kinds/1 (M0); BD-132 writes the checkers that implement these rules and is related, not a prerequisite of the specification"
+  },
+  {
+   "bead": "N10b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-07"
+   ],
+   "note": "N28a-07 delivers the A-20 energy exclusion of the sill fixture at M1 (0.94176 J against 0.90 J); BD-108 joins it to design.check; the bundle with proof kind energy-budget is M4 (N22b-14, N12-17) and stays related"
+  },
+  {
+   "bead": "N10b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-05",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-288",
+    "BD-290",
+    "BD-291",
+    "BD-293",
+    "BD-355",
+    "BD-357",
+    "BD-358",
+    "BD-359",
+    "BD-363"
+   ],
+   "note": "not a prerequisite of the pilot: the seed features of WP-59 and WP-66 depend on it (edges recorded); the epics take no edge"
+  },
+  {
+   "bead": "N10b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA2"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-107)"
+  },
+  {
+   "bead": "N10b-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "SPEC-C-28"
+   ],
+   "note": "cited as the dual object; the drafter states it is not required to start"
+  },
+  {
+   "bead": "N10b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-292",
+    "BD-347"
+   ],
+   "note": "not a prerequisite of the pilot: the revalidation engine beads depend on it (edges recorded)"
+  },
+  {
+   "bead": "N10b-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-133"
+   ],
+   "note": "the pilot reads the M1 mission bundles and their assumption sets"
+  },
+  {
+   "bead": "N10b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the contract template and the law-suite convention"
+  },
+  {
+   "bead": "N10b-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-108 to KA-111, CX-045, CX-046, CX-053, CX-054)"
+  },
+  {
+   "bead": "N10b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-114, KA-115, CX-051)"
+  },
+  {
+   "bead": "N10b-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20a-10",
+    "N20a-11"
+   ],
+   "note": "the race check binds its enumerator to this law suite, so N20a-10 depends on this part (edge recorded); the KILL-SCHED decision is not a prerequisite of a specification"
+  },
+  {
+   "bead": "N10b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-240",
+    "BD-363",
+    "N20a-10"
+   ],
+   "note": "not a prerequisite of the pilot: witness search, label queries and the race check depend on it (edges recorded)"
+  },
+  {
+   "bead": "N10b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-310",
+    "N23b-19"
+   ],
+   "note": "the extra arm needs the forty-design set of BD-310 and the specialists of the Cortex family-policy pilot N23b-19 (the pilot bead behind BD-320)"
+  },
+  {
+   "bead": "N10b-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-11",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23b-24",
+    "N23a-22"
+   ],
+   "note": "owner decision OPEN-CORTEX-1 (M3); two beads carry it (U23a and U23b) and one will be superseded by their integrators; the arm runs only inside an approved envelope"
+  },
+  {
+   "bead": "N10b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-127, CX-059)"
+  },
+  {
+   "bead": "N10b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-14"
+   ],
+   "note": "N38a-14 is the relation registry (M2); the row MR-05 is carried by N38a-16, which needs this construction and stays related"
+  },
+  {
+   "bead": "N10b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-285",
+    "BD-357"
+   ],
+   "note": "not a prerequisite of the pilot: the two quotient mechanisms depend on it (edges recorded)"
+  },
+  {
+   "bead": "N10b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA2"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-129, KA-130)"
+  },
+  {
+   "bead": "N10b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-14"
+   ],
+   "note": "N38a-14 is the relation registry (M2); the row MR-24 is carried by N38a-17 and stays related"
+  },
+  {
+   "bead": "N10b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-322"
+   ],
+   "note": "not a prerequisite of the pilot: the inheritance bead depends on it (edge recorded)"
+  },
+  {
+   "bead": "N10b-15",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-145",
+    "BD-310",
+    "BD-320",
+    "N23b-19"
+   ],
+   "note": "shared specialists where the edit pairs lie in the same class: a shared fixture, not a prerequisite"
+  },
+  {
+   "bead": "N10b-15",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N23b-24",
+    "N23a-22",
+    "N21c-35"
+   ],
+   "note": "owner decisions OPEN-CORTEX-1 (two beads, one to be superseded by their integrators) and OPEN-SPARK-2; the runs exist only inside an approved envelope"
+  },
+  {
+   "bead": "N10b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "N21c-35 decides the compute envelope classes E0 to E3 (OPEN-SPARK-2); WP-79 is an epic and takes no edge; without the approval the pilot is recorded not run"
+  },
+  {
+   "bead": "N10b-16",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N23b-02"
+   ],
+   "note": "BD-439 is an epic (rule 9); the bead that reads this pilot is the KILL-GATREE first reading N23b-02, which depends on it (edge recorded)"
+  },
+  {
+   "bead": "N10b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-264",
+    "N16b-10"
+   ],
+   "note": "not a prerequisite of the pilot: the tier-correction ledger and the KILL-DR decision depend on it (edges recorded)"
+  },
+  {
+   "bead": "N10b-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and its record schema; the pilot writes one record frozen before execution"
+  },
+  {
+   "bead": "N10b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-277"
+   ],
+   "note": "not a prerequisite of the pilot: the exploration lane, which also decides KILL-RARE, depends on it (edge recorded)"
+  },
+  {
+   "bead": "N10b-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N26a-28"
+   ],
+   "note": "the Nemesis pilot at subsystem scale shares one family of records in the pilot register; reported as a cross-group overlap"
+  },
+  {
+   "bead": "N10b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the audit calls the D-2 doctrine test of the register for rows C-16 to C-27"
+  },
+  {
+   "bead": "N10b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-12",
+    "N38a-13",
+    "N10-KA2"
+   ],
+   "note": "the known-answer registry schema and rules, the G1 run that counts obligations, and the chapter rows KA-092 to KA-141"
+  },
+  {
+   "bead": "SPEC-C-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-067"
+   ],
+   "note": "a dependency would close a cycle: BD-067 -> BD-066 -> N14a-13 -> SPEC-C-03; statement S8 audits the fixtures once they exist"
+  },
+  {
+   "bead": "SPEC-C-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-01"
+   ],
+   "note": "N16a-01 is the frob-dyn crate skeleton (no mechanism of the construction), so the law suite has its home crate; the referee oracle BD-007 is already a dependency"
+  },
+  {
+   "bead": "SPEC-C-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-36",
+    "N16a-21"
+   ],
+   "note": "SPEC-C-36 is M1, later than this M0 specification; the pilot of the variational lane is N16a-21 (U16a) with BD-384"
+  },
+  {
+   "bead": "SPEC-C-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-085",
+    "BD-168"
+   ],
+   "note": "the batteries are tests of mechanisms that implement this construction: BD-085 depends on this specification (edge recorded), not the reverse"
+  },
+  {
+   "bead": "SPEC-C-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N18b-40"
+   ],
+   "note": "M4 mechanism, later than this M1 specification; the definition of the margin (the rounding bound of the formed residual) is now stated in the bead"
+  },
+  {
+   "bead": "SPEC-C-06",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "SPEC-C-37"
+   ],
+   "note": "the four-dimensional cone is delegated to C-37 and cited; neither contract blocks the other"
+  },
+  {
+   "bead": "SPEC-C-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-01"
+   ],
+   "note": "N28a-01 is the frob-analyze crate contract and skeleton (no mechanism of the construction)"
+  },
+  {
+   "bead": "SPEC-C-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N10c-08",
+    "SPEC-C-36"
+   ],
+   "note": "the nonholonomic step is the part bead N10c-08; statement S6 uses its own high-order reference integration, so the C-36 contract is cited, not required"
+  },
+  {
+   "bead": "SPEC-C-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-01"
+   ],
+   "note": "N28a-01 is the frob-analyze crate contract and skeleton; the sign law lives in frob-lie under the staging rule of N10a-01"
+  },
+  {
+   "bead": "SPEC-C-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25c-47"
+   ],
+   "note": "the atlas feature is M6 (BD-425 is its epic and takes no edge); its funding condition is stated by the pilot N10a-16"
+  },
+  {
+   "bead": "SPEC-C-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-241"
+   ],
+   "note": "M3 mechanism, later than this M1 specification; it depends on the specification (edge recorded)"
+  },
+  {
+   "bead": "SPEC-C-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-056"
+   ],
+   "note": "the constructors are a mechanism that supplies declared generators to the implementers; the law suite builds its groups from generators in its own fixtures"
+  },
+  {
+   "bead": "SPEC-C-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-16"
+   ],
+   "note": "cited for the simultaneity rule; the two M4 contracts do not block each other"
+  },
+  {
+   "bead": "SPEC-C-10",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33a-18",
+    "N33b-11"
+   ],
+   "note": "airlock admissions of fs-tropical and fs-spectral are prerequisites of the implementers (BD-333 already depends on N33b-11); the law suite uses its own exact max-plus reference"
+  },
+  {
+   "bead": "SPEC-C-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-332",
+    "BD-333",
+    "N22a-29"
+   ],
+   "note": "BD-332 and BD-333 implement the construction and depend on this specification; the frob-gait skeleton N22a-29 also carries the stride-map mechanism and depends on SPEC-C-16; the suite is staged in frob-conformance until the crate exists (rule of N10a-01)"
+  },
+  {
+   "bead": "SPEC-C-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-01"
+   ],
+   "note": "N28a-01 is the frob-analyze crate contract and skeleton (no mechanism of the construction)"
+  },
+  {
+   "bead": "SPEC-C-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-105",
+    "N33a-32"
+   ],
+   "note": "BD-105 implements the construction and already depends on this specification; the admission INT-FSYM-02 is a prerequisite of that implementer, not of the contract"
+  },
+  {
+   "bead": "SPEC-C-11",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "SPEC-C-34"
+   ],
+   "note": "M4, later than this M1 specification; cited for the pilot of the Moonshot part"
+  },
+  {
+   "bead": "SPEC-C-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-38"
+   ],
+   "note": "cited as the target of the dynamic functor; the two M1 contracts do not block each other"
+  },
+  {
+   "bead": "SPEC-C-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-092"
+   ],
+   "note": "a consumer of the port structure at run time, not a prerequisite of the contract"
+  },
+  {
+   "bead": "SPEC-C-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22a-01"
+   ],
+   "note": "N22a-01 is the frob-control crate skeleton with the controller traits; BD-114 implements the construction and already depends on this specification (related); BD-115 is the cone solver in frob-algebra, not the crate creator"
+  },
+  {
+   "bead": "SPEC-C-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "SPEC-C-20"
+   ],
+   "note": "cited for the gauge statement; the two M1 contracts do not block each other"
+  },
+  {
+   "bead": "SPEC-C-13",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "SPEC-C-31",
+    "SPEC-C-32"
+   ],
+   "note": "cited; SPEC-C-31 is M4, later than this M1 specification"
+  },
+  {
+   "bead": "SPEC-C-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-019"
+   ],
+   "note": "BD-019 implements the derivation path of this construction: it depends on the specification (edge recorded), not the reverse"
+  },
+  {
+   "bead": "SPEC-C-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "SPEC-C-21"
+   ],
+   "note": "M2, later than this M0 specification; cited for the rescaling test"
+  },
+  {
+   "bead": "SPEC-C-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-01"
+   ],
+   "note": "N24a-01 is the frob-arena crate skeleton (no mechanism of the construction); BD-124 implements the construction and already depends on this specification (related)"
+  },
+  {
+   "bead": "SPEC-C-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33b-12",
+    "N33a-18"
+   ],
+   "note": "admission of fs-eproc and fs-race under INT-FSIM-14 is a prerequisite of the implementer BD-124; the law suite runs on its own exact reference"
+  },
+  {
+   "bead": "SPEC-C-15",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "SPEC-C-40"
+   ],
+   "note": "M4, later than this M1 specification; cited for paired designs"
+  },
+  {
+   "bead": "SPEC-C-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-092, KA-093, CX-041)"
+  },
+  {
+   "bead": "SPEC-C-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-098 to KA-100, CX-045 to CX-047)"
+  },
+  {
+   "bead": "SPEC-C-17",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-128"
+   ],
+   "note": "BD-128 implements the construction and already depends on this specification (rule 6)"
+  },
+  {
+   "bead": "SPEC-C-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX",
+    "N12-KA"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-103 to KA-106, CX-048 to CX-050; KA-224 is in the Lemma registry N12-KA)"
+  },
+  {
+   "bead": "SPEC-C-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-32"
+   ],
+   "note": "the stance reference model of the C-32 contract is test support of the twelve-move check; SPEC-C-32 no longer depends on BD-128, so no cycle"
+  },
+  {
+   "bead": "SPEC-C-18",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-128"
+   ],
+   "note": "BD-128 implements the construction and already depends on this specification (rule 6)"
+  },
+  {
+   "bead": "SPEC-C-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-112, KA-113, CX-052, CX-053)"
+  },
+  {
+   "bead": "SPEC-C-19",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-078",
+    "BD-128"
+   ],
+   "note": "BD-078 and BD-128 implement the construction; BD-078 already depends on this specification (rule 6)"
+  },
+  {
+   "bead": "SPEC-C-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-116 to KA-118, CX-055)"
+  },
+  {
+   "bead": "SPEC-C-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-119 to KA-122, CX-056, CX-057)"
+  },
+  {
+   "bead": "SPEC-C-21",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-14"
+   ],
+   "note": "N38a-14 is the relation registry (M2); the row MR-06 is carried by N38a-16, which needs this construction and stays related (rule 10)"
+  },
+  {
+   "bead": "SPEC-C-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-123 to KA-126, CX-058)"
+  },
+  {
+   "bead": "SPEC-C-22",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "SPEC-C-09"
+   ],
+   "note": "cited for the definition of the acting group; the law suite takes its groups from generators"
+  },
+  {
+   "bead": "SPEC-C-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-128, CX-060)"
+  },
+  {
+   "bead": "SPEC-C-23",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "SPEC-C-09"
+   ],
+   "note": "cited for the weight tying"
+  },
+  {
+   "bead": "SPEC-C-23",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-145",
+    "BD-310",
+    "BD-320",
+    "N23b-19"
+   ],
+   "note": "the executing beads carry the protocol: BD-320 already depends on this specification; BD-145, BD-310 and the Cortex pilot N23b-19 are earlier milestones and cite it (related edges recorded)"
+  },
+  {
+   "bead": "SPEC-C-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-131, CX-061)"
+  },
+  {
+   "bead": "SPEC-C-24",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-04"
+   ],
+   "note": "the order of the tree recursions fixes the order of message passing"
+  },
+  {
+   "bead": "SPEC-C-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-132 to KA-135, CX-062)"
+  },
+  {
+   "bead": "SPEC-C-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-14"
+   ],
+   "note": "N38a-14 is the relation registry (M2); the row MR-33 is carried by N38a-18 and stays related"
+  },
+  {
+   "bead": "SPEC-C-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-136, KA-137, CX-063, CX-064)"
+  },
+  {
+   "bead": "SPEC-C-26",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-145",
+    "BD-310",
+    "BD-328"
+   ],
+   "note": "BD-310 and BD-328 already depend on this specification; BD-145 is M1 and cites the contract without waiting (related edge recorded)"
+  },
+  {
+   "bead": "SPEC-C-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-01"
+   ],
+   "note": "the construction register, the contract template and the law-suite convention; this bead fills its row"
+  },
+  {
+   "bead": "SPEC-C-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA2",
+    "N10-CX"
+   ],
+   "note": "registries come first: the rows are loaded by the registry bead and bound to tests here (KA-138 to KA-141, CX-065, CX-066)"
+  },
+  {
+   "bead": "SPEC-C-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-14"
+   ],
+   "note": "N38a-14 is the relation registry (M2); the row MR-08 is carried by N38a-16, which needs this construction and stays related"
+  }
+ ],
+ "edges": [],
+ "superseded": [],
+ "cross_group_duplicates": [],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": []
+}

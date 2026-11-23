@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "lemma", "marrow", "frob-lie", "solid", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-010", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-011", "BD-047", "BD-021", "CARD-T-04", "CARD-T-05", "CARD-T-16", "SPEC-C-04", "N10-KA1"]
+related: ["BD-011", "BD-047", "BD-021", "CARD-T-04", "CARD-T-05", "CARD-T-16", "SPEC-C-04", "N10-KA1", "BD-010"]
 gates: ["GATE-MARROW-01", "GATE-LEMMA-00", "GATE-MARROW-04"]
 plan_refs: ["§10 C-02", "§11.1", "§11.2", "§11.3", "§11.4", "§13.2", "§13.3", "§13.8", "§13.10", "§12.3 T-04 T-05 T-16", "Appendix D.1", "Appendix I.1", "Appendix M KA-040 to KA-042", "Appendix N CX-020"]
 ---
@@ -59,6 +59,17 @@ Out: the production types and their phantom-frame machinery (BD-010, BD-047); th
 themselves (SPEC-C-05, BD-011); reflection parity as used by symmetry (SPEC-C-09), though the parity map's
 preservation of pairing and bracket is stated here because T-16 covers both; the bit-comparison fixture against
 `fs-ga` (BD-010, proof obligation PO-MARROW-01, which this suite re-uses as its sample source).
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-010 (creates `frob-lie` and
+its production frame types): that bead is listed in `related` and is not a prerequisite. The law suite is generic
+over its subject trait and closes on the exact reference model and the mutants in its own test support. If
+`frob-lie` does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

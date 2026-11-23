@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-algebra", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-050", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
 needs: ["Appendix G: the reference-robot fixtures (mass, centre of mass, inertia per body) audited by statement C-03.S8; BD-067 captures them with pin and date"]
-related: ["BD-051", "BD-062", "BD-100", "N10a-13", "CARD-T-19", "N10-KA1"]
+related: ["BD-051", "BD-062", "BD-100", "N10a-13", "CARD-T-19", "N10-KA1", "BD-050"]
 gates: ["GATE-MARROW-01", "GATE-SKEL-07", "GATE-ATEL-02"]
 plan_refs: ["§10 C-03", "§11.4", "§11.5", "§13.1", "§13.10", "§12.3 T-19", "§14.5", "Appendix D.1", "Appendix M KA-043 to KA-046", "Appendix N CX-021 CX-022"]
 ---
@@ -49,6 +49,17 @@ statement of T-19.
 Out: the production inertia cone and mass-support predicate (BD-051); the geometry and inertia functor with
 fills and shells (BD-062); the mass roll-up analysis A-02 (BD-100); the identification pilot (N10a-13) and the
 calibration lane that would consume Riemannian steps.
+
+Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
+N10a-01). This bead is written before the code it specifies and does not depend on BD-050 (the `Cone` trait of
+`frob-algebra`): that bead is listed in `related` and is not a prerequisite. The law suite is generic over its
+subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-algebra`
+does not exist when this bead starts, the suite and its support files are written under
+`crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
+read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
+script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
+and is logged `pending` here until then.
 
 ## Technical approach
 

@@ -1,6 +1,1123 @@
 {
  "group": "G26",
- "needs": [],
+ "needs": [
+  {
+   "bead": "BD-270",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19b-28"
+   ],
+   "note": "the margin sweep of the clearance answers gives the certified passage margin and the named bottleneck per route; the composite bound reads that part, not the whole capstone BD-233"
+  },
+  {
+   "bead": "BD-270",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-228"
+   ],
+   "note": "scene.accept's runner and report are what is re-run on the realized (edited) scene; seed order kept (270 > 228)"
+  },
+  {
+   "bead": "BD-271",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-13"
+   ],
+   "note": "component of the capstone: necessary conditions with checked certificates"
+  },
+  {
+   "bead": "BD-271",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-14"
+   ],
+   "note": "component of the capstone: witness search; it carries the guard (BD-272) so the seed need not depend on a higher-numbered seed"
+  },
+  {
+   "bead": "BD-271",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N26a-01"
+   ],
+   "note": "crate foundation, lane types and discovery record"
+  },
+  {
+   "bead": "BD-271",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N26a-02"
+   ],
+   "note": "world model and typed edits"
+  },
+  {
+   "bead": "BD-271",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N26a-04"
+   ],
+   "note": "planted trap registries are the fixtures of the seed's crate-level gate test; N26a-04 does not depend on the oracle"
+  },
+  {
+   "bead": "BD-272",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-13"
+   ],
+   "note": "the four numerical variants are N16b-13's variant step plans (step, tolerance, law, cone families) with physical parameter digests held"
+  },
+  {
+   "bead": "BD-272",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-22"
+   ],
+   "note": "N29a-22 carries the three monitors and their flags on a finished episode; the ledger kernel itself is the existing dep BD-208"
+  },
+  {
+   "bead": "BD-273",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26b-13",
+    "N32a-16"
+   ],
+   "note": "N26b-13 registers nemesis_search in task cluster attack with its wait default; N32a-16 is the bounded synchronous wait. BD-298 (full MCP surface) stays related: it integrates the registry, the verb does not wait for it"
+  },
+  {
+   "bead": "BD-273",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25e-08"
+   ],
+   "note": "the detector already depends on this bead (N25e-08 -> N25e-07 -> BD-273): a dependency would close a cycle; the report hook is exercised by N25e-08's own tests"
+  },
+  {
+   "bead": "BD-273",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-08"
+   ],
+   "note": "the paired lower bound in ratio and difference form for method experiments is N38a-08; N36-06 is the performance harness's use of the same estimator and is not needed"
+  },
+  {
+   "bead": "BD-276",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "airlock group stats (fs-uq) with trait Uncertainty and group gate INT-FSIM-14"
+  },
+  {
+   "bead": "BD-276",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26b-13"
+   ],
+   "note": "N26b-13 registers nemesis_bound in task cluster attack; BD-298 stays related"
+  },
+  {
+   "bead": "BD-276",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "a campaign's finalist set is recorded by the cascade (BD-352, M4), a later milestone; at M3 the finalists-only rule is enforced by N26a-26 through a recorded --finalist attestation, and N26a-26 depends on this bead, not the reverse"
+  },
+  {
+   "bead": "BD-277",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27a-04"
+   ],
+   "note": "stream mode rekey(stream_id) of a fork child is the replicate mode; batches of K children are the existing dep BD-205"
+  },
+  {
+   "bead": "BD-277",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "registries/streams.toml lists the per-step streams of a task by purpose (disturbance-process, sensor-noise, link-timing), which the fresh-randomness check reads"
+  },
+  {
+   "bead": "N26-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-345",
+    "N26b-02",
+    "N26b-07"
+   ],
+   "note": "a registry bead never depends on a mechanism or test; KA-668 is carried by N26b-02 (bound) and N26b-07 (script) in this chapter and applied by BD-345 (M4)"
+  },
+  {
+   "bead": "N26-KA",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-278",
+    "N26b-10"
+   ],
+   "note": "registry bead; KA-669 is carried by N26b-10 (certificate and worked instance) and BD-278"
+  },
+  {
+   "bead": "N26-KA",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-271",
+    "BD-274"
+   ],
+   "note": "registry bead; the seeds' tests carry KA-660, KA-661 and KA-663 and may depend on the registry, not the reverse"
+  },
+  {
+   "bead": "N26a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-31",
+    "N33a-18"
+   ],
+   "note": "optimize group: part 1 admits Racing over fs-eproc (M1), part 2 admits Optimizer and Archive (M3); the stats group (N33b-13) is a dep of the beads that call it (BD-276, N26a-08, N26a-10)"
+  },
+  {
+   "bead": "N26a-02",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§19.12: Habitat's typed scene edit (closed set of edit kinds, application to an immutable pack giving a new SceneId, declared changed aspects) is carried only by N19b-38, at M4 behind the retrofit pilot and feature frontier-retrofit; nothing delivers it at M3, where §26.1 says Nemesis consumes it"
+  },
+  {
+   "bead": "N26a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-20",
+    "BD-162"
+   ],
+   "note": "the manifest holds one blob hash per table (bricks, overlays, regions, fixtures, movables, optical volumes) and stage 11 composes SceneId from those component digests; comparing them with and without an edit is the declared-path check"
+  },
+  {
+   "bead": "N26a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-225"
+   ],
+   "note": "the grammar mechanism owns production choice and attribute draws; its scope does not yet state a per-feature mass export, so a feature without one stays in undefined_for (N26a-03's own fail-closed rule)"
+  },
+  {
+   "bead": "N26a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-116",
+    "BD-117"
+   ],
+   "note": "legged and wheeled baseline controllers of the reference robots (M1); the speed scale is a command scaling on them; BD-247 extends to the other archetypes and is not required"
+  },
+  {
+   "bead": "N26a-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-225",
+    "BD-226"
+   ],
+   "note": "kitchen-commercial family is in BD-225, home family in BD-226"
+  },
+  {
+   "bead": "N26a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-080",
+    "BD-118"
+   ],
+   "note": "contact stepping on the CPU referee and a baseline controller synthesized for a wheeled or legged reference robot (both M1); the pilot depends on nothing later"
+  },
+  {
+   "bead": "N26a-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register, its schema and the registration-before-run rule"
+  },
+  {
+   "bead": "N26a-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28a-03",
+    "N39a-24"
+   ],
+   "note": "N26a-07 charges both arms in its own BudgetLedger in simulated steps; the phase ledger (verb phase attribution N28a-03, resource table N39a-24) is where the share of time spent finding failures is read; shared unit, not blocking"
+  },
+  {
+   "bead": "N26a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-13",
+    "N33a-31"
+   ],
+   "note": "Uncertainty over fs-uq is in the stats group; Optimizer over fs-dfo in optimize part 2"
+  },
+  {
+   "bead": "N26a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-31"
+   ],
+   "note": "Archive over fs-archive"
+  },
+  {
+   "bead": "N26a-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-255",
+    "N24a-11"
+   ],
+   "note": "atoms_min is a field of frob.verdict/1 (N24a-11) and is written with every episode on the batched tiers the search runs on (BD-255)"
+  },
+  {
+   "bead": "N26a-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "fs-voi is in the stats group"
+  },
+  {
+   "bead": "N26a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25b-22"
+   ],
+   "note": "the admissibility contract of a separation query (margin, smallness, priors apart, declared causal paths); N25b-22 does not depend on the search"
+  },
+  {
+   "bead": "N26a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "method-experiment register with its six parts and refusals (GATE-GAUNT-09)"
+  },
+  {
+   "bead": "N26a-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-08"
+   ],
+   "note": "paired lower bound, potency and A/A procedures"
+  },
+  {
+   "bead": "N26a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-36"
+   ],
+   "note": "no bead exported mandatory task events; §24.5 does not ask Arena for them, so the static extraction is oracle bookkeeping of §26.5 and is written as the new bead N26a-36 (reads the task file BD-122 and the requirement tree N24a-04)"
+  },
+  {
+   "bead": "N26a-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-115"
+   ],
+   "note": "the full analysis A-24 (BD-348) is M4; at M3 the oracle poses its static program on the cone solver BD-115, whose infeasibility certificates are rounded to rationals and checked exactly (the pattern N24c-17 uses for traction)"
+  },
+  {
+   "bead": "N26a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-247",
+    "BD-119",
+    "N20b-12"
+   ],
+   "note": "baseline controllers for every archetype (BD-247), and the causal-policy test on the referee (BD-119) and on batched tiers (N20b-12) as the harness that proves a witness read only the candidate's observation interface"
+  },
+  {
+   "bead": "N26a-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-320"
+   ],
+   "note": "FamilyPolicy artifacts arrive at M4; at M3 the ladder's second source is skipped when the candidate belongs to no family"
+  },
+  {
+   "bead": "N26a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-15"
+   ],
+   "note": "mutation pyramid4 as a labelled, conformance-only cone option (cone arm defined in N16b-13)"
+  },
+  {
+   "bead": "N26a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-15"
+   ],
+   "note": "mutation penetration-recovery as a labelled step-plan option with its hopper task"
+  },
+  {
+   "bead": "N26a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-169"
+   ],
+   "note": "per-world parameter variants with model, scene and task slots in one batch"
+  },
+  {
+   "bead": "N26a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-094",
+    "N29b-05"
+   ],
+   "note": "failure taxonomy with first-cause ordering (BD-094) and its monitors on batched tiers (N29b-05), where the 64 paired seeds run"
+  },
+  {
+   "bead": "N26a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-18",
+    "N34-19",
+    "N34-22"
+   ],
+   "note": "canonical writer, format-registry types and the round-trip harness the owner wires; the FMT-FMCW row in final form is assembled by BD-410 (M5), which already depends on BD-274"
+  },
+  {
+   "bead": "N26a-19",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-203: sim.replay takes a world identity or <file.fmcw> and compares the digest chain"
+  },
+  {
+   "bead": "N26a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-059"
+   ],
+   "note": "verb design.patch: typed edits on an expected parent give the new design version"
+  },
+  {
+   "bead": "N26a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-279"
+   ],
+   "note": "verb autopsy.intervene; it does not depend on this script"
+  },
+  {
+   "bead": "N26a-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28b-32",
+    "BD-292"
+   ],
+   "note": "verb result.revalidate (registry entry and split verdict) over the revalidation engine at grades 1 and 2; grades 3 and 4 (BD-347, M4) are not needed"
+  },
+  {
+   "bead": "N26a-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N26b-16",
+    "N12-06"
+   ],
+   "note": "N26b-16 files the candidate card for PO-NEMESIS-04 against the card registry N12-06; no card number is assigned and none is needed: the bound is class Tested meanwhile"
+  },
+  {
+   "bead": "N26a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "sim.estimate's cost model gives episodes per second per tier and the budget check"
+  },
+  {
+   "bead": "N26a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-12",
+    "N33a-18"
+   ],
+   "note": "fs-eproc admitted at first use under INT-FSIM-14 (N33b-12) behind trait Racing of the optimize group (N33a-18)"
+  },
+  {
+   "bead": "N26a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-211"
+   ],
+   "note": "atomic idempotency binding of a request record in the daemon"
+  },
+  {
+   "bead": "N26a-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "the stream registry, where the certification stream is registered disjoint from exploration streams"
+  },
+  {
+   "bead": "N26a-24",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-200: the randomization plan carries law, support and spread per entry, read from the card band; BD-200 admits uniform and truncated normal at M2, so the other families of this bead's table are exercised on synthetic cards until a card law of that family exists"
+  },
+  {
+   "bead": "N26a-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-225"
+   ],
+   "note": "same carrier as N26a-03 need 1: production and attribute draws of the interior grammar"
+  },
+  {
+   "bead": "N26a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28c-01",
+    "N28c-03"
+   ],
+   "note": "decision-core record and table schemas (N28c-01) and the decision evidence record (N28c-03), both M3"
+  },
+  {
+   "bead": "N26a-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "the campaign record of finalists is the cascade's result set (M4); at M3 the recorded --finalist attestation is the admitted path"
+  },
+  {
+   "bead": "N26a-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-094 (failure taxonomy with outcome kinds and a taxonomy version)"
+  },
+  {
+   "bead": "N26a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-116"
+   ],
+   "note": "the legged baseline: a quadruped stands and walks on the referee (M1); it brings the referee contact step BD-080"
+  },
+  {
+   "bead": "N26a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register and its record schema"
+  },
+  {
+   "bead": "N26a-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-255 (streaming past-time monitors on batched tiers, on the 4,096-tick kernels of N24a-07)"
+  },
+  {
+   "bead": "N26a-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-11"
+   ],
+   "note": "the device ring's requested-tick trigger includes the first firing of a named device-side predicate (capture.when)"
+  },
+  {
+   "bead": "N26a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-122"
+   ],
+   "note": "the synthetic rate fixtures are written in this bead; what they need from Arena is the task file and task.check admitting an atom over resolved randomization values"
+  },
+  {
+   "bead": "N26a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "method-experiment register (GATE-GAUNT-09)"
+  },
+  {
+   "bead": "N26a-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-08"
+   ],
+   "note": "paired lower bound"
+  },
+  {
+   "bead": "N26a-31",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-202"
+   ],
+   "note": "fixture 2, the quadruped on the split-grip landing; the per-step pushes and the planted failures are added by this bead and N26a-04"
+  },
+  {
+   "bead": "N26a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-203"
+   ],
+   "note": "sim.replay on a .fmcw with the step-by-step digest comparison on the originating backend"
+  },
+  {
+   "bead": "BD-274",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-06"
+   ],
+   "note": "the pilot of this Frontier mechanism (M2)"
+  },
+  {
+   "bead": "BD-274",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-17"
+   ],
+   "note": "component of the capstone: the shrink test relation"
+  },
+  {
+   "bead": "BD-274",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N26a-18"
+   ],
+   "note": "component of the capstone: delta debugging, bisection and the pair check"
+  },
+  {
+   "bead": "BD-274",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N26a-19"
+   ],
+   "note": "component of the capstone: the .fmcw file"
+  },
+  {
+   "bead": "BD-274",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N26a-03"
+   ],
+   "note": "density and the lexicographic size order"
+  },
+  {
+   "bead": "BD-278",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-27"
+   ],
+   "note": "failure-mode catalogue and its export incidence_rows"
+  },
+  {
+   "bead": "N26-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N26a-13",
+    "N26a-14",
+    "N26a-18",
+    "N26a-21",
+    "N26a-23",
+    "N26a-24",
+    "BD-272",
+    "BD-277",
+    "BD-275"
+   ],
+   "note": "a registry bead never depends on a mechanism; the mechanisms' tests cite the rows and catch the mutants"
+  },
+  {
+   "bead": "N26-CX",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-05"
+   ],
+   "note": "the catalogue file schema and the seeding tool allocate the control numbers (next free NC number, kept in seed_map.toml); the six provisional rows NC-26-01 to -06 get their numbers there"
+  },
+  {
+   "bead": "N26-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": "the exit-code table makes a row's explicit exit authoritative for the unnamed families 74x to 79x and lints a row without one; exit 4 for FROB-REF-760 stands as registered, like 761 in N35-REF and N36-REF"
+  },
+  {
+   "bead": "N26-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-270",
+    "N26a-02",
+    "N26a-23",
+    "N26a-21",
+    "BD-277",
+    "BD-272",
+    "N26a-17",
+    "BD-275"
+   ],
+   "note": "a registry bead never depends on a mechanism; the raising beads cite the rows"
+  },
+  {
+   "bead": "N26b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-01"
+   ],
+   "note": "crate foundation with the module audit.rs"
+  },
+  {
+   "bead": "N26b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "the stream registry, where nemesis-audit is registered"
+  },
+  {
+   "bead": "N26b-01",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28a-33"
+   ],
+   "note": "the ladder's AllocationDecision (advanced, discarded, mode, rank record per rung pair) is the stage's decision record; the campaign manifest is BD-352's, which will depend on this lane through BD-345, so that half is related (see edges)"
+  },
+  {
+   "bead": "N26b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-33"
+   ],
+   "note": "rungs R3 and R4 and their recorded scores are what a final-stage rank record is read from; the corpus's planted winners are the existing dep BD-248; the cascade's result set (BD-352) cannot be a dependency (BD-352 -> BD-345 -> the audit beads)"
+  },
+  {
+   "bead": "N26b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-22"
+   ],
+   "note": "the rank-agreement ledger's rows and its update from published audit pairs; N28b-22 does not depend on the audit record"
+  },
+  {
+   "bead": "N26b-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28c-19",
+    "BD-302"
+   ],
+   "note": "the report reads the audit record, so the order is report after record: N28c-19 reaches this bead through BD-352 -> BD-345 once coverage (d)'s edge is in"
+  },
+  {
+   "bead": "N26b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-33"
+   ],
+   "note": "the rung executors (RungScorer on stated designs and addresses at fixed n); already reached through BD-329"
+  },
+  {
+   "bead": "N26b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26b-13",
+    "N32a-16"
+   ],
+   "note": "N26b-13 registers nemesis_audit in task cluster ladder; N32a-16 is the bounded synchronous wait"
+  },
+  {
+   "bead": "N26b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-27"
+   ],
+   "note": "mode key, per-mode counts, proposal laws and incidence_rows"
+  },
+  {
+   "bead": "N26b-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-01"
+   ],
+   "note": "crate foundation with the module cover.rs"
+  },
+  {
+   "bead": "N26b-08",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "the [[item]] form and ItemId of frob.battery/1"
+  },
+  {
+   "bead": "N26b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "manifests with selection = covering-ref, membership events and name resolution"
+  },
+  {
+   "bead": "N26b-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-01",
+    "N26a-23"
+   ],
+   "note": "the law BatterySelected is a type of N26a-01; the acceptance test that a bound refuses such episodes with FROB-REF-560 needs the firewall N26a-23"
+  },
+  {
+   "bead": "N26b-11",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "the stream registry, where nemesis-cover-heldout is registered"
+  },
+  {
+   "bead": "N26b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-276",
+    "N26a-23"
+   ],
+   "note": "the script calls nemesis bound --episodes and expects the firewall's refusal"
+  },
+  {
+   "bead": "N26b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "resolution of the battery name covering and its echo in the bound block"
+  },
+  {
+   "bead": "N26b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NJL-05"
+   ],
+   "note": "the cluster table, its seven-tool lint and the seat for nemesis_cover are the registry bead NJL-05 (M1); BD-298, the named carrier, integrates the surface at M3 and stays related: a registry bead does not depend on it"
+  },
+  {
+   "bead": "N26b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-04",
+    "N26a-15"
+   ],
+   "note": "planted illegal edits with legal twins, and planted artifact failures"
+  },
+  {
+   "bead": "N26b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-01"
+   ],
+   "note": "CONTRACT.md invariants section, lane types, discovery record"
+  },
+  {
+   "bead": "N26b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-23"
+   ],
+   "note": "lane firewall (INV-NEMESIS-03)"
+  },
+  {
+   "bead": "N26b-15",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N26a-19"
+   ],
+   "note": "the .fmcw file and its replay check (INV-NEMESIS-04)"
+  },
+  {
+   "bead": "N26b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-06"
+   ],
+   "note": "the theorem-card and claim registry with its admission rule and status machine is where the candidate is filed; the ruling itself is a Lemma-lead decision no bead carries (reported under gaps); class Tested meanwhile"
+  },
+  {
+   "bead": "N26b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26-KA"
+   ],
+   "note": "the battery runs the rows the registry lists"
+  },
+  {
+   "bead": "N26b-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-27"
+   ],
+   "note": "Good–Turing monitor and its synthetic catalogue"
+  },
+  {
+   "bead": "N26b-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N26a-04",
+    "N26a-15",
+    "N26a-34"
+   ],
+   "note": "planted registries; the planted-cause registry is built inside N26a-34"
+  },
+  {
+   "bead": "N26b-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register and its funding rule (GATE-GAUNT-08)"
+  },
+  {
+   "bead": "N26b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-272",
+    "BD-273",
+    "BD-276",
+    "BD-277",
+    "N26a-05",
+    "N26a-06",
+    "N26a-11",
+    "N26a-12",
+    "N26a-16",
+    "N26a-28",
+    "N26a-30",
+    "N26a-31",
+    "N26a-32",
+    "N26a-33",
+    "N26a-34",
+    "N26a-35"
+   ],
+   "note": "a registry bead never depends on the measuring or deciding beads; they write into its rows"
+  },
+  {
+   "bead": "N26b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19c-30"
+   ],
+   "note": "the legality bounds take their cited sources from the norms OPEN-HAB-1 rules on (§26.3); N19c-30 can be decided without this bead, so the order is N19c-30 first"
+  },
+  {
+   "bead": "N26b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-04",
+    "N26a-05"
+   ],
+   "note": "the tests that the default holds mechanically run the planted registry through the legality script (FROB-REF-361)"
+  },
+  {
+   "bead": "N26b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-29"
+   ],
+   "note": "distress score, informativeness check and the flat-margin rule"
+  },
+  {
+   "bead": "N26b-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-28"
+   ],
+   "note": "the exploration pilot's harness (random-walk fixture, quadruped with pushes, equal-budget arms)"
+  },
+  {
+   "bead": "N26b-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "method-experiment register"
+  },
+  {
+   "bead": "N26b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-20",
+    "N21c-35"
+   ],
+   "note": "envelope enforcement with FROB-REF-761 (N36-20) and the record of the class in force from OPEN-SPARK-2 (N21c-35), both M0"
+  },
+  {
+   "bead": "N26b-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-21"
+   ],
+   "note": "the certification planner and the budget refusal FROB-REF-760"
+  },
+  {
+   "bead": "N26b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-13",
+    "N33b-12"
+   ],
+   "note": "stats group admission record (INT-FSIM-14) and the fs-eproc first-use admission"
+  },
+  {
+   "bead": "N26b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-22"
+   ],
+   "note": "the sequential path up to the cap and the exact bound beyond it"
+  },
+  {
+   "bead": "N26b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-07"
+   ],
+   "note": "nemesis.search --method given --worlds <file>"
+  },
+  {
+   "bead": "N26b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-19"
+   ],
+   "note": "the .fmcw reader and replay check"
+  },
+  {
+   "bead": "N26b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NF-01",
+    "N33b-04"
+   ],
+   "note": "the compatibility train: procedure and script (NF-01) and the pin-advance procedure with the gates a train re-runs (N33b-04), both M0"
+  },
+  {
+   "bead": "N26b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-30",
+    "N26a-31"
+   ],
+   "note": "the two gate scripts this switch-over re-runs"
+  }
+ ],
  "edges": [],
  "superseded": [],
  "cross_group_duplicates": [],

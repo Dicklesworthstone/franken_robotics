@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-22", "N12-20", "BD-154", "N12-06", "SPEC-C-06", "SPEC-C-37"]
+deps: ["N12-22", "N12-20", "N12-06", "SPEC-C-06", "SPEC-C-37"]
 needs: ["§18.6: the cone kernels K-cone-eval and the Cone trait's project function on which the certificate is issued (BD-050, BD-153)"]
-related: ["BD-379", "N12-16", "CARD-T-08", "N12-21"]
+related: ["BD-379", "N12-16", "CARD-T-08", "N12-21", "BD-154"]
 gates: []
 plan_refs: ["§12.3 (T-07)", "§10 C-06", "§10 C-37", "§18.12 (PO-TRAC-01)", "Appendix D.3 (friction cone, four-dimensional friction cone)", "Appendix I.1 (Cone::project)"]
 ---
@@ -36,6 +36,16 @@ that does not exist along the diagonals.
 In: statement document, registry row, the per-case certificates on the cone projection kernels (three- and
 four-dimensional), specimens and mutants. Out: the `Cone` trait and the kernels (the algebra and contact beads);
 the solver; the positive-semidefinite Hessian (CARD-T-08); the G0 property tests in floating point.
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the four-dimensional friction cone of `frob-contact` (BD-154), like the `Cone` trait and the cone kernels is
+`related`, not a dependency (a card that waited for its implementer would close a loop, because the implementer's
+own acceptance runs the card's law tests). What the card does depend on is in `deps`: the card registry, its
+specification, its pilot where the route is Frontier, and Lemma's own proof machinery. It closes on its statement
+document, its registry row, its specimens and mutants, and every acceptance line that its own fixtures decide. An
+acceptance line that can only be observed on live output (certificates bound to the content hashes of the cone
+kernels as built) is run inside the implementing bead, with this card's law tests, as part of that bead's
+acceptance; the receipt produced there is what moves the registry row for that output.
 
 ## Technical approach
 

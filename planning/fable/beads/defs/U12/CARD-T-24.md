@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "frob-cert", "frob-algebra", "solid", "test"]
 parent: "WP-66"
-deps: ["N12-18", "BD-049", "BD-285", "N12-06", "SPEC-C-22"]
+deps: ["N12-18", "N12-06", "SPEC-C-22"]
 needs: []
-related: ["N12-25", "N12-39", "CARD-T-25", "BD-287"]
+related: ["N12-25", "N12-39", "CARD-T-25", "BD-287", "BD-049", "BD-285"]
 gates: []
 plan_refs: ["§12.3 (T-24)", "§12.8 (OPEN-LEMMA-6)", "§10 C-22", "§13.6", "§17.11", "Appendix D.5 (Burnside counting, wreath product)"]
 ---
@@ -39,6 +39,16 @@ In: statement document, registry row, the per-campaign `orbit-count` certificate
 mutants; the rule for which class is printed when enumeration is out of reach. Out: the group and orbit code
 (the algebra crate); the campaign quotient and the mission-observable projection (Phylum); the auditor's checker
 (N12-18); the Mathlib question (N12-25) and the Lean citation (N12-39).
+
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
+the orbit code of `frob-algebra` (BD-049) and campaign quotienting in `frob-phylum` (BD-285) are `related`, not
+dependencies (a card that waited for its implementer would close a loop, because the implementer's own acceptance
+runs the card's law tests). What the card does depend on is in `deps`: the card registry, its specification, its
+pilot where the route is Frontier, and Lemma's own proof machinery. It closes on its statement document, its
+registry row, its specimens and mutants, and every acceptance line that its own fixtures decide. An acceptance
+line that can only be observed on live output (the certificate a campaign emits for its own count) is run inside
+the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there
+is what moves the registry row for that output.
 
 ## Technical approach
 

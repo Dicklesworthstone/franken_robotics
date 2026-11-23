@@ -8,7 +8,7 @@ labels: ["m3", "lemma", "spine", "spec", "solid", "frontier", "frob-arena", "tes
 parent: "WP-50"
 deps: ["BD-025", "SPEC-C-15", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-25", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-132 to KA-135 and CX-062; this bead binds them to tests and registers the controls the appendix leaves unstated", "§38.7: the metamorphic-relation registry row MR-33 (tier-corrected estimate) in `frob-conformance/registry/relations.toml` (Gauntlet beads); this bead supplies its statement and control"]
-related: ["N10b-17", "BD-262", "BD-263", "BD-264", "BD-212", "BD-214", "BD-268", "SPEC-C-15", "SPEC-C-26", "BD-124"]
+related: ["N10b-17", "BD-262", "BD-263", "BD-264", "BD-212", "BD-214", "BD-268", "SPEC-C-26", "BD-124", "N10a-02"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-25", "§10 C-15", "§16.8", "§29.11", "§38.7 MR-33", "Appendix B.5", "Appendix D.8", "Appendix E GB-15", "Appendix F FD-FSIM-17", "Appendix M.9 KA-132 to KA-135", "Appendix N.7 CX-062"]
 ---

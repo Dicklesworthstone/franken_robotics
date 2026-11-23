@@ -168,3 +168,23 @@ found in the seed index; the lead resolves the rest):
 13. FROB-REF-168 and FROB-REF-263 are listed in §12.7 but are raised by the model compiler and the
     event-derivative code. N12-REF registers them with their triggers and repairs and leaves the raising
     mechanisms to their owners (see (d)).
+
+## (f) Integration addendum
+
+Changes made when this unit was connected to the others (94 bead files after them):
+
+- N12-51 (M2, new): per-law convexity certificates for lockstep contact and joint potentials, the instance half
+  of T-08. Split out of CARD-T-08 because PO-KIN-01 needs the default contact law and the joint rows certified
+  per law at M2, three milestones before the card's Lean lemma. Carries §12.3 (T-08) and §12.4 (instance
+  certificates) for those laws; CARD-T-08 keeps the lemma, the statement and the row, and depends on it.
+- N12-52 (M1, new): the owner decision on the nine candidate theorem cards that other chapters' proof
+  obligations raise (PO-SINEW-01, PO-SINEW-03, PO-HAB-02, PO-SENS-07, PO-SHIELD-04, PO-ARENA-02, PO-AUGUR-06,
+  PO-NEMESIS-04, PO-GROUND-01). Carries the admission rule of §12.3 for candidates beyond T-35.
+- Direction rule for cards: a card never depends on the bead that implements or uses its theorem. Twenty-three
+  cards had such a dependency moved to `related`, each with an order-of-work note in its Scope; cards keep their
+  dependencies on the card registry, their specification, their pilot and Lemma's own proof machinery.
+- BD-364 no longer depends on the end-to-end bead N12-35 (a mechanism never depends on an end-to-end bead).
+- Item 8 of (e): the two refusals with no code in the Lemma table are FROB-REF-701 (over-budget) and
+  FROB-REF-724 (verb not implemented in this build) of the Tether registry; BD-382, N12-28 and N12-32 name them.
+- Item 13 of (e): the row of FROB-REF-168 in N12-REF follows the decision bead of the conventions chapter
+  (N13-03, default option B) and its mechanism (N13-04).

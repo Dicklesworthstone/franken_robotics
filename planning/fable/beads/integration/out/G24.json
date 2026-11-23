@@ -595,9 +595,10 @@
    "n": 2,
    "as": "dep",
    "keys": [
+    "N24a-44",
     "BD-090"
    ],
-   "note": "channel declarations; the interval-extremum kind itself is missing from BD-090 and reported as a gap"
+   "note": "the kind interval-extremum was carried by no bead (BD-090 has five other kinds) and is the new bead N24a-44; the integer strike count is a cumulative-counter channel of BD-090"
   },
   {
    "bead": "N24b-06",
@@ -949,7 +950,326 @@
    "note": "task regions of the scene and typed ports of the design; crossing events are derived here and recorded as event channels"
   }
  ],
- "edges": [],
+ "edges": [
+  {
+   "bead": "SPEC-C-30",
+   "dep": "BD-121",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "BD-154",
+   "dep": "CARD-T-07",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "BD-124",
+   "dep": "N24b-06",
+   "as": "dep",
+   "why": "coverage (d) of U24b: the fixed-n engine calls the enumerator"
+  },
+  {
+   "bead": "BD-260",
+   "dep": "N24b-18",
+   "as": "dep",
+   "why": "coverage (d) of U24b: the gate runs the campaign simulator at full scale (applied in the file)"
+  },
+  {
+   "bead": "BD-248",
+   "dep": "N24b-02",
+   "as": "dep",
+   "why": "coverage (d) of U24b: the corpus content is authored into this registry"
+  },
+  {
+   "bead": "BD-212",
+   "dep": "N24b-09",
+   "as": "dep",
+   "why": "coverage (d) of U24b: the batch-tier rows of GATE-ARENA-04 that BD-212 counts"
+  },
+  {
+   "bead": "BD-256",
+   "dep": "N24a-33",
+   "as": "dep",
+   "why": "coverage (d) of U24c, redirected from the superseded N24c-11 to the kept pilot bead (already in the file)"
+  },
+  {
+   "bead": "BD-259",
+   "dep": "N24c-13",
+   "as": "dep",
+   "why": "coverage (d) of U24c"
+  },
+  {
+   "bead": "BD-260",
+   "dep": "N24c-13",
+   "as": "dep",
+   "why": "coverage (d) of U24c"
+  },
+  {
+   "bead": "BD-202",
+   "dep": "N24c-14",
+   "as": "dep",
+   "why": "coverage (d) of U24c"
+  },
+  {
+   "bead": "BD-255",
+   "dep": "N24c-15",
+   "as": "dep",
+   "why": "coverage (d) of U24c: the device half of the guard band"
+  },
+  {
+   "bead": "BD-123",
+   "dep": "N24a-16",
+   "as": "dep",
+   "why": "coverage (d) of U24c, redirected from the superseded N24c-03 to the kept bead (applied in the file)"
+  },
+  {
+   "bead": "BD-262",
+   "dep": "N24c-31",
+   "as": "related",
+   "why": "coverage (d) of U24c: the item-bank refusal is installed in this verb's admission path by N24c-31, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-124",
+   "dep": "N24c-31",
+   "as": "related",
+   "why": "coverage (d) of U24c: the item-bank refusal is installed in this verb's admission path by N24c-31, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-259",
+   "dep": "N24c-31",
+   "as": "related",
+   "why": "coverage (d) of U24c: the item-bank refusal is installed in this verb's admission path by N24c-31, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-264",
+   "dep": "N24c-31",
+   "as": "related",
+   "why": "coverage (d) of U24c: the item-bank refusal is installed in this verb's admission path by N24c-31, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-276",
+   "dep": "N24c-31",
+   "as": "related",
+   "why": "coverage (d) of U24c: the item-bank refusal is installed in this verb's admission path by N24c-31, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-262",
+   "dep": "N24c-37",
+   "as": "related",
+   "why": "coverage (d) of U24c: the untested-exposure-table refusal is installed in this verb's admission path by N24c-37, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-124",
+   "dep": "N24c-37",
+   "as": "related",
+   "why": "coverage (d) of U24c: the untested-exposure-table refusal is installed in this verb's admission path by N24c-37, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-259",
+   "dep": "N24c-37",
+   "as": "related",
+   "why": "coverage (d) of U24c: the untested-exposure-table refusal is installed in this verb's admission path by N24c-37, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-264",
+   "dep": "N24c-37",
+   "as": "related",
+   "why": "coverage (d) of U24c: the untested-exposure-table refusal is installed in this verb's admission path by N24c-37, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-276",
+   "dep": "N24c-37",
+   "as": "related",
+   "why": "coverage (d) of U24c: the untested-exposure-table refusal is installed in this verb's admission path by N24c-37, which depends on the verb; not blocking"
+  },
+  {
+   "bead": "BD-222",
+   "dep": "N24c-37",
+   "as": "related",
+   "why": "coverage (d) of U24c: the M2 verb registry carries task.check --coupling (its row is in VERBS-task); a registry does not wait for the mechanism"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N24c-22",
+   "as": "related",
+   "why": "coverage (d) of U24c: the M3 verb registry carries task.audit (its row is in VERBS-task)"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N24c-30",
+   "as": "related",
+   "why": "coverage (d) of U24c: the M3 verb registry carries eval.items (its row is in VERBS-eval)"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N24c-31",
+   "as": "related",
+   "why": "coverage (d) of U24c: the M3 verb registry carries the --sampling modes of eval.compare"
+  },
+  {
+   "bead": "BD-191",
+   "dep": "BD-305",
+   "as": "related",
+   "why": "need 3 of BD-191: the private mark and its enforcement are M3"
+  },
+  {
+   "bead": "BD-191",
+   "dep": "N29b-14",
+   "as": "related",
+   "why": "need 3 of BD-191: privacy of stored telemetry objects is M3"
+  },
+  {
+   "bead": "BD-194",
+   "dep": "N23a-13",
+   "as": "related",
+   "why": "need 1 of BD-194: the mapping table is written at export; a term only declares its entry"
+  },
+  {
+   "bead": "BD-201",
+   "dep": "N24c-36",
+   "as": "related",
+   "why": "need 1 of BD-201: the exposure-table lowering of the command stream; KILL-EXPODOMAIN may remove it"
+  },
+  {
+   "bead": "BD-202",
+   "dep": "BD-229",
+   "as": "related",
+   "why": "need 3 of BD-202: the full interface map is M3"
+  },
+  {
+   "bead": "BD-256",
+   "dep": "BD-258",
+   "as": "related",
+   "why": "need 1 of BD-256: seed order; the components N37-11 and N32b-03 carry the dependency"
+  },
+  {
+   "bead": "BD-259",
+   "dep": "BD-298",
+   "as": "related",
+   "why": "need 3 of BD-259: the MCP tool is generated from the verb; seed order"
+  },
+  {
+   "bead": "N24a-42",
+   "dep": "BD-190",
+   "as": "related",
+   "why": "need 1 of N24a-42: BD-190 is the M2 device form"
+  },
+  {
+   "bead": "N24b-05",
+   "dep": "BD-195",
+   "as": "related",
+   "why": "need 1 of N24b-05: BD-195 is the M2 batched form"
+  },
+  {
+   "bead": "N24b-07",
+   "dep": "BD-180",
+   "as": "related",
+   "why": "need 1 of N24b-07: BD-180 is the M2 device kernel"
+  },
+  {
+   "bead": "N24b-12",
+   "dep": "N18a-28",
+   "as": "related",
+   "why": "need 1 of N24b-12: patch quadrature; a dep would close a cycle through BD-212 and BD-202"
+  },
+  {
+   "bead": "N24b-14",
+   "dep": "N35-07",
+   "as": "related",
+   "why": "need 1 of N24b-14: the licence table is M2"
+  },
+  {
+   "bead": "N24b-14",
+   "dep": "BD-177",
+   "as": "related",
+   "why": "need 1 of N24b-14: the D3 equivalence record is M2"
+  },
+  {
+   "bead": "N24b-19",
+   "dep": "N12-13",
+   "as": "related",
+   "why": "the checker of proof kind sample-coverage reads the campaign section this bead writes"
+  },
+  {
+   "bead": "BD-302",
+   "dep": "N24b-19",
+   "as": "dep",
+   "why": "need 1 of N24b-19 reversed: the report verbs call the standing check and raise FROB-REF-845"
+  },
+  {
+   "bead": "N16b-01",
+   "dep": "N24b-01",
+   "as": "dep",
+   "why": "need 1 of N24b-01 reversed: the standard battery is written as a frob.battery/1 manifest"
+  },
+  {
+   "bead": "N38a-20",
+   "dep": "N24b-01",
+   "as": "dep",
+   "why": "need 1 of N24b-01 reversed: the standard battery is written as a frob.battery/1 manifest"
+  },
+  {
+   "bead": "N23b-34",
+   "dep": "N24b-06",
+   "as": "dep",
+   "why": "need 1 of N24b-06 reversed: the cadence rule is registered under eval.preanalyze"
+  },
+  {
+   "bead": "N39a-33",
+   "dep": "N24b-06",
+   "as": "dep",
+   "why": "need 2 of N24b-06 reversed: the ten-fold plan rule is registered under eval.preanalyze"
+  },
+  {
+   "bead": "N19c-14",
+   "dep": "BD-259",
+   "as": "related",
+   "why": "N24b-17, a component of BD-259, depends on the handle of N19c-14; the reverse would close a cycle"
+  },
+  {
+   "bead": "BD-067",
+   "dep": "N38a-04",
+   "as": "dep",
+   "why": "N38a-04 owns the oracle register and capture-script convention and scopes the reference-robot fixtures to BD-067"
+  },
+  {
+   "bead": "N37-16",
+   "dep": "N24b-18",
+   "as": "dep",
+   "why": "N37-16 runs the leak build under the adaptive-retry simulator, which is N24b-18 with its mutant leak-per-world-outcomes"
+  },
+  {
+   "bead": "ART-L3",
+   "dep": "N24a-12",
+   "as": "related",
+   "why": "its related key N24c-01 is superseded by N24a-12"
+  },
+  {
+   "bead": "VERBS-task",
+   "dep": "N24a-12",
+   "as": "related",
+   "why": "its related key N24c-01 is superseded by N24a-12"
+  },
+  {
+   "bead": "VERBS-task",
+   "dep": "N24a-16",
+   "as": "related",
+   "why": "its related key N24c-03 is superseded by N24a-16"
+  },
+  {
+   "bead": "BD-207",
+   "dep": "N24a-44",
+   "as": "dep",
+   "why": "the device telemetry in the step carries the fold of the interval-extremum kind that N24a-44 defines on the referee"
+  },
+  {
+   "bead": "BD-055",
+   "dep": "N24c-23",
+   "as": "related",
+   "why": "coverage (e) of U24c: N24c-23 adds the optional marker foil: true and the foil-only component wrench-site to the design language; the schema owner should confirm"
+  }
+ ],
  "superseded": [
   {
    "drop": "N24c-12",
@@ -977,8 +1297,362 @@
    "note": "both are the example stage of task.check; trace storage, output fields, GATE-ARENA-09 clause, tests and controls folded into N24a-12; differing rule choices (deletion mutant, near-boundary refusal, exact atoms, vacuity classes) settled and stated there"
   }
  ],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "cross_group_duplicates": [
+  {
+   "mine": "N24a-31",
+   "other": "N19c-12",
+   "note": "same mechanism: training scene manifests, leak check by split group at scoring time, FROB-REF-502, GATE-ARENA-02; N24a-31 now uses the same label in-sample"
+  },
+  {
+   "mine": "N24a-31",
+   "other": "N19c-15",
+   "note": "both own an end-to-end script that records GATE-ARENA-02 on planted mirror and retrofit variants"
+  },
+  {
+   "mine": "BD-126",
+   "other": "N25a-02",
+   "note": "both specify admission of a .fmission query and its refusals 868, 874, 884, 887, 847; N25a-02 depends on BD-126 and leaves it parsing, canonical bytes and the verbs"
+  },
+  {
+   "mine": "N24b-06",
+   "other": "N33b-19",
+   "note": "the verb eval.preanalyze with its schemas appears in both; N33b-19 scopes the rule enumerator to N24b-06; both name GATE-ARENA-05, as does BD-124"
+  },
+  {
+   "mine": "N24b-21",
+   "other": "N33b-19",
+   "note": "both own an end-to-end script for the study types, eval.preanalyze and their refusals"
+  },
+  {
+   "mine": "N24b-11",
+   "other": "N18a-28",
+   "note": "the load-weighted slip metric and its refinement-invariance test are defined in both (N18a-28 as a weighted mean slip speed, N24b-11 as its time integral)"
+  },
+  {
+   "mine": "N24b-12",
+   "other": "N18a-28",
+   "note": "the sole straddling a low-grip strip (KA-616, the same case as KA-413) is computed in both"
+  },
+  {
+   "mine": "N24a-41",
+   "other": "N32b-41",
+   "note": "fork timelines and the tables block of the replay packet are specified in both; N32b-41 states it extends the parent-only writer of N24a-41"
+  },
+  {
+   "mine": "N24a-43",
+   "other": "N19a-08",
+   "note": "the moving-surface record and the ledger line for boundary work of prescribed surfaces are specified in both"
+  },
+  {
+   "mine": "N24a-34",
+   "other": "N38b-12",
+   "note": "a scripted adversary and a self-test of the qualification lane under adaptive retries with a broken-certifier control are specified in both (and in N24b-18)"
+  },
+  {
+   "mine": "N24b-17",
+   "other": "N19c-14",
+   "note": "seed derivation, reveal and retirement of sealed families appear in both; N19c-14 holds the scene side and the handle"
+  },
+  {
+   "mine": "BD-194",
+   "other": "N23a-08",
+   "note": "the registered action laws, their log-likelihoods and FROB-REF-527 are specified in both"
+  },
+  {
+   "mine": "BD-194",
+   "other": "N23a-05",
+   "note": "the table of what each kind of task term must declare is in both; N23a-05 depends on BD-194"
+  },
+  {
+   "mine": "BD-064",
+   "other": "N14a-08",
+   "note": "preflight stage 1 with ranked repairs and seeded-defect fixtures per code appears in both (BD-064 as design lints, N14a-08 as the validate stage)"
+  },
+  {
+   "mine": "N24b-02",
+   "other": "BD-248",
+   "note": "the freeze of the design corpus is claimed by both; N24b-02 holds the registry, the split and the freeze mechanics, BD-248 the content"
+  }
+ ],
+ "new_beads": [
+  "N24a-44"
+ ],
+ "gaps": [
+  {
+   "section": "§15 and §14.4",
+   "what": "a gripper or payload-attachment card that states a retention limit as a force and a moment, so that grasp retention in the reach-and-carry family is a carded quantity; the payload block of BD-055 has mount and removable only",
+   "needed_by": [
+    "N24a-30"
+   ]
+  },
+  {
+   "section": "§29.4",
+   "what": "the channel-kind table of BD-090 lists five kinds and no interval extremum, which §24.5 requires; the kind, its downsampling rule and its referee producers are now the new bead N24a-44, and BD-090 and the device telemetry bead BD-207 should name it",
+   "needed_by": [
+    "N24a-44",
+    "N24b-05",
+    "N24a-06"
+   ]
+  },
+  {
+   "section": "§19.3",
+   "what": "a declared pinch zone on closing fixtures (doors, lift gates, conveyor nips): the fixture library N19a-07 carries the closer law and no pinch-zone field",
+   "needed_by": [
+    "N24a-38"
+   ]
+  },
+  {
+   "section": "§19.3 (with §24.20)",
+   "what": "a corridor query on a scene pack's route graph (signed distance from a body footprint to the boundary of a corridor of declared half-width) recorded as a telemetry channel; N19a-04 carries the route graph as data only",
+   "needed_by": [
+    "N24c-21"
+   ]
+  },
+  {
+   "section": "§22.12.3",
+   "what": "milestone conflict: the backup controllers per morphology class are needed as plain controllers at M3 (third idle law of GATE-ARENA-15), and the bead that builds them, N22b-24, is M4",
+   "needed_by": [
+    "N24c-27"
+   ]
+  },
+  {
+   "section": "§19 (with §24.22)",
+   "what": "milestone conflict: the per-world cache of field samples in frob-scene is needed by the M2 fixture half of GATE-ARENA-14, and the per-world scene state pools of N19a-09 are M3",
+   "needed_by": [
+    "N24c-36",
+    "N24c-38"
+   ]
+  },
+  {
+   "section": "Appendix M, Appendix N and Appendix O",
+   "what": "numbers for the late Arena subsections §24.19 to §24.23: eight known-answer groups (registered under local labels KA-ARENA-W1 to -E2 in N24-KA), eight counterexamples (local labels in N24-CX) and fifteen refusals registered by symbolic name in N24-REF",
+   "needed_by": [
+    "N24-KA",
+    "N24-CX",
+    "N24-REF"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N24a-15",
+   "what": "content of the duplicate N24c-12 folded in; the decision rule is the one the pilot BD-257 registers, and the four-of-five rule is recorded as rejected"
+  },
+  {
+   "bead": "N24a-33",
+   "what": "content of the duplicate N24c-11 folded in as the extended set; gate GATE-ARENA-09 named"
+  },
+  {
+   "bead": "N24a-31",
+   "what": "content of the duplicate N24c-05 folded in; one label (in-sample) and one script name; deps N24c-04 and N23a-13 added"
+  },
+  {
+   "bead": "N24a-16",
+   "what": "content of the duplicate N24c-03 folded in; gate GATE-ARENA-08 named; deps BD-090 and BD-122 added; title shortened"
+  },
+  {
+   "bead": "N24a-12",
+   "what": "content of the duplicate N24c-01 folded in; rule choices settled (near-boundary example required for every comparator; deletion mutant by neutral element); gate GATE-ARENA-09 named; title shortened"
+  },
+  {
+   "bead": "N24c-12",
+   "what": "marked superseded_by N24a-15"
+  },
+  {
+   "bead": "N24c-11",
+   "what": "marked superseded_by N24a-33"
+  },
+  {
+   "bead": "N24c-05",
+   "what": "marked superseded_by N24a-31"
+  },
+  {
+   "bead": "N24c-03",
+   "what": "marked superseded_by N24a-16"
+  },
+  {
+   "bead": "N24c-01",
+   "what": "marked superseded_by N24a-12"
+  },
+  {
+   "bead": "BD-254",
+   "what": "Scope rewritten as the capstone of metrics, scorecards and batteries; deps on its components N24a-17 to N24a-22 and N24c-04 added"
+  },
+  {
+   "bead": "BD-122",
+   "what": "Scope rewritten as the capstone of the task file; deps on its components N24a-02, -03, -05, -06, -07, -09 and -12 added"
+  },
+  {
+   "bead": "N24c-04",
+   "what": "Scope rewritten: the M1 verbs only; deps on N24a-16, N24a-17, N24a-18, N24a-22 and N24b-01 (scorecard, metrics, battery manifest) added"
+  },
+  {
+   "bead": "N24a-11",
+   "what": "Scope rewritten: the verdict record; the verb is N24c-02"
+  },
+  {
+   "bead": "N24c-02",
+   "what": "Scope rewritten: the verb task.verdict; the record is N24a-11, added as a dep"
+  },
+  {
+   "bead": "N24a-42",
+   "what": "Scope rewritten: pipeline, monitor campaign and assembled receipt; refusal rows come from N24c-06, added as a dep"
+  },
+  {
+   "bead": "N24c-06",
+   "what": "Scope rewritten: task-file verbs and the nine planted refusals; dep N24c-01 replaced by N24a-12"
+  },
+  {
+   "bead": "N24a-24",
+   "what": "Scope rewritten: the gate harness; referee rows of the M1 families come from N24c-07, added as a dep"
+  },
+  {
+   "bead": "N24c-07",
+   "what": "Scope rewritten: the M1 families script; dep N24c-03 replaced by N24a-16"
+  },
+  {
+   "bead": "N24a-20",
+   "what": "Scope rewritten: friction utilization and clearance; the slip-distance metric is N24b-11, added as a dep"
+  },
+  {
+   "bead": "N24b-11",
+   "what": "Scope rewritten: owns the slip-distance metric; dep on the metric registry N24a-17 added"
+  },
+  {
+   "bead": "N24b-18",
+   "what": "Scope rewritten: the host-scale instrument of GATE-QUAL-01"
+  },
+  {
+   "bead": "N24a-34",
+   "what": "Scope rewritten: the daemon-level harness built on N24b-18, added as a dep; title changed to match"
+  },
+  {
+   "bead": "BD-260",
+   "what": "dep N24b-18 added"
+  },
+  {
+   "bead": "BD-123",
+   "what": "dep N24a-16 added (the settled start state at M1)"
+  },
+  {
+   "bead": "BD-125",
+   "what": "deps N24c-01 and N24c-03 replaced by N24a-12 and N24a-16; dep on the family registry N24a-23 added"
+  },
+  {
+   "bead": "N24c-21",
+   "what": "dep N24c-01 replaced by N24a-12"
+  },
+  {
+   "bead": "N24c-22",
+   "what": "dep N24c-01 replaced by N24a-12"
+  },
+  {
+   "bead": "N24c-19",
+   "what": "dep N24b-12 added (the plate-drag rig it reuses)"
+  },
+  {
+   "bead": "N24-REF",
+   "what": "script name of the 502 row and related keys point at the kept beads"
+  },
+  {
+   "bead": "N24-KA",
+   "what": "the eight known-answer groups of §24.19 to §24.23 registered under local labels with owners"
+  },
+  {
+   "bead": "N24a-02",
+   "what": "consideration added: the optional schema fields that N24c-18, N24c-21, N24c-36, N24c-40 and N24a-14 add"
+  },
+  {
+   "bead": "BD-191",
+   "what": "BD-203 moved from deps to related (seed order; N20a-33 carries the dependency)"
+  },
+  {
+   "bead": "BD-259",
+   "what": "BD-263 and BD-295 moved from deps to related (seed order)"
+  },
+  {
+   "bead": "N24a-14",
+   "what": "dep on its pilot BD-257 added; title shortened"
+  },
+  {
+   "bead": "N24c-24",
+   "what": "dep on its pilot N24c-20 added"
+  },
+  {
+   "bead": "N24c-31",
+   "what": "dep on its pilot N24c-29 added"
+  },
+  {
+   "bead": "N24c-36",
+   "what": "deps on the stream registry N35-23 and the keying helpers N35-24 added"
+  },
+  {
+   "bead": "N24c-18",
+   "what": "related key N24c-01 replaced by N24a-12"
+  },
+  {
+   "bead": "N24c-20",
+   "what": "related key N24c-11 replaced by N24a-33"
+  },
+  {
+   "bead": "N24c-37",
+   "what": "related key N24c-01 replaced by N24a-12"
+  },
+  {
+   "bead": "BD-368",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-01",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-03",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-09",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-13",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-17",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-19",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-21",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-28",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-35",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-36",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-39",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-41",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N24a-43",
+   "what": "title shortened"
+  }
+ ]
 }

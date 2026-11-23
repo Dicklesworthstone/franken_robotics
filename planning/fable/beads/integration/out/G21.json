@@ -2027,11 +2027,952 @@
    "dep": "N21c-17",
    "as": "dep",
    "why": "coverage (d) of U21c: the limb-archetype pilot adds a fourth arm to this harness and reads its three baseline arms"
+  },
+  {
+   "bead": "BD-154",
+   "dep": "CARD-T-07",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (BD-154 M2 -> CARD-T-07 M5 -> N12-20 -> BD-221 -> BD-156 -> BD-154; an M2 bead cannot depend on an M5 card)"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "BD-198",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (seed order: BD-177 may not depend on the later seed BD-198; BD-198 -> N23a-18 -> BD-177)"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "BD-212",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (seed order: BD-212 -> N16b-02 -> BD-177)"
+  },
+  {
+   "bead": "N35-09",
+   "dep": "BD-212",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (a component of BD-177 depending on the later seed BD-212, which reaches BD-177 through N16b-02)"
+  },
+  {
+   "bead": "N35-11",
+   "dep": "BD-212",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (a component of BD-177 depending on the later seed BD-212)"
+  },
+  {
+   "bead": "N35-11",
+   "dep": "BD-219",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (BD-219 -> BD-217 -> BD-198 -> N23a-18 -> BD-177 -> N35-11)"
+  },
+  {
+   "bead": "BD-198",
+   "dep": "BD-201",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (seed order: BD-198 may not depend on the later seed BD-201; the edge lies on the 73-bead component)"
+  },
+  {
+   "bead": "SPEC-C-14",
+   "dep": "BD-018",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (a specification never depends on the bead that implements it; BD-018 depends on SPEC-C-14)"
+  },
+  {
+   "bead": "BD-172",
+   "dep": "N21b-10",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the arena layout planner under which device buffers are allocated (capstone component)"
+  },
+  {
+   "bead": "BD-172",
+   "dep": "N21b-11",
+   "as": "dep",
+   "why": "coverage (d) of U21b: slab leases under which snapshots are read (capstone component)"
+  },
+  {
+   "bead": "BD-175",
+   "dep": "N21b-24",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the stall watchdog and worker supervisor (capstone component)"
+  },
+  {
+   "bead": "BD-178",
+   "dep": "N21b-29",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the verb spark.place with its request modes and refusals (capstone component)"
+  },
+  {
+   "bead": "BD-178",
+   "dep": "N21b-30",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the cost model for small jobs (capstone component)"
+  },
+  {
+   "bead": "BD-172",
+   "dep": "N21b-22",
+   "as": "related",
+   "why": "coverage (d) of U21b asked for a dependency; N21b-22 already depends on BD-172, so it would close a cycle"
+  },
+  {
+   "bead": "BD-173",
+   "dep": "N21b-14",
+   "as": "related",
+   "why": "coverage (d) of U21b: the gate script depends on the seed, not the reverse"
+  },
+  {
+   "bead": "BD-175",
+   "dep": "N21b-25",
+   "as": "related",
+   "why": "coverage (d) of U21b: the gate script depends on the seed, not the reverse"
+  },
+  {
+   "bead": "BD-178",
+   "dep": "N21b-31",
+   "as": "related",
+   "why": "coverage (d) of U21b: the gate script depends on the seed, not the reverse"
+  },
+  {
+   "bead": "BD-181",
+   "dep": "N21b-33",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the invariance gate is built on the sweep machinery of spark.check"
+  },
+  {
+   "bead": "BD-181",
+   "dep": "N21b-39",
+   "as": "related",
+   "why": "coverage (d) of U21b: N21b-39 supplies the run-to-run half of class D2; same lanes, not blocking"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "N21b-39",
+   "as": "related",
+   "why": "coverage (d) of U21b: N21b-39 supplies the run-to-run half of class D2"
+  },
+  {
+   "bead": "BD-295",
+   "dep": "N21b-21",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the daemon's slot dispatch consumes the refill interface and the per-job mode"
+  },
+  {
+   "bead": "BD-295",
+   "dep": "N21b-20",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the slot-dispatch pilot result (the Frontier mechanism depends on its pilot)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N21b-08",
+   "as": "dep",
+   "why": "coverage (d) of U21b and U21c: the M2 exit review records the KILL-METAL ADR"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N21b-19",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the M2 exit review records the KILL-BUCKET ADR"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N21b-34",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the M2 exit review records the KILL-D1 ADR"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N21b-39",
+   "as": "dep",
+   "why": "coverage (d) of U21b: the exit review reads the determinism-lane records"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N21b-09",
+   "as": "dep",
+   "why": "coverage (d) of U21c: the OPEN-SPARK-5 decision is due at the M2 exit with KILL-METAL"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N21c-34",
+   "as": "related",
+   "why": "N21c-34 need 2: the exit review reads the OPEN-SPARK-1 row and applies the no-GPU variant if it is open; it does not wait for ratification"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BD-370",
+   "as": "dep",
+   "why": "BD-370 need 4 and N21c-11 need 2: the M4 exit review lists KILL-FLEET, whose final reading is BD-370"
+  },
+  {
+   "bead": "BD-222",
+   "dep": "N21b-42",
+   "as": "related",
+   "why": "coverage (d) of U21b: the conformance-build options on sim.run (--mutant, --inject-faults, --withhold-kernel and the rest) are owned by the Spark mechanism beads and are not registry rows"
+  },
+  {
+   "bead": "N21a-15",
+   "dep": "N12-18",
+   "as": "related",
+   "why": "coverage (d) of U21a: the rewrite-trace checker (T-27) is M4, later than the pilot"
+  },
+  {
+   "bead": "BD-171",
+   "dep": "N17a-05",
+   "as": "dep",
+   "why": "the seed is the capstone of the bucket planner; N17a-05 is its dynamic-program component written by U17a"
+  },
+  {
+   "bead": "N21b-08",
+   "dep": "N21c-35",
+   "as": "related",
+   "why": "N21c-33 need 2, carried to the kept bead: the state of OPEN-SPARK-2 is an input"
+  },
+  {
+   "bead": "N21b-18",
+   "dep": "N16b-03",
+   "as": "related",
+   "why": "N21c-36 need 2, carried to the kept bead: GATE-KIN-07 confirms the capacity statistic later"
+  },
+  {
+   "bead": "N21b-40",
+   "dep": "BD-043",
+   "as": "related",
+   "why": "N21a-24 need 3, carried to the kept bead"
   }
  ],
- "superseded": [],
- "cross_group_duplicates": [],
+ "superseded": [
+  {
+   "drop": "N21c-33",
+   "keep": "N21b-08",
+   "note": "both decide KILL-METAL; the reasons the gate may fire, the tie and pass rules, the KILL-D1 boundary, the downstream lists, four tests, four negative controls and the dependencies BD-176, BD-181, STD-E2E folded into N21b-08"
+  },
+  {
+   "drop": "N21c-36",
+   "keep": "N21b-18",
+   "note": "both decide OPEN-SPARK-3; the Ω_p background, the measurement of L, t and p on devices, two more candidate sets, the break-even table, registry contents, six tests, KA-547 and KA-548 and the dependencies BD-172, BD-174, STD-E2E folded into N21b-18; BD-212 kept as related"
+  },
+  {
+   "drop": "N21c-37",
+   "keep": "N21b-03",
+   "note": "both decide OPEN-SPARK-4; the per-call admission reading, the 8-node probe, the capsule conditions, the cost disclosure of the fallback (7 to 15% of a step), four tests and the dependencies N21c-01, N34-07, N21a-01, STD-TEST, STD-E2E folded into N21b-03"
+  },
+  {
+   "drop": "N21c-38",
+   "keep": "N21b-09",
+   "note": "both decide OPEN-SPARK-5; the gateway limit table, the owner-decision registry row and its states, the deny rule and patch lint, the two contingency branches, scope and sunset of an own binding, four tests and the dependencies BD-028, N21c-24, N21c-01, STD-TEST, STD-E2E folded into N21b-09"
+  },
+  {
+   "drop": "N21c-29",
+   "keep": "N21a-06",
+   "note": "both discharge PO-SPARK-04; the annotation form for unbounded accesses, undeclared and read-only stores, the access recorder battery, the twin check, eight tests and three controls folded into N21a-06; the lint stays a frob-kir library module"
+  },
+  {
+   "drop": "N21a-24",
+   "keep": "N21b-40",
+   "note": "both are the end-to-end script of GATE-SPARK-08; the pilot background and its reproduction step, the receipts step, the extension steps of N21a-17, -22, -23 and BD-053, the four-placement rule, the signed-comparison mutant, lanes and CX-216, CX-217 folded into N21b-40; scripts now name spark_probe.sh"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "BD-171",
+   "other": "N17a-05",
+   "note": "the exact bucket planner (dynamic program, cap of eight, default set, FROB-REF-741): a seed and a component written by another unit; BD-171 should be the capstone"
+  },
+  {
+   "mine": "N21b-27",
+   "other": "N17a-08",
+   "note": "two end-to-end beads for verb phylum.plan"
+  },
+  {
+   "mine": "N21b-18",
+   "other": "N17b-11",
+   "note": "OPEN-SPARK-3 and OPEN-PHYLUM-1 freeze the same bucket set; one registry file should serve both"
+  },
+  {
+   "mine": "N21c-17",
+   "other": "N17a-15",
+   "note": "the three-arm survivor-specialization pilot is drafted twice (M2 here, M3 there)"
+  },
+  {
+   "mine": "N21c-16",
+   "other": "N17a-15",
+   "note": "the gate to fund specialization from the specializable share (s at least one third) is drafted twice"
+  },
+  {
+   "mine": "N21a-13",
+   "other": "N10a-21",
+   "note": "the M0 pilot of construction C-14: kernels derived, emitted on three back ends and certified"
+  },
+  {
+   "mine": "N21a-15",
+   "other": "N33c-21",
+   "note": "the INT-FJAX-01 e-graph extraction pilot is drafted twice"
+  },
+  {
+   "mine": "N21a-01",
+   "other": "N34-01",
+   "note": "annex and apps workspace layout, lockfile and toolchain rules"
+  },
+  {
+   "mine": "N21a-01",
+   "other": "N34-07",
+   "note": "the capsule registry format and the SAFETY.md rules"
+  },
+  {
+   "mine": "BD-217",
+   "other": "N36-27",
+   "note": "the seed's done-condition says KILL-PARITY decided; N36-27 is the decision bead; BD-217 now only supplies the measurement"
+  },
+  {
+   "mine": "N21c-35",
+   "other": "N44-01",
+   "note": "two owner decisions on the compute-envelope classes E1 to E3"
+  },
+  {
+   "mine": "N21a-23",
+   "other": "BD-203",
+   "note": "K-x-digest: the mixing contract here is a component of the digest-chain seed"
+  },
+  {
+   "mine": "N21c-40",
+   "other": "BD-207",
+   "note": "the drain of device histogram bins at the commit fence appears in both"
+  },
+  {
+   "mine": "N21a-07",
+   "other": "N35-13",
+   "note": "padding-neutral reductions: neutral elements and the pairwise tree anchored at index 0"
+  },
+  {
+   "mine": "N21a-10",
+   "other": "N35-18",
+   "note": "the ban table and banned-construct corpus of batched kernels against the dialect lint and its planted-defect corpus"
+  },
+  {
+   "mine": "N21b-36",
+   "other": "N35-18",
+   "note": "the start-up canaries appear in both"
+  },
+  {
+   "mine": "BD-020",
+   "other": "N41-21",
+   "note": "one kernel (a Cayley step) on Metal bit for bit against the CPU: the first-session step repeats GATE-SPARK-00's Metal half"
+  },
+  {
+   "mine": "BD-020",
+   "other": "N41-22",
+   "note": "the same kernel on CUDA: the first-session step repeats GATE-SPARK-00's CUDA half"
+  },
+  {
+   "mine": "N21c-25",
+   "other": "N18b-27",
+   "note": "half precision is not built: the refuting calculation as a test appears in both"
+  },
+  {
+   "mine": "N21b-39",
+   "other": "N38a-35",
+   "note": "the device rows of the determinism lanes of GATE-GAUNT-07 (twice on one machine, worker counts, debug and release)"
+  }
+ ],
  "new_beads": [],
- "gaps": [],
- "fixes": []
+ "gaps": [
+  {
+   "section": "Appendix O",
+   "what": "no bead owns the refusal-code registry as a whole (assignment and uniqueness across chapters): §21 proposes FROB-REF-619 for a device count that could wrap within a chunk and needs an internal-family 9xx code for a device result that fails its own schema; both are entered only in the chapter registry N21-REF",
+   "needed_by": [
+    "N21-REF",
+    "N21c-39",
+    "N21c-28",
+    "N21a-02"
+   ]
+  },
+  {
+   "section": "§34.3",
+   "what": "the layer rules name the device backend among the inversions defined in frob-dyn, while §21.9 and BD-014 put the KernelBackend trait in frob-kernels; no workspace bead states which holds",
+   "needed_by": [
+    "BD-014"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N21b-08",
+   "what": "KILL-METAL: content, tests and dependencies of the duplicate N21c-33 folded in; STD-E2E added"
+  },
+  {
+   "bead": "N21b-18",
+   "what": "OPEN-SPARK-3: content, tests and dependencies of the duplicate N21c-36 folded in; one registry file name (registries/shape_classes.toml); STD-E2E added"
+  },
+  {
+   "bead": "N21b-03",
+   "what": "OPEN-SPARK-4: content, tests and dependencies of the duplicate N21c-37 folded in; STD-E2E added"
+  },
+  {
+   "bead": "N21b-09",
+   "what": "OPEN-SPARK-5: content, tests and dependencies of the duplicate N21c-38 folded in; STD-E2E added"
+  },
+  {
+   "bead": "N21a-06",
+   "what": "PO-SPARK-04: content and tests of the duplicate N21c-29 folded in; the lint is a frob-kir library module, not an xtask pass"
+  },
+  {
+   "bead": "N21b-40",
+   "what": "GATE-SPARK-08: content of the duplicate script bead N21a-24 folded in; one script (spark_probe.sh) for GATE-SPARK-01 and -08"
+  },
+  {
+   "bead": "N21c-33",
+   "what": "marked superseded_by N21b-08"
+  },
+  {
+   "bead": "N21c-36",
+   "what": "marked superseded_by N21b-18"
+  },
+  {
+   "bead": "N21c-37",
+   "what": "marked superseded_by N21b-03"
+  },
+  {
+   "bead": "N21c-38",
+   "what": "marked superseded_by N21b-09"
+  },
+  {
+   "bead": "N21c-29",
+   "what": "marked superseded_by N21a-06"
+  },
+  {
+   "bead": "N21a-24",
+   "what": "marked superseded_by N21b-40"
+  },
+  {
+   "bead": "BD-029",
+   "what": "Scope rewritten: capstone of the fingerprint over N21c-01, N21c-02, N21c-03 and BD-017; sibling named by key"
+  },
+  {
+   "bead": "BD-172",
+   "what": "Scope rewritten: capstone of the CUDA backend over N21b-02, N21b-03, N21b-07, N21b-10, N21b-11"
+  },
+  {
+   "bead": "BD-173",
+   "what": "Scope rewritten: capstone of the device services over N21b-10 to N21b-13 and N21c-05; siblings named by key"
+  },
+  {
+   "bead": "BD-175",
+   "what": "Scope rewritten: capstone of faults and cancellation over N21b-22, N21b-07, N21b-23, N21b-24"
+  },
+  {
+   "bead": "BD-178",
+   "what": "Scope rewritten: capstone of the placement planner over N21b-28, N21b-29, N21b-30"
+  },
+  {
+   "bead": "BD-371",
+   "what": "Scope rewritten: capstone of specialization over N21c-16 to N21c-20"
+  },
+  {
+   "bead": "BD-217",
+   "what": "Scope, step 7 and one acceptance line changed: it measures and stores the inputs; KILL-METAL is decided by N21b-08 and KILL-PARITY by N36-27"
+  },
+  {
+   "bead": "N21a-02",
+   "what": "Scope rewritten against N21c-28 (M0 form of the boundary check); the two measuring verbs exempted from FROB-REF-606 as N21c-05 rules"
+  },
+  {
+   "bead": "N21c-28",
+   "what": "Scope rewritten against N21a-02 (M2 completion); now depends on N21a-02 and N21b-28; `not-assessed` used as the one typed value"
+  },
+  {
+   "bead": "N21a-07",
+   "what": "Scope rewritten against N21c-41 (tree and operator slot here, the full two-limb operator there)"
+  },
+  {
+   "bead": "N21c-41",
+   "what": "Scope rewritten against N21a-07; now depends on N21a-07"
+  },
+  {
+   "bead": "N21a-10",
+   "what": "Scope rewritten against N21c-42 (rule 7 of the lint here)"
+  },
+  {
+   "bead": "N21c-42",
+   "what": "Scope rewritten against N21a-10; now depends on N21a-10; lint test moved from xtask to frob-kir"
+  },
+  {
+   "bead": "N21a-21",
+   "what": "Scope rewritten against N21b-36 (IR lowering here, hand-written primitives and canaries there)"
+  },
+  {
+   "bead": "N21b-36",
+   "what": "Out clause names N21a-21 as the IR lowering"
+  },
+  {
+   "bead": "N21a-03",
+   "what": "Scope rewritten against N21c-32, N21c-24, N21c-27; sibling beads named by key in the two tables"
+  },
+  {
+   "bead": "N21c-32",
+   "what": "Scope rewritten against N21a-03 (tier register there, generated mechanism register here)"
+  },
+  {
+   "bead": "N21c-31",
+   "what": "the fence-disabled row stated as the one registry row for the seam of N21b-07"
+  },
+  {
+   "bead": "N21b-42",
+   "what": "the fence-disabled row tied to registry id spark.fence-disabled of N21c-31"
+  },
+  {
+   "bead": "BD-441",
+   "what": "epic: dependency BD-217 moved to related"
+  },
+  {
+   "bead": "N21-REF",
+   "what": "registry: dependency on the mechanism N21c-05 moved to related"
+  },
+  {
+   "bead": "BD-017",
+   "what": "seed order: dependency BD-022 moved to related, its dispatch component N32a-04 added; verb surface lists the suites other beads add"
+  },
+  {
+   "bead": "BD-179",
+   "what": "seed order: dependency BD-208 moved to related; the energy-ledger clause is recorded not run until BD-208 exists"
+  },
+  {
+   "bead": "BD-183",
+   "what": "seed order: dependency BD-216 moved to related, its paired-bound component N36-06 added"
+  },
+  {
+   "bead": "N21b-05",
+   "what": "Frontier mechanism: dependency on its pilot N21b-04 added"
+  },
+  {
+   "bead": "BD-014",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-01",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-04",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-17",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-19",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-20",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-21",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-32",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-34",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-41",
+   "what": "owns an end-to-end script: dependency STD-E2E added"
+  },
+  {
+   "bead": "N21b-33",
+   "what": "option --sweeps made the one spelling; `workers` axis and list form added"
+  },
+  {
+   "bead": "N21b-32",
+   "what": "verb surface lists the options other beads add (--list, --footprint-audit, --sweeps, --emit-receipts)"
+  },
+  {
+   "bead": "BD-152",
+   "what": "option --vary renamed --sweeps to match the owning verb bead"
+  },
+  {
+   "bead": "N21a-07",
+   "what": "option --vary renamed --sweeps to match the owning verb bead"
+  },
+  {
+   "bead": "N21a-08",
+   "what": "option --vary renamed --sweeps to match the owning verb bead"
+  },
+  {
+   "bead": "N21a-09",
+   "what": "option --vary renamed --sweeps to match the owning verb bead"
+  },
+  {
+   "bead": "BD-053",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21a-17",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21a-22",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21a-23",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21-KA",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21a-25",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21-CX",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21c-01",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21c-03",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21c-24",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21c-27",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21c-34",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21c-35",
+   "what": "references to superseded beads and to spark_exact_guarded.sh repointed to the kept beads"
+  },
+  {
+   "bead": "N21a-01",
+   "what": "sibling bead named by key"
+  },
+  {
+   "bead": "N21a-04",
+   "what": "sibling bead named by key"
+  },
+  {
+   "bead": "BD-018",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-020",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-030",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-053",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-152",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-171",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-172",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-173",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-174",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-175",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-176",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-178",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-179",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-183",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-217",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-221",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-371",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-01",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-02",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-03",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-04",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-05",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-06",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-08",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-10",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-11",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-12",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-13",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-14",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-15",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-16",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-17",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-18",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-19",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-20",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-21",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-22",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-23",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-25",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-26",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21a-27",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-02",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-03",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-04",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-05",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-06",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-07",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-09",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-10",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-11",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-12",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-13",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-14",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-15",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-17",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-20",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-21",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-22",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-23",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-24",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-25",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-26",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-27",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-28",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-29",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-30",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-31",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-32",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-33",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-34",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-35",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-37",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-38",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-39",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-40",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21b-42",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N21c-15",
+   "what": "title shortened"
+  }
+ ]
 }

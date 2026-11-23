@@ -2363,9 +2363,10 @@
   },
   {
    "section": "§12.4",
-   "what": "a decision by the Lemma lead on whether refinement (alternating-simulation) proofs get a proof kind of their own",
+   "what": "two decisions by the Lemma lead that no bead carries: whether refinement (alternating-simulation) proofs get a proof kind of their own, and whether the coupling budget stays a typed transport block of a bundle (as N25e-03 specifies it) or becomes a kind in the closed registry",
    "needed_by": [
-    "N25c-03"
+    "N25c-03",
+    "N25e-03"
    ]
   },
   {
@@ -2401,7 +2402,7 @@
   },
   {
    "bead": "BD-426",
-   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them)"
+   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them); title shortened"
   },
   {
    "bead": "BD-435",
@@ -2409,7 +2410,7 @@
   },
   {
    "bead": "BD-437",
-   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them)"
+   "what": "epic: its dependencies moved from deps to related (an epic carries no dependencies; its pilot and mechanism beads already hold them); title shortened"
   },
   {
    "bead": "N25d-39",

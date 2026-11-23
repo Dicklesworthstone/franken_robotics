@@ -8,7 +8,7 @@ labels: ["m2", "habitat", "frob-scene", "solid", "registry", "test"]
 parent: "WP-17"
 deps: ["STD-TEST"]
 needs: []
-related: ["BD-025", "BD-146", "BD-223", "BD-318", "BD-163", "BD-164", "BD-228", "BD-229", "BD-230", "BD-231", "BD-233", "BD-234", "BD-235", "BD-236", "BD-369", "BD-413", "BD-414", "BD-415"]
+related: ["BD-025", "BD-146", "BD-223", "BD-318", "BD-163", "BD-164", "BD-228", "BD-229", "BD-230", "BD-231", "BD-233", "BD-234", "BD-235", "BD-236", "BD-369", "BD-413", "BD-414", "BD-415", "N19-CX", "N19-REF", "N19c-28", "N19b-05", "N19b-06"]
 gates: []
 plan_refs: ["Appendix M.18", "§19.18", "§19.19"]
 ---
@@ -28,9 +28,9 @@ harness loads them from.
 ## Scope
 
 In: the 39 rows as machine-readable registry data, the loader check that every row is bound to a test, and the
-record of three discrepancies found between this list and the chapter text. Out: implementing the tests (each row
-names the bead that carries it); the counterexample registry and the refusal registry of this chapter (written by
-the unit that owns the chapter's later subsections).
+record of the discrepancies found between this list and the chapter text (three, and one between two chapters). Out: implementing the tests (each row
+names the bead that carries it); the counterexample registry and the refusal registry of this chapter (N19-CX
+and N19-REF); the runner that executes the chapter's eighteen cases as one battery (N19c-28).
 
 ## Technical approach
 
@@ -96,6 +96,10 @@ the unit that owns the chapter's later subsections).
    - KA-460 M5 Ultra counts: the list's figures correspond to dividing 189 by the scene size in GB; the chapter's
      correspond to about 203 GB (189 GiB), for example 203 GB / 75 MB ≈ 2,700 homes at 2 cm. The budget is stated
      as 189 GiB, so the chapter's figures are the consistent arithmetic.
+   - KA-439 form of the viscous term (a discrepancy between chapters, not with this list): this row and the
+     Habitat chapter cap μ_v at μ_b; the contact chapter, which owns the law, states the Couette term uncapped
+     above Λ = 3. The law's bead (BD-230) settles it. Until it does, the scene-side beads (N19b-05, N19b-06)
+     assert only the two limits both forms share, on fixtures whose speed keeps μ_v below μ_b.
 
 ## Acceptance criteria
 
@@ -104,7 +108,7 @@ the unit that owns the chapter's later subsections).
 - [ ] The binding check passes: every row has a live test or a `pending` mark naming a bead; no row is unbound.
 - [ ] The report of unset tolerances lists exactly the rows marked "to set" (KA-433, KA-435, KA-439, KA-440's
       force, KA-444, KA-445, KA-449, KA-453's coefficients, KA-462) and shrinks only by a recorded decision.
-- [ ] The three discrepancies are recorded with both readings and the reading in force.
+- [ ] The three discrepancies with the list, and the open form of KA-439, are recorded with both readings and the reading in force.
 - [ ] Expected values in the registry are literals with their derivation cited; none is produced by the code
       under test (a lint forbids a registry value written by a test run).
 

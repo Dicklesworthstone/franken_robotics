@@ -8,7 +8,7 @@ labels: ["m1", "sensorium", "frob-sense", "frob-core", "solid", "registry", "tes
 parent: "WP-40"
 deps: ["BD-005", "BD-022"]
 needs: ["Appendix O owner: two refusals that late subsections of this chapter state without a code (a peak-load or sensor-overload claim without a resolved or modeled force history; a stage-7 target whose lead is shorter than the declared latency chain), and one rule with no code (evaluation of a policy with no passing causal-policy receipt): codes to be assigned in `registries/refusals.toml`"]
-related: ["BD-078", "BD-098", "BD-215", "N20b-10", "N20b-02", "BD-240", "N20b-05", "N20b-18", "N20b-17", "N20b-29", "N20b-33", "N20b-12"]
+related: ["BD-078", "BD-098", "BD-215", "N20b-10", "N20b-02", "BD-240", "N20b-05", "N20b-18", "N20b-17", "N20b-29", "N20b-33", "N20b-12", "N20b-45"]
 gates: []
 plan_refs: ["§20.18", "Appendix O", "§35.11", "§32.4", "§20.23", "§20.24"]
 ---

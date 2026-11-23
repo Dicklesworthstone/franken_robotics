@@ -1,10 +1,284 @@
 {
  "group": "G13",
- "needs": [],
- "edges": [],
+ "needs": [
+  {
+   "bead": "N13-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-16"
+   ],
+   "note": "the force-torque reading with exposure averaging and each impulse counted once; rule 4, the battery tests it"
+  },
+  {
+   "bead": "N13-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-17",
+    "N34-18"
+   ],
+   "note": "the raw-byte reader and the canonical writer of frob-core; the auditor's own reader (BD-026) is a separate implementation"
+  },
+  {
+   "bead": "N13-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-01",
+    "N13-12"
+   ],
+   "note": "the kernel manifest records the physical dimension of every argument buffer (N21b-01); the layout description that writes the schema is N13-12"
+  },
+  {
+   "bead": "N13-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-060"
+   ],
+   "note": "ports with their decorations are data of the .fmodule format"
+  },
+  {
+   "bead": "N13-34",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the bead defines the TorsionSpring element itself, on the port components of its dependency BD-070; no other bead carries a passive torsion spring at M1 (the series-spring element N15b-18 is the Frontier item)"
+  },
+  {
+   "bead": "N13-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14a-08"
+   ],
+   "note": "stage 1 of the compile pipeline, where the refusal is raised; the stage runner BD-110 is already a dependency; the Skeleton group keeps its link back to this bead related, so there is no cycle"
+  },
+  {
+   "bead": "N13-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-099",
+    "N20a-37"
+   ],
+   "note": "encoder cards with single-turn and multi-turn wrap (BD-099) and the alias witness object with its checker (N20a-37); enumeration over two supplied worlds is its existing dependency BD-134"
+  },
+  {
+   "bead": "N13-REF",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "no bead owns the assignment of codes to refusals stated without one; the proposal is recorded here (now FROB-REF-128, because the Skeleton registry N14-REF proposes FROB-REF-127 for its own uncoded refusal)"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-102",
+   "dep": "N13-15",
+   "as": "dep",
+   "why": "coverage (d) of U13: the verb exposes the Γ_mech computation"
+  },
+  {
+   "bead": "BD-102",
+   "dep": "N13-16",
+   "as": "dep",
+   "why": "coverage (d) of U13: induced representations, Γ_obs and breakers"
+  },
+  {
+   "bead": "BD-050",
+   "dep": "N13-13",
+   "as": "dep",
+   "why": "coverage (d) of U13: the frob-algebra crate foundation"
+  },
+  {
+   "bead": "BD-052",
+   "dep": "N13-13",
+   "as": "dep",
+   "why": "coverage (d) of U13: the frob-algebra crate foundation"
+  },
+  {
+   "bead": "BD-053",
+   "dep": "N13-10",
+   "as": "dep",
+   "why": "coverage (d) of U13: predicate classes, the exact reference evaluator and the bit-budget rule"
+  },
+  {
+   "bead": "BD-243",
+   "dep": "N13-05",
+   "as": "dep",
+   "why": "coverage (d) of U13: the analysis calls curvature_form"
+  },
+  {
+   "bead": "BD-056",
+   "dep": "N13-02",
+   "as": "dep",
+   "why": "coverage (d) of U13: the parity rule and mirror_joint"
+  },
+  {
+   "bead": "BD-032",
+   "dep": "N13-18",
+   "as": "related",
+   "why": "coverage (d) of U13: shared reversed-adjoint fixtures; not blocking"
+  },
+  {
+   "bead": "BD-048",
+   "dep": "N38a-04",
+   "as": "dep",
+   "why": "coverage (d) of U13: character tables on file need the oracle register under tools/oracle"
+  },
+  {
+   "bead": "N13-21",
+   "dep": "N38a-04",
+   "as": "dep",
+   "why": "coverage (d) of U13: symmetry groups on file need the oracle register"
+  },
+  {
+   "bead": "N13-22",
+   "dep": "N38a-04",
+   "as": "dep",
+   "why": "coverage (d) of U13: symmetry groups on file need the oracle register"
+  },
+  {
+   "bead": "N13-23",
+   "dep": "N38a-06",
+   "as": "dep",
+   "why": "coverage (d) of U13: the development lane for pilot scripts"
+  },
+  {
+   "bead": "N13-25",
+   "dep": "N38a-06",
+   "as": "dep",
+   "why": "coverage (d) of U13: the development lane for pilot scripts"
+  },
+  {
+   "bead": "N13-27",
+   "dep": "N38a-06",
+   "as": "dep",
+   "why": "coverage (d) of U13: the development lane for pilot scripts"
+  },
+  {
+   "bead": "N13-29",
+   "dep": "N38a-06",
+   "as": "dep",
+   "why": "coverage (d) of U13: the development lane for pilot scripts"
+  },
+  {
+   "bead": "N13-34",
+   "dep": "N14a-09",
+   "as": "related",
+   "why": "need 2 of N13-34: the binding functor derives which joints need the turn count from the same rule"
+  },
+  {
+   "bead": "N13-REF",
+   "dep": "N14-REF",
+   "as": "related",
+   "why": "both registries hold a proposal for the next free code of the 1xx block"
+  },
+  {
+   "bead": "BD-062",
+   "dep": "N13-03",
+   "as": "related",
+   "why": "the decision settles advisory against refusal for an over-heavy solid, which BD-062 assumes to be an advisory"
+  },
+  {
+   "bead": "N13-30",
+   "dep": "N10a-13",
+   "as": "related",
+   "why": "the construction's own pilot of the same Frontier item (Riemannian identification); the registered Marrow pilot N13-29 is the dependency"
+  }
+ ],
  "superseded": [],
- "cross_group_duplicates": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N13-27",
+   "other": "N10a-12",
+   "note": "the same paper-scale pilot: lattice mobility on the Sarrus and Bennett linkages (and one leg linkage) against the exact rank; N13-28 depends on N13-27"
+  },
+  {
+   "mine": "N13-34",
+   "other": "N14a-08",
+   "note": "both specify the stage-1 refusal of a lifted law on a joint without turn state, and N14a-09 the derivation of which joints need the count, which N13-34 also lists in scope; N13-34 depends on N14a-08 and the stage runner, and the Skeleton beads keep N13-34 related"
+  },
+  {
+   "mine": "N13-04",
+   "other": "BD-062",
+   "note": "opposite settlements of §11.5 against §14.5: BD-062 gives an advisory for a solid above a quarter of mass_max and says FROB-REF-168 cannot arise from a .fbot; N13-04 refuses it under the default of decision N13-03"
+  },
+  {
+   "mine": "N13-REF",
+   "other": "N14-REF",
+   "note": "both proposed FROB-REF-127 for different uncoded refusals (N14b-34 too); N13-REF and N13-34 now propose FROB-REF-128"
+  },
+  {
+   "mine": "N13-KA",
+   "other": "N38b-30",
+   "note": "N38b-30 supplies negative controls owed by known-answer rows of the conventions and Marrow that state none; N13-KA and N11-KA track the same rows"
+  },
+  {
+   "mine": "N13-15",
+   "other": "BD-102",
+   "note": "distinct scope, same section: N13-15 and N13-16 compute Γ_mech and Γ_obs in frob-algebra, BD-102 is the verb; BD-102 should depend on both"
+  }
+ ],
  "new_beads": [],
- "gaps": [],
- "fixes": []
+ "gaps": [
+  {
+   "section": "Appendix O, §35.11",
+   "what": "no bead assigns numbers to identifiers that late subsections state without one (refusal codes, known answers, counterexamples); chapter registries only record proposals, and two of them proposed FROB-REF-127",
+   "needed_by": [
+    "N13-REF",
+    "N13-34",
+    "N13-KA",
+    "N13-CX"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-011",
+   "what": "seed order: BD-021 (a higher-numbered seed) moved from deps to related; Scope says the certified clause of GATE-MARROW-01 is verified in N13-19"
+  },
+  {
+   "bead": "N13-34",
+   "what": "Scope states the order of work against the Skeleton beads that state the same check (stage 1 and the runner first, then this rule); related links to N14a-08, N14a-09, N14-REF"
+  },
+  {
+   "bead": "N13-06",
+   "what": "N20a-49 added to deps and a note in Considerations: the boundary-instant clause of the window row follows the owner decision on (a, b] against [open, close), asserted through the one membership function"
+  },
+  {
+   "bead": "N13-01",
+   "what": "related link to the window-boundary decision N20a-49 (row 15)"
+  },
+  {
+   "bead": "N11-KA",
+   "what": "related link to N20a-49 (KA-204)"
+  },
+  {
+   "bead": "N11-CX",
+   "what": "related link to N20a-49 (CX-104)"
+  },
+  {
+   "bead": "N13-07",
+   "what": "related link to N20a-49 (row 15 on all tiers)"
+  },
+  {
+   "bead": "N13-36",
+   "what": "BD-110 added to deps: the script drives design.check (rule 4)"
+  },
+  {
+   "bead": "N13-34",
+   "what": "candidate refusal code changed from FROB-REF-127 to FROB-REF-128: the Skeleton registry already proposes 127 for another refusal"
+  },
+  {
+   "bead": "N13-REF",
+   "what": "candidate refusal code changed from FROB-REF-127 to FROB-REF-128, with the reason; related links to N14-REF and N12-REF"
+  },
+  {
+   "bead": "N13-03",
+   "what": "Considerations: the row of FROB-REF-168 is entered by N12-REF with option B's wording and amended or tombstoned by this decision; related links added"
+  }
+ ]
 }

@@ -8,7 +8,7 @@ labels: ["m3", "lemma", "spine", "spec", "solid", "frontier", "frob-nemesis", "t
 parent: "WP-55"
 deps: ["BD-025", "SPEC-C-15", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-27", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-138 to KA-141 and CX-065, CX-066; this bead binds them to tests, sets the tolerance the appendix leaves `to set` and registers the controls it leaves unstated", "§38.7: the metamorphic-relation registry row MR-08 (fork and replay: a child with its own address has fresh streams) in `frob-conformance/registry/relations.toml` (Gauntlet beads)"]
-related: ["N10b-18", "BD-276", "BD-277", "BD-273", "BD-205", "BD-180", "BD-259", "SPEC-C-15", "SPEC-C-28", "SPEC-C-30", "BD-270"]
+related: ["N10b-18", "BD-276", "BD-277", "BD-273", "BD-205", "BD-180", "BD-259", "SPEC-C-28", "SPEC-C-30", "BD-270", "N10a-02"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-27", "§9 D-16", "§11.1", "§26.9", "§26.12", "§26.14", "§38.7 MR-08", "§38.12", "Appendix D.8", "Appendix E GB-32", "Appendix M.9 KA-138 to KA-141", "Appendix N.7 CX-065 CX-066", "Appendix N CX-292"]
 ---

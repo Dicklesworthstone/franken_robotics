@@ -41,6 +41,7 @@ them. See (d) and (e) for what the lead should link or merge.
 | §26.4 | | Verb `nemesis.search`; GATE-NEMESIS-02; KILL-NEMESIS | BD-273, N26a-11, N26a-12 |
 | §26.5 | The solvability oracle | The four classes and what each counts as | N26a-13, N26a-14, N26a-33; seed BD-271 (U26b) |
 | §26.5 | | Necessary conditions (route in the clearance complex, wrench and torque envelopes, energy budget) with dual vector or bottleneck; infeasible columns; retrofit hand-off | N26a-13 |
+| §26.5 | | What the task forces (the mandatory task events the conditions are posed for), read from the verdict formula; added at integration, since no Arena bead exports it | N26a-36 |
 | §26.5 | | Witness sources (baseline at other gains, another family member, sampling controller; privileged trajectory) | N26a-14 |
 | §26.5 | | Three rules: a witness passes the guard; a failed search proves nothing; the candidate's body, not a point robot | N26a-14, N26a-13, N26a-33 |
 | §26.5 | | Planted impossible and solvable traps; the oracle rows of GATE-NEMESIS-01 | N26a-04, N26a-33 |

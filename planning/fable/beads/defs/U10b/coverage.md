@@ -154,3 +154,14 @@ construction, the beads of this unit that supply their known-answer rows and con
 11. **Parent choices that are not the obvious crate owner.** SPEC-C-20 is under WP-49 (the package that names
     GATE-SENS-08) although its milestone is M1; SPEC-C-25 is under WP-50 (tier correction) although the
     construction table names `frob-arena`; N10b-19 is under EPIC-M4.
+
+## Integration pass (group G10)
+
+- Item 1 of part (e) is settled by the order-of-work rule in section 6 of `N10a-01`: the specification beads
+  no longer depend on the seeds BD-081, BD-332, BD-078, BD-061, BD-048, BD-192, BD-124, BD-262, BD-270, BD-170
+  and BD-058 (now `related`); a suite whose crate does not exist yet is staged in `frob-conformance`.
+- `N10b-04` and `N10c-04` name each other for the proof rules and the region-certificate contract; `N10b-01`
+  and `N10a-04` share one label set; `N10b-19`, `N10a-22` and `N10c-10` are the three audits of the forty
+  constructions.
+- The edges asked for in part (d) are recorded in `integration/out/G10.json`; where part (d) names an epic,
+  the edge goes to the decision or component bead that reads the pilot.

@@ -813,10 +813,9 @@
    "n": 3,
    "as": "dep",
    "keys": [
-    "BD-119",
-    "N23b-32"
+    "BD-119"
    ],
-   "note": "the causal test and the four planted-leak fixtures"
+   "note": "the corpus's leak exploit (a privileged wire to the actor) is a planted leak of the causal test BD-119; the four further leaks of the end-to-end bead N23b-32 extend the detector's coverage and are related"
   },
   {
    "bead": "N23b-07",
@@ -1227,10 +1226,9 @@
    "n": 2,
    "as": "dep",
    "keys": [
-    "N36-20",
-    "BD-219"
+    "N36-20"
    ],
-   "note": "the admission refusal for a job above the class in force is N36-20, fed by the estimate of BD-219; BD-297 is related"
+   "note": "the admission refusal for a job above the class in force is N36-20 (M0); the estimators BD-219 and BD-297 feed it when train.family runs and stay related, so that the decision and the pilot behind it do not wait for them"
   },
   {
    "bead": "N23b-25",
@@ -1894,12 +1892,6 @@
    "dep": "BD-219",
    "as": "related",
    "why": "replaces the drafted dep: closes a cycle"
-  },
-  {
-   "bead": "BD-154",
-   "dep": "CARD-T-07",
-   "as": "related",
-   "why": "replaces the drafted dep: closes a cycle"
   }
  ],
  "superseded": [
@@ -1946,12 +1938,36 @@
    "note": "N10b-14 specifies the transport along a typed edit that N23a-27 implements, with the same types and refusal"
   },
   {
+   "mine": "N23a-08",
+   "other": "BD-194",
+   "note": "the registered action laws, their log-likelihoods and FROB-REF-527 are specified in both (also reported by G24)"
+  },
+  {
+   "mine": "N23a-05",
+   "other": "BD-194",
+   "note": "the table of what each kind of task term must declare is in both; N23a-05 is the learner-side admission pass and depends on BD-194"
+  },
+  {
+   "mine": "N23a-03",
+   "other": "N20a-03",
+   "note": "both specify the frozen actor schema with privileged channels absent; N23a-03 holds the gym's access classes and harness"
+  },
+  {
+   "mine": "N23b-08",
+   "other": "BD-266",
+   "note": "both name GATE-CORTEX-15; BD-266 is the verb and variant step plans, N23b-08 the check on trained finalists (depends on BD-266)"
+  },
+  {
    "mine": "N23b-13",
    "other": "N39a-22",
    "note": "both report learner-swap figures from an external PPO driven through the adapter"
   }
  ],
- "new_beads": [],
+ "new_beads": [
+  "N23a-37",
+  "N23a-38",
+  "N23a-39"
+ ],
  "gaps": [
   {
    "section": "§14.7",
@@ -2216,7 +2232,7 @@
   },
   {
    "bead": "N23-KA",
-   "what": "five late known answers of §23.25 to §23.29 added as provisional rows KA-23-L1 to L5 (requested by U23b); Scope and carriers name beads in place of \"another unit\"; title updated"
+   "what": "five late known answers of §23.25 to §23.29 added as provisional rows KA-23-L1 to L5 (requested by U23b); Scope and carriers name beads in place of \"another unit\""
   },
   {
    "bead": "N23-REF",
@@ -2224,19 +2240,75 @@
   },
   {
    "bead": "BD-192",
-   "what": "title shortened to 110 characters or fewer"
+   "what": "body text names the bead in place of \"another unit\""
   },
   {
-   "bead": "N23a-06",
-   "what": "title shortened to 110 characters or fewer"
+   "bead": "BD-197",
+   "what": "body text names the bead in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-01",
+   "what": "body text names the bead in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-03",
+   "what": "body text names the bead in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-05",
+   "what": "body text names the bead in place of \"another unit\""
+  },
+  {
+   "bead": "N23a-11",
+   "what": "body text names the bead in place of \"another unit\""
   },
   {
    "bead": "N23a-12",
-   "what": "title shortened to 110 characters or fewer"
+   "what": "body text names the bead in place of \"another unit\""
   },
   {
-   "bead": "N23a-34",
-   "what": "title shortened to 110 characters or fewer"
+   "bead": "N23b-14",
+   "what": "chapter pointers replaced by the keys of the carrying beads"
+  },
+  {
+   "bead": "N23b-15",
+   "what": "chapter pointers replaced by the keys of the carrying beads"
+  },
+  {
+   "bead": "N23b-36",
+   "what": "chapter pointers replaced by the keys of the carrying beads"
+  },
+  {
+   "bead": "N23b-39",
+   "what": "chapter pointers replaced by the keys of the carrying beads"
+  },
+  {
+   "bead": "N23a-19",
+   "what": "chapter pointers replaced by the keys of the carrying beads"
+  },
+  {
+   "bead": "N23a-26",
+   "what": "chapter pointers replaced by the keys of the carrying beads"
+  },
+  {
+   "bead": "N23a-30",
+   "what": "chapter pointers replaced by the keys of the carrying beads"
+  },
+  {
+   "bead": "N23a-14",
+   "what": "related lists the build beads behind KILL-ALTALGO and the beads that extend its verbs"
+  },
+  {
+   "bead": "N23a-02",
+   "what": "title (123 characters as drafted) shortened to 109 keeping all three artifacts: typed spaces, versioned invertible normalization, disclosed clipping"
+  },
+  {
+   "bead": "N23a-31",
+   "what": "a tie requested under a group larger than Γ_obs now raises the registered code FROB-REF-161 with its payload and repairs (missing raising site reported by G17)"
+  },
+  {
+   "bead": "N23b-30",
+   "what": "Scope states how the joint-law checks join the battery cortex-ppo of BD-197 as rule P-12, and names the overlapping fixture N33c-37"
   }
  ]
 }

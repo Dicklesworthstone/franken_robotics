@@ -8,7 +8,7 @@ labels: ["m8", "lemma", "spine", "spec", "moonshot", "frob-learn", "test"]
 parent: "WP-79"
 deps: ["BD-025", "SPEC-C-23", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-24", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load row KA-131 and CX-061; this bead binds them to tests and sets the round-off bound the appendix leaves `to set`", "§10 C-04: the order of the tree recursions (outward kinematics, inward forces) from the specification bead SPEC-C-04 (unit U10a), which fixes the order of message passing"]
-related: ["N10b-16", "BD-439", "BD-320", "BD-325", "BD-326", "SPEC-C-04", "SPEC-C-09", "SPEC-C-02", "BD-192"]
+related: ["N10b-16", "BD-439", "BD-320", "BD-325", "BD-326", "SPEC-C-04", "SPEC-C-09", "SPEC-C-02", "BD-192", "N10a-02"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-24", "§9 D-6", "§9 D-10", "§11.4", "§23.14", "§23.23", "Appendix C", "Appendix M.9 KA-131", "Appendix N.7 CX-061"]
 ---

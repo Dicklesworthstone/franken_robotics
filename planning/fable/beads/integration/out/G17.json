@@ -32,11 +32,11 @@
   {
    "bead": "BD-186",
    "n": 2,
-   "as": "related",
+   "as": "dep",
    "keys": [
-    "BD-354"
+    "N36-05"
    ],
-   "note": "BD-354 is M4; at M2 the ceiling is computed by hand in this bead and logged"
+   "note": "N36-05 (M0) is the performance program's speedup bound and ceiling-first refusal FROB-REF-866; BD-354 is the mission subsystem's M4 use of it and is related"
   },
   {
    "bead": "BD-285",
@@ -363,16 +363,16 @@
     "N21c-18",
     "BD-371"
    ],
-   "note": "both decide at M4 and read this pilot; the device unit's own share measurement and pilot (N21c-16, N21c-17) duplicate this bead: reported"
+   "note": "both decide at M4 and read this pilot (edge recorded); the device unit's own share measurement and pilot (N21c-16, N21c-17) duplicate this bead: reported"
   },
   {
    "bead": "N17a-15",
    "n": 2,
-   "as": "dep",
+   "as": "related",
    "keys": [
     "N17b-24"
    ],
-   "note": "N17b-24 runs the four arms at M2 in the shared harness; this M3 bead reads arms (a) to (c) from its record"
+   "note": "N17b-24 adds the fourth arm to this bead's harness and depends on this bead (now M2), so the link here is related"
   },
   {
    "bead": "N17a-16",
@@ -742,10 +742,9 @@
    "n": 1,
    "as": "related",
    "keys": [
-    "N21b-18",
-    "N21c-36"
+    "N21b-18"
    ],
-   "note": "one decision seen from two chapters, to be closed by one record: reported as a cross-group duplicate"
+   "note": "one decision seen from two chapters, to be closed by one record: reported as a cross-group duplicate (N21c-36, the second device-side draft, is already superseded by N21b-18)"
   },
   {
    "bead": "N17b-12",
@@ -888,9 +887,9 @@
    "n": 1,
    "as": "dep",
    "keys": [
-    "N21c-17"
+    "N17a-15"
    ],
-   "note": "the device unit's three-arm pilot and harness at M2; N17a-15 (M3) repeats the reading for Phylum and is related"
+   "note": "N17a-15 (moved to M2) builds the three-arm harness this bead extends; the device unit's N21c-17 is the same pilot (reported as a cross-group duplicate)"
   },
   {
    "bead": "N17b-25",
@@ -975,10 +974,472 @@
    "note": "without a row the standing is unmeasured; not blocking"
   }
  ],
- "edges": [],
- "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "edges": [
+  {
+   "bead": "BD-171",
+   "dep": "N17a-04",
+   "as": "dep",
+   "why": "coverage (d) of U17a: phylum.plan wires the padding arithmetic"
+  },
+  {
+   "bead": "BD-171",
+   "dep": "N17a-05",
+   "as": "dep",
+   "why": "coverage (d) of U17a: phylum.plan wires the exact bucket planner"
+  },
+  {
+   "bead": "BD-171",
+   "dep": "N17a-07",
+   "as": "dep",
+   "why": "coverage (d) of U17a: phylum.plan wires the memory model and placement verdicts"
+  },
+  {
+   "bead": "BD-144",
+   "dep": "N17a-17",
+   "as": "dep",
+   "why": "coverage (d) of U17a: the M1 padding pilot consumes the generated set of the generator pilot"
+  },
+  {
+   "bead": "BD-184",
+   "dep": "N17a-09",
+   "as": "dep",
+   "why": "coverage (d) of U17a: the latency gate consumes the slot table (written into the file)"
+  },
+  {
+   "bead": "BD-286",
+   "dep": "N17a-24",
+   "as": "dep",
+   "why": "coverage (d) of U17a: the contract uses orbit transport (written into the file)"
+  },
+  {
+   "bead": "BD-286",
+   "dep": "N17a-26",
+   "as": "dep",
+   "why": "coverage (d) of U17a: the contract uses the mission digest (written into the file)"
+  },
+  {
+   "bead": "BD-170",
+   "dep": "N17a-02",
+   "as": "dep",
+   "why": "capstone: the seed depends on its component, shape-class fitting (written into the file)"
+  },
+  {
+   "bead": "BD-170",
+   "dep": "N17a-03",
+   "as": "dep",
+   "why": "capstone: the seed depends on its component, cohort formation; the reverse dep was removed (written into the file)"
+  },
+  {
+   "bead": "N17b-11",
+   "dep": "N17a-06",
+   "as": "dep",
+   "why": "N17a-06 need 1: the decision reads the cost-model data records (written into the file)"
+  },
+  {
+   "bead": "N17b-11",
+   "dep": "N17a-17",
+   "as": "dep",
+   "why": "N17a-17 need 1: the decision reads the generator pilot's histogram (written into the file)"
+  },
+  {
+   "bead": "N21c-18",
+   "dep": "N17a-15",
+   "as": "dep",
+   "why": "N17a-15 need 1: the KILL-SPECIALIZE decision reads the Phylum-side pilot record"
+  },
+  {
+   "bead": "N21b-19",
+   "dep": "N17b-10",
+   "as": "dep",
+   "why": "coverage (d) of U17b: KILL-BUCKET defers to KILL-PHYLUM and cites its record"
+  },
+  {
+   "bead": "BD-356",
+   "dep": "N17b-10",
+   "as": "dep",
+   "why": "lanes are built on the engine the KILL-PHYLUM record names (written into the file)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N17b-10",
+   "as": "dep",
+   "why": "coverage (d) of U17b: the M2 exit review lists the KILL-PHYLUM decision"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N17b-28",
+   "as": "dep",
+   "why": "coverage (d) of U17b: the M2 exit review lists KILL-LIMBKERNEL (first reading)"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N17b-27",
+   "as": "dep",
+   "why": "coverage (d) of U17b: the M2 exit review lists KILL-LIMBKERNEL (final reading with GATE-PHYLUM-09)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "BD-353",
+   "as": "dep",
+   "why": "coverage (d) of U17b: the M4 exit review lists KILL-FDGRAD (final reading; the first reading N17b-20 is behind it)"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N17a-14",
+   "as": "dep",
+   "why": "the M4 exit review lists the KILL-FAMILYLANE decision"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N17a-29",
+   "as": "dep",
+   "why": "the M3 exit review lists the KILL-QUOTIENT decision"
+  },
+  {
+   "bead": "BET-31",
+   "dep": "N17a-28",
+   "as": "dep",
+   "why": "the bet's falsifiers (planted winner, top-eight overlap, 5% saving) are measured by the quotient audit on the corpus of N17a-30"
+  },
+  {
+   "bead": "BD-295",
+   "dep": "N17a-09",
+   "as": "dep",
+   "why": "N17a-09 need 2: the daemon's dispatcher calls the Phylum slot table"
+  },
+  {
+   "bead": "BD-320",
+   "dep": "N17a-19",
+   "as": "dep",
+   "why": "N17a-19 need 2: train.family records a DesignSplit, which is this component, not the generator core BD-287"
+  },
+  {
+   "bead": "N23a-25",
+   "dep": "N17a-20",
+   "as": "dep",
+   "why": "N17a-20 need 2: policy.apply calls the generator-support test and raises FROB-REF-541"
+  },
+  {
+   "bead": "N17a-26",
+   "dep": "N10b-12",
+   "as": "dep",
+   "why": "the specification of the projection quotient comes before the digest mechanism (written into the file)"
+  },
+  {
+   "bead": "N17a-23",
+   "dep": "CARD-T-24",
+   "as": "related",
+   "why": "replaces the drafted dep: the card is M4 and the bead is M3 (moved in the file)"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N17b-06",
+   "keep": "N17a-10",
+   "note": "both measure GATE-PHYLUM-02 in full; N17b-06's protocol details, five unit tests, fourth control, gate-record fields, what passing licenses and considerations folded into N17a-10"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N17b-12",
+   "other": "VERBS-phylum",
+   "note": "both hold the seven registry entries of cluster phylum with schemas, refusal lists and MCP names; N17b-12 also holds the option table"
+  },
+  {
+   "mine": "N17a-08",
+   "other": "N21b-27",
+   "note": "same end-to-end script scripts/e2e/phylum_plan.sh"
+  },
+  {
+   "mine": "N17a-15",
+   "other": "N21c-17",
+   "note": "same three-arm specialization pilot on the 12-joint quadruped at 8,192 worlds"
+  },
+  {
+   "mine": "N17a-15",
+   "other": "N21c-16",
+   "note": "both read the specializable share s from the M2 profile for KILL-SPECIALIZE"
+  },
+  {
+   "mine": "N17a-16",
+   "other": "N21c-20",
+   "note": "both specify survivor promotion: promotion rule, 60 s compile cap, swap at a boundary with a versioned state map"
+  },
+  {
+   "mine": "N17a-25",
+   "other": "N10b-13",
+   "note": "same pilot: the ballast fixture end to end with bit-identical replay of merged designs (N17a-25 at M2, PILOT-C-22 at M3)"
+  },
+  {
+   "mine": "N17b-11",
+   "other": "N21b-18",
+   "note": "OPEN-PHYLUM-1 and OPEN-SPARK-3 freeze the same bucket set; one record must close both"
+  },
+  {
+   "mine": "N17a-05",
+   "other": "BD-171",
+   "note": "the exact bucket planner (dynamic program, cap of eight, FROB-REF-741) is specified in both; BD-171 is the seed and should be the capstone over N17a-04, N17a-05, N17a-07"
+  },
+  {
+   "mine": "N17a-04",
+   "other": "BD-171",
+   "note": "padding-overhead arithmetic and the break-even rule appear in both"
+  },
+  {
+   "mine": "N17a-07",
+   "other": "BD-171",
+   "note": "the memory and placement table and FROB-REF-740 appear in both"
+  },
+  {
+   "mine": "N17a-07",
+   "other": "BD-219",
+   "note": "one byte model per padded world printed by phylum.plan and by sim.estimate (also N16b-26); one owner needed"
+  },
+  {
+   "mine": "N17a-09",
+   "other": "BD-295",
+   "note": "the pure slot-assignment function, the job cap and the 5% reserve are specified on the Phylum side and in the daemon"
+  },
+  {
+   "mine": "N17a-09",
+   "other": "N21b-21",
+   "note": "refill at masked resets with the reserve and job-cap limits is also the device-side bead's scope"
+  },
+  {
+   "mine": "BD-170",
+   "other": "BD-148",
+   "note": "lowering to a model table with padding to a shape class, and the ShapeClass type, are in both (frob-model and frob-phylum)"
+  },
+  {
+   "mine": "N17a-02",
+   "other": "N14a-12",
+   "note": "N14a-12 also carries the function that states whether a model fits a shape class and with what padding"
+  },
+  {
+   "mine": "N17a-17",
+   "other": "BD-144",
+   "note": "both sample 1,000 generated designs at M1 and report bucket histogram and padding"
+  },
+  {
+   "mine": "N17a-26",
+   "other": "N28b-41",
+   "note": "the memo key built on the digest, its store policy and the replay rule are specified in both"
+  },
+  {
+   "mine": "N17b-07",
+   "other": "N44-01",
+   "note": "the envelope request of the head-to-head (OPEN-PHYLUM-3) is also a row of the work-package envelope decision"
+  },
+  {
+   "mine": "N17b-10",
+   "other": "BET-18",
+   "note": "the kill-gate record and the bet decision read the same head-to-head; one must cite the other"
+  },
+  {
+   "mine": "N17a-29",
+   "other": "BET-31",
+   "note": "the kill-gate record and the bet decision read the same quotient audit; one must cite the other"
+  },
+  {
+   "mine": "N17-KA",
+   "other": "N38b-31",
+   "note": "N17-KA registers DESIGN negative controls for nine Phylum rows that N38b-31 also assigns"
+  }
+ ],
+ "new_beads": [
+  "N17a-30"
+ ],
+ "gaps": [
+  {
+   "section": "§19 (used by §17.11)",
+   "what": "a scene-family operation that maps a world address through an isometry g (the address whose scene is the image under g), where the family supports it; BD-241 builds image worlds for its equivariance test but returns no address",
+   "needed_by": [
+    "N17a-24",
+    "BD-286"
+   ]
+  },
+  {
+   "section": "§24.8",
+   "what": "a smoothness attribute on registered metrics (smooth accumulation, margin, binary outcome, count); the metric registry N24a-17 has none, so the gradient admission test would have to guess",
+   "needed_by": [
+    "N17b-22"
+   ]
+  },
+  {
+   "section": "§24.4",
+   "what": "an explicit declared read set of design fields in the task file; BD-122 has no such field and N17a-26 derives the set from the file's terms",
+   "needed_by": [
+    "N17a-26"
+   ]
+  },
+  {
+   "section": "§23.13 (code of §17.16)",
+   "what": "the weight-tie raising site of FROB-REF-161: N23a-31 refuses a group outside Γ_obs by a type barrier and another family's refusal and does not raise the registered code",
+   "needed_by": [
+    "N17-REF"
+   ]
+  },
+  {
+   "section": "§16.6 and §29",
+   "what": "one shared per-step signature of a world's active contact set (the rows after compaction) exposed by the step and in telemetry; N17a-12, N17b-22 and N22a-30 each derive their own from stage-5 buffers or T1 events",
+   "needed_by": [
+    "N17a-12",
+    "N17b-22"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N17a-23",
+   "what": "dep on CARD-T-24 (M4) moved to related: a bead never depends on a later milestone"
+  },
+  {
+   "bead": "N17a-10",
+   "what": "duplicate N17b-06 folded in; design set fixed to the N17b-03 workload; reading of three bucket sizes aligned with BD-170; consequence of a digest failure aligned with N17b-10; deps BD-206, N17b-03, N17b-04 added"
+  },
+  {
+   "bead": "N17b-06",
+   "what": "marked superseded_by N17a-10"
+  },
+  {
+   "bead": "BD-186",
+   "what": "dep N17b-06 replaced by N17a-10"
+  },
+  {
+   "bead": "N17b-03",
+   "what": "related N17b-06 replaced by N17a-10; dep N17a-17 added"
+  },
+  {
+   "bead": "N17b-10",
+   "what": "related N17b-06 replaced by N17a-10"
+  },
+  {
+   "bead": "N17a-09",
+   "what": "Scope rewritten: the slot table and reset planner; the admission record is N17b-05's; FROB-REF-611 handling aligned"
+  },
+  {
+   "bead": "N17b-05",
+   "what": "Scope rewritten: the admission controller over the slot table; dep N17a-09 added; record gains t_first_assigned and the three-distribution test"
+  },
+  {
+   "bead": "BD-184",
+   "what": "Scope states the capstone and its components; deps N17a-09 and N17b-08 added"
+  },
+  {
+   "bead": "BD-170",
+   "what": "Scope rewritten as capstone of level P-B; deps N17a-02 and N17a-03 added; fit and cohort assembly delegated; two stepped-cohort tests taken over from N17a-03"
+  },
+  {
+   "bead": "N17a-03",
+   "what": "dep on its capstone BD-170 removed; Scope rewritten; owns the ModelTable, WorldSlots, Cohort and ResultKey types"
+  },
+  {
+   "bead": "N17a-02",
+   "what": "Scope rewritten; deps on its pilots BD-144 and N17b-01 added (Frontier mechanism)"
+  },
+  {
+   "bead": "BD-286",
+   "what": "Scope rewritten as capstone: orbit transport is N17a-24, the digest N17a-26; both added as deps"
+  },
+  {
+   "bead": "N17a-15",
+   "what": "milestone M3 to M2 (priority 1): the limb-archetype arm (M2, GATE-PHYLUM-09 in the §40 late-subsection table) is by definition a fourth arm of this pilot; Scope rewritten"
+  },
+  {
+   "bead": "N17b-24",
+   "what": "Scope rewritten: adds arm (d) to N17a-15's harness; dep N17a-15 added"
+  },
+  {
+   "bead": "N17a-06",
+   "what": "Scope: executes the runs whose criteria N17b-11 fixes; run-length protocol aligned (4, 16, 32, 64 worlds per design, paired bound, digest equality)"
+  },
+  {
+   "bead": "N17b-11",
+   "what": "Scope rewritten; deps N17a-06 and N17a-17 added; population-level padding waste tied to the per-bucket definition of N17a-04"
+  },
+  {
+   "bead": "N17b-12",
+   "what": "deps on the mechanisms BD-171 and N17b-04 moved to related (a registry never depends on a mechanism); label registry; option rows --quotient, --family-lanes, --capacity-step, --stratify added"
+  },
+  {
+   "bead": "N17b-04",
+   "what": "dep on the registry N17b-12 added; option slots quotient and family_lanes reserved"
+  },
+  {
+   "bead": "N17b-15",
+   "what": "Scope rewritten as the chapter-level suite and index; table points at the component beads; dep N17a-04 added"
+  },
+  {
+   "bead": "N17-REF",
+   "what": "raising-bead column points at the component beads N17a-02, -05, -07, -20, -23, -26"
+  },
+  {
+   "bead": "N17-CX",
+   "what": "Scope names the component bead that catches each control"
+  },
+  {
+   "bead": "N17a-13",
+   "what": "workload alias aligned with N17b-03 (@workload:h2h-512); dep N17b-03 added"
+  },
+  {
+   "bead": "N17a-26",
+   "what": "dep on the specification bead N10b-12 added; Scope names it; dep N17-REF added"
+  },
+  {
+   "bead": "N17a-28",
+   "what": "dep on the new corpus bead N17a-30 and on N17b-04 added; Scope says the corpus is not chosen here"
+  },
+  {
+   "bead": "BD-356",
+   "what": "dep on the KILL-PHYLUM decision N17b-10 added, with the consequence on each branch stated"
+  },
+  {
+   "bead": "N17b-13",
+   "what": "dep on the crate skeleton N17a-01 added"
+  },
+  {
+   "bead": "BD-285",
+   "what": "deps N17b-04 (the sweep verb), N17b-12 and N17-REF added from its resolved needs"
+  },
+  {
+   "bead": "BD-287",
+   "what": "dep N17b-12 added from its resolved need"
+  },
+  {
+   "bead": "N17a-16",
+   "what": "dep N17b-04 added from its resolved need"
+  },
+  {
+   "bead": "N17a-27",
+   "what": "deps N17b-04 and N17-REF added from its resolved needs"
+  },
+  {
+   "bead": "N17a-08",
+   "what": "deps N17b-12 and N17-REF added from its resolved needs"
+  },
+  {
+   "bead": "N17a-21",
+   "what": "deps N17b-12 and N17-REF added from its resolved needs"
+  },
+  {
+   "bead": "N17a-05",
+   "what": "dep N17-REF added from its resolved need"
+  },
+  {
+   "bead": "N17a-07",
+   "what": "dep N17-REF added from its resolved need"
+  },
+  {
+   "bead": "N17a-20",
+   "what": "dep N17-REF added from its resolved need"
+  },
+  {
+   "bead": "BD-184",
+   "what": "dep on the higher-numbered seed BD-216 moved to related; its components N36-06 (paired bound) and N36-13 (disclosure block) are the deps"
+  },
+  {
+   "bead": "BD-186",
+   "what": "dep on the higher-numbered seed BD-216 moved to related; deps on its components N36-06, N36-13 and on the ceiling-first check N36-05 added"
+  }
+ ]
 }

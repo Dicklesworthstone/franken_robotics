@@ -8,7 +8,7 @@ labels: ["m3", "lemma", "spine", "spec", "frontier", "nemesis", "frob-nemesis", 
 parent: "WP-55"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-271", "BD-272", "BD-274", "BD-275", "BD-279", "BD-293", "BD-369", "N10-CX", "SPEC-C-29", "SPEC-C-33", "N10c-10", "BD-270", "BD-052"]
+related: ["BD-271", "BD-272", "BD-274", "BD-275", "BD-279", "BD-293", "BD-369", "N10-CX", "SPEC-C-29", "SPEC-C-33", "N10c-10", "BD-270", "BD-052", "N10a-02"]
 gates: ["GATE-NEMESIS-03", "GATE-NEMESIS-01"]
 plan_refs: ["§10 C-28", "§26.7", "§12.3", "Appendix D.6", "Appendix I.11", "Appendix M.9", "Appendix N.7"]
 ---

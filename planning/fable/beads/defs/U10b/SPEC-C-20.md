@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "spine", "spec", "solid", "frob-sense", "frob-analyze", 
 parent: "WP-49"
 deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-20", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-116 to KA-118 and CX-055; this bead binds them to tests, sets the tolerance the appendix leaves `to set` and registers the controls it leaves unstated"]
-related: ["BD-120", "BD-239", "BD-242", "BD-244", "BD-390", "SPEC-C-13", "SPEC-C-19", "SPEC-C-21", "SPEC-C-31", "SPEC-C-39", "BD-078"]
+related: ["BD-120", "BD-239", "BD-242", "BD-244", "BD-390", "SPEC-C-13", "SPEC-C-19", "SPEC-C-21", "SPEC-C-31", "SPEC-C-39", "BD-078", "N10a-02"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-20", "§10 C-13", "§20.11", "§28.4 A-17", "Appendix A", "Appendix D.6", "Appendix M.9 KA-116 to KA-118", "Appendix N.7 CX-055"]
 ---

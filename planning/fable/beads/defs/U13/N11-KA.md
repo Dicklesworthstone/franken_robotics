@@ -8,7 +8,7 @@ labels: ["m1", "marrow", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-14"
 deps: ["BD-025", "STD-TEST"]
 needs: []
-related: ["N13-01", "N13-02", "N13-04", "N13-05", "N13-06", "N13-07", "BD-010", "BD-011", "BD-047", "BD-146", "N11-CX"]
+related: ["N13-01", "N13-02", "N13-04", "N13-05", "N13-06", "N13-07", "BD-010", "BD-011", "BD-047", "BD-146", "N11-CX", "N20a-49"]
 gates: []
 plan_refs: ["Appendix M.10", "§11", "§38.6"]
 ---

@@ -162,3 +162,13 @@ statement of §19.1 to §19.8 is carried in full here whatever the other units w
     seed is BD-163; N19a-27 and N19a-28 detail terrain whose umbrella is BD-165; N19a-31 to N19a-39 detail hazard
     data whose schema seed is BD-227. Each states its boundary in Scope; the lead may wish to make the umbrella
     seeds depend on these subtasks rather than the reverse where the other unit wrote them thin.
+
+## (f) Added by the integration pass
+
+- N19a-46 (new, M3): the asset lane of the verb `scene.import` (§19.1 verb table, §19.9), which BD-399 and BD-398
+  both asked for and no unit had written. It defines the loss report schema that the real-place lane (N19c-04)
+  extends. BD-399 now depends on N19b-02 (licence manifest and `FROB-REF-310`) and on N19a-46.
+- Scopes re-cut against the sibling units' beads: N19a-14 and N19a-15 against the brick codec N19b-01; N19a-20
+  against the manifest BD-162 (one hashing rule for `SceneId`); BD-399 against N19b-02; N19a-02's "implemented by"
+  column (N19a-46, N19b-32, N19b-40, N19c-05) and the milestone of `scene.retrofit` (M4).
+- Verb names follow the verb registry: A-13 is `analyze.self-collision` (BD-104).

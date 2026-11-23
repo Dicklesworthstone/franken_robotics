@@ -23,11 +23,11 @@
   {
    "bead": "BD-162",
    "n": 1,
-   "as": "related",
+   "as": "dep",
    "keys": [
     "N19c-42"
    ],
-   "note": "the fault path and exit 9 come from its dependency BD-005, which leaves the code to the chapter; the Habitat row is decided in the new bead N19c-42 and the interim (exit 9 with a named reason) does not block the manifest"
+   "note": "the fault path and exit 9 come from its dependency BD-005, which leaves the code to the chapter; the Habitat row (class integrity, exit 9) is entered by the new registry decision bead N19c-42, which is data entry and comes first"
   },
   {
    "bead": "BD-162",
@@ -170,9 +170,9 @@
    "n": 1,
    "as": "dep",
    "keys": [
-    "BD-258"
+    "N32b-01"
    ],
-   "note": "capability tokens with a `<cluster>:admin` scope for admin verbs"
+   "note": "the scope catalogue and the scope check before every verb (M2); the `<cluster>:admin` scopes for admin verbs are completed in BD-258, a higher-numbered seed, which therefore stays related"
   },
   {
    "bead": "BD-236",
@@ -1496,10 +1496,9 @@
    "n": 1,
    "as": "related",
    "keys": [
-    "N18b-37",
-    "N18a-09"
+    "N18b-37"
    ],
-   "note": "two decisions read the same measured memory; neither orders the other (both Traction units wrote the experiment)"
+   "note": "two decisions read the same measured memory; neither orders the other (N18a-09, the same experiment in the other Traction unit, is superseded by N18b-37)"
   },
   {
    "bead": "N19c-34",
@@ -1576,11 +1575,12 @@
   {
    "bead": "N19c-39",
    "n": 1,
-   "as": "dep",
+   "as": "related",
    "keys": [
-    "N32b-10"
+    "N32b-10",
+    "N33c-46"
    ],
-   "note": "the viewer page with its picking path, which this bead changes"
+   "note": "consumers: this bead hands the viewer a contract with test vectors and leaves the viewer's code out of scope; the pick is in the viewer page N32b-10 and the conversion is put into it by the probe bead N33c-46; the gate script N19c-40 depends on the page"
   },
   {
    "bead": "N19c-39",
@@ -1588,10 +1588,9 @@
    "as": "related",
    "keys": [
     "BD-300",
-    "N33c-24",
-    "N33c-46"
+    "N33c-24"
    ],
-   "note": "the renderer route is M3, a later milestone; the M2 probe N33c-46 reuses this bead's fixture and conversion and is reported as a cross-group overlap"
+   "note": "the renderer route is M3, a later milestone; until it is admitted the adapter row runs against the M2 probe of the sibling's ray transform (N33c-46, reported as a cross-group overlap)"
   },
   {
    "bead": "N19c-40",
@@ -1853,6 +1852,180 @@
    "dep": "BD-261",
    "as": "related",
    "why": "the sealed-field audit depends on BD-259, which waits on this handle through N24b-17"
+  },
+  {
+   "bead": "N19c-40",
+   "dep": "N33c-46",
+   "as": "related",
+   "why": "the gate's viewer-pick and adapter rows exercise the conversion that the probe bead places in the viewer and the adapter; N33c-46 reuses this chapter's fixture, so no order is fixed here"
+  },
+  {
+   "bead": "N26a-02",
+   "dep": "N19b-44",
+   "as": "dep",
+   "why": "its need for Habitat's typed scene edit at M3 (reported by G26 as a gap of §19.12); the new M3 bead N19b-44 carries it"
+  },
+  {
+   "bead": "BD-236",
+   "dep": "BD-258",
+   "as": "related",
+   "why": "seed order: the admin scope of scene.bank is completed in BD-258; the M2 scope check N32b-01 is the dependency"
+  },
+  {
+   "bead": "N19a-20",
+   "dep": "N19c-42",
+   "as": "dep",
+   "why": "the freeze stage's self-check raises the integrity row assigned there (registry rows come first)"
+  },
+  {
+   "bead": "N19c-23",
+   "dep": "N19c-42",
+   "as": "dep",
+   "why": "the identity check after a compile on another machine raises the integrity row assigned there"
+  },
+  {
+   "bead": "N19a-42",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19a-43",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19a-44",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19b-06",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19b-10",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19b-18",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19b-35",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19b-41",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19c-15",
+   "dep": "N19-CX",
+   "as": "dep",
+   "why": "coverage (d) of U19a: the script's negative controls are rows of the Habitat counterexample registry (registries come first)"
+  },
+  {
+   "bead": "N19a-30",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19a-42",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19a-43",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19a-44",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19a-45",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19b-06",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19b-10",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19b-14",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19b-18",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19b-35",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19b-41",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19c-15",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19c-17",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19c-19",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
+  },
+  {
+   "bead": "N19c-24",
+   "dep": "N19-KA",
+   "as": "dep",
+   "why": "the script asserts rows of the Habitat known-answer registry (registries come first)"
   }
  ],
  "superseded": [],
@@ -1865,7 +2038,7 @@
   {
    "mine": "N19c-12",
    "other": "N24c-05",
-   "note": "same work stated a third time: eval.run's scoring-time scene-split check with FROB-REF-502"
+   "note": "the same check stated a third time: eval.run's scoring-time scene-split check with FROB-REF-502"
   },
   {
    "mine": "N19c-05",
@@ -1903,9 +2076,14 @@
    "note": "both carry the conversion of a renormalized ray parameter to world metres for the sibling ray primitive and the viewer's pick, on the same two-plane fixture"
   },
   {
+   "mine": "N19c-39",
+   "other": "N20b-43",
+   "note": "the ray kernel family states the hit-parameter rule under scaled instances that N19c-39 writes for frob-sense"
+  },
+  {
    "mine": "N19a-02",
    "other": "VERBS-scene",
-   "note": "both enter the registry rows of the scene verb cluster (N19a-02 twelve names with the bounded wait, VERBS-scene thirteen rows with parity and snapshot checks)"
+   "note": "both enter the registry rows of the scene verb cluster (N19a-02 twelve names with the bounded wait, VERBS-scene thirteen rows with parity and snapshot checks); VERBS-scene prints scene.retrofit at M3, the gate register has its catalog and gate at M4"
   },
   {
    "mine": "N19c-04",
@@ -1933,6 +2111,11 @@
    "note": "seed and components: BD-165's Scope includes the terrain families, the difficulty map and the curriculum grid that N19a-27 and N19a-28 specify in full, and the outdoor half of the mixed route of N19a-29"
   },
   {
+   "mine": "N19a-30",
+   "other": "N18a-41",
+   "note": "the same end-to-end script for `frob scene gen` on the terrain families with identity across platforms"
+  },
+  {
    "mine": "N19c-16",
    "other": "GB-07",
    "note": "the worked card recomputes the scene memory arithmetic (dense and band figures) that N19c-16 holds as checked tests"
@@ -1946,9 +2129,28 @@
    "mine": "N19c-32",
    "other": "N18b-37",
    "note": "OPEN-HAB-3 and OPEN-TRAC-1 are decided from the same measured memory (N18a-09 states the same experiment again)"
+  },
+  {
+   "mine": "N19a-08",
+   "other": "N24a-43",
+   "note": "the moving-surface record and the ledger line for the boundary work of prescribed surfaces are specified in both"
+  },
+  {
+   "mine": "N19c-15",
+   "other": "N24a-31",
+   "note": "both own an end-to-end script that records GATE-ARENA-02 on a training scene, its mirror and a retrofit variant"
+  },
+  {
+   "mine": "N19b-42",
+   "other": "BET-37",
+   "note": "both record the outcome of KILL-RETROFIT; N19b-42 applies the trigger and writes the decision, BET-37 reads it for the bet"
   }
  ],
- "new_beads": [],
+ "new_beads": [
+  "N19a-46",
+  "N19b-44",
+  "N19c-42"
+ ],
  "gaps": [
   {
    "section": "§14.4",
@@ -1969,9 +2171,10 @@
   },
   {
    "section": "§32.9",
-   "what": "a hook in run admission (sim.run, eval.run, train.start, opt.start, study.submit) through which a subsystem's standing refusal can refuse a run; N19b-32 needs it for FROB-REF-309 and no Tether bead names it",
+   "what": "a hook in run admission (sim.run, eval.run, train.start, opt.start, study.submit) through which a subsystem's standing refusal can refuse a run; N19b-32 needs it for FROB-REF-309, BD-228 for an unaccepted pack, and no Tether bead names it",
    "needed_by": [
-    "N19b-32"
+    "N19b-32",
+    "BD-228"
    ]
   },
   {
@@ -1998,5 +2201,218 @@
    ]
   }
  ],
- "fixes": []
+ "fixes": [
+  {
+   "bead": "BD-414",
+   "what": "epic carried a dependency: BD-231 moved to related and taken by its mechanism bead N19b-13; title shortened"
+  },
+  {
+   "bead": "BD-415",
+   "what": "epic carried a dependency: BD-231 moved to related (its children N19b-17 and N19b-18 already hold it)"
+  },
+  {
+   "bead": "BD-420",
+   "what": "epic carried dependencies: BD-187 and BD-398 moved to related (its child N19b-23 already holds them); title shortened"
+  },
+  {
+   "bead": "N19b-13",
+   "what": "dependency BD-231 added, carried down from its epic BD-414"
+  },
+  {
+   "bead": "N19b-03",
+   "what": "title shortened to 110 characters or fewer; Scope names N19a-09 for the pool mechanics"
+  },
+  {
+   "bead": "N19b-04",
+   "what": "title shortened to 110 characters or fewer; ADR-HAB-07 file path aligned with N19a-03 (docs/adr/), Scope re-cut against N19a-03, dependency N19a-03 added"
+  },
+  {
+   "bead": "N19b-06",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N19b-12",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N19b-19",
+   "what": "title shortened to 110 characters or fewer; decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19b-22",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N19b-24",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N19b-29",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N19b-32",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N19a-15",
+   "what": "overlap with N19b-01: palette placed in the brick record as N19b-01 and BD-164 have it (it was a pool side table); Scope re-cut; dependency N19b-01 added"
+  },
+  {
+   "bead": "N19a-14",
+   "what": "overlap with N19b-01 and BD-163: Scope re-cut (codec in N19b-01, emission in BD-163, gate record in N19a-42); dependency N19b-01 added"
+  },
+  {
+   "bead": "N19b-01",
+   "what": "overlap with N19a-14 and N19a-15: Scope re-cut; the overflow test is limited to the flag and decode"
+  },
+  {
+   "bead": "BD-163",
+   "what": "overlap on GATE-HAB-01: Scope says this bead makes a first measurement and N19a-42 writes the gate record; the refusal for an unaccepted pack points at N19c-42"
+  },
+  {
+   "bead": "BD-162",
+   "what": "overlap with N19a-04, N19a-05 and N19a-20: Scope re-cut; the acceptance hash is the identity part of the report as BD-228 and N19a-20 define it; the integrity fault points at N19c-42"
+  },
+  {
+   "bead": "N19a-20",
+   "what": "overlap with BD-162: the SceneId hashing rule is BD-162's (hash of the canonical manifest); this bead states what the compiler must have written into it; Scope re-cut"
+  },
+  {
+   "bead": "N19a-04",
+   "what": "Scope now names the beads of the sibling units that hold the rest (it pointed at a seed or at `another unit`)"
+  },
+  {
+   "bead": "N19a-05",
+   "what": "Scope now names the beads of the sibling units that hold the rest (it pointed at a seed or at `another unit`)"
+  },
+  {
+   "bead": "N19a-09",
+   "what": "Scope now names the beads of the sibling units that hold the rest (it pointed at a seed or at `another unit`)"
+  },
+  {
+   "bead": "N19a-11",
+   "what": "Scope now names the beads of the sibling units that hold the rest (it pointed at a seed or at `another unit`)"
+  },
+  {
+   "bead": "N19a-13",
+   "what": "Scope now names the beads of the sibling units that hold the rest (it pointed at a seed or at `another unit`)"
+  },
+  {
+   "bead": "N19a-22",
+   "what": "Scope now names the beads of the sibling units that hold the rest (it pointed at a seed or at `another unit`)"
+  },
+  {
+   "bead": "N19a-26",
+   "what": "Scope now names the beads of the sibling units that hold the rest (it pointed at a seed or at `another unit`)"
+  },
+  {
+   "bead": "N19b-26",
+   "what": "related N19a-22 added (the same one-sided enclosure rule)"
+  },
+  {
+   "bead": "BD-399",
+   "what": "overlap with N19b-02: licence manifest type, source register and FROB-REF-310 are N19b-02's; asset import is N19a-46's; Scope re-cut; dependency N19b-02 added"
+  },
+  {
+   "bead": "N19b-02",
+   "what": "overlap with BD-399: Scope re-cut against the asset lane N19a-46 and the population bead BD-399"
+  },
+  {
+   "bead": "N19c-04",
+   "what": "the loss report schema is taken from the asset lane N19a-46 and extended; dependency N19a-46 added"
+  },
+  {
+   "bead": "N19a-03",
+   "what": "names N19b-04 and N19c-16 as holders of the arithmetic tests behind ADR-HAB-07 and ADR-HAB-05"
+  },
+  {
+   "bead": "N19a-41",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19b-11",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19b-15",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19b-20",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19b-36",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19b-42",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19c-08",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19c-18",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19c-26",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "N19c-37",
+   "what": "decision record path set to the gate register's convention docs/delivery/adr/ADR-<gate>-<milestone>.md (three conventions were in use in the group)"
+  },
+  {
+   "bead": "BD-228",
+   "what": "the refusal for an unaccepted pack is the row assigned in N19c-42 (BD-228 and N19-REF named different interim behaviours)"
+  },
+  {
+   "bead": "N19-REF",
+   "what": "the unnumbered refusals are decided in N19c-42; the interim exit-5 wording that disagreed with BD-228 removed"
+  },
+  {
+   "bead": "N19c-22",
+   "what": "a scheduled variant resident in no bound segment is refused with the row assigned in N19c-42"
+  },
+  {
+   "bead": "N19c-34",
+   "what": "depends on the KILL-ADVECT decision N19b-11 (far-field reuse exists only on the branch where film tiles run); the refusal in mode require points at N19c-42"
+  },
+  {
+   "bead": "N19b-34",
+   "what": "verb name corrected from the DESIGN name analyze.clearance to the registry's analyze.route; the delegation to scene.fit is scoped so that N19b-32 can depend on this bead"
+  },
+  {
+   "bead": "BD-104",
+   "what": "verb name set to the registry's analyze.self-collision"
+  },
+  {
+   "bead": "N19a-02",
+   "what": "implementing beads corrected (N19a-46, N19b-32, N19b-40, N19c-05); scene.retrofit at M4 as the gate register has it (U19b used M4, this row said M3)"
+  },
+  {
+   "bead": "N19c-11",
+   "what": "role tables of the shipped generators taken into Scope with an acceptance line, since no generator bead declares parameter roles; dependency N19b-44 added for lineage along typed edits"
+  },
+  {
+   "bead": "N19a-18",
+   "what": "SettleService named as the stage-8 member of the driver's SceneServices (BD-163)"
+  },
+  {
+   "bead": "N19b-38",
+   "what": "overlap with the new bead N19b-44: the edit machinery (kinds, apply, lineage, aspect check) is the M3 bead's and the M4 catalog instantiates it; Scope re-cut; dependency N19b-44 added; Consideration added for the facility-grammar properties (installation time, access, calibration, tolerances, maintenance) that §25.17 reads from the catalog"
+  },
+  {
+   "bead": "N19c-15",
+   "what": "dependency N19b-44 added: the M3 retrofit variant it plants is made by a typed scene edit, which no M3 bead carried"
+  },
+  {
+   "bead": "N19-KA",
+   "what": "KA-439's cap on the viscous term recorded as an open discrepancy between the chapters; Scope names N19-CX, N19-REF and N19c-28"
+  }
+ ]
 }

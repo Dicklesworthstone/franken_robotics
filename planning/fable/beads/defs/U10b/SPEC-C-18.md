@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "spine", "spec", "frontier", "frob-mission", "frob-confo
 parent: "WP-42"
 deps: ["SPEC-C-17", "N10b-08", "BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-18", "§10 registries, Appendix M.9, M.11 and Appendix N.7: the registry beads that load rows KA-103 to KA-106, KA-224 and CX-048 to CX-050 (N10-KA of unit U10a, N10-CX of unit U10c, and the Lemma chapter's registry bead for KA-224); this bead binds them to tests", "§10 C-32: the stance reference model (four feet at (±1/3, ±b) m, 400 N, cap 160 N) from the specification bead SPEC-C-32 of unit U10c, for the stance half of the twelve-move check", "§25.4: the crate `frob-mission` is created by a bead that implements this construction (BD-128) and is expected to depend on this bead; it is deliberately not in `deps`"]
-related: ["N10b-06", "N10b-07", "SPEC-C-32", "BD-128", "BD-288", "BD-292", "BD-286", "BD-111", "BD-347"]
+related: ["N10b-06", "N10b-07", "SPEC-C-32", "BD-128", "BD-288", "BD-292", "BD-286", "BD-111", "BD-347", "N10a-02"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-18", "§9 D-11", "§9 D-19", "§12.7 PO-LEMMA-03", "§25.8", "§28.13", "§38.7 MR-10 MR-11", "Appendix D.6", "Appendix M.9 KA-103 to KA-106", "Appendix M KA-224", "Appendix N.7 CX-048 to CX-050"]
 ---

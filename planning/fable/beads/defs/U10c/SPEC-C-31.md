@@ -8,7 +8,7 @@ labels: ["m4", "lemma", "spine", "spec", "frontier", "reflex", "safety", "frob-s
 parent: "WP-65"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-132", "BD-092", "BD-208", "BD-338", "BD-339", "BD-340", "N10c-02", "N10c-03", "N10-CX", "SPEC-C-38", "N10c-10", "CARD-T-28", "BD-337"]
+related: ["BD-132", "BD-092", "BD-208", "BD-338", "BD-339", "BD-340", "N10c-02", "N10c-03", "N10-CX", "SPEC-C-38", "N10c-10", "CARD-T-28", "BD-337", "N10a-02"]
 gates: ["GATE-SHIELD-01"]
 plan_refs: ["§10 C-31", "§22.11", "§12.3 T-28", "§12.4", "§12.7", "§38.7 MR-22", "Appendix D.7", "Appendix E GB-26", "Appendix I.15", "Appendix M.9", "Appendix N.7"]
 ---

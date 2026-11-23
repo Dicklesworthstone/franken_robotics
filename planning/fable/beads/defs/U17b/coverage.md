@@ -105,3 +105,23 @@ and edit-to-first-step latency); BD-286 with N17b-13 and N17b-14 (§17.11: the i
 19. **"Joint class" in §17.21** is read as the column count of the screw basis, so an archetype key is a depth and a column-count sequence; N17b-23 and N17b-25 state it.
 20. **The seed title of BD-184 names `phylum.sweep`.** The verb has its own bead (N17b-04) and the admission mechanism another (N17b-05); BD-184 keeps the latency campaign and the gate.
 21. **Fixture numbers the chapter does not give** (the grazing body, the standing point mass, the corpus strata, the decision criteria of the three measurement-decided open questions) are chosen in the beads that use them and marked as bead-level design.
+
+## (f) Integration pass (group G17): what changed in this unit
+
+- **N17b-06 is superseded by N17a-10** (both measured GATE-PHYLUM-02 in full); its protocol, tests, fourth control
+  and considerations are folded into N17a-10, and BD-186 depends on N17a-10. Row GATE-PHYLUM-02 of table (b) and
+  the rows of table (a) that name N17b-06 now mean N17a-10.
+- **BD-170, BD-184 and BD-286 are capstones** that depend on component beads of the other unit: BD-170 on N17a-02
+  (shape-class fitting, the one raising site of FROB-REF-160) and N17a-03 (cohort formation and the cohort types);
+  BD-184 on N17a-09 (slot table) beside N17b-05; BD-286 on N17a-24 (orbit transport) and N17a-26 (the digest).
+- **N17b-05 is the admission controller over the slot table N17a-09** and owns the one admission record.
+- **N17b-24 adds arm (d) to the harness of N17a-15** (moved to M2) and no longer builds arms (a) to (c).
+- **N17b-11 reads the runs of N17a-06** and the histogram of N17a-17; the population-level padding waste is tied to
+  the per-bucket definition of N17a-04.
+- **N17b-12 is a registry bead**: it no longer depends on BD-171 and N17b-04; the verb beads depend on it. Its
+  option table gained `--quotient`, `--family-lanes`, `--capacity-step` and `--stratify`.
+- **N17b-15 is the chapter-level suite and index**; the tests beside each mechanism are named in its table.
+- BD-184 and BD-186 no longer depend on the higher-numbered seed BD-216; they depend on its components N36-06 and
+  N36-13 (and BD-186 on the ceiling-first check N36-05).
+- N17-REF's raising-bead column and N17-CX's scope name the component beads of the other unit.
+- Cross-group duplicates and gaps reported to the lead are in `integration/out/G17.json`.

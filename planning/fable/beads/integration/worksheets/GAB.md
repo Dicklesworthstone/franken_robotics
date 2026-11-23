@@ -76,8 +76,8 @@ the candidates were found mechanically (by plan section, gate and title words): 
 ### NAB-05 (M0) registries/glossary.toml: term records G to M (Gait orbit to Morphology class), 61 rows, one corrected
 - **need 1** (names its carrier): §0.8: the hypothesis verdict register with its four states and its rows through H-29 (N00-10, N00-11, N00-12), against which the corrected `Hypothesis verdict` row is checked
   - `N00-10` (M0, U00, task) The evidence ledger: the hypothesis verdict register, its append-only change rule and the wording it binds
-  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling control, priors, topology, kernels, certificates, reuse, referee)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling, priors, topology, kernels, certificates, reuse, referee)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 ### NAB-06 (M0) registries/glossary.toml: term records N to R (Negative control to Rung), 65 rows and one added (Reflex)
 - **need 1** (names its carrier): §0.5: the subsystem table (23 names with their bounded contexts and crates), from which the missing `Reflex` row is taken (N00-03)
   - `N00-03` (M0, U00, task) Stable identifiers and subsystem names: prefix table, append-only and tombstone lint, subsystem-to-crate map
@@ -97,7 +97,7 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `N00-06` (M0, U00, task) frob-conformance: the plan-time check ledger: nine recorded checks re-run here before any gate cites one
 ### NAB-11 (M0) registries/sources.toml: local sources read at plan time (sibling files and commits, this machine, records)
 - **need 1** (names its carrier): §1.7, §33.11: the foundation fact sheet that re-reads sibling-code facts at the pinned commits by a script (N00-16); it consumes the records of this bead and appends their `reread` entries
-  - `N00-16` (M0, U00, task) tools/oracle: the foundation fact sheet: sibling-code facts with paths, re-read at the pinned commits by a script
+  - `N00-16` (M0, U00, task) tools/oracle: the foundation fact sheet: sibling-code facts with paths, re-read at pinned commits by a script
 - **need 2** (names its carrier): §33.5: the stack lock with each sibling's pinned commit (BD-001)
   - `BD-001` (M0, U33c, task) workspace: core skeleton, one toolchain file, build-identity setting, stack lock and first resolution receipt
 ### NAB-12 (M0) registries/sources.toml: public sources on incumbent engines, GPU toolchains, arithmetic and hardware
@@ -110,8 +110,8 @@ the candidates were found mechanically (by plan section, gate and title words): 
 ### NAB-13 (M0) registries/sources.toml: public sources on learning, symmetry, gaits, missions, statistics, reality, assets
 - **need 1** (names its carrier): §0.8: the hypothesis verdict register, whose 'what survives' ranges are read from these sources (N00-10, N00-11, N00-12)
   - `N00-10` (M0, U00, task) The evidence ledger: the hypothesis verdict register, its append-only change rule and the wording it binds
-  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling control, priors, topology, kernels, certificates, reuse, referee)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling, priors, topology, kernels, certificates, reuse, referee)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 - **need 2** (names its carrier): Appendix K.5: the review that re-reads every published figure the thesis, the audit and the bets quote (N00-34)
   - `N00-34` (M0, U00, task) Review: re-read from primary sources every published figure the thesis, audit and bets quote
 - **need 3** (names its carrier): §19.9, Appendix G: the asset-licence register that joins a scene asset to its licence (N19b-02)
@@ -123,7 +123,7 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `BD-029` (M0, U21a, feature) verb spark.fingerprint: the hardware fingerprint record `frob.fingerprint/1` of both machines
   - `N21c-01` (M0, U21c, task) frob-kernels: fingerprint rate probes: bandwidth, launch and commit cost, compile time, thermal soak
 - **need 3** (names its carrier): Appendix G, §19.8, §19.12: the hazard registries and the retrofit catalogue, whose dimensions and prices are `assumed` (BD-227, BD-369)
-  - `BD-227` (M3, U14a, feature) frob-scene: hazard registries `registries/hazards/<archetype>.toml` with provenance, and the verb scene.hazards
+  - `BD-227` (M3, U14a, feature) frob-scene: hazard registries `registries/hazards/<archetype>.toml` with provenance; the verb scene.hazards
   - `BD-369` (M4, U19b, feature) The retrofit catalog registries/retrofits.toml with priced kits, and scene.retrofit on a .fmcw; NS-18
 ### NAB-15 (M0) registries/sources.toml: the 25 plan-time checks and the reproduction archive pinned by commit and digest
 - **need 1** (names its carrier): §0.6, §38.5, Appendix K.3: the plan-time check ledger with its re-run status per check, which decides whether a check may be cited by a gate (N00-06)
@@ -141,7 +141,7 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `N40-29` (M1, U40, task) registry: fallback ledger of the 25 kill gates defined by subsections added after the register was compiled
 - **need 2** (names its carrier): §0.7, §44.2: the funding record per work package and the pilot ledger, which read a row's decision before a package is funded (N00-07, N00-09)
   - `N00-07` (M0, U00, task) frob-conformance: the pilot ledger (`pilots.toml`) for Frontier and Moonshot mechanisms, and the funding refusal
-  - `N00-09` (M1, U00, task) frob-conformance: the funding record per work package: measured rival first, ceiling before speed, no closed hopes
+  - `N00-09` (M1, U00, task) frob-conformance: funding record per work package: measured rival first, ceiling before speed, no closed hopes
 - **need 3** (names its carrier): §0.8: the hypothesis verdict register, whose verdict changes are the only source of a changed score on a carried row (N00-10)
   - `N00-10` (M0, U00, task) The evidence ledger: the hypothesis verdict register, its append-only change rule and the wording it binds
 ### NAB-18 (M0) registries/ev_matrix.toml: the 41 families adopted at tier Solid, with scores, decisions and kill gates
@@ -159,8 +159,8 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `BD-309` (M3, U28c, task) registries/cores: records DC-01, DC-09, DC-10 with regenerating tables and forced fallbacks (cores.show)
   - `BD-349` (M4, U28a, feature) frob-opt: the decision-core table compiler; records of DC-02, DC-03, DC-05; GATE-ATEL-13 for eight cores
 - **need 2** (names its carrier): §0.8: the hypothesis register rows H-01, H-02, H-06, H-09, H-15 and H-16 that six rejections cite (N00-11, N00-12)
-  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling control, priors, topology, kernels, certificates, reuse, referee)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling, priors, topology, kernels, certificates, reuse, referee)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 ### NAB-21 (M0) registries/ev_matrix.toml: the Moonshot queue: 21 waiting items, order of entry and the cap of four
 - **need 1** (names its carrier): §0.7, §38.5: the pilot ledger, which counts running Moonshot pilots and refuses a fifth (N00-07); this bead supplies the order in which a freed slot is filled
   - `N00-07` (M0, U00, task) frob-conformance: the pilot ledger (`pilots.toml`) for Frontier and Moonshot mechanisms, and the funding refusal
@@ -203,7 +203,7 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `N40-30` (M1, U40, task) frob-conformance: every kill-gate decision cross-checked against the fallback ledger; decisions due by exit
 - **need 2** (names its carrier): §36: the M2 profile of the batched step by stage, and the throughput parity rows (BD-216, BD-217)
   - `BD-216` (M2, U36, task) frob-conformance: the performance harness: unit ordering, paired lower bound, disclosure (GATE-SPARK-19)
-  - `BD-217` (M2, U21a, task) Throughput parity rows: profile, optimize one lever at a time, measure against the incumbent, disclose; GATE-SPARK-03 and -04; KILL-PARITY and KILL-METAL
+  - `BD-217` (M2, U21a, task) Throughput parity rows: profile, one lever at a time, measure, disclose; GATE-SPARK-03, -04, the kill inputs
 - **need 3** (names its carrier): §21.18: the measured specializable share of the step (N21c-16)
   - `N21c-16` (M2, U21c, task) Measurement: the specializable share of the step from the M2 profile (the profile clause of KILL-SPECIALIZE)
 - **need 4** (names its carrier): §43: the M2 variant with no GPU, which records gates as not run (N40-33)
@@ -218,7 +218,7 @@ the candidates were found mechanically (by plan section, gate and title words): 
 - **need 3** (names its carrier): §28.10: the rank-agreement and ladder pilots (BD-310)
   - `BD-310` (M3, U28a, task) pilot: rank agreement between rungs and the ladder's allocation rules, on an incumbent engine or batch-cpu
 - **need 4** (names its carrier): §2.4: the lever register with expected ranges by mission class, scored at M3 (N00-20)
-  - `N00-20` (M1, U00, task) frob-conformance: the lever register and expected ranges by mission class, pre-registered and scored at M3 and M7
+  - `N00-20` (M1, U00, task) frob-conformance: the lever register and expected ranges by mission class, pre-registered, scored at M3 and M7
 ### NAB-27 (M4) M4 exit: sweep of the decision records after rank agreement, family policies and mission queries are decided
 - **need 1** (names its carrier): §40.6: the M4 exit report with its kill decisions (N40-04, N40-30)
   - `N40-04` (M0, U40, feature) frob-conformance: a milestone exit as a query over the gate register; the exit report and the load table
@@ -256,7 +256,7 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `BD-432` (M7, U38a, epic) Epic: neutral adjudication of accepted answers in the ten-fold tournament
   - `BD-433` (M7, U39a, epic) Epic: publication of the result: the report with its ledgers, the replication kit, the wording for each outcome
 - **need 2** (names its carrier): §2.4: the lever register with expected ranges by mission class, scored at M7 (N00-20)
-  - `N00-20` (M1, U00, task) frob-conformance: the lever register and expected ranges by mission class, pre-registered and scored at M3 and M7
+  - `N00-20` (M1, U00, task) frob-conformance: the lever register and expected ranges by mission class, pre-registered, scored at M3 and M7
 - **need 3** (names its carrier): §4: the bet register and the rule that turns gate records into a bet verdict (N00-28)
   - `N00-28` (M0, U00, task) frob-conformance: the bet register: thirty-seven bets and the rule that turns gate records into a bet verdict
 ### NAB-31 (M8) M8 exit: final sweep of the decision records: Moonshot outcomes, final states, the closing printout
@@ -297,8 +297,8 @@ the candidates were found mechanically (by plan section, gate and title words): 
 - **need 2** (names its carrier): §22.12: the shield's projection with its KKT check, which owns the three counterexamples of KI-32 as negative controls (BD-338)
   - `BD-338` (M4, U22b, feature) verbs shield.fit, shield.check: runtime shields with a backup controller in frob-shield; GATE-SHIELD-02
 - **need 3** (names its carrier): §0.8: hypothesis rows H-01, H-02, H-05, H-20, H-21 and H-24 (N00-11, N00-12)
-  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling control, priors, topology, kernels, certificates, reuse, referee)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling, priors, topology, kernels, certificates, reuse, referee)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 ### NAB-37 (M0) killed-idea register KI-33 to KI-46: search, statistics and decision rules (reuse, paving, rare events)
 - **need 1** (names its carrier): §28.19: the decision-core tables DC-01 to DC-11 with their fixed-table fallbacks, against which the nine rejected methods of KI-45 were weighed (BD-309, BD-349)
   - `BD-309` (M3, U28c, task) registries/cores: records DC-01, DC-09, DC-10 with regenerating tables and forced fallbacks (cores.show)
@@ -306,8 +306,8 @@ the candidates were found mechanically (by plan section, gate and title words): 
 - **need 2** (names its carrier): §24.12: the reachability pre-analysis of a fixed-n study (`eval.preanalyze`), which owns the enumeration of KI-44 (BD-124)
   - `BD-124` (M1, U33b, feature) frob-arena: two study types on the CPU: the anytime e-process and the fixed-n exact engine; INT-FSIM-14
 - **need 3** (names its carrier): §0.8: hypothesis rows H-03, H-06 to H-10, H-13, H-22a, H-22b and H-23 (N00-11, N00-12)
-  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling control, priors, topology, kernels, certificates, reuse, referee)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling, priors, topology, kernels, certificates, reuse, referee)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 ### NAB-38 (M0) killed-idea register KI-47 to KI-56: algebra, synthesis, proofs, certificates (ornamental labels)
 - **need 1**: Appendix O: refusal code FROB-REF-214 (a quaternionic constituent is refused, because meeting one means the group computation is wrong) in the refusal registry
   - (no mechanical candidates: search INDEX.tsv)
@@ -316,28 +316,28 @@ the candidates were found mechanically (by plan section, gate and title words): 
 - **need 3** (names its carrier): §12.1, §12.5: the stated limits of the proof layer and the admission of the proof checker (BD-380)
   - `BD-380` (M5, U33a, task) INT-FLN-01, INT-FLN-02: the Lean project under `lean/` and the `fln` checker on a Linux host; twin rejected
 - **need 4** (names its carrier): §0.8: hypothesis rows H-17, H-19 and H-20 (N00-12)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 ### NAB-39 (M0) killed-idea register KI-57 to KI-63: reality, structure, the thesis; multipliers, withdrawn claims, process
 - **need 1** (names its carrier): §1.3, §1.6: the claims-wording registry with thirteen differentiators and sixteen withdrawn claims, which owns the permitted wordings that KI-61 summarizes (N00-15)
   - `N00-15` (M0, U00, task) The claims-wording registry: thirteen differentiators, sixteen withdrawn claims, and the gate-conditioned lint
 - **need 2** (names its carrier): §2, §36.3, §39: the thesis arithmetic and parity targets as ratios to the incumbent re-measured on the same hardware (N00-17, BD-040, BD-217, BD-218)
-  - `N00-17` (M0, U00, task) frob-conformance: the thesis arithmetic: exact ceiling calculators with known answers KA-001 and KA-009 to KA-016
+  - `N00-17` (M0, U00, task) frob-conformance: the thesis arithmetic: exact ceiling calculators with known answers KA-001, KA-009 to KA-016
   - `BD-040` (M0, U36, task) Parity baseline on `trj`: incumbent phase ledger (cold start, Q and H rates, time to threshold, edit latency)
-  - `BD-217` (M2, U21a, task) Throughput parity rows: profile, optimize one lever at a time, measure against the incumbent, disclose; GATE-SPARK-03 and -04; KILL-PARITY and KILL-METAL
+  - `BD-217` (M2, U21a, task) Throughput parity rows: profile, one lever at a time, measure, disclose; GATE-SPARK-03, -04, the kill inputs
   - `BD-218` (M2, U23b, task) Training-time parity on one RTX 4090 against the incumbent under the attainment rule; GATE-CORTEX-05
 - **need 3** (names its carrier): §0.8: hypothesis rows H-12, H-14, H-18 and H-19 (N00-11, N00-12)
-  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling control, priors, topology, kernels, certificates, reuse, referee)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling, priors, topology, kernels, certificates, reuse, referee)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 ### NAB-40 (M0) killed-idea register: KI-64 to KI-67, index by hypothesis, refuted-or-declined index, three declined records
 - **need 1** (names its carrier): §0.8: the hypothesis verdict register with its states and rows H-01 to H-29, against which the index is checked (N00-10, N00-11, N00-12)
   - `N00-10` (M0, U00, task) The evidence ledger: the hypothesis verdict register, its append-only change rule and the wording it binds
-  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling control, priors, topology, kernels, certificates, reuse, referee)
-  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, the thin layer, inheritance, rank fidelity)
+  - `N00-11` (M0, U00, task) Hypothesis register rows H-01 to H-12b (sampling, priors, topology, kernels, certificates, reuse, referee)
+  - `N00-12` (M0, U00, task) Hypothesis register rows H-13 to H-29 (requirements, bands, precision, thin layer, inheritance, rank fidelity)
 - **need 2** (names its carrier): §21.26: the counts-beyond-2³² rule and its gate GATE-SPARK-23, the surviving form of KI-67 (BD-207)
   - `BD-207` (M2, U29a, feature) frob-chronicle: telemetry on devices: T0 to T2 in the step, the traced-world mask, histograms, drain at the fence
 ### NAB-41 (M0) frob-conformance: discrepancy pins: eight figures that did not follow from their formulas, nine more found
 - **need 1** (names its carrier): §2.2, §2.3: the thesis arithmetic calculators that own the step-share ceiling and the solver-pilot ceiling (N00-17)
-  - `N00-17` (M0, U00, task) frob-conformance: the thesis arithmetic: exact ceiling calculators with known answers KA-001 and KA-009 to KA-016
+  - `N00-17` (M0, U00, task) frob-conformance: the thesis arithmetic: exact ceiling calculators with known answers KA-001, KA-009 to KA-016
 - **need 2** (names its carrier): §40.7: the gate register's own list of discrepancies it resolved, where the milestone of lifecycle compression is fixed at M6 (N40-09, N40-10)
   - `N40-09` (M1, U40, task) frob-conformance: the lint that keeps the gate register and the chapters in agreement, with recorded resolutions
   - `N40-10` (M0, U40, task) gate register: the 76 gates and 25 kill gates of later subsections folded into the tables; four amended rows
@@ -348,33 +348,33 @@ the candidates were found mechanically (by plan section, gate and title words): 
 - **need 2**: §45.11: the tracker export of bead keys and states, against which an idea's carriers are resolved
   - `N41-16` (M0, U41, task) scripts/tracker-check.sh: tracker hygiene at every milestone: no cycles, no orphans, every gate carried, every bead with a test plan
   - `N40-30` (M1, U40, task) frob-conformance: every kill-gate decision cross-checked against the fallback ledger; decisions due by exit
-  - `BD-319` (M3, U40, task) M3 exit review by a fresh-context session that did not implement the work; the partial ten-fold gate on record
-  - `N41-17` (M1, U41, task) frob-conformance: bead lifecycle rules as checks: typed close reasons citing a test log, fallback and superseded closes, readiness, splitting
-  - `N40-04` (M0, U40, feature) frob-conformance: a milestone exit as a query over the gate register; the exit report and the load table
-  - `BD-147` (M1, U39a, task) M1 exit review by a fresh-context session that did not implement the work; the schedule gate (BET-12)
-  - `N25d-20` (M4, U25d, task) kill gate KILL-SYNTH-LINKAGE: keep exact linkage synthesis or ship multi-start numerical optimization classed Tested, decided at M4
   - `BD-378` (M4, U40, task) M4 exit review by a fresh-context session that did not implement the work; rank agreement and family bets decided
-  - `N38b-03` (M0, U38b, task) frob-conformance: the close audit: typed close reasons that cite a bead's own test, shared reasons flagged
+  - `N25d-11` (M4, U25d, task) kill gate KILL-SYNTH-CODESIGN at M4: keep Pareto antichains, or restrict co-design to the closure analysis
+  - `N38b-08` (M2, U38b, task) frob-conformance: behaviour, not plumbing: zero-weight, random and shuffled-label controls for learning gates
+  - `N40-05` (M0, U40, task) exit protocol: the fresh-context review procedure, exit record and runner shared by all nine milestone exits
   - `N28a-22` (M3, U28a, task) decision KILL-STATIC: keep design.check refusals, or downgrade them to advisory lints
+  - `N40-03` (M0, U40, task) kill-gate records: triggers and fallbacks fixed in advance, dated amendments, the decision ADR, the renaming
+  - `N38b-06` (M0, U38b, task) frob-conformance: live-dependency proofs: perturb a claimed input and require the output to change
+  - `N14b-31` (M4, U14b, task) decision: KILL-SKEL-CELL: may the composed screen discard and exclude, or are tables a sizing report only
 ### NAB-43 (M0) registries/ideas.toml: the first pass: thirty ideas, the best five and next ten with reasons, carriers for all
 - **need 1**: §45: the seed bead set with its current numbering, from which carriers are named (the planning text's own bead numbers for these ideas belong to an earlier numbering and are not used)
   - `N41-16` (M0, U41, task) scripts/tracker-check.sh: tracker hygiene at every milestone: no cycles, no orphans, every gate carried, every bead with a test plan
   - `N41-17` (M1, U41, task) frob-conformance: bead lifecycle rules as checks: typed close reasons citing a test log, fallback and superseded closes, readiness, splitting
-  - `BD-255` (M3, U23a, feature) Requirement verdicts on batched tiers: streaming past-time monitors, task.verdict, task.settle, frob.verdict/1
-  - `BD-121` (M1, U24a, feature) frob-spec: the requirement language core, with three evaluators agreeing bit for bit on 10⁶ traces per operator
-  - `BD-322` (M4, U23a, feature) verb train.inherit: inheritance along design edits, with matched arms and the 12-pair experiment [F]
-  - `BD-195` (M2, U24a, feature) frob-arena: the settled-pose reset cache on the batched tiers and in VecEnv reset, measured at GATE-ARENA-08
+  - `BD-042` (M0, U23a, task) Plan-time pilot, static stance family: re-run from the reproduction archive and record every figure
+  - `BD-198` (M2, U23a, feature) frob-learn: PPO training of the reference quadruped's flat velocity task, with negative controls
   - `N24b-09` (M2, U24b, task) fixture:cart-sill-dock on the batch tiers: analytic rows and creep rigs inside the fidelity envelope
+  - `BD-260` (M3, U24a, task) Gate: 2,000 no-signal campaigns with 500 adaptive retries each keep false promotions within α (GATE-QUAL-01)
+  - `BD-191` (M2, U24a, feature) verb telemetry.stills: contact sheets at key frames with physical overlays, drawn from the collision field
+  - `BD-255` (M3, U23a, feature) Requirement verdicts on batched tiers: streaming past-time monitors, task.verdict, task.settle, frob.verdict/1
   - `BD-196` (M2, U23a, task) frob-learn: on-device learning kernels K-gemm, K-act-fn, K-adam; gradient parity with FrankenTorch
-  - `BD-037` (M0, U18a, task) upstream: `registries/upstream.toml` and an `upstream` bead per sibling work item, mirrored in sibling trackers
-  - `BD-390` (M5, U30a, feature) verb ground.excite: Fisher-information identifiability analysis (rank, precision, aliasing) and an excitation plan
+  - `BD-326` (M4, U23a, task) The three-arm equivariance experiment for BET-07 (GATE-CORTEX-03; inputs of KILL-EQUIV) [F]
 ### NAB-47 (M0) registries/ideas.toml: the nineteen contested ideas: both arguments, resolution, deciding measurement
 - **need 1** (names its carrier): §40.4: the kill-gate records named in the resolutions, each with trigger, fallback and deciding milestone (N40-23 to N40-29)
   - `N40-23` (M0, U40, task) registry: fallback ledger of the 13 kill gates of the foundations (Lemma, Marrow, Skeleton, Sinew, suite)
   - `N40-29` (M1, U40, task) registry: fallback ledger of the 25 kill gates defined by subsections added after the register was compiled
 ### NAB-49 (M0) Owner decision: the sixteen ideas listed as not yet placed (seven since placed; nine to park or decline)
 - **need 1** (names its carrier): §36: the M2 profile of the batched step by stage, which is the trigger for one conditional idea (BD-217)
-  - `BD-217` (M2, U21a, task) Throughput parity rows: profile, optimize one lever at a time, measure against the incumbent, disclose; GATE-SPARK-03 and -04; KILL-PARITY and KILL-METAL
+  - `BD-217` (M2, U21a, task) Throughput parity rows: profile, one lever at a time, measure, disclose; GATE-SPARK-03, -04, the kill inputs
 - **need 2** (names its carrier): §19.15: the brick pool's deduplication and rebuild measurements at GATE-HAB-13, the trigger for another (BD-164)
   - `BD-164` (M2, U19c, task) frob-scene: the shared brick pool, content-addressed bricks and one dense directory per scene variant
 - **need 3** (names its carrier): §16.12, Appendix F: the upstream work item for exact loop closure in the sibling multibody crate (FD-FSIM-04)
@@ -385,13 +385,13 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `N40-03` (M0, U40, task) kill-gate records: triggers and fallbacks fixed in advance, dated amendments, the decision ADR, the renaming
   - `N40-30` (M1, U40, task) frob-conformance: every kill-gate decision cross-checked against the fallback ledger; decisions due by exit
 - **need 2**: §45.11: the tracker export of bead keys, read by the carrier checks
-  - `N41-17` (M1, U41, task) frob-conformance: bead lifecycle rules as checks: typed close reasons citing a test log, fallback and superseded closes, readiness, splitting
-  - `N41-16` (M0, U41, task) scripts/tracker-check.sh: tracker hygiene at every milestone: no cycles, no orphans, every gate carried, every bead with a test plan
-  - `N25d-40` (M0, U25d, task) frob-conformance/registry/pilots.toml: the Augur pilot rows: tier, pilot and falsifier, ceiling, kill gate and carrier for every [F] and [M] mechanism
   - `N44-04` (M0, U44, task) scripts/wp-check.sh: coverage and structure checks of the work packages (crates, milestones, membership, pilots)
-  - `BD-319` (M3, U40, task) M3 exit review by a fresh-context session that did not implement the work; the partial ten-fold gate on record
-  - `N40-04` (M0, U40, feature) frob-conformance: a milestone exit as a query over the gate register; the exit report and the load table
-  - `BD-147` (M1, U39a, task) M1 exit review by a fresh-context session that did not implement the work; the schedule gate (BET-12)
-  - `N25d-20` (M4, U25d, task) kill gate KILL-SYNTH-LINKAGE: keep exact linkage synthesis or ship multi-start numerical optimization classed Tested, decided at M4
+  - `N41-16` (M0, U41, task) scripts/tracker-check.sh: tracker hygiene at every milestone: no cycles, no orphans, every gate carried, every bead with a test plan
+  - `N25d-40` (M0, U25d, task) frob-conformance pilots.toml: the Augur pilot rows: falsifier, ceiling, kill gate, carrier per mechanism
+  - `N41-17` (M1, U41, task) frob-conformance: bead lifecycle rules as checks: typed close reasons citing a test log, fallback and superseded closes, readiness, splitting
   - `BD-378` (M4, U40, task) M4 exit review by a fresh-context session that did not implement the work; rank agreement and family bets decided
-  - `N38b-03` (M0, U38b, task) frob-conformance: the close audit: typed close reasons that cite a bead's own test, shared reasons flagged
+  - `N25d-11` (M4, U25d, task) kill gate KILL-SYNTH-CODESIGN at M4: keep Pareto antichains, or restrict co-design to the closure analysis
+  - `N38b-08` (M2, U38b, task) frob-conformance: behaviour, not plumbing: zero-weight, random and shuffled-label controls for learning gates
+  - `N40-05` (M0, U40, task) exit protocol: the fresh-context review procedure, exit record and runner shared by all nine milestone exits
+  - `N28a-22` (M3, U28a, task) decision KILL-STATIC: keep design.check refusals, or downgrade them to advisory lints
+  - `N40-03` (M0, U40, task) kill-gate records: triggers and fallbacks fixed in advance, dated amendments, the decision ADR, the renaming

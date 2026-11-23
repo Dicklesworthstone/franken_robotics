@@ -154,3 +154,15 @@ other units, without a blocking edge:
     `scene.fit`.
 14. **Known answers with FACT status.** The stance grid counts, the probe pilot counts and the literature root
     counts are re-run or flagged for re-reading in the law suites before any gate may cite them.
+
+## Integration pass (group G10)
+
+- Item 1 of part (e) is settled by the order-of-work rule in section 6 of `N10a-01`: every specification
+  bead and part of this unit depends on `N10a-01` and no longer on the seed that creates its crate or
+  implements the construction (now `related`); the implementers named in item 5 of part (d) depend on the
+  specification, and those edges are recorded in `integration/out/G10.json`.
+- `SPEC-C-28` to `SPEC-C-40` fill their rows of the construction register and follow the ten-section contract
+  template, as the other twenty-seven specification beads do.
+- New bead `N10c-11`: the pilot of C-39 (thirty registered experiments), which item 2 of part (d) had left to
+  mechanism beads that carry only the run-time calibration trigger.
+- The known-answer rows KA-142 to KA-190 are in `N10-KA3`; the audit for C-01 to C-15 is `N10a-22`.

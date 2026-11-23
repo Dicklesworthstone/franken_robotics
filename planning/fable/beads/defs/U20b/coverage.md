@@ -89,3 +89,10 @@ Prerequisites owned elsewhere for which no seed key could be named (also in each
 12. **A derived row not in the chapter:** a packet arriving after the second command and before the third is also excluded (v₃ = 0 forces the same third command in both worlds). N20b-13 tests it and labels it derived.
 13. **The late subsections' answers and shortcuts have gates and no KA or CX numbers**; N20b-20 and N20-CX carry them as pending slots.
 14. **Parent packages.** BD-102 is placed under WP-11 (static analyses, `frob-analyze`) while the symmetry computation it calls sits under WP-38; M1 Sensorium beads are under WP-40 because it is the package that owns `frob-sense` at M1.
+
+## (f) Integration pass (group G20)
+
+- New bead N20b-45: allocation of registry numbers for the three uncoded refusals, the four late counterexamples and the late known answers of (e) 5 and (e) 13.
+- Superseded as duplicates of U20a beads: N20b-23 (by N20a-12), N20b-26 (by N20a-32), N20b-35 (by N20a-35). Their content was folded into the kept beads, and references in N20b-18, -24, -25, -27, -32, -34, -36, -37, -38 were repointed.
+- Overlaps with U20a re-scoped: see section (f) of the U20a coverage file. BD-099's encoder card field names now follow N20a-13, its mask and stream names follow N20a-02 and N20a-04; BD-187's mask reason `miss` is `no-return` and it quantizes after converting to the output convention.
+- Graph fixes: BD-187 no longer depends on the higher-numbered seed BD-189 (the every-tier clock arrives through N20b-44).

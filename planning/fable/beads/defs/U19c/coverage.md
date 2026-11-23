@@ -188,3 +188,14 @@ depend on BD-163 plug into the driver's `Stage` trait defined there.
 27. **Appendix O prints `FROB-REF-311`** with its repair folded into the meaning; N19-REF separates them.
 28. **Bead count.** 47 files is slightly above the typical range; the unit covers ten subsections, two registries,
     six gates, four kill gates and six open questions.
+
+## (f) Added by the integration pass
+
+- N19c-42 (new, M2): the decision and registry rows for the four Habitat refusals the chapter states without a code
+  (a run on an unaccepted pack; a scheduled variant resident in no bound segment; field reuse required under D3, D4
+  or without a stencil; a pack whose recomputed identity differs from the stated one). Proposed numbers 318, 319, 322
+  and 323; BD-228, BD-162, N19a-20, N19c-22, N19c-23 and N19c-34 raise them. N19-REF's interim wording and BD-228's
+  were different and both now point here.
+- N19c-11 takes the role tables of the shipped generators into its Scope (no generator bead declares parameter
+  roles) and depends on N19b-44 for lineage along typed edits; N19c-34 depends on the KILL-ADVECT decision N19b-11.
+- N19c-04 extends the loss report schema of the asset lane N19a-46.

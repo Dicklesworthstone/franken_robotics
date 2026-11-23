@@ -272,3 +272,15 @@ edges creates a cycle with the dependencies this unit declared.
     exposes, with an exact reference implementation in the test support code, so it passes on the reference
     first and then runs unchanged against production code; mechanisms should depend on the specification
     (table in part (d)).
+
+## Integration pass (group G10)
+
+- New beads in this unit: `N09-CX` (the three counterexamples of the doctrine, CX-016 to CX-018, which part (c)
+  assigned to another unit and no unit had written) and `N10a-22` (the end-to-end spine audit for C-01 to C-15,
+  the sibling of `N10b-19` and `N10c-10`).
+- Item 15 of part (e) is settled for all forty constructions by the order-of-work rule in section 6 of
+  `N10a-01`: a specification bead depends only on the conformance skeleton, the register, registries, crate
+  skeletons, admitted oracles, other specifications and its own pilot; a bead that implements the construction
+  or creates its crate is `related`. The dependencies moved are listed in `integration/out/G10.json`.
+- The label set of `N10a-04` is the nine labels of the C-16 contract (`N10b-01`); the two beads had differed.
+- The pilot beads `N10a-12` to `N10a-21` name their records `PILOT-C-nn`, the value the register row carries.

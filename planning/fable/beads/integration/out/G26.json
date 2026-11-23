@@ -708,11 +708,9 @@
   {
    "bead": "N26-REF",
    "n": 1,
-   "as": "dep",
-   "keys": [
-    "N32a-03"
-   ],
-   "note": "the exit-code table makes a row's explicit exit authoritative for the unnamed families 74x to 79x and lints a row without one; exit 4 for FROB-REF-760 stands as registered, like 761 in N35-REF and N36-REF"
+   "as": "none",
+   "keys": [],
+   "note": "already settled through its dependency BD-022, which brings the exit-code table N32a-03: a row's explicit exit is authoritative for the unnamed families 74x to 79x and a row without one fails the lint; exit 4 for FROB-REF-760 stands as registered, like 761 in N35-REF and N36-REF. No direct edge: a registry bead does not depend on the envelope mechanism"
   },
   {
    "bead": "N26-REF",
@@ -1118,10 +1116,325 @@
    "note": "the two gate scripts this switch-over re-runs"
   }
  ],
- "edges": [],
+ "edges": [
+  {
+   "bead": "BD-345",
+   "dep": "N26b-05",
+   "as": "dep",
+   "why": "coverage (d) of U26b: the cascade applies the verb nemesis.audit stage by stage"
+  },
+  {
+   "bead": "BD-345",
+   "dep": "N26b-04",
+   "as": "dep",
+   "why": "coverage (d) of U26b: the trust rule reads the audit record and the bypass query (GATE-ATEL-09)"
+  },
+  {
+   "bead": "BD-309",
+   "dep": "N26b-11",
+   "as": "dep",
+   "why": "coverage (d) of U26b: the DC-10 core record is registered from the decision record N26b-11 writes"
+  },
+  {
+   "bead": "BD-278",
+   "dep": "N26a-01",
+   "as": "dep",
+   "why": "coverage (d) of U26b: crate foundation with the module cover.rs"
+  },
+  {
+   "bead": "N26b-12",
+   "dep": "N26a-01",
+   "as": "dep",
+   "why": "coverage (d) of U26b: the law BatterySelected the script asserts on is a type of the foundation"
+  },
+  {
+   "bead": "N26b-06",
+   "dep": "N35-23",
+   "as": "dep",
+   "why": "coverage (d) of U26b: registration of the fixture stream nemesis-audit-fixtures"
+  },
+  {
+   "bead": "N26b-10",
+   "dep": "N35-23",
+   "as": "dep",
+   "why": "coverage (d) of U26b: registration of the fixture stream nemesis-cover-gate"
+  },
+  {
+   "bead": "BD-349",
+   "dep": "N26a-26",
+   "as": "dep",
+   "why": "coverage (b) of U26a: N26a-26 supplies the DC-04 policy record that BD-349 compiles and registers (GATE-ATEL-13)"
+  },
+  {
+   "bead": "N28a-27",
+   "dep": "N26a-26",
+   "as": "dep",
+   "why": "coverage (b) of U26a: the registry record of DC-04 is built from the policy N26a-26 implements; N28a-27 only named BD-276"
+  },
+  {
+   "bead": "N25b-23",
+   "dep": "N26a-10",
+   "as": "dep",
+   "why": "coverage (b) of U26a: N26a-10 supplies the pair search (search_reversal) that N25b-23's call sequence uses for GATE-AUGUR-13"
+  },
+  {
+   "bead": "BD-271",
+   "dep": "BD-272",
+   "as": "related",
+   "why": "replaces the drafted dep: a seed never depends on a higher-numbered seed; the guard is reached through the component N26a-14"
+  },
+  {
+   "bead": "N26a-02",
+   "dep": "N19b-38",
+   "as": "related",
+   "why": "the typed scene edit machinery is in N19b-38 at M4, a later milestone; see gaps (§19.12)"
+  },
+  {
+   "bead": "N26a-13",
+   "dep": "BD-348",
+   "as": "related",
+   "why": "A-24 task-wrench attainability lands at M4; the oracle's static program at M3 uses the cone solver BD-115"
+  },
+  {
+   "bead": "N26b-01",
+   "dep": "BD-352",
+   "as": "related",
+   "why": "the campaign manifest that the pre-score commitment is written into is BD-352's; BD-352 -> BD-345 -> the audit beads, so a dependency would close a cycle"
+  },
+  {
+   "bead": "N26b-03",
+   "dep": "BD-352",
+   "as": "related",
+   "why": "the cascade's result set is the campaign-level rank record; same cycle as above"
+  },
+  {
+   "bead": "BD-277",
+   "dep": "N10b-18",
+   "as": "dep",
+   "why": "PILOT-C-27 is the construction register's pilot of splitting (SPEC-C-27); a Frontier mechanism depends on its pilot, beside the chapter pilot N26a-28"
+  }
+ ],
  "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "cross_group_duplicates": [
+  {
+   "mine": "N26b-05",
+   "other": "N28b-29",
+   "note": "both specify the verb nemesis.audit with stratified discards, the exact bound, the sealed planted winner, FROB-REF-566 and the measurement of GATE-NEMESIS-07; §26.10 owns the mechanism (N40-08 says so), U28b should keep the cascade's application (BD-345)"
+  },
+  {
+   "mine": "N26b-01",
+   "other": "N28b-13",
+   "note": "same audit lane: keyed draw before any score, merged starved strata, pre-score commitment, fixed n, never cancelled; N26b-01 puts it in frob-nemesis at M4, N28b-13 in frob-opt at M3"
+  },
+  {
+   "mine": "N26b-02",
+   "other": "N28b-29",
+   "note": "the exact false-discard bound 1 − δ^(1/m) per stratum and the stratum verdict are in both"
+  },
+  {
+   "mine": "N26b-03",
+   "other": "N28b-29",
+   "note": "the planted winner's seal, blinded entry, reveal and FROB-REF-566 are in both"
+  },
+  {
+   "mine": "N26b-04",
+   "other": "N28b-29",
+   "note": "the audit record, the label screen-biased and the re-qualification rule are in both; the re-opening and trust rule are also in BD-345"
+  },
+  {
+   "mine": "N26b-06",
+   "other": "N28b-29",
+   "note": "the two synthetic batteries of GATE-NEMESIS-07 (100 biased-screen runs; 1,000 campaigns) are built in both; N28b-31 takes its population from BD-377"
+  },
+  {
+   "mine": "N26b-07",
+   "other": "N28b-31",
+   "note": "two end-to-end scripts record GATE-NEMESIS-07: scripts/e2e/nemesis_audit.sh and scripts/e2e/screening_audit.sh"
+  },
+  {
+   "mine": "N26b-13",
+   "other": "VERBS-nemesis",
+   "note": "both enter the seven nemesis.* rows in registries/verbs.toml with schemas, tool names and checks; N26b-13 also carries scopes, cost models, wait defaults and the cluster proposal for nemesis_cover"
+  },
+  {
+   "mine": "N26b-18",
+   "other": "N40-02",
+   "note": "the eight convergence gates of Nemesis are entered in registries/gates.toml by both (N40-02 with claim and milestone, N26b-18 with full threshold, measuring bead and controls)"
+  },
+  {
+   "mine": "N26b-18",
+   "other": "N40-26",
+   "note": "the kill rows KILL-NEMESIS, KILL-RARE and KILL-MCW (trigger, fallback, decision point) are entered by both"
+  },
+  {
+   "mine": "N26a-26",
+   "other": "N28a-27",
+   "note": "both write the DC-04 record; N28a-27 prints the certification count as ⌈ln(1/δ)/p*⌉ and cites FROB-REF-549, where this chapter uses the exact ⌈ln δ/ln(1 − p⋆)⌉ (29,956 not 29,958) and FROB-REF-560 at the bound"
+  },
+  {
+   "mine": "N26b-11",
+   "other": "BD-309",
+   "note": "the DC-10 record: N26b-11 writes the decision record in frob-nemesis, BD-309 writes registries/cores/dc-10.toml with owner frob-arena; one should cite the other"
+  },
+  {
+   "mine": "N26a-15",
+   "other": "N16b-15",
+   "note": "the same two solver mutations (pyramid4 cone, position-level penetration recovery) with a hopper and a diagonal-push task; N26a-15 should build its 100 planted failures on N16b-15's options (dep recorded)"
+  },
+  {
+   "mine": "N26a-10",
+   "other": "N25b-23",
+   "note": "both define the reversal objective and paired evaluation of two designs on candidate worlds; N26a-10 is the search entry point in frob-nemesis, N25b-23 the Augur engine that should call it (dep recorded)"
+  },
+  {
+   "mine": "N26a-28",
+   "other": "N10b-18",
+   "note": "two pilots of splitting share the random-walk fixture: PILOT-C-27 (M3, falsifier 3 times and 1% of forks) and the chapter's exploration pilot (M2, falsifier of KILL-RARE); N26a-28 records both falsifiers and lets the gate register govern"
+  },
+  {
+   "mine": "N26a-06",
+   "other": "SPEC-C-28",
+   "note": "SPEC-C-28 carries a pilot record for C-28 (planted traps in three scenes, run by BD-274 with BD-273) beside the chapter pilot N26a-06 (ten traps in two interiors, M2): two pilot rows for one mechanism"
+  },
+  {
+   "mine": "N26b-22",
+   "other": "FD-FSIM-18",
+   "note": "the upstream registry row and failing fixture of the 10⁶ sample caps are specified in both (and opened by BD-037)"
+  },
+  {
+   "mine": "N26b-22",
+   "other": "FD-FSIM-19",
+   "note": "the upstream registry row and failing fixture for the missing splitting estimator are specified in both"
+  },
+  {
+   "mine": "N26b-24",
+   "other": "FD-FSIM-18",
+   "note": "the switch-over after the caps are lifted (re-run of the gates at the larger count) is in both"
+  },
+  {
+   "mine": "N26b-24",
+   "other": "FD-FSIM-19",
+   "note": "the differential test of the two splitting estimators and the choice between them is in both"
+  },
+  {
+   "mine": "N26b-23",
+   "other": "BD-275",
+   "note": "N26b-23 adds the sub-command nemesis.hardset carry to the verb BD-275 owns with four sub-commands"
+  },
+  {
+   "mine": "N26b-15",
+   "other": "N10a-09",
+   "note": "INV-NEMESIS-03 (exploration data never enter a bound) is tested crate-wide with mutants in N26b-15 and as the doctrine D-16 check in N10a-09"
+  }
+ ],
+ "new_beads": [
+  "N26a-36"
+ ],
+ "gaps": [
+  {
+   "section": "§19.12",
+   "what": "Habitat's typed scene edit (closed set of edit kinds, application to an immutable pack giving a new SceneId, the declared-aspect check) exists only in N19b-38 at M4, behind the retrofit pilot and the feature frontier-retrofit; §26.1 has Nemesis consume it at M3. Needed: an M3 Solid bead split out of N19b-38, on which N26a-02 and N19b-38 both depend",
+   "needed_by": [
+    "N26a-02"
+   ]
+  },
+  {
+   "section": "§19.7",
+   "what": "BD-225 and BD-226 own the grammar's production and attribute draws but do not state an export of the probability mass of each discrete scene feature (a film present, a cart in an aisle); N26a-03 and N26a-24 need it for the prior of a discrete edit and for exact mixture weights, and meanwhile mark such features undefined_for",
+   "needed_by": [
+    "N26a-03",
+    "N26a-24"
+   ]
+  },
+  {
+   "section": "§12.3",
+   "what": "no bead rules on the candidate theorem card for PO-NEMESIS-04 (the zero-failure inequality) or would write its checker; N26b-16 files the candidate with two checkable routes against the card registry N12-06 and the bound stays class Tested",
+   "needed_by": [
+    "N26b-16",
+    "N26a-21"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-271",
+   "what": "seed order: BD-272 moved from deps to related (the guard is reached through the component N26a-14); Scope now states that the seed is the capstone of N26a-13 (with N26a-36), N26a-14, N26a-01, N26a-02 and the plants N26a-04"
+  },
+  {
+   "bead": "BD-274",
+   "what": "Scope now states that the seed is the capstone of N26a-17, N26a-18, N26a-19 and N26a-03 behind the pilot N26a-06, with the gate script N26a-34 and the KILL-MCW decision N26a-35 downstream of it"
+  },
+  {
+   "bead": "N26a-19",
+   "what": "Frontier mechanism now depends on its pilot N26a-06; the .fmcw type, example, validation rules, acceptance and tests gain the required field one_minimal_verified and the optional contrasts array, so that files written by BD-274 and by the KILL-MCW fallback pass a reader that rejects unknown fields"
+  },
+  {
+   "bead": "N26a-35",
+   "what": "the fallback file's minimality record carries one_minimal_verified: false, as N26a-18 and BD-274 write it"
+  },
+  {
+   "bead": "N26a-02",
+   "what": "the wire example and the unit test use a door-closer torque of 19 N·m, inside the kitchen bound; 21 N·m stays the violation case of BD-270 (coverage (e) item 2 of U26a)"
+  },
+  {
+   "bead": "BD-276",
+   "what": "result schema named frob.nemesis.bound/1, as the verb registry N26b-13 registers it (was frob.bound/1)"
+  },
+  {
+   "bead": "N26a-23",
+   "what": "commitment record schema renamed frob.nemesis.bound.commit/1 to follow the family"
+  },
+  {
+   "bead": "N26a-21",
+   "what": "derivation path aligned with the file N26b-16 writes: docs/derivations/nemesis/po-nemesis-04-zero-failure.md"
+  },
+  {
+   "bead": "N26a-24",
+   "what": "derivation path aligned with the file N26b-16 writes: docs/derivations/nemesis/po-nemesis-02-weight-bound.md"
+  },
+  {
+   "bead": "N26-KA",
+   "what": "Scope re-cut against N26b-16 (the four proof-obligation derivations are referenced by path, not rewritten) and N26b-17 (the runner); owner beads of KA-668 and KA-669 filled in; related extended"
+  },
+  {
+   "bead": "N26b-16",
+   "what": "Scope names what the registry bead N26-KA keeps: the records and the derivation files no obligation covers"
+  },
+  {
+   "bead": "N26b-17",
+   "what": "the battery's registry view must agree with N26-KA's records on truth, tolerance, tier, site and derivation path; it adds only the runner step, the control's invocation and due"
+  },
+  {
+   "bead": "N26b-18",
+   "what": "Scope re-cut against the pilots: the two pilot rows are written by N26a-06 and N26a-28 at M2, this bead states their required content and tests completeness; bead keys of the nine scripts and three decisions added to the rows"
+  },
+  {
+   "bead": "N26a-06",
+   "what": "Scope names N26b-18 (gate rows and the completeness test of this pilot's row); related extended"
+  },
+  {
+   "bead": "N26a-28",
+   "what": "Scope names N26b-18 and the experiment N26b-20 that reuses the harness; related extended"
+  },
+  {
+   "bead": "N26b-14",
+   "what": "Scope names the gate scripts that also raise refusal codes inside a gate measurement, and what only this script does; related extended"
+  },
+  {
+   "bead": "N26b-13",
+   "what": "refusal list of nemesis.search gains 569, raised by --method splitting (BD-277) and exercised that way by N26b-14"
+  },
+  {
+   "bead": "N26a-31",
+   "what": "now depends on N26b-20: OPEN-NEMESIS-2 blocks GATE-NEMESIS-05 (§26.16); acceptance adds that the gate record names the requirement classes excluded from splitting"
+  },
+  {
+   "bead": "N26a-13",
+   "what": "now depends on the new bead N26a-36 for the mandatory task events; Scope and logging name it"
+  },
+  {
+   "bead": "BD-272",
+   "what": "N26a-15 removed from related: it is already a dependency"
+  }
+ ]
 }

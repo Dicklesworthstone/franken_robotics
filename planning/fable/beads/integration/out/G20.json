@@ -596,7 +596,7 @@
    "keys": [
     "BD-161"
    ],
-   "note": "superseded by N20b-23, which carries this dependency"
+   "note": "the zero-lateness reference arm; N20a-12 is the kept OPEN-SENS-1 decision (N20b-23 folded in)"
   },
   {
    "bead": "N20a-12",
@@ -606,7 +606,7 @@
     "BD-116",
     "BD-117"
    ],
-   "note": "superseded by N20b-23, which carries this dependency"
+   "note": ""
   },
   {
    "bead": "N20a-13",
@@ -932,7 +932,7 @@
     "N15b-25",
     "N18b-36"
    ],
-   "note": "superseded by N20b-26; the sibling decisions are taken in the same owner ruling"
+   "note": "sibling owner decisions taken in the same ruling; N20a-32 is the kept OPEN-SENS-4 decision (N20b-26 folded in)"
   },
   {
    "bead": "N20a-32",
@@ -941,7 +941,7 @@
    "keys": [
     "BD-387"
    ],
-   "note": "superseded by N20b-26; dataset admission is M5"
+   "note": "dataset admission is M5; the decision at M4 names which fields may later become measured"
   },
   {
    "bead": "N20a-32",
@@ -950,7 +950,7 @@
    "keys": [
     "NAB-09"
    ],
-   "note": "superseded by N20b-26, which carries this dependency"
+   "note": "the source register with licences"
   },
   {
    "bead": "N20a-33",
@@ -1015,7 +1015,7 @@
     "N22a-03",
     "N22a-02"
    ],
-   "note": "superseded by N20b-35, which carries these dependencies"
+   "note": "N20a-35 is the kept pilot (N20b-35 folded in)"
   },
   {
    "bead": "N20a-35",
@@ -1024,16 +1024,17 @@
    "keys": [
     "BD-279"
    ],
-   "note": "superseded by N20b-35; autopsy.intervene on forks of its dependency BD-205"
+   "note": "autopsy.intervene on forks of its dependency BD-205"
   },
   {
    "bead": "N20a-35",
    "n": 3,
    "as": "dep",
    "keys": [
-    "N20b-32"
+    "N20b-32",
+    "N20b-33"
    ],
-   "note": "superseded by N20b-35, which already depends on N20b-32"
+   "note": "the visibility query and its verb, used for the kinematic cross-check"
   },
   {
    "bead": "N20a-36",
@@ -1051,7 +1052,7 @@
    "keys": [
     "N28b-07"
    ],
-   "note": "continuous optimizers behind the ask/tell interface; mounts as variables are N20b-36"
+   "note": "continuous optimizers behind the ask/tell interface; mounts as optimizer variables are N20b-36 (related)"
   },
   {
    "bead": "N20a-36",
@@ -1486,11 +1487,11 @@
   {
    "bead": "N20b-12",
    "n": 1,
-   "as": "related",
+   "as": "dep",
    "keys": [
     "N23b-09"
    ],
-   "note": "the evaluation report is the consumer that must refuse without a receipt"
+   "note": "the evaluation report that records a policy's first evaluation, where the receipt check is enforced (its dependency BD-198 already depends on N23b-09)"
   },
   {
    "bead": "N20b-12",
@@ -1683,16 +1684,14 @@
    "n": 1,
    "as": "none",
    "keys": [],
-   "note": "already delivered by its dependency BD-212"
+   "note": "superseded by N20a-12, which depends on BD-212"
   },
   {
    "bead": "N20b-23",
    "n": 2,
-   "as": "dep",
-   "keys": [
-    "N20a-07"
-   ],
-   "note": "the three intra-step policies; their device form is its dependency BD-189"
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N20a-12, which depends on N20a-07 and BD-189"
   },
   {
    "bead": "N20b-24",
@@ -1724,31 +1723,23 @@
   {
    "bead": "N20b-26",
    "n": 1,
-   "as": "related",
-   "keys": [
-    "N15b-25",
-    "N18b-36"
-   ],
-   "note": "sibling owner decisions taken in the same ruling"
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N20a-32, which records the sibling decisions N15b-25 and N18b-36 as related"
   },
   {
    "bead": "N20b-26",
    "n": 2,
-   "as": "dep",
-   "keys": [
-    "N37-17",
-    "NAB-09"
-   ],
-   "note": "the licence marks and the source register with licences"
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N20a-32, which depends on N37-17 and NAB-09 (licence marks; the source register with licences)"
   },
   {
    "bead": "N20b-26",
    "n": 3,
-   "as": "related",
-   "keys": [
-    "BD-387"
-   ],
-   "note": "M5; the decision at M4 names which fields may later become measured"
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N20a-32, which records BD-387 (M5) as related"
   },
   {
    "bead": "N20b-27",
@@ -1891,29 +1882,23 @@
   {
    "bead": "N20b-35",
    "n": 1,
-   "as": "related",
-   "keys": [
-    "N20a-36"
-   ],
-   "note": "N20a-36 reads this pilot's classification and depends on it"
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N20a-35, the one pilot for both uses; N20a-36 depends on it"
   },
   {
    "bead": "N20b-35",
    "n": 2,
-   "as": "dep",
-   "keys": [
-    "BD-279"
-   ],
-   "note": "interventions on forks of its dependency BD-205"
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N20a-35, which depends on BD-205 and BD-279"
   },
   {
    "bead": "N20b-35",
    "n": 3,
-   "as": "dep",
-   "keys": [
-    "N38a-09"
-   ],
-   "note": ""
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N20a-35, which depends on N38a-09"
   },
   {
    "bead": "N20b-36",
@@ -2173,12 +2158,6 @@
    "why": "need 2 of N20b-10 and coverage (d) of U20b: rule E-10 registers four further planted leaks in the leak registry of N20b-10"
   },
   {
-   "bead": "N23b-09",
-   "dep": "N20b-12",
-   "as": "dep",
-   "why": "need 1 of N20b-12 and coverage (d) of U20b: a policy's first evaluation is recorded only with a passing causal-policy receipt"
-  },
-  {
    "bead": "N20b-13",
    "dep": "N10b-08",
    "as": "dep",
@@ -2189,11 +2168,408 @@
    "dep": "N20b-38",
    "as": "dep",
    "why": "need 1 of N20b-38: KILL-VISIBILITY is due at M4 and the exit review requires its decision record"
+  },
+  {
+   "bead": "BD-191",
+   "dep": "N20a-33",
+   "as": "dep",
+   "why": "seed and component: telemetry.stills calls the still renderer, identifier buffer and pixel lookup of N20a-33 (need 1 of N20a-33; BD-191's own need)"
+  },
+  {
+   "bead": "N13-06",
+   "dep": "N20a-49",
+   "as": "dep",
+   "why": "coverage (e) 1 of U20a: row 4 of the conventions battery asserts (a, b] while frob-sense implements [open, close); the row is frozen only after the ruling of N20a-49"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N20b-33",
+   "as": "dep",
+   "why": "coverage (d) of U20b: the per-milestone verb bead depends on the verb implementations; sense.visibility is an M3 verb"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N20a-34",
+   "as": "dep",
+   "why": "coverage (d) of U20b: the per-milestone verb bead depends on the verb implementations; the full sense.observability is an M3 verb"
+  },
+  {
+   "bead": "BD-222",
+   "dep": "N20b-16",
+   "as": "dep",
+   "why": "coverage (d) of U20b: the per-milestone verb bead depends on the verb implementations; the complete sense.profile is an M2 verb"
+  },
+  {
+   "bead": "N41-OPEN3",
+   "dep": "N20a-12",
+   "as": "related",
+   "why": "its OPEN-SENS-1 row names N20b-23, which is superseded by N20a-12"
+  },
+  {
+   "bead": "N41-OPEN3",
+   "dep": "N20a-32",
+   "as": "related",
+   "why": "its OPEN-SENS-4 row and related list name N20b-26, which is superseded by N20a-32"
+  },
+  {
+   "bead": "N18b-36",
+   "dep": "N20a-32",
+   "as": "related",
+   "why": "its related list names N20b-26, which is superseded by N20a-32"
   }
  ],
- "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "superseded": [
+  {
+   "drop": "N20b-23",
+   "keep": "N20a-12",
+   "note": "both decide OPEN-SENS-1; the stress clock sets, 4,096-world sample, 1% / 0.5 pp / 5% thresholds, early-realization control and identity tests folded into N20a-12; N20a-12 now depends on BD-189 and BD-189 no longer depends on the decision"
+  },
+  {
+   "drop": "N20b-26",
+   "keep": "N20a-32",
+   "note": "both decide OPEN-SENS-4; the inventory step, licence review, binding criteria for datasheet and measured, the M4-exit default and the source-mismatch control folded into N20a-32"
+  },
+  {
+   "drop": "N20b-35",
+   "keep": "N20a-35",
+   "note": "one pilot settles Gramian placement and mount optimization; the sampling of at most 500 failures, timing and noise causes, the ordered reading with its 90% interval, the planted set of 40 and the kinematic cross-check folded into N20a-35"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N20a-19",
+   "other": "N38a-31",
+   "note": "both specify tactile arrays in frob-sense with taxel footprints and saturation; N20a-19 from the sensor side (resultant equals the sum over taxels), N38a-31 under the tactile epic fed by micro-patch pads"
+  },
+  {
+   "mine": "N20b-17",
+   "other": "VERBS-sense",
+   "note": "both write the eight registry rows of the sense cluster with schemas, refusal lists and parity checks"
+  },
+  {
+   "mine": "N20a-03",
+   "other": "N22a-03",
+   "note": "both define the four namespace types (truth, measurements, belief, policy observations): N20a-03 as channel references in frob-sense, N22a-03 as wrappers in frob-dyn"
+  },
+  {
+   "mine": "N20a-03",
+   "other": "N23a-03",
+   "note": "both specify the frozen actor schema with privileged channels absent; N20b-10 holds the leak registry and runner on N20a-03's type, N23a-03 the gym's access classes and its own causality harness"
+  },
+  {
+   "mine": "N20a-40",
+   "other": "N25b-27",
+   "note": "both state the (1 + TV)/2 bound for noisy indistinguishability under a deadline; N20a-40 with exact enumeration of read policies, N25b-27 as the mission-side witness with probe scope"
+  },
+  {
+   "mine": "N20b-43",
+   "other": "N19c-39",
+   "note": "both write the conversion of ray hit parameters to world metres under scaled instances in the frob-sense ray kernels"
+  },
+  {
+   "mine": "N20b-13",
+   "other": "N10b-08",
+   "note": "the conformance fixture and the spec C-19 part both write the docking model, its closed-form boundary and its law tests; N20b-13 is recorded as depending on the spec"
+  }
+ ],
+ "new_beads": [
+  "N20a-49",
+  "N20b-45"
+ ],
+ "gaps": [
+  {
+   "section": "§11.8",
+   "what": "the conventions chapter (table row Windows, KA-204, CX-104, battery bead N13-06) states exposure windows as (a, b] while §20.4.3, KA-475, CX-201 and every Sensorium bead use [open, close); the decision bead N20a-49 was written in G20 and N13-06 must follow its ruling",
+   "needed_by": [
+    "N20a-06",
+    "N20a-49"
+   ]
+  },
+  {
+   "section": "§24",
+   "what": "no Arena bead gives observation, action, reward and requirement terms a declared transformation kind, nor a task's goal set an invariance group (BD-122 and BD-194 have neither; N14a-11 expects the same from BD-122)",
+   "needed_by": [
+    "N20b-01"
+   ]
+  },
+  {
+   "section": "§19",
+   "what": "no Habitat bead lets a scene family declare the group of world isometries under which its distribution is invariant in law",
+   "needed_by": [
+    "N20b-01"
+   ]
+  },
+  {
+   "section": "§18",
+   "what": "the interface-card schema of BD-167 has no optional pulse-model field (shape, duration or from-stiffness, provenance), which §20.23 needs for the modeled grade of force history",
+   "needed_by": [
+    "N20b-29"
+   ]
+  },
+  {
+   "section": "§32.6",
+   "what": "the sense cluster has eight verbs (sense.visibility appears only in the verb registry appendix), one more than an MCP task cluster allows; the surface owner must assign the split that N20b-17 proposes",
+   "needed_by": [
+    "N20b-17"
+   ]
+  },
+  {
+   "section": "§40",
+   "what": "gate-register text: GATE-SENS-13 says the third-gain amendment reverses every admitted cell, but exact enumeration reverses 327 of 344 (the 17 cells with zero error stay admitted); GATE-SENS-08's M1 part is labelled docking rows though the gate has none; GATE-SENS-15 to -18 and KILL-VISIBILITY are missing from the subsystem table",
+   "needed_by": [
+    "BD-190",
+    "N20b-14",
+    "N20b-21"
+   ]
+  },
+  {
+   "section": "§33",
+   "what": "no bead admits FrankenSim's tracer feature group through the airlock for offline hero renders; N20a-28 depends on the airlock skeleton N33a-11 and would have to do the admission itself",
+   "needed_by": [
+    "N20a-28"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N20a-12",
+   "what": "N20b-23 folded in (stress clock sets, sample size, thresholds, controls); deps BD-189, BD-161, BD-116, BD-117 added"
+  },
+  {
+   "bead": "BD-189",
+   "what": "dep on N20a-12 moved to related: the mechanism measured does not depend on the decision about its default; the decision now depends on BD-189"
+  },
+  {
+   "bead": "N20a-32",
+   "what": "N20b-26 folded in (inventory, licence review, binding provenance criteria, source-mismatch control); deps BD-229, N20b-18, N37-17, NAB-09 added"
+  },
+  {
+   "bead": "N20a-35",
+   "what": "N20b-35 folded in; the two attribution rules reconciled (fractional shares primary, the ordered share reported, the visibility verdict needs both); deps unioned; title shortened"
+  },
+  {
+   "bead": "N20b-24",
+   "what": "related entry repointed from superseded N20b-23 to N20a-12"
+  },
+  {
+   "bead": "N20b-25",
+   "what": "related entry repointed from superseded N20b-23 to N20a-12"
+  },
+  {
+   "bead": "N20b-18",
+   "what": "reference to superseded N20b-26 repointed to N20a-32"
+  },
+  {
+   "bead": "N20b-27",
+   "what": "reference to superseded N20b-26 repointed to N20a-32"
+  },
+  {
+   "bead": "N20b-32",
+   "what": "reference to superseded N20b-35 repointed to N20a-35"
+  },
+  {
+   "bead": "N20b-34",
+   "what": "reference to superseded N20b-35 repointed to N20a-35"
+  },
+  {
+   "bead": "N20b-36",
+   "what": "reference to superseded N20b-35 repointed to N20a-35"
+  },
+  {
+   "bead": "N20b-37",
+   "what": "reference to superseded N20b-35 repointed to N20a-35"
+  },
+  {
+   "bead": "N20b-38",
+   "what": "dep repointed from superseded N20b-35 to N20a-35; pilot inputs restated for the merged pilot's two shares"
+  },
+  {
+   "bead": "N20a-41",
+   "what": "dep on BD-244 moved to related: it closed the cycle BD-244 -> BD-240 -> N20a-41 -> BD-244"
+  },
+  {
+   "bead": "BD-240",
+   "what": "dep on the higher-numbered seed BD-270 moved to related; the smaller prerequisite N26a-07 is recorded under its needs"
+  },
+  {
+   "bead": "BD-187",
+   "what": "dep on the higher-numbered seed BD-189 moved to related; Scope rewritten against N20a-20; mask reason miss renamed no-return; quantization moved after conversion to agree with N20a-20"
+  },
+  {
+   "bead": "N20a-18",
+   "what": "dep on the epic BD-418 removed; BD-418 made its parent"
+  },
+  {
+   "bead": "N20a-19",
+   "what": "dep on the epic BD-418 removed; BD-418 made its parent; dep on the pad pilot N38a-30 added; Scope names N38a-31"
+  },
+  {
+   "bead": "N20a-28",
+   "what": "dep on the epic BD-420 removed; BD-420 made its parent; deps on the epic's pilot N19b-24 and plan N19b-23 added (a Frontier mechanism had no pilot dependency)"
+  },
+  {
+   "bead": "BD-239",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20-KA",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20a-40",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "BD-241",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "BD-242",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20-CX",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20b-01",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20b-05",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20b-09",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20b-40",
+   "what": "title shortened to 110 characters or fewer"
+  },
+  {
+   "bead": "N20a-03",
+   "what": "Scope rewritten: sole home of the namespace types and the frozen actor schema; N20b-10 has the leaks and the runner"
+  },
+  {
+   "bead": "N20b-10",
+   "what": "Scope rewritten: leak registry, five leaks and the absent-channel runner on N20a-03's schema type; dep N20a-03 added"
+  },
+  {
+   "bead": "N20a-31",
+   "what": "Scope rewritten: fault specification, schedule and the bump event; the mount pair and the self-check are N20b-06's"
+  },
+  {
+   "bead": "N20b-06",
+   "what": "Scope rewritten: true-versus-believed mount state and the self-check; consumes N20a-31's bump event; dep N20a-31 added"
+  },
+  {
+   "bead": "BD-238",
+   "what": "Scope rewritten: capstone of GATE-SENS-14 with the card-side rule of refusal 447; the guard is N20b-18; dep N20b-06 added"
+  },
+  {
+   "bead": "N20b-18",
+   "what": "Scope rewritten: the one place where FROB-REF-447 is raised, on the cards of BD-238"
+  },
+  {
+   "bead": "N20a-36",
+   "what": "Scope names N20b-36 (mounts as optimizer variables) and the shared pilot N20a-35; related link added"
+  },
+  {
+   "bead": "N20b-36",
+   "what": "Scope names N20a-36 (the Gramian placement score and its kill rule); related link added"
+  },
+  {
+   "bead": "BD-190",
+   "what": "Scope rewritten: capstone of GATE-SENS-13 adding the backends to the host fixture; deps N20b-13 and N20b-14 added"
+  },
+  {
+   "bead": "BD-134",
+   "what": "Scope names N20b-13 as the home of the docking fixture; dep N20b-13 added"
+  },
+  {
+   "bead": "BD-099",
+   "what": "Scope rewritten against N20a-13, N20a-14, N20a-02 and N20a-04; encoder card field names aligned to N20a-13; mask and stream names aligned to N20a-02 and N20a-04; deps N20a-01, N20a-02, N20a-04 added"
+  },
+  {
+   "bead": "N20a-13",
+   "what": "Scope rewritten: completes BD-099's encoder model and extends N20b-44's kernel; period-timing estimator carried over from BD-099; dep N20b-44 added"
+  },
+  {
+   "bead": "N20a-14",
+   "what": "Scope rewritten: first checks and additions on BD-099's chain; chain order corrected to M·(I + diag(s))·x to agree with BD-099 and N20b-44; kernel ownership given to N20b-44; dep N20b-44 added"
+  },
+  {
+   "bead": "N20b-44",
+   "what": "Scope names N20a-13 and N20a-14 as the beads that extend its kernels"
+  },
+  {
+   "bead": "N20a-20",
+   "what": "Scope rewritten: owns the range-behaviour card fields, the ramp law, quantization and the two first checks; first-form stages and kernels are BD-187's; separate kernel K-ray-range removed"
+  },
+  {
+   "bead": "N20a-02",
+   "what": "made the one registry of mask reasons and flags: reasons not-yet-sampled, unresolved, unsupported-optical-class and flag overloaded added (used by BD-099, BD-187, N20b-28)"
+  },
+  {
+   "bead": "N20a-16",
+   "what": "Scope names N20b-28, N20b-29, N20b-30 and N20b-41 as its extensions; related links added"
+  },
+  {
+   "bead": "N20a-15",
+   "what": "Scope names N20b-28 as the ordered chain for saturating readouts"
+  },
+  {
+   "bead": "N20a-11",
+   "what": "Scope names N20b-21 as the home of the kill-gate row; dep N20b-21 added"
+  },
+  {
+   "bead": "N20a-27",
+   "what": "Scope names N20b-21 as the home of the kill-gate row; dep N20b-21 added"
+  },
+  {
+   "bead": "N20a-43",
+   "what": "Scope names N20b-21 as the home of the kill-gate row; dep N20b-21 added"
+  },
+  {
+   "bead": "N20b-19",
+   "what": "Scope lists the U20a beads whose tests it indexes, by key"
+  },
+  {
+   "bead": "N20b-28",
+   "what": "deps on the U20a beads it extends added (N20a-16, N20a-06, N20a-13 as applicable)"
+  },
+  {
+   "bead": "N20b-41",
+   "what": "deps on the U20a beads it extends added (N20a-16, N20a-06, N20a-13 as applicable)"
+  },
+  {
+   "bead": "N20b-30",
+   "what": "deps on the U20a beads it extends added (N20a-16, N20a-06, N20a-13 as applicable)"
+  },
+  {
+   "bead": "N20b-39",
+   "what": "deps on the U20a beads it extends added (N20a-16, N20a-06, N20a-13 as applicable)"
+  },
+  {
+   "bead": "N20b-40",
+   "what": "deps on the U20a beads it extends added (N20a-16, N20a-06, N20a-13 as applicable)"
+  },
+  {
+   "bead": "N20a-46",
+   "what": "stage 16 attributed to the guard N20b-18"
+  },
+  {
+   "bead": "N20a-06",
+   "what": "contradiction note points to the decision bead N20a-49; related link added"
+  },
+  {
+   "bead": "N20-KA",
+   "what": "unreconciled-pair note points to N20a-49; related links to N20a-49 and N20b-45 added"
+  },
+  {
+   "bead": "N20b-21",
+   "what": "kill-gate rows name the decision beads N20a-11, N20a-27, N20a-43 and N20b-38 with their pilots; related links added"
+  }
+ ]
 }

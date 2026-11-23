@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "spark", "frob-kernels", "frob-core", "solid", "registry", "test", "e2e"]
 parent: "WP-46"
-deps: ["BD-005", "BD-022", "N21c-05", "STD-TEST", "STD-E2E"]
+deps: ["BD-005", "BD-022", "STD-TEST", "STD-E2E"]
 needs: ["§21.5 to §21.15: the raising sites of 601 to 605, 607 to 612, 614, 615 and 617, owned by the backend, arena, planner, check and fault beads of the other two Spark drafting units (seeds named per row)", "Appendix O: assignment of a code for \"a device count could wrap within a chunk\", which the plan states as a refusal without a number (proposed here as `FROB-REF-619`)"]
-related: ["N21c-08", "N21c-19", "N21c-39", "N21c-42", "N21c-28", "N21c-31", "N21-CX", "BD-172", "BD-173", "BD-174", "BD-175", "BD-176", "BD-178", "BD-219", "BD-036", "BD-183", "BD-204"]
+related: ["N21c-08", "N21c-19", "N21c-39", "N21c-42", "N21c-28", "N21c-31", "N21-CX", "BD-172", "BD-173", "BD-174", "BD-175", "BD-176", "BD-178", "BD-219", "BD-036", "BD-183", "BD-204", "N21c-05"]
 gates: []
 plan_refs: ["§21.21", "Appendix O.6", "§32.4", "§35.11", "§21.9", "§21.10", "§21.11", "§21.12"]
 ---

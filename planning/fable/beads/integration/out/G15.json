@@ -17,7 +17,7 @@
    "keys": [
     "N15b-04"
    ],
-   "note": "the braking-mode lines classify the three regeneration paths that N15b-04 routes; same milestone, no cycle"
+   "note": "the braking-mode lines classify the three regeneration paths that N15b-04 routes; same milestone, no cycle; applied in the file"
   },
   {
    "bead": "BD-112",
@@ -46,7 +46,7 @@
     "BD-279",
     "BD-283"
    ],
-   "note": "fork and intervention verbs are M3; offered as next actions once they exist"
+   "note": "the intervention and re-run verbs are M3; offered as next actions once they exist"
   },
   {
    "bead": "BD-419",
@@ -75,7 +75,7 @@
     "N15b-03",
     "N15b-30"
    ],
-   "note": "rows KA-324 to KA-328 are owned by BD-075 (bus) and N15b-03 (battery), measured by N15b-30; a registry never depends on a mechanism"
+   "note": "rows KA-324 to KA-328 are owned by BD-075 (bus) and N15b-03 (battery) and measured by N15b-30; a registry never depends on a mechanism; owner column updated"
   },
   {
    "bead": "N15-KA",
@@ -96,7 +96,7 @@
    "keys": [
     "N15b-12"
    ],
-   "note": "N15a-03 defines the bind point; N15b-12 plugs the witness into it and depends on N15a-03 (edge recorded), so the reverse dep would be a cycle through BD-074 and BD-070"
+   "note": "N15a-03 defines the bind point; N15b-12 registers the witness there and now depends on N15a-03, so the reverse dep would be a cycle through BD-074 and BD-070"
   },
   {
    "bead": "N15a-05",
@@ -106,7 +106,7 @@
     "N15b-03",
     "BD-075"
    ],
-   "note": "sibling elements of the same table; both build on BD-070, which builds on N15a-05"
+   "note": "sibling elements of the same table; both build on BD-070, which now depends on N15a-05"
   },
   {
    "bead": "N15a-05",
@@ -116,7 +116,7 @@
     "N15b-10",
     "BD-074"
    ],
-   "note": "square couplings are in BD-074 and the matrix map C(q) in N15b-10; both are downstream of N15a-05"
+   "note": "square couplings are in BD-074 and the map C(q) in N15b-10; both are downstream of N15a-05"
   },
   {
    "bead": "N15a-07",
@@ -126,7 +126,7 @@
     "BD-018",
     "BD-013"
    ],
-   "note": "the straight-line program form (frob-kir v0) and the banned-construct lint rules, both M0; the remaining lint rules (masks as selects) are N21a-10, related"
+   "note": "the straight-line program form (frob-kir v0) and the banned-construct lint rules, both M0; the lint rules completed at M2 (masks as selects) are N21a-10, kept as related"
   },
   {
    "bead": "N15a-09",
@@ -156,7 +156,7 @@
     "BD-156",
     "BD-159"
    ],
-   "note": "superseded by N15b-08; the kernels and the batched step consume the elimination (BD-159 depends on BD-155, which depends on N15b-08), so a dep would be a cycle"
+   "note": "N15a-10 is superseded by N15b-08; the kernels and the batched step consume the elimination (BD-159 depends on BD-155, which depends on N15b-08), so a dep would be a cycle"
   },
   {
    "bead": "N15a-10",
@@ -165,7 +165,7 @@
    "keys": [
     "N15b-10"
    ],
-   "note": "superseded by N15b-08, which now carries this dep: the coupled-rotor block reads the CouplingMap of N15b-10 (M1)"
+   "note": "N15a-10 is superseded by N15b-08, which now carries this dep: the coupled-rotor block reads the CouplingMap of N15b-10 (M1)"
   },
   {
    "bead": "N15a-13",
@@ -174,7 +174,7 @@
    "keys": [
     "BD-216"
    ],
-   "note": "superseded by N15b-24, which already depends on BD-216 (performance harness, paired lower bound, disclosure block)"
+   "note": "N15a-13 is superseded by N15b-24, which already depends on BD-216 (performance harness, paired lower bound, disclosure block)"
   },
   {
    "bead": "N15a-15",
@@ -184,7 +184,7 @@
     "N15a-29",
     "BD-122"
    ],
-   "note": "no bead carried the task-file field; new bead N15a-29 adds thermal_start to the .ftask of BD-122 and depends on N15a-15, not the reverse"
+   "note": "no bead carried the task-file field; new bead N15a-29 adds thermal_start to the task file and depends on N15a-15, not the reverse"
   },
   {
    "bead": "N15a-15",
@@ -194,7 +194,7 @@
     "N15a-30",
     "BD-192"
    ],
-   "note": "no bead carried the reset path; new bead N15a-30 (M2) applies the per-world start in VecEnv reset (BD-192 is M2, later than N15a-15)"
+   "note": "no bead carried the reset path; new bead N15a-30 (M2) writes the per-world start in VecEnv reset (BD-192 is M2, later than N15a-15)"
   },
   {
    "bead": "N15a-18",
@@ -203,7 +203,7 @@
    "keys": [
     "BD-056"
    ],
-   "note": "the linkage-modulus test builds its ratio as a closure of the design term; BD-056 is the closure constructor (M1)"
+   "note": "the linkage-modulus test builds its ratio as a closure of the design term; BD-056 is the closure constructor (M1); applied in the file"
   },
   {
    "bead": "N15a-18",
@@ -222,14 +222,14 @@
    "keys": [
     "BD-391"
    ],
-   "note": "superseded by N15b-18 (already related to BD-391); a measured stiffness may also come from a bench record, so ground.identify is not blocking"
+   "note": "N15a-19 is superseded by N15b-18 (already related to BD-391); a measured stiffness may also come from a bench record, so ground.identify is not blocking"
   },
   {
    "bead": "N15a-21",
    "n": 1,
    "as": "none",
    "keys": [],
-   "note": "superseded by N15b-20; no hydraulic consumer is planned (N14b-05's variants are parallel, dual-arm, hands and aerial); the consumer check is a step of the epic N15b-20, not a prerequisite a bead delivers"
+   "note": "N15a-21 is superseded by N15b-20; no hydraulic consumer is planned (the variants of N14b-05 are parallel, dual-arm, hands and aerial); the consumer check is a step of the epic, not something a bead delivers"
   },
   {
    "bead": "N15a-23",
@@ -240,7 +240,7 @@
     "BD-075",
     "N15b-04"
    ],
-   "note": "the battery samples R0, R1, R2, harness and shunt losses; a test follows the mechanisms it exercises"
+   "note": "the battery samples R0, R1, R2, harness and shunt losses; a test follows the mechanisms it exercises; applied in the file"
   },
   {
    "bead": "N15b-10",
@@ -248,9 +248,10 @@
    "as": "related",
    "keys": [
     "N15b-39",
-    "N22a-08"
+    "N22a-08",
+    "N22a-09"
    ],
-   "note": "consumer adoption had no carrier; new bead N15b-39 changes the control programs of N22a-08 and depends on N15b-10"
+   "note": "consumer adoption had no carrier; new bead N15b-39 changes the torque rows of the control programs and depends on N15b-10"
   },
   {
    "bead": "N15b-10",
@@ -261,7 +262,7 @@
     "BD-100",
     "BD-348"
    ],
-   "note": "consumer adoption had no carrier; new bead N15b-40 makes A-08 read the generators (A-24, BD-348, is M4 and gains an edge)"
+   "note": "consumer adoption had no carrier; new bead N15b-40 makes A-08 read the generators and fixes the accessor A-24 (BD-348, M4) calls; A-11 adopts in BD-103"
   },
   {
    "bead": "N15b-10",
@@ -271,7 +272,7 @@
     "N15b-41",
     "BD-130"
    ],
-   "note": "consumer adoption had no carrier; new bead N15b-41 makes mission lowerings read the generators"
+   "note": "consumer adoption had no carrier; new bead N15b-41 makes stance lowerings read the generators (BD-130 left coupled torque limits to another owner)"
   },
   {
    "bead": "N15b-11",
@@ -280,7 +281,7 @@
    "keys": [
     "N15b-39"
    ],
-   "note": "the single-source rule for rotor inertia in controller models is enforced by new bead N15b-39, which depends on N15b-11"
+   "note": "the single-source rule for rotor inertia in controller models is implemented in frob-control by new bead N15b-39, which depends on N15b-11"
   },
   {
    "bead": "N15b-12",
@@ -289,7 +290,7 @@
    "keys": [
     "N33c-43"
    ],
-   "note": "the M0 admission probe of the two transformer entry points; it does not depend on any Sinew bead"
+   "note": "the M0 admission probe of the two transformer entry points; it depends on no Sinew bead; applied in the file"
   },
   {
    "bead": "N15b-23",
@@ -298,7 +299,7 @@
    "keys": [
     "N14b-05"
    ],
-   "note": "N14b-05 is the variant whose existence the decision asks about; it exists only on the admitted branch, so it follows the decision"
+   "note": "N14b-05 is the variant whose consumer the decision asks about; it exists only on the admitted branch, so it follows the decision"
   },
   {
    "bead": "N15b-36",
@@ -310,10 +311,736 @@
    "note": "the hybrid variant consumes the element; the dependency runs from N14b-05 to this bead"
   }
  ],
- "edges": [],
- "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "edges": [
+  {
+   "bead": "BD-070",
+   "dep": "N15a-04",
+   "as": "dep",
+   "why": "coverage (d) of U15a: L0 and L1 build on the level identity; applied in the file"
+  },
+  {
+   "bead": "BD-070",
+   "dep": "N15a-05",
+   "as": "dep",
+   "why": "coverage (d) of U15a: L1 is assembled from the elements; applied in the file"
+  },
+  {
+   "bead": "BD-070",
+   "dep": "N15a-03",
+   "as": "dep",
+   "why": "overlap re-scoped: binding a card to a joint is N15a-03's; applied in the file"
+  },
+  {
+   "bead": "BD-071",
+   "dep": "N15a-05",
+   "as": "dep",
+   "why": "coverage (d) of U15a: L2 is assembled from the elements; applied in the file"
+  },
+  {
+   "bead": "BD-071",
+   "dep": "N15a-06",
+   "as": "dep",
+   "why": "coverage (d) of U15a: L2 attaches the thermal nodes; applied in the file"
+  },
+  {
+   "bead": "BD-074",
+   "dep": "N15a-17",
+   "as": "dep",
+   "why": "coverage (d) of U15a: the loss mechanism inside the stiction bound; applied in the file"
+  },
+  {
+   "bead": "BD-084",
+   "dep": "N15a-08",
+   "as": "dep",
+   "why": "coverage (d) of U15a: the stiction row descriptor; applied in the file"
+  },
+  {
+   "bead": "BD-084",
+   "dep": "N15a-09",
+   "as": "dep",
+   "why": "coverage (d) of U15a: the backlash row descriptor and rotor coordinate; applied in the file"
+  },
+  {
+   "bead": "BD-151",
+   "dep": "N15a-07",
+   "as": "dep",
+   "why": "coverage (d) of U15a: the kernels lower the host reference arithmetic; applied in the file"
+  },
+  {
+   "bead": "BD-155",
+   "dep": "N15b-08",
+   "as": "dep",
+   "why": "coverage (d) of U15a named N15a-10, now superseded by N15b-08; already drafted"
+  },
+  {
+   "bead": "BD-155",
+   "dep": "N15a-08",
+   "as": "dep",
+   "why": "the kernel evaluates the descriptor and bound law of N15a-08; applied in the file"
+  },
+  {
+   "bead": "BD-155",
+   "dep": "N15a-09",
+   "as": "dep",
+   "why": "the kernel evaluates the backlash descriptor of N15a-09; applied in the file"
+  },
+  {
+   "bead": "BD-103",
+   "dep": "N15a-14",
+   "as": "dep",
+   "why": "coverage (d) of U15a: A-11 calls the static thermal library; applied in the file"
+  },
+  {
+   "bead": "BD-103",
+   "dep": "N15a-16",
+   "as": "dep",
+   "why": "coverage (d) of U15a: A-11 calls the static envelope library; applied in the file"
+  },
+  {
+   "bead": "BD-103",
+   "dep": "N15b-10",
+   "as": "dep",
+   "why": "section 15.15: A-11 checks coupled joints against the torque generators; applied in the file"
+  },
+  {
+   "bead": "BD-208",
+   "dep": "N15a-07",
+   "as": "dep",
+   "why": "coverage (b) of U15a: the single-precision row of GATE-SINEW-02 uses the reference arithmetic and its residual booking"
+  },
+  {
+   "bead": "BD-076",
+   "dep": "N15b-05",
+   "as": "dep",
+   "why": "seed and component: the gate bead depends on the account record; replaces the drafted N15b-05 -> BD-076; applied in the file"
+  },
+  {
+   "bead": "N15b-05",
+   "dep": "BD-076",
+   "as": "related",
+   "why": "replaces the drafted dep: a component never depends on its capstone; applied in the file"
+  },
+  {
+   "bead": "N15b-06",
+   "dep": "N15a-03",
+   "as": "dep",
+   "why": "overlap re-scoped: the strict-data refusal reads the provenance summary and influence record of N15a-03; applied in the file"
+  },
+  {
+   "bead": "N15b-09",
+   "dep": "N15a-05",
+   "as": "dep",
+   "why": "overlap re-scoped: PO-SINEW-01 extends the per-element check written by N15a-05; applied in the file"
+  },
+  {
+   "bead": "N15b-09",
+   "dep": "N15a-06",
+   "as": "dep",
+   "why": "the thermal node's conductance matrix is one of the structures checked; applied in the file"
+  },
+  {
+   "bead": "N15b-09",
+   "dep": "N15a-09",
+   "as": "dep",
+   "why": "the backlash element is one of the structures checked; applied in the file"
+  },
+  {
+   "bead": "N15b-12",
+   "dep": "N15a-03",
+   "as": "dep",
+   "why": "the witness registers at the bind point N15a-03 defines; applied in the file"
+  },
+  {
+   "bead": "N15b-32",
+   "dep": "N15a-23",
+   "as": "dep",
+   "why": "overlap re-scoped: the script runs the battery N15a-23 defines and writes the GATE-SINEW-08 receipt; applied in the file"
+  },
+  {
+   "bead": "N15b-35",
+   "dep": "N15a-07",
+   "as": "dep",
+   "why": "overlap re-scoped: the script runs the GATE-SINEW-03 battery N15a-07 defines; applied in the file"
+  },
+  {
+   "bead": "N15b-37",
+   "dep": "N15a-11",
+   "as": "dep",
+   "why": "overlap re-scoped: the script asserts the fidelity-ledger rows N15a-11 defines; applied in the file"
+  },
+  {
+   "bead": "N15b-37",
+   "dep": "N15a-12",
+   "as": "dep",
+   "why": "the batched section extends the script of N15a-12 (N15b-31 superseded); applied in the file"
+  },
+  {
+   "bead": "N15b-24",
+   "dep": "N15b-37",
+   "as": "dep",
+   "why": "a decision depends on the bead that produces its measurement (iteration counts per fixture); applied in the file"
+  },
+  {
+   "bead": "N15b-26",
+   "dep": "N15a-12",
+   "as": "dep",
+   "why": "the experiment runs on the six fixtures of N15a-12; applied in the file"
+  },
+  {
+   "bead": "N15a-11",
+   "dep": "BD-159",
+   "as": "dep",
+   "why": "the fidelity experiment runs on batch-cpu, which needs the batched step; applied in the file"
+  },
+  {
+   "bead": "N15b-08",
+   "dep": "N15a-09",
+   "as": "dep",
+   "why": "the eliminated coordinate and rows are those of N15a-09; applied in the file"
+  },
+  {
+   "bead": "N15b-18",
+   "dep": "N15a-09",
+   "as": "dep",
+   "why": "series elasticity reuses the rotor coordinate of N15a-09; applied in the file"
+  },
+  {
+   "bead": "N15b-18",
+   "dep": "N15a-05",
+   "as": "dep",
+   "why": "the series-spring structure is defined in N15a-05; applied in the file"
+  },
+  {
+   "bead": "N15a-24",
+   "dep": "N15a-29",
+   "as": "dep",
+   "why": "the script runs the undersized-knee fixture from the declared start through eval.run; applied in the file"
+  },
+  {
+   "bead": "N15a-27",
+   "dep": "N15a-29",
+   "as": "dep",
+   "why": "the planted episode declares soaked(T) in its task; applied in the file"
+  },
+  {
+   "bead": "BD-074",
+   "dep": "BD-056",
+   "as": "dep",
+   "why": "linkage transmissions are closures of the design term; applied in the file"
+  },
+  {
+   "bead": "N15a-07",
+   "dep": "BD-070",
+   "as": "dep",
+   "why": "the L1 reference arithmetic is the referee's L1 law written straight-line; applied in the file"
+  },
+  {
+   "bead": "N15b-10",
+   "dep": "BD-073",
+   "as": "dep",
+   "why": "coverage (d) of U15b: actuator.envelope gains the joint_torque_set object; already drafted"
+  },
+  {
+   "bead": "BD-110",
+   "dep": "N15b-01",
+   "as": "dep",
+   "why": "coverage (d) of U15b: design.check runs the junction checks at stage 5"
+  },
+  {
+   "bead": "BD-092",
+   "dep": "N15b-05",
+   "as": "dep",
+   "why": "coverage (d) of U15b: the system ledger reads frob.portaccount/1"
+  },
+  {
+   "bead": "BD-208",
+   "dep": "N15b-05",
+   "as": "dep",
+   "why": "coverage (d) of U15b: the batched ledger reads frob.portaccount/1"
+  },
+  {
+   "bead": "BD-071",
+   "dep": "N33a-19",
+   "as": "dep",
+   "why": "coverage (d) of U15b: the sibling files behind the actuation feature group are admitted by N33a-19; applied in the file"
+  },
+  {
+   "bead": "N15a-05",
+   "dep": "N33a-19",
+   "as": "dep",
+   "why": "the elements step through the actuation feature group of the airlock; applied in the file"
+  },
+  {
+   "bead": "N14b-05",
+   "dep": "N15b-36",
+   "as": "related",
+   "why": "coverage (d) of U15b: the aerial-terrestrial hybrid variant is the rotor port's consumer; one bead holds four variants, so not blocking"
+  },
+  {
+   "bead": "N14b-05",
+   "dep": "N15b-23",
+   "as": "related",
+   "why": "the hybrid variant exists only if KILL-SINEW-ROTOR does not fire"
+  },
+  {
+   "bead": "N14a-22",
+   "dep": "BD-060",
+   "as": "related",
+   "why": "coverage (d) of U15b: the limb port packet extends the module port contract that BD-060 leaves to its owner"
+  },
+  {
+   "bead": "BD-069",
+   "dep": "VERBS-actuator",
+   "as": "dep",
+   "why": "coverage (d) of U15b: the verb implementation depends on its registry rows; applied in the file"
+  },
+  {
+   "bead": "BD-072",
+   "dep": "VERBS-actuator",
+   "as": "dep",
+   "why": "the verb implementation depends on its registry row; applied in the file"
+  },
+  {
+   "bead": "BD-073",
+   "dep": "VERBS-actuator",
+   "as": "dep",
+   "why": "the verb implementation depends on its registry row; applied in the file"
+  },
+  {
+   "bead": "BD-075",
+   "dep": "VERBS-actuator",
+   "as": "dep",
+   "why": "coverage (d) of U15b: actuator.bus depends on its registry row; applied in the file"
+  },
+  {
+   "bead": "N15b-02",
+   "dep": "VERBS-module",
+   "as": "dep",
+   "why": "coverage (d) of U15b: the module verbs depend on their registry rows; applied in the file"
+  },
+  {
+   "bead": "BD-112",
+   "dep": "VERBS-explain",
+   "as": "dep",
+   "why": "the verb implementation depends on its registry rows; applied in the file"
+  },
+  {
+   "bead": "BD-275",
+   "dep": "VERBS-nemesis",
+   "as": "dep",
+   "why": "the verb implementation depends on its registry row; applied in the file"
+  },
+  {
+   "bead": "BD-423",
+   "dep": "N15b-16",
+   "as": "related",
+   "why": "coverage (d) of U15b: the lifecycle epic needs KILL-SINEW-AGE decided; an epic carries no deps"
+  },
+  {
+   "bead": "N31a-48",
+   "dep": "N15b-16",
+   "as": "dep",
+   "why": "the cell-fade law of the lifecycle crate exists only if KILL-SINEW-AGE does not fire"
+  },
+  {
+   "bead": "N31a-48",
+   "dep": "N15b-14",
+   "as": "dep",
+   "why": "the lifecycle laws advance the states f_Q and f_R that N15b-14 defines"
+  },
+  {
+   "bead": "N22a-14",
+   "dep": "N15b-39",
+   "as": "dep",
+   "why": "section 15.15: the whole-body program must build its torque rows with the coupled-transmission builder (M3 after M1)"
+  },
+  {
+   "bead": "N24c-17",
+   "dep": "N15b-39",
+   "as": "related",
+   "why": "the traction-at-wrench program calls the same torque-row builder if it bounds joint torques"
+  },
+  {
+   "bead": "BD-348",
+   "dep": "N15b-40",
+   "as": "dep",
+   "why": "section 15.15: A-24 reads the torque generators through the accessor N15b-40 fixes (M4 after M1)"
+  },
+  {
+   "bead": "BD-122",
+   "dep": "N15a-29",
+   "as": "related",
+   "why": "the task-file capstone restates the schema; N15a-29 adds reset.thermal_start to it"
+  },
+  {
+   "bead": "N24a-02",
+   "dep": "N15a-29",
+   "as": "related",
+   "why": "the schema bead lists the field N15a-29 adds"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N15b-23",
+   "as": "dep",
+   "why": "rule 9: BD-419 no longer carries deps, so the M6 exit review depends on the KILL-SINEW-ROTOR decision directly"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N15b-16",
+   "as": "dep",
+   "why": "the M6 exit review lists KILL-SINEW-AGE; it depends on the decision bead"
+  },
+  {
+   "bead": "BD-224",
+   "dep": "N15b-24",
+   "as": "dep",
+   "why": "the M2 exit review lists KILL-SINEW-ROWS; the decision record must predate it"
+  },
+  {
+   "bead": "N18a-32",
+   "dep": "N15a-08",
+   "as": "dep",
+   "why": "its drafted need for the section 15.6 row descriptors is carried by N15a-08 (stiction), not by the capstone BD-084"
+  },
+  {
+   "bead": "N18a-32",
+   "dep": "N15a-09",
+   "as": "dep",
+   "why": "its drafted need for the section 15.6 row descriptors is carried by N15a-09 (backlash)"
+  },
+  {
+   "bead": "N14a-09",
+   "dep": "N15a-08",
+   "as": "related",
+   "why": "its drafted need names BD-084 for the row descriptors; the descriptor functions are N15a-08 and N15a-09"
+  },
+  {
+   "bead": "N14a-09",
+   "dep": "N15b-10",
+   "as": "related",
+   "why": "its coupling maps are the CouplingMap of N15b-10"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N15a-13",
+   "keep": "N15b-24",
+   "note": "both decide KILL-SINEW-ROWS; iteration and throughput statistics, repair levers, record contents, fallback consequences, four unit tests and the dry-run controls folded into N15b-24; comparator form kept as BD-155 builds it"
+  },
+  {
+   "drop": "N15a-10",
+   "keep": "N15b-08",
+   "note": "both are the rotor elimination and PO-SINEW-02; rejected alternatives, enumerated small cases, shape-class consequence, API sketch, three unit tests, the drop-schur mutant and the gate-record criterion folded into N15b-08"
+  },
+  {
+   "drop": "N15a-19",
+   "keep": "N15b-18",
+   "note": "both specify series elasticity and belt and cable compliance; midpoint frequency-warp hypothesis and repairs, convex-tier block, rigid-limit criterion, stiff test case, controls and the fallback flag folded into N15b-18"
+  },
+  {
+   "drop": "N15a-20",
+   "keep": "N15b-19",
+   "note": "same pilot; two more cases, the 1/480 s step, convergence and momentum checks, the decision rule and the unreflected-inertia control folded into N15b-19"
+  },
+  {
+   "drop": "N15a-21",
+   "keep": "N15b-20",
+   "note": "both are the hydraulic L4 epic; element sketch, card fields, known-answer numbers, unit tests, script and controls of the funded level folded into N15b-20"
+  },
+  {
+   "drop": "N15a-22",
+   "keep": "N15b-21",
+   "note": "same pilot; second parameter set, derivation file, decision rule, registry hand-off of KA-336 and two controls folded into N15b-21"
+  },
+  {
+   "drop": "N15b-31",
+   "keep": "N15a-12",
+   "note": "both write scripts/e2e/sinew_joint_rows.sh and the referee row of GATE-SINEW-04; second fixture set, event-count assertions, forced-retry digest, named mutants and the receipt folded into N15a-12"
+  },
+  {
+   "drop": "N15b-29",
+   "keep": "N15a-24",
+   "note": "both measure GATE-SINEW-01 from the user's side; second fixture set, frob doctor step, named mutants, receipt and registry tests folded into N15a-24"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N15a-08",
+   "other": "N18a-32",
+   "note": "both state the stiction row law (convex potential and its exact form); N18a-32 also needs the descriptor this bead emits"
+  },
+  {
+   "mine": "N15a-09",
+   "other": "N18a-32",
+   "note": "both state the compliant and hard backlash rows and the hard stops as laws"
+  },
+  {
+   "mine": "N15a-12",
+   "other": "N18a-32",
+   "note": "both own hand-checkable joint-row fixtures and the dead-zone mutant"
+  },
+  {
+   "mine": "N15a-03",
+   "other": "N14a-09",
+   "note": "both bind actuator cards to joints in frob-model (bound-card record against the binding functor)"
+  },
+  {
+   "mine": "N15b-10",
+   "other": "N14a-09",
+   "note": "the binding functor's transmission binding and coupling maps against the CouplingMap type"
+  },
+  {
+   "mine": "N15b-17",
+   "other": "N31a-48",
+   "note": "both implement a battery capacity-fade law (ageing between episodes against the cell-fade slow state)"
+  },
+  {
+   "mine": "N15b-02",
+   "other": "VERBS-module",
+   "note": "both write the registry entries of module.list, module.show and module.check"
+  }
+ ],
+ "new_beads": [
+  "N15a-29",
+  "N15a-30",
+  "N15b-39",
+  "N15b-40",
+  "N15b-41"
+ ],
+ "gaps": [
+  {
+   "section": "§29.10",
+   "what": "the failure taxonomy (BD-094) has brownout, thermal-limit and thermal-runaway but no class for battery exhaustion, which BD-075 and N15b-03 raise as an event (FROB-REF-135)",
+   "needed_by": [
+    "BD-075",
+    "N15b-03"
+   ]
+  },
+  {
+   "section": "§24.10",
+   "what": "the input of task.fixture (N24b-03) has fixture, layer, rows, tier, designs and control; the Sinew scripts also pass an actuator level, a measured row, a precision and a seed",
+   "needed_by": [
+    "N15a-12",
+    "N15a-24",
+    "N15b-13",
+    "N15b-30",
+    "N15b-32",
+    "N15b-35",
+    "N15b-37"
+   ]
+  },
+  {
+   "section": "§12",
+   "what": "PO-SINEW-01 is named a candidate theorem card; N15b-09 files the proposal, and no bead of the proof chapter adopts or rejects it (PO-SINEW-03 is covered by CARD-T-15)",
+   "needed_by": [
+    "N15b-09"
+   ]
+  },
+  {
+   "section": "Appendix N.12 and Appendix M",
+   "what": "the four shortcuts and the known answer of section 15.15 have no catalogue numbers; N15-CX carries them as CX-SINEW-a to -d and N15-KA cannot register the GATE-SINEW-10 answer",
+   "needed_by": [
+    "N15-CX",
+    "N15-KA"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-419",
+   "what": "epic: its five deps moved to related (rule 9); Scope rewritten; children N15b-22, N15b-23, N15b-36 re-parented to it"
+  },
+  {
+   "bead": "N15b-20",
+   "what": "epic: its deps moved to related (rule 9); pilot N15b-21 re-parented to it"
+  },
+  {
+   "bead": "N15b-22",
+   "what": "parent set to the epic BD-419"
+  },
+  {
+   "bead": "N15b-23",
+   "what": "parent set to the epic BD-419"
+  },
+  {
+   "bead": "N15b-36",
+   "what": "parent set to the epic BD-419; it keeps the seed's deps BD-071 and BD-159"
+  },
+  {
+   "bead": "N15b-21",
+   "what": "parent set to the epic N15b-20"
+  },
+  {
+   "bead": "N15b-37",
+   "what": "Scope rewritten; ledger rows assigned to N15a-11; title left at 111 characters (the artifact and both gates do not fit in fewer)"
+  },
+  {
+   "bead": "BD-070",
+   "what": "Scope rewritten as capstone over N15a-03, N15a-04, N15a-05; type sketch and flag names aligned with N15a-04"
+  },
+  {
+   "bead": "BD-071",
+   "what": "title now names what stays in the bead (not shortened); Scope rewritten as capstone over N15a-05, N15a-06; temperature laws, derating and trip assigned to BD-072, per-step limits to BD-073, the thermal start to N15a-15; magnet temperature and time-constant rows made consistent"
+  },
+  {
+   "bead": "BD-072",
+   "what": "Scope rewritten: it supplies R(T) and k(T) to the accessor of BD-071 and owns derating, trip, verb and gate; iron loss assigned to BD-071"
+  },
+  {
+   "bead": "BD-073",
+   "what": "Scope rewritten: per-step limits here, joint_torque_set added by N15b-10"
+  },
+  {
+   "bead": "BD-074",
+   "what": "Scope rewritten as capstone over N15a-17; the 10^6-point battery assigned to N15a-23 and its receipt to N15b-32"
+  },
+  {
+   "bead": "BD-076",
+   "what": "Scope rewritten as capstone over N15b-05 and N15b-04; one record type (frob.portaccount/1)"
+  },
+  {
+   "bead": "N15b-05",
+   "what": "Scope rewritten as component of BD-076; dep on BD-076 moved to related"
+  },
+  {
+   "bead": "BD-084",
+   "what": "Scope rewritten as capstone over N15a-08, N15a-09; JointRow wraps their descriptor structs"
+  },
+  {
+   "bead": "BD-155",
+   "what": "Scope rewritten: descriptors from N15a-08, N15a-09; tier receipts in N15b-37"
+  },
+  {
+   "bead": "BD-151",
+   "what": "Scope rewritten as capstone over N15a-07; GATE-SINEW-03 battery text aligned with the single definition; six-step cards refused on the circle path"
+  },
+  {
+   "bead": "N15a-07",
+   "what": "Scope rewritten; GATE-SINEW-03 battery made the single definition (classes a, b judged; c in the ledger); L1 available-current law corrected to the referee's signed form"
+  },
+  {
+   "bead": "N15b-35",
+   "what": "Scope and battery text aligned with N15a-07"
+  },
+  {
+   "bead": "BD-103",
+   "what": "Scope rewritten: static libraries are N15a-14 and N15a-16; coupled joints checked against the generators of N15b-10"
+  },
+  {
+   "bead": "N15a-03",
+   "what": "Scope rewritten: it builds the provenance summary, influence record and bind point; the strict-data refusal moved to N15b-06 with its acceptance line"
+  },
+  {
+   "bead": "N15b-06",
+   "what": "Scope rewritten: sole raiser of FROB-REF-113 for actuator cards"
+  },
+  {
+   "bead": "N15a-05",
+   "what": "Scope rewritten: per-element check for five kinds; other kinds and composites in N15b-09; airlock feature group named actuation"
+  },
+  {
+   "bead": "N15b-09",
+   "what": "Scope rewritten: extends the check of N15a-05 to every kind and to composites"
+  },
+  {
+   "bead": "N15a-06",
+   "what": "Scope rewritten: composed by BD-071"
+  },
+  {
+   "bead": "N15a-08",
+   "what": "Scope rewritten as component of BD-084 and BD-155"
+  },
+  {
+   "bead": "N15a-09",
+   "what": "Scope rewritten as component of BD-084 and BD-155"
+  },
+  {
+   "bead": "N15a-17",
+   "what": "Scope rewritten as component of BD-074"
+  },
+  {
+   "bead": "N15a-18",
+   "what": "Scope rewritten as a test bead after BD-074"
+  },
+  {
+   "bead": "N15a-23",
+   "what": "Scope rewritten: defines the battery; the gate receipt is written by N15b-32"
+  },
+  {
+   "bead": "N15b-32",
+   "what": "Scope rewritten: runs the battery of N15a-23 from the user's side and is the only bead that records GATE-SINEW-08"
+  },
+  {
+   "bead": "N15a-25",
+   "what": "Scope rewritten against N15b-32 and N15b-38"
+  },
+  {
+   "bead": "N15a-26",
+   "what": "Scope rewritten against N15b-34 and N15b-38"
+  },
+  {
+   "bead": "N15b-34",
+   "what": "Scope rewritten against N15a-26 and N15b-38"
+  },
+  {
+   "bead": "N15b-38",
+   "what": "Scope rewritten against N15a-25, N15a-26 and N15b-34"
+  },
+  {
+   "bead": "N15a-11",
+   "what": "Scope rewritten: sole owner of the three fidelity-ledger quantities and of the gyroscopic hypothesis; dep on BD-159 added"
+  },
+  {
+   "bead": "N15b-26",
+   "what": "Scope rewritten; runs on the fixtures of N15a-12"
+  },
+  {
+   "bead": "N15a-04",
+   "what": "Scope rewritten: sole owner of the level type, flag names and capability table"
+  },
+  {
+   "bead": "N15a-15",
+   "what": "Scope rewritten: sole owner of ThermalStart and its resolution; wiring in N15a-29 and N15a-30"
+  },
+  {
+   "bead": "N15b-10",
+   "what": "Scope names the adopting beads N15b-39, N15b-40, N15b-41 and BD-103"
+  },
+  {
+   "bead": "N15b-12",
+   "what": "the witness registers at the bind point of N15a-03"
+  },
+  {
+   "bead": "N15a-12",
+   "what": "dep on the cart fixture BD-123 replaced by the fixture verb N24b-03; the batched row is recorded by N15b-37, not BD-155"
+  },
+  {
+   "bead": "N15a-24",
+   "what": "dep on the cart fixture BD-123 replaced by the fixture verb N24b-03"
+  },
+  {
+   "bead": "N15b-13",
+   "what": "dep on the cart fixture BD-123 replaced by the fixture verb N24b-03"
+  },
+  {
+   "bead": "N15b-30",
+   "what": "dep on the cart fixture BD-123 replaced by the fixture verb N24b-03"
+  },
+  {
+   "bead": "BD-069",
+   "what": "table of the fields other Sinew beads read (regen_policy, iron_loss, tooth dissipation time, series stiffness, rotor group, ageing group, authored direction, stiction defaults)"
+  },
+  {
+   "bead": "N15-KA",
+   "what": "owner column of rows 294, 296, 303, 312, 324 to 328, 334, 336, 337 points at the owning beads; notes updated"
+  },
+  {
+   "bead": "N15-REF",
+   "what": "rows 131 and 132 list actuator.check (check 3) and steady(task) among their raisers, as BD-069 and N15a-15 do; note on the codes the chapter leaves unassigned"
+  },
+  {
+   "bead": "N15a-01",
+   "what": "reference to the row beads corrected after N15a-10 was superseded"
+  }
+ ]
 }

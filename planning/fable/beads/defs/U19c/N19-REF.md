@@ -8,7 +8,7 @@ labels: ["m2", "habitat", "frob-scene", "solid", "registry", "test"]
 parent: "WP-17"
 deps: ["BD-005", "STD-TEST"]
 needs: ["§19.5: a refusal code for running on a pack whose acceptance report is incomplete or failed (asked for by the scene.accept bead BD-228; none exists in 301 to 317)", "§19.21: a refusal code for far-field reuse requested under determinism class D3 or D4, or for a field kind whose contract states no stencil (the subsection says 'refused' and names no code)", "§19.15: a refusal code for a reset that asks for a scene variant not resident in the world's bound pool segment (FROB-REF-314 covers admission only)"]
-related: ["N19-KA", "N19-CX", "BD-162", "BD-163", "BD-164", "BD-228", "BD-233", "BD-235", "BD-236", "BD-369", "BD-398", "N19c-02", "N19c-03", "N19c-12", "N19c-27"]
+related: ["N19-KA", "N19-CX", "BD-162", "BD-163", "BD-164", "BD-228", "BD-233", "BD-235", "BD-236", "BD-369", "BD-398", "N19c-02", "N19c-03", "N19c-12", "N19c-27", "N19c-42"]
 gates: []
 plan_refs: ["§19.16", "Appendix O.3", "§32.4", "§24.14", "§35"]
 ---
@@ -74,16 +74,17 @@ registry (N19-CX).
    manifest"; trigger: a scored evaluation scene whose identifier (or, by the group rule, whose group) appears in
    the training manifest; exit 3; raised at scoring (N19c-12).
 4. **Refusals implied and not numbered.** Three situations in the chapter are said to be refused and have no code
-   (the `needs` field lists them). Until codes are assigned (318 and 319 are free in the block) the behaviour is
-   fail-closed: the verb returns exit 5 "not admitted" with a named reason string, and this registry lists the three
-   as `unnumbered` so the gap stays visible.
+   (the `needs` field lists them); a fourth is the integrity fault of a pack whose recomputed identity differs from
+   the stated one. Their rows are decided and entered by N19c-42 (proposed 318, 319, 322 and 323), which depends on
+   this bead. Until that bead is closed this registry lists the four as `unnumbered` so the gap stays visible, and
+   no mechanism bead invents a number of its own.
 
 ## Acceptance criteria
 
 - [ ] `registries/refusals.toml` contains exactly the seventeen Habitat rows with the fields above; the loader rejects a duplicate or unknown code.
 - [ ] Every row is bound to a provoking test or marked `pending: <bead>`; at each milestone exit no row whose bead's milestone has passed is pending.
 - [ ] For every bound row the test asserts exit code 3, `ok: false`, the code, the block keys, and that applying the first repair makes the request admissible.
-- [ ] `frob --json refusals --class scene` (or the registry dump) lists the rows; the three unnumbered refusals appear in the gap report.
+- [ ] `frob --json refusals --class scene` (or the registry dump) lists the rows; the unnumbered refusals appear in the gap report until N19c-42 enters their rows.
 - [ ] Negative control registered: a build in which one mechanism returns a result where its row says "refuse" fails the binding test.
 
 ## Test plan

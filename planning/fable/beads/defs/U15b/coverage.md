@@ -170,3 +170,17 @@ Prerequisites or adoptions owned elsewhere, for which no key of this unit exists
 18. **Registry beads and their tests.** N15-REF and N15-CX close on the registry rows and loader rules; the
     behaviour through the CLI is N15b-38 and the per-row mutant runs, which need the mechanisms that in turn
     depend on the registries.
+
+## (f) Integration pass (group G15)
+
+- Superseded here, content folded into the kept bead: N15b-29 → N15a-24 (GATE-SINEW-01 from the user's side);
+  N15b-31 → N15a-12 (the joint-row script, referee rows of GATE-SINEW-04). Kept here, with the other unit's
+  duplicate folded in: N15b-08 (from N15a-10), N15b-24 (from N15a-13), N15b-18 (from N15a-19), N15b-19 (from
+  N15a-20), N15b-20 (from N15a-21), N15b-21 (from N15a-22).
+- New beads: N15b-39 (control programs carry motor torques through coupling maps; rotor inertia only from the
+  model), N15b-40 (A-08 reads the joint-torque generators; accessor for A-24), N15b-41 (stance lowerings read
+  the generators). They close the consumer-adoption needs of N15b-10 and N15b-11 that no bead carried.
+- Epics carry no dependencies: BD-419 and N15b-20 list what they build on under `related`, and their children
+  (N15b-22, N15b-23, N15b-36; N15b-21) name them as `parent`.
+- The fixture verb is N24b-03 (fixture registry and `task.fixture`), not the cart fixture BD-123; the scripts'
+  dependencies were corrected.

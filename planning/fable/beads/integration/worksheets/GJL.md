@@ -75,7 +75,7 @@ the candidates were found mechanically (by plan section, gate and title words): 
 
 ### ART-L1 (M1) golden fixture L.1: the `.fbot` design `quad-tray`, its canonical form, both views, derived facts and CLI script
 - **need 1** (names its carrier): §14, §32.6: the verbs `design.new` (from a file, a template or a mission cell) and `design.show` (drafted by unit U14a as N14a-21)
-  - `N14a-21` (M1, U14a, feature) verbs design.new and design.show: create a design from a file, template or mission cell; read its compiled sections
+  - `N14a-21` (M1, U14a, feature) verbs design.new, design.show: create a design from a file, template or mission cell; read compiled sections
 ### ART-L3 (M3) golden fixture L.3: the `.ftask` kitchen tray delivery, its eleven labelled traces, the task.check table and CLI script
 - **need 1** (names its carrier): §24.4: the `.ftask` schema `frob.task/1` with nine sections, canonical JSON and the content-addressed `TaskId` (drafted by unit U24a as N24a-02)
   - `N24a-02` (M1, U24a, task) frob-spec: the .ftask schema frob.task/1 with nine sections, canonical JSON and the content-addressed TaskId
@@ -88,4 +88,4 @@ the candidates were found mechanically (by plan section, gate and title words): 
   - `N28a-21` (M3, U28a, feature) verb study.compare and the record frob.comparison/1: five dispositions, absolute verdicts, provisional
 ### NJL-08 (M1) golden fixture L.9, part A: the MCP session driver and the exact half of the transcript (orient, mission, author)
 - **need 1** (names its carrier): §14, §32.6: the verbs `design.new` (from a file, a template or a mission cell) and `design.show` (drafted by unit U14a as N14a-21)
-  - `N14a-21` (M1, U14a, feature) verbs design.new and design.show: create a design from a file, template or mission cell; read its compiled sections
+  - `N14a-21` (M1, U14a, feature) verbs design.new, design.show: create a design from a file, template or mission cell; read compiled sections

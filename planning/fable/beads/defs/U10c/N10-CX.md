@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "spine", "registry", "gauntlet", "solid", "frob-conforma
 parent: "WP-14"
 deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-146", "N10c-10", "SPEC-C-28", "SPEC-C-29", "SPEC-C-30", "SPEC-C-31", "SPEC-C-32", "SPEC-C-33", "SPEC-C-34", "SPEC-C-35", "SPEC-C-36", "SPEC-C-37", "SPEC-C-38", "SPEC-C-39", "SPEC-C-40"]
+related: ["BD-146", "N10c-10", "SPEC-C-28", "SPEC-C-29", "SPEC-C-30", "SPEC-C-31", "SPEC-C-32", "SPEC-C-33", "SPEC-C-34", "SPEC-C-35", "SPEC-C-36", "SPEC-C-37", "SPEC-C-38", "SPEC-C-39", "SPEC-C-40", "N09-CX"]
 gates: ["GATE-GAUNT-01"]
 plan_refs: ["Appendix N.1", "Appendix N.7", "Appendix N.35", "§38.1", "§38.11", "§10"]
 ---

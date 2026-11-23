@@ -8,7 +8,7 @@ labels: ["m2", "lemma", "spine", "spec", "solid", "frob-model", "frob-phylum", "
 parent: "WP-44"
 deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-21", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-119 to KA-122 and CX-056, CX-057; this bead binds them to tests and registers the controls the appendix leaves unstated", "§38.7: the metamorphic-relation registry row MR-06 (similarity rescaling) in `frob-conformance/registry/relations.toml` (Gauntlet beads); this bead supplies its statement and control"]
-related: ["N10b-11", "BD-018", "BD-285", "BD-320", "BD-179", "BD-223", "SPEC-C-14", "SPEC-C-22", "SPEC-C-23", "CARD-T-09", "BD-061"]
+related: ["N10b-11", "BD-018", "BD-285", "BD-320", "BD-179", "BD-223", "SPEC-C-14", "SPEC-C-22", "SPEC-C-23", "CARD-T-09", "BD-061", "N10a-02"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-21", "§9 D-11", "§12.3 T-09", "§12.5", "§17.11", "§35.8", "§38.7 MR-06", "Appendix A", "Appendix D.4", "Appendix D.5", "Appendix M.9 KA-119 to KA-122", "Appendix N.7 CX-056 CX-057"]
 ---

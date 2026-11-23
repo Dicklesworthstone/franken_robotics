@@ -2094,6 +2094,18 @@
    "why": "need 2 of N22a-21: BD-247 integrates the predictive legged row"
   },
   {
+   "bead": "N14b-09",
+   "dep": "N22c-05",
+   "as": "dep",
+   "why": "a Frontier mechanism depends on its pilot: biped balance is piloted in N22c-05"
+  },
+  {
+   "bead": "N14b-09",
+   "dep": "N22c-06",
+   "as": "dep",
+   "why": "a Frontier mechanism depends on its pilot: the hybrid mode graph and the arm on a base are piloted in N22c-06"
+  },
+  {
    "bead": "GB-26",
    "dep": "N22b-09",
    "as": "dep",
@@ -2239,7 +2251,7 @@
   {
    "drop": "N22a-20",
    "keep": "N22c-05",
-   "note": "one four-class pilot of the Frontier baseline routes against two two-class pilots; kept as N22c-05 (predictive, biped; M2) and N22c-06 (hybrid, arm on a base; M3) so that no bead exceeds five days; the derived-constants rule, five-seed falsifier, oracle fallback, constant audit and harness controls folded into both"
+   "note": "one four-class pilot of the Frontier baseline routes against two two-class pilots; kept as N22c-05 (predictive, biped; M2) and N22c-06 (hybrid, arm on a base; M3) so that no bead exceeds five days; the derived-constants rule, five-seed falsifier, oracle fallback, constant audit and harness controls folded into both, with its dependencies on the development-oracle lane N38a-06 and the reference fixtures BD-067"
   },
   {
    "drop": "N22c-10",
@@ -2362,7 +2374,7 @@
   },
   {
    "bead": "N22a-24",
-   "what": "Frontier mechanism without its pilot: dependency on N22a-22 added; title shortened"
+   "what": "Frontier mechanism without its pilot: dependency on N22a-22 added; title shortened; N22c-31 and N22c-32 named in Scope"
   },
   {
    "bead": "BD-118",
@@ -2390,7 +2402,7 @@
   },
   {
    "bead": "N22a-21",
-   "what": "dependency on the superseded pilot N22a-20 replaced by N22c-05; title shortened"
+   "what": "dependency on the superseded pilot N22a-20 replaced by N22c-05; title shortened; N14b-09 named in Scope"
   },
   {
    "bead": "N22c-15",
@@ -2481,10 +2493,6 @@
    "what": "title shortened to at most 110 characters"
   },
   {
-   "bead": "N22-KA",
-   "what": "title shortened to at most 110 characters"
-  },
-  {
    "bead": "N22a-01",
    "what": "title shortened to at most 110 characters"
   },
@@ -2525,19 +2533,7 @@
    "what": "title shortened to at most 110 characters"
   },
   {
-   "bead": "N22a-11",
-   "what": "title shortened to at most 110 characters"
-  },
-  {
    "bead": "N22a-12",
-   "what": "title shortened to at most 110 characters"
-  },
-  {
-   "bead": "N22a-13",
-   "what": "title shortened to at most 110 characters"
-  },
-  {
-   "bead": "N22a-14",
    "what": "title shortened to at most 110 characters"
   },
   {
@@ -2649,10 +2645,6 @@
    "what": "title shortened to at most 110 characters"
   },
   {
-   "bead": "N22c-01",
-   "what": "title shortened to at most 110 characters"
-  },
-  {
    "bead": "N22c-02",
    "what": "title shortened to at most 110 characters"
   },
@@ -2663,6 +2655,38 @@
   {
    "bead": "N22c-39",
    "what": "title shortened to at most 110 characters"
+  },
+  {
+   "bead": "N22a-11",
+   "what": "overlap with N22c-01 re-scoped: this bead writes the quad-mammal referee row of GATE-REFLEX-01; N22c-01 writes the other three and checks agreement; title shortened"
+  },
+  {
+   "bead": "N22c-01",
+   "what": "overlap with N22a-11 re-scoped; dependency on N22a-11 added; title shortened"
+  },
+  {
+   "bead": "N22a-13",
+   "what": "overlap with N22c-47 re-scoped: this bead writes the quad-mammal batch-cpu row; N22c-47 writes the other three and checks agreement; title shortened"
+  },
+  {
+   "bead": "N22c-47",
+   "what": "overlap with N22a-13 re-scoped; dependency on N22a-13 added"
+  },
+  {
+   "bead": "N22-KA",
+   "what": "Scope names N22c-04 as the fixture pack and the holder of the provisional rows; related both ways; title shortened"
+  },
+  {
+   "bead": "N22c-04",
+   "what": "Scope names N22-KA as the holder of the numbered rows; N22-KA added to related"
+  },
+  {
+   "bead": "N22b-24",
+   "what": "body pointed at an unnamed bead of the chapter: N22c-44, N22c-45 and N22c-46 named"
+  },
+  {
+   "bead": "N22a-14",
+   "what": "body pointed at an unnamed bead: N14b-09 named; title shortened"
   }
  ]
 }

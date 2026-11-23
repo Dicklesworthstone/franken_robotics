@@ -136,3 +136,19 @@ on N15a-10 (rotor elimination); BD-103 on N15a-14 and N15a-16 (static libraries)
     in their absence and lists them in `needs`.
 15. **Catalog location.** The plan gives no path for the starter catalog; BD-069 uses `assets/cards/` by analogy
     with `assets/archetypes/`.
+
+## (f) Integration pass (group G15)
+
+- Superseded here, content folded into the kept bead: N15a-10 → N15b-08 (rotor elimination, PO-SINEW-02);
+  N15a-13 → N15b-24 (decision KILL-SINEW-ROWS); N15a-19 → N15b-18 (series elasticity); N15a-20 → N15b-19 (its
+  pilot); N15a-21 → N15b-20 (hydraulic epic); N15a-22 → N15b-21 (its pilot). Kept here, with the other unit's
+  duplicate folded in: N15a-12 (from N15b-31, the joint-row script), N15a-24 (from N15b-29, GATE-SINEW-01).
+- New beads: N15a-29 (the task file's `thermal_start` field and its application on the referee) and N15a-30 (the
+  per-world thermal start at `VecEnv` reset). They close the two needs of N15a-15 that no bead carried.
+- Seeds re-scoped as capstones over this unit's component beads: BD-070 over N15a-03, N15a-04, N15a-05; BD-071
+  over N15a-05, N15a-06; BD-074 over N15a-17; BD-084 and BD-155 over N15a-08, N15a-09; BD-151 over N15a-07;
+  BD-103 over N15a-14, N15a-16. BD-076 is the capstone over N15b-05 and N15b-04.
+- Design choices reconciled between the two units: the GATE-SINEW-03 battery has one definition (N15a-07); the
+  L2 component (BD-071) owns current dynamics and the thermal network, BD-072 the temperature laws, derating and
+  trip, BD-073 the per-step limits; `ThermalStart` and its resolution are N15a-15's; the level type and flag
+  names are N15a-04's; the strict-data refusal is raised by N15b-06 from the records N15a-03 builds.

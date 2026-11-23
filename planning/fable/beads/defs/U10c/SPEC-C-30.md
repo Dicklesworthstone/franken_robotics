@@ -1,6 +1,6 @@
 ---
 key: "SPEC-C-30"
-title: "spec C-30: requirements as temporal logic over unit-normalized predicates: contract, law tests, registry rows"
+title: "spec C-30: requirements as temporal logic over unit-normalized predicates: contract, law tests, registry entries"
 type: "task"
 priority: 1
 milestone: "M1"
@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "spine", "spec", "solid", "arena", "frob-spec", "test"]
 parent: "WP-41"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-122", "BD-194", "BD-255", "BD-257", "N10-CX", "SPEC-C-31", "N10c-10", "BD-121"]
+related: ["BD-122", "BD-194", "BD-255", "BD-257", "N10-CX", "SPEC-C-31", "N10c-10", "BD-121", "N10a-02"]
 gates: ["GATE-ARENA-03", "GATE-CORTEX-10"]
 plan_refs: ["§10 C-30", "§24.5", "§24.6", "§38.7 MR-19 MR-20", "Appendix D.7", "Appendix I.8", "Appendix M.9", "Appendix N.7"]
 ---

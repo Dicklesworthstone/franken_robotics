@@ -144,3 +144,23 @@ unit U17b.
     specialization. Pilots that run before their mechanism's milestone keep the mechanism's work package.
 19. **Bead size.** Bodies run 121 to 190 lines, above the typical 60 to 130, because each carries formulas,
     worked numbers, a refusal with repairs and a full test plan; none was compressed to fit.
+
+## (f) Integration pass (group G17): what changed in this unit
+
+- **New bead N17a-30**, the campaign corpus: the plan measures KILL-QUOTIENT's 5% clause and BET-31 "on the
+  campaign corpus" and never defines it. N17a-30 defines a campaign design set, the composition of version 1, its
+  identity and its freeze before any measurement; N17a-28 depends on it. Carries part of §17.11 and §17.19.
+- **N17a-10 is the single GATE-PHYLUM-02 measurement.** The other unit's N17b-06 specified the same run and is
+  superseded by it; its content is folded into N17a-10.
+- **Seed beads of the other unit are capstones of this unit's components.** BD-170 (level P-B) depends on N17a-02
+  and N17a-03, and N17a-03 no longer depends on BD-170. BD-184 (latency gate) depends on N17a-09. BD-286
+  (invalidation contract) depends on N17a-24 and N17a-26.
+- **Admission is split in two beads with one record.** N17a-09 is the slot table and reset planner; N17b-05 is the
+  admission controller and owns the admission record, into which N17a-09 stamps two instants.
+- **N17a-15 moved from M3 to M2**, because the limb-archetype arm (M2) is by definition a fourth arm of this pilot;
+  N17b-24 depends on it and adds only its arm.
+- **N17a-06 executes the runs whose criteria N17b-11 fixes**; N17b-11 depends on N17a-06 and N17a-17.
+- N17a-23's dependency on theorem card T-24 (M4) is now `related`. N17a-26 depends on the specification bead of the
+  projection quotient (N10b-12). The verb `phylum.sweep` is N17b-04, not BD-184: beads that need the verb depend
+  on N17b-04. Registry entries of the cluster are N17b-12 (duplicated outside the group by VERBS-phylum).
+- Cross-group duplicates and gaps reported to the lead are in `integration/out/G17.json`.

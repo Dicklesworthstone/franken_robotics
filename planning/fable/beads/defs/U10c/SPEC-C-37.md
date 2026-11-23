@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "spine", "spec", "solid", "traction", "sinew", "frob-con
 parent: "WP-10"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-084", "BD-115", "BD-154", "BD-155", "BD-167", "N10c-08", "N10-CX", "N10c-10", "CARD-T-07", "BD-050", "BD-069", "BD-079"]
+related: ["BD-084", "BD-115", "BD-154", "BD-155", "BD-167", "N10c-08", "N10-CX", "N10c-10", "CARD-T-07", "BD-050", "BD-069", "BD-079", "N10a-02"]
 gates: ["GATE-SINEW-04", "GATE-TRAC-04"]
 plan_refs: ["§10 C-37", "§10 C-06", "§18.6", "§18.7", "§15.6", "§12.3 T-07", "Appendix D.3", "Appendix E GB-20", "Appendix I.1", "Appendix M.9", "Appendix N.7"]
 ---

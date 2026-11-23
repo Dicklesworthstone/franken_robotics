@@ -8,7 +8,7 @@ labels: ["m4", "lemma", "spine", "spec", "frontier", "augur", "atelier", "frob-s
 parent: "WP-67"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-060", "BD-105", "BD-132", "BD-361", "N10c-05", "N10-CX", "N10c-10", "BD-360"]
+related: ["BD-060", "BD-105", "BD-132", "BD-361", "N10c-05", "N10-CX", "N10c-10", "BD-360", "N10a-02"]
 gates: ["GATE-AUGUR-17"]
 plan_refs: ["§10 C-34", "§10 C-11", "§25.21.3", "§12.4", "Appendix D.6", "Appendix M.9", "Appendix N.7"]
 ---

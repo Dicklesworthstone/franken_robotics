@@ -1240,6 +1240,26 @@
    "note": "pilot of the hard-contact batch law (and of factor reuse, see N18a-25) on the contact known answers"
   },
   {
+   "mine": "N18b-37",
+   "other": "N19c-32",
+   "note": "OPEN-TRAC-1 and OPEN-HAB-3 are decided from the same measured memory of compiled packs"
+  },
+  {
+   "mine": "N18b-23",
+   "other": "N16b-21",
+   "note": "certified collision detection on sampled windows of lockstep runs: mine is the verb contact.audit, the other the fidelity-ledger quantity built on it"
+  },
+  {
+   "mine": "N18b-09",
+   "other": "NS-08",
+   "note": "two end-to-end scripts for scenario NS-08 (tracks on rubble); the seed BD-365 names its rigid-ground leg"
+  },
+  {
+   "mine": "BD-230",
+   "other": "N19b-05",
+   "note": "the per-contact film thickness state and its update appear in both; BD-230 keeps the cone row and K-film and uses the blend and the cap at μ_b of the scene-side statement"
+  },
+  {
    "mine": "N18-CX",
    "other": "N38b-05",
    "note": "both seed controls.toml with CX-167 to CX-183; N38b-05 should take the rows from N18-CX"
@@ -1248,7 +1268,23 @@
  "new_beads": [
   "N18b-45"
  ],
- "gaps": [],
+ "gaps": [
+  {
+   "section": "§22.11 (W_abs is read from 'an interface card with provenance')",
+   "what": "an absorber work-envelope card or card field (force–displacement lower envelope, stroke, force limit): the interface card of BD-167 is keyed by material pair and condition and carries friction, stiffness and rolling data only, and §18 specifies no absorber, so no bead of G18 carries it (also reported by G22)",
+   "needed_by": [
+    "N22b-11",
+    "N22b-17"
+   ]
+  },
+  {
+   "section": "§25 (a probe on a compliant pad, simulated on the referee)",
+   "what": "an interface law with time-dependent relaxation: §18 specifies none (CL-1 has one dissipation time; N18b-10 puts a covering's stiffness in series), so no bead of G18 carries it (also reported by G25cde)",
+   "needed_by": [
+    "N25c-17"
+   ]
+  }
+ ],
  "fixes": [
   {
    "bead": "BD-154",
@@ -1453,6 +1489,10 @@
   {
    "bead": "BD-386",
    "what": "references to superseded keys replaced by the kept keys (also in BD-154, BD-232, N18a-15, N18a-16)"
+  },
+  {
+   "bead": "N18b-31",
+   "what": "the INV-TRAC-07 test states the cap of the viscous term at μ_b, as BD-230 implements it"
   }
  ]
 }

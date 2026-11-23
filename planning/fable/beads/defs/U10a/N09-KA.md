@@ -8,7 +8,7 @@ labels: ["m0", "gauntlet", "frob-conformance", "solid", "spine", "registry", "te
 parent: "WP-14"
 deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§25.22: the plan-time pilots re-run from the reproduction bundle, which turn these four rows from FACT about a pilot into rows a gate may cite: BD-042 (static stance family), BD-030 (boundary screen of 65,536 rows), BD-043 (remaining pilots, including the wheel-loop feed-forward term), BD-041 (cart docking with two gains and with three)"]
-related: ["BD-030", "BD-041", "BD-042", "BD-043", "BD-146", "N10a-02", "N10a-06", "N10a-07", "N10-KA1"]
+related: ["BD-030", "BD-041", "BD-042", "BD-043", "BD-146", "N10a-02", "N10a-06", "N10a-07", "N10-KA1", "N09-CX"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-08"]
 plan_refs: ["§9 D-17 D-18 D-19", "§38.5", "§38.6", "Appendix M.1", "Appendix M.8", "Appendix M.37"]
 ---

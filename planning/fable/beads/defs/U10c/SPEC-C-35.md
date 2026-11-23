@@ -8,7 +8,7 @@ labels: ["m5", "lemma", "spine", "spec", "frontier", "foundry", "frob-foundry", 
 parent: "WP-70"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-401", "BD-402", "BD-403", "BD-404", "BD-406", "N10c-06", "N10c-07", "N10-CX", "N10c-10", "BD-400"]
+related: ["BD-401", "BD-402", "BD-403", "BD-404", "BD-406", "N10c-06", "N10c-07", "N10-CX", "N10c-10", "BD-400", "N10a-02"]
 gates: ["GATE-FOUNDRY-04", "GATE-FOUNDRY-05"]
 plan_refs: ["§10 C-35", "§31.5", "§31.6", "§31.7", "§31.9", "Appendix D.10", "Appendix M.9"]
 ---

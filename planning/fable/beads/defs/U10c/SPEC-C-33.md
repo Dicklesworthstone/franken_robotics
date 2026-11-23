@@ -8,7 +8,7 @@ labels: ["m3", "lemma", "spine", "spec", "frontier", "habitat", "frob-scene", "t
 parent: "WP-53"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-104", "BD-132", "BD-233", "BD-234", "BD-369", "SPEC-C-28", "SPEC-C-31", "N10-CX", "N10c-10", "CARD-T-31", "BD-162"]
+related: ["BD-104", "BD-132", "BD-233", "BD-234", "BD-369", "SPEC-C-28", "SPEC-C-31", "N10-CX", "N10c-10", "CARD-T-31", "BD-162", "N10a-02"]
 gates: ["GATE-HAB-10"]
 plan_refs: ["§10 C-33", "§19.11", "§12.3 T-31", "§12.4", "§38.7 MR-29", "Appendix D.3", "Appendix M.9", "Appendix N.7"]
 ---

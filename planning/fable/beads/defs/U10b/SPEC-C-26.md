@@ -8,7 +8,7 @@ labels: ["m3", "lemma", "spine", "spec", "frontier", "frob-opt", "test"]
 parent: "WP-62"
 deps: ["BD-025", "STD-TEST", "STD-E2E"]
 needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-26", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-136, KA-137 and CX-063, CX-064; this bead binds them to tests", "§28.10 and §23.11: the forty-design rank-agreement pilot of this construction (shared with construction C-23) is pre-registered by BD-145 and run by BD-310 at M3 and BD-328 at M4; those beads must carry the protocol stated in section 5 of this bead, and BD-145 cites this contract's definitions without waiting for this bead"]
-related: ["BD-145", "BD-310", "BD-328", "BD-329", "BD-265", "BD-345", "BD-124", "SPEC-C-15", "SPEC-C-23", "SPEC-C-25", "SPEC-C-39", "BD-262"]
+related: ["BD-145", "BD-310", "BD-328", "BD-329", "BD-265", "BD-345", "BD-124", "SPEC-C-15", "SPEC-C-23", "SPEC-C-25", "SPEC-C-39", "BD-262", "N10a-02"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-26", "§9 D-10", "§9 D-17", "§16.9", "§23.11", "§28.9", "§28.10", "§28.12", "§40.7", "Appendix D.8", "Appendix E GB-35", "Appendix I.13", "Appendix M.9 KA-136 KA-137", "Appendix N.7 CX-063 CX-064"]
 ---

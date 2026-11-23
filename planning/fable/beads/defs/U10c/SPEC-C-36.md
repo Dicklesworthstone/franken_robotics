@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "spine", "spec", "frontier", "kinesis", "frob-dyn", "fro
 parent: "WP-10"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-088", "BD-161", "BD-384", "N10c-08", "N10-CX", "N10c-10", "CARD-T-06", "CARD-T-13", "BD-011", "BD-087"]
+related: ["BD-088", "BD-161", "BD-384", "N10c-08", "N10-CX", "N10c-10", "CARD-T-06", "CARD-T-13", "BD-011", "BD-087", "N10a-02"]
 gates: ["GATE-KIN-01"]
 plan_refs: ["§10 C-36", "§10 C-05", "§16.7", "§12.3 T-06 T-13", "§38.18", "Appendix D.1", "Appendix D.2", "Appendix M.9", "Appendix N.7"]
 ---

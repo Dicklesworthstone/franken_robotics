@@ -161,3 +161,15 @@ splat scenes (working name KILL-RGBSPLAT) through N19b-23; it does not exist in 
     within the finalist budget) and the arithmetic either way.
 19. **Hazard dimensions for containers.** The kitchen hazard row gives fill 30 to 80% and no container size; the slosh
     pilot (N19b-12) must register an `assumed` container box, which is its main weakness and is stated there.
+
+## (f) Added by the integration pass
+
+- N19b-44 (new, M3, Solid): typed scene edits (§19.1, §19.12): the closed set of edit kinds, `apply` on an immutable
+  pack, the lineage record and the declared-aspect check. The adversarial search, scene groups (N19c-11) and the hygiene
+  gate script (N19c-15) need edits at M3, a milestone before the catalog; N19b-38 (M4) now instantiates these kinds and
+  depends on N19b-44.
+- The epics BD-414, BD-415 and BD-420 carry no dependencies; the seed dependency of BD-414 (BD-231) is held by N19b-13.
+- A-18's verb is `analyze.route`, the verb registry's name (N19b-34); N19b-32 depends on N19b-34 for the footprint
+  family of a design.
+- ADR-HAB-07's file is the one N19a-03 creates (`docs/adr/ADR-HAB-07.md`); kill-gate decision records use the gate
+  register's path `docs/delivery/adr/ADR-<gate>-<milestone>.md` in all three units.

@@ -90,3 +90,13 @@ Prerequisites for which I could name no key (also in the `needs` fields):
 16. **Numbers the text leaves open**, all labelled DESIGN in the beads and to be fixed at their gates: chart-cut margins and small-angle thresholds (BD-011); the host rational size cap (N13-10); magnitude floors of guarded-predicate inputs and the treatment of out-of-range inputs (N13-10, N13-11); the distribution of the 24 planted asymmetries over archetypes (N13-21, N13-22); the reading of the GATE-MARROW-02 set as 49 presentations (BD-048); the tolerance of "Ad(exp x) = exp(ad x) to tolerance" (BD-011, N13-19).
 17. **Algorithms the text names without giving.** Character tables (BD-048 specifies the class-matrix method with exact lifting and self-certification); symmetry-adapted bases with aligned copies (BD-325 specifies a splitting-subgroup construction and the complex structure J = i·(P_χ − P_χ̄)); SE(3) exponential differential in closed form (BD-011 gives a candidate and makes the dual-number law its arbiter). These are DESIGN in the beads.
 18. **Content of my subsections whose seed beads belong to other units** (BD-049, BD-050, BD-051, BD-052, BD-053, BD-062, BD-078, BD-098, BD-102, BD-154). To make sure nothing in §11 and §13 depends on those units reading these chapters, the full text of each such subsection is carried in a U13 bead as a specification with its conformance tests (N13-04, N13-06, N13-10, N13-15, N13-16, N13-17, N13-19). The lead may wish to de-duplicate once the other units' files exist.
+
+## (f) Integration addendum
+
+Changes made when this unit was connected to the others:
+
+- BD-011 no longer depends on BD-021: a seed never depends on a higher-numbered seed. The certified clause of GATE-MARROW-01 is verified in N13-19.
+- N13-34 and the Skeleton beads N14a-08 and N14a-09 state the same stage-1 check. One direction is kept: N13-34 follows stage 1 (N14a-08) and the stage runner (BD-110), and the Skeleton beads keep N13-34 as related. N13-36 depends on BD-110, since its script drives `design.check`.
+- N13-06 depends on the window-boundary decision N20a-49 written by the sensing group: §11.8 says (a, b] and §20.4.3 says [open, close) for the shared instant of two neighbouring exposure windows. The boundary-instant clause of the window row is frozen only after that ruling.
+- The candidate code of the uncoded turn-state refusal is FROB-REF-128, not FROB-REF-127 as in (c) and (e) item 4: the Skeleton registry already proposes 127 for its own uncoded refusal. Assignment still belongs to the registry's owner, for whom no bead exists (reported as a gap).
+- The row of FROB-REF-168 is entered by the Lemma registry N12-REF with the wording of N13-03's default; N13-03 amends or tombstones it.

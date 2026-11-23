@@ -4,13 +4,11 @@
   {
    "bead": "BD-132",
    "n": 1,
-   "as": "related",
+   "as": "dep",
    "keys": [
-    "N25b-01",
-    "BD-128",
-    "BD-133"
+    "N25b-01"
    ],
-   "note": "the auditor defines the per-kind payload fields itself (N12-02, N12-03 and this bead); N25b-01's producer-side types follow them and BD-133 depends on this bead, so a dependency would close a cycle"
+   "note": "the payload each proof object carries is fixed by the plain proof-object types of N25b-01 (M1), whose own link back to the checkers is recorded related; BD-128 emits them and BD-133 writes them and depends on this bead: both stay related"
   },
   {
    "bead": "BD-364",
@@ -77,7 +75,7 @@
     "BD-080",
     "BD-167"
    ],
-   "note": "direction rule 6; the law CL-1 itself is N18a-16; the per-law certificates are issued in the new bead N12-51"
+   "note": "direction rule 6; the law CL-1 itself is N18a-16; the per-law certificates are issued in the new bead N12-51, which depends on the law"
   },
   {
    "bead": "CARD-T-08",
@@ -615,10 +613,10 @@
    "why": "PO-KIN-01 links the per-law convexity certificate of CL-1, issued by N12-51 at M2"
   },
   {
-   "bead": "N18a-16",
-   "dep": "N12-51",
-   "as": "dep",
-   "why": "a law is admitted on a lockstep tier only with its convexity certificate (N12-51), which is written from the potential's formula"
+   "bead": "N12-51",
+   "dep": "BD-153",
+   "as": "related",
+   "why": "the cone kernels evaluate the law that N12-51 certifies; kernel-bound certificates are the M5 pipeline's"
   },
   {
    "bead": "N17a-23",
@@ -693,12 +691,6 @@
    "why": "need 1 of N12-19: emits tube-inclusion bundles; also specifies the same checker"
   },
   {
-   "bead": "BD-382",
-   "dep": "N12-32",
-   "as": "related",
-   "why": "kept: the decision depends on this bead"
-  },
-  {
    "bead": "BD-133",
    "dep": "N12-05",
    "as": "dep",
@@ -733,14 +725,127 @@
    "dep": "N12-30",
    "as": "dep",
    "why": "coverage (d) of U12: the M4 family batches extend specialized projections and exist only if KILL-FAMILYCERT does not fire"
+  },
+  {
+   "bead": "N12-28",
+   "dep": "N32-REF",
+   "as": "dep",
+   "why": "the over-budget and parked-verb refusals it raises are rows of the Tether registry"
+  },
+  {
+   "bead": "N25d-36",
+   "dep": "N12-52",
+   "as": "dep",
+   "why": "its need for an admission decision on candidate theorem cards is the new decision bead N12-52"
+  },
+  {
+   "bead": "N26b-16",
+   "dep": "N12-52",
+   "as": "dep",
+   "why": "its need for a Lemma decision on the zero-failure statement is N12-52"
+  },
+  {
+   "bead": "N25a-07",
+   "dep": "N12-52",
+   "as": "related",
+   "why": "the four proof rules it enters as candidate cards are decided in N12-52; the battery does not wait"
+  },
+  {
+   "bead": "N15b-09",
+   "dep": "N12-52",
+   "as": "related",
+   "why": "PO-SINEW-01 is filed there as a candidate card; N12-52 adopts or rejects it; the obligation's own test does not wait"
+  },
+  {
+   "bead": "N20a-37",
+   "dep": "N12-52",
+   "as": "related",
+   "why": "the general statements of PO-SENS-07 are candidates decided in N12-52; the instance is CARD-T-30"
+  },
+  {
+   "bead": "BD-132",
+   "dep": "BD-128",
+   "as": "related",
+   "why": "need 1 of BD-132: the mission core emits the proof objects; not a prerequisite of the checkers"
+  },
+  {
+   "bead": "CARD-T-18",
+   "dep": "N10b-02",
+   "as": "related",
+   "why": "the specification part that states the same identity with its law tests in frob-gait"
   }
  ],
  "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [
-  "N12-51"
+ "cross_group_duplicates": [
+  {
+   "mine": "N12-17",
+   "other": "N22b-14",
+   "note": "both specify the energy-budget checker in frob-cert; keep the checker in N12-17 and the writer, run-replay recomputation and corpus in N22b-14, which should depend on N12-17; N22b-14's dependency on CARD-T-28 must not be folded into N12-17, because the card depends on the checker"
+  },
+  {
+   "mine": "N12-15",
+   "other": "N19b-31",
+   "note": "both specify the complex-connectivity checker in frob-cert (check A of N19b-31); keep it in N12-15; N19b-31 keeps the certificate objects, the scene-side check and the writer and should depend on N12-15"
+  },
+  {
+   "mine": "N12-19",
+   "other": "N22b-35",
+   "note": "both specify the tube-inclusion checker; N12-19 holds the auditor's rule, N22b-35 the lookup stage, the writer and the gate campaign"
+  },
+  {
+   "mine": "BD-132",
+   "other": "N20a-37",
+   "note": "the alias-pair checker: BD-132 builds the rule in frob-cert, N20a-37 specifies an independent checker of the same witness object; one of them should own the frob-cert rule (BD-132) and the other cite it"
+  },
+  {
+   "mine": "CARD-T-30",
+   "other": "N20a-37",
+   "note": "N20a-37 carries the theorem statement and proofs of PO-SENS-07 'as cards'; CARD-T-30 is the instance card; the general statements are candidates decided in N12-52"
+  },
+  {
+   "mine": "CARD-T-07",
+   "other": "BD-154",
+   "note": "both issue the poly-identity certificates of the Moreau identities for the four-dimensional cone: BD-154 as PO-TRAC-01 at M2, the card at M5 through the coverage pipeline"
+  },
+  {
+   "mine": "CARD-T-01",
+   "other": "BD-021",
+   "note": "BD-021 issues the M0 instance certificates of T-01, T-03 and T-04; the three cards also list the instance certificate in scope. Distinct in practice: BD-021 is the machinery and first run, the cards hold statement documents, rows, specimens and mutants"
+  },
+  {
+   "mine": "N12-08",
+   "other": "N00-01",
+   "note": "both lint the banned word 'verified': N12-08 on frob-lemma's output and exports, N00-01 on documents, templates, refusal messages and help text"
+  },
+  {
+   "mine": "N12-34",
+   "other": "N38b-11",
+   "note": "N12-34 runs every specimen and mutant through frob-verify for GATE-LEMMA-03; N38b-11 generates a mutation corpus per proof kind (as BD-136 does for the mission slice); the corpora should be one"
+  },
+  {
+   "mine": "N12-KA",
+   "other": "N38b-30",
+   "note": "N38b-30 supplies negative controls for known-answer rows of Lemma that state none (KA-210, KA-222 to KA-226); N12-KA lists the same rows and names its own"
+  },
+  {
+   "mine": "CARD-T-18",
+   "other": "N10b-02",
+   "note": "both state the symmetry-event identity: N10b-02 as a specification with law tests in frob-gait, the card as certificates; distinct scope"
+  }
  ],
- "gaps": [],
+ "new_beads": [
+  "N12-51",
+  "N12-52"
+ ],
+ "gaps": [
+  {
+   "section": "§33.4",
+   "what": "no bead admits fs-checker as a re-check oracle: N33b-09 forbids any cargo edge to it and N25a-32 only records its pin facts; an out-of-process admission record is what the second-checker experiment would need",
+   "needed_by": [
+    "N12-29"
+   ]
+  }
+ ],
  "fixes": [
   {
    "bead": "CARD-T-05",
@@ -837,6 +942,42 @@
   {
    "bead": "CARD-T-09",
    "what": "SPEC-C-21 (M2) moved from deps to related: an M0 card cannot depend on an M2 specification, and C-21 relies on the card, not the reverse"
+  },
+  {
+   "bead": "CARD-T-08",
+   "what": "re-scoped: the per-law convexity certificates and the admission guard moved to the new M2 bead N12-51 (needed at M2 by PO-KIN-01); the card keeps the Lean lemma, statement and row and depends on N12-51"
+  },
+  {
+   "bead": "CARD-T-12",
+   "what": "rule 8: the Lean pilot N12-23 added as a direct dependency"
+  },
+  {
+   "bead": "CARD-T-13",
+   "what": "rule 8: the Lean pilot N12-23 moved from related to deps"
+  },
+  {
+   "bead": "BD-364",
+   "what": "rule 4: the end-to-end bead N12-35 moved from deps to related; Scope states that this bead runs the script's m4 profile for its own gate record"
+  },
+  {
+   "bead": "N12-REF",
+   "what": "row FROB-REF-168 aligned with decision N13-03 and mechanism N13-04 (no default fill, written solid above a quarter of mass_max, four ranked repairs); related links; note on which registry enters the row"
+  },
+  {
+   "bead": "BD-382",
+   "what": "refusal codes named: FROB-REF-701 for an over-budget instance and FROB-REF-724 for the parked verb, both from N32-REF"
+  },
+  {
+   "bead": "N12-28",
+   "what": "refusal codes named: FROB-REF-701 and FROB-REF-724 from N32-REF"
+  },
+  {
+   "bead": "N12-32",
+   "what": "the verb-parked refusal named as FROB-REF-724; related link to N32-REF"
+  },
+  {
+   "bead": "N12-29",
+   "what": "the fs-checker arm made consistent with the dependency firewall (no cargo edge; out of process under its own admission record, or not run); acceptance line added"
   }
  ]
 }

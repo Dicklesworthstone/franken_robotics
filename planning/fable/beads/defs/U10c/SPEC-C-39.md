@@ -8,7 +8,7 @@ labels: ["m3", "lemma", "spine", "spec", "solid", "atelier", "frob-opt", "test"]
 parent: "WP-59"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-291", "BD-341", "BD-344", "BD-349", "BD-351", "N10c-09", "N10-CX", "N10c-10", "BD-262"]
+related: ["BD-291", "BD-341", "BD-344", "BD-349", "BD-351", "N10c-09", "N10-CX", "N10c-10", "BD-262", "N10c-11", "N10a-02"]
 gates: ["GATE-ATEL-15"]
 plan_refs: ["§10 C-39", "§28.9", "§28.16", "§28.17", "§30.15", "Appendix D.8", "Appendix E GB-36", "Appendix M.9"]
 ---
@@ -44,12 +44,13 @@ below which nothing is bought. Proof classes: Proved, Certified, Tested, Estimat
 
 ## Scope
 
-In: `docs/math/C-39.md` part A; law tests in `crates/frob-opt/tests/laws_c39_evsi.rs`; registry entry for KA-187
-and the pilot record of the construction.
+In: `docs/math/C-39.md` part A; law tests in `crates/frob-opt/tests/laws_c39_evsi.rs`; registry entry for KA-187;
+the statement of the construction's pilot (protocol, falsifier, ceiling, fallback) in the contract.
 
 Out: the verb `experiment.suggest` and its ranking in the product (BD-351); the decision-core table for "which
 experiment next, or stop" (BD-349); registered predictions and their scoring (BD-344); optimization and racing
-(BD-341); probe design (N10c-09, BD-291); recording GATE-ATEL-15 and deciding KILL-VOI (BD-351).
+(BD-341); probe design (N10c-09, BD-291); running the pilot and writing its record `PILOT-C-39` in the pilot
+register (N10c-11, which depends on this bead); recording GATE-ATEL-15 and deciding KILL-VOI (BD-351).
 
 Register row (the shared rule of N10a-01). The construction register
 `frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
@@ -121,7 +122,7 @@ referee.
 of the defining expectation as the independent oracle; the variance-removal rule; a small menu of experiments
 with costs for the ranking and stop rule; a Monte Carlo opportunity-loss estimate with a fixed seed for three
 finalists. Generic over a trait `C39ValueSubject`; mutants in `tests/support/c39_mutants.rs`. Registry: KA-187
-with a derivation file; the pilot record.
+with a derivation file. The pilot record is written by the pilot bead N10c-11.
 
 Pilot of the construction: thirty registered experiments on the first mission slice. Falsifier (TARGET): stated 80%
 intervals cover fewer than 65% or more than 92% of outcomes, or the direct-measurement comparator beats a
@@ -139,7 +140,8 @@ information is a stop rule only and `experiment.suggest` lists proposals unranke
       model if BD-351 has landed.
 - [ ] Every mutant below fails its named law.
 - [ ] KA-187 is registered with a derivation file, a stated tolerance and the control named below (the row was
-      printed with neither); the pilot record is in the pilot register.
+      printed with neither); the contract states the pilot's protocol, falsifier, ceiling and fallback, which
+      the pilot bead N10c-11 runs and records.
 - [ ] `scripts/e2e/spec_c39_evsi.sh` exits 0.
 - [ ] Row C-39 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
       Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
@@ -194,8 +196,8 @@ Determinism: `f64` closed forms twice on one machine; the Monte Carlo row with i
 - The Gaussian model is a convenience; the calibration rule E7 is the guard, and its failure sends the core back
   to the fixed order.
 - KILL-VOI and KILL-AUGUR-PROBE do not overlap: the first governs the ranking, the second the probe generator.
-- Compute: none; the closed form is constant time. The pilot's thirty experiments are campaign runs owned by the
-  mechanism beads.
+- Compute: none; the closed form is constant time. The pilot's thirty experiments run on the first mission
+  slice and are owned by the pilot bead N10c-11.
 - Interaction: the reality-gap variance comes from the calibration lane; until a cell is calibrated its term is
   the declared uncalibrated default and real episodes rank high, which is the intended behaviour.
 

@@ -196,7 +196,7 @@
    "keys": [
     "N23b-24"
    ],
-   "note": "the owner decision OPEN-CORTEX-1 (two beads of the Cortex group carry it)"
+   "note": "the owner decision OPEN-CORTEX-1, read as the precondition of the M4 reading"
   },
   {
    "bead": "BET-16",
@@ -1071,7 +1071,7 @@
    "n": 1,
    "as": "none",
    "keys": [],
-   "note": "not a prerequisite: the review reads bead definitions, which exist once the beads are loaded, and each unit's coverage file maps the late subsections to keys"
+   "note": "resolved inside the bead: step 7 of its Technical approach now lists, for each of the 66 late mechanisms, the beads that carry it (from the owning units' coverage files). Not a dependency: the review reads bead definitions before any of them is implemented, and most are of later milestones"
   },
   {
    "bead": "N00-33",
@@ -1196,7 +1196,7 @@
    "keys": [
     "N23b-24"
    ],
-   "note": "the owner decision OPEN-CORTEX-1 (two beads of the Cortex group carry it)"
+   "note": "the owner decision OPEN-CORTEX-1; under its default the scenario closes as not demonstrated"
   },
   {
    "bead": "NS-21",
@@ -1446,6 +1446,12 @@
    "dep": "N16b-19",
    "as": "dep",
    "why": "rule 7: the bet verdict reads the kill-gate decision KILL-SHADOW"
+  },
+  {
+   "bead": "BET-35",
+   "dep": "N21c-11",
+   "as": "dep",
+   "why": "rule 7: the bet verdict reads the kill-gate decision KILL-FLEET (first reading; the final reading is its dependency BD-370)"
   },
   {
    "bead": "BET-36",
@@ -2138,11 +2144,6 @@
    "note": "scripts/e2e/lemma_coverage.sh of N12-36 also runs NS-11, and the seed BD-379 carries the NS-11 demonstration on K-cay-step; NS-11 holds the demo.yaml and the offline re-check"
   },
   {
-   "mine": "NS-18",
-   "other": "BD-369",
-   "note": "the seed's done-condition names NS-18; NS-18 depends on it and holds only the demo inputs, demo.yaml and the script. Capstone and its demonstration, not a duplicate"
-  },
-  {
    "mine": "NS-20",
    "other": "N31b-14",
    "note": "true duplicate of the scenario script: N31b-14 is titled as the end-to-end script of North-Star NS-20 (qualified design to a verified .fbuild through the six Foundry verbs, with the demonstration manifest); NS-20 specifies the same script and demos/ns-20/demo.yaml"
@@ -2386,7 +2387,15 @@
  "new_beads": [
   "N00-37"
  ],
- "gaps": [],
+ "gaps": [
+  {
+   "section": "§28.8 and §28.23 (GATE-ATEL-03), with §4 (BET-10)",
+   "what": "ablation arms per verb cluster in the agent-surface A/B. BET-10 has no kill gate; its written consequence is that the surface is reduced to the verbs that showed an effect, which needs a per-cluster effect. N28b-11 registers three arms (minimal, full, solve) and BD-374 records per-verb usage only, so nothing measures which clusters showed an effect",
+   "needed_by": [
+    "BET-10"
+   ]
+  }
+ ],
  "fixes": [
   {
    "bead": "BET-13",
@@ -2423,6 +2432,10 @@
   {
    "bead": "BET-24",
    "what": "Scope extended: the acceptance comparison of clause (b) is run by the new bead N00-37, and the reading of its record is stated"
+  },
+  {
+   "bead": "N00-32",
+   "what": "the beads under review resolved into a table: 66 late mechanisms mapped to the keys that carry them, from the owning units' coverage files"
   },
   {
    "bead": "BET-02",

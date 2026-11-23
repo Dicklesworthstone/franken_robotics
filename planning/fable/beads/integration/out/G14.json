@@ -1330,11 +1330,10 @@
    "n": 1,
    "as": "dep",
    "keys": [
-    "N22a-20",
     "N22c-05",
     "N22c-06"
    ],
-   "note": "the pilots of the Frontier rows; the Reflex group wrote them twice (N22a-20 and N22c-05/-06)"
+   "note": "the pilots of the Frontier rows: biped balance in N22c-05, the hybrid mode graph and the arm on a base in N22c-06 (N22a-20 was the same pilot and is superseded by N22c-05)"
   },
   {
    "bead": "N14b-10",
@@ -1575,6 +1574,30 @@
    "why": "the admission transaction is finished without design.patch; BD-059 depends on it"
   },
   {
+   "bead": "BD-063",
+   "dep": "N10a-19",
+   "as": "dep",
+   "why": "the paper-scale pilot of C-12 (a 64-edit sequence with four invalidation controls) that this bead's tests reproduce runs first"
+  },
+  {
+   "bead": "N37-04",
+   "dep": "BD-065",
+   "as": "related",
+   "why": "the importer depends on the `Untrusted` type, not the reverse (edge BD-065 → N37-04 recorded)"
+  },
+  {
+   "bead": "N37-04",
+   "dep": "BD-066",
+   "as": "related",
+   "why": "the importer depends on the `Untrusted` type, not the reverse (need 5 of BD-066)"
+  },
+  {
+   "bead": "N14b-05",
+   "dep": "N15b-23",
+   "as": "related",
+   "why": "only the aerial-terrestrial hybrid of the five variants waits for KILL-SINEW-ROTOR; the bead as a whole is not on one branch"
+  },
+  {
    "bead": "BD-058",
    "dep": "N14a-06",
    "as": "related",
@@ -1624,6 +1647,21 @@
    "note": "N20a-41 also specifies the design-check labels `aliased-passive`/`aliased-all-probes` and refusal 120"
   },
   {
+   "mine": "N14b-12",
+   "other": "N19b-30",
+   "note": "stage 7 restates the height slab, the transition predicates and the door-push predicate that N19b-30 defines"
+  },
+  {
+   "mine": "BD-227",
+   "other": "N19a-39",
+   "note": "the realism-claim check behind FROB-REF-312 is in both; N19a-39 depends on BD-227 and owns promotion against the source register"
+  },
+  {
+   "mine": "N14a-12",
+   "other": "N17a-02",
+   "note": "both state whether a model fits a shape class and with what padding"
+  },
+  {
    "mine": "N14a-02",
    "other": "N15b-01",
    "note": "port signatures and port instances adjoin the junction checks (coverage (e) 12 of U14a)"
@@ -1664,6 +1702,11 @@
    "note": "the scrub-moment derivation μ·W·L/4 is written in both (coverage (e) 2 of U14a)"
   },
   {
+   "mine": "BD-063",
+   "other": "N10a-19",
+   "note": "BD-063's test `sixty_four_edit_sequence` reproduces the C-12 pilot that N10a-19 runs and records"
+  },
+  {
    "mine": "BD-144",
    "other": "N17a-17",
    "note": "both report padding and a bucket histogram on 1,000 generated designs at M1"
@@ -1684,6 +1727,15 @@
    "needed_by": [
     "N14a-14",
     "N14a-03"
+   ]
+  },
+  {
+   "section": "§29",
+   "what": "the third clause of GATE-SKEL-08 (M1: after a schema migration old runs are replayable) needs replay of a recorded referee run; the verb sim.replay is BD-203 (M2) and replay across a migration is N28b-05 (M3), so no M1 bead delivers it and N14a-29 can only log that clause as partial",
+   "needed_by": [
+    "N14a-29",
+    "N14a-18",
+    "BD-059"
    ]
   },
   {
@@ -1982,6 +2034,30 @@
   {
    "bead": "N14a-01",
    "what": "the exact rational type is `frob_lie::exact::Rational` of N13-10 (dependency through need 1) instead of a private `frob_design::exact::Ratio`: one rational type across layers 1 and 2"
+  },
+  {
+   "bead": "N14b-05",
+   "what": "Considerations name the decision the aerial-terrestrial hybrid variant waits for (KILL-SINEW-ROTOR, N15b-23) and the rotor port bead N15b-36; both added as related, since only one of the five variants is on that branch"
+  },
+  {
+   "bead": "BD-066",
+   "what": "BD-065 removed from `related`: it is already in `deps`"
+  },
+  {
+   "bead": "BD-227",
+   "what": "BD-226 removed from `related`: it is already in `deps`"
+  },
+  {
+   "bead": "N14a-11",
+   "what": "BD-102 removed from `related`: it is already in `deps`"
+  },
+  {
+   "bead": "N14a-17",
+   "what": "BD-058 removed from `related`: it is already in `deps`"
+  },
+  {
+   "bead": "N14a-14",
+   "what": "Considerations state the M1/M2 split forced by the airlock: mesh exchange and distance fields are admitted at M2 (N33a-30, added as related), so the mesh and offset-shell rows are `blocked: geometry group` until then (also reported as a gap)"
   }
  ]
 }

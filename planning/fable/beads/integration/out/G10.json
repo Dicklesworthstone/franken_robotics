@@ -1542,10 +1542,1095 @@
    "note": "N38a-14 is the relation registry (M2); the row MR-08 is carried by N38a-16, which needs this construction and stays related"
   }
  ],
- "edges": [],
+ "edges": [
+  {
+   "bead": "BD-011",
+   "dep": "SPEC-C-02",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-159",
+   "dep": "SPEC-C-04",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-012",
+   "dep": "SPEC-C-05",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-087",
+   "dep": "SPEC-C-05",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-157",
+   "dep": "SPEC-C-05",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-085",
+   "dep": "SPEC-C-06",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-115",
+   "dep": "SPEC-C-06",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-153",
+   "dep": "SPEC-C-06",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-045",
+   "dep": "SPEC-C-08",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-102",
+   "dep": "SPEC-C-09",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-241",
+   "dep": "SPEC-C-09",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-327",
+   "dep": "SPEC-C-09",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-107",
+   "dep": "N10a-10",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-325",
+   "dep": "N10a-10",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-060",
+   "dep": "SPEC-C-12",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-076",
+   "dep": "SPEC-C-12",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-077",
+   "dep": "N10a-11",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-103",
+   "dep": "N10a-11",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-108",
+   "dep": "N10a-11",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-117",
+   "dep": "SPEC-C-13",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-019",
+   "dep": "SPEC-C-14",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-053",
+   "dep": "SPEC-C-14",
+   "as": "dep",
+   "why": "coverage (d) of U10a: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-101",
+   "dep": "N10a-12",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N10a-13",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-367",
+   "dep": "N10a-14",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-386",
+   "dep": "N10a-14",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-106",
+   "dep": "N10a-15",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-243",
+   "dep": "N10a-16",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N10a-17",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-335",
+   "dep": "N10a-17",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-063",
+   "dep": "N10a-19",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-077",
+   "dep": "N10a-19",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-118",
+   "dep": "N10a-20",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-249",
+   "dep": "N10a-20",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-149",
+   "dep": "N10a-21",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-150",
+   "dep": "N10a-21",
+   "as": "dep",
+   "why": "coverage (d) of U10a: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "N25c-47",
+   "dep": "N10a-16",
+   "as": "dep",
+   "why": "need 2 of N10a-16: the Moonshot atlas is funded on the second stage of this pilot (rule 8)"
+  },
+  {
+   "bead": "BD-105",
+   "dep": "N10a-18",
+   "as": "related",
+   "why": "coverage (d) of U10a asks certified-solver work to depend on this pilot; BD-105 carries only the closed-form kernel, so the link is not blocking"
+  },
+  {
+   "bead": "BD-333",
+   "dep": "N10b-03",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-334",
+   "dep": "N10b-03",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-335",
+   "dep": "N10b-03",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-288",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-290",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-291",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-293",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-355",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-357",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-358",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-359",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-363",
+   "dep": "N10b-05",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-292",
+   "dep": "N10b-07",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-347",
+   "dep": "N10b-07",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-240",
+   "dep": "N10b-10",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-363",
+   "dep": "N10b-10",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "N20a-10",
+   "dep": "N10b-10",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-285",
+   "dep": "N10b-13",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-357",
+   "dep": "N10b-13",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-322",
+   "dep": "N10b-15",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-264",
+   "dep": "N10b-17",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-277",
+   "dep": "N10b-18",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "BD-321",
+   "dep": "N10b-11",
+   "as": "dep",
+   "why": "coverage (d) of U10b: a Frontier mechanism depends on its pilot (rule 8)"
+  },
+  {
+   "bead": "N20a-10",
+   "dep": "N10b-09",
+   "as": "dep",
+   "why": "need 2 of N10b-09 and coverage (d) of U10b: the race check binds its enumerator to this law suite (rule 6)"
+  },
+  {
+   "bead": "N23b-02",
+   "dep": "N10b-16",
+   "as": "dep",
+   "why": "coverage (d) of U10b names the epic BD-439, which takes no edge (rule 9); the KILL-GATREE first reading decides on this pilot (rule 7)"
+  },
+  {
+   "bead": "N16b-10",
+   "dep": "N10b-17",
+   "as": "dep",
+   "why": "need 2 of N10b-17: the KILL-DR decision reads this pilot (rule 7)"
+  },
+  {
+   "bead": "BD-145",
+   "dep": "SPEC-C-26",
+   "as": "related",
+   "why": "coverage (d) and (e) item 2 of U10b: the executing bead carries the protocol of this contract; the contract is a later milestone, so the link does not block"
+  },
+  {
+   "bead": "BD-145",
+   "dep": "SPEC-C-23",
+   "as": "related",
+   "why": "coverage (d) and (e) item 2 of U10b: the executing bead carries the protocol of this contract; the contract is a later milestone, so the link does not block"
+  },
+  {
+   "bead": "BD-310",
+   "dep": "SPEC-C-23",
+   "as": "related",
+   "why": "coverage (d) and (e) item 2 of U10b: the executing bead carries the protocol of this contract; the contract is a later milestone, so the link does not block"
+  },
+  {
+   "bead": "N23b-19",
+   "dep": "SPEC-C-23",
+   "as": "related",
+   "why": "coverage (d) and (e) item 2 of U10b: the executing bead carries the protocol of this contract; the contract is a later milestone, so the link does not block"
+  },
+  {
+   "bead": "BD-205",
+   "dep": "SPEC-C-29",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-283",
+   "dep": "SPEC-C-29",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-280",
+   "dep": "N10c-01",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-281",
+   "dep": "N10c-01",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-282",
+   "dep": "N10c-01",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-255",
+   "dep": "SPEC-C-30",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-337",
+   "dep": "SPEC-C-31",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-338",
+   "dep": "N10c-02",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-339",
+   "dep": "N10c-02",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-340",
+   "dep": "N10c-02",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-132",
+   "dep": "SPEC-C-32",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-358",
+   "dep": "N10c-04",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-233",
+   "dep": "SPEC-C-33",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-402",
+   "dep": "N10c-06",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-406",
+   "dep": "N10c-07",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-087",
+   "dep": "SPEC-C-36",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-080",
+   "dep": "N10c-08",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-084",
+   "dep": "SPEC-C-37",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-155",
+   "dep": "SPEC-C-37",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-070",
+   "dep": "SPEC-C-38",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-071",
+   "dep": "SPEC-C-38",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-291",
+   "dep": "N10c-09",
+   "as": "dep",
+   "why": "coverage (d) item 5 and (e) item 1 of U10c: the mechanism implements the construction and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-351",
+   "dep": "N10c-11",
+   "as": "dep",
+   "why": "new pilot bead of C-39: the Frontier mechanism it funds depends on it (rule 8)"
+  },
+  {
+   "bead": "N25c-17",
+   "dep": "N10c-11",
+   "as": "dep",
+   "why": "new pilot bead of C-39: the Frontier mechanism it funds depends on it (rule 8)"
+  },
+  {
+   "bead": "N28a-26",
+   "dep": "N10c-11",
+   "as": "dep",
+   "why": "new pilot bead of C-39: the KILL-VOI decision reads its record (rule 7); three beads carry that decision and their integrators will keep one"
+  },
+  {
+   "bead": "N28b-21",
+   "dep": "N10c-11",
+   "as": "dep",
+   "why": "new pilot bead of C-39: the KILL-VOI decision reads its record (rule 7); three beads carry that decision and their integrators will keep one"
+  },
+  {
+   "bead": "N28c-17",
+   "dep": "N10c-11",
+   "as": "dep",
+   "why": "new pilot bead of C-39: the KILL-VOI decision reads its record (rule 7); three beads carry that decision and their integrators will keep one"
+  },
+  {
+   "bead": "N22b-34",
+   "dep": "N10c-03",
+   "as": "dep",
+   "why": "coverage (d) item 5 of U10c names the epic BD-440, which takes no edge (rule 9); this component of the epic implements the part and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "N22b-35",
+   "dep": "N10c-03",
+   "as": "dep",
+   "why": "coverage (d) item 5 of U10c names the epic BD-440, which takes no edge (rule 9); this component of the epic implements the part and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "N25d-22",
+   "dep": "N10c-05",
+   "as": "dep",
+   "why": "coverage (d) item 5 of U10c names the epic BD-437, which takes no edge (rule 9); this component of the epic implements the part and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "N25d-23",
+   "dep": "N10c-05",
+   "as": "dep",
+   "why": "coverage (d) item 5 of U10c names the epic BD-437, which takes no edge (rule 9); this component of the epic implements the part and binds its law suite (rule 6)"
+  },
+  {
+   "bead": "BD-044",
+   "dep": "N10a-01",
+   "as": "dep",
+   "why": "coverage (d) items 1 to 3 of U10a: the M0 exit review asks the D-1 and D-2 review questions that this bead puts in the exit-review template; a review depends on what it reviews (rule 4); later exit reviews inherit the edge through BD-044"
+  },
+  {
+   "bead": "BD-044",
+   "dep": "N10a-03",
+   "as": "dep",
+   "why": "coverage (d) items 1 to 3 of U10a: the M0 exit review asks the D-1 and D-2 review questions that this bead puts in the exit-review template; a review depends on what it reviews (rule 4); later exit reviews inherit the edge through BD-044"
+  }
+ ],
  "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "cross_group_duplicates": [
+  {
+   "mine": "N10a-12",
+   "other": "N13-27",
+   "note": "same pilot: subgroup-lattice mobility on the Sarrus and Bennett linkages against the exact rank"
+  },
+  {
+   "mine": "N10a-13",
+   "other": "N13-29",
+   "note": "overlap: both pilot steps on the pseudo-inertia cone (N13-29 the ten-point geodesic check; N10a-13 the planted-parameter identification of the C-03 pilot line)"
+  },
+  {
+   "mine": "N10a-13",
+   "other": "N30b-15",
+   "note": "overlap: identification of planted parameters before the calibration lane is funded"
+  },
+  {
+   "mine": "N10a-14",
+   "other": "N18a-22",
+   "note": "same pilot subject: the hard-contact law as a batch law, fixed passes to a residual of 1e-4 on battery contact states"
+  },
+  {
+   "mine": "N10a-14",
+   "other": "N18a-25",
+   "note": "overlap: factor reuse on a fixed active set and the share of response columns the mode guard reroutes"
+  },
+  {
+   "mine": "N10a-16",
+   "other": "N25c-42",
+   "note": "overlap: holonomy pilot on a three-link body (M3 here against direct collocation; M6 there on the CPU referee)"
+  },
+  {
+   "mine": "N10a-17",
+   "other": "N22a-28",
+   "note": "same pilot subject: continuation of a quadruped trot orbit in a design parameter before funding (N22c-09 is a third copy)"
+  },
+  {
+   "mine": "N10a-17",
+   "other": "N22c-09",
+   "note": "same pilot subject as N22a-28: orbit continuation of a quadruped trot over design perturbations"
+  },
+  {
+   "mine": "N10a-19",
+   "other": "N14a-15",
+   "note": "overlap: reuse under module substitution counted against a full recompile"
+  },
+  {
+   "mine": "N10a-21",
+   "other": "N21a-13",
+   "note": "same pilot: three M0 kernel bodies derived, emitted on three back ends and certified"
+  },
+  {
+   "mine": "N10b-07",
+   "other": "N28a-23",
+   "note": "overlap: verdict reuse exercised by twelve scripted amendments (M1 polarity pilot here; M4 grade-3 pilot there)"
+  },
+  {
+   "mine": "N10b-10",
+   "other": "N20a-09",
+   "note": "overlap: both plant a stale-read race for the schedule-race check"
+  },
+  {
+   "mine": "N10b-13",
+   "other": "N17a-25",
+   "note": "same pilot: the ballast fixture end to end with bit-identical replay of merged designs"
+  },
+  {
+   "mine": "N10b-15",
+   "other": "N23b-20",
+   "note": "overlap: policy inheritance along design edits against training from scratch"
+  },
+  {
+   "mine": "N10b-16",
+   "other": "N23b-01",
+   "note": "same pilot: geometric-algebra tree policy, three arms at equal wall-clock"
+  },
+  {
+   "mine": "N10b-17",
+   "other": "N16b-07",
+   "note": "same pilot: cross-tier correlation on 200 addresses before the tier correction"
+  },
+  {
+   "mine": "N10b-18",
+   "other": "N26a-28",
+   "note": "overlap: rare-failure exploration by splitting against crude sampling (random-walk fixture and one trap here; one quadruped, four methods there)"
+  },
+  {
+   "mine": "N10a-02",
+   "other": "NAB-21",
+   "note": "both carry the Moonshot queue of 21 items and the cap of four as data (moonshots.toml here, ev_matrix.toml there); one file should hold it"
+  },
+  {
+   "mine": "N10a-02",
+   "other": "N41-09",
+   "note": "overlap: the cap-of-four check on active Moonshot items is implemented in both"
+  },
+  {
+   "mine": "N10a-04",
+   "other": "N21a-20",
+   "note": "overlap: the adjoint-duality test of derivative pairs and validity labels on kernel derivatives"
+  },
+  {
+   "mine": "N10a-06",
+   "other": "N00-27",
+   "note": "overlap: both run the claim-product known answers KA-027 to KA-032 with their controls"
+  },
+  {
+   "mine": "N10-KA1",
+   "other": "N38b-29",
+   "note": "overlap: negative controls for the construction rows printed none stated are set in N10-KA1 to N10-KA3 and the specification beads, and proposed again (72 controls) in N38b-29"
+  },
+  {
+   "mine": "N10-KA1",
+   "other": "N38b-27",
+   "note": "overlap: tolerances for the construction rows printed to set are set in N10-KA1 to N10-KA3 and the specification beads, and decided again by rule in N38b-27"
+  },
+  {
+   "mine": "N10c-11",
+   "other": "N25c-15",
+   "note": "shared experiment, not a duplicate: the comparator clause of the C-39 pilot is read from the Augur probe pilot"
+  }
+ ],
+ "new_beads": [
+  "N09-CX",
+  "N10a-22",
+  "N10c-11"
+ ],
+ "gaps": [
+  {
+   "section": "§10 C-11; §28.4 (A-05, A-06)",
+   "what": "certified inverse kinematics as a mechanism (all solutions in a box with existence and uniqueness certificates by an interval test) has a contract (SPEC-C-11) and a pilot (N10a-18) and no mechanism bead that the pilot gates: BD-105 carries only the closed-form three-joint kernel and says certified inverse kinematics is not in it",
+   "needed_by": [
+    "N10a-18",
+    "SPEC-C-11"
+   ]
+  },
+  {
+   "section": "§10 C-17 pilot; §12.4; §22.11",
+   "what": "no bead issues the energy exclusion of the sill fixture as a mission bundle with proof kind energy-budget before M4 (writer N22b-14 and checker N12-17 are M4); the C-17 pilot at M1 can only use the A-20 analysis verdict of N28a-07",
+   "needed_by": [
+    "N10b-05"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N10a-10",
+   "what": "rule 6: BD-048 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10a-11",
+   "what": "rule 6: BD-052 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-01",
+   "what": "rule 6: BD-010 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-02",
+   "what": "rule 6: BD-010 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-03",
+   "what": "rule 6: BD-050 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-04",
+   "what": "rule 6: BD-047 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-05",
+   "what": "rule 6: BD-010 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-06",
+   "what": "rule 6: BD-050 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-08",
+   "what": "rule 6: BD-011 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-09",
+   "what": "rule 6: BD-048 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-10",
+   "what": "rule 6: BD-049 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-11",
+   "what": "rule 6: BD-010 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-12",
+   "what": "rule 6: BD-054 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-13",
+   "what": "rule 6: BD-045 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-14",
+   "what": "rule 6: BD-018 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10b-01",
+   "what": "rule 6: BD-081 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10b-02",
+   "what": "rule 6: BD-332 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10b-12",
+   "what": "rule 6: BD-170 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10b-14",
+   "what": "rule 6: BD-058 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-16",
+   "what": "rule 6: BD-081, BD-332 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-20",
+   "what": "rule 6: BD-078 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-21",
+   "what": "rule 6: BD-061 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-22",
+   "what": "rule 6: BD-048 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-23",
+   "what": "rule 6: BD-192 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-24",
+   "what": "rule 6: BD-192 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-25",
+   "what": "rule 6: BD-124 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-26",
+   "what": "rule 6: BD-262 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-27",
+   "what": "rule 6: BD-270 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-01",
+   "what": "rule 6: BD-279 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-02",
+   "what": "rule 6: BD-337 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-03",
+   "what": "rule 6: BD-337 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-04",
+   "what": "rule 6: BD-127 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-05",
+   "what": "rule 6: BD-360 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-06",
+   "what": "rule 6: BD-400 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-07",
+   "what": "rule 6: BD-400 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-08",
+   "what": "rule 6: BD-079 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "N10c-09",
+   "what": "rule 6: BD-128 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-28",
+   "what": "rule 6: BD-270, BD-052 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-29",
+   "what": "rule 6: BD-090 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-30",
+   "what": "rule 6: BD-121 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-31",
+   "what": "rule 6: BD-337 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-32",
+   "what": "rule 6: BD-128, BD-026 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-33",
+   "what": "rule 6: BD-162 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-34",
+   "what": "rule 6: BD-360 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-35",
+   "what": "rule 6: BD-400 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-36",
+   "what": "rule 6: BD-011, BD-087 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-37",
+   "what": "rule 6: BD-050, BD-069, BD-079 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-38",
+   "what": "rule 6: BD-069 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-39",
+   "what": "rule 6: BD-262 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-40",
+   "what": "rule 6: BD-128, BD-026 moved from deps to related; order-of-work paragraph added to Scope (the suite closes on its reference model and is bound by the implementing bead)"
+  },
+  {
+   "bead": "SPEC-C-28",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-29",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-30",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-31",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-32",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-33",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-34",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-35",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-36",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-37",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-38",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-39",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-40",
+   "what": "depends on N10a-01 like SPEC-C-01 to SPEC-C-27; register-row duty added to Scope and Acceptance; statement identifiers prefixed and template sections named"
+  },
+  {
+   "bead": "SPEC-C-14",
+   "what": "cycle SPEC-C-14 <-> BD-018 broken by the rule-6 move"
+  },
+  {
+   "bead": "SPEC-C-30",
+   "what": "cycle through BD-121 broken by the rule-6 move; the consideration on the order against BD-121 rewritten"
+  },
+  {
+   "bead": "SPEC-C-31",
+   "what": "cycle through BD-337 broken by the rule-6 move"
+  },
+  {
+   "bead": "SPEC-C-35",
+   "what": "cycle SPEC-C-35 <-> BD-400 broken by the rule-6 move"
+  },
+  {
+   "bead": "SPEC-C-04",
+   "what": "BD-007 kept as a dependency: the admitted referee oracle behind the airlock (M0), which the suite runs against; it does not implement the construction"
+  },
+  {
+   "bead": "SPEC-C-07",
+   "what": "BD-033 kept as a dependency: an M0 frob-conformance oracle bead whose chord formula the suite reuses"
+  },
+  {
+   "bead": "N10a-01",
+   "what": "law-suite convention gains the order-of-work rule that the three units had settled differently: specification first, suite staged in frob-conformance when the crate is absent, binding by the implementing bead"
+  },
+  {
+   "bead": "N10a-04",
+   "what": "label set aligned with the C-16 contract of N10b-01 (nine labels, one type, the same repairs for FROB-REF-263; it had seven); Scope names N10b-01"
+  },
+  {
+   "bead": "N10b-01",
+   "what": "Scope names N10a-04 for the doctrine check and the composite order"
+  },
+  {
+   "bead": "N10b-04",
+   "what": "overlap with N10c-04 re-scoped: proof rules here, region-certificate contract and paving arithmetic there"
+  },
+  {
+   "bead": "N10c-04",
+   "what": "overlap with N10b-04 re-scoped; its statements are written C-32.R1 to C-32.R8 so they cannot be read as the rules C-17.R1 to C-17.R6"
+  },
+  {
+   "bead": "N10b-19",
+   "what": "Scope names the sibling audits N10a-22 and N10c-10 and the register test of N10a-01"
+  },
+  {
+   "bead": "N10c-10",
+   "what": "Scope names the sibling audits N10a-22 and N10b-19 in place of unnamed sibling work"
+  },
+  {
+   "bead": "SPEC-C-06",
+   "what": "definition of the rounding margin of the formed residual stated in the bead (it pointed to another chapter)"
+  },
+  {
+   "bead": "N10a-14",
+   "what": "definition of the rounding margin of the formed residual stated in the bead"
+  },
+  {
+   "bead": "SPEC-C-39",
+   "what": "the pilot record moves to the new pilot bead N10c-11; Scope and Acceptance updated"
+  },
+  {
+   "bead": "N10a-02",
+   "what": "added to related of SPEC-C-16 to SPEC-C-40 and of the ten pilot beads of U10b (its validators read their pilot and comparator fields); coverage (d) of U10a"
+  },
+  {
+   "bead": "N09-CX",
+   "what": "new registry bead linked from N09-KA, N10a-02, N10a-05, N10a-06, N10a-07 and N10-CX"
+  },
+  {
+   "bead": "N10a-12",
+   "what": "pilot record identifier PILOT-C-01 stated, the value the register row carries (likewise N10a-13 to N10a-21 with PILOT-C-03, -06, -07, -08, -10, -11, -12, -13, -14), matching the pilot beads of U10b"
+  },
+  {
+   "bead": "N10a-22",
+   "what": "new audit bead: the three audits N10a-22, N10b-19 and N10c-10 now cover the forty constructions"
+  },
+  {
+   "bead": "N10c-11",
+   "what": "new pilot bead for C-39; BD-351, N25c-17 and the KILL-VOI decision depend on it (edges recorded)"
+  }
+ ]
 }

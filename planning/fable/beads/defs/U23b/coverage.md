@@ -114,3 +114,29 @@ Every one of the 22 gates and 9 kill gates has its full threshold, milestone and
 18. **No refusal code for fewer than five seeds.** Done: a label `under-seeded` that gate records and comparisons refuse (N23b-09).
 19. **The window loss of §23.29** is written without a discount. Done: the physical discount of the task is applied; β = 0 gives the plan's sum (N23b-38).
 20. **Flag defaults in the information contract.** The plan states the default class only for reward and `info` fields. Done: termination and truncation flags and undeclared masks default to trainer-only (N23b-31), flagged.
+
+## (f) Integration pass (group G23: units U23a and U23b)
+
+Changes made when the two units of the chapter were connected; the tables above are the drafting record and are
+read with these corrections.
+
+- **Superseded duplicates.** N23b-26 (OPEN-CORTEX-3) is superseded by N23a-29 of the other unit, whose reset
+  convention matches the mechanism N23a-28 (one reset in k + 1 children); read N23a-29 for N23b-26 in the rows
+  above. N23b-24 (OPEN-CORTEX-1) and N23b-25 (OPEN-CORTEX-2 with OPEN-CORTEX-5) are the kept beads of their
+  questions; the other unit's N23a-22 and N23a-09 were folded into them. The Cortex defaults live in
+  `registries/defaults.toml`.
+- **Kill-gate decisions.** The five kill gates of §23.1 to §23.13 are decided by separate beads of the other
+  unit: KILL-LEARNKERN N23a-16 (fallback trainer N23a-17), KILL-DISTILL N23a-21, KILL-FAMILY N23a-26,
+  KILL-INHERIT N23a-30, KILL-EQUIV N23a-33. The seed beads measure; N23b-16's carrier map says so. The parity
+  clauses of GATE-CORTEX-08 are N23a-19; BD-199 measures the scaling clause.
+- **Verbs.** `train.start`, `train.status`, `train.stop` are N23a-14 and `train.export` is N23a-13 (not BD-198);
+  `policy.apply` is N23a-25 (not BD-322). N23b-33 and N23b-09 depend on those beads and BD-198 depends on them.
+- **Build beads behind KILL-ALTALGO** (asked for in section (d)): N23a-37 (SAC), N23a-38 (TD3), N23a-39
+  (evolution strategies) were written; asynchronous sharding is N36-12; adaptive randomization is N23b-04; the
+  privileged-teacher path is inside BD-323 and checks its row.
+- **Late known answers.** The five unnumbered known answers are provisional rows KA-23-L1 to L5 of N23-KA.
+- **Refusal registry.** The raising-site column of N23-REF names the beads that raise each code (N23a-03, -05,
+  -08, -13, -18, -24, -25, -27 beside the seeds).
+- **Reported, not fixed here.** No bead assigns Appendix O codes to refusals that late subsections state in
+  words (three in this chapter, one in §24.14). The planted linear-phase sampler is drafted twice (N23b-30 and
+  N33c-37); the geometric-algebra pilot twice (N23b-01 and N10b-16); the inheritance pilot overlaps N10b-15.

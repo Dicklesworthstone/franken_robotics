@@ -8,7 +8,7 @@ labels: ["m2", "lemma", "spine", "spec", "solid", "autopsy", "frob-chronicle", "
 parent: "WP-51"
 deps: ["N10a-01", "STD-TEST", "STD-E2E"]
 needs: []
-related: ["BD-203", "BD-205", "BD-279", "BD-283", "N10c-01", "SPEC-C-28", "N10-CX", "N10c-10", "BD-090"]
+related: ["BD-203", "BD-205", "BD-279", "BD-283", "N10c-01", "SPEC-C-28", "N10-CX", "N10c-10", "BD-090", "N10a-02"]
 gates: ["GATE-AUTOPSY-01", "GATE-AUTOPSY-02"]
 plan_refs: ["§10 C-29", "§27.3", "§27.4", "§27.5", "§29.8", "§38.7 MR-08", "Appendix I.12", "Appendix M.9", "Appendix N.7"]
 ---

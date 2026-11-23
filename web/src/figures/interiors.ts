@@ -517,12 +517,26 @@ const retail = (u: U) => {
   p.add(3.6, -3.4, 3, 0.7, 1.3, "glass");
   p.add(3.6, -3.5, 2.9, 0.5, 0.9, "stock2", 0.1);
   p.hazard("Glass case", "with condensation", "Depth dropout or a false return", 3.4, -3.05, 0.9);
+  // Checkouts between the sales floor and the front of the store, each lane running towards the door: a belt at the
+  // entry end, then the scanner, the bagging shelf, a card reader and the till's screen, and a lane light on a pole.
   const lane = p.r(0.6, 0.9);
   for (let i = 0; i < 2; i++) {
-    p.counter(4.6, 0.6 + i * (lane + 0.62), 1.5, 0.6, "wood");
-    p.add(4.2, 0.6 + i * (lane + 0.62), 0.3, 0.3, 0.3, "dark", 0.9);
+    const x = 3.35 + i * (lane + 0.62);
+    p.add(x, 1.3, 0.52, 1.56, 0.08, "dark");
+    p.add(x, 1.3, 0.6, 1.6, 0.78, "wood", 0.08);
+    p.add(x, 1.3, 0.62, 1.62, 0.04, "dark", 0.86);
+    // Along the worktop, which runs from z 0.49 to 2.11: belt, scanner, card reader, bagging.
+    p.add(x, 0.97, 0.44, 0.86, 0.012, "belt", 0.9);
+    p.add(x, 1.52, 0.36, 0.2, 0.008, "glass", 0.9);
+    p.add(x + 0.23, 1.52, 0.08, 0.2, 0.24, "dark", 0.9);
+    p.add(x - 0.24, 1.68, 0.08, 0.1, 0.06, "dark", 0.9);
+    p.add(x - 0.04, 1.92, 0.5, 0.3, 0.02, "steel", 0.9);
+    p.add(x + 0.24, 1.78, 0.04, 0.04, 0.3, "steel", 0.9);
+    p.add(x + 0.24, 1.78, 0.05, 0.3, 0.2, "dark", 1.2);
+    p.add(x + 0.26, 0.55, 0.04, 0.04, 0.6, "steel", 0.9);
+    p.add(x + 0.26, 0.55, 0.1, 0.16, 0.12, "stock2", 1.5);
   }
-  p.hazard("Checkout lane", `${p.m(lane)} wide`, "The footprint does not pass", 4.6, 0.6 + (lane + 0.62) / 2, 0.15);
+  p.hazard("Checkout lane", `${p.m(lane)} wide`, "The footprint does not pass", 3.35 + (lane + 0.62) / 2, 1.3, 0.15);
   p.patch(0.2, 2.9, 1.1, 0.7, 0.5);
   p.hazard("Spill", `${p.r(0.1, 2).toFixed(1)} mm film`, "Slip", 0.2, 2.9, 0.12);
   p.add(-3.4, 3.1, 2.2, 1, 0.012, "mat");

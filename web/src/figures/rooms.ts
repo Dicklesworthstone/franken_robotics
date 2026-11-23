@@ -115,7 +115,11 @@ export default function mount(root: HTMLElement) {
     for (const meshes of sets.values()) {
       const parts = meshes.map((mesh) => {
         mesh.updateMatrix();
-        return (mesh.geometry.index ? mesh.geometry.toNonIndexed() : mesh.geometry.clone()).applyMatrix4(mesh.matrix);
+        const part = mesh.geometry.clone().applyMatrix4(mesh.matrix);
+        // Rounded blocks are made without an index. One that names each vertex in turn lets them join the indexed
+        // boxes, cylinders and balls, which keep their shared vertices: a third fewer in a room of round things.
+        if (!part.index) part.setIndex([...Array(part.getAttribute("position").count).keys()]);
+        return part;
       });
       const geo = mergeGeometries(parts);
       for (const part of parts) part.dispose();

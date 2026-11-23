@@ -1078,6 +1078,11 @@ function mecanum(idle: boolean): Body {
       box([0.014, 0.03, 0.22], [0.312, 0.09, 0], "glow"),
       ...twin((s) => [ball(0.016, [0.31, 0.055, s * 0.08], "lens")]),
       ...[X, -X].flatMap((x) => twin((s) => [cyl(0.028, 0.06, [x, 0, s * 0.15], "steel", "z")])),
+      // Rubber bumpers fore and aft between the wheels, tail lights, an emergency stop, and rails on the deck.
+      ...[1, -1].map((e) => box([0.024, 0.03, 0.27], [e * 0.316, 0.02, 0], "rubber")),
+      ...twin((s) => [box([0.008, 0.02, 0.05], [-0.312, 0.1, s * 0.1], "amber"), box([0.34, 0.006, 0.016], [0, 0.174, s * 0.06], "steel")]),
+      cyl(0.026, 0.008, [-0.205, 0.167, 0.09], "dark"),
+      cyl(0.019, 0.016, [-0.205, 0.178, 0.09], "amber"),
     ]),
   );
   for (const [i, w] of wheels.entries()) {
@@ -1128,6 +1133,8 @@ function omni(idle: boolean): Body {
       cyl(0.06, 0.03, [0, 0.165, 0], "steel"),
       ball(0.048, [0, 0.18, 0], "lens"),
       ...angles.map((a) => box([0.09, 0.07, 0.08], [Math.cos(a) * 0.15, 0.02, Math.sin(a) * 0.15], "dark", [0, -a, 0])),
+      // A ranging window in the rim between each pair of wheels.
+      ...angles.map((a) => box([0.012, 0.03, 0.07], [Math.cos(a + Math.PI / 3) * 0.197, 0.075, Math.sin(a + Math.PI / 3) * 0.197], "dark", [0, -(a + Math.PI / 3), 0])),
     ]),
   );
   for (const [i, a] of angles.entries()) {
@@ -1412,18 +1419,28 @@ function triwheel(idle: boolean): Body {
   const stand = -TAU / 12;
   mk.add(
     trunk([
-      box([0.34, 0.42, 0.3], [0, 0.37, 0], "shell"),
+      // The cargo body on its chassis, a hatch set into the flat of its top, and a rubber bumper across the front.
+      box([0.34, 0.4, 0.3], [0, 0.36, 0], "shell"),
       box([0.36, 0.05, 0.32], [0, 0.14, 0], "dark"),
-      box([0.024, 0.22, 0.2], [0.172, 0.4, 0], "dark"),
-      box([0.008, 0.03, 0.16], [0.186, 0.47, 0], "glow"),
-      ...twin((s) => [ball(0.016, [0.184, 0.36, s * 0.05], "lens")]),
-      box([0.3, 0.012, 0.26], [0, 0.585, 0], "dark"),
+      box([0.2, 0.008, 0.16], [0, 0.56, 0], "dark"),
+      box([0.188, 0.012, 0.148], [0, 0.566, 0], "shell"),
+      box([0.05, 0.004, 0.018], [-0.045, 0.5725, 0], "dark"),
+      box([0.024, 0.2, 0.2], [0.172, 0.39, 0], "dark"),
+      box([0.008, 0.03, 0.16], [0.186, 0.45, 0], "glow"),
+      ...twin((s) => [ball(0.016, [0.184, 0.35, s * 0.05], "lens")]),
+      box([0.03, 0.045, 0.3], [0.178, 0.205, 0], "rubber"),
+      // A telescopic handle: sleeves down the back, steel tubes out of them, a rubber grip across.
       ...twin((s) => [
-        cyl(0.018, 0.36, [-0.18, 0.7, s * 0.12], "steel"),
+        cyl(0.022, 0.26, [-0.195, 0.48, s * 0.12], "dark"),
+        cyl(0.016, 0.3, [-0.195, 0.75, s * 0.12], "steel"),
+        box([0.04, 0.03, 0.04], [-0.195, 0.6, s * 0.12], "dark"),
         cyl(0.03, 0.06, [0, 0, s * 0.18], "steel", "z"),
         box([0.07, 0.17, 0.04], [0, 0.07, s * 0.165], "dark"),
+        // Louvres on each flank over the cluster drive.
+        ...[0, 1, 2].map((i) => box([0.16, 0.008, 0.004], [-0.02, 0.24 + i * 0.03, s * 0.151], "dark")),
       ]),
-      cyl(0.02, 0.28, [-0.18, 0.88, 0], "dark", "z"),
+      cap(0.022, 0.24, [-0.195, 0.9, 0], "rubber", "z"),
+      ...twin((s) => [cyl(0.026, 0.03, [-0.195, 0.9, s * 0.135], "dark", "z")]),
     ]),
   );
   for (const side of [-1, 1] as const) {
@@ -1746,22 +1763,54 @@ function snake(idle: boolean): Body {
   };
 }
 
-/** A two-wheeled inverted pendulum. To speed up it must lean ahead of its wheels, by atan(a / g). */
+/** A two-wheeled inverted pendulum. To speed up it must lean ahead of its wheels, and further than a / g. */
 function balancer(idle: boolean): Body {
   const mk = new Maker();
   const r = 0.14;
   const [A, w] = idle ? [0.06, 1.5] : [0.36, 1.4];
   const x = (t: number) => A * Math.sin(w * t);
-  const pitch = (t: number) => -Math.atan((-A * w * w * Math.sin(w * t)) / 9.81);
+  /*
+   * The lean that carries it, from angular momentum about the wheels' contact with the floor. The body (m, its centre
+   * l above the axle, Ic about that centre) pivots at the axle, r up, and the motors that push the wheels push back on
+   * it, so to accelerate at a it must lean further than a / g:
+   *   (Ic + m l² + m r l) φ'' = m g l φ − a (m (r + l) + M r + J / r)
+   * For a = −A ω² sin ωt the one motion that stays balanced is φ = a K / (m g l + ω² (Ic + m l² + m r l)), with K the
+   * bracket: a forward lean in step with the push, near twice a / g for a 10 kg body on 1.2 kg hub-motor wheels.
+   */
+  const [m, l, Ic, M, J] = [10, 0.2, 0.25, 2.4, 0.03];
+  const gain = (m * (r + l) + M * r + J / r) / (m * 9.81 * l + w * w * (Ic + m * l * l + m * r * l));
+  const pitch = (t: number) => -gain * (-A * w * w * Math.sin(w * t));
+  // A fender's arc over a wheel, clear of the tyre.
+  const fender = (s: 1 | -1): Part[] =>
+    Array.from({ length: 6 }, (_, i) => {
+      const [a0, a1] = [0.42 + (i / 6) * 2.3, 0.42 + ((i + 1) / 6) * 2.3];
+      return slab([0.172 * Math.cos(a0), 0.172 * Math.sin(a0), s * 0.17], [0.172 * Math.cos(a1), 0.172 * Math.sin(a1), s * 0.17], 0.012, 0.066, "dark");
+    });
   mk.add(
     trunk([
-      box([0.12, 0.42, 0.26], [0, 0.31, 0], "shell"),
-      box([0.13, 0.08, 0.3], [0, 0.03, 0], "dark"),
-      box([0.03, 0.15, 0.2], [0.06, 0.4, 0], "dark"),
-      box([0.006, 0.02, 0.14], [0.077, 0.445, 0], "glow"),
-      ...twin((s) => [ball(0.018, [0.074, 0.37, s * 0.05], "lens"), box([0.3, 0.02, 0.07], [0, 0.17, s * 0.17], "dark")]),
-      cap(0.045, 0.16, [0, 0.55, 0], "dark", "z"),
-      box([0.006, 0.012, 0.16], [0.046, 0.55, 0], "glow"),
+      // The drive pod between the wheels: battery and both motors, low.
+      box([0.2, 0.13, 0.25], [0, 0, 0], "dark"),
+      box([0.22, 0.03, 0.262], [0, 0.075, 0], "shell"),
+      box([0.006, 0.014, 0.16], [0.101, 0.024, 0], "glow"),
+      // The torso, its face to the front, a grab handle behind.
+      box([0.13, 0.3, 0.21], [0, 0.24, 0], "shell"),
+      box([0.012, 0.13, 0.15], [0.066, 0.27, 0], "dark"),
+      box([0.004, 0.008, 0.1], [0.073, 0.315, 0], "glow"),
+      strut([-0.097, 0.35, -0.06], [-0.097, 0.35, 0.06], 0.009, "dark"),
+      // The neck, the head with its visor and eyes, and a lidar on top.
+      cyl(0.028, 0.06, [0, 0.42, 0], "steel"),
+      box([0.15, 0.1, 0.24], [0.01, 0.5, 0], "shell"),
+      box([0.012, 0.06, 0.2], [0.086, 0.5, 0], "dark"),
+      box([0.004, 0.008, 0.14], [0.092, 0.465, 0], "glow"),
+      cyl(0.04, 0.034, [0, 0.567, 0], "dark"),
+      ring(0.04, 0.004, [0, 0.572, 0], "glow"),
+      ...twin((s) => [
+        cyl(0.055, 0.024, [0, 0, s * 0.135], "steel", "z"),
+        ball(0.016, [0.09, 0.505, s * 0.045], "lens"),
+        strut([-0.065, 0.35, s * 0.06], [-0.097, 0.35, s * 0.06], 0.009, "dark"),
+        ...fender(s),
+        slab([0, 0.185, s * 0.105], [0, 0.185, s * 0.15], 0.05, 0.012, "dark"),
+      ]),
     ]),
   );
   // The wheel's angle in the world is −x / r; the joint measures it from the leaning body.

@@ -11,10 +11,13 @@ import {
   RepeatWrapping,
   ShadowMaterial,
   Euler,
+  InstancedMesh,
+  Matrix3,
+  Matrix4,
   Vector3,
 } from "three";
 import { $, $$, clamp, fit, loop, mix, reduced, smooth } from "./lib";
-import { envelope, type Envelope } from "./envelope";
+import { envelope, treads, type Envelope } from "./envelope";
 import { archetypes } from "./archetypes";
 import { makers, type Body, type Link } from "./bodies";
 import { lit, materials, renderer, solid } from "./three-kit";
@@ -40,7 +43,8 @@ function gridTexture() {
   }
   const t = new CanvasTexture(c);
   t.wrapS = t.wrapT = RepeatWrapping;
-  t.repeat.set(28, 28);
+  // The floor is drawn where the body has driven to, so its uv transform is set by hand every frame.
+  t.matrixAutoUpdate = false;
   t.anisotropy = 8;
   return t;
 }
@@ -92,6 +96,8 @@ export default function mount(root: HTMLElement) {
     node: Group;
     set: Quaternion;
     burst: Vector3;
+    /** A belt's shoes, one instanced mesh for each of their parts. */
+    belt?: { meshes: InstancedMesh[]; locals: Matrix4[]; tread: ReturnType<typeof treads> };
   }
   let body: Body;
   let posed: Posed[] = [];
@@ -104,6 +110,21 @@ export default function mount(root: HTMLElement) {
   let span = 1;
   let tall = 1;
   const swing = new Quaternion();
+  const shoe = new Matrix4();
+  const cell = new Matrix4();
+  const uv = new Matrix3();
+  /** Moves the grid under the body to where it has driven: tiles are half a metre, the plane 14 m across. */
+  const ground = (t: number) => {
+    const at = body.travel?.(t) ?? { x: 0, z: 0, yaw: 0 };
+    const c = Math.cos(at.yaw);
+    const s = Math.sin(at.yaw);
+    const k = 14 / 0.5;
+    const ox = (at.x - 7 * c + 7 * s) / 0.5;
+    const oz = (at.z + 7 * s + 7 * c) / 0.5;
+    const wrap = (v: number) => v - Math.floor(v);
+    uv.set(k * c, -k * s, wrap(ox), -k * s, -k * c, wrap(oz), 0, 0, 1);
+    grid.matrix.copy(uv);
+  };
 
   const build = (i: number) => {
     index = i;
@@ -115,17 +136,31 @@ export default function mount(root: HTMLElement) {
       const node = new Group();
       const set = new Quaternion();
       if (link.set) set.setFromEuler(new Euler(...link.set));
-      for (const part of link.parts) {
-        const mesh = new Mesh(solid(part.s, part.d), mats[part.m]);
-        mesh.position.set(...part.p);
-        if (part.r) mesh.rotation.set(...part.r);
-        mesh.castShadow = true;
-        mesh.receiveShadow = part.m !== "glow";
-        node.add(mesh);
-      }
+      let belt: Posed["belt"];
+      if (link.belt) {
+        const tread = treads(link);
+        belt = { tread, meshes: [], locals: [] };
+        for (const part of link.parts) {
+          const mesh = new InstancedMesh(solid(part.s, part.d), mats[part.m], tread.count);
+          mesh.castShadow = mesh.receiveShadow = true;
+          mesh.frustumCulled = false;
+          belt.meshes.push(mesh);
+          const turn = new Quaternion().setFromEuler(new Euler(...(part.r ?? [0, 0, 0])));
+          belt.locals.push(new Matrix4().compose(new Vector3(...part.p), turn, new Vector3(1, 1, 1)));
+          node.add(mesh);
+        }
+      } else
+        for (const part of link.parts) {
+          const mesh = new Mesh(solid(part.s, part.d), mats[part.m]);
+          mesh.position.set(...part.p);
+          if (part.r) mesh.rotation.set(...part.r);
+          mesh.castShadow = true;
+          mesh.receiveShadow = part.m !== "glow";
+          node.add(mesh);
+        }
       const [x, y, z] = link.at;
       const burst = new Vector3(x, y + 0.02, z).normalize().multiplyScalar(link.parent < 0 ? 0 : 0.16);
-      posed.push({ link, node, set, burst });
+      posed.push({ link, node, set, burst, belt });
       if (link.parent < 0) rootNode = node;
       else posed[link.parent]!.node.add(node);
     }
@@ -143,7 +178,7 @@ export default function mount(root: HTMLElement) {
     $(root, "[data-rows]").innerHTML = body.links
       .map((l) => {
         const active = l.joint !== "free" && l.joint !== "fixed" && !l.passive;
-        const name = l.joint === "free" || l.joint === "fixed" ? l.joint : `turn ${l.joint}${l.passive ? ", passive" : ""}`;
+        const name = l.belt ? "belt, passive" : l.joint === "free" || l.joint === "fixed" ? l.joint : `turn ${l.joint}${l.passive ? ", passive" : ""}`;
         return `<tr><td>${l.name}</td><td>${l.parent < 0 ? "world" : body.links[l.parent]!.name}</td><td${active ? ' class="act"' : ""}>${name}</td><td>${l.at.map(num).join(" ")}</td></tr>`;
       })
       .join("");
@@ -152,7 +187,13 @@ export default function mount(root: HTMLElement) {
 
   const pose = (t: number, open: number) => {
     const off = body.base?.(t) ?? {};
-    for (const [i, { link, node, set, burst }] of posed.entries()) {
+    for (const [i, { link, node, set, burst, belt }] of posed.entries()) {
+      if (belt)
+        for (let k = 0; k < belt.tread.count; k++) {
+          belt.tread.place(t, k, shoe);
+          for (const [j, mesh] of belt.meshes.entries()) mesh.setMatrixAt(k, cell.multiplyMatrices(shoe, belt.locals[j]!));
+        }
+      if (belt) for (const mesh of belt.meshes) mesh.instanceMatrix.needsUpdate = true;
       node.position.set(...link.at);
       if (link.joint === "free") {
         node.position.set(off.x ?? 0, body.height + (off.y ?? 0) + (1 - open) * 0.25, off.z ?? 0);
@@ -179,7 +220,7 @@ export default function mount(root: HTMLElement) {
     if (view.running) clock += dt;
     const open = reduced ? 1 : clamp((now - born) / 900, 0, 1);
     pose(clock, open);
-    grid.offset.x = (grid.offset.x + (view.running ? dt * body.speed * 2 : 0)) % 1;
+    ground(clock);
     size = mix(size, body.size, 1 - Math.exp(-dt * 6));
     if (!held) {
       vyaw = mix(vyaw, view.running ? 0.12 : 0, 1 - Math.exp(-dt * 1.2));

@@ -5,7 +5,6 @@ import {
   type BufferGeometry,
   CanvasTexture,
   Color,
-  CylinderGeometry,
   DirectionalLight,
   DynamicDrawUsage,
   Float32BufferAttribute,
@@ -21,17 +20,15 @@ import {
   PlaneGeometry,
   Raycaster,
   RingGeometry,
-  SphereGeometry,
   Vector2,
   Vector3,
 } from "three";
-import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { archetypes } from "./archetypes";
 import { makers, type Mat, type Part } from "./bodies";
-import { envelope, frames, verdict, type Envelope, type Place, type Verdict } from "./envelope";
+import { envelope, frames, treads, verdict, type Envelope, type Place, type Verdict } from "./envelope";
 import { $, clamp, fit, fmt, loop, mix, range, reduced, rng, seg, smooth } from "./lib";
-import { lit, renderer } from "./three-kit";
+import { lit, renderer, shapeOf } from "./three-kit";
 
 /** How the crowd stands: rows run away from the camera, columns across it. */
 const ROWS = 11;
@@ -93,16 +90,10 @@ const PAINT: Record<Mat, string> = {
   rubber: "#0d1210",
   glow: "#ffffff",
   amber: "#fbbf24",
+  lens: "#07120e",
 };
 function shape(p: Part, fine: boolean): BufferGeometry {
-  const [a, b, c] = p.d;
-  let geo: BufferGeometry;
-  if (p.s === "ball") geo = new SphereGeometry(a, fine ? 16 : 10, fine ? 10 : 7);
-  else if (p.s === "cyl") geo = new CylinderGeometry(a, c, b, fine ? 22 : 14);
-  else {
-    const r = Math.min(a, b, c) * 0.26;
-    geo = r > 0.005 ? new RoundedBoxGeometry(a, b, c, fine ? 2 : 1, r) : new BoxGeometry(a, b, c);
-  }
+  const geo = shapeOf(p.s, p.d, fine ? 1 : 0);
   const flat = geo.index ? geo.toNonIndexed() : geo;
   flat.deleteAttribute("uv");
   const own = new Group();
@@ -170,8 +161,9 @@ export default function mount(root: HTMLElement) {
 
   // Every link shape is drawn once, instanced over every body that has it.
   const members = small ? crowd(8, 7) : crowd();
-  const kinds = new Map(archetypes.map((a) => [a.id, makers[a.id]!()]));
-  const sizes = new Map<string, Envelope>([...kinds].map(([id, b]) => [id, envelope(b)]));
+  // A body is measured as it drives, and drawn as it waits its turn at the door.
+  const kinds = new Map(archetypes.map((a) => [a.id, makers[a.id]!(true)]));
+  const sizes = new Map<string, Envelope>(archetypes.map((a) => [a.id, envelope(makers[a.id]!())]));
   const bodies = members.map((m) => {
     const body = kinds.get(m.id)!;
     return {
@@ -179,6 +171,7 @@ export default function mount(root: HTMLElement) {
       body,
       size: sizes.get(m.id)!,
       frame: frames(body),
+      treads: new Map(body.links.flatMap((l, i) => (l.belt ? [[i, treads(l)] as const] : []))),
       clock: m.beat,
       root: new Matrix4().compose(
         new Vector3(m.x, 0, m.z),
@@ -191,10 +184,10 @@ export default function mount(root: HTMLElement) {
       lit: 1,
       drawn: -1,
       hue: new Color(HUE.fits),
-      slots: [] as [mesh: InstancedMesh, slot: number, link: number, lamp: boolean][],
+      slots: [] as [mesh: InstancedMesh, slot: number, link: number, lamp: boolean, shoe: number][],
     };
   });
-  const groups = new Map<string, { parts: Part[]; lamp: boolean; users: [number, number][] }>();
+  const groups = new Map<string, { parts: Part[]; lamp: boolean; users: [number, number, number][] }>();
   for (const [b, one] of bodies.entries())
     for (const [l, link] of one.body.links.entries())
       for (const lamp of [false, true]) {
@@ -203,7 +196,10 @@ export default function mount(root: HTMLElement) {
         const sign = JSON.stringify([lamp, parts]);
         let group = groups.get(sign);
         if (!group) groups.set(sign, (group = { parts, lamp, users: [] }));
-        group.users.push([b, l]);
+        // A belt's parts are one shoe, drawn once for every shoe round the loop.
+        const shoes = one.treads.get(l)?.count ?? 0;
+        if (shoes) for (let k = 0; k < shoes; k++) group.users.push([b, l, k]);
+        else group.users.push([b, l, -1]);
       }
   const plain = new MeshStandardMaterial({ vertexColors: true, roughness: 0.42, metalness: 0.12 });
   const bright = new MeshBasicMaterial({ toneMapped: false });
@@ -217,7 +213,7 @@ export default function mount(root: HTMLElement) {
     mesh.receiveShadow = !small && !lamp;
     scene.add(mesh);
     meshes.push(mesh);
-    for (const [slot, [b, l]] of users.entries()) bodies[b]!.slots.push([mesh, slot, l, lamp]);
+    for (const [slot, [b, l, k]] of users.entries()) bodies[b]!.slots.push([mesh, slot, l, lamp, k]);
   }
 
   // A pool of light under each body that fits.
@@ -308,6 +304,7 @@ export default function mount(root: HTMLElement) {
   };
 
   let drift = 0;
+  const shoe = new Matrix4();
   const aim = new Vector3();
   const look = { x: 0, y: 0, tx: 0, ty: 0 };
   let W = 1;
@@ -339,7 +336,9 @@ export default function mount(root: HTMLElement) {
       b.hue.lerp(off.set(HUE[b.says]), reduced ? 1 : 1 - Math.exp(-dt * 9));
       if (moving) b.clock += dt * smooth(b.lit);
       const world = b.frame.pose(b.clock, b.root);
-      for (const [mesh, slot, link] of b.slots) world[link]!.toArray(mesh.instanceMatrix.array, slot * 16);
+      for (const [mesh, slot, link, , k] of b.slots)
+        if (k < 0) world[link]!.toArray(mesh.instanceMatrix.array, slot * 16);
+        else b.treads.get(link)!.place(b.clock, k, shoe).premultiply(world[link]!).toArray(mesh.instanceMatrix.array, slot * 16);
       if (b.drawn !== b.lit || (b.lit > 0 && b.lit < 1) || b.says !== "fits") paint(i);
     }
     for (const mesh of meshes) mesh.instanceMatrix.needsUpdate = true;

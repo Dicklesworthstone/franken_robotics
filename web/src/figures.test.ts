@@ -188,7 +188,7 @@ test("the crowd is the same for everyone, and every body is sorted by its own me
   const size = Object.fromEntries(Object.entries(makers).map(([id, make]) => [id, envelope(make())]));
   for (const e of Object.values(size)) for (const v of Object.values(e)) expect(v).toBeGreaterThan(0.05);
   const count = (place: string) => all.filter((m) => fits(size[m.id]!, m.scale, PLACES[place]!) === "fits").length;
-  expect(count("door")).toBe(67);
+  expect(count("door")).toBe(71);
   expect(count("hall")).toBeGreaterThan(count("door"));
   expect(count("shelf")).toBeLessThan(count("door"));
   // A smaller copy of a body that fits also fits.

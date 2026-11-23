@@ -659,11 +659,11 @@ function humanoid(idle: boolean): Body {
     turn: () => -0.04,
     parts: [
       box([0.15, 0.12, 0.22], [0, 0.07, 0], "dark"),
-      box([0.21, 0.25, 0.34], [0, 0.235, 0], "shell"),
-      box([0.024, 0.13, 0.2], [0.104, 0.24, 0], "dark"),
-      box([0.006, 0.012, 0.14], [0.118, 0.285, 0], "glow"),
-      box([0.09, 0.2, 0.26], [-0.13, 0.22, 0], "dark"),
-      box([0.13, 0.06, 0.44], [0, 0.335, 0], "dark"),
+      box([0.2, 0.25, 0.3], [0, 0.235, 0], "shell"),
+      box([0.024, 0.13, 0.18], [0.1, 0.24, 0], "dark"),
+      box([0.006, 0.012, 0.12], [0.114, 0.285, 0], "glow"),
+      box([0.09, 0.2, 0.24], [-0.125, 0.22, 0], "dark"),
+      box([0.13, 0.06, 0.36], [0, 0.335, 0], "dark"),
     ],
   });
   mk.add({
@@ -687,12 +687,12 @@ function humanoid(idle: boolean): Body {
     let p = mk.add({
       name: `${n}.shoulder.pitch`,
       parent: chest,
-      at: [0, 0.33, side * 0.235],
+      at: [0, 0.33, side * 0.2],
       joint: "z",
       turn: swing,
       parts: [cyl(0.05, 0.07, [0, 0, 0], "dark", "z"), cyl(0.04, 0.012, [0, 0, side * 0.037], "steel", "z"), ring(0.045, 0.004, [0, 0, side * 0.039], "glow", "z")],
     });
-    p = mk.add({ name: `${n}.shoulder.roll`, parent: p, at: [0, 0, side * 0.05], joint: "x", turn: () => -side * 0.1, parts: [cyl(0.042, 0.08, [0, -0.01, 0], "steel", "x")] });
+    p = mk.add({ name: `${n}.shoulder.roll`, parent: p, at: [0, 0, side * 0.045], joint: "x", turn: () => -side * 0.05, parts: [cyl(0.042, 0.08, [0, -0.01, 0], "steel", "x")] });
     p = mk.add({ name: `${n}.shoulder.yaw`, parent: p, at: [0, -0.05, 0], joint: "y", turn: () => side * 0.06, parts: [cap(0.038, 0.13, [0, -0.1, 0], "shell"), cyl(0.04, 0.03, [0, -0.02, 0], "dark")] });
     p = mk.add({
       name: `${n}.elbow`,
@@ -887,12 +887,11 @@ function ackermann(idle: boolean): Body {
       box([0.36, 0.04, 0.18], [-0.03, 0.06, 0], "dark"),
       box([0.7, 0.09, 0.3], [0, 0.155, 0], "shell"),
       box([0.62, 0.02, 0.26], [0, 0.105, 0], "dark"),
-      box([0.34, 0.09, 0.25], [-0.06, 0.245, 0], "dark"),
-      box([0.3, 0.014, 0.23], [-0.06, 0.296, 0], "shell"),
+      box([0.34, 0.06, 0.25], [-0.06, 0.23, 0], "dark"),
+      box([0.3, 0.012, 0.23], [-0.06, 0.264, 0], "shell"),
+      box([0.012, 0.034, 0.2], [0.112, 0.23, 0], "lens"),
       box([0.02, 0.024, 0.2], [0.352, 0.16, 0], "glow"),
       ...twin((s) => [ball(0.016, [0.348, 0.135, s * 0.09], "lens"), box([0.02, 0.03, 0.07], [-0.352, 0.165, s * 0.095], "amber")]),
-      cyl(0.04, 0.012, [0.02, 0.304, 0], "steel"),
-      cyl(0.034, 0.03, [0.02, 0.325, 0], "lens"),
       ...twin((s) => [box([0.12, 0.012, 0.04], [L / 2, 0.035, s * 0.07], "steel"), box([0.12, 0.012, 0.04], [-L / 2, 0.035, s * 0.07], "steel")]),
       cyl(0.022, 2 * wz - 0.08, [-L / 2, 0, 0], "steel", "z"),
       cyl(0.04, 0.09, [-L / 2, 0, 0], "dark", "z"),
@@ -1452,11 +1451,11 @@ function manipulator(idle: boolean): Body {
 function snake(idle: boolean): Body {
   const mk = new Maker();
   const n = 9;
-  const len = 0.17;
+  const len = 0.19;
   const A = 0.55;
   const wave = 1.3;
   const v = idle ? 0 : 0.32;
-  const r = 0.032;
+  const r = 0.04;
   /** How far along its path the head has gone. */
   const crawl = (t: number) => (idle ? 0.31 + 0.06 * Math.sin(0.7 * t) : v * t);
   // The path: heading ψ(s) = A sin(2πs / λ), tabled over one wavelength.
@@ -1520,29 +1519,35 @@ function snake(idle: boolean): Body {
         return i ? yaws[i]! - yaws[i - 1]! : 0;
       },
       parts: [
-        cap(0.036, len * 0.52, [-len / 2, 0.02, 0], i ? tone : "shell", "x"),
-        cyl(0.03, 0.084, [0, 0.02, 0], "steel"),
-        ring(0.031, 0.004, [0, 0.064, 0], "glow"),
+        cap(0.046, len - 0.104, [-len / 2, 0.012, 0], i ? tone : "shell", "x"),
+        ring(0.046, 0.0035, [-len / 2, 0.012, 0], "glow", "x"),
+        cyl(0.03, 0.1, [0, 0.012, 0], "steel"),
+        cyl(0.034, 0.012, [0, 0.058, 0], "dark"),
         ...(i
           ? []
-          : [box([0.05, 0.034, 0.064], [0.03, 0.03, 0], "dark"), box([0.008, 0.012, 0.05], [0.056, 0.036, 0], "glow"), ...twin((s) => [ball(0.011, [0.05, 0.05, s * 0.022], "lens")])]),
+          : [
+              cap(0.046, 0.05, [0.03, 0.012, 0], "shell", "x"),
+              box([0.03, 0.036, 0.074], [0.088, 0.018, 0], "dark"),
+              box([0.006, 0.008, 0.05], [0.104, 0.002, 0], "glow"),
+              ...twin((s) => [ball(0.011, [0.1, 0.026, s * 0.02], "lens")]),
+            ]),
       ],
     });
     for (const s of [-1, 1] as const)
       mk.add({
         name: `${i ? `link${i}` : "head"}.wheel.${s < 0 ? "left" : "right"}`,
         parent,
-        at: [-len / 2, -0.01, s * 0.052],
+        at: [-len / 2, 0, s * 0.068],
         joint: "z",
         passive: true,
         turn: (t) => -crawl(t) / r,
-        parts: [tire(r, 0.016, r * 0.6, [0, 0, 0], "rubber"), cyl(r * 0.62, 0.018, [0, 0, 0], "steel", "z")],
+        parts: [tire(r, 0.02, r * 0.62, [0, 0, 0], "rubber"), cyl(r * 0.64, 0.016, [0, 0, 0], "steel", "z"), cyl(r * 0.2, 0.024, [0, 0, 0], "dark", "z")],
       });
   }
   const lag = (n * len * ahead) / 2;
   return {
     links: mk.links,
-    height: 0.042,
+    height: r,
     speed: v * ahead,
     base: (t) => {
       chain(t);

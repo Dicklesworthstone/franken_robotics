@@ -24,6 +24,7 @@ import {
   Vector2,
   Vector3,
 } from "three";
+import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { $, clamp, fit, fmt, loop, rng } from "./lib";
 import { foot, reach } from "./bodies";
 import { lit, renderer } from "./three-kit";
@@ -125,8 +126,10 @@ export default function mount(root: HTMLElement) {
     scene.add(m);
     return m;
   };
-  const trunks = make(new BoxGeometry(1, 1, 1), std(0.4, 0.1), COUNT * 2);
-  const limbs = make(new BoxGeometry(1, 1, 1), std(0.45, 0.2), max * 2);
+  const trunks = make(new RoundedBoxGeometry(1, 1, 1, 2, 0.16), std(0.4, 0.1), COUNT * 2);
+  // Limbs taper from the joint above to the joint below.
+  const limbs = make(new CylinderGeometry(0.5, 0.34, 1, 12), std(0.45, 0.2), max * 2);
+  const heads = make(new RoundedBoxGeometry(1, 1, 1, 2, 0.2), std(0.5, 0.35), COUNT);
   const hubs = make(new CylinderGeometry(1, 1, 1, 18).rotateX(Math.PI / 2), std(0.35, 0.6), max * 2);
   const feet = make(new SphereGeometry(1, 12, 8), std(0.9, 0), max, false);
   const lamps = make(new BoxGeometry(1, 1, 1), new MeshBasicMaterial(), COUNT, false);
@@ -143,6 +146,7 @@ export default function mount(root: HTMLElement) {
       shell.set("#dfe8e2").lerp(hue[r.legs]!, 0.28);
       trunks.setColorAt(i * 2, shell);
       trunks.setColorAt(i * 2 + 1, dark);
+      heads.setColorAt(i, dark);
       lamps.setColorAt(i, hue[r.legs]!);
       for (let l = 0; l < r.legs; l++, leg++) {
         limbs.setColorAt(leg * 2, shell);
@@ -155,7 +159,7 @@ export default function mount(root: HTMLElement) {
     limbs.count = leg * 2;
     hubs.count = leg * 2;
     feet.count = leg;
-    for (const m of [trunks, limbs, hubs, feet, lamps]) m.instanceColor!.needsUpdate = true;
+    for (const m of [trunks, heads, limbs, hubs, feet, lamps]) m.instanceColor!.needsUpdate = true;
     $(root, "[data-links]").textContent = fmt(COUNT + leg * 3);
   };
 
@@ -189,11 +193,13 @@ export default function mount(root: HTMLElement) {
       const r = rows[i]!;
       const bx = (Math.floor(i / SIDE) - (SIDE - 1) / 2) * GAP;
       const bz = ((i % SIDE) - (SIDE - 1) / 2) * GAP;
-      const bob = r.lift * 0.1 * Math.cos((4 * Math.PI * t) / r.period);
+      // Highest over the middle of each stance, in step with this robot's own feet.
+      const bob = r.lift * 0.1 * Math.cos(4 * Math.PI * (t / r.period + i * 0.137 - r.duty / 2));
       const by = r.hang + 0.03 + bob;
       put(trunks, i * 2, bx, by + 0.02, bz, 0, r.length, 0.13 * r.thick, r.width);
       put(trunks, i * 2 + 1, bx, by + 0.1 * r.thick, bz, 0, r.length * 0.74, 0.05, r.width * 0.72);
-      put(lamps, i, bx + r.length / 2 + 0.004, by + 0.035, bz, 0, 0.012, 0.03, r.width * 0.62);
+      put(heads, i, bx + r.length / 2 + 0.04, by + 0.03, bz, 0, 0.1, 0.1 * r.thick, r.width * 0.66);
+      put(lamps, i, bx + r.length / 2 + 0.092, by + 0.045, bz, 0, 0.012, 0.022, r.width * 0.5);
       gait.period = r.period;
       gait.duty = r.duty;
       gait.stride = SPEED * r.duty * r.period;
@@ -222,7 +228,7 @@ export default function mount(root: HTMLElement) {
         }
       }
     }
-    for (const m of [trunks, limbs, hubs, feet, lamps]) m.instanceMatrix.needsUpdate = true;
+    for (const m of [trunks, heads, limbs, hubs, feet, lamps]) m.instanceMatrix.needsUpdate = true;
   };
 
   const ring = new LineLoop(

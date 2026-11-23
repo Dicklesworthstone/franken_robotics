@@ -1,15 +1,19 @@
 import {
   AmbientLight,
   BoxGeometry,
+  type BufferGeometry,
   Color,
+  CylinderGeometry,
   DirectionalLight,
   Group,
   HemisphereLight,
   Mesh,
   MeshStandardMaterial,
   OrthographicCamera,
+  SphereGeometry,
   Vector3,
 } from "three";
+import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { $, $$, clamp, fit, loop, mix, reduced, seg } from "./lib";
 import { generate, type Finish, type Interior } from "./interiors";
 import { lit, renderer } from "./three-kit";
@@ -57,6 +61,18 @@ export default function mount(root: HTMLElement) {
   mats.hazard.emissiveIntensity = 0.9;
 
   const unit = new BoxGeometry(1, 1, 1);
+  const round = { cyl: new CylinderGeometry(0.5, 0.5, 1, 28), ball: new SphereGeometry(0.5, 24, 16) };
+  // Furniture and stock get softened edges, made at their own size so that the bevel keeps its shape.
+  const soft = new Set<Finish>(["wood", "fabric", "steel", "shelf", "stock", "stock2", "stock3", "dark", "green"]);
+  let made: BufferGeometry[] = [];
+  const shape = (b: { w: number; h: number; d: number; f: Finish; s?: "cyl" | "ball" }) => {
+    if (b.s) return [round[b.s], true] as const;
+    const r = Math.min(0.025, Math.min(b.w, b.h, b.d) * 0.2);
+    if (!soft.has(b.f) || r < 0.006) return [unit, true] as const;
+    const geo = new RoundedBoxGeometry(b.w, b.h, b.d, 2, r);
+    made.push(geo);
+    return [geo, false] as const;
+  };
   const pins = $(root, "[data-pins]");
   const list = $(root, "[data-hazards]");
   let room: Interior;
@@ -64,7 +80,7 @@ export default function mount(root: HTMLElement) {
   let seed = 41;
   let place = "kitchen";
   let born = 0;
-  let rise: { mesh: Mesh; y: number; h: number; delay: number }[] = [];
+  let rise: { mesh: Mesh; y: number; h: number; delay: number; unit: boolean }[] = [];
   let spans: HTMLElement[] = [];
 
   const light = (i: number) => {
@@ -73,19 +89,22 @@ export default function mount(root: HTMLElement) {
   };
   const build = () => {
     if (group) scene.remove(group);
+    for (const geo of made) geo.dispose();
+    made = [];
     group = new Group();
     room = generate(place, seed);
     rise = [];
     for (const b of room.blocks) {
-      const mesh = new Mesh(unit, mats[b.f]);
-      mesh.scale.set(b.w, b.h, b.d);
+      const [geo, scaled] = shape(b);
+      const mesh = new Mesh(geo, mats[b.f]);
+      if (scaled) mesh.scale.set(b.w, b.h, b.d);
       mesh.position.set(b.x, (b.y ?? 0) + b.h / 2, b.z);
       mesh.rotation.y = b.turn ?? 0;
       mesh.castShadow = b.f !== "glass" && b.f !== "hazard" && b.h > 0.02;
       mesh.receiveShadow = b.f !== "hazard";
       group.add(mesh);
       if (b.h > 0.03 && b.f !== "wall" && (b.y ?? 0) >= 0)
-        rise.push({ mesh, y: b.y ?? 0, h: b.h, delay: ((b.x + room.w / 2) / room.w + (b.z + room.d / 2) / room.d) * 0.4 + (b.y ?? 0) * 0.12 });
+        rise.push({ mesh, y: b.y ?? 0, h: b.h, unit: scaled, delay: ((b.x + room.w / 2) / room.w + (b.z + room.d / 2) / room.d) * 0.4 + (b.y ?? 0) * 0.12 });
     }
     scene.add(group);
     born = performance.now();
@@ -133,7 +152,7 @@ export default function mount(root: HTMLElement) {
     for (const r of rise) {
       const k = clamp((t - r.delay) / 0.45, 0, 1);
       const e = 1 - (1 - k) ** 3;
-      r.mesh.scale.y = Math.max(0.0001, r.h * e);
+      r.mesh.scale.y = Math.max(0.0001, (r.unit ? r.h : 1) * e);
       r.mesh.position.y = r.y + (r.h * e) / 2;
     }
     mats.hazard.emissiveIntensity = reduced ? 0.8 : 0.7 + 0.35 * Math.sin(now / 420);

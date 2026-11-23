@@ -213,6 +213,37 @@ const rollRate = (v: readonly [number, number], dir: readonly [number, number], 
   -(v[0] * (dir[0] * Math.cos(lean) - dir[1] * Math.sin(lean)) + v[1] * (dir[1] * Math.cos(lean) + dir[0] * Math.sin(lean))) /
   (r * Math.cos(lean));
 
+/**
+ * The swivel angle of a caster that trails a distance d behind a pivot at (px, pz). Its wheel cannot slide sideways,
+ * so θ' = −(vx sin θ + vz cos θ) / d − ω. Run to its periodic steady state, then tabled over one period.
+ */
+function trail(period: number, twist: (t: number) => readonly number[], px: number, pz: number, d: number, n = 2880) {
+  const h = period / n;
+  const rate = (t: number, th: number) => {
+    const tw = twist(t);
+    const [vx, vz] = pointVelocity(tw, px, pz);
+    return -(vx * Math.sin(th) + vz * Math.cos(th)) / d - (tw[2] ?? 0);
+  };
+  const table = new Float64Array(n + 1);
+  let th = 0;
+  for (let lap = 0; lap < 4; lap++)
+    for (let k = 0; k < n; k++) {
+      const t = k * h;
+      if (lap === 3) table[k] = th;
+      const a = rate(t, th);
+      const b = rate(t + h / 2, th + (a * h) / 2);
+      const c = rate(t + h / 2, th + (b * h) / 2);
+      const e = rate(t + h, th + c * h);
+      th += ((a + 2 * b + 2 * c + e) * h) / 6;
+    }
+  table[n] = th;
+  return (t: number) => {
+    const u = (mod(t, period) / period) * n;
+    const k = Math.min(n - 1, Math.floor(u));
+    return table[k]! + (table[k + 1]! - table[k]!) * (u - k);
+  };
+}
+
 /* ---------- Legs ---------- */
 
 /** Joint angles that put a two-link leg's foot at (x, y) from the hip, y negative downwards. */
@@ -230,12 +261,15 @@ export interface Step {
   stride: number;
   lift: number;
 }
-/** Where a foot is in its cycle: on the ground it moves back with the floor, in the air it swings forward. */
+/**
+ * Where a foot is in its cycle, from its hip. On the ground it moves back with the floor. In the air it follows a
+ * cycloid over the floor, so that it leaves and lands at rest on the floor, not at rest on the body.
+ */
 export function foot(phase: number, g: Step, lead = 0): [x: number, up: number] {
   const p = phase - Math.floor(phase);
   if (p < g.duty) return [lead + g.stride * (0.5 - p / g.duty), 0];
   const s = (p - g.duty) / (1 - g.duty);
-  return [lead + g.stride * (-0.5 + (s - Math.sin(TAU * s) / TAU)), g.lift * Math.sin(Math.PI * s) ** 1.4];
+  return [lead + g.stride * (s - 0.5 - Math.sin(TAU * s) / (TAU * g.duty)), g.lift * Math.sin(Math.PI * s) ** 1.4];
 }
 /** The same gait marking time: feet lift and land where they were. */
 const still = (g: Step): Step => ({ period: g.period * 1.1, duty: 0.6, stride: 0, lift: g.lift * 0.55 });
@@ -261,6 +295,8 @@ interface Leg {
   target: (t: number) => readonly [number, number];
   /** Hip roll that keeps the leg under the body when the body rolls or shifts. */
   roll?: (t: number) => number;
+  /** How far the leg's plane leans from upright, which lowers the knee joint's carrier on the far side. */
+  tilt?: (t: number) => number;
   wheel?: number;
   /** How far a wheeled foot has rolled by time t. */
   rolled?: (t: number) => number;
@@ -275,7 +311,9 @@ function leg(mk: Maker, o: Leg) {
     if (t !== memo) {
       memo = t;
       const [x, y] = o.target(t);
-      angles = reach(o.l1, o.l2, x, y, o.bend);
+      const lean = o.tilt?.(t) ?? 0;
+      // The thigh hangs from an arm across the hip; tilted, the arm drops its end and the leg shortens upright.
+      angles = reach(o.l1, o.l2, x, (y + 0.08 * o.side * k * Math.sin(lean)) / Math.cos(lean), o.bend);
     }
     return angles;
   };
@@ -609,6 +647,7 @@ function biped(idle: boolean): Body {
         return [x, -hang - bob(t) + up];
       },
       roll: (t) => Math.asin(sway(t) / hang),
+      tilt: (t) => Math.asin(sway(t) / hang),
       bend: 1,
       side,
       thick: 1.05,
@@ -706,43 +745,56 @@ function humanoid(idle: boolean): Body {
     p = mk.add({ name: `${n}.wrist.pitch`, parent: p, at: [0, -0.03, 0], joint: "z", turn: () => 0.1, parts: [ball(0.025, [0, 0, 0], "steel")] });
     mk.add({ name: `${n}.wrist.yaw`, parent: p, at: [0, 0, 0], joint: "x", turn: () => 0, parts: [box([0.07, 0.085, 0.032], [0, -0.06, 0], "shell"), box([0.06, 0.05, 0.026], [0.004, -0.122, 0], "dark")] });
 
+    /*
+     * The leg in three dimensions, in G1's order: hip pitch, then roll, then knee. The ankle goes where the foot
+     * belongs, under a pelvis that bobs and shifts over the planted foot, and the ankle's pitch and roll stand the
+     * sole flat on the floor.
+     */
     let memo = NaN;
-    let hk: readonly [number, number] = [0, 0];
+    let legAngles = [0, 0, 0, 0, 0];
     const solve = (t: number) => {
       if (t !== memo) {
         memo = t;
-        const [x, up] = foot(phase(t, side), g, -0.02);
-        hk = reach(0.4, 0.4, x, -(H + bob(t)) + up, -1);
+        const [X, up] = foot(phase(t, side), g, -0.02);
+        const Y = -(H + bob(t)) + up;
+        const Z = -sway(t);
+        const span = Math.min(X * X + Y * Y + Z * Z, 0.8 * 0.8 * 0.999);
+        const knee = -Math.acos(Math.max(-1, Math.min(1, (span - 0.32) / 0.32)));
+        const a = 0.4 * Math.sin(knee);
+        const b = -0.4 - 0.4 * Math.cos(knee);
+        const roll = Math.asin(Math.max(-1, Math.min(1, Z / b)));
+        const pitch = Math.atan2(Y, X) - Math.atan2(b * Math.cos(roll), a);
+        const ankleRoll = Math.asin(-Math.cos(pitch) * Math.sin(roll));
+        const ankle = Math.atan2(-Math.sin(pitch), Math.cos(pitch) * Math.cos(roll)) - knee;
+        legAngles = [pitch, roll, knee, ankle, ankleRoll];
       }
-      return hk;
+      return legAngles;
     };
-    // The pelvis shifts over the planted foot; hip and ankle roll keep both soles flat where they stand.
-    const lean = (t: number) => Math.asin(sway(t) / H);
     let q = mk.add({
       name: `${n}.hip.pitch`,
       parent: 0,
       at: [0, -0.06, side * 0.1],
       joint: "z",
-      turn: (t) => solve(t)[0],
+      turn: (t) => solve(t)[0]!,
       parts: [cyl(0.06, 0.07, [0, 0, 0], "dark", "z"), ring(0.055, 0.004, [0, 0, side * 0.037], "glow", "z")],
     });
-    q = mk.add({ name: `${n}.hip.roll`, parent: q, at: [0, 0, 0], joint: "x", turn: lean, parts: [box([0.09, 0.07, 0.07], [0, -0.05, 0], "steel")] });
+    q = mk.add({ name: `${n}.hip.roll`, parent: q, at: [0, 0, 0], joint: "x", turn: (t) => solve(t)[1]!, parts: [box([0.09, 0.07, 0.07], [0, -0.05, 0], "steel")] });
     q = mk.add({ name: `${n}.hip.yaw`, parent: q, at: [0, 0, 0], joint: "y", turn: () => 0, parts: [cap(0.056, 0.22, [0, -0.2, 0], "shell"), box([0.03, 0.2, 0.07], [0.05, -0.2, 0], "dark")] });
     q = mk.add({
       name: `${n}.knee`,
       parent: q,
       at: [0, -0.4, 0],
       joint: "z",
-      turn: (t) => solve(t)[1],
+      turn: (t) => solve(t)[2]!,
       parts: [cyl(0.052, 0.1, [0, 0, 0], "steel", "z"), taper([0, -0.02, 0], [0, -0.36, 0], 0.05, 0.034, "dark"), box([0.022, 0.24, 0.07], [0.04, -0.17, 0], "shell")],
     });
-    q = mk.add({ name: `${n}.ankle.pitch`, parent: q, at: [0, -0.4, 0], joint: "z", turn: (t) => -(solve(t)[0] + solve(t)[1]), parts: [ball(0.034, [0, 0, 0], "steel")] });
+    q = mk.add({ name: `${n}.ankle.pitch`, parent: q, at: [0, -0.4, 0], joint: "z", turn: (t) => solve(t)[3]!, parts: [ball(0.034, [0, 0, 0], "steel")] });
     mk.add({
       name: `${n}.ankle.roll`,
       parent: q,
       at: [0, 0, 0],
       joint: "x",
-      turn: (t) => -lean(t),
+      turn: (t) => solve(t)[4]!,
       parts: [box([0.22, 0.03, 0.1], [0.04, -0.055, 0], "rubber"), box([0.15, 0.035, 0.084], [0.02, -0.027, 0], "shell")],
     });
   }
@@ -766,10 +818,13 @@ function diffDrive(idle: boolean): Body {
   const P = 9;
   const pivot: V3 = [-0.15, -0.03, 0];
   const twist = (t: number) => (idle ? [0, 0, 0] : [0.5, 0, 0.55 * Math.sin((TAU * t) / P)]);
+  const swivel = trail(P, twist, pivot[0], pivot[2], 0.025);
   const spin = integral(P, (t) => {
     const tw = twist(t);
-    const caster = pointVelocity(tw, pivot[0], pivot[2]);
-    return [-pointVelocity(tw, 0, -track)[0] / r, -pointVelocity(tw, 0, track)[0] / r, -Math.hypot(...caster) / 0.03];
+    const [vx, vz] = pointVelocity(tw, pivot[0], pivot[2]);
+    const th = swivel(t);
+    // The caster wheel rolls at the pivot's speed along the way it points.
+    return [-pointVelocity(tw, 0, -track)[0] / r, -pointVelocity(tw, 0, track)[0] / r, -(vx * Math.cos(th) - vz * Math.sin(th)) / 0.03];
   });
   mk.add(
     trunk([
@@ -788,14 +843,14 @@ function diffDrive(idle: boolean): Body {
   );
   wheel(mk, "left.wheel", 0, [0, 0, -track], r, 0.045, idle ? (t) => -inch(t) / r : (t) => spin(t, 0));
   wheel(mk, "right.wheel", 0, [0, 0, track], r, 0.045, idle ? (t) => -inch(t) / r : (t) => spin(t, 1));
-  // A trailing caster turns to follow the velocity of its pivot.
+  // A trailing caster swings round behind its pivot, the way a wheel that cannot slide sideways must.
   const yoke = mk.add({
     name: "caster.yoke",
     parent: 0,
     at: pivot,
     joint: "y",
     passive: true,
-    turn: idle ? () => 0 : (t) => heading(...pointVelocity(twist(t), pivot[0], pivot[2])),
+    turn: idle ? () => 0 : swivel,
     parts: [cyl(0.018, 0.03, [0, 0.01, 0], "steel"), ...twin((s) => [box([0.05, 0.05, 0.006], [-0.016, -0.025, s * 0.016], "dark")])],
   });
   mk.add({
@@ -1211,6 +1266,23 @@ function wheelLeg(idle: boolean): Body {
   const rolling = (t: number) => (idle ? 0 : 0.55 * gate(mod(t, P), 0, 5.4, 1));
   const walking = (t: number) => (idle ? 1 : gate(mod(t, P), 6, 11.6, 0.8));
   const sum = integral(P, (t) => [rolling(t), rolling(t) + walking(t) * vWalk]);
+  // Where each foot is from its hip, the trot faded in and out.
+  const step = (t: number, phase: number) => {
+    const [fx, up] = foot(t / g.period + phase, g);
+    return [walking(t) * fx, walking(t) * up] as const;
+  };
+  const phases = [0, 0.5, 0.5, 0];
+  // A wheel on the floor rolls by exactly as far as its foot goes over the floor; in the air it holds still.
+  const rolls = integral(
+    P,
+    (t) =>
+      phases.map((phase) => {
+        if (step(t, phase)[1] > 1e-9) return 0;
+        const h = 1e-4;
+        return rolling(t) + walking(t) * vWalk + (step(t + h, phase)[0] - step(t - h, phase)[0]) / (2 * h);
+      }),
+    2880,
+  );
   const hang = (q.femur + q.tibia) * 0.82;
   const L = q.length;
   const W = q.width;
@@ -1239,14 +1311,13 @@ function wheelLeg(idle: boolean): Body {
         l1: q.femur,
         l2: q.tibia,
         target: (t) => {
-          const [fx, up] = foot(t / g.period + phase, g);
-          const e = walking(t);
-          return [e * fx, -hang - bob(t) + e * up];
+          const [fx, up] = step(t, phase);
+          return [fx, -hang - bob(t) + up];
         },
         bend: (x < 0 ? 1 : -1) as 1 | -1,
         side,
         wheel: q.wheel,
-        rolled: (t) => sum(t, 0),
+        rolled: (t) => rolls(t, i * 2 + (side < 0 ? 0 : 1)),
       });
     }
   }

@@ -139,7 +139,7 @@ export const renderBody = (ref: Refs) =>
             `<button type="button" role="radio" aria-checked="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-i="${i}"><span class="num">${String(i + 1).padStart(2, "0")}</span><b>${a.name}</b><small>${a.dof}</small></button>`,
         )
         .join("")}</div>
-<div class="stage-view"><canvas tabindex="0" aria-label="A turning model of the selected robot. Drag, or use the arrow keys, to turn it."></canvas><p class="stage-hint">Drag to turn</p><dl class="stage-hud"><div><dt>Motors</dt><dd data-dof>${archetypes[0]!.dof}</dd></div><div><dt>Symmetry</dt><dd data-sym>${archetypes[0]!.symmetry}</dd></div><div><dt>Links</dt><dd data-links></dd></div></dl></div>
+<div class="stage-view"><canvas tabindex="0" aria-label="A turning model of the selected robot. Drag, or use the arrow keys, to turn it; pinch, double-click or press plus and minus to look closer."></canvas><p class="stage-hint">Drag to turn · pinch to zoom</p><dl class="stage-hud"><div><dt>Motors</dt><dd data-dof>${archetypes[0]!.dof}</dd></div><div><dt>Symmetry</dt><dd data-sym>${archetypes[0]!.symmetry}</dd></div><div><dt>Links</dt><dd data-links></dd></div></dl></div>
 <div class="stage-info" aria-live="polite"><p class="micro" data-no>Body 1 of ${archetypes.length}</p><h4 data-name>${archetypes[0]!.name}</h4><p data-layout>${copy(archetypes[0]!.layout)}</p><p class="tests"><span data-tests>${copy(archetypes[0]!.tests)}</span></p><div class="datawrap"><table class="data"><thead><tr><th>link</th><th>parent</th><th>joint</th><th>offset, m</th></tr></thead><tbody data-rows></tbody></table></div></div></div>`,
     }),
   }) +

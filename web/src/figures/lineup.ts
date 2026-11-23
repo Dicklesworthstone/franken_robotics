@@ -202,7 +202,8 @@ export default function mount(root: HTMLElement) {
   for (const [b, one] of bodies.entries())
     for (const [l, link] of one.body.links.entries())
       for (const lamp of [false, true]) {
-        const parts = link.parts.filter((p) => (p.m === "glow") === lamp);
+        // Close-up detail and moving mechanism are too small to see in a crowd.
+        const parts = link.parts.filter((p) => !p.fine && !p.spin && !p.span && (p.m === "glow") === lamp);
         if (!parts.length) continue;
         const sign = JSON.stringify([lamp, parts]);
         let group = groups.get(sign);

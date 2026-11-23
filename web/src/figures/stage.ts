@@ -14,13 +14,16 @@ import {
   InstancedMesh,
   Matrix3,
   Matrix4,
+  Raycaster,
+  Vector2,
   Vector3,
+  type BufferGeometry,
 } from "three";
 import { $, $$, clamp, fit, loop, mix, reduced, smooth } from "./lib";
-import { envelope, treads, type Envelope } from "./envelope";
+import { envelope, ownPlace, placed, treads, type Envelope } from "./envelope";
 import { archetypes } from "./archetypes";
-import { makers, type Body, type Link } from "./bodies";
-import { lit, materials, renderer, solid } from "./three-kit";
+import { makers, type Body, type Link, type Mat, type Part } from "./bodies";
+import { lit, materials, merged, renderer, solid } from "./three-kit";
 
 const AXIS = { x: new Vector3(1, 0, 0), y: new Vector3(0, 1, 0), z: new Vector3(0, 0, 1) };
 
@@ -98,7 +101,11 @@ export default function mount(root: HTMLElement) {
     burst: Vector3;
     /** A belt's shoes, one instanced mesh for each of their parts. */
     belt?: { meshes: InstancedMesh[]; locals: Matrix4[]; tread: ReturnType<typeof treads> };
+    /** Parts that move within their link: gears on their shafts, rods between their pins. */
+    moving: { part: Part; mesh: Mesh; own: Matrix4 }[];
   }
+  /** Merged geometry made for the body on show, freed when another is chosen. */
+  let made: BufferGeometry[] = [];
   let body: Body;
   let posed: Posed[] = [];
   let rootNode: Group | undefined;
@@ -129,14 +136,20 @@ export default function mount(root: HTMLElement) {
   const build = (i: number) => {
     index = i;
     if (rootNode) scene.remove(rootNode);
+    for (const geo of made) geo.dispose();
+    made = [];
     body = makers[archetypes[i]!.id]!();
     hull = envelope(body);
     posed = [];
+    zoomGoal = 1;
+    canvas.style.touchAction = "";
+    panGoal.set(0, 0, 0);
     for (const link of body.links) {
       const node = new Group();
       const set = new Quaternion();
       if (link.set) set.setFromEuler(new Euler(...link.set));
       let belt: Posed["belt"];
+      const moving: Posed["moving"] = [];
       if (link.belt) {
         const tread = treads(link);
         belt = { tread, meshes: [], locals: [] };
@@ -149,18 +162,41 @@ export default function mount(root: HTMLElement) {
           belt.locals.push(new Matrix4().compose(new Vector3(...part.p), turn, new Vector3(1, 1, 1)));
           node.add(mesh);
         }
-      } else
+      } else {
+        // Parts that stand still in their link are joined into one mesh for each finish: a few draw calls a link
+        // however much detail it carries. Parts that move keep meshes of their own.
+        // Close-up detail casts no shadow: it would double its cost for shadows too small to see.
+        const still = new Map<string, BufferGeometry[]>();
         for (const part of link.parts) {
-          const mesh = new Mesh(solid(part.s, part.d), mats[part.m]);
-          mesh.position.set(...part.p);
-          if (part.r) mesh.rotation.set(...part.r);
-          mesh.castShadow = true;
-          mesh.receiveShadow = part.m !== "glow";
+          if (part.coarse) continue;
+          if (part.spin || part.span) {
+            const mesh = new Mesh(solid(part.s, part.d), mats[part.m]);
+            mesh.matrixAutoUpdate = false;
+            mesh.castShadow = !part.fine;
+            mesh.receiveShadow = part.m !== "glow";
+            node.add(mesh);
+            moving.push({ part, mesh, own: ownPlace(part) });
+            continue;
+          }
+          const key = `${part.m}${part.fine ? " fine" : ""}`;
+          const list = still.get(key) ?? [];
+          list.push(solid(part.s, part.d).clone().applyMatrix4(ownPlace(part)));
+          still.set(key, list);
+        }
+        for (const [key, list] of still) {
+          const geo = merged(list);
+          for (const g of list) g.dispose();
+          made.push(geo);
+          const [m, fine] = key.split(" ") as [Mat, string?];
+          const mesh = new Mesh(geo, mats[m]);
+          mesh.castShadow = !fine;
+          mesh.receiveShadow = m !== "glow";
           node.add(mesh);
         }
+      }
       const [x, y, z] = link.at;
       const burst = new Vector3(x, y + 0.02, z).normalize().multiplyScalar(link.parent < 0 ? 0 : 0.16);
-      posed.push({ link, node, set, burst, belt });
+      posed.push({ link, node, set, burst, belt, moving });
       if (link.parent < 0) rootNode = node;
       else posed[link.parent]!.node.add(node);
     }
@@ -185,9 +221,15 @@ export default function mount(root: HTMLElement) {
     $(root, ".datawrap").scrollTop = 0;
   };
 
+  const stretch = new Vector3(1, 1, 1);
   const pose = (t: number, open: number) => {
     const off = body.base?.(t) ?? {};
-    for (const [i, { link, node, set, burst, belt }] of posed.entries()) {
+    for (const [i, { link, node, set, burst, belt, moving }] of posed.entries()) {
+      for (const { part, mesh, own } of moving) {
+        const len = placed(part, own, t, mesh.matrix);
+        if (part.span) mesh.matrix.scale(stretch.set(1, len / part.d[1], 1));
+        mesh.matrixWorldNeedsUpdate = true;
+      }
       if (belt)
         for (let k = 0; k < belt.tread.count; k++) {
           belt.tread.place(t, k, shoe);
@@ -216,6 +258,59 @@ export default function mount(root: HTMLElement) {
   let vyaw = 0;
   let held = false;
   const target = new Vector3();
+  /*
+   * Zoom divides the distance the camera stands back; pan moves the point it turns about. Both ease towards where
+   * the hand puts them. Zooming in on a point keeps that point where it is on the screen.
+   */
+  const MAX = 12;
+  let zoom = 1;
+  let zoomGoal = 1;
+  const pan = new Vector3();
+  const panGoal = new Vector3();
+  const centre = new Vector3();
+  let dist = 1;
+  const clampPan = () => {
+    const r = Math.max(span, tall) * 0.6;
+    panGoal.x = clamp(panGoal.x, -r, r);
+    panGoal.z = clamp(panGoal.z, -r, r);
+    panGoal.y = clamp(panGoal.y, -tall * 0.48, tall * 0.6);
+  };
+  /** Zoom by `k` towards a point of the world, or towards the middle of the view. */
+  const zoomBy = (k: number, at?: Vector3) => {
+    const next = clamp(zoomGoal * k, 1, MAX);
+    if (next === 1) panGoal.set(0, 0, 0);
+    else if (at) {
+      // The point under the hand stays put: the centre moves towards it by what the zoom takes away.
+      const goal = centre.clone().add(panGoal);
+      goal.sub(at).multiplyScalar(zoomGoal / next).add(at);
+      panGoal.copy(goal.sub(centre));
+    }
+    zoomGoal = next;
+    // Zoomed in, a touch on the model pans and pinches it; at the start it scrolls the page as before.
+    canvas.style.touchAction = next > 1 ? "none" : "";
+    clampPan();
+    view.poke();
+  };
+  const ray = new Raycaster();
+  const ndc = new Vector2();
+  /** The point of the body under a place on the canvas, or the point at the same depth as the centre of view. */
+  const under = (x: number, y: number) => {
+    const box = canvas.getBoundingClientRect();
+    ndc.set(((x - box.left) / box.width) * 2 - 1, -((y - box.top) / box.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hit = rootNode ? ray.intersectObject(rootNode, true)[0] : undefined;
+    if (hit) return hit.point.clone();
+    return ray.ray.at(camera.position.distanceTo(centre.clone().add(pan)), new Vector3());
+  };
+  /** Moves the centre of view by a drag of dx, dy pixels, so that the body follows the hand. */
+  const panBy = (dx: number, dy: number) => {
+    const per = (2 * dist * Math.tan((camera.fov * Math.PI) / 360)) / canvas.clientHeight;
+    const right = new Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+    const up = new Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
+    panGoal.addScaledVector(right, -dx * per).addScaledVector(up, dy * per);
+    clampPan();
+    view.poke();
+  };
   const draw = (dt: number, now: number) => {
     if (view.running) clock += dt;
     const open = reduced ? 1 : clamp((now - born) / 900, 0, 1);
@@ -223,29 +318,41 @@ export default function mount(root: HTMLElement) {
     ground(clock);
     size = mix(size, body.size, 1 - Math.exp(-dt * 6));
     if (!held) {
-      vyaw = mix(vyaw, view.running ? 0.12 : 0, 1 - Math.exp(-dt * 1.2));
+      // Close up the turning slows, so that what is being looked at stays in view.
+      vyaw = mix(vyaw, view.running ? 0.12 / zoom : 0, 1 - Math.exp(-dt * 1.2));
       yaw += vyaw * dt;
     }
     // The camera backs off until the whole body fits, whichever way the frame is shaped.
     const k = 1 - Math.exp(-dt * 6);
     span = mix(span, hull.circle, k);
     tall = mix(tall, hull.height, k);
+    const ease = reduced ? 1 : 1 - Math.exp(-dt * 10);
+    zoom = mix(zoom, zoomGoal, ease);
+    pan.lerp(panGoal, ease);
     const half = Math.tan((camera.fov * Math.PI) / 360);
     const upright = (tall * Math.cos(pitch) + span * Math.sin(pitch)) / 2 / half;
     const across = span / 2 / (half * camera.aspect);
-    const dist = Math.max(upright, across) * 1.16 + span * 0.3;
-    target.set(0, tall * 0.48, 0);
+    dist = (Math.max(upright, across) * 1.16 + span * 0.3) / zoom;
+    centre.set(0, tall * 0.48, 0);
+    target.copy(centre).add(pan);
     camera.position.set(
-      Math.cos(yaw) * Math.cos(pitch) * dist,
+      target.x + Math.cos(yaw) * Math.cos(pitch) * dist,
       target.y + Math.sin(pitch) * dist,
-      -Math.sin(yaw) * Math.cos(pitch) * dist,
+      target.z - Math.sin(yaw) * Math.cos(pitch) * dist,
     );
     camera.lookAt(target);
-    key.position.set(1.4 * size, 3.4 * size, 1.9 * size);
+    const near = clamp(dist * 0.02, 0.004, 0.05);
+    if (near !== camera.near) {
+      camera.near = near;
+      camera.updateProjectionMatrix();
+    }
+    // The light keeps its direction; close up its shadow covers only what is in view, and so is sharper.
+    key.position.set(target.x + 1.4 * size, target.y + 3.4 * size, target.z + 1.9 * size);
     key.target.position.copy(target);
     const c = key.shadow.camera;
-    c.left = c.bottom = -size * 1.5;
-    c.right = c.top = size * 1.5;
+    const reach = Math.min(size * 1.5, Math.max(0.25, dist * half * Math.max(1, camera.aspect) * 2));
+    c.left = c.bottom = -reach;
+    c.right = c.top = reach;
     c.near = 0.1;
     c.far = size * 8;
     c.updateProjectionMatrix();
@@ -260,30 +367,104 @@ export default function mount(root: HTMLElement) {
     view.poke();
   });
 
+  // One finger or the mouse turns the body; two fingers pinch to zoom and move it; a right or shift drag moves it.
+  const down = new Map<number, { x: number; y: number }>();
   let px = 0;
   let py = 0;
+  let panning = false;
+  let pinch: { d: number; zoom: number; mx: number; my: number; at: Vector3 } | undefined;
+  const pair = () => {
+    const [a, b] = [...down.values()];
+    return { d: Math.hypot(a!.x - b!.x, a!.y - b!.y), mx: (a!.x + b!.x) / 2, my: (a!.y + b!.y) / 2 };
+  };
   canvas.addEventListener("pointerdown", (e) => {
+    down.set(e.pointerId, { x: e.clientX, y: e.clientY });
     held = true;
     px = e.clientX;
     py = e.clientY;
     vyaw = 0;
+    panning = e.button === 2 || e.button === 1 || e.shiftKey;
     canvas.setPointerCapture(e.pointerId);
+    if (down.size === 2) {
+      const p = pair();
+      pinch = { d: Math.max(1, p.d), zoom: zoomGoal, mx: p.mx, my: p.my, at: under(p.mx, p.my) };
+    }
   });
   canvas.addEventListener("pointermove", (e) => {
-    if (!held) return;
+    if (!down.has(e.pointerId)) return;
+    down.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && down.size >= 2) {
+      const p = pair();
+      zoomBy((pinch.zoom * p.d) / pinch.d / zoomGoal, pinch.at);
+      panBy(p.mx - pinch.mx, p.my - pinch.my);
+      pinch.mx = p.mx;
+      pinch.my = p.my;
+      return;
+    }
     const dx = e.clientX - px;
-    yaw -= dx * 0.008;
-    if (e.pointerType !== "touch") pitch = clamp(pitch + (e.clientY - py) * 0.006, 0.02, 1.35);
-    vyaw = -dx * 0.25;
+    const dy = e.clientY - py;
     px = e.clientX;
     py = e.clientY;
+    if (panning) {
+      panBy(dx, dy);
+      return;
+    }
+    yaw -= dx * 0.008;
+    if (e.pointerType !== "touch") pitch = clamp(pitch + dy * 0.006, 0.02, 1.35);
+    vyaw = -dx * 0.25;
     view.poke();
   });
   for (const type of ["pointerup", "pointercancel"] as const)
-    canvas.addEventListener(type, () => {
-      held = false;
+    canvas.addEventListener(type, (e) => {
+      down.delete(e.pointerId);
+      if (down.size < 2) pinch = undefined;
+      if (down.size === 1) {
+        // The finger left behind carries on turning from where it is.
+        const [rest] = [...down.values()];
+        px = rest!.x;
+        py = rest!.y;
+      }
+      if (!down.size) held = false;
     });
+  canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+  // A pinch on a trackpad arrives as a wheel with ctrl held; Safari sends gestures instead. A plain wheel scrolls
+  // the page, as it would anywhere else.
+  canvas.addEventListener(
+    "wheel",
+    (e) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      const step = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+      zoomBy(Math.exp(-clamp(step, -60, 60) * 0.012), under(e.clientX, e.clientY));
+    },
+    { passive: false },
+  );
+  let gesture = 1;
+  canvas.addEventListener("gesturestart", (e) => {
+    e.preventDefault();
+    gesture = 1;
+  });
+  canvas.addEventListener("gesturechange", (e) => {
+    e.preventDefault();
+    const g = e as unknown as { scale: number; clientX: number; clientY: number };
+    if (down.size >= 2) return;
+    zoomBy(g.scale / gesture, under(g.clientX, g.clientY));
+    gesture = g.scale;
+  });
+  // A double click goes in on the point under it, two and a half times; at the closest it goes back out.
+  canvas.addEventListener("dblclick", (e) => {
+    if (zoomGoal >= MAX * 0.99) zoomBy(1 / MAX);
+    else zoomBy(2.5, under(e.clientX, e.clientY));
+  });
   canvas.addEventListener("keydown", (e) => {
+    // With Ctrl or Cmd held these keys zoom the page, and that is left to the browser.
+    const zoomKey = e.ctrlKey || e.metaKey || e.altKey ? undefined : { "+": 1.5, "=": 1.5, "-": 1 / 1.5, _: 1 / 1.5, "0": 0 }[e.key];
+    if (zoomKey !== undefined) {
+      e.preventDefault();
+      if (zoomKey) zoomBy(zoomKey);
+      else zoomBy(1 / MAX);
+      return;
+    }
     const turn = { ArrowLeft: [0.16, 0], ArrowRight: [-0.16, 0], ArrowUp: [0, 0.1], ArrowDown: [0, -0.1] }[e.key];
     if (!turn) return;
     e.preventDefault();

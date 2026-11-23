@@ -1,5 +1,5 @@
 import { Euler, Matrix4, Quaternion, Vector3 } from "three";
-import { shoes, type Body, type Link, type Part } from "./bodies";
+import { girth, shoes, type Body, type Link, type Part } from "./bodies";
 
 const AXIS = { x: new Vector3(1, 0, 0), y: new Vector3(0, 1, 0), z: new Vector3(0, 0, 1) };
 const ONE = new Vector3(1, 1, 1);
@@ -67,8 +67,46 @@ export interface Envelope {
   circle: number;
 }
 
-/** The box and circle that hold everything drawn, over the whole of the body's motion. */
-export function envelope(body: Body): Envelope {
+const Y = new Vector3(0, 1, 0);
+const pa = new Vector3();
+const pb = new Vector3();
+const pd = new Vector3();
+const pq = new Quaternion();
+const turnAbout = new Matrix4();
+const shift = new Matrix4();
+/**
+ * Where a part is in its link at time t: its own place `own`, turned about its axle when it spins, or set between its
+ * two points when it spans them. Returns its length along local y, which a span stretches.
+ */
+export function placed(p: Part, own: Matrix4, t: number, out: Matrix4): number {
+  if (p.span) {
+    const [a, b] = p.span(t);
+    pa.set(...a);
+    pb.set(...b);
+    pd.subVectors(pb, pa);
+    const len = pd.length();
+    pq.setFromUnitVectors(Y, len > 1e-9 ? pd.divideScalar(len) : Y);
+    out.compose(pa.add(pb).multiplyScalar(0.5), pq, ONE);
+    return len;
+  }
+  if (p.spin) {
+    const { at, axis, angle } = p.spin;
+    turnAbout.makeRotationAxis(pd.set(...axis).normalize(), angle(t));
+    // About the axle through `at`: move it to the origin, turn, move it back.
+    out.makeTranslation(-at[0], -at[1], -at[2]).multiply(own).premultiply(turnAbout).premultiply(shift.makeTranslation(at[0], at[1], at[2]));
+    return p.d[1];
+  }
+  out.copy(own);
+  return p.d[1];
+}
+/** A part's own place in its link, from its position and turn. */
+export const ownPlace = (p: Part) => new Matrix4().compose(new Vector3(...p.p), new Quaternion().setFromEuler(new Euler(...(p.r ?? [0, 0, 0]))), ONE);
+
+/**
+ * The box and circle that hold everything drawn, over the whole of the body's motion. Parts drawn only close up are
+ * left out unless `close` is set: a test holds them inside the rest, so that the door test need not pay for them.
+ */
+export function envelope(body: Body, close = false): Envelope {
   const { pose } = frames(body);
   const root = new Matrix4();
   const m = new Matrix4();
@@ -82,15 +120,10 @@ export function envelope(body: Body): Envelope {
     e.top = Math.max(e.top, y);
     e.radius = Math.max(e.radius, Math.hypot(x, z));
   };
-  const own = (p: Part) =>
-    new Matrix4().compose(
-      new Vector3(...p.p),
-      new Quaternion().setFromEuler(new Euler(...(p.r ?? [0, 0, 0]))),
-      ONE,
-    );
-  const parts = body.links.map((l) => l.parts.map((p) => [p, own(p)] as const));
+  const parts = body.links.map((l) => l.parts.filter((p) => (close ? !p.coarse : !p.fine)).map((p) => [p, ownPlace(p)] as const));
   const belts = body.links.map((l) => (l.belt ? treads(l) : undefined));
-  const reach = (p: Part) => {
+  const part = new Matrix4();
+  const reach = (p: Part, len: number) => {
     if (p.s === "ball") {
       centre.setFromMatrixPosition(m);
       const r = p.d[0];
@@ -102,7 +135,7 @@ export function envelope(body: Body): Envelope {
       axis.setFromMatrixColumn(m, 1);
       centre.setFromMatrixPosition(m);
       const r = p.d[0];
-      const h = p.d[1] / 2;
+      const h = len / 2;
       e.half = Math.max(e.half, Math.abs(centre.z) + h * Math.abs(axis.z) + r);
       e.top = Math.max(e.top, centre.y + h * Math.abs(axis.y) + r);
       for (const end of [-h, h]) e.radius = Math.max(e.radius, Math.hypot(centre.x + axis.x * end, centre.z + axis.z * end) + r);
@@ -110,8 +143,9 @@ export function envelope(body: Body): Envelope {
       // Round solids: a cylinder reaches h·|a·u| + r·√(1 − (a·u)²) along any direction u.
       axis.setFromMatrixColumn(m, 1);
       centre.setFromMatrixPosition(m);
-      const [r, h] =
-        p.s === "ring" ? [p.d[0] + p.d[1], p.d[1]] : p.s === "tire" ? [p.d[0], p.d[1] / 2] : [Math.max(p.d[0], p.d[2]), p.d[1] / 2];
+      const [r, half] = girth(p);
+      // A span stretches the solid along its axis; a ring or an arc has no length to stretch.
+      const h = p.s === "ring" || p.s === "arc" ? half : half * (len / p.d[1]);
       e.half = Math.max(e.half, Math.abs(centre.z) + h * Math.abs(axis.z) + r * Math.sqrt(Math.max(0, 1 - axis.z ** 2)));
       e.top = Math.max(e.top, centre.y + h * Math.abs(axis.y) + r * Math.sqrt(Math.max(0, 1 - axis.y ** 2)));
       for (const end of [-h, h])
@@ -121,7 +155,7 @@ export function envelope(body: Body): Envelope {
         }
     } else
       for (let c = 0; c < 8; c++) {
-        v.set((c & 1 ? 0.5 : -0.5) * p.d[0], (c & 2 ? 0.5 : -0.5) * p.d[1], (c & 4 ? 0.5 : -0.5) * p.d[2]).applyMatrix4(m);
+        v.set((c & 1 ? 0.5 : -0.5) * p.d[0], (c & 2 ? 0.5 : -0.5) * len, (c & 4 ? 0.5 : -0.5) * p.d[2]).applyMatrix4(m);
         point(v.x, v.y, v.z);
       }
   };
@@ -136,14 +170,16 @@ export function envelope(body: Body): Envelope {
         for (let s = 0; s < belt.count; s++) {
           belt.place(t, s, shoe).premultiply(world[i]!);
           for (const [p, local] of list) {
-            m.multiplyMatrices(shoe, local);
-            reach(p);
+            const len = placed(p, local, t, part);
+            m.multiplyMatrices(shoe, part);
+            reach(p, len);
           }
         }
       else
         for (const [p, local] of list) {
-          m.multiplyMatrices(world[i]!, local);
-          reach(p);
+          const len = placed(p, local, t, part);
+          m.multiplyMatrices(world[i]!, part);
+          reach(p, len);
         }
     }
   }

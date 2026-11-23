@@ -8,7 +8,7 @@
  * waits on the spot: legs mark time and wheels hold still, which is how the crowd stands in front of the door.
  */
 export type V3 = [number, number, number];
-export type Solid = "box" | "cyl" | "ball" | "cap" | "tire" | "ring" | "barrel";
+export type Solid = "box" | "cyl" | "ball" | "cap" | "tire" | "ring" | "barrel" | "gear" | "hex" | "coil" | "arc" | "pulley" | "bellows" | "fins" | "bolts";
 export type Mat = "shell" | "dark" | "steel" | "rubber" | "glow" | "amber" | "lens";
 
 export interface Part {
@@ -17,12 +17,33 @@ export interface Part {
    * box: full sizes. ball: radius. The round solids lie along their local y. cyl: radius at +y, length, radius at −y.
    * cap: radius, length between its two half-spheres, radius. tire: outer radius, width, rim radius.
    * ring: radius, tube radius, radius. barrel: middle radius, length, end radius.
+   * gear: pitch radius, face width, teeth (involute, 20°, tooth 0 on local x). hex: radius to a corner, height.
+   * coil: radius to the wire's centre, length, turns. arc: radius, tube radius, sweep about local y from local x.
+   * pulley: radius, width, depth of its groove. bellows: radius, length, folds. fins: radius, length, fins.
+   * bolts: radius of their circle (0 for one at the middle), radius of a head, how many; heads face local +y.
    */
   d: V3;
   p: V3;
   /** Euler rotation, XYZ order. */
   r?: V3;
   m: Mat;
+  /**
+   * Drawn close up only. The crowd leaves it out, and so does the door test, which is right because a test asserts
+   * that every such part lies inside what the rest of the body takes up.
+   */
+  fine?: boolean;
+  /**
+   * Drawn in the crowd and measured by the door test, but left out close up, where fine parts draw the same thing in
+   * more detail inside it.
+   */
+  coarse?: boolean;
+  /** Turns about an axis through a point of its link by angle(t): a gear on its shaft, a crank on its pin. */
+  spin?: { at: V3; axis: V3; angle: (t: number) => number };
+  /**
+   * Set each moment between two points of its link, its local y running from the first to the second and its
+   * length stretched to fit: a rod between two pins, a piston from its trunnion, a tendon between two pulleys.
+   */
+  span?: (t: number) => [V3, V3];
 }
 /** A track: copies of the link's parts, `pitch` apart, round a loop from x = 0 to x = len with ends of radius r. */
 export interface Belt {
@@ -87,6 +108,199 @@ const cyl = (r: number, l: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ 
 const cap = (r: number, l: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ s: "cap", d: [r, l, r], p, m, r: lay(axis) });
 const ring = (r: number, tube: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ s: "ring", d: [r, tube, r], p, m, r: lay(axis) });
 const tire = (r: number, w: number, rim: number, p: V3, m: Mat, axis: Axis = "z"): Part => ({ s: "tire", d: [r, w, rim], p, m, r: lay(axis) });
+
+/** How far a round solid reaches from its axis, and half its length along the axis. */
+export function girth(p: Part): [r: number, h: number] {
+  const [a, b, c] = p.d;
+  switch (p.s) {
+    case "ring":
+    case "arc":
+      return [a + b, b];
+    case "tire":
+      return [a, b / 2];
+    case "gear":
+      return [a * (1 + 2 / c), b / 2];
+    case "coil":
+      return [a * 1.13, b / 2];
+    case "bolts":
+      return [a + b, b * 0.55];
+    case "hex":
+    case "pulley":
+    case "bellows":
+    case "fins":
+      return [a, b / 2];
+    default:
+      return [Math.max(a, c), b / 2];
+  }
+}
+
+/** A vector turned by XYZ Euler angles, the way three.js applies them, or back again. */
+export function rot(turn: V3 | undefined, v: V3, back = false): V3 {
+  if (!turn) return v;
+  const r: V3 = turn;
+  let [x, y, z] = v;
+  const k = back ? -1 : 1;
+  const steps: [number, () => void][] = [
+    [2, () => {
+      const [c, s] = [Math.cos(k * r[2]), Math.sin(k * r[2])];
+      [x, y] = [c * x - s * y, s * x + c * y];
+    }],
+    [1, () => {
+      const [c, s] = [Math.cos(k * r[1]), Math.sin(k * r[1])];
+      [x, z] = [c * x + s * z, -s * x + c * z];
+    }],
+    [0, () => {
+      const [c, s] = [Math.cos(k * r[0]), Math.sin(k * r[0])];
+      [y, z] = [c * y - s * z, s * y + c * z];
+    }],
+  ];
+  for (const [, step] of back ? steps.reverse() : steps) step();
+  return [x, y, z];
+}
+const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const scale = (a: V3, k: number): V3 => [a[0] * k, a[1] * k, a[2] * k];
+
+/* ---------- Machine elements, drawn close up ---------- */
+
+const fine = (parts: Part[]): Part[] => parts.map((p) => ({ ...p, fine: true }));
+/** A part's own axis (its local y) in its link's frame. */
+const axisOf = (p: Part) => rot(p.r, [0, 1, 0]);
+/**
+ * A spur gear of pitch radius R, face w and z teeth. It turns with its link, and also by angle(t) about its own axis
+ * when that is given.
+ */
+const gear = (R: number, w: number, z: number, p: V3, m: Mat, axis: Axis = "y", angle?: (t: number) => number): Part => {
+  const g: Part = { s: "gear", d: [R, w, z], p, m, r: lay(axis), fine: true };
+  if (angle) g.spin = { at: p, axis: axisOf(g), angle };
+  return g;
+};
+/**
+ * The gear that meshes with `g`, which turns by angle(t) about its own axis: z teeth of the same module, lying the
+ * same way, its centre at angle `at` round g from g's tooth 0. Gear 1's tooth meets gear 2's gap where they touch.
+ */
+function mate(g: Part, angle: (t: number) => number, z: number, at: number, w: number, m: Mat): [Part, (t: number) => number] {
+  const [R1, , z1] = g.d;
+  const R2 = (R1 * z) / z1;
+  const c = add(g.p, rot(g.r, [Math.cos(at) * (R1 + R2), 0, -Math.sin(at) * (R1 + R2)]));
+  const turn = (t: number) => -(z1 / z) * (angle(t) - at) + at + Math.PI - Math.PI / z;
+  return [{ s: "gear", d: [R2, w, z], p: c, m, r: g.r, fine: true, spin: { at: c, axis: axisOf(g), angle: turn } }, turn];
+}
+/** Turns that point local +y along each axis, either way. Note that `lay("x")` points it along −x. */
+const FACE: Record<Axis | "-x" | "-y" | "-z", V3 | undefined> = {
+  y: undefined,
+  "-y": [Math.PI, 0, 0],
+  x: [0, 0, -Math.PI / 2],
+  "-x": [0, 0, Math.PI / 2],
+  z: [Math.PI / 2, 0, 0],
+  "-z": [-Math.PI / 2, 0, 0],
+};
+/** A circle of socket-head screws whose heads face along `axis`. */
+const bolts = (R: number, head: number, n: number, p: V3, axis: Axis | "-x" | "-y" | "-z" = "y", m: Mat = "steel"): Part => ({
+  s: "bolts",
+  d: [R, head, n],
+  p,
+  m,
+  r: FACE[axis],
+  fine: true,
+});
+const coil = (R: number, len: number, turns: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ s: "coil", d: [R, len, turns], p, m, r: lay(axis), fine: true });
+type Face = Axis | "-x" | "-y" | "-z";
+const axisIndex = (f: Face) => "xyz".indexOf(f.at(-1)!);
+/** Screws in the corners of one face of an upright box of size d at p, `inset` in from the edges. */
+function screws(d: V3, p: V3, face: Face, inset: number, head = 0.0022): Part[] {
+  // Never on the rounding of the edges, where a head would stand off the curve.
+  inset = Math.max(inset, rounding(d) + head * 1.6);
+  const i = axisIndex(face);
+  const sign = face[0] === "-" ? -1 : 1;
+  const [j, k] = [0, 1, 2].filter((n) => n !== i) as [number, number];
+  const out: Part[] = [];
+  for (const a of [-1, 1])
+    for (const b of [-1, 1]) {
+      const q: V3 = [...p];
+      q[i] = q[i]! + sign * (d[i]! / 2 + head * 0.55);
+      q[j] = q[j]! + a * (d[j]! / 2 - inset);
+      q[k] = q[k]! + b * (d[k]! / 2 - inset);
+      out.push(bolts(0, head, 1, q, face));
+    }
+  return out;
+}
+/** A panel line: a groove-dark seam 1.4 mm across from a to b, lying in a surface. */
+const seam = (a: V3, b: V3): Part => ({ ...slab(a, b, 0.0014, 0.0014, "dark"), fine: true });
+/** How far the renderer rounds the edges of a box of size d, or 0 where it leaves them sharp. */
+export const rounding = (d: V3) => {
+  const m = Math.min(...d);
+  const r = Math.min(m * 0.28, 0.006 + m * 0.08);
+  return r > 0.004 ? r : 0;
+};
+/** A seam from a to b on a face of the box of size d at p, kept to the flat of that face, clear of its rounded edges. */
+function seamOn(d: V3, p: V3, a: V3, b: V3): Part {
+  const keep = rounding(d) + 0.0012;
+  // The face is the one both ends lie on, across which the seam does not run.
+  const face = [0, 1, 2].map((i) => Math.abs(a[i]! - b[i]!) < 1e-9 && Math.abs(Math.abs(a[i]! - p[i]!) - d[i]! / 2) < 0.0006);
+  const clip = (q: V3) => q.map((v, i) => (face[i] ? v : Math.max(p[i]! - d[i]! / 2 + keep, Math.min(p[i]! + d[i]! / 2 - keep, v)))) as V3;
+  return seam(clip(a), clip(b));
+}
+/** Slots of a vent, n of them `pitch` apart along `along`, each `len` long across it, on a face looking along `face`. */
+function vent(n: number, p: V3, along: Axis, across: Axis, len: number, pitch: number, face: Face): Part[] {
+  const out: Part[] = [];
+  const i = axisIndex(face);
+  for (let k = 0; k < n; k++) {
+    const d: V3 = [0.002, 0.002, 0.002];
+    d["xyz".indexOf(along)] = pitch * 0.45;
+    d["xyz".indexOf(across)] = len;
+    d[i] = 0.0016;
+    const q: V3 = [...p];
+    const u = "xyz".indexOf(along);
+    q[u] = q[u]! + (k - (n - 1) / 2) * pitch;
+    out.push({ s: "box", d, p: q, m: "dark", fine: true });
+  }
+  return out;
+}
+/** A cable through the given points, its bends rounded by the capsules that make it. */
+const cable = (pts: V3[], r = 0.0035, m: Mat = "rubber"): Part[] => pts.slice(1).map((b, i) => ({ ...strut(pts[i]!, b, r, m), fine: true }));
+
+/** A bent tube: radius R round local y, tube radius tube, from local x through `sweep` radians. */
+const arc = (R: number, tube: number, sweep: number, p: V3, m: Mat, axis: Axis = "y"): Part => ({ s: "arc", d: [R, tube, sweep], p, m, r: lay(axis), fine: true });
+/** A rod that is put between two moving points each moment. */
+const bar = (r: number, m: Mat, ends: (t: number) => [V3, V3]): Part => {
+  const [a, b] = ends(0);
+  return { s: "cyl", d: [r, Math.hypot(...gap(a, b)), r], p: mid(a, b), m, fine: true, span: ends };
+};
+
+/**
+ * A ball-screw actuator: its barrel pivots on a trunnion at `a` with the motor behind it, and its rod reaches a pin
+ * at pin(t), both in one link's frame. How long the barrel and the rod are follows from how near and how far the
+ * pins come over `seconds`. The trunnion's pin lies along `across`; the rod ends in a spherical eye.
+ */
+function actuator(a: V3, pin: (t: number) => V3, r: number, seconds: number, across: Axis = "z"): Part[] {
+  let [lo, hi] = [Infinity, 0];
+  for (let i = 0; i <= 480; i++) {
+    const d = Math.hypot(...gap(a, pin((i / 480) * seconds)));
+    [lo, hi] = [Math.min(lo, d), Math.max(hi, d)];
+  }
+  const barrel = lo - 2.2 * r;
+  const stroke = hi - barrel + 1.2 * r;
+  /** Two points along the line from the trunnion to the pin, `from` and `to` metres from the trunnion. */
+  const along = (t: number, from: (n: number) => number, to: (n: number) => number): [V3, V3] => {
+    const d = gap(a, pin(t));
+    const n = Math.hypot(...d);
+    return [add(a, scale(d, from(n) / n)), add(a, scale(d, to(n) / n))];
+  };
+  return [
+    bar(r * 0.42, "steel", (t) => along(t, (n) => n - stroke, (n) => n - 0.6 * r)),
+    bar(r, "dark", (t) => along(t, () => -0.2 * r, () => barrel)),
+    bar(r * 1.22, "steel", (t) => along(t, () => barrel - 0.7 * r, () => barrel)),
+    { s: "fins", d: [r * 1.28, r * 2.6, 14], p: a, m: "dark", fine: true, span: (t) => along(t, () => -2.9 * r, () => -0.3 * r) },
+    bar(r * 1.1, "steel", (t) => along(t, () => -3.25 * r, () => -2.9 * r)),
+    { ...cyl(r * 0.45, r * 2.9, a, "steel", across), fine: true },
+    { s: "ball", d: [r * 0.62, r * 0.62, r * 0.62], p: pin(0), m: "steel", fine: true, span: (t) => along(t, (n) => n - 0.31 * r, (n) => n + 0.31 * r) },
+  ];
+}
+/** An actuator whose pin a lever carries round the joint at `j`: `arm` from it, turned by angle(t) about z. */
+const ram = (a: V3, j: V3, arm: V3, angle: (t: number) => number, r: number, seconds: number) =>
+  actuator(a, (t) => add(j, rot([0, 0, angle(t)], arm)), r, seconds);
+/** The lever a ram pulls: a clevis of two plates from the joint out to the pin at `arm`, in the child's frame. */
+const clevis = (arm: V3, r: number): Part[] => fine(twin((e) => [slab([0, 0, e * r * 0.72], [arm[0], arm[1], e * r * 0.72], r * 1.7, r * 0.34, "steel")]));
 
 /** XYZ Euler angles of a rotation matrix given by rows. */
 function euler(m: number[]): V3 {
@@ -358,8 +572,19 @@ function leg(mk: Maker, o: Leg) {
       cyl(0.04 * k, 0.014, [end * 0.054 * k, 0, 0], "steel", "x"),
       ring(0.05 * k, 0.0045 * k, [end * 0.03 * k, 0, 0], "glow", "x"),
       box([0.066 * k, 0.058 * k, 0.05 * k], [0, -0.004, o.side * 0.044 * k], "dark"),
+      // The roll motor's output flange and its back cover, each held by a circle of screws.
+      bolts(0.03 * k, 0.0026 * k, 8, [end * (0.054 * k + 0.007 + 0.0015 * k), 0, 0], end > 0 ? "x" : "-x"),
+      bolts(0.038 * k, 0.0026 * k, 6, [-end * (0.05 * k + 0.0015 * k), 0, 0], end > 0 ? "-x" : "x"),
+      ...fine([cyl(0.034 * k, 0.004, [-end * 0.051 * k, 0, 0], "steel", "x")]),
     ],
   });
+  // The knee's ball-screw actuator runs down the thigh on the side the knee points to, from a trunnion below the hip
+  // to a lever on the shank: it pushes the knee into its bend and pulls it straight.
+  const knee = (t: number) => solve(t)[1];
+  let [lo, hi] = [Infinity, -Infinity];
+  for (let i = 0; i <= 480; i++) [lo, hi] = [Math.min(lo, knee(i * 0.025)), Math.max(hi, knee(i * 0.025))];
+  const e = lo + hi < 0 ? 1 : -1;
+  const arm = rot([0, 0, -(lo + hi) / 2], [e * 0.054 * k, 0, 0]);
   const thigh = mk.add({
     name: `${o.name}.thigh`,
     parent: hip,
@@ -371,8 +596,12 @@ function leg(mk: Maker, o: Leg) {
       cyl(0.046 * k, 0.012, [0, 0, o.side * 0.036 * k], "steel", "z"),
       ring(0.052 * k, 0.0045 * k, [0, 0, o.side * 0.037 * k], "glow", "z"),
       slab([0, -0.02 * k, 0], [0, -o.l1 * 0.9, 0], 0.07 * k, 0.052 * k, "shell"),
-      // The rod that drives the knee from a motor at the hip.
+      // The thigh's cover is held by a screw in each corner of its outer face below the hip's drum.
+      ...screws([0.07 * k, o.l1 * 0.9 - 0.07 * k, 0.052 * k], [0, -(0.07 * k + o.l1 * 0.9) / 2, 0], o.side > 0 ? "z" : "-z", 0.009 * k, 0.002 * k),
+      // A cable conduit down the inside of the thigh to the knee.
       strut([0.014 * k, -0.04 * k, -o.side * 0.03 * k], [0.01 * k, -o.l1 * 0.93, -o.side * 0.03 * k], 0.008 * k, "dark"),
+      ...ram([e * 0.058 * k, -0.092 * k, 0], [0, -o.l1, 0], arm, knee, 0.011 * k, 12),
+      ...fine([box([0.026 * k, 0.02 * k, 0.04 * k], [e * 0.046 * k, -0.092 * k, 0], "dark")]),
     ],
   });
   const shank = mk.add({
@@ -384,8 +613,11 @@ function leg(mk: Maker, o: Leg) {
     parts: [
       cyl(0.038 * k, 0.062 * k, [0, 0, 0], "steel", "z"),
       taper([0, 0, 0], [0, -o.l2 * (o.wheel ? 0.98 : 0.9), 0], 0.025 * k, 0.015 * k, "dark"),
+      ...clevis(arm, 0.011 * k),
+      ...twin((s2) => [bolts(0.026 * k, 0.0022 * k, 6, [0, 0, s2 * (0.031 * k + 0.0012 * k)], s2 > 0 ? "z" : "-z")]),
       ...(o.wheel
-        ? []
+        ? // The wheel's motor: a finned can on the end of the shank, between it and the wheel it drives.
+          [{ s: "fins" as const, d: [0.035, 0.022, 14] as V3, p: [0, -o.l2, o.side * 0.013] as V3, r: lay("z"), m: "dark" as const, fine: true }]
         : [ball(0.03 * k, [0, -o.l2, 0], "rubber"), ring(0.019 * k, 0.005 * k, [0, -o.l2 + 0.034 * k, 0], "steel")]),
     ],
   });
@@ -432,8 +664,18 @@ function sprawl(
       cyl(0.041 * k, 0.012, [0, 0.044 * k, 0], "steel"),
       ring(0.05 * k, 0.0045 * k, [0, 0.042 * k, 0], "glow"),
       slab([0.02 * k, 0, 0], [o.coxa, 0, 0], 0.05 * k, 0.056 * k, "shell"),
+      bolts(0.03 * k, 0.0024 * k, 8, [0, 0.044 * k + 0.006 + 0.0013 * k, 0], "y"),
+      bolts(0.038 * k, 0.0024 * k, 6, [0, -0.04 * k - 0.0013 * k, 0], "-y"),
     ],
   });
+  // Under the femur, inside the knee, a ball-screw actuator from a trunnion near the hip to a lever on the tibia.
+  const kneeAt = (t: number) => solve(t)[2];
+  let [lo, hi] = [Infinity, -Infinity];
+  for (let i = 0; i <= 240; i++) [lo, hi] = [Math.min(lo, kneeAt(i * 0.01 * o.gait.period * 4)), Math.max(hi, kneeAt(i * 0.01 * o.gait.period * 4))];
+  // The tibia bends towards the femur's inner side; the lever sits a little down the tibia, on the femur's side of it.
+  const inner = lo + hi < 0 ? -1 : 1;
+  const lever: V3 = [inner * 0.03 * k, -0.04 * k, 0];
+
   const femur = mk.add({
     name: `${o.name}.femur`,
     parent: coxa,
@@ -445,6 +687,9 @@ function sprawl(
       ring(0.044 * k, 0.004 * k, [0, 0, 0.04 * k], "glow", "z"),
       ring(0.044 * k, 0.004 * k, [0, 0, -0.04 * k], "glow", "z"),
       slab([0, -0.015 * k, 0], [0, -o.l1 * 0.92, 0], 0.05 * k, 0.044 * k, "shell"),
+      ...twin((s2) => [bolts(0.032 * k, 0.0022 * k, 8, [0, 0, s2 * (0.037 * k + 0.0012 * k)], s2 > 0 ? "z" : "-z")]),
+      ...ram([inner * 0.045 * k, -0.075 * k, 0], [0, -o.l1, 0], lever, kneeAt, 0.0085 * k, o.gait.period * 4),
+      ...fine([box([0.03 * k, 0.018 * k, 0.03 * k], [inner * 0.032 * k, -0.075 * k, 0], "dark")]),
     ],
   });
   mk.add({
@@ -457,6 +702,8 @@ function sprawl(
       cyl(0.036 * k, 0.062 * k, [0, 0, 0], "dark", "z"),
       taper([0, 0, 0], [0, -o.l2 * 0.92, 0], 0.024 * k, 0.012 * k, "dark"),
       ball(0.026 * k, [0, -o.l2, 0], "rubber"),
+      ...clevis(lever, 0.0085 * k),
+      ...fine([ring(0.016 * k, 0.004 * k, [0, -o.l2 + 0.026 * k, 0], "steel")]),
     ],
   });
 }
@@ -482,6 +729,28 @@ function rollers(r: number, n: number, lean: number, z: number, offset: number, 
   }
   return out;
 }
+/**
+ * The axles of barrel rollers laid out as `rollers` lays them: a pin through each roller standing out at both ends,
+ * and the tabs that hold the pins, each reaching in from the pin end to the wheel's hub plates.
+ */
+function axles(r: number, n: number, lean: number, z: number, offset: number, length: number, girth: number): Part[] {
+  const out: Part[] = [];
+  const rho = r - girth;
+  for (let i = 0; i < n; i++) {
+    const a = offset + (i / n) * TAU;
+    const u: V3 = [-Math.sin(a) * Math.cos(lean), Math.cos(a) * Math.cos(lean), Math.sin(lean)];
+    const c: V3 = [Math.cos(a) * rho, Math.sin(a) * rho, z];
+    out.push({ s: "cyl", d: [girth * 0.16, length + girth * 0.5, girth * 0.16], p: c, r: aim(u), m: "steel" });
+    for (const e of [-1, 1]) {
+      const end = add(c, scale(u, e * (length / 2 + girth * 0.18)));
+      // The tab runs straight in towards the axle from the pin's end.
+      const k = 1 - (girth * 0.95) / Math.hypot(end[0], end[1]);
+      const inward: V3 = [end[0] * k, end[1] * k, end[2]];
+      out.push(slab(end, inward, girth * 0.42, girth * 0.22, "steel"));
+    }
+  }
+  return out;
+}
 function wheel(mk: Maker, name: string, parent: number, at: V3, r: number, w: number, turn: (t: number) => number, o: WheelOptions = {}) {
   const parts: Part[] = [];
   const kind = o.kind ?? "tire";
@@ -491,6 +760,8 @@ function wheel(mk: Maker, name: string, parent: number, at: V3, r: number, w: nu
       cyl(r * 0.7, 0.008, [0, 0, w * 0.46], "steel", "z"),
       cyl(r * 0.7, 0.008, [0, 0, -w * 0.46], "steel", "z"),
       ...rollers(r, 9, o.lean ?? Math.PI / 4, 0, 0, (w * 0.86) / Math.sin(Math.abs(o.lean ?? Math.PI / 4)), r * 0.21),
+      // Each roller turns on a steel axle held at both ends by a tab bent out from its side plate.
+      ...fine(axles(r, 9, o.lean ?? Math.PI / 4, 0, 0, (w * 0.86) / Math.sin(Math.abs(o.lean ?? Math.PI / 4)), r * 0.21)),
     );
   } else if (kind === "omni") {
     const girth = r * 0.2;
@@ -500,6 +771,7 @@ function wheel(mk: Maker, name: string, parent: number, at: V3, r: number, w: nu
       cyl(r * 0.74, 0.006, [0, 0, 0], "steel", "z"),
       ...rollers(r, 7, 0, -w * 0.25, 0, length, girth),
       ...rollers(r, 7, 0, w * 0.25, Math.PI / 7, length, girth),
+      ...fine([...axles(r, 7, 0, -w * 0.25, 0, length, girth), ...axles(r, 7, 0, w * 0.25, Math.PI / 7, length, girth)]),
     );
   } else if (kind === "cleat") {
     parts.push(cyl(r * 0.93, w, [0, 0, 0], "steel", "z"), cyl(r * 0.7, w * 1.04, [0, 0, 0], "dark", "z"));
@@ -521,8 +793,20 @@ function wheel(mk: Maker, name: string, parent: number, at: V3, r: number, w: nu
       const a = (i / 5) * TAU;
       parts.push(box([r * 0.48, r * 0.1, w * 0.94], [Math.cos(a) * r * 0.29, Math.sin(a) * r * 0.29, 0], "steel", [0, 0, a]));
     }
+    // Close up: the rim's bead seats either side, its valve, and between the spokes the windows of the wheel's web.
+    parts.push(
+      ...fine([
+        ...twin((e) => [ring(r * 0.645, r * 0.012, [0, 0, e * w * 0.41], "steel", "z")]),
+        cyl(r * 0.016, r * 0.06, [Math.cos(0.63) * r * 0.61, Math.sin(0.63) * r * 0.61, w * 0.41 + r * 0.03], "dark", "z"),
+      ]),
+    );
   }
+  // The hub: a dark boss, its screws on both faces, and the light at the axle.
   parts.push(cyl(r * 0.17, w * 1.06, [0, 0, 0], "dark", "z"), cyl(r * 0.1, w * 1.12, [0, 0, 0], "glow", "z"));
+  const head = Math.max(0.0018, r * 0.022);
+  // Sunk into the boss as far as it takes to keep them inside the glow at the axle.
+  const face = Math.min(w * 0.53 + head * 0.55, w * 0.55 - head * 0.55);
+  parts.push(...twin((e) => [bolts(r * 0.135, head, 5, [0, 0, e * face], e > 0 ? "z" : "-z")]));
   return mk.add({ name, parent, at, set: o.set, joint: "z", turn, passive: o.passive, parts });
 }
 
@@ -544,6 +828,31 @@ export interface QuadSpec {
   gait: Step;
   bend: 1 | -1;
 }
+/**
+ * Close-up detail on a quadruped's long body of length L and width W whose shell's top is at `top`: panel lines down
+ * its flanks, screws in the deck's corners, vents towards the tail, rings round both camera lenses, and a charging
+ * port with its power button on the tail.
+ */
+function hull(L: number, W: number, top: number, k: number): Part[] {
+  const side = W * 0.58;
+  const shell: V3 = [L * 0.9, 0.12 * k, W * 1.16];
+  return [
+    ...twin((s) => [
+      seamOn(shell, [0, 0.02, 0], [L * 0.16, -0.04 * k, s * side], [L * 0.16, 0.08 * k, s * side]),
+      seamOn(shell, [0, 0.02, 0], [-L * 0.16, -0.04 * k, s * side], [-L * 0.16, 0.08 * k, s * side]),
+      seamOn(shell, [0, 0.02, 0], [-L * 0.45, 0.05 * k, s * side], [L * 0.45, 0.05 * k, s * side]),
+      ...vent(6, [(-0.59 * L + 0.06 * k) / 2, 0.012 * k, s * (side + 0.0004)], "x", "y", 0.04 * k, 0.012, s > 0 ? "z" : "-z"),
+      { ...ring(0.0215, 0.0026, [L / 2 + 0.1085, 0.022, s * 0.046], "steel", "x"), fine: true },
+    ]),
+    ...screws([L * 0.64, 0.024, W * 0.78], [0, top + 0.008, 0], "y", 0.012),
+    ...fine([
+      cyl(0.011, 0.006, [-(L / 2 + 0.11), 0.045, 0.05], "steel", "x"),
+      cyl(0.006, 0.002, [-(L / 2 + 0.1124), 0.045, 0.05], "dark", "x"),
+      cyl(0.0085, 0.005, [-(L / 2 + 0.11), 0.045, -0.05], "glow", "x"),
+    ]),
+  ];
+}
+
 /** A walker with two, three or four pairs of legs, trotting on diagonal pairs. */
 export function walker(q: QuadSpec, idle = false): Body {
   const mk = new Maker();
@@ -569,6 +878,7 @@ export function walker(q: QuadSpec, idle = false): Body {
       box([0.012, 0.022, 0.11], [L / 2 + 0.112, 0.062, 0], "glow"),
       ball(0.019, [L / 2 + 0.104, 0.022, -0.046], "lens"),
       ball(0.019, [L / 2 + 0.104, 0.022, 0.046], "lens"),
+      ...hull(L, W, top, k),
     ]),
   );
   for (let i = 0; i < pairs; i++) {
@@ -620,6 +930,21 @@ function radial(legs: number, o: { r: number; coxa: number; l1: number; l2: numb
       ring(o.r * 0.92, 0.006, [0, 0.058, 0], "glow"),
       cyl(o.r * 0.36, 0.024, [0, 0.096, 0], "steel"),
       ball(o.r * 0.28, [0, 0.1, 0], "lens"),
+      // The top plate's ring of screws, the sensor's collar screws, and between each pair of legs a panel line down
+      // the shell with a vent beside it.
+      bolts(o.r * 0.68, 0.0024, 12, [0, 0.088 + 0.0013, 0], "y"),
+      bolts(o.r * 0.31, 0.002, 6, [0, 0.108 + 0.0011, 0], "y"),
+      ...Array.from({ length: legs }, (_, i) => {
+        const a = (i / legs) * TAU;
+        const [c, sn] = [Math.cos(a), Math.sin(a)];
+        return [
+          seam([c * o.r, -0.03, sn * o.r], [c * o.r, 0.05, sn * o.r]),
+          ...[-1, 1].map((e) => {
+            const b = a + e * 0.09;
+            return { ...box([0.0016, 0.05, 0.006], [Math.cos(b) * (o.r + 0.0004), 0.012, Math.sin(b) * (o.r + 0.0004)], "dark", [0, -b, 0]), fine: true };
+          }),
+        ];
+      }).flat(),
     ]),
   );
   for (let i = 0; i < legs; i++) {
@@ -733,6 +1058,12 @@ function humanoid(idle: boolean): Body {
       box([0.006, 0.012, 0.12], [0.114, 0.285, 0], "glow"),
       box([0.09, 0.2, 0.24], [-0.125, 0.22, 0], "dark"),
       box([0.13, 0.06, 0.36], [0, 0.335, 0], "dark"),
+      // The chest's cover screwed down at its corners, panel lines down its sides, and the battery pack on the back
+      // held by four screws with its latch and charge light.
+      ...screws([0.2, 0.25, 0.3], [0, 0.235, 0], "x", 0.014),
+      ...twin((s) => [0.035, -0.06].map((x) => seamOn([0.2, 0.25, 0.3], [0, 0.235, 0], [x, 0.11, s * 0.1503], [x, 0.305, s * 0.1503]))),
+      ...screws([0.09, 0.2, 0.24], [-0.125, 0.22, 0], "-x", 0.012),
+      ...fine([box([0.006, 0.03, 0.06], [-0.172, 0.29, 0], "steel"), box([0.003, 0.006, 0.03], [-0.1715, 0.16, 0], "glow")]),
     ],
   });
   mk.add({
@@ -747,6 +1078,8 @@ function humanoid(idle: boolean): Body {
       ball(0.017, [0.084, 0.14, -0.034], "lens"),
       ball(0.017, [0.084, 0.14, 0.034], "lens"),
       box([0.008, 0.01, 0.1], [0.088, 0.112, 0], "glow"),
+      ...fine(twin((s) => [ring(0.0192, 0.0022, [0.0866, 0.14, s * 0.034], "steel", "x")])),
+      ...fine([cyl(0.0365, 0.008, [0, -0.008, 0], "steel")]),
     ],
   });
   for (const side of [-1, 1] as const) {
@@ -759,7 +1092,11 @@ function humanoid(idle: boolean): Body {
       at: [0, 0.33, side * 0.2],
       joint: "z",
       turn: swing,
-      parts: [cyl(0.05, 0.07, [0, 0, 0], "dark", "z"), cyl(0.04, 0.012, [0, 0, side * 0.037], "steel", "z"), ring(0.045, 0.004, [0, 0, side * 0.039], "glow", "z")],
+      parts: [
+        cyl(0.05, 0.07, [0, 0, 0], "dark", "z"),
+        cyl(0.04, 0.012, [0, 0, side * 0.037], "steel", "z"),
+        ring(0.045, 0.004, [0, 0, side * 0.039], "glow", "z"),
+      ],
     });
     p = mk.add({ name: `${n}.shoulder.roll`, parent: p, at: [0, 0, side * 0.045], joint: "x", turn: () => -side * 0.05, parts: [cyl(0.042, 0.08, [0, -0.01, 0], "steel", "x")] });
     p = mk.add({ name: `${n}.shoulder.yaw`, parent: p, at: [0, -0.05, 0], joint: "y", turn: () => side * 0.06, parts: [cap(0.038, 0.13, [0, -0.1, 0], "shell"), cyl(0.04, 0.03, [0, -0.02, 0], "dark")] });
@@ -769,7 +1106,13 @@ function humanoid(idle: boolean): Body {
       at: [0, -0.22, 0],
       joint: "z",
       turn: (t) => 0.42 + 0.16 * (1 + swing(t) / 0.32) * (idle ? 0.3 : 1),
-      parts: [cyl(0.036, 0.074, [0, 0, 0], "steel", "z"), taper([0, -0.01, 0], [0, -0.15, 0], 0.034, 0.028, "dark")],
+      parts: [
+        cyl(0.036, 0.074, [0, 0, 0], "steel", "z"),
+        taper([0, -0.01, 0], [0, -0.15, 0], 0.034, 0.028, "dark"),
+        ...twin((e) => [bolts(0.024, 0.0018, 6, [0, 0, e * (0.037 + 0.001)], e > 0 ? "z" : "-z")]),
+        // The fingers' tendons run down the inside of the forearm to the wrist.
+        ...[-0.009, 0, 0.009].flatMap((dx) => cable([[dx, -0.03, -side * 0.0352], [dx, -0.145, -side * 0.0302]], 0.0014, "steel")),
+      ],
     });
     p = mk.add({ name: `${n}.wrist.roll`, parent: p, at: [0, -0.17, 0], joint: "y", turn: () => 0, parts: [cyl(0.03, 0.03, [0, 0, 0], "steel"), ring(0.03, 0.003, [0, 0.016, 0], "glow")] });
     p = mk.add({ name: `${n}.wrist.pitch`, parent: p, at: [0, -0.03, 0], joint: "z", turn: () => 0.1, parts: [ball(0.025, [0, 0, 0], "steel")] });
@@ -786,8 +1129,17 @@ function humanoid(idle: boolean): Body {
       const knuckle: V3 = [x, -0.105 - 0.55 * l, inward * 0.004];
       const tip: V3 = [x, knuckle[1] - 0.45 * l * Math.cos(0.6), inward * (0.004 + 0.45 * l * Math.sin(0.6))];
       hand.push(strut([x, -0.104, 0], knuckle, 0.0078, "dark"), strut(knuckle, tip, 0.007, "dark"));
+      // Close up: a steel hinge at each knuckle, and the tendon that curls the finger along its palm side, from the
+      // palm over the knuckle to the last joint.
+      const [c, sn] = [Math.cos(0.6), Math.sin(0.6)];
+      const end = add(add(knuckle, scale(gap(knuckle, tip), 0.78)), [0, sn * 0.0083, inward * c * 0.0083]);
+      hand.push(
+        ...fine([cyl(0.0083, 0.0152, [x, -0.104, 0], "steel", "x"), cyl(0.0076, 0.0146, knuckle, "steel", "x")]),
+        ...cable([[x, -0.097, inward * 0.0166], [x, knuckle[1], inward * (0.004 + 0.0089)], end], 0.0011, "steel"),
+      );
     }
     hand.push(strut([0.03, -0.05, inward * 0.01], [0.044, -0.08, inward * 0.026], 0.009, "dark"), strut([0.044, -0.08, inward * 0.026], [0.04, -0.103, inward * 0.034], 0.008, "dark"));
+    hand.push({ ...cyl(0.0094, 0.012, [0.044, -0.08, inward * 0.026], "steel", "z"), fine: true });
     mk.add({ name: `${n}.wrist.yaw`, parent: p, at: [0, 0, 0], joint: "x", turn: () => 0, parts: hand });
 
     /*
@@ -827,14 +1179,50 @@ function humanoid(idle: boolean): Body {
       parts: [cyl(0.06, 0.07, [0, 0, 0], "dark", "z"), ring(0.055, 0.004, [0, 0, side * 0.037], "glow", "z")],
     });
     q = mk.add({ name: `${n}.hip.roll`, parent: q, at: [0, 0, 0], joint: "x", turn: (t) => solve(t)[1]!, parts: [box([0.09, 0.07, 0.07], [0, -0.05, 0], "steel")] });
-    q = mk.add({ name: `${n}.hip.yaw`, parent: q, at: [0, 0, 0], joint: "y", turn: (t) => solve(t)[5]!, parts: [cap(0.056, 0.22, [0, -0.2, 0], "shell"), box([0.03, 0.2, 0.07], [0.05, -0.2, 0], "dark")] });
+    q = mk.add({
+      name: `${n}.hip.yaw`,
+      parent: q,
+      at: [0, 0, 0],
+      joint: "y",
+      turn: (t) => solve(t)[5]!,
+      parts: [
+        cap(0.056, 0.22, [0, -0.2, 0], "shell"),
+        box([0.03, 0.2, 0.07], [0.05, -0.2, 0], "dark"),
+        ...twin((e) => [seam([-0.02, -0.12, e * 0.0526], [-0.02, -0.29, e * 0.0526])]),
+        // The knee's power and signal run down the back of the thigh in a harness.
+        ...cable([[-0.05, -0.09, -side * 0.03], [-0.06, -0.2, -side * 0.024], [-0.054, -0.33, -side * 0.034], [-0.03, -0.4, -side * 0.046]]),
+      ],
+    });
     q = mk.add({
       name: `${n}.knee`,
       parent: q,
       at: [0, -0.4, 0],
       joint: "z",
       turn: (t) => solve(t)[2]!,
-      parts: [cyl(0.052, 0.1, [0, 0, 0], "steel", "z"), taper([0, -0.02, 0], [0, -0.36, 0], 0.05, 0.034, "dark"), box([0.022, 0.24, 0.07], [0.04, -0.17, 0], "shell")],
+      parts: [
+        cyl(0.052, 0.1, [0, 0, 0], "steel", "z"),
+        taper([0, -0.02, 0], [0, -0.36, 0], 0.05, 0.034, "dark"),
+        box([0.022, 0.24, 0.07], [0.04, -0.17, 0], "shell"),
+        ...twin((e) => [bolts(0.036, 0.0022, 8, [0, 0, e * (0.05 + 0.0012)], e > 0 ? "z" : "-z")]),
+        ...screws([0.022, 0.24, 0.07], [0.04, -0.17, 0], "x", 0.008, 0.0018),
+        /*
+         * The ankle is driven from the calf by two ball-screw rams side by side, their rods on the heel either side of
+         * the joint: pushed together they pitch the foot, pushed against each other they roll it.
+         */
+        ...[-1, 1].flatMap((e) =>
+          actuator(
+            [-0.058, -0.15, e * 0.024],
+            (t) => {
+              const [, , , ankle, ar] = solve(t);
+              return add([0, -0.4, 0], rot([0, 0, ankle!], rot([ar!, 0, 0], [-0.042, 0, e * 0.024])));
+            },
+            0.0085,
+            g.period * 2,
+          ),
+        ),
+        { ...box([0.012, 0.012, 0.075], [-0.047, -0.15, 0], "steel"), fine: true },
+        ...cable([[-0.03, 0.0, -side * 0.046], [-0.044, -0.06, -side * 0.04], [-0.046, -0.12, -side * 0.036]]),
+      ],
     });
     q = mk.add({ name: `${n}.ankle.pitch`, parent: q, at: [0, -0.4, 0], joint: "z", turn: (t) => solve(t)[3]!, parts: [ball(0.034, [0, 0, 0], "steel")] });
     mk.add({
@@ -843,7 +1231,13 @@ function humanoid(idle: boolean): Body {
       at: [0, 0, 0],
       joint: "x",
       turn: (t) => solve(t)[4]!,
-      parts: [box([0.22, 0.03, 0.1], [0.04, -0.055, 0], "rubber"), box([0.15, 0.035, 0.084], [0.02, -0.027, 0], "shell")],
+      parts: [
+        box([0.22, 0.03, 0.1], [0.04, -0.055, 0], "rubber"),
+        box([0.15, 0.035, 0.084], [0.02, -0.027, 0], "shell"),
+        // The rams' clevises on the heel, and the foot's cover screwed down.
+        ...twin((e) => [{ ...box([0.016, 0.016, 0.012], [-0.042, -0.004, e * 0.024], "steel"), fine: true }]),
+        ...screws([0.15, 0.035, 0.084], [0.02, -0.027, 0], "y", 0.01, 0.0018),
+      ],
     });
   }
   const speed = idle ? 0 : g.stride / (g.duty * g.period);
@@ -887,6 +1281,24 @@ function diffDrive(idle: boolean): Body {
       ball(0.016, [0.166, 0.085, -0.026], "lens"),
       ball(0.016, [0.166, 0.085, 0.026], "lens"),
       ...twin((s) => [cyl(0.03, 0.06, [0, 0, s * 0.15], "steel", "z")]),
+      // The lidar's emitter goes round and round its window; screws hold the window's ring.
+      { s: "box", d: [0.003, 0.012, 0.016], p: [0.02 + 0.0478, 0.218, 0], m: "glow", fine: true, spin: { at: [0.02, 0.218, 0], axis: [0, 1, 0], angle: (t) => TAU * 1.5 * t } },
+      bolts(0.0495, 0.0016, 6, [0.02, 0.208 + 0.0009, 0], "y"),
+      // Screws round the top plate, a power button and a status light, panel lines down the shell, vents at the back,
+      // a rubber bumper round the front, and the charging contacts that meet the dock.
+      bolts(0.13, 0.0022, 10, [0, 0.158 + 0.0012, 0], "y"),
+      ...fine([
+        cyl(0.009, 0.004, [-0.08, 0.16, 0.07], "steel"),
+        cyl(0.006, 0.004, [-0.08, 0.162, 0.07], "glow"),
+        cyl(0.004, 0.003, [-0.1, 0.1595, 0.09], "amber"),
+        { ...arc(0.171, 0.007, 2.4, [0, 0.02, 0], "rubber"), r: [0, -1.2, 0] },
+        ...twin((s) => [box([0.004, 0.012, 0.03], [-0.165, 0.03, s * 0.03], "steel", [0, s * 0.18, 0])]),
+      ]),
+      ...[0.9, -0.9, Math.PI].map((a) => seam([Math.cos(a) * 0.165, 0.012, -Math.sin(a) * 0.165], [Math.cos(a) * 0.165, 0.138, -Math.sin(a) * 0.165])),
+      ...Array.from({ length: 7 }, (_, i) => {
+        const a = Math.PI + (i - 3) * 0.07;
+        return { ...box([0.0016, 0.05, 0.005], [Math.cos(a) * 0.1654, 0.085, -Math.sin(a) * 0.1654], "dark", [0, a, 0]), fine: true };
+      }),
     ]),
   );
   wheel(mk, "left.wheel", 0, [0, 0, -track], r, 0.045, idle ? (t) => -inch(t) / r : (t) => spin(t, 0));
@@ -991,6 +1403,51 @@ function ackermann(idle: boolean): Body {
   const left0 = left(0);
   const right0 = close(left0);
   const scrub = (s: number, d: number, d0: number) => (s * (wz - kz) * (d - d0)) / r;
+  /*
+   * The steering servo hangs under a crossmember in the nose, ahead of the tie rod. Its horn turns about y; a drag link
+   * of fixed length runs level from the horn's pin to a ball pin on top of the left steering arm. Wherever the arm has gone, the horn takes the angle
+   * that puts its pin one drag link away from it: the nearer of the two circles' crossings to where it started.
+   */
+  const steering = (): Part[] => {
+    const H: V3 = [L / 2 - 0.04, -0.0095, 0.03];
+    const horn = 0.026;
+    const on = (t: number): V3 => {
+      const [ax, az] = armAt(-1);
+      const [x, z] = turnBy(left(t), ax * 0.62, az * 0.62);
+      return [L / 2 + x, H[1], -kz + z];
+    };
+    const psi0 = 0.25;
+    const tip = (psi: number): V3 => [H[0] + horn * Math.cos(psi), H[1], H[2] - horn * Math.sin(psi)];
+    const P0 = on(0);
+    const reach = Math.hypot(tip(psi0)[0] - P0[0], tip(psi0)[2] - P0[2]);
+    const psi = (t: number) => {
+      const P = on(t);
+      const [dx, dz] = [P[0] - H[0], P[2] - H[2]];
+      const D = Math.hypot(dx, dz);
+      const c = Math.max(-1, Math.min(1, (horn * horn + D * D - reach * reach) / (2 * horn * D)));
+      // u·D = D cos(ψ + φ), with u = (cos ψ, −sin ψ) and φ the angle of (dx, dz).
+      const phi = Math.atan2(dz, dx);
+      const a = Math.acos(c);
+      const [p1, p2] = [a - phi, -a - phi];
+      const near = (v: number) => Math.abs(Math.atan2(Math.sin(v - psi0), Math.cos(v - psi0)));
+      return near(p1) < near(p2) ? p1 : p2;
+    };
+    return [
+      ...fine([
+        box([0.05, 0.03, 0.026], [H[0] + 0.01, 0.015, H[2]], "dark"),
+        cyl(0.005, 0.012, [H[0], -0.004, H[2]], "steel"),
+        box([0.024, 0.012, 0.18], [H[0] + 0.01, 0.036, 0], "steel"),
+      ]),
+      ...screws([0.05, 0.03, 0.026], [H[0] + 0.01, 0.015, H[2]], "z", 0.005, 0.0016),
+      {
+        ...slab([H[0], H[1], H[2]], tip(psi0), 0.01, 0.005, "steel"),
+        fine: true,
+        spin: { at: H, axis: [0, 1, 0], angle: (t) => psi(t) - psi0 },
+      },
+      bar(0.0045, "steel", (t) => [tip(psi(t)), on(t)]),
+      { ...ball(0.007, on(0), "dark"), fine: true, span: (t) => [add(on(t), [0, -0.0035, 0]), add(on(t), [0, 0.0035, 0])] },
+    ];
+  };
   // A wheel arch on the body over the top of each wheel, 0.135 round its axle, clear of a front wheel at full lock,
   // and kept inside the circle the wheels already sweep so that the body is no larger than it was.
   const arch = (x: number, s: 1 | -1): Part[] =>
@@ -1018,6 +1475,37 @@ function ackermann(idle: boolean): Body {
       cyl(0.032, 0.03, [0.24, 0.215, 0], "dark"),
       ring(0.032, 0.004, [0.24, 0.222, 0], "glow"),
       cyl(0.026, 0.008, [0.24, 0.234, 0], "steel"),
+      ...steering(),
+      ...fine([
+        // The drive: a finned motor ahead of the differential.
+        { s: "fins", d: [0.03, 0.07, 16], p: [-L / 2 + 0.085, 0.005, 0], r: lay("x"), m: "dark" },
+        cyl(0.022, 0.012, [-L / 2 + 0.045, 0.005, 0], "steel", "x"),
+        // Front suspension: upper and lower wishbones from rails under the nose to ball joints at the ends of each
+        // kingpin, the lower rails hung from the upper by a plate at the front, and a short coil-over from each upper
+        // arm up to the floor of the body.
+        ...twin((s) =>
+          [-0.05, 0.05].flatMap((y) => [
+            slab([L / 2 - 0.05, y * 0.9, s * 0.05], [L / 2, y, s * (kz - 0.012)], 0.012, 0.008, "steel"),
+            slab([L / 2 + 0.04, y * 0.9, s * 0.05], [L / 2, y, s * (kz - 0.012)], 0.012, 0.008, "steel"),
+            ball(0.011, [L / 2, y + Math.sign(y) * 0.004, s * kz], "dark"),
+          ]),
+        ),
+        ...twin((s) => [
+          box([0.12, 0.012, 0.04], [L / 2, -0.045, s * 0.07], "steel"),
+          box([0.008, 0.09, 0.04], [L / 2 + 0.056, -0.005, s * 0.07], "steel"),
+          ball(0.006, [L / 2 - 0.028, 0.05, s * 0.085], "dark"),
+          cyl(0.0045, 0.03, [L / 2 - 0.028, 0.062, s * 0.085], "steel"),
+          coil(0.0115, 0.042, 6, [L / 2 - 0.028, 0.073, s * 0.085], "amber"),
+          cyl(0.0085, 0.022, [L / 2 - 0.028, 0.084, s * 0.085], "dark"),
+        ]),
+        // Panel lines for the doors.
+        ...twin((s) => [
+          seamOn([0.7, 0.09, 0.3], [0, 0.155, 0], [0.11, 0.11, s * 0.1503], [0.11, 0.2, s * 0.1503]),
+          seamOn([0.7, 0.09, 0.3], [0, 0.155, 0], [-0.15, 0.11, s * 0.1503], [-0.15, 0.2, s * 0.1503]),
+          seamOn([0.7, 0.09, 0.3], [0, 0.155, 0], [-0.15, 0.19, s * 0.1503], [0.11, 0.19, s * 0.1503]),
+        ]),
+      ]),
+      { s: "box", d: [0.003, 0.012, 0.014], p: [0.24 + 0.0328, 0.215, 0], m: "glow", fine: true, spin: { at: [0.24, 0.215, 0], axis: [0, 1, 0], angle: (t) => TAU * 1.5 * t } },
     ]),
   );
   wheel(mk, "rear.left.wheel", 0, [-L / 2, 0, -wz], r, 0.07, (t) => spin(t, 0));
@@ -1096,6 +1584,22 @@ function mecanum(idle: boolean): Body {
       ...twin((s) => [box([0.008, 0.02, 0.05], [-0.312, 0.1, s * 0.1], "amber"), box([0.34, 0.006, 0.016], [0, 0.174, s * 0.06], "steel")]),
       cyl(0.026, 0.008, [-0.205, 0.167, 0.09], "dark"),
       cyl(0.019, 0.016, [-0.205, 0.178, 0.09], "amber"),
+      // A gearmotor inboard of each wheel under the chassis: the finned motor, its gearbox and the screws that close
+      // the box. Screws hold the deck and the plate on it; panel lines and vents run along the flanks.
+      ...[X, -X].flatMap((x) =>
+        twin((s) => [
+          { s: "fins", d: [0.028, 0.06, 16], p: [x - Math.sign(x) * 0.012, -0.008, s * 0.075], r: lay("z"), m: "dark", fine: true },
+          { ...cyl(0.03, 0.035, [x, -0.004, s * 0.122], "steel", "z"), fine: true },
+          bolts(0.02, 0.0016, 4, [x - Math.sign(x) * 0.012, -0.008, s * (0.045 - 0.001)], s > 0 ? "-z" : "z"),
+        ]),
+      ),
+      ...screws([0.48, 0.03, 0.24], [0, 0.148, 0], "y", 0.012),
+      ...twin((s) => [
+        seamOn([0.62, 0.1, 0.3], [0, 0.085, 0], [0.1, 0.035, s * 0.1503], [0.1, 0.135, s * 0.1503]),
+        seamOn([0.62, 0.1, 0.3], [0, 0.085, 0], [-0.1, 0.035, s * 0.1503], [-0.1, 0.135, s * 0.1503]),
+        ...vent(7, [0, 0.085, s * 0.1504], "x", "y", 0.05, 0.012, s > 0 ? "z" : "-z"),
+      ]),
+      ...fine([cyl(0.01, 0.006, [-0.312, 0.06, -0.08], "steel", "x"), cyl(0.0055, 0.0035, [-0.3135, 0.06, -0.08], "dark", "x")]),
     ]),
   );
   for (const [i, w] of wheels.entries()) {
@@ -1148,6 +1652,17 @@ function omni(idle: boolean): Body {
       ...angles.map((a) => box([0.09, 0.07, 0.08], [Math.cos(a) * 0.15, 0.02, Math.sin(a) * 0.15], "dark", [0, -a, 0])),
       // A ranging window in the rim between each pair of wheels.
       ...angles.map((a) => box([0.012, 0.03, 0.07], [Math.cos(a + Math.PI / 3) * 0.197, 0.075, Math.sin(a + Math.PI / 3) * 0.197], "dark", [0, -(a + Math.PI / 3), 0])),
+      // Each wheel's motor lies behind its gearbox under the body, the box screwed shut; screws ring the top plate and
+      // the sensor's collar, and panel lines run down the shell either side of each window.
+      ...angles.flatMap((a) => {
+        const [c, sn] = [Math.cos(a), Math.sin(a)];
+        return [
+          { s: "fins" as const, d: [0.024, 0.05, 14] as V3, p: [c * 0.08, 0.008, sn * 0.08] as V3, r: aim([c, 0, sn]), m: "dark" as const, fine: true },
+          ...[-0.22, 0.22].map((d) => seam([Math.cos(a + Math.PI / 3 + d) * 0.2, 0.034, Math.sin(a + Math.PI / 3 + d) * 0.2], [Math.cos(a + Math.PI / 3 + d) * 0.2, 0.116, Math.sin(a + Math.PI / 3 + d) * 0.2])),
+        ];
+      }),
+      bolts(0.13, 0.0022, 9, [0, 0.15 + 0.0012, 0], "y"),
+      bolts(0.054, 0.0018, 6, [0, 0.18 + 0.001, 0], "y"),
     ]),
   );
   for (const [i, a] of angles.entries()) {
@@ -1209,26 +1724,46 @@ function swerve(idle: boolean): Body {
       box([0.44, 0.04, 0.44], [0, 0.225, 0], "dark"),
       box([0.3, 0.008, 0.3], [0, 0.248, 0], "steel"),
       box([0.508, 0.012, 0.508], [0, 0.16, 0], "glow"),
+      ...screws([0.44, 0.04, 0.44], [0, 0.225, 0], "y", 0.01),
+      ...[-1, 1].flatMap((s) => [-0.2501, 0.2501].map((z) => seamOn([0.5, 0.08, 0.5], [0, 0.17, 0], [0.08 * s, 0.13, z], [0.08 * s, 0.21, z]))),
     ]),
   );
+  const chassis: Part[] = [];
   for (const [i, [x, z]] of mods.entries()) {
     const n = `${x > 0 ? "front" : "rear"}.${z < 0 ? "left" : "right"}`;
     const lock = heading(x, z);
+    const steer = idle ? (t: number) => lock * (0.5 - 0.5 * Math.cos(0.5 * t)) : (t: number) => heading(...pointVelocity(twist(t), x * 0.2, z * 0.2));
+    // The module steers on a gear of 48 teeth under its housing; a pinion of 12 on the chassis, its motor above
+    // it inside, turns it four times slower than itself.
+    const ringGear = gear(0.06, 0.012, 48, [0, -0.04, 0], "steel");
+    const [pinion] = mate({ ...ringGear, p: [x * 0.2, 0.08, z * 0.2] }, steer, 12, Math.atan2(z, -x), 0.014, "steel");
+    chassis.push(
+      pinion,
+      ...fine([cyl(0.004, 0.012, [pinion.p[0], 0.091, pinion.p[2]], "steel"), { s: "fins", d: [0.016, 0.024, 12], p: [pinion.p[0], 0.106, pinion.p[2]], m: "dark" }]),
+    );
     const m = mk.add({
       name: `${n}.steer`,
       parent: 0,
       at: [x * 0.2, 0.12, z * 0.2],
       joint: "y",
-      turn: idle ? (t) => lock * (0.5 - 0.5 * Math.cos(0.5 * t)) : (t) => heading(...pointVelocity(twist(t), x * 0.2, z * 0.2)),
+      turn: steer,
       parts: [
         cyl(0.06, 0.05, [0, 0, 0], "dark"),
         ring(0.06, 0.005, [0, -0.022, 0], "glow"),
         box([0.07, 0.02, 0.08], [0, -0.03, 0], "dark"),
         ...twin((s) => [box([0.05, 0.11, 0.01], [0, -0.085, s * 0.032], "steel")]),
+        ringGear,
+        bolts(0.026, 0.002, 6, [0, -0.046 - 0.0011, 0], "-y"),
+        // The fork's plates are screwed to the housing and carry the axle's bearings.
+        ...twin((s) => [
+          ...[-0.016, 0.016].map((u) => bolts(0, 0.0018, 1, [u, -0.062, s * (0.037 + 0.001)], s > 0 ? "z" : "-z")),
+          { ...cyl(0.014, 0.004, [0, -0.12, s * 0.039], "dark", "z"), fine: true },
+        ]),
       ],
     });
     wheel(mk, `${n}.drive`, m, [0, -0.12, 0], r, 0.045, idle ? () => 0 : (t) => drives(t, i));
   }
+  mk.links[0]!.parts.push(...chassis);
   return { links: mk.links, height: r, speed: idle ? 0 : 0.45, travel: idle ? undefined : drive(P, twist), cycle: P, size: 0.56 };
 }
 
@@ -1259,6 +1794,17 @@ function tracked(idle: boolean): Body {
       box([0.08, 0.06, 0.12], [-0.06, 0.34, 0], "dark"),
       ...twin((s) => [ball(0.014, [-0.018, 0.345, s * 0.03], "lens")]),
       box([0.004, 0.008, 0.08], [-0.018, 0.322, 0], "glow"),
+      // Lens rings, the pan-and-tilt yoke under the camera head, screws on the deck, and panel lines on the hull.
+      ...twin((s) => [
+        { ...ring(0.0155, 0.002, [-0.018, 0.345, s * 0.03], "steel", "x"), fine: true },
+        // The tilt yoke: a cheek either side of the head, its pivot boss and screws, on a crossbar the mast turns.
+        { ...box([0.036, 0.048, 0.005], [-0.06, 0.326, s * 0.0635], "steel"), fine: true },
+        { ...cyl(0.01, 0.004, [-0.06, 0.34, s * 0.068], "dark", "z"), fine: true },
+        bolts(0.0055, 0.0013, 4, [-0.06, 0.34, s * (0.07 + 0.0007)], s > 0 ? "z" : "-z"),
+      ]),
+      { ...box([0.036, 0.005, 0.132], [-0.06, 0.3045, 0], "steel"), fine: true },
+      ...screws([0.4, 0.05, 0.22], [0, 0.19, 0], "y", 0.012),
+      ...twin((s) => [0.12, -0.12].map((x) => seamOn([0.5, 0.12, 0.27], [0, 0.11, 0], [x, 0.05, s * 0.1353], [x, 0.17, s * 0.1353]))),
       ...twin((s) => [
         box([0.48, 0.06, 0.03], [0, 0, s * 0.2], "dark"),
         // Road wheels ride the inside of the bottom run in pairs, either side of the shoes' guide horns.
@@ -1275,13 +1821,22 @@ function tracked(idle: boolean): Body {
     const s = (t: number) => (idle ? 0 : run(t, side < 0 ? 0 : 1));
     // Round the ends the shoes turn about the axle at the belt's speed over its radius, and so do the wheels.
     const wrap = (t: number) => -s(t) / loop;
-    const sprocket: Part[] = [cyl(0.085, 0.03, [0, 0, -0.03], "dark", "z"), cyl(0.085, 0.03, [0, 0, 0.03], "dark", "z"), cyl(0.03, 0.11, [0, 0, 0], "steel", "z")];
-    // Each tooth sits in the gap between two shoes, where the belt brings it.
-    for (let i = 0; i < teeth; i++) {
-      const a = Math.PI / 2 + ((i + 0.5) / teeth) * TAU;
-      sprocket.push(box([0.014, 0.012, 0.09], [Math.cos(a) * 0.087, Math.sin(a) * 0.087, 0], "steel", [0, 0, a]));
-    }
-    sprocket.push(cyl(0.016, 0.114, [0, 0, 0], "glow", "z"));
+    // Two toothed rings either side of the shoes' guide horns, each tooth under the gap between two shoes where the
+    // belt brings it, on hubs screwed to the axle.
+    const sprocket: Part[] = [
+      ...twin((e) => [{ ...cyl(0.085, 0.03, [0, 0, e * 0.03], "dark", "z"), coarse: true }]),
+      ...Array.from({ length: teeth }, (_, i): Part => {
+        const a = Math.PI / 2 + ((i + 0.5) / teeth) * TAU;
+        return { ...box([0.014, 0.012, 0.09], [Math.cos(a) * 0.087, Math.sin(a) * 0.087, 0], "steel", [0, 0, a]), coarse: true };
+      }),
+      ...fine([cyl(0.068, 0.03, [0, 0, -0.03], "dark", "z"), cyl(0.068, 0.03, [0, 0, 0.03], "dark", "z")]),
+      cyl(0.03, 0.11, [0, 0, 0], "steel", "z"),
+      ...twin((e) => [
+        { s: "gear", d: [0.083, 0.028, teeth], p: [0, 0, e * 0.03], r: [Math.PI / 2, Math.PI / 2 + (0.5 / teeth) * TAU, 0], m: "steel", fine: true } satisfies Part,
+        bolts(0.05, 0.0024, 8, [0, 0, e * (0.045 + 0.0013)], e > 0 ? "z" : "-z"),
+      ]),
+      cyl(0.016, 0.114, [0, 0, 0], "glow", "z"),
+    ];
     mk.add({ name: `${n}.sprocket`, parent: 0, at: [-half, 0, side * 0.2], joint: "z", turn: wrap, parts: sprocket });
     mk.add({
       name: `${n}.idler`,
@@ -1296,8 +1851,25 @@ function tracked(idle: boolean): Body {
         cyl(0.06, 0.09, [0, 0, 0], "steel", "z"),
         ...[0, 1, 2, 3, 4].map((i) => box([0.07, 0.014, 0.094], [Math.cos((i / 5) * TAU) * 0.035, Math.sin((i / 5) * TAU) * 0.035, 0], "dark", [0, 0, (i / 5) * TAU])),
         cyl(0.014, 0.096, [0, 0, 0], "glow", "z"),
+        ...twin((e) => [bolts(0.07, 0.0024, 10, [0, 0, e * (0.049 + 0.0013)], e > 0 ? "z" : "-z")]),
       ],
     });
+    // Two return rollers hold up the top run, each a pair either side of the guide horns, turning with the track.
+    mk.links[0]!.parts.push(
+      ...[-0.09, 0.09].flatMap((x) => [
+        ...[-0.034, 0.034].flatMap((dz) => [
+          { ...cyl(0.016, 0.022, [x, 0.079, side * 0.2 + dz], "dark", "z"), fine: true },
+          { ...bolts(0.008, 0.0018, 3, [x, 0.079, side * 0.2 + dz + Math.sign(dz) * 0.0115], dz > 0 ? "z" : "-z"), spin: { at: [x, 0.079, side * 0.2] as V3, axis: [0, 0, 1] as V3, angle: (t: number) => -s(t) / 0.016 } },
+        ]),
+        { ...cyl(0.005, 0.09, [x, 0.079, side * 0.2], "steel", "z"), fine: true },
+        { ...slab([x, 0.03, side * 0.2], [x, 0.079, side * 0.2], 0.016, 0.008, "dark"), fine: true },
+      ]),
+      // Each pair of road wheels hangs from the track frame on a swing arm.
+      ...[-0.12, 0, 0.12].flatMap((x) => [
+        { ...slab([x + 0.04, -0.02, side * 0.2], [x, -0.055, side * 0.2], 0.014, 0.022, "steel"), fine: true },
+        ...[-1, 1].map((e) => bolts(0, 0.0022, 1, [x, -0.055, side * 0.2 + e * (0.045 + 0.0012)], e > 0 ? "z" : "-z")),
+      ]),
+    );
     mk.add({
       name: `${n}.track`,
       parent: 0,
@@ -1389,6 +1961,7 @@ function wheelLeg(idle: boolean): Body {
       box([0.012, 0.022, 0.11], [L / 2 + 0.112, 0.062, 0], "glow"),
       ball(0.019, [L / 2 + 0.104, 0.022, -0.046], "lens"),
       ball(0.019, [L / 2 + 0.104, 0.022, 0.046], "lens"),
+      ...hull(L, W, top, 1),
     ]),
   );
   for (let i = 0; i < 2; i++) {
@@ -1471,10 +2044,45 @@ function triwheel(idle: boolean): Body {
       ],
     });
     // The wheels are geared together: each turns by the distance travelled, less the cluster's own angle.
-    for (let i = 0; i < 3; i++) {
+    const roll = (t: number) => -(idle ? inch(t) : v * t) / r - stand;
+    const wheels = [0, 1, 2].map((i) => {
       const a = (i / 3) * TAU;
-      wheel(mk, `${n}.wheel${i + 1}`, c, [Math.cos(a) * R, Math.sin(a) * R, side * 0.04], r, 0.05, (t) => -(idle ? inch(t) : v * t) / r - stand, { passive: i > 0 });
+      return wheel(mk, `${n}.wheel${i + 1}`, c, [Math.cos(a) * R, Math.sin(a) * R, side * 0.04], r, 0.05, roll, { passive: i > 0 });
+    });
+    /*
+     * Close up, the train that does it lies open on the cluster's inner face: a sun of 24 teeth at the middle, turned
+     * by the motor in the chassis; an idler of 12 out along each arm; and a gear of 20 on each wheel's shaft. Through
+     * the idler a wheel turns the same way as the sun, 24/20 as far, so the motor turns all three wheels together.
+     */
+    // Clear of the arms (|z| ≤ 0.0225) and the hub (|z| ≤ 0.025).
+    const zg = -side * 0.029;
+    const face = 0.006;
+    const wheelGear = { s: "gear", d: [0.05, face, 20], p: [R, 0, zg], m: "steel", r: lay("z"), fine: true } satisfies Part;
+    const [idler0, idle0] = mate(wheelGear, roll, 12, Math.PI, face, "dark");
+    const [sun, sunTurn] = mate(idler0, idle0, 24, Math.PI, face, "steel");
+    sun.p = [0, 0, zg];
+    sun.spin!.at = sun.p;
+    const train: Part[] = [idler0, sun];
+    for (const [i, link] of wheels.entries()) {
+      const a = (i / 3) * TAU;
+      let offset = 0;
+      if (i > 0) {
+        const [idler, idlerTurn] = mate(sun, sunTurn, 12, a, face, "dark");
+        const [, wheelTurn] = mate(idler, idlerTurn, 20, a, face, "steel");
+        train.push(idler);
+        // The wheel's own gear is set round on its shaft by however far its mesh needs it to be.
+        offset = wheelTurn(0) - roll(0);
+      }
+      const at = (rad: number): V3 => [Math.cos(a) * rad, Math.sin(a) * rad, zg];
+      const idlerAt = at(R - 0.05 - 0.03);
+      train.push(cyl(0.006, face + 0.012, idlerAt, "steel", "z"), bolts(0, 0.0018, 1, add(idlerAt, [0, 0, -side * (face / 2 + 0.006)]), side > 0 ? "-z" : "z"));
+      mk.links[link]!.parts.push(
+        { ...wheelGear, p: [0, 0, zg - side * 0.04], r: [Math.PI / 2, offset, 0] },
+        { ...cyl(0.008, 0.056, [0, 0, -side * 0.042], "steel", "z"), fine: true },
+        bolts(0.03, 0.0018, 4, [0, 0, zg - side * (0.04 + face / 2 + 0.0009)], side > 0 ? "-z" : "z"),
+      );
     }
+    mk.links[c]!.parts.push(...fine(train), bolts(0.03, 0.002, 6, [0, 0, zg - side * (face / 2 + 0.001)], side > 0 ? "-z" : "z"));
   }
   return {
     links: mk.links,
@@ -1511,6 +2119,21 @@ function rocker(idle: boolean): Body {
       cyl(0.06, 0.012, [-0.2, 0.445, 0.13], "shell"),
       cyl(0.012, 0.02, [-0.2, 0.46, 0.13], "dark"),
       box([0.012, 0.03, 0.2], [0.232, 0.24, 0], "glow"),
+      // Close up: the dish's feed held over it on three struts, rings round the mast camera's lenses, the deck's
+      // screws, panel lines on the body, and the links that carry the differential bar down to each rocker.
+      ...Array.from({ length: 3 }, (_, i) => {
+        const a = (i / 3) * TAU + 0.5;
+        return { ...strut([-0.2 + Math.cos(a) * 0.056, 0.452, 0.13 + Math.sin(a) * 0.056], [-0.2, 0.495, 0.13], 0.0016, "steel"), fine: true };
+      }),
+      ...fine([cyl(0.009, 0.012, [-0.2, 0.5, 0.13], "dark"), cyl(0.0035, 0.03, [-0.2, 0.48, 0.13], "steel")]),
+      ...fine(twin((s) => [ring(0.0175, 0.002, [0.2455, 0.615, s * 0.04], "steel", "x")])),
+      ...screws([0.5, 0.02, 0.46], [-0.04, 0.325, 0], "y", 0.012),
+      ...twin((s) => [0.12, -0.12].map((x) => seamOn([0.46, 0.14, 0.32], [0, 0.24, 0], [x, 0.17, s * 0.1603], [x, 0.31, s * 0.1603]))),
+      ...twin((s) => [
+        { ...strut([-0.05, 0.372, s * 0.205], [-0.05, 0.25, s * 0.205], 0.0055, "steel"), fine: true },
+        { ...ball(0.009, [-0.05, 0.372, s * 0.205], "dark"), fine: true },
+        { ...ball(0.009, [-0.05, 0.25, s * 0.205], "dark"), fine: true },
+      ]),
     ]),
   );
   mk.add({
@@ -1537,6 +2160,10 @@ function rocker(idle: boolean): Body {
         slab([0, 0, 0], [0.32, -0.2, 0], 0.036, 0.036, "dark"),
         slab([0, 0, 0], [-0.2, -0.12, 0], 0.036, 0.036, "dark"),
         cyl(0.02, 0.07, [0.32, -0.2, side * 0.03], "steel", "z"),
+        // The lever the differential's link pulls, the pivot's screws, and the front wheel's harness along the arm.
+        { ...slab([0, 0, -side * 0.015], [-0.05, 0.05, -side * 0.015], 0.022, 0.008, "steel"), fine: true },
+        bolts(0.028, 0.0022, 6, [0, 0, side * (0.025 + 0.0012)], side > 0 ? "z" : "-z"),
+        ...cable([[0.03, 0.0, -side * 0.022], [0.17, -0.083, -side * 0.022], [0.3, -0.17, -side * 0.022], [0.32, -0.2, -side * 0.012]], 0.004),
       ],
     });
     wheel(mk, `${n}.front`, rk, [0.32, -0.2, side * 0.07], r, 0.08, spin, { kind: "cleat" });
@@ -1547,7 +2174,13 @@ function rocker(idle: boolean): Body {
       joint: "z",
       passive: true,
       turn: () => 0,
-      parts: [cyl(0.03, 0.05, [0, 0, 0], "steel", "z"), slab([0, 0, 0], [0.15, -0.08, 0], 0.03, 0.03, "dark"), slab([0, 0, 0], [-0.17, -0.08, 0], 0.03, 0.03, "dark")],
+      parts: [
+        cyl(0.03, 0.05, [0, 0, 0], "steel", "z"),
+        slab([0, 0, 0], [0.15, -0.08, 0], 0.03, 0.03, "dark"),
+        slab([0, 0, 0], [-0.17, -0.08, 0], 0.03, 0.03, "dark"),
+        bolts(0.02, 0.002, 6, [0, 0, side * (0.025 + 0.0011)], side > 0 ? "z" : "-z"),
+        ...[0.15, -0.17].flatMap((x) => [{ ...cyl(0.016, 0.06, [x, -0.08, side * 0.03], "steel", "z"), fine: true }]),
+      ],
     });
     wheel(mk, `${n}.middle`, bg, [0.15, -0.08, side * 0.07], r, 0.08, spin, { kind: "cleat" });
     wheel(mk, `${n}.rear`, bg, [-0.17, -0.08, side * 0.07], r, 0.08, spin, { kind: "cleat" });
@@ -1578,6 +2211,12 @@ function manipulator(idle: boolean): Body {
       cyl(0.078, 0.022, [0.14, 0.205, 0.1], "steel"),
       ring(0.078, 0.004, [0.14, 0.205, 0.1], "glow"),
       cyl(0.045, 0.03, [-0.23, -0.035, 0], "dark"),
+      bolts(0.069, 0.0024, 12, [0.14, 0.216 + 0.0013, 0.1], "y"),
+      ...screws([0.52, 0.02, 0.32], [0, 0.19, 0], "y", 0.012),
+      ...twin((s) => [
+        ...[0.13, -0.13].map((x) => seamOn([0.58, 0.16, 0.38], [0, 0.1, 0], [x, 0.02, s * 0.1903], [x, 0.18, s * 0.1903])),
+        ...vent(8, [-0.2, 0.1, s * 0.1904], "x", "y", 0.06, 0.011, s > 0 ? "z" : "-z"),
+      ]),
     ]),
   );
   wheel(mk, "left.wheel", 0, [0, 0, -0.22], r, 0.05, (t) => (-v * t) / r);
@@ -1599,9 +2238,21 @@ function manipulator(idle: boolean): Body {
       turn: (t) => rest[i]! + 0.22 * Math.sin(t * 0.7 + i * 1.3),
       parts: [
         ...(axes[i] === "y"
-          ? [cyl(w * 1.04, 0.045, [0, 0.012, 0], "dark"), ring(w * 1.04, 0.004, [0, 0.036, 0], "glow")]
-          : [cyl(w * 0.98, w * 2.2, [0, 0, 0], "dark", "z"), ring(w * 0.8, 0.004, [0, 0, w * 1.1], "glow", "z"), ring(w * 0.8, 0.004, [0, 0, -w * 1.1], "glow", "z")]),
+          ? [cyl(w * 1.04, 0.045, [0, 0.012, 0], "dark"), ring(w * 1.04, 0.004, [0, 0.036, 0], "glow"), bolts(w * 0.9, 0.0019, 10, [0, 0.0345 + 0.001, 0], "y")]
+          : [
+              cyl(w * 0.98, w * 2.2, [0, 0, 0], "dark", "z"),
+              ring(w * 0.8, 0.004, [0, 0, w * 1.1], "glow", "z"),
+              ring(w * 0.8, 0.004, [0, 0, -w * 1.1], "glow", "z"),
+              // Each drive's output flange: a ring of screws round a steel cap on both faces.
+              ...twin((e) => [
+                bolts(w * 0.55, 0.0021, 8, [0, 0, e * (w * 1.1 + 0.0012)], e > 0 ? "z" : "-z"),
+                { ...cyl(w * 0.3, 0.003, [0, 0, e * (w * 1.1 + 0.0015)], "steel", "z"), fine: true },
+              ]),
+            ]),
         cap(w * 0.78, Math.max(0.01, len - w * 1.2), [0, len / 2 + 0.02, 0], "shell"),
+        // The harness down the back of the link, clipped to it.
+        ...(len > 0.09 ? cable([[-(w * 0.78 + 0.0034), 0.045, 0], [-(w * 0.78 + 0.0034), len - 0.012, 0]], 0.003) : []),
+        ...(len > 0.09 ? [0.3, 0.7].map((f) => ({ ...ring(w * 0.78 + 0.0005, 0.0016, [0, 0.045 + f * (len - 0.057), 0], "dark"), fine: true })) : []),
       ],
     });
     at = [0, len + 0.03, 0];
@@ -1611,10 +2262,19 @@ function manipulator(idle: boolean): Body {
     parent: p,
     at,
     joint: "fixed",
+    // A parallel gripper inside the old one's bounds: its housing with dark end caps and a light line, the rail the
+    // fingers ride on, and steel fingers with rubber pads facing each other.
     parts: [
       cyl(0.03, 0.02, [0, 0, 0], "steel"),
-      box([0.05, 0.03, 0.11], [0, 0.022, 0], "dark"),
-      ...twin((s) => [box([0.026, 0.08, 0.014], [0, 0.07, s * 0.042], "steel"), box([0.022, 0.024, 0.006], [0, 0.098, s * 0.034], "rubber")]),
+      box([0.05, 0.03, 0.086], [0, 0.022, 0], "shell"),
+      box([0.004, 0.006, 0.05], [0.023, 0.022, 0], "glow"),
+      box([0.03, 0.006, 0.09], [0, 0.04, 0], "dark"),
+      ...twin((s) => [
+        box([0.05, 0.03, 0.012], [0, 0.022, s * 0.049], "dark"),
+        box([0.026, 0.07, 0.014], [0, 0.075, s * 0.042], "steel"),
+        box([0.018, 0.016, 0.01], [0, 0.102, s * 0.036], "steel"),
+        box([0.022, 0.04, 0.006], [0, 0.088, s * 0.032], "rubber"),
+      ]),
     ],
   });
   return { links: mk.links, height: r, speed: v, travel: idle ? undefined : (t) => ({ x: v * t, z: 0, yaw: 0 }), cycle: (TAU / 0.7) * 1, size: 0.9 };
@@ -1726,16 +2386,26 @@ function snake(idle: boolean): Body {
   for (let i = 0; i < n; i++) {
     const at: V3 = i ? [-len, 0, 0] : [0, 0, 0];
     const tone: Mat = i % 2 ? "dark" : "shell";
+    const bend = (t: number) => {
+      chain(t);
+      return i ? yaws[i]! - yaws[i - 1]! : 0;
+    };
+    const prev = parent;
+    if (i) {
+      // Each joint is driven through a gear of 32 teeth on the link behind, turned by a pinion of 10 on the link ahead,
+      // just under the joint's cap.
+      const joint = gear(0.04, 0.005, 32, [-len, 0.0605, 0], "steel");
+      const [pinion] = mate(joint, bend, 10, 0, 0.005, "steel");
+      mk.links[prev]!.parts.push(pinion, { ...cyl(0.006, 0.006, [pinion.p[0], 0.055, 0], "dark"), fine: true });
+    }
     parent = mk.add({
       name: i ? `link${i}` : "head",
       parent,
       at,
       joint: i ? "y" : "free",
-      turn: (t) => {
-        chain(t);
-        return i ? yaws[i]! - yaws[i - 1]! : 0;
-      },
+      turn: bend,
       parts: [
+        ...(i ? [gear(0.04, 0.005, 32, [0, 0.0605, 0], "steel")] : []),
         cap(0.046, len - 0.104, [-len / 2, 0.012, 0], i ? tone : "shell", "x"),
         ring(0.046, 0.0035, [-len / 2, 0.012, 0], "glow", "x"),
         cyl(0.03, 0.1, [0, 0.012, 0], "steel"),
@@ -1762,7 +2432,12 @@ function snake(idle: boolean): Body {
           chain(t);
           return -(read(s, n + i) + side * track * yaws[i]!) / r;
         },
-        parts: [tire(r, 0.02, r * 0.62, [0, 0, 0], "rubber"), cyl(r * 0.64, 0.016, [0, 0, 0], "steel", "z"), cyl(r * 0.2, 0.024, [0, 0, 0], "dark", "z")],
+        parts: [
+          tire(r, 0.02, r * 0.62, [0, 0, 0], "rubber"),
+          cyl(r * 0.64, 0.016, [0, 0, 0], "steel", "z"),
+          cyl(r * 0.2, 0.024, [0, 0, 0], "dark", "z"),
+          ...twin((e) => [bolts(0.016, 0.0016, 5, [0, 0, e * (0.008 + 0.0009)], e > 0 ? "z" : "-z")]),
+        ],
       });
   }
   const lag = (n * len * ahead) / 2;
@@ -1821,6 +2496,15 @@ function balancer(idle: boolean): Body {
       box([0.004, 0.008, 0.14], [0.092, 0.465, 0], "glow"),
       cyl(0.04, 0.034, [0, 0.567, 0], "dark"),
       ring(0.04, 0.004, [0, 0.572, 0], "glow"),
+      // Close up: the lidar's emitter going round, rings round the eyes, panel lines and vents
+      // down the torso's sides, and the screws of the pod's cover.
+      { s: "box", d: [0.003, 0.009, 0.014], p: [0.0408, 0.578, 0], m: "glow", fine: true, spin: { at: [0, 0.578, 0], axis: [0, 1, 0], angle: (t) => TAU * 1.5 * t } },
+      ...twin((s) => [
+        { ...ring(0.0175, 0.002, [0.0925, 0.505, s * 0.045], "steel", "x"), fine: true },
+        seamOn([0.13, 0.3, 0.21], [0, 0.24, 0], [0.03, 0.09, s * 0.1053], [0.03, 0.39, s * 0.1053]),
+        ...vent(6, [-0.03, 0.3, s * 0.1054], "y", "x", 0.04, 0.012, s > 0 ? "z" : "-z"),
+      ]),
+      ...screws([0.22, 0.03, 0.262], [0, 0.075, 0], "y", 0.012),
       ...twin((s) => [
         cyl(0.055, 0.024, [0, 0, s * 0.135], "steel", "z"),
         ball(0.016, [0.09, 0.505, s * 0.045], "lens"),

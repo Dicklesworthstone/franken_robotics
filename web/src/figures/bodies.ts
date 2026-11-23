@@ -991,6 +991,13 @@ function ackermann(idle: boolean): Body {
   const left0 = left(0);
   const right0 = close(left0);
   const scrub = (s: number, d: number, d0: number) => (s * (wz - kz) * (d - d0)) / r;
+  // A wheel arch on the body over the top of each wheel, 0.135 round its axle, clear of a front wheel at full lock,
+  // and kept inside the circle the wheels already sweep so that the body is no larger than it was.
+  const arch = (x: number, s: 1 | -1): Part[] =>
+    Array.from({ length: 5 }, (_, i) => {
+      const [a0, a1] = [0.85 + (i / 5) * 1.44, 0.85 + ((i + 1) / 5) * 1.44];
+      return slab([x + 0.135 * Math.cos(a0), 0.135 * Math.sin(a0), s * 0.1925], [x + 0.135 * Math.cos(a1), 0.135 * Math.sin(a1), s * 0.1925], 0.008, 0.085, "shell");
+    });
   mk.add(
     trunk([
       // The body rides above the wheels so that the front pair can steer under it.
@@ -1005,6 +1012,12 @@ function ackermann(idle: boolean): Body {
       ...twin((s) => [box([0.12, 0.012, 0.04], [L / 2, 0.035, s * 0.07], "steel"), box([0.12, 0.012, 0.04], [-L / 2, 0.035, s * 0.07], "steel")]),
       cyl(0.022, 2 * wz - 0.08, [-L / 2, 0, 0], "steel", "z"),
       cyl(0.04, 0.09, [-L / 2, 0, 0], "dark", "z"),
+      // Wheel arches, rubber bumpers tucked under the nose and tail, and a ranging lidar on the bonnet.
+      ...[L / 2, -L / 2].flatMap((x) => twin((s) => arch(x, s))),
+      ...[1, -1].map((e) => box([0.03, 0.03, 0.26], [e * 0.345, 0.1, 0], "rubber")),
+      cyl(0.032, 0.03, [0.24, 0.215, 0], "dark"),
+      ring(0.032, 0.004, [0.24, 0.222, 0], "glow"),
+      cyl(0.026, 0.008, [0.24, 0.234, 0], "steel"),
     ]),
   );
   wheel(mk, "rear.left.wheel", 0, [-L / 2, 0, -wz], r, 0.07, (t) => spin(t, 0));
@@ -1486,6 +1499,10 @@ function rocker(idle: boolean): Body {
       box([0.4, 0.05, 0.28], [0, 0.15, 0], "dark"),
       box([0.5, 0.02, 0.46], [-0.04, 0.325, 0], "dark"),
       box([0.44, 0.008, 0.4], [-0.04, 0.338, 0], "steel"),
+      // A solar array on the deck: cells in the steel frame, one left out where the antenna mast stands.
+      ...Array.from({ length: 12 }, (_, i) => [i % 4, Math.floor(i / 4)] as const)
+        .filter(([c, k]) => !(c === 0 && k === 2))
+        .map(([c, k]) => box([0.0935, 0.004, 0.117], [-0.208 + c * 0.1055, 0.344, -0.1245 + k * 0.1245], "dark")),
       cyl(0.016, 0.26, [0.18, 0.46, 0], "steel"),
       box([0.09, 0.07, 0.15], [0.2, 0.61, 0], "shell"),
       ...twin((s) => [ball(0.016, [0.246, 0.615, s * 0.04], "lens")]),

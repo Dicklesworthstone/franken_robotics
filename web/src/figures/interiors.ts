@@ -592,7 +592,14 @@ const kitchen = (u: U) => {
   p.partition("z", 3, -3.3, 3.3, 0.6, 0.95);
   p.leaf(3.075, 0.15, 0.9, 0.5 - Math.PI / 2);
   p.hazard("Swing door", `${Math.round(p.r(5, 20))} N·m`, "Returns onto the robot or its load", 3, 0.6, 0.8);
+  // The cold room: a door frame in its front, the strip curtain the threshold hazard speaks of hung from a rail across
+  // the opening, and the condensing unit on its roof with its fan.
   p.add(3.75, -2.2, 1.2, 1.6, 1.15, "steel");
+  p.add(3.75, -1.405, 0.9, 0.03, 1.02, "dark");
+  p.add(3.75, -1.375, 0.86, 0.04, 0.04, "steel", 0.98);
+  for (let i = 0; i < 8; i++) p.add(3.4 + i * 0.1, -1.37, 0.085, 0.006, 0.95, "glass", 0.03);
+  p.add(3.9, -2.45, 0.6, 0.4, 0.3, "steel", 1.15);
+  p.add(3.9, -2.24, 0.02, 0.22, 0.22, "dark", 1.19, Math.PI / 2, "rod");
   p.patch(3.75, -1.3, 1, 0.1);
   p.hazard("Cold-room threshold", p.mm(10, 40), "Stall, and strips that hide the way", 3.75, -1.3, 0.2);
   p.table(3.8, 2.2, 1, 1.4, 0.9, "wood", "steel", true);

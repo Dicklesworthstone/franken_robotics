@@ -14,6 +14,7 @@ export type Finish =
   | "stock3"
   | "dark"
   | "glass"
+  | "wire"
   | "green"
   | "belt"
   | "mat"
@@ -120,7 +121,7 @@ class Plan {
   desk(x: number, z: number, w: number, d: number, h: number) {
     this.add(x, z, w, d, 0.03, "wood", h - 0.03);
     for (const sx of [-1, 1]) this.add(x + sx * (w / 2 - 0.03), z, 0.04, d - 0.04, h - 0.03, "dark");
-    this.add(x, z - d / 2 + 0.05, w - 0.1, 0.03, 0.36, "dark", h - 0.42);
+    this.add(x, z - d / 2 + 0.05, w - 0.1, 0.03, 0.36, "dark", h - 0.39);
   }
   /** A monitor on its stand, its lit face towards +z. */
   monitor(x: number, z: number, y: number) {
@@ -142,6 +143,53 @@ class Plan {
     this.add(x, z, 0.36, 0.36, 0.38, "stock", 0, 0, "cyl");
     this.add(x, z, 0.62, 0.62, 0.52, "green", 0.32, 0, "ball");
     this.add(x + 0.08, z - 0.06, 0.42, 0.42, 0.4, "green", 0.62, 0, "ball");
+  }
+  /** Blocks placed in a frame at (x, z) turned by `turn`, the way a block's own turn goes: +x towards −z. */
+  turned(x: number, z: number, turn: number) {
+    const c = Math.cos(turn);
+    const s = Math.sin(turn);
+    return (dx: number, dz: number, w: number, d: number, h: number, f: Finish, y = 0, spin = 0, round?: "cyl" | "ball") =>
+      this.add(x + dx * c + dz * s, z - dx * s + dz * c, w, d, h, f, y, turn + spin, round);
+  }
+  /** A block pallet, 1.2 m by 0.9 m: deck boards on stringers on nine blocks, with fork openings on all four sides. */
+  pallet(x: number, z: number, turn: number) {
+    const put = this.turned(x, z, turn);
+    for (const dz of [-0.4, 0, 0.4]) put(0, dz, 1.2, 0.1, 0.022, "wood");
+    for (const dx of [-0.53, 0, 0.53]) {
+      for (const dz of [-0.39, 0, 0.39]) put(dx, dz, 0.14, 0.12, 0.078, "wood", 0.022);
+      put(dx, 0, 0.14, 0.9, 0.022, "wood", 0.1);
+    }
+    for (const dz of [-0.39, -0.195, 0, 0.195, 0.39]) put(0, dz, 1.2, 0.12, 0.028, "wood", 0.122);
+  }
+  /** A shopping cart: a wire basket on a wheeled frame, a tray under it and a handle at the back (+z). */
+  cart(x: number, z: number, turn: number) {
+    const put = this.turned(x, z, turn);
+    put(0, 0, 0.56, 0.9, 0.012, "wire", 0.36);
+    for (const dz of [-0.47, 0.47]) put(0, dz, 0.6, 0.012, 0.5, "wire", 0.35);
+    for (const dx of [-0.29, 0.29]) put(dx, 0, 0.012, 0.95, 0.5, "wire", 0.35);
+    for (const dz of [-0.47, 0.47]) put(0, dz, 0.62, 0.022, 0.022, "steel", 0.84);
+    for (const dx of [-0.3, 0.3]) put(dx, 0, 0.022, 0.96, 0.022, "steel", 0.84);
+    for (const dx of [-0.22, 0.22]) {
+      put(dx, 0, 0.025, 0.9, 0.025, "steel", 0.07);
+      put(dx, 0.42, 0.025, 0.025, 0.3, "steel", 0.07);
+      put(dx, 0.5, 0.025, 0.025, 0.38, "steel", 0.6);
+      for (const dz of [-0.4, 0.4]) put(dx, dz, 0.07, 0.07, 0.07, "dark", 0, 0, "ball");
+    }
+    put(0, 0, 0.46, 0.7, 0.025, "dark", 0.14);
+    put(0, 0.51, 0.6, 0.04, 0.04, "dark", 0.96);
+  }
+  /** An office chair turned by `turn`, back to +z, on five castor arms whose star is turned by `star`. */
+  officeChair(x: number, z: number, turn: number, star: number) {
+    for (let k = 0; k < 5; k++) {
+      const a = star + (k / 5) * Math.PI * 2;
+      this.add(x + Math.cos(a) * 0.15, z - Math.sin(a) * 0.15, 0.3, 0.05, 0.03, "dark", 0.04, a);
+      this.add(x + Math.cos(a) * 0.29, z - Math.sin(a) * 0.29, 0.05, 0.05, 0.05, "dark", 0, 0, "ball");
+    }
+    this.add(x, z, 0.06, 0.06, 0.36, "steel", 0.07, 0, "cyl");
+    const put = this.turned(x, z, turn);
+    put(0, 0, 0.48, 0.46, 0.08, "dark", 0.42);
+    put(0, 0.245, 0.05, 0.03, 0.17, "steel", 0.44);
+    put(0, 0.22, 0.44, 0.06, 0.44, "dark", 0.56);
   }
   /** A window in the far wall, centred at x. */
   window(x: number, w: number, sill = 0.5, head = 1) {
@@ -190,7 +238,7 @@ class Plan {
       let from = -end;
       for (const [x, w, sill, head] of [...this.windows].sort((a, b) => a[0] - b[0])) {
         wall(from, x - w / 2, 0, WALL);
-        wall(x - w / 2, x + w / 2, 0, sill);
+        wall(x - w / 2, x + w / 2, 0, sill - 0.03);
         wall(x - w / 2, x + w / 2, head, WALL - head);
         pieces.push({ x, z, w, d: 0.02, h: head - sill, f: "glass", y: sill, turn: 0 });
         pieces.push({ x, z: z + 0.05, w: w + 0.08, d: 0.2, h: 0.03, f: "shelf", y: sill - 0.03, turn: 0 });
@@ -216,7 +264,7 @@ const home = (u: U) => {
   // Living room
   const sx = split - 3.1;
   p.window(sx, 1.4);
-  p.window(split + 1.6, 1, 0.6);
+  p.window(split + 3.1, 0.9);
   p.sofa(sx, -2.75, 2.1, 0.94, -1);
   p.table(sx + p.r(-0.2, 0.3), -1.2, 1.1, 0.6, 0.4);
   p.add(sx, -1.2, 2.6, 1.9, 0.014, "mat");
@@ -283,11 +331,11 @@ const office = (u: U) => {
       p.monitor(x, z - 0.1, 0.72);
       const cx = x + p.r(-0.3, 0.3);
       const cz = z + 0.75 + p.r(-0.1, 0.2);
-      p.add(cx, cz, 0.46, 0.46, 0.08, "dark", 0.42, p.r(0, 3));
-      p.add(cx, cz, 0.06, 0.06, 0.42, "steel");
-      p.add(cx, cz, 0.5, 0.08, 0.03, "dark", 0.02, p.r(0, 3));
-      p.add(cx, cz, 0.08, 0.5, 0.03, "dark", 0.02, p.r(0, 3));
-      p.add(cx, cz + 0.2, 0.42, 0.06, 0.5, "dark", 0.5);
+      // Pushed back from the desk and left a little askew. The draws are the ones this room always made.
+      const turn = (p.r(0, 3) - 1.5) * 0.4;
+      const star = p.r(0, 3);
+      p.r(0, 3);
+      p.officeChair(cx, cz, turn, star);
     }
   p.hazard("Castor chair", `base ${p.m(p.r(0.3, 0.35))}`, "Pushed into the path, legs under the scan plane", -2.6, 0.6, 0.6);
   p.add(3.9, -1.4, 0.04, 4.6, WALL, "glass");
@@ -328,7 +376,7 @@ const warehouse = (u: U) => {
   for (let i = 0; i < 3; i++) {
     const x = 4.4 + p.r(-0.4, 1.2);
     const z = -2.6 + i * 1.5;
-    p.add(x, z, 1.2, 0.9, 0.15, "wood", 0, p.r(-0.3, 0.3));
+    p.pallet(x, z, p.r(-0.3, 0.3));
     if (u() < 0.6) p.add(x, z, 0.9, 0.7, p.r(0.3, 0.8), "stock", 0.15, p.r(-0.2, 0.2));
   }
   p.hazard("Pallet", "1.2 m × 0.14 to 0.16 m", "A wheel catches in a fork opening", 4.6, -1.1, 0.5);
@@ -392,8 +440,7 @@ const retail = (u: U) => {
   p.add(ex, 1.85, 0.9, 0.5, 0.8, "stock3");
   p.hazard("End cap", "tight turn", "Turning envelope with a payload", ex, 1.9, 1);
   const cx = p.r(1.6, 2.4);
-  p.add(cx, 1.7, 0.6, 0.95, 0.5, "steel", 0.35, p.r(-0.4, 0.4));
-  p.add(cx, 1.7, 0.5, 0.85, 0.05, "dark", 0.14);
+  p.cart(cx, 1.7, p.r(-0.4, 0.4));
   p.hazard("Shopping cart", `${Math.round(p.r(15, 30))} kg`, "Blocks the aisle, or is pushed into a display", cx, 1.7, 1.1);
   p.add(3.6, -3.4, 3, 0.7, 1.3, "glass");
   p.add(3.6, -3.5, 2.9, 0.5, 0.9, "stock2", 0.1);
@@ -420,7 +467,7 @@ const kitchen = (u: U) => {
     const x = -3.2 + i * 1.3;
     p.add(x, -2.85, 1, 0.6, 0.06, "dark", 0.9);
     if (u() < 0.8) {
-      p.add(x, -2.85, 0.4, 0.4, p.r(0.2, 0.34), "steel", 0.96);
+      p.add(x, -2.85, 0.4, 0.4, p.r(0.2, 0.34), "steel", 0.96, 0, "cyl");
     }
   }
   p.add(-1, -3.15, 6, 0.3, 0.1, "steel", 1.7);

@@ -126,10 +126,14 @@ export default function mount(root: HTMLElement) {
     scene.add(m);
     return m;
   };
-  const trunks = make(new RoundedBoxGeometry(1, 1, 1, 2, 0.16), std(0.4, 0.1), COUNT * 2);
+  // Trunks and heads are made at a typical robot's proportions and stretched a little to each one's, so that their
+  // rounded edges keep close to their shape.
+  const TRUNK = [0.62, 0.13, 0.3] as const;
+  const HEAD = [0.1, 0.1, 0.2] as const;
+  const trunks = make(new RoundedBoxGeometry(...TRUNK, 2, 0.032), std(0.4, 0.1), COUNT * 2);
   // Limbs taper from the joint above to the joint below.
   const limbs = make(new CylinderGeometry(0.5, 0.34, 1, 12), std(0.45, 0.2), max * 2);
-  const heads = make(new RoundedBoxGeometry(1, 1, 1, 2, 0.2), std(0.5, 0.35), COUNT);
+  const heads = make(new RoundedBoxGeometry(...HEAD, 2, 0.022), std(0.5, 0.35), COUNT);
   const hubs = make(new CylinderGeometry(1, 1, 1, 18).rotateX(Math.PI / 2), std(0.35, 0.6), max * 2);
   const feet = make(new SphereGeometry(1, 12, 8), std(0.9, 0), max, false);
   const lamps = make(new BoxGeometry(1, 1, 1), new MeshBasicMaterial(), COUNT, false);
@@ -196,9 +200,9 @@ export default function mount(root: HTMLElement) {
       // Highest over the middle of each stance, in step with this robot's own feet.
       const bob = r.lift * 0.1 * Math.cos(4 * Math.PI * (t / r.period + i * 0.137 - r.duty / 2));
       const by = r.hang + 0.03 + bob;
-      put(trunks, i * 2, bx, by + 0.02, bz, 0, r.length, 0.13 * r.thick, r.width);
-      put(trunks, i * 2 + 1, bx, by + 0.1 * r.thick, bz, 0, r.length * 0.74, 0.05, r.width * 0.72);
-      put(heads, i, bx + r.length / 2 + 0.04, by + 0.03, bz, 0, 0.1, 0.1 * r.thick, r.width * 0.66);
+      put(trunks, i * 2, bx, by + 0.02, bz, 0, r.length / TRUNK[0], (0.13 * r.thick) / TRUNK[1], r.width / TRUNK[2]);
+      put(trunks, i * 2 + 1, bx, by + 0.1 * r.thick, bz, 0, (r.length * 0.74) / TRUNK[0], 0.05 / TRUNK[1], (r.width * 0.72) / TRUNK[2]);
+      put(heads, i, bx + r.length / 2 + 0.04, by + 0.03, bz, 0, 0.1 / HEAD[0], (0.1 * r.thick) / HEAD[1], (r.width * 0.66) / HEAD[2]);
       put(lamps, i, bx + r.length / 2 + 0.092, by + 0.045, bz, 0, 0.012, 0.022, r.width * 0.5);
       gait.period = r.period;
       gait.duty = r.duty;
@@ -211,7 +215,9 @@ export default function mount(root: HTMLElement) {
           const phase = r.wave ? p / pairs + (s > 0 ? 0.5 : 0) : ((p + (s > 0 ? 1 : 0)) % 2) * 0.5;
           const [fx, up] = foot(t / r.period + phase + i * 0.137, gait);
           const bend = (pairs === 2 && p ? -r.bend : r.bend) as 1 | -1;
-          const [h, k] = reach(r.femur, r.tibia, fx, -r.hang + up - bob, bend);
+          const w = 0.05 * r.thick;
+          // The foot is a ball of radius 0.55 w: in stance its centre is that far off the floor.
+          const [h, k] = reach(r.femur, r.tibia, fx, w * 0.55 + up - by, bend);
           const hz = bz + s * (r.width / 2 + 0.05 * r.thick);
           const a1 = h;
           const kx = hx + Math.sin(a1) * r.femur;
@@ -219,7 +225,6 @@ export default function mount(root: HTMLElement) {
           const a2 = h + k;
           const tx = kx + Math.sin(a2) * r.tibia;
           const ty = ky - Math.cos(a2) * r.tibia;
-          const w = 0.05 * r.thick;
           put(hubs, leg * 2, hx, by, hz, 0, w * 1.05, w * 1.05, w * 1.5);
           put(hubs, leg * 2 + 1, kx, ky, hz, 0, w * 0.72, w * 0.72, w * 1.2);
           put(limbs, leg * 2, (hx + kx) / 2, (by + ky) / 2, hz, a1, w * 1.1, r.femur, w * 0.85);

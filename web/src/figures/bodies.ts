@@ -132,23 +132,36 @@ const taper = (a: V3, b: V3, r0: number, r1: number, m: Mat): Part => ({ s: "cyl
 
 /* ---------- Motion ---------- */
 
+/**
+ * The cubic between two table entries a and b, h apart, that leaves a at rate ra and arrives at b at rate rb, at the
+ * fraction f of the way. Read this way a table of positions gives speeds that never jump.
+ */
+const hermite = (f: number, a: number, b: number, ra: number, rb: number, h: number) => {
+  const f2 = f * f;
+  const f3 = f2 * f;
+  return (2 * f3 - 3 * f2 + 1) * a + (f3 - 2 * f2 + f) * h * ra + (3 * f2 - 2 * f3) * b + (f3 - f2) * h * rb;
+};
+
 /** Running integrals, from 0 to t, of rates that repeat every `period`: a table read in constant time. */
 export function integral(period: number, rates: (t: number) => readonly number[], n = 720) {
   const dim = rates(0).length;
   const table = new Float64Array((n + 1) * dim);
+  const slope = new Float64Array((n + 1) * dim);
   const h = period / n;
   let last = rates(0);
+  slope.set(last, 0);
   for (let k = 1; k <= n; k++) {
     const now = rates(k * h);
     for (let j = 0; j < dim; j++) table[k * dim + j] = table[(k - 1) * dim + j]! + ((last[j]! + now[j]!) / 2) * h;
+    slope.set(now, k * dim);
     last = now;
   }
   return (t: number, j: number) => {
     const c = Math.floor(t / period);
     const u = ((t - c * period) / period) * n;
     const k = Math.min(n - 1, Math.floor(u));
-    const a = table[k * dim + j]!;
-    return c * table[n * dim + j]! + a + (table[(k + 1) * dim + j]! - a) * (u - k);
+    const [a, b] = [k * dim + j, (k + 1) * dim + j];
+    return c * table[n * dim + j]! + hermite(u - k, table[a]!, table[b]!, slope[a]!, slope[b]!, h);
   };
 }
 
@@ -173,15 +186,22 @@ export function drive(period: number, twist: (t: number) => readonly number[], n
     zs[k + 1] = zs[k]! + dz;
     hs[k + 1] = hs[k]! + w * h;
   }
+  // Velocities at the entries themselves, in the frame the period starts in, for reading between them.
+  const [vx, vz, vh] = [0, 0, 0].map(() => new Float64Array(n + 1)) as [Float64Array, Float64Array, Float64Array];
+  for (let k = 0; k <= n; k++) {
+    const [a = 0, b = 0, w = 0] = twist(k * h);
+    [vx[k], vz[k]] = turnBy(hs[k]!, a, b);
+    vh[k] = w;
+  }
   const D = { x: xs[n]!, z: zs[n]!, yaw: hs[n]! };
   return (t) => {
     const c = Math.floor(t / period);
     const u = ((t - c * period) / period) * n;
     const k = Math.min(n - 1, Math.floor(u));
     const f = u - k;
-    const lx = xs[k]! + (xs[k + 1]! - xs[k]!) * f;
-    const lz = zs[k]! + (zs[k + 1]! - zs[k]!) * f;
-    const lh = hs[k]! + (hs[k + 1]! - hs[k]!) * f;
+    const lx = hermite(f, xs[k]!, xs[k + 1]!, vx[k]!, vx[k + 1]!, h);
+    const lz = hermite(f, zs[k]!, zs[k + 1]!, vz[k]!, vz[k + 1]!, h);
+    const lh = hermite(f, hs[k]!, hs[k + 1]!, vh[k]!, vh[k + 1]!, h);
     // c whole periods: the sum of D's step turned by 0, θ, …, (c − 1)θ, a geometric series in e^{−iθ}.
     let px = c * D.x;
     let pz = c * D.z;
@@ -293,10 +313,13 @@ interface Leg {
   thick?: number;
   /** Where the foot belongs at time t, from the hip: forward, and down (negative). */
   target: (t: number) => readonly [number, number];
-  /** Hip roll that keeps the leg under the body when the body rolls or shifts. */
+  /** Hip roll that keeps the leg under the body when the body rolls. */
   roll?: (t: number) => number;
-  /** How far the leg's plane leans from upright, which lowers the knee joint's carrier on the far side. */
-  tilt?: (t: number) => number;
+  /**
+   * Where the foot belongs to the side of the hip, when the base shifts sideways but stays level. The hip then rolls
+   * by exactly what puts it there, given that the thigh hangs from an arm across the hip.
+   */
+  lateral?: (t: number) => number;
   wheel?: number;
   /** How far a wheeled foot has rolled by time t. */
   rolled?: (t: number) => number;
@@ -306,14 +329,19 @@ function leg(mk: Maker, o: Leg) {
   const k = o.thick ?? 1;
   const end = o.at[0] >= 0 ? 1 : -1;
   let memo = NaN;
-  let angles: readonly [number, number] = [0, 0];
+  let angles: readonly [number, number, number] = [0, 0, 0];
   const solve = (t: number) => {
     if (t !== memo) {
       memo = t;
       const [x, y] = o.target(t);
-      const lean = o.tilt?.(t) ?? 0;
-      // The thigh hangs from an arm across the hip; tilted, the arm drops its end and the leg shortens upright.
-      angles = reach(o.l1, o.l2, x, (y + 0.08 * o.side * k * Math.sin(lean)) / Math.cos(lean), o.bend);
+      if (o.lateral) {
+        // Seen from the front, the foot at (y, side) is the point (−D, arm) of the leg's own plane rolled about the
+        // hip: the leg's reach D in its plane follows from the distance, the roll from the angle between the two.
+        const arm = 0.08 * o.side * k;
+        const side = arm + o.lateral(t);
+        const D = Math.sqrt(Math.max(0, y * y + side * side - arm * arm));
+        angles = [...reach(o.l1, o.l2, x, -D, o.bend), Math.atan2(side, y) - Math.atan2(arm, -D)];
+      } else angles = [...reach(o.l1, o.l2, x, y, o.bend), o.roll?.(t) ?? 0];
     }
     return angles;
   };
@@ -322,7 +350,7 @@ function leg(mk: Maker, o: Leg) {
     parent: o.parent,
     at: o.at,
     joint: "x",
-    turn: (t) => o.roll?.(t) ?? 0,
+    turn: (t) => solve(t)[2],
     parts: [
       cyl(0.05 * k, 0.1 * k, [0, 0, 0], "dark", "x"),
       cyl(0.04 * k, 0.014, [end * 0.054 * k, 0, 0], "steel", "x"),
@@ -646,8 +674,8 @@ function biped(idle: boolean): Body {
         const [x, up] = foot(t / g.period + phase, g);
         return [x, -hang - bob(t) + up];
       },
-      roll: (t) => Math.asin(sway(t) / hang),
-      tilt: (t) => Math.asin(sway(t) / hang),
+      // The pelvis shifts over the planted foot; each foot stays where it is on the floor.
+      lateral: (t) => -sway(t),
       bend: 1,
       side,
       thick: 1.05,
@@ -746,27 +774,30 @@ function humanoid(idle: boolean): Body {
     mk.add({ name: `${n}.wrist.yaw`, parent: p, at: [0, 0, 0], joint: "x", turn: () => 0, parts: [box([0.07, 0.085, 0.032], [0, -0.06, 0], "shell"), box([0.06, 0.05, 0.026], [0.004, -0.122, 0], "dark")] });
 
     /*
-     * The leg in three dimensions, in G1's order: hip pitch, then roll, then knee. The ankle goes where the foot
-     * belongs, under a pelvis that bobs and shifts over the planted foot, and the ankle's pitch and roll stand the
-     * sole flat on the floor.
+     * The leg in three dimensions, in G1's order: hip pitch, roll and yaw, knee, ankle pitch and roll. The ankle goes
+     * where the foot belongs, under a pelvis that bobs and shifts over the planted foot, and the sole stands flat on
+     * the floor pointing straight ahead. Solved from the foot back: seen from the sole, the hip lies in the plane of
+     * the knee once the ankle has rolled, and what is left of the rotation is the hip's own pitch, roll and yaw.
      */
     let memo = NaN;
-    let legAngles = [0, 0, 0, 0, 0];
+    let legAngles = [0, 0, 0, 0, 0, 0];
     const solve = (t: number) => {
       if (t !== memo) {
         memo = t;
         const [X, up] = foot(phase(t, side), g, -0.02);
         const Y = -(H + bob(t)) + up;
         const Z = -sway(t);
-        const span = Math.min(X * X + Y * Y + Z * Z, 0.8 * 0.8 * 0.999);
+        const ar = Math.atan2(Z, -Y);
+        const Yr = Y * Math.cos(ar) - Z * Math.sin(ar);
+        const span = Math.min(X * X + Yr * Yr, 0.8 * 0.8 * 0.999);
         const knee = -Math.acos(Math.max(-1, Math.min(1, (span - 0.32) / 0.32)));
-        const a = 0.4 * Math.sin(knee);
-        const b = -0.4 - 0.4 * Math.cos(knee);
-        const roll = Math.asin(Math.max(-1, Math.min(1, Z / b)));
-        const pitch = Math.atan2(Y, X) - Math.atan2(b * Math.cos(roll), a);
-        const ankleRoll = Math.asin(-Math.cos(pitch) * Math.sin(roll));
-        const ankle = Math.atan2(-Math.sin(pitch), Math.cos(pitch) * Math.cos(roll)) - knee;
-        legAngles = [pitch, roll, knee, ankle, ankleRoll];
+        const ankle = Math.atan2(-0.4 - 0.4 * Math.cos(knee), -0.4 * Math.sin(knee)) - Math.atan2(Yr, X);
+        // Hip = Rx(−ar)·Rz(−(ankle + knee)), taken apart as pitch about z, then roll about x, then yaw about y.
+        const c = ankle + knee;
+        const pitch = Math.atan2(-Math.sin(c), Math.cos(ar) * Math.cos(c));
+        const roll = Math.asin(-Math.sin(ar) * Math.cos(c));
+        const yaw = Math.atan2(-Math.sin(ar) * Math.sin(c), Math.cos(ar));
+        legAngles = [pitch, roll, knee, ankle, ar, yaw];
       }
       return legAngles;
     };
@@ -779,7 +810,7 @@ function humanoid(idle: boolean): Body {
       parts: [cyl(0.06, 0.07, [0, 0, 0], "dark", "z"), ring(0.055, 0.004, [0, 0, side * 0.037], "glow", "z")],
     });
     q = mk.add({ name: `${n}.hip.roll`, parent: q, at: [0, 0, 0], joint: "x", turn: (t) => solve(t)[1]!, parts: [box([0.09, 0.07, 0.07], [0, -0.05, 0], "steel")] });
-    q = mk.add({ name: `${n}.hip.yaw`, parent: q, at: [0, 0, 0], joint: "y", turn: () => 0, parts: [cap(0.056, 0.22, [0, -0.2, 0], "shell"), box([0.03, 0.2, 0.07], [0.05, -0.2, 0], "dark")] });
+    q = mk.add({ name: `${n}.hip.yaw`, parent: q, at: [0, 0, 0], joint: "y", turn: (t) => solve(t)[5]!, parts: [cap(0.056, 0.22, [0, -0.2, 0], "shell"), box([0.03, 0.2, 0.07], [0.05, -0.2, 0], "dark")] });
     q = mk.add({
       name: `${n}.knee`,
       parent: q,
@@ -931,11 +962,18 @@ function ackermann(idle: boolean): Body {
   const spin = integral(P, (t) => {
     const tw = twist(t);
     const front = (s: number, d: number) => {
-      const [hx, hz] = pointVelocity(tw, L / 2, s * wz);
+      // The wheel's centre sits out along its axle from the kingpin, and goes round with the knuckle.
+      const [ox, oz] = turnBy(d, 0, s * (wz - kz));
+      const [hx, hz] = pointVelocity(tw, L / 2 + ox, s * kz + oz);
       return -(hx * Math.cos(d) - hz * Math.sin(d)) / r;
     };
     return [-pointVelocity(tw, -L / 2, -wz)[0] / r, -pointVelocity(tw, -L / 2, wz)[0] / r, front(-1, left(t)), front(1, close(left(t)))];
   });
+  // Steering alone rolls a front wheel too: its contact patch swings along the wheel's own heading, |wz − kz| from the
+  // kingpin, by as much as the knuckle turns.
+  const left0 = left(0);
+  const right0 = close(left0);
+  const scrub = (s: number, d: number, d0: number) => (s * (wz - kz) * (d - d0)) / r;
   mk.add(
     trunk([
       // The body rides above the wheels so that the front pair can steer under it.
@@ -969,7 +1007,7 @@ function ackermann(idle: boolean): Body {
       ],
     });
   const kl = knuckle(-1, left, false);
-  wheel(mk, "front.left.wheel", kl, [0, 0, -(wz - kz)], r, 0.07, (t) => spin(t, 2), { passive: true });
+  wheel(mk, "front.left.wheel", kl, [0, 0, -(wz - kz)], r, 0.07, (t) => spin(t, 2) - scrub(-1, left(t), left0), { passive: true });
   // The tie rod hangs from the left arm and points at the right one.
   mk.add({
     name: "tie.rod",
@@ -985,7 +1023,7 @@ function ackermann(idle: boolean): Body {
     parts: [cyl(0.008, rod, [0, 0, rod / 2], "steel", "z"), ball(0.012, [0, 0, 0], "dark"), ball(0.012, [0, 0, rod], "dark")],
   });
   const kr = knuckle(1, closed, true);
-  wheel(mk, "front.right.wheel", kr, [0, 0, wz - kz], r, 0.07, (t) => spin(t, 3), { passive: true });
+  wheel(mk, "front.right.wheel", kr, [0, 0, wz - kz], r, 0.07, (t) => spin(t, 3) - scrub(1, closed(t), right0), { passive: true });
   return { links: mk.links, height: r, speed: v, travel: idle ? undefined : drive(P, twist), cycle: P, size: 0.62 };
 }
 
@@ -1161,8 +1199,12 @@ function swerve(idle: boolean): Body {
 function tracked(idle: boolean): Body {
   const mk = new Maker();
   const P = 12;
-  const half = 0.24;
   const loop = 0.1;
+  // Nineteen sprocket teeth and forty-eight shoes on one pitch, so that the teeth mesh with the track all the way
+  // round. That fixes the distance between the sprocket and the idler.
+  const teeth = 19;
+  const pitch = (TAU * loop) / teeth;
+  const half = ((48 / teeth - 1) * Math.PI * loop) / 2;
   const pivoting = (u: number) => gate(u, 7.5, 11.5, 1);
   const rate = Math.PI / 2 / 3;
   const twist = (t: number) => {
@@ -1182,30 +1224,38 @@ function tracked(idle: boolean): Body {
       box([0.004, 0.008, 0.08], [-0.018, 0.322, 0], "glow"),
       ...twin((s) => [
         box([0.48, 0.06, 0.03], [0, 0, s * 0.2], "dark"),
-        ...[-0.12, 0, 0.12].map((x) => cyl(0.038, 0.06, [x, -0.055, s * 0.2], "dark", "z")),
+        // Road wheels ride the inside of the bottom run in pairs, either side of the shoes' guide horns.
+        ...[-0.12, 0, 0.12].flatMap((x) => [
+          cyl(0.04, 0.024, [x, -0.055, s * 0.2 - 0.034], "dark", "z"),
+          cyl(0.04, 0.024, [x, -0.055, s * 0.2 + 0.034], "dark", "z"),
+          cyl(0.012, 0.09, [x, -0.055, s * 0.2], "steel", "z"),
+        ]),
       ]),
     ]),
   );
   for (const side of [-1, 1] as const) {
     const n = side < 0 ? "left" : "right";
     const s = (t: number) => (idle ? 0 : run(t, side < 0 ? 0 : 1));
+    // Round the ends the shoes turn about the axle at the belt's speed over its radius, and so do the wheels.
+    const wrap = (t: number) => -s(t) / loop;
     const sprocket: Part[] = [cyl(0.085, 0.03, [0, 0, -0.03], "dark", "z"), cyl(0.085, 0.03, [0, 0, 0.03], "dark", "z"), cyl(0.03, 0.11, [0, 0, 0], "steel", "z")];
-    for (let i = 0; i < 12; i++) {
-      const a = (i / 12) * TAU;
-      sprocket.push(box([0.016, 0.016, 0.09], [Math.cos(a) * 0.088, Math.sin(a) * 0.088, 0], "steel", [0, 0, a]));
+    // Each tooth sits in the gap between two shoes, where the belt brings it.
+    for (let i = 0; i < teeth; i++) {
+      const a = Math.PI / 2 + ((i + 0.5) / teeth) * TAU;
+      sprocket.push(box([0.014, 0.012, 0.09], [Math.cos(a) * 0.087, Math.sin(a) * 0.087, 0], "steel", [0, 0, a]));
     }
     sprocket.push(cyl(0.016, 0.114, [0, 0, 0], "glow", "z"));
-    mk.add({ name: `${n}.sprocket`, parent: 0, at: [-half, 0, side * 0.2], joint: "z", turn: (t) => -s(t) / 0.095, parts: sprocket });
+    mk.add({ name: `${n}.sprocket`, parent: 0, at: [-half, 0, side * 0.2], joint: "z", turn: wrap, parts: sprocket });
     mk.add({
       name: `${n}.idler`,
       parent: 0,
       at: [half, 0, side * 0.2],
       joint: "z",
       passive: true,
-      turn: (t) => -s(t) / 0.094,
+      turn: wrap,
       parts: [
-        cyl(0.094, 0.036, [0, 0, -0.026], "dark", "z"),
-        cyl(0.094, 0.036, [0, 0, 0.026], "dark", "z"),
+        cyl(0.094, 0.026, [0, 0, -0.036], "dark", "z"),
+        cyl(0.094, 0.026, [0, 0, 0.036], "dark", "z"),
         cyl(0.06, 0.09, [0, 0, 0], "steel", "z"),
         ...[0, 1, 2, 3, 4].map((i) => box([0.07, 0.014, 0.094], [Math.cos((i / 5) * TAU) * 0.035, Math.sin((i / 5) * TAU) * 0.035, 0], "dark", [0, 0, (i / 5) * TAU])),
         cyl(0.014, 0.096, [0, 0, 0], "glow", "z"),
@@ -1217,9 +1267,10 @@ function tracked(idle: boolean): Body {
       at: [-half, 0, side * 0.2],
       joint: "fixed",
       passive: true,
-      belt: { len: 2 * half, r: loop, pitch: 0.04 },
+      belt: { len: 2 * half, r: loop, pitch },
       turn: s,
-      parts: [box([0.034, 0.01, 0.1], [0, 0, 0], "rubber"), box([0.01, 0.012, 0.1], [0, 0.011, 0], "rubber"), box([0.014, 0.01, 0.05], [0, -0.009, 0], "steel")],
+      // A shoe: its plate, the grouser that bites the floor, and the guide horn that runs between the wheels.
+      parts: [box([0.03, 0.01, 0.1], [0, 0, 0], "rubber"), box([0.01, 0.012, 0.1], [0, 0.011, 0], "rubber"), box([0.014, 0.01, 0.04], [0, -0.009, 0], "steel")],
     });
     for (const [f, x] of [
       ["front", half],
@@ -1272,14 +1323,17 @@ function wheelLeg(idle: boolean): Body {
     return [walking(t) * fx, walking(t) * up] as const;
   };
   const phases = [0, 0.5, 0.5, 0];
-  // A wheel on the floor rolls by exactly as far as its foot goes over the floor; in the air it holds still.
+  // A wheel on the floor rolls by exactly as far as its foot goes over the floor. Lifted clear, it holds still;
+  // between one and four millimetres up it eases from one to the other, so a foot that barely leaves the floor
+  // never skids.
   const rolls = integral(
     P,
     (t) =>
       phases.map((phase) => {
-        if (step(t, phase)[1] > 1e-9) return 0;
+        const grip = 1 - ease((step(t, phase)[1] - 0.001) / 0.003);
+        if (grip <= 0) return 0;
         const h = 1e-4;
-        return rolling(t) + walking(t) * vWalk + (step(t + h, phase)[0] - step(t - h, phase)[0]) / (2 * h);
+        return grip * (rolling(t) + walking(t) * vWalk + (step(t + h, phase)[0] - step(t - h, phase)[0]) / (2 * h));
       }),
     2880,
   );
@@ -1516,8 +1570,8 @@ function manipulator(idle: boolean): Body {
 }
 
 /**
- * A chain of links on passive wheels. Wheels cannot slide sideways, so every link follows the same serpentine
- * path: the shape travels backwards along the body while the body slides forwards along the shape.
+ * A chain of links on passive wheels, its nose steered along a serpentine. Wheels cannot slide sideways, so each link
+ * trails the joint in front of it like a trailer behind a hitch, and the wave passes down the body.
  */
 function snake(idle: boolean): Body {
   const mk = new Maker();
@@ -1527,17 +1581,18 @@ function snake(idle: boolean): Body {
   const wave = 1.3;
   const v = idle ? 0 : 0.32;
   const r = 0.04;
-  /** How far along its path the head has gone. */
+  const track = 0.068;
+  /** How far along its path the nose has gone. */
   const crawl = (t: number) => (idle ? 0.31 + 0.06 * Math.sin(0.7 * t) : v * t);
-  // The path: heading ψ(s) = A sin(2πs / λ), tabled over one wavelength.
+  // The nose's path: heading ψ(s) = A sin(2πs / λ), tabled over one wavelength.
+  const psi = (s: number) => A * Math.sin((TAU * s) / wave);
   const N = 512;
   const px = new Float64Array(N + 1);
   const pz = new Float64Array(N + 1);
   const ds = wave / N;
   for (let k = 0; k < N; k++) {
-    const psi = A * Math.sin((TAU * (k + 0.5)) / N);
-    px[k + 1] = px[k]! + Math.cos(psi) * ds;
-    pz[k + 1] = pz[k]! - Math.sin(psi) * ds;
+    px[k + 1] = px[k]! + Math.cos(psi((k + 0.5) * ds)) * ds;
+    pz[k + 1] = pz[k]! - Math.sin(psi((k + 0.5) * ds)) * ds;
   }
   const ahead = px[N]! / wave;
   let zMean = 0;
@@ -1549,32 +1604,72 @@ function snake(idle: boolean): Body {
     const f = u - k;
     return [c * px[N]! + px[k]! + (px[k + 1]! - px[k]!) * f, pz[k]! + (pz[k + 1]! - pz[k]!) * f];
   };
+  /*
+   * Link i's wheels sit d = len / 2 behind the joint at its front, h, and cannot slide sideways, so along the nose's
+   * path its heading θ turns at θ′ = −(h′ · n) / d, where n points to its right; the joint behind it then moves at
+   * h′ + len · n · θ′, and its wheels roll at h′ · u, u its heading. Nothing here depends on time, only on how far the
+   * nose has gone, so once run to steady state every heading and roll is a table over one wavelength, exact whether the
+   * nose goes forwards, backwards or back and forth.
+   */
+  const d = len / 2;
+  const M = 1024;
+  const dim = 2 * n;
+  const rates = (s: number, y: Float64Array, out: Float64Array) => {
+    let hx = Math.cos(psi(s));
+    let hz = -Math.sin(psi(s));
+    for (let i = 0; i < n; i++) {
+      const c = Math.cos(y[i]!);
+      const sn = Math.sin(y[i]!);
+      const turn = -(hx * sn + hz * c) / d;
+      out[i] = turn;
+      out[n + i] = hx * c - hz * sn;
+      hx += len * sn * turn;
+      hz += len * c * turn;
+    }
+  };
+  const table = new Float64Array((M + 1) * dim);
+  {
+    const h = wave / M;
+    const y = new Float64Array(dim);
+    const [k1, k2, k3, k4, y2] = [0, 0, 0, 0, 0].map(() => new Float64Array(dim)) as Float64Array[];
+    const laps = 6;
+    for (let lap = 0; lap < laps; lap++) {
+      // Each link's roll is counted from the start of the lap that is kept.
+      if (lap === laps - 1) y.fill(0, n);
+      for (let k = 0; k < M; k++) {
+        const s = k * h;
+        if (lap === laps - 1) table.set(y, k * dim);
+        rates(s, y, k1!);
+        for (let j = 0; j < dim; j++) y2![j] = y[j]! + (h / 2) * k1![j]!;
+        rates(s + h / 2, y2!, k2!);
+        for (let j = 0; j < dim; j++) y2![j] = y[j]! + (h / 2) * k2![j]!;
+        rates(s + h / 2, y2!, k3!);
+        for (let j = 0; j < dim; j++) y2![j] = y[j]! + h * k3![j]!;
+        rates(s + h, y2!, k4!);
+        for (let j = 0; j < dim; j++) y[j] = y[j]! + (h / 6) * (k1![j]! + 2 * k2![j]! + 2 * k3![j]! + k4![j]!);
+      }
+    }
+    table.set(y, M * dim);
+  }
+  /** Heading of link j (j < n), or how far link j − n has rolled, once the nose has gone s along its path. */
+  const read = (s: number, j: number) => {
+    const c = Math.floor(s / wave);
+    const u = ((s - c * wave) / wave) * M;
+    const k = Math.min(M - 1, Math.floor(u));
+    const a = table[k * dim + j]!;
+    const value = a + (table[(k + 1) * dim + j]! - a) * (u - k);
+    return j < n ? value : value + c * table[M * dim + j]!;
+  };
   let memo = NaN;
+  let s = 0;
+  let nose: [number, number] = [0, 0];
   const yaws = new Float64Array(n);
-  let head: [number, number] = [0, 0];
   const chain = (t: number) => {
     if (t === memo) return;
     memo = t;
-    let s = crawl(t) + wave;
-    let prev = point(s);
-    head = prev;
-    for (let i = 0; i < n; i++) {
-      // The next joint sits a chord of `len` behind this one, on the path.
-      let s2 = s - len;
-      for (let it = 0; it < 4; it++) {
-        const q = point(s2);
-        const dx = q[0] - prev[0];
-        const dz = q[1] - prev[1];
-        const d = Math.hypot(dx, dz);
-        const psi = A * Math.sin((TAU * s2) / wave);
-        const slope = (dx * Math.cos(psi) - dz * Math.sin(psi)) / d;
-        s2 -= (d - len) / (slope || 1);
-      }
-      const q = point(s2);
-      yaws[i] = heading(prev[0] - q[0], prev[1] - q[1]);
-      prev = q;
-      s = s2;
-    }
+    s = crawl(t);
+    nose = point(s);
+    for (let i = 0; i < n; i++) yaws[i] = read(s, i);
   };
   let parent = -1;
   for (let i = 0; i < n; i++) {
@@ -1604,14 +1699,18 @@ function snake(idle: boolean): Body {
             ]),
       ],
     });
-    for (const s of [-1, 1] as const)
+    // The wheel on the outside of a turn goes further than the one inside: its offset times the link's heading.
+    for (const side of [-1, 1] as const)
       mk.add({
-        name: `${i ? `link${i}` : "head"}.wheel.${s < 0 ? "left" : "right"}`,
+        name: `${i ? `link${i}` : "head"}.wheel.${side < 0 ? "left" : "right"}`,
         parent,
-        at: [-len / 2, 0, s * 0.068],
+        at: [-len / 2, 0, side * track],
         joint: "z",
         passive: true,
-        turn: (t) => -crawl(t) / r,
+        turn: (t) => {
+          chain(t);
+          return -(read(s, n + i) + side * track * yaws[i]!) / r;
+        },
         parts: [tire(r, 0.02, r * 0.62, [0, 0, 0], "rubber"), cyl(r * 0.64, 0.016, [0, 0, 0], "steel", "z"), cyl(r * 0.2, 0.024, [0, 0, 0], "dark", "z")],
       });
   }
@@ -1622,8 +1721,7 @@ function snake(idle: boolean): Body {
     speed: v * ahead,
     base: (t) => {
       chain(t);
-      const s = crawl(t) + wave;
-      return { x: head[0] - ahead * s + lag, z: head[1] - zMean, yaw: yaws[0]! };
+      return { x: nose[0] - ahead * s + lag, z: nose[1] - zMean, yaw: yaws[0]! };
     },
     travel: idle ? undefined : (t) => ({ x: ahead * v * t, z: 0, yaw: 0 }),
     cycle: idle ? TAU / 0.7 : wave / v,

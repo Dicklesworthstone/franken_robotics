@@ -52,6 +52,7 @@ export default function mount(root: HTMLElement) {
     stock3: m("#d7a63a", 0.8),
     dark: m("#232c30", 0.7, 0.2),
     glass: m("#9adcff", 0.08, 0.1, 0.28),
+    wire: m("#a9b9c1", 0.35, 0.7, 0.55),
     green: m("#5f9a62", 0.9),
     belt: m("#30393d", 0.6),
     mat: m("#1f3a46", 0.98),

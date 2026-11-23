@@ -272,6 +272,17 @@ export function shapeOf(s: Solid, d: readonly [number, number, number], q: 0 | 1
       shape.closePath();
       return plate(shape, b, a * SHEET * 0.3, fine ? round(a * 200 * c, 16, 64) : 8);
     }
+    case "web": {
+      // A disc with c round windows on a circle between its hub and its rim, cut right through it. Every curve gets
+      // the same number of segments, so the rim is drawn as four quarters to make it four times as smooth as a window.
+      const shape = new Shape();
+      for (let k = 0; k < 4; k++) shape.absarc(0, 0, a, (k * Math.PI) / 2, ((k + 1) * Math.PI) / 2, false);
+      for (let i = 0; i < Math.round(c); i++) {
+        const t = (i / Math.round(c)) * Math.PI * 2;
+        shape.holes.push(new Path().absarc(Math.cos(t) * a * 0.62, Math.sin(t) * a * 0.62, a * 0.15, 0, Math.PI * 2, true));
+      }
+      return plate(shape, b, b * 0.15, fine ? 18 : q ? 6 : 4);
+    }
     case "arc":
       return new TorusGeometry(a, b, fine ? 10 : 4, fine ? round(a * 600 * (c / Math.PI), 8, 64) : 6, c).rotateX(-Math.PI / 2);
     case "pulley": {

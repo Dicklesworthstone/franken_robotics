@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
 import { Matrix4, Vector3 } from "three";
 import { archetypes } from "./figures/archetypes";
-import { makers, type Solid } from "./figures/bodies";
-import { envelope, frames, ownPlace, placed } from "./figures/envelope";
+import { along, beltLength, makers, type Solid } from "./figures/bodies";
+import { envelope, frames, ownPlace, placed, treads } from "./figures/envelope";
 import { shapeOf } from "./figures/three-kit";
 
 test("every archetype is drawn with the actuated coordinates its row in the plan states", () => {
@@ -96,6 +96,54 @@ test("gears in mesh meet tooth to gap at every moment, which also holds them to 
   expect(pairs).toEqual(Object.fromEntries(Object.entries(trains).map(([id, n]) => [id, [n, n, n, n, n]])));
 });
 
+test("every belt runs round its loop at one speed, without a jump, its shoes facing out", () => {
+  const ds = 1e-6;
+  for (const make of Object.values(makers))
+    for (const l of make().links.filter((l) => l.belt)) {
+      const b = l.belt!;
+      const total = beltLength(b);
+      let [speed, square] = [0, 0];
+      for (let s = 0; s < total; s += total / 997) {
+        const [x0, y0, t0] = along(b, s);
+        const [x1, y1] = along(b, s + ds);
+        // Moving at one metre per metre, along the shoe's own x: the outward normal is square to the path.
+        speed = Math.max(speed, Math.abs(Math.hypot(x1 - x0, y1 - y0) / ds - 1));
+        square = Math.max(square, Math.abs((x1 - x0) * -Math.sin(t0) + (y1 - y0) * Math.cos(t0)) / ds);
+      }
+      expect({ link: l.name, speed: speed < 1e-4, square: square < 1e-4 }).toEqual({ link: l.name, speed: true, square: true });
+    }
+});
+
+test("a flipper's sprocket holds every shoe it wraps between two of its teeth, at every moment", () => {
+  for (const idle of [false, true]) {
+    const body = makers["tracked-flipper"]!(idle);
+    const { pose } = frames(body);
+    let count = 0;
+    for (const belt of body.links.filter((l) => /\.(front|rear)\.belt$/.test(l.name))) {
+      const bi = body.links.indexOf(belt);
+      const di = body.links.findIndex((l) => l.name === belt.name.replace(/belt$/, "drive"));
+      const gear = body.links[di]!.parts.find((p) => p.s === "gear")!;
+      const [phase, n] = [gear.r![1], gear.d[2]];
+      const tread = treads(belt);
+      for (const t of [0, 0.37, 1.3, 2.9, 5.5, 8.8]) {
+        const world = pose(t, new Matrix4());
+        const back = world[di]!.clone().invert();
+        const shoe = new Matrix4();
+        for (let k = 0; k < tread.count; k++) {
+          tread.place(t, k, shoe);
+          const p = new Vector3().setFromMatrixPosition(shoe.premultiply(world[bi]!)).applyMatrix4(back);
+          if (Math.abs(Math.hypot(p.x, p.y) - belt.belt!.r) > 1e-6) continue;
+          const pitch = (2 * Math.PI) / n;
+          const off = (((Math.atan2(p.y, p.x) - phase - Math.PI / n) % pitch) + pitch) % pitch;
+          expect({ belt: belt.name, t, gap: Math.min(off, pitch - off) < 1e-6 }).toEqual({ belt: belt.name, t, gap: true });
+          count++;
+        }
+      }
+    }
+    expect(count).toBeGreaterThan(200);
+  }
+});
+
 test("every solid has finite geometry at every level of detail", () => {
   const sizes: Record<Solid, [number, number, number]> = {
     box: [0.1, 0.05, 0.02],
@@ -110,6 +158,7 @@ test("every solid has finite geometry at every level of detail", () => {
     coil: [0.02, 0.08, 7],
     arc: [0.05, 0.004, 2],
     fender: [0.135, 0.085, 1.44],
+    web: [0.07, 0.008, 6],
     pulley: [0.03, 0.02, 0.004],
     bellows: [0.02, 0.06, 6],
     fins: [0.03, 0.06, 18],

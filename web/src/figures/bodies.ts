@@ -8,7 +8,7 @@
  * waits on the spot: legs mark time and wheels hold still, which is how the crowd stands in front of the door.
  */
 export type V3 = [number, number, number];
-export type Solid = "box" | "cyl" | "ball" | "cap" | "tire" | "ring" | "barrel" | "gear" | "hex" | "coil" | "arc" | "fender" | "pulley" | "bellows" | "fins" | "bolts";
+export type Solid = "box" | "cyl" | "ball" | "cap" | "tire" | "ring" | "barrel" | "gear" | "hex" | "coil" | "arc" | "fender" | "web" | "pulley" | "bellows" | "fins" | "bolts";
 export type Mat = "shell" | "dark" | "steel" | "rubber" | "glow" | "amber" | "lens";
 
 export interface Part {
@@ -20,6 +20,8 @@ export interface Part {
    * gear: pitch radius, face width, teeth (involute, 20°, tooth 0 on local x). hex: radius to a corner, height.
    * coil: radius to the wire's centre, length, turns. arc: radius, tube radius, sweep about local y from local x.
    * fender: radius to the middle of its sheet, width, sweep as an arc's; the sheet is SHEET of its radius thick.
+   * web: radius, thickness, windows: a flat plate with that many round windows cut through it on a circle between
+   * its hub and its rim, about local y.
    * pulley: radius, width, depth of its groove. bellows: radius, length, folds. fins: radius, length, fins.
    * bolts: radius of their circle (0 for one at the middle), radius of a head, how many; heads face local +y.
    */
@@ -48,8 +50,11 @@ export interface Part {
 }
 /** A track: copies of the link's parts, `pitch` apart, round a loop from x = 0 to x = len with ends of radius r. */
 export interface Belt {
+  /** From the centre of the near end, at the link's origin, to the far end's along x. */
   len: number;
+  /** The radius the belt wraps round the near end at, and round the far end unless r2 says otherwise. */
   r: number;
+  r2?: number;
   pitch: number;
 }
 export interface Link {
@@ -131,6 +136,7 @@ export function girth(p: Part): [r: number, h: number] {
     case "bolts":
       return [a + b, b * 0.55];
     case "hex":
+    case "web":
     case "pulley":
     case "bellows":
     case "fins":
@@ -745,6 +751,15 @@ function sprawl(
       ...twin((s2) => [bolts(0.032 * k, 0.0022 * k, 8, [0, 0, s2 * (0.037 * k + 0.0012 * k)], s2 > 0 ? "z" : "-z")]),
       ...ram([inner * 0.045 * k, -0.075 * k, 0], [0, -o.l1, 0], lever, kneeAt, 0.0085 * k, o.gait.period * 4),
       ...fine([box([0.03 * k, 0.018 * k, 0.03 * k], [inner * 0.032 * k, -0.075 * k, 0], "dark")]),
+      // Close up the knee is a clevis: the femur ends in two steel cheeks, either side of the tibia's eye, each with
+      // the head of the knee's pin and a circle of screws, all inside the drum the crowd draws there.
+      ...fine(
+        twin((s2) => [
+          cyl(0.034 * k, 0.01 * k, [0, -o.l1, s2 * 0.026 * k], "steel", "z"),
+          cyl(0.012 * k, 0.002, [0, -o.l1, s2 * (0.031 * k + 0.001)], "steel", "z"),
+          bolts(0.024 * k, 0.0018 * k, 6, [0, -o.l1, s2 * (0.031 * k + 0.001 * k)], s2 > 0 ? "z" : "-z"),
+        ]),
+      ),
     ],
   });
   mk.add({
@@ -754,7 +769,8 @@ function sprawl(
     joint: "z",
     turn: (t) => solve(t)[2],
     parts: [
-      cyl(0.036 * k, 0.062 * k, [0, 0, 0], "dark", "z"),
+      { ...cyl(0.036 * k, 0.062 * k, [0, 0, 0], "dark", "z"), coarse: true },
+      { ...cyl(0.03 * k, 0.04 * k, [0, 0, 0], "dark", "z"), fine: true },
       taper([0, 0, 0], [0, -o.l2 * 0.92, 0], 0.024 * k, 0.012 * k, "dark"),
       ball(0.026 * k, [0, -o.l2, 0], "rubber"),
       ...clevis(lever, 0.0085 * k),
@@ -811,9 +827,19 @@ function wheel(mk: Maker, name: string, parent: number, at: V3, r: number, w: nu
   const kind = o.kind ?? "tire";
   if (kind === "mecanum") {
     parts.push(
-      cyl(r * 0.52, w * 0.92, [0, 0, 0], "dark", "z"),
-      cyl(r * 0.7, 0.008, [0, 0, w * 0.46], "steel", "z"),
-      cyl(r * 0.7, 0.008, [0, 0, -w * 0.46], "steel", "z"),
+      // Far off, a hub and two plain side plates. Close up the plates are machined with six windows each, and the
+      // hub inside is slim enough to see past through them to the rollers' tabs and the far plate; a circle of screws
+      // outside the boss's holds each plate to the hub.
+      ...[cyl(r * 0.52, w * 0.92, [0, 0, 0], "dark", "z"), ...twin((e) => [cyl(r * 0.7, 0.008, [0, 0, e * w * 0.46], "steel", "z")])].map(
+        (q): Part => ({ ...q, coarse: true }),
+      ),
+      ...fine([
+        cyl(r * 0.3, w * 0.92, [0, 0, 0], "dark", "z"),
+        ...twin((e) => [
+          { s: "web", d: [r * 0.7, 0.008, 6], p: [0, 0, e * w * 0.46], r: lay("z"), m: "steel" } satisfies Part,
+          bolts(r * 0.26, 0.0022, 6, [0, 0, e * (w * 0.46 + 0.004 + 0.0012)], e > 0 ? "z" : "-z"),
+        ]),
+      ]),
       ...rollers(r, 9, o.lean ?? Math.PI / 4, 0, 0, (w * 0.86) / Math.sin(Math.abs(o.lean ?? Math.PI / 4)), r * 0.21),
       // Each roller turns on a steel axle held at both ends by a tab bent out from its side plate.
       ...fine(axles(r, 9, o.lean ?? Math.PI / 4, 0, 0, (w * 0.86) / Math.sin(Math.abs(o.lean ?? Math.PI / 4)), r * 0.21)),
@@ -1535,7 +1561,7 @@ function ackermann(idle: boolean): Body {
   mk.add(
     trunk([
       // The body rides above the wheels so that the front pair can steer under it.
-      box([0.36, 0.04, 0.18], [-0.03, 0.06, 0], "dark"),
+      box([0.36, 0.04, 0.182], [-0.03, 0.06, 0], "dark"),
       box([0.7, 0.09, 0.3], [0, 0.155, 0], "shell"),
       ...screws([0.7, 0.09, 0.3], [0, 0.155, 0], "x", 0.012),
       // The bonnet's outline.
@@ -1546,7 +1572,8 @@ function ackermann(idle: boolean): Body {
       box([0.3, 0.012, 0.23], [-0.06, 0.264, 0], "shell"),
       box([0.012, 0.034, 0.2], [0.112, 0.23, 0], "lens"),
       ...lamp([0.02, 0.024, 0.2], [0.352, 0.16, 0], "x"),
-      ...twin((s) => [...eye(0.016, [0.348, 0.135, s * 0.09]), box([0.02, 0.03, 0.07], [-0.352, 0.165, s * 0.095], "amber")]),
+      // The cameras sit low enough under the light bar that their bezels clear its frame.
+      ...twin((s) => [...eye(0.015, [0.348, 0.129, s * 0.09]), box([0.02, 0.03, 0.07], [-0.352, 0.165, s * 0.095], "amber")]),
       ...twin((s) => [box([0.12, 0.012, 0.04], [L / 2, 0.035, s * 0.07], "steel"), box([0.12, 0.012, 0.04], [-L / 2, 0.035, s * 0.07], "steel")]),
       cyl(0.022, 2 * wz - 0.08, [-L / 2, 0, 0], "steel", "z"),
       cyl(0.04, 0.09, [-L / 2, 0, 0], "dark", "z"),
@@ -1574,8 +1601,9 @@ function ackermann(idle: boolean): Body {
         ),
         ...twin((s) => [
           box([0.12, 0.012, 0.04], [L / 2, -0.045, s * 0.07], "steel"),
-          box([0.008, 0.09, 0.04], [L / 2 + 0.056, -0.005, s * 0.07], "dark"),
-          ...[-0.03, 0.02].map((y) => bolts(0, 0.0018, 1, [L / 2 + 0.06 + 0.001, y, s * 0.07], "x")),
+          // The plate overlaps the rails' ends and sides rather than sharing their faces, which would flicker.
+          box([0.008, 0.09, 0.044], [L / 2 + 0.058, -0.005, s * 0.07], "dark"),
+          ...[-0.03, 0.02].map((y) => bolts(0, 0.0018, 1, [L / 2 + 0.062 + 0.001, y, s * 0.07], "x")),
           ball(0.006, [L / 2 - 0.028, 0.05, s * 0.085], "dark"),
           cyl(0.0045, 0.03, [L / 2 - 0.028, 0.062, s * 0.085], "steel"),
           coil(0.0115, 0.042, 6, [L / 2 - 0.028, 0.073, s * 0.085], "amber"),
@@ -1814,11 +1842,11 @@ function swerve(idle: boolean): Body {
       { ...box([0.3, 0.008, 0.3], [0, 0.248, 0], "steel"), coarse: true },
       box([0.508, 0.012, 0.508], [0, 0.16, 0], "glow"),
       ...screws([0.44, 0.04, 0.44], [0, 0.225, 0], "y", 0.01),
-      // Close up the payload plate on top is a millimetre thinner, and tapped on a 50 mm grid whose holes' rims come
-      // no higher than the plate did.
+      // Close up the payload plate on top is a millimetre thinner, and tapped on a 50 mm grid: each hole a dark disc
+      // set into the plate and standing half a millimetre proud of it, no higher than the plate did.
       ...fine([
         box([0.3, 0.007, 0.3], [0, 0.2475, 0], "steel"),
-        ...Array.from({ length: 25 }, (_, i) => cyl(0.0032, 0.0008, [(Math.floor(i / 5) - 2) * 0.05, 0.2516, ((i % 5) - 2) * 0.05], "dark")),
+        ...Array.from({ length: 25 }, (_, i) => cyl(0.0032, 0.001, [(Math.floor(i / 5) - 2) * 0.05, 0.2511, ((i % 5) - 2) * 0.05], "dark")),
       ]),
       ...[-1, 1].flatMap((s) => [-0.2501, 0.2501].map((z) => seamOn([0.5, 0.08, 0.5], [0, 0.17, 0], [0.08 * s, 0.13, z], [0.08 * s, 0.21, z]))),
     ]),
@@ -1872,6 +1900,25 @@ function tracked(idle: boolean): Body {
   const teeth = 19;
   const pitch = (TAU * loop) / teeth;
   const half = ((48 / teeth - 1) * Math.PI * loop) / 2;
+  // Each flipper has a track of its own, round a toothed drive pulley on the main axle and a small idler at its tip.
+  // The crowd draws it as a band 12 mm thick round radii r1 and r2. Close up the shoes ride on radii 4 mm smaller,
+  // so that their grousers reach no further than that band; their pitch puts twenty round the drive pulley, and the
+  // pulleys stand as far apart as closes the loop on thirty-six of them.
+  const [r1, r2] = [0.085, 0.045];
+  const [rho1, rho2] = [r1 - 0.004, r2 - 0.004];
+  const cogs = 20;
+  const step = (TAU * rho1) / cogs;
+  let [near, far] = [0.15, 0.4];
+  for (let i = 0; i < 60; i++) {
+    const mid = (near + far) / 2;
+    if (beltLength({ len: mid, r: rho1, r2: rho2, pitch: step }) < 36 * step) near = mid;
+    else far = mid;
+  }
+  const flipLen = (near + far) / 2;
+  // Where the drive pulley's first tooth stands, in the gap between two shoes where the belt wraps it: shoes round
+  // the drive pulley sit at the angle their place along the loop gives, turned with the pulley.
+  const lean = Math.asin((rho1 - rho2) / flipLen);
+  const phase = lean - Math.PI / 2 + (2 * flipLen * Math.cos(lean) + rho2 * (Math.PI - 2 * lean)) / rho1 + Math.PI / cogs;
   const pivoting = (u: number) => gate(u, 7.5, 11.5, 1);
   const rate = Math.PI / 2 / 3;
   const twist = (t: number) => {
@@ -1922,7 +1969,8 @@ function tracked(idle: boolean): Body {
       ...twin((e) => [{ ...cyl(0.085, 0.03, [0, 0, e * 0.03], "dark", "z"), coarse: true }]),
       ...Array.from({ length: teeth }, (_, i): Part => {
         const a = Math.PI / 2 + ((i + 0.5) / teeth) * TAU;
-        return { ...box([0.014, 0.012, 0.09], [Math.cos(a) * 0.087, Math.sin(a) * 0.087, 0], "steel", [0, 0, a]), coarse: true };
+        // A millimetre short of the rings' outer faces, so that the two never share a plane.
+        return { ...box([0.014, 0.012, 0.088], [Math.cos(a) * 0.087, Math.sin(a) * 0.087, 0], "steel", [0, 0, a]), coarse: true };
       }),
       ...fine([cyl(0.068, 0.03, [0, 0, -0.03], "dark", "z"), cyl(0.068, 0.03, [0, 0, 0.03], "dark", "z")]),
       cyl(0.03, 0.11, [0, 0, 0], "steel", "z"),
@@ -1956,13 +2004,22 @@ function tracked(idle: boolean): Body {
           { ...cyl(0.016, 0.022, [x, 0.079, side * 0.2 + dz], "dark", "z"), fine: true },
           { ...bolts(0.008, 0.0018, 3, [x, 0.079, side * 0.2 + dz + Math.sign(dz) * 0.0115], dz > 0 ? "z" : "-z"), spin: { at: [x, 0.079, side * 0.2] as V3, axis: [0, 0, 1] as V3, angle: (t: number) => -s(t) / 0.016 } },
         ]),
-        { ...cyl(0.005, 0.09, [x, 0.079, side * 0.2], "steel", "z"), fine: true },
+        // The axle stands a little proud of both rollers.
+        { ...cyl(0.005, 0.094, [x, 0.079, side * 0.2], "steel", "z"), fine: true },
         { ...slab([x, 0.03, side * 0.2], [x, 0.079, side * 0.2], 0.016, 0.008, "dark"), fine: true },
       ]),
-      // Each pair of road wheels hangs from the track frame on a swing arm.
+      // Each pair of road wheels hangs from the track frame on a swing arm. The wheels roll on the inside of the
+      // bottom run, which carries their rims back as fast as the belt runs: the screws round each hub turn with them.
       ...[-0.12, 0, 0.12].flatMap((x) => [
         { ...slab([x + 0.04, -0.02, side * 0.2], [x, -0.055, side * 0.2], 0.014, 0.022, "steel"), fine: true },
         ...[-1, 1].map((e) => bolts(0, 0.0022, 1, [x, -0.055, side * 0.2 + e * (0.045 + 0.0012)], e > 0 ? "z" : "-z")),
+        ...[-1, 1].map(
+          (e): Part => ({
+            ...bolts(0.024, 0.0018, 4, [x, -0.055, side * 0.2 + e * (0.046 + 0.001)], e > 0 ? "z" : "-z"),
+            fine: true,
+            spin: { at: [x, -0.055, side * 0.2], axis: [0, 0, 1], angle: (t: number) => -s(t) / 0.04 },
+          }),
+        ),
       ]),
     );
     mk.add({
@@ -1981,27 +2038,73 @@ function tracked(idle: boolean): Body {
       ["rear", -half],
     ] as const) {
       const dir = x > 0 ? 1 : -1;
-      // A flipper's belt: two pulleys and the straight runs that join them on their outside tangents.
-      const [r1, r2, len] = [0.085, 0.045, 0.27];
-      const tilt = Math.asin((r1 - r2) / len);
+      const lift = (t: number) => dir * (0.35 + 0.32 * Math.sin(t * 0.8 + (x > 0 ? 0 : 1.6)));
+      // Far off, the flipper's belt is two runs on the outside tangents of two rubber discs as big as it wraps them.
+      const tilt = Math.asin((r1 - r2) / flipLen);
       const runs = twin((s2) => {
         const n2: [number, number] = [dir * Math.sin(tilt), s2 * Math.cos(tilt)];
-        return [slab([r1 * n2[0], r1 * n2[1], 0], [dir * len + r2 * n2[0], r2 * n2[1], 0], 0.012, 0.052, "rubber")];
+        return [slab([r1 * n2[0], r1 * n2[1], 0], [dir * flipLen + r2 * n2[0], r2 * n2[1], 0], 0.012, 0.052, "rubber")];
       });
-      mk.add({
+      const arm = mk.add({
         name: `${n}.${f}.flipper`,
         parent: 0,
         at: [x, 0, side * 0.29],
         joint: "z",
-        turn: (t) => dir * (0.35 + 0.32 * Math.sin(t * 0.8 + (x > 0 ? 0 : 1.6))),
+        turn: lift,
         parts: [
-          slab([0, 0, -side * 0.012], [dir * len, 0, -side * 0.012], 0.06, 0.016, "dark"),
-          cyl(r1 - 0.006, 0.05, [0, 0, 0], "rubber", "z"),
-          cyl(r2 - 0.006, 0.05, [dir * len, 0, 0], "rubber", "z"),
-          ...runs,
+          ...[
+            slab([0, 0, -side * 0.012], [dir * flipLen, 0, -side * 0.012], 0.06, 0.016, "dark"),
+            cyl(r1 + 0.006, 0.05, [0, 0, 0], "rubber", "z"),
+            cyl(r2 + 0.006, 0.05, [dir * flipLen, 0, 0], "rubber", "z"),
+            ...runs,
+          ].map((q): Part => ({ ...q, coarse: true })),
           cyl(0.03, 0.056, [0, 0, 0], "steel", "z"),
           cyl(0.018, 0.06, [0, 0, 0], "glow", "z"),
+          // Close up the arm is slimmer, inside the loop and clear of the shoes' guide horns, and carries the tip's axle.
+          ...fine([slab([0, 0, -side * 0.014], [dir * flipLen, 0, -side * 0.014], 0.05, 0.012, "dark"), cyl(0.01, 0.054, [dir * flipLen, 0, 0], "steel", "z")]),
         ],
+      });
+      // The drive pulley is keyed to the main axle, so it turns against the arm by the axle's angle less the arm's,
+      // and the belt runs by that over its radius. Lifting the arm over a still axle walks the belt round, as it must.
+      const turned = (t: number) => wrap(t) - lift(t);
+      const ran = (t: number) => -rho1 * turned(t);
+      // The rear flipper's loop is the front's turned half round, so that it runs out behind.
+      mk.add({
+        name: `${n}.${f}.belt`,
+        parent: arm,
+        at: [0, 0, 0],
+        set: dir > 0 ? undefined : [0, 0, Math.PI],
+        joint: "fixed",
+        passive: true,
+        belt: { len: flipLen, r: rho1, r2: rho2, pitch: step },
+        turn: ran,
+        // A shoe: its plate, a grouser across it, and a steel guide horn that runs between the pulleys' discs. It is as
+        // wide as the crowd's discs, which it wraps round as they do.
+        parts: fine([box([0.02, 0.007, 0.05], [0, 0, 0], "rubber"), box([0.007, 0.006, 0.05], [0, 0.0065, 0], "rubber"), box([0.01, 0.009, 0.014], [0, -0.008, 0], "steel")]),
+      });
+      // The drive pulley: a sprocket whose teeth sit between the guide horns, and a disc either side under the
+      // plates, its screws turning with it.
+      mk.add({
+        name: `${n}.${f}.drive`,
+        parent: arm,
+        at: [0, 0, 0],
+        joint: "z",
+        passive: true,
+        turn: turned,
+        parts: fine([
+          { s: "gear", d: [0.07, 0.012, cogs], p: [0, 0, 0], r: [Math.PI / 2, phase, 0], m: "steel" },
+          ...twin((e) => [cyl(rho1 - 0.0035, 0.016, [0, 0, e * 0.0155], "dark", "z"), bolts(0.05, 0.0022, 8, [0, 0, e * (0.0235 + 0.0012)], e > 0 ? "z" : "-z")]),
+        ]),
+      });
+      // The idler at the tip turns on its axle as the belt carries it round.
+      mk.add({
+        name: `${n}.${f}.tip`,
+        parent: arm,
+        at: [dir * flipLen, 0, 0],
+        joint: "z",
+        passive: true,
+        turn: (t) => -ran(t) / rho2,
+        parts: fine(twin((e) => [cyl(rho2 - 0.0035, 0.016, [0, 0, e * 0.0155], "dark", "z"), bolts(0.022, 0.0018, 5, [0, 0, e * (0.0235 + 0.001)], e > 0 ? "z" : "-z")])),
       });
     }
   }
@@ -2109,7 +2212,7 @@ function triwheel(idle: boolean): Body {
       ...screws([0.024, 0.2, 0.2], [0.172, 0.39, 0], "x", 0.01),
       box([0.008, 0.03, 0.16], [0.186, 0.45, 0], "glow"),
       ...twin((s) => eye(0.016, [0.184, 0.35, s * 0.05])),
-      box([0.03, 0.045, 0.3], [0.178, 0.205, 0], "rubber"),
+      box([0.03, 0.045, 0.304], [0.178, 0.205, 0], "rubber"),
       // A telescopic handle: sleeves down the back, steel tubes out of them, a rubber grip across.
       ...twin((s) => [
         cyl(0.022, 0.26, [-0.195, 0.48, s * 0.12], "dark"),
@@ -2369,7 +2472,7 @@ function manipulator(idle: boolean): Body {
     parts: [
       cyl(0.03, 0.02, [0, 0, 0], "steel"),
       box([0.05, 0.03, 0.086], [0, 0.022, 0], "shell"),
-      box([0.004, 0.006, 0.05], [0.023, 0.022, 0], "glow"),
+      box([0.004, 0.006, 0.05], [0.0235, 0.022, 0], "glow"),
       box([0.03, 0.006, 0.09], [0, 0.04, 0], "dark"),
       ...twin((s) => {
         const pins: V3[] = [
@@ -2709,25 +2812,43 @@ export const makers: Record<string, (idle?: boolean) => Body> = {
 
 /* ---------- Belts ---------- */
 
-/** Where a point s along a belt loop is, and how far it has tilted: the top run moves forwards, the bottom back. */
+/**
+ * The parts of a belt loop: the angle its straight runs lean by, when the far end is smaller than the near one, their
+ * length on the outside tangents of the two ends, and the arcs it wraps round the near end and the far one.
+ */
+function circuit(b: Belt) {
+  const [r1, r2] = [b.r, b.r2 ?? b.r];
+  const lean = Math.asin((r1 - r2) / b.len);
+  const run = b.len * Math.cos(lean);
+  const near = r1 * (Math.PI + 2 * lean);
+  const far = r2 * (Math.PI - 2 * lean);
+  return { r1, r2, lean, run, near, far, total: 2 * run + near + far };
+}
+/** How far it is round a belt. */
+export const beltLength = (b: Belt) => circuit(b).total;
+/**
+ * Where a point s along a belt loop is, and how far it has tilted: the top run moves forwards, the bottom back. The
+ * loop goes round the near end at the origin and the far end at (len, 0), joined by the runs on their outside tangents.
+ */
 export function along(b: Belt, s: number): [x: number, y: number, tilt: number] {
-  const arc = Math.PI * b.r;
-  let u = mod(s, 2 * b.len + 2 * arc);
-  if (u < b.len) return [u, b.r, 0];
-  u -= b.len;
-  if (u < arc) {
-    const a = Math.PI / 2 - u / b.r;
-    return [b.len + b.r * Math.cos(a), b.r * Math.sin(a), a - Math.PI / 2];
+  const { r1, r2, lean, run, far, total } = circuit(b);
+  const [sin, cos] = [Math.sin(lean), Math.cos(lean)];
+  let u = mod(s, total);
+  if (u < run) return [r1 * sin + u * cos, r1 * cos - u * sin, -lean];
+  u -= run;
+  if (u < far) {
+    const a = Math.PI / 2 - lean - u / r2;
+    return [b.len + r2 * Math.cos(a), r2 * Math.sin(a), a - Math.PI / 2];
   }
-  u -= arc;
-  if (u < b.len) return [b.len - u, -b.r, -Math.PI];
-  u -= b.len;
-  const a = -Math.PI / 2 - u / b.r;
-  return [b.r * Math.cos(a), b.r * Math.sin(a), a - Math.PI / 2];
+  u -= far;
+  if (u < run) return [b.len + r2 * sin - u * cos, -r2 * cos - u * sin, lean - Math.PI];
+  u -= run;
+  const a = lean - Math.PI / 2 - u / r1;
+  return [r1 * Math.cos(a), r1 * Math.sin(a), a - Math.PI / 2];
 }
 /** Where each shoe of a belt sits once the belt has run a distance s. The shoes close the loop exactly. */
 export function shoes(b: Belt, s: number) {
-  const total = 2 * b.len + 2 * Math.PI * b.r;
+  const total = beltLength(b);
   const n = Math.max(1, Math.round(total / b.pitch));
   return Array.from({ length: n }, (_, k) => along(b, s + (k * total) / n));
 }

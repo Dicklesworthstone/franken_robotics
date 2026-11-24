@@ -330,4 +330,159 @@ if ! printf '%s\n' "${R5_OUT}" | grep -q "Cargo.lock"; then
   fail_test "expected missing Cargo.lock diagnostic for annex workspace, got: ${R5_OUT}"
 fi
 
+# ---------------------------------------------------------------------------
+# Regression 6: sibling franken-stack.lock missing git_rev, SUITE.lock line
+#               missing commit= token, and traversal path in sibling lock
+#               must fail closed (never silently drop rows to report on-pin).
+# ---------------------------------------------------------------------------
+R6_BASE="${TMP}/sib_own_lock_failclosed"
+mkdir -p "${R6_BASE}"
+REV_R6_DEP="$(create_synthetic_sibling "${R6_BASE}/dep_target" "dep-target")"
+REV_R6_STACK="$(create_synthetic_sibling "${R6_BASE}/sib_stack" "sib-stack")"
+cat > "${R6_BASE}/sib_stack/franken-stack.lock" <<'EOF'
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-DEP"
+name = "dep-target"
+path = "../dep_target"
+EOF
+REV_R6_STACK="$(git_commit_all "${R6_BASE}/sib_stack" "add franken-stack.lock missing git_rev")"
+
+REV_R6_SUITE="$(create_synthetic_sibling "${R6_BASE}/sib_suite" "sib-suite")"
+cat > "${R6_BASE}/sib_suite/SUITE.lock" <<'EOF'
+suite dep_target
+EOF
+REV_R6_SUITE="$(git_commit_all "${R6_BASE}/sib_suite" "add SUITE.lock missing commit token")"
+: "${REV_R6_DEP}"
+
+LOCK_R6="$(cat <<EOF
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-STACK-NOPIN"
+name = "sib-stack"
+posture = "consume-path"
+path = "../sib_stack"
+git_rev = "${REV_R6_STACK}"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-R6A"
+receipt = ""
+fallback = "fb"
+
+[[foundation]]
+id = "FD-SUITE-NOPIN"
+name = "sib-suite"
+posture = "consume-path"
+path = "../sib_suite"
+git_rev = "${REV_R6_SUITE}"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-R6B"
+receipt = ""
+fallback = "fb"
+EOF
+)"
+create_synthetic_workspace "${R6_BASE}/repo" "${LOCK_R6}" "nightly-2026-08-31" "" >/dev/null
+"${FIRST_RECEIPT}" --stdout --root "${R6_BASE}/repo" > "${TMP}/r6_receipt.json"
+python3 - "${TMP}/r6_receipt.json" <<'PYEOF'
+import json, sys
+r = json.load(open(sys.argv[1], "r", encoding="utf-8"))
+by_fd = {s["fd"]: s["own_lock"] for s in r["siblings"]}
+for fd in ("FD-STACK-NOPIN", "FD-SUITE-NOPIN"):
+    ol = by_fd[fd]
+    assert ol["class"] == "drift" and ol["reason"] == "unknown-pin" and ol["agrees"] is False, (
+        f"{fd} failed open on missing pin: {ol}"
+    )
+PYEOF
+
+# Sibling franken-stack.lock with absolute/traversal path must be refused (not stripped via basename).
+REV_R6_BAD="$(create_synthetic_sibling "${R6_BASE}/sib_badpath" "sib-badpath")"
+cat > "${R6_BASE}/sib_badpath/franken-stack.lock" <<EOF
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-EVIL"
+name = "dep-target"
+path = "/etc/dep_target"
+git_rev = "${REV_R6_DEP}"
+EOF
+REV_R6_BAD="$(git_commit_all "${R6_BASE}/sib_badpath" "add absolute path in sibling franken-stack.lock")"
+LOCK_R6_BAD="$(cat <<EOF
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-BADPATH"
+name = "sib-badpath"
+posture = "consume-path"
+path = "../sib_badpath"
+git_rev = "${REV_R6_BAD}"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-R6C"
+receipt = ""
+fallback = "fb"
+EOF
+)"
+create_synthetic_workspace "${R6_BASE}/repo_bad" "${LOCK_R6_BAD}" "nightly-2026-08-31" "" >/dev/null
+set +e
+R6_BAD_OUT="$("${FIRST_RECEIPT}" --stdout --root "${R6_BASE}/repo_bad" 2>&1)"
+R6_BAD_RC=$?
+set -e
+if [ "${R6_BAD_RC}" -eq 0 ]; then
+  fail_test "sibling franken-stack.lock with absolute path silently succeeded instead of failing closed"
+fi
+: "${R6_BAD_OUT}"
+
+# ---------------------------------------------------------------------------
+# Regression 7: validate_rel_path rejects bare "..", "../", "." and backslashes.
+# ---------------------------------------------------------------------------
+R7_BASE="${TMP}/rel_path_checks"
+mkdir -p "${R7_BASE}"
+REV_R7="$(create_synthetic_sibling "${R7_BASE}/sib_ok" "sib-ok")"
+for bad_rel in ".." "../" "." "..\\sib_ok"; do
+  safe_tag="$(printf '%s' "${bad_rel}" | tr '/\\.' '___')"
+  ws="${R7_BASE}/repo_${safe_tag}"
+  lock_bad="$(cat <<EOF
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-BAD"
+name = "sib-ok"
+posture = "consume-path"
+path = "${bad_rel}"
+git_rev = "${REV_R7}"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-R7"
+receipt = ""
+fallback = "fb"
+EOF
+)"
+  create_synthetic_workspace "${ws}" "${lock_bad}" "nightly-2026-08-31" "" >/dev/null
+  set +e
+  R7_OUT="$("${FIRST_RECEIPT}" --stdout --root "${ws}" 2>&1)"
+  R7_RC=$?
+  set -e
+  if [ "${R7_RC}" -eq 0 ]; then
+    fail_test "validate_rel_path accepted forbidden path '${bad_rel}'"
+  fi
+  : "${R7_OUT}"
+done
+
+# ---------------------------------------------------------------------------
+# Regression 8: --verify on a valid-hash non-object JSON receipt ("[]") fails
+#               cleanly with exit 2 and no Python traceback.
+# ---------------------------------------------------------------------------
+R8_DIR="${TMP}/non_object_receipt"
+mkdir -p "${R8_DIR}"
+R8_HASH="$(printf '[]' | "${B3SUM_BIN}" --no-names)"
+R8_FILE="${R8_DIR}/${R8_HASH}.json"
+printf '[]' > "${R8_FILE}"
+set +e
+R8_OUT="$("${FIRST_RECEIPT}" --verify "${R8_FILE}" --root "${R1_BASE}/repo" 2>&1)"
+R8_RC=$?
+set -e
+assert_eq "non-object receipt verify exit code" "${R8_RC}" "2"
+if printf '%s\n' "${R8_OUT}" | grep -q "Traceback"; then
+  fail_test "--verify crashed with Python traceback on non-object JSON receipt: ${R8_OUT}"
+fi
+
 pass_test

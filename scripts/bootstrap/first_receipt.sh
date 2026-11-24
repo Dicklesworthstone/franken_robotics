@@ -438,7 +438,7 @@ def parse_own_lock_entries(sib_dir: str):
                 if not line:
                     continue
                 parts = line.split()
-                if len(parts) >= 3 and parts[0] == "suite":
+                if len(parts) >= 2 and parts[0] == "suite":
                     repo_name = parts[1]
                     commit = ""
                     for tok in parts[2:]:
@@ -455,10 +455,20 @@ def parse_own_lock_entries(sib_dir: str):
             data = tomllib.load(f)
         entries = []
         for row in data.get("foundation", []):
+            if not isinstance(row, dict):
+                continue
             rel = row.get("path")
             pin = row.get("git_rev")
-            if isinstance(rel, str) and rel and isinstance(pin, str):
-                entries.append((os.path.basename(rel.rstrip("/")), pin))
+            if isinstance(rel, str) and rel:
+                validated = validate_rel_path(f"{os.path.basename(sib_dir)}/franken-stack.lock", rel)
+                rel_parts = [p for p in validated.split("/") if p]
+                if len(rel_parts) == 2 and rel_parts[0] == "..":
+                    dep_name = rel_parts[1]
+                elif len(rel_parts) == 1:
+                    dep_name = rel_parts[0]
+                else:
+                    fail(f"invalid sibling dependency path in franken-stack.lock: {rel!r}")
+                entries.append((dep_name, pin if isinstance(pin, str) else ""))
         return ("franken-stack.lock", lock_hash, entries)
 
     return (None, None, None)
@@ -500,9 +510,13 @@ def classify_sibling_own_lock(sib_dir: str, lock_pin_rev):
 def validate_rel_path(label: str, path_str: str) -> str:
     if not isinstance(path_str, str) or not path_str:
         fail(f"empty path for {label}")
+    if "\\" in path_str:
+        fail(f"backslash path refused for {label}: {path_str}")
     if path_str.startswith("/") or path_str.startswith("~") or os.path.isabs(path_str):
         fail(f"absolute or home-relative path refused for {label}: {path_str}")
     parts = [p for p in path_str.split("/") if p]
+    if not parts or parts == ["."] or parts == [".."]:
+        fail(f"degenerate relative path refused for {label}: {path_str}")
     # N33a-03 rule 4: relative path, no '..' after the first component.
     if any(p == ".." for p in parts[1:]):
         fail(f"path traversal after first component refused for {label}: {path_str}")
@@ -715,9 +729,9 @@ def build_receipt(root_dir: str, lock_path: str):
             }
         )
 
-        # Run cargo tree -d to record duplicate packages and command receipt.
+        # Run cargo tree -d strictly locked & offline to record duplicate packages.
         tree_argv = ["cargo", "tree", "-d"]
-        tree_proc = run_cargo_ro(ws_dir, tree_argv)
+        tree_proc = run_cargo_ro(ws_dir, ["cargo", "tree", "--locked", "--offline", "-d"])
         if tree_proc.returncode != 0:
             fail(
                 f"cargo tree -d failed in workspace {ws_name}: "
@@ -860,6 +874,9 @@ def verify_receipt(root_dir: str, lock_path: str, verify_file: str, exact: bool)
     if recanon != stored_bytes:
         off = first_diff_byte(stored_bytes, recanon)
         fail(f"receipt is not canonical JSON (first diff byte offset {off})", code=2)
+
+    if not isinstance(stored_obj, dict):
+        fail(f"receipt JSON root must be an object, got {type(stored_obj).__name__}", code=2)
 
     if stored_obj.get("schema") != "frob.stack-receipt/1":
         fail(f"unexpected schema: {stored_obj.get('schema')!r}", code=2)

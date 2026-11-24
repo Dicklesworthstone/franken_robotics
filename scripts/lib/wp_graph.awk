@@ -30,9 +30,9 @@ function witness_is_better(nwf, nwt, cwf, cwt) {
     if (cwf == "") return 1
     if (nwf == "implicit" && cwf != "implicit") return 0
     if (nwf != "implicit" && cwf == "implicit") return 1
-    if (nwf < cwf) return 1
-    if (nwf > cwf) return 0
-    return (nwt < cwt) ? 1 : 0
+    if ((nwf "") < (cwf "")) return 1
+    if ((nwf "") > (cwf "")) return 0
+    return ((nwt "") < (cwt "")) ? 1 : 0
 }
 
 function add_edge(u, v, wf, wt,    k) {
@@ -66,8 +66,8 @@ function sift_down(a, start, end_idx,    root, child, swap_idx, tmp) {
     while (root * 2 <= end_idx) {
         child = root * 2
         swap_idx = root
-        if (a[swap_idx] < a[child]) swap_idx = child
-        if (child + 1 <= end_idx && a[swap_idx] < a[child + 1]) swap_idx = child + 1
+        if ((a[swap_idx] "") < (a[child] "")) swap_idx = child
+        if (child + 1 <= end_idx && (a[swap_idx] "") < (a[child + 1] "")) swap_idx = child + 1
         if (swap_idx == root) return
         tmp = a[root]
         a[root] = a[swap_idx]
@@ -344,7 +344,7 @@ END {
         for (j = 1; j <= rd; j++) {
             cu = radj[cv SUBSEP j]
             cand = dist[cv] + 1
-            if (cand > dist[cu] || (cand == dist[cu] && (prev_dep[cu] == "" || cv < prev_dep[cu]))) {
+            if (cand > dist[cu] || (cand == dist[cu] && (prev_dep[cu] == "" || (cv "") < (prev_dep[cu] "")))) {
                 dist[cu] = cand
                 prev_dep[cu] = cv
             }

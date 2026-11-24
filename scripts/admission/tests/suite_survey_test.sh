@@ -1131,6 +1131,104 @@ EOF
   pass "$t"
 }
 
+# ---------------------------------------------------------------------------
+# Test 17: workspace_inherited_asupersync_and_malformed_toolchain_toml
+# - A configured member manifest using `asupersync = { workspace = true,
+#   optional = true, default-features = false }` must resolve the root
+#   [workspace.dependencies] requirement while preserving member overrides
+#   (and appear in asupersync_0_5_0_named_by when root pins =0.5.0).
+# - A syntax-broken rust-toolchain.toml must fail closed with exit 2 instead
+#   of returning "[toolchain]" as the channel via the legacy plain-text path.
+# ---------------------------------------------------------------------------
+test_workspace_inherited_asupersync_and_malformed_toolchain_toml() {
+  local t="workspace_inherited_asupersync_and_malformed_toolchain_toml"
+  local base="$SCRATCH/$t"
+  local repo="$base/repo"
+  local sib="$base/sib_ws_inh"
+  mkdir -p "$repo" "$base/out" "$sib/crates/runtime"
+
+  init_git_fixture "$sib"
+  printf '[toolchain]\nchannel = "nightly-2026-08-31"\n' >"$sib/rust-toolchain.toml"
+  cat >"$sib/Cargo.toml" <<'EOF'
+[workspace]
+members = ["crates/*"]
+
+[workspace.dependencies]
+asupersync = { version = "=0.5.0", default-features = true }
+EOF
+  cat >"$sib/crates/runtime/Cargo.toml" <<'EOF'
+[package]
+name = "sib-runtime"
+version = "0.1.0"
+
+[dependencies]
+asupersync = { workspace = true, optional = true, default-features = false }
+EOF
+  commit_all "$sib" "init"
+
+  cat >"$base/siblings.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "sib_ws_inh"
+path = "../sib_ws_inh"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/runtime/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = {}
+EOF
+  printf '{"rows":[],"schema":"frob.suite-survey/1"}\n' >"$base/empty_baseline.json"
+
+  local out rc=0
+  out="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$base/out" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" 2>&1)" || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    fail "$t" "workspace inheritance run expected exit 0, got $rc: $out"
+    return
+  fi
+  local rec
+  rec="$(extract_record_path "$out")"
+  assert_py "$t" '
+import json, sys
+doc = json.load(open(sys.argv[1]))
+r = doc["rows"][0]
+asup = r["asupersync"]
+assert asup == {
+    "kind": "registry",
+    "requirement": "=0.5.0",
+    "optional": True,
+    "default_features": False,
+}, f"workspace-inherited asupersync misread: {asup}"
+assert doc["asupersync_0_5_0_named_by"] == ["sib_ws_inh"], doc["asupersync_0_5_0_named_by"]
+' "$rec" || return
+
+  # Subcase B: malformed rust-toolchain.toml must fail closed (exit 2), not record "[toolchain]"
+  local sib_bad="$base/sib_bad_tc"
+  init_git_fixture "$sib_bad"
+  printf '[toolchain]\nchannel = \n' >"$sib_bad/rust-toolchain.toml"
+  commit_all "$sib_bad" "broken toolchain toml"
+  cat >"$base/bad_tc.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "sib_bad_tc"
+path = "../sib_bad_tc"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = ""
+watched = {}
+EOF
+  local bad_out bad_rc=0
+  bad_out="$("$SURVEY_SH" --repo-root "$repo" --register "$base/bad_tc.toml" --out-dir "$base/out_bad_tc" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" 2>&1)" || bad_rc=$?
+  if [ "$bad_rc" -ne 2 ]; then
+    fail "$t" "malformed rust-toolchain.toml expected exit 2, got $bad_rc: $bad_out"
+    return
+  fi
+
+  pass "$t"
+}
+
 test_reads_channel_and_requirement
 test_path_requirement
 test_counts_modified_paths
@@ -1147,6 +1245,7 @@ test_default_features_underscore_alias
 test_path_traversal_and_date_validation
 test_asupersync_0_5_semver_edge_cases
 test_same_second_sequence_and_bare_dotdot_rejected
+test_workspace_inherited_asupersync_and_malformed_toolchain_toml
 
 printf '\nSUMMARY: %d passed, %d failed\n' "$PASS" "$FAIL"
 [ "$FAIL" -eq 0 ]

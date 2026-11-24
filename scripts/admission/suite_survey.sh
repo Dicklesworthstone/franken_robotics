@@ -389,12 +389,17 @@ def read_channel(sibling_dir: str, toolchain_file: str) -> str | None:
             ch = lookup_dotted(doc, "toolchain.channel")
             if isinstance(ch, str) and ch.strip():
                 return ch.strip()
-        except tomllib.TOMLDecodeError:
+        except tomllib.TOMLDecodeError as exc:
+            if rel.endswith(".toml"):
+                raise ValueError(f"invalid TOML in {rel}: {exc}") from exc
             # Legacy plain-text rust-toolchain file containing just the channel name
             for line in raw.splitlines():
                 s = line.strip()
-                if s and not s.startswith("#"):
-                    return s
+                if not s or s.startswith("#"):
+                    continue
+                if s.startswith("[") or "=" in s:
+                    raise ValueError(f"invalid TOML in {rel}: {exc}") from exc
+                return s
     return None
 
 
@@ -454,25 +459,37 @@ def parse_asupersync_spec(val, key_path: str) -> dict:
 
 
 def read_asupersync(sibling_dir: str, manifest_rel: str, key_path: str, watched_vals: dict) -> dict:
+    inherited_optional: bool | None = None
+    inherited_df: bool | None = None
+
     # 1. Try the configured manifest and key first.
     if manifest_rel and key_path:
         doc = read_toml_file(os.path.join(sibling_dir, manifest_rel))
         if doc is not None:
             val = lookup_dotted(doc, key_path)
-            if val is not None:
+            if isinstance(val, dict) and val.get("workspace") is True:
+                # Member inherits from root [workspace.dependencies]; retain member overrides
+                # and fall through to resolve the workspace-level specification.
+                if "optional" in val:
+                    inherited_optional = bool(val["optional"])
+                if "default-features" in val:
+                    inherited_df = bool(val["default-features"])
+                elif "default_features" in val:
+                    inherited_df = bool(val["default_features"])
+            elif val is not None:
                 spec = parse_asupersync_spec(val, key_path)
-                # Cargo does not allow `optional = true` under [workspace.dependencies];
-                # honor a declared watched `asupersync_optional` boolean if present.
-                if (
-                    key_path.startswith("workspace.dependencies.")
-                    and spec["kind"] != "none"
-                    and isinstance(watched_vals.get("asupersync_optional"), bool)
-                ):
-                    spec["optional"] = watched_vals["asupersync_optional"]
-                return spec
+                if spec["kind"] != "none":
+                    # Cargo does not allow `optional = true` under [workspace.dependencies];
+                    # honor a declared watched `asupersync_optional` boolean if present.
+                    if (
+                        key_path.startswith("workspace.dependencies.")
+                        and isinstance(watched_vals.get("asupersync_optional"), bool)
+                    ):
+                        spec["optional"] = watched_vals["asupersync_optional"]
+                    return spec
 
     # 2. Fallback read-only scan of root Cargo.toml and declared workspace members
-    #    so a newly added or relocated asupersync dependency is never missed.
+    #    so workspace-inherited or newly added asupersync dependencies are never missed.
     root_doc = read_toml_file(os.path.join(sibling_dir, "Cargo.toml"))
     if root_doc is not None:
         if lookup_dotted(root_doc, "package.name") == "asupersync":
@@ -488,6 +505,15 @@ def read_asupersync(sibling_dir: str, manifest_rel: str, key_path: str, watched_
             if val is not None:
                 spec = parse_asupersync_spec(val, candidate_key)
                 if spec["kind"] != "none":
+                    if inherited_optional is not None:
+                        spec["optional"] = inherited_optional
+                    elif (
+                        candidate_key == "workspace.dependencies.asupersync"
+                        and isinstance(watched_vals.get("asupersync_optional"), bool)
+                    ):
+                        spec["optional"] = watched_vals["asupersync_optional"]
+                    if inherited_df is not None:
+                        spec["default_features"] = inherited_df
                     return spec
         members = lookup_dotted(root_doc, "workspace.members")
         excludes = lookup_dotted(root_doc, "workspace.exclude")

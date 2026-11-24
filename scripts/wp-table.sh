@@ -141,17 +141,36 @@ if [ "$USE_PLAN" -eq 1 ]; then
     PLAN_ROWS="$TMP_WORK/plan.rows.tsv"
     awk -F '\t' '
         NR == 1 {
-            if ($1 != "package" || $2 != "first_milestone" || $3 != "depends_on") {
+            if (NF != 3 || $1 != "package" || $2 != "first_milestone" || $3 != "depends_on") {
                 printf("wp-table: invalid plan TSV header: %s\n", $0) > "/dev/stderr"
+                bad = 1
                 exit 1
             }
             next
         }
         NF == 0 || $1 ~ /^#/ { next }
         {
+            if (NF != 3 || $1 == "" || $2 == "") {
+                printf("wp-table: malformed plan TSV row at line %d (expected 3 tab-separated fields): %s\n", NR, $0) > "/dev/stderr"
+                bad = 1
+                exit 1
+            }
+            if ($1 in seen_pkg) {
+                printf("wp-table: duplicate package key in plan TSV at line %d: %s\n", NR, $1) > "/dev/stderr"
+                bad = 1
+                exit 1
+            }
+            seen_pkg[$1] = 1
             printf("%s\t%s\t%s\n", $1, $2, $3)
         }
-    ' "$PLAN_FILE" > "$PLAN_ROWS"
+        END {
+            if (bad) exit 1
+            if (NR == 0) {
+                printf("wp-table: invalid plan TSV header: empty file\n") > "/dev/stderr"
+                exit 1
+            }
+        }
+    ' < "$PLAN_FILE" > "$PLAN_ROWS"
     jq -Rs '
         split("\n") | map(select(length > 0)) |
         map(split("\t") | {
@@ -883,8 +902,8 @@ compare_file() {
         return
     fi
     if ! cmp -s "$committed" "$fresh"; then
-        diff_info=$(awk '
-            BEGIN { l = 0; found = 0 }
+        diff_info=$(WP_CMP_FRESH="$fresh" awk '
+            BEGIN { f2 = ENVIRON["WP_CMP_FRESH"]; l = 0; found = 0 }
             {
                 l++
                 if ((getline other < f2) <= 0) {
@@ -907,7 +926,7 @@ compare_file() {
                     }
                 }
             }
-        ' f2="$fresh" "$committed")
+        ' < "$committed")
         printf 'stale: %s differs at %s\n' "$label" "$diff_info"
         FAIL=1
     fi

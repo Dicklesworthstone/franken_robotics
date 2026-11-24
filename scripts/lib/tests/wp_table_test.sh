@@ -590,6 +590,66 @@ test_invalid_plan_tsv_header_fails() {
     pass "invalid_plan_tsv_header_fails"
 }
 
+# ------------------------------------------------------------------------------
+# 22. plan_tsv_empty_truncated_duplicate_and_bytewise_sort:
+#     (a) empty 0-byte plan TSV fails closed (missing header);
+#     (b) truncated plan row (missing depends_on column) fails closed;
+#     (c) duplicate package row in plan TSV fails closed;
+#     (d) wp_graph.awk sorts numeric-looking node/witness keys bytewise ("10" < "2"),
+#         not numerically;
+#     (e) compare_file works when out-dir path contains '='.
+# ------------------------------------------------------------------------------
+test_plan_tsv_empty_truncated_duplicate_and_bytewise_sort() {
+    # 22a: empty 0-byte plan TSV
+    empty_tsv="$TMP_ROOT/empty_plan.tsv"
+    : > "$empty_tsv"
+    if sh "$WP_TABLE" generate --input "$FIX_DIR/unpackaged_only.jsonl" --plan "$empty_tsv" --out-dir "$TMP_ROOT/empty_plan_out" >"$TMP_ROOT/empty_plan.out" 2>"$TMP_ROOT/empty_plan.err"; then
+        fail "plan_tsv_empty_truncated_duplicate_and_bytewise_sort" "empty 0-byte plan TSV exited 0"
+        return
+    fi
+
+    # 22b: truncated plan row (only 2 columns, missing depends_on)
+    trunc_tsv="$TMP_ROOT/trunc_plan.tsv"
+    printf 'package\tfirst_milestone\tdepends_on\nWP-01\tM0\n' > "$trunc_tsv"
+    if sh "$WP_TABLE" generate --input "$FIX_DIR/tr_chain.jsonl" --plan "$trunc_tsv" --out-dir "$TMP_ROOT/trunc_plan_out" >"$TMP_ROOT/trunc_plan.out" 2>"$TMP_ROOT/trunc_plan.err"; then
+        fail "plan_tsv_empty_truncated_duplicate_and_bytewise_sort" "truncated 2-column plan TSV row exited 0"
+        return
+    fi
+
+    # 22c: duplicate package key in plan TSV
+    dup_tsv="$TMP_ROOT/dup_plan.tsv"
+    printf 'package\tfirst_milestone\tdepends_on\nWP-01\tM0\t-\nWP-01\tM0\tWP-02\nWP-02\tM0\t-\nWP-03\tM0\t-\n' > "$dup_tsv"
+    if sh "$WP_TABLE" generate --input "$FIX_DIR/tr_chain.jsonl" --plan "$dup_tsv" --out-dir "$TMP_ROOT/dup_plan_out" >"$TMP_ROOT/dup_plan.out" 2>"$TMP_ROOT/dup_plan.err"; then
+        fail "plan_tsv_empty_truncated_duplicate_and_bytewise_sort" "duplicate package key in plan TSV exited 0"
+        return
+    fi
+
+    # 22d: bytewise (string) sort in wp_graph.awk on numeric-looking keys ("10" < "2")
+    num_in="$TMP_ROOT/num_keys.in"
+    printf 'NODE\t2\nNODE\t10\nEDGE\t2\t10\t2\t9\nEDGE\t2\t10\t10\t1\n' > "$num_in"
+    num_nodes=$(awk -F '\t' -f "$AWK_GRAPH" "$num_in" | awk -F '\t' '$1=="CONDENSED_NODE"{printf "%s,", $2}')
+    num_wit=$(awk -F '\t' -f "$AWK_GRAPH" "$num_in" | awk -F '\t' '$1=="RAW_EDGE"{print $4 ":" $5}')
+    if ! assert_eq "bytewise_nodes" "10,2," "$num_nodes" ||
+       ! assert_eq "bytewise_witness" "10:1" "$num_wit"; then
+        return
+    fi
+
+    # 22e: check stale diff with '=' in --out-dir path
+    eq_dir="$TMP_ROOT/dir=eq"
+    run_gen "$eq_dir" --input "$FIX_DIR/tr_chain.jsonl" --no-plan
+    printf 'corrupted\n' > "$eq_dir/work-packages.md"
+    if sh "$WP_TABLE" check --input "$FIX_DIR/tr_chain.jsonl" --no-plan --out-dir "$eq_dir" >"$TMP_ROOT/eq_dir.log" 2>&1; then
+        fail "plan_tsv_empty_truncated_duplicate_and_bytewise_sort" "stale check with '=' in path exited 0"
+        return
+    fi
+    if ! grep -q "stale: .*work-packages.md differs at line 1:" "$TMP_ROOT/eq_dir.log"; then
+        fail "plan_tsv_empty_truncated_duplicate_and_bytewise_sort" "compare_file failed with '=' in path: $(cat "$TMP_ROOT/eq_dir.log")"
+        return
+    fi
+
+    pass "plan_tsv_empty_truncated_duplicate_and_bytewise_sort"
+}
+
 # Run all tests
 test_tr_chain
 test_tr_diamond
@@ -612,6 +672,7 @@ test_metamorphic_relations
 test_negative_control_reach_u_bug
 test_posix_and_hygiene
 test_invalid_plan_tsv_header_fails
+test_plan_tsv_empty_truncated_duplicate_and_bytewise_sort
 
 printf 'SUMMARY: passed=%d failed=%d\n' "$PASS" "$FAIL"
 if [ "$FAIL" -ne 0 ]; then

@@ -17,7 +17,7 @@ features = ["referee", "geometry", "ledger"]
 build_env = { FRANKENSIM_DEPGRAPH_SALT = "franken-robotics-dev-v1" }
 confined_to = ["frob-fsim", "bedrock-direct"]
 admission_gate = "INT-FSIM-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "KILL-FSIM: (a) pinned worker process exchanging whole jobs; (b) lift the minimal referee set."
 
 [[foundation]]
@@ -30,7 +30,7 @@ version = "=0.7.0"
 toolchain = "nightly-2026-08-31"
 confined_to = ["any"]
 admission_gate = "INT-ASUP-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "FD-ASUP-01 aligns the siblings; a surface that still brings a second package: KILL-MCP fallback 1."
 
 [[foundation]]
@@ -43,7 +43,7 @@ version = "=0.5.1"
 toolchain = "nightly-2026-08-31"
 confined_to = ["frob-chronicle"]
 admission_gate = "INT-FSQL-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "An append-only JSON-lines ledger with the same schema; LRU eviction."
 
 [[foundation]]
@@ -56,7 +56,7 @@ version = "=0.1.3"
 toolchain = "nightly-2026-08-31"
 confined_to = ["spark/frob-spark-metal"]
 admission_gate = "INT-FT-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "The annex binds objc2-metal directly (needs an owner decision); the CPU trainer uses the in-house kernels on batch-cpu."
 
 [[foundation]]
@@ -66,7 +66,7 @@ posture = "consume"
 version = "=0.19.9"
 confined_to = ["spark/frob-spark-cuda"]
 admission_gate = "INT-CUDA-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "None needed for CPU and Metal; the CUDA tier is absent."
 
 [[foundation]]
@@ -78,7 +78,7 @@ git_rev = "1b4cfab25b55aaeba2be4a62ed97048eca6bf4d5"
 toolchain = "nightly-2026-08-20"
 confined_to = ["derive/frob-derive"]
 admission_gate = "INT-FSYM-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "KILL-KIR, KILL-LEMMA."
 
 [[foundation]]
@@ -91,7 +91,7 @@ version = "=0.14.0"
 toolchain = "nightly-2026-08-25"
 confined_to = ["surface/frob-mcp"]
 admission_gate = "INT-FMCP-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "KILL-MCP."
 
 [[foundation]]
@@ -104,5 +104,5 @@ version = "=0.6.0"
 toolchain = "nightly-2026-08-31"
 confined_to = ["frob-chronicle", "frob-conformance", "bindings/frob-gymnasium"]
 admission_gate = "INT-FNP-01"
-receipt = ""
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "Plain binary columns; drop the oracle."

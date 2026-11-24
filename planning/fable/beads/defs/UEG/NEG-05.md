@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "tenfold", "frob-conformance", "solid", "test", "card"]
 parent: "WP-34"
-deps: ["NEG-03", "GB-09", "N00-17"]
+deps: ["GB-09", "N00-17", "N38b-51", "NEG-03"]
 needs: []
-related: ["BD-040", "BD-143"]
+related: []
 gates: []
 plan_refs: ["Appendix E.7 row 2", "§36.4 item 1", "§2.3 item 1", "Appendix M.38 row 2", "Appendix M KA-010, KA-818"]
 ---
@@ -26,9 +26,19 @@ distrust the other ceilings.
 
 ## Scope
 
-In: the print rule for derived figures, its check, the regression test for this ceiling. Out: the ceiling
-calculators (N00-17); the card (GB-09); the measured incumbent ledger that will replace the published share
-(BD-040, BD-143).
+In: the print-consistency rule for derived figures and its check; the formatter contract `format_ceiling`
+and the report lint; the regression tests of the formatter on this ceiling; the content of register item
+E7-2 (its stale patterns, its pinning tests, its link to REC-02).
+
+Out, with the bead that has it:
+- the settled truth of the known-answer rows KA-010 and KA-818 (the exact rational 100/13, tolerance 0.05),
+  the derivation file `docs/derivations/amdahl-step-share.md` and the record REC-02 of the reconciliation
+  register: N38b-51 (a dependency, at M0, because this bead's acceptance resolves item E7-2 to REC-02). This
+  bead does not set a row's truth or tolerance; it cites those rows;
+- the pin DX-02 of the killed-idea register, which records the same correction: NAB-41;
+- the scan engine: N38b-50; the register file that holds item E7-2: NEG-03;
+- the ceiling calculators (N00-17); the card (GB-09); the measured incumbent ledger that will replace the
+  published share (BD-040, BD-143).
 
 ## Technical approach
 
@@ -43,13 +53,16 @@ calculators (N00-17); the card (GB-09); the measured incumbent ledger that will 
    `digits`, the ceiling computed from the rounded share, and separately the ceiling from the exact share,
    each labelled. A caller cannot obtain a string that mixes them.
 4. **Register and scan.** Item E7-2: stale pattern `1/(1 − 0.87) = 7.8` and "about 7.8" in the scope of
-   step-share or Amdahl text; pinned by `gb_09_reference` and the test below.
+   step-share or Amdahl text; pinned by `gb_09_reference` and the test below; `same_as = ["REC-02"]` and
+   `value = "100/13"`, the figure that record settles. The formatter's legitimate second form, "7.8 (from the
+   unrounded share 82/94 = 0.872)", is printed on a line the report marks `stale-as-control: E7-2`, so the
+   scan (the engine of N38b-50, which honours the marker for every linked record) does not flag it.
 
 ## Acceptance criteria
 
 - [ ] The formatter returns ("0.87", "7.7", "7.8 from 82/94") for the share 41/47 at two digits.
 - [ ] A report line that pairs 0.87 with 7.8 without the "unrounded" label is rejected by the report lint.
-- [ ] The stale-value scan finds no hit for E7-2.
+- [ ] The stale-value scan finds no hit for E7-2, and item E7-2 resolves to REC-02 with the value 100/13.
 - [ ] When the measured incumbent share exists, the same formatter prints its ceiling and the published one
       side by side, each with its source tag.
 
@@ -57,8 +70,11 @@ calculators (N00-17); the card (GB-09); the measured incumbent ledger that will 
 
 ### Unit tests
 
-- `ceiling_from_rounded_share`: 100/13 rounds to 7.7 at two significant digits.
-- `ceiling_from_exact_share`: 47/6 rounds to 7.8.
+- `ceiling_from_rounded_share`: the formatter's output for the rounded share: 100/13 rounds to 7.7 at two
+  significant digits.
+- `ceiling_from_exact_share`: the formatter's output for the exact share: 47/6 rounds to 7.8. (The register's
+  own recomputation of 100/13 and 94/12 = 47/6 is `rec_02_from_rounded_share` and `rec_02_from_raw_rates` of
+  N38b-51; these two tests are of the formatter's rounding and labelling, not of the record.)
 - `formatter_never_mixes`: property test over 10³ random shares in (0.5, 0.99): the printed ceiling always
   equals the ceiling recomputed from the printed share at the printed precision.
 - `report_lint_rejects_mixed_line`: the string "1/(1 − 0.87) = 7.8" fails; "about 7.7 (1/(1 − 0.87))" passes.

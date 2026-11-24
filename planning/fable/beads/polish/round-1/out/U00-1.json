@@ -1,0 +1,397 @@
+{
+ "round": 1,
+ "slice": "U00-1",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "BET-01",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Clause (a) said 'paired lower bound of the time ratio above 1.3' while BD-221, which applies KILL-KIR on the same timings, fires on the one-sided 95% upper bound exp(mean + t*s/sqrt n) > 1.3 (t = 1.833 at n = 10, 8,192 worlds, >= 10 pairs); aligned with BD-221 and defined 'one optimization pass'. Clause (b) had no quantity: defined r_typed and r_untyped from BD-221's triage tallies with the firing rule (DESIGN) and the both-zero case. Potency controls given magnitudes (planted 2x slowdown, A/A <= 1.02, the 4-ulp twin rule, named planted defects). Unit tests rewritten on the upper bound with worked values (1.294 holds, 1.320 falsifies), clause-(b) rate test added; e2e log now records the bound, pairs, A/A and first differing field."
+  },
+  {
+   "bead": "BET-03",
+   "kinds": [
+    "self-contained",
+    "scope",
+    "tests"
+   ],
+   "what": "Clause (a) names slip distance and cost of transport but GATE-FID-01 gates displacement, energy per metre and stance impulse: stated how each quantity is read, the disagreement formula and floors, and that slip/creep rows (no pre-registered threshold) are judged by N18b-33's KILL-CONTACT decision. Scope now names the beads that own what is out. Unit tests: falsification only after mapping and the repair cycle, plus a clause-(b) ranking-flip test."
+  },
+  {
+   "bead": "BET-04",
+   "kinds": [
+    "scope",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Scope names BD-006, BD-031, BD-038, N33a-10, N33b-04, N33b-05 (the KILL-FSIM decision, read not re-decided) and BD-044. A unit test that 'fired' the kill gate inside the bet now reads INT-FSIM-01's failure as clause (a). Known answers carry their values inline, including the action sampler's joint-law defect (0.6655 against 0.5) that the list omitted. Named fs-qty."
+  },
+  {
+   "bead": "BET-05",
+   "kinds": [
+    "scope",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Scope names BD-248, BD-250, N28a-22 (KILL-STATIC decision), BD-345, N26b-05. Top-k fixed at k = 10 per archetype family (from BD-250) with the 1 - delta^(1/m) discard bound worked. Kill-applying unit test replaced by one that reads N28a-22's record."
+  },
+  {
+   "bead": "BET-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Clause (b) had no rule and its unit test used 'within seed spread', unlike the kill-gate bead N23a-33, which reads the same record: aligned on 'paired 95% interval of the compute ratio equivariant/augmented includes or exceeds 1', with the owner-ruling fork and the 'passed its gate, falsified by its second clause' record. Acceptance cites N23a-33's ADR by identifier and hash. The reconciliation note's flag fix (--tying equivariant, exit 5) was already present."
+  },
+  {
+   "bead": "BET-08",
+   "kinds": [
+    "scope",
+    "self-contained"
+   ],
+   "what": "Scope names BD-030, BD-179, BD-182. The guard's kill gate is named (KILL-MARROW-GUARD) with its trigger and fallback, and stated not to be this bet's kill gate (BET-08 has none)."
+  },
+  {
+   "bead": "BET-09",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "Scope names BD-174, BD-217, BD-142, N21b-39 and the KILL-METAL decision N21b-08. Unit test that fired KILL-METAL inside the bet replaced by one that reads N21b-08's record; acceptance cites that ADR by hash."
+  },
+  {
+   "bead": "BET-10",
+   "kinds": [
+    "scope",
+    "self-contained"
+   ],
+   "what": "Scope names BD-374, N28b-43, BD-317, N39b-11. KA-009 given its values (12% unfinished caps the ratio at 25/3) and its consequence at the 1.5 threshold."
+  },
+  {
+   "bead": "BET-11",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "scope",
+    "tests"
+   ],
+   "what": "Coverage was counted per identity ('certified identities over declared identities'), but GATE-LEMMA-01 and BD-379 count kernels: covered kernels / derived kernels, a kernel covered only when it declares every catalogue identity and each has a replayable certificate. Aligned. The consumed-certificate record now points at the decision-effect ledger N12-12 (cert_effect rows, `unknown` never counted as changed) and `frob prove list --effects`. Scope names N12-20, BD-379, N12-36, N12-12, N12-31. Unit tests read the KILL-LEMMA record instead of firing it; added kernel-level and unknown-effect tests."
+  },
+  {
+   "bead": "BET-13",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Population wording needed 32 families; the plan adds 46 where four confirmatory cells share alpha, the family as the independent unit, and the declaration before sealing. Added, with a three-case unit test."
+  },
+  {
+   "bead": "BET-14",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Labels were only `engine needed`, `tie`, `not run`; §39.22 fixes `mixed` (with the unrecovered phase named), `no saving to recover` (T_F >= T_B), r > 1 (T_W < T_F), the both-below-0.5 rule, the ablation bounds 1/s and 1/(1 - s) that void a stratum, and that ten-fold wording is F against the stronger of B and W. Added, with unit tests including the 0.28 known answer."
+  },
+  {
+   "bead": "BET-15",
+   "kinds": [
+    "scope",
+    "self-contained"
+   ],
+   "what": "Scope names BD-320, BD-321, N23b-19, N23b-24, BD-328. Humanoid break-even given its s (0.5 to 1 GPU-hour, KA-589) and arithmetic. Acceptance cites N23a-26's ADR by hash."
+  },
+  {
+   "bead": "BET-16",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "The Frontier pilot N23b-20 (reached through N23a-30) was not mentioned: added its protocol, falsifier and the provisional pilot-only reading that N23a-30 applies. Unit tests that fired KILL-INHERIT now read its record; added the provisional test."
+  },
+  {
+   "bead": "BET-17",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "Scope names BD-145, N41-08, BD-310, BD-328 (which decides KILL-RANK for rungs), N28b-22, N28b-23, N23b-35, N16b-12. Kill-firing unit test replaced by one that reads BD-328's record; added a HeldInPart test. Acceptance cites the decision by hash."
+  },
+  {
+   "bead": "BET-18",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Unit test called a 0.62 mixed-batch ratio 'falsified', but clause (c) fires below 0.5: between 0.5 and 0.70 the gate fails short of the falsifier; the test now records that state. KILL-BUCKET trigger lacked 'to hold Omega_3 <= 2'. Scope names BD-183 to BD-186, N17b-03, N17b-07, N17b-10, N21b-19 and that KILL-PHYLUM governs KILL-BUCKET."
+  },
+  {
+   "bead": "BET-19",
+   "kinds": [
+    "self-contained",
+    "complete"
+   ],
+   "what": "Deciding-gate thresholds were summarized: added the dual (0, 1/2, 1/2), the zonotope test, the 15/16 equality reading and 1/65 m, the pusher battery's 20 of 20 intervals with [1/2, 2] and the empty set, checker independence (std closure, no shared files, 200 mutants per proof kind, repeated at M3), the swapped prefix and clairvoyant witness in the corpus, and the lower-verb arm of -07."
+  },
+  {
+   "bead": "BET-20",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "Scope names BD-289 (pilot and KILL-AUGUR-REGION decision), BD-358, N25b-11, BD-136 and the separate KILL-WEAKVAR beads. Kill-firing unit tests read BD-289's record; acceptance cites it by hash."
+  },
+  {
+   "bead": "BET-21",
+   "kinds": [
+    "self-contained",
+    "scope"
+   ],
+   "what": "The 123 threshold of GATE-QUAL-01 was unexplained: added that an exact one-sided binomial test of a rate at or below 0.05 over 2,000 campaigns rejects at the 1% level from 124, the expected count at alpha being 100. Scope names BD-259, BD-260, BD-261 and states there is no kill gate (the written consequence is applied by this bead's record)."
+  },
+  {
+   "bead": "BET-23",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "Scope names BD-279, BD-280, N27b-24, N27b-28, BD-375 and the KILL-AUTOPSY decision N27b-11. A unit test that fired KILL-AUTOPSY inside the bet now reads N27b-11's record (top factor changed in 34% > 30%); acceptance cites it by hash."
+  },
+  {
+   "bead": "BET-24",
+   "kinds": [
+    "complete"
+   ],
+   "what": "GATE-ARENA-03 lacked its refusal battery: every refusal of the requirement language (FROB-REF-520, -535, -536, -523, -538, -525, -526, -539, -528) must be triggered by its planted task file."
+  },
+  {
+   "bead": "BET-25",
+   "kinds": [
+    "self-contained",
+    "scope",
+    "complete"
+   ],
+   "what": "The potency control said the pre-slip fixture's numbers were 'owed'; they exist (N22c-27, gate GATE-SHIELD-06 measured by N22c-29): added the cart fixture (2.0 m/s, 5.0 m/s^2 demand, mu 0.8 / 0.3, 0.4000 / 0.6796 m, arm 1 crossing at 1.162 m/s and stopping 0.2296 m beyond, arm 2 threshold 0.7196 m, mutant overshoot <= 0.04 m, the two admitting changes). Acceptance reads that record instead of 'once its numbers exist'. Scope names BD-337, N22b-14, BD-338, BD-339, N22c-27/28/29."
+  },
+  {
+   "bead": "BET-26",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Rimless-wheel known answer was garbled (multiplier described as 'cos 2a times'); replaced by KA-093: return map w+^2 -> c^2 (w+^2 + b), c = cos 2a, b = (4g/l) sin a sin g, fixed point c^2 b/(1 - c^2), multiplier c^2 (exactly 1/2 for eight spokes), uphill slope refused. Kill-applying unit test replaced by one that reads N22c-17's record. The free-period case names its gate (GATE-GAIT-04)."
+  },
+  {
+   "bead": "BET-27",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "Scope names BD-252, BD-331, BD-323, N22c-31/32/33 (the delivered-controller lane and its separate kill gate KILL-MPCRECORD) and the decisions N22c-16 (KILL-MPC) and N23a-21 (KILL-DISTILL). Unit test that fired KILL-DISTILL now reads N23a-21's record; acceptance cites both decisions by hash, with FROB-REF-817 named."
+  },
+  {
+   "bead": "BET-28",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Scope's 'out' list named no beads: now BD-388 (rehearsal), BD-393 (ground.band, GATE-GROUND-06), BD-394 (drift, GATE-GROUND-07), N30a-18 (omitted-law control), N38b-26 and N41-10 (which real dataset, if any)."
+  },
+  {
+   "bead": "BET-29",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests"
+   ],
+   "what": "Scope names BD-403, N31b-13, BD-406, BD-407 and the three kill decisions N31b-15, N31b-18, N31b-19. KILL-PACKET's trigger now names GATE-FOUNDRY-09 or GATE-FOUNDRY-10 as in the plan. Kill-firing unit test reads N31b-15's record; acceptance cites all three decisions by hash."
+  },
+  {
+   "bead": "BET-30",
+   "kinds": [
+    "split",
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "The M8 half (GATE-CORTEX-17, KILL-GATREE, in section 40.5 for BET-30) was 'appended' by a bead that closes at M4: split to new bead N00p1-11. Clause (a) had no rule: defined on BD-326's diagnostic arm M (front-lidar variant) as a paired interval of return(M) - return(E) against the 2% tolerance BD-326 uses, with an unmeasured state. E2e used a depth camera while arm M is a lidar variant: aligned; negative controls now name FROB-REF-161, FROB-REF-109 (KA-276, CX-133). Unit tests given values; KILL-EQUIV read from its record."
+  },
+  {
+   "bead": "BET-36",
+   "kinds": [
+    "split",
+    "scope",
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "The M6 half (GATE-HAB-07, GATE-HAB-09, KILL-ADVECT, KILL-LIVING, in section 40.5) was 'appended' by a bead that closes at M3: split to new bead N00p1-12. Scope names BD-230, N18a-37, N19b-06, N18a-33, N18a-34, BD-231, BD-253 and the M6 beads. Added KA-404 squeeze times (0.038 s, 2.3 s, 0.76 s, recomputed), the film blend formula and MR-26. Kill-firing tests now evaluate clause (a) and read N18a-34's record. Added deps N18a-37 and N19b-06 (the M3 measurements of the two gates it reads)."
+  },
+  {
+   "bead": "BET-31",
+   "kinds": [
+    "scope",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Scope names BD-285, N17a-30, N17a-28. GATE-PHYLUM-01's 'orbit and ballast rows' given their values (86,185 and 500,500 hexapod representatives, recomputed by Burnside; 735,471 placements in 24,546 classes; {0,3} and {1,2} must split) and the coupled-bus answer (zero one-tick, two two-tick schedules). Kill-firing unit test replaced by one that reads N17a-29's record."
+  },
+  {
+   "bead": "BET-32",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Scope names BD-276 (with N26a-30), BD-277 and the KILL-RARE decision N26a-32; acceptance cites it by hash. Added the exact 29,956-episode figure behind 'about 30,000'."
+  },
+  {
+   "bead": "BET-33",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "Scope names BD-135/BD-136 (M1 part), BD-292, BD-347, N28b-35, BD-377, BD-286, N28c-42. A unit test that 'killed the rule' now records the rule as N25a-19's record lists it; the removal is applied there."
+  },
+  {
+   "bead": "BET-34",
+   "kinds": [
+    "correct",
+    "scope",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Refusal causes in acceptance (contact count, retry ladder, other) differed from the coverage report's (contact cap, fixed-witness gate, missing joint class, kinematic loop): aligned, with the strict-profile share. GATE-FID-07's 'predicted time' defined (16 p(1-p)/delta^2: 576 and 1,600 episodes). Fallback names FD-FSIM-12 and FD-FSIM-13. Scope names BD-086, BD-093, BD-213, BD-214, BD-268, N16b-19; kill-firing test reads N16b-19's record. Known-answer coverage arithmetic used an invented 4,800 GPU world-seconds per second; replaced by the plan's (3,400 and 4,000; shares 0.12 to 0.71%, 2.4% at 1,000)."
+  },
+  {
+   "bead": "BET-35",
+   "kinds": [
+    "self-contained",
+    "scope",
+    "correct",
+    "tests"
+   ],
+   "what": "KILL-FLEET's 'g < 1/3' was undefined: g = M/T, the movable fraction of a campaign's phase ledger, ceiling 1/(1 - g). Clause (a) (against the two cards) and the gate (against the better single machine) reconciled: read on the gate's paired lower bound, the stricter comparison. Clause (b) tied to N19c-25/N19c-26 (KILL-BANK-BREADTH). Scope names N21c-08, N21c-10, N21c-11, BD-370. Kill-firing test reads N21c-11's record (g = 0.204, ceiling 1.256)."
+  },
+  {
+   "bead": "BET-37",
+   "kinds": [
+    "self-contained",
+    "scope",
+    "tests"
+   ],
+   "what": "The wheel-and-ramp closed form was only 'held in a derivation file': added tan(alpha) = sqrt(h(2r - h))/(r - h) with 4/3 at r = 50 mm, 0.75 at 100 mm, 1/12 on the wedge, the 0.63 m/s dynamic caveat and the 62-of-156 sill study. Stated why the M3 exit state is not-due (GATE-HAB-11 lands at M4). Scope names BD-233, BD-274, BD-369, N19b-37, N19b-43, N19b-42; kill-firing test reads N19b-42's record."
+  },
+  {
+   "bead": "N00-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The subsystem table had one gate_code per subsystem and the lint required gate codes to come from it, which would reject GATE-FID, -SHIELD, -GAIT, -QUAL, -TENFOLD, -WS and -SAFE (all in use) and OPEN-NUM, -PERF, -SUITE, -PROG. Now gate_codes is a list per subsystem plus a chapter-code table; counts 29 gate codes and 31 open-question codes; admission gates name a foundation. Tests added."
+  },
+  {
+   "bead": "N00-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Availability was per reader, so at M1 the controls engineer (telemetry.divergence arrives at M2, BD-206) and the mission author (mission.refute at M3, BD-290) would fail the resolution test. Availability is now per pointer, a verb's milestone read from its capability record's first_milestone (dep N00-02 added); a misspelt future verb still fails. Scope names N32b-17 and BD-313 separately."
+  },
+  {
+   "bead": "N00-05",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Graph finding (articulation point): its dependents N00-30, N00-32, N00-36 append review rounds, which is right; scope kept. Acceptance made exact: the five not_happened and five limits items enumerated with their discharging beads (BD-044, N00-14, N00-30, N00-06; N00-31, N00-34, N00-32, two standing), every stated sum checked (rounds 3, 5, 9, 10, 11, 12; 66 = 48 + 18), and records other than rounds and the two lists rejected."
+  },
+  {
+   "bead": "N00-08",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The negative control (a mutant H-3 that checks only that a reader is named) had no fixture to miss: added the unit test reader_naming_unknown_verb_fails (a reader entry naming a verb absent from the verb registry)."
+  },
+  {
+   "bead": "N00-09",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "GATE-TENFOLD-09 counts removable shares only on a ledger-closed run of the strong baseline; the admission check accepted any baseline record. Refusal (a) now also refuses a baseline whose ledger is ledger-open (more than 2% unattributed, N39a-24's closure rule), with the test open_ledger_baseline_refused."
+  },
+  {
+   "bead": "N00-10",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "It defined its own event certificate.consumed {..., changed: bool}, conflicting with N12-12's decision-effect ledger (cert_effect rows with changed true/false/unknown, unknown never counted as changed). Now it reads N12-12's ledger through frob prove list --effects and defines no second record; scope says so; test certificate_disagreement_reads_cert_effect_totals (4 consumed, 2 changed, 1 unchanged, 1 unknown; M0 prints 'no ledger yet'). N12-12 added to related. State counts 4/1/11/16 checked against the plan."
+  },
+  {
+   "bead": "N00-11",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "h11_coverage_band took 'the workload rate from the row's derivation file': replaced by the plan's arithmetic (T·h: 3,400 humanoid and 4,000 quadruped GPU world-seconds per second; referee 4.8 to 24; shares 0.12 to 0.71%, and 2.4% at 1,000). The same correction made in BET-34, whose known answer used an invented 4,800."
+  },
+  {
+   "bead": "N00-12",
+   "kinds": [
+    "tests"
+   ],
+   "what": "h22a_winner_lost_example now pins the ranking: cheap top ten carrying true ranks (2, 3, 1, 4, ..., 10), two discordant pairs of 45, tau = 41/45 = 0.911 (the plan's 0.91), best not in the top two."
+  },
+  {
+   "bead": "N00-13",
+   "kinds": [
+    "scope"
+   ],
+   "what": "It carries gate GATE-TENFOLD-01 but did not say who measures it: scope now names N39b-08 (the gate record, which cites IA-01 to IA-21), N40-12 (the register row) and N39b-32 (licences, OPEN-TENFOLD-7)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N00p1-11",
+   "why": "split from BET-30: the M8 reading of the geometric-algebra tree-policy rider (GATE-CORTEX-17, KILL-GATREE) and docs/adr/bet-30-m8.md; BET-30 closes at M4 and no M8 bead writes the bet's verdict. Defines the rider's step clause (the bet counts steps, the gate wall-clock) on the gate's paired bounds."
+  },
+  {
+   "bead": "N00p1-12",
+   "why": "split from BET-36: the M6 reading of clauses (b) proxies and (c) advected films (GATE-HAB-07, GATE-HAB-09, KILL-ADVECT, KILL-LIVING) and docs/adr/bet-36-m6.md; BET-36 closes at M3. Defines the per-kind proxy reading as the complement of KILL-LIVING's."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N00-28",
+   "what": "The verdict function's list of bets decided per class or stratum (BET-06, BET-13, BET-14, BET-17, BET-34, BET-36) omits BET-02, whose falsifier and KILL-D1 are per device family (CUDA, Metal); BET-02's own test expects HeldInPart per family. Add BET-02 (per device family) to that list."
+  },
+  {
+   "bead": "NS-05",
+   "what": "Step e still writes `frob train start ... --equivariant gobs`; the trainer's option is `--tying equivariant` (BD-326, N23a-31, N23a-33), refused with exit code 5 naming the KILL-EQUIV record when that gate has fired. Left by the reconciliation pass (dup-07) as outside its packet."
+  },
+  {
+   "bead": "N00-28",
+   "what": "The verdict function has no case for a deciding gate that fails while no falsifier clause is true and no kill gate fired (BET-18 at a mixed-batch ratio between 0.5 and 0.70: GATE-PHYLUM-03 needs 0.70, the bet's clause and KILL-PHYLUM fire below 0.5). It is neither Held nor Falsified. Define it (BET-18 records it as `open: gate failed short of the falsifier`, mapping to N40-31's exit state `open`)."
+  },
+  {
+   "bead": "N23bx-02",
+   "what": "Record in the GATE-CORTEX-17 receipt the environment-step count at each run's attainment look: BET-30's rider is stated in steps (1/1.3 of the plain transformer's steps), the gate in wall-clock, and N00p1-11 reads the steps. Also the unit case paired_ratio_bounds_three_seeds gives the upper bound as 1.464; exp(0.35674 + 0.02409) = 1.46350, which rounds to 1.463 (or print 1.4635)."
+  },
+  {
+   "bead": "N25a-30",
+   "what": "It registers its pilot (falsifiers F1 to F3, ceiling, fallback, fixture digest) and enters its result 'in the review log', and depends on N00-05 for that. The review log is the append-only record of the specification's review rounds and accepts only rounds and its two lists; pilots register in the pilot register pilots.toml (N38a-09, already a dependency). Move both entries there and drop the dependency on N00-05."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "All 50 beads of U00-1 reviewed (BET-01 to BET-37, EPIC-PROGRAM, N00-01 to N00-05, N00-08 to N00-14). Two bets read at a later milestone than their bead (BET-30 at M8, BET-36 at M6) were split into N00p1-11 and N00p1-12; keys numbered from 11 to avoid colliding with another U00 slice's new beads. The commonest repair: bet beads that did not name the beads owning their deciding gates and kill decisions, and tests that applied a kill trigger the bet only reads. BET-34 was touched twice (its coverage arithmetic corrected with N00-11)."
+}

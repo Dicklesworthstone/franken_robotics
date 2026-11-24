@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "lemma", "marrow", "skeleton", "sinew", "registry", "solid"]
 parent: "EPIC-M0"
 deps: ["N41-03"]
-needs: ["§12 to §15: the decision and experiment beads named in the last column are owned by the chapter units; they are named so that the register links each question to the bead that decides it"]
-related: ["N41-OPEN2", "N41-OPEN8", "N41-13", "N12-23", "N12-29", "N13-09", "N14b-17", "N15b-25", "N40-35"]
+needs: []
+related: ["N41-OPEN2", "N41-OPEN8"]
 gates: []
 plan_refs: ["§42.3", "§42.1", "§12.9", "§13.10", "§14.15", "§15.14"]
 ---
@@ -34,9 +34,21 @@ Considerations.
 
 ## Scope
 
-In: the seventeen rows below as records of `registries/open.toml`. Out: the schema and loader (N41-03); the
-decisions (the beads in the last column); the owner's two questions here that have their own decision beads
-(OPEN-SKEL-2 in N41-13, OPEN-SINEW-1 in N15b-25).
+One record per open question, written once, and for these seventeen it is written here.
+
+In: the seventeen rows below as records of `registries/open.toml`, including the closed record and tombstone of
+OPEN-SKEL-1.
+
+Out, and which bead has it:
+
+- The schema and loader: N41-03.
+- The decisions: the beads in the last column. The owner's two questions here have their own decision beads
+  (OPEN-SKEL-2 in N41-13, OPEN-SINEW-1 in N15b-25).
+- The Skeleton chapter's side of OPEN-SKEL-1 to -4: N14b-26, the Skeleton chapter's register bead. It prints the
+  four questions as the chapter states them and checks that the Skeleton verbs apply the defaults registered
+  here (prices `assumed` and `--strict-data` refusing a cost verdict; the task's randomization grid in the
+  stage-8 witness; isotropic `lattice` fill). It enters no record in `registries/open.toml` and does not
+  tombstone OPEN-SKEL-1; it depends on this bead.
 
 ## Technical approach
 
@@ -58,7 +70,7 @@ who enters the row, from the closed set).
 | OPEN-SKEL-2 | Where card prices come from, and under what licence | Prices are `assumed`, the cost budget is advisory, and `--strict-data` refuses a cost verdict | Project lead; asked of the owner with the other data-source questions | No gate before the build packet | M5 | N41-13 |
 | OPEN-SKEL-3 | How a task with continuous world parameters declares the finite family that preflight stage 8 searches | The task's own randomization grid, recorded in the witness | Arena lead | Before stage 8 is funded | M3 | N14b-17 |
 | OPEN-SKEL-4 | Whether the `lattice` fill needs anisotropy | Isotropic fraction only, with the assumption printed in the check report | Foundry lead | Nothing before the fabrication work | none before M5 | considerations of BD-055 |
-| OPEN-SINEW-1 | Which real actuator parts ship in the catalogue, and under what data licence | Generic classes only | Project lead; asked of the owner at M4 with the sensor-card and film-table questions | Nothing before M4 | M4 | N15b-25 |
+| OPEN-SINEW-1 | Which real actuator parts ship in the catalogue, and under what data licence | Generic classes only | Project lead; asked of the owner at M3, one milestone before its M4 deadline, with the sensor-card and film-table questions | Nothing before M4 | M4 | N15b-25 |
 | OPEN-SINEW-2 | The default Stribeck shape and stiction velocity ε on batched tiers | The rational shape and ε = 10⁻³ rad/s, both overridable by a card | Sinew lead | GATE-SINEW-04 | M2 | N15b-26 |
 | OPEN-SINEW-3 | Whether iron loss is on by default at actuator level L2 | On when the card gives coefficients; otherwise zero, with the flag `iron loss not modelled` on every result | Sinew lead | GATE-SINEW-05 | M1 | N15b-27 |
 | OPEN-SINEW-4 | Whether the second polarization pair of the battery model on the referee is composed from existing FrankenSim circuit elements or needs an upstream change | Open the upstream work item (FD-FSIM-21); an in-house `f64` reference until it lands | Airlock lead | The admission test for `fs-phs` | M1 | N15b-28 |
@@ -104,6 +116,10 @@ OPEN-SKEL-1; OPEN-LEMMA-1 marked decided with no admission record; a blocking ro
   they are answered every affected result prints `assumed` and stays `Estimated`.
 - If the proof siblings do not mature, the defaults of OPEN-LEMMA-1 to -3 and -6 keep the affected results at
   `Tested`, which is a weaker word and still an honest one.
+- N14b-26 prints the four Skeleton questions with the same defaults and owners as the rows above (compared when
+  the two beads were reconciled). It words the scope of OPEN-SKEL-4 as "nothing before the structural work" and
+  this bead as "nothing before the fabrication work"; both mean the Foundry chapter's work, which lands at M5.
+  The record is this bead's.
 
 ## References
 

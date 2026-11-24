@@ -1,7 +1,7 @@
 # Coverage of drafting unit U34: §34 Workspace, crates, formats
 
-34 bead files: 6 seed beads (BD-003, BD-004, BD-005, BD-141, BD-145, BD-410), 25 new beads (N34-01 to N34-25) and
-3 registry beads (N34-KA, N34-CX, N34-REF). The chapter is Solid throughout; it defines no Frontier or Moonshot
+36 bead files: 6 seed beads (BD-003, BD-004, BD-005, BD-141, BD-145, BD-410), 27 new beads (N34-01 to N34-27; N34-26
+and N34-27 were added at integration) and 3 registry beads (N34-KA, N34-CX, N34-REF). The chapter is Solid throughout; it defines no Frontier or Moonshot
 mechanism, so there is no pilot bead and no kill-gate bead. It owns no verb of the verb registry.
 
 ## (a) Subsections and the beads that carry them
@@ -16,12 +16,12 @@ mechanism, so there is no pilot bead and no kill-gate bead. It owns no verb of t
 | §34.6 | The six checks | BD-004 (the table, exactly six, `check-generated`); BD-003 (`check-layers`, `check-deps`); N34-03, N34-04, N34-25 (`check-deps` rules); N34-07 (`check-unsafe`); N34-08, N34-09, N34-10 (`check-contracts`); N34-13 (`check-stack`); N34-14 (end to end) |
 | §34.7 | Working rules inherited from the machine and the suite | N34-15 (all twelve rules with enforcement points; the envelope guard); BD-145 (the compute request under the envelope question); N34-13 (the stack-check rule) |
 | §34.8 | What ships with the first commit | N34-16 (the inventory checked end to end); produced by BD-001 and BD-002 of other units |
-| §34.9 | The format registry | N34-19 (ADR-WS-03, the thirteen rows, registry rules 1 to 6, types); BD-141 (seven formats at M1, producers and consumers); BD-410 (the remaining six, complete at M5); N34-22 (the round-trip harness); N34-23 (end to end); N34-24 and N34-REF (the three refusals); N34-09 (owner, tests, single parser) |
+| §34.9 | The format registry | N34-19 (ADR-WS-03, the thirteen rows, registry rules 1 to 6, types); BD-141 (seven formats at M1, producers and consumers); BD-410 (the remaining six, complete at M5); N34-22 (the round-trip harness); N34-23 (end to end); N34-24 and N34-REF (the three refusals); N34-09 (owner, tests, single parser); N34-27 (the decision on schema-named files beyond the thirteen formats) |
 | §34.10 | The rule for creating a new crate | N34-02 (ADR-WS-01, the three reasons, additions, merges, deletion of `frob-lifecycle`); BD-003 (the proof-boundary edge table) |
 | §34.11 | The independent auditor | N34-25 (ADR-WS-02's six parts as every-commit rules; the gate record); BD-003 (L-9 manifest rules); the crate and its script are BD-026 and N25b-05 of other units |
 | §34.12 | Suite conventions this project adopts | N34-11 (artifact-graph identifiers); N34-08 (contracts as code); N34-09 and N34-12 (demo files); N34-10 (shadow-run; the controller gate; the table of all six); BD-003 and N34-06 (two planes) |
 | §34.13 | Invariants, gates and open questions | Invariants: BD-003 (INV-WS-01), N34-25 (INV-WS-02), N34-09 (INV-WS-03), N34-03 (INV-WS-04), BD-004 (INV-WS-05). Gates: table (b). Open questions: N34-02 and BD-003 (OPEN-WS-1), N34-02 (OPEN-WS-2, OPEN-WS-5), N34-25 (OPEN-WS-3), N34-19 and BD-141 (OPEN-WS-4) |
-| §34.14 | The canonical reader and writer, and JSON features that unify across the build (late subsection) | N34-17 (the reader); N34-18 (the writer, `CanonicalBytes`); N34-20 (admission order on both surfaces); N34-04 (the guard); N34-21 (the corpus, the four-way build, the gate) |
+| §34.14 | The canonical reader and writer, and JSON features that unify across the build (late subsection) | N34-17 (the reader); N34-18 (the writer, `CanonicalBytes`); N34-20 (admission order on both surfaces); N34-04 (the guard); N34-21 (the corpus, the four-way build, the gate); N34-26 (the ledger block of `doctor` that the gate's surface step reads) |
 
 ## (b) Gates, and the beads that measure or decide them
 

@@ -1,0 +1,58 @@
+# Polishing round 3, slice F-U22b
+
+38 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| BD-327 | M4 | feature | WP-29 | yes | verb control.symmetry: symmetric controllers under stabilizer intersection, measured at GATE-REFLEX-07 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/BD-327.md` |
+| BD-336 | M4 | feature | WP-27 | yes | verbs skill.compile, skill.check, skill.show: the exact layer of `.fskill` skill artifacts; GATE-REFLEX-08 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/BD-336.md` |
+| BD-337 | M4 | feature | WP-65 | yes | verb shield.budget: the energy-budget tier `.fenergy` with K-energy-monitor and its proof kind; GATE-SHIELD-01 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/BD-337.md` |
+| BD-338 | M4 | feature | WP-65 | yes | verbs shield.fit, shield.check: runtime shields with a backup controller in frob-shield; GATE-SHIELD-02 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/BD-338.md` |
+| BD-339 | M4 | task | WP-65 | yes | GATE-SHIELD-03 campaign: shields on 5,000 in-envelope and 5,000 shifted worlds; return kept, step cost | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/BD-339.md` |
+| BD-340 | M4 | feature | WP-65 | yes | verb shield.report: the measured shield margin with its drift alarm; GATE-SHIELD-04; adaptive-element rule | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/BD-340.md` |
+| N22b-01 | M4 | task | WP-27 | yes | frob-control: the `.fskill` artifact (FMT-FSKILL, frob.skill/1): types, canonical form, limits, round trip | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-01.md` |
+| N22b-02 | M4 | task | WP-27 | yes | frob-control: the per-mode task-space map w = w₀ + B_m·u from the contact-consistent constrained mass solve | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-02.md` |
+| N22b-03 | M4 | task | WP-27 | yes | frob-control: skill allocation cone program with feasible and infeasibility witnesses (FROB-REF-448) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-03.md` |
+| N22b-05 | M4 | task | WP-27 | yes | e2e: skill_exact_layer.sh drives skill.compile, skill.check, skill.show on the GATE-REFLEX-08 fixtures | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-05.md` |
+| N22b-06 | M8 | task | BD-436 | yes | Pilot [M]: skill transport by a learned residual: 24 target bodies, three treatments at equal compute | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-06.md` |
+| N22b-07 | M8 | feature | BD-436 | yes | verb skill.transport: a frozen task-space residual above the allocation program [M]; GATE-REFLEX-09 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-07.md` |
+| N22b-08 | M8 | task | BD-436 | yes | Kill-gate decision KILL-SKILL: keep learned residual transport of skills, or fall back to the exact layer | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-08.md` |
+| N22b-09 | M4 | task | WP-65 | yes | Pilot [F]: energy budget: worked card in exact arithmetic and a cart stop with μ, restitution and law swept | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-09.md` |
+| N22b-11 | M4 | task | WP-65 | yes | frob-shield: building the budget terms T_ub, E_drive, E_ext, E_stored, E_reserve, W_abs from model and cards | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-11.md` |
+| N22b-13 | M4 | task | WP-65 | yes | frob-shield: kernel K-energy-monitor in the exact-integer class: margin, cut and hand-over to the backup | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-13.md` |
+| N22b-14 | M4 | task | WP-65 | yes | frob-cert, frob-lemma: proof kind `energy-budget` (T-28): bundle writer, run-replay check, mutation corpus | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-14.md` |
+| N22b-15 | M4 | task | WP-65 | yes | GATE-SHIELD-01 campaign: no budget exceedance over 10⁴ randomized contact sequences, with both controls | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-15.md` |
+| N22b-16 | M4 | task | WP-65 | yes | Kill-gate decision KILL-ENERGY: keep the energy-budget claim, or keep only an `Estimated` alarm | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-16.md` |
+| N22b-17 | M4 | task | WP-65 | yes | Decision OPEN-SHIELD-1: where absorber envelopes come from before any bench data exist | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-17.md` |
+| N22b-18 | M4 | task | WP-65 | yes | e2e: shield_energy_budget.sh drives shield.budget, shield.check and frob-verify on worked cards and refusals | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-18.md` |
+| N22b-19 | M4 | task | WP-65 | yes | Pilot [F]: reduced-order barrier shield: a trained quadruped behind a velocity-level filter, 10⁴ episodes | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-19.md` |
+| N22b-21 | M4 | task | WP-65 | yes | frob-shield: reduced-order templates (integrator, unicycle, inverted pendulum, capture point) and tracking | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-21.md` |
+| N22b-26 | M4 | task | WP-65 | yes | frob-shield: the per-episode violation bound from independent hidden-state labels (δ₁, δ₂, δ₃) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-26.md` |
+| N22b-27 | M3 | task | WP-65 | yes | Owner decision OPEN-SHIELD-2: the shield's calibration level α and the per-episode violation budget | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-27.md` |
+| N22b-28 | M4 | task | WP-65 | yes | Kill-gate decision KILL-SHIELD: keep runtime shields, or turn barrier rows into reward penalties and alarms | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-28.md` |
+| N22b-29 | M4 | task | WP-65 | no (here for a request) | frob-shield: measured tracking margin ε̂ by split-conformal calibration, scope key (FROB-REF-457), tier term | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-29.md` |
+| N22b-32 | M4 | task | WP-65 | yes | e2e: shield_runtime.sh drives shield.fit, a shielded run, shield.check and shield.report with planted failures | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-32.md` |
+| N22b-33 | M8 | task | BD-440 | yes | Pilot [M]: reachable-set table for braking across two floor materials: coverage and false admissions | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-33.md` |
+| N22b-34 | M8 | task | BD-440 | yes | frob-shield: reachable-set table builder [M]: backward viability pruning, at most 8 modes × 16,384 cells | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-34.md` |
+| N22b-35 | M8 | feature | BD-440 | yes | frob-shield, frob-cert: belief-set table lookup, proof kind `tube-inclusion`, GATE-SHIELD-05 on braking [M] | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-35.md` |
+| N22b-36 | M8 | task | BD-440 | yes | Kill-gate decision KILL-TUBE: keep reachable-set tables, or let reduced-order barriers cover small subsystems | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-36.md` |
+| N22b-37 | M4 | task | WP-29 | yes | frob-control: the usable group Γ_use as Γ_obs intersected with four stabilizers (FROB-REF-461) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-37.md` |
+| N22b-38 | M4 | task | WP-29 | yes | frob-control: reduction under Γ_use: tied gains, isotypic blocks, reduced-against-full check at mode switches | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-38.md` |
+| N22b-40 | M4 | task | WP-29 | yes | frob-control: symmetry at an event: saltation identity tested on landings and flagged at grazing | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-40.md` |
+| N22b-41 | M4 | task | WP-29 | yes | e2e: control_symmetry.sh drives control.symmetry over planted asymmetries, two latches, the landing identity | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22b-41.md` |
+| N22bx-01 | M4 | task | WP-65 | yes | frob-shield: the absorber card (`.fcard` kind `absorber`): force–displacement lower envelope, exact W_abs | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22bx-01.md` |
+| N22bx-02 | M3 | task | WP-27 | yes | frob-control: the three backup control laws as plain controllers at M3, with no domain or passivity claim | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U22b/N22bx-02.md` |
+
+## Addressed to your beads
+
+- `BD-327`: request from round 2, slice S37: raises FROB-REF-443 'through the Γ_obs consumer guard (N20b-02)' but has N20b-02 only in related; move it to deps (M3 before M4; graph_check: no cycle)
+- `BD-337`: request from round 2, slice S68: the energy-budget option of shield.check is renamed --energy-budget <EnergyBudgetId|.fenergy> (MCP energy_budget) in VERBS-shield, because every run row's generated common property budget is the compute budget; adopt the spelling in the surface paragraph, tests and script
+- `BD-338`: request from round 2, slice S68: shield.fit's optional --budget <EnergyBudgetId> is renamed --energy-budget in VERBS-shield (the run kind's common property budget is the compute budget); adopt it in the spellings paragraph and tests
+- `N22b-06`: request from round 3, slice H-owners-2: File reserved row R21 (E2, campaign: scope); not approved: close withdrawn citing R21, N22b-07 unfunded, KILL-SKILL records its fallback.
+- `N22b-14`: request from round 2, slice S80: its list of the kind's rule identifiers omits energy.absorber-mismatch, which N12-17 now defines (fourteen identifiers: eleven static, three of yours).
+- `N22b-16`: request from round 2, slice S68: frob shield check <run> --budget <id> becomes --energy-budget <id> (VERBS-shield row; --budget is the generated compute budget of every run verb)
+- `N22b-18`: request from round 2, slice S68: frob shield check <run> --budget <id> becomes --energy-budget <id> (VERBS-shield row; --budget is the generated compute budget of every run verb)
+- `N22b-29`: request from round 3, slice H-owners-1: `insufficient-calibration` is a N35x-02 row (4xx); raise it behind one named constant, numbered at the run.
+- `N22b-35`: request from round 3, slice H-verbs-5: Name the schema of the subsystem description file that `shield.fit --table` takes (the payload schema N12-19 reads). The row declares it as an artifact-input params entry.
+- `N22b-37`: request from round 2, slice S74: N22a-31 admits an orbit's group with the contact-sequence condition (K fixes every mode of the stride; sigma maps the mode at t to the mode at t+N/m) in place of Stab(current contact mode), since every trot's mirror exchanges the stance pairs. The UseGroup check needs a context whose contact mode is not held fixed (a stride's mode sequence), or N22a-31 must pass a stance-free context explicitly.
+- `N22bx-01`: request from round 3, slice H-verbs-1: state what actuator.check runs on an absorber card: VERBS-actuator now says the form rules (102, 103, 113) plus the field rules of the kind, and none of the three electromechanical checks; confirm or correct

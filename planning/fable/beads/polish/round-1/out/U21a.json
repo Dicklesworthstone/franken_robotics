@@ -1,0 +1,328 @@
+{
+ "round": 1,
+ "slice": "U21a",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "BD-013",
+   "kinds": [
+    "self-contained",
+    "scope",
+    "deps"
+   ],
+   "what": "BD-001 creates no frob-* crate, so this bead now creates the frob-kir crate (home of dialect_lint) and the frob-kernels dialect directory (crate skeleton if N21b-01 has not); added dep BD-005 for the Refusal type the lint returns"
+  },
+  {
+   "bead": "BD-018",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep BD-013: its dialect emitter uses the prelude macros and its output must pass BD-013's lint"
+  },
+  {
+   "bead": "BD-029",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep BD-022: `frob spark fingerprint --json` and `frob schema` need the frob binary and envelope"
+  },
+  {
+   "bead": "BD-152",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e used `--sweeps` (N21b-33 depends on this bead): steps now use `--workers N --key <k>` (N21b-32), capacity/slot axes run in the unit battery, sweeps steps skip until N21b-33; register step no longer uses `--list` (N21a-04, a dependant); index row and static sort check attributed to N21a-04; added deps N21b-32, BD-015, BD-016 (device byte-equality runs)"
+  },
+  {
+   "bead": "BD-172",
+   "kinds": [
+    "split",
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "graph bottleneck: backend-neutral record frob.stepplan/1, builder and validation split to new N21ap1-01 (dep added); StepPlanId attributed to N16a-03's descriptor (BD-172 had a narrower field list); precompile command fixed to N21b-13's grammar; CUDA realization test added"
+  },
+  {
+   "bead": "BD-173",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "spark.precompile/spark.cache grammar aligned with N21b-13 (owner); added dep BD-174 since GATE-SPARK-11 is measured on Metal"
+  },
+  {
+   "bead": "BD-178",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "verb grammar aligned with N21b-29 (`--tier <mode:backend>`, not `--mode`); e2e steps aligned with N21b-31's script; per U19c request, N19c-20 added to related and the planner calls launch_groups(bucket, &VariantSegmentMap) from M3 when a bucket's variants span segments"
+  },
+  {
+   "bead": "BD-221",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "superseded N21a-15 replaced by N33c-21; `--compare twin` (not a spark.check option) replaced by a conformance harness run logging ulp histograms; added deps N21a-03 (ADR files it writes and amends), N21a-04 (`--list` inventory), N21a-18, N21a-19, N21a-20 (toolchain pieces it measures)"
+  },
+  {
+   "bead": "N21a-07",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "`--sweeps` replaced by `--workers/--key` with capacity via the battery until N21b-33; added dep N21a-21, which its sum_dd text already says it depends on"
+  },
+  {
+   "bead": "N21a-08",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`--sweeps` replaced; overflow run through `frob sim run` made a skip-until step activated by BD-159 (which depends on this bead); kernel-level overflow fixture named"
+  },
+  {
+   "bead": "N21a-09",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`--sweeps` replaced by `--workers/--key`, capacity via the battery until N21b-33"
+  },
+  {
+   "bead": "N21a-10",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "e2e used nonexistent `spark precompile --unit`: this bead now adds the option to spark.precompile (dep N21b-13) and the command names a target; kernel-module marker changed from `#![frob_kernel]` (would not compile) to a header comment"
+  },
+  {
+   "bead": "N21a-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "det_min/det_max select chain returned 1 for (NaN, 1); added an explicit NaN arm returning the canonical quiet NaN 0x7FC00000 (commutative bit for bit), is_neg/is_nan defined on the bit view (dep N21a-17); truth tables and a mutant control updated; Rust-lint clause moved to N21a-10; probe kernel named K-det-suite with --key"
+  },
+  {
+   "bead": "N21a-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "reassociation potency control is caught by bit comparison at M0; the trace checker is N21a-19 at M2"
+  },
+  {
+   "bead": "N21a-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`--require-current-check` is a spark.place option; e2e now runs spark.check with --key and asserts the row is current for the new KernelId"
+  },
+  {
+   "bead": "N21a-17",
+   "kinds": [
+    "complete",
+    "deps",
+    "scope"
+   ],
+   "what": "nobody defined FROB_MULHI_U32, FROB_SHL/SHR, FROB_BITS_F32/F32_FROM_BITS: added as prelude additions with both expansions and a prelude version bump; this bead adds the spark.probe suite exact-ops; added deps BD-017, BD-030"
+  },
+  {
+   "bead": "N21a-18",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`spark check --list --resources` does not exist: e2e reads IR metadata blocks and manifest resource fields and asserts agreement"
+  },
+  {
+   "bead": "N21a-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "false claim fixed: in f32, fl(0.1f*3) equals 0.3f; the fold is refused because the exact product is not representable; `--compare unrewritten` replaced by a scratch-tree unrewritten build compared by conformance-vector digests; N21a-15 replaced by N33c-21"
+  },
+  {
+   "bead": "N21a-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "sum_dd contradicted N35-13/N21a-07 (dd_add nodes, neutral (-0,-0), pair result): aligned to N35-13 (two_sum nodes, neutral (-0,0), final select, one f32); fixture fixed to root (16,777,218, 1) and result 16,777,220; neutral-padding test added"
+  },
+  {
+   "bead": "N21a-22",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "dep BD-172 replaced by N21ap1-01 (needs only the record); added dep N21a-04 (library index, --list); data-flow check placed in the record's builder; `spark place --plan` (no such option) replaced by the builder's test entry"
+  },
+  {
+   "bead": "N21a-25",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "added deps N21a-01, N21a-02, N21a-03, N21a-13 (its M0 steps run their mechanisms); N21a-15 replaced by N33c-21; stepplan step (N21ap1-01) added to the M2 list"
+  },
+  {
+   "bead": "N21a-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "superseded N21a-15 replaced by N33c-21"
+  },
+  {
+   "bead": "BD-371",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e used options nobody owns: `spark check --against-generic --states` replaced by N21c-19's `--specialized <KernelId>`; this bead now states it adds `--specialize <ModelId>` to spark.precompile, and the command follows N21b-13's `<target>` grammar"
+  },
+  {
+   "bead": "N21-KA",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep BD-002: its completeness check resolves gates in registries/gates.toml, which BD-002 creates; all 28 rows' arithmetic re-verified"
+  },
+  {
+   "bead": "N21a-01",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps"
+   ],
+   "what": "reconciliation dup-05 follow-up: second flag registries/decisions.toml adr-spark-01 and `exploratory: true` withdrawn; one record (owner_decisions.toml row OPEN-SPARK-1, created by N21c-34, missing = open) and one label spelling; backend registration reports the state in frob doctor; ADR-SPARK-01 rules written into N21a-03's file (dep N21a-03)"
+  },
+  {
+   "bead": "N21a-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "same reconciliation: device block no longer carries `exploratory`; the dispatcher is the single hook attaching labels:[\"exploratory\"] with reason OPEN-SPARK-1 from the owner_decisions row (missing = open, fail-closed before N21c-34 lands); tests renamed and a one-spelling test added; direction kept as U21c set it (N21c-34 depends on this bead)"
+  },
+  {
+   "bead": "N21a-03",
+   "kinds": [
+    "scope"
+   ],
+   "what": "ADR-SPARK-01 status mirror check against the OPEN-SPARK-1 record deferred to N21c-34 (which depends on this bead); graph finding addressed: N21a-01, N21a-25 and BD-221 now depend on it, N21c-34 does (U21c), requests to N21b-08 and N21c-18"
+  },
+  {
+   "bead": "N21a-05",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e step relied on an undefined `--zero-copy` option and a step N21b-31 does not have: now owns scripts/e2e/spark_stride_boundary.sh driving the binding through the harness test entry with five logged steps; dep STD-E2E"
+  },
+  {
+   "bead": "N21a-06",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "its dynamic test runs on K-compact, K-sort, K-reduce: added dep BD-152; states it adds `--footprint-audit` to spark.check; e2e adds --key"
+  },
+  {
+   "bead": "N21a-23",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete"
+   ],
+   "what": "run-digest reduction is cross-world, so class stat (inner exact), not 'stat-free'; states it adds the spark.probe suite digest; added deps N21a-04 (index row) and N21a-06 (footprint audit) its acceptance needs"
+  },
+  {
+   "bead": "N21a-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "q16_16 sqrt needs 24 digit-by-digit iterations (radicand v*2^16 up to 47 bits), not 16; 48 for q32_32; test adds 0x7FFFFFFF -> raw 11,863,283 and raw 92,681 for 2.0"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N21ap1-01",
+   "why": "split from BD-172 (graph bottleneck): the backend-neutral step-plan record frob.stepplan/1, its builder and validation in frob-kernels, which N21a-22, BD-174, BD-159, N21c-39 and others need without the CUDA backend"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N21b-33",
+   "what": "activate the skip-until steps sweeps_capacity and sweeps_slots of scripts/e2e/spark_utility_kernels.sh (BD-152, N21a-07, -08, -09) in your acceptance, since --sweeps is yours and those beads cannot depend on you"
+  },
+  {
+   "bead": "N21b-13",
+   "what": "list `--unit <path>` among spark.precompile's options as added by N21a-10 (compile one dialect unit through lint, compiler and cache)"
+  },
+  {
+   "bead": "BD-159",
+   "what": "activate the overflow_run step of scripts/e2e/spark_utility_kernels.sh (N21a-08: contact overflow through frob sim run, Degraded count); and depend on N21ap1-01, so the lockstep step builds its StepPlan through the shared builder (BD-172, the record's former home, depends on you)"
+  },
+  {
+   "bead": "BD-174",
+   "what": "depend on N21ap1-01: the Metal backend builds and realizes the backend-neutral step plan frob.stepplan/1, which now lives there and not in BD-172"
+  },
+  {
+   "bead": "N21c-39",
+   "what": "the bounds/counters field of frob.stepplan/1 is now defined by N21ap1-01; depend on it"
+  },
+  {
+   "bead": "N35-14",
+   "what": "the per-launch read/write slab sets the audit reads come from N21ap1-01's record; consider depending on it directly"
+  },
+  {
+   "bead": "N21b-40",
+   "what": "spark_probe.sh step classes (N21a-22) now builds the planted statistics-feed plan through `cargo test -p frob-kernels --test stepplan_record -- planted_stat_feed`, not `frob spark place --plan`"
+  },
+  {
+   "bead": "N16a-03",
+   "what": "note the name clash: frob-dyn's StepPlan descriptor and frob-kernels' StepPlan launch record (N21ap1-01) share a short name; N21ap1-01 carries your StepPlanId as a caller-supplied digest"
+  },
+  {
+   "bead": "N21b-13",
+   "what": "also list `--specialize <ModelId>` as added by BD-371 (removed again by N21c-18's fallback if KILL-SPECIALIZE fires)"
+  },
+  {
+   "bead": "N21b-32",
+   "what": "list the spark.check options later beads add, with owners: --list (N21a-04), --footprint-audit (N21a-06), --specialized (N21c-19), --sweeps/--localize (N21b-33), --all/--step/--rollout (BD-176)"
+  },
+  {
+   "bead": "N21b-31",
+   "what": "add step stride_handoff (BD-178 lists it): run N21a-05's harness entry `cargo test -p frob-kernels --test layout_boundary` under the counting shim and compare the materialized bytes with the placement receipt"
+  },
+  {
+   "bead": "N21c-34",
+   "what": "exploratory-flag reconciliation done on the U21a side: one record (your owner_decisions.toml row OPEN-SPARK-1), one spelling (labels: [\"exploratory\"], reason OPEN-SPARK-1) attached only in N21a-02's dispatcher hook; please add the check that ADR-SPARK-01's status (N21a-03's file and decisions.toml row) mirrors your row, which N21a-03 now defers to you, and route 724/819 through that hook"
+  },
+  {
+   "bead": "N21b-08",
+   "what": "depend on N21a-03: ADR-KILL-METAL uses its ADR format and updates its tier register row for Metal"
+  },
+  {
+   "bead": "N21c-18",
+   "what": "depend on N21a-03: the KILL-SPECIALIZE ADR uses its format and the tier register row it amends"
+  },
+  {
+   "bead": "BD-017",
+   "what": "name the extension suites exact-ops (N21a-17) and digest (N21a-23), which those beads add to spark.probe"
+  }
+ ],
+ "unchanged": 7,
+ "notes": "All 38 read. Unchanged: BD-053, BD-175, BD-217, N21a-04, N21a-12, N21a-16, N21a-20. Main themes: e2e commands used options owned by later beads or by none (--sweeps, --compare, --plan, --unit, --resources, --against-generic, --zero-copy), now aligned with the verb owners; BD-172 split for the graph bottleneck; exploratory-flag overlap resolved in the direction U21c chose (N21c-34 after N21a-02/-03). defs/U21a/coverage.md (not a bead) still names N21a-15. Slice looks close to settled; the requests are mostly bookkeeping for verb owners."
+}

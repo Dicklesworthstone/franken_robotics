@@ -1,0 +1,366 @@
+{
+ "round": 2,
+ "slice": "S63",
+ "reviewed": 44,
+ "changed": [
+  {
+   "bead": "N26a-22",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "sense"
+   ],
+   "what": "Computed the Beta(1/2,1/2) sequence's clean counts (92,872 at 1e-4; 1,050,021 at 1e-5, above the sibling cap; 11,705,893 at 1e-6) and pinned them; added choose_design (sequential only when its clean count fits the budget and the 10^6 cap, else fixed-n at required(p*,delta)) because admission promises a clean run of required() certifies while the sequence would end Exhausted at hi = 2.91e-4; fixed-n endings (curtailed or run to n) made explicit; checkpoint corrected (sibling state is not serializable and order-sensitive: resume replays outcomes in address order); added the e-value value 0.505328 and tests choose_design_rule, sequential_plan_values, fixed_n_both_endings."
+  },
+  {
+   "bead": "N26a-23",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Rule 4 (tier or numerical profile differs from the commitment) had no refusal: now FROB-REF-560 (DESIGN, reason stated), acceptance and test refuses_other_tier added."
+  },
+  {
+   "bead": "N26a-24",
+   "kinds": [
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "Moved BD-124 (arena study engine, not used by the germ maps or the mixture) to related; added the admission check that a nominal share outside (0, 1] is refused with FROB-REF-563, with test epsilon_out_of_range_refused_563 (the user-side check in N26a-30 relies on it)."
+  },
+  {
+   "bead": "N26a-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The gridded interval's ends were defined ambiguously (one reading reports the outermost unrejected grid points and cuts off part of the true set); now both ends are rejected grid points, with the planted wrong reading as the negative control of grid_conservative."
+  },
+  {
+   "bead": "N26a-26",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests",
+    "users"
+   ],
+   "what": "The Nominal state ran the sequence although admission sizes the budget by the zero-failure count: it now commits the design of N26a-22's choose_design on entry (fixed-n run to n_declared otherwise), and the baseline uses the same rule; acceptance criteria now state budgets, designs and seeded-run shares (the old certify case at p = 1e-5 against 1e-4 succeeds only 74% of the time); test design_by_share; considerations state the cost trade."
+  },
+  {
+   "bead": "N26a-27",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The interval-coverage criterion had no threshold: added planning values from a 20,000-replication simulation (92%, 90%, 88% at N = 10, 20, 50) and a TARGET floor of 85% for KA-667. All other numbers verified."
+  },
+  {
+   "bead": "N26a-29",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "Applied the round-1 request: the distress score reads the online margin on devices, now from N23ap1-01 (split from BD-255); BD-255 moved to related; scope names N24a-07, N23ap1-01 and BD-255 with what each owns."
+  },
+  {
+   "bead": "N26a-30",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Script used options no verb row has (--studies, --study-n) and lacked --tier and --key: the 10^4-study fixed-n campaign now runs through the Gauntlet runner by gate name (plus KA-141 for the walk), the sequential part as 1,000 keyed user-side calls, with a 20-study parity check; the bare-proposal control runs under gauntlet-mutations (KA-665) and --epsilon 0 is asserted refused; certify step gives budgets and both designs; the script writes a receipt and a session that did not implement the capability records the gate with record_gate; deps BD-025, N10-KA2, N26-KA added. KA-664's control was the count rounded down (29,957), which errs on the safe side and is withdrawn by NEG-04 and CX-400: now the undercount 29,955."
+  },
+  {
+   "bead": "N26a-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Fixture description contradicted the registry (N26a-04): T5-two-mode has mode A on a static germ and mode B on the per-step sum; names aligned to N26a-04, traps cycled in registry order, both T2 potency traps used; run-verb calls carry --tier, budget and distinct keys; the gate is recorded from the script's receipt with record_gate by a non-implementing session."
+  },
+  {
+   "bead": "N26a-32",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision record moved to docs/adr/ADR-KILL-RARE-M3.md (docs/delivery/adr is retired); the scratch-configuration calls of step 3 now carry --tier and distinct keys (kr-3-1, kr-3-2) so the bound comparison is between two runs, not one stored receipt."
+  },
+  {
+   "bead": "N26a-33",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "Every run-verb call carries its own key; the log now records the mandatory-events record each necessary condition was posed from (N26a-36's fields) and a metric not_excluded_with_unmapped; the script writes a receipt with all three rows and the gate is recorded from it with record_gate by a non-implementing session (it said the script writes the record); the step that called scene.retrofit (N19b-40, an M4 bead that depends on the oracle) is removed: that hand-off is checked by the later bead, and this script logs the bottleneck in that verb's input form."
+  },
+  {
+   "bead": "N26a-34",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Run-verb calls carry distinct keys ns-<step>-<trial> (the two replays of step 8 included, so the altered copy is really run); the gate is recorded from the script's receipt with record_gate by a non-implementing session."
+  },
+  {
+   "bead": "N26a-35",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision record moved to docs/adr/ADR-KILL-MCW-M3.md; the shrink and replay calls of step 3 carry distinct keys (km-3-<i>, km-3r-<i>, km-3-a)."
+  },
+  {
+   "bead": "N26b-02",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "The crate had two Clopper-Pearson implementations (the audit's and N26a-21's p_U); the audit now calls N26a-21's (dep added) and adds only the census case, with test one_binomial_bound_in_crate. Every reference value, audits_needed, the stage bound 0.125782 and the 0.9912 hypergeometric coverage re-verified."
+  },
+  {
+   "bead": "N26b-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The example record's overall bound 0.1258 belonged to N26b-02's other worked strata; for the record's own allocation (400/300/150/50 audited 36/27/14/4, none false) it is 0.1826 at level delta/4, now stated with the per-stratum bounds; the read-back no longer passes an au: identity to artifact.read (which takes b3: digests): the record is read by key replay and the calibration artifact by digest."
+  },
+  {
+   "bead": "N26b-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The gate's conformance entry was a per-gate test target (gate_nemesis_07), which the Gauntlet convention forbids: now the entry GATE-NEMESIS-07 of g1_known_answers, run with FROB_TEST_SEED and gauntlet-mutations for its controls; the offline form takes --key; a cancelled lane episode was refused with 546 here but voids its stratum in N26b-01, N26b-02, N26b-04, this bead's own exit table and the verb row: now void (exit 2), the cancellation itself being refused at the lane (N28b-13); test cancelled_member_voids_stratum; the gate is recorded from N26b-07's receipt by a non-implementing session."
+  },
+  {
+   "bead": "N26b-06",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The generator had no entry point (the conformance crate has no binary): example target nemesis_audit_fixtures added, with a scratch-campaign kind that writes one synthetic campaign into a temporary store (population and audit-draw before any score, then scores and scripted lane outcomes) so the verb's prepare and run can be exercised without the cascade; mutants compiled under gauntlet-mutations as plants of N26-CX entries, whose control records the seeding tool makes (this bead writes no controls.toml row); dep BD-090; test scratch_campaign_phases. Coverage table (0.9952 mean, six cells), 0.5537 mutant mean, the 81-design layout and stage coverage above 0.999 re-verified."
+  },
+  {
+   "bead": "N26b-07",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Two live steps needed a running campaign the script had no way to make (the cascade, BD-345 and BD-352, depends on this gate): step 6 now uses the generator's scratch campaign for prepare then run, step 9 asserts n_audit on every audit and a forced cancellation voiding one stratum, and the live forms stay with N28b-31 (steps seal, refusals, gates); fixture generator as an example target; keys on every audit call; artifact read by b3 digest; the self-test named withdrawn NC-26 identifiers and hand-wrote first_caught: now the late-entry tags and the control runner's history (N38b-04, dep added); the gate is recorded from the script's receipt by a non-implementing session; deps VERBS-artifact, VERBS-nemesis."
+  },
+  {
+   "bead": "N26b-09",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The tie-dependent eighth-pick values hold only for the fixture's stated key order; the criterion now says so and points at N26b-10."
+  },
+  {
+   "bead": "N26b-10",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Recomputed the worked instance: picks, prefix certificates 53..98, optima 31..90, OPT6 = 90, 93 plain evaluations; lazy greedy's 36 evaluations, the stale-gain certificate 99 and the seventh and eighth picks R1, R2 hold only when scene keys are the names in byte order (with listed order: 34, 103, T1, T2), so the fixture now states its keys, with test worked_key_order; the oracle and instance generator are example targets (no binary in the conformance crate)."
+  },
+  {
+   "bead": "N26b-12",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Fixture tools called as --bin of a crate that has no binary: now example targets; run-verb calls carry keys, eval run names its design and tier, the bound call its tier and target; the gate is recorded from the script's receipt with record_gate by a non-implementing session instead of a registries/gates.toml row written by the script; deps VERBS-eval and VERBS-nemesis (the script calls their verbs)."
+  },
+  {
+   "bead": "N26b-14",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Planted requests and twins carry distinct keys per surface, so a twin is never the stored refusal of its planted request; MCP and CLI envelopes compared apart from key, timestamps and job identities; before M4 the 566 row asserts nemesis audit exits 5 with FROB-REF-724; dep VERBS-eval (the 567 row calls eval qualify)."
+  },
+  {
+   "bead": "N26b-17",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied the request: BD-146 (the M1 capstone) replaced by what the runner uses, N38a-02 (tiers, sites, receipts), N38a-13 (the per-site G1 run and its bindings) and N38b-04 (the control runner); BD-273 added (KA-661's control arm is the search's baseline) and VERBS-nemesis; the other 20 deps checked against the rows' owners. Its private registry file batteries/nemesis_known_answers.toml (a second copy, a lint failure) is now a table of the script that reads truth, tier, sites, derivation and due from known_answers.toml; first_caught written by hand and the withdrawn NC-26 names are replaced by the control runner's history and the late-entry tags; rows run by the Gauntlet's cargo form, KA-664's call given candidate, task, tier and key; test table_repeats_no_registry_field. KA-664's control was the count rounded down (29,957), which errs on the safe side and is withdrawn by NEG-04 and CX-400: now the undercount 29,955."
+  },
+  {
+   "bead": "N26b-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pilot register named by its one file and schema (crates/frob-conformance/registry/pilots.toml, frob.gauntlet.pilot/1, N38a-09)."
+  },
+  {
+   "bead": "N26b-19",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Decision record moved to docs/adr/OPEN-NEMESIS-1.md; the three search calls carry distinct keys; dep VERBS-nemesis."
+  },
+  {
+   "bead": "N26b-20",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The script passed --distress <score> to nemesis search, an option no row has: the arms now select their candidate through a scratch distress-score registry (rows marked experiment, read only there), the crude arm runs as nemesis bound --mode estimate as in N26a-31 (it was card-uniform search, which is not crude nominal sampling), every arm and repetition with its own key; decision record in docs/adr; deps BD-276, VERBS-nemesis."
+  },
+  {
+   "bead": "N26b-21",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Decision record moved to docs/adr/OPEN-NEMESIS-3.md; the four bound calls name candidate, task, tier and distinct keys and expect the fixed-n design at 1e-6; envelope arithmetic re-verified (7,489 s, 833/417/18 per second, 2.08e-6, 76,959/769,618/7,696,209); dep VERBS-nemesis."
+  },
+  {
+   "bead": "N26b-22",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Routing by planned count sent a 1e-5 certification (299,572 episodes) to the sibling's sequence, which would end Exhausted on that clean run (it needs about 1,050,021): routing is now N26a-22's choose_design, with test routing_follows_design and the old router as its negative control; the e2e adds the 1e-4 cases at budgets 100,000 (sequence) and 50,000 (exact) with keys; decision record in docs/adr; deps VERBS-nemesis, VERBS-operator (frob doctor)."
+  },
+  {
+   "bead": "N26b-23",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision record moved to docs/adr/OPEN-NEMESIS-5.md; add and carry calls carry keys (the cancelled carry and its resume share one by design; the MCP carry has its own)."
+  },
+  {
+   "bead": "N26b-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "After the cap lift the routing is choose_design reading the configured cap (1e-5 becomes sequential when budget and cap exceed its ~1,050,021 clean count; 1e-6 stays fixed-n), not 'counts above 10^6 to the sequence'; routing test rewritten with three cases; e2e calls given candidate, task, tier and keys; gate receipts entered by a recording session; dep VERBS-nemesis."
+  },
+  {
+   "bead": "N26bp1-01",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The script ran nemesis search 'with each estimator' though no verb option picks one: now once on the default build and once on the test-only build that routes to the other estimator, under distinct keys, with task, legality, tier and budget; gate receipt entered by a recording session; dep VERBS-nemesis."
+  },
+  {
+   "bead": "N26b-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its KA-664 control was the withdrawn rounded-down count (29,957, said to match neither count): now the undercount 29,955 with (1 - p*)^n = 0.0500041 > delta (NEG-04, CX-400); the considerations say none of the three circulating formulas is a control."
+  },
+  {
+   "bead": "N35-25",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The script called nemesis bound 'where the verb exists' and otherwise logged skipped, but N26a-24 and BD-276 depend on this bead (the verb cannot be a prerequisite, and no VERBS row was a dep): the draw-side run is now an example target proposal_weights (10^6 Gaussian-tail draws with records, rerun digests, a reweigh audit of every stored draw, a joint germ-and-finite run counting branch disagreements), and the run through the verb is pointed to N26a-30 step 6 (KA-665) and N26a-24's roundtrip test. Hand values, the +-0.013 mean (4.6 standard errors) and the 2% tail re-verified."
+  },
+  {
+   "bead": "NEG-04",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "It had no script ('covered by' NEG-02's GB-32 rows) while N38b-56 names NEG-04's script as where the count goes through the verb: added scripts/e2e/neg_e7_1_clean_count.sh with keyed nemesis bound calls (76,959 at delta = 1/2200; the three counts), a planner regression with teeth (at 1e-3 a budget of 2,995 is admitted and 2,994 refused with FROB-REF-760, where the approximation would refuse 2,995), KA-664 in g0_laws with and without gauntlet-mutations, and the stale-value scan with a planted 76,963; deps STD-E2E, VERBS-nemesis."
+  },
+  {
+   "bead": "NS-15",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Steps a, f, g and h lacked commands or options the verb rows require: eval run gets --tier, search a budget in episodes, hardset add its --class, the removal replays use the file's neighbours_passing worlds with keys, and the illegal and unsolvable variants go through nemesis oracle (FROB-REF-360 naming the 25 mm bound; infeasible-for-candidate). The acceptance cited the gates' 95-of-100 and 100-of-100 TARGETs as if one demo run measured them: now the demo asserts its instance and names N26a-33, N26a-11 and N26a-34 as the gates' measurements; deps VERBS-eval, VERBS-nemesis, VERBS-sim."
+  },
+  {
+   "bead": "SPEC-C-27",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "Gauntlet rows were run as --test g1/g0/g3 without seed: now g1_known_answers, g0_laws and g3_metamorphic with FROB_TEST_SEED and gauntlet-mutations for the controls; the gates were said to be recorded by BD-276 and BD-277: now measured by N26a-30 and N26a-31 and recorded from receipts by a non-implementing session; dep VERBS-operator (frob doctor). All worked numbers re-verified (KA-139 bound 9.99994e-4, the exchanged-walk weight (2/3)^19, Good-Turing 3/11)."
+  },
+  {
+   "bead": "SPEC-C-28",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "It would create KA-142..144 'if the chapter registry bead has not', but they are N10-KA3's rows (now a dep): it writes their derivation files and fills the open control obligations of KA-143 and KA-144 that N10-KA3 assigns it; controls.toml rows were written by hand: now seeded by N38b-05 from N10-CX's CX-067/CX-068 (dep) and those control texts, naming this bead's plants; the pilots.toml bullet contradicted 'this bead neither registers nor runs a pilot' (now: only checks the field resolves to N26a-06's record); registry paths under crates/; GATE-NEMESIS-03 measured by N26a-34 and KILL-MCW decided by N26a-35 (not BD-274); Gauntlet run forms g1_known_answers and g5_determinism with seed; dep VERBS-operator."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-276",
+   "what": "Mode certify should name the design rule of N26a-22's choose_design (sequential when its clean count fits the budget and the 10^6 cap, fixed-n at required(p*,delta) otherwise), not 'sequential up to the cap, fixed-n beyond'; and its end-to-end paragraph should drop 'the binary's batch entry point' (no verb row has a study-batch option; N26a-30 now runs the 10^4-study campaign through the Gauntlet runner)."
+  },
+  {
+   "bead": "N26-REF",
+   "what": "The FROB-REF-560 trigger column should also list an address reused, outside the committed range or in the discovery record, and an episode run on a tier or numerical profile other than the committed one (N26a-23 rules 2 and 4)."
+  },
+  {
+   "bead": "N26a-04",
+   "what": "Its T5 (single-mode, 1e-5) class says it is read by GATE-NEMESIS-05 and the exploration pilot, but the gate script (N26a-31) reads T4 and T5-two-mode and the pilot (N26a-28) builds its own fixtures: name a reader for T5 or drop the claim."
+  },
+  {
+   "bead": "N28b-31",
+   "what": "Its gates step runs `cargo test -p frob-conformance --test gate_atel_09`, a per-gate test target the Gauntlet convention forbids: use `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- GATE-ATEL-09`. N26b-07 now leaves the live forms of the commitment order and of lane cancellation to its steps seal, refusals and gates; keep them."
+  },
+  {
+   "bead": "BD-345",
+   "what": "Its gate paragraph names `cargo test -p frob-conformance --test gate_atel_09`; the run form is the GATE-ATEL-09 entry of a tier target (g1_known_answers), per BD-025."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "The nemesis.search row lists only candidate, --task, --legality, --method, budget and --first, but BD-273 defines --worlds FILE (for --method given), --require-cited (the trigger of FROB-REF-361), --seed, --tier and --mission, and scripts call them (N26b-14 rows 360/361, N26b-19, N26a-33): add them to the row."
+  },
+  {
+   "bead": "N26-KA",
+   "what": "KA-664's control column still reads 'an episode count from ln(1/delta)/p* rounded down (29,957; 299,573; 2,995,732)', which errs on the safe side and is withdrawn by NEG-04 and CX-400: replace it with the undercounts one below the exact values (29,955; 299,571; 2,995,730; 76,958 for the tenth request), for which (1 - p*)^n > delta."
+  },
+  {
+   "bead": "N26a-21",
+   "what": "Its known-answer paragraph gives KA-664's control as the count rounded down from ln(1/delta)/p*; per NEG-04 and CX-400 it is the undercount 29,955 (the rounded-down 29,957 cannot fail the row)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.replay's positional input is 'an episode'; NS-15 replays the passing neighbours of a .fmcw (world identities w:... from neighbours_passing, N26a-19): state that a world identity is accepted positionally, or name the form that replays one."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "Slice complete: 44 reviewed. Unchanged: N26a-28, N26a-36, N26b-01, N26b-03, N26b-08, N26b-11, N26b-15 (numbers verified). Main themes: the design rule choose_design (fixed-n vs sequence) now governs routing in N26a-26, N26b-22 and N26b-24; Gauntlet run forms, receipts and record_gate sessions; docs/adr; keys and VERBS deps; KA-664's withdrawn control."
+}

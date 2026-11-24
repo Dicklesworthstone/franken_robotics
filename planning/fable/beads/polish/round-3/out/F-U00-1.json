@@ -1,0 +1,349 @@
+{
+ "round": 3,
+ "slice": "F-U00-1",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BET-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 applied: the bet report is `cargo run -p frob-conformance --example bets -- status --json` (example `bets`, to be declared by N00-28; request recorded)."
+  },
+  {
+   "bead": "BET-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 applied (`--example bets -- status`). Added dep BD-224: this bead writes bet-03-m2.md from the M2 reading BD-224's exit record holds. Acceptance no longer says this bead records the KILL-CONTACT ADR: it cites N18b-33's `docs/adr/ADR-KILL-CONTACT-M2.md` by identifier and hash and writes no kill ADR."
+  },
+  {
+   "bead": "BET-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "acceptance said the verdict and the KILL-STATIC decision are recorded here; now the verdict ADR bet-05-m3.md cites N28a-22's `docs/adr/ADR-KILL-STATIC-M3.md` by identifier and hash, no kill ADR written here, no verdict filed without the decision."
+  },
+  {
+   "bead": "BET-06",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the script 'recomputes the per-class verdict' with no tool named; it now reads the HeldInPart row from the one verdict rule (`--example bets -- status --json`, N00-28) and checks the ADR field by field."
+  },
+  {
+   "bead": "BET-07",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KILL-EQUIV record cited at the kill-gate record form of N40-03 (`docs/adr/ADR-KILL-EQUIV-M4.md`, not ADR-CORTEX-16-kill-equiv.md; request to N23a-33). The train.start probes carry a design, a task and `--key` (a run verb without a key is FROB-REF-805, exit 3, which would mask the exit 5 under test); verdict read from the bets report."
+  },
+  {
+   "bead": "BET-08",
+   "kinds": [
+    "correct"
+   ],
+   "what": "request H-owners-1 applied: `cargo run -p frob-conformance --example bets -- status --json`."
+  },
+  {
+   "bead": "BET-09",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "script now names its inputs (BD-217's kill_inputs receipts) and reads the verdict from the bets report instead of an unnamed recomputation."
+  },
+  {
+   "bead": "BET-11",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "script reads the verdict from the bets report (the one verdict rule) instead of an unnamed recomputation."
+  },
+  {
+   "bead": "BET-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`funding admit` spelled as N00-09's declared example `cargo run -p frob-conformance --example funding -- admit --record <path> --json`; the e2e asserts exit 3 with the re-plan reason for an M2 package and exit 0 for an M1 package."
+  },
+  {
+   "bead": "N00-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "self-contained",
+    "complete"
+   ],
+   "what": "requests H-owners-1 and H-ref-2 applied: FROB-REF-866 (no ceiling, or ceiling below claim) is raised through N36-05's admit_experiment (dep added) with N35-REF's four repairs, admit holds no second comparison; the request's `--example pilots -- fundable` is the wrong tool (it answers pilot fundability, not funding-record admission), so this bead declares example `funding` with `admit --record` and `order --export`; tests committed_records_admitted and ceiling_refusal_raised_by_admit_experiment added with a mutant control; e2e uses the example with expected exit codes. Also: N00-10's scope binding (no funding of a REFUTED strong form; ACTIVE-bound work waits on its settling test) had no home, since N00-10 is M0 and this bead depends on it: admit gains check h (calls N00-10's hypotheses::scope, dep N00-10 added, no cycle) and step 3 a fifth ordering assertion, with tests and plants."
+  },
+  {
+   "bead": "BET-15",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "verdict read from the bets report (one verdict rule) over the recorded gate rows, N recomputed from recorded P, s, f, ADR checked against both."
+  },
+  {
+   "bead": "BET-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the train.inherit --dry-run probe carries `--key` (run verb; without it FROB-REF-805, exit 3, would mask the exit 5 under test); verdict read from the bets report."
+  },
+  {
+   "bead": "BET-17",
+   "kinds": [
+    "deps",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "the bead closes at M4 but writes bet-17-m3.md: added dep BD-319 and the rule (as BET-03) that the M3 record is written from the M3 exit review's recorded reading, not recomputed; verdict read from the bets report."
+  },
+  {
+   "bead": "BET-19",
+   "kinds": [
+    "correct",
+    "deps",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 applied (`--example bets -- status`). The M4 bead writes bet-19-m1.md and -m3.md: added deps BD-147 and BD-319 and the rule that those records come from the exit reviews' recorded readings. Acceptance no longer says kill decisions are recorded here: it cites N25a-18's and N25b-04's records by identifier and hash."
+  },
+  {
+   "bead": "BET-20",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "verdict read from the bets report and bet-20-m3.md checked against it."
+  },
+  {
+   "bead": "BET-21",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "verdict read from the bets report and bet-21-m3.md checked against it."
+  },
+  {
+   "bead": "BET-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance cites N26a-12's and N26a-35's kill records instead of recording kill decisions here; sim.replay calls carry `--key` and the 1-minimality check replays the `neighbours_passing` world identities (`frob sim replay w:<hash>`), which the registry row accepts; verdict read from the bets report."
+  },
+  {
+   "bead": "BET-23",
+   "kinds": [
+    "deps",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "the M4 bead writes bet-23-m3.md: added dep BD-319 and the rule that the M3 record comes from the M3 exit review's recorded reading; verdict read from the bets report."
+  },
+  {
+   "bead": "BET-24",
+   "kinds": [
+    "deps",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "read at M1 and M3 but only an M3 record was written: bet-24-m1.md added (from BD-147's recorded M1 reading, dep added), as N00-28's decision-record rule requires; the script no longer 'writes the verdict': it reads it from the bets report and checks both ADRs."
+  },
+  {
+   "bead": "BET-25",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "verdict read from the bets report and bet-25-m4.md checked against it."
+  },
+  {
+   "bead": "BET-26",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the script no longer 'writes the verdict': it reads it from the bets report and checks bet-26-m4.md (scripts write no ADR)."
+  },
+  {
+   "bead": "BET-27",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "verdict read from the bets report and bet-27-m4.md checked against it."
+  },
+  {
+   "bead": "BET-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KILL-BAND record cited at N40-03's form `docs/adr/ADR-KILL-BAND-M5.md` (not docs/adr/KILL-BAND.md; request to N30b-18); the rehearsal's Ground calls spelled from VERBS-ground with a key on every run and mutate call; verdict read from the bets report."
+  },
+  {
+   "bead": "BET-29",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the script's unnamed verdict recomputation now reads the verdict from the bets report over the three gate receipts and three kill records and checks bet-29-m5.md against it."
+  },
+  {
+   "bead": "BET-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the FROB-REF-161 probe named no verb; it now calls the row that lists the code, `frob phylum quotient --designs <set> --task <task> --group mech --json` (exit 3), noting that the weight-tie site is N23a-31's and reached by its own tests because train.start has no tie-group input; the symmetry reads are spelled; verdict read from the bets report."
+  },
+  {
+   "bead": "BET-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "phylum.quotient spelled from its row; sim.replay calls carry `--key` (run verb); verdict read from the bets report and bet-31-m3.md checked against it."
+  },
+  {
+   "bead": "BET-34",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 applied (`--example bets -- status`). The M3 bead writes bet-34-m2.md from the M2 reading BD-224 takes (its procedure says so): dep BD-224 added, no cycle; both ADRs checked against the report."
+  },
+  {
+   "bead": "BET-35",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob fleet plan` takes the campaign positionally as its row's example does; verdict read from the bets report and bet-35-m4.md checked against it."
+  },
+  {
+   "bead": "BET-37",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "verdict read from the bets report and bet-37-m4.md checked against it, instead of an unnamed recomputation."
+  },
+  {
+   "bead": "N00-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the M0 output listed no registry digest, which the capabilities row in VERBS-operator lists and N32b-19's cursor frontier needs: `registry_digest` added. The e2e's 'one unimplemented verb' is taken from the --missing listing and called with `--key` when run-kind, so the answer under test is 724 and never 805."
+  },
+  {
+   "bead": "N00-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`--since <rev>` cannot be passed to a cargo test target (libtest rejects unknown options): it is the environment variable FROB_IDS_SINCE, with the command spelled; the e2e names its test command."
+  },
+  {
+   "bead": "N00-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "availability example said mission.refute arrives at M3; its row is M1 (only its whole-family form is M3), so the example and the unit test pointer_level_availability now use telemetry.divergence (M2) and scene.accept (M3), and note sense.schedule's reduced M1 form; walkthrough run and mutate calls carry `--key`."
+  },
+  {
+   "bead": "N00-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the append-only check compared with 'the merge base', which on a branchless main is HEAD and compares nothing; it now uses N00-03's base rule (HEAD with a dirty tree, else HEAD~1); test and e2e commands spelled."
+  },
+  {
+   "bead": "N00-08",
+   "kinds": [
+    "correct"
+   ],
+   "what": "rule 10's enforcer column now names the one raise point of FROB-REF-866 (N36-05's admit_experiment) beside N00-17, N00-09 and BD-354."
+  },
+  {
+   "bead": "N00-10",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the change rule compared with 'the merge base' (HEAD on branchless main): now N00-03's base rule. The scope-binding step and its acceptance needed funding records (N00-09, a later bead that depends on this one; KNOWN_DRIFTS 7): now a function hypotheses::scope with tests here, applied by N00-09. H-27 (ACTIVE) carries banned wording the lint never applied: the lint now applies an ACTIVE row's patterns. Commands spelled."
+  },
+  {
+   "bead": "N00-11",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "shared script now names its owner (N00-10) and this bead's stage (KNOWN_DRIFTS 11); 'one plant per banned pattern' contradicted the 'seven' plants: one per row with banned wording, H-12's caught as deferred-as-lever; command and summary added."
+  },
+  {
+   "bead": "N00-12",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "shared script names its owner and stage; eight plants (one per row with banned wording, H-27 included); the H-19 negative control 'marked settled' named no field of a hypothesis row: it now leaves ACTIVE with no history entry."
+  },
+  {
+   "bead": "N00-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "acceptance required M0 statuses set by the re-audit (N00-14, which depends on this bead; KNOWN_DRIFTS 7): moved to N00-14, this bead checks the status/m0_record load rule. The prior-art check is a function here (presented_as_new) called by N00-15's lint, which the unit test previously assumed; command spelled."
+  },
+  {
+   "bead": "N00-14",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "request S01 applied: dep N00-15 added (no cycle: N00-15 does not reach N00-14). N00-13 assigns the M0 status of its 21 IA rows to this re-audit, which covered only DA and NF rows: IA rows added to the procedure, outcome rule and acceptance, with a test."
+  },
+  {
+   "bead": "N00-15",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "lint rule g calls N00-13's prior_art::presented_as_new, with a test; `--exit M0` cannot be passed to a cargo test target: exit mode is FROB_EXIT=M0 with the command spelled; e2e names its command."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N00-28",
+   "what": "declare the report as example target `crates/frob-conformance/examples/bets.rs` with subcommand `status`: `cargo run -p frob-conformance --example bets -- status --json` (BD-025: the crate has no default binary). The BET beads of slice F-U00-1 now cite that spelling; `scripts/e2e/bet_register.sh` and step 5 of N00-28 should use it too."
+  },
+  {
+   "bead": "N23a-33",
+   "what": "the kill-gate record is `docs/adr/ADR-KILL-EQUIV-M4.md` (N40-03's form `docs/adr/ADR-<gate-name>-<milestone>.md`, KNOWN_DRIFTS 4 and 10), not `docs/adr/ADR-CORTEX-16-kill-equiv.md`; BET-07 now cites the former. Its `frob train start --tying ... --dry-run` probes also need a design, a task and `--key` (train.start is a run verb; without a key it is FROB-REF-805, exit 3, masking the exit 5 under test)."
+  },
+  {
+   "bead": "N30b-18",
+   "what": "the KILL-BAND record is `docs/adr/ADR-KILL-BAND-M5.md` (N40-03's form, KNOWN_DRIFTS 4 and 10), not `docs/adr/KILL-BAND.md`; BET-28 now cites the former."
+  },
+  {
+   "bead": "BD-221",
+   "what": "the typing-control tally counts 'frame or unit' errors; BET-01's clause (b) and the plan's potency control count frame, sign and unit defects (sign: a negated cross product, a reversed coadjoint). Count sign defects in both tallies (typed and untyped) so the bet reads the quantity it registers."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "42 beads reviewed: 40 changed, 2 unchanged (BET-10, N00-01). Requests to my beads: H-owners-1 applied to BET-01, -03, -08, -19, -34; on N00-09 applied in part (the suggested `--example pilots -- fundable` answers pilot fundability, not funding-record admission, so N00-09 declares example `funding`); H-ref-2 applied to N00-09; S01 applied to N00-14. New environment variables FROB_IDS_SINCE (N00-03) and FROB_EXIT (N00-15) replace options a cargo test target cannot take. Slice looks settled apart from the four outgoing requests."
+}

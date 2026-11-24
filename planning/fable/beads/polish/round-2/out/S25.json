@@ -1,0 +1,127 @@
+{
+ "round": 2,
+ "slice": "S25",
+ "reviewed": 19,
+ "changed": [
+  {
+   "bead": "N13-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Signed case 5 has the same character as the unsigned regular representation, so its rank cannot detect a dropped sign, although Considerations said that was its purpose. Added case 6 (C2xC2, base angular velocity as axial vector to linear velocity as polar vector: dim Hom 2; dropping the parity factor gives 3), its acceptance line, the planted parity-error control, unit test parity_rule_discriminates and CX-124."
+  },
+  {
+   "bead": "N23b-22",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied both requests: named reserved envelope row R15 of N44-01 (E1, scope gate:KILL-EQUIV, about 10 device-hours), which this bead files before its first run above E0; every arm and control is launched through frob-launch --scope gate:KILL-EQUIV --request R15 (N36-20), with meter rows cited per run in the record and the NDJSON log, and unit test launch_rows_cover_runs. Added register entry PILOT-EQUIV-01 with its fields. Verdict words now match the pilot register (falsifier-rejected, falsifier-holds, inconclusive). Added deps N36-20 and N44-01."
+  },
+  {
+   "bead": "BD-326",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "risks"
+   ],
+   "what": "The e2e called `frob eval compare --paired --arms --metric`, a form the verb registry does not define (eval.compare compares two designs). It now registers with study.plan (fixed-n, n = 10), compares the evaluation metrics with study.submit and study.compare, and pairs the per-seed training quantities by seed, analysed with BD-124's fixed-n engine (never keyed by a training counter, FROB-REF-556). Added deps N33b-19 and N28a-21. Considerations said the measurement 'fits a campaign-class envelope'; corrected to E0 per job, with the FROB-REF-761 and not-run rule for a run above it."
+  },
+  {
+   "bead": "N23a-31",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The first acceptance line closed the bead if 'the equivariance kill gate has fired'. That cannot happen before the bead is built (KILL-EQUIV is decided after BD-326, which uses this network), so the line now follows the pilot's verdict. The in-law test ran 20 two-sample tests at 1% each per group, about one false failure in five groups; it is now family-wise 1% (Bonferroni) with fixed seeds."
+  },
+  {
+   "bead": "N23a-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Γ_aug was defined as possibly larger than Γ_obs ('every element of Γ_obs qualifies because it preserves each world'; elements outside Γ_obs admitted by declared randomization). That contradicts the plan's table of group uses and BD-241's Γ_obs, which already preserves the law of the scenes. Now Γ_aug = the elements of Γ_obs under which the command distribution is also invariant in law. The bead's acceptance cases are unchanged and now agree with the definition."
+  },
+  {
+   "bead": "BET-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The gate clause 'the one-sided patch is passed' was glossed as 'the constraint is refused there'. That conflated the gate's patch clause (arm E's paired pass rate on patch scenes, BD-326) with the bet's symmetry-breaking control (FROB-REF-161 on an off-centre payload task); the two are now separate. Replaced test bet07_patch_not_refused_is_untested with bet07_patch_clause_fails_gate and bet07_control_not_refused_is_untested. Learning controls are now zero-weight and random; shuffled-label applies only to distillation."
+  },
+  {
+   "bead": "BET-30",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Reads GATE-MARROW-03 as a deciding gate but did not depend on N13-22, the bead that writes its complete record; added that dep (M3)."
+  },
+  {
+   "bead": "BD-327",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "The verb registry row (VERBS-control) gives control.symmetry the inputs design, controller and task and the refusals 443 and 461; the bead had no controller input and only 461. Added an optional --controller (checks a controller's recorded group per mode against the context, which answers an agent's 'is my symmetry still usable here?'). Added FROB-REF-443 with precedence over 461. Specified the control.synth extension (--symmetry use|mech|none, --verify-reduction) and the sim.run --verify-reduction option, which N22b-38 and N22b-41 already use. New tests refusal_443_before_461 and controller_group_checked."
+  },
+  {
+   "bead": "N22b-37",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The containment check now passes H through the Γ_obs consumer guard first (FROB-REF-443 for an element outside Γ_obs), then checks Γ_use (461), so that the two codes never both fire for one request; added test refusal_443_first."
+  },
+  {
+   "bead": "N22b-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The isotypic projector was written for real characters only ('χ real for the groups in scope'), while the same bead carries complex-type pairs for Cn, n ≥ 3. Added the real projector of a complex pair, (d/|Γ|)·Σ 2·Re χ(g)·ρ(g), and named the conjugate-missing mutation it guards against."
+  },
+  {
+   "bead": "N22b-40",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Considerations names CARD-T-18 (M5) as related, not a prerequisite, but the front matter did not list it; added it to related."
+  },
+  {
+   "bead": "N22b-41",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Added the FROB-REF-443 refusal (front-lidar quadruped, --symmetry mech: names m_fa and the lidar mount, not 461), the control.symmetry --controller check (level-ground controller asked about the slope gives 461), and a planted defect (guard order Γ_use before Γ_obs) that must make the script fail."
+  },
+  {
+   "bead": "NS-05",
+   "kinds": [
+    "deps",
+    "users",
+    "tests"
+   ],
+   "what": "Its step 5 branches on the KILL-EQUIV record, so it now depends on N23a-33. Step (c) typed the group by hand (`algebra irreps <Γ_obs>`), which is not a valid input and defeats 'computed, not declared'; it now uses the verb's design form (--design --task: stored Γ_obs, group_kind obs). Negative controls are now zero-weight and random policies (shuffled-label is for distillation)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-control",
+   "what": "control.synth: add FROB-REF-461 and FROB-REF-443 to its chapter refusals (N22-REF already lists control.synth among the raisers of 461) and record the extension by BD-327: inputs `symmetry` (use|mech|none, default use) and `verify-reduction`. control.symmetry: inputs are design, task, optional controller, optional context (scene or gravity, contact mode, commanded twist) and optional `events`; precedence 443 before 461."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run: add the option `--verify-reduction` (run-time reduced-against-full check of a symmetry-reduced controller on both sides of each mode switch), extended by BD-327 and N22b-38 and used by scripts/e2e/control_symmetry.sh (N22b-41); its refusal on disagreement is FROB-REF-461."
+  }
+ ],
+ "unchanged": 6,
+ "notes": "BD-325, N13-24, N13-25, N13-26, N22b-39 and N23a-33 checked against §13.4-13.10, §22.13-22.18 and §23.13/23.22-23.23, with the numbers recomputed; left as they are. The changes are mostly coherence between beads and their registries (verb rows, pilot and bet registers, refusal precedence) plus three mathematical or statistical corrections (N13-23, N22b-38, N23a-31). After this round the slice should be close to settled."
+}

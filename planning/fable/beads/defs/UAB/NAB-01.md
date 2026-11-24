@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "workspace", "delivery", "solid", "registry"]
 parent: "WP-01"
 deps: ["BD-002", "BD-004", "BD-005"]
-needs: ["§0.3: the identifier-prefix table, which owns the prefixes (BET, GOAL, NS, C, T, A, DC, GATE, KILL, INT, INV, PO, OPEN, ADR, FD, WP, BD, GB, KA, H, N, FMT, FROB-REF) that the glossary does not redefine (N00-03)", "§34.6: the generator table of `xtask check-generated`, to which this bead adds one row (BD-004)"]
-related: ["NAB-02", "NAB-03", "NAB-04", "NAB-05", "NAB-06", "NAB-07", "NAB-08", "N00-03", "N00-08"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix A", "§0.3", "§0.5", "§0.7", "§34.1", "§34.6"]
 ---
@@ -55,8 +55,11 @@ registry. Out: the term records (NAB-03 to NAB-07); the lint over `CONTRACT.md` 
 ## Technical approach
 
 **1. File and schema.** `registries/glossary.toml`, schema name `frob.glossary/1`, JSON-Schema at
-`schemas/registries/glossary.schema.json` (generated with the other registry schemas). One `[[term]]` table per
-row:
+`schemas/registries/glossary.schema.json`, written by hand by this bead like every registry-file schema under
+`schemas/registries/` (BD-002, N34x-03): it is reviewed source, not a generator output. `check-generated`
+(BD-004) generates only `schemas/frob.*.json`, so it neither regenerates this file nor reports it as
+`gen.orphan`; a change to the record format edits the schema and the loader in the same commit. One `[[term]]`
+table per row:
 
 ```toml
 schema = "frob.glossary/1"
@@ -73,6 +76,9 @@ constructs  = []                      # constructions, doctrine rules, gates or 
 aliases     = ["cells"]               # inflections and alternative spellings the lint accepts for this term
 owner_crate = "frob-mission"          # crate whose CONTRACT.md is authoritative once it exists; "" before
 design_values = false                 # true when the row quotes a number; the number is then a DESIGN value
+structural  = false                   # true only for a term the glossary itself defines (rule 4); default false
+see         = ""                      # optional: the id of the record a cross-reference row points at
+                                      # ("alias-witness" → "indistinguishability-witness"); must resolve
 ```
 
 Field rules:
@@ -83,8 +89,10 @@ Field rules:
 3. A row that names several terms defined together (`Adjoint, coadjoint`; `Cold run, warm campaign`;
    `Degraded`, `Faulted`; the five binaries; `Toolchain T; toolchain train`) is one record whose `term` is the
    first name and whose `aliases` list the others; each alias resolves to the record.
-4. `defined_in` is non-empty except for the records marked `structural = true`, which are defined by the glossary
-   itself (at plan time four: `ADR`, `Stratum`, `Witness`, `World`).
+4. `defined_in` or `constructs` is non-empty (a row owned by a construction or a doctrine rule alone, such as
+   `Cayley map` (C-05), `Canonical form` (C-21) or `Ceiling` (D-10), has only `constructs`), except for the records
+   marked `structural = true`, which are defined by the glossary itself (at plan time four: `ADR`, `Stratum`,
+   `Witness`, `World`); a record with both empty and no flag is `gloss.no-definition`.
 5. `meaning` is one sentence or two, at most 320 characters, plain prose, Unicode mathematics, no LaTeX.
 6. A number inside `meaning` requires `design_values = true`; the number is a DESIGN value of the defining
    section unless the text says FACT or TARGET.
@@ -100,7 +108,8 @@ orderings.
 reader module the other registries use), with `Glossary::lookup(&str) -> Vec<&Term>` (case-insensitive, over
 `term` and `aliases`; more than one hit means the caller must give a sense) and `Glossary::iter()`. Errors are
 typed: `gloss.schema`, `gloss.duplicate-id`, `gloss.duplicate-term-sense`, `gloss.missing-sense`,
-`gloss.unsorted`, `gloss.no-definition`, `gloss.meaning-too-long`, `gloss.number-unlabelled`.
+`gloss.unsorted`, `gloss.no-definition`, `gloss.meaning-too-long`, `gloss.number-unlabelled`,
+`gloss.see-unresolved` (a non-empty `see` that names no `id` in the file).
 
 **4. Generator.** `xtask::generate::glossary`, a pure function from `registries/glossary.toml` to
 `docs/GLOSSARY.md`, added to the generator table of `check-generated` with mode "regenerate, compare bytes". The
@@ -163,7 +172,15 @@ registry). Evidence class: not applicable; the registry makes no claim about the
   `gloss.number-unlabelled`.
 - `meaning_longer_than_320_is_refused`.
 - `structural_records_may_omit_definition`: `Stratum` with `structural = true` and empty `defined_in` loads; the
-  same record without the flag → `gloss.no-definition`.
+  same record without the flag → `gloss.no-definition`; `Cayley map` with empty `defined_in` and
+  `constructs = ["C-05"]` loads without the flag.
+- `see_must_resolve`: `alias-witness` with `see = "indistinguishability-witness"` loads when that record exists
+  and fails `gloss.see-unresolved` when it does not.
+- `schema_matches_loader_fields`: the property names of a `[[term]]` in the hand-written
+  `schemas/registries/glossary.schema.json` equal the field names of the loader's `Term` type (the thirteen of
+  step 1), and the minimal registry validates against the schema; a record with an extra field `note` fails
+  `gloss.schema` in the loader and fails schema validation (the schema is not generated, so this test is what
+  keeps the two from drifting).
 
 `xtask/tests/generate_glossary.rs`: `output_is_deterministic` (two runs, equal bytes);
 `sense_and_code_terms_render` (`Cell (mission)`, `` `provisional` ``); `marker_line_present`;
@@ -179,9 +196,13 @@ first differing line.
 
 ### Known answers and negative controls
 
-Known answers at plan time: 337 records; 14 records whose term carries a sense qualifier in parentheses
+Known answers at plan time: 337 records; 14 plan-time rows whose term column carries a parenthetical
 (`Archetype` twice, `Arena (device)`, `Battery (evaluation)`, `Campaign` twice, `Cell` three times, `Envelope`
-twice, `Instants (seven)`, `Tier` twice); 11 code-literal rows; 5 multi-name rows; 4 structural rows; 23
+twice, `Instants (seven)`, `Tier` twice); after transcription, 6 terms with two or more senses and 13 records
+with a non-empty `sense` that another record of the same term makes necessary (`Archetype` 2, `Arena` 2 with
+the unqualified row taking sense `subsystem`, `Campaign` 2, `Cell` 3, `Envelope` 2, `Tier` 2), while
+`Battery (evaluation)` keeps its sense alone and `Instants (seven)` has an empty sense because the parenthetical
+is a count (NAB-05); 11 code-literal rows; 5 multi-name rows; 4 structural rows; 23
 subsystem names (the twenty-one that own a chapter, `Gauntlet` and `Airlock`). Negative controls (each must be
 caught): a planted duplicate `id`; a planted out-of-order pair; a hand edit of `docs/GLOSSARY.md`; a record
 whose `sense` repeats. Determinism lanes: the generator twice on one machine and on both platforms (macOS on

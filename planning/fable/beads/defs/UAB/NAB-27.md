@@ -4,11 +4,11 @@ title: "M4 exit: sweep of the decision records after rank agreement, family poli
 type: "task"
 priority: 2
 milestone: "M4"
-labels: ["m4", "delivery", "gauntlet", "solid", "registry", "decision-record"]
+labels: ["m4", "delivery", "gauntlet", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M4"
-deps: ["NAB-22", "NAB-26", "BD-378"]
-needs: ["§40.6: the M4 exit report with its kill decisions (N40-04, N40-30)", "§28.10, §23.11: the rank-agreement experiment on our engine and the family-policy experiment (BD-328, BD-321)", "§28.26: the reuse ledger with its three columns that are never summed (N28c-45)", "§43: the M4 variant with no family policy (N40-34)"]
-related: ["NAB-17", "NAB-21", "NAB-32", "NAB-42", "NAB-28", "N40-34", "N28c-45", "BD-321", "BD-328", "BD-354"]
+deps: ["BD-328", "N13-24", "N14b-31", "N17a-14", "N17b-20", "N19b-42", "N20b-38", "N21c-11", "N21c-18", "N22b-16", "N22b-28", "N22c-16", "N22c-17", "N23a-26", "N23a-30", "N23a-33", "N25b-17", "N25c-27", "N25c-40", "N25d-11", "N25d-15", "N25d-20", "N25e-17", "N25e-22", "N25e-26", "N28b-20", "N28b-36", "N28c-17", "N28c-41", "N28c-45", "N40-04", "NAB-22", "NAB-26", "NAB-50", "STD-E2E"]
+needs: []
+related: ["BD-378", "NAB-32", "NAB-36", "NAB-37", "NAB-42", "NAB-47"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2", "Appendix B.5", "§43 (M4)", "§0.8"]
 ---
@@ -33,9 +33,22 @@ the matrix and twenty-four kill-gate pairs, the largest sweep.
 In: the M4 sweep record and report; history entries; proposals. Out: deciding gates; the exit review (BD-378);
 the procedure (NAB-22).
 
+Order of work (DESIGN, as at M2 and M3 in NAB-25 and NAB-26). The sweep is made at the exit candidate commit,
+before the exit record is written, and the exit review depends on it: the review's runner executes
+`decision-sweep check --exit M4` as the attached check of NAB-22 and copies the sweep's section into the exit
+record, so the record must exist first. What the sweep reads is produced before the review, not by it: the gate
+report at that commit (N40-04); the kill-decision ADRs written by their decision beads (step 1's table names the
+gate; the beads are N28b-36, N28c-17, N25d-11, N23a-30, N28b-20, BD-328 for KILL-RANK, N22c-17, N25b-17, N19b-42,
+N21c-11, N22b-16, N22b-28, N22c-16, N23a-26, N23a-33, N13-24, N25d-20, N25d-15, N17b-20, N17a-14, N25c-27, N25c-40
+and N21c-18); the late kill decisions of step 2's last paragraph (N25e-17, N25e-22, N25e-26, N28c-41, N20b-38,
+N14b-31); and the reuse ledger (N28c-45) that KI-33 and KI-34 read. The dependency list names those beads for that
+reason. This is the order of NAB-22's design decision 1, which every sweep follows; what the sweep shares with
+the review is its independence rule (a session that implemented none of the cited beads).
+
 ## Technical approach
 
-`decision-sweep skeleton --exit M4`, fill, `check --exit M4`, by a session that implemented none of the cited
+`cargo run -p frob-conformance --bin decision-sweep -- skeleton --exit M4` (the tool of NAB-22; below shortened
+to `decision-sweep …`), fill, `decision-sweep check --exit M4`, by a session that implemented none of the cited
 beads.
 
 **1. Families due by a kill gate decided at M4.**
@@ -126,6 +139,10 @@ are re-read before the family-policy and inheritance gates cite them.
 - [ ] The three disagreements of step 3 each have a recorded state with numbers.
 - [ ] Every speed comparison cited as evidence has a ceiling recorded before it ran.
 - [ ] In the no-family-policy variant the two families read `fell-back` and their dependants are listed.
+- [ ] The sweep record exists at the exit candidate commit before the M4 exit record is written, and the exit
+      runner's attached check reads it; the sweep's session implemented none of the beads it cites.
+- [ ] A family whose kill gate fired at M4 names its fallback in every registry of the decision records the same
+      day (no family reads "adopted" under a fired gate).
 
 ## Test plan
 
@@ -133,13 +150,28 @@ are re-read before the family-policy and inheritance gates cite them.
 
 `crates/frob-conformance/tests/decision_sweep.rs`: `due_m4_families` (twenty-one ids: `EV-S26`, `EV-S41`,
 `EV-F03`, `EV-F05`, `EV-F08`, `EV-F09`, `EV-F11`, `EV-F12`, `EV-F13`, `EV-F16`, `EV-F20`, `EV-F22`, `EV-F25`,
-`EV-F28`, `EV-F30`, `EV-F31`, `EV-F33`, `EV-F34`, `EV-F41`, `EV-F56`, `EV-P18`; 24 pairs);
-`speed_evidence_needs_prior_ceiling`; `no_family_policy_variant_marks_fell_back`.
+`EV-F28`, `EV-F30`, `EV-F31`, `EV-F33`, `EV-F34`, `EV-F41`, `EV-F56`, `EV-P18`; 24 pairs, because EV-F08, EV-F16
+and EV-F25 each have two kill gates); `speed_evidence_needs_prior_ceiling` (a family re-scored on a comparison whose
+ceiling was recorded after it ran → `check` fails); `no_family_policy_variant_marks_fell_back`;
+`rung_select_at_tau_0_6_is_discard_only` (a KI-40 entry licensing selection at τ = 0.6 → `check` fails; at 0.6 the
+entry must read "discard only"); `ki28_needs_parameter_edits` (KI-28 marked met from a topology-edit result →
+`check` fails); `fired_gate_family_renamed` (KILL-FAMILY fired, EV-F22 still reading `adopted` → `check` fails).
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M4` (NAB-50): due list, `check`, 24 pairs, the conditions of step 2 as
-`metric` lines. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh --exit M4` (NAB-50): prints the due list, runs `decision-sweep check --exit M4`,
+and asserts the 24 pairs, the conditions of step 2, the three disagreements of step 3 and the ceilings of step 4;
+then replays the three negative controls below (fixtures under
+`tests/fixtures/sweep/M4/controls/` written by this bead, the hook of NAB-50) on scratch copies of the sweep record and asserts that `check`
+fails on each with its reason. Logged through the shared helper of STD-E2E to
+`target/e2e-logs/decision_records/<utc>.ndjson` with a transcript, every line with `ts`, `script`, `bead`
+(`NAB-27`), `step`, `event`: `cmd` lines with the exact command line, exit code and wall time; one `assert` per pair
+with the kill gate, the ADR identifier and the outcome; one `metric` per condition of step 2 with the measured
+number, its unit, the threshold and `condition_met`; one `metric` per speed comparison with its recorded ceiling
+and claimed ratio; the digests of the gate report and of the sweep record; `assert` lines of kind
+`negative-control` with `caught`; on failure the first due item without an outcome, or the first condition whose
+number does not resolve to a receipt, with the path of the sweep record; a `summary` with assertions passed and
+failed and the kill gates read.
 
 ### Known answers and negative controls
 

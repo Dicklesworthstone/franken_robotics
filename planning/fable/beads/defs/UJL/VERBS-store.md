@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "tether", "chronicle", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-43"
-deps: ["BD-022", "NJL-01", "NJL-02", "STD-E2E"]
+deps: ["BD-022", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []
-related: ["BD-209", "BD-222", "NJL-03", "NJL-04", "NJL-05"]
+related: []
 gates: ["GATE-TETHER-02"]
 plan_refs: ["Appendix J (J.1, J.2, J.3, J.5)", "§29.16", "§32.6", "§32.12.3", "§32.21 (GATE-TETHER-02)"]
 ---
@@ -18,8 +18,9 @@ FrankenRobotics (a robotics simulation and design system) is reached through the
 `frobd` and the MCP server `frob-mcp` (the Model Context Protocol, by which an agent harness lists and calls tools).
 Every capability is a verb, `cluster.verb`, declared once in `registries/verbs.toml` (crate `frob-verbs`, tier
 Solid). The CLI, the daemon protocol, the MCP tools, the schemas, the refusal table and the agent guide are
-generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 243 verbs
-in 44 clusters (namespaces).
+generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 244 verbs
+in 44 clusters (namespaces): the 243 of the specification and `artifact.import` (VERBS-artifact); the
+count of record is NJL-03's.
 
 This bead is the registry of record for the cluster `store`. The cluster covers the store: its size, pins and
 retention, and a collection cycle with tombstones. It has two verbs (1 `read`, 1 `admin`); the handlers live in
@@ -36,7 +37,7 @@ gate), M Moonshot; `S/F` is a Solid core with Frontier extensions.
 DESIGN: a registry bead per cluster exists beside the implementing beads because a row missing from the registry,
 spelled twice, or served with different refusal lists on the CLI and over MCP is a surface defect that no mechanism
 test catches. Rejected: rows left to the implementing beads alone (nothing checks their union against the
-inventory); one bead for all 243 rows (too large to review).
+inventory); one bead for all the rows (too large to review).
 
 ## Scope
 
@@ -60,23 +61,56 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
 
 **`store.status`** (MCP tool `store_status`; owner `frob-chronicle`)
 - Inputs: none.
-- Outputs: store size, pins and retention. Evidence: *operational*.
+- Outputs (BD-209): per retention class the object count and bytes; the budget and the bytes over or under it;
+  pinned bytes by reason kind with the top pin holders (claim and job identifiers); the oldest unpinned sampled
+  trace; tombstone counts by reason; the memo store's size against its default; the retention window in force;
+  the per-kind memo counters (N28b-38); per memo policy hits, misses, bytes used, pinned bytes, evictions,
+  admissions refused by cost and by size, ghost admissions, cost saved by hits in both units and the current
+  small share (N33c-19); `unpinned_closure_objects` (the writer-rule audit, which must read 0), the count of
+  orphan pins released with reason `holder-gone`, and the operator `hold` pins with their age (N29b-13). The
+  line for private holdings (objects, bytes, pins) is printed only to a session holding `private:read`, and the
+  output is otherwise byte-identical, with no private byte total (BD-305, N29b-14). Evidence: *operational*.
 - Chapter refusals: none of its own.
-- Implemented by: BD-209.
+- Implemented by: BD-209. Extended by: N28b-38 (memo counters), N33c-19 (memo policy statistics), N29b-13
+  (audit and orphan lines), BD-305 and N29b-14 (the private line).
 
 **`store.collect`** (MCP tool `store_collect`; owner `frob-chronicle`)
-- Inputs: retention policy; dry run.
-- Outputs: a collection cycle with tombstones; pinned objects and frontiers held by open cursors are kept. Evidence:
-  *operational*.
-- Chapter refusals: `FROB-REF-813` (a deletion that would remove a pinned object).
+- Inputs (BD-209): `--dry-run`; `--budget <size>` (bytes, or with an SI suffix `kB`, `MB`, `GB`: `1MB` is 10⁶
+  bytes); `--now <instant>` (tests); `--class <c>` (restrict to one class); `--force` (remove the objects of the
+  named class that the window and budget rules would keep; a pinned object is never removed); `idempotency_key`
+  (`--key`), declared by this row as its own optional input because the `admin` kind has no common key property:
+  absent, the call is a dry run (BD-209's default); present, it is a real collection, and a repeat with the same
+  key returns the stored cycle. The withdrawal form (N29b-13): `--withdraw-claim <claim_id> --reason <text>`,
+  idempotent by construction (a second withdrawal returns the first record) and taking no key.
+- Outputs: the removed (or would-be removed) objects by class with bytes, the tombstones written, and what was kept
+  and why for the ten largest kept objects; pinned objects and frontiers held by open cursors are kept; orphan
+  pins released before the mark, each with reason `holder-gone` (N29b-13). Before the mark, and before any
+  orphan pin is released, a real collection and a dry run run the writer-rule audit
+  (`audit::pins_cover_live_claims`); a non-empty result aborts the cycle with the refusal
+  `unpinned-claim-closure` (below) and removes nothing, so an aborted cycle changes nothing (N29b-13). For a
+  withdrawal: the claim's released pins, the dependent claims made unavailable, and the affected gate parts and
+  beads. Evidence: *operational*.
+- Chapter refusals: `FROB-REF-813` (a deletion that would remove a pinned object; meeting one under `--force`
+  refuses the whole call and names the pins). A withdrawal of a claim that supports a `qualification-receipt`
+  without the owner scope is the appended `FROB-REF-720` naming that scope (exit 5). One refusal is a ledger row
+  that no bead numbers by hand: `unpinned-claim-closure` (N29-REF's row, raised by N29b-13; family `9xx`, exit 9,
+  retry `never`: an integrity fault of the store, not an input the caller got wrong): the pre-mark audit found a
+  live claim whose evidence closure holds a stored object the claim does not pin; the block carries the count of
+  (claim, object) pairs and the first 20 pairs with a handle for the rest; repairs 1. withdraw each listed claim
+  (`--withdraw-claim`, which runs no cycle and is not blocked by the audit) and re-run its evidence, 2. report
+  the writer that inserted the claim and leave the store uncollected until it is fixed. Its number comes from
+  the allocation ledger (`registries/refusal_allocations.toml`, N35-33's rule; no proposal, no interim code); the
+  row's `refusals` receives that number in the change that registers it, and no bead types it.
 - Implemented by: BD-209.
+- Extended by: N29b-13 (claim withdrawal, `--withdraw-claim`; the pre-mark audit with `unpinned-claim-closure`
+  and the orphan release).
 
 **Machine fields of each row.**
 
 | Verb | Capabilities | Output schema | Task clusters | Example |
 |---|---|---|---|---|
 | `store.status` | `store:read` | `frob.store.status.out/1` | `housekeeping` | `frob store status --json` |
-| `store.collect` | `store:admin` | `frob.store.collect.out/1` | `housekeeping` | `frob store collect --dry-run --json` |
+| `store.collect` | `store:admin` | `frob.store.collect.out/1` | `housekeeping` | `frob store collect --dry-run --budget 1MB --json` |
 
 The remaining fields follow by rule: `input_schema` is `frob.<verb name>.in/1`; `refusals` is the chapter list of
 the verb's block; `idempotent` is `true` for `read` and `admin` and `false` for `run` and `mutate` (which take an
@@ -110,22 +144,45 @@ purpose = "Store size, pins and retention"
 1. The MCP tool name is the verb name with `.` and `-` replaced by `_`. The output on the wire is one envelope
    `frob.envelope/1` with `result` specialized to the output schema; its `evidence` block is a claim product (the
    weakest class, tier and determinism class among the inputs).
-2. The generator adds the common input properties of the kind (`run`: `sync_wait_ms` from 0 to 30,000 with MCP
-   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel`; `mutate`: `idempotency_key`,
-   `expected_parent`) and appends the surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid),
-   724 (not implemented in this build) and 802 (schema failure, including an unknown parameter) for every verb; 701
-   to 704 (budget and admission), 803 (key reused with different content) and 805 (missing key) for `run`; 725, 803,
-   804 (stale parent) and 805 for `mutate`; 806 and 807 for paginated reads; 808 for an out-of-range integer.
+2. The generator adds the common input properties of the kind, as NJL-01's kinds table lists them (`run`:
+   `sync_wait_ms` from 0 to the row's `wait.mcp_max_ms`, 30,000, with MCP default 5,000; `idempotency_key`, CLI
+   `--key`; `budget`; `estimate_only`, CLI `--estimate`; `on_cancel`, `leave` (the default: the job keeps
+   running) or `cancel_job`; `envelope_scope`, CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, the
+   approved compute-envelope scope the job cites (NJL-01; a citation that contradicts the token of the launcher
+   the job runs under is 761 with pointer `/envelope_scope`, N35-REF); `mutate`: `idempotency_key` and
+   `expected_parent`). `idempotency_key` is never in the JSON-schema `required` array: the annotation
+   `x-frob-key: "required"` (`"optional"` on a `key_optional` entry) carries the rule, and the admission
+   transaction refuses a missing key with 805 on both surfaces. The surface-wide refusals appended by kind:
+   `FROB-REF-720` (scope missing), 723 (token invalid), 724 (not implemented in this build) and 802 (schema
+   failure, including an unknown parameter) for every verb; 701 to 704 (budget and admission), 761 (above the
+   compute envelope in force), 803 (key reused with different content) and 805 (missing key) for `run`; 725, 803,
+   804 (stale parent) and 805 for `mutate`. The properties and codes driven by fields are those of NJL-01's
+   variation table: `cursor`, `limit` and `follow` with 806 and 807 for a paginated entry or a paginated action;
+   808 (an integer outside ±(2⁵³ − 1)) for an entry whose generated input schema has an `int53` property at any
+   depth, whatever its kind (every `run` entry has one, `sync_wait_ms`); `estimate_only` on a non-`run` entry
+   with `estimable = true`; no 805 for a `key_optional` entry; the `action` property, with each action's codes,
+   for an entry with `actions`; 790 for a non-empty `needs_groups`; 891 for an `artifact-input<F>`,
+   `artifact-ref<F>` or `artifact-identity<F>` parameter, and 892 as well for `artifact-identity<F>`; 893 for a
+   `foreign-file` parameter; 734 and 828 for a parameter that accepts a path to a file (`artifact-input<F>`,
+   `artifact-identity<F>`, `foreign-file`). The later variations of that table (10 to 13) land with their beads
+   and are read there, not copied here.
 3. Exit codes: 0 done; 2 done with findings; 3 refused input (1xx to 5xx, and 8xx other than conflicts); 4 budget
-   (70x); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
+   (70x and 761); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
    indeterminate; never 1 on purpose.
-4. Rows are entered when the cluster is first registered (M2). Until its own milestone a verb answers one envelope
-   with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json` lists it as absent.
+4. Rows are entered when the cluster is first registered (M2); each row's tool is added to the task-cluster
+   tables its `task_clusters` names in the same change (NJL-05's staging rule). A verb whose handler is not in
+   the build answers one envelope with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json`
+   lists it as absent; a reduced form that lands before the row's `first_milestone` answers and is listed as
+   implemented with its form named (NJL-01, NJL-03: the field keeps the appendix's milestone).
 
 **Notes for this cluster.**
 
 - `store.collect` is of kind `admin`. Collection is bounded and respects retained checkpoints, pinned objects and
   the frontiers pinned by open cursors; a deletion that would remove a pinned object is refused (`FROB-REF-813`).
+- Key on an `admin` verb (DESIGN, round 1): BD-209 requires an idempotency key for a real collection and makes a
+  keyless call a dry run, while N29b-13 says an `admin` verb takes no key. Both hold with the key as this row's own
+  optional input, which selects a real collection and makes it replayable; no `FROB-REF-805` is appended (the
+  `admin` rule), because a keyless call is a valid dry run, not a refusal.
 
 ## Acceptance criteria
 
@@ -144,7 +201,7 @@ purpose = "Store size, pins and retention"
       verb runs its registry example with the result its implementing bead specifies; a misspelt parameter is
       `FROB-REF-802`, exit 3.
 - [ ] The generated refusal table lists for each verb exactly its chapter codes plus the codes appended for its
-      kind, and every code exists in `registries/refusals.toml`.
+      kind and fields (NJL-01), and every code exists in `registries/refusals.toml`.
 - [ ] The gate row is recorded with the measured counts by a session that did not write the rows.
 
 ## Test plan
@@ -159,8 +216,12 @@ strings labelled `synthetic`):
   `store.collect` is `admin` at M2).
 - `schemas_and_scopes`: input schemas are `frob.<name>.in/1`; output schemas and capabilities equal the
   machine-fields table.
-- `refusal_lists`: each row's chapter codes equal its block (`store.status`: none; `store.collect`: 813); the
-  appended codes equal the rule for its kind.
+- `refusal_lists`: each row's chapter codes equal its block (`store.status`: none; `store.collect`: 813, and the
+  number the ledger assigned to `unpinned-claim-closure`, read from `registries/refusal_allocations.toml` by
+  slug, in a registry where that row is entered; none is typed in the test); the appended codes equal the rule
+  for its kind and fields (NJL-01) (no 805 on `store.collect`).
+- `collect_key_selects_mode`: `store.collect` without a key returns a dry run and removes nothing; with a key it
+  collects, and the same key again returns the stored cycle; `--withdraw-claim` twice returns the first record.
 - `mcp_names_one_to_one`: the tool names are the mapped names (`store_status`, `store_collect`), with no collision
   against any other cluster.
 - `task_clusters_and_examples`: every row sits in a task cluster of at most seven tools or is a base tool; each
@@ -208,8 +269,13 @@ and field; the `summary` line gives assertions passed and failed and the gate to
 - Closing rule: the bead closes at M2, when the rows are registered, the surfaces match and every verb passes its
   example or answers the not-implemented refusal. The per-milestone surface beads (BD-222) re-run this script as
   verbs land; that is how GATE-TETHER-02 is re-measured.
-- Scope names are proposals (`<cluster>:<read|run|write|admin>` plus the named scopes of the surface) until the
-  capability bead BD-258 fixes the scope registry; a `run` or `write` scope of a cluster implies its `read` scope.
+- Scope names follow the naming rule decided in BD-258 (no longer proposals): a row cites scopes of its own
+  cluster by kind (`read` → `<cluster>:read`; `run` → `<cluster>:run` or a named spending scope; `mutate` →
+  `<cluster>:write` or a named write scope; `admin` → `<cluster>:admin`, `job:cancel` or a named admin scope),
+  plus `export:*` when the row exports and `private:*` where privacy applies, never a scope named after the
+  object read or the engine spent on; N32b-01's catalogue generates the forms. `<cluster>:run` and
+  `<cluster>:write` imply `<cluster>:read`, closed when a set is stored (at minting and at derivation,
+  `Scopes::close_implied`), so checks stay plain set inclusion.
   Inputs and outputs above name contents, not flag spellings, except where a flag is quoted; the implementing bead
   fixes the spellings and the snapshot then pins them (additive changes keep the schema's major version; anything
   else raises it).

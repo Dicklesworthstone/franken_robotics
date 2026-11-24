@@ -1,0 +1,377 @@
+{
+ "round": 2,
+ "slice": "S74",
+ "reviewed": 41,
+ "changed": [
+  {
+   "bead": "BD-332",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "VERBS-gait moved from related to deps: `frob gait atlas` and the MCP tool are generated from its row. N33bx-03 says the atlas reports cross_check agree|disagree|absent, withholds the timing block on disagree, and asserts the field in the atlas's own script, but BD-332 said only 'both required to agree': the field and both failure behaviours added, with a cross_check_states test (agree; absent record; planted largest-entry entry gives disagree) and the script assertion. Group counts (8 subgroups, 23 pairs, 26 for the abelian mutant), the Z6xZ2 quotients and both max-plus schedules recomputed and correct."
+  },
+  {
+   "bead": "BD-333",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "users"
+   ],
+   "what": "Refusal list gains FROB-REF-461 and FROB-REF-443 (N22-REF and N20-REF name gait.orbit and a gait-orbit quotient) with an acceptance line, unit test and script step 7 (bound pair on the trotting loop); every script call carries --key (KNOWN_DRIFTS 5) and a keyless call checks 805; grammar gains operator-only --workers (batch-cpu, outside identities) so the worker-count lane can run through the binary, and states the common run inputs; deps gain VERBS-gait and the new derived-saltation-kernel bead N22ap2-02, whose verb-level check (source: derived-kernel in the label payload) script step 1 now asserts; 'an ordinary derivative' at grazing named as the two-sided saltation derivative."
+  },
+  {
+   "bead": "BD-334",
+   "kinds": [
+    "correct",
+    "tests",
+    "users"
+   ],
+   "what": "Fold controls named 'three rimless wheels at the critical slope', but the wheel's multiplier is cos^2(2a) on every slope (no fold; N22-REF records the same correction): replaced by three planar-loop folds (s_min 1.26e-5, 3.77e-5, 7.54e-5) on fixture:planar-fold, which N22c-36 now registers, with the 3.2275 control. The rimless gradient was taken in alpha, which the CLI fixture cannot vary (integer spokes): verb-level now (slope, l, g) via --wrt with 0.2135572 for g, alpha kept in the crate test. Evidence class Estimated (gate record Tested); example carries --key and equals VERBS-gait's; 'ordinary label' (not one of the nine) replaced; --key/805 and --workers named."
+  },
+  {
+   "bead": "BD-335",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Examples carry --key and now equal VERBS-gait's row (which adopted them in round 1), so the 'except' clause and the row test are corrected; evidence block Estimated; draft decision record path docs/adr/ADR-KILL-GAIT-M4.md (KNOWN_DRIFTS 4); script calls all keyed, with fresh run-scoped keys and --workers for the determinism lane, the clauses recomputed by the Gauntlet's cargo form and the gate recorded with record_gate (KNOWN_DRIFTS 1); --workers and 805 tests added."
+  },
+  {
+   "bead": "BET-26",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Script calls gain the fixture grammar and fresh keys; the uphill wheel returns a typed outcome without an orbit (exit 2, N22a-38), not a refusal; the controls criterion matches BD-335 (grazing refused or marked, unstable given the verdict, none scored); the pre-registration criterion now checks the registration made by N00-28 and BD-335 instead of claiming to make it after them (KNOWN_DRIFTS 7)."
+  },
+  {
+   "bead": "CARD-T-25",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Two acceptance lines asserted facts about live atlas output, which this card cannot observe (BD-332 is related, by its own order-of-work rule); restated on the card's specimen, with the live-output part named as BD-332's acceptance. All counts rechecked (8 subgroups; six K with cyclic quotient; the D4 non-normal pair)."
+  },
+  {
+   "bead": "FD-FSIM-20",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Post-phase calls had no subject, parameters or key: now the fixture grammar (spokes=8,l=1,slope=0.08 and the gate's 4-degree set, compass gait, transverse instability) with fresh run-scoped keys, the 100-case gradient calls keyed, gate values by the Gauntlet's cargo form and record_gate. Rimless 1.2000388 and ball 8.829 rechecked."
+  },
+  {
+   "bead": "GB-27",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Control (b) was wrong: swapping f+ and f- gives Xi11 = -1.25 and coupling -11.03625, not -8.829 (that value comes from subtracting the time-shift term, now control b'); grazing at the gait level is 431 wrapping 263 (N22a-33), not 263; example and NEG-02 calls keyed; c in the fixed-point row defined. Goldens recomputed (2.0949958810, 1.4474100597)."
+  },
+  {
+   "bead": "N10a-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The shooting now states the body's pair (trot (C2,1) m=2; bound (C2,C2) m=1), not the clock network's diagonal exchange, which no isometry of the body realizes (N22a-31); pilot record path and schema per KNOWN_DRIFTS 3; rollout calls spelt as sim.run with --worlds, distinct keys per variant and for the A/A arm."
+  },
+  {
+   "bead": "N10b-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "A labeled derivative's evidence class is Estimated (N00-26's creation rule; the statements stay Tested); 'ordinary label' on the symmetric subspace replaced by saltation; gauntlet target names g1_known_answers for KA-095 and g3_metamorphic for KA-097 (KNOWN_DRIFTS 1)."
+  },
+  {
+   "bead": "N10b-02",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Same 'ordinary' label fix; target names g3_metamorphic (KA-094) and g1_known_answers (KA-096); shooting and block diagonalization attributed to N22a-31/N22a-32. Two-ball residual 981/1000 and the 27/162/45/324 counts rechecked."
+  },
+  {
+   "bead": "N10b-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Rimless controls rebuilt: the critical slope is a grazing control only at a mid-stance section (gamma_c = 0.0682295 rad for eight spokes; at the post-impact section the wheel has no singularity), and the near-unit-multiplier control quantified; test added. Record path and schema per KNOWN_DRIFTS 3; result class Estimated (standalone program; pilots fund, never gate); validation by --test pilot_register instead of the non-target g0."
+  },
+  {
+   "bead": "N22a-29",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "Evidence class Tested -> Estimated (only a checker, the Gauntlet harness or the study runner creates stronger classes; matches VERBS-gait's screening label and BD-333). Scope names N22ap2-03 for the gait-instability monitor. The U24a request (dep N24a-38 and the switch-over) is carried by the new bead N22ap2-03 instead of this crate-skeleton bead, because the monitor lives in frob-chronicle (layer 6), which frob-gait (layer 4) may not name."
+  },
+  {
+   "bead": "N22a-30",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Evidence class of derivatives Tested -> Estimated (as N22a-29)."
+  },
+  {
+   "bead": "N22a-31",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "scope"
+   ],
+   "what": "Added group admission through N22b-37's UseGroup check (443 outside Gamma_obs, 461 outside the usable group; a reduction under a larger group is refused). Because an orbit spans a stride, the instantaneous contact-mode stabilizer is replaced by the contact-sequence condition (K fixes every mode; sigma maps mode t to t+N/m), with the trot as positive control, a turning command and a bound pair on a trot as refusals. Corrected the Considerations sentence that described a silent fallback; Scope names N22b-37 rather than BD-327 (which depends on this bead); evidence class Estimated."
+  },
+  {
+   "bead": "N22a-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Evidence class of multipliers Tested -> Estimated. All numbers rechecked (A^2, trace 3.086161, non-normal gains 10.0249/10.0062/3.1253/0.1953)."
+  },
+  {
+   "bead": "N22a-33",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "Scope said the derived saltation kernel is derived by BD-333, which BD-333 never stated; it now names the new bead N22ap2-02. Evidence class Estimated. Ball and rimless-wheel saltation entries re-derived (8.829; -6.0655; b = 2.094996)."
+  },
+  {
+   "bead": "N22a-34",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the U22c request: order sensitivity is the maximum over pairs of selections (N22c-54's decided measure): 0.612372 in the mass norm, sqrt(3)/4 = 0.433013 normalized at beta = 1/3, attained by the mirror orderings, with 0.353553/0.25 kept as ordering-vs-coupled. Found the near-threshold case was then wrong: at beta = 0.98 the pairwise value is 0.0101 (order-sensitive); replaced by beta = 0.99 (0.0050, agree) and kept 0.98 as the boundary case. Added a closed-form test; evidence class Estimated."
+  },
+  {
+   "bead": "N22a-36",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The orbit record's evidence block said class Tested, against BD-333, VERBS-gait's screening label and N00-26; now Estimated, with the recovery table of an order-sensitive verdict keeping its own Tested; schema test added."
+  },
+  {
+   "bead": "N22a-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Evidence class Estimated. All seven closed forms rechecked (36/7, 20/7; fold at 0; doubling at 1 and 3; two-cycle 0.513045/0.799455; pitchfork +-0.5; mode change at 0.5)."
+  },
+  {
+   "bead": "N22a-38",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests"
+   ],
+   "what": "Every gait.orbit call carries --key; step 12's determinism comparison uses fresh run-scoped keys (otherwise it compares a stored receipt with itself) and --workers; record evidence class Estimated; the gate row is written with record_gate (KNOWN_DRIFTS 1); stale 'requested of BD-333' wording fixed; step 1 asserts the impact's source: derived-kernel (N22ap2-02 leaves that verb-level check to this script and BD-333's). Rimless values rechecked (2.094996, 2.719485, b = -1.048)."
+  },
+  {
+   "bead": "N22a-39",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests"
+   ],
+   "what": "Every run call keyed (the key from the case id, so a resume replays finished cases) and the determinism lane on fresh run-scoped keys with --workers; the rimless closed-form subset taken in (slope, l, g) through --wrt (the integer spoke count cannot be differentiated), with the g entry 0.2135572; 'ordinary label' (not one of the nine) replaced in the clause, two criteria and the self-test; pass rule by the Gauntlet's cargo form (g1_known_answers) and the row by record_gate; --impact-report named as BD-333's input."
+  },
+  {
+   "bead": "N22a-40",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Every run and mutate call (gait orbit, gait continue, design edit) keyed, one key per ledger state for the screening table, fresh keys for the step-13 comparison; the offered-seed and fixture inputs named as BD-333's grammar (--seed-orbit, --set) instead of 'requested of BD-333'; the event-reset refusal calls spelt with --form stroboscopic and keys."
+  },
+  {
+   "bead": "N22c-17",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The not-fired rule judged the rung on the point tau, while every rank rule is judged on its lower bootstrap bound (the program's rank-agreement row): modes discard-only/selective/uninformative restated and the rule table extended with the uninformative case. 'not-for-ranking' is not a Standing value: the fired switch is BD-335's orbit_use = diagnostic-only, records carry standing diagnostic, and the ladder refuses with FROB-REF-537. ADR at docs/adr/ADR-KILL-GAIT-M4.md with N40-03's fields and the decision by record_gate (KNOWN_DRIFTS 1, 4); rule tests located in kill_gates.rs; the fired-behaviour orbit call on a fresh key."
+  },
+  {
+   "bead": "N22c-35",
+   "kinds": [
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Register and result now named as one entry of crates/frob-conformance/registry/pilots.toml (schema frob.gauntlet.pilot/1, N38a-09; KNOWN_DRIFTS 3), protocol committed before the result; the script validates the entry with --test pilot_register. Closed forms rechecked (e^-pi 0.0432139, e^-2pi 0.00186744, omega*^2 1.2000388)."
+  },
+  {
+   "bead": "N22c-36",
+   "kinds": [
+    "e2e-logging",
+    "complete",
+    "users",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Its only e2e was N22c-38's gate script, which depends on this bead and N22c-37 (KNOWN_DRIFTS 7): own runner gait_section_form.sh added (planar loop, rimless wheel, the stroboscopic refusal, the keyless 805) with NDJSON logging. The fixed-period request it refuses had no spelling: --form stroboscopic with --period (BD-333 leaves both to this bead) and --form section, with --key; the label list now has the nine labels (fixed-mode was missing). Registers fixture:planar-fold, which BD-334's fold controls and N22c-37's planted fold use and nobody registered; its closed forms tested (0.221360, 2.732753, 0.99998743). Dep STD-E2E."
+  },
+  {
+   "bead": "N22c-37",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Same KNOWN_DRIFTS 7 gap: own runner gait_bordered_form.sh added (planar loop r*, T*, multiplier and sensitivities; the planted fold located by continuation with dr*/dtheta 3.2275 at -0.24; section-vs-bordered agreement), keyed calls, NDJSON logging. Dep STD-E2E. Closed forms rechecked."
+  },
+  {
+   "bead": "N22c-38",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied the three requests (U22a, U33b, UJL-2): --set instead of --param, the wheel's keys spokes=8,l=1,slope=0.08 instead of alpha/gamma, the planar-loop refusal as --set mu=1 --form stroboscopic --period 2pi, plus a one-spelling check that --param fails with 802. Every call keyed with a determinism lane on fresh keys and --workers; the uphill wheel spelt and stated as a typed outcome (exit 2); compass-gait calls spelt; gradient calls name --state-sensitivity; the row recomputed by g1_known_answers and recorded with record_gate. omega*^2 stated as 1.2000388, since 1.2000 or 1.20004 would fail the 1e-6 tolerance."
+  },
+  {
+   "bead": "N22c-39",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Record moved to docs/adr/ADR-KILL-FREEPERIOD-M4.md with N40-03's fields and the decision by record_gate, replacing a write to registries/gates.toml (KNOWN_DRIFTS 1, 2, 4); per-subject, per-form, per-pass keys so the two forms and the two passes never compare a replayed receipt; rule tests located in kill_gates.rs and run by the script."
+  },
+  {
+   "bead": "N22c-40",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Pilot register path and schema (KNOWN_DRIFTS 3) and validation by pilot_register. The pilot said the orbit solver supplies the two-mode orbit over risers, but gait.orbit's world is flat ground and the terrain input comes only with N22c-41, which follows the pilot: the prototype now shoots on keyed sim.run stride evaluations over a terrain: riser scene, with the flat-ground orbit as seed; one key per sampled sequence. Counterexample numbers rechecked (1.457107, 1.207107, det 1/16, cycle counts 2/1/2/3)."
+  },
+  {
+   "bead": "N22c-41",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "No bead supplied terrain to the orbit world, yet the gate's real-orbit step runs a trot over alternating risers: added mode worlds from a BD-201 terrain task (--task; this bead registers the alternating-risers instance of BD-201's stairs family), level-referenced base height, the equivariance precondition per mode world, the orbit of the shortest cyclic word and mode Jacobians as checked factors of its monodromy. Evidence class Tested -> Estimated (frob-gait may not mint Tested; the rational certificate is re-checked by frob-verify, the only checker that may create a Certified product, scoped to the stated matrices). Verb keyed; own runner gait_stride_sequences.sh (KNOWN_DRIFTS 7) with two new tests; dep STD-E2E."
+  },
+  {
+   "bead": "N22c-42",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Every call keyed; the determinism lane on fresh run-scoped keys; the real-orbit step spelt (quad-ref, --task, --tier) with the mode-factor identity and the Estimated class asserted; the row recomputed by g1_known_answers and recorded with record_gate."
+  },
+  {
+   "bead": "N22c-43",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Record moved to docs/adr/ADR-KILL-STRIDESEQ-M4.md with N40-03's fields and record_gate (KNOWN_DRIFTS 1, 2, 4); rule tests located; the fallback call spelt with a fresh key; under rule 5 (mechanism never funded) --modes does not exist, so the script runs only BD-333's recovery test and logs the flag check not-applicable instead of calling an absent option."
+  },
+  {
+   "bead": "N22c-54",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Decision record named docs/adr/ADR-OPEN-GAIT-2.md (KNOWN_DRIFTS 4); script calls spelt in BD-333's grammar with --impact-report and keys, asserting 0.433013 and 0.612372 at beta = 1/3; dep STD-E2E. Closed form 2 sqrt(b)(1-b)/(1+b)^2 rechecked."
+  },
+  {
+   "bead": "N33b-11",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Acceptance and e2e called gait.orbit 'once it exists' (M4, BD-333, which depends on this M3 bead; KNOWN_DRIFTS 7): restated as the airlock's group-absent path tested at crate level, with the binary-level 790 check named as BD-333's script step 5; the stage commands spelt (cargo test lanes) and the gate recorded with record_gate (KNOWN_DRIFTS 1); planted adapter paths made valid Rust identifiers. Hand cases rechecked (e^-0.2pi = 0.533488, det 1, growth about 100)."
+  },
+  {
+   "bead": "N33bx-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The entry's runtime result was class Tested; under N00-26 only a checker, the harness or the study runner mints stronger classes, so it is Estimated, with the admission lane's record the Tested product. Coherence with BD-332's cross_check field restored there. All hand cases rechecked (trot 1/2 with eigenvector (0, 1/4); B 0.7; orientation 2 with the reversed circuit under the omitted transpose; mutant 3/4 and 0.9)."
+  },
+  {
+   "bead": "SPEC-C-10",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "The verb step used a spelling no bead defines (`--design templates/quad-mammal --network z4xz2`): now BD-332's `frob gait atlas templates/quad-mammal --network quadruped-8cell --json`, logged pending until BD-332 lands; G1 rows by the Gauntlet's cargo form (g1_known_answers, KNOWN_DRIFTS 1); s4_agrees_with_fs_tropical needs N33bx-03, not a dependency, so it is owed at BD-332's acceptance (its cross_check_states). Trot and variant schedules rechecked (1/2, x = (0, 1/4); 3/5 with [1/4, 7/20])."
+  },
+  {
+   "bead": "SPEC-C-16",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`--test g1` is not a target: now FROB_TEST_SEED=16 cargo test -p frob-conformance --test g1_known_answers -- KA-092 KA-093. All numbers rechecked (8.829; z* 2.09499588102780; omega 1.44741005974; dJ/dgamma 29.96; delta t 1/2000)."
+  },
+  {
+   "bead": "NFp2-03",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The importer call omitted the adapter: `scene import --kind place --from twin`, as BD-398's place form and the gate script's own `--from twin`. Landmark, coplanarity and epsilon_c = 0.005 values rechecked."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N22ap2-02",
+   "why": "The derived saltation kernel that N22a-33 binds into the event-located tangent map and that CARD-T-17 certifies had no deriving bead (N22a-33 named BD-333, which never states it). The new bead derives a kernel per event class through N21a-12's pipeline, binds it with the source recorded per event, and tests it against the formula: ball Xi = [[-0.8,0],[8.829,-0.8]], moving platform 5.6232, rimless -6.065528, six mutants; e2e gait_saltation_kernels.sh."
+  },
+  {
+   "bead": "N22ap2-03",
+   "why": "Round 1's U24a request asked N22a-29 to switch the gait-instability failure-class row to available, but the monitor lives in frob-chronicle (layer 6), which frob-gait (layer 4) may not name. The new bead carries it: stride events in frob-gait's chart, the predicate with the threshold d_floor = 1e-2, synthetic answers (strides 5/6/8/8/99), the planted trot above its stable speed chosen by a rho > 1 sweep and the nominal-speed control, and GATE-CHRON-08's fixture extension recorded with record_gate. Key p2-03 because another reviewer already holds N22ap2-01."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-gait",
+   "what": "gait.orbit inputs: add --period (with --form stroboscopic, N22c-36), --task (with --modes, the mode worlds of N22c-41), --seed-orbit and the operator-only --workers (BD-333's grammar); chapter refusals add FROB-REF-443 (group outside Gamma_obs, BD-333 and N22a-31). gait.gradient: the label list (`ordinary`, `one-sided`, `generalized`) names a label that does not exist; list the nine of C-16 (smooth, saltation, discrete-step, fixed-mode, one-sided, generalized, smoothed, finite-difference, refused), and add BD-334's inputs --state-sensitivity, --multipliers, --check fd, --edit and --workers."
+  },
+  {
+   "bead": "N24a-38",
+   "what": "The gait-instability row's delivering bead is N22ap2-03 (frob-chronicle; frob-gait may not name the chronicle), not N22a-29: rename it in the wave list. State the predicate's floor d_floor = 1e-2 (scaled chart) so both beads describe one predicate. From M3 the row enters unavailable while every legged baseline declares a periodic gait from M1, so admission rule (a) would refuse those runs until M4: exempt later-wave rows from rule (a) until their delivering bead lands, or narrow the enabling feature."
+  },
+  {
+   "bead": "CARD-T-17",
+   "what": "Name N22ap2-02 as the bead that derives the saltation kernels (the card names BD-333, which does not); line 122 says the derivative of a symmetry-tied simultaneous event is 'ordinary', which is not one of the nine labels: it is `saltation` (as N10b-01 and N10b-02 now say)."
+  },
+  {
+   "bead": "N22b-37",
+   "what": "N22a-31 admits an orbit's group with the contact-sequence condition (K fixes every mode of the stride; sigma maps the mode at t to the mode at t+N/m) in place of Stab(current contact mode), since every trot's mirror exchanges the stance pairs. The UseGroup check needs a context whose contact mode is not held fixed (a stride's mode sequence), or N22a-31 must pass a stance-free context explicitly."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.import's row lists only kind and the path, but BD-398's place form takes `--from <adapter>` (fdgr, mesh, twin), which NFp2-02, NFp2-03 and the GATE-HAB-03 script call (KNOWN_DRIFTS 8): list it as an input of the place form."
+  },
+  {
+   "bead": "N33b-21",
+   "what": "The spectral row (an M1 bead with no dependency on BD-333) calls `frob gait orbit fixture:rimless-wheel ... --json` 'from M4' without --key (805 under KNOWN_DRIFTS 5). The binary-level check that gait.orbit succeeds with the group and exits 5 with FROB-REF-790 without it is BD-333's script step 5 (BD-333 depends on N33b-11); either cite that step instead of calling the verb, or add --key and a stage that BD-333's script invokes (KNOWN_DRIFTS 7)."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 41 beads read in full (N22a-35 and NFp2-02 unchanged). Main finds beyond the drifts: no bead derived the saltation kernels or carried the gait-instability switch-over (two new beads); the rimless wheel used as a fold control (it has none); no bead gave the orbit world terrain although the GATE-GAIT-05 script runs a trot over risers (now N22c-41); the pilot N22c-40 waited on that later bead; fixture:planar-fold used by BD-334 and N22c-37 but registered nowhere (now N22c-36); the section and bordered forms had no e2e of their own; evidence classes Tested where frob-gait may only mint Estimated. The N22c-38 requests were applied. Ten-bead checkpoints were missed once (the file was rewritten at 22 and 35 reviewed, not at 30). depcheck and graph_check cycles are clean apart from INDEX entries for the new p2 beads."
+}

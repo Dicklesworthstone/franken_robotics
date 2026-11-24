@@ -1,0 +1,222 @@
+{
+ "round": 3,
+ "slice": "F-U25c-2",
+ "reviewed": 26,
+ "changed": [
+  {
+   "bead": "N25c-26",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "request applied: dep BD-364 (the M4 writer of product-unreachable bundles that step 7 verifies; BD-359 exposes only proof objects), named in step 7; step 8's '--after-edit <both>' made executable: the sole and clock changes are one edit record (an edit is a set of changed fields, BD-292), since --after-edit takes one e:…"
+  },
+  {
+   "bead": "N25c-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the kill row's decision entry lacked `receipts`, which N40-03 requires (at least one for not-fired): now decision = { outcome, adr, date, session, receipts } citing the GATE-AUGUR-16 receipt and the pilot result's receipt, in the approach and the acceptance criterion"
+  },
+  {
+   "bead": "N25c-29",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "unit test and e2e step 2 asserted a threshold of '0.10 m plus the registered clearance' with no number: the fixture's clearance margin is now 0.01 m (threshold 0.11 m inside the gap range [0, 0.12] m), and a 0.03 m margin case checks that an exclusion may rest on the range bound but never on assuming the unknown gap blocked"
+  },
+  {
+   "bead": "N25c-30",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "added dep N25b-30 (the M3 writer of composition bundles that acceptance and e2e step 4 verify with frob-verify); stated that a declared failing chain is refused with 858 (exit 3) while a search candidate that fails composition is discarded, not refused; 858 is not on mission.synthesize's row (only mission.transport): requested of VERBS-mission"
+  },
+  {
+   "bead": "N25c-31",
+   "kinds": [
+    "correct"
+   ],
+   "what": "859 (unrealizable or path-less world edit) raised through mission.synthesize is not on that row in VERBS-mission (only distinguish and separate): noted in the bead and requested of the registry; exit 3 stated"
+  },
+  {
+   "bead": "N25c-32",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e step 6 and a negative control asserted a refusal 'as unearned' with no code, no command and no registry row: now the answer stays at the highest earned level with matter.promotion = not-earned naming the failed condition (DESIGN, no refusal code exists), step 6 spelled as a mission.synthesize call with --set; added unit test outside_duty_cycle_refused_854 for the acceptance criterion that had none; the negative control now plants a coupled run without a ranking change"
+  },
+  {
+   "bead": "N25c-33",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "e2e step 7 calls `frob report mission`, whose implementer BD-302 was no dependency: added; mission.show --set values strategies, per_budget, ties, acceptance and unmet are not on the row (only inner, outer, excluded, unresolved): stated as this bead's M8 extension and requested of VERBS-mission"
+  },
+  {
+   "bead": "N25c-34",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "step 4 dispatched acceptance missions with no command: now `frob eval qualify … --task … --claim … --key` (BD-259's blinded lane, a transitive dep), asserting the prediction was registered first and the receipt's decision matches it; step 7 expected revalidate to be refused with 858 while withdrawing claims: now exit 2 with the composition proof withdrawn and 'clock mismatch' as cause (858 is not on mission.revalidate's row); step 12 wrote the gate row itself: now a receipt recorded with record_gate (KNOWN_DRIFTS 9)"
+  },
+  {
+   "bead": "N25c-35",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the gate-register write `pass` or `killed: fallback adopted` departed from N40-03 (KNOWN_DRIFTS 10): now decision = { outcome, adr, date, session, receipts }; a second repair cycle is a deferred decision, which needs an exit after M8, so it is unavailable and a failure after the first cycle fires; a pilot (N25c-28) whose falsifier held is the trigger met on the pilot's record (its falsifier is the trigger's own condition), so `fired` citing the pilot receipt, as N40-34 reads KILL-FAMILY; `not-reached` only when the pilot was not run or the owner declined the epic; unit tests pilot_falsified_fires and epic_not_funded_not_reached"
+  },
+  {
+   "bead": "N25c-38",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "request applied: dep BD-364 (the colouring-bound bundle writer), named in step 2; step 1's literal command lacked --key (KNOWN_DRIFTS 5) although the key paragraph requires it"
+  },
+  {
+   "bead": "N25c-40",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the kill row's decision entry lacked `receipts`, which N40-03 requires: now { outcome, adr, date, session, receipts } citing the pilot result's receipt and the GATE-AUGUR-19 receipt, in the approach and the acceptance criterion"
+  },
+  {
+   "bead": "N25c-41",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request applied (H-verbs-3): `--derive-sets` without `labels-from-contact` answers FROB-REF-724, exit 5, status not-in-build (killed after KILL-AUGUR-LABELS fires), pointer /derive_sets, the feature in the first repair, never 802; acceptance adds the byte-identical help schema with and without the feature; the e2e flag-off step asserts 724"
+  },
+  {
+   "bead": "N25c-42",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "the bead wrote a pilot record of its own while N25d-40 already enters row 16 as records 16a [F] and 16b [M]: a second record would leave 16a `unregistered` and block funding; it now registers 16a and 16b (protocol, cost, tool, gated_beads N25c-43/44/45 on 16a and N25c-47 on 16b, without which fundable_bead reads the whole package and 16b, whose result only the gate supplies, blocks the beads that produce it); dep N25d-40 added; `plan_time_records = [PILOT-C-08]` removed, since PILOT-C-08 is a pilot record, not a ledger record, and N38a-09 makes that a load error; identifiers PILOT-PHASE-01/02 proposed and requested of N25d-40; unit test holonomy_gated_beads"
+  },
+  {
+   "bead": "N25c-43",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied (H-verbs-1) with one correction: the four kinds are `connection-outside-stratum` with detail rank-drop, stratum-crossing, component-removed and rank-only-displacement, under the constant CONNECTION_OUTSIDE_STRATUM; N25e-45 names no interim code (the number is assigned by N35x-02's M0 run before this bead lands, and an emit under a stand-in fails sixth_row_loads), so the stale 'generic model-admission refusal' interim was removed; each refusal's pointer and first repair stated; the bead had no e2e script of its own (it pointed at N25c-45's, KNOWN_DRIFTS 11): now scripts/e2e/analyze_connection.sh with its design fixtures, the calls spelled with the row's --shape and --loop, NDJSON logging; dep STD-E2E; rank_drop_refused made concrete (crawler at alpha1 = alpha2: the three axles meet at one point, checked numerically) and unit test refusal_rows added"
+  },
+  {
+   "bead": "N25c-44",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "no e2e script of its own (KNOWN_DRIFTS 11): now scripts/e2e/mission_holonomy_query.sh with its gait mission fixtures, seven keyed steps and NDJSON logging; N25c-46 parks the query 'behind its feature flag' but none was named: cargo feature holonomy-query (DESIGN), a gait block without it answering 724 not-in-build or killed; the refusals it raises through mission.synthesize and mission.refute (N25e-45 row 6) named: the constant, detail stratum-crossing and rank-only-displacement; deps N25e-45 and STD-E2E; unit tests contact_transition_refused and gait_block_without_feature"
+  },
+  {
+   "bead": "N25c-45",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "step 1 called analyze curvature without --shape and --loop, which the row requires: spelled; step 2's integration now goes through the verb's ordered-product output; step 4's chart change made executable with a forward-shifted design fixture; N25c-43's and N25c-44's scripts run as a first stage (KNOWN_DRIFTS 11); fixture ownership stated (designs N25c-43, gait missions N25c-44, slip and mirror variants here)"
+  },
+  {
+   "bead": "N25c-46",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "decision entry lacked `receipts` (N40-03): added; the pilot-first rule sent every falsified pilot to not-reached, though the pilot's cost part is the trigger's clause B on the pilot's record: now fired on the pilot for the cost part (N40-34's reading), not-reached for a residual failure alone; the atlas funding rule's reading is appended as 16b's pilot result, which N25c-47's fundable check reads; unit tests split accordingly and atlas_result_appended added"
+  },
+  {
+   "bead": "N25c-47",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the surface said `--atlas` is not in the verb's row: VERBS-mission registers it (M6, shape-atlas); stated with the 724 not-in-build or killed rule, never 802, and `result.revalidate` kept as the invalidation verb for non-mission results; acceptance: the funding rule checked through `--example pilots -- fundable --bead N25c-47`, and the flag-off answer; e2e step flag-off added"
+  },
+  {
+   "bead": "N25cp1-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "step 6 asserted that 'the registered outcome interval must contain the result', but the blinded lane returns a decision and nothing per world: now `frob eval qualify <design> --mission q:<acceptance mission> --key sh-6-<n>` (the row's mission-bound form), asserting the prediction's ledger sequence precedes the receipt and the decision matches what the registered interval implies; step 7 called mission.revalidate with no change input, which the row requires: the doorway measurement and wet-floor card enter as edits with --after-edit, the sealed cluster is read through step 6's receipt; step 5 spelled with its key"
+  },
+  {
+   "bead": "N25cp1-03",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "step 4 revalidated every holdout with --after-edit, including sealed world clusters, which are not edits and must never be opened into the query: sealed clusters now qualify each survivor through `frob eval qualify --mission` (BD-259, a dep), measurements, cards and drawn placements stay edits; step 1's compile and mission creation spelled with keys; holdout_after_registration covers the sealed-cluster case"
+  },
+  {
+   "bead": "N25cx-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "both requests applied: fleet-link-undercuts-min-latency and fleet-decision-maker-shared are N35x-02 3xx rows numbered at M0, so they are emitted through their constants from the start, the slug never in place of the code (the 'interim' wording removed); with a fleet scene a positional design and --policy conflict (802), not `--design`, as VERBS-sim's --scene row states; unit tests renamed and pinned to the constants' codes"
+  },
+  {
+   "bead": "N25cx-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "`--answer` is on no row: the mission answer is the positional a:… of experiment.suggest; `--tie-break smallest-radius` is on no row either (BD-291 has it as the mission field candidates.tie_break): declared as this bead's option with its default and its conflict rule, and requested of VERBS-experiment; the pad step of the e2e spelled (mission.distinguish for the answer, then both tie-breaks); unit test tie_break_conflicts_with_mission_802"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize: add FROB-REF-858 (stage composition fails, raised from M8 by N25c-30 on a declared stage chain of a facility query) and FROB-REF-859 (an unrealizable or path-less world edit in an edit set, raised from M8 by N25c-31) to its chapter refusals, and name N25c-29 (--from-scene on mission.new is already there), N25c-30, N25c-31, N25c-32 and N25c-33 among the M8 extenders of mission.synthesize (the facility query)"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.show --set: add the values strategies, per_budget, ties, acceptance and unmet, extender N25c-33 (M8)"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize and mission.refute: name N25c-44 as M6 extender (the inverse holonomy query, selected by the .fmission gait block, behind the cargo feature holonomy-query; without it 724 not-in-build, killed after KILL-AUGUR-PHASE fires) and add connection-outside-stratum (the constant CONNECTION_OUTSIDE_STRATUM, number assigned at M0 by N35x-02, exit 3, detail stratum-crossing or rank-only-displacement) to both refusal lists, as N25e-45 row 6 asks"
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.curvature: the code of connection-outside-stratum is no longer pending with an unnamed interim: N25e-45 row 6 rules that no interim applies (the number is assigned by N35x-02's M0 run, before BD-243's M3 emit site and N25c-43's M6 ones); list the assigned number through the constant CONNECTION_OUTSIDE_STRATUM with the kinds rank-drop and over-determined (BD-243, M3) and stratum-crossing, component-removed and rank-only-displacement (N25c-43, M6); and give the contact-stratum input a spelling, since no script can choose a stratum today"
+  },
+  {
+   "bead": "VERBS-experiment",
+   "what": "experiment.suggest: add `--tie-break largest-gap|smallest-radius` (default largest-gap; N25cx-02, M3), the CLI form of BD-291's candidates.tie_break for the --between form, which has no mission to carry it; 802 when it contradicts the positional answer's mission"
+  },
+  {
+   "bead": "N25-REF",
+   "what": "row FROB-REF-858 lists the epic BD-435 among its raising beads; an epic raises no code: name N25c-30 (mission.synthesize, facility stage composition, M8) in its place, beside BD-128"
+  },
+  {
+   "bead": "N25d-40",
+   "what": "row 16: enter records 16a and 16b with bead = N25c-42 (the pilot bead that registers and runs them; the table's carrier column names the epic BD-425, which stays the work_package), with ids PILOT-PHASE-01 and PILOT-PHASE-02 (proposed in the register's grammar), as already requested for rows 11 (N25c-24) and 13 (N25c-39), so the linkage test's carrier check holds"
+  }
+ ],
+ "unchanged": 4,
+ "notes": "done. Unchanged after full review: N25c-24, N25c-39, N25c-48 and N25cp2-01 (their calibration, deadline, closed-form, dual and vertex numbers recomputed and correct). All five slice requests applied; the one to N25c-43 with a correction (N25e-45 names no interim for connection-outside-stratum: the constant from the start). Every touched file parses (front matter, seven sections, sorted deps, no dangling dep, no cycle)."
+}

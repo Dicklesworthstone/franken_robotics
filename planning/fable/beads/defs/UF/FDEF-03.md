@@ -2,13 +2,13 @@
 key: "FDEF-03"
 title: "defect report, franken_numpy and frankentorch: the stride-convention trap at the interchange boundary"
 type: "task"
-priority: 2
+priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "spark", "upstream", "franken_numpy", "frankentorch", "solid", "test"]
 parent: "WP-37"
 deps: ["BD-036", "BD-037", "STD-E2E"]
 needs: []
-related: ["FD-FNP-01", "BD-193", "BD-301"]
+related: []
 gates: ["INT-FNP-02"]
 plan_refs: ["Appendix F.2 row 3", "§33.11", "§21.5", "§33.10", "Appendix F.3", "§0.1"]
 ---
@@ -87,7 +87,7 @@ for a named conversion, not as a bug in either library.
 - [ ] `tests/upstream/FD-FNP-01/REPORT.md` has the sections Hazard, Evidence (both files, lines, commits), the three cases, Expected and observed, Proposed fix, Interim posture, and `observed_at`.
 - [ ] The reproduction builds against the two pinned crates alone and prints 3.0 expected and 12.0 observed for case 1, and each library's answer for case 2.
 - [ ] The report is filed in both trackers and both identifiers are in the registry row of FD-FNP-01.
-- [ ] In this repository, a search finds no function at an interchange boundary that takes a bare stride tuple; the typed converter is the only route, and a planted function that takes `(usize, usize)` strides from `fnp-ndarray` is caught by the boundary lint of the converter's crate.
+- [ ] In this repository, a search finds no function at an interchange boundary that takes a bare stride tuple; the typed converter (`frob_core::view`, BD-036) is the only route: its compile-fail test `bare_tuple_does_not_compile` (a call passing `(8, 4)` where a `ViewLayout` is required) and its run-time test `foreign_descriptor_without_unit_refused` both pass.
 - [ ] The three cases are tests of the typed converter: element 3; materialize-or-refuse with `FROB-REF-617`; the aliasing write refused.
 
 ## Test plan

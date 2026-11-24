@@ -1,0 +1,405 @@
+{
+ "round": 2,
+ "slice": "S87",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "N15b-22",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Total shaft power was 223.8 W; 4 x 55.937 = 223.7 W. KA-334's tolerance was 'to be set' though this pilot is the bead that sets it: tolerances registered (thrust 1e-6, power 1e-5 relative, accumulated residual 1e-6 of shaft energy) and handed to N15-KA row 334. Loop gains and the discrete-ledger rule fixed so the settling check is reproducible and a step-bookkeeping residual cannot pass for the falsifier. Pilot record named (pilots.toml, frob.gauntlet.pilot/1, fields). Tests moved to N38a-09's pilot_register.rs with row-specific names (four U15b pilots each added a function pilot_registered_before_result to one file); hand-value and KA-tolerance tests; e2e header, steps, STD-E2E fields, expected residual of the hover-only control (-3.92 J). Deps N38a-09, N15-KA."
+  },
+  {
+   "bead": "N15b-21",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot record named (pilots.toml, frob.gauntlet.pilot/1) with kill_gate 'to-register' (the chapter names none; the register requires a gate or to-register, which blocks funding until the epic registers one). Tests moved to pilot_register.rs with row-specific names, hand-value test for both sets and KA-336 test; KA-336 tolerances stated (0.5%, 1e-9 per step, 1e-6 accumulated) instead of 'to be set'; e2e header, steps and STD-E2E fields. Deps N38a-09, N15-KA."
+  },
+  {
+   "bead": "N15b-23",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "ADR path docs/adr/KILL-SINEW-ROTOR.md -> docs/adr/ADR-KILL-SINEW-ROTOR-M6.md with N40-03's fields; outcomes in N40-03's four names ('a missing pilot counts as failed' contradicted not-reached); writes the gate row's decision and the owner declaration N40-30 compares (kill_ledger test in acceptance). Downstream fixed: the hybrid variant is N14bp1-02, never written on the fired branch, so it closes rather than being 'removed from the catalog'. Refusal of a design declaring a rotor was 'exit 5' while N14bp1-02 says FROB-REF-103: 724 is a per-verb dispatch refusal and no bead writes code for a withdrawn kind, so FROB-REF-103 (DESIGN, reason stated); e2e now runs a real command (design new --file) instead of 'design check hybrid-rotor'. Pure-rule test with the four outcomes. Dep N40-23 (the row written); related N14bp1-02, N15b-36, N40-30."
+  },
+  {
+   "bead": "N15b-36",
+   "kinds": [
+    "scope",
+    "tests",
+    "e2e-logging",
+    "correct",
+    "complete"
+   ],
+   "what": "Its e2e ran `frob sim run` on a design with rotors, but the design-side rotor kind is N14bp1-02's, which depends on this bead (KNOWN_DRIFTS 7): e2e now drives `frob actuator show/check` on fixture rotor cards and the KA-334 row on a referee bench (`cargo test --test g1_known_answers -- ka_334`), mutants under gauntlet-mutations; the design-level hover moved to new bead N15bp2-01. Tolerances made concrete (KA-334 as the pilot registers: 1e-6/1e-5; GATE-SINEW-02 1e-9 per step) instead of 'proposed 0.5%'. Added FM>1 passivity refusal (FROB-REF-130) with test and control, descent-domain test values, telemetry lines, kernel parity test (GATE-SINEW-03 1e-4) for the in-scope batched kernel, controls registered via N38a-40."
+  },
+  {
+   "bead": "N19b-23",
+   "kinds": [
+    "split",
+    "sense",
+    "scope",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "Its step 3 (recommendation and the owner's ADR after the pilot) needs N19b-24's result while N19b-24 depends on this bead; acceptance and e2e also checked the pilot's registration (KNOWN_DRIFTS 7). Split: the decision moved to new bead N19bp2-01; this bead keeps the plan, the kill-gate row (in N40-03's shape, mode pilot-before-funding) and the frozen pilot protocol with its digest; title and labels follow; e2e steps with STD-E2E fields."
+  },
+  {
+   "bead": "N19b-24",
+   "kinds": [
+    "placement",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Pilot register named (pilots.toml, frob.gauntlet.pilot/1) as two records (one tier per record: RGB F, splat M); the pilot no longer closes the epic itself (that is the decision bead N19bp2-01's); priority 3 -> 2, since the priority-2 owner decision waits on it; e2e header, ordering step added to rgb_splat_preparation.sh, STD-E2E fields."
+  },
+  {
+   "bead": "N20a-28",
+   "kinds": [
+    "split",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Mixed two Frontier items: hero renders are funded by the tracer's pilot (N33bx-07), not by the RGB census, so keeping them here withdrew hero renders whenever RGB is dropped; split to new bead N20ap2-01, which also takes U33b's request (790 on a default binary, artifact with three flags on a tracer build). Deps: + N19bp2-01 (the funding decision), STD-E2E; - N33bx-07, N33a-11 (hero only). The e2e ran an RGB camera with no rasterizer (a later work package): a declared flat-field irradiance source (DESIGN) makes the photon-transfer fixture runnable; runs keyed; Poisson-branch and quantization tests added."
+  },
+  {
+   "bead": "N38a-33",
+   "kinds": [
+    "deps",
+    "correct",
+    "users",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied S50's request: dep N19c-42 and the constant ACTOR_SUBJECT_CLAIM (crates/frob-scene/src/refusal/late.rs, row 10) as the only way the refusal is raised. Stated what a default build or a fired KILL-DRESSING does with an actor declaration (FROB-REF-724, exit 5, by name; N19ax-05 relied on it). E2e made concrete: fixtures, fixture controller, keyed runs, telemetry checks, default-binary refusal step; tests for both."
+  },
+  {
+   "bead": "N38a-32",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Pilot register file, schema and fallback named; e2e sources lib.sh and logs the STD-E2E fields and the negative control."
+  },
+  {
+   "bead": "N19ax-05",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "ADR path docs/delivery/adr/... -> docs/adr/ADR-KILL-DRESSING-M6.md (KNOWN_DRIFTS 4) with N40-03 fields; decision entry scoped item:actors beside N19a-41's item:assets (as N19a-41 expects), outcome names, 'not built: pilot empty' -> not-reached; owner declaration; fired-branch refusal named FROB-REF-724 (N38a-33); run verbs keyed with distinct keys per lane (KNOWN_DRIFTS 5); test decision_scoped_to_actors."
+  },
+  {
+   "bead": "N31a-50",
+   "kinds": [
+    "correct",
+    "complete",
+    "duplicate",
+    "tests",
+    "users"
+   ],
+   "what": "Feature-absent and KILL-LIFECYCLE refusals named FROB-REF-724 (status not-in-build / killed, fallback and ADR named), as N00-02's dispatch rule and the other M6 kill gates. Synopsis completed with --key, --mode time-axis|hand-specified, --wear-states (DESIGN; step 8 had no way to supply wear states) and --fixture (N31a-51's named fixtures, so the toys of N31a-47 run through the verb as N31a-59 assumes); options not in VERBS-foundry requested. Gate row ownership: it and N31a-59 both claimed the GATE-FOUNDRY-12 record; the row is now N31a-59's, this bead emits the receipt. Aged-variant hand-off: eval.run and nemesis.search had no input for a variant set (N31a-59 and N31b-23 call `eval run --variants`): this bead adds the generic input and requests it of both rows. Tests for each."
+  },
+  {
+   "bead": "N31a-59",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "risks"
+   ],
+   "what": "Determinism repeats would have returned stored envelopes (the preamble's foundry_key derives from step and inputs): repeats carry their own keys and assert idempotent_replay false (KNOWN_DRIFTS 5). Gate row written with record_gate (KNOWN_DRIFTS 1). Kill-switch step names FROB-REF-724; fallback step supplies --wear-states; eval run names its design; STD-E2E header. Graph finding (21 deps) checked: all used directly except BD-402 (independent structural check, unused, implied through BD-409), dropped. The 100-hour reference job takes hours of wall time, above E0, and no envelope row covered it: the bead now files a row from R19 (E1 for gate:GATE-FOUNDRY-12 while a run is at most 2 h and all backends at most 12 device-hours) with the not-approved fallback (gate not-run, KILL-LIFECYCLE deferred), plus an acceptance line."
+  },
+  {
+   "bead": "N31a-47",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "KA-750's registered control placed in controls.toml with its number from N38a-40 (KNOWN_DRIFTS 2). Numbers verified (0.1; 2.25e6, 800; 0.4% bias at 20.125 periods; e = eps^2 H^2 z/4)."
+  },
+  {
+   "bead": "N31a-48",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "KA-753's registered control placed in controls.toml with its number from N38a-40. Numbers verified (2.5 vs 2.0; 3.195; 4.5% with 3,000 Ah; 1.8e-4 rad/h)."
+  },
+  {
+   "bead": "N31b-11",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot record placed in pilots.toml (frob.gauntlet.pilot/1) with its fields, fallback and integrated gate; verdict `positive` replaced by the register's statuses (falsifier-rejected/-holds/inconclusive); row-specific tests in pilot_register.rs; e2e header and steps; dep STD-E2E."
+  },
+  {
+   "bead": "N31b-23",
+   "kinds": [
+    "correct",
+    "users",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Contradicted N31a-50 and N31a-59: it unregistered foundry.lifecycle and deleted the crate on `fired`, while those keep the verb's --mode hand-specified as the fallback and test it. The plan's deletion rule (§34) is for a failed pilot: now `not-reached` deletes or never creates the crate; `fired` removes the time-axis modules and keeps the fallback through the verb (DESIGN, one call gives a variant set; time-axis requests refused with FROB-REF-724 killed). Outcomes in N40-03's names (incl. deferred); ADR docs/adr/KILL-LIFECYCLE.md -> ADR-KILL-LIFECYCLE-M6.md with N40-03's fields; decision entry on N40-27's row and owner declaration for N40-30 (dep N40-27, STD-E2E). E2e used a nonexistent `design edit --provenance` and asserted the verb unregistered: rewritten around the fallback mode, with header, kill_ledger step and keys."
+  },
+  {
+   "bead": "N31b-28",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its card fields duplicated and differed from those the laws read: the cell group is N15b-17's (k_cal, k_cyc, r_cal, r_cyc and validity group), which N31a-48 forbids defining twice; wear now c_w (the coefficient N31a-48 reads) with its constituents for provenance. Tests wear_coefficient_from_constituents (5e-10 rad/J) and coefficient_without_class_refused; e2e header, strict-data refusal named FROB-REF-113."
+  },
+  {
+   "bead": "N18ax-02",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its device steps of traction_clh.sh had no commands or keys: capture, pass_shares, differential (sim.replay --tier batch-cpu --precision f32 --comparison --capture digests, from the row) and the two refusals, each run keyed (KNOWN_DRIFTS 5)."
+  },
+  {
+   "bead": "N18ax-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Device parts recorded through record_gate --part M6 (KNOWN_DRIFTS 1) instead of an unnamed write; `not run: epic not funded` stated as N40-01's status not-run with its detail."
+  },
+  {
+   "bead": "N25c-42",
+   "kinds": [
+    "self-contained",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot record placed in pilots.toml (frob.gauntlet.pilot/1, N38a-09 as dep) with falsifier, ceiling, fallback, integrated gate and PILOT-C-08 as plan-time record; verdict appended there (was 'the review log'). Comparison arm chosen (DESIGN): the mission lane `refine` (trajectory optimization), the same as the gate's, instead of 'refine or the standalone tool'. E2e header, steps, keyed referee runs. Numbers verified (theta 0.125, 0.0062419 m, poses)."
+  },
+  {
+   "bead": "N25c-43",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The A-09 verb named (analyze.curvature, a read verb with no refusals in its row: this bead's refusals requested of VERBS-analyze)."
+  },
+  {
+   "bead": "N25c-44",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "mission.synthesize and mission.refute are run verbs: surface commands carry --key (KNOWN_DRIFTS 5). Numbers verified (0.21465 vs 0.225 m; 8 or 9 cycles)."
+  },
+  {
+   "bead": "N25c-45",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Comparison arm had 'refine or the standalone tool': the lane refine (product path, DESIGN). Step 6 re-executes the answer's own referee rollout from its replay address (sim.replay, bitwise) and measures displacement, instead of an unspecified sim run. Keys on run verbs, analyze.curvature named, gate written with record_gate, header with plants. Closed-form table verified."
+  },
+  {
+   "bead": "N25c-46",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "ADR named docs/adr/ADR-KILL-AUGUR-PHASE-M6.md with N40-03's fields; 'pass or killed: fallback adopted' replaced by N40-03 outcomes, with not-reached on a falsified pilot (new rule and test); decision entry on N40-26's row (moved to deps) and owner declaration in frob-mission's contract.toml; kill_ledger step; e2e header."
+  },
+  {
+   "bead": "N25c-47",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob mission revalidate` does not exist: atlas charts and gaits register with the result store and are withdrawn through result.revalidate. `--atlas` requested of VERBS-mission (724 without the feature). Funding acceptance names not-fired and the Moonshot slot (N25d-49). E2e made concrete with keyed steps and header; KA values verified (0.0049958 m at w = 0.25 m)."
+  },
+  {
+   "bead": "N25d-01",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Pilot record path completed (crates/.../pilots.toml, schema, fallback, integrated gate), deps N38a-09 and STD-E2E. E2e said 'frob sim run with forks at the pre-event snapshot', which no verb does: perturbed forks run as a pilot program against BD-082's snapshot interface; nominal run keyed; header. Saltation of the bouncing ball verified (8.83 1/s)."
+  },
+  {
+   "bead": "N25d-02",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The surface was 'to be confirmed in the registry rows'; neither row has it: requested explicitly of VERBS-analyze (--symmetry-events, 263 and 852) and VERBS-gait (symmetry_events block, 852). Residual closed form and sliding cross term verified."
+  },
+  {
+   "bead": "N25d-03",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "`sim run --fixture` is not an option: runs use `--task fixture:mirrored-landing` on the variant design; task.fixture is a run verb (--layer, --key); every run keyed; mutant builds under gauntlet-mutations; gate written with record_gate; header and STD-E2E fields."
+  },
+  {
+   "bead": "N25d-04",
+   "kinds": [
+    "priority",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Graph finding: N25d-05 (priority 2) waits on it at 4. Raised to 2 with the reason stated (its close, usually quick, is the kill decision's input; the GPU spend still waits on funding). Closes mapped to the register's status `withdrawn` with the reason; pilot record path and schema; e2e used `--backend`, which gait.gradient does not have (`--tier`), now keyed and with header. Ceiling values verified (1.1765, 6.67, 13.5)."
+  },
+  {
+   "bead": "N25d-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "ADR named docs/adr/ADR-KILL-AUGUR-SYMEVENT-M6.md with N40-03's fields; owner declaration placed in frob-mission's contract.toml; kill_ledger test in acceptance and script; N40-26 (the row it writes) moved to deps, STD-E2E added; header."
+  },
+  {
+   "bead": "N25d-49",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Pilot statuses were not the register's: 'not-run' and 'falsified' replaced by N38a-09's 'registered' and 'falsifier-holds'. The envelope plant asked sim.estimate (a read verb that never refuses) for FROB-REF-761: it now submits the over-class job to sim.run with e2e_expect_refusal FROB-REF-761 4 and its own key, sized by sim.estimate first. Added the STD-E2E header, lib.sh, and the scratch registries root for the plants."
+  },
+  {
+   "bead": "BD-427",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete"
+   ],
+   "what": "Applied S01: 22 M6 beads with no M6 dependent added as deps (incl. N00p1-12 from S01's other request, FD-FSIM-05/-22, FD-FTX-01, N38b-44, N19ax-05, N25c-47 and the round-2 beads N15bp2-01, N19bp2-01, N20ap2-01); every live M6 bead now reaches the review except NAB-29, which follows it as every exit's sweep does (stated). Applied S03: flags-off digests compared with the latest earlier exit's reference re-recorded by the compatibility train (three places, as EPIC-M6). Table 2a names N19ax-05, N19bp2-01, N15bp2-01, N20a-28/N20ap2-01; pilot register path and schema named."
+  },
+  {
+   "bead": "NAB-29",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Queue removals listed passed, killed, falsified; NAB-21 frees a slot on a fourth event, expired, now listed. Eight families checked against Appendix C.1 (all rows naming an M6 kill gate)."
+  },
+  {
+   "bead": "WP-73",
+   "kinds": [
+    "complete"
+   ],
+   "what": "N00p1-12 (decide BET-36 at M6), parented here, was missing from the contents; added in key order, counts 17 and 13."
+  },
+  {
+   "bead": "WP-74",
+   "kinds": [
+    "complete",
+    "title"
+   ],
+   "what": "Contents updated for round 2: N15bp2-01 under BD-419, N19bp2-01 under BD-420, N20ap2-01 as a direct child; N19b-23 and N20a-28 lines carry their current titles; counts 32 and 31."
+  },
+  {
+   "bead": "WP-75",
+   "kinds": [
+    "risks",
+    "correct"
+   ],
+   "what": "Envelope bullet said no request is expected, but the GATE-FOUNDRY-12 reference job takes hours of wall time on CPU tiers (above E0): it now names the request N31a-59 files (R19 onward, E1 for gate:GATE-FOUNDRY-12) and its not-approved fallback."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N15bp2-01",
+   "why": "split from N15b-36: the hover of a design with rotors through `frob sim run` and `telemetry energy` needs N14bp1-02's rotor kind, which waits on N15b-36; epic BD-419 requires the port reachable through sim run when admitted"
+  },
+  {
+   "bead": "N19bp2-01",
+   "why": "split from N19b-23: the owner's fund/defer/drop decision reads the pilot's result, and the pilot reads N19b-23's protocol; N20a-28 now depends on it"
+  },
+  {
+   "bead": "N20ap2-01",
+   "why": "split from N20a-28: hero renders (telemetry.stills --quality hero over the tracer group) are a separate Frontier item funded by N33bx-07's pilot, not by the RGB epic"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-419",
+   "what": "Its fail-closed sentence should name FROB-REF-103, exit 3 (unknown field), as N15b-36 now does; list the new child N15bp2-01 (the hover through frob sim run, round 2) and add it to related."
+  },
+  {
+   "bead": "N14bp1-02",
+   "what": "Use N40-03's outcome names (fired / not-fired / not-reached, plus deferred) for KILL-SINEW-ROTOR's admit branch, and the ADR path docs/adr/ADR-KILL-SINEW-ROTOR-M6.md (KNOWN_DRIFTS 4), as N15b-23 now does."
+  },
+  {
+   "bead": "N15b-15",
+   "what": "Its pilot record and tests belong in crates/frob-conformance/tests/pilot_register.rs (KNOWN_DRIFTS 3) with row-specific test names, as N15b-22 now has."
+  },
+  {
+   "bead": "N15b-19",
+   "what": "Its pilot record and tests belong in crates/frob-conformance/tests/pilot_register.rs (KNOWN_DRIFTS 3) with row-specific test names, as N15b-22 now has."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "what": "telemetry.stills gains --quality standard|hero and --spp <n>; needs_groups includes the frankensim tracer group when hero; refusals FROB-REF-790 (group absent) and FROB-REF-802 (out-of-domain option); extender N20ap2-01."
+  },
+  {
+   "bead": "N33bx-07",
+   "what": "The hero-render consumer is now N20ap2-01 (telemetry.stills --quality hero), split from N20a-28 in round 2; repoint its references from N20a-28."
+  },
+  {
+   "bead": "BD-420",
+   "what": "Add the round-2 children N19bp2-01 (the owner's fund, defer or drop decision on the pilot's verdict, with its ADR) and N20ap2-01 in related; add an acceptance line that the owner's decision is recorded as an ADR by N19bp2-01 before any work package (N20a-28) is funded, since N19b-23 now only writes the plan and registers the gate."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "foundry.lifecycle's row lists only design, duty, horizon, laws and --strict-data: add --ages, --laws, --structural-candidates, --rare-rates, --mode time-axis|hand-specified, --wear-states <file>, --fixture <name>, --key; refusals FROB-REF-724 (killed or not-in-build), 831, 113; extender N31a-50."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run gains the input --variants <set> (aged model variants from foundry.lifecycle run side by side); extender N31a-50."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.search gains the input --variants <set> (aged model variants); extender N31a-50."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.curvature: add the refusals of N25c-43 (skid-steer yaw, rank drop, stratum crossing, certification from bracket rank alone; interim code until N25e-45 allocates one); analyze.symmetry: add --symmetry-events <run> with FROB-REF-263 and FROB-REF-852 (extender N25d-02)."
+  },
+  {
+   "bead": "VERBS-gait",
+   "what": "gait.gradient returns a symmetry_events block naming every licence used and refuses an unlicensed transport with FROB-REF-852; extender N25d-02."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize gains --atlas <id> under the feature shape-atlas (FROB-REF-724 without it); extender N25c-47."
+  },
+  {
+   "bead": "N25e-45",
+   "what": "Name the code of the generic model-admission refusal that N25c-43 returns as the interim for 'connection outside its stratum' (detail connection-outside-stratum), so its tests can assert it until the new code is allocated."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 38 beads read. Round 1 left pilot, kill-gate and e2e conventions (register path, N40-03 outcomes, ADR paths, keys, verb options) uneven across the M6 epics; these are aligned, BD-427 now reaches every M6 bead, and the GATE-FOUNDRY-12 reference job has its envelope request. Settled once the verb-row requests land."
+}

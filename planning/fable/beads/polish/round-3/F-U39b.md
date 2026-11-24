@@ -1,0 +1,45 @@
+# Polishing round 3, slice F-U39b
+
+30 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| BD-143 | M1 | task | WP-34 | yes | frob-conformance: the incumbent design-loop phase ledger on trj, cold and warm, with the ceilings recomputed | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/BD-143.md` |
+| BD-429 | M7 | epic | WP-76 | yes | Epic: the tournament decision rule: pooled restricted-time ratio, family counts, power analysis, kill rules | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/BD-429.md` |
+| N39b-01 | M3 | task | WP-60 | yes | frob-conformance tenfold: the disqualification engine: five grounds, scope, cell effects, integrity detectors | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-01.md` |
+| N39b-07 | M3 | task | WP-60 | yes | Kill-gate decision KILL-TENFOLD-TIE at M3 and M7: a tie or a recovery ratio of 0.8 ships the layer | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-07.md` |
+| N39b-08 | M0 | task | WP-34 | yes | frob-conformance: GATE-TENFOLD-01, the rival audit and the no-agent incumbent baseline in the first ledger | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-08.md` |
+| N39b-10 | M2 | task | WP-47 | yes | KILL-TENFOLD-LEVER re-read at M2 on our own profile, and the thesis arithmetic redone with measured rates | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-10.md` |
+| N39b-12 | M3 | task | WP-60 | yes | e2e tenfold_partial_gate.sh: full rehearsal of the partial gate on synthetic arms, with every drill | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-12.md` |
+| N39b-13 | M7 | task | WP-77 | yes | The tournament at M7: the order of work, the freeze record, the breach rules, the log GATE-TENFOLD-07 cites | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-13.md` |
+| N39b-15 | M3 | task | WP-60 | yes | frob-conformance tenfold: the wording lint and the limits block: where the word ten-fold may appear | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-15.md` |
+| N39b-16 | M7 | task | WP-76 | yes | pilot: the tournament decision rule simulated before sampling: draft rule, power table, binding pre-analysis | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-16.md` |
+| N39b-17 | M7 | task | WP-77 | yes | e2e tenfold_tournament_rehearsal.sh: the freeze and dress rehearsal of the tournament on the development pool | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-17.md` |
+| N39b-19 | M3 | task | WP-60 | yes | frob-conformance tenfold: the standalone scorer tenfold-score: standard library only, bit-for-bit results | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-19.md` |
+| N39b-20 | M7 | task | WP-77 | yes | frob-conformance tenfold: replication level 2: one sampled pair per stratum re-run on comparable hardware | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-20.md` |
+| N39b-21 | M7 | task | WP-77 | yes | e2e tenfold_kit.sh: build the kit, recompute level 1, re-run level 2, refuse a private input (GATE-TENFOLD-08) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-21.md` |
+| N39b-22 | M3 | task | WP-60 | yes | frob-conformance tenfold: GATE-TENFOLD-03: every harness known answer exact, every negative control caught | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-22.md` |
+| N39b-26 | M2 | task | EPIC-M2 | yes | Decision OPEN-TENFOLD-1: which simulator adjudicates each stratum (terrain, films, tracks) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-26.md` |
+| N39b-27 | M2 | task | EPIC-M2 | yes | Owner decision OPEN-TENFOLD-2: who the adjudicator of the ten-fold test is, or the self-adjudicated default | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-27.md` |
+| N39b-32 | M0 | task | WP-34 | yes | Decision OPEN-TENFOLD-7: incumbent licences: publishing a comparison, and what the kit may carry | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-32.md` |
+| N39b-33 | M3 | task | WP-60 | yes | Owner decision OPEN-TENFOLD-8: ratify thresholds 3 and 10, guard floor 5, tie 1.5, margin 0.05, four cells | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-33.md` |
+| N39b-34 | M3 | feature | WP-60 | yes | verb eval.preanalyze: ten-fold study plans: reachable verdicts, necessary family count, population refusal | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-34.md` |
+| N39b-35 | M3 | task | WP-60 | yes | frob-conformance tenfold: two estimands, the bounded paired contrast, result types, zero-count intervals | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-35.md` |
+| N39b-39 | M3 | task | WP-60 | yes | frob-conformance tenfold: the second claim, a new engineering operation: acceptance contract and tie rule | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-39.md` |
+| N39b-40 | M3 | task | WP-60 | yes | frob-conformance tenfold: sealed mission templates I: stance, split-grip landing, compliant stock; mutations | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-40.md` |
+| N39b-41 | M7 | task | WP-76 | yes | frob-conformance tenfold: sealed mission templates II: rebody, facility, throughput; warm-campaign rules | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-41.md` |
+| N39b-42 | M7 | task | WP-76 | yes | e2e tenfold_suite_hygiene.sh: GATE-TENFOLD-12: easy wins, unresolved answers, mutations, withdrawals | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-42.md` |
+| N39b-43 | M3 | task | WP-60 | yes | frob-conformance tenfold: three-arm statistics: the tie test and the recovery ratios r_T, r_C with intervals | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-43.md` |
+| N39b-44 | M2 | task | WP-47 | yes | frob-conformance: the one-receipt pipeline for the composed incumbent (arm W) and its binding property | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-44.md` |
+| N39b-45 | M3 | task | WP-60 | yes | frob-conformance tenfold: three phase ablations on arm B's engine with their accounting bounds | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-45.md` |
+| N39b-46 | M3 | feature | WP-60 | yes | verb report.campaign: --arms B,W,F prints T, C, r_T, r_C with intervals; --ablate prints an ablation and bound | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-46.md` |
+| N39b-47 | M3 | task | WP-60 | yes | e2e tenfold_recovery_ablation.sh: GATE-TENFOLD-13: recovery ratios, ablations in bounds, one-receipt record | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39b-47.md` |
+
+## Addressed to your beads
+
+- `BD-143`: request from round 3, slice F-U00-2: Write the ceilings report as `cargo run -p frob-conformance --example thesis -- ceilings --ledger <ledger> --json` (N00-17's declared example), not a default-binary form.
+- `N39b-12`: request from round 2, slice S46: N39b-27 now has its own M2 script (scripts/e2e/tenfold_adjudicator_decision.sh) for the decision record; its acceptance points to this bead's `roles` step as the place where the default session is created, its access asserted and its action log entered. Keep those assertions here and call the M2 script before them.
+- `N39b-22`: request from round 3, slice H-cx-2: The 27 TF-CX entries are numbered from N39-CX's cx block of 27 at M0 (tags kept as slugs) and their controls are seeded by N38b-05; run them by their issued numbers; planting beads: N39a-07/08/13/17/18/24/27/29/30/33/35/37, N39b-01/02/08/13/18/34/35/37/41/43/45 under N39-CX's plant ids.
+- `N39b-22`: request from round 3, slice H-ka-3: Run scripts/e2e/ka_tenfold_registry.sh (N39-KA) as the first stage of tenfold_known_answers.sh. Log each row by its block number with the TF label as slug, replacing the --ka local label once the N38a-40 block is mapped.
+- `N39b-33`: request from round 2, slice S39: N39a-31 now states that its parameter-set record `tenfold/<gate>/noninferiority.json` holds only option, mode and population_mode as its own, and copies margin and level from the ratified block. Please add the check that refuses a block whose `noninferiority_margin` or `level` differs from that record's, or whose named non-inferiority option differs from its `option` (test e.g. `noninferiority_record_matches_block`), so the margin has one source of authority (an option C or E that moves the margin is then an amendment of the block).
+- `N39b-42`: request from round 3, slice H-owners-2: Same as N32a-18: store the named receipt by its BLAKE3 under receipts/gates/ and cite the hash.

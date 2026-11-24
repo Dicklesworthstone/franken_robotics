@@ -1,0 +1,300 @@
+{
+ "round": 3,
+ "slice": "F-U22a",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "BD-049",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "convention 11 and 7: the verb's script was N13-17's (which depends on this bead); now owns scripts/e2e/algebra_orbits_verb.sh on its own deps (family, sagittal, cursor pages, positional vs --family, registry example, 214 with the order-300 generators, 215 before arithmetic); the design-bound step needs design.new (N14a-21) and stays in N13-17's script. `--family C2 --slots 4 --types 3` gave no defined action: now `--action sagittal` as N13-17 has it. Dep STD-E2E."
+  },
+  {
+   "bead": "BD-249",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "Applied H-verbs-2: eval run --seed -> --run-seed. The arm's control.mpc call now names --tier batch-cpu --seed 1 (protocol step 5 pairs tier and addresses). The protocol was 'registered' with `frob study plan …` (a paired-study manifest, not a pre-registration); now the script checks the method-experiment record of N38a-07 (a dep) and logs its protocol_blake3."
+  },
+  {
+   "bead": "BD-251",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-verbs-2: eval run --seed -> --run-seed (both calls); step 5's single-task form gained --worlds 1, and 'the stronger card' is now a named fixture design e2e-quad-strong added by this bead. Stale 'request to VERBS-prove' removed: the row now lists --run --kind control-program. Convention 7: the stand-payload task fixtures/reflex/tasks/stand-10s-payload-at-2s and payload_heavy.json are now N22a-15's (a dependency, whose own script runs them); this bead cites them as added by N22a-15 and keeps reach-force-beyond-limits."
+  },
+  {
+   "bead": "BD-252",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps",
+    "users"
+   ],
+   "what": "Brought into line with VERBS-control: 817 is on the row for --freeze (N22c-31's handler), not 'never raised by this verb'; the cap is the worded refusal mpc-episode-cap (exit 3, nothing admitted); --planner lifted:<id> is an M6 extension and fails the schema with 802 until N22c-24 lands (was exit 5), --freeze answers 724 naming N22c-31. Spellings --setting, --tier, --seed fixed (DESIGN, as N22a-26 uses them). Convention 11: own script scripts/e2e/control_mpc_verb.sh on its own deps (pricing, three episodes, cap, diag-replay fork invariance, unbuilt lanes, MCP parity, cancellation); unit test for the cap slug. Dep STD-E2E."
+  },
+  {
+   "bead": "BD-330",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The protocol was 'registered' with `frob study plan`; now the N38a-07 method-experiment record is checked and its hash logged. Stale 'requested of VERBS-train' replaced: the row lists --rung R2|R3 and --rho from M4. related gains N22c-15 (the decision bead the Scope names as related) and VERBS-train."
+  },
+  {
+   "bead": "BD-331",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Protocol registration through the N38a-07 method-experiment record instead of `frob study plan` (which binds a paired-study manifest)."
+  },
+  {
+   "bead": "BD-334",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Registry row: refusals now 263, 431, 852 as VERBS-gait lists them (852 raised from M6 by N25d-02; a listed unraised code is legal). Convention 9: the unit-level gate counts no longer 'written with the gate row'; N22a-39 is the one recorder. Convention 11/7: the runner script now also drives frob on its own deps (rimless-wheel gradient against the closed form, --wrt spokes 802, the planar-fold control 431 with s_min, missing key 805, daemon and MCP parity, cancellation), so its reachability criterion is checkable without N22a-39. Dep STD-E2E."
+  },
+  {
+   "bead": "BD-335",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Protocol registration through the N38a-07 record (was `frob study plan`). Convention 1/9: the GATE-GAIT-03 tier run carries --features gauntlet-mutations, catches the shuffled-score control in the same run and writes the receipt; the script no longer runs record_gate itself: the row is entered from the receipt by a session that did not implement the continuation. The comparison arm is now a valid eval.run single-task call (task, --worlds 1, --run-seed 1, --controller baseline). Stale 'requested of VERBS-gait' for --workers replaced (the row lists it; 802 off batch-cpu)."
+  },
+  {
+   "bead": "N22a-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied H-verbs-6: the --state input of sim.run is this bead's (VERBS-sim's row): default estimated for a run whose controller reads state, ignored without a controller, resolved source in the header; the defaulted estimated is refused 464 like a named one. Criterion and four unit tests added; the script gains the default runs and the controller-free g1 pair. Convention 5: every sim.run call carries its own --key; design positional."
+  },
+  {
+   "bead": "N22a-04",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Convention 11/7: the verb's only script was N22a-05's (which depends on this bead); now owns scripts/e2e/control_estimate_verb.sh on its own deps (T2 and T1 smoke runs, envelope and evidence, 464 on --align similarity, 888 on a run without packets, window and comparator inputs, idempotent replay, daemon and MCP parity, pagination, capabilities and schema), with NDJSON fields and a criterion."
+  },
+  {
+   "bead": "N22a-05",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Applied H-verbs-6: positional design, --telemetry T2, --controller <ControllerId> from control synth --gait trot with the 0.5 m/s in the task flat-trot-10m (no --gait/--speed); design new takes its name positionally (N14a-21's CLI; --name is not on the row); keys on every run and mutate call; the planted bias and IMU-free variants are named design files. Applied S54: step 10 is now the g1_known_answers tier run with --features gauntlet-mutations (case gate_reflex_03_referee, controls caught, receipt); the row is entered from that receipt through record_gate by a session that did not implement the estimator; the script writes no row."
+  },
+  {
+   "bead": "N22a-11",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Applied F-U15b-2 and H-verbs-6: positional design, a distinct --key per step, gait and seed, and --controller <c-walk>/<c-trot> from control synth --gait with one task per commanded speed (traverse-5m-flat-0.3, -0.6). design new name positional; the weak-knee variant is a design file (design.edit has no --replace-actuator/--as) and the three-leg variant a remove-limb typed edit. Convention 9 (and N22c-01's request): step 11 is now the tier run with its legged case and controls writing a receipt; N22c-01, the register's M1 recorder, records the part; this bead writes no row."
+  },
+  {
+   "bead": "N22a-12",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "Convention 7: the unit tests claimed 'real synthesis and real validation episodes', but the class controllers and the verb (BD-116, BD-117, BD-118) come after this bead. The criteria and tests now build reports from real solves of synthetic programs through N22a-08 and episode records through BD-094 (both deps); the real-synthesis outcomes are named as BD-118's tests and N22a-11's script. The 5% backup test states its 6%/4% fixtures."
+  },
+  {
+   "bead": "N22a-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S54: the leg count is a capacity L_max of the shape class (4 for quad-mammal, 8 for N14b-08's multi-legged class), padded masked rows; new unit test leg_count_is_class_capacity. Applied H-verbs-6: positional design; keys on every call; the mixed launch via --designs, world 17 via --world-addr (owner N16a-12, added as a dep), eval run in its single-task form with --run-seed. Convention 9: the script wrote the M2 row; now its tier run writes a receipt with the legged batch case and controls, and the M2 part is recorded by N22c-47, which the register names."
+  },
+  {
+   "bead": "N22a-15",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Convention 7/11: the script ran a controller and a task with no dependency for them; deps BD-118 (control.synth) and N16b-25 (sim.run --task/--controller) added; the bead now owns the task stand-10s-payload-at-2s and payload_heavy.json (they were attributed to BD-251, which depends on this bead); the script creates the design (rlr-design) and synthesizes (rlr-synth) before the scenario, each with its own key."
+  },
+  {
+   "bead": "N22a-16",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Convention 7/8: dep N24c-04 (eval.run) added for the eval call; the runner now creates the design, synthesizes, compares sim runs --controller baseline (rrw-base) and baseline+residual:zero (rrw-zero) with state digests equal at every checkpoint, runs eval with baseline+residual:zero, and asserts that residual:zero and a bare baseline+residual: each give 802, the spellings VERBS-sim lists."
+  },
+  {
+   "bead": "N22a-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-verbs-2: eval run --seed 1 -> --run-seed 1. The script now creates its designs (rs-design, rs-design-<i>) instead of assuming them, each call with its own key."
+  },
+  {
+   "bead": "N22a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-verbs-1: the Tier paragraph and the entry sketch say registered S, printed S/F (tier = \"S\"; RL-12 admits only S, F and M); the stale sentence that F was requested is replaced."
+  },
+  {
+   "bead": "N22a-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Before this bead lands --class legged-predictive is 802 (VERBS-control's rule for later extensions), not tier-missing-law; not-admitted-on-device is cited as N22a-12's reason. Convention 9: the script creates its design (cpl-design) and its tier run (case gate_reflex_01_legged_predictive, the friction-pyramid control) writes a receipt and no row; BD-247 is not a dependency."
+  },
+  {
+   "bead": "N22a-22",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "Applied H-owners-2: the envelope bullet files the reserved R25 (E2, campaign:pilot-reflex-mpc, 15 device-hours); it is not approved, so the E0 form of its own fallback is in force and the specialist steps are recorded `not run: no envelope` citing R25. The specialist, falsifier, storage, tau, control and envelope criteria are made conditional on R25."
+  },
+  {
+   "bead": "N22a-24",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Applied H-owners-1: the pilot form of --protocol reads protocol.sampling_episodes_per_design through pilots::sampling_allowance(id) (N38a-09 rule 5b); unknown, void or field-less ids admit nothing beyond the default three (unit test extended). The slug mpc-episode-cap is cited as the N35x-02 ledger row."
+  },
+  {
+   "bead": "N22a-25",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Stale 'request to VERBS-eval' removed: eval.qualify and eval.promote both list 817 and name this bead under Extended by; the --candidate design=<d>,controller=<c> spelling is attributed to the VERBS-eval row."
+  },
+  {
+   "bead": "N22a-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 11: --planner lifted:x is 802 before N22c-24 (VERBS-control's rule for later extensions), --freeze 724. Convention 5: explicit distinct keys on the pricing, screening and the three --forks calls (a shared key would return the first receipt). Scope names BD-252's own script."
+  },
+  {
+   "bead": "N22a-27",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "Applied H-owners-2: the envelope bullet no longer files 'the next free identifier from R19'; it files the reserved R26 (E1, gate:KILL-RESIDUAL, 2 h per run, 12 device-hours) only if the smoke run shows a run over one hour; R26 is not approved, so then the pilot closes withdrawn (not run: no envelope, citing R26), N22a-16 and BD-330 stay unfunded and N22c-15 records the fallback; if the smoke run fits E0 the row is never filed and the identifier not reused. Envelope and primary-run criteria updated to match."
+  },
+  {
+   "bead": "N22a-28",
+   "kinds": [
+    "complete",
+    "risks"
+   ],
+   "what": "The pilot named no compute envelope while its siblings N22a-22 and N22a-27 do: the cost item now states E0 (cost.envelope = \"default\" in the register row), each specialist one job well inside an hour at the published 410 s, no reserved N44-01 row so nothing starts above E0, and a specialist stopped at the ceiling leaves the ranking with the exclusion recorded, as a child without an orbit does."
+  },
+  {
+   "bead": "N22a-31",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Stale: the Considerations said N22b-37 might offer no context with the contact mode not held fixed and that this bead would pass its own; N22b-37 (a dependency) now has the stride form of its context, replacing Stab(current contact mode) by the contact-sequence condition. The admission paragraph and the bullet now call that form and say its token is accepted only by the periodic-orbit reducer."
+  },
+  {
+   "bead": "N22a-38",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9 and 1: step 13 ran record_gate from 'the script's receipt'; now the tier run g1_known_answers --features gauntlet-mutations -- GATE-GAIT-01 re-evaluates the clauses, catches the registered negative control in the same run and writes the receipt; the script writes no row, and the row is entered from the receipt by a session that did not implement the mechanisms (BD-333 assigns the row here). Step 10: --form stroboscopic takes --period (N22c-36's grammar, as N22c-38 spells it)."
+  },
+  {
+   "bead": "N22a-39",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9 and 1: the tier run carries --features gauntlet-mutations (controls caught in the same run) and writes the receipt; the row is entered from that receipt (not 'the script's receipt') by a session that did not implement the gradient; this bead stated as the one recorder of GATE-GAIT-02."
+  },
+  {
+   "bead": "N22a-40",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 5: design.edit takes kind, target and value positionally (its row's example `frob design edit quad-a set-param foot.radius 0.030 m`); `--op set-param --path --value` is not on the row. Step 12: gait.orbit --form stroboscopic takes --period 0.5 (N22c-36)."
+  },
+  {
+   "bead": "N22ap2-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-verbs-6: the design is positional on sim.run (was --design <design>); design new names the design; the world-17 run spelled with --world-addr."
+  },
+  {
+   "bead": "N22ap2-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9 and 1: step (5) ran record_gate on 'this script's receipt'; now the GATE-CHRON-08 tier run carries --features gauntlet-mutations, checks the registered controls caught in the same run and writes the receipt; the script writes no row and the extended list is recorded from the receipt by a session that did not implement the monitor. Criterion updated."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-control",
+   "what": "Its notes still say N35x-02 does not yet carry mpc-episode-cap and that the row is requested; N35x-02 now has it (Control, §22.8, 4xx, status slug). Drop the stale sentence."
+  },
+  {
+   "bead": "N13-17",
+   "what": "BD-049 now owns scripts/e2e/algebra_orbits_verb.sh (the verb's commands on BD-049's own deps); algebra_orbits.sh may run it as a stage and keep only the design-bound step and the battery."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run's --task and --controller <ControllerId> are given to N16b-25 (M2), yet the M1 gate scripts N22a-05 (GATE-REFLEX-03), N22a-11 and N22c-01 (GATE-REFLEX-01, M1 on the referee) must call `frob sim run <design> --task <t> --controller <ControllerId>` at M1, as H-verbs-6 asks. Name an M1 owner for these two inputs on the referee (for example BD-118 for the baseline ControllerId, or an extension of BD-024), or the M1 gate rows cannot be run on their dependencies."
+  },
+  {
+   "bead": "N22c-47",
+   "what": "The gate register names N22c-47 the recorder of the M2 part of GATE-REFLEX-01. N22a-13 now writes no row: its tier run writes a receipt carrying its case gate_reflex_01_legged_batch_cpu. Step 7 should record the M2 part from N22c-47's own tier run receipt (`record_gate -- --gate GATE-REFLEX-01 --receipt <hash> --part M2`) and compare the quad-mammal values with N22a-13's receipt, instead of 'the row written by N22a-13 is compared, not rewritten'."
+  },
+  {
+   "bead": "N22c-49",
+   "what": "GATE-GAIT-01 and GATE-GAIT-02 name BD-333 and BD-334 as measured by, but both beads assign the gate row to the end-to-end beads that depend on them (BD-333: 'N22a-38 extends with the gate's four clauses and its gate row'; BD-334: 'the row is entered by N22a-39'), and a recorder that comes before the receipt's script cannot record from it without a cycle. Name them as GATE-REFLEX-01's M1 part does: 'BD-333 with N22a-38' and 'BD-334 with N22a-39', the second of each pair recording from its tier run's receipt."
+  },
+  {
+   "bead": "N22c-49",
+   "what": "GATE-REFLEX-01's M3 part names BD-247 as recorder, while N22a-21 (legged-predictive class, after BD-247's cases exist) re-enters the same part through its tier run's case gate_reflex_01_legged_predictive. State who records the legged-predictive row of the M3 part (BD-247 from N22a-21's receipt, or a named second part), so that the part keeps one recorder."
+  },
+  {
+   "bead": "N24a-38",
+   "what": "Delivery names N22a-29 as the bead that switches the gait-instability row to available and extends the GATE-CHRON-08 list; N22a-29 has no frob-chronicle code and names N22ap2-03 (which depends on N22a-29 and on this bead) for it. Name N22ap2-03 in the delivery paragraph and in the row's status text that the admission refusal prints. Still open from round 2: the predicate's noise floor d_floor = 0.01 (scaled chart) that N22ap2-03 adds, and the admission exemption of later-wave rows."
+  },
+  {
+   "bead": "N29b-06",
+   "what": "It writes GATE-CHRON-08's one row at M2; later classes extend the fixture list after their monitors land (gait-instability by N22ap2-03 at M4, model-drift by BD-394 at M5, slosh-tip by N19b-13 at M6), each with a tier run receipt. Convention 9 allows one recorder per gate: state who records a later class's re-run from its receipt (for example a part per class recorded by the switching bead), so N22ap2-03's recording has a named owner."
+  }
+ ],
+ "unchanged": 15,
+ "notes": "All 46 reviewed; 31 changed, 15 unchanged (N22a-02, -06, -07, -10, -14, -19, -23, -29, -30, -32, -33, -34, -36, -37, N22ap2-02). The remaining defects were mostly convention ones (scripts writing gate rows, verbs spelled off their rows, mechanism beads without their own scripts, stale request notes); the gait and control mechanics and their known answers check out numerically. Open items sit with the requests: M1 owners for sim.run --task/--controller, and the recorders of GATE-GAIT-01/02, GATE-REFLEX-01 M3 and GATE-CHRON-08's later classes."
+}

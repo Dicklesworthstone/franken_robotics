@@ -1,0 +1,261 @@
+{
+ "round": 3,
+ "slice": "H-cx-2",
+ "reviewed": 11,
+ "changed": [
+  {
+   "bead": "N28-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Brought to the catalogue division of N38b-05: entries in counterexamples.toml only (the seeding tool writes controls.toml and allocates NC numbers; the hand-written NC-28-313 record removed); the four ≡ entries (CX-306/307/308/314) keep their own control with same_as instead of sharing one (catalogue rule 1); the two late cases get a cx block request of 2 through N38a-40 with tags mapped to slug; added per row the control kind, plant id, target, defect, expected observation and the live planting bead (N28a-11 rows 1-9, N28a-18, N28b-02/03, N28b-34, N28b-37, N28b-32, N28c-13, N28b-22, N28c-35, N28c-42); CX-302/314/318 FACT with rerun=false; CX-312 an obligation until N28a-18 supplies its fixture; stance arithmetic test (150 N min-max, spring compatibility); script no longer calls a verb of a non-dependency (frob doctor dropped); deps + N38b-05, STD-E2E."
+  },
+  {
+   "bead": "N31-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Same division: entries only, no hand-written control records; six late cases numbered through a cx block request of 6 (N38a-40) instead of 'a number requested from the catalogue owner'; CX-341 keeps its own control (not one shared with CX-303) and no same_as, so the plan-time count of 13 holds; CX-337/339 carry plan_case=words with case_supplied_by naming the derivation files; CX-342-344 pointed at the task beads N31a-45, N31a-47/48 instead of the epics BD-438, BD-423; per-row control columns added; script no longer calls a Foundry verb of a non-dependency; deps + N38a-40, N38b-05, STD-E2E, dropped N38b-04 (runner, only related)."
+  },
+  {
+   "bead": "N32-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Removed the rule that the mechanism bead first catching a mutant allocates the control row in controls.toml (contradicts N38b-05: only the seeding tool writes it); private record fields (chapter, mutant, controls, owner_bead, control_by, due) replaced by the N38b-05 schema with a plant id per entry; planting bead and due kept in the test-file table; the three tagged cases now have gates and plants (packet case GATE-TETHER-16; the two gate-less DESIGN additions go to seed_findings.toml with a disposition required at M3); new tests schema_fields_only and design_additions_are_findings; the script re-runs the seeding and join; deps + N38b-05; all seven cases, the M/G/1 numbers (E[S]=189, E[S^2]=324,090, rechecked) and the fixture kept."
+  },
+  {
+   "bead": "N33-CX",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Named the fixture owners left as prose (BD-033 planar drive, BD-036 stride converter, BD-034 trainer); suite-sampler-marginals given its own rule (the sampler row of the admission probe) instead of restating rule P-12 and GATE-CORTEX-18, which are N23-CX's CX-23-L1, with one fixture shared with N23-CX and N41-CX and same_as on the later; 0.665510 = 1 - 2x0.167245 shown; rerun_here aligned to N38b-05's rerun/rerun_receipt; test command to --test registry_cx_suite; new block_request_of_nine test."
+  },
+  {
+   "bead": "N34-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Rewritten to the catalogue division: entries only, eleven controls derived by the seeding tool from per-entry plant lists (2,1,2,1,3,1,1) with kind, plant id, target, defect, expectation and gates per plant; the unnumbered JSON-library case appended through a cx block request of 1 instead of 'when its owner assigns a number'; the four-way build bead named (N34-21, mutant writer of N34-18); CX-362's third plant keeps GATE-AUGUR-06 beside GATE-WS-03 and names N25b-05/BD-026/BD-136; mutant selection follows the runner's gauntlet-mutations features (the cfg flag of an earlier draft noted as superseded, as N34-22 already does); own script registry_n34_cx.sh with NDJSON logging (it had none); test command to --test; control_targets_exist replaced by a planting-bead liveness check; deps + N38a-40, N38b-05, STD-E2E."
+  },
+  {
+   "bead": "N35-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Removed same_as = CX-215 from CX-371 (not ≡ in Appendix N; a 14th ≡ breaks the loader's count of 13; CX-215's case_supplied_by already carries the link); CX-373's case restored to the plan's D = diag(1,1e4), residual (0,1e-3), with the power-of-two figures (2^13, 0.671, 8.192e-4) beside it; added a control table (kind, plant reusing N35-15/N35-30 mutant names, target, defect, expectation, gate) with gates for CX-369/371/372 resolved from the plan's ties (GB-04, KA-795, GATE-SPARK-18 text); owner-test checks report unbound until the owner lands (no wait on mechanisms); own script registry_n35_cx.sh; test command to --test counterexamples_numerics; deps + STD-E2E. All numbers rechecked (2.95%, 1.0002%, 0.9969%, 16.64, f32 spacings)."
+  },
+  {
+   "bead": "N36-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Rows moved from the private file registry/counterexamples/perf.toml (fields test, owner, tier, due) into counterexamples.toml in the N38b-05 schema, with those fields kept in a compiled-in test table; CX-377's rule restored to the plan's 'switch cost measured at GATE-SPARK-21 before the experiment of §17 is funded'; a control table with plant ids and gates (GATE-TENFOLD-09 for the ceiling-first rows, GATE-SPARK-22 for CX-381, GATE-FID-07 for CX-383 from row 17, GATE-SPARK-20 with KILL-SHARD for CX-379); CX-380's relation to CX-253 stated (own controls, one reducer fixture); script re-runs seeding and join, uses the ADR-GAUNT-01 form; test command to --test; deps + N38b-05. Numbers rechecked (20.46, 2.74, 1.46, 1.26, 0.28/0.79 GB, 0.14-0.71%, 16%)."
+  },
+  {
+   "bead": "N38-CX",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied the S14 request: CX-386 at n = 0.7 is 9.16 cm (0.091646, 0.190127, 0.117076 m from the unrounded p = 5.01648 kPa), test updated and rejects 9.17; CX-389 states r as the wheel radius with a = sqrt(2rh - h^2) (0.900 N·m only holds for r = 60 mm as a radius); new cx_389_radii and cx_400_counts tests; own script registry_n38_cx.sh with seeding/join and four plants (it only had other beads' scripts); deps + STD-E2E."
+  },
+  {
+   "bead": "N39-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "placement",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "27 local labels TF-CX-01..27 that were to 'receive CX and NC numbers on append' now numbered through a cx block request of 27 (N38a-40), tags kept in slug; entries in counterexamples.toml and no hand-written controls.toml records; each entry given its plant (N39a-41's names where it has them) and the bead that builds it; gate shorthand '-03' expanded; CX-003/CX-008 left to N00-CX (requested to carry GATE-TENFOLD-03) instead of being restated; moved M3 -> M0 under WP-34 (as N39-REF) because GATE-TENFOLD-01 (M0) and -02/-09 (M1) need TF-CX-27/-13/-03 registered before M3; registry tests now arithmetic only (no planted scorer needed), the last_seen criterion replaced by stale reporting; TF-CX-05 gets its own planted input; own script; deps + N38a-40, STD-E2E, N38b-04 moved to related. TF-CX-06 rows, binomial tails, 1.5^7/1.5^8 and 0.117346 rechecked. Dropped the superseded N39b-24 from TF-CX-15 (N39a-11 carries it)."
+  },
+  {
+   "bead": "N40-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Rows moved from the private file registry/counterexamples/register.toml into counterexamples.toml (N38b-05 schema, planted-input, a named plant per row) through a cx block request of 65 with the RC- ids as slugs; no hand-written [[control]] records; applied the S01 requests as RC-62 (attached check exiting non-zero taken as a pass; N40-05 attached_check_contract), RC-63 (Owner question with no calendar row at or before its deadline; N40-35 owner_rows_have_calendar_row), RC-64 (not-run gate behind a defaulted question reported with no question named; N40-35 default_behind_not_run_gate_named) and the S46 request as RC-65 (kill gate not-fired under the no-GPU variant while a read part was not run; N40-33 kill_decisions_under_variant, due M2); due counts 40/20/5 (cumulative 40, 60, 65); binding check reports rows whose catching bead has not landed as stale instead of failing this bead; script re-runs seeding and join."
+  },
+  {
+   "bead": "N41-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Rows moved from the private file registry/counterexamples/delivery.toml into counterexamples.toml (N38b-05 schema, a kind and plant per row) through a cx block request of 51 with X41- ids as slugs; no hand-written [[control]] records; the four rows that named an N40-CX control and wrote none (X41-11/18/19/21 = RC-17/53/52/54) now keep their own entry and control against GATE-GAUNT-01 with the shared plant and same_as on the later block (one control per entry, N38b-05); X41-27 same_as CX-002 and X41-16 same_as CX-399; overlaps with N33-CX, N34-CX, N23-CX and N39-CX stated (own entries, shared fixtures); 'declared' replaced by the runner's stale; acceptance no longer requires catching tests of N41-04, which depends on this bead (convention 7); own script registry_n41_cx.sh (it had none); deps + N38b-05, STD-E2E; 0.99^24 = 0.78568 checked."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38b-05",
+   "what": "(a) State how the seeding fills each control's target, defect and expect (BD-025 rejects empty defect/expect): take them from per-row catalogue texts (the chapter beads now give a target, defect and expected observation per row) or state the derivation rule. Repeats round-2 S11."
+  },
+  {
+   "bead": "N38b-05",
+   "what": "(b) Admit plant as a list on an entry, one control per plant, each with its own kind, target, defect, expectation and gates (N34-CX CX-358/360/362 with 2/2/3 plants, N31-CX CX-342 with 2, N23-CX). Repeats S58."
+  },
+  {
+   "bead": "N38b-05",
+   "what": "(c) Admit an optional due on an entry, copied to the control's optional due (BD-025), so that N32-CX, N36-CX, N40-CX and N41-CX can drop their compiled-in due tables."
+  },
+  {
+   "bead": "N38b-05",
+   "what": "(d) case_supplied_by is defined as 'the later CX entry with same_as this one'; CX-215's case is supplied by CX-371, which is plan-time and not ≡, so the definition must also admit a later entry without same_as, keeping the count of 13."
+  },
+  {
+   "bead": "N38b-05",
+   "what": "(e) State that the loader's count of exactly 13 same_as applies to plan-time entries only: appended entries now carry same_as (N33-CX, N34-CX, N39-CX/N41-CX overlaps, X41-16 = CX-399, X41-27 = CX-002)."
+  },
+  {
+   "bead": "N28a-11",
+   "what": "Controls are written by N38b-05's seeding tool from N28-CX's entries, not 'the control record that N28-CX entered'; build the nine mutants under N28-CX's plant ids (a08-polygon-screen ... a21-content-only) and keep the executable parts in its own test table, with no extra fields in controls.toml."
+  },
+  {
+   "bead": "N28a-18",
+   "what": "Supply CX-312's numeric fixture and fill its case_supplied_by; build the plants pair-world-epoch and pair-by-draw-index under those ids."
+  },
+  {
+   "bead": "N28b-34",
+   "what": "Build support-enlarged-hash-match (with BD-347) under N28-CX's plant id; likewise N28b-37 memo-key-no-delivery, N28b-32 optimum-kept-on-feasibility, N28c-13 suggest-without-direct, N28b-22 rung-selects-unmeasured, N28b-02/03 bisect-last-edit-first-change, N28c-35 curve-fit-threshold, N28c-42 reuse-summed-or-cold."
+  },
+  {
+   "bead": "BD-400",
+   "what": "Build the CX-336/337 plants under N31-CX's plant ids; the same for BD-402 (CX-338/339), BD-406 (CX-340), BD-408 (CX-341), BD-404 (L31-4, L31-5), N31a-45 (CX-342, two plants, and CX-343, after pilot N31b-10), N31a-47 with N31a-48 (CX-344, after pilot N31b-11), N31b-32/33, N31b-35/37, N31b-39/40 (late tags L31-1 to L31-3, L31-6)."
+  },
+  {
+   "bead": "N32a-09",
+   "what": "Stop allocating or writing the control row in controls.toml (N32-CX's earlier rule, now withdrawn; N38b-05's seeding tool writes it); build CX-345 idem-two-statement under that plant id and bind the catching test to the seeded control by its nc_<nnnn>_ name."
+  },
+  {
+   "bead": "N32a-10",
+   "what": "Stop allocating or writing the control row in controls.toml (N32-CX's earlier rule, now withdrawn; N38b-05's seeding tool writes it); build CX-346 cursor-offset and CX-347 cursor-time-only under that plant id and bind the catching test to the seeded control by its nc_<nnnn>_ name."
+  },
+  {
+   "bead": "N32a-07",
+   "what": "Stop allocating or writing the control row in controls.toml (N32-CX's earlier rule, now withdrawn; N38b-05's seeding tool writes it); build CX-348 schema-bare-int64 under that plant id and bind the catching test to the seeded control by its nc_<nnnn>_ name."
+  },
+  {
+   "bead": "N32a-08",
+   "what": "Stop allocating or writing the control row in controls.toml (N32-CX's earlier rule, now withdrawn; N38b-05's seeding tool writes it); build CX-349 chunk-key-tick-range and CX-350 chunk-key-no-episode under that plant id and bind the catching test to the seeded control by its nc_<nnnn>_ name."
+  },
+  {
+   "bead": "N32b-24",
+   "what": "Drop 'exactly one row per mutant' as a row this bead writes: the seeding tool writes the one control; build packet-binary-budget against N24a-41 and add the binary-level tests of CX-345 to CX-350 to the seeded controls."
+  },
+  {
+   "bead": "BD-211",
+   "what": "Replace 'allocated at M1 by the mechanism beads ... the rule is N32-CX's' by: controls are seeded by N38b-05 from N32-CX's entries; this bead binds its daemon-level tests to them."
+  },
+  {
+   "bead": "N32b-02",
+   "what": "Build derived-token-copy for N32-CX's tag tether-derived-budget-copy; its rule has no gate, so the M3 exit must dispose of the finding (gate added or entry withdrawn). Same for N32b-03 with leaderboard-arrival-ties."
+  },
+  {
+   "bead": "N25b-05",
+   "what": "Add a fifth scratch variant shared-canonicalizer-drops-field (one canonicalizer shared by producer and checker, a field dropped before hashing; the bundle must be rejected by two implementations), run at gate time and caught under GATE-WS-03 and GATE-AUGUR-06; N34-CX CX-362's third plant, which no bead built."
+  },
+  {
+   "bead": "N34-18",
+   "what": "Name the three mutant builds and the conformance crate's library-map writer by N34-CX's plant ids (writer-no-key-sort, identity-on-raw-bytes, library-map-insertion-order); N34-19 and N34-24 likewise view-has-identity and view-converted-silently, N34-22 reader-ignores-unknown, N34-25 cert-depends-on-core and cert-pasted-function, BD-141 the debug-render-identity fixture."
+  },
+  {
+   "bead": "N35-15",
+   "what": "Its 'Registry rows' write controls.toml with private fields (axes, expected_kernel, expected_quantity, owner_test, known_answer, counterexample): controls are written only by N38b-05's seeding tool (CX-367/368 from N35-CX, the others from N35-KA's rows); keep the axes and the specificity matrix in this bead's own test table."
+  },
+  {
+   "bead": "N35-30",
+   "what": "Build the host-form plants under N35-CX's ids (states-only-comparator row 4, uncentred-offset-range row 5, sequential-stream row 6, chol-scale-by-ten, unscaled-residual-tolerance); N35-09 states-only-comparator, N35-10 zero-discordant-small-n, N35-02 seeded-reordered-arm, N35-24 sequential-stream, BD-179 absolute-f32-positions and the device forms, BD-156 unscaled-residual-tolerance."
+  },
+  {
+   "bead": "N36-05",
+   "what": "Build the plants of N36-CX under its ids: pruning-times-speedup, ceiling-recorded-after (with N36-07 at M2), and the planted inputs phase-ceiling-below-goal (with N36-04) and family-batch-no-switch-cost; likewise N36-03 units-without-decimation, N36-08 mean-of-shard-means, N36-09 late-two-card-prediction, BD-219 per-world-bytes-only, N36-18 unmeasured-bandwidth-ceiling, N36p1-02 full-referee-coverage-claim."
+  },
+  {
+   "bead": "N39a-38",
+   "what": "GATE-TENFOLD-09 now carries the controls of CX-375 to CX-378 (ceiling-first refusal, FROB-REF-866) and TF-CX-03; run them when measuring the gate."
+  },
+  {
+   "bead": "BD-214",
+   "what": "GATE-FID-07 now carries the control of CX-383 (a record claiming the referee checks every device world; row 17 of §36.3); run it when measuring the gate."
+  },
+  {
+   "bead": "N00-CX",
+   "what": "Add GATE-TENFOLD-03 to the rule_ids of CX-003 and CX-008, which the ten-fold harness must catch (N39-CX no longer restates them)."
+  },
+  {
+   "bead": "N39a-41",
+   "what": "Keep limit_as_warm for TF-CX-04 only; TF-CX-05 now has its own planted input standing_asset_omitted (built by N39a-17), since one control per entry needs one plant per entry."
+  },
+  {
+   "bead": "N39a-17",
+   "what": "Build the planted input standing_asset_omitted (the warm card with S_A = 0 and the asset in use) for TF-CX-05, and the mutant limit_as_warm for TF-CX-04."
+  },
+  {
+   "bead": "N39b-22",
+   "what": "The 27 TF-CX entries are numbered from N39-CX's cx block of 27 at M0 (tags kept as slugs) and their controls are seeded by N38b-05; run them by their issued numbers; planting beads: N39a-07/08/13/17/18/24/27/29/30/33/35/37, N39b-01/02/08/13/18/34/35/37/41/43/45 under N39-CX's plant ids."
+  },
+  {
+   "bead": "N40-33",
+   "what": "Replace 'a control number is requested of N40-CX' by N40-CX RC-65 (kill gate not-fired under the variant while a read part was not run, due M2)."
+  },
+  {
+   "bead": "N40-05",
+   "what": "Name N40-CX RC-62 (an attached check that exits non-zero taken as a pass) among the negative controls of attached_check_contract."
+  },
+  {
+   "bead": "N40-35",
+   "what": "Name N40-CX RC-63 (Owner question with no calendar row at or before its deadline) and RC-64 (not-run gate behind a defaulted question reported with no question named) in its negative controls."
+  },
+  {
+   "bead": "N41-32",
+   "what": "Do not write [[control]] records in controls.toml itself (N38b-05's seeding tool is the only writer; RISK- seeds are seeded there); for the planted instances of GATE-WS-07 reuse N41-CX's X41-01, X41-06, X41-07 and X41-08 controls (your reuse-first rule) instead of a third record."
+  },
+  {
+   "bead": "hub",
+   "what": "N39-CX moved from M3 (WP-60, priority 2) to M0 (WP-34, priority 0) so that GATE-TENFOLD-01 (M0) and -02/-09 (M1) have their controls registered in time; INDEX.tsv still shows the old milestone, parent and priority."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 11 brought to the catalogue division of N38b-05 (entries only; seeding writes controls; late cases numbered by cx blocks: N28 2, N31 6, N32 3, N33 9, N34 1, N39 27, N40 65, N41 51). Three requests addressed to the slice applied: S14 (CX-386 9.16 cm), S01 (RC-62 to RC-64), S46 (RC-65); none rejected. Numbers recomputed and correct throughout; points worth knowing: CX-389's 0.900 N·m holds only with 60 mm as the radius (now stated); TF-CX-08's 0.1174 is 0.117346 rounded up as an upper bound (intentional, as N39a-30 says); CX-373 keeps the plan's D = diag(1,1e4) case with the power-of-two figures beside it. Front-matter gates on N38/N39/N40/N41-CX left as they are (the registry pattern of N00-CX and N38-KA). N36-CX attaches five controls to gates the plan ties to the rule rather than names in Appendix N; the fail-closed alternative (findings file) is stated. Outside the slice, N35-15, N41-32 and N00-CX also write controls.toml records themselves; requests filed for the first two. Every touched file parses (front matter, JSON lists, seven sections, table columns), all referenced keys are live, no new dependency cycle; deliberate unknown gates (GATE-*-99) are script plants. Slice looks settled apart from the N38b-05 schema requests (a)-(e), on which several entries rely."
+}

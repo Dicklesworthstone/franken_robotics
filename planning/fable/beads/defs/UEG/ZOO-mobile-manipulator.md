@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-04", "BD-054", "BD-055", "BD-056", "BD-105", "BD-102", "BD-104", "ZOO-diff-drive"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-102", "BD-104", "BD-105", "N14b-04", "N14b-12", "NEG-30", "NEG-31", "ZOO-diff-drive"]
 needs: []
-related: ["ROBOT-iiwa7", "ROBOT-stretch3", "ROBOT-tiago", "N14b-09", "N14b-12", "BD-244", "BD-246", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 16", "§14.10", "§28.4 A-05, A-06", "§14.11 (stage 7)", "Appendix M KA-270"]
 ---
@@ -80,7 +80,9 @@ elbow limit): the row "points inside d_min are unreachable" catches it.
 
 - [ ] The zoo instance equals the template default; `DesignId` pinned and platform-independent.
 - [ ] Rank, null-space, reach and tip-over rows hold; self-collision pairs are listed.
-- [ ] The three controls behave as stated; stage-7 rows are `not run` until stage 7 lands and then pass.
+- [ ] The three controls behave as stated; the stage-7 rows (this archetype supplies them, with its task and
+      scene) pass at M3 through stage 7 (N14b-12, a dependency, M3). In a build without stage 7 the rows read
+      `not-run` with `reason = "stage 7 absent"`, never `passed`, and the bead does not close on them.
 
 ## Test plan
 

@@ -1,14 +1,14 @@
 ---
 key: "BET-32"
-title: "Decide BET-32: rare-failure bounds (bounded-weight importance sampling refutes and tightens; never cheap absence)"
+title: "Decide BET-32: rare-failure bounds (bounded-weight importance sampling refutes, tightens; never cheap absence)"
 type: "task"
 priority: 1
 milestone: "M3"
 labels: ["m3", "nemesis", "frob-nemesis", "solid", "bet", "gate"]
 parent: "WP-55"
-deps: ["N00-28", "BD-276", "BD-277", "STD-E2E"]
-needs: ["§26.9: the fixtures with a planted failure rate (including one with two separate modes, one outside the proposal) and the defensive-mixture proposal with weight bound 1/ε"]
-related: ["BET-22", "BD-273", "BD-259", "N00-11", "N00-20"]
+deps: ["BD-276", "BD-277", "N00-28", "N26a-30", "N26a-32", "STD-E2E"]
+needs: []
+related: ["GB-32", "N00-11", "N00-20", "N40-31"]
 gates: ["GATE-NEMESIS-04", "GATE-NEMESIS-05", "KILL-RARE"]
 plan_refs: ["§4 (BET-32)", "§40.5", "§0.8 (H-07)", "§2.4 (lever 4)", "§26.15"]
 ---
@@ -29,7 +29,11 @@ bound.
 
 ## Scope
 
-In: pre-registration, the M3 reading, verdict and decision record. Out: the estimators, the splitting lane.
+In: pre-registration, the M3 reading, verdict and decision record. Out, with the beads that have them: the
+certification lane `nemesis.bound` with the defensive mixture, GATE-NEMESIS-04 and the measurements of clauses
+(a) to (d) (BD-276, with its end-to-end script N26a-30); the exploration lane (multilevel splitting) and
+GATE-NEMESIS-05 (BD-277); the decision KILL-RARE, its ADR and its fallback (N26a-32), which this bead reads and
+cites and never re-decides.
 
 ## Technical approach
 
@@ -68,7 +72,8 @@ In: pre-registration, the M3 reading, verdict and decision record. Out: the esti
       (at least 30%); every weight at most 1/ε.
 - [ ] The episode ratio against crude sampling on the 10⁻⁴ refutation fixture (at least 3×).
 - [ ] The second mode outside the proposal was not reported absent (the result says the proposal does not cover
-      it); verdict and the KILL-RARE decision recorded.
+      it); the verdict recorded in `docs/adr/bet-32-m3.md`, citing the KILL-RARE decision on record by N26a-32
+      (by identifier and hash; with it missing the verdict is not filed).
 
 ## Test plan
 
@@ -86,7 +91,8 @@ episodes per arm; `summary` naming GATE-NEMESIS-04, GATE-NEMESIS-05 and KILL-RAR
 
 ### Known answers and negative controls
 The Gaussian tail P(Z > 4) = 3.167 × 10⁻⁵; a random-walk level-crossing probability of 1.504 × 10⁻⁴; the
-zero-failure rule: n failure-free episodes give a 95% upper bound of 1 − 0.05^(1/n) (n = 299 gives 0.00997).
+zero-failure rule: n failure-free episodes give a 95% upper bound of 1 − 0.05^(1/n) (n = 299 gives 0.00997;
+⌈ln 0.05 ÷ ln(1 − 10⁻⁴)⌉ = 29,956 episodes for a 10⁻⁴ bound, the "about 30,000" above).
 Negative controls: the mis-centred proposal; a proposal adapted during the confirming draws; the planted second
 mode; a fork with no fresh randomness.
 

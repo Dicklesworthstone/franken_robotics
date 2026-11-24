@@ -1,0 +1,2626 @@
+{
+ "group": "G38",
+ "needs": [
+  {
+   "bead": "BD-025",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-003"
+   ],
+   "note": "the layer and dependency checks enforce the crate's placement afterwards; the crate v0 is finished without them"
+  },
+  {
+   "bead": "BD-025",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38b-18",
+    "N38b-19",
+    "N40-02"
+   ],
+   "note": "all three depend on BD-025, which creates the v0 gates.toml they extend; its first rows are typed from the printed register"
+  },
+  {
+   "bead": "BD-146",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "the manifest format and the smoke and fixtures batteries it wires into the per-change run"
+  },
+  {
+   "bead": "BD-146",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-04"
+   ],
+   "note": "the exit query supplies the list of gates with a part due at M1"
+  },
+  {
+   "bead": "BD-146",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N00-CX",
+    "N00-KA",
+    "N09-CX",
+    "N09-KA",
+    "N10-CX",
+    "N10-KA1",
+    "N10-KA2",
+    "N10-KA3",
+    "N11-CX",
+    "N11-KA",
+    "N12-CX",
+    "N12-KA",
+    "N13-CX",
+    "N13-KA",
+    "N14-CX",
+    "N14-KA",
+    "N15-CX",
+    "N15-KA",
+    "N16-CX",
+    "N16-KA",
+    "N17-KA",
+    "N18-CX",
+    "N18-KA",
+    "N20-CX",
+    "N20-KA",
+    "N21-KA",
+    "N22-CX",
+    "N22-KA",
+    "N24-CX",
+    "N24-KA",
+    "N25-CX",
+    "N25-KA",
+    "N28-CX",
+    "N28-KA",
+    "N29-CX",
+    "N29-KA",
+    "N30-CX",
+    "N32-CX",
+    "N32-KA",
+    "N33-CX",
+    "N33-KA",
+    "N34-CX",
+    "N34-KA",
+    "N35-CX",
+    "N35-KA",
+    "N36-CX",
+    "N36-KA",
+    "N37-CX",
+    "N37-KA",
+    "N40-CX",
+    "N40-KA",
+    "N41-CX",
+    "N41-KA",
+    "N38-KA",
+    "N38-CX"
+   ],
+   "note": "every chapter registry bead of M0 or M1 holds rows and entries due at M1; later registries are due with later seeds"
+  },
+  {
+   "bead": "BD-223",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04",
+    "N40-33"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-223",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29b-07",
+    "BD-176"
+   ],
+   "note": "the fidelity ledger BD-212 is already a dependency; the tier-correction ledger in full (BD-264) and eval.detect (BD-267) are M3 and recorded as related edges"
+  },
+  {
+   "bead": "BD-318",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-318",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-254",
+    "N26b-11"
+   ],
+   "note": "nemesis.cover (BD-278) is already a dependency"
+  },
+  {
+   "bead": "BD-318",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-261",
+    "N37-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-377",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04",
+    "N40-34"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-377",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-292",
+    "BD-347"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-377",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-145",
+    "BD-328"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-411",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-411",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-388"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-411",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-408, which depends on BD-400 to BD-407"
+  },
+  {
+   "bead": "BD-411",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "the corpus mechanism N38b-11 is already a dependency"
+  },
+  {
+   "bead": "BD-417",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38a-37",
+    "N38a-38",
+    "N40-03"
+   ],
+   "note": "gap closed by new beads: N38a-37 registers KILL-RUT by dated amendment, N38a-38 decides it; an epic carries no dependency"
+  },
+  {
+   "bead": "BD-418",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38a-37",
+    "N38a-39",
+    "N40-03"
+   ],
+   "note": "gap closed by new beads: N38a-37 registers KILL-TACTILE by dated amendment, N38a-39 decides it; an epic carries no dependency"
+  },
+  {
+   "bead": "BD-432",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N41-06",
+    "N39b-26",
+    "N39b-27"
+   ],
+   "note": "an epic carries no dependency; its pilot N38a-34 depends on the decision"
+  },
+  {
+   "bead": "BD-432",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39a-10",
+    "N39a-11",
+    "N39b-24",
+    "N40-14"
+   ],
+   "note": "an epic carries no dependency"
+  },
+  {
+   "bead": "BD-432",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39a-05",
+    "N39b-14"
+   ],
+   "note": "BD-428 is an epic; the mission card and the report with its phase ledgers are the task beads behind it"
+  },
+  {
+   "bead": "N38-CX",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-40"
+   ],
+   "note": "new bead: the allocation ledger assigns the block CX-385 to CX-400 so that no other chapter's late entries take it"
+  },
+  {
+   "bead": "N38-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N15-KA",
+    "N18-KA",
+    "N13-KA",
+    "N25-KA",
+    "N24-KA",
+    "N23-KA",
+    "N21-KA",
+    "N22-KA",
+    "N20-KA",
+    "N19-KA"
+   ],
+   "note": "rows of one registry; a registry bead depends only on the registry skeleton"
+  },
+  {
+   "bead": "N38-KA",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-40"
+   ],
+   "note": "new bead: the allocation ledger assigns the block KA-836 to KA-849; the append-only check itself is in its dependency N38a-12"
+  },
+  {
+   "bead": "N38-REF",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-005 is already a dependency"
+  },
+  {
+   "bead": "N38-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": "shares the exit-code convention; a registry bead does not depend on a mechanism"
+  },
+  {
+   "bead": "N38a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-003",
+    "BD-004"
+   ],
+   "note": "the decision checks read the six xtask checks and their generated-file list"
+  },
+  {
+   "bead": "N38a-03",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "not a prerequisite: this bead registers the 54 cells first; each owner's test binds by entry id when it lands (edge N31b-05 recorded)"
+  },
+  {
+   "bead": "N38a-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-35",
+    "N36-25",
+    "N39b-08"
+   ],
+   "note": "the decision N38b-35 depends on this register; comparators.toml stays empty and comparisons `not run` until it is decided"
+  },
+  {
+   "bead": "N38a-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-001",
+    "N33a-03"
+   ],
+   "note": "the stack lock and its strict parser"
+  },
+  {
+   "bead": "N38a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-005"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-003"
+   ],
+   "note": "this bead plants a failure against check-deps"
+  },
+  {
+   "bead": "N38a-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-24"
+   ],
+   "note": "the decision reads this bead's count; a mechanism never depends on the decision about it"
+  },
+  {
+   "bead": "N38a-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-35"
+   ],
+   "note": "the lane runs no pilot until the release is pinned by the decision"
+  },
+  {
+   "bead": "N38a-06",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-07"
+   ],
+   "note": "N38b-07 defines the origin flag in the claim product; this bead sets it on lane records"
+  },
+  {
+   "bead": "N38a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-REF",
+    "N24-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-259"
+   ],
+   "note": "later milestone (M3); the rule is stated at M1 and bound when the lane lands"
+  },
+  {
+   "bead": "N38a-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block is out of this bead's scope; shared convention"
+  },
+  {
+   "bead": "N38a-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N44-03",
+    "N44-04",
+    "N00-09"
+   ],
+   "note": "named carriers are epics; the funding rule is finished on a scratch registry and reads the work-package table and funding records when they exist (N00-09 is M1 and depends on this chain)"
+  },
+  {
+   "bead": "N38a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-007"
+   ],
+   "note": "the referee dynamics is the in-repository source for rows 19 and 20; the development oracle N38a-06 stays related as the alternative"
+  },
+  {
+   "bead": "N38a-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-27",
+    "N38b-28",
+    "N38b-61"
+   ],
+   "note": "the three decisions depend on this registry"
+  },
+  {
+   "bead": "N38a-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-KA",
+    "N09-KA",
+    "N10-KA1",
+    "N10-KA2",
+    "N10-KA3",
+    "N11-KA",
+    "N12-KA",
+    "N13-KA",
+    "N14-KA",
+    "N15-KA",
+    "N16-KA",
+    "N17-KA",
+    "N18-KA",
+    "N19-KA",
+    "N20-KA",
+    "N21-KA",
+    "N22-KA",
+    "N23-KA",
+    "N24-KA",
+    "N25-KA",
+    "N26-KA",
+    "N27-KA",
+    "N28-KA",
+    "N29-KA",
+    "N30-KA",
+    "N31-KA",
+    "N32-KA",
+    "N33-KA",
+    "N34-KA",
+    "N35-KA",
+    "N36-KA",
+    "N37-KA",
+    "N39-KA",
+    "N40-KA",
+    "N41-KA"
+   ],
+   "note": "rule 5: the registry skeleton comes first and each chapter's rows depend on it"
+  },
+  {
+   "bead": "N38a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04",
+    "N38b-05"
+   ],
+   "note": "the control runner and the seeded registry; BD-025 is already reached; BD-146 depends on this bead and stays related"
+  },
+  {
+   "bead": "N38a-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N38b-23"
+   ],
+   "note": "the gate row is registered with its control first; the recorder enters the receipt"
+  },
+  {
+   "bead": "N38a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-38"
+   ],
+   "note": "the experiment measures this runner and depends on it"
+  },
+  {
+   "bead": "N38a-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-09",
+    "SPEC-C-02",
+    "SPEC-C-14",
+    "SPEC-C-05",
+    "SPEC-C-12",
+    "N16a-12",
+    "BD-163",
+    "BD-203",
+    "BD-059"
+   ],
+   "note": "registry records come first; each owner's transform binds by identifier"
+  },
+  {
+   "bead": "N38a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-181",
+    "BD-159",
+    "BD-170"
+   ],
+   "note": "registry records; the owners' tests bind by identifier"
+  },
+  {
+   "bead": "N38a-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "SPEC-C-18",
+    "SPEC-C-21",
+    "SPEC-C-22",
+    "SPEC-C-27",
+    "SPEC-C-29"
+   ],
+   "note": "registry records; C-27 is M3"
+  },
+  {
+   "bead": "N38a-16",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-124",
+    "BD-259",
+    "BD-111"
+   ],
+   "note": "due with their subsystems at M1, M3 and M4"
+  },
+  {
+   "bead": "N38a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-078",
+    "BD-098",
+    "BD-189",
+    "BD-215"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "SPEC-C-30",
+    "N24b-11",
+    "BD-202"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-17",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "SPEC-C-23",
+    "N23b-25"
+   ],
+   "note": "due at M4 with family policies"
+  },
+  {
+   "bead": "N38a-17",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "SPEC-C-31",
+    "N19b-05"
+   ],
+   "note": "due at M4 and M3"
+  },
+  {
+   "bead": "N38a-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-33",
+    "BD-233",
+    "BD-235",
+    "N19c-11"
+   ],
+   "note": "due at M3"
+  },
+  {
+   "bead": "N38a-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N29a-13",
+    "N29a-16",
+    "SPEC-C-25",
+    "BD-264"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31a-21",
+    "N10c-06"
+   ],
+   "note": "due at M5"
+  },
+  {
+   "bead": "N38a-18",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N34-18",
+    "BD-211",
+    "N33c-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-18",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "SPEC-C-14",
+    "N16b-13",
+    "BD-005",
+    "SPEC-C-08",
+    "N21b-37"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N38b-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "the manifest format; scorecard accounting (BD-254) is M3 and depends on this bead's chain: related edge"
+  },
+  {
+   "bead": "N38a-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-332"
+   ],
+   "note": "later milestone (M4); gait rows join the legged grid when the atlas lands"
+  },
+  {
+   "bead": "N38a-20",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N38b-37"
+   ],
+   "note": "the decision depends on this bead"
+  },
+  {
+   "bead": "N38a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-259"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-202"
+   ],
+   "note": "later milestone (M2); its layer joins the trigger map when it lands"
+  },
+  {
+   "bead": "N38a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-096",
+    "N33c-15"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-24",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-175 is already a dependency"
+  },
+  {
+   "bead": "N38a-24",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-081 is already a dependency"
+  },
+  {
+   "bead": "N38a-24",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-159",
+    "N16a-14",
+    "BD-171",
+    "BD-189"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-25",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-210 (which depends on the chunk transaction BD-091) and BD-211"
+  },
+  {
+   "bead": "N38a-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-15",
+    "N33c-17"
+   ],
+   "note": "BD-096 is already a dependency"
+  },
+  {
+   "bead": "N38a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-17"
+   ],
+   "note": "BD-141 is already a dependency; the complete format registry BD-410 is M5: related edge"
+  },
+  {
+   "bead": "N38a-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N37-04",
+    "N37-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-26",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-261 (the firewall and its sealed-field audit) is already a dependency"
+  },
+  {
+   "bead": "N38a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N38b-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-37"
+   ],
+   "note": "new bead: the registration of KILL-RUT by dated amendment"
+  },
+  {
+   "bead": "N38a-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-09",
+    "N19b-03",
+    "N19a-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-161",
+    "BD-154"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-37"
+   ],
+   "note": "new bead: the registration of KILL-TACTILE by dated amendment"
+  },
+  {
+   "bead": "N38a-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-098"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-31",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-141",
+    "BD-238"
+   ],
+   "note": "the .fcard row of the format registry and the sensor cards"
+  },
+  {
+   "bead": "N38a-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-34"
+   ],
+   "note": "the pilot's archetype is the warehouse"
+  },
+  {
+   "bead": "N38a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-04",
+    "N19a-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-079",
+    "BD-166",
+    "BD-187"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-33",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-005"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-05"
+   ],
+   "note": "BD-428 is an epic; the mission card with its published part is the task bead behind it"
+  },
+  {
+   "bead": "N38a-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-259"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-34",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-08",
+    "N41-06",
+    "N39a-11"
+   ],
+   "note": "the adapter, the owner decision OPEN-PROG-2 and the kill decision that names the cross-home fallback"
+  },
+  {
+   "bead": "N38a-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01",
+    "NJL-01",
+    "N35-07",
+    "N35-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-35",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N38b-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38a-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N26b-05",
+    "N26b-03",
+    "BD-345"
+   ],
+   "note": "later milestone (M4); the potency record of each screen is bound when the audit lands"
+  },
+  {
+   "bead": "N38a-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-280"
+   ],
+   "note": "the e2e N27b-09 of the same test is related"
+  },
+  {
+   "bead": "N38b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30a-03"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-01",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-311"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-01",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-388"
+   ],
+   "note": "later milestone (M5)"
+  },
+  {
+   "bead": "N38b-01",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-303"
+   ],
+   "note": "BD-005 is already a dependency; BD-303 is M3"
+  },
+  {
+   "bead": "N38b-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30a-04"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-095"
+   ],
+   "note": "later milestone (M1)"
+  },
+  {
+   "bead": "N38b-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N41-16",
+    "N40-05"
+   ],
+   "note": "the tracker check and the exit protocol call this audit; they need it, not the reverse"
+  },
+  {
+   "bead": "N38b-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25b-03"
+   ],
+   "note": "later milestone (M1); rule 5 takes its record as input when it exists"
+  },
+  {
+   "bead": "N38b-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-CX",
+    "N09-CX",
+    "N10-CX",
+    "N11-CX",
+    "N12-CX",
+    "N13-CX",
+    "N14-CX",
+    "N15-CX",
+    "N16-CX",
+    "N17-CX",
+    "N18-CX",
+    "N19-CX",
+    "N20-CX",
+    "N21-CX",
+    "N22-CX",
+    "N23-CX",
+    "N24-CX",
+    "N25-CX",
+    "N26-CX",
+    "N27-CX",
+    "N28-CX",
+    "N29-CX",
+    "N30-CX",
+    "N31-CX",
+    "N32-CX",
+    "N33-CX",
+    "N34-CX",
+    "N35-CX",
+    "N36-CX",
+    "N37-CX",
+    "N39-CX",
+    "N40-CX",
+    "N41-CX"
+   ],
+   "note": "the seeding tool comes first; each chapter's entries are written by its registry bead and seeded as they land"
+  },
+  {
+   "bead": "N38b-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-27"
+   ],
+   "note": "later milestone (M4); CX-012 stays an obligation until the fixture has its numeric instance"
+  },
+  {
+   "bead": "N38b-05",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-06",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-022 (the envelope with its bound block, on N32a-03) and BD-025 (on BD-005)"
+  },
+  {
+   "bead": "N38b-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-111"
+   ],
+   "note": "later milestone (M1)"
+  },
+  {
+   "bead": "N38b-07",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-005 is already a dependency"
+  },
+  {
+   "bead": "N38b-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38a-06"
+   ],
+   "note": "the lane depends on this bead for the flag type"
+  },
+  {
+   "bead": "N38b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23-REF"
+   ],
+   "note": "BD-198 is already a dependency; the registry row of FROB-REF-544"
+  },
+  {
+   "bead": "N38b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-323"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N38b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-018",
+    "BD-051"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02",
+    "BD-136"
+   ],
+   "note": "this corpus extends the mission corpus of BD-136 (overlap reported)"
+  },
+  {
+   "bead": "N38b-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-021",
+    "BD-019"
+   ],
+   "note": "FrankenSymPy is reached out of process as an oracle of the register N38a-04; only confirms that a mutant is false"
+  },
+  {
+   "bead": "N38b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-18",
+    "N24a-34"
+   ],
+   "note": "BD-259 is already a dependency; these hold the scripted adversary and the 500-retry campaign this bead registers"
+  },
+  {
+   "bead": "N38b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-04"
+   ],
+   "note": "BD-271 is already a dependency; the planted registry of illegal edits and traps"
+  },
+  {
+   "bead": "N38b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-145"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-345"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N38b-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-276",
+    "BD-277"
+   ],
+   "note": "later milestone (M3); the rare-event row is due when they land"
+  },
+  {
+   "bead": "N38b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-06",
+    "N28a-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-393",
+    "BD-411"
+   ],
+   "note": "later milestone (M5)"
+  },
+  {
+   "bead": "N38b-15",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-280, BD-281 and BD-282 are already dependencies"
+  },
+  {
+   "bead": "N38b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-22"
+   ],
+   "note": "BD-092 and BD-208 are already dependencies"
+  },
+  {
+   "bead": "N38b-17",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "N38b-11 is already a dependency"
+  },
+  {
+   "bead": "N38b-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-01"
+   ],
+   "note": "the register layer extends this base record and depends on it (edge recorded); overlap reported"
+  },
+  {
+   "bead": "N38b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-02",
+    "N40-10"
+   ],
+   "note": "the rows are entered after the record exists"
+  },
+  {
+   "bead": "N38b-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N34-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-095"
+   ],
+   "note": "later milestone (M1)"
+  },
+  {
+   "bead": "N38b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N40-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-20",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-004 is already a dependency"
+  },
+  {
+   "bead": "N38b-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-02",
+    "N40-04"
+   ],
+   "note": "out of this bead's scope; both are other generated views of the same file"
+  },
+  {
+   "bead": "N38b-20",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N32b-19",
+    "N32b-07"
+   ],
+   "note": "later milestones (M1, M3)"
+  },
+  {
+   "bead": "N38b-20",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N41-29"
+   ],
+   "note": "later milestone (M1)"
+  },
+  {
+   "bead": "N38b-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-36"
+   ],
+   "note": "later milestone (M1); the broader script of the register (overlap with distinct scope, reported)"
+  },
+  {
+   "bead": "N38b-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38a-08",
+    "N38a-14"
+   ],
+   "note": "later milestones (M1, M2); the suite binds to them when they land"
+  },
+  {
+   "bead": "N38b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-004"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-10"
+   ],
+   "note": "both enter rows of one registry; overlap reported"
+  },
+  {
+   "bead": "N38b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-29"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22c-05",
+    "N22c-06",
+    "N23b-21",
+    "N27b-10"
+   ],
+   "note": "the count comes from its dependency N38a-06; the pilots are later-milestone beads of their owners"
+  },
+  {
+   "bead": "N38b-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-36"
+   ],
+   "note": "the experiment depends on this bead"
+  },
+  {
+   "bead": "N38b-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-05"
+   ],
+   "note": "the exit protocol calls the exit selection; it needs this bead, not the reverse"
+  },
+  {
+   "bead": "N38b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-25"
+   ],
+   "note": "the engineering half is decided first; N41-10 decides the same question (duplicate reported)"
+  },
+  {
+   "bead": "N38b-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-KA",
+    "N09-KA",
+    "N10-KA1",
+    "N10-KA2",
+    "N10-KA3",
+    "N11-KA",
+    "N13-KA",
+    "N14-KA",
+    "N15-KA",
+    "N16-KA",
+    "N18-KA",
+    "N19-KA",
+    "N20-KA",
+    "N21-KA",
+    "N22-KA",
+    "N23-KA",
+    "N25-KA",
+    "N29-KA",
+    "N31-KA",
+    "N33-KA",
+    "N36-KA"
+   ],
+   "note": "the rule and the list are data; each owner applies the rule to its own rows"
+  },
+  {
+   "bead": "N38b-27",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-38",
+    "N35-01"
+   ],
+   "note": "the scaling rules are restated in this bead; the conditioning and tier-envelope beads are M2"
+  },
+  {
+   "bead": "N38b-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-KA",
+    "N09-KA"
+   ],
+   "note": "N00-33 registers controls for the same thesis rows and takes precedence (duplicate reported)"
+  },
+  {
+   "bead": "N38b-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N19-KA",
+    "N20-KA"
+   ],
+   "note": "later milestones (M2, M1)"
+  },
+  {
+   "bead": "N38b-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA1",
+    "N10-KA2",
+    "N10-KA3"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "SPEC-C-01",
+    "SPEC-C-02",
+    "SPEC-C-03",
+    "SPEC-C-04",
+    "SPEC-C-05",
+    "SPEC-C-06",
+    "SPEC-C-07",
+    "SPEC-C-08",
+    "SPEC-C-09",
+    "SPEC-C-10",
+    "SPEC-C-11",
+    "SPEC-C-12",
+    "SPEC-C-13",
+    "SPEC-C-14",
+    "SPEC-C-15",
+    "SPEC-C-16",
+    "SPEC-C-17",
+    "SPEC-C-18",
+    "SPEC-C-19",
+    "SPEC-C-20",
+    "SPEC-C-21",
+    "SPEC-C-22",
+    "SPEC-C-23",
+    "SPEC-C-24",
+    "SPEC-C-25",
+    "SPEC-C-26",
+    "SPEC-C-27",
+    "SPEC-C-28",
+    "SPEC-C-29",
+    "SPEC-C-30",
+    "SPEC-C-31",
+    "SPEC-C-32",
+    "SPEC-C-33",
+    "SPEC-C-34",
+    "SPEC-C-35",
+    "SPEC-C-36",
+    "SPEC-C-37",
+    "SPEC-C-38",
+    "SPEC-C-39",
+    "SPEC-C-40"
+   ],
+   "note": "each mutation is planted beside its construction's law tests when that construction lands"
+  },
+  {
+   "bead": "N38b-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N11-KA",
+    "N12-KA",
+    "N13-KA",
+    "N14-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15-KA",
+    "N16-KA",
+    "N17-KA",
+    "N18-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19-KA",
+    "N20-KA",
+    "N21-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N22-KA",
+    "N24-KA",
+    "N25-KA",
+    "N28-KA"
+   ],
+   "note": "N23-KA and N27-KA are M2: related edges"
+  },
+  {
+   "bead": "N38b-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29-KA",
+    "N32-KA",
+    "N33-KA",
+    "N35-KA",
+    "N36-KA",
+    "N37-KA"
+   ],
+   "note": "N30-KA and N31-KA are M5: related edges"
+  },
+  {
+   "bead": "N38b-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-216",
+    "N36-04",
+    "N36-05"
+   ],
+   "note": "the helpers each mutation is planted beside"
+  },
+  {
+   "bead": "N38b-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-08",
+    "N36-25"
+   ],
+   "note": "the rival audit runs on the pins this decision freezes; N36-25 decides the same comparator set (duplicate reported)"
+  },
+  {
+   "bead": "N38b-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N17b-08"
+   ],
+   "note": "later milestone (M2)"
+  },
+  {
+   "bead": "N38b-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-37",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-245",
+    "N16b-01"
+   ],
+   "note": "the laws are M3; N16b-01 also lists scenarios per class (duplicate of N38a-20 reported)"
+  },
+  {
+   "bead": "N38b-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-109"
+   ],
+   "note": "the first archetypes and the template verb; the remaining fourteen (BD-246) are M3: related edge"
+  },
+  {
+   "bead": "N38b-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-22"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-39",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38-KA"
+   ],
+   "note": "later milestone (M1); the record follows the values this test lands"
+  },
+  {
+   "bead": "N38b-39",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "SPEC-C-36"
+   ],
+   "note": "later milestone (M1)"
+  },
+  {
+   "bead": "N38b-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-332"
+   ],
+   "note": "later milestone (M4)"
+  },
+  {
+   "bead": "N38b-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-41",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-05",
+    "N21a-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20b-04"
+   ],
+   "note": "the solver; its e2e N20b-07 is related"
+  },
+  {
+   "bead": "N38b-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18b-12",
+    "N18b-18"
+   ],
+   "note": "BD-366 is already a dependency; the row exists only if KILL-SOIL keeps soil mechanics"
+  },
+  {
+   "bead": "N38b-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18b-40",
+    "N18a-26"
+   ],
+   "note": "BD-367 is already a dependency; the row exists only if KILL-RESPONSE keeps response batches"
+  },
+  {
+   "bead": "N38b-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19b-09",
+    "N19b-08",
+    "N19b-11"
+   ],
+   "note": "the mechanism and the decision KILL-ADVECT; the drafted dependency on the epic BD-413 was moved to related"
+  },
+  {
+   "bead": "N38b-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25d-23",
+    "N25d-25"
+   ],
+   "note": "the drafted dependency on the epic BD-437 was moved to related"
+  },
+  {
+   "bead": "N38b-45",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22b-34",
+    "N22b-36"
+   ],
+   "note": "the drafted dependency on the epic BD-440 was moved to related"
+  },
+  {
+   "bead": "N38b-45",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-46",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-41",
+    "N38b-42",
+    "N38b-43",
+    "N38b-44",
+    "N38b-45"
+   ],
+   "note": "later milestones; each adds its step when it lands"
+  },
+  {
+   "bead": "N38b-46",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-47",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10-KA1",
+    "N14-KA",
+    "N15-KA",
+    "N16-KA",
+    "N18-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-47",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-245"
+   ],
+   "note": "later milestone (M3): the belt law and its scrub-work known answer"
+  },
+  {
+   "bead": "N38b-47",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N14b-03",
+    "N15b-21"
+   ],
+   "note": "later milestones (M3, M6)"
+  },
+  {
+   "bead": "N38b-48",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15-KA",
+    "N18-KA",
+    "N10-KA3"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-49",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "N38a-12 is already a dependency"
+  },
+  {
+   "bead": "N38b-50",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-043"
+   ],
+   "note": "the re-run is out of this bead's scope; its separate phase timings update the record"
+  },
+  {
+   "bead": "N38b-50",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-17"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-51",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-17"
+   ],
+   "note": "the incumbent ledger BD-040 stays related; NEG-05 settles the same value (duplicate reported)"
+  },
+  {
+   "bead": "N38b-52",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-218"
+   ],
+   "note": "later milestone (M2)"
+  },
+  {
+   "bead": "N38b-53",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19b-08"
+   ],
+   "note": "later milestone (M6)"
+  },
+  {
+   "bead": "N38b-53",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N19-KA"
+   ],
+   "note": "later milestone (M2)"
+  },
+  {
+   "bead": "N38b-54",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-236",
+    "N36-16",
+    "N19c-16"
+   ],
+   "note": "later milestones (M3, M2)"
+  },
+  {
+   "bead": "N38b-54",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-029 is already a dependency"
+  },
+  {
+   "bead": "N38b-55",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-078 is already a dependency"
+  },
+  {
+   "bead": "N38b-55",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N11-KA",
+    "N20-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-56",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N26a-21",
+    "BD-259"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-56",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N26-KA"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-57",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N26-KA",
+    "N26a-21"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-57",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N26-KA"
+   ],
+   "note": "later milestone (M3)"
+  },
+  {
+   "bead": "N38b-58",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16a-14",
+    "BD-219"
+   ],
+   "note": "later milestone (M2)"
+  },
+  {
+   "bead": "N38b-58",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-KA",
+    "N36-CX"
+   ],
+   "note": "N16-KA is M1: related edge"
+  },
+  {
+   "bead": "N38b-59",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-06"
+   ],
+   "note": "BD-124 is already a dependency; the pre-analysis verb takes the level as a parameter"
+  },
+  {
+   "bead": "N38b-59",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-KA1",
+    "N24-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-60",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-289",
+    "BD-358"
+   ],
+   "note": "later milestones (M3, M4)"
+  },
+  {
+   "bead": "N38b-60",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N10-CX"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-61",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N38b-61",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-043",
+    "N00-17",
+    "BD-218",
+    "N19b-08",
+    "N36-16",
+    "BD-078",
+    "N26a-21",
+    "N26-KA",
+    "N16a-14",
+    "N24b-06",
+    "BD-289"
+   ],
+   "note": "each owner confirms its settled value when its mechanism lands; the closure is registry and document work"
+  },
+  {
+   "bead": "STD-TEST",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "BD-025 depends on STD-TEST; STD-TEST stays at the bottom of the graph"
+  },
+  {
+   "bead": "STD-TEST",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "N38b-19 depends on STD-TEST; STD-TEST stays at the bottom of the graph"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-223",
+   "dep": "BD-264",
+   "as": "related",
+   "why": "need 2 of BD-223: the tier-correction ledger in full is M3; its M2 store N29b-07 is the dependency"
+  },
+  {
+   "bead": "BD-223",
+   "dep": "BD-267",
+   "as": "related",
+   "why": "need 2 of BD-223: eval.detect is M3 and binds to the battery identity when it lands"
+  },
+  {
+   "bead": "N38a-20",
+   "dep": "BD-254",
+   "as": "related",
+   "why": "need 1 of N38a-20: scorecard accounting is M3 and already depends on this bead through BD-212"
+  },
+  {
+   "bead": "N38a-26",
+   "dep": "BD-410",
+   "as": "related",
+   "why": "need 1 of N38a-26: the complete format registry is M5"
+  },
+  {
+   "bead": "N38b-33",
+   "dep": "N23-KA",
+   "as": "related",
+   "why": "need 1 of N38b-33: the Cortex registry is M2"
+  },
+  {
+   "bead": "N38b-33",
+   "dep": "N27-KA",
+   "as": "related",
+   "why": "need 1 of N38b-33: the Autopsy registry is M2"
+  },
+  {
+   "bead": "N38b-34",
+   "dep": "N30-KA",
+   "as": "related",
+   "why": "need 1 of N38b-34: the Ground registry is M5"
+  },
+  {
+   "bead": "N38b-34",
+   "dep": "N31-KA",
+   "as": "related",
+   "why": "need 1 of N38b-34: the Foundry registry is M5"
+  },
+  {
+   "bead": "N38b-58",
+   "dep": "N16-KA",
+   "as": "related",
+   "why": "need 2 of N38b-58: the Kinesis registry is M1"
+  },
+  {
+   "bead": "N38b-42",
+   "dep": "N20b-07",
+   "as": "related",
+   "why": "need 1 of N38b-42: the sensing unit's e2e cites the same gate; not blocking"
+  },
+  {
+   "bead": "N38b-37",
+   "dep": "BD-246",
+   "as": "related",
+   "why": "need 2 of N38b-37: the remaining fourteen archetypes are M3"
+  },
+  {
+   "bead": "N38a-36",
+   "dep": "N27b-09",
+   "as": "related",
+   "why": "need 2 of N38a-36: the e2e of the same planted single causes"
+  },
+  {
+   "bead": "N31b-05",
+   "dep": "N38a-03",
+   "as": "dep",
+   "why": "need 1 of N38a-03 reversed: Foundry's Gauntlet row binds its cells of the tier matrix by entry id"
+  },
+  {
+   "bead": "N40-01",
+   "dep": "N38b-18",
+   "as": "dep",
+   "why": "need 1 of N38b-18 reversed and coverage (e) 16 of U38b: the register layer extends the base gate record; one schema file"
+  },
+  {
+   "bead": "N25-KA",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "new bead N38a-40 closes the gap reported by G25ab: the eighteen late answers take their numbers from the allocation ledger"
+  },
+  {
+   "bead": "N25-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "the eleven late counterexamples take their numbers from the allocation ledger"
+  },
+  {
+   "bead": "N20b-45",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "Sensorium's late rows take their blocks from the same ledger, so that no two chapters reserve one number"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N38a-38",
+   "as": "dep",
+   "why": "coverage (d) of U38a: the M6 exit review reads the decision of KILL-RUT"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N38a-39",
+   "as": "dep",
+   "why": "coverage (d) of U38a: the M6 exit review reads the decision of KILL-TACTILE"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N38a-09",
+   "other": "N00-07",
+   "note": "true duplicate (both create frob-conformance/registry/pilots.toml, registration before the run and the funding refusal for GATE-GAUNT-08). Keep N38a-09: it is the owning chapter's bead (§38.5), 25 pilot beads of ten units already depend on it by key, and its record is the fuller one (append-only results, protocol hash and ledger sequence, sites, verdicts, printout, e2e script). Fold from N00-07: the completeness check (every Frontier or Moonshot capability record, kernel-manifest entry and verb row is named by a pilot), the Moonshot cap of four as a refusal, the rule that a fallback names a lower-tier mechanism, kill_gate must exist in the gate register, and the seed list of 23 pilots still to run with their kill gates and thresholds. The 18 beads that depend on N00-07 (BET-15 to BET-37, N00-09) then depend on N38a-09"
+  },
+  {
+   "mine": "N38a-10",
+   "other": "N00-06",
+   "note": "the same plan-time checks held as two ledgers: N38a-10 has the twenty pilot rows of §38.5 with expected values, owners and limits inside pilots.toml; N00-06 has nine check records with re-run status and a citation rule. Keep N38a-10 as the one ledger (it sits in the register N38a-09 that survives) and fold N00-06's consistency assertions and citation rule into it"
+  },
+  {
+   "mine": "N38a-11",
+   "other": "N00-35",
+   "note": "both re-run the humanoid contact-Hessian conditioning survey (row 20 of the plan-time ledger); N38a-11 owns rows 13, 14, 17 to 20; N00-35 alone has the CPU reference rates and Metal limits. Row 20 should be run once, by N38a-11"
+  },
+  {
+   "mine": "N38b-28",
+   "other": "N00-33",
+   "note": "both register negative controls for KA-009 to KA-013, KA-015, KA-016, KA-019 to KA-021 and KA-023 to KA-026; N38b-28 defers to the thesis unit where they differ and should keep only the rule, the three boundary rows and KA-033"
+  },
+  {
+   "mine": "N38b-29",
+   "other": "N10-KA1",
+   "note": "negative controls for the 72 construction rows printed `none stated` are proposed in N38b-29 and set again in N10-KA1 to N10-KA3 and the specification beads; N38b-29 now depends on the three registries and should register only what they leave open"
+  },
+  {
+   "mine": "N38b-27",
+   "other": "N10-KA1",
+   "note": "tolerances of the 47 construction rows printed `to set`: decided by rule in N38b-27, set by owners in N10-KA1 to N10-KA3; the owners' values stand, N38b-27 keeps the rule and the meta-test"
+  },
+  {
+   "mine": "N38b-30",
+   "other": "N12-KA",
+   "note": "N38b-30 proposes controls for Lemma rows KA-210 and KA-222 to KA-226 that N12-KA names itself; likewise N13-KA and N11-KA for Marrow and the conventions"
+  },
+  {
+   "mine": "N38b-31",
+   "other": "N17-KA",
+   "note": "nine Phylum rows receive a DESIGN control in both"
+  },
+  {
+   "mine": "N38b-11",
+   "other": "BD-136",
+   "note": "both generate a certificate mutation corpus per proof kind; BD-136 (200 mutants per kind, mission gates) is the seed and N38b-11 extends it to 1,000 and adds the checker-before-answer test: one generator should remain, in BD-136, and N12-34 (GATE-LEMMA-03) runs the same specimens"
+  },
+  {
+   "mine": "N38a-20",
+   "other": "N16b-01",
+   "note": "both define and freeze the standard battery (scenario grid per robot class, seeds, identity, change events): N38a-20 in frob-conformance/battery, which is where §38.1 places it, N16b-01 in frob-arena with the manifest format and address scheme. Keep N38a-20 for the grid, identity and events and fold N16b-01's address scheme into it, or keep N16b-01 as the frob.battery/1 instance only; eight beads of U16 depend on N16b-01"
+  },
+  {
+   "mine": "N38a-28",
+   "other": "N18b-16",
+   "note": "same pilot (the rut leak fixture on batch-cpu); N18b-16 is M4 with the soil work, N38a-28 is M6 under the seed epic BD-417. One pilot should remain; N38a-29 depends on whichever is kept"
+  },
+  {
+   "mine": "N38a-29",
+   "other": "N18b-17",
+   "note": "per-world rut state with zero leak: N18b-17 on strict and batch-cpu at M4, N38a-29 at batch scale on devices at M6 as copy-on-write tiles; scopes should be divided at the device boundary"
+  },
+  {
+   "mine": "N38a-30",
+   "other": "N18b-35",
+   "note": "same pilot: a fingertip pad as 2×2 and 4×4 contacts on strict against one patch; N20a-18 is a third pilot of the tactile array on an indentation fixture"
+  },
+  {
+   "mine": "N38a-31",
+   "other": "N20a-19",
+   "note": "both specify tactile arrays in frob-sense with taxel footprints and saturation; N20a-19 from the sensor side, N38a-31 with the micro-patch pads and cards under the seed epic BD-418"
+  },
+  {
+   "mine": "N38a-32",
+   "other": "N19a-40",
+   "note": "N19a-40 (M5) pilots scene dressing, kinematic actors included, against the proxies; N38a-32 (M6) pilots the actors alone on the warehouse hazard list. The actor half is decided twice"
+  },
+  {
+   "mine": "N38a-35",
+   "other": "N21b-39",
+   "note": "the device rows of the determinism lanes of GATE-GAUNT-07 are scripted in both"
+  },
+  {
+   "mine": "N38a-08",
+   "other": "N36-06",
+   "note": "the one-sided paired lower bound and the A/A procedure are implemented in frob-conformance by N38a-08 (strict A/A form) and again by the performance harness N36-06 (frequency form); N36-05 repeats the ceiling function. One implementation should serve both"
+  },
+  {
+   "mine": "N38b-05",
+   "other": "N18-CX",
+   "note": "both write controls.toml records for CX-167 to CX-183: N38b-05 is the seeding tool and map, the entries are the chapter bead's; the same holds for every N<chapter>-CX"
+  },
+  {
+   "mine": "N38b-12",
+   "other": "N24a-34",
+   "note": "the scripted adversary and the adaptive-retry self-test of the qualification lane are specified in N24a-34 and N24b-18 and registered again in N38b-12, which now depends on both and should only register the certifier row and its broken-certifier control"
+  },
+  {
+   "mine": "N38b-35",
+   "other": "N36-25",
+   "note": "OPEN-GAUNT-4 and OPEN-PERF-2 are one decision (the frozen incumbent releases and container digests) written as two decision beads with two comparator registries; keep one record, in comparators.toml of N38a-04"
+  },
+  {
+   "mine": "N38b-26",
+   "other": "N41-10",
+   "note": "both decide OPEN-GAUNT-1 (which real dataset enters the Reality lane first); N41-10 pairs it with OPEN-GROUND-2 as an owner decision, N30b-25 has the engineering half"
+  },
+  {
+   "mine": "N38b-50",
+   "other": "NEG-03",
+   "note": "two registers of the same disagreements: the reconciliation register of N38b-50 (Appendix M.38, eleven values) and registries/cards/discrepancies.toml of NEG-03 (Appendix E.7). NEG-06 settles value 1 (842.8 ÷ 575.7 = 1.46) as N38b-50 does"
+  },
+  {
+   "mine": "N38b-51",
+   "other": "NEG-05",
+   "note": "both settle the engine-speed ceiling: 7.7 from the share 0.87, 7.8 only from 82/94"
+  },
+  {
+   "mine": "N38b-55",
+   "other": "NEG-09",
+   "note": "both settle every-thirteenth-step scheduling at 616 decision instants in 20 s"
+  },
+  {
+   "mine": "N38b-56",
+   "other": "NEG-04",
+   "note": "both settle the tenth qualification request at 76,959 failure-free episodes"
+  },
+  {
+   "mine": "N38b-18",
+   "other": "N40-01",
+   "note": "both define the record of registries/gates.toml: N38b-18 the base record with six statuses, N40-01 the register layer with seven and nine rules. Split kept as coverage (e) 16 of U38b states it; N40-01 depends on N38b-18 (edge recorded) and one schema file must result"
+  },
+  {
+   "mine": "N38b-23",
+   "other": "N40-10",
+   "note": "GATE-GAUNT-02 to -11, GATE-FID-09 and KILL-DEVORACLE are entered as rows by both; N38b-23 should own the rows with their controls and N40-10 only index them"
+  },
+  {
+   "mine": "N38b-21",
+   "other": "N40-36",
+   "note": "two e2e scripts over the gate register: N38b-21 measures the three clauses of GATE-GAUNT-10 at M0, N40-36 the wider path to the exit report at M1; distinct scope, related"
+  },
+  {
+   "mine": "N38b-01",
+   "other": "N30a-02",
+   "note": "overlap with distinct scope (coverage (e) 16 of U38b): the calibration unit owns the Reality statuses, the guessed-field share (N30a-03) and the anchor comparison (BD-311, N30a-04); N38b-01 and N38b-02 keep the conformance checks and depend on N30a-02"
+  },
+  {
+   "mine": "N38b-42",
+   "other": "N20b-04",
+   "note": "overlap with distinct scope: N20b-04 and N20b-07 test the calibration solver and cite GATE-GAUNT-11; N38b-42 supplies only the registry-bound row and its wrong-adjoint control and depends on N20b-04"
+  }
+ ],
+ "new_beads": [
+  "N38a-37",
+  "N38a-38",
+  "N38a-39",
+  "N38a-40"
+ ],
+ "gaps": [
+  {
+   "section": "§19.7, §40.4",
+   "what": "the M6 re-read of KILL-DRESSING on the actor mechanism (cost above 25%, a broken launch shape or determinism class) has no decision bead: N19a-41 decides at M5, before the mechanism exists; BD-421 requires the actors' decision as an ADR with measured values",
+   "needed_by": [
+    "BD-421",
+    "N38a-33"
+   ]
+  },
+  {
+   "section": "§39.4",
+   "what": "no task bead authors and publishes the development missions with their cards: BD-428 is an epic and N39a-05 holds only the card format",
+   "needed_by": [
+    "N38a-34"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "STD-E2E",
+   "what": "BD-001 moved from related to deps: the harness tool is built in the workspace skeleton; cycle-checked (BD-001 has no dependency and nothing it needs depends on STD-E2E); Considerations reworded; STD-E2E stays at the bottom"
+  },
+  {
+   "bead": "STD-TEST",
+   "what": "checked: its only dependency is STD-E2E; both drafted needs resolved as related; STD-E2E removed from its related list, where it duplicated the dependency"
+  },
+  {
+   "bead": "N38-REF",
+   "what": "dependencies on the mechanisms N38b-04 and N38b-19 moved to related: a registry bead depends only on the skeleton; title shortened"
+  },
+  {
+   "bead": "N38a-34",
+   "what": "dependencies on the epics BD-429, BD-430, BD-431 moved to related; the task beads behind them added (BD-259, N39a-05, N39a-08, N39a-11, N41-06)"
+  },
+  {
+   "bead": "N38b-44",
+   "what": "dependency on the epic BD-413 replaced by the mechanism beads N19b-09, N19b-08 and the decision N19b-11 (the row exists on one branch of KILL-ADVECT)"
+  },
+  {
+   "bead": "N38b-45",
+   "what": "dependencies on the epics BD-437 and BD-440 replaced by N25d-23, N25d-25, N22b-34, N22b-36, N12-19 (the rows exist on one branch of KILL-SYNTH-CONT and KILL-TUBE); title shortened"
+  },
+  {
+   "bead": "BD-377",
+   "what": "an unmeasured stratum is `uninformative`, not `discard-only`: made to agree with N38b-13 and with the ledger's own rule (coverage (e) 2 of U38b)"
+  },
+  {
+   "bead": "N38a-06",
+   "what": "overlap with N38b-07 on the development-oracle label re-scoped: the flag type and propagation are N38b-07's, the lane sets it; now depends on N38b-07 and on the decision N38b-35"
+  },
+  {
+   "bead": "N38b-07",
+   "what": "Scope names N38a-06 as the lane that sets the flag"
+  },
+  {
+   "bead": "BD-146",
+   "what": "overlap on the per-change run re-scoped against N38a-22 and N38b-25; Scope states it is the M1 capstone; depends on its component N38a-22; title shortened to 107 characters"
+  },
+  {
+   "bead": "N38a-22",
+   "what": "Scope states that battery manifests are BD-146's and the run schedule N38b-25's"
+  },
+  {
+   "bead": "N38b-25",
+   "what": "Scope states that path selection reads the trigger map of N38a-22 and keeps no second map"
+  },
+  {
+   "bead": "N38a-28",
+   "what": "depends on the decision of KILL-SOIL (N18b-18): the pilot exists on one branch of it"
+  },
+  {
+   "bead": "N38a-29",
+   "what": "depends on the decision of KILL-SOIL (N18b-18) and on the registration of KILL-RUT (N38a-37)"
+  },
+  {
+   "bead": "N38a-31",
+   "what": "depends on the registration of KILL-TACTILE (N38a-37)"
+  },
+  {
+   "bead": "N38a-32",
+   "what": "depends on the M5 decision of KILL-DRESSING (N19a-41)"
+  },
+  {
+   "bead": "N38a-33",
+   "what": "depends on the M5 decision of KILL-DRESSING (N19a-41): the mechanism exists on one branch of it"
+  },
+  {
+   "bead": "BD-417",
+   "what": "Scope and related name the registration N38a-37 and the decision N38a-38 of its kill gate"
+  },
+  {
+   "bead": "BD-418",
+   "what": "Scope and related name the registration N38a-37 and the decision N38a-39 of its kill gate"
+  },
+  {
+   "bead": "N38-KA",
+   "what": "numbers KA-836 to KA-849 bound to the allocation ledger N38a-40 (dependency added); title shortened"
+  },
+  {
+   "bead": "N38-CX",
+   "what": "numbers CX-385 to CX-400 bound to the allocation ledger N38a-40 (dependency added); title shortened"
+  }
+ ]
+}

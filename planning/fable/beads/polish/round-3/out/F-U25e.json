@@ -1,0 +1,367 @@
+{
+ "round": 3,
+ "slice": "F-U25e",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BD-294",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Step 7 no longer records the gate: the script runs the three negative controls and ends with a summary carrying the receipt hash; GATE-AUGUR-06 (M3) is recorded from that receipt by a session that did not implement the campaign or its checkers (convention 9, STD-E2E self-recording lint)."
+  },
+  {
+   "bead": "BD-302",
+   "kinds": [
+    "request",
+    "coherence"
+   ],
+   "what": "Applied all three requests: S66 (claims-realism manifests and the scene generator identity), F-U21c (report.run --claim performance and device-throughput citations call N21c-34's exploratory_blocks, FROB-REF-819, pointer evidence.device.exploratory; dep N21c-34) and H-verbs-4 (citations go through N16b-04's cite_as_established, one of 820/830/557/822, with tests)."
+  },
+  {
+   "bead": "BD-358",
+   "kinds": [
+    "convention",
+    "coherence"
+   ],
+   "what": "Own e2e script mission_region_mode.sh on its own small fixtures (disc, two-constraint, wide7: shares, zero boxes on the monotone constraint, overrides in the request digest, budget stop, 856 refusals, interval-box bundles through standalone frob-verify, 10^6-point audit); N25b-11's gate script kept as the gate's measurement; --key added to the region-mode spelling; dep STD-E2E."
+  },
+  {
+   "bead": "N25e-02",
+   "kinds": [
+    "convention",
+    "coherence"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (mission_transport_claims.sh, own fixtures, refusals 852 and 847); the non-causal coupling refusal is named (FROB-REF-847, on the verb's row); stale 'added by request' wording replaced, the options are on VERBS-mission from M4; dep STD-E2E."
+  },
+  {
+   "bead": "N25e-04",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-verbs-3 applied: --budget paired-runs replaced by --coupling-source paired-runs --pairs <n> --level <a> (M8, VERBS-mission), leaving --budget as the generated compute budget; script calls updated."
+  },
+  {
+   "bead": "N25e-05",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Script no longer records (receipt, recorder session, N38b-19); the mean-instead-of-maximum proposer mutant is a registered mutation control (nc-<nnnn>, N38b-04) instead of an unregistered test-profile flag."
+  },
+  {
+   "bead": "N25e-06",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-verbs-3 applied (the field removed on a fired tray clause is the coupling source, not the compute budget); the decision entry follows N40-03 with receipts, and the M8 ADR path follows decision-adr-path (convention 10)."
+  },
+  {
+   "bead": "N25e-07",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-cx-1 applied: the FACT re-run of N25-CX's augur-late-02 (sill fixture at mu 0.500, 0.525, 0.550) records its receipt in the BD-197 pattern (rerun, rerun_receipt, plant, seeding run)."
+  },
+  {
+   "bead": "N25e-09",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-owners-1 applied: the band's known answer is cited as N25-KA's augur-late-03; the gate script produces a receipt and never records (convention 9)."
+  },
+  {
+   "bead": "N25e-10",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Late known-answer rows cited by N25-KA tag (augur-late-04) until N38a-40 issues the block (conventions 2 and 12)."
+  },
+  {
+   "bead": "N25e-11",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Late known-answer rows cited by N25-KA tags (augur-late-04, -05) until N38a-40 issues the block."
+  },
+  {
+   "bead": "N25e-12",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Gate script produces a receipt and never records (convention 9); late rows cited by N25-KA tags."
+  },
+  {
+   "bead": "N25e-13",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Late known-answer row cited by N25-KA tag (augur-late-06)."
+  },
+  {
+   "bead": "N25e-14",
+   "kinds": [
+    "convention"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (mission_bracket_ends.sh through cargo targets and an example driver, since the bead adds no verb: worked case 0.622, Farkas bundle through frob-verify, 551 and 843, early-stopping solver as a registered mutation control); deps STD-E2E, STD-TEST."
+  },
+  {
+   "bead": "N25e-15",
+   "kinds": [
+    "convention"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (opt_bracket_verbs.sh: mission.refute --utility, eval.compare --bracket/--scenario/advisory, evidence.trace of both certificates, 551); --key added to both verb spellings (convention 5); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-17",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Kill decision for KILL-AUGUR-BRACKET written in N40-03's form (decision = {outcome, adr, date, session, receipts}, ADR path), closing whichever way the measurement falls (convention 10)."
+  },
+  {
+   "bead": "N25e-18",
+   "kinds": [
+    "request",
+    "coherence"
+   ],
+   "what": "H-owners-1 applied: the conditional §25.21 fallback is fallback.also = [{ships, pilot}] with ships alone lower-tier (N38a-09 rule 5); dep N25d-07 added; late rows cited by tags."
+  },
+  {
+   "bead": "N25e-20",
+   "kinds": [
+    "convention",
+    "coherence"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (synth_placement_lane.sh: cart boundary 35/654 m, the 4 m/s2 dual through frob-verify, prescribed vs library scope, all-wheel drive, routing, 868); stale 'requested of the registry' wording replaced, the lane options are on mission.synthesize's row; late rows cited by N25-KA tags (augur-late-07, -08); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-21",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Gate script produces a receipt and the record is made by another session (convention 9); late rows cited by N25-KA tag."
+  },
+  {
+   "bead": "N25e-22",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Decision bead no longer waits on what waits on it: deps are N25e-21, N40-03, STD-E2E (related N25d-07, N25d-08, N25e-18, N40-29); the decision entry carries receipts and the clause scope (conventions 7 and 10)."
+  },
+  {
+   "bead": "N25e-24",
+   "kinds": [
+    "request",
+    "convention",
+    "coherence"
+   ],
+   "what": "H-verbs-3 applied: --split-cap 0 is 802 and 7 or more is 856 from the handler, the schema stating only the minimum 1; registry wording updated (options on VERBS-mission from M4); own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (mission_weak_variable.sh); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-25",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The script logs the receipt hash and never records; each part of GATE-AUGUR-30 (known answer, comparison) is recorded from it by another session (convention 9)."
+  },
+  {
+   "bead": "N25e-26",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Decision entry in N40-03's form with receipts (convention 10)."
+  },
+  {
+   "bead": "N25e-30",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Every run-verb call carries its own key (convention 5); the script produces a receipt and never records (convention 9); late rows cited by N25-KA tag (augur-late-11)."
+  },
+  {
+   "bead": "N25e-32",
+   "kinds": [
+    "convention"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (mission_docking_certs.sh on its own fixtures: partitions and alias pair through frob-verify, five mutants, end certificates, the 133,185-case harness, the 854 eligibility refusal); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-33",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-verbs-3 applied: the synthesize calls of steps 2 and 3 carry distinct keys; the script produces a receipt and never records (convention 9)."
+  },
+  {
+   "bead": "N25e-34",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-verbs-5 applied: on sense.alias the binding is --card <sensor>=<card> (e.g. --card probe=pairwise-only.fcard), as VERBS-sense registers; mission.refute/synthesize keep the registered --card <sensor card> pending a request to VERBS-mission; example carries --key; own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (sense_error_dependence.sh); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-35",
+   "kinds": [
+    "convention"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (mission_label_length.sh: 2/3/5-bit rows, the deadline pair, finite-game and partition bundles through frob-verify, 868, the beyond-caps interval); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-36",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-verbs-5 applied: sense.alias calls use --card probe=<card> and the fixture's probe is named probe; mission.refute keeps the registered bare form; script produces a receipt and never records (convention 9)."
+  },
+  {
+   "bead": "N25e-37",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The two deadline calls of step 5 carry their own keys (convention 5); the script produces a receipt and never records (convention 9)."
+  },
+  {
+   "bead": "N25e-38",
+   "kinds": [
+    "convention",
+    "coherence"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (mission_shared_scope.sh: shared vs --scope ignore margins, the 850 unshared-witness refusal, scope-rule bundles, experiment.suggest --scope ignore); dep BD-351 added because the bead extends experiment.suggest (path check passed); registry wording updated (options are on the rows from M4); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-39",
+   "kinds": [
+    "convention"
+   ],
+   "what": "own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (mission_probe_four_laws.sh: r = 3 at 1/2 s with gap 0.1090, no probe at 1/4 s, the three-law alternatives, 900-case evaluator, experiment.suggest, smallest-radius tie-break as a registered mutation control); deps STD-E2E, STD-TEST. Numbers re-derived and confirmed."
+  },
+  {
+   "bead": "N25e-41",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Script produces a receipt; GATE-AUGUR-34 and the clause C reading are recorded by a session that did not implement N25e-38/N25e-39, and the decision entry by one that did not measure (conventions 9 and 10)."
+  },
+  {
+   "bead": "N25e-42",
+   "kinds": [
+    "convention",
+    "coherence"
+   ],
+   "what": "Late rows cited by N25-KA tag (augur-late-17); registry wording updated (--tolerance and --candidate are on mission.synthesize's row with codesign); own e2e script with STD-E2E NDJSON logging and per-call keys (convention 11; the gate script that depends on it no longer stands in for it, convention 7) (synth_sizing_witness.sh: witness within 1 g of 100 kg, candidates 100 and 99.5 with 853, bundle through frob-verify, two-resource, chain regression, increment-stop mutant registered); deps STD-E2E, STD-TEST."
+  },
+  {
+   "bead": "N25e-44",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Late rows cited by tags (augur-late-17, -18); both mutants are registered mutation controls (N38b-04's guard replaces the frob capabilities check); step 10 produces a receipt and the record is made by another session (convention 9)."
+  },
+  {
+   "bead": "N25e-45",
+   "kinds": [
+    "request",
+    "convention",
+    "coherence"
+   ],
+   "what": "Requests answered on the merits (see notes): the 1xx row connection-outside-stratum needs no interim, being assigned at N35x-02's M0 run, and the bead says so with the constant name; kinds over-determined and rank-only-displacement added per VERBS-analyze; its e2e script checks only what it delivers (convention 7); related list updated."
+  },
+  {
+   "bead": "N25ex-01",
+   "kinds": [
+    "convention",
+    "coherence"
+   ],
+   "what": "Acceptance no longer waits on a later bead (convention 7); decision entry carries receipts (convention 10); arithmetic corrected to (997/1000)^10 x 99/100 = 0.96070."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "From H-verbs-5: give mission.refute and mission.synthesize the one card grammar --card <sensor>=<card> (repeatable; as VERBS-sense registers for sense.alias, DESIGN one grammar with BD-134). Until the row changes, N25e-34 and N25e-36 use the registered --card <sensor card> on the mission verbs."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "The killed-option rule (FROB-REF-724, exit 5, status killed) should also cover KILL-COUPLING's finite clause firing at M4 (N25ex-01), not only the M8 paired-runs clause."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.curvature: connection-outside-stratum is a 1xx row assigned at N35x-02's M0 run, so no interim code is needed; list its five kinds, including over-determined and rank-only-displacement (N25e-45)."
+  },
+  {
+   "bead": "N25c-43",
+   "what": "Use the assigned connection-outside-stratum code through the constant CONNECTION_OUTSIDE_STRATUM (no interim; N25e-45), and raise the bracket-rank refusal with kind rank-only-displacement."
+  },
+  {
+   "bead": "N25c-44",
+   "what": "Use the assigned connection-outside-stratum code (no interim; N25e-45)."
+  },
+  {
+   "bead": "BD-243",
+   "what": "Add dep N25e-45 (graph_check path passed); raise row 6 with detail rank-drop or over-determined as N25e-45 specifies (step 1 already refuses a rank drop at M3)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Add KILL-SYNTH-REGRESSOR's clauses screening and comparison to the closed clause scope kind (it lists only KILL-COUPLING's finite and tray); N25e-22 writes its entries with those scopes."
+  },
+  {
+   "bead": "N40-29",
+   "what": "Set scope_kind = \"clause\" on the KILL-SYNTH-REGRESSOR row (N25e-22)."
+  },
+  {
+   "bead": "N25-CX",
+   "what": "Rename the late counterexample tags: augur-late-01..11 collide with N25-KA's augur-late-01..18 for different rows (for example cx-late-nn); N25e-07's plant N25e-07:augur-late-02 would follow the new name."
+  },
+  {
+   "bead": "N25e-03",
+   "what": "Convention 11 and 7: the bead names N25e-05's gate script (which depends on it) as its e2e. Give it its own, e.g. scripts/e2e/cert_transport_block.sh: cargo test --test transport_rules; cargo tree -p frob-cert one line; every manifest entry in crates/frob-cert/tests/specimens/transport/ through standalone frob-verify under env -i with verdict and rule; the chain fixture through mission transport, prove bundle and frob-verify (keys); STD-E2E NDJSON log; dep STD-E2E. Also the criterion 'the block round-trips byte-identically' has no test: add one in frob-conformance (frob-cert's dependency table stays empty)."
+  },
+  {
+   "bead": "N25e-19",
+   "what": "Convention 11 and 7: own e2e script instead of N25e-21's (e.g. analyze_regressor_identity.sh: the two cargo test files; frob analyze regressor-identity per reference robot twice with exit 0, error <= 1e-12 and identical results; the sign-flipped column as a registered mutation control exiting 2); deps STD-E2E, STD-TEST."
+  },
+  {
+   "bead": "N25e-28",
+   "what": "Convention 11 and 7: own e2e script instead of N25e-30's (e.g. mission_law_class.sh on its own fixtures: the three classes through mission.synthesize with keys, the affine dual at b = 1/4 through mission.refute, refusals 868 law-class-missing and 847, distinct MissionIds); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-29",
+   "what": "Convention 11 and 7: own e2e script instead of N25e-30's (e.g. cert_lp_primal_law.sh: cargo test --test lp_primal_law, closure check, every specimen and per-rule mutation through standalone frob-verify with rule names, the 200 seeded law mutations counted); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-31",
+   "what": "Convention 11 and 7: own e2e script instead of N25e-33's (e.g. mission_docking_interval.sh: least tolerance as the root of 16d^2+41d-1 with a <= 1e-9 enclosure and attained, the probe (39+sqrt1745)/128, delta 1/40 inner and 1/50 excluded, the U = 1, eps = 1/32 instance, keys); dep STD-E2E."
+  },
+  {
+   "bead": "N25e-43",
+   "what": "Convention 11 and 7: own e2e script instead of N25e-44's (e.g. synth_pareto_coverage.sh: three builds with claim pareto, budget 4 -> (4, 4), pareto-candidates with its obligation, discrete partition bundles accepted and the missing/duplicate/absent-dominator mutants rejected, the weights-only mutant registered); deps STD-E2E, STD-TEST. Also criterion 7 (a stored pareto claim withdrawn by revalidation after a catalog edit) relies on mission.revalidate (N25a-16), which is not a dependency: add N25a-16 (path check: N25a-16 does not depend on N25e-43) and a unit test such as catalog_edit_withdraws_pareto_claim."
+  },
+  {
+   "bead": "N25e-16",
+   "what": "Check its script against convention 9 as the other gate scripts of U25e were: it should end with a summary carrying the receipt hash and leave the record to a session that did not implement N25e-14/N25e-15 (not verified here: outside this slice)."
+  }
+ ],
+ "unchanged": [
+  "N25e-01",
+  "N25e-08",
+  "N25e-23",
+  "N25e-27",
+  "N25e-40"
+ ],
+ "notes": [
+  "Rejected request premises: N25e-45's two requests (S87, H-verbs-1) ask for an interim code for connection-outside-stratum. None is needed: it is a 1xx row assigned at N35x-02's M0 run, before any bead that emits it; N25e-45 now says so and names the constant. The rank-drop timing point is passed to BD-243 as a request.",
+  "H-verbs-5 (N25e-34, N25e-36) applied for sense.alias, whose row registers --card <sensor>=<card>; mission.refute and mission.synthesize keep the registered --card <sensor card> under convention 12, and the one-grammar form is requested of VERBS-mission.",
+  "Main finding beyond the requests: twelve mechanism beads of the slice (N25e-02, -14, -15, -20, -24, -32, -34, -35, -38, -39, -42 and BD-358) had no e2e script of their own and named the later gate script that depends on them (conventions 7 and 11). Each now has its own script on its own fixtures and dependencies, with STD-E2E NDJSON logging, keyed run-verb calls and no recording; the gate scripts are unchanged and may run them as stages. Six beads outside the slice have the same gap (requests above).",
+  "During this pass I briefly edited six beads outside the slice (N25e-03, -19, -28, -29, -31, -43) and defs/U25e/coverage.md; all were restored to their exact prior text (checked against the pre-edit capture and HEAD) and the changes became requests. coverage.md's lines on --budget paired-runs and 'five new codes' are stale against VERBS-mission and N25e-45; whoever owns the unit's coverage file should update them.",
+  "Every slice file parses (front matter, seven sections, three test subsections); graph_check cycles reports 0 after the dependency additions (STD-E2E/STD-TEST on the mechanism beads, BD-351 on N25e-38), each checked with graph_check path first.",
+  "Known answers re-derived this pass: the margin table (4.4994, 4.7240, -13.0598/-10.0162 N; independent 0.2836, -0.0776, -15.0751 N), the probe gaps (0.0129, 0.0662, 0.1090; three-law 0.0158 and 0.0312; no separation at t <= 1/4), and the label-length bounds all agree with the beads.",
+  "Slice looks settled after this round apart from the outside requests; the remaining open items are registry-side (VERBS-mission card grammar, N40-03 clause kinds, N25-CX tag names)."
+ ]
+}

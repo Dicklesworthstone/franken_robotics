@@ -1,0 +1,902 @@
+{
+ "group": "G35",
+ "needs": [
+  {
+   "bead": "BD-177",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-263"
+   ],
+   "note": "eval.promote is a caller (M3, higher seed): it depends on this bead, recorded as an edge"
+  },
+  {
+   "bead": "BD-177",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-33"
+   ],
+   "note": "the ledger's first-divergence record and the bisection; the command surface is its dependency BD-176"
+  },
+  {
+   "bead": "BD-177",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "the conformance crate that holds battery/; no bead defines a shared layout, each battery bead freezes and hashes its own directory, as this bead does"
+  },
+  {
+   "bead": "BD-181",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-33"
+   ],
+   "note": "the sweep machinery and the bisection over the digest chain (which brings BD-203 without a seed-order edge)"
+  },
+  {
+   "bead": "BD-181",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16a-12",
+    "N16a-13"
+   ],
+   "note": "the batch-cpu half of GATE-KIN-05 (padding, digests independent of the batch) and the path-table Jacobian"
+  },
+  {
+   "bead": "BD-181",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-02"
+   ],
+   "note": "device workers and the two-card shard rule; the one-device two-environment form is the shard axis of N21b-33; N36-08 (the learner's shard runtime) is downstream of BD-198 and stays related"
+  },
+  {
+   "bead": "BD-269",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N37-28"
+   ],
+   "note": "the FROB-REF-825 refusal on the five paths is this component; the named BD-308 is a higher seed and stays related (already listed)"
+  },
+  {
+   "bead": "BD-269",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-263",
+    "BD-259",
+    "BD-133"
+   ],
+   "note": "the verbs this gate wires and tests; BD-408 is M5 and is recorded as related (fifth path through the boundary function)"
+  },
+  {
+   "bead": "BD-269",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-279",
+    "BD-280"
+   ],
+   "note": "higher seeds, and BD-279 already depends on this bead; cases 4 and 4' run when the verbs exist"
+  },
+  {
+   "bead": "N35-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-39"
+   ],
+   "note": "an end-to-end bead that writes lane records the classifier reads at run time; a mechanism does not depend on it"
+  },
+  {
+   "bead": "N35-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-33"
+   ],
+   "note": "the classifier defines the attestation record the sweeps write into; N21b-33 already depends on this bead (N21b-33 -> BD-203 -> N35-07 -> N35-02 with G29's edge), so a dependency would close a cycle"
+  },
+  {
+   "bead": "N35-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-02"
+   ],
+   "note": "tiers, execution sites and hash-named receipts"
+  },
+  {
+   "bead": "N35-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-sim"
+   ],
+   "note": "the sim.run registry row, which already separates --profile from --determinism and --precision; N16b-25 depends on this bead (G16) and is not a prerequisite"
+  },
+  {
+   "bead": "N35-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-02",
+    "N32a-03"
+   ],
+   "note": "strict registry parsing and generated schemas; the schema refusal for a misspelt or unknown value"
+  },
+  {
+   "bead": "N35-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register of section 38.5 (N00-07 is its cross-group duplicate)"
+  },
+  {
+   "bead": "N35-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-10"
+   ],
+   "note": "the KILL-SHARD decision record; its measurement BD-199 is already a dependency"
+  },
+  {
+   "bead": "N35-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-18"
+   ],
+   "note": "the trainer's half of the labelled profile and FROB-REF-867 (M2)"
+  },
+  {
+   "bead": "N35-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N37-28"
+   ],
+   "note": "a consumer of the tag: N37-28 depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N35-06",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N36-12"
+   ],
+   "note": "M4 consumer that runs only under this profile; edge N36-12 -> N35-06 recorded"
+  },
+  {
+   "bead": "N35-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-262",
+    "N28a-21"
+   ],
+   "note": "callers of the check (M3); they depend on this bead, edges recorded"
+  },
+  {
+   "bead": "N35-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-205",
+    "BD-279",
+    "BD-280"
+   ],
+   "note": "callers of the check; they depend on this bead, edges recorded"
+  },
+  {
+   "bead": "N35-07",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-263"
+   ],
+   "note": "caller of the check (M3); G16 recorded BD-263 -> N35-07"
+  },
+  {
+   "bead": "N35-07",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-220"
+   ],
+   "note": "caller of the check; edge BD-220 -> N35-07 recorded"
+  },
+  {
+   "bead": "N35-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-21"
+   ],
+   "note": "the record frob.comparison/1 into which the correlation fields go; the comparison run is its dependency BD-262"
+  },
+  {
+   "bead": "N35-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N27b-22"
+   ],
+   "note": "the M2 pilot that measures the same growth rate; shared estimator, earlier milestone, not blocking"
+  },
+  {
+   "bead": "N35-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-11"
+   ],
+   "note": "the record frob.verdict/1 with margins (M1); verdicts written on batched tiers are BD-255 (M3), recorded as related"
+  },
+  {
+   "bead": "N35-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-02"
+   ],
+   "note": "the ledger's strata, quantity registry and store, where envelope rows live; the freeze is BD-212, which G16 and G21 recorded as related"
+  },
+  {
+   "bead": "N35-09",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": "the fixed-n engine on the CPU, applied to each placement's outcomes; eval.compare on devices (BD-262) is M3"
+  },
+  {
+   "bead": "N35-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "SPEC-C-26"
+   ],
+   "note": "the rank-agreement contract is M3; this bead carries its own exact top-band tau until then"
+  },
+  {
+   "bead": "N35-10",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "margins arrive with the per-world records of its dependency N35-09 (ledger tables N16b-02); the frozen values are BD-212, already related"
+  },
+  {
+   "bead": "N35-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-OPEN7",
+    "N41-03"
+   ],
+   "note": "the register row of OPEN-NUM-2 and the decision rule with its record format"
+  },
+  {
+   "bead": "N35-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16a-12"
+   ],
+   "note": "N16a-12 depends on this bead (G16); the padded layout is a shared convention restated here"
+  },
+  {
+   "bead": "N35-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "the kernel manifest frob.kernel/1, which gains the neutral-element declaration"
+  },
+  {
+   "bead": "N35-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-06",
+    "N21a-22"
+   ],
+   "note": "declared footprints inside one world; stat kernels never feed state"
+  },
+  {
+   "bead": "N35-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23a-02"
+   ],
+   "note": "the versioned normalizer with freeze and update between collections; the environment is its dependency BD-192"
+  },
+  {
+   "bead": "N35-14",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-172"
+   ],
+   "note": "the step plan frob.stepplan/1 with its launch list"
+  },
+  {
+   "bead": "N35-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-42"
+   ],
+   "note": "the conformance --mutant loader is built there"
+  },
+  {
+   "bead": "N35-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the control runner; the registry file is its dependency BD-025"
+  },
+  {
+   "bead": "N35-16",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-180"
+  },
+  {
+   "bead": "N35-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-10"
+   ],
+   "note": "the completed dialect lint, the Rust kernel lint and the wired compile paths"
+  },
+  {
+   "bead": "N35-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-12"
+   ],
+   "note": "the kernel cache key that records compile options"
+  },
+  {
+   "bead": "N35-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-36"
+   ],
+   "note": "the double-float canaries and the refusal of a failing device"
+  },
+  {
+   "bead": "N35-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-11"
+   ],
+   "note": "the det_* functions; det_min and det_max of the prelude are its dependency BD-013"
+  },
+  {
+   "bead": "N35-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-19"
+   ],
+   "note": "the shard-sum reducer and global valid count; the two-card measurement is its dependency BD-199"
+  },
+  {
+   "bead": "N35-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-12"
+   ],
+   "note": "the content-addressed kernel cache key"
+  },
+  {
+   "bead": "N35-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-207"
+   ],
+   "note": "a consumer of these types: BD-207 depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N35-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-32"
+   ],
+   "note": "the M0 ledger keeps its own integer ulp histogram; same law, earlier milestone, not blocking"
+  },
+  {
+   "bead": "N35-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-12"
+   ],
+   "note": "fs-rand and fs-math are on the bedrock-direct list with admission smoke tests; there is no rand feature group"
+  },
+  {
+   "bead": "N35-22",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "this bead defines WorldAddr itself (its Scope), on the identity types of its dependency BD-005; N23a-04 sketches a different struct (reported)"
+  },
+  {
+   "bead": "N35-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N24c-36"
+   ],
+   "note": "an M2 consumer that already depends on this bead"
+  },
+  {
+   "bead": "N35-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-33"
+   ],
+   "note": "new bead: the registry as a whole allocates the code; no bead owned Appendix O"
+  },
+  {
+   "bead": "N35-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N24c-36",
+    "N24c-37"
+   ],
+   "note": "M2 consumers; N24c-36 already depends on this bead"
+  },
+  {
+   "bead": "N35-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N20a-04"
+   ],
+   "note": "the sensing unit's noise streams use these helpers; the fixtures here hash port names only"
+  },
+  {
+   "bead": "N35-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N26a-24",
+    "N26a-25",
+    "BD-276"
+   ],
+   "note": "consumers of the weights; N26a-24 overlaps this bead (reported)"
+  },
+  {
+   "bead": "N35-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-200"
+   ],
+   "note": "randomization from card uncertainty: the declared distribution of each field, from which the transform is read"
+  },
+  {
+   "bead": "N35-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-10"
+   ],
+   "note": "frontier-pinned pagination at M1; the daemon form BD-211 is M2 and stays related"
+  },
+  {
+   "bead": "N35-26",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-138 (M1 tools on the generic VerbTool of BD-023)"
+  },
+  {
+   "bead": "N35-26",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25d-46"
+   ],
+   "note": "the default exit 2 is in force until decided; the behaviour is its dependency BD-135"
+  },
+  {
+   "bead": "N35-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-38"
+   ],
+   "note": "the conditioning figure written at the solve stage"
+  },
+  {
+   "bead": "N35-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-23"
+   ],
+   "note": "the Faulted and Degraded states with reasons; solver records are its dependency BD-159"
+  },
+  {
+   "bead": "N35-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N24a-11"
+   ],
+   "note": "the verdict record that carries the margin; margins of the other decision kinds are N35-09 (related)"
+  },
+  {
+   "bead": "N35-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-02"
+   ],
+   "note": "the registry build that generates the schemas the lint runs over"
+  },
+  {
+   "bead": "N35-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28a-18"
+   ],
+   "note": "an M1 bead with its own PairCounts identity; same rule, not blocking"
+  },
+  {
+   "bead": "N35-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-179, which depends on the harness N21b-38"
+  },
+  {
+   "bead": "N35-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N41-OPEN7",
+    "N41-03"
+   ],
+   "note": "the register row of OPEN-NUM-4 and the decision rule"
+  },
+  {
+   "bead": "N35-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the control runner; the crate and registry are its dependency BD-025; the battery freezes its own directory"
+  },
+  {
+   "bead": "N35-CX",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-025 (the negative-control registry and registries/counterexamples.toml)"
+  },
+  {
+   "bead": "N35-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the known-answer registry skeleton: row schema, rules, generated printout"
+  },
+  {
+   "bead": "N35-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-33"
+   ],
+   "note": "new bead: the exit rule per sub-family (76x) and the one-exit-per-code check; per-verb refusal lists are readers of this registry"
+  },
+  {
+   "bead": "N35-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-216",
+    "BD-219",
+    "BD-354"
+   ],
+   "note": "a registry never depends on the mechanisms that raise its codes"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-263",
+   "dep": "BD-177",
+   "as": "dep",
+   "why": "coverage (d) of U35 and BD-177 need 1: eval.promote cites the pair's standing decision-equivalence verdict"
+  },
+  {
+   "bead": "N37-28",
+   "dep": "BD-269",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle (BD-269 is the capstone of GATE-SAFE-09 and depends on this component; G37 records the same)"
+  },
+  {
+   "bead": "BD-269",
+   "dep": "BD-408",
+   "as": "related",
+   "why": "BD-269 need 2: the build-packet writer is M5"
+  },
+  {
+   "bead": "N36-12",
+   "dep": "N35-06",
+   "as": "dep",
+   "why": "N35-06 need 3: the asynchronous collection runs only under this profile"
+  },
+  {
+   "bead": "BD-204",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "coverage (d) of U35: teleport calls the licence check"
+  },
+  {
+   "bead": "BD-205",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "coverage (d) of U35: run.fork calls the licence check on the source run"
+  },
+  {
+   "bead": "BD-220",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "coverage (d) of U35: memo reuse calls the licence check"
+  },
+  {
+   "bead": "BD-262",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "coverage (d) of U35: eval.compare calls the licence check before any episode"
+  },
+  {
+   "bead": "N28a-21",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "N35-07 need 1: study.compare calls the licence check"
+  },
+  {
+   "bead": "BD-279",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "coverage (d) of U35: the attribution verbs call the licence check"
+  },
+  {
+   "bead": "BD-280",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "coverage (d) of U35: the attribution verbs call the licence check"
+  },
+  {
+   "bead": "BD-207",
+   "dep": "N35-21",
+   "as": "dep",
+   "why": "coverage (d) of U35: the device histogram and telemetry.histogram use these types and laws"
+  },
+  {
+   "bead": "BD-180",
+   "dep": "N35-22",
+   "as": "dep",
+   "why": "coverage (d) of U35: the device kernel ports the host key layout and pinned vectors unchanged"
+  },
+  {
+   "bead": "N35-07",
+   "dep": "NJL-01",
+   "as": "dep",
+   "why": "coverage (d) of U35: the verb entry schema, which gains min_determinism"
+  },
+  {
+   "bead": "BD-181",
+   "dep": "N21c-35",
+   "as": "related",
+   "why": "coverage (d) of U35: the gate-size matrix needs the gate-measurement class of OPEN-SPARK-2; recorded not run without it"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "N21c-35",
+   "as": "related",
+   "why": "coverage (d) of U35: the referee pair may need the gate-measurement class"
+  },
+  {
+   "bead": "N35-09",
+   "dep": "BD-255",
+   "as": "related",
+   "why": "N35-09 need 1: verdict records on batched tiers arrive at M3"
+  },
+  {
+   "bead": "N35-11",
+   "dep": "N36-20",
+   "as": "dep",
+   "why": "replaces the demoted BD-219: compute-envelope classes for the cost evidence (also in the file)"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N35-13",
+   "other": "N21a-07",
+   "note": "overlap: the reduction contract (neutral elements, anchored tree, host references) here, the kernels K-reduce and K-seg-reduce there"
+  },
+  {
+   "mine": "N35-18",
+   "other": "N21a-10",
+   "note": "overlap: ban table and banned-construct corpus here, the lint and its planted-defect corpus there"
+  },
+  {
+   "mine": "N35-18",
+   "other": "N21b-36",
+   "note": "overlap: start-up canaries in both (seven ban canaries here, the double-float canaries there)"
+  },
+  {
+   "mine": "N35-25",
+   "other": "N26a-24",
+   "note": "both build proposals on normal germs with a defensive mixture and exact weights"
+  },
+  {
+   "mine": "N35-23",
+   "other": "BD-180",
+   "note": "both carry the stream registry"
+  },
+  {
+   "mine": "N35-16",
+   "other": "BD-180",
+   "note": "both carry draw tables and their invariance tests"
+  },
+  {
+   "mine": "N35-22",
+   "other": "N23a-04",
+   "note": "two WorldAddr structs: (run_seed, namespace, world, episode, fork) here, (run_seed, world, episode) there; G21 and G24 resolve the type to N35-22"
+  },
+  {
+   "mine": "N35-03",
+   "other": "N38a-35",
+   "note": "overlap: G5 lanes on batch-cpu and the referee here, the five lanes over every kernel and verb there"
+  },
+  {
+   "mine": "N35-32",
+   "other": "N37-29",
+   "note": "both scripts measure GATE-SAFE-09 on the five paths"
+  },
+  {
+   "mine": "BD-269",
+   "other": "N37-28",
+   "note": "five-path D4 refusal: measured here, built there (capstone and component, edge recorded)"
+  },
+  {
+   "mine": "N35-REF",
+   "other": "N36-REF",
+   "note": "rows 761, 862, 863 and 866 appear in both: rows owned here, raising sites and repairs there"
+  },
+  {
+   "mine": "N35-REF",
+   "other": "N37-REF",
+   "note": "neighbouring codes 561 and 825: one code per raising site, the two readings must agree"
+  },
+  {
+   "mine": "N35-REF",
+   "other": "N23-REF",
+   "note": "neighbouring codes 861 and 867"
+  },
+  {
+   "mine": "N35-REF",
+   "other": "N27-REF",
+   "note": "neighbouring codes 562 and 584"
+  },
+  {
+   "mine": "N35-06",
+   "other": "N23a-18",
+   "note": "overlap: the profile product-wide here (861), the trainer's handling there (867)"
+  },
+  {
+   "mine": "N35-06",
+   "other": "N37-28",
+   "note": "both put class D4 and the profile name on every result, checkpoint and policy of a fast-training job and state the re-evaluation rule"
+  },
+  {
+   "mine": "N35-21",
+   "other": "N29a-13",
+   "note": "integer histograms with interval quantiles in frob-core (f32 pattern, 3.125%) and in frob-chronicle (quantized integer, 3.1%); one binning must govern"
+  },
+  {
+   "mine": "N35-08",
+   "other": "N27b-22",
+   "note": "both measure the growth rate by twin runs; one estimator should serve both"
+  },
+  {
+   "mine": "N35-21",
+   "other": "BD-207",
+   "note": "two histogram parametrizations: f32 pattern bins here, channel quantum there"
+  },
+  {
+   "mine": "N35-26",
+   "other": "BD-299",
+   "note": "overlap: the three standing rules as a sweep here, the three failure classes on both surfaces there"
+  }
+ ],
+ "new_beads": [
+  "N35-33"
+ ],
+ "gaps": [
+  {
+   "section": "§24 and §23 (GATE-CORTEX-10)",
+   "what": "decision records (frob.verdict/1) on batched tiers are written from M3 (BD-255); GATE-SPARK-16 compares task decisions on device placements at M2, so until then verdicts must be evaluated on the host from recorded traces",
+   "needed_by": [
+    "N35-09",
+    "BD-177"
+   ]
+  },
+  {
+   "section": "Appendix J",
+   "what": "registry rows lack what the numerics beads add: spark.check has no --decisions, --invariance, --conditions or --sweeps (VERBS-spark); eval.compare has no --pairing or pair_correlation (VERBS-eval)",
+   "needed_by": [
+    "BD-177",
+    "BD-181",
+    "N35-14",
+    "N35-07",
+    "N35-08"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-177",
+   "what": "deps BD-198 and BD-212 moved to related (seed order; BD-198 closed the cycle); Scope states the capstone; the trained checkpoint joins a superseding ensemble"
+  },
+  {
+   "bead": "BD-181",
+   "what": "deps BD-198 and BD-203 moved to related (seed order); Scope states the capstone; the trained checkpoint joins a superseding world set"
+  },
+  {
+   "bead": "N35-11",
+   "what": "dep BD-219 moved to related (closed the cycle); cost evidence taken from measured runs; dep N36-20 added"
+  },
+  {
+   "bead": "BD-269",
+   "what": "Scope states the capstone and its components; BD-408 added to related"
+  },
+  {
+   "bead": "N35-16",
+   "what": "the raw-draw tap it reads, carried by no telemetry bead, put in its scope with a criterion and tests"
+  },
+  {
+   "bead": "N35-33",
+   "what": "new bead for the unowned refusal registry (the gap G13, G16, G21, G23 and G24 also report)"
+  }
+ ]
+}

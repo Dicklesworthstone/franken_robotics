@@ -1,0 +1,318 @@
+{
+ "round": 2,
+ "slice": "S91",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "BD-442",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied U00-2, S01 and S33: added the 10 M8 beads that were not its ancestors (CARD-T-13, N00p1-11, N16bx-03, N21c-23, N25c-41, N25cp1-03, N25d-26, N25d-39, N31a-62, NAB-31), so every M8 bead is now an ancestor (checked: 0 missing of 67). The run is now N40-05's runner with checks.toml. NAB-31's sweep record is read, not waited on circularly. `xtask augur-slices --exit M8` was added with its control. KILL-INTERACT's two readings are named. New unit tests and an ancestry check. The original 42 deps are each used directly by the review, so all were kept."
+  },
+  {
+   "bead": "NAB-31",
+   "kinds": [
+    "deps",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Removed BD-442 from deps (drift 7: BD-442 depends on the sweep) and moved it to related; added an Order (DESIGN) paragraph. Inputs (N40-04's gate report and the ADRs by path and hash) are named. Full NDJSON logging fields were added, plus a consideration on amending the sweep before the verdict."
+  },
+  {
+   "bead": "N16bx-03",
+   "kinds": [
+    "deps"
+   ],
+   "what": "FD-FSIM-22 moved from deps to related: the pilot uses existing exact rod statics and no milestone waits on it."
+  },
+  {
+   "bead": "N25c-41",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Surface gains `--key` (run verb) and `--derive-sets` (not in the VERBS-mission row; requested; 802 without the flag). Added an acceptance item on the generated registry. Full e2e: derive, label-query, attack, verify and flag-off, with charter logging fields."
+  },
+  {
+   "bead": "N25d-39",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Its e2e is rewritten in drift-1 form. Each KA runs under its tier (KA-655 under g2_parity; KA-649 also under g5_determinism) with distinct `--key` values. Controls run under gauntlet-mutations, and `pending` is allowed only with its ADR. Full logging fields; the summary names GATE-AUGUR-22."
+  },
+  {
+   "bead": "WP-78",
+   "kinds": [
+    "complete",
+    "title"
+   ],
+   "what": "Child count is now 8, with the new N16cp2-91 line; the N16c-22 title is updated."
+  },
+  {
+   "bead": "WP-79",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "Applied U44-1: the envelope bullet cites row R10 of registries/compute_envelope.toml (N44-01). It states that N22b-06 (about 40 GPU-hours) and N25c-04's arms have no row and are refused until registered and approved. Added the missing child N00p1-11 (14 beads)."
+  },
+  {
+   "bead": "WP-80",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The pilots paragraph names all four pilots: N25d-21, N21c-21, N31b-10 (the Q15 PI loop with and without a clamp, and its falsifier) and N21a-26."
+  },
+  {
+   "bead": "N16c-18",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Corrected the 8-robot threshold to p >= 0.91*64/63 = 0.92444 (9.956 at p = 0.924) and the tile count to 49 (the 0.98 s tile has gamma = 0). Added dep N38a-09. The record now goes to crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1, proposed PILOT-KIN-12, since 06-11 are taken) with fallback.kill_gate KILL-INTERACT. The e2e uses `frob scene gen --family warehouse --seed --key` and `scene show`, plus a pilots_registry test and logging fields. The hand-case unit test was extended."
+  },
+  {
+   "bead": "N16c-19",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Depends on the first reading N16cp2-91 (so no planner code is written if the kill fires at the pilot), plus STD-E2E and STD-TEST. Tile count is 49. Now has its own script scripts/e2e/tile_planner.sh (cargo tests, the tile_plan example, the soundness property, mutants via features, determinism), with an acceptance item."
+  },
+  {
+   "bead": "N16c-20",
+   "kinds": [
+    "deps",
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Added STD-E2E and STD-TEST. Scope owns the four fixtures it tests. The tile-ledger `--table` option is requested of VERBS-telemetry. The verb surface carries `--key` and codes 721/722/610. Acceptance is narrowed to its own fixtures, plus scripts/e2e/sim_decouple.sh exiting 0. Now has its own five-step e2e."
+  },
+  {
+   "bead": "N16c-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The fixture table marks the fixtures owned by N16c-20 and adds rest-gap-0p10-5hz (DESIGN: no --control-period option exists). rest-gap robots are commanded toward each other. Every command carries distinct `--key` values. The calls are `telemetry summary --table tile-ledger` and `telemetry divergence <dec> <ref> --mode exact`. Step 9 runs g1_known_answers then record_gate. Count is 49."
+  },
+  {
+   "bead": "N16c-22",
+   "kinds": [
+    "split",
+    "title",
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The first reading is split out to the new N16cp2-91; this bead is the final reading. It reads point A from the ADR's first section, writes the second section of docs/adr/ADR-KILL-INTERACT-M8.md and appends an N40-03 entry (fired, not-fired or not-reached), replacing ADR-KN-15. New tests first_section_untouched and outcome_vocabulary; the e2e gains `--key` and logging fields."
+  },
+  {
+   "bead": "N25d-47",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Takes the OPEN-AUGUR-9 default with `frob-conformance open default OPEN-AUGUR-9 --exit <Mn>` (N41-03). Added section 7 for the feature fmission-decision-makers of frob-spec (DESIGN); a build without it refuses with FROB-REF-724. Full e2e: `mission check`, keyed synthesize, shared-bus, byte stability, the rule, and charter logging."
+  },
+  {
+   "bead": "BD-436",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Scope cited the superseded N25a-20 for KILL-AUGUR-TRANSPORT; it now names N25c-05, N22b-08 for KILL-SKILL, and N25e-06 for the tray clause of KILL-COUPLING. Every child is named. Acceptance gains the ADR path and the tray-clause entry."
+  },
+  {
+   "bead": "N10c-03",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The e2e used the non-command `ka:KA-846@host`; it now runs `FROB_TEST_SEED=1 cargo test -p frob-conformance --test g1_known_answers -- KA-846` and its control under gauntlet-mutations (mutant erode_by_e). N38-KA moved from related to deps, because the bead binds to the record N38-KA allocates."
+  },
+  {
+   "bead": "N12-19",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "An acceptance item required N22b-35's braking bundle, but N22b-35 depends on this bead (drift 7). It is restated as an extensible corpus, shown with a second hand specimen; the braking run is N22b-35's own acceptance line. N12-34 (the shared script) moved from related to deps. Full NDJSON logging fields added."
+  },
+  {
+   "bead": "N12p1-01",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "N12-34 moved from related to deps (its script is this bead's e2e). Full logging fields added. N25d-24's live run is marked as N25d-24's. All numbers re-checked (577/408, beta ~2.1e-6, alpha ~0.0351, 0.00995)."
+  },
+  {
+   "bead": "N23b-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pilot register path corrected to crates/frob-conformance/registry/pilots.toml with schema frob.gauntlet.pilot/1 (N38a-09)."
+  },
+  {
+   "bead": "N23b-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The record is now the first section of docs/adr/ADR-KILL-GATREE-M8.md with N40-03's fields and a header digest. Entries: falsified appends fired (GATE-CORTEX-17 killed by propagation); undetermined appends not-reached; not-falsified appends none, and N23bx-02 completes the record. Old status words are replaced. New tests for the entries and the digest; logging fields and paths added."
+  },
+  {
+   "bead": "N25c-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Every transport and replay call carries `--key`. The dynamic request is spelled `--relation compute` beside N25e-02's `--relation <relation.json>` and is requested of VERBS-mission; the flag-off step asserts the 724 refusal. Logging fields completed."
+  },
+  {
+   "bead": "N25c-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "risks",
+    "e2e-logging"
+   ],
+   "what": "Every run verb carries a distinct `--key`. The gate is run with `FROB_TEST_SEED cargo test -p frob-conformance --test g1_known_answers -- GATE-AUGUR-23` with controls under gauntlet-mutations, then record_gate. The compute risk now names the N44-01 envelope request and FROB-REF-761; dep N44-01 added."
+  },
+  {
+   "bead": "N25c-05",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The record is docs/adr/ADR-KILL-AUGUR-TRANSPORT-M8.md with N40-03's fields, plus `decision = {outcome, adr, date, session}` on the kill row. Outcomes are not-fired, fired, or not-reached (never funded; this replaces 'not run; parked'); on fired, GATE-AUGUR-23 is killed by propagation. New test outcome_vocabulary. The e2e has keyed transport calls, ADR and entry validation, and full logging."
+  },
+  {
+   "bead": "N25e-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Transport and qualify calls carry distinct `--key` values. `--budget paired-runs --pairs --level` is not in the VERBS-mission row and is now marked as requested. The planted controls run as mutant builds."
+  },
+  {
+   "bead": "N25e-06",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S81. Step 1 reads ADR-KILL-COUPLING-M4.md and the clause:finite entry. On fired at M4 it appends a clause:tray not-reached entry citing the M4 ADR and closes; with no entry it stops. Step 3 writes docs/adr/ADR-KILL-COUPLING-M8.md with N40-03's fields and appends {scope clause:tray, exit M8, outcome, adr, date, session}. Acceptance, unit tests (entry shape, finite entry untouched) and an always-run record stage were added, with full logging."
+  },
+  {
+   "bead": "SPEC-C-24",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`--test g3 -- KA-131` replaced with `FROB_TEST_SEED=2400 cargo test -p frob-conformance --test g3_metamorphic -- KA-131`, plus the CX-061 all-rotations control under gauntlet-mutations."
+  },
+  {
+   "bead": "BD-437",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The surface line gains `--key` (run verb) and notes that `--family` is added by N25d-23, matching its child."
+  },
+  {
+   "bead": "CARD-T-14",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "Its only e2e was N31a-58's script, but N31a-58 depends on this card (drift 7). It now owns scripts/e2e/card_t14.sh: cargo tests, `prove list` parked, the fixture queries with fln replay (pending without fln), and controls, with full logging. An acceptance item was added, with deps STD-E2E and STD-TEST. N31a-58's run is a later check; N31a-58 moved to related."
+  },
+  {
+   "bead": "CARD-T-34",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The U12-2 request (N12p1-01 for N12-19) was already applied. The Stewart-Gough 40-root acceptance on live output broke drift 7; it is restated on the pilot N25d-21's stored roots with the law test stewart_gough_forty (40 accepted, 780 disjointness checks, plus removed and duplicated controls). The live check is N25d-23's and N25d-24's. Added deps N12-34, STD-E2E and STD-TEST; its e2e is its own step of N12-34's script."
+  },
+  {
+   "bead": "N10c-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The alpha-root checker is cited as N12p1-01 (split from N12-19). Tier names are fixed to g0_laws and g1_known_answers, with KA-844 and the three mutant controls added. N38-KA moved to deps. The z^3+z case was re-checked."
+  },
+  {
+   "bead": "N21a-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The private registries/pilots/kir-fixed-point.toml is replaced by a record in crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1, proposed PILOT-KIR-01, registered before the run, fallback.kill_gate to-register; verdicts map to falsifier-rejected and falsifier-holds). Added deps N38a-09 and STD-TEST. The e2e has explicit commands, a controls stage, and a log path with an evidence block. Arithmetic re-checked."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N16cp2-91",
+   "why": "KILL-INTERACT is read twice at M8. Both readings sat in N16c-22, which depends on the gate run and so on the planner and the verb: the first reading, meant to stop the code before it is written, could only be recorded after it. N16cp2-91 takes the first reading from the paper pilot (share at 8 robots < 0.5 fires) and writes the first section of docs/adr/ADR-KILL-INTERACT-M8.md, with a fired entry only on that branch. N16c-19 depends on it, and N16c-22 keeps the final reading. This follows the pattern of N23b-02/N23bx-02 and N21c-18/BD-371."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "Register the options these M8 beads call (drift 8). mission.synthesize: `--derive-sets` (N25c-41, M8, behind its flag; 802 without it) and `--family <id>` (N25d-23, BD-437). mission.transport: the value `compute` of `--relation`, beside N25e-02's `--relation <relation.json>` (N25c-03; refused with FROB-REF-724 and the static core named until M8, and again after KILL-AUGUR-TRANSPORT fires). Also `--budget paired-runs`, `--pairs <n>` and `--level <alpha>` (N25e-04)."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "what": "telemetry.summary: add the option `--table <name>` with the one value `tile-ledger` (N16c-20 implements it at M8; N16c-21 reads it). The row's inputs are only the run and a token budget."
+  },
+  {
+   "bead": "NAB-22",
+   "what": "DESIGN (1) says the sweep follows the exit review and consumes its record. The sweeps (NAB-23 to NAB-31) are ordered the other way: each depends on its decision beads and N40-04's gate report, and the exit review depends on the sweep (drift 7). Restate (1) so that the sweep precedes the exit review and the review reads the sweep record."
+  },
+  {
+   "bead": "N40-03",
+   "what": "The ADR path is still docs/delivery/adr/ADR-<gate-name>-<milestone>.md (Technical approach item 6 and the OPEN default). KNOWN_DRIFTS #4 and every kill-gate bead use docs/adr/ADR-<gate>-<milestone>.md; align the path."
+  },
+  {
+   "bead": "N23bx-02",
+   "what": "Precondition step 1: a failed precondition now leaves KILL-GATREE with no entry at all, because a not-falsified first reading (N23b-02) appends none and the M8 due list would show a gap. Append `outcome = \"not-reached\"` with the reason instead. Section 5: 'the row of KILL-GATREE takes killed' should read that the fired entry is appended and GATE-CORTEX-17 takes killed by N40-03's propagation."
+  },
+  {
+   "bead": "N16c-12",
+   "what": "The pilot record `frob.pilot/1` entry `kin-rowqueue` should be a record in crates/frob-conformance/registry/pilots.toml with schema frob.gauntlet.pilot/1 and a PILOT-KIN-<nn> identifier (drift 3). PILOT-KIN-06 to -12 are claimed by N16bx-03, N16a-21, BD-385, N16c-29, N16c-36 and N16c-18."
+  },
+  {
+   "bead": "N16c-23",
+   "what": "Entry `kin-stepadjoint` should take a PILOT-KIN-<nn> identifier (drift 3); 06 to 12 are claimed (N16bx-03, N16a-21, BD-385, N16c-29, N16c-36, N16c-18)."
+  },
+  {
+   "bead": "N44-01",
+   "what": "registries/compute_envelope.toml needs rows for the other WP-79 jobs above E0, which WP-79 now says are refused until registered: the learned-residual pilot N22b-06 (about 40 GPU-hours) and the two training arms of GATE-AUGUR-23 in N25c-04 (N25c-04 now depends on N44-01)."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "All 38 beads were read in full, plus the new N16cp2-91. Unchanged: CARD-T-13, BD-435, BD-438, BD-439, BD-440, BD-441, N00p1-11 (its missing BD-442 edge was added on BD-442); the arithmetic of BD-438 and BD-441 was re-checked. All six requests addressed to the slice were applied after checking (U00-2, S01, S33 to BD-442; U44-1 to WP-79; S81 to N25e-06; U12-2 to CARD-T-34, already applied). Graph finding on BD-442: kept its 42 original deps, since the review reads each directly; the 10 new ones are M8 beads that were not its ancestors. After the edits every M8 non-epic bead is an ancestor of BD-442, and graph_check reports 0 cycles in the graph. Recurring defects round 1 left in this slice: kill-gate records not in N40-03's form (status words pass/killed instead of outcome entries, ADR paths off docs/adr/), run verbs without `--key`, g-tier names abbreviated, and acceptance or e2e lines that wait on beads that depend on them (N12-19, CARD-T-14, CARD-T-34, N16c-22). Checked but not requested: N22b-35 already registers its braking specimens and mutants; N31a-58 already logs the T-14 obligations; N25d-24 already owns the live Complete/Partial label. The PILOT-KIN-12 and PILOT-KIR-01 identifiers are proposals, assigned by the register. The helper scripts are in the scratchpad's polish-r2-S91/."
+}

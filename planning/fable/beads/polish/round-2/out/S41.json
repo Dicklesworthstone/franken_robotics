@@ -1,0 +1,191 @@
+{
+ "round": 2,
+ "slice": "S41",
+ "reviewed": 44,
+ "changed": [
+  {
+   "bead": "N28c-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the TOML sketch of frob.core/1 put `obligations` after the [loss] header, which makes it loss.obligations in TOML; the field rules and CoreRecord have it top-level. Moved the line before the first table header."
+  },
+  {
+   "bead": "N28b-12",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "the sampling-controller screening cap lost the plan's exception (§22.8, enforced by N22a-24): a named paired screening comparison may use up to the class break-even count (30/60 at 20 ms, 6/12 at 4 ms); a fourth episode otherwise is rejected at admission, not reduced. Restated rule 3 and rewrote the `sampling_screening_cap` test (4 rejected, 30 admitted, 31 rejected). The `model-privileged` condition now carries both conditions of the plan (independent planning parameters and estimated state)."
+  },
+  {
+   "bead": "BD-329",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied: `frob conformance run --gate GATE-ATEL-08` replaced by the ADR-GAUNT-01 cargo form. The alarm was specified differently from its component N28b-16 (integral mixture over ε and a ≥ p-value); restated as N28b-16's nine-point grid and strict-plus-tie p-value. The `martingale_alarm_on_drift` test asserted that a doubling always alarms, which N28b-16's power figures (about 70%) contradict; it now uses the tripling criterion (90% within 120 designs)."
+  },
+  {
+   "bead": "GB-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the e2e said `opt.cascade` has no plan-only flag; its registry entry has `--plan-only` (runs nothing). Restated: the plan-only form cannot show a calibrated q̂, so the run form is used."
+  },
+  {
+   "bead": "BET-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the e2e read the ladder's mode with `frob eval rank-agreement --show`, an option the registry row does not have (eval.rank-agreement is a run verb). Replaced by `frob evidence trace <claim_id of the class's latest rank-agreement row> --json` (N28b-22 row version, N28b-23 core_decision record)."
+  },
+  {
+   "bead": "N28a-27",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "request 2 applied: `frob conformance run --gate GATE-ATEL-13 --cores dc-04,dc-06` replaced by the ADR-GAUNT-01 cargo form. Request 1 (narrow to completing the records; rows by N28c-10) was already satisfied by round 1's text; nothing further."
+  },
+  {
+   "bead": "N28a-28",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "request applied: `frob conformance run --gate GATE-ATEL-13 --cores …` replaced by the ADR-GAUNT-01 cargo form for the dc-07/dc-08/dc-11 phases."
+  },
+  {
+   "bead": "BD-349",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "request applied: the forced-trigger pass `frob conformance run --gate GATE-ATEL-13 --cores … --force-triggers` (no such command, ADR-GAUNT-01) replaced by the demonstration-manifest commands that force each trigger through `cores::testing::force` (N28c-03), with the gate rows measured by N28c-08/N28c-09 in the cargo form. Added the NDJSON log path, per-line fields and summary line the script lacked."
+  },
+  {
+   "bead": "N28b-30",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the prune-audit sample key named a Philox stream \"prune-audit\" that the stream registry does not hold (registries/streams.toml, N35-23); now drawn on the registered `nemesis-audit` stream (row 17) with the rule identifier in the key, as N28b-13 already corrected for the audit lane."
+  },
+  {
+   "bead": "BD-352",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "requests applied: stage 5's build-packet refusal is FROB-REF-830 (one code per request, N16b-04/N28-REF), 557 only for a ranking shown without its condition and raised by report.design/report.campaign (VERBS-report), opt.cascade raising neither; test renamed to model_conditional_build_packet_830 plus a 557 report test. Added deps VERBS-opt and VERBS-report (rows it implements; no cycle). Item 14 now carries the registry row's full inputs (--spec, --population, --campaign, --manifest, --plan-only, --finalists-from, --estimate) and refusals 537, 545, 704, 871, with an acceptance criterion and four unit tests. The e2e's 'conformance runner' is the ADR-GAUNT-01 cargo form."
+  },
+  {
+   "bead": "N28b-28",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "requests applied: gate_query used `frob gates show` (no such command); now the cargo form in the gate-scale run and a read-only read of the GATE-ATEL-16 row in registries/gates.toml; section 4 names the recorder (`--example record_gate`, N38b-19). The merge step merged archives with `frob opt archive`, which has no merge input; now `frob phylum map --merge A B` / `B A` in two stores, then `frob opt archive --campaign`."
+  },
+  {
+   "bead": "BD-342",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "request applied: `frob opt archive show` (unregistered action word) → `frob opt archive --campaign <id> --json`; the two-agent merge now names its commands (`frob phylum map --merge` both orders, `--campaign` for the rebuilt map). The requested deps VERBS-opt and VERBS-phylum are both reached through its components (N17b-18 now depends on VERBS-opt; N17b-29 on VERBS-phylum), so no direct dep was added."
+  },
+  {
+   "bead": "BD-350",
+   "kinds": [
+    "correct"
+   ],
+   "what": "IT-6's e2e sent the cascade's rare-failure bound request to 'stage 5 of BD-352'; the bound is stage 6 (Qualify, N28b-27's nominal-draw rule). Corrected."
+  },
+  {
+   "bead": "N17b-17",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the map's selection standing was computed from τ and recall alone, so it could read `select` where the ladder's mode for the same rung pair and stratum is `discard-only` or `uninformative` (lost plant, invalid calibration, failed audit; N28b-23, BD-345). Added the cap (never more permissive than the ladder's mode), a test `selection_capped_by_mode`, and the missing dep on the ladder's mode automaton N28b-23 (which reaches the ledger N28b-22 it reads; no cycle)."
+  },
+  {
+   "bead": "N17b-18",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "request applied: `frob opt archive show --campaign …` (opt.archive registers no action word) → `frob opt archive --campaign stairs-q3 --stratum s:12 --json` in the examples and the e2e. Added dep VERBS-opt (the opt.archive row it implements, moved from related; no cycle), which also gives BD-342 its path to that row."
+  },
+  {
+   "bead": "N14b-30",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the Considerations put the 95% interval of Spearman's ρ on 200 items at roughly ±0.1; at ρ near 0.75 it is about ±0.065 (0.68 to 0.81, Fisher z with the 1.06 factor), wider when validity exclusions shrink n. Corrected."
+  },
+  {
+   "bead": "N14b-31",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "clause B of KILL-SKEL-CELL fired only 'after one repair cycle' (and the Considerations said a second unsound exclusion fires it), while the registered trigger is one unsound `outer` exclusion and its own truth-table test maps unsound 1 → B; the plan writes 'after one repair cycle' only where it grants one. Clause B now fires on the first; repair restores the rule afterwards only by dated amendment, as before."
+  },
+  {
+   "bead": "N25e-13",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "`dp_matches_closed_form_lossless` claimed DP optimum = grid floor of the energy-balance payload for every lossless pair; the drive spends energy in whole force quanta q = F_max·h/128, so the claim holds only with ⌊E/q⌋·q (exact on the worked case, 160 quanta; not for E = 200 J, h = 1 m). Restated. The scaling metamorphic relation omitted F_max and the payload grid (scaling E and masses alone moves the force cap). The kill-gate note no longer grants a repair cycle the register does not."
+  },
+  {
+   "bead": "N25e-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the repair rule gave an implementation-caused false stop one repair cycle after the measurement; KILL-AUGUR-BRACKET's trigger is 'one false stop' with no repair cycle, and §40.1 allows a trigger change only by a dated amendment before the measurement. Defects are now fixed before the measurement; a false stop in the recorded measurement fires the gate; an amendment is the owner's to propose."
+  },
+  {
+   "bead": "N25e-15",
+   "kinds": [
+    "complete",
+    "deps"
+   ],
+   "what": "the bead adds `--bracket`, `--scenario`, `--relaxation`, a many-design comparison and 551 to eval.compare and `--utility` to mission.refute, none of which the registry rows carry, and it did not depend on VERBS-mission. Added the dep (no cycle) and an acceptance criterion that the generated registry carries the options and refusal; requests filed to VERBS-eval and VERBS-mission."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-opt",
+   "what": "The opt.cascade row's 557 sentence still says the refusal of a build-packet request on a model-conditional finalist is 557; under N28-REF's precedence and N16b-04 the build-packet (spend) case is FROB-REF-830 and 557 is only a ranking presented without its condition. Reword (BD-352 now states it so)."
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "report.campaign's 557 text includes 'or used for a build packet'; per N28-REF's one-code precedence that case is FROB-REF-830 (raised by the build-packet/promotion path through N16b-04's check), 557 is only for a model-conditional ranking shown without its condition (e.g. --compact dropping the condition columns). Reword."
+  },
+  {
+   "bead": "N28c-06",
+   "what": "The replay driver is exposed as `frob-conformance run cores.replay …`, a binary of frob-conformance; BD-025 (ADR-GAUNT-01) says the crate is library plus test targets with no binary (non-test entry points are example targets, as `--example record_gate`). Expose replay_campaign as an example target (e.g. `cargo run -p frob-conformance --example cores_replay -- --fixture … --schedule … --json`) and align its callers (BD-350 and about 35 U28c/U30 beads use `frob-conformance run <name>`), or have BD-025 register the runner binary explicitly."
+  },
+  {
+   "bead": "BD-025",
+   "what": "About 37 beads (U28c, U30a, U30b, BD-350) invoke `frob-conformance run <name>` (cores.replay, ground.*, budget-curve.*, suggest.*), a binary the crate statement here says does not exist; the lint `no_conformance_command` scans only `frob conformance` and `frob-conformance record`. Decide: register a runner binary (and say so in the crate statement) or extend the lint to `frob-conformance run` and name the example-target form."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "N25e-15 adds to eval.compare `--bracket [advisory]`, `--scenario <w>`, `--relaxation <name>`, a comparison of more than two designs (`<designs…>`, the M of its α/(2M) level split; the row says two designs), and the refusal FROB-REF-551 for a stop on a non-enclosing relaxation. Add them to the row (implemented by N25e-15)."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "N25e-15 adds `--utility` to mission.refute (returns Ū_d with its binding constraint, the relaxation's `encloses` list and the label `body-limited`); the row does not list it. Add it (implemented by N25e-15)."
+  }
+ ],
+ "unchanged": 24,
+ "notes": "All 44 beads reviewed; 20 changed, mostly registry and command fidelity (ADR-GAUNT-01 cargo form, unregistered verb options, 830 against 557) plus five plan-fidelity fixes (two kill gates given a repair cycle the register does not grant, the lost screening-cap exception, the map standing uncapped by the ladder mode, an unregistered stream). Round 1 had already applied three of the requests (BD-345, N28b-31, BD-346). The slice looks close to settled; the open cross-slice item is the `frob-conformance run <name>` binary that BD-025 says does not exist (requests to N28c-06 and BD-025)."
+}

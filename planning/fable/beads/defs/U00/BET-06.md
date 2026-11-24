@@ -6,9 +6,9 @@ priority: 1
 milestone: "M3"
 labels: ["m3", "reflex", "frob-control", "solid", "bet", "gate"]
 parent: "WP-27"
-deps: ["N00-28", "BD-248", "BD-249", "BD-252", "STD-E2E"]
+deps: ["BD-248", "BD-249", "BD-252", "N00-28", "N22c-14", "STD-E2E"]
 needs: []
-related: ["BD-116", "BD-117", "BD-118", "BD-247", "BET-17", "BET-27", "N00-15", "N00-11"]
+related: ["BET-17", "BET-27", "N00-11", "N00-15", "N40-31", "N40-32", "NS-08"]
 gates: ["GATE-REFLEX-02", "KILL-BASELINE"]
 plan_refs: ["§4 (BET-06)", "§40.5", "§1.1", "§1.6 (N7)", "§22.18"]
 ---
@@ -30,8 +30,13 @@ has no screen.
 
 ## Scope
 
-In: pre-registration, the M3 reading per morphology class, verdict and decision record. Out: the synthesis, the
-corpus, the sampling controller.
+In: pre-registration of the bet, the M3 reading per morphology class, the bet's verdict and its decision record
+`docs/adr/bet-06-m3.md`. Out: the synthesis, the corpus, the sampling controller; the corpus measurement of
+GATE-REFLEX-02, its statistic, its per-class table and the evaluation of the kill gate's trigger (BD-249); the
+decision KILL-BASELINE itself, its ADR `docs/adr/ADR-KILL-BASELINE-M3.md`, its registry row and the application of its
+fallback (N22c-14). This bead depends on both: it reads BD-249's recorded numbers and N22c-14's decision
+record, evaluates the bet's falsifier clauses on them and writes the bet's verdict. It measures nothing and
+decides no kill gate.
 
 ## Technical approach
 
@@ -45,7 +50,13 @@ corpus, the sampling controller.
    `design check` traverse 5 m, as a paired 95% lower bound; every planted control-relevant defect fails.
 4. **Per-class reading.** The verdict is a map over morphology classes (quadruped, hexapod, biped, humanoid,
    differential, Ackermann, omnidirectional, tracked, hybrid, arm on a base); tracked and hybrid classes are
-   read at M4 with their contact laws.
+   read at M4 with their contact laws. A class is read by the class rule registered with BD-249's protocol and
+   applied by N22c-14, and by no second rule: with n_c corpus designs of the class passing `design check` and
+   k_c of them traversing, the class passes (the bet is held for it) when n_c ≥ 10 and k_c/n_c ≥ 0.80; with
+   fewer than ten designs it is `undecided`: it keeps synthesis only if every one of its designs traverses,
+   is otherwise treated as not passing, and is listed in the verdict as `undecided` with the designs the
+   corpus would need to decide it. The lower bound is the corpus statistic; per class it is reported and does
+   not decide, because with 20 designs 19 passes give a 95% lower bound of 0.78.
 5. **Kill gate and fallback.** KILL-BASELINE (M3): GATE-REFLEX-02 fails. Fallback: baseline synthesis is limited
    to the morphology classes that pass; the others report `not-synthesizable` and route to the sampling
    fallback or to training.
@@ -64,7 +75,8 @@ corpus, the sampling controller.
 - [ ] Per class: designs passing `design check`, designs traversing 5 m, the proportion with its paired 95%
       lower bound, and the sampling-controller arm's proportion on the same designs.
 - [ ] All planted control-relevant defects failed.
-- [ ] Verdict per class and the KILL-BASELINE decision recorded as an ADR; N7's rendering updated.
+- [ ] Verdict per class recorded in `docs/adr/bet-06-m3.md`, which cites the KILL-BASELINE decision on record
+      in N22c-14's ADR and registry row (that decision is made there, not here); N7's rendering updated.
 
 ## Test plan
 
@@ -74,8 +86,11 @@ the lower bound, not the point estimate); `bet06_per_class_map` (quadruped 0.91 
 `HeldInPart`); `bet06_planted_defect_that_traverses_is_untested`; `bet06_kill_baseline_routes_class`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_06_decide.sh` recomputes the per-class verdict, checks the ADR, and under a fired kill gate
-checks that `frob control synth --json` on a design of a failing class returns the outcome `not-synthesizable`
+`scripts/e2e/bet_06_decide.sh` recomputes the per-class verdict from BD-249's recorded rows with the bet
+register's report (`cargo run -p frob-conformance --example bets -- status --json`, example `bets` of N00-28; the
+script reads the row of BET-06, whose `HeldInPart` map gives one verdict per class), checks the ADR against it
+field by field, and under a fired kill gate
+checks that `frob control synth <design> --key b06-withdrawn --json` on a design of a failing class returns the outcome `not-synthesizable`
 with the route to the sampling fallback as its first next action. Logged per STD-E2E: per class the counts,
 proportion, lower bound against 0.80, the arm's proportion, planted-defect outcomes; `summary` naming
 GATE-REFLEX-02 and KILL-BASELINE.

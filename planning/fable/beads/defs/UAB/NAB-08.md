@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "workspace", "gauntlet", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-01"
-deps: ["STD-E2E", "NAB-01", "NAB-02", "NAB-03", "NAB-04", "NAB-05", "NAB-06", "NAB-07"]
+deps: ["NAB-01", "NAB-02", "NAB-03", "NAB-04", "NAB-05", "NAB-06", "NAB-07", "STD-E2E"]
 needs: []
-related: ["N00-08", "N00-03"]
+related: []
 gates: []
 plan_refs: ["Appendix A", "§0.7", "§34.6", "§38"]
 ---
@@ -32,13 +32,19 @@ themselves (NAB-01, NAB-02); the term records (NAB-03 to NAB-07).
 ## Technical approach
 
 Plain shell, sourcing `scripts/e2e/lib.sh` (the shared helper of STD-E2E), idempotent, seed-free (nothing is
-random), working on a scratch copy of the tree under `target/e2e-work/glossary/` so that planted defects never
-touch the working tree. Header: `bead=NAB-08 milestone=M0 labels=workspace,glossary`.
+random), working on a scratch copy of the tree under the harness's scratch root
+`target/e2e-scratch/glossary/<run_id>/` so that planted defects never touch the working tree. The scratch root is
+passed to `xtask` by `--root <dir>` and to the lint by `FROB_LINT_ROOT=<dir>` (NAB-02 step 1). Header:
+`bead=NAB-08 milestone=M0 labels=workspace,glossary plants=hand-edit,deleted-term,undefined-label,ambiguous-sense,ornamental,unsorted,missing-subsystem`.
 
 Steps:
 
 1. `e2e_init glossary NAB-08`; copy `registries/`, `docs/GLOSSARY.md`, every `CONTRACT.md` and `contract.toml`
-   into the scratch tree.
+   into the scratch tree. If the real tree has no `CONTRACT.md` yet (early M0), copy NAB-02's clean fixture
+   contract (`crates/frob-conformance/tests/fixtures/glossary/clean/CONTRACT.md`, labelled `synthetic`, whose
+   Outputs section prints `` `provisional` `` as a label value) into the scratch tree as
+   `crates/e2e-probe/CONTRACT.md` and log `probe_contract: true`, so that every contract-dependent defect of
+   step 7 is exercised from the first day instead of being skipped.
 2. **Registry loads.** `e2e_cmd -- cargo test -p frob-core --test registry_glossary`. Assert exit 0.
 3. **Counts.** `e2e_cmd -- cargo test -p frob-conformance --test glossary_content -- --nocapture` and read the
    printed counts. `e2e_assert_eq total 337`; per range 73, 59, 61, 66, 78; `e2e_assert_eq subsystems 23`;
@@ -54,11 +60,14 @@ Steps:
 7. **Planted defects** (each through `e2e_expect_caught <name> -- <check>`, in the scratch tree, restored after
    each):
    - `hand-edit`: change one character of `docs/GLOSSARY.md` → `check-generated` reports `gen.differs`.
-   - `deleted-term`: remove the `commit-fence` record → the lint fails on the first contract that uses
-     "commit fence" with `gloss.undefined-term` (skipped with a recorded `skip` while no contract uses it).
-   - `undefined-label`: append "Outputs carry the label `rate-biased`." to a contract → `gloss.undefined-term`.
+   - `deleted-term`: remove the `provisional` record → the lint fails with `gloss.undefined-term` on the first
+     contract whose Outputs section prints `` `provisional` `` as a label value (the probe contract of step 1
+     guarantees one). A deleted term used only in plain prose is invisible to the scanner (NAB-02, negative
+     control 7), so the plant uses a label value.
+   - `undefined-label`: append "Outputs carry the label `rate-biased`." to the Outputs section of a contract →
+     `gloss.undefined-term`.
    - `ambiguous-sense`: append "Each cell is refined once." to the contract of a crate that owns no sense of
-     `Cell` → `gloss.ambiguous-sense`.
+     `Cell` (the probe contract owns none) → `gloss.ambiguous-sense`.
    - `ornamental`: append "The fusion is a cellular sheaf." → `gloss.ornamental-label`.
    - `unsorted`: swap two adjacent records → loader error `gloss.unsorted`.
    - `missing-subsystem`: delete the `Reflex` record → the subsystem completeness test fails.
@@ -107,8 +116,9 @@ silicon) and Linux (x86-64).
 
 - The script depends on `cargo` through the build-offload shim like every other; it never invokes a compiler
   directly.
-- Before any crate has a contract the lint steps find nothing to scan; the script then records `skip` for the
-  defects that need a contract, and the exit review of the first milestone with contracts re-runs it.
+- Before any crate has a contract the lint would find nothing to scan; the probe contract of step 1 keeps the
+  contract-dependent defects live, and the `uses_resolved` metric of step 6 is then reported against the
+  probe alone (logged with `probe_contract: true`, so nobody mistakes it for coverage of real contracts).
 
 ## References
 

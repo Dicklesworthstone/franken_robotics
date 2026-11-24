@@ -1,7 +1,7 @@
 # Coverage of drafting unit U35 (§35 Numerics and determinism)
 
-38 bead files: 3 seed beads (BD-177, BD-181, BD-269), 32 new beads (N35-01 to N35-32) and 3 registries
-(N35-KA, N35-CX, N35-REF).
+39 bead files: 3 seed beads (BD-177, BD-181, BD-269), 33 new beads (N35-01 to N35-33; N35-33 was added in
+the integration pass) and 3 registries (N35-KA, N35-CX, N35-REF).
 
 Keys of other units are named below where their beads already carry part of a subsection; they appear in no
 `deps` field of this unit (only seed keys, reserved keys and this unit's own keys do).
@@ -21,7 +21,7 @@ Keys of other units are named below where their beads already carry part of a su
 | §35.8 | Anchored positions | N35-30 (row 5: representation, difference rule, ADR-NUM-06, PO-NUM-01 exhaustive host form, KA-790 to -792), N35-19 (HZ-31; OPEN-NUM-3), N35-31 (`FROB-REF-249` end to end), N35-REF (row 249) | N21b-37 (the mechanism and its per-backend exhaustive test), BD-157 (`K-anchor`), BD-179 (GATE-SPARK-05 out to 1 km) |
 | §35.9 | Randomness by address | N35-22 (host service: address, three-level key layout, exact uniforms, normals; PO-NUM-03), N35-23 (the stream registry with exposure domains; 22 first rows), N35-24 (keying by physical entity; KA-793), N35-25 (proposal draws with exact weights), N35-16 (draw tables on every backend) | BD-180 (the device kernel `K-x-philox`), BD-200 (randomization from cards) |
 | §35.10 | Diagonal scaling for single-precision contact solves | N35-29 (the five parts and the facts; decision OPEN-NUM-4 from GATE-SPARK-18), N35-30 (rows 7 and 8: PO-NUM-02 host form, the scaling rule, the tolerance case), N35-04 (precision profiles and the degraded policy), N35-27 (κ̂ in every record) | N18b-25 and BD-156 (the kernels), N21b-38 (the conditioning record and harness), BD-179 (GATE-SPARK-18's measurement) |
-| §35.11 | Refusals | N35-REF (fifteen rows with triggers, repairs, exits and neighbouring codes), N35-26 (families; the three standing rules and the mission-query clarification as a sweep) | BD-005 (refusal type and loader) |
+| §35.11 | Refusals | N35-REF (fifteen rows with triggers, repairs, exits and neighbouring codes), N35-26 (families; the three standing rules and the mission-query clarification as a sweep), N35-33 (the registry as a whole: allocation of numbers to refusals stated in words, the exit rule per sub-family, cross-chapter checks, the generated printout; added in the integration pass) | BD-005 (refusal type and loader) |
 | §35.12 | A number never claims more than its certificate | N35-27 (the `numerics` block on every step and result), N35-28 (summaries state exclusions; the three wording rules by schema) | N21b-38 (κ̂ fields at the solve stage) |
 | §35.13 | Invariants and proof obligations | INV-NUM-01: BD-181 (slot axis), N35-03, N35-20 (HZ-10). INV-NUM-02: N35-13. INV-NUM-03: N35-14, BD-181. INV-NUM-04: N35-16, N35-22. INV-NUM-05: N35-28. INV-NUM-06: N35-01. PO-NUM-01: N35-30. PO-NUM-02: N35-30, N35-29. PO-NUM-03: N35-22, N35-16 | PO-NUM-01 and -02 per backend: N21b-37, N21b-38, BD-179 |
 | §35.14 | Known answers and negative controls | N35-30 (the ten rows and ten controls as one battery), N35-KA, N35-CX, N35-15 | — |
@@ -80,7 +80,8 @@ and KILL-SHARD (N35-05, N35-06, BD-269). The other determinism and precision gat
 - **Telemetry (seed BD-207).** The device histogram kernel and `telemetry.histogram` must reproduce the types
   of N35-21; a raw-draw telemetry tap is needed by N35-16.
 - **The refusal registry's owner.** A `76x` entry in the family-to-exit rule (exit 4 for FROB-REF-761), and a
-  code for a stream-entity hash collision inside one design or task (N35-23).
+  code for a stream-entity hash collision inside one design or task (N35-23). Resolved in the integration
+  pass: no unit owned the registry as a whole, so N35-33 was added here and carries both.
 - **Compute envelope.** GATE-SPARK-15 at gate size (1,000 batch-of-one runs and 100 co-tenancies of up to
   8,192 worlds per workload and backend) and the referee pair of GATE-SPARK-16 exceed the default envelope;
   the work-package epic registers no request above it. A gate-measurement request is needed for BD-181 and

@@ -1,0 +1,295 @@
+{
+ "round": 2,
+ "slice": "S78",
+ "reviewed": 30,
+ "changed": [
+  {
+   "bead": "BD-365",
+   "kinds": [
+    "complete",
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Applied the S26 request: the braked pair at run time (controller commands brake:<joint>, contacts_under maps it, lockstep selects at the next step boundary with an unchanged step plan, strict/referee at event time, engaged brake = ideal axle lock with 'assumed: ideal lock', capacity from the larger binding, telemetry role/law per contact and law-switch events), with tests and controls; deps N14bp2-02, N33b-22, STD-E2E. Own script scripts/e2e/traction_tiers.sh (tiers, known answers via g1_known_answers, scrub, hybrid, referee FROB-REF-721, rigid-climb, all keyed) replacing the dependent N18b-09's script (drift 7); NS-08 'demonstrated' is met when NS-08 closes. Cluster step made hand-checkable (r=0.100, rho=0.181: h=0.175/t=0.260 admitted, 0.30 m riser refused, limit 0.297124 m) via N33b-22's admitted oracle with the admission-blocked rule."
+  },
+  {
+   "bead": "BD-366",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging",
+    "tests",
+    "complete",
+    "self-contained"
+   ],
+   "what": "N12-43 moved to deps with a D.3 oracle test (U12-2 request); KA-837 aligned (5.0165 kPa; control 0.091646/0.190127/0.117076 m = 9.16 cm, S14 request); N18b-17 (Moonshot, priority 4) removed from deps (graph finding): rut row recorded against fallback 'off' until N18b-17 amends via record_gate; gate run/record commands; KILL-SOIL ADR path docs/adr/ADR-KILL-SOIL-M4.md; contact.soil CLI spelling table (one input form, FROB-REF-802 otherwise); own script scripts/e2e/soil_verb.sh replacing N18b-19's (drift 7)."
+  },
+  {
+   "bead": "N18b-12",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "KA-837 control 9.16 cm (S14 request); dep N12-43 with matches_d3_oracle test and script step; --test g1 -> g1_known_answers; delivers the illustrative fixture cards soil-a and soil-b used by BD-366 and N18b-19; command-line refusal now asserted by BD-366's script."
+  },
+  {
+   "bead": "N18b-19",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "verb/refusal stages run BD-366's soil_verb.sh (no second copy); ruts stage made mode-aware with an always-run terrain-reset check and a hook for N18b-17's ruts.sh (e2e_skip until N18b-17, which now depends on this bead, turns it on); fixture cards from N18b-12; keys on run calls; 9.17 -> 9.16 in the planted control."
+  },
+  {
+   "bead": "N18b-17",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Now comes after BD-366/N18b-19 (dep N18b-19) and amends the GATE-TRAC-08 rut row via record_gate; turns on N18b-19's ruts hook; Out text: N38a-29 depends on it directly; keys on every run; KA-419 through g4_chaos with gauntlet-mutations."
+  },
+  {
+   "bead": "N18b-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "KA-837 aligned (5.0165 kPa; n=0.7 control 0.091646/0.190127/0.117076 m = 9.16 cm, S14 request); direct sinkage/shear from the D.3 oracles (dep N12-43) with a test; pilot register path crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1); keyed runs; full logging fields."
+  },
+  {
+   "bead": "N18b-13",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Every run in soil_step.sh carries its own --key (drift 5); cards named as N18b-12's soil-a/soil-b."
+  },
+  {
+   "bead": "N18b-16",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot register path and schema; keys on every run; p = 8.3608 kPa per KA-837; consideration corrected: BD-366 no longer waits on the rut Moonshot (rut row on the fallback until N18b-17 amends)."
+  },
+  {
+   "bead": "N18b-18",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Decision record docs/adr/ADR-KILL-SOIL-M4.md with every N40-03 field and a non-implementer recording session (drift 4); dep N40-03; keyed tow run with telemetry read-back and ADR field check; negative control for a missing field."
+  },
+  {
+   "bead": "N18b-36",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "ADR path docs/adr/ADR-OPEN-TRAC-3.md and the KILL-SOIL record path; CLI soil assertion now made by BD-366's soil_verb.sh."
+  },
+  {
+   "bead": "N18b-09",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "hybrid stage runs BD-365's traction_tiers.sh --stage hybrid (no second copy; braked-pair and cluster asserts listed); keyed wheel and determinism runs (drift 5). The referee refusal call carries a key (without one the verb answers FROB-REF-805, not 721)."
+  },
+  {
+   "bead": "NS-08",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "scene gen uses --family terrain/stairs|rubble (S66 request, BD-165's form); contact.soil step uses the design input form BD-366 defines (the plate 0.3x0.1 + load form did not exist); reset check made a fresh-digest equality valid with ruts off or on (no wait on the priority-4 rut bead); keyed repeat and worker-count runs; logging fields."
+  },
+  {
+   "bead": "N18b-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Pilot register path/schema; keys on runs and eval compare calls; logging fields."
+  },
+  {
+   "bead": "N18b-04",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Script called contact.probe on a tyre law the probe row does not have: added the tyre probe branch (--law tyre, --slip-ratio, --tan-slip-angle; F_x/F_y, FROB-REF-243) and the tyre row of registries/contact_selectors.toml, with tests (drift 8; requested of VERBS-contact); keyed strict and lockstep cornering, parked-slope run, telemetry read-back."
+  },
+  {
+   "bead": "N18b-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Pilot register path/schema; keys per point and profile; logging fields."
+  },
+  {
+   "bead": "N18b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script now creates a design from the template (design new) before contact.capacity and sim.run, which take a design; keyed strict/lockstep/referee runs with energy read-back."
+  },
+  {
+   "bead": "N18b-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Keys on the script's runs; text now says the verb-level anchor cases are driven by BD-367's response_verb.sh, run by N18b-42."
+  },
+  {
+   "bead": "N18b-40",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Acceptance criterion no longer measured by the dependent N18b-42 (drift 7): measured on this bead's own scenarios, gate size left to N18b-42; dep STD-E2E (it owns a script); keyed runs. Verb-level column cases named as BD-367's script stage."
+  },
+  {
+   "bead": "N18b-41",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Keys on the script's runs."
+  },
+  {
+   "bead": "BD-367",
+   "kinds": [
+    "complete",
+    "users",
+    "e2e-logging",
+    "tests",
+    "deps",
+    "correct"
+   ],
+   "what": "UJL-1 request: CLI spellings and defaults table (step = last converged non-degraded step; columns = base-impulses; precision of the anchoring step; on-stale refactor; lambda standard; FROB-REF-802 on unknown values) so the registry example runs as written, with a test; own script scripts/e2e/response_verb.sh (fixtures, anchor, columns, lambda, cli, job; all keyed) so the verb is verified when it lands instead of only by the dependent N18b-42 (drift 7); gate-size sweep criterion left to N18b-42; stale-anchor refusal numbered through the allocation ledger (drift 2); reduced-sweep unit test."
+  },
+  {
+   "bead": "N18b-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "--test g1 -> g1_known_answers with gauntlet-mutations and record_gate (drift 1); test file g1_known_answers.rs; stages 0-3 and 5 run the component scripts and BD-367's response_verb.sh instead of a second copy of verb-level commands; own sweep stage keyed per batch and state (drift 5); self-test covers every called-script stage."
+  },
+  {
+   "bead": "N18a-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Registration and record in crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1, drift 3); snapshot runs keyed per stratum and batch (drift 5); log path and full STD-E2E fields, first false accept on failure."
+  },
+  {
+   "bead": "N18a-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Decision record docs/adr/ADR-KILL-RESPONSE-M4.md with every N40-03 field, receipt hashes and a recording session that did not implement BD-367 (drift 4); dep N40-03; script checks ADR fields and runs the keyed fallback call; negative control for a missing field or implementer session; keyed criterion."
+  },
+  {
+   "bead": "N18ax-01",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The eight pad-hold fixtures the script runs are now in scope with a path; runs keyed per law and pad plus a strict determinism lane; refusal controls spelled out; the cl-1r hold probe inputs (radius, hold, at), absent from the contact.probe row, added as a branch with a test and requested of VERBS-contact (drift 8)."
+  },
+  {
+   "bead": "BD-368",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script made runnable: conveyor scenes compiled from N24a-43's moving-surface fixture at floor height (there is no conveyor scene family; the plant family's belts are 0.6-0.9 m goods conveyors); task settle with --model; every eval run, settle and compile keyed (drift 5); planted run through e2e_expect_caught; GATE-ARENA-01 recorded via N24a-24's gate script and record_gate (drift 1); full logging fields."
+  },
+  {
+   "bead": "N24a-29",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "scene gen spelt --family terrain/stairs|curb|step with N19a-28's parameter names (rise, run, steps, height) in BD-165's form; rig runs, settle and eval runs keyed (drift 5); log records the track model in use (belt or fallback); full logging fields."
+  },
+  {
+   "bead": "N24a-30",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "U28a request: BD-348 moved to related (none of A-24 to A-26 used; BD-110 still reached through BD-246); N24a-43 moved from related to deps, since place-on-belt runs on its belt (drift 7); attachment-card runs keyed dry/dusty distinctly, eval and settle keyed (drift 5); belt-frame error asserted; full logging fields."
+  },
+  {
+   "bead": "N24a-43",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "S66 request: exposure (a) of hazards_plant.sh now runs N19a-35's fixtures/hab/hazards/plant/block-2kg.fbot with belt-set-down.ftask (key hzp-run-a) after e2e_scene_ready; own script keyed per friction value and tier, adds the batch-isolation pair and the planted build through e2e_expect_caught; scene compile keyed; full logging fields."
+  },
+  {
+   "bead": "N15ax-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Unit-test command fixed (cargo test -p frob-contact attachment_card selects no integration-test file; now --test attachment_card); the attachment probe call (--card --force --moment --conservative), absent from the contact.probe row, specified as a branch with its outputs and refusals, a test added, and requested of VERBS-contact (drift 8)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-contact",
+   "what": "Add to the contact.probe row: (1) the tyre branch of N18b-04 (--law tyre, --card, --normal, --slip-ratio, --tan-slip-angle; outputs F_x, F_y; FROB-REF-243); (2) the attachment branch of N15ax-02 (card, force, moment, conservative; outputs holds, utilizations, margin, class; FROB-REF-802 for one of force/moment alone, FROB-REF-121 for a card without the group); (3) law cl-1r with radius, hold, at (N18ax-01). For contact.soil, list the input spellings of BD-366's table. For contact.response, list BD-367's spellings and defaults (step, anchor, columns families, precision, on-stale, lambda, describe); the registry example then runs as written."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "--fixture <name> is used in scripts (e.g. N18b-39's `frob sim run --tier batch-cpu --profile lockstep --fixture resting-block`) but is absent from the sim.run row; add it with its meaning (a named built-in fixture in place of a design path) or state the replacement form."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "The scene.gen CLI example `frob scene gen terrain:stairs --difficulty 0.4 --seed 11 --key sg-1 --json` passes the family positionally with a colon; BD-165's form, used by the beads, is `--family terrain/stairs`."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Its decision-ADR path is still docs/delivery/adr/ADR-<gate-name>-<milestone>.md (item 6, and the OPEN fail-closed default); KNOWN_DRIFTS item 4 retires docs/delivery/adr in favour of docs/adr/. The kill-gate beads of WP-30 (N18b-18, N18a-26, N18b-36) now cite docs/adr/."
+  },
+  {
+   "bead": "N38-KA",
+   "what": "KA-837's n = 0.7 control still prints 9.17, 19.01 and 11.71 cm (and p = 5.017 kPa); from the unrounded p = 5.01648 kPa it is 0.091646, 0.190127 and 0.117076 m (9.16 cm), as BD-366, N18b-11, N18b-12, BD-417, N38b-43 and N38b-46 now state (S14's request)."
+  },
+  {
+   "bead": "NEGp1-53",
+   "what": "Its tracked pivot run `frob sim run <DesignId> --tier referee --task fixture:pivot-90 ...` puts the belt class on the referee, whose contact cap the belt class exceeds (N18b-06 and N18b-09 assert FROB-REF-721, exit 5, for exactly this run); take the reference value on --profile strict, or state how the referee admits it."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "Slice settled in build order. Three script-ownership fixes under drift 7 (BD-365, BD-366 and BD-367 now own the verb-level scripts their dependents had carried); the priority finding on BD-366 fixed by inverting the rut dependency (N18b-17 now amends the GATE-TRAC-08 rut row). N24ap2-60 unchanged. The p1 kill-gate decisions N18a-26, N18b-18 and N18b-36 wait on p2 work, which the charter's one-step rule implies; left as is. Open point kept from the original N18b-42 text: the hand fixtures (H = 3, the 2x2 matrix) are run 'through the verb', whose input is a run and step, so they need fixture worlds with that Hessian; not invented here."
+}

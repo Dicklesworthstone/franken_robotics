@@ -1,0 +1,258 @@
+{
+ "round": 3,
+ "slice": "F-U24a-1",
+ "reviewed": 26,
+ "changed": [
+  {
+   "bead": "BD-094",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps",
+    "correct"
+   ],
+   "what": "Convention 11/7: the e2e was steps of N24a-39's later script calling `frob sim run` on fixture tasks (N16b-25/N24b-03, not deps) and `frob explain run` (BD-112, later); now owns scripts/e2e/telemetry_failures.sh on its own deps (unit tests, a failure_fixtures example on the referee and ledger, telemetry.failures per class, kinds and denominators on a 10-episode battery, first cause 120 ticks, drill-down through telemetry.query, controls via e2e_expect_caught). Acceptance no longer says this bead records GATE-CHRON-08 (convention 9: N24a-39's receipt, recorded by N29b-06). Dep STD-E2E."
+  },
+  {
+   "bead": "BD-121",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "scope",
+    "correct",
+    "deps"
+   ],
+   "what": "Own script scripts/e2e/spec_differential_campaign.sh (cargo smoke, the campaign as `e2e_tier g5_determinism KA-597` with receipt, KA-596/594/615 via g1_known_answers, the six controls via --mutations, cancel/resume equality) instead of a step of N24a-42's later script with an ad-hoc FROB_SPEC_TRACES runner. Dropped the acceptance line that waited on BD-122 ('reachable through task check/verdict once BD-122 lands', convention 7; moved to Scope Out). Gate record: receipt only, N24a-42 joins and records (convention 9). Added unit test shard_cancel_resume for the existing acceptance line. Dep STD-E2E."
+  },
+  {
+   "bead": "BD-191",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the H-verbs-7 request: an untraced world is FROB-REF-888 (exit 3) naming the sampling rule and manifest field; an overlay whose channel the run does not declare is FROB-REF-802 with `available` (DESIGN, like telemetry.histogram's unknown channel); a declared channel not retained for the world is 888; later overlay ids before N24ap2-60 answer FROB-REF-724 (exit 5, not-linked, naming the overlay). Unit tests and acceptance updated. E2E step 5 compared runs with `telemetry divergence` (BD-206, not a dep): now `telemetry summary --digests` tables (BD-187); step 6 uses `--overlay sensing` for 802 and `--overlay film` for 724 (film is N24ap2-60's in this build)."
+  },
+  {
+   "bead": "BD-195",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Script step 5 ran `record_gate` (convention 9, STD-E2E self-recording lint): now e2e_tier g1_known_answers KA-601 (and --mutations) for the receipt; this bead records GATE-ARENA-08 outside the script. Added deps N16b-25 (sim.run --task/--worlds on batched tiers, used by step 2) and BD-210 (job.wait, used by step 1; with --sync-wait-ms). Step 1 now also exercises the `--cohort` option this bead adds (and 802 with --model)."
+  },
+  {
+   "bead": "BD-201",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "'record the gate' made explicit and single-recorder: N24a-24's script yields the receipt; this bead records the M2 part of GATE-ARENA-01 with record_gate --part M2 outside any script (BD-253, BD-368 record M3, M4); the e2e runs the gate script as a stage and logs its receipt hash."
+  },
+  {
+   "bead": "BD-253",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2E scene verbs brought to their registry rows: scene gen --family warehouse|kitchen-commercial/galley --seed; scene split create --name/--group-by/--rule/--default then split add --split/--family/--seeds/--expected-parent (was an unregistered `scene split --family`). Gate: records the M3 part of GATE-ARENA-01 from the harness receipt with --part M3 outside the script."
+  },
+  {
+   "bead": "BD-256",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Hidden trajectories are runs recorded under the reference task, so scoring a draft is `task verdict <trace> --task <draft> --re-evaluate` (without it the registry's worded refusal verdict-task-mismatch); exit 0 or 2 both expected."
+  },
+  {
+   "bead": "BD-257",
+   "kinds": [
+    "correct"
+   ],
+   "what": "train.start used `--profile device-replay`; the registry's determinism option is `--determinism device-replay` (`--profile` is a step profile). Added the registered `--steps` budget so the arms' identical budget is explicit."
+  },
+  {
+   "bead": "BD-368",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2E registers the tasks with `task new` before check/settle by TaskId; job wait with --sync-wait-ms; gate script as a stage; records the M4 part of GATE-ARENA-01 with --part M4 outside the script (was 'as N24a-24 states', a second recorder)."
+  },
+  {
+   "bead": "N24a-02",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Convention 7/11: acceptance 'reachable through frob task show once BD-122 lands' and an e2e made of N24a-42's later ftask-* steps; now owns scripts/e2e/spec_ftask_format.sh on its own deps (cargo tests incl. 10^4 round trips and mutations, an ftask_id example on the golden JSON, shuffled/whitespace/edited copies, planted refusals 103/891/task-structure-invalid, controls); the verb-level check is named as BD-122's and N24a-42's. Dep STD-E2E."
+  },
+  {
+   "bead": "N24a-03",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Own script scripts/e2e/spec_sexpr_view.sh (tests, ftask_view example: .sexp -> JSON equals the committed golden byte for byte and back up to the number rule; planted 523/536/520 structural forms with line/column; depth and node limits; controls) instead of N24a-42's later step that needed BD-122's `task show --as sexpr`. Dep STD-E2E."
+  },
+  {
+   "bead": "N24a-04",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The e2e called `frob task verdict --evaluator definitional`: no such option in task.verdict's row and the verb comes later. Own script scripts/e2e/spec_semantics.sh (hand cases, the 10^6-pair law suites, a definitional_cases example compared with a committed golden of margin bits, controls). Dep STD-E2E."
+  },
+  {
+   "bead": "N24a-05",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "Own script scripts/e2e/spec_units.sh (tests, `e2e_tier g1_known_answers KA-594` with the CX-259 control under --mutations, a unit_check example on five planted canonical task files and the golden task) instead of N24a-42's later `task check` steps. Deps added: N24a-02 (the signals section and the task reader the checker reads) and BD-090 (Chronicle's channel schema, needed by the existing check signal_unit_disagrees_with_channel_is_535); STD-E2E."
+  },
+  {
+   "bead": "N24a-07",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The e2e ran fixture 1 (later) and an unregistered `task verdict --recompute-online`. Own script scripts/e2e/spec_online_kernels.sh: tests, an online_harness example through the batch-cpu harness (fixture 1's dwell/stalled built in code: 51-tick window, 102 values per world, zero mismatches with the definitional evaluator, aliasing manifest rejected), KA-596 via e2e_tier with its padding control. Dep STD-E2E."
+  },
+  {
+   "bead": "N24a-08",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "Acceptance 'fixture 1's dwell and stalled are recorded on the referee' waited on fixture 1 (N24b-05, later): now a synthetic one-body referee run with fixture 1's two signal shapes, fixture 1 itself named as N24b-05's and N24a-42's. E2E used the unregistered `task verdict --evaluator definitional --check-online`: own script scripts/e2e/spec_deque_monitor.sh (tests, a deque_referee example on the referee with a planted reset and gap, KA-596 via e2e_tier, expiry/back-pop controls). Dep STD-E2E."
+  },
+  {
+   "bead": "N24a-13",
+   "kinds": [
+    "users",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied the H-verbs-7 request: the --overlay file is its own format FMT-FOVERLAY (`.foverlay`, schema member frob.task.overlay/1, owner frob-spec, canonical JSON, no view; members schema, name, entries {path, value}, optional schedule {from_step, entries}; overlay digest under its domain) so the artifact-input stage can route it; a member inside .ftask was rejected because it would enter the TaskId, which the freeze rule forbids. Unit test overlay_document_format and an acceptance line. Own script scripts/e2e/spec_requirement_uses.sh (tests, decision_signal and overlay_check examples, planted .foverlay files, controls) instead of N24a-42's later consumers-* steps. Dep STD-E2E."
+  },
+  {
+   "bead": "N24a-14",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Acceptance demanded byte-identical verdict records with the term on and off, impossible since the term enters the TaskId carried in the record: now both evaluated under the term-off task (`--re-evaluate`), records under their own tasks differing only in `task`. E2E used `train start` 'with a fixed open-loop action sequence' (no such input): now sim.run --controller open-loop:<schedule> on batch-cpu for rate invariance, task verdict with --re-evaluate, and a short train start (--determinism device-replay) plus train export for the manifest entry. Dep N15a-12 (implements open-loop:<schedule>)."
+  },
+  {
+   "bead": "N24a-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Convention 10 (N40-03): the decision entry lacked `receipts` (required, at least one for not-fired); now `decision = { outcome, adr, date, session, receipts }` and the acceptance checks it loads under N40-01's validator; the re-read beads list gains N40-03's third value 'withdrawn before this decision'."
+  },
+  {
+   "bead": "N24a-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "task.settle inputs brought to the registry row (task positional, --model, common --key/--sync-wait-ms/--budget; no `tier` or `design and controller` inputs at M1; --cohort BD-195, --tier BD-255) keeping --refresh for the plan's 'build or refresh' (requested of VERBS-task). E2E ran `frob sim run --tier referee` of a task, which needs --task (N16b-25, M2) or --fixture (N24b-03), neither a dep: now a settle_episode example through the same admission check and load_settled, plus a --refresh determinism step; the description of N24c-07's settle step no longer relies on job.wait at M1."
+  },
+  {
+   "bead": "N24a-17",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Convention 11: the e2e was N24ap1-01's metrics-core-* steps, a later bead that depends on this one, and used `eval scorecard --quantile`, which is not an eval.scorecard input. Now owns scripts/e2e/arena_metrics_core.sh on its own deps (tests in debug and release, a metric_registry example, a metrics_core example on planted verdict records: 6/10 with [0.2623, 0.8785], RMT 5.75 s and 6.0 s, the 0.99 not-observable cell p_max 0.7411 n_needed 299, the 299-episode answer, 888 on a dropped interval, 100 permutations, three nc- controls); N24ap1-01 named as running it as a stage. Acceptance line and dep STD-E2E."
+  },
+  {
+   "bead": "N24a-18",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Convention 11: the e2e was N24ap1-01's later metrics-energy-* steps. Now owns scripts/e2e/arena_metrics_energy.sh: tests (KA-611 cases), an energy_metrics example on per-episode totals (KA-598 10/30 vs 12/12, zero completions, invalid attempt, CoT 0.2000/0.1500, distance floor, ratio of sums 1.667), a real referee run through `frob sim run` and `frob telemetry energy` (BD-024, BD-094, both reached) fed to the example, 888 on a gap, controls for KA-598/CX-261. frob-arena (layer 4) never links the Chronicle. Acceptance line and dep STD-E2E."
+  },
+  {
+   "bead": "N24a-19",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The e2e ran `eval run` with no --controller, so the default baseline would run instead of the scripted open-loop controller the closed-form check needs: now `--controller fixture:motion-open-loop`, registered by this bead under fixtures/controllers/ (N14b-06's form, admitted by eval.run). Dep N14b-06 (no cycle)."
+  },
+  {
+   "bead": "N24a-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The rigs were run with `frob sim run <rig> --task` (N16b-25, not a dep) and then read with `eval scorecard <run>`, whose input is a run of eval.run: now `frob eval run <rig> --task <TaskId> --worlds 1 --run-seed 1 --tier referee --key ...`, the single-task form of N24c-04 (reached through N24ap1-01)."
+  },
+  {
+   "bead": "N24a-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The planted infeasible control program was run with no controller named: now `--controller fixture:parallel-shift-infeasible` registered by this bead (N14b-06's form, reached). The 'run whose Control stream is withheld' had no means: now the same battery at `--telemetry T0` (T0 keeps per-episode metrics and state digests, not the layer events), with eval.run's forwarding of sim.run's --telemetry requested of VERBS-eval; asserts exactly one fallback:infeasible event and 888, never a zero count."
+  },
+  {
+   "bead": "N24a-22",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Convention 11: the e2e was N24ap1-01's later scorecard-* steps. Now owns scripts/e2e/arena_scorecard_table.sh: property tests, a scorecard_build example on a 20-record synthetic battery (15/20 = 0.750 and 15/19 = 0.789, the doorway witness 0.62 m > 0.55 m, the bare-label rejection), N24b-01's battery_resolve for the silent shortening (no-event refusal, the declared event, n = 19, two identities refused), the three GATE-ARENA-07 controls; the M3 oracle comparison kept in the N24ap1-01 stage. Acceptance line and dep STD-E2E."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-telemetry",
+   "what": "telemetry.stills: refusals gain FROB-REF-888 (an untraced world, or an overlay channel declared but not retained; exit 3), FROB-REF-802 (an overlay naming a channel the design does not declare: pointer /overlay with `available`) and FROB-REF-724 (an overlay id of a later bead not in the build: not-linked, mechanism); replace 'BD-191 names neither code (requested)' (BD-191)."
+  },
+  {
+   "bead": "BD-002",
+   "what": "Add the formats.toml row FMT-FOVERLAY: extension .foverlay, schema frob.task.overlay/1, owner frob-spec, canonical JSON, no S-expression view (the training/check overlay of N24a-13; its digest is recorded beside an unchanged TaskId, so it cannot be a member of .ftask)."
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "task.check: params entry `overlay = \"artifact-input<task-overlay>\"` (format FMT-FOVERLAY, N24a-13). task.settle: add `--refresh` (rebuild a complete settled-pose cache under a new key instead of returning the stored receipt; N24a-16, the plan's 'build or refresh')."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run: forward sim.run's `--telemetry T0|T1|T2|T3|task-all` with sim.run's spelling (manifest-only, physics digests unchanged), as it forwards the step-plan options; N24a-21 needs a run at T0 to show that a fallback count over an unretained Control stream is FROB-REF-888, not zero."
+  },
+  {
+   "bead": "N24a-42",
+   "what": "Run as stages the own scripts of the spec beads: spec_differential_campaign.sh (BD-121), spec_ftask_format.sh (N24a-02), spec_sexpr_view.sh (N24a-03), spec_semantics.sh (N24a-04), spec_units.sh (N24a-05), spec_online_kernels.sh (N24a-07), spec_deque_monitor.sh (N24a-08), spec_requirement_uses.sh (N24a-13). Its steps use unregistered task.verdict options `--evaluator definitional`, `--recompute-online` and `--check-online` (convention 8): drop them or request them of VERBS-task. Its consumers-* overlay files become .foverlay documents of frob.task.overlay/1."
+  },
+  {
+   "bead": "N24a-39",
+   "what": "Run scripts/e2e/telemetry_failures.sh (BD-094's own script) as a stage of the failures-* steps."
+  },
+  {
+   "bead": "N24ap1-01",
+   "what": "Run as stages arena_metrics_core.sh (N24a-17), arena_metrics_energy.sh (N24a-18) and arena_scorecard_table.sh (N24a-22). The metrics-core step's `eval scorecard --quantile 0.99` is not an eval.scorecard input: read the 0.99 cell of a metric whose registry aggregate lists it, or request the input of VERBS-eval."
+  },
+  {
+   "bead": "N24a-24",
+   "what": "Section 5 has 'a session that did not implement the tasks' record GATE-ARENA-01 with record_gate and no --part, while BD-201, BD-253 and BD-368 record its M2, M3 and M4 parts with --part from this script's receipt (convention 9): state that this bead writes the receipt only and name the three recorders."
+  },
+  {
+   "bead": "N40-01",
+   "what": "Confirm the GATE-ARENA-01 row of registries/gates.toml carries three [[gate.part]] entries (M2, M3, M4), which BD-201, BD-253 and BD-368 record with --part."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "All 26 beads read in full; BD-260 left unchanged (its figures recomputed and correct). Two requests addressed to beads of the slice were applied: H-verbs-7 on N24a-13 (the overlay is its own format FMT-FOVERLAY, .foverlay, frob.task.overlay/1, routed as artifact-input<task-overlay>; a member of .ftask was rejected because it would enter the TaskId) and the telemetry.stills codes on BD-191 (888, 802 with available, 724). The main drift was convention 11: eleven mechanism beads (BD-094, BD-121, N24a-02, -03, -04, -05, -07, -08, -13, -17, -18, -22) had e2e that were steps of a later bead's script (N24a-39, N24a-42, N24ap1-01); each now owns a script on its own deps, driving the library through tests and example programs that keep frob-spec and frob-arena (layer 4) off the Chronicle (layer 6), and the later beads are asked to run them as stages. Convention 9: BD-094, BD-121, BD-195, BD-201, BD-253 and BD-368 scripts no longer record gates; BD-201/253/368 record GATE-ARENA-01 parts with --part. Convention 10: N24a-15's decision entry gained receipts. New deps checked with graph_check: no cycle. Coordination: sibling slice F-U24a-2 has the same kind of format request for N24ax-02's --element file; the FMT-FOVERLAY row should be decided with it by BD-002. Clopper-Pearson 6/10 outward [0.2623, 0.8785], p_max(10) = 0.7411, KM RMT 6.0 s and 15/19 = 0.789 were recomputed."
+}

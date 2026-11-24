@@ -1,0 +1,269 @@
+{
+ "round": 2,
+ "slice": "S69",
+ "reviewed": 22,
+ "changed": [
+  {
+   "bead": "BD-398",
+   "kinds": [
+    "users",
+    "complete",
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Request from S66 applied: the place form's full input table (--from, --source/--user-supplied/--licence-ack/--profile by N19a-46's rules, --landmarks, --declare, --name, --repair, --key), with acceptance and script checks. Removed the per-call --private-root (BD-305/N37-02: roots.private is an owner-held configuration key; unset is FROB-REF-734 root-unset). ADR path docs/adr/. Every run call in the script carries --key; cancellation exercised. Convention 7: the place-lane steps of the scripts of N19c-02, N19c-03, N19c-04 and N19c-05 are skipped until this bead and are run here (acceptance line); its own check of a dataset row uses N19a-46's synthetic test-research row, since NEGp1-52 (hm3d-scan) depends on this bead. The declare row now also carries answered probe requests (N19c-05's closure path); pilot sentence names both M3 pilots (N33c-25 drone lane, N19c-01 twin lane)."
+  },
+  {
+   "bead": "BD-399",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Request from UEG-2 applied: deps NEG-19 and NEG-20 (the catalogue is built from their manifests and the script asserts a third-party source key); NEG-18 stays related; STD-E2E added. Script: keys on every run call; --populated/--assets declared as scene.gen inputs of this bead (VERBS-scene asked); step plans read from the frob.stepplan/1 record beside the run receipts instead of `spark check` (the CPU-against-device kernel check); artifact export by digest with --out and --key."
+  },
+  {
+   "bead": "N19a-40",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Record aligned to the pilot register's schema frob.gauntlet.pilot/1 (N38a-09) field for field; the funding assertion now reads the dressing.assets entry of WP-32's answer, since WP-32 also holds the ingestion mechanisms and fundable() is per package."
+  },
+  {
+   "bead": "N19a-41",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "ADR moved to docs/adr/ with N40-03's required fields; outcomes from the register's closed set (not-fired/fired/not-reached/deferred) instead of kept/fell back; decision entry scoped item:assets so the M6 actor re-read (N19ax-05) does not replace it (requested of N40-03/N40-24). `sim run --plan-only` (no such option) replaced by the step-plan record beside run receipts; keys on every run; the withdrawn option answers FROB-REF-724 exit 5 per N00-02; the planted actor control (no actors at M5) replaced by a populate-by-slot determinism plant."
+  },
+  {
+   "bead": "N19c-01",
+   "kinds": [
+    "correct",
+    "placement",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Pilot record moved to the register's schema frob.gauntlet.pilot/1 (frob.pilot/1 retired) with dep N38a-09, verdict mapped to the register vocabulary (importer-first=falsifier-rejected, upstream-first=falsifier-holds, fail-closed on partial/ambiguous); checklist frozen before the package is opened; the handedness item absorbed from N33c-25's duplicate Part B, so this is the program's one twin-package inspection; moved to M3/priority 2 (as that draft had it) so FD-FSS-01 can open two milestones before the importer; inspection tool named; logging fields completed; funding granularity per package raised as a consideration (request to N38a-09)."
+  },
+  {
+   "bead": "N33c-25",
+   "kinds": [
+    "scope",
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Part B (twin-package inspection) removed as a duplicate of N19c-01, which absorbs its handedness item; pilot record on frob.gauntlet.pilot/1 with the verdict vocabulary; the nonexistent `frob-conformance scan-schema` driver replaced by a frob-scene Cargo example; at M3 the script asserts the place form answers FROB-REF-724 exit 5 and drives the adapter through the example; `--private-root` removed (roots.private); keys on run calls; OPEN-HAB-5 restated as N19c-09 has it."
+  },
+  {
+   "bead": "N19c-02",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Closed an open case: an operator declaration or a source's metric statement without a measured baseline establishes `estimated` (declared accuracy or \u00b15%), never `witnessed`, and no fifth label exists (NEGp1-52 writes `declared: metres`, requested). Script: place-lane steps skip with `needs BD-398` and run in BD-398's acceptance; steps that run at close added (schema, generated pack); keys on every run."
+  },
+  {
+   "bead": "N19c-03",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "scope",
+    "correct"
+   ],
+   "what": "Script restructured under convention 7 (place-lane steps skip until BD-398, runnable schema/generated-pack steps added, keys on every run); spawn test restated against the footprint edge and S; the M2 spawn check N19a-19 reads adjacency as one footprint radius, which this bead's table overrides (request to N19a-19)."
+  },
+  {
+   "bead": "N19c-04",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "scope"
+   ],
+   "what": "`--private-root` removed (roots.private, unset = FROB-REF-734 root-unset); `scene show --loss` (no such option) replaced by the loss report in the import result; an example driver `import_place` runs the pipeline before BD-398 registers the place form, and the script switches to the verb when the capability lists it; keys; refusals of `--from`; drone fixture and identity re-import steps."
+  },
+  {
+   "bead": "N19c-05",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "The 'scene edit verbs' of the e2e (no registry row) replaced: a measurement reaches a pack by re-import with the answered request in the --declare file (BD-398's table extended) or by scene.compile of the edited source. A Part 0 on an authored friction-card scene runs at close; the ingested parts skip until BD-398; keys on synthesize/compile/import/fit; the gate-clause acceptance line now exposes what N19c-07 (a dependent) asserts."
+  },
+  {
+   "bead": "N19c-06",
+   "kinds": [
+    "users",
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "`--survey` declared as a scene.gen input added by this bead with its refusals (requested of VERBS-scene); privacy made decidable and fail-closed (survey packs private unless the survey declares synthetic; non-synthetic survey outside roots.private = FROB-REF-734); script with keys, the private/refusal steps and plants; STD-E2E dep."
+  },
+  {
+   "bead": "N19c-07",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Per-call and script --private-root removed (owner-held roots.private; private lane refuses unset or in-tree roots); `--seed` on import and `scene show --loss` removed; keys on every run call (fingerprint, import, binds, spawn sampling run, fit, eval, export by digest) with a distinct key for the identity re-import; gate value recorded through record_gate by a fresh session; helper tests in plain bash; plants header. Script gains `--from twin|fdgr` for the two switch-overs, and the gate record cites the ingest contract row (N19c-09)."
+  },
+  {
+   "bead": "N19c-08",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request from S50 applied: ADR at docs/adr/ADR-KILL-INGEST-M5.md with N40-03's required fields; `frob gates show` (no such command) replaced by a tools/gates helper decide_kill_ingest reading registries/gates.toml and the pilot register (N19c-18's pattern); outcomes in the register's closed set (`not-decidable` became `deferred` naming a later exit; `not-reached` added for an unfunded importer); tests and logging fields completed; STD-E2E dep."
+  },
+  {
+   "bead": "N19c-09",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Record at docs/adr/OPEN-HAB-5.md with the registries/open.toml row (decided/defaulted per N41-03; defaulting is the exit reviewer's step); script imports through N19c-04's example driver (the place form is BD-398's, not a dependency) and through the verb with keys once listed; the gate-run acceptance line (N19c-07 depends on this bead) became the `contract` field in the import result; STD-E2E dep."
+  },
+  {
+   "bead": "N19c-10",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Record at docs/adr/OPEN-HAB-6.md with the open-register row; script commands spelled with the place import, two task settings, distinct keys, the exclusion-biased eval, and full logging fields; STD-E2E dep."
+  },
+  {
+   "bead": "NEG-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Import command made valid (--kind asset, --key; profile populated-interior added to registries/import-profiles.toml with behaviours from generator metadata, FROB-REF-315 otherwise); its stage of assets_licences.sh (owned by NEGp1-54) lists keyed steps, refusals and logging fields (NEG-22 pattern)."
+  },
+  {
+   "bead": "NEG-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Import command made valid (--kind asset, --behaviour free, --key; profile small-rigid recorded in registries/import-profiles.toml); its stage of assets_licences.sh lists keyed imports, refusals, the settle run, both exports and the stripped-notice control, with logging fields."
+  },
+  {
+   "bead": "NEG-20",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Import commands made valid (--kind asset, --behaviour articulated, --key); the layout profile named (kitchen-layout) and its result defined (parameter set plus the generated pack citing it; never a mesh); its stage of assets_licences.sh lists keyed steps and logging fields."
+  },
+  {
+   "bead": "NS-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Imports carry --kind place (else FROB-REF-802); the anchor enters through --declare as a measured baseline (a witness by N19c-02, closing the probe request); scale labels lowercase per N19c-02; FROB-REF-731 is exit 5, not 3; gate recording left to N19c-07; script header, private root and logging fields."
+  },
+  {
+   "bead": "FD-FDGR-01",
+   "kinds": [
+    "deps",
+    "split",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Split (NFp2-01 pattern): the dep on the M5 capstone BD-398 made the upstream work wait for M5; now deps BD-037, N33b-04, N33c-25, STD-E2E. This bead keeps the sibling's three stages, the fixture, the pin move (row `landed`) and a post-phase schema check through N33c-25's example; the gate runs through scene.import, the contract row and `adopted` moved to new NFp2-02 with the import-side tests."
+  },
+  {
+   "bead": "FD-FSS-01",
+   "kinds": [
+    "deps",
+    "split",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Split likewise: its acceptance ran scene.import and GATE-HAB-03, which it did not depend on (convention 7). It keeps the pilot record (read from N19c-01's register result), the sibling change, the validator fixture (now an ignored conformance test with skeleton tests) and the version record; registration, scale-label, unknown-region checks and the gate moved to new NFp2-03. The N33c-25 dep (for the twin inspection now in N19c-01) became related."
+  },
+  {
+   "bead": "NFp2-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`eval run --run-seed` (no such input; the battery fixes its seeds) removed; record_rebaseline reached through a Cargo example target (requested of N16bp1-01); the freeze run after the record under its own key (the step-3 key would return the stored receipt), with the FROB-REF-720 scope check; gate verdict read through fidelity.ledger; cost note for the second battery run."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "NFp2-02",
+   "why": "split from FD-FDGR-01: the switch-over (INT-FDGR-01 and GATE-HAB-03 through scene.import on the published geometry, the drone contract row, row adopted, posture subprocess) needs BD-398 and N19c-07, so it comes after both while the upstream work starts after the M3 schema pilot"
+  },
+  {
+   "bead": "NFp2-03",
+   "why": "split from FD-FSS-01: the switch-over (the extended twin package version into the import contract, registration/scale/unknown checks through the importer, GATE-HAB-03 at witnessed or better, row adopted; a not-needed case) needs BD-398, N19c-07 and N19c-09"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.import place form: list BD-398's inputs (from twin|fdgr|mesh, source, user_supplied, licence_ack, profile default large-building, landmarks, declare incl. answered probe requests, name, repair, key) and drop any per-call private root. scene.gen: add `--populated` and `--assets <class>` (BD-399, behind frontier-dressing; FROB-REF-724 exit 5 without the capability or after KILL-DRESSING fires) and `--survey <file>` (N19c-06, refusals 802 and 734)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "KILL-DRESSING is decided per item (assets at M5 by N19a-41, actors at M6 by N19ax-05): admit a decision scope `item:<name>` so the M6 entry does not replace the M5 one; the kill-gate text still names docs/delivery/adr in places (convention 4: docs/adr/)."
+  },
+  {
+   "bead": "N40-24",
+   "what": "Read the KILL-DRESSING row per item (scope item:assets at M5, item:actors at M6) when re-reading beads."
+  },
+  {
+   "bead": "N19ax-05",
+   "what": "Write the KILL-DRESSING M6 entry with scope item:actors (N19a-41 writes item:assets) and the ADR under docs/adr/; the planted 'actor reading world state' control moved here from N19a-41 (no actors exist at M5)."
+  },
+  {
+   "bead": "N38a-09",
+   "what": "pilots::fundable answers per work package, but WP-32 holds three independent Frontier mechanisms (twin-lane ingestion N19c-01, drone-lane ingestion N33c-25, dressing.assets N19a-40): a falsifier-holds on one must not block the fallback work of another (N19c-06 is the interim posture of a held ingestion pilot). Consider a per-mechanism answer (fundable(work_package, mechanism)) or state which beads of a package each mechanism gates."
+  },
+  {
+   "bead": "NEGp1-52",
+   "what": "`declared: metres` is not a scale label: under N19c-02 a source's metric statement without a measured baseline is `estimated` (declared accuracy, default \u00b15%), never `witnessed`; use that label in the hm3d-scan profile."
+  },
+  {
+   "bead": "N19a-19",
+   "what": "Spawn/goal adjacency to unknown space is 'the footprint inflated by one coarse cell touches a flagged cell' (N19c-03's treatment table, which owns the rule), not 'within one footprint radius'."
+  },
+  {
+   "bead": "N16bp1-01",
+   "what": "record_rebaseline is a library function with no entry point a script can call; expose it as a Cargo example target like record_gate (`cargo run -p frob-chronicle --example record_rebaseline -- --gate <g> --cause <c> --doc <path>`), which NFp2-01 and BD-212's m2-baseline record both need."
+  },
+  {
+   "bead": "NEGp1-54",
+   "what": "Run the row steps of NEG-18, NEG-19 and NEG-20 in assets_licences.sh as those beads now list them: --kind asset, --behaviour where the profile needs it, a distinct --key per run call, the new profiles populated-interior, small-rigid, kitchen-fixture and kitchen-layout."
+  },
+  {
+   "bead": "N19a-10",
+   "what": "Record the import profiles the M5 row beads add in registries/import-profiles.toml: populated-interior (NEG-18), small-rigid (NEG-19), kitchen-fixture and kitchen-layout (NEG-20)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 22 beads needed fixes, mostly scripts calling the M5 place import that BD-398 delivers after them, per-call private roots, missing keys and retired paths or commands; the duplicate twin inspection now lives in N19c-01 (M3) and two upstream items were split into switch-over beads NFp2-02/03. Not settled until N38a-09 (per-package funding across three WP-32 mechanisms) and N40-03 (per-item KILL-DRESSING scope) answer their requests."
+}

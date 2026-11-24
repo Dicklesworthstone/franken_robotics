@@ -6,9 +6,9 @@ priority: 2
 milestone: "M2"
 labels: ["m2", "suite", "cortex", "upstream", "frankentorch", "solid"]
 parent: "WP-21"
-deps: ["BD-037", "BD-028", "NF-01", "STD-E2E"]
+deps: ["BD-028", "BD-037", "BD-196", "N23a-14", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-196", "BD-197", "BD-198", "BD-218", "FD-FT-01", "FD-FT-03"]
+related: ["FD-FT-03", "N23a-15", "N23a-16", "N23a-17", "N33a-22"]
 gates: ["GATE-CORTEX-02"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§23.8", "§33.4", "§33.10", "§23.23", "§33.8"]
 ---
@@ -95,14 +95,21 @@ against the new pin.
 
 **What the switch-over re-runs.** "Gradient parity, then switch the trainer." GATE-CORTEX-02: on-device
 backward kernels match FrankenTorch autograd within 10⁻⁵ relative on 10³ random batches; after adoption the
-comparison is three-way (our kernels, FrankenTorch on the device, FrankenTorch on the CPU). Only when the
+comparison is three-way (our kernels, FrankenTorch on the device, FrankenTorch on the CPU). The gate's entries are
+BD-196's battery `cortex-grad` in the Gauntlet's parity tier (`crates/frob-conformance/src/batteries/cortex_grad.rs`,
+collected by `tests/g2_parity.rs`); this bead registers one further case there, `ft-device`, an entry naming
+GATE-CORTEX-02 at the `cuda` and `metal` sites that computes the same gradients with FrankenTorch executing on the
+device and compares the three pairwise within 10⁻⁵ relative (a site without its device is `Skipped` with the
+reason, never passed). Only when the
 three agree, and FrankenTorch's device path reaches the training-time target of the reference task within the
 parity band the hand-written kernels reached, does the trainer switch; the hand-written kernels stay as the
 differential oracle. The PPO battery (rules P-1 to P-12) is re-run on the switched trainer.
 
 **Fallback if the change cannot land.** The hand-written kernels remain the trainer. KILL-LEARNKERN, for
-reference (trigger: GATE-CORTEX-02 fails after one repair cycle, or the training-time gate is missed by more
-than two times after one optimization pass; fallback: the forward pass stays on the device, rollout storage is
+reference (trigger: GATE-CORTEX-02 fails after one repair cycle, or the training-time gate GATE-CORTEX-05 is
+missed by more than two times after one optimization pass, GATE-CORTEX-05 being wall-clock to the return
+threshold of GATE-CORTEX-01 on one RTX 4090 at most 1.25 times an incumbent's for the comparable task, re-measured
+on the same card, published context about 410 s; fallback: the forward pass stays on the device, rollout storage is
 read back once per rollout and the learner runs on FrankenTorch on the CPU, with the lost throughput
 disclosed; the trainer moves to FrankenTorch device execution if this item lands).
 
@@ -111,7 +118,7 @@ disclosed; the trainer moves to FrankenTorch device execution if this item lands
 - [ ] In FrankenTorch: the operator set above executes on Metal with device-resident tensors; the coverage table lists exactly the operators with a passing device test; an uncovered operator falls back with a typed notice.
 - [ ] In FrankenTorch: for each covered operator, device and CPU results agree within 4 ulp per output in `f32`, and backward results within 10⁻⁵ relative.
 - [ ] Here: the three-way gradient comparison passes on 10³ random batches (GATE-CORTEX-02's tolerance).
-- [ ] Here: the trainer switch is recorded as an ADR with the before and after training times on the reference task; if FrankenTorch's device path is slower beyond the parity band, the record says "not switched" and the hand-written kernels stay.
+- [ ] Here: the trainer switch is recorded as an ADR under `docs/adr/` with the before and after training times on the reference task; if FrankenTorch's device path is slower beyond the parity band, the record says "not switched" and the hand-written kernels stay.
 - [ ] Here: a device tag alone still earns zero operator coverage in this project's records at any pin.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
@@ -122,7 +129,7 @@ disclosed; the trainer moves to FrankenTorch device execution if this item lands
 ### Unit tests
 In FrankenTorch (added):
 - `device_linear_layer_gradient`: y = W·x + b with W = [[1, 2], [3, 4]], x = (1, −1), b = 0 and loss ½·‖y‖²: y = (−1, −1); expected ∂L/∂W = [[−1, 1], [−1, 1]] and ∂L/∂b = (−1, −1), computed on the device, to 10⁻⁶.
-- `device_adam_first_step`: learning rate 10⁻³, β₁ = 0.9, β₂ = 0.999, gradient g ≠ 0; expected first update −10⁻³·sign(g) to 10⁻⁶ relative (bias-corrected moments are g and g²).
+- `device_adam_first_step`: learning rate 10⁻³, β₁ = 0.9, β₂ = 0.999, ε = 10⁻⁸, gradient g = (0.5, −2.0); the bias-corrected moments are g and g², so the first update is −10⁻³·g/(|g| + ε) = (−10⁻³, +10⁻³) to 10⁻⁶ relative (ε/|g| is at most 2·10⁻⁸ here; a gradient below 10⁻² would make ε visible at that tolerance, which is why the inputs are stated).
 - `coverage_table_matches_tests`: generated table equals the set of operators with a device test.
 - `uncovered_operator_falls_back_loudly`: an operator outside the set on a device tensor returns its CPU result with the typed notice.
 - `gaussian_log_density_on_device`: mean 0, standard deviation 2, action 1; expected −½·(0.25) − ln 2 − ½·ln(2π) = −1.7371.
@@ -136,9 +143,16 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_ft_02 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob train start --json` on the reference quadruped's flat velocity
-task with each trainer for a fixed short budget, and logs time to the first evaluation checkpoint and the
-gradient-parity metrics with their thresholds.
+bead are re-run (GATE-CORTEX-02's three-way comparison as Gauntlet entries, KNOWN_DRIFTS 1:
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --features gauntlet-mutations --test g2_parity --
+GATE-CORTEX-02`, asserting from the hash-named receipt under `target/gauntlet/receipts/` the worst relative error
+per site and case against 10⁻⁵ and every registered control `caught`), and the registry row must read `adopted`
+with a receipt newer than the pin move. Phase `post` also runs `frob train start quad-ref --task quad-flat-velocity --backend gpu-metal
+--trainer <t> --steps <short budget> --seed 1 --key fdft02-tr-<t>-s<N> --json` for each trainer `<t>`:
+`device` (the hand-written kernels) and `frankentorch-device` (FrankenTorch executing on the device, the
+additive value of `train.start --trainer` that this item's switch-over adds beside N23a-14's `device` and
+`frankentorch`, refused with `FROB-REF-724` on a build without the adopted pin), and logs time to the first
+evaluation checkpoint and the gradient-parity metrics with their thresholds.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_ft_02/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

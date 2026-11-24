@@ -6,9 +6,9 @@ priority: 1
 milestone: "M4"
 labels: ["m4", "reflex", "frob-gait", "frontier", "bet", "gate"]
 parent: "WP-64"
-deps: ["N00-28", "N00-07", "BD-333", "BD-335", "BD-328", "STD-E2E"]
-needs: ["§22.9: the gait catalogue with planted grazing and unstable orbits, and the calibration set of designs with specialist results"]
-related: ["BD-332", "BD-334", "BET-17", "N00-11"]
+deps: ["BD-328", "BD-333", "BD-335", "N00-28", "N22a-38", "N22c-17", "N38a-09", "STD-E2E"]
+needs: []
+related: ["GB-27", "N00-11", "N40-31"]
 gates: ["GATE-GAIT-01", "GATE-GAIT-03", "KILL-GAIT"]
 plan_refs: ["§4 (BET-26)", "§40.5", "§0.8 (H-05)", "§22.18"]
 ---
@@ -28,8 +28,11 @@ recognized and refused, not ranked.
 
 ## Scope
 
-In: pre-registration, the M4 reading, verdict and decision record. Out: the orbit solver, continuation, the
-catalogue.
+In: pre-registration of the bet, the M4 reading, the bet's verdict and its decision record
+`docs/adr/bet-26-m4.md`. Out: the orbit solver, continuation, the catalogue; the measurement of GATE-GAIT-03
+(BD-335); the decision KILL-GAIT itself, its ADR, its registry row and the application of its fallback
+(N22c-17). This bead depends on both: it reads BD-335's recorded numbers and N22c-17's decision record,
+evaluates the bet's four falsifier clauses on them and writes the bet's verdict. It decides no kill gate.
 
 ## Technical approach
 
@@ -61,38 +64,58 @@ catalogue.
 
 ## Acceptance criteria
 
-- [ ] Pre-registered with the catalogue digest and the calibration set.
+- [ ] Pre-registered with the catalogue digest and the calibration set: the bet's row in N00-28's register and
+      BD-335's protocol record carry both, and the record's commit predates the first gate solve (checked here,
+      since the registration itself is made by those beads, which this one follows).
 - [ ] Median and distribution of solve times against 10 minutes, beside the published 4–260 s; the continuation
       success share against 50%; τ against 0.5 with its interval.
-- [ ] Every planted grazing and unstable orbit was refused with a named reason.
-- [ ] Verdict and the KILL-GAIT decision recorded as an ADR; every orbit result carries the standing
+- [ ] Every planted grazing and unstable control was caught with a named reason (a grazing child refused with
+      `FROB-REF-431` or marked at grazing, an unstable parent given the verdict `unstable`) and none carries a
+      score in a screening table; one uncaught control falsifies clause c.
+- [ ] Verdict recorded in `docs/adr/bet-26-m4.md`, which cites the KILL-GAIT decision on record in N22c-17's
+      ADR and registry row (that decision is made there, not here); every orbit result carries the standing
       `screening`.
 
 ## Test plan
 
 ### Unit tests
-`bets.rs`: `bet26_median_3_min_success_0_62_tau_0_58_holds`; `bet26_median_12_min_falsifies_a`;
+`crates/frob-conformance/tests/bets.rs` (the bet register's rule of N00-28 on recorded values):
+`bet26_median_3_min_success_0_62_tau_0_58_holds`; `bet26_median_12_min_falsifies_a`;
 `bet26_continuation_success_0_45_falsifies_b`; `bet26_grazing_orbit_ranked_falsifies_c`;
-`bet26_tau_0_38_falsifies_d`; `bet26_kill_gait_removes_rung`.
+`bet26_tau_0_38_falsifies_d`; `bet26_reads_kill_gait_record` (N22c-17's record: fired → `Falsified`, the record's
+hash carried and the ADR naming the fallback "no design is ranked by an orbit"; the rung's removal is applied
+there, not here).
 
 ### End-to-end script and logging
-`scripts/e2e/bet_26_decide.sh` re-solves the rimless-wheel and compass-gait fixtures with `frob gait orbit`,
-runs one continuation with `frob gait continue`, submits the planted grazing orbit (expects a refusal),
-recomputes the timing and success statistics and τ from the ledger, and the verdict. Logged per STD-E2E:
-fixture, residual, multipliers against their known values, solve time, continuation steps, refusal code;
-`summary` naming GATE-GAIT-01, GATE-GAIT-03 and KILL-GAIT.
+`scripts/e2e/bet_26_decide.sh` re-solves the rimless-wheel and compass-gait fixtures with N22a-38's spellings
+(`frob gait orbit fixture:rimless-wheel --set spokes=8,l=0.5,slope_deg=4 --section post-impact --key
+bet26-rw-<run-id> --json`; `frob gait orbit fixture:compass-gait --section auto --key bet26-cg-<run-id> --json`;
+fresh run-scoped keys, so that each is a new solve whose time is measured and not the stored receipt of the gate's
+run), runs one continuation (`frob gait continue --from <the reference trot's orbit> --param
+thigh_len=0.20..0.22 --key bet26-gc-<run-id> --json`), submits one planted grazing child of BD-335's catalogue
+(`frob gait orbit <child> --gait trot --key bet26-graze-<run-id> --json`; expects `FROB-REF-431`, exit 3, or an
+orbit marked at grazing that carries no score), recomputes the timing and success statistics and τ from BD-335's
+logged per-child records and the rank-agreement ledger, reads N22c-17's decision record and its hash, reads the
+verdict of BET-26 from the bet register's report (`cargo run -p frob-conformance --example bets -- status
+--json`, example `bets` of N00-28, the one verdict rule) and checks `docs/adr/bet-26-m4.md` against it (the
+script writes no ADR). Logged per STD-E2E: fixture, residual, multipliers against their known values, solve time,
+continuation steps, refusal code; `summary` naming GATE-GAIT-01, GATE-GAIT-03 and KILL-GAIT.
 
 ### Known answers and negative controls
-The rimless wheel on a slope has a closed-form fixed point and a single non-trivial multiplier (the squared
-cosine of the inter-spoke angle 2α governs the speed lost at each impact: the post-impact angular speed is
-cos 2α times the pre-impact one); the test compares against the derivation file within 10⁻⁶. Share of a
+KA-093, the rimless wheel with spoke half-angle α and leg length ℓ on a slope γ: the return map on the
+post-impact rate is ω₊² ↦ c²·(ω₊² + b) with c = cos 2α and b = (4g/ℓ)·sin α·sin γ, so the fixed point is
+ω*² = c²·b/(1 − c²) and the multiplier is c², exactly ½ for eight spokes (α = π/8); an uphill slope (b < 0) has no
+fixed point and must return a typed outcome without an orbit (exit 2, no `GaitOrbit` record; N22a-38 step 3),
+never a solved orbit. The test compares against these within 10⁻⁶ (GATE-GAIT-01, with proof obligation
+PO-GAIT-01; KA-560 is the chapter's row of the same wheel). Share of a
 training run: 4/410 = 1%, 260/410 = 63%. Negative controls: the planted grazing and unstable orbits; the
 planted transverse instability; a solve reported as converged with its residual above tolerance.
 
 ## Considerations
 
 - A loop with no clock has a free period and a trivial unit multiplier that must not be read as marginal
-  stability; that case has its own gate.
+  stability; that case has its own gate (GATE-GAIT-04: the rimless wheel and compass gait pass through the
+  autonomous path with the trivial multiplier removed and listed).
 - Orbit screening applies to periodic gaits on regular ground; on rubble or stairs it says nothing and must say
   so.
 

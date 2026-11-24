@@ -1,0 +1,32 @@
+# Polishing round 4, slice H-ka-3
+
+8 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| N34-KA | M0 | task | WP-01 | yes | Workspace known-answer registry: KA-781 to KA-784 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U34/N34-KA.md` |
+| N35-KA | M1 | task | WP-14 | yes | frob-conformance: known-answer registry rows KA-785 to KA-805 (numerics and determinism) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U35/N35-KA.md` |
+| N36-KA | M0 | task | WP-34 | yes | registry: performance known answers KA-806 to KA-826 with truth, tolerance, tier, control and carrier | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U36/N36-KA.md` |
+| N37-KA | M1 | task | WP-58 | yes | frob-conformance: known-answer registry of the safety chapter: KA-827 to KA-835, with values, tiers and controls | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U37/N37-KA.md` |
+| N38-KA | M0 | task | WP-14 | yes | frob-conformance: known-answer rows adopted by the Gauntlet: five corrected fixtures, nine late fixtures | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U38b/N38-KA.md` |
+| N39-KA | M3 | task | WP-60 | yes | frob-conformance: the known-answer registry of the ten-fold harness (cards, guard, estimands, recovery) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U39b/N39-KA.md` |
+| N40-KA | M0 | task | WP-01 | yes | registry: known answers of the gate register and milestone layer (counts, tables and arithmetic to reproduce) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U40/N40-KA.md` |
+| N41-KA | M0 | task | EPIC-M0 | yes | registry: known answers of the delivery registers (risks, open questions, tracker, first session, done) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U41/N41-KA.md` |
+
+## Addressed to your beads
+
+- `N36-KA`: request from round 3, slice F-U36: KA-815: N36-02 now uses the plan's rule (a multiple of 8) with Q's registered raise to 160. The control 'the rounding step removed (152 for Q and 314 for H, which the rule check must reject)' holds for H only; Q's 152 satisfies the rule and is caught by the pinned registered raise (row_capacity_known_answer).
+- `N36-KA`: request from round 3, slice H-owners-1: BD-025/ADR-GAUNT-01: tier targets are g0_laws, g1_known_answers, g2_parity, g3_metamorphic, g4_chaos, g5_determinism; replace `--test g0`..`--test g5` with the long name (the lint refuses the short form).
+- `N36-KA`: mechanical check of the conventions: [C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `DESIGN, correcting an earlier draft of this bead that kept `registry/known_answers/perf.toml` with private`
+- `N37-KA`: request from round 3, slice H-owners-1: BD-025: there is no binary named frob-conformance. Rewrite every `frob-conformance <sub> ...` as `cargo run -p frob-conformance --example <harness> -- <sub> ...` (or a declared `--bin`, or `cargo run -p <owning crate> --example <name>` when the code lives there); declare the example in the bead. The no_conformance_command lint refuses the old form.
+- `N37-KA`: mechanical check of the conventions: [C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``registry/known_answers/safe.toml` with private fields (`where`, `gate`, `measured_by`, `test`). The columns`
+- `N38-KA`: request from round 3, slice F-U10b: (from N10b-02) Name KA-838's derivation file docs/derivations/contact-strata.md, the file KA-096 uses for the same four-foot fixture, with a `same_as` link to KA-096, so that check 9 of N10b-19 (one fixture identity per physical case) sees one fixture.
+- `N38-KA`: mechanical check of the conventions: [C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. "… this bead creates; it runs this script as its first stage (requested of N38b-46), so a registry defect fails before any verb runs.  ### Kno…"
+- `N39-KA`: request from round 3, slice F-U39a: TF-24: the fourth value is 5.1496, not 5.1499 (ln(0.05/250500) / ln 0.05 = 5.14964); the printed 5.15 and the tolerance are unaffected. N39a-06 now asserts 1.2314, 2.5691, 4.0778, 5.1496.
+- `N39-KA`: mechanical check of the conventions: [C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. "… number (and slug) and runs this script as its first stage (requested of N39b-22).  ### Known answers and negative controls  The tables. Neg…"
+- `N40-KA`: request from round 3, slice F-U40: Counts changed by two gates that now close in parts (N40-02, N40-10): R-07 is 36 convergence rows (GATE-MARROW-01 has parts M0 and M1); R-11 convergence is 11, 60, 80, 77, 49, 25, 7, 0, 7 and `load_sums` convergence is 316; R-23 late parts are 8, 12, 23, 21, 16, 3, 4, 0, 3 (90 parts, ten gates with two parts; GATE-MARROW-06 has M1 and M2) and `late_sums` is 90. R-22 and R-25 stay (550 and 144 are seeded rows); add a row beside R-26 for the six re-read entries of exit rows (0,0,0,3,1,0,2,0,0: KILL-POOL, KILL-LOOPELIM, KILL-LIMBKERNEL at M3; KILL-AUGUR-REGION at M4; KILL-DRESSING, KILL-HARDCONTACT at M6) and the ten rows entered by introduce amendments (KILL-RUT, -TACTILE, -TAXEL; KILL-SINEW-SEA; KILL-HULL, -STRIBECK, -TYRE, -GRANULAR; KILL-AUGUR-SOS, -FAMILYKERNEL), pinned by N40-30 and N40-04.
+- `N40-KA`: request from round 3, slice H-owners-2: Add the closed table of eight scope kinds of N40-03 step 1 as a known answer beside R-10.
+- `N41-KA`: request from round 3, slice H-owners-1: Known answers live in the one file crates/frob-conformance/registry/known_answers.toml (N38a-12), not a per-chapter delivery.toml.
+- `N41-KA`: request from round 3, slice H-owners-2: K41-26: the closed set of close types is six (pass, recorded, fallback, superseded, duplicate, withdrawn).
+- `N41-KA`: mechanical check of the conventions: [C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `own (a `known_answers/delivery.toml`, or any other `known_answers*.toml`, fails the loader with`
+- `N41-KA`: mechanical check of the conventions: [C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. "…ves 25 High, 28 Medium, 2 Low and drops the four late rows; requested of N41-CX as a planted case | N41-01, N41-RISK1 to N41-RISK4 | | K41-…"

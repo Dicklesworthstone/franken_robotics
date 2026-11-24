@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "frob-lemma", "frob-arena", "solid", "test"]
 parent: "WP-41"
 deps: ["N12-06", "SPEC-C-15"]
 needs: []
-related: ["BD-381", "BD-259", "N12-13", "BD-383", "N12-37", "BD-124"]
+related: ["GB-29", "GB-30", "N12-13", "N12-37", "N12-48", "N12-52", "N12x-05", "N24b-06", "N24b-15", "N24c-08", "N24c-09", "N28c-23"]
 gates: []
 plan_refs: ["§12.3 (T-26)", "§10 C-15", "§24.12", "§24.13", "§0.7 (a frozen decision rule is enumerated before sampling)", "Appendix D.8 (error budget for retries)"]
 ---
@@ -85,8 +85,11 @@ produced there is what moves the registry row for that output.
 - [ ] The level series is exact: for α = 1/20, n = 1, 7, 10, 500 give 1/40, 7/160, 1/22, 25/501, each below 1/20.
 - [ ] Negative controls: a stated reachable set that includes an unreachable verdict is rejected; a series with
       α_i = α/i² in place of α/[i·(i + 1)] fails the identity; the Lean statement with α·n/(n + 2) on the right side
-      fails to compile.
-- [ ] Registry row: enumeration route `checked`; Lean route `checked`, class `Proved`, after BD-381 seals it.
+      fails to compile (this control is registered here and run by BD-381 when it seals the proof).
+- [ ] Registry row at this card's close (M1): enumeration route `checked`; Lean route `hypothesis`, with the
+      registered statement `lean/Frob/Statements/T26.lean` (equality and the `< α` corollary for α > 0) present.
+      BD-381, which depends on this card, seals the proof at M5 and its receipt moves the Lean route to
+      `checked`, class `Proved`.
 
 ## Test plan
 
@@ -101,8 +104,15 @@ at request 500; checked as ln(1/α_i)/ln(1/α) to two decimals).
 
 ### End-to-end script and logging
 
-The study scripts log the pre-analysis digest and the reachable set through `frob study plan`;
-`scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals the Lean half.
+`scripts/e2e/arena_study_preanalysis.sh` (bead N24b-21), steps `enumerate`, `consequences` and
+`refuse_unreachable`, runs `frob eval preanalyze` on the reference rule and logs the pre-analysis digest and the
+reachable set (asserting the concordance interval ±0.0662 at n = 64, that the tie is first reachable at 86, and
+that a study declaring it at n = 64 is refused); `scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals the
+Lean half at M5. For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-26"),
+`step`, `event`, the exact command line, exit code, wall time, the rule's identity and n, the reachable verdicts
+with their outcome counts, the table digest from both implementations (which must agree), the level-series values
+as exact rationals for the indices checked, and on a mismatch the first differing outcome count or level and the
+path to reproduce.
 
 ### Known answers and negative controls
 

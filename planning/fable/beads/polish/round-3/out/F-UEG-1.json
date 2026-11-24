@@ -1,0 +1,177 @@
+{
+ "round": 3,
+ "slice": "F-UEG-1",
+ "reviewed": 40,
+ "changed": [
+  {
+   "bead": "GB-03",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Lane B and NEG-02's surface call assert exit 3 with FROB-REF-116 through `frob design check <design> --stages 6`; stage 6 only runs A-10 once BD-110 has assembled the real analyses into the runner (BD-103's own text says its callers reach it 'through BD-110'), and GB-03 depended on neither BD-110 nor the runner directly. Added dep BD-110 (M1, no cycle) and named it in lane B. All goldens and the discrete-catalogue fixed points recomputed: correct."
+  },
+  {
+   "bead": "GB-06",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied S31's request after checking N33b-19 and VERBS-study: study.plan's anytime block takes `planning_effect` and the cost estimate carries `expected_pairs` labelled `approximation: gaussian-growth`. The surface step moves from `not run` to asserted (6, 24, 150 at level 0.05), with an acceptance line, the three ceilings added as count outputs so the surface map has goldens to compare, and N33b-19 moved from related to deps (no cycle). Monte Carlo bands re-simulated: mean stopping time 1.05 to 1.09 N at delta 0.1 and 0.2, 2.6 N and 1.45 N at delta 1 and 0.5, as the bead states."
+  },
+  {
+   "bead": "GB-08",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The row 'share of RMT that is misses' had golden 24/35 = 0.6857 with printed '0.96 h of 1.40 h', which NEG-01's printed check rejects (0.69 is not 0.96): marked unprinted, as round 2 did for the like row of GB-18. Ten rationals and N00-17's restricted_mean semantics rechecked: correct."
+  },
+  {
+   "bead": "GB-10",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The surface lane runs `frob design show --section mass` (N14a-21) and `frob design check --stages 1` with repair masses attributed to BD-110, none of which GB-10 depended on: BD-110 moved from related to deps (it reaches N14a-21 and the runner N28ap1-01; no cycle). Goldens recomputed in rationals: correct."
+  },
+  {
+   "bead": "GB-15",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The surface step ran `eval promote` 'on a synthetic two-tier fixture with planted rho = 0.9 (n = 64, N = 6,400)' and compared one promotion's 'realized variance ratio' with [0.17, 0.23]. No bead delivers a stored result with a planted correlation (N16b-06's synthetic_tier_pairs is a library generator), BD-264's audit floor p_min = 1/20 excludes n/N = 0.01, and one promotion is one draw, not a variance. Now, as GB-14 does: the verb is run on N16b-06's honest control (sim run with its own key, then --method dr and --method paired) and asserts the receipt fields BD-264 defines, logging the card's ratio at the receipt's values as a metric; the planted case stays in the seeded library tests. Dep N16b-06 made direct."
+  },
+  {
+   "bead": "GB-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The snapshot-traffic row took its golden backwards from the rounded print (539 bytes per snapshot derived from 6.9 MB/s, rel 1e-3, which the plan's 540 misses). The plan's input is 540 bytes of integration state (section 21.20, CX-229): golden now 540 x 256 x 50 = 6,912,000 B/s = 6.912 MB/s, printed 6.9, exact. Every other row recomputed: correct."
+  },
+  {
+   "bead": "NEG-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied F-U00-2's request: the ceilings report is named by N00-17's declared example, `cargo run -p frob-conformance --example thesis -- ceilings --ledger <ledger> --json` (the crate has no default binary)."
+  },
+  {
+   "bead": "GB-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Round 2 moved the script to `sim run --precision f16` because N18b-27 makes a 16-bit width unrepresentable in a step plan, but lane B still said 'a step plan that requests precision = f16 for the solve or for a state buffer is refused at admission'. Lane B now names N18b-27's two entry points that can carry the request (the five recognized-and-refused --precision values at admission step 1; a kernel manifest with a 16-bit solve or state slab at registration), and the two mechanism tests say which each covers. Goldens recomputed: correct."
+  },
+  {
+   "bead": "GB-23",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The surface text asked for 'a 20 s window' with no option and read four policy events (0, 14, 27, 40) from the default call. VERBS-sense and BD-078 give `--window <t0>..<t1>`, half-open, default one repeat [0, 120 quanta), which holds three policy events (the fourth opens the next repeat), and events[] is paginated. Now: the four-event rows and the count of 600 are read from `--window 0..20` over the concatenated pages, and the default window is stated as three events."
+  },
+  {
+   "bead": "GB-25",
+   "kinds": [
+    "correct",
+    "deps",
+    "placement"
+   ],
+   "what": "The rewrite-trace checker was split out of N12-18 (M4) into N12p2-02 (M2) in round 2; the card still named N12-18 and staged its trace check at M4. Now N12p2-02, with gb_25_mechanism_trace_reject from M2, and the `prove kernel` surface given first_milestone M2 with its reason (the verb is M0, but a certificate holds a rewrite trace only when the M2 kernels ship theirs). The acceptance line requires the pairs on CUDA and Metal through BD-017's probe kernels and the script calls `spark probe`, which the card did not depend on: dep BD-017 added (M0, no cycle)."
+  },
+  {
+   "bead": "GB-26",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Lane B gave the verb's delays as 50.4432 ms and 45.4432 ms; shield.budget works in integer microseconds and rounds a delay down (BD-337: 50,443 and 45,443 microseconds), and its product reading is admitted with the finding declared-below-derived, exit 2. Lane B now states the integers of both readings and the acceptance line names both forms. The surface ran on an unnamed 'synthetic cart' with sibling designs for each variant and no --reading-max; it now uses the fixtures N22b-18 ships (drop-stop-cart-slope, drop-stop-cart, boundary dock_stop_A, --reading-max 0.39, --reserve 0.10, the geared-rotor variant), with five keyed calls, so the card and shield_energy_budget.sh share one set of fixtures; N22b-18 moved from related to deps (no cycle)."
+  },
+  {
+   "bead": "GB-32",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The refusal of a bound over selected episodes had no code: it is FROB-REF-560, exit 3, with no estimate (N26a-23's lane firewall; 549 is the cascade's code one layer up), now named in lane B, acceptance and the script step with its repairs. The bounded-weight call was `--mode estimate --epsilon 1/10`; BD-276's grammar pairs epsilon with a shift or a proposal, so it is now `--mode estimate --shift <mu> --epsilon 1/10`. All ten goldens recomputed: correct."
+  },
+  {
+   "bead": "GB-35",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Three defects in the e2e. (1) It read 'the ladder planner's itemized cost record (NEG-08)', but NEG-08 depends on this card; the lines now come from N28b-17's estimate, which since this round prints them under the same names. (2) Lane B calls the ladder cost model, N28b-17, which was not a dependency: added. (3) It ran `opt cascade` 'on the synthetic rung pair with the planted residual law' and compared q-hat and the cut 0.66; no bead delivers a campaign with a planted residual law, and the verb (BD-352) was not a dependency. Now the planted numbers go through BD-329's ladder_shadow driver on a synthetic ladder log (index 38 of 39, q-hat 0.04, cut 0.66; 18 audit designs give the infinite margin), and the verb runs on N28b-28's seeded-81 population asserting the card's rule on what it reports (n_c at least 19, index = ceil((n_c+1)*0.95), cut = k-th best less 2 q-hat). Deps N28b-17 and N28b-28 (both M4, no cycle). Beta laws and ladder costs recomputed: correct."
+  },
+  {
+   "bead": "NEG-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied F-U28b's request after reading N28b-17: `opt.cascade --estimate` prints N28b-17's estimate with the same itemized lines under this record's names (rung_costs; audit_lane.share 12.15 min and audit_lane.count 57 min with the rung named; a total per reading, 133.65 and 178.5 min). The e2e note and step 1 say so."
+  },
+  {
+   "bead": "NEG-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Its stage labels_e7c in shield_energy_budget.sh called `shield budget <cart> --boundary dock_stop_A` without --reading-max, which every other step of that script passes (0.39, giving the card's 0.4 m/s), and left the governing cart unnamed. Now N22b-18's product-reading fixture drop-stop-cart-slope with the script's spellings, the finding declared-below-derived and exit 2 that N22b-18's own step asserts for it, and the superseded-labelling cart named as the variant fixture this bead adds."
+  },
+  {
+   "bead": "NEG-15",
+   "kinds": [
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "Applied S53's request after reading N24c-16 and plan G.1 and G.4: `assets/robots/INDEX.toml` gains one class row per archetype (eighteen), each with its reference robots or `reference = \"none\"` with required `reason` and `revisit` and an optional `decision`; twelve classes read none at plan time, and N24c-16 rewrites the hexapod's row from its decision record. Because cassie and iiwa7 land at M3, a row may list a robot not yet on file only under `pending` with its milestone (biped-point at M1). The check `robot_index_check` with its four failing fixtures, the meaning of a none row for its readers (template baseline; GATE-SKEL-07's mass row `not applicable`, never passed), an acceptance line and two tests added."
+  },
+  {
+   "bead": "NEG-16",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The script is the user-side check of the asset register, so it now logs NEG-15's class rows before the robot loop (step 0: eighteen rows; at M1 five with a reference on file, biped-point pending, twelve none, each none row with its reason, revisit condition and decision), counts them in the summary line, and fails on a none row without a revisit condition (acceptance line)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-110",
+   "what": "BD-064 (Out) and GB-10 (lane B) both say the predicted mass of each fill repair is added to the repairs by design.check in BD-110 ('predicted mass and margin deltas on repairs, which need the compiled model'); neither BD-110 nor N28ap1-01 says anything about predicted effects on repairs. Carry it (for the `set-fill` repairs of FROB-REF-105: the body mass after the edit from BD-062's functor; GB-10's fixtures expect 2.2957992 kg for {shell: 3 mm} and 22.68 kg for solid) or name the bead that does."
+  },
+  {
+   "bead": "NEG-01",
+   "what": "Its lane-B contract cites 'GB-25: the rewrite table at M2 and the trace checker at M4'. The rewrite-trace checker is N12p2-02 at M2 (split out of N12-18), so both of GB-25's staged checks are M2; the M4 example needs another card or the synthetic one of card_mechanism_milestones."
+  },
+  {
+   "bead": "NEG-02",
+   "what": "(a) Acceptance line 1 expects GB-25's 'M2 and M4 checks not run (M2) and not run (M4)' and the surface table says '(M2, M4 checks staged)': after N12p2-02 both of GB-25's staged checks and its `prove.kernel` surface are M2. (b) Step 6's list of refusals driven through a verb can add FROB-REF-560 (GB-32, exit 3). (c) The statement 'No card bead depends on this one' no longer holds for cards later than M0 (GB-14 depends on it for its script); say 'no M0 card'. (d) For information, no change asked: GB-35's surface step now also runs BD-329's `ladder_shadow` example on a synthetic ladder log, GB-15's runs on N16b-06's honest control and GB-26's on N22b-18's fixtures; the table's verb column is unchanged."
+  },
+  {
+   "bead": "BD-078",
+   "what": "Acceptance says `frob sense schedule` on the 400 Hz / 30 Hz fixture 'returns boundaries 0, 14, 27, 40, lateness 0, 2, 1, 0', and its input rule says the default window is one repeat, half-open [max phase, max phase + repeat): that window holds three policy events (quanta 0, 40, 80); the fourth (quantum 120, boundary 40) opens the next repeat. Say which window the four-boundary line uses (GB-23 now reads the four from --window 0..20)."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.import's `--profile` list names `asset-default` and the row beads' `scene-collection`, `articulated-object`, `generic` (and the scan profile). The M5 row beads add four more, recorded in registries/import-profiles.toml: `populated-interior` (NEG-18), `small-rigid` (NEG-19), `kitchen-fixture` and `kitchen-layout` (NEG-20). List them (N19a-46's `profile` row has the same short list)."
+  },
+  {
+   "bead": "N19a-46",
+   "what": "Its `profile` input row lists the profiles the row beads add as `scene-collection`, `articulated-object`, `generic` and the scan profile; the M5 row beads also add `populated-interior` (NEG-18), `small-rigid` (NEG-19), `kitchen-fixture` and `kitchen-layout` (NEG-20)."
+  },
+  {
+   "bead": "N24c-16",
+   "what": "NEG-15 now has the class row it asks for: in `assets/robots/INDEX.toml`, a `[[class]]` row with `archetype = \"hexapod-radial\"`, `reference = \"none\"`, `reason`, `revisit` and `decision`, accepted by `robot_index_check`. Write the row in those field names (your text says `reference: none`) and name `robot_index_check` as the check your acceptance line relies on."
+  }
+ ],
+ "unchanged": 23,
+ "notes": "Seventeen of forty changed, all for substance: four requests applied (GB-06, NEG-06, NEG-08, NEG-15), and thirteen beads where a surface step or a dependency did not match what its owning or registry bead delivers (verbs called without their bead as a dependency, fixtures no bead ships, integer and option forms of the owning verb, a checker bead that was split to an earlier milestone). Every golden of the twenty-six cards was recomputed and one was wrong (GB-16's snapshot traffic, derived backwards from its rounded print). The numeric content is settled; the remaining drift was at the seam between cards and the verbs they drive, so one more light pass over the card surfaces after NEG-01 and NEG-02 take their requests should find little."
+}

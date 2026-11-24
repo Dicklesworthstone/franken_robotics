@@ -4,11 +4,11 @@ title: "spec C-16 (frob-gait, frob-dyn): hybrid gait orbits: saltation, return m
 type: "task"
 priority: 2
 milestone: "M4"
-labels: ["m4", "lemma", "spine", "spec", "frontier", "frob-gait", "frob-dyn", "test"]
+labels: ["m4", "lemma", "spine", "spec", "frontier", "frob-gait", "frob-dyn", "test", "review-notes-open"]
 parent: "WP-64"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template `docs/math/TEMPLATE.md` and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-16", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-092, KA-093 and CX-041; this bead binds the rows to tests and creates a row only if it is absent"]
-related: ["N10b-01", "N10b-02", "N10b-03", "BD-082", "BD-333", "BD-334", "BD-335", "BD-426", "CARD-T-17", "CARD-T-18", "SPEC-C-10", "SPEC-C-09", "BD-081", "BD-332", "N10a-02"]
+deps: ["BD-025", "BD-027", "N10-CX", "N10-KA2", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-081", "BD-332"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-16", "§9 D-8", "§9 D-15", "§12.3 T-17", "§22.9", "Appendix D.2", "Appendix E GB-27", "Appendix M.9 KA-092 KA-093", "Appendix N.7 CX-041"]
 ---
@@ -65,7 +65,7 @@ referee step of `frob-dyn`) or BD-332 (the gait atlas, the first seed in `frob-g
 `related` and are not prerequisites. The law suite is generic over its subject trait and closes on the exact
 reference model and the mutants in its own test support. If `frob-dyn` or `frob-gait` do not exist when this bead
 starts, the suite and its support files are written under `crates/frob-conformance/tests/` with the same file
-names (that crate exists from BD-025) and the commands below read `-p frob-conformance`; the bead that implements
+names (that crate exists from BD-025) and the commands below read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements
 the construction moves them into the owning crate, binds its production types to the subject trait and runs the
 unchanged suite as part of its own acceptance. A criterion or script step below that names production code or a
 verb of an implementing bead is owed at that bead's acceptance and is logged `pending` here until then.
@@ -166,7 +166,7 @@ by gate INT-FSIM-13; none is admitted today.
   identity per physical case: the host row and the subsystem row share constants).
 - `tests/support/c16_ref.rs`: the reference model in exact rational arithmetic (a reduced fraction over `i128`
   with checked overflow; trigonometric fixtures use exact values, cos²(π/4) = ½). It calls no code under test.
-- `tests/support/c16_mutants.rs`: one mutant per negative control, compiled under the cargo feature `controls`
+- `tests/support/c16_mutants.rs`: one mutant per negative control, compiled under the crate's cargo feature `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it)
   and selected by its `NC-` identifier; the test `controls_are_caught` asserts each mutant fails its named law.
 - Each test emits one structured line through the STD-TEST helper: row id, statement id, measured, expected,
   tolerance.
@@ -180,20 +180,27 @@ by gate INT-FSIM-13; none is admitted today.
   with events re-located on both sides"`, `retired_when` as above.
 - `known_answers.toml`: KA-092, KA-093 bound to tests, derivation files `docs/derivations/bouncing-ball.md` and
   `docs/derivations/rimless-wheel.md`. `controls.toml`: controls seeded from CX-041 and the two set below.
+- KA-094 to KA-097 are bound by the part beads, which also set the cells the appendix printed open: KA-094 and
+  KA-096 by N10b-02 (KA-094's tolerance: exact in ℚ on the host, and a relative Frobenius residual of at most
+  10⁻⁹ in `f64` on the referee; KA-096's controls: a count that divides 81 by the group order without the
+  fixed-point terms, 81/4 = 20.25, and an orbit sum that omits the diagonal exchange's fixed points,
+  (81 + 2·9)/4 = 24.75); KA-095 and KA-097 by N10b-01. Each row's derivation file names the setting bead.
 - Implementers: `frob-dyn` (events, per-step Jacobians), `frob-gait` (return map, multipliers, adjoint).
   Gates that measure the construction (recorded by the mechanism beads, not here): GATE-GAIT-01 (rimless-wheel
   fixed point and multiplier within 10⁻⁶; compass-gait multipliers within 10⁻⁶ of an independent high-precision
   computation; a planted transverse instability found), GATE-GAIT-02 (100 cases: at least 72 of 80 regular
   cases with gradient cosine at least 0.95 against central differences; all 20 grazing and fold controls labeled
-  or refused; no case refused for simultaneity alone), GATE-GAIT-03 (continuation and rank agreement), kill
-  gate KILL-GAIT. Theorem cards: T-17 here, T-18 in N10b-02.
+  or refused; no case refused for simultaneity alone; the bar fixture returns rest, v/4 and the sign of the
+  coupling term), GATE-GAIT-03 (continuation on at least 50% of 10% design perturbations, median solve at most
+  10 CPU-minutes, Kendall τ at least 0.5 between orbit cost of transport and specialists on the calibration set),
+  kill gate KILL-GAIT (trigger: GATE-GAIT-03 fails). Theorem cards: T-17 here, T-18 in N10b-02.
 
 ## Acceptance criteria
 
 - [ ] `docs/math/C-16.md` exists with the ten sections of the template, statements C-16.S1 to S9 with classes,
       the two derivations, the foundations line with repository, path, pin and date.
 - [ ] `cargo test -p frob-dyn --test laws_c16_saltation` and `cargo test -p frob-gait --test laws_c16` pass on
-      the reference model; with `--features controls` the test `controls_are_caught` passes (every mutant fails).
+      the reference model; with `--features conformance` the test `controls_are_caught` passes (every mutant fails).
 - [ ] KA-092: Ξ equals [[−r, 0], [−(1 + r)·g/v⁻, −r]] exactly in ℚ for r ∈ {0, 1/2, 4/5, 1}, v⁻ ∈ {−2, −1/3},
       g = 981/100; det = r²; δt = −δy/v⁻.
 - [ ] KA-093: multiplier exactly ½ for eight spokes, ¼ for six, ¾ for twelve; fixed point c·K/(1 − c).
@@ -216,7 +223,8 @@ by gate INT-FSIM-13; none is admitted today.
 - `s4_drift_removed`: rimless wheel with hub position x kept in the state: the unreduced Jacobian has eigenvalue
   1 (drift 2ℓ·sin α per step); after removing the drift the only multiplier is c.
 - `s5_rimless_multiplier`: c = cos²(2α) for 6, 8, 12 spokes = ¼, ½, ¾; z* for the eight-spoke numbers within
-  10⁻¹² of 2.0949958810 s⁻² in `f64`.
+  10⁻¹² relative of 2.09499588102780 s⁻² in `f64` (the ten-digit value 2.0949958810 is 1.3·10⁻¹¹ relative away
+  and must not be used as the reference); ω₊ = √z* = 1.44741005974 rad/s.
 - `s6_no_saltation_on_compliant_map`: a piecewise-linear continuous step map (synthetic): the product of step
   Jacobians equals the finite-difference Jacobian of the composed map away from kinks; inserting a Ξ factor
   breaks the equality.
@@ -229,7 +237,8 @@ by gate INT-FSIM-13; none is admitted today.
 
 `scripts/e2e/spec_c16.sh` (idempotent, seed-explicit: generator seed 16 printed). Steps: `frob --json doctor`;
 `cargo test -p frob-dyn --test laws_c16_saltation`; `cargo test -p frob-gait --test laws_c16`; both again with
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-092 KA-093`; `frob --json prove list`
+`--features conformance`; `FROB_TEST_SEED=16 cargo test -p frob-conformance --test g1_known_answers -- KA-092 KA-093`
+(the Gauntlet's cargo form; `g1` is not a target name, KNOWN_DRIFTS 1); `frob --json prove list`
 and assert card T-17 is listed with a class no stronger than its recorded route supports; check that
 `docs/math/C-16.md` and the two derivation files exist and that the register row resolves. It sources the
 STD-E2E helper and writes `target/e2e-logs/spec_c16/<utc>.ndjson` and a transcript. Every line has `ts`,

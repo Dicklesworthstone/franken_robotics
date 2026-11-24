@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "spark", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-32"]
-needs: ["§21.20, §35.6: the bans on fast-math, fused multiply-add, built-in transcendentals and floating-point atomics in batched kernels, enforced by the dialect lint (BD-013)", "Appendix O: refusal code FROB-REF-245 (a half-precision solve or state is refused) in the refusal registry"]
-related: ["NAB-34", "NAB-41", "NAB-20", "NAB-25", "NAB-15", "N00-35", "N21c-16", "BD-013", "BD-152", "BD-156", "BD-371", "BD-441"]
+needs: []
+related: ["NAB-34"]
 gates: []
 plan_refs: ["Appendix C.2.1", "§0.8 (H-04, H-04b, H-15)", "§21.20", "§35.6"]
 ---
@@ -135,7 +135,7 @@ KI-08: staged erasure as speed. KI-09: time tiles, parareal, time-parallel integ
 - *Survives.* Common-subexpression elimination, and rule-trace rewrite certificates in the exact class E and the
   bounded class R (§21.7; DC-11). The method is reopened only on the profile condition of DC-11.
 - *Revive only if.* The profile condition of decision core DC-11: our own M2 profile shows more than about a fifth of step time in derived arithmetic. Each accepted class-R rewrite still needs its polynomial-identity certificate, an error bound, the fidelity battery and a new kernel identity.
-- *Carried by.* BD-018, BD-221, BD-349 (the DC-11 table).
+- *Carried by.* BD-018, BD-221, BD-349 (the decision-core compiler), N28a-28 (the DC-11 record), N28c-11 (its GATE-ATEL-13 rows).
 
 **KI-05. Fast-math switches in the kernel pipeline**
 - *Strong form.* Contraction of multiply-adds, an approximate arithmetic mode and built-in sine and cosine in

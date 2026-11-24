@@ -6,9 +6,9 @@ priority: 3
 milestone: "M4"
 labels: ["m4", "suite", "nemesis", "upstream", "frankensim", "solid"]
 parent: "WP-55"
-deps: ["BD-037", "BD-276", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-276", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-124", "BD-277", "FD-FSIM-17", "FD-FSIM-19"]
+related: ["FD-FSIM-19", "N26a-22", "N26a-31", "N26b-22", "N33a-18", "N33b-12", "N33b-13"]
 gates: ["GATE-NEMESIS-05"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§26.9", "§26.16", "§42", "§33.9"]
 ---
@@ -30,10 +30,25 @@ costs the nominal episodes that certify directly).
 
 ## Scope
 
-In: in FrankenSim, both caps turned into parameters with the present value as default, and the numerics made
-safe at larger counts; here, the re-run at the larger count. Out: the bounded-weight estimator and its
-defensive mixture on this side (BD-276); splitting (FD-FSIM-19, BD-277); the compute envelope for a 10⁻⁶ claim
-(OPEN-NEMESIS-3, an owner decision).
+In: in FrankenSim, both caps turned into parameters with the present value as default, the numerics made safe
+at larger counts, and the tests added there; the mirrored bead in the sibling's tracker; here, the item's
+failing fixture `tests/upstream/FD-FSIM-18/` kept current, the script `scripts/e2e/upstream_fd_fsim_18.sh` with
+its two phases, and the registry row moved from `open` to `landed`. This bead closes when the change is on the
+sibling's `main`.
+
+Out, with the bead that has it:
+- the switch-over on this side once the change has landed: N26b-24 (its Procedure A), which depends on this
+  bead. It rewrites the admission tests to the new behaviour, passes the configured cap through the airlock,
+  runs the differential test of the sibling's sequence against the exact binomial bound, updates the routing
+  above 10⁶, re-runs GATE-NEMESIS-05 at the larger count and the coverage row of GATE-NEMESIS-04, runs this
+  bead's script in phase `post`, and moves the row to `adopted`. None of that is specified here.
+- the admission tests that record the two caps at the pin, the tests of the interim posture and the decision
+  record of OPEN-NEMESIS-4: N26b-22, a related bead of M3 (the admission test comes first and the upstream item
+  second, which the milestones already give; the link is not a blocking one, because this item's own fixture
+  is opened by BD-037 and nothing in the sibling change needs the Nemesis tests).
+- the row itself and the form of every fixture: BD-037.
+- the bounded-weight estimator and its defensive mixture on this side (BD-276); splitting (FD-FSIM-19, BD-277);
+  the compute envelope for a 10⁻⁶ claim (OPEN-NEMESIS-3, an owner decision, N26b-21).
 
 ## Technical approach
 
@@ -73,7 +88,9 @@ Additive: at the default every result is bit-identical to today's.
 **Interim posture here.** This project's own exact binomial bound for larger counts (with zero failures in n
 trials the one-sided upper bound at confidence 1 − δ is 1 − δ^(1/n)); claims are certified to 10⁻⁵ and reported
 as `Estimated` beyond (the default of OPEN-NEMESIS-3; OPEN-NEMESIS-4 records the caps and the absence of
-splitting upstream, default as stated, and blocks nothing).
+splitting upstream, default as stated, and blocks nothing). The posture is built and tested by N26b-22 (routing
+by planned count, agreement of the two routines at the boundary, refusal of an importance run above 10⁶
+evaluations) on the exact bound of N26a-22; this bead changes none of it.
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FSIM-18/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-FSIM-18`, compiled as the `frob-conformance` integration test `upstream_fd_fsim_18` and
@@ -81,7 +98,11 @@ marked `#[ignore]` so that the default suite stays green, with `expected.toml` b
 recorded at the pinned commit (`observed_at`, the failing assertion and the observed value). It fails at the pin
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
 itself a failure of the registry check. It feeds 3·10⁶ failure-free trials to the sibling's Bernoulli sequence
-through the airlock and expects an upper bound; at the pin it receives the cap refusal after 10⁶.
+through the airlock and expects an upper bound, and it requests an importance run of 10⁶ + 1 evaluations and
+expects it to be accepted; at the pin it receives the cap refusal after 10⁶ in both. The fixture is not the
+admission test: `bernoulli_sequence_cap` and `importance_execution_cap` (N26b-22, in `frob-fsim`) pass at the pin
+by recording the cap error, and are named in the row's `admission_test` field; this fixture fails at the pin by
+asking for what the cap forbids, and is the row's `fixture`.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -94,11 +115,14 @@ T moves while a ten-fold tournament is running. If a gate named here does not ex
 the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
 against the new pin.
 
-**What the switch-over re-runs.** GATE-NEMESIS-05 at the larger count: exploration on planted failures of
-probability 10⁻⁴ and 10⁻⁵ (one with two separate modes), at equal episode budget and 30 repetitions, needs at
-least 10 times fewer episodes than crude sampling at 10⁻⁵ and finds both modes in at least 80% of repetitions;
-the certification that follows it is re-run with a budget above 10⁶ episodes on the planted 10⁻⁵ failure and on
-a failure-free fixture sized for 10⁻⁶. The exact binomial bound stays as a differential check on the sequence.
+**Who runs the switch-over.** The register's rule for this item is "re-run GATE-NEMESIS-05 at the larger
+count". The steps of the train that are particular to this item (step 3 above, and what must change in
+`frob-fsim` and `frob-nemesis` before the relock) are one procedure, written once, in N26b-24 (Procedure A):
+the rewritten admission tests, the cap passed through the airlock, the differential test against the exact
+binomial bound at six counts, the routing above 10⁶, the two gate re-runs with their numbers, and the record.
+This bead hands over a change on the sibling's `main`, a fixture that will flip from failing to passing at a
+pin that contains it (the train notices the flip and sets the row to `landed`), and the script whose phase
+`post` that procedure runs.
 
 **Fallback if the change cannot land.** Our exact binomial bound for counts above 10⁶; 10⁻⁶ stays `Estimated`
 unless the owner approves the envelope and the bound is computed here.
@@ -107,12 +131,11 @@ unless the owner approves the envelope and the bound is computed here.
 
 - [ ] In FrankenSim: both caps are configuration fields with default 10⁶; at the default all existing tests and values are unchanged; at 10⁸ the sequence runs without overflow or loss of validity.
 - [ ] In FrankenSim: over 10⁴ null runs at the true rate with optional stopping, the sequence excludes the truth in at most a fraction δ of runs, at n up to 3·10⁶.
-- [ ] Here: the airlock passes the configured cap through, and a count above the configured cap is still a refusal by name, never a silent truncation.
-- [ ] Here: at n = 3·10⁶ with zero failures the sibling's upper bound is no smaller than the exact binomial bound 9.986·10⁻⁷ and within a factor of 3 of it (TARGET for the sequence's width).
-- [ ] Here: GATE-NEMESIS-05 passes at the larger count; a 10⁻⁶ claim is labelled `Certified` only if the envelope was approved and the bound obtained, and `Estimated` otherwise.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] In FrankenSim: above the configured cap both routines still refuse by name; neither truncates a run.
+- [ ] Here: the fixture `upstream_fd_fsim_18` fails at the pin with the signature in `expected.toml` (both requests refused at the cap), and phase `pre` of the script passes.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, the admission tests of N26b-22, this bead and the mirrored bead in the sibling's tracker; its `status` is `landed`, with the sibling commit that contains the change. The status `adopted` is set by the switch-over (N26b-24, Procedure A), not by this bead.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
-- [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
+- [ ] Nothing in this repository patches, forks or vendors the sibling. (The pin move, the new receipt and the record in `DEPENDENCY_ADMISSION.md` are checked in N26b-24.)
 
 ## Test plan
 
@@ -122,10 +145,11 @@ In FrankenSim (added):
 - `log_wealth_matches_direct_at_small_n`: n = 20, k = 3, p = 0.1; the log-space value equals the direct product to 10⁻¹².
 - `no_overflow_at_1e8`: n = 10⁸, k = 0, p = 10⁻⁶; finite wealth and a finite bound.
 - `anytime_validity_under_optional_stopping`: as in the acceptance line, δ = 0.05.
-Here:
-- `zero_failure_bound_closed_form`: δ = 0.05; n = 299,574 gives 1 − 0.05^(1/n) = 1.0000·10⁻⁵; n = 3·10⁶ gives 9.986·10⁻⁷.
-- `sibling_sequence_dominates_exact_bound`: the sequence's bound is never below the fixed-n exact bound at the same n (an anytime bound cannot beat a fixed-n one).
-- `over_cap_refuses_by_name`: configured cap 2·10⁶, 2·10⁶ + 1 trials; expected the named refusal.
+- `configured_cap_refuses_by_name`: configured cap 2·10⁶, 2·10⁶ + 1 trials; expected the named refusal, for the
+  sequence and for the importance execution.
+Here: the fixture `upstream_fd_fsim_18` (ignored; fails at the pin). The tests on this side that follow the
+change (`zero_failure_bound_closed_form`, `sibling_bound_not_tighter_than_exact`, `over_cap_refuses_by_name`
+through the airlock) are in N26b-24, where the switch-over is specified.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_18.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
@@ -133,8 +157,11 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_18 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob nemesis bound --json` on the failure-free fixture with a
-budget of 3·10⁶ episodes on `batch-cpu`, asserting the bound and its label.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob nemesis bound <candidate> --task <the failure-free fixture task> --tier batch-cpu
+--target 1e-6 --mode certify --budget episodes=3000000 --key fd18-post --json` (a run verb: the tier is
+required and the call carries its idempotency key), asserting the bound and its label. This bead writes both phases and
+runs phase `pre`; phase `post` is run by the switch-over (`scripts/e2e/nemesis_switchover.sh` of N26b-24 calls
+it after the pin move), which is where its assertions are accepted.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_18/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -146,7 +173,7 @@ and the artifact paths needed to reproduce. A final `summary` line gives asserti
 gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
-- Known answers: n = ⌈ln 20/p*⌉ is 29,958 at 10⁻⁴, 299,574 at 10⁻⁵ and 2,995,733 at 10⁻⁶; the zero-failure bound 1 − δ^(1/n).
+- Known answers (KA-664): the zero-failure count by the exact rule n = ⌈ln δ / ln(1 − p*)⌉ at δ = 0.05 is 29,956 at 10⁻⁴, 299,572 at 10⁻⁵ and 2,995,731 at 10⁻⁶ (the approximation ⌈ln 20/p*⌉ gives 29,958, 299,574 and 2,995,733 and is not used); the zero-failure bound 1 − δ^(1/n) is 9.999991·10⁻⁶ at n = 299,572 and 9.986·10⁻⁷ at n = 3·10⁶.
 - Negative controls: a sequence restarted at the cap and multiplied through must violate the type-I rate on the null runs (this is the shortcut the item exists to prevent); a 32-bit counter must fail `no_overflow_at_1e8`.
 - Determinism lanes: exact counts; the bound is identical twice on one machine and across platforms to 10⁻¹² relative.
 

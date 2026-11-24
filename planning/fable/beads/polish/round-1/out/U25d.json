@@ -1,0 +1,303 @@
+{
+ "round": 1,
+ "slice": "U25d",
+ "reviewed": 55,
+ "changed": [
+  {
+   "bead": "BD-043",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Results now append to the plan-time ledger records PILOT-PT-03/-04/-05/-08/-09/-10/-11/-12/-16 owned by N38a-10 (with commit, fingerprint, seed, digest), not to free 'rerun' blocks; nine groups vs ten rows made explicit; GATE-GAUNT-08 not claimed for a 'differs' row; the unverifiable '25 negative checks' replaced by a counted 'Rejected' line total (static reading of verify_negative.py finds 29 call sites); e2e log gains bead/step fields, first differing value and reproduce paths; unit tests rows_map_to_ledger and fourth_limit_present; dep N25d-40 moved to related (BD-043 no longer writes the mechanism rows)."
+  },
+  {
+   "bead": "N25d-40",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Aligned with the pilot register schema (N38a-09) and the ledger (N38a-10): run rows link plan_time_records (PILOT-PT ids) and derive status, nothing is copied or overwritten; to-run rows stay 'unregistered' until their pilot freezes a protocol; kill gates are 'to-register' until N40-26 enters them at M1 (the old test 'every kill gate exists' could not pass at M0); row 22 carries proposed KILL-SYNTH-PLACEMENT as to-register; the nonexistent 'frob doctor --registries' status view replaced by 'pilots fundable --all --json'; probe-ceiling symbols defined; dep N38a-10 added."
+  },
+  {
+   "bead": "N25d-07",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "Scope said twenty random instances, the approach forty (twenty placement, twenty actuator-removal): fixed; the pilot record's kill gate is to-register with proposed KILL-SYNTH-PLACEMENT, so funding of N25d-08 fails closed until the ledger or owner rules; e2e logging fields added."
+  },
+  {
+   "bead": "N25d-06",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "A strategy not compiled or not admitted now refuses with FROB-REF-724 (exit 5, 'not implemented in this build') with pointer /strategy and a repair naming the missing feature; the reserved 'placement' is refused the same way until N25e-20 lands; unit tests disabled_strategy_refusal and lane_failure_is_not_exclusion added."
+  },
+  {
+   "bead": "BD-360",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "Considerations pointed to 'acceptance rules named in needs' while needs is empty: now names the sizing-witness rule F(U) <= U of N25e-42 and Pareto coverage of N25e-43, and states the 99.5 kg example's stopping threshold (0.005 kg); checked GB-03 (kappa 2943/5000, 30000/2057 kg, L=13/25 gives 38259/37500) and the catalogue step-function figures."
+  },
+  {
+   "bead": "N25d-10",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "dep N25d-08 (mass placement) moved to related: the co-design script does not use it; dispatch checks now assert FROB-REF-802 (unknown strategy, exit 3) and FROB-REF-724 (disabled continuation, exit 5)."
+  },
+  {
+   "bead": "N25d-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Decision rule fired on 'gate rows failed after one repair', which is not in the ledger trigger (N40-26) and would fall back to the Solid closure that just failed: now a 'deferred' outcome with the defect filed; outcomes use N40-03 names; unit tests rule_one_of_eight_keeps, rule_gate_rows_unpassed_defers, rule_matches_ledger_trigger; e2e re-runs the rule on the synthetic one-false-prune record and logs ledger ids. Also: writes the gate's owner declaration (role owner, the ledger's trigger/fallback/decided/mode/reads copied, decision block with receipts), which N25d-41 says the deciding bead writes and N40-30 compares; no deciding bead of the slice said so. Close reasons now include 'decided: deferred'."
+  },
+  {
+   "bead": "BD-362",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "The out-of-scope refusal (free schedule, topology, more than 17 parameters) had no code, pointer or payload: payload specified (exit 3, pointer, observed/required, ranked repairs). Numbers are never typed by a mechanism bead, so it follows N25e-45's pattern: fail-closed interim under FROB-REF-857 with detail 'synthesis-out-of-scope', switch-over when the allocation ledger assigns a number; the earlier 'does not close until the row exists' would have blocked it behind the 8xx hold."
+  },
+  {
+   "bead": "N25d-15",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Budget clause rewritten unambiguously (median above 600 s fires; a single slow solve counts as one failed candidate), matching the unit test; fired-on-pilot no longer exits 5 while fired-on-gate routes to the fallback: both route refine-shaped queries to the opt.start adapter with an explanation (FROB-REF-724 only if opt.start is absent); test fallback_answer_explains; e2e asserts the fallback answer. Also: writes the gate's owner declaration (role owner, the ledger's trigger/fallback/decided/mode/reads copied, decision block with receipts), which N25d-41 says the deciding bead writes and N40-30 compares; no deciding bead of the slice said so."
+  },
+  {
+   "bead": "N25d-20",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "'Fire administratively if the symbolic sibling is not admitted at M4' would kill exact linkage synthesis permanently over an upstream defect, contrary to REV-1 (siblings are our work; interim posture plus switch-over): now outcome 'deferred' with the numerical lane shipped as a labelled interim and the exact lane switched over on admission; the claim that the milestone plan names this was not in the plan and is removed; tests and e2e updated. Also: writes the gate's owner declaration (role owner, the ledger's trigger/fallback/decided/mode/reads copied, decision block with receipts), which N25d-41 says the deciding bead writes and N40-30 compares; no deciding bead of the slice said so. Close reasons now include 'decided: deferred'."
+  },
+  {
+   "bead": "N25d-08",
+   "kinds": [
+    "users",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "No surface was specified (strategy set is closed and 'placement' belongs to N25e-20) and its e2e was claimed by N25d-10's script, which never runs it: added the surface (mass_placement and actuator_loss blocks reached through mission.synthesize/refute, schema fields asked of BD-126) and its own script augur_synth_exact.sh with fixtures, asserts and NDJSON logging; deps BD-126 and STD-E2E; kill-gate gap (proposed KILL-SYNTH-PLACEMENT) recorded."
+  },
+  {
+   "bead": "BD-437",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related gains N12p1-01, the alpha-root checker the continuation lane's certificates go through (N12-19 kept as related)."
+  },
+  {
+   "bead": "N25d-23",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "dep N12-19 replaced by N12p1-01 (the alpha-root checker), as requested; the proposer's gamma bound was the literature condition-number bound, which can be a true bound yet below the checker's per-k Frobenius-type bound, so the checker would reject true roots: the proposer now computes beta-bar, gamma-bar and the matrix B by the checker's written rule (no shared code) and emits the checker's payload (B, sparse monomials, smale-alpha-theorem); label vocabulary aligned to the checker ('unlabelled', not 'undetermined'); exact reality tests in squared form; disabled feature names FROB-REF-724; tests gamma_bar_meets_checker_rule and payload_matches_checker."
+  },
+  {
+   "bead": "N25d-24",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "dep N12-19 replaced by N12p1-01; 'undetermined' replaced by the checker's 'unlabelled'; the feature-off refusal names FROB-REF-724."
+  },
+  {
+   "bead": "N25d-25",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "'fire administratively if not funded' contradicted N25d-49 (an unfunded experiment is never recorded as passed or killed) and N40-03: now outcome 'not-reached', nothing built; outcome names per N40-03 (not-fired, fired/killed, not-reached); FROB-REF-857's second repair only where the numerical lane exists; test rule_not_funded_is_not_reached; e2e logs ledger ids, re-runs the three synthetic records, STD-E2E fields. Also: writes the gate's owner declaration (role owner, the ledger's trigger/fallback/decided/mode/reads copied, decision block with receipts), which N25d-41 says the deciding bead writes and N40-30 compares; no deciding bead of the slice said so. Close reasons now include 'not reached'."
+  },
+  {
+   "bead": "N25d-01",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "the pilot's own negative control used unequal sole laws without saying which parameter; a friction difference cannot show on this sticking landing, so it is now unequal restitution (0 vs 0.2, as in KA-094) with the reason; dep BD-333 (M4 derived saltation) moved to related, since the bead says it needs no derivative kernel."
+  },
+  {
+   "bead": "N25d-02",
+   "kinds": [
+    "tests"
+   ],
+   "what": "'each of the seven rules has a test' but rules 2 (three routes), 3 (block reduction) and 5 (licence scope) had none: tests ambiguous_routes_recorded, block_reduction_needs_stabilizer, licence_scope_is_local added."
+  },
+  {
+   "bead": "N25d-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "risks"
+   ],
+   "what": "the sole-law mutant control used friction 0.8 vs 0.5, under which the correct build also reports Holds (sticking impacts do not depend on friction), so the control could not separate the mutant: now restitution 0 vs 0.2; the fixed-time-difference mutant had no stated detector: a KA-094 two-ball smoke step added and S-slide named; 'not started if the pilot failed' would block the kill decision forever: now closes 'not run'."
+  },
+  {
+   "bead": "N25d-04",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "'reduction in decision time' made precise (lower bound against the stronger of challenger B and fallback C); the experiment closes 'not funded' or 'not run' (gate failed, pilot falsified, ceiling) with a record instead of staying open and blocking KILL-AUGUR-SYMEVENT."
+  },
+  {
+   "bead": "N25d-05",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unfunded amortization half fired the gate, contrary to N25d-49 and N40-26: now 'not-reached', row outcome 'deferred' with the capability partial (check and local licences ship, no family mask); outcomes use N40-03 names; kill record owned by N40-26; deciding ratio stated; tests rule_unfunded_defers, rule_outcome_names; e2e logs ledger ids, synthetic records, STD-E2E fields. Also: writes the gate's owner declaration (role owner, the ledger's trigger/fallback/decided/mode/reads copied, decision block with receipts), which N25d-41 says the deciding bead writes and N40-30 compares; no deciding bead of the slice said so."
+  },
+  {
+   "bead": "N25d-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the script wrote the slice status itself, while N25d-26's rule has the exit review's ADR set it: the script now proposes the status."
+  },
+  {
+   "bead": "N25d-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the note that the registry row of 856 should name the admission site was stale (N25-REF already names both triggers and tests them): corrected."
+  },
+  {
+   "bead": "N25d-34",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "has an e2e script but no STD-E2E dependency, label or log specification: dep and label added; NDJSON log path and fields (register record, counts against the required 11,520 / 561 x2 / 20, first disagreement, per invalid fixture verdict, rule and digest, file-set intersection, planted disagreement)."
+  },
+  {
+   "bead": "N25d-36",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "the e2e script re-ran the battery's invalid fixtures although the bead says one assertion, one script (N25a-07 owns them): it now reads the battery's last log and fails on a missing or failed line; STD-E2E dep, label and log path/fields added, including the generator control."
+  },
+  {
+   "bead": "N25d-41",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "linkage test (6) required every kill gate to have its owner declaration at M1, but the declaration is written by the deciding bead (M3 to M8), so the test could not pass at M1: now at most one before, exactly one once the gate's exit has passed; test kill_declaration_not_required_before_due."
+  },
+  {
+   "bead": "N25d-42",
+   "kinds": [
+    "deps"
+   ],
+   "what": "its e2e script uses the STD-E2E helper but the bead did not depend on STD-E2E: added."
+  },
+  {
+   "bead": "N25d-44",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "the census counts stored answers of nine families but depended on only one of their beads (BD-355): the stance, docking, pusher, alias and jaw, separation, region, dominance and label beads added (decisions depend on measurements); acceptance said 'three synthetic records' while the tests define four: fixed."
+  },
+  {
+   "bead": "N25d-46",
+   "kinds": [
+    "deps"
+   ],
+   "what": "e2e script without the STD-E2E dependency: added."
+  },
+  {
+   "bead": "N25d-47",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the default refusal of more than one decision maker named exit 5 but no code: FROB-REF-724 with its pointer, as N25d-06 uses for features not in the build."
+  },
+  {
+   "bead": "N25d-48",
+   "kinds": [
+    "correct"
+   ],
+   "what": "groups 9 and 10 now expect FROB-REF-724 with exit 5, matching N25d-06 and N25d-47."
+  },
+  {
+   "bead": "N25d-49",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "created a separate registries/moonshot_funding.toml with its own activation and cap check, contrary to NAB-21 and N41-09 (one file holds the queue; two drift) and duplicating the pilot register's cap: the owner's answers now land in the six queue records MQ-09/10/11/14/16/20 via N41-09's transitions, compute classes as N36-20 approvals, pilot results from N38a-09; the three checks call their owning predicates (pilots fundable, D-6 moonshot_cap, FROB-REF-761); deps N10a-02 and N38a-09; test no_second_ledger; e2e logs queue records and fundable results."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38a-10",
+   "what": "add a supplementary ledger record PILOT-PT-S3 for the §25.22 'Admission fixtures' row (followups/r2_contracts.py, r4_contracts.py: six printed counterexamples), rerun_owner BD-043; it is in §25.22 but not among the twenty, so BD-043 has nowhere to append its result. Also add the fourth Augur-specific limit (integrated interface remains HYPOTHESIS) as an optional note field, or confirm BD-043 may carry it as the result note."
+  },
+  {
+   "bead": "N38a-09",
+   "what": "accept a 'plan_time_records' list on a mechanism record and let pilots::fundable read the linked ledger records' derived status (reproduced only if all reproduce) as that row's result; N25d-40 rows 1, 2, 6, 8, 9, 10, 12 need it so plan-time results are not copied into a second record."
+  },
+  {
+   "bead": "N40-26",
+   "what": "§25.21 tags mass placement and single-actuator-loss robustness [F] but names no kill gate, and the pilot register refuses funding without one. Proposed (DESIGN, owner to confirm or rule the two constructions Solid): KILL-SYNTH-PLACEMENT, trigger = N25d-07's falsifier (any disagreement with a hand answer on fixtures A-D, exact certificates not recovered on more than 5 of 40 planted instances, or the construction fully expressed by existing verbs), fallback = mass-support predicate (FROB-REF-106) and task-wrench analysis A-24 per removal classed Tested, decided M4."
+  },
+  {
+   "bead": "BD-126",
+   "what": "add to frob.mission/1 a 'mass_placement' block in the design domain (target pseudo-inertia as exact strings, optional fixed part, sites, support region ball|box|polytope, optional per-site caps) and an 'actuator_loss' block in the mission (removal catalogue, requirement vertices, fault_identity_observed: bool); N25d-08 reaches §25.21's two exact constructions through them (no strategy value)."
+  },
+  {
+   "bead": "N25e-45",
+   "what": "add a seventh uncoded Augur refusal to the decision: 'a synthesis query outside a lane's admitted scope' (refine: free contact schedule, topology choice, more than 17 continuous parameters; reusable by the other lanes' scope refusals), exit 3, retry after-change, pointer to the offending field, observed/required, repairs: bind the schedule / reduce theta / use the optimization search for topology; interim FROB-REF-857 with detail 'synthesis-out-of-scope' (BD-362 implements that interim)."
+  },
+  {
+   "bead": "N35x-02",
+   "what": "file an allocation request with slug 'synthesis-out-of-scope' (family 8xx) in registries/refusal_allocations.toml for the refusal above, raised by BD-362 (frob-synth refine, M4)."
+  },
+  {
+   "bead": "N40-30",
+   "what": "comparison check 1 ('every ledger row has exactly one owner declaration') cannot pass before the deciding beads run (Augur's are M3 to M8; the declaration is written by the deciding bead): require at most one declaration before the gate's decision is due by the schedule of section 3, and exactly one from that exit on. N25d-41's linkage test now uses that reading (kill_declaration_not_required_before_due)."
+  }
+ ],
+ "unchanged": 24,
+ "notes": "All 55 beads read in full and checked against §25.20-§25.28. Math re-verified by hand or by script: stance grid 2,254/114 and boundaries 3/14, 15/88; docking 344/217/9; KA-627, -633, -634, -639, -647, -648 (24,546 classes recomputed), -649 (square loop composed numerically), -652, -654; alpha cases; saltation of the two-ball and sliding-impact cases. Main fixes: kill-decision beads aligned to N40-03 outcomes, N25d-49's no-kill-for-unfunded rule, and the owner-declaration duty; pilots and records aligned to the pilot register and ledger; the alpha proposer computes the checker's own bounds; two negative controls that could not fail (friction-only sole-law variants) replaced; the Moonshot funding ledger folded into the canonical queue. Settled except for the seven requests, chiefly N40-26 (KILL-SYNTH-PLACEMENT), N25e-45/N35x-02 (out-of-scope synthesis refusal), BD-126 (placement and actuator-loss blocks) and N40-30 (declaration timing). N25d-23, N25d-24 and BD-437 now reference N12p1-01, the round-1 alpha-root checker bead of U12 (file defs/U12/N12p1-01.md, not yet in INDEX.tsv), as the slice request asked; every other referenced key resolves, all 55 files parse, graph has no cycle."
+}

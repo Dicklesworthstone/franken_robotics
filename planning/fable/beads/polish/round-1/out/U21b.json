@@ -1,0 +1,462 @@
+{
+ "round": 1,
+ "slice": "U21b",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "BD-014",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its e2e script called `frob spark check` (N21b-32), which depends on BD-014, so it could never pass before the bead closed. Its own end-to-end lane is now a release integration test of the harness with NDJSON logging in the STD-E2E format; the shell script `spark_harness_selftest.sh` is specified here and delivered by N21b-32."
+  },
+  {
+   "bead": "BD-017",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep BD-009: the probe report is stored in the ledger as device evidence"
+  },
+  {
+   "bead": "BD-020",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Each `spark check` call now carries a distinct idempotency key, and the D2 repeat run must show `idempotent_replay: false` and be byte-equal to the first."
+  },
+  {
+   "bead": "BD-030",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "The τ = 2⁻²⁶ negative control claimed it would fail `guard_bound_exhaustive`, but that test does not depend on τ and the wrong decision is not guaranteed. The control is now a registration refusal (τ must be ≥ ε_g), with the new test `guard_threshold_below_bound_refused`; its device miscounts are logged."
+  },
+  {
+   "bead": "BD-171",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The worked card's printed figures (14.8 ms, 1.35 ms, crossover 360) come from Ω rounded to 3.5. Exact arithmetic gives Ω = 3.4908 and 14.75, 1.344, 0.673 and 0.964 ms with a crossover of 361.3, so an exact verb would have failed its own known answer. Both readings are now stated and tested. N12-49 moved from related to deps, with the new test `envelope_matches_compendium_oracle` (the request from U12-2). References to superseded N21b-27 now point to N17a-08. The e2e covers all three refusals and logs the first differing field."
+  },
+  {
+   "bead": "BD-174",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Added deps N21b-10, N21b-11, N21b-12, N21b-36 and N21c-04: the arena layout, leases, kernel cache, canaries and `spark devices` are used by compile, allocate, read_back and the script. The e2e called `spark place` and `spark check --step`, which are built on this backend (cycle), so they were replaced by the single-kernel check per stage kernel and deferred to N21b-31 and N21b-35. The repeat run now uses a new idempotency key."
+  },
+  {
+   "bead": "BD-176",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "Acceptance used `spark.place`, the evidence boundary and the decision-level test, which all depend on BD-176 (cycle). Currency is now verified through the verb output and the hooks `require_current` (605) and `citable` (864), with the test `currency_hooks`. The D3 decision clause and the planted one-in-fifty bias go to BD-177 and N21b-35, and the rollout-level control becomes a planted 0.2σ shift that the two one-sided tests must reject."
+  },
+  {
+   "bead": "BD-179",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "N12-42 added to deps with the new test `spacing_matches_compendium_d2` (the request from U12-2). Determinism-lane repeats use distinct idempotency keys and assert no replay."
+  },
+  {
+   "bead": "BD-183",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Added dep BD-178 (the e2e's `layout` step calls `spark place`). Paired and repeated timing and digest arms use distinct idempotency keys and assert no replay; otherwise paired timings could compare a stored receipt with itself."
+  },
+  {
+   "bead": "N21b-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Static rule 4 refused any non-u32 argument of an Exact kernel, which made K-x-digest and K-x-hist (which read f32 bit patterns) impossible to register. Added a `Bits` view that binds without a copy, with test `exact_reads_float_bits`. Added the `role` field and the τ ≥ ε rule for guarded kernels that BD-030 relies on, so the manifest record is defined once. The e2e called `frob doctor` to load the kernel registry, but doctor has no such section. Added a `kernels` doctor section (findings per invalid manifest, exit 2) with an acceptance line and a dep on BD-022."
+  },
+  {
+   "bead": "N21b-02",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance asserted control-block behaviour on BD-172's full step, but BD-172 depends on this bead (cycle). It now uses a small test graph (`K-ctl-advance`, `K-ctl-probe` writing a defined word with a wrapping accumulator, `K-selftest`). The full-step forms are asserted by BD-172 and N21b-26. Added a device integration test with NDJSON logging."
+  },
+  {
+   "bead": "N21b-03",
+   "kinds": [
+    "users",
+    "e2e-logging"
+   ],
+   "what": "The e2e used an undefined \"developer subcommand\". It now runs `frob spark fingerprint` with an idempotency key (a `run` verb) and runs the OPEN-SPARK-4 probe cards as a release integration test; DESIGN adds no verb."
+  },
+  {
+   "bead": "N21b-04",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`spark fingerprint` is a `run` verb and now carries a key. The script now fails unless the commit of the registered model is an ancestor of the result commit, which makes \"registered before it runs\" checkable."
+  },
+  {
+   "bead": "N21b-05",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The e2e pointed to a `layout` step of BD-174 that calls `spark place`, which is built on this bead (cycle). The shell lane is now N21b-31's `residency` step, which asserts at most 28 arguments, the largest-buffer limit and the byte model. The bead's own lane is a Metal integration test that reads back 10⁶ random triples through the accessor macros, with NDJSON logging."
+  },
+  {
+   "bead": "N21b-06",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its read API takes N21b-11's `SlabLease` and its R1 acceptance needs it, so N21b-11 moved from related to deps. The BD-174 script steps now carry distinct keys and assert that profiling leaves digests unchanged."
+  },
+  {
+   "bead": "N21b-07",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance ran KA-537 on workload Q through `sim.run`, but the full step (BD-172, BD-174) depends on this fence (cycle). A defined fence workload (quaternion integration with `K-cay-step` and `K-normalize` in the committed group) carries the bead's own tests on both devices, with a fault-injection integration test and NDJSON logging. The Q form stays in N21b-26, with keys."
+  },
+  {
+   "bead": "N21b-08",
+   "kinds": [
+    "users",
+    "e2e-logging"
+   ],
+   "what": "The fallback smoke run used `frob train start … --tier batch-cpu` without a key. `train.start` takes `--devices` and, as a run verb, `--key`. The command is now complete, and the run must show no replay and a placement receipt that is `batch-cpu` on every row."
+  },
+  {
+   "bead": "N21b-09",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`spark fingerprint` and `sim run` in the evidence script now carry idempotency keys (both are run verbs, refused without one from M2), and the sim run must show no replay, so the measured figures are fresh."
+  },
+  {
+   "bead": "N21b-10",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The FROB-REF-602 refusal carried total and budget but not the fields its registry row (N21-REF) requires: the slab-class pointer, observed and required bytes, and repairs by class, including the named largest world count that fits. Added these, with tests for the `worlds` and `scenes` pointers. The e2e's \"planner's own script step\" did not exist. It is now a release integration test with NDJSON logging; the shell lanes are N21b-14 and N21b-31."
+  },
+  {
+   "bead": "N21b-11",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "The leases need epochs from the commit fence (N21b-07), but the fence depends on this bead. The epoch state and its two transitions are now defined here and driven by N21b-07. The `lease_violation` step had no script or command. It now sits in N21b-26 through a conformance-build host-read request, and the bead has its own lease integration test with NDJSON logging."
+  },
+  {
+   "bead": "N21b-12",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance used `frob spark precompile` (N21b-13) and `spark.place` staleness output (N21b-29), both of which are built on this cache (cycle). The library entry point `KernelCache::precompile` now carries the GPU-less fill, and staleness is asserted as the cache's reported identities, with the planner clause downstream. Added a device integration test with NDJSON logging."
+  },
+  {
+   "bead": "N21b-13",
+   "kinds": [
+    "users",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The `spark.precompile` synopsis and examples had no `--key`, although the verb is `run` and is refused without one from M2 (FROB-REF-805). Added the key, its replay semantics and the test `precompile_requires_key`. The missing admin scope now names its code, FROB-REF-720. A \"cold environment creation\" was replaced with a cold precompile, because environment creation belongs to later beads."
+  },
+  {
+   "bead": "N21b-14",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "`digests_unchanged` compared the cold run with the warm run, but the cold step ran no simulation. Cold now runs `sim run` on an empty cache, and the cold precompile is its own step. Commands carry distinct keys, and new `replay` and `no_key` steps were added. The CUDA free-memory equality is asserted only when no other process holds the card, because `trj` is shared."
+  },
+  {
+   "bead": "N21b-15",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance sweeps every M2 kernel on each device and a variant-mix property test, so BD-172, BD-174 (the device kernel libraries) and BD-170 (variant tables with masks) were added as deps (no cycle). The `spark place` run table it relied on is now specified in N21b-29. Added a device integration test with NDJSON logging."
+  },
+  {
+   "bead": "N21b-16",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance asked for one captured graph on both families, but Metal has no graph capture. It now states one capture on CUDA and one step plan with zero re-plans on Metal, and records OPEN-SPARK-4 as not applicable to Metal. The e2e commands carry distinct idempotency keys."
+  },
+  {
+   "bead": "N21b-17",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The `phylum sweep` commands had no idempotency key. `run` verbs are refused without one from M2 (FROB-REF-805), and the shared-versus-plain comparison could replay a stored receipt. They now carry keys `fam-<mode>-<pair>-<t>-s<seed>` on cuda, metal and batch-cpu, with at least 10 compared pairs and an assertion that nothing was replayed."
+  },
+  {
+   "bead": "N21b-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Its e2e commands carry distinct keys (`open3-fp`, `open3-t` with `--capacity nv=18|36|64`, `open3-cap`). The Considerations named one overflow code; they now give 610 on device tiers and 722 on batch-cpu, as the refusal registries do."
+  },
+  {
+   "bead": "N21b-19",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The KILL-BUCKET decision table had no row for <= 8 families with fill below 0.5 and the deference trigger fired, so one input combination had no verdict. Added the row, stated that the rows are exhaustive and disjoint, and the test now covers all 24 combinations."
+  },
+  {
+   "bead": "N21b-20",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The fill fraction phi averaged per-slot fractions, which weights an idle slot like a busy one. It is now useful world-steps over slot-steps summed over step-plan executions. The known answer was corrected to 0.349 with a ceiling of 2.87, and the test asserts the old 0.956 is not reported."
+  },
+  {
+   "bead": "N21b-21",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The `sim run` commands had no key; `run` verbs are refused without one from M2 (FROB-REF-805), and a reused key replays the stored receipt. Added keys `slot-<mode>-<job>-s<seed>` and a no-replay assertion."
+  },
+  {
+   "bead": "N21b-22",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The cancel cycles' `sim run` commands had no key. A repeated key replays the first receipt, so the leak check would have measured nothing. Each cycle now has its own key, `g06-cancel-<cycle>-<t>-s<seed>`."
+  },
+  {
+   "bead": "N21b-23",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Answers the U16a request on 610 against 722. The two registries (N21-REF, N16-REF) split the code by tier, so one function raises 610 (exit 6) on CUDA and Metal and 722 (exit 5) on batch-cpu, with the same pointer and needed count. Added the test `overflow_code_by_tier` and the acceptance line. The 602 text now matches N21b-10's fields, and the e2e commands carry keys."
+  },
+  {
+   "bead": "N21b-24",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The watchdog supervises the Metal worker of BD-174 and its acceptance runs a stall on Metal, so BD-174 was added to deps (no cycle). The stall and reference runs carry distinct keys."
+  },
+  {
+   "bead": "N21b-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Keys now include the script run's UTC id, so a rerun executes instead of replaying. Step-table fixes: `over_budget` expects 602 with pointer `worlds`, and `overflow_refuse` expects 610 (exit 6) on devices and 722 (exit 5) on batch-cpu. `shape_change` and `lease` were given their commands. The free-memory check holds only when the card is not shared. Added acceptance for exit codes and keys."
+  },
+  {
+   "bead": "N21b-26",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Key policy `g12-<run-id>-...`. Added the `shards` step (`--shards 1` against `--shards 2` on `trj`, owed by N21b-02), which nothing ran. Gave the `lease_violation` step its conformance host-read command and stated the cancel_cycles caveat, with acceptance lines for shards and keys."
+  },
+  {
+   "bead": "N21b-28",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The mixed-allowed tests need a planner, but the planner (N21b-29, BD-178) is built on this record. Those tests now use a hand-built mixed plan, and the planner's end-to-end form stays in N21b-31's `counters_mixed` step."
+  },
+  {
+   "bead": "N21b-29",
+   "kinds": [
+    "complete",
+    "users",
+    "deps",
+    "tests"
+   ],
+   "what": "Rule 4 uses N21b-30's cost model, so N21b-30 moved from related to deps. FROB-REF-602 is in the verb's registry refusal list but was never raised, so the planner now checks the arena total against the budget at plan time, with the registry's fields and repairs and the test `over_budget_602`. The residency map now carries N21b-15's run table, which BD-183's `layout` step reads; N21b-15 was added as a dep. Added the utility-job form `--job <kernel-job> --rows N [--inputs-resident]`, which N21b-30's cost-model step needs, with the test `utility_job_form`."
+  },
+  {
+   "bead": "N21b-30",
+   "kinds": [
+    "users",
+    "e2e-logging"
+   ],
+   "what": "The cost-model probe now carries a key (`g09-cost-probe-<d>-<run-id>`), and the e2e uses the utility-job form of `spark place`, now specified in N21b-29."
+  },
+  {
+   "bead": "N21b-31",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Each `sim run` now carries a distinct key (without one, FROB-REF-805 would mask the code under test). The `residency` step asserts N21b-05's Metal limits and byte model at 8,192 worlds. Added an `over_budget` step for FROB-REF-602."
+  },
+  {
+   "bead": "N21b-32",
+   "kinds": [
+    "users",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Added `--workers` and `--key` to the verb line. Job-submitting run verbs are refused without a key from M2 (FROB-REF-805), and a reused key replays the stored receipt, so a determinism comparison could compare one run with itself. Added a replay step and distinct keys per compared run, delivered BD-014's `spark_harness_selftest.sh` here, and added VERBS-spark as a dep because acceptance requires the registry row. Registered the `--exhaustive` option (a kernel over the finite input domain its manifest declares), which N21b-37 uses to discharge PO-NUM-01."
+  },
+  {
+   "bead": "N21b-33",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance asserted FROB-REF-605 through `spark place` (N21b-29), but the planner is built on the check, which made a finish-order cycle. It now asserts the refusal through BD-176's `require_current` hook, and the planner clause lives in N21b-31. The sweep and localize commands carry keys."
+  },
+  {
+   "bead": "N21b-34",
+   "kinds": [
+    "deps",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "The KILL-D1 decision reads N21b-35's result file, N21b-33's sweeps, the planner's `--need-class` (N21b-29) and `sim.replay --tier` (BD-204), but none of these were deps. Added them (no cycle) with an inputs paragraph; N21b-35 moved from related to deps. The e2e now has keyed commands, including `spark place --need-class D1`, which expects 247 after the kill fires."
+  },
+  {
+   "bead": "N21b-35",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The `currency` and `stale` steps use `spark place`, so N21b-29 was added as a dep. The `class` step re-ran the probe; it now reads the stored report. The result file that KILL-D1 reads had no schema: `frob.spark.gate02.result/1` is defined here with the test `result_file_schema`. Keys follow `g02-<run-id>-...`, and the repeat lane uses fresh keys."
+  },
+  {
+   "bead": "N21b-36",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The known answer of `dd_accumulates_time` assumed f32 h. With h held as a double-float pair the sum is 2000 + 3.5e-7; the f32-h case is 2000 + 9.5e-5. Both are now stated and were checked by simulation. The probe commands carry keys."
+  },
+  {
+   "bead": "N21b-37",
+   "kinds": [
+    "deps",
+    "users",
+    "e2e-logging"
+   ],
+   "what": "The e2e used `spark check --exhaustive`, which no bead defined. The option is now registered in N21b-32's option list, N21b-32 is a dep, and the commands carry keys."
+  },
+  {
+   "bead": "N21b-38",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e called `spark check --metamorphic pow2`, an option nobody defines, and `contact probe --states ... --compare f64`, but `contact.probe` is a read verb for one state. Both steps are now release runs of the bead's conformance harness, selected by environment variables, with NDJSON logging. PO-NUM-02 on CUDA and Metal needs the device step libraries, and the stiff refinement needs the double-float residual, so BD-172, BD-174 and N21b-36 were added as deps (no cycle). Numbers checked: kappa-hat 16, 0.12, 8.2e-4, D22 = 2^13, 2.9e-4."
+  },
+  {
+   "bead": "N21b-39",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The `sim run` and `spark check` commands had no keys. With a reused key, B in the `repeat` or `restart` lane would return A's stored receipt and pass against every racy mutant. Added a per-arrangement key rule, assertions of `idempotent_replay: false` and distinct run ids, and an acceptance line with a conformance case that deliberately reuses a key."
+  },
+  {
+   "bead": "N21b-40",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The keys came from seed, host and step only. A second run would then replay the first (the twice-on-one-machine lane would compare a report with itself), and the clean canary and the two mutant canaries shared a key. Keys now include the script run id and a command index, and `--resume <run-id>` keeps the replay for interrupted runs. Tests `script_is_idempotent` (rewritten) and `keys_distinct_within_run`."
+  },
+  {
+   "bead": "N21b-41",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The falsifier's third funding path (a sharing ratio of 2 or more) named no benefit, so N21b-17 could not be narrowed from it. The verdict is now one total registered function: admission is material above 64 kB and at least halved; traffic is material at 5% or more with a ratio of at least 2; sharing that is present but immaterial is `not funded`. `falsifier_enumeration` covers a grid around each threshold."
+  },
+  {
+   "bead": "N21b-42",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance requires the existing `spark.fence-disabled` row registered by N21c-31, so N21c-31 moved from related to deps (no cycle). The racy admission's 20 trial pairs need distinct keys, because a replayed pair is equal by construction and would hide a discriminating mutant. Added the key rule, a replay rejection in `racy_admission_rule`, and replay flags in the log."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-spark",
+   "what": "The refusal lists omit codes that the implementing beads raise. spark.check (N21b-32, BD-176) and spark.probe (BD-017) also raise FROB-REF-601 and FROB-REF-606, and spark.probe raises FROB-REF-603. The spark.check example uses a positional kernel and `--devices cuda:0,metal`, but N21b-32 fixes `--kernel <name> --backend <batch-cpu|gpu-cuda[:n]|gpu-metal>`; align it, as `frob spark check --kernel K-cay-step --backend gpu-cuda:0 --key ck-1 --json`. The spark.place example (`--shape quad-12 --mode strict`) does not match N21b-29's surface, `--tier <mode:backend> (--workload Q|H | --design <id> --task <id>) --worlds N`. Use `frob spark place --tier strict:gpu-cuda --workload Q --worlds 1024 --json`, and settle the output schema name: the registry gives `frob.placement/1`, while N21b-29 wraps it in `frob.spark.place.out/1` with the residency map and cost predictions."
+  },
+  {
+   "bead": "BD-022",
+   "what": "N21b-01 now provides a `kernels` section to `frob doctor` (kernel registry digest, manifest count, one finding per invalid manifest); add it to the doctor section list."
+  },
+  {
+   "bead": "N17a-04",
+   "what": "The worked-card known answers 14.8 ms, 1.35 ms and crossover 360 hold only with Ω rounded to 3.5. Exact arithmetic gives Ω = 3.4908, 14.75 ms, 1.344 ms and a crossover of 361.3, so state both, as BD-171 now does (also N17a-05 line 129 and KA-371)."
+  },
+  {
+   "bead": "N16-REF",
+   "what": "FROB-REF-722 (exit 5) and FROB-REF-610 (exit 6, N21-REF, §21.21) cover the same capacity overflow under `refuse`, split by tier: 722 on batch-cpu and the lockstep tiers, 610 on gpu-cuda and gpu-metal (N21b-23 raises both from one function, with the same pointer and needed count). Add a cross-reference to 610 for the device tiers and note the different exit codes, and state that KA-349's CUDA and Metal rows are met by 610."
+  },
+  {
+   "bead": "BD-159",
+   "what": "Its Considerations say the device beads are asked to raise 722. N21b-23 keeps the registries' tier split instead: 610 (exit 6) on gpu-cuda and gpu-metal, 722 (exit 5) on batch-cpu, from one function with an identical pointer and needed count (test `overflow_code_by_tier`). Restate the note accordingly, and point KA-349's device rows at 610."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "The spark.check row's options need `--exhaustive` (a kernel over the finite input domain its manifest declares; N21b-37 for K-anchor's 2^25 offsets) and `--workers`/`--key` (N21b-32). The spark.place row needs the utility-job form `--job <kernel-job> --rows N [--inputs-resident]` (N21b-29, used by N21b-30)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Every bead changed, mostly for one systemic hazard: run verbs need distinct idempotency keys, or comparisons replay stored receipts and compare a run with itself. Finish-order cycles were broken by moving clauses downstream and adding integration-test lanes. Correctness fixes in N21b-19, -20, -36, -41 and BD-171. The 610/722 split by tier is kept and requested upstream. The slice looks settled apart from the requests."
+}

@@ -1,0 +1,419 @@
+{
+ "round": 2,
+ "slice": "S56",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BD-173",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "requests applied: deps N21c-27 and VERBS-spark (moved from related; duplicate BD-174 removed from related); INV-SPARK-03 and -06 tests named arena::allocated_bytes_flat_1e6_steps and lease::host_read_requires_committed_epoch. Its e2e section named steps N21b-14 does not have (lease_violation, oversize_job) and an unkeyed sim run: now N21b-14's step names, with 614 and 602 pointed at N21b-26 and N21b-31. Acceptance waited on N21b-14's script, which depends on this bead: the three GATE-SPARK-11 clauses now hold in its own hardware tests and the row is recorded by N21b-14. spark.precompile synopsis keyed, with --target-fingerprint."
+  },
+  {
+   "bead": "BD-176",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "request applied: dep VERBS-spark (moved from related); verb synopsis lacked the required --key and --workers; --worlds N stated as this bead's option (requested of the registry row)."
+  },
+  {
+   "bead": "BD-177",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "--test g5 is not a target: FROB_TEST_SEED=<seed> cargo test ... --test g5_determinism; command synopsis keyed (run verb, 805) and its three options named as additions to the row."
+  },
+  {
+   "bead": "BD-178",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "requests applied: dep N21c-27; INV-SPARK-07 property test named placement::strict_withheld_kernel_zero_worlds with its planted violation. --test g1 -> g1_known_answers and recording through record_gate; negative control cited a step withhold_each that does not exist (now strict_run); sim run keyed; acceptance no longer waits on N21b-31's script; CX-217 control named."
+  },
+  {
+   "bead": "BD-180",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e step 1 called the run verb spark.check without --key (805)."
+  },
+  {
+   "bead": "BD-181",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "command synopsis lacked the verb's required --backend and --key (the gate is per backend; --report also needs the key); --test g5 -> g5_determinism with FROB_TEST_SEED."
+  },
+  {
+   "bead": "BD-182",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "script called `frob spark fingerprint --json` (a run verb needing --device and --key, and a re-measurement) to read digests: now the read verb spark.devices; `frob spark check --json` had no kernel, backend or key; contact.audit and sim.run calls keyed; script-file ownership among the three modes stated."
+  },
+  {
+   "bead": "N13-31",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "share-of-step-time formula omitted the evaluations per world-step (rate x cost / step time is not dimensionless): now f = n_eval x rate x t_fb / t_step with each symbol and the planning t_step; evidence (a) asked the fingerprint for per-operation 64-bit facts it does not record (one yes/no field): compile probe added; reads spark.devices (dep N21c-04) instead of an unkeyed spark.fingerprint; open-question row and test fallback_share_formula named."
+  },
+  {
+   "bead": "N13-32",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "decision record named docs/adr/ADR-KILL-MARROW-GUARD-M2.md with N40-03's required fields and outcome vocabulary (not-fired | fired; propagation gives GATE-MARROW-05's device rows `killed`); dep N40-23 (the ledger that enters the row it fills)."
+  },
+  {
+   "bead": "N13-33",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "sim run calls keyed; fidelity.shadow call given its real form (start --job)."
+  },
+  {
+   "bead": "BD-370",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "both requests applied: fleet.peer_link = false gives by-hand advice and forwards nothing (text, acceptance, test plan_verb_peer_link_false_advises_only); files envelope row R12 (dep N44-01, admits gate:GATE-SPARK-13, E1 at envelope_run_length or E2, not-approved branch). Found: `frob opt cascade @campaign:standard` used a positional the verb does not have and no key (paired runs would replay a stored receipt): keyed form with one key per arm and pair; arm selection was unspecified (now by the peer-link key, DESIGN); --test g1 -> g1_known_answers with record_gate; final reading written into ADR-KILL-FLEET-M4.md as the second decision entry."
+  },
+  {
+   "bead": "BD-371",
+   "kinds": [
+    "deps",
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request applied: dep N21c-27, INV-SPARK-09 names. Scope listed the promotion rule both In and Out and tested it a second time with a different g (point value) than N17a-16 (paired lower bound): the rule is N17a-16's, this bead records its two inputs; precompile call keyed with a device id of the registry's spelling (cuda:0); --test g5 -> g5_determinism."
+  },
+  {
+   "bead": "BET-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "pre-registered only three allowed transfer classes (the overview's short form); the mechanism N21c-08 and INV-SPARK-10 allow nine, so a recipe or variant table would have read as forbidden: aligned."
+  },
+  {
+   "bead": "FD-FSIM-09",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "post phase called spark.probe and sim.run with no key, device or workload, and the bead depended on none of the verbs or on the schema check it re-runs: keyed spark.probe and spark.check K-selftest calls; deps BD-017, N21b-32, N21c-28."
+  },
+  {
+   "bead": "N17a-16",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "the two compared phylum.sweep runs had no key (805; a shared key would compare a run with itself): distinct keys; ownership note of the promotion inequality aligned with BD-371."
+  },
+  {
+   "bead": "N21-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "untouched by round 1. Request applied (BD-146 -> N38b-05). Wrote a private file registries/counterexamples.toml with private fields: now the one catalogue of N38b-05 in its schema, with control_kind, plant, label/rerun and rule_ids per entry and a compiled-in test table; four test names did not exist in their owner beads (BD-178, BD-013, N21c-26): corrected; registry check in gauntlet form; e2e with full logging."
+  },
+  {
+   "bead": "N21b-10",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "the Metal argument limit was `31 less the reserve of N21b-05` without the number: 28, as a planner input; test argument_budget given values."
+  },
+  {
+   "bead": "N21b-11",
+   "kinds": [
+    "tests"
+   ],
+   "what": "INV-SPARK-06 property test named lease::host_read_requires_committed_epoch (the register's name) with its planted violation."
+  },
+  {
+   "bead": "N21b-12",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests"
+   ],
+   "what": "acceptance filled an sm_89 cache on this Mac, where NVRTC does not exist; and a fill for another host had no defined driver version or compiler identity for the key, so copied entries could never hit: TargetIdentity read from the target's fingerprint record, FROB-REF-606 on mismatch, test target_identity_from_record."
+  },
+  {
+   "bead": "N21b-13",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "both requests applied (--unit of N21a-10, --specialize of BD-371 listed); --target-fingerprint added with its refusals; cluster is `spark` (devices is the task cluster); dep VERBS-spark; 601, 606, 616 named as codes the row must gain."
+  },
+  {
+   "bead": "N21b-14",
+   "kinds": [
+    "e2e-logging",
+    "complete",
+    "correct"
+   ],
+   "what": "two rows had unkeyed or incomplete run commands; --test g1 -> g1_known_answers with record_gate; added step arch_fill (N21b-12, N21b-13 and BD-173 all pointed at a no-GPU precompile step that the script did not have)."
+  },
+  {
+   "bead": "N21b-17",
+   "kinds": [
+    "complete",
+    "users"
+   ],
+   "what": "its script used `phylum sweep --tables shared|plain`, an option no bead defined: the gated option is now specified here (724 until built, `plain` always accepted) with an acceptance line, and requested of VERBS-phylum."
+  },
+  {
+   "bead": "N21b-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "pilot register named as crates/frob-conformance/registry/pilots.toml, schema frob.gauntlet.pilot/1, with the record's mandatory parts; the bead's verdict words mapped to the register's (falsifier-rejected / falsifier-holds / inconclusive); funding follows pilots::fundable, not a second flag."
+  },
+  {
+   "bead": "N21b-23",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "an acceptance clause required teleporting a faulted world, which is BD-204's and BD-204 depends on this bead (a bead waiting on what waits on it): the clause now asserts what teleport needs is on record and leaves the teleport to BD-204; --max-faulted stated as this bead's addition to sim.run and requested of VERBS-sim."
+  },
+  {
+   "bead": "N21b-25",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "script calls `frob job cancel` and `frob job status` (BD-210) without depending on it: dep BD-210 added (no cycle: BD-210 depends on BD-175, not on this bead); the `feature` row tested 616, a plan-time refusal of the planner this bead does not depend on: moved to `covered elsewhere` with script and step for each of the seven codes (eleven tested here, eighteen in all); cancel-cycle run keyed; --test g4 -> g4_chaos with record_gate."
+  },
+  {
+   "bead": "N21b-26",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "step `shards` called `frob sim run --shards`, which sim.run does not have (it is train.start's), on two cards in one job (above the default envelope), for a clause GATE-SPARK-12 does not contain: the comparison is now asserted by N21b-35's `sweeps` step through N21b-33's shard axis, with the capture and host-traffic assertions moved there; --test g4 -> g4_chaos with record_gate; run commands keyed in the rows."
+  },
+  {
+   "bead": "N21b-28",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the quoted `counters` run lacked its idempotency key."
+  },
+  {
+   "bead": "N21b-29",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete"
+   ],
+   "what": "request applied: dep VERBS-spark (moved from related). Cluster is `spark` (devices and fleet are task clusters); the conformance option --withhold-kernel and the exclusivity of the two forms stated; 619 of the row attributed to N21c-39."
+  },
+  {
+   "bead": "N21b-31",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "request applied: step stride_handoff (N21a-05's harness entry under the counting shim: 16 materialized bytes for the negative-stride view, 0 for the representable one, 617 under zero-copy) with dep N21a-05 and an acceptance line; run commands keyed in the rows; --test g1 -> g1_known_answers with record_gate."
+  },
+  {
+   "bead": "N21b-33",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "request applied: acceptance now activates the skip-until stages sweeps_capacity and sweeps_slots of spark_utility_kernels.sh for the five utility kernels; noted that the axis is spelled `slot` (BD-152's command says `slots` and omits --backend: request)."
+  },
+  {
+   "bead": "N21b-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "decision record was docs/adr/ADR-KILL-D1-<family>.md, outside the naming rule: now one ADR-KILL-D1-M2.md with a section per family, N21a-03 headings, N40-03 fields and outcome vocabulary; per-family decision entries need a scope kind N40-03 does not have (requested), with a fail-closed single entry until then."
+  },
+  {
+   "bead": "N21b-35",
+   "kinds": [
+    "e2e-logging",
+    "complete",
+    "correct"
+   ],
+   "what": "run commands keyed in the rows; --test g5 -> g5_determinism with record_gate; `sweeps` step now also runs the full step and carries the one-card-against-two-shards assertions moved from N21b-26 (with the envelope note); plant_kernel named N21b-32's real fixture (K-selftest has no constant)."
+  },
+  {
+   "bead": "N21b-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "--test g5 -> g5_determinism with FROB_TEST_SEED in the `record` step."
+  },
+  {
+   "bead": "N21b-42",
+   "kinds": [
+    "correct"
+   ],
+   "what": "rows were written to the alias registries/negative_controls.toml in a private field list: now the physical controls.toml as Control records (id, seed, gate GATE-GAUNT-07, kind mutation, target, defect, expect) with the mapping of the bead's columns."
+  },
+  {
+   "bead": "N21c-07",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "untouched by round 1. role_of returned `train's machine class` and a test expected `throughput class`, neither one of the seven tags: now the tag `train`, with the reason and a test that the result is always a registered tag; the e2e asked sim.estimate about a proof job: role and preferred_machines are printed by any run verb's --estimate block and the fixture uses prove.bundle --estimate; logging fields spelled out."
+  },
+  {
+   "bead": "N21c-08",
+   "kinds": [
+    "complete",
+    "users",
+    "e2e-logging"
+   ],
+   "what": "`artifact export --to-host` and `import` were used with no bead defining them and no key: egress option specified here (requested of VERBS-artifact); ingress specified as verb artifact.import (DESIGN, requested; the inventory has no import verb, and the standalone default needs one) with an integration entry until the row exists; script calls keyed; reader-side refusal step added."
+  },
+  {
+   "bead": "N21c-09",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "scene.gen --recipe and artifact.export --replay-closure stated as this bead's additions (requested of the registry rows); sim.replay, scene.gen and export calls keyed and given real argument forms."
+  },
+  {
+   "bead": "N21c-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "registration named in pilots.toml (frob.gauntlet.pilot/1) with falsifier, ceiling and fallback; frob.pilot.fleet/1 kept as the measured payload attached to the register's result, not a second pilot record; `frob opt cascade @campaign:standard --machine trj` used a positional and an option the verb does not have and no key: keyed form with the frozen campaign's four values, distinct keys for the two runs, standalone daemon instead of --machine."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-spark",
+   "what": "spark.check row: list --worlds N (BD-176); --decisions, --pair <A>:<B>, --ensemble <hash> (BD-177); --invariance, --axes, --episodes, --cotenancies, --report (BD-181). spark.precompile row: list --target-fingerprint <file> (N21b-13, N21b-12: the driver and compiler identity for a fill with no device of the architecture visible), --unit <path> (N21a-10), --specialize <ModelId> (BD-371, M4, 724 before), and the codes 601, 606 and 616 beside 603 and 612."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run row: add --max-faulted (N21b-23) and the device codes the Spark beads raise through sim.run and the gate scripts assert: 603, 604, 605, 606, 607, 608, 609, 611, 612, 615, 616 (the row has only 601, 602, 610); list as conformance-build-only options --withhold-kernel (N21b-29), --inject-stall (N21b-24), --inject-faults and --conformance-host-read (N21b-07, N21b-11, N21b-26), --admit-at (N21b-16, N21b-25), --mutant, --chunk-intervals, --group-multiple, --cancel-at, --cache-dir, --device (N21b-39, N21b-42); --snapshot-every (N21b-26 uses it; owner BD-203)."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "gated-options table of phylum.sweep: add --tables shared|plain (N21b-17; `shared` is 724 until the mechanism is funded and built)."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "what": "artifact.export: add --to-host <mac|trj> [--campaign <id>] (N21c-08: writes one frob.xfer/1 bundle) and --replay-closure <run>:<address> (N21c-09), with 618. Lead decision needed: no verb admits a bundle on the receiving machine; N21c-08 specifies artifact.import (run, frob-chronicle, M2) and asks for the row. It would be the 244th verb, so the count in the VERBS-* boilerplate and NJL-01 moves with it; N21c-08 and N21c-09 run ingress through an integration entry until the row exists."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.gen: add --recipe <file> (N21c-09: family, parameters and seed read from a frob.scene.recipe/1 record; exclusive with them, 802)."
+  },
+  {
+   "bead": "BD-152",
+   "what": "stages sweeps_capacity and sweeps_slots call `frob spark check --kernel <name> --sweeps capacity,slots --key <k>`: N21b-33 spells the axis `slot` (a misspelt axis is 802) and the verb requires --backend <b>; N21b-33 now activates the two stages in its acceptance."
+  },
+  {
+   "bead": "N21b-02",
+   "what": "its deferred full-step clause `one card against two shards on workload Q` says it is asserted by N21b-26's script; it is now asserted by N21b-35's `sweeps` step (spark check --step --sweeps shard), because sim.run has no --shards and GATE-SPARK-12 has no shard clause. Update the pointer."
+  },
+  {
+   "bead": "N40-03",
+   "what": "admit a decision scope kind `family:<cuda|metal>`: the plan decides KILL-D1 per device family (N21b-34 writes one section per family in docs/adr/ADR-KILL-D1-M2.md and falls back to a single conservative entry until the scope exists). Also its step 6 still names docs/delivery/adr/, which is retired."
+  },
+  {
+   "bead": "N40-24",
+   "what": "mark the KILL-D1 ledger row as decided per scope (device family), so that N21b-34's per-family decision entries load."
+  },
+  {
+   "bead": "N35-17",
+   "what": "calls `frob spark check --invariance …` without --backend and --key, and `--report` without --key (BD-181's command now states both; 805 otherwise); `--test g5` is not a target (g5_determinism, with FROB_TEST_SEED)."
+  },
+  {
+   "bead": "N35-12",
+   "what": "`frob spark check --decisions --pair …` calls carry no --key (run verb, 805; the A/A control and the pair must use distinct keys); `--test g5` is not a target (g5_determinism)."
+  },
+  {
+   "bead": "N21c-11",
+   "what": "read the pilot's payload frob.pilot.fleet/1 by the receipt hash of the [[pilot.result]] that N21c-10 appends to pilots.toml (verdict falsifier-rejected for g >= 1/3, falsifier-holds below); the payload is not a second pilot record."
+  },
+  {
+   "bead": "BD-172",
+   "what": "script step `precompile` calls `frob spark precompile gpu-cuda:0 --workload Q --json`: spark.precompile is a run verb (--key, 805) and its target is a device id of N21c-04's spelling (cuda:0), a backend family or an architecture name (N21b-13)."
+  },
+  {
+   "bead": "BD-015",
+   "what": "`Precompile on a GPU-less host`: the v0 cache key contains the driver version, which a host without a device does not have; N21b-12 settles it with a TargetIdentity read from the target's fingerprint record (606 on mismatch). NVRTC is not published for macOS, so the Mac cannot be that host (N21b-12 had said it could)."
+  },
+  {
+   "bead": "N21c-27",
+   "what": "INV-SPARK-06 row: the property test lease::host_read_requires_committed_epoch is defined in N21b-11 and re-run on CUDA by BD-173; add N21b-11 to the row's owners. INV-SPARK-03, -07 and -09 names are now used by BD-173, BD-178 and BD-371, which depend on the register."
+  },
+  {
+   "bead": "N21c-25",
+   "what": "N21-CX names plants from your fixtures for CX-225, -228, -230, -231 (N21c-25:half-precision-factor, :two-centroid-sketch, :f32-sum-reordered, gemm_device_path_refused_under_d2); confirm or rename by updating the entry and N21-CX's compiled-in table together."
+  },
+  {
+   "bead": "N21c-26",
+   "what": "N21-CX names plants from your guard fixtures for CX-224, -226, -229 (no_compile_after_warmup_on_variant_admission, cow_indirection_not_expressible, host_read_outside_lease_refused) and asks tile_bounds and the directory slot arithmetic to reject a claimed figure (CX-232, CX-227); N21-CX no longer cites a test `sampling_battery_refused_for_promotion`, which you do not have (CX-233 binds sampling_control_cost and N22a-25's 817 guard)."
+  },
+  {
+   "bead": "N21a-10",
+   "what": "N21-CX binds CX-219 to your tests rule8_select_keeps_infinity and rule8_rejects_blend_pattern and names the plant N21a-10:blend-mutant (the blend twin your KA-533 control already describes)."
+  },
+  {
+   "bead": "BD-013",
+   "what": "N21-CX binds CX-221 to lint_rejects_spin_loop (it had named a test lint_rejects_grid_barrier that does not exist) with plant BD-013:spin-loop-source, and labels the stall rate FACT to be re-read at the pinned commit of the piano renderer."
+  },
+  {
+   "bead": "N21c-30",
+   "what": "your control rows use a private field list (id, guards, kind, plant, expected_detection, tier, backends, owner_test); N21b-42 now writes its rows as STD-TEST's Control records (id, seed, gate, kind, target, defect, expect) in controls.toml. Bring N21c-30 and N21c-31 to the same record, or state the mapping."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "All 42 beads read in full against plan §21, §13.7-13.10, §17.9, §35 and the registries; 38 changed, 4 unchanged (BET-02, N21b-22, N21b-24, N21b-30). All 15 requests addressed to the slice applied after checking. Round 1 had not touched N21-CX or N21c-07. Main finds: run verbs called without keys or with options and positionals no bead defines (opt.cascade @campaign:standard, sim.run --shards, phylum.sweep --tables, artifact.export --to-host, scene.gen --recipe, an import with no verb at all); capstones whose acceptance waited on the script bead that depends on them (BD-173, BD-178) and a clause waiting on BD-204 (N21b-23); a cross-host kernel-cache fill with no defined key inputs, claimed for a Mac that has no NVRTC; a dimensionally wrong formula in N13-31; the promotion rule implemented twice with different g; a private counterexample file and private control rows; `--test g1/g4/g5` targets; kill-gate records outside the naming rule. Graph: 0 cycles after the dependency changes (graph_check.py cycles). One lead decision is open: the ingress verb artifact.import (request to VERBS-artifact). Not yet settled: a round-3 look at N21-CX, N21c-08 and N21c-09 is advisable once the registry rows answer."
+}

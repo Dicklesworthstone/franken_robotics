@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "spine", "spec", "solid", "atelier", "frob-opt", "test"]
 parent: "WP-59"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["N10-KA3", "N10a-01", "STD-E2E", "STD-TEST", "VERBS-operator"]
 needs: []
-related: ["BD-291", "BD-341", "BD-344", "BD-349", "BD-351", "N10c-09", "N10-CX", "N10c-10", "BD-262", "N10c-11", "N10a-02"]
+related: ["BD-262", "BD-341", "BD-344", "BD-349", "N10c-10"]
 gates: ["GATE-ATEL-15"]
 plan_refs: ["§10 C-39", "§28.9", "§28.16", "§28.17", "§30.15", "Appendix D.8", "Appendix E GB-36", "Appendix M.9"]
 ---
@@ -173,8 +173,11 @@ information is a stop rule only and `experiment.suggest` lists proposals unranke
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c39_evsi.sh`: `frob --json doctor`; `cargo test -p frob-opt --test laws_c39_evsi`; `cargo test
--p frob-conformance --test g1 -- KA-187`; file and registry checks. Log to
+`scripts/e2e/spec_c39_evsi.sh` (sources the helper of STD-E2E; seed printed): `frob --json doctor`; `cargo test
+-p frob-opt --test laws_c39_evsi` (the reference, then each mutant of `c39_mutants.rs` as a subject, each
+required to fail its named law); `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers
+-- KA-187`, and the same with `--features gauntlet-mutations`, in which the row's control `value_ignores_mean`
+must be caught; `cargo test -p frob-conformance --test g0_doctrine -- d2` for row C-39; file and registry checks. Log to
 `target/e2e-logs/spec_c39_evsi/<utc>.ndjson` with a transcript; each line has `ts`, `script`, `bead`, `step`,
 `event`, command line, exit code, wall time, the evidence block (claim Known answer, class Tested, tier G1 host,
 determinism of the host run, seed), values in objective units and per GPU-second against expected with

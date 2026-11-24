@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "frob-cert", "frob-mission", "frontier", "test"]
 parent: "WP-66"
-deps: ["N12-17", "N12-06", "SPEC-C-40"]
-needs: ["§0.7: the paper-scale pilot of the dominance construction (one contact transition, a sole exchange over a split-grip strip, against a reachability tool on the same product model), owned by the mission work"]
-related: ["BD-293", "BD-262", "N12-16", "CARD-T-28", "BD-359"]
+deps: ["N12-06", "N12-17", "N25c-24", "SPEC-C-40"]
+needs: []
+related: ["BD-359", "BD-364", "N12-16", "N12-46", "N25d-36"]
 gates: []
 plan_refs: ["§12.3 (T-32)", "§10 C-40", "§25.16", "Appendix D.6 (dominance by unreachability)"]
 ---
@@ -91,12 +91,20 @@ that output.
 `crates/frob-lemma/tests/cards/t32.rs`: `surface_parameter_fixture_accepts`; `gain_interval_is_one_fifth`;
 `separate_enclosures_admit_all_four_pairs`; `tied_branches_hide_one_zero`; `missing_piece_rejects`;
 `sign_change_inside_piece_rejects`; `absolute_verdicts_required`; `non_affine_piece_by_interval`
-(a margin z² − 1/4 on [3/5, 1] enclosed as [11/100, 3/4] > 0).
+(a margin z² − 1/4 on [3/5, 1] enclosed as [11/100, 3/4] > 0); `progress_declaration_required` (a piece without
+its progress and nonempty-execution declarations is rejected, naming the piece); `undeclared_shared_input_rejects`
+(a branch of A tied to a branch of B by an input absent from the declared shared set).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants;
-`lemma_second_machine.sh` with profile `m4` (bead N12-35) re-checks dominance bundles of the M4 family answers.
+`scripts/e2e/lemma_second_machine.sh` with profile `m4` (bead N12-35) re-checks dominance bundles of the M4 family
+answers. For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-32"), `step`
+(`T-32/<fixture-or-mutant>`), `event`, the exact command line, exit code, wall time, the number of pieces and
+whether they cover the joint product, the outcome pairs found with their measure under the declared law (the
+fixture's gain 1/5), both absolute verdicts, the bundle's BLAKE3 on each machine, the expected and observed
+verdict, and on a mismatch the first failing piece (its cell, branch combination and pair) with the path to
+reproduce.
 
 ### Known answers and negative controls
 

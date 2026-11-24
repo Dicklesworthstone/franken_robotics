@@ -1,14 +1,14 @@
 ---
 key: "ART-L9"
-title: "golden fixture L.9: the scripted agent session over MCP, run against frob-mcp in process and through frobd --mcp"
+title: "golden fixture L.9: the scripted agent session over MCP, run on frob-mcp in process and through frobd --mcp"
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "tether", "frob-mcp", "frob-cli", "frob-conformance", "solid", "test", "e2e", "gate"]
+labels: ["m3", "tether", "frob-mcp", "frob-cli", "frob-conformance", "solid", "test", "e2e", "gate", "review-notes-open"]
 parent: "WP-26"
-deps: ["NJL-08", "NJL-09", "BD-023", "BD-210", "BD-298", "NJL-05", "NJL-07", "STD-E2E"]
+deps: ["BD-023", "BD-210", "BD-298", "BD-304", "NJL-05", "NJL-07", "NJL-08", "NJL-09", "STD-E2E"]
 needs: []
-related: ["BD-138", "BD-258", "BD-295", "BD-299", "BD-304", "BD-313", "BD-373", "BD-140", "NJL-02", "NJL-06", "ART-L1", "ART-L3", "ART-L4", "ART-L6", "ART-L7", "ART-L8"]
+related: ["BD-138", "BD-140", "BD-258", "BD-295", "BD-299", "BD-313", "BD-373", "NJL-02", "NJL-06"]
 gates: ["GATE-TETHER-12"]
 plan_refs: ["Appendix L.9", "§32.3 (ADR-TETHER-03, -04, -05)", "§32.5", "§32.11", "§32.12.2", "§32.12.4", "§32.12.5", "§32.12.6", "§32.12.9", "§32.13", "§32.19", "§32.21 (GATE-TETHER-12)"]
 ---
@@ -87,12 +87,23 @@ The session makes nine `session_focus` calls and visits seven task clusters (the
 3. *Hosted by the daemon* (`frobd --mcp`, streamable HTTP bound to 127.0.0.1; a bearer token in the
    `Authorization` header maps to the session's capability token). All steps run in one process.
 
+**Each lane in its own root** (DESIGN). Every lane runs in its own scratch root: its own daemon state root,
+job ledger, namespace and test campaign. Reason: idempotency keys are scoped to (principal, verb), so lanes
+sharing one ledger under the specimen's keys would hand lane 3 the stored receipts of lane 2
+(`idempotent_replay: true`) and the comparison would compare a receipt with itself; and a second committed
+qualification request in one campaign would be request 2 at level 0.05/6, not the specimen's request 1. The
+test campaign of each root is opened and closed with the admin actions of `eval.ledger` as NJL-09 specifies
+(on the synthetic claim family while OPEN-ARENA-3 is undecided).
+
 **Comparison of lanes** (`session.expect.json`). For every step that ran in two lanes, the envelopes agree on
 `verb`, `ok`, `exit`, `result`, `refusal`, `evidence`, `bound`, `warnings` and `next_actions`, after removing
-session and job identifiers, wall times and cost. For the exact half this is byte equality of the canonical
-`result`. For the simulated half it is equality as well, because both lanes submit the same request under the
-same seed protocol to the same daemon at determinism class D2: a world's digest depends on its address and
-identities, never on which process asked.
+session, job and campaign identifiers, wall times and cost. For the exact half this is byte equality of the
+canonical `result`. For the simulated half it is equality as well, because both lanes submit the same request
+under the same seed protocol to the same daemon build at determinism class D2: a world's digest depends on its
+address and identities, never on which process asked. Exception: steps B12 and B13 consume each lane's own
+sealed clusters, so they are compared on their exact fields (schema, `index: 1`, `alpha_i`, `alpha_spent`,
+`units_used`, the sealed-field list, the flags, the evidence class) and not on the decision, the receipt hash or
+the bundle root; B14 is compared on its verdict, entry count and class.
 
 **Session-wide rules this bead asserts** (rules 1 to 3 are also asserted per step by NJL-08, rules 4 to 11 by
 NJL-09; here they are checked across the whole session).
@@ -103,7 +114,7 @@ NJL-09; here they are checked across the whole session).
 | 2. Inner and outer sets are different answers | The design of A12 lies in an inner cell of A9; no later step treats an unresolved cell as a candidate |
 | 3. A minimum needs a matching lower bound | `attained` is true only in A9 |
 | 4. A long tool returns a handle | Every `run` tool returns within its `sync_wait_ms` plus 500 ms with a result or a handle; a handle carries progress with a denominator; after a killed connection `job_find` with the step's key returns the job, with one charge |
-| 5. A certified static answer does not make the robot walk | Envelopes of the mission steps carry `claims: ["Proof"]`; envelopes of search and study steps never do |
+| 5. A certified static answer does not make the robot walk | The envelopes of the two synthesis answers (A7, A9) carry `claims: ["Proof"]`; envelopes of search, shrink, attribution and study steps never do |
 | 6. A counterexample is shrunk before it is argued about | The fork of B5 is made on the world of B4, not on the unshrunk world of B3 |
 | 7. Attribution is interventional and labelled | The attribution is class Estimated; a mid-episode structural intervention is refused with `FROB-REF-581` |
 | 8. An edit puts evidence in question, by read set | The mission answer of A9 is inherited in B9; the dynamic results are not |
@@ -159,8 +170,10 @@ fixture sessions labelled `synthetic`; the real server over the in-memory transp
 - `lane_compare_ignores_only_listed_fields`: a planted difference in `result` fails; a difference in cost,
   wall time or job identifier does not.
 - `session_budget_identity`: on the specimen's numbers, 1,800 − (212 + 61 + 240) = 1,287 GPU-seconds.
-- `claims_by_step`: mission steps carry Proof; search, shrink, attribution and study steps do not; the receipt
-  carries Design comparison.
+- `claims_by_step`: the synthesis answers A7 and A9 carry Proof; search, shrink, attribution and study steps do
+  not; the receipt carries Design comparison.
+- `lanes_use_separate_roots`: the lane plan gives three distinct state roots; a planted plan that runs lane 3 on
+  lane 2's root is rejected before any request (it would compare stored receipts with themselves).
 - `flags_on_exporting_steps`: every step whose verb exports an artifact has the three flags, all false; a
   recorded envelope with a missing flag fails.
 - `no_imported_text`: a recorded session containing the planted string in a `next_actions.command` fails.
@@ -170,15 +183,18 @@ fixture sessions labelled `synthetic`; the real server over the in-memory transp
 
 `scripts/e2e/art_l9_mcp_session.sh` (header: `bead=ART-L9 milestone=M3 labels=golden,appendix-l,mcp,tether
 gates=GATE-TETHER-12 seed=901 needs=cpu,cuda,mcp,frobd plants=lane-diverges,wait-overrun,focus-grants-scope`).
-Steps: (1) set up the scratch root, the fixtures of artifacts L.1, L.3 and L.4, a test campaign and the
-poisoned-name design; (2) lane 1: start `frob-mcp` over stdio with no daemon, run `frob-mcp-drive` on the
+Steps: (1) set up one scratch root per lane, each with the fixtures of artifacts L.1, L.3 and L.4, a test
+campaign opened under an administrative session (`frob eval ledger --open --task t:kitchen-tray@88c1…
+--world-family <synthetic family> --key l9-open --json`, as NJL-09 does) and the poisoned-name design; (2) lane 1: start `frob-mcp` over stdio with no daemon, run `frob-mcp-drive` on the
 CPU-tier subset, assert the in-process statement and the typed refusals; (3) lane 2: start `frobd`, run the full
 step file over stdio; (4) lane 3: start `frobd --mcp` on a loopback port, run the full step file over HTTP with
 the bearer token; (5) run the part beads' assertions on the recordings of lanes 2 and 3; (6) compare the lanes
 step by step (`e2e_assert_digest_eq` on canonical results); (7) the session-wide rules, one read of the resource
 `frob://docs/clusters` compared with the focused lists, and the budget identity (`e2e_assert_num`, exact); (8)
 the wire-cancel and kill checks of rule 4, each followed by `job_find`; (9) the full replay under the same keys;
-(10) the search for the poisoned string; (11) the offline `frob-verify`; (12) `frob-golden check --artifact L9`.
+(10) the search for the poisoned string; (11) the offline `frob-verify`; (12) close each lane's test campaign
+(`frob eval ledger <campaign> --close --key l9-close --json`) after the sealed-read refusals; (13) `frob-golden
+check --artifact L9`.
 Plants: `lane-diverges` (the hosted server patched to alter one result) must fail step (6); `wait-overrun` (a
 tool that sleeps 2 s past its wait) must fail the gate metric; `focus-grants-scope` (a server that adds a scope
 on focus) must fail rule 1. The log (`target/e2e-logs/art_l9_mcp_session/<utc>.ndjson`, with its transcript
@@ -218,8 +234,11 @@ pointer and the paths of both recordings; refusals with code and first repair; s
 - The specimen's introduction says the agent changes focus eight times; the transcript has nine `session_focus`
   calls. The step file follows the transcript. Recorded in the unit's coverage file.
 - The specimen's token has six scopes, fewer than a per-cluster scope rule would require for the tools called;
-  the script opens the session with the union computed from the registry and logs the difference (see
-  NJL-08). Whether broader scopes imply the missing ones is the capability bead's decision.
+  the script opens the session with the union computed from the registry and logs the difference (metric
+  `scopes_beyond_specimen`, as NJL-08 does). The capability bead BD-258 has decided the question: scopes are
+  named by the verb's own cluster, and only `<cluster>:run` and `<cluster>:write` imply `<cluster>:read`; no
+  scope implies another cluster's, so `design:write` does not cover `control_synth`, and the union is the
+  registry's.
 - OPEN-TETHER-2 (owner: Tether lead; blocks GATE-TETHER-12): whether agent harnesses act on catalog-changed
   notifications. The script re-lists after every focus and also checks the tag filter, so it passes under the
   fail-closed default (static clusters by launch flag plus the compatibility tool).

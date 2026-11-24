@@ -1,0 +1,245 @@
+{
+ "round": 3,
+ "slice": "F-UF-2",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "FD-FSIM-31",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Post phase called `scripts/train/toolchain_train.sh --dry-run` without the required `--to` (NF-02's interface is `--to <channel> [--dry-run]`) and NF-02 was only related: NF-02 moved to deps; the two new feature-off matrix rows now run on every column and on a stable release through N33c-01's harness (`toolchain_matrix.sh --sets … --channels …`, probe sets in its probe form), then the dry matrix on T with `--to <T> --dry-run`."
+  },
+  {
+   "bead": "FD-FSIM-33",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Post phase called `frob sim run --tier referee --json` with no design, no `--key` and an authored-wrench input that no `sim.run` row has before N26a-02 (M3, a later bead); the step is removed from this script (KNOWN_DRIFTS 7, 8) and the post phase states that the GATE-WS-06 probe and its mutant carry the adoption; the verb-level check is requested of N26a-02."
+  },
+  {
+   "bead": "FD-FSS-01",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The coplanarity threshold was 'a stated threshold' and the test cited an undefined 'ratio 0.0589': now V < 1% (TARGET) of d³ with d the largest pairwise distance, the importer's own §19.5.1 rule (FROB-REF-302, CX-185); added a near-coplanar failing case (V = 1/120 m³, V/d³ = 0.0029). The not-needed close set the row to 'a closed state', which `frob.upstream/1` cannot hold (statuses open, landed, adopted): now `status = \"not-needed\"`, requested of BD-037, with `open` plus the verdict in PILOT.md until the schema admits it. Also completed against BD-037's fixture timing rule: step 0 replaces `observed_at = \"pending: inspection pilot\"` with the exporting commit of the inspected package (ending the row's exemption), and `pin_state = \"unpinned\"` stays until NFp2-03 enters a package version into the import contract."
+  },
+  {
+   "bead": "FD-FSYM-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Post phase ran `frob algebra irreps --json` with no group source; now `frob algebra irreps <family> --json` over the gate's families C1…C12, D1…D12, each also xC2, and S4, as the algebra.irreps row spells them."
+  },
+  {
+   "bead": "FD-FSYM-04",
+   "kinds": [
+    "deps"
+   ],
+   "what": "N12-16 was listed both in deps and in related; removed from related."
+  },
+  {
+   "bead": "FD-FSYM-05",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Post phase runs `frob mission synthesize … --strategy linkage` on N25d-19's fixtures, which the bead did not depend on (KNOWN_DRIFTS 8): added dep N25d-19 (same milestone, M4; it brings BD-361's lane; no cycle)."
+  },
+  {
+   "bead": "FD-FT-01",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Post phase runs `spark probe`, `spark fingerprint` and `spark check`, whose implementing beads BD-017, BD-029 and N21b-32 (all M0) were not dependencies: added (no cycle)."
+  },
+  {
+   "bead": "FD-FT-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the requests of F-U23a-1 and H-verbs-2: GATE-CORTEX-02 runs as Gauntlet entries (`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --features gauntlet-mutations --test g2_parity -- GATE-CORTEX-02`), not the withdrawn `frob eval run --battery cortex-grad`. The three-way comparison is now a case `ft-device` this bead registers in BD-196's `cortex_grad` module. Added deps BD-196 (the battery) and N23a-14 (`train.start --trainer`), both M2, which the script calls."
+  },
+  {
+   "bead": "FD-FTUI-01",
+   "kinds": [
+    "complete"
+   ],
+   "what": "BD-037's fixture timing rule makes frankentui's row `pin_state = \"unpinned\"` with `observed_at` the head read on the day and gives the item's own bead the duty to re-run the fixture at the sibling's first admission and clear the field; the bead said nothing of it. Added: after the pilot N33c-23 (a dependency) admits frankentui, this bead re-runs the fixture at the admitted pin, records that commit and signature, and clears `pin_state`."
+  },
+  {
+   "bead": "FD-FTX-01",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Same duty under BD-037's fixture timing rule for franken_textiles: at its first admission (the pilot N33c-28, INT-FTX-01, a dependency) the fixture is re-run at the admitted pin, `observed_at` updated and `pin_state` cleared."
+  },
+  {
+   "bead": "FDEF-01",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Applied S01's request: priority 2 -> 0 (M0 bead, M0 default 0; the M0 exit review BD-044, priority 0, depends on it)."
+  },
+  {
+   "bead": "FDEF-02",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Applied S01's request: priority 2 -> 0 (M0; BD-044 depends on it)."
+  },
+  {
+   "bead": "FDEF-03",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Applied S01's request: priority 2 -> 0 (M0; BD-044 depends on it)."
+  },
+  {
+   "bead": "FDEF-04",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Applied S01's request: priority 1 -> 0 (M0; BD-044 depends on it)."
+  },
+  {
+   "bead": "FDEF-05",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Applied S01's request: priority 2 -> 0 (M0; BD-044 depends on it)."
+  },
+  {
+   "bead": "NF-03",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Post phase ran `frob sim run g1 --tier referee --seconds 2 --json` with no `--key` (KNOWN_DRIFTS 5) and without a dependency on sim.run's M0 owner (KNOWN_DRIFTS 8): added `--key nf03-g1` and dep BD-024 (M0, no cycle); the post phase now says NF-05's script runs it as a stage, so the re-check after the switch-over has a runner."
+  },
+  {
+   "bead": "NF-04",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Applied S05's request: the acceptance line 'Here, after NF-05: …' could only hold after NF-05, which depends on NF-04 (KNOWN_DRIFTS 7). Now: either landed (toolchain file names T, suite passes) or recorded blocked with the subprocess posture as design of record; row FD-FSYM-06 reads `landed` (or blocked); the switch-over conditions are asserted by NF-05 (step 5, `legs_are_adopted`) and re-checked by this bead's post phase, which NF-05's script runs as a stage. The verdict-agreement line is scoped to the landed case."
+  },
+  {
+   "bead": "NF-05",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Script called `frob sim run g1 … --json` and `frob spark probe --json` with no `--key` (KNOWN_DRIFTS 5) and without their owners as dependencies (the probe was a conditional 'skipped: capability absent' step; KNOWN_DRIFTS 8); added deps BD-024 and BD-017 (both M0, P0, no cycle), keys `tt-g1` and `tt-probe`, and the probe's required `--device`. Added: the script runs each moved leg's `--phase post` (FD-FMCP-01, NF-03, NF-04) as stages, `skipped: leg not moved` under candidate (b), so the legs' post-switch-over re-checks have a runner. Declined S01's request for priority 0 (see notes)."
+  },
+  {
+   "bead": "NF-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S06's request: Out list now names N33bp2-01 as the first pin move of FrankenSim (split from N33b-04 in round 2)."
+  },
+  {
+   "bead": "NF-07",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied F-U33c's and H-owners-1's requests: `frob-conformance probe g1-mass` (no such binary, BD-025) is now `cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- g1-mass --json`, the example declared (N33c-36's file, N33c-41's subcommand). The second roll-up via `frob design check --json` had no design and no mass stage (N14b-34: the roll-up is a weight comparison, not a design.check stage): now the probe is compared with N14b-34's profile file `g1-reduced-30.toml` (sum, names, omissions), and the cited reduction is asserted on the envelope of `frob sim run g1 … --key nf07-pre-<run>`; the post run uses a distinct key and compares digests (KNOWN_DRIFTS 5)."
+  },
+  {
+   "bead": "NF-08",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Post phase ran `frob sim run --tier referee --json` on an undefined two-body fixture, with no design, no `--key`, and no dependency defining sim.run or a multi-body scene (KNOWN_DRIFTS 5, 7, 8). The 40 m aisle case is now the unit test `aisle_relative_pose_40m` through the airlock (owner-limit `FROB-REF-792` at the pin, agreement with frob-lie after adoption); the script names the probe command (`foundation_probe -- se3-dexp`, N33c-42) and runs INT-FSIM-02's admission lane (BD-032) with the airlock's call count, keeping the `not exercised` rule. The verb-level form is stated as not claimed."
+  },
+  {
+   "bead": "NF-09",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Script ran `frob actuator check --json` with no card or design 'on a design with one correct and one reversed gear', one call for two verdicts. Now N15b-12's `--bind` form on N15b-13's `witness-rig:j1` with a gear card (exit 0, `direction_witness: pass`) and `frob design check quad-reversed-knee --stages 1 --json` (exit 3, FROB-REF-108), the fixtures of N15b-13 (GATE-SINEW-10's e2e bead, added as dep, M1, no cycle); phase post runs N15b-13's script as a stage for the GATE-SINEW-10 re-run the switch-over names (N15b-13 alone records the gate)."
+  },
+  {
+   "bead": "NF-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script's `frob sim run --tier batch-cpu …` had no design or scene: now N18b-45's hand instance (`arc-arm.fbot` with `arc-hand.fscene`, `--profile strict --seconds 0.01`, as N33c-44 runs it; reached through N33c-44), and the audit gains `--p 1`. Background said 'this bead proposes P3', contradicting its Identifier section: now N33c-47 assigns FD-FSIM-37 at P3."
+  },
+  {
+   "bead": "NF-11",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Script's 'runs the two probes' now names `cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- sos-bounds --json` (N33c-45; no frob-conformance binary, BD-025); `frob prove verify --json` had no bundle and its owner BD-027 was not a dependency (KNOWN_DRIFTS 8): now `frob prove verify <bundle>` on the bundle `fs_sos_value_is_a_proposal` writes, dep BD-027 added (no cycle)."
+  },
+  {
+   "bead": "NF-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Background said 'this bead proposes P3', contradicting its Identifier section and N33c-47: now N33c-47 assigns FD-F3D-02 at P3."
+  },
+  {
+   "bead": "NFp2-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said N16bp1-01 'is asked to expose' the `record_rebaseline` example target; N16bp1-01 now exposes it (its step 7): stale request removed."
+  },
+  {
+   "bead": "NFp2-02",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Applied F-U33c's request: cites N33c-25's drone-lane pilot record (`gated_beads = [\"NFp2-02\"]`) as its pilot; N33c-25 moved from related to deps; preconditions and the script's `preconditions` step run `cargo run -p frob-conformance --example pilots -- fundable --bead NFp2-02 --json`, expecting `Fundable`; `Blocked{falsifier-holds}` stops before any write and prints the record's fallback (operator-declared scale, `reality: no-claim`) and KILL-INGEST; acceptance and `precondition_guard` cover the case."
+  },
+  {
+   "bead": "NFp2-03",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Aligned with FD-FSS-01: the not-needed case is the row reading `not-needed` (or `open` with the verdict in `PILOT.md` while BD-037's schema lacks the value), not 'closed \"not needed (pilot)\"', which `frob.upstream/1` cannot hold. Completed against BD-037's fixture timing rule, which FD-FSS-01 leaves to this bead: entering the package version into the import contract is the sibling's first admission, so `observed_at` becomes the exporting commit and `pin_state` is cleared (also in the not-needed case); acceptance, `not_needed_case_records_nothing` and the `adopt` step check it."
+  },
+  {
+   "bead": "NFx-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said `--process` on `foundry.optimize` was 'requested of VERBS-foundry'; the row now carries `--process <card>` per part (KNOWN_DRIFTS 12): stale request removed."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-037",
+   "what": "`frob.upstream/1` has statuses open, landed, adopted only; FD-FSS-01 (conditional) must be closable when its pilot finds nothing missing, and NFp2-03 reads that case. Please admit `status = \"not-needed\"` on a conditional row only (FD-FSS-01 the one row allowed it, its `fixture` holding PILOT.md citing the pilot record), exempt such a row from 'fails at its recorded commit', and name it in `upstream_unpinned_rows_named` / the loader test."
+  },
+  {
+   "bead": "N26a-02",
+   "what": "FD-FSIM-33 removed from its script the verb-level wrench check that needs your disturbance input. When the authored external wrench exists, your script could run: a one-body referee fixture (2 kg, inertia diag(0.1, 0.2, 0.3) kg·m², at rest, R = R_z(90°)) with a body-frame force (1, 0, 0) N: world momentum change along +y, never +x (the mixed-frame hazard of FDEF-05)."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Unchanged (correct as written): FD-FT-03, FDEF-06, NFp1-51, NFp1-52. Declined S01's request to set NF-05 to priority 0: BD-044 (M0 exit, priority 0) holds NF-05 in `related` on purpose, not in deps (its `m0_upstream_exempt_listed` test and Considerations: the train waits on the P1 legs NF-03 and NF-04 and is exempt under N41-16 check 3(b)), so no priority-0 bead waits on it and P1 stands. Applied all other requests addressed to this slice (S01 x5, S05, S06, F-U33c x2, H-owners-1, F-U23a-1/H-verbs-2 on FD-FT-02). Graph: `tools/graph_check.py cycles` reports 0 after all dependency additions; all 33 files parse (front matter, JSON lists, seven sections, no key in both deps and related)."
+}

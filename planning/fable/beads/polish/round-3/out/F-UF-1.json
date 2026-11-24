@@ -1,0 +1,189 @@
+{
+ "round": 3,
+ "slice": "F-UF-1",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "FD-ASUP-01",
+   "kinds": ["correct", "deps", "e2e-logging"],
+   "what": "S09 request applied in part. Applied: STD-E2E moved from related to deps (its script sources the helper); both phases call the registered form `frob doctor --section upstream --json`, logged not-run with the key it waits for (BD-022 or BD-037) while the binary or the row does not exist; the four mirror identifiers are recorded beside their repositories in the order of the row's `repo`, which BD-037's test `upstream_p0_rows_adopted` checks. Not applied: 'writes its own [[item]] row'. BD-037, the owner, was settled in this round the other way (it enters the FD-ASUP-01 row from this bead's closing record field for field and tests exactly that), and the bead already agrees with it; the fixture it opens itself was already in place."
+  },
+  {
+   "bead": "FD-FDGR-01",
+   "kinds": ["correct", "complete"],
+   "what": "BD-037's fixture timing rule names this item among the seven whose sibling has no pin at M0 (`pin_state = unpinned`, fixture written against the head of the day) and gives the item's own bead the duty to re-run the fixture at the sibling's first pin and clear the field; the bead said only 'fails at the pin'. Added the rule to the fixture paragraph (first pin: N33c-25's M3 revision, else this item's own pin move) and to the registry acceptance line."
+  },
+  {
+   "bead": "FD-FKER-01",
+   "kinds": ["correct", "deps", "tests"],
+   "what": "S04 request applied: `suite.dev-only` no longer exists; a frob-core -> franken-kernel edge fails as BD-003's `L-4.foundation-confined` on the FD-FKER row, case 1 is an ADR (docs/adr/) changing that row's uses, and the negative control expects `L-4.foundation-confined` and no other finding. Also: phase post called `frob evidence trace --json` with no claim identifier (the row's positional input) and the bead did not depend on BD-095, which implements the verb: command corrected, dep BD-095 added (M1, no cycle)."
+  },
+  {
+   "bead": "FD-FLN-01",
+   "kinds": ["correct", "complete"],
+   "what": "Same BD-037 fixture timing rule as FD-FDGR-01: franken_lean is first admitted at M5 by BD-380 (a dependency), so phase pre re-runs the fixture at that first pin, re-records observed_at and the four signatures, and the bead clears `pin_state`; added to the fixture paragraph and the registry acceptance line."
+  },
+  {
+   "bead": "FD-FLN-02",
+   "kinds": ["correct", "complete"],
+   "what": "Same BD-037 fixture timing rule (`pin_state = unpinned` until BD-380's first pin; this bead re-runs the fixture there and clears the field); added to the fixture paragraph and the registry acceptance line."
+  },
+  {
+   "bead": "FD-FMCP-01",
+   "kinds": ["correct"],
+   "what": "Phase post asserted that the row reads `adopted`, which needs INT-FMCP-01, run by BD-023, a bead that depends on this one (KNOWN_DRIFTS 7; the acceptance line already allowed `landed`). The phase now accepts `landed` with the new receipt until the gate's first run and logs the gate step not-run with the key BD-023."
+  },
+  {
+   "bead": "FD-FSIM-02",
+   "kinds": ["correct", "deps"],
+   "what": "Left incoherent by the round-2 split: phase post still required the row to read `adopted` and 'the gates named' (GATE-FID-01) to be re-run, both of which are NFp2-01's, a bead after this one. Phase post now runs the referee-side re-runs and expects `landed` (`adopted` once NFp2-01 has run). Its script calls `sim.run --fixture` and re-runs the thin-barrier and sill fixtures, neither reachable from its deps: added N24b-03 and BD-086 (both M1, no cycle)."
+  },
+  {
+   "bead": "FD-FSIM-03",
+   "kinds": ["deps", "self-contained"],
+   "what": "Phase post runs `frob sim run --tier referee --fixture traction/sphere_on_heightfield`, but the bead reached neither the fixture registry (N24b-03) nor the referee step (BD-080): both added as deps (M1, no cycle); stated that this bead registers that fixture."
+  },
+  {
+   "bead": "FD-FSIM-04",
+   "kinds": ["correct", "deps"],
+   "what": "Phase post called `frob sim run --tier referee --json` (no fixture, no key) and a bare `frob design check`. Now `frob sim run --fixture <parallelogram|four-bar> --tier referee --seconds 2 --seed 5 --key fd04-<fixture> --json` and `frob design check <design> --json`, asserting what each output has (the run's `exact` label and closure residuals; stage 3 loop assembly and mobility 1; design.check's `closure` block is the co-design closure, not the loop). Dep BD-110 added (design.check, M1)."
+  },
+  {
+   "bead": "FD-FSIM-06",
+   "kinds": ["correct"],
+   "what": "The before/after digest comparison ran `frob sim run g1 ...` without a key; two compared runs need distinct keys or the second returns the first one's receipt (KNOWN_DRIFTS 5): keys fd06-g1-before and fd06-g1-after."
+  },
+  {
+   "bead": "FD-FSIM-08",
+   "kinds": ["correct", "deps"],
+   "what": "The item retargets the `PortSystem` adapter, which N33a-15 builds (M1) and which was only related: moved to deps, Scope names it. Phase post asked `frob doctor` which verbs the build has (doctor reports pins and devices; `frob capabilities --verb <name>` reports verbs) and asserted a contract version and an energy balance that neither design.check nor module.check prints: now `frob capabilities --verb ...`, positional arguments (`quad-mammal`, a leg module), assertions on fields the rows have (no 108/101 finding, `ports_ok`), the version asserted by the fixture test."
+  },
+  {
+   "bead": "FD-FSIM-10",
+   "kinds": ["correct", "self-contained"],
+   "what": "Spoke of 'the baseline registry of frob-conformance', which does not exist. The artifact is the oracle register crates/frob-conformance/registry/oracles.toml (N38a-04), whose held-out row `fs-g1-train-ppo-update` only a passing run of BD-034's test clears; switch-over text, acceptance line and test now name the row, its fields, the role `comparator:ppo-update` (DESIGN) and the pin_move record."
+  },
+  {
+   "bead": "FD-FSIM-11",
+   "kinds": ["self-contained"],
+   "what": "Named the register it changes: row `fs-mbd-planar-drive` of crates/frob-conformance/registry/oracles.toml, cleared only by the passing run of BD-033's test (held_out emptied, admission.status admitted, role `reference:planar-drive`, DESIGN, and a pin_move record)."
+  },
+  {
+   "bead": "FD-FSIM-12",
+   "kinds": ["split", "scope", "deps", "correct", "tests", "e2e-logging"],
+   "what": "S52 request applied by the split it proposed. The re-baseline, GATE-FID-01 and the GATE-FID-03 coverage re-issue need BD-212, N16bp1-01 and BD-213, none of them dependencies: they moved to the new bead NFp3-11 (cause `upstream:FD-FSIM-12`, new strata, no frozen envelope edited). This bead keeps the upstream change, delegation, the pin move and the referee-side re-runs, leaves the row `landed`, bumps the referee kernel version with delegation (so the strata are new), and replaces the unimplementable 'delegation on and off within the fidelity envelope' by a pre/post comparison of the wheel-over-lip fixture under distinct keys. Script: `sim.run` with seed and keys, `telemetry energy <run>`; ledger and coverage reads left to NFp3-11. gates now INT-FSIM-07 only."
+  },
+  {
+   "bead": "FD-FSIM-13",
+   "kinds": ["split", "scope", "deps", "correct", "risks", "e2e-logging"],
+   "what": "Same defect as FD-FSIM-12 without a request: its script called contact.capacity, contact.audit, fidelity.coverage and sim.run, and its acceptance required GATE-TRAC-06 and GATE-FID-03, with no dependency on any bead that delivers them. The M2 side moved to the new bead NFp3-12; this P1 item keeps the upstream change, the pin move, INT-FSIM-04 at the new limit and the 22-contact run, and leaves the row `landed`. Deps BD-080 and N24b-03 added for that run (`--fixture traction/plate_on_22_points`, seed, keys; the positional fixture form was a ruled-out spelling). `fidelity coverage` without --class was 802. Added the case in which only form (ii) lands (the single-body fixture still refuses; row stays landed). gates now INT-FSIM-04 only."
+  },
+  {
+   "bead": "FD-FSIM-14",
+   "kinds": ["correct"],
+   "what": "Acceptance 'a performance record without a build-identity receipt is refused by the disclosure check' pointed at BD-216 (M2) from an M1 bead; restated on what its dependency delivers: N33a-08's `may_cite` answers `dev-build-identity` for a Performance or Parity gate under the development salt."
+  },
+  {
+   "bead": "FD-FSIM-19",
+   "kinds": ["correct", "tests"],
+   "what": "F-U26b request applied: phase post names the selector `nemesis.splitting.estimator = ours | upstream` (N26bp1-01; set per call in a scratch configuration, one binary) and asserts each result's `estimator` (`frob-nemesis`, `fs-uq`), so a call that silently ran the other estimator fails."
+  },
+  {
+   "bead": "FD-FSIM-20",
+   "kinds": ["correct"],
+   "what": "The script paragraph had the script itself record GATE-GAIT-01 and -02 (KNOWN_DRIFTS 9). It now stops at the receipt; the referee-route values are entered afterwards by a session that did not implement the work, in the rows of the gates' recorder beads N22a-38 and N22a-39."
+  },
+  {
+   "bead": "FD-FSIM-21",
+   "kinds": ["correct"],
+   "what": "H-verbs-6 request applied in the form of the bead that owns the fixtures: `--seeds 1..100` is gone, but a loop over `--seed` would not reproduce the brownout fixture's 100 draws of source voltage, resistance and demand, which N15b-30 keeps in one manifest and runs as `frob task fixture brownout-trials --tier referee --key ...`. The script now uses N15b-30's two `task.fixture` forms with keys of its own (fd21-step, fd21-brownout)."
+  },
+  {
+   "bead": "FD-FSIM-22",
+   "kinds": ["correct"],
+   "what": "`frob sim run <finalist fixture> --scene ...` put a fixture in the positional slot; the positional is the design, and it is the spelling that admits `--scene`: now `<robot design>`, with the reason."
+  },
+  {
+   "bead": "FD-FSIM-23",
+   "kinds": ["correct", "complete", "tests"],
+   "what": "Phase post ran `frob ground identify --json` 'once per route' with no dataset, no key, no stage and no way to choose a route. Now two calls with the positional dataset, `--stage actuators` (or the second call would fit the next stage), distinct keys, and the route chosen by the existing `--windows` option: a definition is the windowed route, the new value `raw` (DESIGN, requested of VERBS-ground and BD-391) is the streaming entry, FROB-REF-724 naming FD-FSIM-23 where the entry is absent. One unit test for that refusal."
+  },
+  {
+   "bead": "FD-FSIM-24",
+   "kinds": ["correct"],
+   "what": "`frob ground identify --json` and `frob ground kit build ...` lacked the positional dataset, the stage and the idempotency keys of run verbs; added (`--stage actuators`, whose pass C runs the ensemble lane, N30a-23; keys per machine and run)."
+  },
+  {
+   "bead": "FD-FSIM-25",
+   "kinds": ["self-contained"],
+   "what": "Phase post said 'the as-built ingestion verb (the verb BD-395 defines)'; it is `frob ground ingest <scan bundle> --design <id> --task-family tf:none --key ... --json`, now written out with its two keys and the fields asserted."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "NFp3-11",
+   "why": "split from FD-FSIM-12 (request of S52): the fidelity side of its switch-over. One re-baseline of the fidelity ledger under the cause `upstream:FD-FSIM-12` (new strata, document docs/adr/ADR-FID-01-rebaseline-FD-FSIM-12.md, record, freeze), GATE-FID-01 read on the new strata, GATE-FID-03's coverage table re-issued and compared by cause (`fixed-witness-gate` must not rise), row moved to adopted; cases for adoption before the M2 freeze and for FD-FSIM-02 in the same pin move. Deps BD-212, BD-213, FD-FSIM-12, N16bp1-01, STD-E2E."
+  },
+  {
+   "bead": "NFp3-12",
+   "why": "split from FD-FSIM-13: the M2 side of its switch-over. The capacity read three ways as one number C; the capacity expectations of the Traction scripts restated as the rule m <= C in place of the literal 21 (they are false by design once the airlock opts in to a larger capacity); N18b-24's script as a stage; the capacity-bias row of GATE-TRAC-06; GATE-FID-03's coverage re-issued and compared by cause (`contact-cap` must not rise); under form (iii) the upstream patch model as a registered patch reduction; row moved to adopted. Deps BD-213, FD-FSIM-13, N18b-24, STD-E2E."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "FD-FTUI-01",
+   "what": "BD-037's fixture timing rule lists this item among the seven with `pin_state = unpinned`, and gives the item's own bead the duty to re-run its fixture at the sibling's first admission and clear the field. The bead does not mention it (FD-FLN-01, FD-FLN-02 and FD-FDGR-01 now do). The same holds for FD-F3D-01, FD-FTX-01 and FD-FSS-01 (the last also `observed_at = pending: inspection pilot`)."
+  },
+  {
+   "bead": "FD-F3D-01",
+   "what": "As for FD-FTUI-01: state BD-037's `pin_state = unpinned` rule and that this bead re-runs the fixture at franken_threed's first pin and clears the field."
+  },
+  {
+   "bead": "FD-FTX-01",
+   "what": "As for FD-FTUI-01: state BD-037's `pin_state = unpinned` rule and that this bead re-runs the fixture at franken_textiles' first pin and clears the field."
+  },
+  {
+   "bead": "FD-FSS-01",
+   "what": "As for FD-FTUI-01: state BD-037's `pin_state = unpinned` rule (and its `observed_at = pending: inspection pilot` exemption) in the bead."
+  },
+  {
+   "bead": "NFp2-01",
+   "what": "FD-FSIM-12's fidelity switch-over is now NFp3-11 (cause `upstream:FD-FSIM-12`); the Out list and the consideration that say FD-FSIM-12 'has the same step' should name it. For both items landing in one pin move, NFp3-11 states: measure the battery once (look for stored pairs at the new referee kernel version before running), each item its own document and record in landing order, and freeze once after both records exist (the first to run stops with `freeze waits for <the other cause>`). Please state the same, or NFp2-01 freezes before NFp3-11's record exists."
+  },
+  {
+   "bead": "N16bp1-01",
+   "what": "Add NFp3-11 to the users of the `record_rebaseline` example (`--gate GATE-FID-01 --cause upstream:FD-FSIM-12`), and let the acceptance line and `rebaseline_once_per_cause` cover `upstream:FD-FSIM-12` as they cover `upstream:FD-FSIM-02` (accepted once, independent of the other cause)."
+  },
+  {
+   "bead": "BD-213",
+   "what": "NFp3-11 and NFp3-12 re-run the GATE-FID-03 entry at a new pin and compare the new `referee_class_coverage` rows with the rows at the old stack-lock digest, by cause. Please state that rows at an older digest are kept as history (never overwritten by a regeneration), and that the two switch-over beads are users of the table."
+  },
+  {
+   "bead": "N18b-20",
+   "what": "`contact_capacity.sh` and its tests assert the referee cap as the literal 21 ('prone 24 does not fit', 'humanoid prone 40 does not fit', exit 2). After FD-FSIM-13 the airlock may opt in to a larger capacity and those assertions are false by design. Please write them as the rule: a class fits iff its maximum <= `referee_cap` as the verb reports it (same expectations at 21). NFp3-12 otherwise restates them at the switch-over."
+  },
+  {
+   "bead": "N18b-21",
+   "what": "`patch_reduction.sh` asserts that the humanoid crawl refuses with FROB-REF-721 on the referee; that holds only while its 40 contacts exceed `referee_cap`. Please make the expectation conditional on the capacity read (721 above it, completes at or below it), as NFp3-12 states. Under form (iii) of FD-FSIM-13, NFp3-12 adds a row to registries/patch_reductions.toml for the upstream patch model with its bound: please confirm the row schema admits a sibling qualification fixture as the receipt."
+  },
+  {
+   "bead": "N18b-24",
+   "what": "Step 2 of `contact_capacity_audit.sh` quotes 'a referee cap of 21' in its expectations; NFp3-12 runs this script whole at the pin where FD-FSIM-13 is adopted. Please read the expectations from `referee_cap` (rule m <= C)."
+  },
+  {
+   "bead": "VERBS-ground",
+   "what": "FD-FSIM-23 adds the value `raw` to `ground.identify --windows` (the streaming entry of fs-assimilate on raw rows; a window definition stays the windowed route), answering FROB-REF-724 naming FD-FSIM-23 at a pin without the entry. Please add it to the row (extended by FD-FSIM-23, M5)."
+  },
+  {
+   "bead": "BD-391",
+   "what": "FD-FSIM-23 selects the identification route through your `--windows` option (`raw` = streaming entry, DESIGN) and expects the calibration record to name the route (`windowed` or `streaming`); please note the value and the record field where `--windows` is defined."
+  },
+  {
+   "bead": "N38a-04",
+   "what": "Two role names are now declared by upstream beads for the held-out rows when they are cleared: `comparator:ppo-update` (row `fs-g1-train-ppo-update`, FD-FSIM-10) and `reference:planar-drive` (row `fs-mbd-planar-drive`, FD-FSIM-11). Please list them among the role names other beads declare."
+  }
+ ],
+ "unchanged": 10,
+ "notes": "All five requests handled: three applied as asked (FD-FKER-01, FD-FSIM-12, FD-FSIM-19), two applied in the form the owning bead requires (FD-ASUP-01 keeps handing its row to BD-037; FD-FSIM-21 uses N15b-30's fixture form, not a seed loop). Most other changes are one defect class: a script calling a verb without its positional input, its key or a dependency on the bead that delivers it, and a post phase asserting `adopted` where a later bead adopts. Unchanged and checked against their verb rows, known answers and arithmetic: FD-FNP-01, FD-FSIM-05, -09, -17, -18, -26, -27, -28, -29, -30. The slice should be settled once the requests to N18b-20/21/24 and NFp2-01 are read."
+}

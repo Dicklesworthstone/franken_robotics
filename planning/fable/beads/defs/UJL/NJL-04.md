@@ -1,6 +1,6 @@
 ---
 key: "NJL-04"
-title: "frob-verbs: one name per verb: the alias lint, the retired-name table and the fifteen mechanisms with one owner each"
+title: "frob-verbs: one name per verb: the alias lint, the retired-name table, fifteen mechanisms with one owner each"
 type: "task"
 priority: 0
 milestone: "M0"
@@ -8,7 +8,7 @@ labels: ["m0", "tether", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-06"
 deps: ["BD-022", "NJL-01", "STD-E2E"]
 needs: []
-related: ["NJL-02", "NJL-03", "N16b-27", "N28c-29", "BD-137", "BD-313", "STD-TEST"]
+related: ["NJLx-51", "STD-TEST", "VERBS-actuator", "VERBS-algebra", "VERBS-analyze", "VERBS-artifact", "VERBS-autopsy", "VERBS-contact", "VERBS-control", "VERBS-cores", "VERBS-design", "VERBS-eval", "VERBS-evidence", "VERBS-experiment", "VERBS-explain", "VERBS-fidelity", "VERBS-fleet", "VERBS-foundry", "VERBS-gait", "VERBS-ground", "VERBS-job", "VERBS-mission", "VERBS-module", "VERBS-nemesis", "VERBS-operator", "VERBS-opt", "VERBS-phylum", "VERBS-policy", "VERBS-predict", "VERBS-prove", "VERBS-report", "VERBS-result", "VERBS-run", "VERBS-scene", "VERBS-sense", "VERBS-session", "VERBS-shield", "VERBS-sim", "VERBS-skill", "VERBS-solve", "VERBS-spark", "VERBS-store", "VERBS-study", "VERBS-task", "VERBS-telemetry", "VERBS-train"]
 gates: ["GATE-TETHER-02"]
 plan_refs: ["Appendix J (J.2 preamble, J.4)", "§32.6", "§32.5", "§27.14", "§26.12", "§28.10", "§24.12", "§29.8", "§29.12"]
 ---
@@ -83,8 +83,9 @@ Readings that follow from the table and bind implementers:
    computation; the output schemas differ, so the pair is not an alias.
 
 **What counts as an alias (the lint's four tests).** Semantics cannot be linted, so the rule is made mechanical:
-1. `retired-name`: no registry row may carry a name listed in `registries/verbs-retired.toml`.
-2. `same-handler`: no two registry rows may resolve to the same handler symbol in the generated table.
+1. `retired-name`: no registry row may carry a name listed in the retired-name table (below).
+2. `same-handler`: no two registry rows may resolve to the same handler symbol in the dispatch table that binds
+   handlers to rows.
 3. `same-schemas`: no two rows may declare the same pair of input and output schema identifiers.
 4. `surface-alias`: the CLI generator and the MCP registration may not attach a second name to a command or
    tool. A source scan of `frob-cli` and `surface/frob-mcp` fails on any `alias`, `visible_alias` or
@@ -94,7 +95,13 @@ A fifth test covers text an agent copies: `next-actions-registered`, over the go
 conformance suite, asserts that every `next_actions.command` and every registry `examples` entry starts with
 the CLI path of a registered verb.
 
-**The retired-name table (`registries/verbs-retired.toml`).** FACT (earlier drafts of the chapters, before
+**The retired-name table (the `[[retired_name]]` array of `registries/verbs.toml`).** DESIGN, settling a
+difference between two drafts: this bead had a separate file `registries/verbs-retired.toml` with `[[retired]]`
+rows; the registry bead N32a-02, whose build script runs the check (its lint `RL-03`), reads a `[[retired_name]]`
+table in the registry file itself. The table lives in the registry file under N32a-02's name, because the
+strict reader of that file is the one that must see it and a second file would be a second build input. Rows:
+`name`, `use` (a list of registered verbs, empty for a file name), `reason` (one sentence; N32a-02 is asked to
+admit the field). FACT (earlier drafts of the chapters, before
 the one-name pass): these second spellings appeared in drafts and were removed. The mapping to
 the registered verb follows the mechanisms table; where it is this bead's reading it is marked DESIGN.
 
@@ -113,7 +120,7 @@ the registered verb follows the mechanisms table; where it is this bead's readin
 | `policy.rs`, `contact.rs` | none: source file names, not verbs | The scan's false positives |
 
 ```toml
-[[retired]]
+[[retired_name]]
 name = "autopsy.fork"
 use = ["run.fork"]
 reason = "forks and their classification are owned by the replay chapter"
@@ -126,13 +133,17 @@ an unknown tool name is answered by the MCP library before any generated code ru
 "Unknown tool"), so no envelope exists there; this is the one sanctioned difference between the surfaces for
 unknown names.
 
-**Where it runs.** Tests 1 to 3 are in the build script of `frob-verbs` (a registry with an alias does not
-build). Test 4 is a unit test in each surface crate. Test 5 is in the conformance crate. No new `xtask`
-subcommand is added (the workspace keeps exactly six).
+**Where it runs.** Tests 1 and 3 are N32a-02's lint `RL-03` in the build script of `frob-verbs` (a registry with
+an alias does not build); this bead supplies the table's rows and the planted registries. Test 2 cannot run in
+the build script, which sees no handler: it is a unit test of `frob-verbs` over the dispatch table that binds a
+handler to each row (the handler bindings of the per-milestone surface beads, BD-137 from M1), and it runs in
+every build of `frob`. Test 4 is a unit test in each surface crate. Test 5 is in the conformance crate. No new
+`xtask` subcommand is added (the workspace keeps exactly six).
 
 ## Acceptance criteria
 
-- [ ] `registries/verbs-retired.toml` holds the rows of the table above; every `use` target is a registered verb.
+- [ ] The `[[retired_name]]` table of `registries/verbs.toml` holds the rows of the table above (twelve names);
+      every `use` target is a registered verb.
 - [ ] Each of the fifteen mechanisms is reachable under its registered name and under no other: the registry
       has exactly the verbs of the middle column for it.
 - [ ] Each of the four lint tests and the fifth check fires on its planted defect and names it (negative

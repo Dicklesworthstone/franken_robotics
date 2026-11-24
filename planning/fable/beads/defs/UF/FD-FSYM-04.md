@@ -6,9 +6,9 @@ priority: 2
 milestone: "M5"
 labels: ["m5", "suite", "lemma", "upstream", "frankensympy", "frontier"]
 parent: "WP-31"
-deps: ["BD-037", "BD-027", "NF-01", "STD-E2E"]
+deps: ["BD-027", "BD-037", "N12-16", "N12-20", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-021", "BD-379", "BD-132", "BD-358", "FD-FSYM-01", "NF-11"]
+related: ["NF-11"]
 gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§12.1", "§12.4", "§25.4", "§33.4", "§33.18", "§33.8"]
 ---
@@ -33,8 +33,10 @@ subtraction rounded to nearest; no such value enters a certificate here).
 ## Scope
 
 In: in FrankenSymPy, two certificate families with their checkers and capsule forms; here, re-issue of the
-affected certificates. Out: the auditor's own checkers (`poly-identity`, `rational-ldlt` and the rest, BD-027,
-BD-132), which stay independent; region certificates as a mechanism (BD-358); `fs-sos` (NF-11).
+affected certificates through the instance-certificate pipeline (N12-20), and the one auditor-side rule the
+re-issue needs (the matrix group rule below). Out: the auditor's own checkers (`poly-identity`, `rational-ldlt`
+and the rest, BD-027, BD-132; `sos-gram`, N12-16), which stay independent of FrankenSymPy; region certificates as
+a mechanism (BD-358); `fs-sos` (NF-11).
 
 ## Technical approach
 
@@ -100,7 +102,13 @@ against the new pin.
 **What the switch-over re-runs.** The rule is "re-issue certificates": every certificate that was issued as a
 group of entry-wise identities for one matrix fact is re-issued in the matrix family, and each new certificate
 is re-checked by this project's auditor and by FrankenSymPy's offline consumer (two independent checkers); the
-old groups are retired only when both agree on every one. `sos-gram` certificates gain FrankenSymPy as a second
+old groups are retired only when both agree on every one. For the auditor to check a matrix certificate as one
+object it gains one rule (DESIGN, the project-side change of this item, in
+`crates/frob-cert/src/kinds/poly_identity.rs` under a new kind version `poly-identity` v2 so that v1 bundles keep
+their meaning): the bundle's `query` states the matrix identity with its shape r × c, and the payload carries
+exactly r·c entry identities indexed in row-major order, each checked by the existing rule; a missing, duplicated
+or extra index rejects the bundle, so a missing entry is a failed certificate and not a shorter list. The rule
+reads only the bundle, never FrankenSymPy. `sos-gram` certificates gain FrankenSymPy as a second
 checker; whether that moves the proof kind out of Frontier is decided by the certificate-coverage work at M5,
 not by this item. Bundle hashes change with the re-issue, so every artifact that cites a re-issued certificate
 is revalidated.
@@ -131,6 +139,9 @@ In FrankenSymPy (added):
 Here:
 - `auditor_and_sibling_agree`: on every re-issued certificate.
 - `missing_entry_fails_the_bundle`: a matrix certificate with one entry's witness deleted is rejected.
+- `duplicate_or_extra_index_rejected`: the planar Cayley 2 × 2 certificate with entry (1, 1) listed twice, or with
+  a fifth entry, is rejected by the v2 group rule.
+- `v1_bundles_unchanged`: every `poly-identity` v1 specimen of BD-027 gives the same verdict and report bytes.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsym_04.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
@@ -138,8 +149,10 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsym_04 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob prove verify --json` and `frob prove list --json` over the
-re-issued set, and logs the counts of certificates accepted by each checker.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also re-issues the
+set (`frob-derive --manifest derive/kernels.toml --stage certify`, N12-20), runs `frob prove verify --all --json`
+and `frob prove list --json` over it and `fsym-capsule-consumer` on the same certificates, and logs the counts of
+certificates accepted by each checker and the count per kernel before and after.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsym_04/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

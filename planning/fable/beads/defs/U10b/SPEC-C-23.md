@@ -4,11 +4,11 @@ title: "spec C-23 (frob-learn): a family policy as a section: link tokens and na
 type: "task"
 priority: 2
 milestone: "M4"
-labels: ["m4", "lemma", "spine", "spec", "frontier", "frob-learn", "test"]
+labels: ["m4", "lemma", "spine", "spec", "frontier", "frob-learn", "test", "review-notes-open"]
 parent: "WP-61"
-deps: ["BD-025", "SPEC-C-21", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-23", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load row KA-128 and CX-060; this bead binds them to tests and sets the round-off bound the appendix leaves `to set`", "§10 C-09: the observation-preserving group Γ_obs and its orbit labels from the specification bead SPEC-C-09 (unit U10a); cited for the weight tying", "§23.22: the family-policy pilot (Pilot 1 of this construction, shared with construction C-26: one class, 40 designs) is executed by the rank-agreement pilot beads BD-145 and BD-310 and the Cortex pilot of BD-320; they must carry the protocol stated in this bead"]
-related: ["N10b-14", "N10b-15", "N10b-11", "BD-320", "BD-321", "BD-322", "BD-145", "BD-310", "BD-328", "BD-196", "SPEC-C-09", "SPEC-C-24", "SPEC-C-26", "BD-192", "N10a-02"]
+deps: ["BD-022", "BD-025", "N10-CX", "N10-KA2", "N10a-01", "SPEC-C-21", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-145", "BD-192", "BD-310", "N23b-19", "SPEC-C-26"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-23", "§9 D-10", "§23.7", "§23.11", "§23.22", "§23.23", "§38.7 MR-23", "Appendix E GB-28", "Appendix I.14", "Appendix M.9 KA-128", "Appendix N.7 CX-060"]
 ---
@@ -26,7 +26,9 @@ equivalent conventions.
 
 Tier: Frontier [F]. Owning chapter: Cortex; crate `frob-learn`. It serves BET-15 (family policies) and BET-16
 (inheritance). This bead specifies the section and its naturality; the transport along edits is N10b-14; the
-pilots are N10b-15 and the shared forty-design pilot named in `needs`.
+pilots are N10b-15 (Pilot 2, edits) and Pilot 1, the forty-design experiment shared with construction C-26,
+whose protocol is pre-registered by BD-145 and executed by BD-310, with the Cortex family-policy pilot N23b-19
+(those beads carry the protocol stated in section 4 below; they are `related`, not prerequisites).
 
 Terms. *Design family* 𝒟: a set of designs in which the observation space Y_d and the action space U_d change
 with the design d. *Bundle*: the collection of policy spaces Π_d, one per design. *Section*: a choice of one
@@ -56,7 +58,7 @@ environment of `frob-learn`): that bead is listed in `related` and is not a prer
 over its subject trait and closes on the exact reference model and the mutants in its own test support. If
 `frob-learn` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -128,8 +130,13 @@ passes are this project's to build.
   reference policy that is permutation-equivariant by construction (per-token map, sum pooling over children,
   per-token head) with fixed rational weights; generators of re-descriptions (random relabeling, random frame
   change per link, axis-sign flips, power-of-two similarity scaling). `tests/support/c23_mutants.rs`: mutants
-  under the cargo feature `controls`. The reference policy is a real, small policy, not a stand-in for the
+  under the crate's cargo feature `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it). The reference policy is a real, small policy, not a stand-in for the
   product network: the product network of BD-320 is bound to the same laws.
+- KA-129 and KA-130, which the appendix printed with tolerance `to set` and control `none stated`, are bound by
+  the part bead N10b-14, which sets both tolerances (exact: bit equality of the first action; bit-equal
+  initializations on matched tokens) and registers both controls (a transport that re-initializes the encoder
+  of every token; transport by index instead of by matched token, MR-24's control); N10-KA2 carries these cells
+  marked "(set: N10b-14)". KA-128's tolerance and control are set here.
 - Register row C-23: `rust_type` = the family-policy and mapping-table types of `frob-learn`, `verb =
   "train.family"` (with `policy.apply`), `failing_test` = `frob-learn::laws_c23::s5_file_order_policy_caught`,
   `payoff.gate = "GATE-CORTEX-11"`, `known_answers = KA-128, KA-129, KA-130`, `pilot = "PILOT-C-23"`,
@@ -144,7 +151,7 @@ passes are this project's to build.
 
 - [ ] `docs/math/C-23.md` has the ten sections, statements C-23.S1 to S6 with classes, the feature list, the
       evidence figures tagged FACT and the pilot statements.
-- [ ] `cargo test -p frob-learn --test laws_c23` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-learn --test laws_c23` passes; with `--features conformance` every mutant fails.
 - [ ] KA-128: for every design of the synthetic corpus (at least 50 designs) and 20 seeded re-descriptions
       each, the actions after mapping back differ from the original by at most 64 units in the last place in
       `f64` (the bound set here; exact equality for relabelings and power-of-two scalings).
@@ -173,7 +180,7 @@ passes are this project's to build.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c23.sh` (idempotent; seed 2300 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g3 -- KA-128 MR-23` on the host site; existence
+`--features conformance`; `FROB_TEST_SEED=2300 cargo test -p frob-conformance --test g3_metamorphic -- KA-128 MR-23` on the host site; existence
 of `docs/math/C-23.md`. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c23/<utc>.ndjson` and a
 transcript; each line has `ts`, `script`, `bead` (`SPEC-C-23`), `step`, `event` (`start`, `cmd`, `assert`,
 `metric`, `refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class

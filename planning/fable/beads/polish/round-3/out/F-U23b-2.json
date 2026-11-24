@@ -1,0 +1,209 @@
+{
+ "round": 3,
+ "slice": "F-U23b-2",
+ "reviewed": 23,
+ "changed": [
+  {
+   "bead": "N23b-20",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Request H-owners-2 applied: not-approved close is `withdrawn: not run: no envelope, R13` (N41-17 rule 2, N44-01 step 5), also in the open question. Pilot register id PILOT-INHERIT-01 (N38a-09 grammar) registered before the first run with falsifier, ceiling, fallback and cost; result as `[[pilot.result]]` in the register's verdict words (falsifier-holds / falsifier-rejected / inconclusive), which N23a-30's withdrawn closes cite; acceptance and falsifier test updated."
+  },
+  {
+   "bead": "N23b-21",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Request H-owners-2 applied: not-approved close is `withdrawn: not run: no envelope, R14`. PILOT-DISTILL-01 registered before the first run, result as `[[pilot.result]]` in the register's verdict words (cited by N23a-21); acceptance and falsifier test updated."
+  },
+  {
+   "bead": "N23b-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request H-owners-2 applied: not-approved close is `withdrawn: not run: no envelope, R15` (N41-17 rule 2, N44-01 step 5)."
+  },
+  {
+   "bead": "N23b-23",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Request F-U23b-1 applied: e2e re-pointed to N23b-16's scripts/e2e/cortex_kill_gate_records.sh with its own KILL-ALTALGO step, log under target/e2e-logs/cortex_kill_gate_records/ with the charter fields; N40-03's kill_gate_records.sh runs as a stage. Decision put in N40-03's one form (KNOWN_DRIFTS 10): no `measured` field on the kill row; one decision entry per `algorithm:<name>` scope at M4 with adr, date, session, receipts; one ADR section per algorithm; outcomes fired / not-fired / not-reached (ceiling below 1.1, undetermined, R16 not approved). Killed build beads close `withdrawn` citing the ADR (N41-17 rule 5); the non-existent state `not-funded` replaced by capability `not-in-build` (N00-02) with the reason in the 724 detail; unit tests and controls restated."
+  },
+  {
+   "bead": "N23b-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "KNOWN_DRIFTS 7: unit tests and the e2e no longer call `train.family` (BD-320 depends on this bead) nor `frob sim estimate` for a pretraining request (not an input of that row); restated on N21c-35's loader and N36-20's `admit` / `frob-launch --scope pretrain:family-pretrain/quadruped --request R7.1` (refused 761 with no row; `scratch_verdict: admitted` under a scratch root; humanoid scope refused; token not matching the decision record rejected). Verb-level checks named as BD-320's. Option A and acceptance: KILL-FAMILY's decision (N23a-26) takes `not-reached`; approved-branch beads close `withdrawn: not run: no envelope, R7` (N44-01 step 5) instead of 'marked blocked'. Ceiling acceptance split: admission refuses above the metered ceiling here, the running-job stop is BD-320's."
+  },
+  {
+   "bead": "N23b-25",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "KNOWN_DRIFTS 7: cortex_defaults.sh no longer waits for train.start (N23a-14 and BD-197 depend on this bead); restated on `cargo test -p frob-learn defaults` and the study harness with no `--action-law` (registry default, its label, β and κ). The study's verb confirmation mode and the verb-level defaults checks are named as N23a-35's. Acceptance: 'BD-197 reads' named as the consumer's; the GATE-CORTEX-07 record criterion moved to Considerations as BD-197's record (BD-197 already carries the default law in force)."
+  },
+  {
+   "bead": "N23b-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "N23b-12 on the default branch closes `withdrawn` citing docs/adr/ADR-OPEN-CORTEX-4.md (N41-17 rule 2), not an untyped 'closed with'."
+  },
+  {
+   "bead": "N23b-28",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFTS 7: acceptance narrowed to what this bead checks (a published-provenance GATE-CORTEX-05 row carries the label and cannot be set to pass, on a scratch registry); writing our time against 513 s is BD-218's, which depends on this bead."
+  },
+  {
+   "bead": "N23b-29",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "KNOWN_DRIFTS 7: 'passes the qualification of N23b-30' removed from acceptance and stated in Scope as N23b-30's acceptance (N23b-30 depends on this bead). KNOWN_DRIFTS 11: own script scripts/e2e/action_sampler.sh (unit tests, per-backend draw dump with exact integer/uniform digests, channel-addition stability, manifest digest per second-output rule, check_qualified refusal with no world), charter logging; dep STD-E2E added (no cycle)."
+  },
+  {
+   "bead": "N23b-30",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "KNOWN_DRIFTS 9: GATE-CORTEX-18's value is recorded from the g1 receipt with `record_gate`, never written by the script."
+  },
+  {
+   "bead": "N23b-32",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "KNOWN_DRIFTS 9: GATE-CORTEX-19's value is recorded from the g1 receipt with `record_gate`."
+  },
+  {
+   "bead": "N23b-33",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFTS 7: the acceptance line that cited N23b-34's gate (a later bead) as its measurement now states this bead's own check (the spent levels sum to at most α, `alpha_series` 0.04902 over 50 looks) and names the 2,000-training simulation as N23b-34's GATE-CORTEX-20. Request S51 was already satisfied (see notes)."
+  },
+  {
+   "bead": "N23b-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFTS 12: stale 'the row does not list its inputs yet; requested of VERBS-eval' replaced: the eval.preanalyze row lists the cadence-mode inputs (cadence, target, true_rate, level) and names this bead."
+  },
+  {
+   "bead": "N23b-36",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request H-owners-2 applied: not-approved close is `withdrawn: not run: no envelope, R17`, in acceptance and in the script's refusal branch. Pilot id: 'an identifier of set C (next free number)' would produce PILOT-C-nn, which N38a-09's grammar keeps for construction pilots; now PILOT-SHORTGRAD-01."
+  },
+  {
+   "bead": "N23b-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "N41-17: on `fired` N23b-38/39 close `withdrawn` citing the pilot's `[[pilot.result]]` (rule 7, listed 'withdrawn before this decision'), not `superseded` (they never needed a killed capability, they are it); on R17 declined they close `withdrawn` citing R17; on the other `not-reached` branches `withdrawn` citing this ADR (rule 5). Entry gains `receipts` (N40-03 asks one for not-fired). The second reading's naming is now N40-03 step 6 (`reading = \"final\"`, ADR ...-M6-final.md), no longer 'requested of N40-03'; acceptance aligned."
+  },
+  {
+   "bead": "N23b-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFTS 12: stale 'the VERBS-train row lists neither short-horizon-ac nor --design-params/--window/--design-lr; requested' replaced by the row's actual content (from M6, Extended by N23b-38)."
+  },
+  {
+   "bead": "N23b-39",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "Request H-owners-2 applied: the final KILL-SHORTGRAD entry carries `reading = \"final\"` with adr docs/adr/ADR-KILL-SHORTGRAD-M6-final.md (N40-03 step 6) and the full entry fields; acceptance and `final_reading_appends` updated (duplicate and adr-path load checks). Request H-cx-1 applied: CX-23-L5 cited in the negative controls and its plant `N23b-39:CX-23-L5` (planted-input, K = 128, monitor off) built in the guard test harness with test `cx_23_l5_plant_caught` (median cosine below 0.5, switch to stencil or stop, share below 60%). E2E verbs checked against VERBS-opt, -phylum, -design, -eval rows: unchanged."
+  },
+  {
+   "bead": "N23b-40",
+   "kinds": [
+    "correct"
+   ],
+   "what": "'closed unbuilt' on a falsified pilot typed as `withdrawn` citing N23b-19's `[[pilot.result]]` (N41-17 rule 7). KNOWN_DRIFTS 8: e2e step 1 calls `frob design view <document> --as json --json` (the row's required view input) and asserts one canonical term, which is what design.view prints."
+  },
+  {
+   "bead": "N23b-41",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFTS 5: the train.start dry runs in acceptance and e2e steps 4 and 6 carry `--key` (fnp-dry-1, fnp-dry-2; distinct content); the acceptance command gains its positional design, task and algo."
+  },
+  {
+   "bead": "N23bp1-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "N41-17 rule 5: on a passed GATE-CORTEX-16 the bead closes `withdrawn: not needed: KILL-GYMADAPT not fired, docs/adr/ADR-KILL-GYMADAPT-M3.md` (with the gate row's hash), not an untyped reason; N40-03: the kill row's state is the outcome `fired` (GATE-CORTEX-16 `killed` by propagation), so the start condition and the conditional-input sentence no longer call KILL-GYMADAPT `killed`; acceptance, unit test and Considerations aligned."
+  },
+  {
+   "bead": "N23bx-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFTS 12: stale 'the row lacks --worlds/--backend/--steps/--seed; all five requested of VERBS-train' replaced by the row's actual content (from M8, Extended by N23bx-01). Unfunded close typed: `withdrawn` citing the pilot result, the KILL-GATREE ADR's not-reached entry or the envelope row (N41-17 rules 5 and 7), not 'closes on the fallback's name'."
+  },
+  {
+   "bead": "N23bx-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request S91 applied: a failed precondition after a not-falsified first reading appends `not-reached` at M8 (reason in the ADR's second section; GATE-CORTEX-17 stays not-run), so the M8 due list has no gap; on firing the `fired` entry is appended and GATE-CORTEX-17 takes `killed` by N40-03's propagation. Entry gains `receipts`; new acceptance line and test `precondition_failed_not_reached`; Considerations aligned. KNOWN_DRIFTS 9: the register row is recorded from the receipt with record_gate."
+  },
+  {
+   "bead": "N23bx-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request H-owners-1 applied: `interim = none` (N35-33 rule 7; no bare slug, no proposed number); the first round assigns the request at M0, before BD-200 at M2. Step 2 restated: the row enters refusals.toml only with the assigned number, the constant holds it, and an unassigned request keeps BD-200 open (it still refuses, never ships as passing). Acceptance (ledger state; where the literal may appear) and the stored-refusal note aligned."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-320",
+   "what": "Moved from N23b-24 (KNOWN_DRIFTS 7, BD-320 depends on it): add to train_family.sh and its unit tests `self_declared_envelope_refused` (a train.family job declaring its own envelope in its arguments is refused), `token_binds_purpose` through the verb (a quadruped per-run token does not admit a humanoid run, 761), and `ceiling_stops_run` (a run that reaches its ceiling stops at a commit boundary, the stop recorded, no partial result published)."
+  },
+  {
+   "bead": "N23a-35",
+   "what": "Moved from N23b-25 (KNOWN_DRIFTS 7): in cortex_train.sh assert that `frob train start` with no `--action-law` reports `action_law: latent-then-limit` with its default label (and `OPEN-CORTEX-2 undecided` until decided) and the default β = 0.5025 /s, κ = 2.565 /s; that `frob train export`'s manifest states the law and both rates; optionally repeat three seeds per law of N23b-25's study through the verbs as a non-blocking confirmation."
+  },
+  {
+   "bead": "BD-197",
+   "what": "State that the trainer's default action law and β, κ are read from `registries/defaults.toml` (N23b-25), with a test that the trainer's default equals the registry value; N23b-25 now names this as BD-197's."
+  },
+  {
+   "bead": "BD-200",
+   "what": "Per N23bx-03 and N35-33 rule 7: raise `randomize-no-interval` through the one constant holding the number the ledger's first round assigns at M0 (interim `none`); the slug is the request's name, never raised as a code, so drop 'the provisional name behind one constant' as what is raised."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "Conditional inputs of sim.run (N23bp1-01): 'admitted only while KILL-GYMADAPT is `killed`' should read 'while KILL-GYMADAPT's decision in force is `fired` (GATE-CORTEX-16 `killed`)': a kill row's state is its outcome (N40-03); the same in the refusal-cases line."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "N23b-33's S51 request is already satisfied and was not applied again: the script passes the positional <reference quadruped>, --backend batch-cpu and --key att-1/att-2/att-3, and VERBS-train's train.start row lists --eval-cadence and --target; N23b-33 changed only for a drift-7 acceptance line. N23bx-03: chose interim `none` over 'an existing 5xx code with detail' because no existing code states the condition (the bead rejects 103 and 113 as different defects with different repairs) and the M0 assignment precedes BD-200's first raise, so an interim would never be used. Every bead of the slice needed at least one meaningful change, mostly typed closes (N41-17), kill-decision form (N40-03), drift 7 and stale 'requested of VERBS' text; unchanged = 0. For other slices: N22c-21, N33c-28, N19b-16 and N19c-33 also register pilots as 'an identifier of set C (next free number)', which N38a-09's grammar reserves for construction pilots. All 23 touched files parse (front matter, JSON arrays, known deps, seven sections). Slice looks settled after this round."
+}

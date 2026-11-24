@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-design", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-38"
-deps: ["BD-054", "BD-060", "BD-075", "BD-077", "ART-L1", "NJL-07", "STD-E2E"]
+deps: ["ART-L1", "BD-054", "BD-058", "BD-059", "BD-060", "BD-075", "BD-077", "N41p2-01", "NJL-07", "NJLx-02", "STD-E2E"]
 needs: []
-related: ["N15b-02", "N14a-30", "BD-076", "BD-108", "BD-141", "BD-058", "ART-L9"]
+related: ["ART-L9", "BD-076", "BD-108", "BD-141", "N14a-30", "N15b-02"]
 gates: []
 plan_refs: ["Appendix L.2", "§14.6", "§14.9", "§15.10", "§15.5"]
 ---
@@ -40,14 +40,17 @@ sibling modules are reused.
 ## Scope
 
 In: the specimen and resolved files; the port contract and its two readings; the junction checks against
-`quad-tray`; extraction of the module from the design; a leaf-local and a global substitution as controls; the
-script. Out: the module format and its verbs (BD-060), substitution and its invalidation contract (BD-077),
+`quad-tray`; the extraction of the leg from `quad-tray` run against the fixture, with its arguments file; a
+leaf-local and a global substitution as controls; the script. Out: the module format (BD-060) and its verbs
+(N15b-02); the edit `extract-module` itself (N41p2-01); substitution and its invalidation contract (BD-077);
 the bus and battery model (BD-075); the layers and the identity map (NJL-07).
 
 ## Technical approach
 
 **Files** under `fixtures/golden/appendix-l/L2/`: `leg-3r-qdd.specimen.fmodule.json` (the text below);
-`leg-3r-qdd.resolved.fmodule.json`; `port-contract.expect.json`; `substitution.expect.json`; `fields.toml`.
+`leg-3r-qdd.resolved.fmodule.json`; `extract-args.json` (used twice: refused on `quad-tray` as loaded, admitted
+after the two lever removals); `patch-swap-bus.json` and `patch-unlock-swap-bus.json`;
+`port-contract.expect.json`; `substitution.expect.json`; `fields.toml`.
 
 **The artifact.**
 
@@ -126,14 +129,47 @@ reuses the sibling legs' expanded subtrees, kernels and local analyses, recomput
 groups, budgets, closure and the self-collision pairs with the new limb, and invalidates static stability, the
 baseline controller, every rollout and every whole-robot certificate. An edit to the bus, its battery or the
 shared sink, a limb in a closure, or a changed port signature is global and invalidates everything downstream
-of the model identity.
+of the model identity. The two controls on the extracted design: (a) the leaf-local one substitutes the module
+at the front-left image only (an instance target, so BD-077 splits the two mirrors first, which changes no
+compile product), re-bound with `knee_card` = `qdd-m`, leaving three sibling legs whose products are reused; (b)
+the global one is the same `swap-module` in one `design.patch` with a `set-bus` to 24 V (still inside the
+assumed [18, 25.2] V). `quad-tray` locks `power_bus` (artifact L.1), so (b) without an `unlock` refuses with
+`FROB-REF-111`, and with `unlock power_bus` as the patch's first operation it is admitted and classed `global`
+(condition 3: the bus the module assumes changes in the same patch).
 
 **One spelling the format does not fix.** How an entry of `params` names its target inside `body` is not
 specified: the specimen writes the default values in place, while a lever in a `.fbot` names its target by a
 JSON pointer `path`. DESIGN proposal for the resolved layer, confined to that content: each parameter gains a
 `path` (`thigh`: `/body/chain/1/body/region/capsule/1`, whose value is `"0.21 m"`; `knee_card`:
-`/body/chain/2/actuator`, whose value is `"qdd-l"`). The specimen layer stays as printed. If the format's
-owner bead chooses another spelling, the resolved layer follows it.
+`/body/chain/2/actuator`, whose value is `"qdd-l"`): a JSON pointer from the module document's root, as a
+lever is a pointer from the design's root, which is BD-060's fail-closed spelling. The specimen layer stays as
+printed. If the format's owner bead chooses another spelling, the resolved layer follows it.
+
+**Extraction from `quad-tray`** (the edit `extract-module` of N41p2-01; this bead runs it against the fixture).
+Two of `quad-tray`'s three levers point into the leg: `knee_ratio` (`/limbs/of/of/chain/2/transmission/belt/ratio`)
+and `foot_radius` (`/limbs/of/of/chain/3/foot/region/sphere`). The edit refuses a lever that points into the
+subterm unless a module parameter with that path is declared, so extracting with only the specimen's two
+parameters refuses with `FROB-REF-103`, listing both levers. DESIGN, for the fixture: the two levers are removed
+first (two `declare-lever` edits with `remove: true`, BD-058; levers are read by no compile product, so the
+`ModelId` is unchanged), and the leg is then extracted with exactly the specimen's parameters. Reason: the
+specimen's parameter block is reproduced as printed, and lever re-pointing is already exercised by N41p2-01's own
+fixture (the three levers of `quad-a`). Rejected: declaring `knee_ratio` and `foot_radius` as module parameters
+(a module with four parameters is not the specimen). `extract-args.json`: `name` `leg-3r-qdd`; `params` `thigh`
+(unit m, bounds [0.15, 0.30] m, path `/body/chain/1/body/region/capsule/1`) and `knee_card` (kind
+`card:actuator`, path `/body/chain/2/actuator`); `ports`: rename `contact-0` to `sole`, add `state` (`signal`,
+`joint-state/3`, 1000 Hz, `latency_max` 1 ms); `contract`: `bus_demand` (peak 38 A, time-resolved per-task
+profile), `heat_to_sink` (continuous at most 60 W) and `assumes` (bus voltage [18, 25.2] V, sink conductance at
+least 0.4 W/K). The target is the attach node `/limbs/of/of` under the two mirrors, so the one `use` that replaces
+it serves all four legs.
+
+**What is compared with the fixture** (not the whole canonical bytes: the extraction computes the mass guarantee
+and both hashes, which the specimen prints as illustrations). Equal to the resolved file: `body`, link for link;
+the port signature keyed by port id (kind, frame, nominal, power sign, message type, rate, latency bound, law);
+`params` (id, unit, default, bounds, kind, path); `contract.guarantees` other than `mass`, and `contract.assumes`.
+Computed and checked: `guarantees.mass` is the exact interval [min, max] of the leg's mass roll-up over the
+corners of the parameter box (thigh 0.15 m and 0.30 m, each with `qdd-m` and `qdd-l` at the knee), recomputed by
+`frob module check`, and reported beside the specimen's illustrative [1.6, 2.4] kg (a `structural` field of
+`fields.toml`); the reference hash and the contract digest are recorded, and the digest must recompute.
 
 **Junction checks against `quad-tray`** (`port-contract.expect.json`): the bus nominal 22.2 V lies in the
 assumed [18, 25.2] V; four modules each assume a sink conductance of at least 0.4 W/K and the shared sink
@@ -148,16 +184,23 @@ port has one producer; the `sole` entry names the law `foot-patch`, the same law
 - [ ] `frob module check` accepts the fixture: five entries in `ports` with the kinds `mech`, `elec`,
       `thermal`, `signal`, `contact`; both parameters resolve to their targets; the mass guarantee encloses the
       computed leg mass at both ends of the thigh range; the digest recomputes.
-- [ ] Extracting the leg from `quad-tray` by a typed edit yields a module whose `body` equals the fixture's
-      link for link and a design whose compiled model identity is unchanged.
+- [ ] Extraction: on `quad-tray` as loaded, `extract-module /limbs/of/of` with only the specimen's two
+      parameters refuses with `FROB-REF-103` and lists the levers `knee_ratio` and `foot_radius`; after the two
+      lever removals (each with the `ModelId` unchanged), the extraction with `extract-args.json` returns
+      `model_id_unchanged: true`, and the module's `body`, port signature, `params`, guarantees other than mass
+      and assumptions equal the resolved fixture's; its mass guarantee equals the exact roll-up interval over the
+      four corners, as `frob module check` recomputes it.
 - [ ] Joined to `quad-tray`, the four junction checks hold; with the shared sink lowered to 1.5 W/K the thermal
       assumption fails and names the sink; with the bus nominal at 26 V the electrical assumption fails.
 - [ ] A reversed power sign on the `bus` port refuses with `FROB-REF-108`; a tampered digest refuses with
       `FROB-REF-114`; each is exit 3 with one envelope.
 - [ ] The peak sum is reported as a number and excludes nothing: the bus analysis on the profiles is invoked
       before any electrical exclusion, and a design is not refused on 152 A against 60 A alone.
-- [ ] `frob module substitute` with the same module and `knee_card` bound to `qdd-m` reports `leaf-local`
-      with the reuse table above; the same substitution combined with a bus edit reports `global`.
+- [ ] `frob module substitute` at the front-left image with the same module and `knee_card` bound to `qdd-m`
+      reports `leaf-local` with the reuse table above, and every product it reports reused equals its value
+      from a `--no-memo` recompile; the same `swap-module` in one patch with `set-bus` refuses with
+      `FROB-REF-111` while `power_bus` is locked, and with `unlock power_bus` first is classed `global` with
+      every electrical and thermal product in the invalidation set.
 - [ ] All outputs are identical on two runs, in debug and release, on Linux and macOS (class D0).
 
 ## Test plan
@@ -176,25 +219,46 @@ port has one producer; the `sole` entry names the law `foot-patch`, the same law
 - `l2_port_packet_27_scalars`: 21 + 6; the eliminated inertia of the identity along the first axis is
   diag(0, 1, 1, 1, 1, 1) and is refused as an invertible quantity.
 - `l2_reversed_sign_refuses_108`; `l2_tampered_digest_refuses_114`.
+- `l2_extract_refuses_unmapped_levers`: `quad-tray` as loaded, extraction with `thigh` and `knee_card` only:
+  `FROB-REF-103` with exactly the referrers `knee_ratio` and `foot_radius`.
+- `l2_extract_matches_fixture`: after the two lever removals, the extraction's `ModelId` equals the parent's;
+  `body`, ports by id, `params`, guarantees other than mass and assumptions equal the resolved fixture's; the
+  mass guarantee equals the exact [min, max] of the roll-up at the four corners, as rationals.
 - `l2_substitution_leaf_local` and `l2_substitution_global`: the reuse and invalidation sets equal
-  `substitution.expect.json`.
+  `substitution.expect.json`; `l2_bus_locked_111`: the patch without `unlock` refuses with `FROB-REF-111`.
 
 ### End-to-end script and logging
 
 `scripts/e2e/art_l2_fmodule.sh` (header: `bead=ART-L2 milestone=M1 labels=golden,appendix-l,skeleton,
 verb:module.show,verb:module.check,verb:module.list,verb:module.substitute seed=1 needs=cpu
-plants=sink-1.5,peaks-exclude`). Steps: (1) create `quad-tray` from artifact L.1's fixture; (2) extract the
-leg with the typed edit that makes a module from a subterm, capture the module hash; (3) `frob module show`
-and `frob module check` on it, assert kinds, parameters, guarantees and digest; (4) compare its canonical
-bytes with the resolved fixture (`e2e_assert_digest_eq`); (5) `frob module list --json` contains it by content
-hash; (6) `frob design check` on the design that uses the module, assert the four junction facts; (7) `frob
-module substitute … --bind knee_card=qdd-m --key l2-sub --json`, assert `leaf-local` and the reuse table;
-(8) the same with a bus edit in one patch, assert `global`; (9) `e2e_expect_refusal FROB-REF-108 3` and
-`FROB-REF-114 3` on the two planted modules; (10) `frob-golden check --artifact L2`. Plants: `sink-1.5` must
-fail step (6); `peaks-exclude` (a checker patched to refuse on the peak sum) must be caught by the assertion
-that the design is not refused. The log (`target/e2e-logs/art_l2_fmodule/<utc>.ndjson`) has every command with
-exit code and wall time, the evidence block, digests, each assertion with observed and expected values, each
-refusal with code and first repair, and the `summary`.
+plants=sink-1.5,peaks-exclude`). Steps: (1) `frob design new quad-tray --file
+fixtures/golden/appendix-l/L1/quad-tray.resolved.fbot.json --key l2-new --json`, capture `DesignId` and
+`model_id`; (2a) `frob design edit quad-tray extract-module /limbs/of/of --name leg-3r-qdd --args
+@fixtures/golden/appendix-l/L2/extract-args.json --key l2-x0 --json`:
+`e2e_expect_refusal FROB-REF-103 3`, the refusal lists `knee_ratio` and `foot_radius`; (2b) `frob design edit
+quad-tray declare-lever knee_ratio --args '{"remove": true}' --key l2-r1 --json` and the same for
+`foot_radius` (`--key l2-r2`), `model_id` unchanged after each; (2c) `frob design edit quad-tray extract-module
+/limbs/of/of --name leg-3r-qdd --args @fixtures/golden/appendix-l/L2/extract-args.json --key l2-x1 --json`,
+assert `model_id_unchanged: true`, capture the module reference; (3) `frob module show` and `frob module check`
+on it, assert kinds, parameters, guarantees and digest; (4) compare with the resolved fixture field by field
+(`e2e_assert_json` on `body`, the ports keyed by id, `params`, the guarantees other than mass and the
+assumptions; `e2e_assert_rational` on the mass interval against the four-corner roll-up); (5) `frob module list
+--json` contains it by content hash; (6) `frob design check` on the design that uses the module, assert the four
+junction facts; (7) `frob module substitute quad-tray --at <front-left instance> --with <module ref> --bind
+knee_card=qdd-m --key l2-sub --expected-parent <head> --json`, assert `leaf-local`, the reuse table and the
+mirrors split; then `frob design show <new> --products --no-memo --json`, assert every reused product's digest
+equals its recompiled digest; (8) `frob design patch quad-tray --file
+fixtures/golden/appendix-l/L2/patch-swap-bus.json --key l2-p1 --json` (the `swap-module` and `set-bus` 24 V; a
+`mutate` call carries a key, and the script writes the head it captured into the document's required `parent`,
+since a stale parent is refused with 112 before the lock check):
+`e2e_expect_refusal FROB-REF-111 3`; the same with `unlock power_bus` first (`patch-unlock-swap-bus.json`, `--key
+l2-p2`), assert `global`, condition 3 named, every electrical and thermal product invalidated; (9) `e2e_expect_refusal
+FROB-REF-108 3` and `FROB-REF-114 3` on the two planted modules; (10) `frob-golden check --artifact L2`. Plants:
+`sink-1.5` must fail step (6); `peaks-exclude` (a checker patched to refuse on the peak sum) must be caught by
+the assertion that the design is not refused. The log (`target/e2e-logs/art_l2_fmodule/<utc>.ndjson`) has every
+command with exit code and wall time, the evidence block, `DesignId` and `ModelId` before and after each edit,
+digests, each assertion with observed and expected values, each refusal with code and first repair, and the
+`summary`.
 
 ### Known answers and negative controls
 
@@ -218,6 +282,10 @@ refusal with code and first repair, and the `summary`.
   reference hash is defined over the file with the `digest` field removed. Fail-closed default until the
   owner bead of the format decides: a reference `@b3:…` is the content hash of the canonical file, and
   `contract.digest` is a separate value; the identity map holds both.
+- The typed edit that extracts a module from a subterm is `extract-module`, row 23 of the edit catalogue
+  (N41p2-01, a dependency). It refuses rather than leave a lever dangling, which is why the fixture removes
+  `quad-tray`'s two leg levers before extracting; the refusal itself is asserted in step (2a), so the fixture
+  also pins that rule. BD-058 remains a dependency for the lever removals, the `unlock` and the design store.
 - Kill gate KILL-SKEL-SUBST (reuse under substitution does not hold its gate): fallback, every substitution
   is reported `global`; steps (7) and (8) then assert `global` twice and the rest stands.
 - The limb port interface serves the tree-operator route for large mechanisms; it is Frontier, and this

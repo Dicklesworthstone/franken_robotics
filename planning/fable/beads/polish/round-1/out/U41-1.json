@@ -1,0 +1,407 @@
+{
+ "round": 1,
+ "slice": "U41-1",
+ "reviewed": 34,
+ "changed": [
+  {
+   "bead": "BD-056",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained",
+    "scope"
+   ],
+   "what": "radial images were said exact in Q(zeta_n); the plan (§13.4) requires the real subfield of Q(zeta_m), m = lcm(n,4) (sin(2pi/3) is outside Q(zeta_3)): corrected with a test and a mutant; a written mirror normal or radial direction of irrational length had no rule: P = I - 2nn^T/(n^Tn), t = 2dn/|n|, refuse FROB-REF-102 when irrational (DESIGN) with a test; acceptance and e2e needed elaborate, both functors, design.check and design.view, all of which depend on this bead: the known answer is now asserted on placed-component sets here (equal up to identifiers, source paths and the parity record, which the hand-expanded form lacks), the compiled comparison, the scale mass factor and the CLI script move to new bead N41p1-01; the property test no longer uses N14b-01's generator (a dependent); mesh winding test added; STD-E2E dropped from deps"
+  },
+  {
+   "bead": "BD-058",
+   "kinds": [
+    "correct",
+    "deps",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "stale expected parent was FROB-REF-112 (the design.patch document code); now FROB-REF-804 exit 7, key reuse 803 exit 7, missing key 805 exit 3, through N32a-09's admission transaction; CLI aligned with the registry and the plan's sessions (positional op, --expected-parent, --key, selectors foot.radius and --joints '*.knee' with a stated resolution rule to term path or instance, bare SI numbers, two-value expected/new form refusing 804); 'reported as broken' made concrete as symmetry.split; split equality restated at elaboration (N14a-07) with compiled equality left to N14a-17; e2e no longer runs design.check (BD-110, a later seed); deps add BD-023, N14-REF, N14a-07, N32a-09, VERBS-design"
+  },
+  {
+   "bead": "BD-087",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "the Lie-group integrator had no test against the frozen D2 oracle of the conformance compendium (N12-42, which was only related): new unit test agrees_with_compendium_d2_oracle (100 seeded states, 10^3 steps at h = 2 ms, agreement 1e-12; the mutant differs by more than 1e-6) with its acceptance line; N12-42 moved to deps. Dcay^-1, the rotation-block inverse and the trivialization were checked and are right"
+  },
+  {
+   "bead": "BD-115",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "f32 admission bound named but not defined: now kappa*u <= 0.05 with u = 2^-24 on the diagonally scaled A W^-2 A^T (OPEN-TRAC-4, GATE-TRAC-10); the two-contact force-distribution known answer had a non-unique optimum: objective 1/2||f||^2 with contacts at +-0.2 m makes the 50/50 split with zero tangential unique; the K_mu-for-dual mutant was described backwards (for mu = 0.5 it rejects the hand case; for mu = 2 it accepts the false y = (1,-1)): corrected, with test false_certificate_mu_2_rejected; e2e step that skipped until frob-verify exists removed, four-run digest comparison instead, auditor checkers named as dependents (BD-251, N12-16)"
+  },
+  {
+   "bead": "BD-153",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "contact frame stated orthonormal right-handed (t1 x t2 = n); known answers completed (open_is_zero R = I, mu = 0.5, value -0.95; setup_constants with N_nom = 5 N and a 20 N case giving R_t = 0.03125; jac_rows_revolute_known with t1 = z, t2 = x); e2e skip removed: the kernel harness at 1/4/8/16 workers with digest comparison; the CLI run is the batched step's script (BD-159, N16a-18), which depends on this bead"
+  },
+  {
+   "bead": "BD-157",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "K-anchor used one renormalization pass while N21b-37 (the dependent anchored-position bead) specifies two fixed passes; aligned (13.0 -> -3.0 with cell +2), with test anchor_two_passes, mutant single_pass_anchor and an acceptance line; e2e skip removed: kernel harness at 1/8/24 workers; the CLI spin-and-translate step is requested of N16a-18"
+  },
+  {
+   "bead": "BD-160",
+   "kinds": [
+    "correct",
+    "users",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the e2e used --workers and --tile-worlds on sim.run that no bead defined: now DESIGN operator parameters (workers 1-512, tile_worlds a power of two 1-1024, default 32; batch-cpu only, else FROB-REF-802; outside every identity, echoed in the receipt; schema frob.sim.run.in/1 minor version) with an acceptance line; the drain report carries the fence step and its digest; e2e rewritten on the registered sim.run form with job cancel (N29a-23) and a fresh run reproducing the fence digest; deps add BD-159, N16b-25, N29a-23"
+  },
+  {
+   "bead": "BD-166",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "e2e ran 'frob contact audit ... where the audit verb exists' (N18b-23, a dependent) and a sim.run form with --task and no design that no verb defines: rewritten to the registered sim.run form on a thin-barrier design and scene, asserting no pass-through in 4096 worlds from final states and pass-throughs under the endpoint-only mutant; the audit stays N18b-23's; acceptance adds that both kernels are bound into stage 4 of BD-159's step plan (a distance-field scene refused with FROB-REF-724 before now runs); candidate time made precise (earliest t at which the gap reaches the margin); thin-plate known answer states rho = 0 and margin 0; deps add BD-159, BD-163, N16b-25"
+  },
+  {
+   "bead": "BD-180",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "e2e asserted resolved pushes and frictions from episode records, which need BD-200, the disturbance beads and N23b-03, all dependents: rewritten at this bead's level (spark.check v0 on K-x-philox, the draw-table binary across batch sizes, workers, slot orders and builds, equality with N35-22's host service, the appended-stream comparison, each mutant build); the CLI property on resolved parameters is BD-200's script. 'Once the device backends exist' removed from the acceptance and the determinism lanes: CUDA and Metal are the open clause and N35-16's battery"
+  },
+  {
+   "bead": "BD-200",
+   "kinds": [
+    "correct",
+    "deps",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "task syntax was TOML [[randomize]] with target; the task file is BD-122's (canonical JSON, S-expression view, section `randomization`, §24.4): rewritten as (draw <name> :from ... :scope :law :entity) with the keys later beads add named; stream `param` with a 64-bit entity did not exist: now N35-23's task-parameter (by_param, path@port) and scene-field (by_cell, tile region) through N35-24's helpers, 32-bit entities; two fields of one tile shared one block (identical u): the component carries the field's hash, with a collision refusal, tests and a mutant; the normal used a 'normal pair', now normal_f32 of N35-22 on the attempt's block; numerical parameters refuse FROB-REF-572 (N23-REF, raised here) and no-interval names its proposed 571 (N23bx-03); the e2e had no design and read episode records (N23b-03, a dependent): sim.run with a task gains a randomization block and --resolved-out, task.check takes --design, replay through BD-203; pointer to N30a-27 for correlation inside a card (request from U30a); deps add BD-122, BD-203, N16b-25, N23-REF"
+  },
+  {
+   "bead": "BD-231",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "rug_lowers_to_box_body used 3.333 kg/m2 on 0.6 m2 (1.9998 kg, not 2): now 4 kg/m2 on 1.0 x 0.5 m with the three principal inertias; the 1,000-variant battery predicts 'slides' everywhere and its corner is a near tie (r = 40 mm, h = 5 mm, 4 kg, mu = 0.7: climb 27.7 N against sliding 27.4 N): variants within 10% are reported `near-tie` and not scored, load fixed at 50 N stated; e2e ran sim.run with a task and no design: now a castor probe design delivered here on the compiled pack, and the batched variants through per-world design slots and scene variants with alone-versus-batch digests"
+  },
+  {
+   "bead": "BD-341",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "requests applied: FROB-REF-445 raised through N20a-41's lookup alias::standing_witness(interface, mission) with the witness attached and the override; candidate admission through N24c-23's shared function, refusing foil-as-candidate (test opt_start_refuses_foil, not applicable if KILL-FOIL has fallen back); unit tests added for 445 and 761, which had none; e2e runs one refusal fixture per table row (it ran four of six); N24c-23 moved to deps"
+  },
+  {
+   "bead": "BD-344",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "refusals named only by provisional names: now as N28cx-01 decided (prediction-changed-after-freeze is FROB-REF-883; prediction-after-outcome on its interim form 883 with detail registration-after-outcome); `--for next` of the registry row was undefined here: bound at dispatch, an unbound record is listed as no-outcome: cancelled (next-unbound); the binomial interval known answer had no interval: Clopper-Pearson 95% [0.6143, 0.9229] for 24 of 30; e2e made concrete (registered metric, --for next, first-chunk wait, same key, 802, MCP byte-identity)"
+  },
+  {
+   "bead": "N41-01",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "acceptance and tests loaded the real 59 rows, which N41-RISK1..4 write and which depend on this bead: now a fixture registry, with the first-readable table checked as a function of the transcribed pairs and the real-file known answers placed with N41-RISK4 and N41-04; the no-gap rule made a completeness check (`risks check --complete`) because each part holds non-contiguous identifiers and would fail the plain load; rule 4 reads the open register, so N41-03 moved to deps"
+  },
+  {
+   "bead": "N41-02",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the register-wide clause reads all 59 rows and N41-32's M0 bindings but depended on part 1 only: deps add N41-32, N41-RISK2, -3, -4; test renamed every_risk_row_has_planted_control (registered or declared) with a removed-control negative; the e2e logs the clause per row"
+  },
+  {
+   "bead": "N41-03",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "loader rule 8 hard-coded the 161/147/14/4/4 counts in the plain load, so each of the eight row parts (which depend on this bead) would fail for rows it does not own: rule 8 is now a completeness check run by the exit runner and the last part; acceptance and tests restated on fixture registries (a generated 161-row fixture for the counts), the real-file counts placed with N41-OPEN8 and N41-04"
+  },
+  {
+   "bead": "N41-04",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "graph finding checked: all 20 deps are used directly by the script (9 are also transitive through N41-PM and are kept as direct prerequisites); step 10 fires planted controls bound by N41-32, which was only related: added to deps, and the step states that later bindings join through the registry marks with a logged count (at least 18); step 1 asserts the severity totals and the full first-readable table moved here from N41-01"
+  },
+  {
+   "bead": "N41-05",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "'the M7 pin freeze refuses' needed N33b-03 (M7): this bead now provides `open require OPEN-PROG-1`, which the freeze calls (request); the wording consequences are entered as conditioned rows of the claims-wording registry (N00-15, added to deps); the guard's callers named (N40-05, N41-27); tests for the scoped statement, the require check and page generation; e2e adds the licence plant and the require check"
+  },
+  {
+   "bead": "N41-06",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "acceptance needed a family writer and an M7 sealing step that do not exist at M2, and the per-stratum KILL-TENFOLD-ADJ outcomes of M3: now this bead provides `tenfold require-adjudication --gate partial|tournament` (record present; M7 confirmation dated after the M6 page), called by N39a-40's freeze-and-seal steps (which depend on it); per-stratum completeness tested on fixture records; the wording rows entered in N00-15's registry; e2e rewritten on the check"
+  },
+  {
+   "bead": "N41-08",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "an M1 bead whose acceptance and e2e used eval.rank-agreement (M3/M4), a cascade and FROB-REF-537 (BD-328, N28b-23, M4): restated on what exists at M1 (a job fixture with scope campaign:rank-agreement estimated as needs E2 and refused with 761 by N36-20; an amended E1 approval admitting a toy job, ceiling stop, kill rule on synthetic records, the loader check); the rung consequences are named as BD-328's and N28b-23's acceptance (BD-328 already asserts 537 with no record)"
+  },
+  {
+   "bead": "N41-09",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the e2e checked the 21 default order values on a scratch queue of seven items: the default-order step now runs on a scratch copy of the full queue. Counts and the default-order table were verified (13 + 2 + 6 = 21; MQ-01 19th)"
+  },
+  {
+   "bead": "N41-10",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied: GATE-GROUND-10 reads blocked with detail OPEN-GROUND-1, then no-claim with reason no-dataset-admitted, never 'not run', now an acceptance line and a test with a mutant; the band refusal named (FROB-REF-889, ground.band BD-393, added to deps); the page includes N30b-26's options file, so N30b-26 moved to deps; the outcome checks are written against fixture states of both outcomes and run by the exit runner"
+  },
+  {
+   "bead": "N41-11",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "an M2 bead whose acceptance, tests and e2e asserted M3 mechanisms (weights inheriting mark and licence, BD-305; 31-day collection and sealed retired clusters, N24b-17) with a 'not due' escape: acceptance under the defaults restated on what exists at M2 (BD-209's capture window and budget; custom reward terms refused with FROB-REF-828 by N37-03, now a dep; capabilities says not-admitted); the M3 clauses named as acceptance of the decision beads N37-20 and N37-30, which depend on this bead and already test them; tests weights_inherit_mark_and_licence and retired_cluster_unreadable moved out, custom_reward_term_refused_828 and record_defaults_for_missing_adrs added; e2e rewritten (planted non-default retention without ADR fails the cross-check; store; 828)"
+  },
+  {
+   "bead": "N41-12",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied: KILL-PEERLINK (N32a-35) named as the gate whose recorded PASS enables fleet.peer_link = true, staying standalone until then even under build (acceptance said 'the fleet gate', which is KILL-FLEET); the e2e ran `frob fleet plan` of BD-370, which depends on this bead: the plan-forwards-nothing assertion is BD-370's (request), the e2e uses fleet.status (N21c-15, added to deps) and capabilities (N00-02, added) and plants a PASS to show acceptance; the cross-machine job refusal had no owner: stated as this bead's job-admission rule on --machine; test link_on_requires_gate_pass made concrete"
+  },
+  {
+   "bead": "N41-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the strict-data refusal and the budget refusal were unnamed ('the cost budget's code'): FROB-REF-113 (an assumed field under --strict-data, stage 6) and FROB-REF-115 (an exceeded cost budget with value, limit and largest contributors), with exit 3; the e2e adds the datasheet-without-citation card refused at load and sources the STD-E2E helper"
+  },
+  {
+   "bead": "N41-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the bead wrote the two register rows, which N41-OPEN6 (OPEN-TETHER-1) and N41-OPEN7 (OPEN-SUITE-2) already write: now it writes no second copy, sets their blocks to the two confirmation gates and tests that rows and ADR agree (rows_and_adr_agree); N41-OPEN6 and N41-OPEN7 moved from related to deps; N32a-05 (the KILL-MCP decision whose ADR a failed confirmation requires) added to related"
+  },
+  {
+   "bead": "N41-15",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "acceptance and e2e exercised the frozen-parameters refusal (N39b-05/N39b-33), 761 (N39b-29) and the advocate checks (N39b-28), all dependents, and the freeze it refused belongs to N39a-40: this bead now provides `frob-conformance tenfold require-owner-inputs` (exit 3 naming the open row or the hand-edited table), which the freeze calls (request); the three dependents' checks are named as their tests against a record generated here; the agent check was misattributed (unequal caps across manifests is N39a-19's; N39b-31 refuses a per-arm cap in the record): corrected, test per_arm_cap_refused; defaults of the generated record tested"
+  },
+  {
+   "bead": "N41-16",
+   "kinds": [
+    "tests"
+   ],
+   "what": "four of the eight checks had no planted-defect test (own-parent dependency, missing milestone label, e2e bead without the harness dependency, see-section bodies advisory at M0 and failing from M1): tests added; negative-control count corrected to thirteen. Seed known answers left as frozen history"
+  },
+  {
+   "bead": "N41-17",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "rule 1 cross-checks the capability registry of N00-02, which was not reachable: added to deps and the cross-check stated (a record printed implemented while a bead citing its gate is open is listed); acceptance says every rule has a planted violation but rules 1 and 6 had no test: partial_bead_lists_open_conditions, implemented_while_gate_bead_open_listed, wp_check_not_run_listed added"
+  },
+  {
+   "bead": "N41-18",
+   "kinds": [
+    "deps"
+   ],
+   "what": "the step owns the session-record validator, whose tests live in frob-conformance (BD-025), and its script sources the STD-E2E helper, but depended on neither: both added (they stand only on the workspace and frob-core v0), with the reason stated in Scope"
+  },
+  {
+   "bead": "N41-19",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "step 4 ran 'the existing test' inside FrankenSim's checkout, contrary to BD-007's capture script (git-archive export, probe crate, offload shim; INV-SUITE-04): now runs that script; acceptance adds that the bead closes on its observation whatever the verdict (the Background says a failure blocks no later step) and the untracked-files check; STD-E2E added"
+  },
+  {
+   "bead": "N41-20",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied: the fs-qty cells run as `toolchain_matrix.sh --sets 1` (N33c-01) on the probe workspace, never cargo in FrankenSim's checkout, so BD-031 resumes them; steps 4-5 re-made the fastmcp_rust change on a branch and built inside its checkout, while the change is FD-FMCP-01's (a dependency, landed on main) and the scope says so: now the step builds the landed commit in a scratch clone against the 112/115/0 baseline and changes no sibling; record, acceptance, validator cases, e2e asserts and the negative control follow; STD-E2E added"
+  },
+  {
+   "bead": "N41-21",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the record validator (N41-18) and the STD-E2E helper were used but not depended on: added; the swapped-operand negative control of the known-answers section was never run: now a procedure step, a record field, an acceptance line and an e2e assert"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N41p1-01",
+   "why": "split from BD-056: the mirror-equals-hand-expanded known answer after elaboration and compilation, the scale mass factor (x8, inertia x32) and scripts/e2e/design_constructors.sh need N14a-07, BD-061, BD-062, BD-057, BD-110 and N14a-21, which all depend on BD-056"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14a-07",
+   "what": "unit test replace_substitutes_component says the knee actuator is replaced 'inside one mirror image only'; BD-056 rule 7 makes `replace` a substitution on the subterm before expansion, so under the mirrors it changes all four knees (BD-056 replace_before_expand); a one-image change is BD-058's constructor split. Align the test"
+  },
+  {
+   "bead": "N14a-17",
+   "what": "add split_alone_compiled_identical: BD-058 now asserts only that splitting quad-a's mirrors without changing a value elaborates to an equal instance tree (BD-061 is a later seed); assert the compiled kinematic and inertial sections bit-identical here"
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.edit row: chapter refusals should be BD-058's (101, 102, 103, 105, 106, 107, 108, 111, 114, 121, 123, 125, 126; 109 is raised at stage 5 by design.check, not by design.edit); symmetry values (`preserved`, `broken`, `restored`) differ from BD-058's declared `preserved|reported|grows|none` plus `symmetry.split`; the CLI example's selector `foot.radius` is now defined in BD-058"
+  },
+  {
+   "bead": "N32-REF",
+   "what": "FROB-REF-804's trigger should also cover design.edit's two-value form (expected current value of a field differs from the head's), payload field/expected/current/head, exit 7 (BD-058, DESIGN)"
+  },
+  {
+   "bead": "N16a-18",
+   "what": "add the spin-and-translate CLI step that BD-157 no longer runs: a 10^6-step lockstep run of a body spinning and translating far from the origin at two worker counts, equal digests, membership residual <= 4 ulp from telemetry, re-anchor counts logged (BD-157 depends on nothing that runs sim.run)"
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run row: (1) add the operator-only inputs `workers` (1-512) and `tile_worlds` (power of two, 1-1024, default 32), batch-cpu only, FROB-REF-802 otherwise, outside every identity (BD-160); (2) add the `task` input that 42 beads already use (`frob sim run <design> --task <t>`), whose randomization plan is compiled at admission (BD-200), and the operator option `--resolved-out <file>` (BD-200)"
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "task.check row: add the optional `design` input that resolves a task's randomization `:from` references against a design's instances, and 'Extended by: BD-200' (refusals randomize-no-interval, proposed 571, and FROB-REF-572)"
+  },
+  {
+   "bead": "N23b-03",
+   "what": "the beyond-card example uses the withdrawn TOML `[[randomize]] target = ...` form; BD-200 now spells the section `(randomization (draw <name> :from interface:rubber-60a/tile#mu :law card ...))` in BD-122's S-expression view: write `:beyond-card (widen \"1.5\")` in that form, and the refused bare range keys as `:lo`, `:hi`, `:range`"
+  },
+  {
+   "bead": "N24c-36",
+   "what": "its declaration example names streams `world.material`, `world.fixture`, `world.push`, `sensor.imu`, which are not rows of N35-23's registry (`scene-field`, `disturbance-process`, `disturbance-event`, `sensor-noise`, ...); either use the registered names or state that `:stream` names an N35-23 row by its `name`; `:from card:<card>:uncertainty` differs from BD-200's `:from <kind>:<card>#<field>`: align"
+  },
+  {
+   "bead": "N35-24",
+   "what": "the keying table gives `by_cell(scene-field, cell)` with the tile index as entity and no rule for two randomized fields of one cell (friction and restitution would read the same block); BD-200 now sets component = (low 29 bits of entity_of_name(\"scene-field\", field path))*8 + attempt, with a collision refusal: adopt it in the helper or state the rule there"
+  },
+  {
+   "bead": "N41-RISK4",
+   "what": "its acceptance 'with parts 1 to 3 the register holds exactly 59 records' and test register_is_complete_01_to_59 need N41-RISK1, -2 and -3, but it depends on N41-01 only: add them to deps, and run N41-01's completeness check (`risks check --complete`: no gap, 59 rows, totals 28/29/2) here"
+  },
+  {
+   "bead": "N41-OPEN8",
+   "what": "its acceptance 'with parts 1 to 7 the register holds exactly 161 questions' needs N41-OPEN1 to -7, but it depends on N41-03 only: add them to deps; run N41-03's completeness check (`open check --complete`, rule 8) here"
+  },
+  {
+   "bead": "N33b-03",
+   "what": "before writing the tournament freeze record, call N41-05's `frob-conformance open require OPEN-PROG-1` and refuse while the row is open (the plan: OPEN-PROG-1 is asked again before the pins are frozen for M7); add N41-05 to deps"
+  },
+  {
+   "bead": "N39a-40",
+   "what": "every freeze-and-seal step calls N41-15's `frob-conformance tenfold require-owner-inputs --json` first (the four owner rows decided or defaulted, the configuration record equal to its ADRs) and, when it seals a family, N41-06's `frob-conformance tenfold require-adjudication --gate <partial|tournament>` (record present; at M7 a confirmation dated after the M6 page), refusing on either failure"
+  },
+  {
+   "bead": "BD-370",
+   "what": "assert that under fleet.peer_link = false (N41-12's generated key, the default) `fleet.plan` prints the role-table assignment as advice and forwards nothing across machines; N41-12 no longer runs `frob fleet plan`, since BD-370 depends on it through N32a-35"
+  },
+  {
+   "bead": "N41-23",
+   "what": "it adds cases to the session-record validator owned by N41-18 (crates/frob-conformance/tests/session_record.rs) but does not reach N41-18: add it to deps"
+  },
+  {
+   "bead": "N41-24",
+   "what": "it adds a case to the session-record validator owned by N41-18 (crates/frob-conformance/tests/session_record.rs) but does not reach N41-18: add it to deps"
+  },
+  {
+   "bead": "N40-05",
+   "what": "the exit runner calls N41-05's `scripts/release/visibility-guard.sh` (unverified is a warning at an exit) and N41-01's and N41-03's completeness checks (`risks check --complete`, `open check --complete`)"
+  },
+  {
+   "bead": "N41-27",
+   "what": "the release checker calls N41-05's `scripts/release/visibility-guard.sh` (unverified fails a release); add N41-05 to deps"
+  },
+  {
+   "bead": "N38b-26",
+   "what": "the owner answers OPEN-GAUNT-1 on N41-10's page (put at the M4 exit): depend on N41-10, as N39b-27 depends on N41-06"
+  },
+  {
+   "bead": "BD-397",
+   "what": "form B still writes GATE-GROUND-10 as status 'not run' with state = no-claim; it should be the terminal status no-claim with reason no-dataset-admitted, and blocked with detail OPEN-GROUND-1 before the dataset question is recorded (dup-07, as in N30b-25, N38b-26, N41-10)"
+  },
+  {
+   "bead": "BD-328",
+   "what": "N41-08 now names BD-328 as the bead that asserts OPEN-PROG-4's default on the rung side: keep a step of its script under a scratch default ADR of OPEN-PROG-4 (no rank-agreement record): select or discard refused with FROB-REF-537, report wording 'unranked' and 'k survivors'"
+  }
+ ],
+ "unchanged": 1,
+ "notes": "complete: 34 of 34 reviewed; N41-07 unchanged; graph 0 cycles"
+}

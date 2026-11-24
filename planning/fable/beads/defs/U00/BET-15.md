@@ -1,14 +1,14 @@
 ---
 key: "BET-15"
-title: "Decide BET-15: family policies (one policy per morphology class decides most designs without per-design training)"
+title: "Decide BET-15: family policies (one per morphology class decides most designs without per-design training)"
 type: "task"
 priority: 1
 milestone: "M4"
 labels: ["m4", "cortex", "frob-learn", "frontier", "bet", "gate"]
 parent: "WP-61"
-deps: ["N00-28", "N00-07", "BD-320", "BD-321", "BD-328", "STD-E2E"]
-needs: ["§23.11: the pre-funding pilot of family policies and the break-even count N = P/(s·(1 − f))", "§42 (OPEN-CORTEX-1): the owner-approved compute envelope for pretraining one family policy (class E3, approved per run with its ceiling and kill rule written first)"]
-related: ["BET-16", "BET-17", "BD-322", "NS-19", "N00-11", "N00-20"]
+deps: ["BD-320", "BD-321", "BD-328", "GB-28", "N00-28", "N23a-26", "N23b-19", "N23b-24", "N38a-09", "STD-E2E"]
+needs: []
+related: ["BET-16", "BET-17", "N00-11", "N00-20", "N40-31", "N40-32", "NS-19"]
 gates: ["GATE-CORTEX-11", "KILL-FAMILY"]
 plan_refs: ["§4 (BET-15)", "§40.5", "§0.8 (H-02)", "§2.4 (lever 2)", "§23.23", "§43.7"]
 ---
@@ -30,18 +30,29 @@ days: a scale two cards cannot reach.
 ## Scope
 
 In: pre-registration, the pilot's result as a precondition, the M4 reading, the break-even computation, verdict
-and decision record. Out: the policy architecture, pretraining, the experiment itself.
+and decision record. Out, with the beads that have them: the policy architecture and pretraining (`train.family`,
+BD-320); the held-out experiment and the GATE-CORTEX-11 record (BD-321); the pre-funding pilot on 200 generated
+designs (N23b-19); the owner's compute envelope, default no pretraining (N23b-24); the rank-agreement
+measurement clause (b) reads (BD-328). Also out: the decision of
+the kill gate KILL-FAMILY, which is N23a-26 (a dependency): it applies the trigger, writes its own record
+(`docs/adr/ADR-KILL-FAMILY-M4.md`), sets the verbs' admission and declares the milestone variant. This
+bead reads that record, evaluates the bet's falsifier clauses and writes the bet verdict
+(`docs/adr/bet-15-m4.md`), which cites it; "the KILL-FAMILY decision recorded" below means on record by that
+bead.
 
 ## Technical approach
 
 1. **Falsifier clauses** (any falsifies):
    a. Zero-shot return on held-out in-class designs is below 70% of the per-design specialist's.
-   b. Rank agreement with specialists is below the threshold of the rank-agreement bet (BET-17).
+   b. Rank agreement with specialists is below the threshold of the rank-agreement bet (BET-17): the lower 95%
+      bound on Kendall's τ between the family-policy rung and the specialists, per class and task family, is
+      below 0.7 (the record of BD-328).
    c. Pretraining, counted in compute, is not repaid within the break-even count N = P/(s·(1 − f)) at the
       measured values, where P is the pretraining cost, s the cost of one specialist training and f the fraction
       of a specialist's cost that using the family policy still spends per design (fine-tuning and evaluation).
       Illustrative: 60 GPU-hours at f = 0.1 repay after about 590 quadruped designs at s = 410 s
-      (216,000 s ÷ (410 s × 0.9) = 585), or after 70 to 130 humanoid designs.
+      (216,000 s ÷ (410 s × 0.9) = 585), or after 70 to 130 humanoid designs (KA-589: s = 0.5 to 1 GPU-hour per
+      humanoid specialist, 216,000 ÷ (1,800 × 0.9) = 133 and 216,000 ÷ (3,600 × 0.9) = 67).
 2. **Competing arm.** Per-design PPO from the baseline warm start. **Potency control.** Designs outside the
    class must be flagged out-of-distribution and declined, not walked badly in silence.
 3. **Deciding gate (TARGET).** GATE-CORTEX-11 (Design comparison, M4): in one class on held-out parametric
@@ -72,20 +83,25 @@ and decision record. Out: the policy architecture, pretraining, the experiment i
       out-of-class decline rate, re-description retention, and rank agreement are recorded per class.
 - [ ] The break-even count is computed from measured P, s and f, and compared with the number of designs the
       program expects to evaluate in the class.
-- [ ] Verdict and the KILL-FAMILY decision recorded as an ADR.
+- [ ] Verdict recorded in `docs/adr/bet-15-m4.md`, citing N23a-26's KILL-FAMILY record
+      (`docs/adr/ADR-KILL-FAMILY-M4.md`) by identifier and hash; with no decision on record the verdict is
+      not filed.
 
 ## Test plan
 
 ### Unit tests
 `bets.rs`: `bet15_breakeven_585` (P = 216,000 GPU-s, s = 410, f = 1/10 → N = 585.4, printed "about 590");
 `bet15_zero_shot_0_74_and_ft_0_15_holds`; `bet15_zero_shot_0_66_falsifies_a`;
-`bet15_not_repaid_falsifies_c` (N = 585 against 200 expected designs); `bet15_no_envelope_is_untested`;
+`bet15_rank_bound_0_65_falsifies_b` (lower bound 0.65 → clause b holds; 0.72 → it does not); `bet15_not_repaid_falsifies_c` (N = 585 against 200 expected designs); `bet15_no_envelope_is_untested`;
 `bet15_out_of_class_walked_silently_fails_gate`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_15_decide.sh` recomputes the verdict from the experiment's records, recomputes N, and under a
-fired kill gate checks that `frob policy apply` returns a refusal naming the fallback route. Logged per
-STD-E2E: class, held-out count, return ratios, step fractions, P, s, f, N, the expected design count;
+`scripts/e2e/bet_15_decide.sh` reads the verdict of BET-15 from the bet register's report (`cargo run -p
+frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule) over the
+experiment's recorded gate rows, recomputes N from the recorded P, s and f, checks the ADR against both, and under a
+fired kill gate checks that `frob policy apply class:quadruped --design <reference> --task velocity --key b15-probe
+--json` returns exit 5 with FROB-REF-724 naming `docs/adr/ADR-KILL-FAMILY-M4.md` and the fallback route. Logged
+per STD-E2E, newline-delimited JSON at `target/e2e-logs/bet_15_decide/<utc>.ndjson` with a transcript: class, held-out count, return ratios, step fractions, P, s, f, N, the expected design count;
 `summary` naming GATE-CORTEX-11 and KILL-FAMILY.
 
 ### Known answers and negative controls

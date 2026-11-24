@@ -1,0 +1,311 @@
+{
+ "round": 2,
+ "slice": "S67",
+ "reviewed": 28,
+ "changed": [
+  {
+   "bead": "ART-L8",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "study.plan's paired-study refusal is 533, not 542 (layer rule of N24-REF/N28-REF: Arena study verbs answer 552, 532, 533); acceptance, unit list and script step 5 corrected, a no-Atelier-twin test added; dep N32a-13 added (809 at submit and the PairCounts constructor, 990 on a bad sum); 'superseded plan' made concrete; CX-266 cited; the unreachable-verdict consideration now states the settled layer rule. Numbers recomputed (2,145/521/521/1,103; 3,828 with one tie; 15/17/19/21/23; [0.0554, 0.4392]; 13/256)."
+  },
+  {
+   "bead": "BD-250",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request applied: `frob conformance run` replaced by the ADR-GAUNT-01 cargo form and record_gate; `frob study plan --from` (no such option; an ROC study is not a study.plan manifest) replaced by the committed registration file. Registration now carries the six method-gate parts N28c-25's gates_atelier_form requires (arms, controls, paired bound, fallback, the 1.19x ceiling KA-015, the reachability pre-analysis and power). E2E rewritten with real design.check calls, header, log fields, plants; unit tests given values (ties 0.875); dep N28c-25."
+  },
+  {
+   "bead": "BET-05",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Heuristic arm stated differently from BD-250 (summed peak torque vs min over joints of continuous torque); now BD-250's single definition. Fallback check said severity `advisory`; N28a-22 makes refusing findings High (exit 2): aligned. Test file path and the e2e commands and log fields named."
+  },
+  {
+   "bead": "N28a-22",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "ADR path docs/delivery/adr retired (KNOWN_DRIFTS 4): docs/adr/ADR-KILL-STATIC-M3.md with N40-03's required fields. Outcome `fired-partial` is outside N40-03's closed set: the partial firing kept as N40-03's one repair cycle (downgrade the offending analysis, re-measure, then not-fired or fired). Added the kill gate's owner declaration, which N28c-25 assigns to the deciding bead. Script: `frob sim run` given --key, gate row read via registry_report."
+  },
+  {
+   "bead": "BD-262",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps",
+    "users"
+   ],
+   "what": "Its e2e was N28a-30's script, a later bead (KNOWN_DRIFTS 7), and called eval.compare without --key: now its own scripts/e2e/eval_compare_devices.sh (cpu and device legs, schedule fuzz under distinct keys, 542/543/exposure-table-untested, job cancel, 805) with full logging. Verb line gains --backend and --key; options missing from the VERBS-eval row are named and requested. Deps BD-123 (cart fixture), STD-E2E."
+  },
+  {
+   "bead": "N28a-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request applied: gates run in the cargo form with record_gate. Steps 2-3 asserted 555/553/542 through study.plan, which by the layer rule answers 532/552/533: each invalid request now goes through eval.compare and study.plan with the code of each layer (as N28a-18 states). Every run call carries a distinct --key."
+  },
+  {
+   "bead": "N28a-17",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Requests applied: dep BD-243 replaced by N33b-18 (A-16 and Morris screening) and Scope says so; output schema frob.explain.compare.out/1; next_actions of explain.run must equal analyze.sensitivity's ranked edits in order (one ranking, owned by N33b-18), asserted in a new own script scripts/e2e/explain_compare.sh (was N28a-30's, a later bead). Deps BD-123, STD-E2E."
+  },
+  {
+   "bead": "N28a-20",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "complete",
+    "deps"
+   ],
+   "what": "Own script scripts/e2e/compare_multi.sh (was N28a-30's later script, and leaned on `opt start --race`, an M4 verb): global/named/all claims through eval.compare with keys, 543, the null race through its cargo test. `claim: all` (mentioned only in Considerations) specified with a unit test and values; --metric/--claim requested of VERBS-eval. Deps BD-123, STD-E2E. e-BH and Binomial(512,0.05) 0.99-quantile 38 recomputed."
+  },
+  {
+   "bead": "N28a-21",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied: dep VERBS-study. Exit codes aligned: unknown study 809 exit 7 (as N32a-13), sealed 840 exit 3, 553 for a fixed-n re-read; 840 and 809 requested of the row. Own script scripts/e2e/study_compare_record.sh (was N28a-30's later script) with keys, schema validation, sealed read, plants; dep STD-E2E."
+  },
+  {
+   "bead": "BD-263",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "users"
+   ],
+   "what": "Request applied: `--require-rule table` accepted (with the pin a missing or stale DC-01 table is 871, exit 3, nothing dispatched; without it the 30-pair fallback with 871 in warnings); dep N28c-02. The 872 guard cannot be wired here without a cycle (N28c-12 depends on BD-263), so the `result` parameter gets one resolution point that N28c-12 wraps; acceptance and unit tests added; 871/872 requested of VERBS-eval."
+  },
+  {
+   "bead": "N16b-05",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "E2E called `frob eval promote --explain-table`, an option nobody defines: own script scripts/e2e/dc01_table.sh over check-generated and the table test. Self-test exact values added (0.00726 and 0.0240 within 32 pairs, recomputed); the envelope-after-outcomes control reconciled with N16bp1-01 (821 first at the verb). Dep STD-E2E. Table points recomputed."
+  },
+  {
+   "bead": "N16b-31",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Step 1 named its command (`frob cores show dc-01 --rows`, BD-309, replacing 'when available'); step 4's unnamed 'verb that requires established evidence' is now `frob report run --cite` (BD-302); a step for the 871 fallback and the --require-rule pin added. Deps BD-302, BD-309."
+  },
+  {
+   "bead": "BD-302",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Requests applied: deps VERBS-report and N20b-18; report.run --claim reality routes through require_reality_claimable (447); --cite (869, 820, 845 through one resolve_cited point that N28c-12 wraps for 872), --compact (557) and --claim performance specified; --claims-realism stays N19a-39's and answers 724 until then. Unit tests and e2e legs for each."
+  },
+  {
+   "bead": "BD-267",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users",
+    "complete",
+    "scope"
+   ],
+   "what": "Script called `frob eval run --task --policy --seed` and `frob eval detect --result`, options no row has, and no run call carried --key: now the eval.run row's inputs (design, battery, tier) on N23b-07's fixtures, positional result as the registry example, keys throughout, 805/701 and idempotent-replay legs, and the gate in the cargo form with record_gate. Evidence class aligned with the registry's *screening* label (was Tested). Scope split of the flag record with N23b-05 made exact; mirror's 64-pair budget noted in cost; inputs and refusals 561/867 missing from the VERBS-eval row named and requested."
+  },
+  {
+   "bead": "N23b-07",
+   "kinds": [
+    "users",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The corpus was loadable only by the conformance library, so BD-267's script had no way to evaluate it through the verbs: each fixture now also ships a design (planted controller as its frozen controller record) and a one-entry battery addressed @fixture:cortex/<flag>. Own script scripts/e2e/cortex_exploit_corpus.sh (base outcomes through eval.run, the two plants, the release-graph check) with full logging instead of pointing at BD-267's later script. Deps N24c-04, STD-E2E. Breakaway, √2·μ and 0.125 J / 0.05 J recomputed."
+  },
+  {
+   "bead": "N23b-05",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance required flagging N23b-07's planted exploits, but N23b-07 was not a dependency (KNOWN_DRIFTS 7): dep added (no cycle) and a corpus integration test `--test detect_corpus numerical` added that the acceptance cites; e-process table extended with (29,2) and (4,2) and a concrete 32-pair undetermined stream (exceedances at 8, 16, 24; ln E⁺ within [0.31, 3.48]), recomputed. The e2e note now says the verb-level script belongs to BD-267, which depends on this bead."
+  },
+  {
+   "bead": "N23b-06",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Same gap as N23b-05: dep N23b-07 added (no cycle); corpus integration test `--test detect_corpus physical` with the expected flag per fixture, and a test that each NotEvaluated reason is reachable; e2e note made drift-7 explicit."
+  },
+  {
+   "bead": "N23b-10",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "MethodGateRecord was a second method-experiment form beside N38a-07's register (a dependency) and omitted its reachability pre-analysis: it now writes N38a-07's record and must pass experiments::admit, keeping Cortex's ten-pair minimum, t-bound and N23b-15 controls; acceptance and a unit test added. E2E rewritten with real commands and keys (train.start with --steps and --profile fast-training, eval.compare, study.plan, eval.run on planted fixtures), the layer-rule codes per verb (542/533, 553/552), header and full logging. Peeking 5.08/8.76/12.9/17.4% and t(0.95,9)=1.833 checked."
+  },
+  {
+   "bead": "GB-14",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "Lane B claimed `frob eval promote` on a synthetic bit stream, which the verb cannot take (it takes a result): the streams stay at library level and four surface calls are named for NEG-02's script (cores show --rows; promote of N16b-06's honest control and plant A with keys; 821 envelope-hash-mismatch). Golden fallback probability at p₀ corrected to 0.8121788131469604 (exact rational; was 0.…594). Restart control's formula matched to its rule (restart on every non-promotion: 0.0771; on rejection only 0.0641). Deps BD-309, N16b-06, NEG-02 (its script); all goldens recomputed in rationals."
+  },
+  {
+   "bead": "NS-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Model-conditional spend/promotion is FROB-REF-830 (§23.16, N23-REF), not 820; 820 kept for citing the provisional result (report run --cite). The demo built its own planted policies: now uses N16b-06's plant A and honest control and N23b-08's ranking-box-cone, so it runs on the gates' artifacts (deps N16b-06, N23b-08, BD-302). `eval run --policy` (no such input) replaced; the non-existent 'penetration recovery' and 'action chatter' detectors replaced by energy-created; keys, header and full logging."
+  },
+  {
+   "bead": "N16b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Registry path aligned with KNOWN_DRIFTS 2 (crates/frob-conformance/registry/controls.toml). Its users made exact: background_referee.sh is an M2 bead's script that cannot depend on this one, so its M3 steps are accepted by BD-268; NS-09 and GB-14 added as users."
+  },
+  {
+   "bead": "N15b-07",
+   "kinds": [
+    "deps",
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request applied: dep BD-243 replaced by N33b-18, Out names 'A-16 itself (N33b-18)'. The label had two definitions (N33b-18 step 5 and this bead's sweep): N33b-18's rule now decides, and this bead adds its joint-corner case to that one function (requested of N33b-18's Scope). Deps BD-112 and BD-262 added for the explain and compare calls the script makes (lost with BD-243). Script rewritten with fixtures, the actuator verbs, keyed sim runs on two tiers, a simulated-path comparison and the plants. Thermal and bus numbers recomputed."
+  },
+  {
+   "bead": "N28b-05",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Its M3 step of lineage_queries.sh ran sim run, design edit and sim replay without keys, with two compared replays under one call shape, and no command for the comparison replay: steps numbered with distinct keys, the comparison replay as `sim replay --tier referee --comparison`, and an 894 leg. 791 missing from sim.replay's row requested of VERBS-sim."
+  },
+  {
+   "bead": "N31b-40",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script used `--telemetry T1`, an option no row has; the time-coherent peak capture is N29ax-02's `--peak-capture link-bending-proximal` (a dependency). FROB-REF-171 is loaded by N31b-45 (a dependency), so the 'pending row' hedge is removed and the fail-closed case raises the same code with a detail. 171 requested of eval.promote's row. Tube and 900 N numbers recomputed."
+  },
+  {
+   "bead": "N31b-42",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The six parts were described but not tied to N38a-07's register (a dependency): the registration is now an experiments.toml record admitted by experiments::admit, with a paired change-share lower bound that is positive exactly when ≥1 of 15 changed (1 of 15 → 0.34%), so the plan's rule and the register's form agree. Script named only 'screening and comparison verbs': now design edit set-fill sized, design check, eval run, eval scorecard with keys. Binomial bounds recomputed (18.1%; [0.17%, 31.9%])."
+  },
+  {
+   "bead": "N33a-31",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Its admission step lives in N33a-34's script, which provides the step table, but it neither depended on N33a-34 nor said what the step runs: deps N33a-34 and STD-E2E; the step is specified (build behind the feature, the known-answer tests, the planted adapters, the record and check-stack) with full logging, and an acceptance item runs it unskipped at M3."
+  },
+  {
+   "bead": "N35-08",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Run verbs (eval compare twice, run fork) lacked --key, so the second comparison would replay the first's receipt: distinct keys; a 562 leg for a fork below D2; logging completed. `--pairing` and per-arm placement are not on eval.compare's row: requested. Horizon, Fisher interval, phi and per-step λ checked."
+  },
+  {
+   "bead": "NS-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Step e refused a manifest (study.plan) with 553 and 542, the eval.compare codes; by the layer rule study.plan answers 552 and 533: both layers now asserted. Deps N28a-21 and N32a-13 (study.compare's implementers) added. Header, lanes and full logging. ⌈ln 20/ln 1.2⌉ = 17 checked."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-study",
+   "what": "study.compare raises FROB-REF-840 (sealed study, INV-ATEL-11) and FROB-REF-809 (unknown study, exit 7, as study.cancel in N32a-13); add both to its row. Also drop 542 from study.plan and study.submit per the layer rule (N28-REF already asks)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "The ADR template still says docs/delivery/adr/ADR-<gate-name>-<milestone>.md; KNOWN_DRIFTS 4 retires that directory: docs/adr/."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare: add inputs metric (repeatable), margin, max_pairs, backend (BD-262), fixed_n and declared_verdicts (N33b-19), claim global|named|all (N28a-20), pairing exact|by-address|unpaired and per-arm placement (N35-07's Asked, N35-08). eval.promote: add input require_rule (table) and refusals FROB-REF-871 (BD-263, N28c-02), FROB-REF-872 (N28c-12's guard on `result`) and FROB-REF-171 (N31b-40, loaded by N31b-45). eval.detect: add inputs detectors, pairs_budget, tiers and chapter refusals FROB-REF-561 and FROB-REF-867, which BD-267 raises while the row says 'none of its own' and refusal_lists expects none."
+  },
+  {
+   "bead": "N35-07",
+   "what": "A cross-family pair demanded as paired without D1 is FROB-REF-561 in N35-07's licence rules, but eval.compare's row lists no 561 and the layer rule gives it 542 (arms in different classes) and 533 at study.plan. Say which code each verb returns for this case (and add it to the rows), so N35-08's script can assert it; N35-08 now leaves that leg out."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.replay resolves the producer worker (N28b-05) and refuses with FROB-REF-791 when it is absent: add 791 to sim.replay's chapter refusals and N28b-05 as an extender."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.sensitivity's 'Implemented by' lists BD-243 and N28a-05; A-16 and the verb are N33b-18's (BD-243 only checks A-09, A-14 and A-16 side by side): add N33b-18."
+  },
+  {
+   "bead": "N33b-18",
+   "what": "Step 5's card-conditional rule misses the joint-corner case (no field flips alone, the joint worst corner does); N15b-07 now adds that case to this one function instead of keeping a second rule. Name the extension in Scope so there is one definition of the label."
+  },
+  {
+   "bead": "N23b-08",
+   "what": "scripts/e2e/rank_robustness.sh calls run verbs without --key (`frob eval run`, `frob fidelity modelform`, `frob eval promote`) and `eval promote --result <id>` where the row's example is positional: add distinct keys and the positional form (KNOWN_DRIFTS 5, 8)."
+  },
+  {
+   "bead": "N38a-07",
+   "what": "List the admissible success.quantity values; N31b-42 registers a count experiment with `paired-change-share-lower-bound` (exact one-sided lower bound on the paired share of changed campaigns), which is a paired lower bound but is not the ratio form the example shows."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 28 beads reviewed and changed; the requests addressed to the slice (BD-250, BD-263, BD-302 x2, N15b-07, N28a-17 x3, N28a-21, N28a-30) are applied, BD-263's 872 by a resolution point N28c-12 wraps since a direct dep would be a cycle. Numbers recomputed by script (scratchpad polish-r2-S67): L.8, DC-01/GB-14 tables in rationals (one golden corrected), e-process stream, thermal and bus, tube sizing, binomial bounds. No cycles after the edits; every touched file parses. Settled within the slice; nine requests to registry and neighbouring beads remain (VERBS-eval, VERBS-study, VERBS-sim, VERBS-analyze, N40-03, N35-07, N33b-18, N23b-08, N38a-07)."
+}

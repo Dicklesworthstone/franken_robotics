@@ -1,14 +1,14 @@
 ---
 key: "FD-FT-01"
-title: "upstream frankentorch: Metal gateway extensions (async completion, offsets, more arguments, archives, timing)"
+title: "upstream frankentorch: Metal gateway extensions, stages 1 and 2 (async completion, typed buffers, offsets, more arguments)"
 type: "task"
 priority: 1
 milestone: "M2"
 labels: ["m2", "suite", "spark", "upstream", "frankentorch", "frob-spark-metal", "solid"]
 parent: "WP-19"
-deps: ["BD-037", "BD-016", "BD-028", "NF-01", "STD-E2E"]
+deps: ["BD-016", "BD-017", "BD-028", "BD-029", "BD-037", "N21b-32", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-174", "BD-173", "BD-175", "BD-029", "BD-217", "FD-FT-02", "FD-FT-03"]
+related: ["FD-FT-02", "FD-FT-03", "NFp1-51", "NFp1-52", "N19c-20", "N21a-27", "N21b-04", "N21b-05", "N21b-06", "N21b-08", "N21b-09", "N21b-12", "N21b-24", "N21c-24", "N33c-39", "N33c-47"]
 gates: ["INT-FT-01", "INT-FT-02", "GATE-SPARK-02", "GATE-SPARK-04"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§21.9", "§21.10", "§21.3", "§33.17", "§21.25", "§41"]
 ---
@@ -47,9 +47,15 @@ an owner decision; default: stay inside the gateway's limits and accept KILL-MET
 
 ## Scope
 
-In: the gateway extensions below, in FrankenTorch, in five stages that land separately; here, the Metal backend
-moved onto each as it lands, and the four gates re-run. Out: the Metal backend itself (BD-174); device tensors
-and autograd in FrankenTorch (FD-FT-02); a CUDA gateway (FD-FT-03).
+The register item FD-FT-01 has five stages that land separately (below). The item was split in polishing so
+that each bead is one piece of work.
+
+In: stages 1 (completion) and 2 (buffers and arguments), in FrankenTorch; here, the Metal backend moved onto each
+as it lands, and the four gates re-run; the item's one register row (`mirror`, `open` → `landed`) and its
+fixture with one assertion per probe. Out: stages 3 and 4, function constants, binary archives, private storage
+and per-kernel timing (NFp1-51, which depends on this bead); stage 5, Metal 4 command allocators and the
+`objc2-metal` migration, and the row's move to `adopted` (NFp1-52, which depends on NFp1-51); the Metal backend
+itself (BD-174); device tensors and autograd in FrankenTorch (FD-FT-02); a CUDA gateway (FD-FT-03).
 
 ## Technical approach
 
@@ -86,6 +92,10 @@ safety documentation.
    buffer; per-kernel timing in the `Receipt`.
 5. *Platform.* Metal 4 command allocators; migration from the deprecated `metal` 0.33 binding to `objc2-metal`.
 
+This bead carries stages 1 and 2, which bear on BET-09 and land first. Stages 3 and 4 are NFp1-51 and stage 5 is
+NFp1-52; all five remain one register row, FD-FT-01, with one mirrored bead. The row reads `landed` from the
+first stage merged on FrankenTorch's `main` until every stage has been adopted here; NFp1-52 sets `adopted`.
+
 Part of this is wrapping, not new binding work: the `metal` 0.33.0 binding under the gateway already exposes
 indirect thread-group dispatch and thread-group memory length (`metal-0.33.0/src/encoder.rs:1715`, `:1730`) and
 is reported to expose blit encoders and binary archives (FACT to recheck). Its language-version enumeration
@@ -108,20 +118,35 @@ by this bead: one test tagged `FD-FT-01`, compiled as the `frob-conformance` int
 marked `#[ignore]` so that the default suite stays green, with `expected.toml` beside it holding the signature
 recorded at the pinned commit (`observed_at`, the failing assertion and the observed value). It fails at the pin
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
-itself a failure of the registry check. It has one probe per stage (five assertions): two command buffers in flight
-at once; a buffer bound at a non-zero offset; a kernel with 40 buffer arguments; a function constant; a
-receipt with per-kernel times. All five are impossible through the gateway at the pin.
+itself a failure of the registry check. It has five assertions covering stages 1 to 4 (stage 2 has two): two
+command buffers in flight at once (stage 1); a buffer bound at a non-zero offset and a kernel with 40 buffer
+arguments (stage 2); a function constant (stage 3); a receipt with per-kernel times (stage 4). All five are
+impossible through the gateway at the pin. `expected.toml` holds one signature per assertion, tagged with its
+stage, so that after a partial adoption the fixture still fails, on the first assertion whose stage is not yet
+adopted, with that assertion's recorded signature; each stage bead updates the file when its stage is adopted.
+NFp1-52 adds a sixth assertion for stage 5.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
 is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
 (`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
-T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
-become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
+T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the interim
+posture of the limits that stage removes end; the row's `status` becomes `adopted` only after the last stage's
+switch-over (NFp1-52). No PASS is recorded on a dirty sibling tree, and neither a pin nor
 T moves while a ten-fold tournament is running. If a gate named here does not exist yet when the change lands,
 the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
 against the new pin.
+
+**When the Metal backend does not exist yet (DESIGN, so that this bead never waits on later beads).** This bead
+depends only on the M0 admission (BD-016, BD-028), so a stage may be adopted before the Metal backend (BD-174 and
+its components N21b-05 to N21b-07) or the gates GATE-SPARK-02 (BD-176) and GATE-SPARK-04 (BD-217) exist. Then the
+switch-over runs INT-FT-01, INT-FT-02 and the fixture only; the backend beads are built on the pinned gateway as
+they specify (their interim posture stays their design of record), and moving the backend onto a stage's new API
+(several command buffers in flight, offset binding, argument tables) is a lever of the one optimization pass that
+KILL-METAL allows (BD-217, N21b-08; option B of OPEN-SPARK-5, N21b-09), landing only with identical digests and a
+paired lower bound of at least 1.03. When the backend does exist at adoption, the move and the re-tests below are
+part of this bead.
 
 **What the switch-over re-runs, after each stage that changes the backend.** INT-FT-01 (the gateway builds in
 the Metal annex, with FrankenTorch's `block` patch repeated at the annex root, and runs a kernel on this Mac;
@@ -143,11 +168,10 @@ the Mac trains on `batch-cpu` using its CPU cores and keeps its world-bank, proo
 - [ ] In FrankenTorch, per stage: the new API exists with tests; every existing test, including the compile-fail tests that make R1 a compile-time fact, still passes; any new `unsafe` is inside `ft-kernel-metal` with its safety note.
 - [ ] Stage 1: two command buffers are in flight at once and complete in submission order on the fixture; a wait with a deadline returns `TimedOut` without invalidating a later completion.
 - [ ] Stage 2: the offset-bound and 40-argument probes run; an offset that breaks alignment or overlaps a declared write range is refused.
-- [ ] Stage 3: a kernel specialized by function constant produces the same bytes as the `#define` form; a warm start from the archive compiles nothing; a corrupted or stale archive entry is a miss.
-- [ ] Stage 4: a private-storage result blitted to a shared snapshot equals the shared-storage result bit for bit; the receipt carries one time per kernel.
-- [ ] Here: after each adopted stage the four gates above are re-run and recorded; rules R1 to R6 are re-tested; launch counts and blocked host time per chunk are recorded before and after.
+- [ ] Here: after each adopted stage INT-FT-01 and INT-FT-02 are re-run and recorded; where the Metal backend and the gates exist at that pin, GATE-SPARK-02 and GATE-SPARK-04 are re-run and recorded, rules R1 to R6 are re-tested, and launch counts and blocked host time per chunk are recorded before and after; where they do not, the record names each as `first run against the new pin` with the bead that will make it.
 - [ ] Here: no code in `spark/frob-spark-metal` binds Metal outside the gateway (a source scan), at every pin.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `landed` once stage 1 or 2 is on FrankenTorch's `main`, and stays `landed`, with the stages not yet adopted named, until NFp1-52 sets `adopted`.
+- [ ] After stages 1 and 2 are adopted, the fixture's three stage-1 and stage-2 assertions pass and the stage-3 assertion fails with its recorded signature.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
 
@@ -159,24 +183,31 @@ In FrankenTorch (added, in `ft-kernel-metal`; run on Apple silicon):
 - `interruptible_wait_times_out`: a kernel that runs about 200 ms, a 10 ms deadline; expected `TimedOut`, then a normal completion on a second wait.
 - `bind_at_offset_reads_the_right_elements`: a 1,024-element `f32` buffer bound at byte offset 512; the kernel's element 0 is host element 128.
 - `forty_arguments`: a kernel summing 40 one-element buffers holding 1.0 … 40.0; expected 820.0.
-- `function_constant_equals_define`: N = 12 as a constant and as a `#define`; identical output bytes.
-- `archive_warm_start_compiles_nothing`: second open reports zero compilations.
-- `private_blit_equals_shared`: 10⁶ `f32` values; bit equality.
-- `receipt_has_per_kernel_times`: three kernels in one batch; three non-negative times whose sum is at most the batch's device time.
+- `typed_buffers_round_trip`: `u16`, `i32`, `u64` and raw-byte buffers written and read back; expected bit equality, including `u64` values above 2³² and the `i32` value −1.
+- `offset_misaligned_or_overlapping_is_refused`: an `f32` binding at byte offset 2, and an offset range overlapping a declared write range; expected a refusal for each.
 Here:
 - `readback_rules_r1_to_r6`: the backend's rule tests, re-run per stage.
 - `chunk_commit_survives_aborted_buffer`: an injected non-`Completed` terminal state; the committed slab is unchanged and the retry reproduces the digest.
 
 ### End-to-end script and logging
-`scripts/e2e/upstream_fd_ft_01.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
+`scripts/e2e/upstream_fd_ft_01.sh --phase pre|post [--stage N]…` (plain shell, seed-explicit, idempotent,
+non-zero on failure). This bead writes it with stages 1 and 2; NFp1-51 and NFp1-52 add their stages to the same
+script. Phase `post` for a stage asserts that stage's assertions pass and that every later stage's assertions
+still fail with their recorded signatures.
 Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_ft_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Run on the Mac. Phase `post` also runs `frob spark probe --json`,
-`frob spark fingerprint --json` (which records the language version and the 64-bit atomic probe),
-`frob spark check --json` for the CPU-versus-device check, and the Metal row of the performance harness,
-logging launch counts, blocked host seconds per chunk and world-steps per second with their thresholds.
+bead are re-run, and the registry row must read `landed` with the adopted stages named and a receipt newer than
+the pin move (`adopted` only after NFp1-52). Run on the Mac. Phase `post` also runs `frob spark probe --device
+metal --suite all --key fdft01-probe-s<N> --json`, `frob spark fingerprint --device metal --no-soak --key
+fdft01-fp-s<N> --json` (which records the language version and the 64-bit atomic probe) and `frob spark check
+--kernel K-cay-step --backend gpu-metal --key fdft01-check-s<N> --json` (the M0 single-kernel form of the
+CPU-versus-device check), each a `run` verb under its own key per stage N (the three verbs are those of the M0
+beads BD-017, BD-029 and N21b-32, dependencies of this bead); where the Metal backend and the
+performance harness exist at that pin, it also runs the Metal row of the performance harness, logging launch
+counts, blocked host seconds per chunk and world-steps per second with their thresholds, and otherwise logs that
+step `skipped: not yet built` with the bead key.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_ft_01/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -185,11 +216,11 @@ command line, exit code, wall time and the envelope's `evidence` block (claim, c
 identities, seed). It also records the sibling's pinned commit, the stack-receipt hash, the phase, each measured
 value with its unit and threshold, digests where state is compared and, on failure, the first differing value
 and the artifact paths needed to reproduce. A final `summary` line gives assertions passed and failed and the
-gates touched. No private-scene data is logged.
+gates touched. No private-scene data is logged. Every line also carries `stage`.
 
 ### Known answers and negative controls
 - Known answers: 1 + 2 + … + 40 = 820; host element 128 at byte offset 512 for `f32`; a kernel matches a Rust loop bit for bit on 10⁶ quaternions (the admission of INT-FT-01).
-- Negative controls: a host read of a slab before its command buffer completes must be impossible to write or be refused (R1); a batch that ends in a non-`Completed` state must never make its slab current (R2); a stale archive paired with changed source must not be loaded.
+- Negative controls: a host read of a slab before its command buffer completes must be impossible to write or be refused (R1); a batch that ends in a non-`Completed` state must never make its slab current (R2); a misaligned or overlapping offset binding must be refused; phase `post --stage 3` run after stages 1 and 2 are adopted, while stage 3 is not, must exit non-zero (the per-stage signatures are really checked).
 - Determinism lanes: every stage re-runs the device's run-to-run lane (same bits twice, and across worker counts) and the cross-backend lane against `batch-cpu` in its declared class.
 
 ## Considerations
@@ -197,7 +228,7 @@ gates touched. No private-scene data is logged.
 - RISK-08 (the gateway is synchronous, takes at most 31 buffer arguments, binds at offset zero and compiles from source only) and premortem story 14 (the gateway's limits throttled the Mac tier): earliest signals are launch counts and blocked host time per chunk on Metal.
 - BET-09 (Metal on Apple silicon is a real rollout tier, not a demo) is judged at GATE-SPARK-04; stages 1 and 2 are the ones that bear on it, and should land first.
 - A compile probe on this machine is reported to show that Metal Shading Language 3.2 and 4.0 provide no 64-bit integer atomic add and no 64-bit compare-and-swap (FACT to recheck; the fingerprint re-runs it); stage 5 does not change what kernels may assume about that.
-- The item is larger than one bead's usual five days: its five stages are its natural subtasks, each landing and being adopted separately.
+- The item is larger than one bead's usual five days, so its five stages were split along their natural lines: this bead (stages 1 and 2), NFp1-51 (stages 3 and 4) and NFp1-52 (stage 5). Each stage lands and is adopted separately; the register keeps one row and one mirrored bead for the item.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
   milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its
@@ -212,4 +243,4 @@ gates touched. No private-scene data is logged.
 
 ## References
 
-Appendix F.1 (row FD-FT-01), F.3; §21.9 (the gateway, the limits table, rules R1 to R6), §21.10 (the kernel cache), §21.3 (ADR-SPARK-09), §33.17 (row 8), §21.25 (OPEN-SPARK-5); INT-FT-01, INT-FT-02; GATE-SPARK-02, GATE-SPARK-04; KILL-METAL; RISK-08; BET-09.
+Appendix F.1 (row FD-FT-01), F.3; §21.9 (the gateway, the limits table, rules R1 to R6), §21.10 (the kernel cache), §21.3 (ADR-SPARK-09), §33.17 (row 8), §21.25 (OPEN-SPARK-5); INT-FT-01, INT-FT-02; GATE-SPARK-02, GATE-SPARK-04; KILL-METAL; RISK-08; BET-09; NFp1-51, NFp1-52 (the later stages).

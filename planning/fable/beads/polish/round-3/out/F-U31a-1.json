@@ -1,0 +1,287 @@
+{
+  "round": 3,
+  "slice": "F-U31a-1",
+  "reviewed": 27,
+  "changed": [
+    {
+      "bead": "N31a-02",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: the e2e was only a step of N31a-54's script (a later bead). Own script scripts/e2e/foundry_ceiling.sh: test binary, an example over the synthetic design (f_L = 27/100, range [189/10000, 81/1000], ceiling line first, above-ceiling and primitive-baseline refusals), the source register's re-read status; evidence absent with reason no-verb; N31a-54 runs it as a stage and keeps the verb-level ordering check. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-03",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: own script scripts/e2e/foundry_admission.sh on admit() over a scratch ledger (Qualified, 166 with pointer and the registry's two repairs in order, Exploratory label, ExportPacket refused with the flag, sidecar stamp, stale-verdict re-qualification first); verb-level refusals stay N31a-54's and N31a-57's steps, now with --key \"$(e2e_key ...)\" (convention 5, STD-E2E key rule). Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-04",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11: 'no script of its own' replaced by scripts/e2e/foundry_sibling_facts.sh: probe lane, probe list against docs/foundry/sibling_gaps.md (14 rows covered), the five ignored switch-over tests listed by FD identifier, wrapper tests incl. remote/inproc byte equality and upstream_reason, group-absent 790; N31a-55 keeps the frob doctor stack-digest check as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-05",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: own script scripts/e2e/foundry_loop_machine.sh: example on the real machine with synthetic rungs (iterates 3, 57/20, 1131/400, 22593/8000 as rationals; lambda 1.1 -> 260 diverged), kill-and-resume at each of the eight stages with record-hash equality, fresh-worlds negative control via e2e_expect_caught; N31a-54 runs it as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-06",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: own script scripts/e2e/foundry_campaign.sh: example calling campaign::submit (100% T2 coverage, H_c, spec hash), trace digests equal across two runs, a removed T2 chunk -> 169 naming world, interval and channel, sampled-T2 read -> 169; N31a-53 runs it as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-12",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps",
+        "tests"
+      ],
+      "what": "KA-754 (N31-KA) registers two controls the bead lacked: ratio 3 -> 1.125 refused with 262 (new unit test separation_ratio_three_refused_262) and the limit applied at ratio two admitting 1.333 (new planted defect limit-at-ratio-two); KA section names them as N31-KA's, seeded by N38b-05, no row registered here. Unit-test command had two filters before -- (cargo rejects it): fixed. Own script scripts/e2e/foundry_impact_loads.sh (convention 11); N31a-53 runs it as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-13",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "correct"
+      ],
+      "what": "The e2e said foundry_loads.sh is created by BD-400; N31a-53 owns it. Own script scripts/e2e/foundry_declared_loads.sh (convention 11): generator example (73.55 N / 220.65 N, residuals <= 1e-9, label, no-claim, no world address), pilot stage-1 cases, sign-flip -> 167, KILL-LOADS -> 724 with --declared statics offered; verb-level steps stay in N31a-53's script with e2e_key keys (foundry.size is a read, no key). Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-15",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Request S84 applied: AC 1 now says the measurement is N31a-18's battery and the gate row N31a-54's, recorded from that battery's receipt (as BD-403 and N31a-54 state). Unit-test command fixed (two filters before --). Own script scripts/e2e/foundry_topology_rung.sh: both drivers on the tube-replacement fixture (mass within 5%, bisection <= 7 solves, bracket <= 1%, gradient check), infeasible-in-envelope, coarse/finalist times against 120 s / 600 s; N31a-54 runs it as a stage with an e2e_key key. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-16",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: own script scripts/e2e/foundry_plate.sh: bracket-plate example (nucleated hole, mass below blank, stock thickness, 3-D check passing, no 2-D stress field), Kirsch 3.0 within 5%, buckling rejection with next thickness, out-of-plane redirect; N31a-54 keeps the verb run, now with an e2e_key key. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-17",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: own script scripts/e2e/foundry_extraction.sh: the stage entry on the bead's own fixtures (sphere 3.351e-5 m^3 within 1%, KA-744 tube 3.5186e-5 m^3 within 1%, fragment removed and cavity kept, same-family fallback), mesh_hash determinism; N31a-54 runs it as a stage and logs the same fields per link class. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-18",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "scope"
+      ],
+      "what": "Convention 9 and 11: scope said the user-side script records the GATE-FOUNDRY-04 row; now N31a-54's recording session records it with record_gate from both receipts and no script writes it. The e2e was N31a-54's script, which also 'records the gate row': own script scripts/e2e/foundry_topology_battery.sh runs the battery test binary, e2e_tier g1_known_answers GATE-FOUNDRY-04 and again with --mutations, logs receipt values (angles, compliance ratios, 20 fixtures) as metrics and the four controls as caught, records nothing; N31a-54 runs it as a stage with e2e_key keys. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-19",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "correct"
+      ],
+      "what": "Stale note (convention 12): step 8 said --fixture, --load, --cases, --stress/--modes/--all are requested of VERBS-foundry; the check row lists them with this bead. Own script scripts/e2e/foundry_stress_check.sh (convention 11): cantilever 1.159 mm / 30 MPa, halving, planted 1.25 at the root (exit 2), sharp and filleted L-bracket, neck-optimized -> 261 with the registry's three repairs in order; N31a-55 runs it as a stage, keys now e2e_key. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-20",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps",
+        "tests"
+      ],
+      "what": "FROB-REF-261 repairs (N31-REF Table 1, rendering rule of N31a-52: the row's repairs in order, inapplicable ones omitted, then the mechanism's): the modal failure listed only its own repairs; the row's 'larger minimum length scale' now comes first (stress cap and fillet omitted as inapplicable, as already for buckling), then mode constraint x1.05, stiffer material, transient path; the 261 unit tests assert the order. Own script scripts/e2e/foundry_buckling_modes.sh (Euler 2.14/1.71, 204.2 Hz and 45.6 Hz, floor 125 Hz, optimized 261 refusals, local/global modes); N31a-55 runs it as a stage with e2e_key keys. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-21",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Planted defect renamed finish-per-episode -> finish-per-window, the name of CX-338's registered plant (N31-CX; BD-402 builds that plant in this counter module), and the bead no longer calls its unit-test defect 'the registered mutation'. Own script scripts/e2e/foundry_fatigue.sh (convention 11): fatigue block 0.116 and 8.62, rainflow 8.752e-6 at 1e-12, chunked equality (MR-34), the window-split negative control through two finished counters (7.816e-6), no-claim and 163; N31a-55 runs it as a stage with e2e_key keys. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-22",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "correct"
+      ],
+      "what": "Stale note (convention 12): step 4 said 113 and --strict-data are requested of VERBS-foundry and N31-REF; both carry them. Own script scripts/e2e/foundry_card_validity.sh (convention 11): example of the card validity test (missing yield -> 163 with pointer and both repairs, slm no-claim, --require fatigue -> 163, machined admitted, assumed modulus under --strict-data -> 113, unitless yield rejected); N31a-55 runs it as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-23",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: own script scripts/e2e/foundry_mass_feedback.sh: KA-744 tube from the primitive path and the 256-segment mesh, enclosure, density uncertainty, the edit (new DesignId, inverse, mirrored class, single-limb break, mass-support reshape, swap-actuator rejected), Checked constructors refusing three bad records; N31a-54 runs it as a stage and keeps the frob design show assertion. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-24",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Convention 11 and 7: own script scripts/e2e/foundry_convergence.sh over the planted maps in exact rationals (iterates 3, 57/20, 1131/400, 22593/8000; lambda-hat 3/20; fixed point 48/17; slow loop with policy Off and Auto; divergent and two-size cycle refusals with the row's repair order; zero rule); verb-level runs stay N31a-54's steps with e2e_key keys (convention 5). Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-25",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "correct"
+      ],
+      "what": "Stale note (convention 12): --outer actuators is on VERBS-foundry's optimize row with this bead, no longer 'requested'. Own script scripts/e2e/foundry_outer_actuators.sh (convention 11): step and no-step torque fixtures (mu > 1 with the step; mu = 1.00 with the reason), withdrawn proposal, catalogue-cycle, inner-loop swap rejected; N31a-54 runs it as a stage with e2e_key keys. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-26",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "tests",
+        "correct"
+      ],
+      "what": "Unit-test command had three filters before -- (cargo rejects it): fixed. The e2e used foundry_key (N31a-51's derived key, which STD-E2E's key rule rejects): verb-level steps in N31a-55's script now pass --key \"$(e2e_key ...)\". Own script scripts/e2e/foundry_fab.sh (convention 11): thin-plate finding with repair, clean bracket, rates card cost, keep-in finding, advisory mode, process declaration required, dispatch table compared. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-27",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "tests",
+        "correct"
+      ],
+      "what": "Unit-test command fixed (two filters before --). foundry_key replaced by e2e_key in the verb-level steps of N31a-55. Own script scripts/e2e/foundry_corner_voids.sh (convention 11): pocket fillets 2.0 mm against 3.0 mm, 3.5 mm clean, sharp r < 2h, flat versus ball floor edge, tangent-ball agreement, sphere curvature, cube cavity void, slm drain 2 mm vs 4 mm, fdm information. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-28",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "tests",
+        "correct"
+      ],
+      "what": "Unit-test command fixed (two filters before --). foundry_key replaced by e2e_key in the verb-level steps of N31a-55, each call with its own label. Own script scripts/e2e/foundry_access_overhang.sh (convention 11): reach shortfall 20 mm with target 60 mm, lip undercut and side setup, small hole needing the 1.5 mm cutter, 5-axis cone, sphere overhang 184.0 mm^2 within 3%, shelf/chamfer/wall, bridge exemption, best build direction, no overhang check for sls. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-29",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "correct"
+      ],
+      "what": "Stale note (convention 12): --process on foundry.optimize is on VERBS-foundry's row with this bead, no longer 'requested'. foundry_key replaced by e2e_key. Dep N31a-17 added: the repair re-run of step 6 runs 'after extraction' and AC 5 checks an extracted shelf part, but extraction (N31a-17) was not a dependency (no cycle: N31a-17 depends on neither). Own script scripts/e2e/foundry_process_constraints.sh (convention 11): length scales from cards, xi_full and output scaling, reverse-sweep derivative, filter placement from the capability row with the post-check label, thin-web re-run with L' and the mass cost. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-30",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps",
+        "scope"
+      ],
+      "what": "Request S84 applied (checked against N31a-55 step 13, BD-405 and convention 9): the bead produced the gate record with record_gate itself; step 5 is now the battery receipt (G1 row with per-kind counts and the nine controls caught in the same run), scope and AC 6 say this bead writes no gate row and N31a-55's recording session records GATE-FOUNDRY-07 citing this receipt by hash (the request's 'written by scripts/e2e/foundry_check.sh' corrected to that script's recording session, since no script records). Own script scripts/e2e/foundry_fab_battery.sh: battery test binary, e2e_tier g1_known_answers GATE-FOUNDRY-07 and --mutations, receipt values as asserts and metric fab_fixtures_passed against 20, records nothing; N31a-55 runs it as a stage with e2e_key keys instead of foundry_key. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-31",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "tests"
+      ],
+      "what": "Unit-test command fixed (two filters before --). Own script scripts/e2e/foundry_sensitivities.sh (convention 11 and 7; the only e2e was N31a-56's): two-link values, rational pose 3/5 exactly, odometry 200 m per m, parallelism 1 rad per rad, Estimated and unknown simulated sensitivities, the weakest-class stack, identical interval endpoints twice; N31a-56 runs it as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-32",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "tests"
+      ],
+      "what": "Unit-test command fixed (two filters before --). Own script scripts/e2e/foundry_allocation.sh (convention 11 and 7): worked case 15.9904/6.3458 um at 1e-9, 7.276 um and 19.9% under the 1/t model, worst-case 3.333/1.667 um, correlated pair 6.083 um, KA-171 0.0447/0.0894 mm, rescaling, groups, multi-quantity minimum, process floor flag and 'not declared'; N31a-56 runs it as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-33",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps",
+        "tests"
+      ],
+      "what": "FROB-REF-165 repairs did not follow N31-REF Table 1 (as N31a-52 renders it): the row's 'second-order sensitivity' and 'tighten the named feature' were missing. Step 6 now ranks worst-case boxes, a second-order sensitivity or the episode count, tighten the feature, then a wider margin or another process, with the inapplicable ones omitted per reason; the three 165 unit tests assert the order. Unit-test command fixed (three filters before --). Own script scripts/e2e/foundry_tolerance_robust.sh (convention 11): quadratic refusal and 100 um box, linear worked case without failure, corner attribution, mixed split, two-gap 0.15 mm, Monte Carlo 0.99692 with seed, report schema; N31a-56 runs it as a stage. Dep STD-E2E."
+    },
+    {
+      "bead": "N31a-34",
+      "kinds": [
+        "e2e-logging",
+        "deps",
+        "tests",
+        "correct"
+      ],
+      "what": "Stale note (convention 12): --geometry-only with --part/--format/--out is on VERBS-foundry's export row with this bead, no longer 'requested'. Unit-test command fixed (two filters before --). The e2e attributed to N31a-57 a 'frob foundry check <exported file>' read-back that N31a-57 does not run and the check row's positional does not take (convention 8); the read-back is the quarantine re-import, as N31a-57 step 4 asserts. foundry_key replaced by e2e_key. Own script scripts/e2e/foundry_mesh_export.sh (convention 11): byte identity across two directories, re-import equality, counts across formats, sidecar flags, open-shell/non-manifold/non-f32 refusals, orientation repair, 3MF bytes under a shifted clock. Dep STD-E2E."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N31a-51",
+      "what": "The preamble's foundry_key <step> derives the key from script, step and the digest of the call's inputs: exactly the derived key STD-E2E's key rule rejects (keys are written with e2e_key <label>, e2e-<script>-<label>, no derivation). Retire foundry_key, or define it as a thin alias that prints e2e_key's value for a label, and say so; this slice's beads now write --key \"$(e2e_key <label>)\" in the cluster scripts' steps they describe. (Also concerns: N31a-53, N31a-54, N31a-55, N31a-56, N31a-57.)"
+    },
+    {
+      "bead": "N31a-54",
+      "what": "Convention 11: the mechanism beads now own scripts that this script runs as stages: foundry_ceiling.sh (N31a-02), foundry_admission.sh (N31a-03), foundry_loop_machine.sh (N31a-05), foundry_topology_rung.sh (N31a-15), foundry_plate.sh (N31a-16), foundry_extraction.sh (N31a-17), foundry_topology_battery.sh (N31a-18, whose receipt hash this bead's recording session cites for GATE-FOUNDRY-04), foundry_mass_feedback.sh (N31a-23), foundry_convergence.sh (N31a-24), foundry_outer_actuators.sh (N31a-25), foundry_process_constraints.sh (N31a-29). Name them as stages, and use e2e_key labels for the keys."
+    },
+    {
+      "bead": "N31a-55",
+      "what": "Convention 11: run as stages foundry_sibling_facts.sh (N31a-04), foundry_stress_check.sh (N31a-19), foundry_buckling_modes.sh (N31a-20), foundry_fatigue.sh (N31a-21), foundry_card_validity.sh (N31a-22), foundry_fab.sh (N31a-26), foundry_corner_voids.sh (N31a-27), foundry_access_overhang.sh (N31a-28) and foundry_fab_battery.sh (N31a-30, whose receipt hash the GATE-FOUNDRY-07 recording cites). Also: step 8 and the self-test call CX-338's plant 'finish-per-episode'; N31-CX and BD-402 register it as finish-per-window (N31a-21 now uses that name)."
+    },
+    {
+      "bead": "N31a-53",
+      "what": "Convention 11: run as stages foundry_campaign.sh (N31a-06), foundry_impact_loads.sh (N31a-12) and foundry_declared_loads.sh (N31a-13)."
+    },
+    {
+      "bead": "N31a-56",
+      "what": "Convention 11: run as stages foundry_sensitivities.sh (N31a-31), foundry_allocation.sh (N31a-32) and foundry_tolerance_robust.sh (N31a-33)."
+    },
+    {
+      "bead": "N31a-57",
+      "what": "Convention 11: run as stages foundry_mesh_export.sh (N31a-34) and foundry_admission.sh (N31a-03, for the packet refusal of an exploratory result); step 1's keys from foundry_key become e2e_key labels."
+    },
+    {
+      "bead": "N31-REF",
+      "what": "Row FROB-REF-261 lists only the stress repairs (cap x0.95/u*, larger minimum length scale, fillet). N31a-20's buckling and modal failures add mechanism repairs after the row's applicable one: buckling: the sibling's buckling-constrained allocation, a wall-thickness floor at a local wall mode; modal: the first-mode constraint tightened to floor x1.05, a stiffer material, the transient path when only the 5*f99 term fails. Add them as 'then' repairs (and to N31a-52's rendering table) so row and rendering list the same repairs. (Also concerns: N31a-52.)"
+    },
+    {
+      "bead": "N31-CX",
+      "what": "CX-338's plant location reads frob-foundry::fatigue::rainflow, but BD-402 (which builds the plant) and N31a-21 put the counter in frob-foundry::check::fatigue, the crate's module map. Align the row's location."
+    }
+  ],
+  "unchanged": 0,
+  "notes": "Resumed slice: no result file and no slice file modified after the cutoff (latest 12:29), so all 27 beads were reviewed from the start. Every bead's end-to-end coverage was only a step of a later e2e bead's script (N31a-53 to N31a-57, each depending on it), contrary to conventions 7 and 11; each now owns a script on its own dependencies (test binary plus an example program, evidence absent with reason no-verb, STD-E2E logging, dep STD-E2E) and keeps the verb-level steps as the later script's stage. Both requests addressed to the slice were applied (N31a-15 as worded; N31a-30 with the recording attributed to N31a-55's recording session, not its script, per convention 9). Numbers rechecked by hand in every bead (KA-737/738/741-745/754, KA-170/171, the slow and planted loops, smin/smax constants, Monte Carlo threshold, sphere overhang area, tube mass properties); no numeric error found."
+}

@@ -1,0 +1,49 @@
+# Polishing round 3, slice F-U32b
+
+31 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| N32b-01 | M2 | task | WP-43 | yes | frobd, frob-verbs: capability tokens: scope catalogue, minting, daemon-key tag, the check before every verb | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-01.md` |
+| N32b-02 | M3 | task | WP-26 | yes | frobd: token attenuation: a derived session with fewer scopes and a smaller budget, debited from its parent | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-02.md` |
+| N32b-03 | M3 | task | WP-26 | yes | frob-verbs, frobd: agent namespaces, lineage ownership, and the shared archive and leaderboard views | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-03.md` |
+| N32b-04 | M2 | feature | WP-43 | yes | verbs session.open and session.show: scopes, budgets left, namespace, derived sessions, overhead line | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-04.md` |
+| N32b-05 | M3 | task | WP-26 | yes | e2e: many agents on one daemon: scope refusals, attenuation, namespace isolation, shared views | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-05.md` |
+| N32b-06 | M3 | feature | WP-52 | yes | frob-tui: the dashboard core: a pure model over verb envelopes and the daemon's event stream, read-only | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-06.md` |
+| N32b-09 | M3 | task | WP-52 | yes | e2e: dashboard conformance: a snapshot per pane and every number reproduced by its source verb | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-09.md` |
+| N32b-12 | M3 | feature | WP-52 | yes | viewer: film, clearance, counterfactual-ghost, world-difference and reality-band overlays; map layers | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-12.md` |
+| N32b-14 | M3 | task | WP-52 | yes | e2e: viewer conformance: the overlay value under a probe pixel equals the telemetry channel | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-14.md` |
+| N32b-15 | M3 | task | WP-26 | yes | e2e: the studio session as a script: check, repair, synthesize, estimate, run, explain, compare, promote | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-15.md` |
+| N32b-16 | M4 | task | WP-28 | yes | e2e: the mission session as a script: synthesize, refute, attack, shrink, revalidate, qualify, verify | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-16.md` |
+| N32b-17 | M1 | feature | WP-06 | yes | verb robot-docs: the agent guide generated from the registry, by task cluster, sized to a token budget | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-17.md` |
+| N32b-18 | M1 | task | WP-06 | yes | docs single source: the skill file, frob://docs resource texts and MCP prompt texts, with a drift check | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-18.md` |
+| N32b-19 | M1 | feature | WP-06 | yes | verb capabilities: what is implemented, from the gate register, with modes and ceilings per device | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-19.md` |
+| N32b-20 | M2 | feature | WP-43 | yes | verbs schema and doctor: schemas with minimal examples; a health check of toolchain, pins, devices, caches | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-20.md` |
+| N32b-21 | M3 | task | WP-26 | yes | e2e: the Tether refusal battery: twenty-two codes fired on the CLI and over MCP, first repair executed | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-21.md` |
+| N32b-22 | M3 | task | WP-26 | yes | frob-conformance: the Tether invariant battery: a property test and a planted violation per invariant | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-22.md` |
+| N32b-23 | M3 | task | WP-26 | yes | frob-verbs, frobd: the five Tether proof obligations: written arguments and the checks that discharge them | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-23.md` |
+| N32b-24 | M2 | task | WP-43 | yes | frob-conformance: the Tether known-answer battery (KA-755 to KA-766) and the controls for CX-345 to CX-351 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-24.md` |
+| N32b-25 | M0 | task | WP-06 | yes | registries/gates.toml: the Tether rows: GATE-TETHER-01 to -16 and eight kill gates, with their controls | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-25.md` |
+| N32b-31 | M3 | task | WP-52 | yes | Kill-gate decision KILL-TUI (M3): ship the frob-tui dashboard, or ship no dashboard | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-31.md` |
+| N32b-32 | M3 | task | WP-52 | yes | Kill-gate decision KILL-REPLAYPACK (M3): keep the offline replay packet, or run export, stills and viewer | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-32.md` |
+| N32b-37 | M3 | task | WP-26 | yes | frob-conformance: the agent diagnosis battery: thirty wrong-setup tasks with a sealed answer key | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-37.md` |
+| N32b-38 | M3 | task | WP-26 | yes | frob-conformance: transcript counts (simulations, turns) and the clean-client reproduction of a diagnosis | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-38.md` |
+| N32b-39 | M3 | task | WP-26 | yes | e2e: the diagnosis battery scorer and the GATE-TETHER-15 run against a logs-only arm | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-39.md` |
+| N32b-40 | M2 | feature | WP-52 | yes | viewer: playing a replay packet: packet source, block verification, WebGL 2 policy, the in-page probe | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-40.md` |
+| N32b-41 | M3 | feature | WP-52 | yes | frob-chronicle: replay packets with forks: 16 fork timelines, the tables block, the licence switch | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-41.md` |
+| N32b-43 | M3 | task | WP-52 | yes | e2e: GATE-TETHER-16: 16-fork replay packets: size, offline play in two browsers, identity, digests, probes | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32b-43.md` |
+| N32bp2-44 | M5 | feature | WP-52 | yes | viewer: a real reality band in the page: ground_band in the live source, the band envelope in the snapshot, e2e | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32bp2-44.md` |
+| N32bx-01 | M3 | task | WP-26 | yes | frob-verbs: session call capture `frob.session-transcript/1`: one row per call, `session.show --transcript` | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32bx-01.md` |
+| N32bx-02 | M3 | task | WP-26 | yes | registries/scopes.toml: the named admin scope `ground:retire` for `ground.band --retire`; the named-scope rule | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U32b/N32bx-02.md` |
+
+## Addressed to your beads
+
+- `N32b-01`: request from round 2, slice S38: minting reads a root token's grant from the owner-held configuration but defines no form for it: read N37-02's new DESIGN `principal.<id>` tables (scopes incl. budget scopes, namespace, trace_bytes, max_lifetime_s) and refuse `session.open` for an unlisted principal with FROB-REF-723.
+- `N32b-02`: request from round 3, slice H-cx-2: Build derived-token-copy for N32-CX's tag tether-derived-budget-copy; its rule has no gate, so the M3 exit must dispose of the finding (gate added or entry withdrawn). Same for N32b-03 with leaderboard-arrival-ties.
+- `N32b-04`: request from round 3, slice H-verbs-5: Add the `principal` input to session.open: root sessions only, 802 together with derive, and 723 for an unlisted principal (N37-02). State which principal a root call without it receives, and whether omitted `scopes` means the principal's whole grant.
+- `N32b-14`: request from round 3, slice F-U24a-2: Follow N24a-36's spelling of telemetry.query (`--from`/`--to`, `--channels`, `--limit`) in your probes, as S60 asked.
+- `N32b-19`: request from round 3, slice H-verbs-3: Line 118 says the filter `--device` is 'from M0, BD-022'; BD-022's own table gives the M0 capabilities handler `--verb` only and assigns --device and the build/gates[]/devices[] sections to N32b-19 (M1). VERBS-operator now dates --device at M1 under N32b-19; please correct the note.
+- `N32b-20`: request from round 3, slice H-verbs-3: Its synopsis `frob schema [<schema_id> | --verb <name> | --list]` (and line 20's `frob schema <kind>`) should follow the registry row: the positional also accepts a verb name, and the row carries --refusals (and the bare form), --verbs, --path-args, --exports and --echoing, served by BD-022 and BD-304; the schema catalogue's --list stays this bead's.
+- `N32b-24`: request from round 3, slice H-cx-2: Drop 'exactly one row per mutant' as a row this bead writes: the seeding tool writes the one control; build packet-binary-budget against N24a-41 and add the binary-level tests of CX-345 to CX-350 to the seeded controls.
+- `N32b-25`: request from round 2, slice S57: Accept a missing KILL-PEERLINK record under the ADR-PROG-12 `standalone` ruling, read as `not-reached`, not as an error (N32a-35 is then closed withdrawn and never creates the row).
+- `N32bx-01`: request from round 3, slice H-owners-3: Same rename as VERBS-session for the transcript's foreign-session argument of session.show.

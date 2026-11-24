@@ -4,11 +4,11 @@ title: "spec C-22 (frob-algebra, frob-phylum): symmetry orbits: Burnside counts,
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "lemma", "spine", "spec", "solid", "frontier", "frob-algebra", "frob-phylum", "test"]
+labels: ["m1", "lemma", "spine", "spec", "solid", "frontier", "frob-algebra", "frob-phylum", "test", "review-notes-open"]
 parent: "WP-03"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-22", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-123 to KA-126 and CX-058; this bead binds them to tests and registers the controls the appendix leaves unstated", "§10 C-09: the two symmetry groups Γ_mech and Γ_obs of the specification bead SPEC-C-09 (unit U10a); cited for the definition of the acting group"]
-related: ["N10b-12", "N10b-13", "N10b-02", "BD-049", "BD-102", "BD-241", "BD-285", "BD-287", "BD-357", "SPEC-C-09", "SPEC-C-21", "CARD-T-24", "BD-048", "N10a-02"]
+deps: ["BD-025", "BD-027", "N10-CX", "N10-KA2", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-048", "N17a-25"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-22", "§10 C-09", "§12.3 T-24", "§12.8 OPEN-LEMMA-6", "§13.6", "§17.11", "§17.18", "§28.15", "§38.7 MR-04", "Appendix D.5", "Appendix E GB-19", "Appendix M.9 KA-123 to KA-126", "Appendix N.7 CX-058"]
 ---
@@ -23,7 +23,7 @@ the group element that maps it to the representative so that results are transpo
 is spent at campaign time, where it deletes simulations, and not in the per-step loop.
 
 Tier: Solid [S] for orbit enumeration and counting; Frontier [F] for wreath products (this bead) and for the
-mission-observable projection quotient (N10b-12, with its pilot N10b-13). Owning chapters: the algebraic core
+mission-observable projection quotient (N10b-12, with its pilot N17a-25). Owning chapters: the algebraic core
 (crate `frob-algebra`, verb `algebra.orbits`) and design families (crate `frob-phylum`, verb
 `phylum.quotient`). It serves BET-31 (campaign quotienting).
 
@@ -56,7 +56,7 @@ N10a-01). This bead is written before the code it specifies and does not depend 
 subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-algebra`
 does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -138,7 +138,7 @@ preserves the decorated ports of the hub. A failed check refuses the group.
   fn representatives(&self, group, k) -> Vec<Assignment>; fn wreath(&self, k_group, h_group, slots) ->
   Result<PermGroup, Refusal> }`. `tests/support/c22_ref.rs`: permutation groups as explicit element lists
   (D₆, C₂, C₂ × C₂, C₂ ≀ C₂), brute-force orbit enumeration with a union–find. `tests/support/c22_mutants.rs`:
-  mutants under the cargo feature `controls`.
+  mutants under the crate's cargo feature `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
 - Register row C-22: `rust_type` = the orbit and wreath types of `frob-algebra`, `verb = "algebra.orbits"`
   (and `phylum.quotient`), `failing_test` = `frob-algebra::laws_c22::s2_wrong_cycle_index_caught`,
   `payoff.gate = "GATE-PHYLUM-01"`, `cards = ["T-24"]`, `known_answers = KA-123 … KA-127`,
@@ -147,13 +147,15 @@ preserves the decorated ports of the hub. A failed check refuses the group.
 - Gates that measure the construction (recorded by mechanism beads): the M1 counts of BD-049 (86,185, 500,500
   and 27 exact; a wrong cycle index caught); GATE-PHYLUM-01 at M3 (orbit and ballast rows exact; zero false
   quotients in 10⁴ sampled class pairs by replay; the lidar and equal-Σx controls caught); kill gate
-  KILL-QUOTIENT (N10b-13 states it).
+  KILL-QUOTIENT (decided at M3: one false quotient survives a repair cycle, or digest classes save less than 5%
+  of dispatches on the campaign corpus; fallback: orbit representatives only, the digest kept as a cache key
+  with no claim; the projection pilot N17a-25 feeds it).
 
 ## Acceptance criteria
 
 - [ ] `docs/math/C-22.md` has the ten sections, statements C-22.S1 to S7 with classes, the algorithms and the
       fixtures with their cycle types.
-- [ ] `cargo test -p frob-algebra --test laws_c22` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-algebra --test laws_c22` passes; with `--features conformance` every mutant fails.
 - [ ] KA-123, KA-124, KA-125: 86,185, 500,500 and 92; for k = 3 the 92 representatives are produced, are
       pairwise in different orbits, and every one of the 729 assignments maps to exactly one of them.
 - [ ] KA-126: order 8; counts (k² + k)/2 for k = 1 … 5 (1, 3, 6, 10, 15) equal brute force.
@@ -184,7 +186,8 @@ preserves the decorated ports of the hub. A failed check refuses the group.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c22.sh` (idempotent; seed 2200 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-123 KA-124 KA-125 KA-126`;
+`--features conformance`; `FROB_TEST_SEED=2200 cargo test -p frob-conformance --test g1_known_answers -- KA-123
+KA-124 KA-125 KA-126` (the tier target of the rows' G1 tier; `g1` is not a target name);
 `frob --json prove list` and assert card T-24 is listed with a class no stronger than its route supports
 (`Tested` until the lemma's re-check is recorded). Sources the STD-E2E helper; writes
 `target/e2e-logs/spec_c22/<utc>.ndjson` and a transcript; each line has `ts`, `script`, `bead` (`SPEC-C-22`),

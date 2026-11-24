@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "spark", "atelier", "frob-conformance", "solid", "test", "card"]
 parent: "WP-47"
-deps: ["NEG-03", "GB-04", "GB-05"]
+deps: ["BD-106", "GB-04", "GB-05", "N21b-37", "NEG-03"]
 needs: []
-related: ["N21b-37", "BD-106", "BD-109"]
+related: []
 gates: []
 plan_refs: ["Appendix E.7 (corrections to carried cards)", "Appendix E.1 GB-04, GB-05", "§35.8", "Appendix M KA-792, KA-267"]
 ---
@@ -32,7 +32,9 @@ same four-move manoeuvre, 2·α·b + d·cot(α/2) at cos α = 1 − d/(2b), is 0
 ## Scope
 
 In: regression tests that pin the corrected figures and label the earlier ones; the register entries and the
-scan. Out: the cards (GB-04, GB-05); anchored positions (N21b-37); the maneuverability analysis (BD-106).
+scan. Out: the cards (GB-04, GB-05); anchored positions (N21b-37) and the maneuverability analysis (BD-106),
+both dependencies because the acceptance checks the anchored type's documented resolution and the analysis's
+report of both costs.
 
 ## Technical approach
 
@@ -45,7 +47,9 @@ scan. Out: the cards (GB-04, GB-05); anchored positions (N21b-37); the maneuvera
    (prints 0.57). Exact: cos α = 0.75, α = 0.7227342478 rad, cost 2·α·b + d·cot(α/2) = 0.5536688302 m (prints
    0.55); ratio to the shift 5.54. The relative error of the small-angle form is 2.17% here and 0.21% at
    d = 0.01 m (0.178885 against 0.178512 m). Rule: the analysis reports the exact cost of the manoeuvre and,
-   beside it, the small-angle estimate with its validity note (α below about 0.3 rad for 1% agreement).
+   beside it, the small-angle estimate with its validity note: the small-angle form overstates the exact cost by
+   under 1% while the optimal rotation α is below about 0.49 rad (d/b below about 0.235; at b = 0.20 m a shift up
+   to about 0.047 m), and by 0.37% at α = 0.3 rad. The note is computed from the two forms, not hard-coded.
 3. **Register and scan.** Items E7-K1 and E7-K2: stale patterns `0.48 µm` in the scope of cell, offset or
    anchor text unless labelled "uncentred"; a sideways cost of `0.57 m` for the 0.10 m shift printed without
    the exact 0.55 m beside it. Pinned by `gb_04_reference`, `gb_05_reference` and the tests below.
@@ -67,6 +71,8 @@ scan. Out: the cards (GB-04, GB-05); anchored positions (N21b-37); the maneuvera
 - `sideways_cost_exact_and_small_angle`: 0.5536688302 and 0.5656854249 for d = 0.10 m; 0.1785120583 and
   0.1788854382 for d = 0.01 m.
 - `small_angle_error_grows`: relative error 0.21% at d = 0.01 m and 2.17% at d = 0.10 m.
+- `small_angle_validity_threshold`: at b = 0.20 m the relative error reaches 1% at d = 0.0471 m (α = 0.490 rad) and
+  is 0.375% at α = 0.3 rad; the report's validity note marks d = 0.04 m inside and d = 0.05 m outside.
 - `analysis_reports_both`: the report structure has `cost_exact` and `cost_small_angle` with a validity note.
 
 ### End-to-end script and logging

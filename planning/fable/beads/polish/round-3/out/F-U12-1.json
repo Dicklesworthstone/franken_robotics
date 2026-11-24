@@ -1,0 +1,277 @@
+{
+ "round": 3,
+ "slice": "F-U12-1",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "N12-02",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request applied: rewrite-trace's checker is N12p2-02. Dispatch takes (kind, version, scope) with the claim-kind to scope table (DESIGN); REGISTRY_VERSION and enabled_kinds() exposed for N12-04 to print. Tests that needed N12-03's reader or N12-04's printing (cycle by rule 10) moved: the bundle-level fabricated-kind test to N12-03, the --help/report printing to N12-04; dispatch-level tests on synthetic tuples (unknown kind and version, out of scope, disabled under registry-fixture, not-implemented to Unsupported). Own script lemma_kind_registry.sh (kind_registry example); dep STD-E2E."
+  },
+  {
+   "bead": "N12-03",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request applied: rule 4 compares query.policy-class (826). Specimen gains proof.version; a not-implemented kind still runs rules 4-6 and is Unsupported only if they pass; class.above-kind-cap in rule 6; the offered query (frob-verify --query, prove.verify --query, else embedded) compared field by field. Golden mutants on disk with expected.toml; bundle-level KA-215 test (fabricated kind with consistent hashes) moved here from N12-02. Own script lemma_bundle_schema.sh; deps N12-02, STD-E2E."
+  },
+  {
+   "bead": "N12-04",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "frob-verify gains --query <file> (the offered query N12-03 compares; the kernel case gives 826); --help lists the registry revision and the enabled (kind, version) pairs (N12x-08 item 4). Recomputed-value test uses BD-027's rational-ldlt/accept-pd4 (pivots 1, 1/3, 1/3, 1) and N12-03's golden mutant, so it no longer waits on BD-132. Own script lemma_verify_report.sh; dep STD-E2E."
+  },
+  {
+   "bead": "BD-132",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request applied: rule (g) admits only independent-normal-force at close; N25cp2-01 (M1, depends on BD-132) widens it to {independent-normal-force, passive-equal-spring} compared with policy_class.authority, with auditor-computed compatibility rows for lp-primal and lp-farkas. The bead writes no gate record (drift 9): GATE-LEMMA-03 is recorded by N12-34 with record_gate. Own script lemma_kinds_m1.sh; deps N12-04, STD-E2E; related N12-34, N25cp2-01. Numbers rechecked."
+  },
+  {
+   "bead": "N12-08",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "The scope block called a nonexistent prove.list --explain (drift 8): now prove.kernel, prove.list (once per listing) and prove.bundle (wired by BD-133) print not_claimed through lemma::not_claimed(); acceptance and test prove_list_json_has_one_not_claimed_block added; related BD-133."
+  },
+  {
+   "bead": "N12-09",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "It claimed to record GATE-AUGUR-06, which BD-136 and BD-294 record (drift 9): now receipt only. Its e2e was N12-34's script, which depends on it (drift 7/11): own script lemma_independence.sh (check-deps, cargo tree both ways, the test target, the two fixtures through e2e_expect_caught), run by N12-34 as step 2; dep STD-E2E."
+  },
+  {
+   "bead": "N12-10",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Negative control 'round constant' named as one BLAKE3 IV word (the test's own wording). KA-223 and KA-225 registered as G2 entries run in the Gauntlet form (FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity -- KA-223, with --features gauntlet-mutations for the planted builds; drift 1). Own script lemma_auditor_oracles.sh; deps N38a-02 (tiers and receipts), STD-E2E."
+  },
+  {
+   "bead": "N12-13",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request applied: enabling sample-coverage is the ledger change sample-coverage-enable with N12x-08's six items (cap Tested, so item 4 is not owed), landed with the constant so check-generated passes; test for it; dep N12x-08 (M3, same milestone). GATE-LEMMA-03 is recorded by N12-34's re-run, not here (drift 9). Own script lemma_kind_sample_coverage.sh with the NDJSON fields kept; dep STD-E2E. Statistics rechecked (exact tails, (19/14)^16, 504/19, alpha_7 = 1/1120)."
+  },
+  {
+   "bead": "N12-14",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request applied: the four rows go to enabled through ledger enable changes with the six items; all four cap Certified, so item 4 (200-mutant seeded-fault campaign, zero false accepts) is run with BD-136's one generator and this bead's operators, which BD-294 reuses at M3. Own script lemma_kinds_transport.sh; deps BD-136, N12x-08, STD-E2E. Monomial numbers rechecked."
+  },
+  {
+   "bead": "N12-16",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Enable changes were already there; item 4 (cap Certified) now says how the 200-mutant campaign runs (BD-136's generator, this bead's operators per kind), with items 5 and 6. GATE-LEMMA-03's M4 value is recorded by N12-34. Its e2e was N12-34's script: own script lemma_kinds_enclosure.sh; deps BD-136, STD-E2E. Krawczyk, conic and Taylor numbers rechecked."
+  },
+  {
+   "bead": "N12-17",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Both kinds cap Certified: item 4's campaign spelled out with operators per kind (distinct from N22b-14's BET-25 corpus), items 5 and 6, check-generated. GATE-LEMMA-03 recorded by N12-34. Own script lemma_kinds_energy_product.sh; deps BD-136, STD-E2E. Energy numbers rechecked (1,490,000 / 1,491,136 / 1,500,000; 50,443 us)."
+  },
+  {
+   "bead": "CARD-T-12",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its Lean unit tests were the sealing tests (kleene_*_seals), which need BD-381's proof, a later bead that depends on this card (drift 7): replaced by statement-level tests (statement elaborates with its hash, closure, variants elaborate as registered) and a registry-row test; sealing stays BD-381's t12_kleene_seals. The close-time run named no script: own script card_t12.sh; dep STD-E2E. N12-37's later lines kept."
+  },
+  {
+   "bead": "CARD-T-14",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its script calls frob --json prove list (BD-027's verb) without depending on it (drift 8): dep BD-027 (no path back). Numbers rechecked."
+  },
+  {
+   "bead": "CARD-T-17",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied after checking N22ap2-02, BD-333, N10b-01 and N10b-02: the derived saltation kernels are N22ap2-02's (M4), not BD-333's; a symmetry-tied simultaneous event carries the label saltation on the symmetric subspace, not 'ordinary'. N22ap2-02 does not wait on the card (its coverage rows read pending: T-17) and the card's planar-biped line needs its kernels, so it is now a dep (drift 7); BD-333 related. Saltation and rimless-wheel numbers rechecked."
+  },
+  {
+   "bead": "CARD-T-20",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Its log fields included the budget arm E (operation count against 8,192), which N12-34's corpus walker cannot produce: own script card_t20.sh (budget arm through BD-027's producer, law tests, frob-verify on the specimen and four mutants), test budget_arm_e; dep STD-E2E. The N12-34 dep is kept (named owner of the corpus walk). Holonomy sign and BCH term rechecked."
+  },
+  {
+   "bead": "CARD-T-24",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its order of work said the implementers run this card's law tests, but BD-049 (M1), N17a-23 and BD-285 (M3) land earlier and do not depend on it, and BD-285's script cannot log an orbit-count certificate at M3. The live-output line (a sweep's own count certified) is now observed here: dep N17a-23, acceptance and test live_sweep_certificate (three-type hexapod, 92). Own script card_t24.sh; dep STD-E2E. Counts recomputed (86,185; 500,500; 92; wreath 6 of 36; 24,546 ballast classes)."
+  },
+  {
+   "bead": "CARD-T-27",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Acceptance line 'the decision core refuses to keep a kernel's identity without an accepted class-E certificate' tested DC-11 (N28a-28), which the card lists as Out and does not depend on (drift 7). Moved to Out with its owner named; request to N28a-28 so the rule is not lost. Single-precision witness rechecked."
+  },
+  {
+   "bead": "CARD-T-34",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its row check (frob --json prove list filtered to T-34) was attributed to N12-34's script, which knows no card rows: own script card_t34.sh in CARD-T-14's form (laws, row, kind unsupported or accepted); N12-34's step 6a keeps the named mutant. Alpha-test numbers rechecked (1/1156, 1/4, 780 pairs)."
+  },
+  {
+   "bead": "BD-379",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its only e2e was N12-36's script, which depends on it (drift 7/11): own script lemma_coverage_measure.sh (certify stage, check-generated, prove list --coverage, frob-verify replays, mutant control, NS-11, receipt); N12-36 keeps the gate record. NS-11's test lists T-01, T-02, T-03, T-06 but the bead depended on none of those cards: deps CARD-T-01, CARD-T-02, CARD-T-03, CARD-T-06 (no path back), STD-E2E."
+  },
+  {
+   "bead": "BD-381",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "F-U12-2's request applied (checked against N12-24 item 8): check-binding right after fln seal-capsule, exit 3 discards. lean-capsule is not-implemented in the baseline: added the ledger change lean-capsule-enable with N12x-08's six items (cap Proved, so the 200-mutant campaign with BD-136's generator); registry status now N12-06's checked, not 'proved'; the cards' registered variants asserted. Its e2e was N12-37's (depends on it): own script lemma_lean_seal.sh. Deps BD-133 (prove.bundle), N12-04 (frob-verify), BD-136, N12x-08, STD-E2E."
+  },
+  {
+   "bead": "BD-382",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its e2e was N12-38's (depends on it): own script lemma_reflect_pilot.sh (pilot row, soundness capsules, prove reflect with --key, replay with the same key, 823 and 724 controls, false evaluations, CARD-T-35's law tests). The 701 acceptance line had no test: reflect_over_budget_refused_701. N38a-09 was in deps and related: removed from related; N12-38 related; dep STD-E2E. Farkas and box-form conversion numbers rechecked."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N12-REF",
+   "what": "FROB-REF-826: add query.policy-class to the trigger and its rule list (N12-03 rule 4 compares the policy class of the offered query; N25d-27's late-query case relies on it)."
+  },
+  {
+   "bead": "N12-KA",
+   "what": "KA-215 is realized by N12-02 (dispatch level) and N12-03 (bundle level, fabricated kind with consistent hashes); KA-212 is realized by N12p2-02, the rewrite-trace checker, not N12-18."
+  },
+  {
+   "bead": "N12-CX",
+   "what": "CX-106's control is realized by N12-02 and N12-03; CX-111 is realized by N12p2-02, not N12-18."
+  },
+  {
+   "bead": "VERBS-prove",
+   "what": "The outputs of prove.kernel, prove.list (once per listing) and prove.bundle carry the not_claimed array of six fixed strings (N12-08)."
+  },
+  {
+   "bead": "BD-133",
+   "what": "prove.bundle prints not_claimed through lemma::not_claimed() and its Proof strings through fmt_proof_claim (N12-08 says BD-133 builds on it): add dep N12-08 (checked: N12-08 does not depend on BD-133)."
+  },
+  {
+   "bead": "N12-33",
+   "what": "It asserts the registry rows of CARD-T-01, CARD-T-03 and CARD-T-04: add them to deps (checked: no path back)."
+  },
+  {
+   "bead": "BD-243",
+   "what": "CARD-T-20's order of work says the curvature analysis runs the card's law tests and binds its curvature kernel to the T-20 certificate hash, but BD-243 does not depend on CARD-T-20 (both M3; no path back): add dep CARD-T-20, run cargo test -p frob-lemma --test cards -- t20 in its acceptance, and bind and log the T-20 certificate hash of the curvature kernel."
+  },
+  {
+   "bead": "BD-359",
+   "what": "CARD-T-32's order of work says per-cell product-unreachable certificates of a product system BD-359 builds are checked there with the card's law tests, but BD-359 does not depend on CARD-T-32 (both M4; no path back): add dep CARD-T-32, run cargo test -p frob-lemma --test cards -- t32, and check one built product system's per-cell bundles with frob-verify."
+  },
+  {
+   "bead": "N17a-23",
+   "what": "Its order-of-work note says the certificate a sweep emits for its own count is checked in this crate's tests once the card and checker exist; N17a-23 closes at M3 and cannot. CARD-T-24 (M4) now depends on N17a-23 and does that check (live_sweep_certificate); the note should say so."
+  },
+  {
+   "bead": "N28a-28",
+   "what": "DC-11: own the rule, and a test, that a kernel keeps its identity across a rewrite only with an accepted class-E certificate (moved out of CARD-T-27, which cannot test the decision core). Its trace checker is rewrite-trace, now N12p2-02; its dep N12-18 (orbit-count, group-enumeration) looks stale unless another core needs it; same for N28c-11."
+  },
+  {
+   "bead": "N12-36",
+   "what": "Run BD-379's own script lemma_coverage_measure.sh as its measurement stage and record GATE-LEMMA-01 from that receipt, rather than repeating the measurement."
+  },
+  {
+   "bead": "N12-37",
+   "what": "Run BD-381's own script lemma_lean_seal.sh as a stage; the pipeline now includes N12-24's check-binding after fln seal-capsule (exit 3 discards)."
+  },
+  {
+   "bead": "N12-38",
+   "what": "Run BD-382's own script lemma_reflect_pilot.sh as a stage before the gate measurement."
+  },
+  {
+   "bead": "N12-34",
+   "what": "Run the own scripts of N12-09 (lemma_independence.sh, step 2) and N12-10 (lemma_auditor_oracles.sh) and of the checker beads (lemma_kinds_m1.sh, lemma_kind_sample_coverage.sh, lemma_kinds_transport.sh, lemma_kinds_enclosure.sh, lemma_kinds_energy_product.sh) as stages rather than redoing them. Step 10 'write the gate record' conflicts with drift 9: record GATE-LEMMA-03 with cargo run -p frob-conformance --example record_gate -- --gate GATE-LEMMA-03 --receipt <hash> from the script's receipt."
+  }
+ ],
+ "unchanged": 12,
+ "unchanged_beads": [
+  "CARD-T-01",
+  "CARD-T-03",
+  "CARD-T-06",
+  "CARD-T-08",
+  "CARD-T-10",
+  "CARD-T-25",
+  "CARD-T-30",
+  "CARD-T-31",
+  "CARD-T-32",
+  "CARD-T-33",
+  "CARD-T-35",
+  "BD-364"
+ ],
+ "notes": "Complete: 33 of 33 reviewed. Requests addressed to the slice were all checked and applied (N12-02, N12-03, BD-132, N12-13, N12-14, CARD-T-17), plus F-U12-2's round-3 request to BD-381 (check-binding after seal-capsule, checked against N12-24 item 8); none was rejected. Main pattern fixed: mechanism beads whose only e2e was a later e2e bead's script (N12-34/36/37/38) now own scripts with STD-E2E (drifts 7/11); checker beads now enable their rows through N12x-08 ledger changes with the six items (200-mutant campaign where the cap is Certified or Proved); no bead in the slice writes a gate record (drift 9). Every touched file parses (front matter JSON, lists, seven sections); no dep on a later milestone and no cycle (own scripts in polish-r3-F-U12-1/, not graph_check.py). Not fully settled: the added scripts and ledger items deserve one more read, and 14 requests to other beads are open."
+}

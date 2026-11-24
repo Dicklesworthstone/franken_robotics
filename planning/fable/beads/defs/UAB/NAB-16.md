@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-01"
-deps: ["STD-E2E", "NAB-09", "NAB-10", "NAB-11", "NAB-12", "NAB-13", "NAB-14", "NAB-15"]
-needs: ["§38.13: a `registries/gates.toml` with at least one record, so that a gate citing a source can be planted in a scratch copy (N40-01, N40-02)"]
-related: ["N00-06", "N00-34", "N40-36"]
+deps: ["N40-01", "N40-02", "NAB-09", "NAB-10", "NAB-11", "NAB-12", "NAB-13", "NAB-14", "NAB-15", "STD-E2E"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix H", "§0.1", "§38"]
 ---
@@ -28,23 +28,27 @@ the defects the lint exists to catch. Tier: Solid; a test bead.
 ## Scope
 
 In: `scripts/e2e/sources.sh`, its planted fixtures and its log. Out: the register, the records and the lint
-(NAB-09 to NAB-15); re-reading sources and re-running checks (N00-34, N00-06 and the pilot re-run beads).
+(NAB-09 to NAB-15); re-reading sources and re-running checks (N00-34, the plan-time pilot ledger N38a-10 and the pilot re-run beads).
 
 ## Technical approach
 
 Plain shell, sourcing `scripts/e2e/lib.sh`, idempotent, offline (no URL is fetched), working on a scratch copy
-under `target/e2e-work/sources/`. Header: `bead=NAB-16 milestone=M0 labels=gauntlet,sources`.
+under the harness's scratch root `target/e2e-scratch/sources/<run_id>/`, passed to `xtask` by `--root <dir>`
+and to the conformance tests by `FROB_LINT_ROOT=<dir>` (NAB-02 step 1; NAB-10 step 6). Header:
+`bead=NAB-16 milestone=M0 labels=gauntlet,sources plants=pass-on-unread,unknown-source,bare-url,plan-check-not-reproduced,relies-on-unverified,by-eye,mark-raised,reread-edited,fabricated-url,archive-unknown-revision`.
 
 1. `e2e_init sources NAB-16`; copy `registries/`, `crates/frob-conformance/registry/`, contracts and `docs/`
    into the scratch tree.
 2. **Register loads and counts.** `e2e_cmd -- cargo test -p frob-core --test registry_sources` and
    `e2e_cmd -- cargo test -p frob-conformance --test sources_content -- --nocapture`. Assertions:
-   `public_urls == 147` (49 + 98); `public_readings == 163` with `P == 39`, `F == 92`, `S == 30`, `U == 2`,
-   `R == 0`, `M == 0`; `topics_public == 13`; `references == 43` with `M == 43`; `plan_checks == 25`;
+   `public_urls == 147` (49 + 98); `public_brackets == 163` (39 P, 92 F, 30 S, 2 U); `public_readings == 174`
+   with `P == 43`, `F == 95`, `S == 34`, `U == 2`, `R == 0`, `M == 0` (the split, versioned and shared-bracket
+   rules of NAB-12 and NAB-13); `topics_public == 13`; `references == 43` with `M == 43`; `plan_checks == 25`;
    `unverified == 13`; `local_topics == 13`; `commits_recorded == 5`.
-3. **Flags.** Every non-P reading reports `reread_before_gate = true`; the count of readings that may be cited
-   without a reading equals 39 public P readings plus those with confirmed re-reads (0 at plan time), and the
-   script logs the number of open reading tasks as a `metric`.
+3. **Flags.** Every non-P reading reports `reread_before_gate = true`; the count of public readings that may be
+   cited without a reading equals the 43 public P readings plus those with confirmed re-reads (0 at plan time);
+   no local reading (before its re-read at the stack-lock commit), reference reading or plan-time check (before
+   its re-run) may be cited; and the script logs the number of open reading tasks as a `metric`.
 4. **Archive.** Compute `shasum -a 256` of the single `.zip` under `planning/`; `e2e_assert` that it equals
    exactly one of the four recorded revisions and log which; extract it into a new, empty scratch directory
    that holds nothing else; there run `e2e_cmd -- python3 -I -B verify.py` (the runner checks the inventory of
@@ -52,8 +56,10 @@ under `target/e2e-work/sources/`. Header: `bead=NAB-16 milestone=M0 labels=gaunt
    expects to be started from the directory that holds its README). Then run three of its inner programs and
    compare their printed counts with the recorded values: `mor/repro/P01-inverse.py` (stance family: 11,520 of
    11,520, half-width 3/14 m), `mor/repro/P05-docking-family.py` (561 cells: 344 admitted, 217 excluded) and
-   the promotion-rule enumeration under `sill/` (2,145 pairs: 521, 521, 1,103, 0). Then
-   `e2e_expect_caught archive-negative -- python3 -I -B verify_negative.py`.
+   the promotion-rule enumeration `sill/promotion_rule.py` (2,145 pairs: 521, 521, 1,103, 0; its recorded
+   output `sill/promotion_rule.out` is compared byte for byte). Then
+   `e2e_expect_caught archive-negative -- python3 -I -B verify_negative.py`. Plant `archive-unknown-revision`:
+   one byte appended to a scratch copy of the archive → the digest step fails `src.archive-unknown-revision`.
 5. **Summary block is current.** `e2e_cmd -- cargo xtask check-generated --json`; no `gen.differs` for
    `docs/SOURCES.md`.
 6. **Citation lint on the real tree.** `e2e_cmd -- cargo test -p frob-conformance --test citations`; `metric`
@@ -70,16 +76,19 @@ under `target/e2e-work/sources/`. Header: `bead=NAB-16 milestone=M0 labels=gaunt
    - `mark-raised`: an F mark changed to P with no `reread` entry → the frozen-mark comparison fails.
    - `reread-edited`: an existing `reread` entry altered → the loader fails `src.reread-edited`.
    - `fabricated-url`: a URL given to the unlocated benchmark page → `no_url_is_fabricated` fails.
-8. **A positive path.** Append a `reread` entry with `result = "confirmed"` to the F reading of the
-   `pass-on-unread` plant and re-run the lint: the same gate record is now clean. This shows the lint can be
-   satisfied only through the register.
+8. **Two positive paths.** (a) Append a `reread` entry with `result = "confirmed"` to the F reading of the
+   `pass-on-unread` plant and re-run the lint: the same gate record is now clean. (b) In the scratch copy, give
+   one part of GATE-SPARK-21 a recorded value (a scratch fixture row labelled `synthetic`; the real gate register
+   is never written, and the script records no gate) and set NV-01 to `status = "measured"` with that record:
+   the `relies-on-unverified` contract of step 7 is now clean (NAB-14's acceptance). Both show that the lint
+   can be satisfied only through the registers.
 9. `summary`.
 
 ## Acceptance criteria
 
 - [ ] The script exits 0 on a clean tree and writes `target/e2e-logs/sources/<utc-timestamp>.ndjson` with a
       transcript beside it.
-- [ ] All nine planted defects are caught, and the positive path of step 8 passes.
+- [ ] All nine planted defects are caught, and both positive paths of step 8 pass.
 - [ ] The archive digest is matched to a recorded revision and logged; with a byte appended to a scratch copy
       of the archive the step fails `src.archive-unknown-revision`.
 - [ ] The script fetches nothing from the network (it runs with networking disabled in CI) and leaves the
@@ -105,7 +114,8 @@ line lists assertions passed and failed and touches no gate.
 
 ### Known answers and negative controls
 
-Known answers: 147 URLs; 163 public readings (39 P, 92 F, 30 S, 2 U); 13 public topics; 43 references; 25
+Known answers: 147 URLs; 163 public brackets (39 P, 92 F, 30 S, 2 U) entered as 174 readings (43 P, 95 F,
+34 S, 2 U); 13 public topics; 43 references; 25
 plan-time checks; 13 unverified items; four archive revisions (230,188; 241,568; 258,254; 275,178 bytes). The
 archive checks pin 11,520 of 11,520, 344 + 217 = 561 and 521 + 521 + 1,103 + 0 = 2,145. Negative controls: the
 nine plants of step 7 and the archive's own negative runner. Determinism lanes: twice on one machine, identical

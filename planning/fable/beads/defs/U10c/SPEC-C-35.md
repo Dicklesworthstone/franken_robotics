@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "spine", "spec", "frontier", "foundry", "frob-foundry", "test"]
 parent: "WP-70"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["N10-KA3", "N10a-01", "STD-E2E", "STD-TEST", "VERBS-operator"]
 needs: []
-related: ["BD-401", "BD-402", "BD-403", "BD-404", "BD-406", "N10c-06", "N10c-07", "N10-CX", "N10c-10", "BD-400", "N10a-02"]
+related: ["BD-400", "BD-401", "BD-403", "BD-404", "N31b-06", "N31b-07", "N31b-08", "N10c-10"]
 gates: ["GATE-FOUNDRY-04", "GATE-FOUNDRY-05"]
 plan_refs: ["§10 C-35", "§31.5", "§31.6", "§31.7", "§31.9", "Appendix D.10", "Appendix M.9"]
 ---
@@ -47,13 +47,17 @@ and enters a claim product as its weakest input.
 ## Scope
 
 In: `docs/math/C-35.md` part A (frame) and part B (topology optimization); law tests in
-`crates/frob-foundry/tests/laws_c35_topology.rs`; registry entry for KA-168 and the pilot record of the whole
-construction.
+`crates/frob-foundry/tests/laws_c35_topology.rs`; registry entry for KA-168; the `pilot` field of row C-35 and the
+check that it resolves to the complete record of the whole construction's pilot, which the Foundry chapter's
+pilot beads write (see the pilot paragraph; this bead neither registers nor runs a pilot).
 
 Out: load-case extraction (`foundry.loads`, BD-400); beam-rung sizing and the structural margin (BD-401); the
 topology optimization mechanism and `foundry.optimize` (BD-403); inertia fed back into the model with its
-convergence test (BD-404); fatigue (N10c-06, BD-402); tolerance (N10c-07, BD-406); recording GATE-FOUNDRY-04 and
--05 and deciding KILL-TOPOPT (BD-403).
+convergence test (BD-404); fatigue (N10c-06, BD-402); tolerance (N10c-07, BD-406); recording GATE-FOUNDRY-04
+(the script N31a-54, from its own receipt and the extraction battery's of N31a-18), recording GATE-FOUNDRY-05 (the
+registered comparison N31b-13) and deciding KILL-TOPOPT (N31b-15); the row KA-168 itself, which the construction
+known-answer registry N10-KA3 (a dependency) enters with tolerance `to set` and no control, the two obligations
+this bead supplies.
 
 Register row (the shared rule of N10a-01). The construction register
 `frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
@@ -139,14 +143,18 @@ body-fitted mesh.
 `crates/frob-foundry/tests/laws_c35_topology.rs` with `tests/support/c35_ref.rs`: a series-bar model in exact
 rationals; a small truss solver in `f64` for finite-difference checks; the two-bar volume function; the hat
 filter. Generic over a trait `C35TopologySubject` (compliance, sensitivity, solve count); mutants in
-`tests/support/c35_mutants.rs`. Registry: KA-168 with a derivation file; the construction's pilot in the pilot
-register.
+`tests/support/c35_mutants.rs`. Registry: KA-168 with a derivation file; row C-35's `pilot` field naming
+`PILOT-C-35`.
 
-Pilot of the construction (run by BD-403 with BD-402 and BD-406): one link of a reference quadruped through all
-three computations. Falsifier (TARGET): a mass saving below 7% at equal stiffness and peak stress, or a damage
-figure that changes by more than 5% when the window length is halved. Ceiling: link mass fraction times saving,
-0.27 × 0.30 ≈ 8% of robot mass on the quadruped with a published breakdown. Fallback: catalogue sections with a
-beam check. Gates: GATE-FOUNDRY-04 at M5 (two-bar compliance within 10% and bar angle within 5°; the extracted
+Pilot of the construction (run at M4 by the Foundry chapter's pilot beads, before the mechanisms BD-403, BD-402
+and BD-406 are funded, since a pilot comes before the mechanism it funds: N31b-06, structure loop stage 1, one
+lower-leg link against a hand-sized tube; N31b-07, stage 2, which reads its result against the construction's
+window-halving clause and writes the record `PILOT-C-35`; N31b-08, the tolerance pilot behind KILL-TOLERANCE,
+carried by N10c-07): one link of a reference quadruped through all three computations. Falsifier (TARGET): a mass
+saving below 7% at equal stiffness and peak stress, or a damage figure that changes by more than 5% when the window
+length is halved. Ceiling: link mass fraction times saving, 0.27 × 0.30 ≈ 8% of robot mass on the quadruped with a
+published breakdown. Fallback: catalogue sections with a beam check, which with the beam-sizing rung (BD-401) is the
+row's `generic_comparator`. Gates: GATE-FOUNDRY-04 at M5 (two-bar compliance within 10% and bar angle within 5°; the extracted
 surface meshes and passes the mesh audit on 20 of 20 fixtures) and GATE-FOUNDRY-05 at M5 (the stage-2 pilot:
 saving at least 7%, the kill threshold, with 15% the target; the convergence test passes within five iterations;
 coarse solve at most 120 s per link class). Kill gate KILL-TOPOPT (M5): GATE-FOUNDRY-05 fails (saving under 7%, no
@@ -161,9 +169,11 @@ optimization becomes an offline option or is dropped.
 - [ ] `cargo test -p frob-foundry --test laws_c35_topology` passes on the reference model, and on the production
       optimizer's sensitivity if BD-403 has landed.
 - [ ] Every mutant below fails its named law.
-- [ ] KA-168 is registered with a derivation file, a stated tolerance and the control named below (the row was
-      printed with neither).
-- [ ] The pilot record is in the pilot register.
+- [ ] KA-168's row of N10-KA3 in `crates/frob-conformance/registry/known_answers.toml` is completed with a
+      derivation file, a stated tolerance and the control named below (the row was printed with neither); no
+      second row is created.
+- [ ] Row C-35's `pilot` field names `PILOT-C-35`; the check reports `pending` until N31b-07 has written the
+      record and fails if the record lacks the falsifier (both clauses), the ceiling or the fallback.
 - [ ] `scripts/e2e/spec_c35_topology.sh` exits 0.
 - [ ] Row C-35 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
       Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
@@ -191,7 +201,9 @@ optimization becomes an offline option or is dropped.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c35_topology.sh`: `frob --json doctor`; `cargo test -p frob-foundry --test laws_c35_topology`;
-`cargo test -p frob-conformance --test g1 -- KA-168`; file and registry checks. Log to
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-168` (the tier target's name is
+`g1_known_answers`), and the same with `--features gauntlet-mutations` for the control `sensitivity_sign_flipped`;
+file and registry checks. Log to
 `target/e2e-logs/spec_c35_topology/<utc>.ndjson` with a transcript; each line has `ts`, `script`, `bead`, `step`,
 `event`, command line, exit code, wall time, the evidence block (claim Known answer, class Tested, tier G1 host,
 determinism D0 for rational rows, seed), sensitivities against the closed form with the relative error and its

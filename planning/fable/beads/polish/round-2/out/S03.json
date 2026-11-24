@@ -1,0 +1,93 @@
+{
+ "round": 2,
+ "slice": "S03",
+ "reviewed": 9,
+ "changed": [
+  {
+   "bead": "EPIC-M0",
+   "kinds": [
+    "complete"
+   ],
+   "what": "exit rule listed three of the five conditions of plan §43.2; added the risk-register reading and the open questions due at M0 answered or defaulted by ADR (N40-05 steps 9 and 10), and noted that the reality: line is required from M1 on"
+  },
+  {
+   "bead": "EPIC-M1",
+   "kinds": [
+    "complete",
+    "correct",
+    "placement"
+   ],
+   "what": "recurring set at M1 omitted GATE-GAUNT-02, -05 and -10, which recur at every exit from M0 (§38.15; N40-04 rule 2); added them with what each checks, and GATE-GAUNT-08 at each funding decision (the Frontier part of WP-42). gates gains KILL-TENFOLD-LEVER, whose first decision round 1 placed at this exit"
+  },
+  {
+   "bead": "EPIC-M2",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "recurring set omitted GATE-GAUNT-02, -05, -10 (now matches BD-224 and N40-04); GATE-GAUNT-08 at each funding decision for the Frontier parts of WP-44, -46, -50. OPEN-CHRON-4 carried OPEN-SAFE-4's defaults: now 30 days and 64 GB (failure captures, store budget), with logs, keys and retired clusters attributed to OPEN-SAFE-4 at M3 (§42.3, N41-OPEN6/7). OPEN-TENFOLD-4 asked one milestone ahead, since its default blocks the M3 exit (N41-15, N41-OPEN8)"
+  },
+  {
+   "bead": "EPIC-M3",
+   "kinds": [
+    "complete",
+    "correct",
+    "risks"
+   ],
+   "what": "recurring set omitted GATE-GAUNT-05 and -10; added them, the M3 condition of GATE-GAUNT-02 (count of Appendix M rows due by M3 with tolerance 'to set' or control 'none stated' must be zero), and GATE-GAUNT-08 at each funding decision (WP-27, -53, -55, -57, -59). OPEN-SAFE-4 default spelled out (was 'as at M2'). OPEN-TENFOLD-4 named in owner input and in the compute consideration, with N41-15's exit reading: every stratum 'not run' blocks the exit, CPU strata with device strata 'not run' are a recordable outcome (reconciles §39.12 with §44.2)"
+  },
+  {
+   "bead": "EPIC-M4",
+   "kinds": [
+    "complete"
+   ],
+   "what": "recurring list lacked GATE-GAUNT-08 at each funding decision, which M6 and M8 state and BD-378 checks; added with the Frontier packages of M4 (WP-28 to -30, -61, -62, -64 to -67)"
+  },
+  {
+   "bead": "EPIC-M5",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "GATE-GAUNT-08 at each funding decision added (every M5 package holds Frontier work). OPEN-FOUNDRY-2's default was given as 'generic prices labelled assumed'; plan §42.3 and registry N41-OPEN6 say 'card references and no prices'; the two questions now carry their own defaults"
+  },
+  {
+   "bead": "EPIC-M6",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance and the exit script compared flag-off digests with 'the M4 digests'; M5 and M7 may close between M4 and an M6 epic, and pins and T move after the M7 freeze, so the reference is now the latest earlier exit's battery, re-recorded by the compatibility train's parity run after any pin or T move; the log names that exit, commit and pins"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-147",
+   "what": "M1 exit review: 'Recurring from here' lists GROUND-01, SAFE-01, TENFOLD-09, GAUNT-01 only; GATE-GAUNT-02, -05 and -10 recur at every exit from M0 (§38.15; N40-04 rule 2) and are due at M1; also GATE-GAUNT-08 at each funding decision (the Frontier part of WP-42). EPIC-M1 now states this"
+  },
+  {
+   "bead": "BD-224",
+   "what": "M2 exit review: add GATE-GAUNT-08 at each funding decision (Frontier parts of WP-44, -46, -50); OPEN-CHRON-4's default is 30 days and 64 GB (failure captures, store budget); job logs, keys and retired clusters are OPEN-SAFE-4 at M3 (§42.3, N41-OPEN6/7); list OPEN-TENFOLD-4 as asked ahead, since its default blocks the M3 exit (N41-15, N41-OPEN8)"
+  },
+  {
+   "bead": "BD-319",
+   "what": "M3 exit review: add GATE-GAUNT-08 at each funding decision; state that GATE-GAUNT-02 must print zero rows due by M3 with tolerance 'to set' or control 'none stated'; spell out OPEN-SAFE-4's default (job logs and keys 30 days, retired clusters sealed indefinitely); add OPEN-TENFOLD-4 with its blocking default and N41-15's reading (all strata 'not run' blocks; CPU strata with device strata 'not run' is recordable)"
+  },
+  {
+   "bead": "BD-412",
+   "what": "M5 exit review: OPEN-FOUNDRY-2's default is 'card references and no prices' (§42.3, N41-OPEN6), not 'generic prices labelled assumed' (that is OPEN-SKEL-2's); add GATE-GAUNT-08 at each funding decision to the recurring list"
+  },
+  {
+   "bead": "BD-427",
+   "what": "M6 exit review: flags-off digests are compared with 'the M4 reference' (lines 143, 162, 181); M5 and M7 can close in between and pins and T move after the M7 freeze, so compare with the latest earlier exit's reference, re-recorded by the compatibility train after a pin or T move (as EPIC-M6 now says)"
+  },
+  {
+   "bead": "N40-35",
+   "what": "owner-input calendar has no row for OPEN-TENFOLD-4, although N41-OPEN8's acceptance requires the calendar to list it at M1 and again at M2 (its default blocks the M3 exit); the grouped M5 price row gives 'prices labelled assumed' also for OPEN-FOUNDRY-2, whose default is 'card references and no prices'"
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All nine milestone epics read in full. Every compiled-table row in them (113 kill rows, 356 admission and convergence rows) matches its register row of §40.2 to §40.4 verbatim; late-gate tables, due counts, priorities and work-package tables agree with §40.6, §40.8, §40.9 and §44.1. The fixes concern recurring gates, owner-input defaults and one digest reference; EPIC-M7 and EPIC-M8 are unchanged. The slice looks settled."
+}

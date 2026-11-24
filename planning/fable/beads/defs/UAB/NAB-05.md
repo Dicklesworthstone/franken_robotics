@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "workspace", "delivery", "solid", "registry"]
 parent: "WP-01"
-deps: ["NAB-01"]
-needs: ["§0.8: the hypothesis verdict register with its four states and its rows through H-29 (N00-10, N00-11, N00-12), against which the corrected `Hypothesis verdict` row is checked"]
-related: ["NAB-02", "NAB-03", "NAB-04", "NAB-06", "NAB-07", "NAB-08", "N00-10"]
+deps: ["N00-10", "NAB-01"]
+needs: []
+related: ["NAB-06", "NAB-07"]
 gates: []
 plan_refs: ["Appendix A", "§0.8"]
 ---
@@ -63,7 +63,8 @@ recorded state of one of the planning hypotheses H-01 to H-24: supported, narrow
 describes has four states, **ACTIVE** (unrefuted and untested), **NARROWED** (the strong form failed; a stated
 weaker claim survives), **REFUTED** (a calculation or an executed check shows the mechanism does not deliver
 what was claimed) and **DEFERRED** (real, but not an answer to the question asked of it), and its rows run to
-H-29 with three split rows (H-04b, H-12b, H-22a and H-22b). The record is therefore written:
+H-29 with split rows: 32 identifiers, H-01 to H-29 with H-22 replaced by H-22a and H-22b, plus H-04b and H-12b
+(N00-10's count). The record is therefore written:
 
 > Hypothesis verdict | The recorded state of one planning hypothesis (H-01 to H-29, with the split rows H-04b,
 > H-12b, H-22a and H-22b): ACTIVE, NARROWED, REFUTED or DEFERRED. The state binds what may be said and built;
@@ -159,9 +160,14 @@ Rows in this range: 61.
 - `count_is_61`; `order_matches_frozen_list`.
 - `hypothesis_verdict_is_corrected`: the meaning contains "ACTIVE, NARROWED, REFUTED or DEFERRED" and "H-29",
   and does not contain "supported, narrowed or refuted".
-- `hypothesis_states_equal_register_states`: the four state names equal the enumeration loaded from the
-  hypothesis register's schema (skipped with a recorded `skip` until that registry exists).
+- `hypothesis_states_equal_register_states`: the four state names equal the enumeration of schema
+  `frob.hypothesis/1`, loaded from `crates/frob-conformance/registry/hypotheses.toml` (N00-10, a dependency of
+  this bead, so the register exists when this test is written), and the 32 identifiers named by the corrected
+  row (H-01 to H-29 with H-22 replaced by H-22a and H-22b, plus H-04b and H-12b) equal the register's identifiers;
+  a register with 33 rows (a bare H-22 kept beside its split rows) fails it.
 - `seven_instants_in_order`: sample, exposure, timestamp, arrival, decision, command, actuation.
+- `no_sense_is_a_number_word`: no record of the registry has a `sense` that is a numeral or a number word
+  (`Instants` has an empty sense); the negative control below plants `sense = "seven"`.
 - `pinned_values`: `Mass-support bound` contains "‖c − o‖² + tr(I_C)/(2m) ≤ ρ²"; `Moonshot cap` contains "four";
   `Ladder` contains "R0 static" and "R5 rare failure"; `Gauntlet` contains "G0 laws" and "G5 determinism";
   `Kernel class` contains the four names; `Layer rule` contains "L-1 to L-12"; `Hervé class` contains "twelve".

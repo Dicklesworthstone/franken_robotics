@@ -1,0 +1,471 @@
+{
+ "round": 2,
+ "slice": "S88",
+ "reviewed": 41,
+ "changed": [
+  {
+   "bead": "N14b-05",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "dep N16bx-02 (a mechanism funded only on its pilot's PASS) moved to related: a flagged template does not wait for its physics and the chain held N14bp1-02 behind it; added dep BD-361 (M4), whose emitted limb module the delta template is made of, so delta_mobility_three is a real test (it was 'un-ignored by that bead', an earlier bead). Named the physics bead per variant; dual-arm template gains the `welded` preset (compile-time weld), the only dual-arm form on N16bx-01's FAIL branch and its training fallback; kill-gate fallback forms per variant; e2e creates designs with design.new --key before design.check, full STD-E2E logging; --include-variants requested of VERBS-design."
+  },
+  {
+   "bead": "N14b-22",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "capability refusal named (FROB-REF-724, reason feature-not-built) and moved to BD-065's format dispatch (this bead cannot test its own unbuilt state; script said it had a pre-consumer step though written with the importer); consumer record file; oracle for an SDF-only robot stated with an OPEN fail-closed default; deps BD-067 and N14b-24 (fk-parity); design.import calls carry --name/--key, the strict run a distinct key; limits row in N37-05; hand known answer for relative_to."
+  },
+  {
+   "bead": "N14b-23",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "placement"
+   ],
+   "what": "pilot record in crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1, row entered by N14b-26), machine-readable mapping table, row-specific tests in pilot_register.rs, script moved to scripts/e2e/ with STD-E2E logging; deps N38a-09 and STD-E2E; gate GATE-GAUNT-08 as every pilot carries."
+  },
+  {
+   "bead": "N14bp1-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "S87 request applied: N40-03 outcome names (fired / not-fired / not-reached / deferred) and docs/adr/ADR-KILL-SINEW-ROTOR-M6.md; second reading of the gate; e2e negative control gets a name and --key, log fields completed."
+  },
+  {
+   "bead": "N14bp1-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "same fixes as N14b-22: FROB-REF-724 from BD-065's dispatch, precondition test on the pilot row and consumer record, uncovered vendor extensions reported unsupported, oracle OPEN with fail-closed default, deps BD-067 and N14b-24, design.check names its design, strict run with distinct key, ADR in docs/adr/, inertia tolerance for a decimal quaternion."
+  },
+  {
+   "bead": "N15b-14",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "sim.run in the script lacked --key (KNOWN_DRIFTS 5): two keyed runs (new and aged); design.check step added; deps BD-110 (stage-6 runner), BD-170 (per-world parameter rows), N15-KA (KA-324, KA-328); --battery-age requested of VERBS-design, VERBS-actuator, VERBS-sim; full log fields. Numbers rechecked (720 s, 5,486 W, 16.7%)."
+  },
+  {
+   "bead": "N15b-15",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "S87 request applied: record in pilots.toml with every field, tests in crates/frob-conformance/tests/pilot_register.rs with row-specific names (sinew_ageing_*), KA-337 row check; deps N38a-09, N15-KA; negative control perturbs in the direction that increases the error (else it might stay inside 10%); script header and log fields."
+  },
+  {
+   "bead": "N15b-16",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "decision aligned with N40-03 and KNOWN_DRIFTS 4 as N15b-23 is: four outcome names, docs/adr/ADR-KILL-SINEW-AGE-M6.md with required fields, gates.toml decision table and owner declaration, kill_ledger check; dep N40-23; fail-closed refusal named (FROB-REF-724); actuator.list option is --kind not --family, per-card provenance through actuator.show."
+  },
+  {
+   "bead": "N15b-17",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "where the age record lives between runs (named chronicle record, --age-record) so the twelve-run campaign is implementable; twelve distinct --key values and an idempotent repeat; synthetic card's validity group (f_q_max 0.5, campaign reaches f_Q 0.40); expected flip month 2 derived; age_after expected values; deps N31-REF (FROB-REF-831) and N31-KA (KA-753); acceptance uses not-fired and the ADR path; sim.run options requested."
+  },
+  {
+   "bead": "N15b-18",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "assumed-stiffness refusal had no code: FROB-REF-726 with reason card-provenance requested of N32-REF; task.fixture calls carry --layer and distinct --key; deps N24b-03 (task.fixture) and N15-KA (KA-335); log fields. Frequencies and the midpoint warp (285.7 rad/s, 3.0%) rechecked."
+  },
+  {
+   "bead": "N15b-19",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "risks"
+   ],
+   "what": "pilot record in pilots.toml with every field and kill_gate to-register (proposed KILL-SINEW-SEA wording), [[pilot.result]]; row-specific tests in pilot_register.rs (sinew_series_elastic_*), KA-335 row; deps N15-KA, N38a-09; script header with plants; fail-closed until the gate row exists; 285.8 corrected to 285.7 rad/s; case table rechecked."
+  },
+  {
+   "bead": "N15b-20",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "fail-closed refusal of L4 named (FROB-REF-724 not-linked, mechanism actuator-level-L4, exit 5; FROB-REF-136 rejected with reason); refusal and l4_gate.rs tests moved to N15a-04, which defines the enum (an epic is never implemented); refusal script with task.fixture --layer/--key and full log fields; funded-level script gets --key. Cylinder numbers rechecked (6 MPa, 7.367e-5 m3/s, 0.1473 m/s, 736.7 = 294.7 + 442.0 W)."
+  },
+  {
+   "bead": "N16bx-01",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "row-specific pilot_register.rs tests (kin_runtime_closure_pilot_*); script runs the planted hooks and the register test with full log fields. Fixture numbers rechecked."
+  },
+  {
+   "bead": "N16bx-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "closure-pool overflow under refuse is FROB-REF-722 on batch-cpu and FROB-REF-610 on GPU tiers (KNOWN_DRIFTS 6), Degraded closure-capacity otherwise; test capacity_overflow_610_gpu; sim.run calls carry distinct keys. Retention and squeeze numbers rechecked."
+  },
+  {
+   "bead": "N22c-21",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "complete",
+    "risks"
+   ],
+   "what": "record in pilots.toml (frob.gauntlet.pilot/1, set C, kill_gate KILL-SOILLIFT) with protocol path and hash and [[pilot.result]]; pilot tool named (frob-conformance bin pilot-soil-lift) with its unit tests there, row tests in pilot_register.rs; e2e sim.run had no design, scene, worlds or --key; fixtures tracked-a / sand-dry / soil-lift-excitation that later beads reuse now owned here; KILL-SOIL named with the not-reached outcome. Dictionary, coefficient and conformal-index numbers rechecked."
+  },
+  {
+   "bead": "N22c-22",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "differential test located (crates/frob-control/tests/lift_differential.rs, built while both fits exist) with a permutation negative-control test; switch-over script spelled with keyed control.lift calls before and after, artifact.read comparison, gate_reflex_10.sh re-run, full log fields; kill clause covers not-reached and cites the ADR path. Input-affine recovery hand case rechecked."
+  },
+  {
+   "bead": "N22c-23",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "UJL request applied: refusal slug's N35x-02 ledger row (4xx, unnumbered) named, number requested; registry example verbatim with --key and --runs for calibrate; the regime fixture fixtures/verbs/control/regime.toml with its values delivered here; FROB-REF-243 surfaced from the soil law; own e2e script (it had only 'covered by N22c-25') with determinism, min-count and incomplete-regime controls; deps N22-REF, STD-E2E."
+  },
+  {
+   "bead": "N22c-24",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "control.mpc is a run verb: --key (FROB-REF-805 without), --state to pose a single out-of-regime query; task fixture soil-velocity-tracking owned here; own e2e script (in-regime, out-of-regime, replay, freeze refused with 817, unknown LiftId) with full log fields; dep STD-E2E."
+  },
+  {
+   "bead": "N22c-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "script called control.lift with --fixture (not an option of the verb) and no keys, on design tracked-flipper with soil <card>: hand cases now run through N22c-23's crate tests, body runs use tracked-a, sand-dry, regime.toml and keyed sim.run / control.lift / control.mpc calls (distinct keys per paired episode); out-of-regime queries posed with --state; gate recorded with record_gate; fixtures' owners named; log adds keys, digests, repair cycle."
+  },
+  {
+   "bead": "N22c-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "decision aligned with N40-03 and KNOWN_DRIFTS 4: four outcome names ('fired by consequence' was not one; KILL-MPC or KILL-SOIL upstream gives not-reached), docs/adr/ADR-KILL-SOILLIFT-M6.md with required fields, decision table of the N40-29 row and owner declaration in frob-control's contract.toml, kill_ledger check; withdrawal is FROB-REF-724 killed: KILL-SOILLIFT; dep N40-29 (ledger row) and STD-E2E; rule table gains the not-reached rows and a record test; script header, plant and full logging."
+  },
+  {
+   "bead": "N23b-36",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "both requests applied: reserved envelope row R17 named (packages WP-33, E1 for gate:KILL-SHORTGRAD up to 12 device-hours, E2 up to 48, else per-run) with the run-count arithmetic; every arm through frob-launch (N36-20) under R17 with one meter row per run cited in the record and the log; dep N36-20. Record placed in pilots.toml with every field and the result-word to status mapping; tests moved to pilot_register.rs with row-specific names and a launch-rows test; script header, plant, full log fields. Growth and block numbers rechecked. Pilot record's cost and tool fields aligned with N38a-09's schema (cost table with envelope; tool { name, pin, site = host })."
+  },
+  {
+   "bead": "N23b-37",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "first reading aligned with N40-03: four outcome names (undetermined, no envelope and no gradient source are not-reached, never not-fired), docs/adr/ADR-KILL-SHORTGRAD-M6.md, first decision entry of the N40-29 row and owner declaration, kill_ledger check; withdrawal is FROB-REF-724 killed:/not-linked; dep N40-29; own re-derivation script (it pointed at N40-03's shared script) with header, plant and full logging; tests in kill_gates.rs."
+  },
+  {
+   "bead": "N23b-38",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "funding condition named as not-fired at the first reading; the window-store refusal named (FROB-REF-602, interim code N16-REF assigns, exit 6) with a test (1,988 worlds fit at K = 32 in 16 GiB); verb spelled with design, task, --backend and --key, and its new options requested of VERBS-train (KNOWN_DRIFTS 8); script had no design, key, or valid tier option and used sim.estimate (which has no window input): now keyed train.start/status/stop, the 602 refusal, the 861 citation; test file named. Loss, memory and implicit-function numbers rechecked."
+  },
+  {
+   "bead": "N23b-39",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied: reserved row R18 (WP-33, gate:GATE-CORTEX-22, about 3.3 times R17) with not-run on decline; final reading as a second decision entry with its own ADR and N40-03 outcomes, FROB-REF-724 killed:; edit sequence uses design.edit's set-param form applied as one design.patch; script spelled with real verb options (opt.start --method cma-es, phylum.gradient, design.patch, eval run/promote/detect) and distinct keys per arm, task and seed, record_gate; test final_reading_appends; test file named. Cosine, monitor-rate, stencil-count and paired-bound arithmetic rechecked (L = 2.4713)."
+  },
+  {
+   "bead": "BD-413",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KILL-ADVECT's record path docs/adr/ADR-KILL-ADVECT-M6.md (KNOWN_DRIFTS 4) with N40-03's four outcomes; the film law's kill gate named (KILL-FILM, N18a-34). Pilot, tile, stability-bound and CX-191 numbers rechecked."
+  },
+  {
+   "bead": "BD-414",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KILL-SLOSH's record path docs/adr/ADR-KILL-SLOSH-M6.md with N40-03's outcomes (not-reached when the pilot leaves the mechanism unfunded). First-mode frequency rechecked (8.955 rad/s, 1.425 Hz)."
+  },
+  {
+   "bead": "BD-415",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KILL-PROXY's record path docs/adr/ADR-KILL-PROXY-M6.md with N40-03's outcomes. Catenary sag (0.2923 m) and castor climb (4/3) rechecked."
+  },
+  {
+   "bead": "BD-416",
+   "kinds": [
+    "correct",
+    "tests",
+    "placement"
+   ],
+   "what": "KILL-LIVING's record path and per-kind outcomes; plan file given a path (docs/epics/coupled-islands.md, as N15b-20 does); its two registry checks, which an epic never implements, carried by its decision bead N19b-20; island runs above E0 filed as compute_envelope request rows (N44-01's rule) instead of an unrecorded approval. Lattice memory, 181-world bound and 3,464 steps per second rechecked."
+  },
+  {
+   "bead": "FD-FSIM-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "funding condition read per island kind (kind:rod for the rod half, kind:cloth for the cloth half) in N40-03's outcome names, closing superseded with the ADR; post-phase sim.run spelled with design, scene, worlds, seconds and a distinct key per scene, robot and seed. Cantilever frequency (5.65 Hz), deflection (2.65 mm) and wave speed (20.14 m/s) rechecked."
+  },
+  {
+   "bead": "FD-FTX-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "closing rule tied to KILL-LIVING's kind:cloth entry (fired or not-reached closes superseded with docs/adr/ADR-KILL-LIVING-M6.md; the register row keeps its number)."
+  },
+  {
+   "bead": "N00p1-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the two kill ADRs it cites moved from the retired docs/delivery/adr/ to docs/adr/ (KNOWN_DRIFTS 4); KILL-LIVING read as per-kind decision entries in N40-03's names. Shares (0.933, 0.840, 0.950, pooled 0.910) rechecked."
+  },
+  {
+   "bead": "N19b-16",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "pilot register path and schema; one record cannot carry two tiers and two kill gates, so two records (F: KILL-PROXY; M: KILL-LIVING) share one frozen protocol and result; about ten GPU-hours is above E0, so the bead files a compute_envelope request row (R19 onward, E1 for gate:GATE-HAB-09) and launches every incumbent run through frob-launch with meter rows (not-approved branch: not-run, both kill gates not-reached); deps N36-20, N38a-09, N44-01; row tests in pilot_register.rs; script header, plants and full log fields. Exact interval [0.735, 0.979] rechecked. Both records' tool field is the schema's { name, pin, site } table."
+  },
+  {
+   "bead": "N19b-20",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "verdicts mapped to N40-03's outcomes with one decision entry per island kind (scope kind:fluid|cloth|rod, requested of N40-03 and N40-24), not-reached for an uninformative pilot; ADR moved to docs/adr/; owner declaration in frob-scene's contract.toml and kill_ledger check; dep N40-24 (the ledger row); BD-416's two checks carried here; script used sim.estimate (which never admits or runs) with --require-living-tier: now keyed sim.run with and without the flag, report.run, kill_ledger, header and full log fields."
+  },
+  {
+   "bead": "N19c-33",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "record in pilots.toml (frob.gauntlet.pilot/1, set C, kill_gate KILL-FARFIELD; frob.pilot/1 retired) with protocol path and hash, cost and tool tables, [[pilot.result]] with the verdict-to-status mapping; row tests habitat_farfield_* in pilot_register.rs; deps N38a-09 and STD-E2E; memory stated (full grid 101 GB, coarse 6.3 GB without content-addressed tiles) with E0 and a request row if exceeded; script header with plants, register test, peak store bytes logged. Cost table and 4.21% threshold rechecked."
+  },
+  {
+   "bead": "N19c-34",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "smoke script spelled with design, scene, worlds, seconds, tier, seed and a distinct key per call (frs-parent, frs-reuse, frs-full, frs-req-d3 with e2e_expect_refusal FROB-REF-322 3, frs-auto-d3); telemetry divergence given its two runs, --world and --mode exact (no --exact option); log path and summary gates."
+  },
+  {
+   "bead": "N19c-35",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "options it adds (run.fork --no-field-reuse, --field-reuse; run.show --receipt and --phase-ledger; sim.estimate --fork-batch/--forks) were in no verb row: acceptance requires them in the rows (KNOWN_DRIFTS 8) and they are requested of VERBS-run and VERBS-sim; script forks spelled with --world/--at/--change and distinct keys per mode, the over-budget refusal with e2e_expect_refusal and its auto twin, cancellation through job.cancel; related VERBS-run, VERBS-sim, N19c-36; log keys and summary. Byte model (554,865,664 and 28,094,464 bytes) and cost identity 0.079 rechecked."
+  },
+  {
+   "bead": "N19c-36",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "parents keyed (gh15-parent-<fixture>); run show --phase-ledger requested of VERBS-run with a fallback reading a from the first fork's field_reuse block; null fork is an empty change set (no --change none) keyed gh15-null; 1,000 forks with two distinct keys each and telemetry divergence --world --mode exact; record_gate spelled; keys logged; summary gates; related N19c-33, N19c-37, VERBS-run. Upper bound 0.116 and cost identity 0.128 rechecked."
+  },
+  {
+   "bead": "N19c-37",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "stage B aligned with N40-03 and KNOWN_DRIFTS 1 and 4: second decision entry of the N40-29 row (stage A's never edited; nothing appended when stage A fired) with its own ADR docs/adr/ADR-KILL-FARFIELD-M6-final.md (naming requested of N40-03 as for KILL-SHORTGRAD), owner declaration copied, kill_ledger and kill_gate_records.sh checks, deferred needs an ADR; script read 'frob gates show' (no such verb): reads gates.toml read-only; withdrawn receipt checked with a keyed run.fork; test stage_b_appends_second_entry; deps N40-29, STD-E2E."
+  },
+  {
+   "bead": "N19cp1-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "stage A aligned: docs/adr/ADR-KILL-FARFIELD-M6.md (retired docs/delivery/adr/), first decision entry in N40-03's names (cleared = not-fired on triggers 2 and 3), owner declaration in frob-scene's contract.toml, kill_ledger check; pilot record read from pilots.toml with pilot_register tests ('frob conformance show' and 'frob perf profile' do not exist): phase ledgers measured by keyed sim.run (three runs per fixture for the spread) and run show --phase-ledger, requested of VERBS-run; record_shape test checks outcome names and path; deps STD-E2E; summary gates."
+  },
+  {
+   "bead": "N33b-16",
+   "kinds": [
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "its step of N33b-21's script given the log path and the full STD-E2E fields (bead, step, stack receipt, summary gates); a cold build above E0 that the worker cannot absorb is filed as a compute_envelope request row (N44-01) instead of an unrecorded written approval. Mach (3.46, 0.35, 6.9) and relaxation (6e-6) numbers rechecked."
+  },
+  {
+   "bead": "N33c-28",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "pilot record given the register's fields (set C id, tier M, protocol path and hash, tool { ftx-drape, pin, development-oracle }, cost table, fallback with KILL-LIVING, [[pilot.result]]); row tests suite_cloth_oracle_* in pilot_register.rs; funding ADR in docs/adr/ and cited by N19b-20's kind:cloth entry; script header with plants, the two planted negative controls run, register test, candidate sim.run keyed, line fields; related BD-416, FD-FTX-01, N19b-20. Distance hand case (0.005 m RMS) rechecked."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-design",
+   "what": "design.templates gains --include-variants (variant rows with tier, flag, physics owner, physics bead, computed status; N14b-05); design.check gains --battery-age f_q=<r>,f_r=<r> (N15b-14)."
+  },
+  {
+   "bead": "BD-065",
+   "what": "the format dispatch of design.import answers --format sdf and --format usd with FROB-REF-724 (reason feature-not-built) naming the consumer condition of N14b-22 and the pilot-plus-consumer condition of N14bp1-03, until those importers are linked."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "what": "actuator.bus gains --battery-age f_q=<r>,f_r=<r> (N15b-14)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run gains --battery-age (constants, N15b-14; `evolved`, N15b-17), --age-record <name>, --duty-multiplier <w>, --idle-time <duration> (N15b-17)."
+  },
+  {
+   "bead": "N32-REF",
+   "what": "FROB-REF-726 gains the reason card-provenance: a mechanism whose admission requires a card field of class measured or cited datasheet (N15b-18, series stiffness)."
+  },
+  {
+   "bead": "N40-23",
+   "what": "register KILL-SINEW-SEA (trigger: the series-elastic pilot's falsifier holds and no remedy inside the referee's design passes; fallback: rigid transmissions with backlash rows, results flagged compliance not modelled), proposed by N15b-19's pilot record (kill_gate = to-register until then; the record does not fund)."
+  },
+  {
+   "bead": "N15a-04",
+   "what": "every lowering of ActuatorLevel::L4Hydraulic refuses FROB-REF-724 (reason not-linked, mechanism actuator-level-L4, exit 5, repair: electric level L1 to L3), with crates/frob-actuate/tests/l4_gate.rs (l4_refused_until_admitted, status_table_names_fallback) and scripts/e2e/sinew_l4_refusal.sh as N15b-20 specifies."
+  },
+  {
+   "bead": "N35x-02",
+   "what": "number the ledger row lifted-planner-out-of-regime (family 4xx) so that VERBS-control can list it on control.lift and control.mpc --planner lifted:<id> (N22c-23, N22c-24)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "state the ADR name for a second decision entry taken at the same exit (KILL-SHORTGRAD: first reading at the pilot and final reading at GATE-CORTEX-22, both M6); N23b-37 and N23b-39 use the DESIGN name docs/adr/ADR-KILL-SHORTGRAD-M6-final.md beside ADR-KILL-SHORTGRAD-M6.md."
+  },
+  {
+   "bead": "N40-03",
+   "what": "add the decision scope prefix kind:<island> (kind:fluid, kind:cloth, kind:rod) for KILL-LIVING, which N19b-20 decides per island kind (and FD-FSIM-22, FD-FTX-01, N00p1-12 read per kind)."
+  },
+  {
+   "bead": "N40-24",
+   "what": "mark the KILL-LIVING row as decided per scope (kind:fluid, kind:cloth, kind:rod), so its decision is an array of per-kind entries (N19b-20)."
+  },
+  {
+   "bead": "N19b-11",
+   "what": "KILL-ADVECT's ADR path is docs/adr/ADR-KILL-ADVECT-M6.md, not the retired docs/delivery/adr/ (KNOWN_DRIFTS 4), and its verdicts are named in N40-03's four outcomes (BD-413 and N00p1-12 now cite that path)."
+  },
+  {
+   "bead": "N19b-15",
+   "what": "KILL-SLOSH's ADR path is docs/adr/ADR-KILL-SLOSH-M6.md (KNOWN_DRIFTS 4), verdicts in N40-03's four outcomes (BD-414 cites it)."
+  },
+  {
+   "bead": "N19b-19",
+   "what": "KILL-PROXY's ADR path is docs/adr/ADR-KILL-PROXY-M6.md (KNOWN_DRIFTS 4), verdicts in N40-03's four outcomes; it reads T from N19b-16's articulated-proxies record (tier F), one of two records sharing the pilot's protocol (BD-415 cites it)."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.start gains the --algo value short-horizon-ac and the options --design-params <levers>, --window 16|32, --design-lr <rate>, with window_store_bytes in the output (Extended by: N23b-38)."
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "control.lift's 'calibration runs' input gets the spelling --runs <run id> (N22c-23); when N35x-02 numbers lifted-planner-out-of-regime it enters both rows' refusals."
+  },
+  {
+   "bead": "VERBS-run",
+   "what": "run.fork gains --no-field-reuse and --field-reuse auto|require|off (refusal FROB-REF-322 with failed_precondition, exit 3) with the field_reuse block in its output; run.show gains --receipt (the fork's field_reuse block) and --phase-ledger (N21a-27's step profile of the run, including a); Extended by N19c-35, used by N19c-34, N19c-36, N19c-37, N19cp1-02."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.estimate gains --fork-batch <run> --forks <n>, reporting the fork-window store bytes before admission (Extended by N19c-35)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "KILL-FARFIELD is decided in two entries at M6 (stage A, N19cp1-02, before the mechanism; stage B, N19c-37, after GATE-HAB-15); the same second-entry ADR naming as KILL-SHORTGRAD applies (DESIGN docs/adr/ADR-KILL-FARFIELD-M6-final.md)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 41 beads reviewed in work-package order (WP-33, WP-73). Main themes: pilot records moved to pilots.toml with N38a-09's fields and row tests; kill-gate decisions aligned with N40-03 (four outcomes, docs/adr/, decision entries, owner declarations, kill_ledger); envelope rows (R17, R18, R19 onward) and frob-launch for pilots above E0; scripts spelled with real verb options and distinct keys, with options that do not exist yet requested of their VERBS rows. New dependencies checked with graph_check (no cycles). No bead merged or created. Priorities left as they were (the charter's rule is ambiguous for Moonshot kill gates)."
+}

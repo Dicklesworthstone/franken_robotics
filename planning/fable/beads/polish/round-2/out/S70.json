@@ -1,0 +1,387 @@
+{
+ "round": 2,
+ "slice": "S70",
+ "reviewed": 43,
+ "changed": [
+  {
+   "bead": "BD-228",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Verb line given with --key, closed --only list (unknown name 802), --tiers, --waive/--reason, --sync-wait-ms; schema frob.scene.accept.out/1, scope scene:run; 317 raised by accept only (compile reports a finding, exit 2). New 'Compile and accept' paragraph: stage 10 writes the identity part, accept recomputes it (mismatch is scene-pack-identity-mismatch, exit 9), packs from before stage 10 must be recompiled; GLB-dependent sections keyed by SceneId plus GLB digest. Admission row habitat.scene-accepted (FROB-REF-318, PACK_NOT_ACCEPTED, stage A, no override) and lint rule scene-ready-before-run. Preview form (--source --preview --ray; 302 on reflected sources; never complete) for N19c-39/N19c-40/N19-KA, dep N19c-39. Five new unit tests; e2e rewritten with keys and all six fixture scripts; e2e_scene_ready calls accept with a key; acceptance lists N19a-09 and N19a-23 scripts."
+  },
+  {
+   "bead": "BD-229",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "One region table: N19a-04's M2 rows are extended, not duplicated (dep N19a-04, removed from related). Latent value from BD-225, redrawn per episode by address. Tests kitchen_wetness_0_7_selects_wet and one_region_table. New e2e scripts/e2e/scene_maps.sh with keys; deps add N19a-18 (compile needs stage 8) and STD-E2E; fixed a doubled --json."
+  },
+  {
+   "bead": "BD-230",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "Removed a wait on a bead that waits on it: PO-TRAC-02's derivation file is N18b-31's and the symbolic check is N19b-05's PO-HAB-04 certificate. Added the KILL-ROWQUEUE paragraph (N16c-17 index-list entry point on the keep branch, N16c-14) with an acceptance criterion and film_index_list_equals_masked; oracles from N12-43 (film_matches_d3_oracles). Deps add N12-43, N16c-17; related adjusted. e2e notes --key."
+  },
+  {
+   "bead": "BD-231",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "FROB-REF-303 named in text and acceptance; e2e put on STD-E2E logging with keys on compile and runs and e2e_scene_ready; --seed left pending the VERBS-sim request."
+  },
+  {
+   "bead": "BD-233",
+   "kinds": [
+    "correct"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-FCLEAR-M3.md (drift 4); scene gen calls carry --key (drift 5)."
+  },
+  {
+   "bead": "BD-235",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "FROB-REF-326 replaced by N19c-42's 9xx slug scene-split-count-mismatch (SPLIT_COUNT_MISMATCH, exit 9) in approach and acceptance; schema frob.scene.split.out/1, scope scene:write; check --deep exposes N19c-11's pairwise fp_coarse check (possible-ungrouped-variant, exit 2); read operations take no key, writes take --key and --expected-parent. Request of N19c-11 applied: acceptance requires its scene_groups.sh split steps. Tests count_mismatch_is_9xx_slug, deep_check_flags_off_lattice_mirror; smoke e2e given keys, parents, a stale-parent and a key-replay step; dep STD-E2E."
+  },
+  {
+   "bead": "BD-236",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Brick bytes = pooled_bytes(new_bricks) = 1,164 x new_bricks per N19c-16 (was 1,160, missing the 4-byte metadata word) in approach and estimate_matches_byte_model. Output schema frob.scene.bank.out/1 as a tagged union (was three private schemas); read action renamed show to match the registry's default action; admin actions under scene:admin take no key and are idempotent by effect. Tests admin_actions_idempotent and out_schema_tagged_union; e2e adds the no-op and missing-scope steps; dep STD-E2E."
+  },
+  {
+   "bead": "BD-369",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Dep VERBS-scene (moved from related); notes that the scene.retrofit row answers 724 from M3 until this M4 bead links the handler; ADR path docs/adr/ADR-KILL-RETROFIT-M4.md; e2e: --key on gen, fit, retrofit, eval promote and sim run, scene fit --scene, e2e_scene_ready before the run."
+  },
+  {
+   "bead": "BET-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "scene fit and scene retrofit calls in bet_37_decide.sh carry their own --key (drift 5)."
+  },
+  {
+   "bead": "CARD-T-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Payload restated as N12-15's: cell blobs of i16 c_lo/c_hi by hash plus margin_mm, membership decided by the checker (strict c_lo > w, c_hi > w), cuts carry run-length-encoded labels checked by union-find; the 'run-length-encoded bitset' of the inner complex is gone. e2e now cites clearance_certs.sh (N19b-31) and scene_fit_gate.sh (N19b-35) with frob scene fit, not contact_clearance_gate.sh (which tests the pairwise predicate)."
+  },
+  {
+   "bead": "N12x-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Import steps compile mirrored-room-3pt.glb and mirrored-room.glb with keys; logged e2e_skip \"needs N19a-21\", and N19a-21's acceptance requires them (drift 7)."
+  },
+  {
+   "bead": "N18a-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "e2e cites frob contact clearance with --key (a run verb, one key per case)."
+  },
+  {
+   "bead": "N18a-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Pilot registered in crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1, N38a-09) with status registered, protocol hash, ceiling 'none on speed', fallback with KILL-MESHGPU; result appended as [[pilot.result]] with the falsifier-holds/falsifier-rejected mapping. e2e: corpus compile and baseline run with keys; the paired measurement goes through a bench target, since sim run cannot select a test-only stage; pilots fundable listing."
+  },
+  {
+   "bead": "N18a-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-MESHGPU-M3.md (drift 4); e2e reads the pilot record and spells the GPU-admission refusal with keys and e2e_scene_ready."
+  },
+  {
+   "bead": "N18a-33",
+   "kinds": [
+    "correct"
+   ],
+   "what": "wet_floor_battery step: compile with keys, e2e_scene_ready, eval run with distinct keys per arm and tier."
+  },
+  {
+   "bead": "N18a-34",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-FILM-M3.md; fallback check spelled with compile key, e2e_scene_ready, and two keyed sim runs (lockstep, strict)."
+  },
+  {
+   "bead": "N18a-37",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "GATE-HAB-06's one record is N19b-06's (film_patch_gate.sh): this script touches it and writes no row; it stays the GATE-TRAC-05 source (background and acceptance fixed; related N19b-06). Steps 5 and 8 carry keys and e2e_scene_ready; step 7's forced retry needs a chaos-plan option sim.run does not list, so it is an e2e_skip until VERBS-sim lists it, with BD-230's unit test standing in."
+  },
+  {
+   "bead": "N18a-38",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "GATE-TRAC-07's record is N19b-33's (contact_clearance_gate.sh, as N18a-03 states): this script declares the gate touched and writes no row (background, acceptance, summary). All run verbs carry keys; e2e_scene_ready before the GPU run; step 3's no-route case comes from the fixture source, since compile has no option to disable routes."
+  },
+  {
+   "bead": "N18b-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "contact.laws --scene and contact.probe scene position are not in VERBS-contact: requested, with e2e_skip until listed. e2e: compile and runs with keys, a named robot design, e2e_scene_ready, NDJSON path."
+  },
+  {
+   "bead": "N18b-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Test targets in the ADR-GAUNT-01 form (FROB_TEST_SEED ... --test g0_laws / g3_metamorphic; --test g0 and g3 are not target names); controls at crates/frob-conformance/registry/controls.toml with --features gauntlet-mutations; PO-TRAC-02's symbolic check cites N19b-05's PO-HAB-04 certificate (the counterpart of BD-230's fix)."
+  },
+  {
+   "bead": "N18b-37",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Pilot register path crates/frob-conformance/registry/pilots.toml, schema frob.gauntlet.pilot/1, results appended; ADR docs/adr/ADR-OPEN-TRAC-1.md; e2e gen and compile with keys per archetype and candidate, the paired stage timing through the measurement binary (sim run cannot select a directory design); noted that N19c-16's 1,164 bytes per brick makes the 1,152-byte magnitudes about 1% low."
+  },
+  {
+   "bead": "N19a-06",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Added card field acceptance_angle (half-angle in radians, required on glass, admission range (0, pi/2)) that N20a-21's glass rule reads; roughness unit stated (lobe half-width, radians); glass rule cites the field. Tests glass_requires_acceptance_angle, roughness_unit_radians; acceptance extended; e2e compiles carry two keys."
+  },
+  {
+   "bead": "N19a-07",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e: compile with key, e2e_scene_ready, the door push and drawer pull as keyed sim runs of probe designs (sim.run takes no force option)."
+  },
+  {
+   "bead": "N19a-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e: compiles with keys, e2e_scene_ready, push and cart runs as probe designs with distinct keys."
+  },
+  {
+   "bead": "N19a-09",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Dep N19c-27. e2e restructured: keyed compile, e2e_scene_ready, per-world --designs slots with a door-pusher probe in world 17, a two-episode task, distinct keys per tier; accept --only leak step is e2e_skip \"needs BD-228\"; the film leg stays a skip now required by N19b-05."
+  },
+  {
+   "bead": "N19a-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e: keyed compiles (including the cancel case), e2e_scene_ready, and the ten-step run as --seconds 10*dt with a key (sim.run has no --steps)."
+  },
+  {
+   "bead": "N19a-21",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Dep N19c-27. e2e: each registration case its own fixture, sidecar and key, including a new mirrored-room-3pt.glb; acceptance requires N12x-03's import steps."
+  },
+  {
+   "bead": "N19a-22",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Dep N19c-27; keys on compile and accept steps."
+  },
+  {
+   "bead": "N19a-23",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "317 and waivers moved to scene.accept (compile lists the region, exit 2); waivers keyed by SceneId plus GLB digest; item 9 cites N19cp1-01. Test no_symbol_path_to_glb replaced by compile_lists_accept_refuses and glb_swap_needs_new_acceptance. e2e rewritten with keys, --seconds for --steps, accept steps e2e_skip \"needs BD-228\". Deps add N19c-27; related adjusted."
+  },
+  {
+   "bead": "N19a-24",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Keys added; accept uses the closed --only names board,normals,silhouette,continuity (registration belonged to N19a-21)."
+  },
+  {
+   "bead": "N19a-25",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Keys on compile, per-fixture per-tier accept (--tiers) and the cancel case."
+  },
+  {
+   "bead": "N19a-43",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Keys in 2a, 2b, 3a, 3c and the 3a preview; new 3d (two-plane preview at 2.000 m) and 3e (N19-KA's accept stage) applying the S50 requests; receipt and acceptance updated; related adds N19c-39, N19c-40."
+  },
+  {
+   "bead": "N19a-44",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Commands: keyed compile per variant, e2e_scene_ready, the push and scan runs name their designs (block, sensor rig) and carry distinct keys per variant and tier, co-tenant runs keyed; --seed kept pending the VERBS-sim request."
+  },
+  {
+   "bead": "N19ax-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e: compile takes --key, not --seed; e2e_scene_ready; runs keyed; the unlisted --controller/--telemetry/--seed are named as requested of VERBS-sim; the recompile keyed."
+  },
+  {
+   "bead": "N19ax-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e: keyed compile and gen, e2e_scene_ready; scene show takes no worker count, so the worker-independence check moved to keyed runs with --workers 1 and 16 comparing resolved routes; runs keyed."
+  },
+  {
+   "bead": "N19b-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "N32-REF's ruling applied: 724 for feature-not-built and killed, 726 for island-in-training and tier-not-eligible (disjoint reason sets, repairs per code); a training run naming an island answers 726 on every build (purpose checked first; confirmation requested). Acceptance and island_never_in_training updated, new require_tier_not_eligible_726. e2e keyed, e2e_scene_ready, a training-purpose 726 step; unlisted --require-living-tier and run purpose requested of VERBS-sim with e2e_skip until listed."
+  },
+  {
+   "bead": "N19b-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "CX-192 run as FROB_TEST_SEED ... cargo test -p frob-conformance --test g1_known_answers -- CX-192 with gauntlet-mutations controls (no frob conformance command); the training-island estimate expects 726, not 724."
+  },
+  {
+   "bead": "N19b-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Acceptance requires N19a-09's film-patch leg of scene_state_leak.sh to run and pass (drift 7); dep N19c-27; e2e compiles keyed and reruns the leak script."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.accept inputs: list the closed --only names (registration, enclosure-selftest, deviation, maps, feasibility, board, gauges, normals, support, silhouette, ripple, continuity, leak; unknown name 802), --tiers, --waive region=<id> --reason, --sync-wait-ms, and the preview form --source <path> --preview [--ray] with refusal 302 on reflected sources (BD-228)."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.bank actions: the row lists show/estimate (read) and evict (admin); BD-236 also has admin actions admit, pin and unpin under scene:admin (no key, idempotent by effect), and one output frob.scene.bank.out/1 as a tagged union status/estimate/change."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.split example `frob scene split --family ... --group-by building --key sp-1` names no operation; BD-235 has create/add/move-group (mutate: --key, --expected-parent) and show/check [--deep]/part-of (read, no key)."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.show lists only the pack as input; beads use --receipts (N19a-18) and --route <a>,<b>|shortest, --corridor, --at, --footprint (N19ax-02), and add the output pinch_zones (N19ax-01). List them or say which bead adds them."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run inputs omit options many beads use: --seed (about 110 bead files), --steps (9), --controller (12), --telemetry (28), --chaos-plan (N16c-02, N18a-37), --require-living-tier and a run purpose (N19b-03, N19b-04). List them or rule them out so scripts can be corrected program-wide."
+  },
+  {
+   "bead": "VERBS-contact",
+   "what": "Film-branch inputs eta, h0 and until_h with a squeeze-time output (GB-21, N18a-37); contact.laws --scene and contact.probe scene position (N18b-10)."
+  },
+  {
+   "bead": "BD-163",
+   "what": "317 is raised by scene.accept, not by scene.compile; compile lists an unwaived region as a finding with exit 2 (BD-228, N19a-23)."
+  },
+  {
+   "bead": "STD-E2E",
+   "what": "Item 11's e2e_scene_ready runs `frob --json scene accept <scene_id>` with no key; scene.accept is a run verb, and BD-228 writes the helper with `--key e2e-ready-<run_id>-<scene_id>` (drift 5). Align the text."
+  },
+  {
+   "bead": "N19-KA",
+   "what": "Its accept on the reflected room should use `frob scene accept --source <room> --preview --key hka-2`: the room does not compile (302), so there is no pack to accept."
+  },
+  {
+   "bead": "N32-REF",
+   "what": "Confirm that a training or throughput run naming an island answers 726 island-in-training on every build, including one without moonshot-islands (purpose checked before build), as N19b-03 now states."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Its ADR path docs/delivery/adr/ is retired by drift 4; use docs/adr/ADR-<gate>-<milestone>.md."
+  },
+  {
+   "bead": "N19a-04",
+   "what": "BD-229 now extends N19a-04's M2 region table at M3 rather than keeping a second one; N19a-04 can say so so the two stay one table."
+  },
+  {
+   "bead": "N19c-27",
+   "what": "Informational: N19a-09, N19a-21, N19a-22, N19a-23 and N19b-05 now depend on N19c-27, so their ledger rows bind through deps."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Round 1 left the numerics right; round 2 fixed program drifts (run keys, Gauntlet form, registry and ADR paths, the 724/726 ruling, the 9xx split slug, the 1,164-byte brick), gate-record ownership (GATE-HAB-06, GATE-TRAC-07), one wait-on-waiter cycle (BD-230/N18b-31) and the scene.accept surface. Unchanged: BD-232, BET-36, GB-21 (request only), N12-15, N19bp2-01. Settled apart from the VERBS-sim/-scene/-contact option requests, which several e2e steps await."
+}

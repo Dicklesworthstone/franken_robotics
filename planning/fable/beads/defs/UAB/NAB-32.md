@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
 parent: "EPIC-M0"
-deps: ["BD-002", "BD-004", "BD-005", "BD-025", "STD-TEST", "NAB-17"]
-needs: ["§0.8: the hypothesis verdict register, whose rule is that the strong form of a narrowed or refuted hypothesis appears once, in this register, with its refuting calculation (N00-10)", "§40.4: the decision ADR convention and directory for kill gates, reused for revival ADRs (N40-03)", "Appendix O: `registries/refusals.toml`, where the refusal codes that enforce a kill at run time must exist (BD-005)", "§0.1: the wording lint that bans 'verified' and 'deployable' for results (N00-01)"]
-related: ["NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39", "NAB-40", "NAB-41", "NAB-20", "NAB-22", "NAB-50", "N00-04", "N00-10", "N00-15", "N40-03"]
+deps: ["BD-002", "BD-004", "BD-005", "BD-025", "N00-10", "NAB-17", "STD-TEST"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix C (preamble)", "Appendix C.2 (preamble)", "§0.7", "§0.8"]
 ---
@@ -72,16 +72,60 @@ survives    = "A stable-key sort and a segmented reduction; integer atomics only
 revive_only_if = "Never on a replayable profile; admissible only inside the labelled D4 profile."
 revive_evidence = "none"                 # pilot | gate | primary-source | none (cannot be revived by measurement)
 revive_gates = []                        # gates or kill gates whose records can meet the condition
-sections    = ["§35.7"]; gates = []; kill_gates = []; bets = []; refusals = []
+sections    = ["§35.7"]
+gates       = []
+kill_gates  = []
+bets        = []
+refusals    = []
 carriers    = ["BD-152", "BD-181"]
 sources     = []                         # source-register ids behind FACT figures
 keywords    = ["unordered scatter", "floating-point atomics", "non-deterministic reduction"]
+ornamental  = []                         # KI-50 only: the labels of the glossary's [[ornamental]] records (NAB-38)
+restates    = []                         # KI-64 to KI-66: the earlier records the entry restates (NAB-40)
+reason_on_file = ""                      # KD-nn: "none" when no refuting calculation is on file (NAB-40)
+reason_proposed = ""                     # KD-nn and KP-nn: the reason proposed for the owner to confirm; their
+                                         #   "Reopened by" text goes in revive_only_if (NAB-40, NAB-49)
+owner_confirmed = false                  # KD-nn and KP-nn: true only with the owner's decision record
 
   [[idea.calculation]]                   # every number of the refutation that can be recomputed
-  name = "window-survival"; expr = "0.999^1000"; value = "0.3677"; tol = "5e-4"; label = "DESIGN arithmetic"
+  name  = "window-survival"
+  expr  = "0.999^1000"
+  value = "0.3677"
+  tol   = "5e-4"
+  label = "DESIGN arithmetic"              # DESIGN arithmetic | FACT (FACT names a `sources` id)
+
+  [[idea.method]]                        # KI-45 only: one sub-record per rejected method (NAB-37)
+  method       = ""
+  core         = ""
+  why_not      = ""
+  used_instead = ""                      # what is used instead; it exists as a bead
+  keywords     = []                      # the revive lint matches each method separately
+
+  [[idea.row]]                           # KI-61 and KI-63 only: one sub-record per row of their tables (NAB-39)
+  withdrawn_claim  = ""                  # KI-61: withdrawn_claim, contradicted_by, claimed_instead
+  contradicted_by  = ""
+  claimed_instead  = ""
+  item             = ""                  # KI-63: item, evidence_against, done_instead
+  evidence_against = ""
+  done_instead     = ""
+  keywords         = []                  # the revive lint matches each row separately
+
+  [[idea.history]]                       # appended only by an accepted revival ADR (step 5); none at plan time
+  exit     = "M2"
+  adr      = "ADR-REVIVE-KI-03"
+  change   = ""                          # what the record now says, in one line
+  evidence = []                          # gate records or pilot records the ADR rests on
+
+[[alias]]                                # the refuted-or-declined index (NAB-40 step 3)
+name     = ""                            # the name under which the idea is usually proposed
+survives = ""                            # what survives of it, in one line
+records  = []                            # the KI, KD or KP records the name resolves to
 ```
 
-Groups (eight, as the register is organized): arithmetic, precision and kernels (KI-01 to KI-09); memory, forks,
+Fields that only some records use (`ornamental`, `restates`, the `KD` and `KP` fields, `[[idea.method]]`,
+`[[idea.row]]`) are optional in the JSON-Schema and absent elsewhere; any field not listed here is refused.
+
+Groups (nine: the register's eight, and the four further entries as the ninth): arithmetic, precision and kernels (KI-01 to KI-09); memory, forks,
 telemetry and scheduling (KI-10 to KI-16); worlds and physics (KI-17 to KI-25); control, learning and transfer
 (KI-26 to KI-32); search, statistics and decision rules (KI-33 to KI-46); algebra, synthesis, proofs and
 certificates (KI-47 to KI-56); reality, structure and the thesis (KI-57 to KI-59); claims, wording and process
@@ -124,11 +168,33 @@ gaps section and every feature flag in `contract.toml`; work-package funding rec
 `ki.adr-evidence-kind-mismatch`; `ki.adr-condition-not-met` (the ADR's measured values do not satisfy the
 condition as written); `ki.strong-form-as-goal` (a goal, bet, gate threshold or claims-registry wording states
 the strong form's claim of a REFUTED or NARROWED record); `ki.strong-form-duplicated` (the strong-form text
-occurs outside the register, its printout and quoted fixtures); `ki.refusal-missing` (a record names a refusal
+occurs verbatim outside the register, its printout and quoted fixtures; no pattern is involved); `ki.refusal-missing` (a record names a refusal
 code that the refusal registry lacks); `ki.carrier-missing` (a carrier key that no bead has).
 
-**5. The revival ADR template** (`docs/delivery/adr/ADR-REVIVE-KI-nn.md`, in the directory and form the
-kill-gate decision ADRs use): record id; the strong form quoted; the refutation's numbers; the new evidence
+*One rule, one pattern list (DESIGN; stated identically in N00-10).* The hypothesis verdict register has a
+wording lint for the same rule as `ki.strong-form-as-goal`: a match of a `banned` pattern of a REFUTED or
+NARROWED hypothesis row in documents, contracts, help text and report templates (its finding
+`hyp.banned-wording`). Two pattern lists for one strong form could disagree, so there is one. For a record
+whose `hypothesis` field names a row, `ki.strong-form-as-goal` is computed from that row's `banned` patterns,
+read through `frob_conformance::hypotheses::banned(id)` of N00-10, and the finding carries the row id and the
+index of the pattern; the record's `keywords` then serve only the proposal matching above
+(`ki.match-without-citation`, `ki.revival-without-adr`). For a record with no hypothesis the record's
+`keywords` are the patterns. The two lints differ in what they scan (this one: goals, bets, gate thresholds
+and claims-registry wording, beside the inputs listed above); where both scan one file, both report, and the
+shared row id and pattern index show that it is one cause. The loader refuses a record that names a hypothesis
+identifier absent from the hypothesis register, and one whose `hypothesis_state` differs from the state that
+register prints.
+
+*Rows that land later (DESIGN).* Refusal rows are entered by each chapter's refusal-registry bead. Of the three
+codes named at plan time, `FROB-REF-214` (Marrow) is entered at M0, and `FROB-REF-245` (Traction) and
+`FROB-REF-817` (Reflex) at M1. The codes the records name are frozen with the milestone of their registry row in
+`tests/fixtures/ki/refusals.tsv`; a code of that list that is absent from the registry is reported with a
+recorded `skip` while the exit record of that milestone does not exist, and is `ki.refusal-missing` afterwards.
+A kill gate named by a record follows the same rule (the frozen list and the ledger groups of NAB-17 step 6).
+The M1 sweep (NAB-24) requires that no such skip remains.
+
+**5. The revival ADR template** (`docs/adr/ADR-REVIVE-KI-nn.md`, in the directory and form the kill-gate
+decision ADRs use; every decision record lives in `docs/adr/`): record id; the strong form quoted; the refutation's numbers; the new evidence
 with receipts; the condition as written and as measured; what is proposed (usually the strong form at a lower
 tier with its own pilot and kill gate); the owner's decision. An accepted revival appends a history entry to
 the record; the record is never deleted.
@@ -149,7 +215,8 @@ reader map's path for a sceptical reviewer. Determinism class D0.
 - [ ] A revival ADR whose evidence kind differs from the record's is refused; one whose measured values do
       not meet the condition is refused.
 - [ ] Every refusal code named by a record (`FROB-REF-245`, `FROB-REF-214`, `FROB-REF-817` at plan time) exists
-      in the refusal registry.
+      in the refusal registry; the two whose rows are entered at M1 are reported under a recorded `skip` until
+      the M1 exit and not later.
 
 ## Test plan
 
@@ -176,6 +243,9 @@ reader map's path for a sceptical reviewer. Determinism class D0.
 - `strong_form_as_goal_fails`: a gate threshold "no-adaptation return at 70% of specialists on any unseen
   design" (the strong form of KI-27).
 - `strong_form_duplicated_fails`: KI-01's strong-form sentence pasted into a contract.
+- `as_goal_uses_hypothesis_patterns`: for a record tied to a hypothesis, the finding carries that row's id and
+  pattern index, and removing the pattern from the hypothesis row (in a fixture copy) removes the finding;
+  `hypothesis_state_must_agree`: a record whose `hypothesis_state` differs from the register's is refused.
 - `refusal_missing_fails`; `carrier_missing_fails`.
 - `register_and_fixtures_are_exempt`.
 

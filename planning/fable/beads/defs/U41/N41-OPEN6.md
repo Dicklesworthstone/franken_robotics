@@ -1,14 +1,14 @@
 ---
 key: "N41-OPEN6"
-title: "registries/open.toml, part 6: open questions of Atelier, Chronicle, Ground, Foundry and Tether (27 rows, one decided)"
+title: "registries/open.toml, part 6: Atelier, Chronicle, Ground, Foundry and Tether questions (27 rows, one decided)"
 type: "task"
 priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "atelier", "chronicle", "ground", "foundry", "tether", "registry", "solid"]
 parent: "EPIC-M0"
 deps: ["N41-03"]
-needs: ["§29 to §32: the decision and experiment beads named in the last column are owned by the chapter units; where this unit also wrote an owner packet for the same question (OPEN-CHRON-4, OPEN-GROUND-2, OPEN-FOUNDRY-2, OPEN-TETHER-5) both keys are named and the lead keeps one as primary"]
-related: ["N41-OPEN5", "N41-OPEN7", "N41-10", "N41-11", "N41-12", "N41-13", "N41-14", "N28c-26", "N28c-28", "N40-35"]
+needs: []
+related: ["N41-OPEN7"]
 gates: []
 plan_refs: ["§42.3", "§42.2", "§28.24", "§29.21", "§30.23", "§31.20", "§32.22"]
 ---
@@ -30,7 +30,7 @@ The last column names the bead that decides each question. For four owner questi
 unit's decision bead, which carries the engineering evidence and the wiring, and this unit's owner packet, which
 carries the question as it is put to the owner with its default, the cost of the default and the ADR:
 OPEN-CHRON-4 (N41-11 and N29b-12), OPEN-GROUND-2 (N41-10 and N30b-26), OPEN-FOUNDRY-2 (N41-13 and N31b-25) and
-OPEN-TETHER-5 (N41-12 and N32b-36). The recorded decision OPEN-TETHER-1 is in N41-14.
+OPEN-TETHER-5 (N41-12 and N32a-34). The recorded decision OPEN-TETHER-1 is in N41-14.
 
 ## Scope
 
@@ -55,19 +55,19 @@ decisions.
 | OPEN-GROUND-1 | Which public paired simulation-and-reality dataset, if any, has enough robots per class to test exchangeability across units; none was identified | The second-simulator stand-in, labelled `synthetic` | Ground lead | GATE-GROUND-10 only | M5 | N30b-25; the owner half is OPEN-GAUNT-1 (N41-10, N38b-26) |
 | OPEN-GROUND-2 | Whether any bench hardware (the six optional bench packages) is acquired | None; Reality stays `no-claim` | Project lead; a question for the owner | Nothing; sourcing may start at M0 | M5 | N41-10 (owner packet); N30b-26 |
 | OPEN-GROUND-3 | Calibration expiry by age and operating hours | 90 days or 200 operating hours, whichever comes first, and always on part replacement | Ground lead | GATE-GROUND-10 | M5 | N30b-27 |
-| OPEN-GROUND-4 | The exchange rate between operator time and GPU-seconds in the experiment table | Real episodes are recommended, never scheduled, and no rate is assumed | Project lead | Nothing | none | considerations of BD-351 |
+| OPEN-GROUND-4 | The exchange rate between operator time and GPU-seconds in the experiment table | Real episodes are recommended, never scheduled, and no rate is assumed | Project lead | Nothing | none | considerations of N30b-09 and N30b-08 (the experiment table it concerns is BD-351) |
 | OPEN-GROUND-5 | Who is the authenticated authority that could promote a sibling's estimated candidate | Nobody; every Ground output stays `Estimated` | Lemma lead | Any Ground output above `Estimated` | M5 | N30b-28 |
 | OPEN-FOUNDRY-1 | Whether the sibling `fs-mesh` produces a conforming mesh of an arbitrary optimized surface | If it does not, the independent check is a second cut-cell solve at another resolution and offset, labelled `check: same-family` | Foundry lead | GATE-FOUNDRY-04 | M5 | N31b-24 |
-| OPEN-FOUNDRY-2 | Which parts catalogue and price data, under what licence | Card references and no prices | Project lead; asked of the owner at M5 | Nothing | M5 | N41-13 (owner packet); N31b-25 |
+| OPEN-FOUNDRY-2 | Which parts catalogue and price data, under what licence | Card references and no prices | Project lead; asked of the owner at M4, one milestone before its M5 deadline | Nothing | M5 | N41-13 (owner packet); N31b-25 |
 | OPEN-FOUNDRY-3 | Which current-capacity table governs conductor sizing | Current density against a limit declared on the cable card, with no capacity claim | Foundry lead | Any conductor capacity claim | M5 | N31b-26 |
 | OPEN-FOUNDRY-4 | Stress-life data for printed material by process and orientation | `fatigue: no-claim` for printed parts | Foundry lead | The fatigue leg of GATE-FOUNDRY-05, for printed fixtures only | M5 | N31b-27 |
 | OPEN-FOUNDRY-5 | Wear, insulation and cell-fade coefficients with provenance | Generic cards marked `assumed`, which `--strict-data` refuses | Sinew lead | GATE-FOUNDRY-12 | M6 | N31b-28 |
 | OPEN-FOUNDRY-6 | The time budget per bit-vector obligation | 2 s (TARGET); a timeout is undecided and is therefore refused | Lemma lead | GATE-FOUNDRY-11 | M8 | N31b-29 |
 | OPEN-TETHER-1 | Decided with OPEN-SUITE-2 by the owner on 2026-11-22 and kept as a recorded decision. The question was whether `frob-mcp` can link handler crates in process | Decision: `frob-mcp` is a member of the core graph and runs verbs in process, once the upstream work item FD-FMCP-01 has brought fastmcp_rust onto T; KILL-MCP's fallbacks if the admission INT-FMCP-01 cannot pass | Tether lead | Decided; confirmed by INT-FMCP-01 | M0 (confirmation) | N41-14; BD-023 |
-| OPEN-TETHER-2 | Whether the agent harnesses in use speak one of the two protocol eras the library serves, and act on catalog-changed notifications | Static clusters by launch flag, plus `verb_invoke` | Tether lead | GATE-TETHER-12 | M3 | N32b-33 (also N32a-12) |
-| OPEN-TETHER-3 | The default and maximum of `sync_wait_ms`, against measured agent turn time and measured verb latency | 5,000 and 30,000 | Tether lead | GATE-TETHER-13 | M4 | N32b-34 (also N32a-33) |
-| OPEN-TETHER-4 | The slot reserve, per-environment job cap, quantum and ageing period of the daemon's dispatch, from the M2 queue trace | 5%, 64, 5 s, 600 s | Daemon lead | GATE-TETHER-10 | M3 | N32b-35 (also N32a-22) |
-| OPEN-TETHER-5 | Whether the peer link between the two machines earns its upkeep | Standalone machines | Owner | M4 | M4 | N41-12 (owner packet); N32b-36 (also N32a-34) |
+| OPEN-TETHER-2 | Whether the agent harnesses in use speak one of the two protocol eras the library serves, and act on catalog-changed notifications | Static clusters by launch flag, plus `verb_invoke` | Tether lead | GATE-TETHER-12 | M3 | N32a-12 |
+| OPEN-TETHER-3 | The default and maximum of `sync_wait_ms`, against measured agent turn time and measured verb latency | 5,000 and 30,000 | Tether lead | GATE-TETHER-13 | M4 | N32a-33 |
+| OPEN-TETHER-4 | The slot reserve, per-environment job cap, quantum and ageing period of the daemon's dispatch, from the M2 queue trace | 5%, 64, 5 s, 600 s | Daemon lead | GATE-TETHER-10 | M3 | N32a-22 |
+| OPEN-TETHER-5 | Whether the peer link between the two machines earns its upkeep | Standalone machines | Owner | M4 | M4 | N41-12 (owner packet); N32a-34 |
 
 Status at entry: twenty-six `open`, one `decided` (OPEN-TETHER-1). One default is confirmed by the gate register and
 is open only to new evidence: the single revalidation engine of OPEN-ATEL-4. What the owner defaults cost:

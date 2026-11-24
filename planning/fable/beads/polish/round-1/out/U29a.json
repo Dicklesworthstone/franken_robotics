@@ -1,0 +1,452 @@
+{
+  "round": 1,
+  "slice": "U29a",
+  "reviewed": 41,
+  "changed": [
+    {
+      "bead": "BD-024",
+      "kinds": [
+        "complete",
+        "correct",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "M0 artifact (§43.3) needs the two-second rollout digest equal to FrankenSim's own: added rollout_match against the fixture field rollout_2s_digest, fail-closed on a missing or stale fixture; the registry row is VERBS-sim's (idempotent = false for a run verb, owner frob-dyn), not redefined; dep VERBS-sim; digest encoding aligned with BD-007 (zero terminator, tag byte); determinism class D2; perturbation flag is a manifest field; e2e adds the MCP call and ledger counts"
+    },
+    {
+      "bead": "BD-091",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "878/810 division now recorded in N29-REF (surfaces_as), test added; state_digest semantics defined per run digest_kind (mix128 on batched tiers, blake3-128 on the referee) since the referee digest at M1 is 32-byte BLAKE3 and the field is u128"
+    },
+    {
+      "bead": "BD-092",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "tests"
+      ],
+      "what": "sign of numerical_residual fixed (the line is -r; r > 0 means created energy) with the zero-sum stated over the signed lines; electrical identity in the actuator-account form; cost of transport reported twice (mechanical, electrical) as Appendix D.4 and N24a-18; first-offender tolerance numbers; dep N12-44 (D.4 oracle library) with oracle tests, as requested by U12-2"
+    },
+    {
+      "bead": "BD-095",
+      "kinds": [
+        "correct",
+        "deps"
+      ],
+      "what": "schemas frob.evidence.trace.in/1 and .out/1 as the registry convention; dep VERBS-evidence (registry first)"
+    },
+    {
+      "bead": "BD-097",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "tests"
+      ],
+      "what": "artifact.export capabilities artifact:run and export:report (plan's scope list; VERBS-artifact), private:export for private objects; FROB-REF-816 on export added; exit codes from N37-REF (731/733/734 exit 5); evidence pass-through; run.show standing provisional/established; CLI forms --range and --out as the registry examples; deps VERBS-artifact, VERBS-run"
+    },
+    {
+      "bead": "BD-148",
+      "kinds": [
+        "complete",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "its e2e calls design.show --section packed, which no bead provided: the section is now in scope here; deps N14a-21 (design.show) and BD-109 (the four archetypes its acceptance uses); e2e logging completed"
+    },
+    {
+      "bead": "BD-203",
+      "kinds": [
+        "split",
+        "scope",
+        "correct",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "graph bottleneck mixing three crates: split into N29ap1-01 (digest and chain in the step) and N29ap1-02 (K-snapshot, host side, T3); BD-203 keeps replay engine, sim.replay and GATE-CHRON-01 as the capstone; .fmcw input moved to N26a-19 (M3 format; 724 before it); refusal codes 601 and 606 corrected (606 is fingerprint changed); dep VERBS-sim; dep BD-210 for device replay jobs; the failure capture kind (replaying a ring-less failing world from its reconstruct marker) moved to the new N29ap1-03, which breaks the ring/replay cycle with N29a-11; e2e group order digest-*, snapshot-store-*, snapshot-* stated"
+    },
+    {
+      "bead": "BD-204",
+      "kinds": [
+        "correct"
+      ],
+      "what": "battery test target name g1_teleport matches the layout"
+    },
+    {
+      "bead": "BD-206",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "output schema frob.telemetry.divergence.out/1 carries the core report; FROB-REF-894 added (registry lists it) with a test; evidence pass-through; exit codes stated; job exception labelled DESIGN; dep VERBS-telemetry; --no-replay option defined (used by N29a-21: stored data only, interval or unresolved, never a guessed tick)"
+    },
+    {
+      "bead": "BD-207",
+      "kinds": [
+        "deps",
+        "scope"
+      ],
+      "what": "dep BD-203 retargeted to N29ap1-01 (it needs the digest section of the ring, not replay)"
+    },
+    {
+      "bead": "N29a-07",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "T0 digest fields defined per digest_kind (referee keeps the 32-byte BLAKE3); the --aggregate option its e2e uses is N24a-36's (requested) with a fallback through the harness"
+    },
+    {
+      "bead": "N29a-25",
+      "kinds": [
+        "users",
+        "complete",
+        "tests",
+        "title"
+      ],
+      "what": "U18b request: the plant file frob.conformance-plant/1 with a registry of plant kinds so N18bx-03's stiffness kind (and N29ap1-02's snapshot-bitflip) plug in through --conformance-plant <file>; built-in plant kind shift (one IEEE addition of a stated delta on a canonical state slab) so the 5 mm base offset at tick 200 used by N29a-20 and N29a-21 has a mechanism; title says so"
+    },
+    {
+      "bead": "BD-208",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "residual sign aligned with BD-092 (audit residual r, line numerical_residual = -r; compliance energy enters as storage with +Δ so a compliant press gives r = 0); stored residual is the integer closing the signed identity; ε and ρ both gate the row (fail-closed); compliance-sign mutant added"
+    },
+    {
+      "bead": "BD-209",
+      "kinds": [
+        "correct",
+        "deps",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "schemas .in/1 and .out/1 and evidence operational as VERBS-store; --force and --budget size forms defined; deps VERBS-store and N24a-11 (issue_verdict takes frob.verdict/1); e2e verdict issued through issue_verdict at M2 (comparison verbs are M3); adds gap reason collected to the contract and the auditor"
+    },
+    {
+      "bead": "BD-210",
+      "kinds": [
+        "deps",
+        "correct"
+      ],
+      "what": "dep BD-203 replaced by N29a-18, N29ap1-01, N29ap1-02: resume needs restore from a stored snapshot or a re-run from the address, not the replay engine; BD-203 now depends on BD-210 for device replay jobs and cancel (no cycle)"
+    },
+    {
+      "bead": "N29-KA",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "tests"
+      ],
+      "what": "rows moved to the suite's one file crates/frob-conformance/registry/known_answers.toml as N38a-12 [[ka]] records (reconciliation dup-07 and U12-2 request); controls in controls.toml (dep N38b-05); K1-K3 pending tags with a N38a-40 block request; derivation files for all fifteen cases written here (rule 1 of N38a-12), eight added; test binding via the citation lint"
+    },
+    {
+      "bead": "N29a-01",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "e2e read writers through store.status, which reports classes not writers: now the harness ledger dump plus a refused foreign write"
+    },
+    {
+      "bead": "N29a-02",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "tests"
+      ],
+      "what": "registry row deferred to VERBS-run (capabilities run:run, export:report, idempotent false, evidence pass-through); FROB-REF-816 added through N37-23's check_carried (dep N37-23, VERBS-run); 734 is exit 5 not 3; --out directory form of the registry example defined"
+    },
+    {
+      "bead": "N29a-03",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "gap-reason list was closed at five while BD-209, N29b-12 and N29ax-02 add collected, store-budget and episode-incomplete: the auditor keeps its own copy kept equal to the contract by a repository check"
+    },
+    {
+      "bead": "N29a-04",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "e2e used --limit and --at-frontier, which telemetry.query lacks: --page-size and a harness read at the frontier; the CLI refusal is 806 with 896 as cause per N29-REF, 896 checked at the store directly"
+    },
+    {
+      "bead": "N29a-05",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "cancel from a second process at M1 goes through the harness's job-engine call (job.cancel is M2)"
+    },
+    {
+      "bead": "N29a-06",
+      "kinds": [
+        "deps"
+      ],
+      "what": "dep BD-095: its gate row's claims must resolve in the artifact graph"
+    },
+    {
+      "bead": "N29a-08",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "artifact.verify e2e: ownership group read through the harness; --range k*65536 form and --out (not --to); 734 is exit 5; aggregate fallback; seventh planted defect (ownership map grants verdict to Chronicle)"
+    },
+    {
+      "bead": "N29a-09",
+      "kinds": [
+        "complete",
+        "correct",
+        "tests"
+      ],
+      "what": "bead-log event kinds include implement; implemented_by filled by append per N38b-19 (Frob-Session trailers plus implement lines); test implemented_by_from_trailers_and_implement_lines"
+    },
+    {
+      "bead": "N29a-10",
+      "kinds": [
+        "correct"
+      ],
+      "what": "parity claim stated as the seedless oracle forward-dynamics digest of G1's reference state (BD-007)"
+    },
+    {
+      "bead": "N29a-11",
+      "kinds": [
+        "split",
+        "deps",
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "ring no longer depends on BD-203: uses K-snapshot of N29ap1-02, shared ring::window and flush::record_capture (source = ring); reconstruct marker is a pending ledger row consumed by N29ap1-03, whose test proves the equality; test reconstruct_marker_fields; ring-* e2e group revised"
+    },
+    {
+      "bead": "N29a-12",
+      "kinds": [
+        "complete",
+        "users",
+        "tests"
+      ],
+      "what": "derivation file owned by N29-KA; new item sample::traced_set(manifest) (the traced set as a value) exposed as telemetry.query --traced-worlds (requested of N24a-36, harness fallback); test traced_set_from_manifest_only"
+    },
+    {
+      "bead": "N29a-14",
+      "kinds": [
+        "scope"
+      ],
+      "what": "Out names N21c-39 (no-wrap bound) and N21c-40 (drain, which depends on this bead)"
+    },
+    {
+      "bead": "N29a-15",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "registry row deferred to VERBS-telemetry (now a dep): .out/1 schema, cluster runs, chapter refusal 898, evidence pass-through, its example; general codes 802, 840, 888 and 806 with cause 896; tests registry_example_runs and paged_bins_pinned extended; the registry example runs with the fixture run identifier substituted"
+    },
+    {
+      "bead": "N29a-16",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "traced-set read through telemetry.query --traced-worlds (requested) or the harness over sample::traced_set; --aggregate fallback; the 1,000-seed lane recomputes addresses per seed and tests the mean error against zero (the planted total changes per seed); test estimate_error_centred"
+    },
+    {
+      "bead": "N29a-17",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "behaviour proof could not use in-kernel digests in configuration B (which disables them): one host digest of the end state per segment, outside the timer, with the host reference of N29ap1-01 (dep); test end_digest_outside_timer; notes the peaks-* lane N29ax-02 adds at M3 (a second set of 30 balanced blocks)"
+    },
+    {
+      "bead": "N29a-18",
+      "kinds": [
+        "placement",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "Out reattributed after the split (K-snapshot and T3 schedule are N29ap1-02's, replay engine BD-203); completeness check uses the host digest reference (dep N29ap1-01); e2e uses the real sim.replay and BD-204 options (--run, --key, result: Bitwise, --tier batch-cpu --precision f64); related filled"
+    },
+    {
+      "bead": "N29a-19",
+      "kinds": [
+        "e2e-logging",
+        "scope"
+      ],
+      "what": "sim_replay.sh step groups listed with their owners and order, including digest-* (N29ap1-01), snapshot-store-* (N29ap1-02, renamed from a clash with N29a-18) and reconstruct-* (N29ap1-03); Out names the new beads"
+    },
+    {
+      "bead": "N29a-20",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "missing-samples answer corrected to [40, 60] with gap [40, 59] (the rule itself gives it; tick 60, the first proven mismatch, cannot be excluded); orientation bound made sound and explicit (norm of component bounds plus first-sample distance; test orientation_bound_sound); cross-profile stage refinement starts from a ComparisonStart; 5 mm offset planted with the shift kind"
+    },
+    {
+      "bead": "N29a-21",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "boundary trial groups were impossible in a 400-tick episode (first tick of a chunk with t_b in a later chunk): now t_a = 256 and t_a = 255; mutant right-rate stated from an exhaustive count; missing-samples expectation [40, 60] with a gap-only mutant; plant file option and shift kind; --no-replay is BD-206s"
+    },
+    {
+      "bead": "N29a-22",
+      "kinds": [
+        "correct",
+        "deps",
+        "complete",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "verb row deferred to VERBS-fidelity (now a dep): capability fidelity:read (was telemetry:read), schemas .in/1 and .out/1, evidence pass-through (was Tested), owner frob-dyn, exit codes; planted fixtures tied to N16b-15's registered mutations M1 and M2; the stiff penalty bounce had no mechanism: mutation explicit-penalty requested of N16b-15 (fixture not run until then), integrator and host-simulated apexes stated; e2e commands made concrete with the conformance guard; tests registry_example_runs, evidence_is_pass_through"
+    },
+    {
+      "bead": "N29a-23",
+      "kinds": [
+        "deps",
+        "correct",
+        "tests"
+      ],
+      "what": "VERBS-job now a dep; job.list cursor mismatch is 806 with cause 896; evidence stated (operational, except a returned final envelope keeps the submitting verb's evidence); the optional inputs beyond the rows (cancel reason, list verb/since) placed in this bead's schemas and requested of VERBS-job; the 100-trial killed-client recovery got its test killed_client_recoverable_100; test evidence_labels"
+    },
+    {
+      "bead": "N29a-24",
+      "kinds": [
+        "tests",
+        "correct"
+      ],
+      "what": "200 device trials now stratified 20 per fault kind (the gate row read \"200 per fault kind\" while the battery drew kinds at random); the 100 seeded daemon kills of the acceptance criteria are now in the approach, the gate row and the metrics"
+    },
+    {
+      "bead": "N29ax-01",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "chunks are 256 steps as BD-024 chunks a referee run (was \"control ticks\", inconsistent with its own 256/512/768/960 test); digest width compared stated (32 bytes in T0, blake3-128 in the chunk row); the collected-design refusal named FROB-REF-869 with its test; related filled"
+    },
+    {
+      "bead": "N29ax-02",
+      "kinds": [
+        "correct",
+        "deps",
+        "complete",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "query through the existing telemetry.query selectors (one event channel peak.<scalar> per capture) instead of invented --events/--capture options; sim.run option spelled --peak-capture (sim.replay --capture means something else; requested of VERBS-sim); the gap reason episode-incomplete added to the contract list and the auditor's copy with a test; cost measured by N29a-17's paired protocol as a peaks-* group of its script (dep N29a-17); cantilever fixture made exact (root fixed, gravity off); budget-stop e2e step"
+    }
+  ],
+  "new_beads": [
+    {
+      "bead": "N29ap1-01",
+      "why": "split from BD-203: per-tick state digest and digest chain in the batched step, emission at K-commit, stage-digest variant (frob-kernels); most rdeps of BD-203 need only this"
+    },
+    {
+      "bead": "N29ap1-02",
+      "why": "split from BD-203: K-snapshot at the fence, host side with digest tripwire, EpisodeId, T3 schedule"
+    },
+    {
+      "bead": "N29ap1-03",
+      "why": "BD-203's --capture failure needed N29a-11's ring markers while the ring needed BD-203: the capture of a ring-less failing world from its reconstruct marker is its own piece of work (M2, deps BD-203, N29a-11, N29ap1-02), with the ring-equality tests moved to it"
+    }
+  ],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "BD-007",
+      "what": "the in-tree probe and capture script should also write the 960-step two-second rollout digest (field rollout_2s_digest) into tests/fixtures/oracle/fsim/g1_fd_digest.toml; BD-024 compares the M0 run's final digest with it (§43.3)"
+    },
+    {
+      "bead": "VERBS-evidence",
+      "what": "example uses claim:b3:0d4e; N34-11's single text form is clm:<64 hex> and its parser rejects other spellings"
+    },
+    {
+      "bead": "VERBS-artifact",
+      "what": "artifact.read lists 734 (it takes no path) and omits 869 (tombstoned object) and 840 (sealed run), which BD-097 raises"
+    },
+    {
+      "bead": "VERBS-run",
+      "what": "run.export says implemented by N29a-02 and BD-097; BD-097 does not implement it. run.show should list 840"
+    },
+    {
+      "bead": "VERBS-sim",
+      "what": "sim.replay refusals should add FROB-REF-601 (backend unavailable) and FROB-REF-840 (sealed run), which BD-203 raises"
+    },
+    {
+      "bead": "VERBS-telemetry",
+      "what": "telemetry.divergence refusals should add 840 and 888; its cost model should note the job case (per-tick capture that needs a device returns a job handle, BD-206)"
+    },
+    {
+      "bead": "N14a-21",
+      "what": "add the section packed (produced by BD-148) to design.show's section table"
+    },
+    {
+      "bead": "N24a-36",
+      "what": "add --aggregate <names> to telemetry.query, computed through N29a-07's registry with FROB-REF-898 for an unadmitted name; and a changed-filter cursor surfaces as 806 with 896 as cause (N29-REF division), not 896"
+    },
+    {
+      "bead": "BD-090",
+      "what": "ChunkRecord.state_digest is u128 while the referee's M1 state digest is a 32-byte BLAKE3: adopt the digest_kind rule of BD-091 (blake3-128 truncation on the referee, full 32 bytes in T0)"
+    },
+    {
+      "bead": "BD-090",
+      "what": "make the gap-reason list a registered list that later beads extend: BD-209 adds collected, N29b-12 store-budget, N29ax-02 episode-incomplete; N29a-03's auditor keeps an equal copy"
+    },
+    {
+      "bead": "VERBS-sim",
+      "what": "sim.replay implemented-by should add N29ap1-03 (--capture failure) beside BD-203"
+    },
+    {
+      "bead": "N24a-36",
+      "what": "add --traced-worlds to telemetry.query, returning sample::traced_set (N29a-12) for a run; N29a-12 and N29a-16 read it (harness fallback until then)"
+    },
+    {
+      "bead": "N27a-09",
+      "what": "the shared missing-samples fixture (ticks 40 to 59 absent, true mismatch at 47) answers interval [40, 60] with coverage gap [40, 59] (N29a-20 §5, N29a-21): tick 60 is the first proven mismatch and cannot be excluded; update tolerance_gap_interval and the expected output text"
+    },
+    {
+      "bead": "N27a-13",
+      "what": "gap_gives_interval: with joint-velocity samples absent for ticks 40 to 59 and the first proven exit at 60, the honest interval is [40, 60] with gap [40, 59] (same rule as N29a-20)"
+    },
+    {
+      "bead": "N16b-15",
+      "what": "add a third conformance-only step-plan mutation explicit-penalty (normal response k*d with no damping, force from the start-of-step penetration, semi-implicit integration) beside M1 and M2, with a controls.toml record for GATE-CHRON-08: KA-709 and the planted trampolining fixture of N29a-22 (k = 1e6 N/m, 1 kg, h = 2 ms, drop 0.2 m) have no law to run under otherwise"
+    },
+    {
+      "bead": "N14a-29",
+      "what": "step 11 runs the re-execution path of N29ax-01 (its dependency) and compares the chunk state digests at M1 (there is no digest chain before M2); drop the acceptance allowance that step 11 may be logged partial, which N29ax-01 exists to remove"
+    },
+    {
+      "bead": "VERBS-job",
+      "what": "job.cancel inputs: add the optional reason; job.list inputs: add the optional verb and since filters (N29a-23 schemas); job.wait and job.find outputs: say that a returned final envelope keeps the submitting verb's evidence while answers about the job are operational"
+    },
+    {
+      "bead": "VERBS-sim",
+      "what": "sim.run (M3): add the option --peak-capture <scalar>[=<entities>] that declares a peak capture in the manifest core (N29ax-02); spelled apart from sim.replay --capture"
+    }
+  ],
+  "unchanged": 1,
+  "notes": "All 41 beads reviewed (40 changed, N29a-13 unchanged); 3 new beads (N29ap1-01 to -03) split BD-203's three crates and broke the ring/replay cycle. All 44 staging files parse (front matter one-line JSON lists, seven sections, three test subsections); graph_check cycles = 0; no dependency on a later milestone. Cross-unit corrections that need owners: the missing-samples interval [40, 60] (N27a-09, N27a-13) and the explicit-penalty law (N16b-15). Out-of-slice dependents of BD-203 (N21b-39, N35-03, N21c-40, N17a-10, BD-214, N27a-03, N29b-05) may retarget to N29ap1-01 or N29ap1-02 when they need only the digest or the snapshot."
+}

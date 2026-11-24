@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "spine", "spec", "frontier", "augur", "atelier", "frob-synth", "test"]
 parent: "WP-67"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["N10-CX", "N10-KA3", "N10a-01", "STD-E2E", "STD-TEST", "VERBS-operator"]
 needs: []
-related: ["BD-060", "BD-105", "BD-132", "BD-361", "N10c-05", "N10-CX", "N10c-10", "BD-360", "N10a-02"]
+related: ["BD-360", "BD-105", "BD-437", "N25d-16", "N10c-10"]
 gates: ["GATE-AUGUR-17"]
 plan_refs: ["§10 C-34", "§10 C-11", "§25.21.3", "§12.4", "Appendix D.6", "Appendix M.9", "Appendix N.7"]
 ---
@@ -49,8 +49,8 @@ entries for KA-164 and KA-165 and the control seeded from CX-082.
 
 Out: the synthesis strategy `linkage` through the derivation subprocess and the `.fmodule` output (BD-361); the
 derived leg inverse-kinematics kernel and admission of the symbolic sibling's solver (BD-105); the auditor's
-`interval-box` and `partition` checkers (BD-132 and successors); lane 2 (N10c-05, BD-437); recording the linkage
-rows of GATE-AUGUR-17 and deciding KILL-SYNTH-LINKAGE (BD-361).
+`interval-box` and `partition` checkers (BD-132 and successors); lane 2 (N10c-05, BD-437); measuring and
+recording the linkage rows of GATE-AUGUR-17 (N25d-19) and deciding KILL-SYNTH-LINKAGE (N25d-20).
 
 Register row (the shared rule of N10a-01). The construction register
 `frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
@@ -134,12 +134,21 @@ Pilot as the construction states it: 24 dyad and four-bar templates with planted
 falsifier: one defect certified as valid. The owning chapter's pilot is 240 template instances (three-pose dyads
 with a lug catalogue and keep-in regions) against multi-start numerical optimization under the same checks;
 falsifier: a certified linkage binds or changes circuit on the referee, or more than a quarter of the instances
-fall outside the caps. Both are recorded in the pilot register; BD-361 runs them. Ceiling: better proposals for
-one mechanism family at a time; the certificate, not speed. Fallback: multistart recovery on the CPU, labelled
-`Partial`. Gate: the linkage rows of GATE-AUGUR-17 at M4 (the three-pose dyad and both circuit fixtures exact;
-zero certified linkages change circuit on the referee across 240 instances). Kill gate KILL-SYNTH-LINKAGE (M4): a
-certified linkage binds or changes circuit on the referee, or more than 25% of template instances exceed the
-caps; fallback: multi-start numerical optimization with the same circuit and clearance check, classed Tested.
+fall outside the caps. Both are run by the Augur chapter's pilot N25d-16 (M4), before BD-361 is funded (a pilot
+comes before the mechanism it funds, and BD-361 depends on it): its 240 instances carry a planted-defect quarter,
+so the construction's falsifier (one planted defect certified as valid) is among its falsifiers, and it writes the
+one record `PILOT-C-34` that row C-34's `pilot` field names, with both statements and the difference between them;
+multi-start numerical optimization under the same checks is the row's `generic_comparator`. Ceiling: better proposals for
+one mechanism family at a time; the certificate, not speed. Two fallbacks are named and they belong to different
+lanes. The construction's own sentence, "lane 1 with multistart recovery on the CPU, labeled `Partial`", is the
+fallback of lane 2 (continuation, N10c-05 and BD-437, KILL-SYNTH-CONT): it keeps this lane and adds multi-start
+recovery of the roots continuation would have found. Lane 1's fallback is that of its own kill gate, below. Gate:
+the linkage rows of GATE-AUGUR-17 at M4 (the three-pose dyad and both circuit fixtures exact; zero certified
+linkages change circuit on the referee across 240 instances), measured and recorded by N25d-19. Kill gate
+KILL-SYNTH-LINKAGE (M4, decided by N25d-20): a certified linkage binds or changes circuit on the referee, or more
+than 25% of template instances exceed the caps; fallback: multi-start numerical optimization with the same circuit
+and clearance check, classed Tested. If that gate fires, lane 2's fallback loses its lane-1 half and stands on
+multi-start recovery alone (N25d-20).
 
 ## Acceptance criteria
 
@@ -150,7 +159,9 @@ caps; fallback: multi-start numerical optimization with the same circuit and cle
 - [ ] Every mutant below fails its named law.
 - [ ] KA-164 and KA-165 are registered with derivation files; KA-164, printed with no control, has the control
       named below; the control from CX-082 is attached to GATE-AUGUR-17.
-- [ ] Both pilot statements are in the pilot register with the difference between them noted.
+- [ ] Both pilot statements are in the record `PILOT-C-34` (written by N25d-16) with the difference between them
+      noted; the check of row C-34's `pilot` field reports `pending` until that record exists and fails if the
+      record lacks either statement.
 - [ ] `scripts/e2e/spec_c34_exact.sh` exits 0.
 - [ ] Row C-34 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
       Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
@@ -180,7 +191,10 @@ caps; fallback: multi-start numerical optimization with the same circuit and cle
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c34_exact.sh`: `frob --json doctor`; `cargo test -p frob-synth --test laws_c34_exact`;
-`cargo test -p frob-conformance --test g1 -- KA-164 KA-165`; file and registry checks. Log to
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-164 KA-165` (the
+known-answer tier; the seed is explicit and logged); the same command with `--features gauntlet-mutations`, in
+which the registered controls of the two rows (`collinear_returns_pivot`, `closure_only`) must be caught; file
+and registry checks. Log to
 `target/e2e-logs/spec_c34_exact/<utc>.ndjson` with a transcript; each line has `ts`, `script`, `bead`, `step`,
 `event`, command line, exit code, wall time, the evidence block (claim Known answer, class Tested, tier G1 host,
 determinism D0, seed), pivots and distances as rationals against expected, the sign of σ per sub-interval, and on

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "atelier", "marrow", "frob-analyze", "frontier", "spine", "spec", "test"]
 parent: "WP-11"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§28.4: the bead that creates crate frob-analyze (the curvature-sign law lives in crates/frob-lie/tests/, the holonomy fixtures in crates/frob-analyze/tests/)", "§25.19: the shape-space atlas for locomotion by geometric phase (Moonshot; BD-425), which is funded only on the conditions stated below"]
-related: ["BD-243", "BD-425", "N10a-16", "SPEC-C-04", "SPEC-C-07", "CARD-T-20", "N10-KA1", "BD-011"]
+deps: ["BD-025", "N10a-01", "N28a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-011", "BD-243", "N10a-16", "N13-05"]
 gates: ["GATE-MARROW-01", "GATE-MARROW-04", "GATE-ATEL-02"]
 plan_refs: ["§10 C-08", "§11.1", "§11.6", "§13.8", "§28.4 A-09", "§12.3 T-20", "§38.7 MR-41", "Appendix C.1.4", "Appendix D.1", "Appendix M KA-064 KA-065", "Appendix N CX-030"]
 ---
@@ -119,7 +119,7 @@ wrong by twice the answer.
 | C-08.S1 | For a polynomial connection, the second-order coefficient of the holonomy of a coordinate rectangle is −(∂ᵢ𝔸ⱼ − ∂ⱼ𝔸ᵢ − [𝔸ᵢ, 𝔸ⱼ]) (T-20) | Certified | Truncated-series identity in exact rationals |
 | C-08.S2 | SO(3) constant connection: a loop of area da rotates the body by +da about z | Certified | Rational Baker–Campbell–Hausdorff truncation; numerical confirmation |
 | C-08.S3 | Elroy's beanie: a relative rotation Δψ rotates body 1 by −I₂/(I₁ + I₂)·Δψ | Certified (ratio); Tested (integration) | Conservation of zero angular momentum |
-| C-08.S4 | Planar three-link floating body: net rotation per cycle from the holonomy agrees with direct integration | Tested | Loop doubled, reversed and sped up until the approximation breaks |
+| C-08.S4 | Planar three-link floating body: the SE(2) holonomy per cycle from the area formula agrees with direct integration (rotation exactly, translation to leading order) | Tested | Loop doubled, reversed and sped up until the approximation breaks |
 | C-08.S5 | Loop relations to leading order: doubling the loop doubles the displacement, reversing negates it, speeding it up leaves it unchanged | Tested | Metamorphic test |
 | C-08.S6 | The same physical gait reconstructed in another body frame predicts the same motion | Tested | Chart control |
 | C-08.S7 | A loop crossing a contact-stratum boundary is refused by the area formula | Tested | Planted loop with a changed contact |
@@ -131,18 +131,33 @@ wrong by twice the answer.
   𝔸 = I₂/(I₁ + I₂) = ¼ and a relative rotation Δψ = 2π rotates body 1 by −π/2. The shape space is a circle,
   the group is abelian and the curvature is zero: the displacement after a full relative turn is a holonomy
   around a non-contractible loop, which the area formula cannot see and the path exponential gives exactly.
-- *Three-link floating body.* Three identical uniform slender links, mass 1 kg and length 1 m each, joined end
-  to end by two revolute joints, floating in the plane with zero linear and angular momentum. Shape
-  s = (α₁, α₂), group SO(2) for the orientation of the middle link. The connection is 𝔸(s) = 𝕀(s)⁻¹·𝕀_BS(s),
-  computed in the derivation file from the kinetic energy. Loops: circles of radius ρ ∈ {0.05, 0.1, 0.2, 0.4,
-  0.8} rad centred at (0.5, −0.5) rad.
+- *Three-link floating body.* Three identical uniform slender links, mass 1 kg, length 1 m and inertia
+  1/12 kg·m² about its centre each, joined end to end by two revolute joints, floating in the plane with zero
+  linear and angular momentum. Shape s = (α₁, α₂) in the chain convention αᵢ = θᵢ₊₁ − θᵢ (θ₁, θ₂, θ₃ the link
+  angles from one end); group SE(2), the pose of the middle link, body frame at its centre and along it. The
+  connection is 𝔸(s) = 𝕀(s)⁻¹·𝕀_BS(s) ∈ 𝔰𝔢(2), computed in the derivation file from the kinetic energy. Loops:
+  circles of radius ρ ∈ {0.05, 0.1, 0.2, 0.4, 0.8} rad centred at (0.5, 0.5) rad (the body bent into an arc),
+  traversed from α₁ towards α₂. (DESIGN, and a correction of the construction's reading of KA-065, which speaks
+  of the net rotation alone: the rotational part of a planar connection is abelian, so its holonomy is exactly
+  −∬ curl 𝔸_ω by Stokes' theorem and no bracket enters it; the bracket of 𝔰𝔢(2) is a pure translation, so the
+  sign mutant is visible only in the translation of the middle link, and the fixture must compare the whole
+  SE(2) element. The centre (0.5, −0.5) in this convention is the point-symmetric S-shape, where the curvature
+  vanishes and a circle about it moves the body by nothing, so it tests nothing.)
 - *Sign fixture.* As above, with a = b = 1/10: the loop rotates by +1/100 rad about z to leading order.
 
-**Tolerances set by this bead** (TARGET). Area formula against direct integration on the three-link body:
-relative error at most 0.1 at ρ = 0.1 rad, and the error ratio between ρ and ρ/2 within [1.5, 2.5] (one order
-beyond the leading term); the test records the radius at which the relative error first exceeds 0.25 ("until
-the approximation breaks"). Chart control: equal to 10⁻⁹ rad. Beanie: exact ratio; integration to 10⁻¹²
-relative.
+**Tolerances set by this bead** (TARGET). Area formula against direct integration of ġ = g·ξ, ξ = −𝔸(s)·ṡ,
+on the three-link body. Rotation of the middle link: exact by Stokes, so compared to 10⁻⁹ relative (quadrature
+and integration error only). Translation of the middle link (the leading-order part): relative error at most
+0.1 at ρ = 0.05 rad and at most 0.2 at ρ = 0.1 rad, and the ratio of the errors at ρ and ρ/2 within
+[1.5, 3.0] for ρ ∈ {0.1, 0.2} (one order beyond the leading term); the test records the radius at which the
+relative error first exceeds 0.25 ("until the approximation breaks"). Chart control: equal to 10⁻⁹ rad. Beanie:
+exact ratio; integration to 10⁻¹² relative. Reference magnitudes from an independent `f64` computation made in
+review (for orientation; the derivation file reproduces them and does not copy them): at the centre the
+rotational curvature is about 0.0246 and the translational part of (D𝔸)₁₂ about 0.0039 against a bracket term
+of about 0.073; at ρ = 0.1 rad a cycle turns the middle link by 7.7·10⁻⁴ rad and moves it by 1.1 to
+1.3·10⁻⁴ m; the translational relative error is about 0.05 at ρ = 0.05, 0.09 to 0.12 at 0.1 and 0.17 to 0.28
+at 0.2 (the two figures are the arc bent either way); at ρ = 0.1 rad the sign mutant's translation is wrong by
+a factor of 30 to 40.
 
 **What it does not claim.** No prediction for dynamic walking. No atlas: a shape-space atlas is funded only
 after an independent full rollout admits at least one newly proposed gait and a changed-contact test withdraws
@@ -165,10 +180,15 @@ computed with +[𝔸ᵢ, 𝔸ⱼ]).
       commutator equals +a·b·e_z at second order, exactly.
 - [ ] `cargo test -p frob-analyze --test laws_c08` passes on the reference connection of the two fixtures.
 - [ ] The beanie rotates by −π/2 for Δψ = 2π within 10⁻¹² relative, and the test asserts zero curvature.
-- [ ] The three-link holonomy agrees with direct integration within the tolerances above; the break radius is
-      recorded.
-- [ ] The flipped-sign mutant fails the sign fixture, the three-link loop (error of order one relative to the
-      answer) and the reversal relation: three fixtures.
+- [ ] The three-link holonomy agrees with direct integration within the tolerances above, rotation and
+      translation reported separately; the break radius is recorded; the test asserts that the curvature at
+      the loop centre is not zero.
+- [ ] The flipped-sign mutant fails three independent fixtures: the SO(3) sign fixture, the rectangle series
+      of S1 on 𝔰𝔬(3) and 𝔰𝔢(2) connections, and the translation of the three-link loop (an error of order one
+      or more relative to the answer). Its rotation on the three-link loop is unchanged, and the test asserts
+      that too, so a reader cannot take the rotational check for a sign control. The holonomy relation, whose
+      predicted side is the area formula, also fails under the mutant; it is logged and not counted as
+      independent of the loop fixture.
 - [ ] KA-064 and KA-065 registered with tolerances and controls set; the register row of C-08 filled.
 
 ## Test plan
@@ -181,8 +201,10 @@ computed with +[𝔸ᵢ, 𝔸ⱼ]).
 - `s2_so3_sign`: 𝔸₁ = e_x, 𝔸₂ = e_y, a = b = 1/10; rotation about z is +a·b up to third order; with the
   mutant the prediction is −a·b.
 - `s3_beanie`: I₁ = 3, I₂ = 1; Δψ ∈ {π/2, π, 2π, −2π}; body 1 turns by −Δψ/4.
-- `s4_three_link`: holonomy by curvature integral (numerical quadrature of the exact curvature) against
-  direct integration of θ̇ = −𝔸(s)·ṡ around each loop; tolerances as stated.
+- `s4_three_link`: holonomy by curvature integral, exp(−∬ D𝔸) with numerical quadrature of the exact
+  curvature over the disc, against direct integration of ġ = g·ξ, ξ = −𝔸(s)·ṡ in SE(2) around each loop;
+  rotation and translation against their separate tolerances; the curvature at the centre is nonzero.
+- `s4_three_link_sign_mutant`: the same loops with +[𝔸ᵢ, 𝔸ⱼ]: translation fails, rotation unchanged.
 - `s5_loop_relations`: doubled (traversed twice), reversed, time-rescaled by 10.
 - `s6_chart_independence`: the same loop with the body frame attached to an end link instead of the middle
   link; predicted world-frame rotation of a fixed link equal within 10⁻⁹ rad.
@@ -204,10 +226,11 @@ bound failed. Final `summary` line.
   (set here): the connection's sign flipped (ξ = +𝔸·ṡ), which turns body 1 the wrong way; and I₁ and I₂
   exchanged.
 - KA-065 three-link holonomy: tolerances as set above; G1 · host. Control: the component formula with the
-  bracket term's sign flipped, which must fail the same loop by an error of order one.
+  bracket term's sign flipped, which must fail the same loop by an error of order one in its translation.
 - CX-030: the curvature written with +[𝔸ᵢ, 𝔸ⱼ].
-- For an abelian group the bracket term vanishes and the sign mutant is invisible; the suite therefore keeps
-  the SO(3) fixture as the mandatory sign control and says so in the test name.
+- For an abelian group, or for the rotational part of any planar connection, the bracket term vanishes and the
+  sign mutant is invisible; the suite therefore keeps the SO(3) fixture as the mandatory sign control and says
+  so in the test name, and reads the three-link control from the translation only.
 - Determinism: exact tests D0; integration tests twice on one machine, debug and release.
 
 ## Considerations
@@ -220,7 +243,7 @@ bound failed. Final `summary` line.
 - The three-link connection's closed form is long; the derivation file is the single source and both routes
   of S4 use it, so the comparison tests the holonomy formula and the integrator, not the connection itself.
   An independent check of the connection is the momentum residual: the reconstructed motion must keep total
-  angular momentum zero to 10⁻¹².
+  linear and angular momentum zero to 10⁻¹².
 
 ## References
 

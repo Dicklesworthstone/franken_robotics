@@ -1,0 +1,349 @@
+{
+ "round": 1,
+ "slice": "U38a",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "BD-041",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "archive step now follows the source register's revision rule: the cited revision a635b91 (241,568 B, full SHA-256 0326e89d…09a4f, re-observed in git history, holds every driver) is recovered and run first, the working-tree revision 47e8e89 (275,178 B, 9620da42…) is a second result; full digests written out; shallow-clone fallback stated"
+  },
+  {
+   "bead": "N38a-03",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "added the nine subjects' keys, subsystems, owner sections, crates and gate families; defined how a cell's gate and milestone are seeded (family, earliest milestone) and narrowed by the binding bead; two tests"
+  },
+  {
+   "bead": "N38a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "sibling oracle whose pin conflicts with the core graph is now an upstream work item in the sibling (REVISION_2 REV-1/REV-2), with interim worker-process posture and switch-over rule"
+  },
+  {
+   "bead": "N38a-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the recorder refusal of parity evidence for a reality gate had no home: added claim_matches_evidence to the recorder's validation with harness reason claim-evidence-mismatch; dep N38b-19 (the recorder); origin labels left to N38b-07; test made exact; dep N38-REF added: the harness reasons it emits are registered there (registries first)"
+  },
+  {
+   "bead": "N38a-07",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "Out pointed the design corpus at N38a-22 (it is N38a-36); the ceiling formula 1/(1 − f + f/r + h) with f, r, h defined; ceiling filed after first run refused; dep N36-05 (owner of ceiling and FROB-REF-866); two tests"
+  },
+  {
+   "bead": "N38a-08",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "potency pass rule used an upper bound never defined: U = exp(ℓ̄ + t·s/√n) (difference form d̄ + t·s_d/√n)"
+  },
+  {
+   "bead": "N38a-09",
+   "kinds": [
+    "users",
+    "complete",
+    "tests"
+   ],
+   "what": "U25d request: optional plan_time_records and integrated_gate fields; fundable reads linked plan-time records' status (reproduced only if all reproduce), new reasons plan-time-differs and plan-time-not-run, no copying, no gate set; tests"
+  },
+  {
+   "bead": "N38a-10",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "dup-08: conditioning rows 19 and 20 re-run once by N38a-11, N00-35 only reads and cites by hash; U25d request: supplementary record PILOT-PT-S3 (admission fixtures, SRC-CHK-13, BD-043) and limits_extra carrying the fourth limit on rows 1-12, 15, 16, S3; cited-revision-first rule with full digests; tests updated; dep N38-REF added: the harness reasons it emits are registered there (registries first)"
+  },
+  {
+   "bead": "N38a-11",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "the dynamics source was 'named under needs' with needs empty: now BD-007's RefereeDynamics over fs_mbd with an export test target and file hand-off; the program writes a pilot result, not a fixture; cited archive revision a635b91 first; which candidate scripts exist in which revision"
+  },
+  {
+   "bead": "N38a-12",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "coherent"
+   ],
+   "what": "dup-07: one physical known-answer file enforced (ka-second-file on any registries/known-answers/ file); plan_time_counts said eight counts for ten values; dep N38-REF added: the harness reasons it emits are registered there (registries first); Out named the tolerance and control decisions '(needs)' with needs empty: N38b-27, N38b-28, N38b-34; its validation runs on the test kit's parser, no second reader"
+  },
+  {
+   "bead": "N38a-13",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "e2e verb call used a form not in the verb registry: now `frob task fixture fixture:cart-sill-dock --layer analytic --key fx-1 --json` (VERBS-task); account_counts made consistent (eligible 4, 6 = 3 + 2 + 1)"
+  },
+  {
+   "bead": "N38a-14",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "each relation's mutation is also a kind=mutation control of GATE-GAUNT-03 in controls.toml; loader checks the one-to-one map (relation-without-control, control-without-relation); test and acceptance line; dep N38-REF added: the harness reasons it emits are registered there (registries first)"
+  },
+  {
+   "bead": "N38a-15",
+   "kinds": [
+    "deps",
+    "coherent"
+   ],
+   "what": "scope said transform code was 'under needs' with needs empty: registry records, binding check, mutation controls and arithmetic tests are in; owners bind mr:<id>@<site> and depend on this registry bead; due-unbound reported and failing the gate in N38a-19; acceptance qualified to bound relations"
+  },
+  {
+   "bead": "N38a-16",
+   "kinds": [
+    "deps",
+    "correct",
+    "coherent"
+   ],
+   "what": "same scope and acceptance repair as N38a-15; 'seventeen planted defects' corrected to sixteen; due milestones MR-10 to MR-12 with GATE-PHYLUM-05 at M3, MR-14 at M1 run from M2"
+  },
+  {
+   "bead": "N38a-17",
+   "kinds": [
+    "deps",
+    "coherent",
+    "faithful"
+   ],
+   "what": "same scope and acceptance repair; known answers cite KA-471 (quanta 0, 40, 80, 120 realized at boundaries 0, 14, 27, 40, lateness 0, 2, 1, 0; 600 decisions in 20 s) and CX-200"
+  },
+  {
+   "bead": "N38a-18",
+   "kinds": [
+    "deps",
+    "coherent"
+   ],
+   "what": "same scope and acceptance repair; relations due at M0 to M1 run in their owners' tests and in G3 from M2"
+  },
+  {
+   "bead": "N38a-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "surface step used `frob design show --canonical`, not a registry form: MR-35 now round-trips through `frob design view --as sexpr/--as json` and compares the DesignId of `frob design show`; MR-C09 uses the registry form of sim.run"
+  },
+  {
+   "bead": "N38a-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "e2e eval.run call given its registry form (design quad-a, --key)"
+  },
+  {
+   "bead": "N38a-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "e2e `frob nemesis hardset run --json` lacked class, task, design and key: registry forms of show and run as in N15a-28; constraint 3's ad hoc 'battery: hard worlds only' replaced by the registered slug hard-world-set-inadmissible (3xx, exit 3, N26-REF, interim form); acceptance and test name it"
+  },
+  {
+   "bead": "N38a-22",
+   "kinds": [
+    "correct",
+    "coherent",
+    "tests"
+   ],
+   "what": "duplicate trigger table (N24b-01 already defines registries/batteries/triggers.toml): this bead now owns only the fixtures row's path list, the union of both lists (frob-dyn whole crate, assets/fixtures added), in the one file; check (d) fails on a second trigger file; tests single_trigger_table, fixtures_row_is_union; fixture verb in registry form; smoke/fixtures manifests attributed to N24b-01 and BD-146"
+  },
+  {
+   "bead": "N38a-25",
+   "kinds": [
+    "tests"
+   ],
+   "what": "had no e2e of its own (deferred to N38a-27, which depends on it): own script chaos_protocols.sh with steps, plants two-statement-key and offset-pagination, and NDJSON log; called by chaos_g4.sh under filter protocols"
+  },
+  {
+   "bead": "N38a-26",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "own e2e chaos_input.sh (plants keep-last-duplicate, planted-leak) called by chaos_g4.sh under filter input; registry forms of design check and import; the 'escaped' duplicate name was printed unescaped: now wheel\\u005fradius_mm"
+  },
+  {
+   "bead": "N38a-27",
+   "kinds": [
+    "correct",
+    "coherent"
+   ],
+   "what": "frontier check used evidence.trace (a claim's closure): now run.show and telemetry.query; job.find given --verb; family filters call the three family scripts and fold their logs; this script owns setup, audit, plants and account"
+  },
+  {
+   "bead": "N38a-29",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "U18b request: the 'named capacity refusal for rut tiles' now cites ledger slug rut-capacity-overflow (N18-REF row, 7xx beside 722, exit 5, pointer, three ranked repairs, interim form, not FROB-REF-722) as N18b-17 does; acceptance, unit test and e2e pool-exhaustion step updated"
+  },
+  {
+   "bead": "N38a-31",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "the three lever values 0.3826, 0.3536, 0.3744 now say which pad resolution each belongs to and how it is computed"
+  },
+  {
+   "bead": "N38a-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "scene.hazards called with a flag form not in the registry: positional archetype (warehouse, retail-store); the verb lands at M3, so the file fallback is dropped"
+  },
+  {
+   "bead": "N38a-33",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "actor-subject refusal had no code or slug: uncoded slug actor-subject-claim (3xx, exit 3, pointer, two repairs) registered by N19-REF and requested in the allocation ledger (N35-33), interim form until numbered; dep N19-REF; acceptance and test exact"
+  },
+  {
+   "bead": "N38a-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the 16.6/λ divergence horizon holds for f32 only; f64 value 36.7/λ added"
+  },
+  {
+   "bead": "N38a-36",
+   "kinds": [
+    "deps",
+    "correct",
+    "coherent",
+    "tests"
+   ],
+   "what": "Out named its sources '(needs)' with needs empty: screening audit N26b-05/-06 (M4) and attribution N27b-09 named as read sources; screens have no potent record before the audit lands (fail-closed); recorder hook potency_current with harness reasons no-potency-record and not-potent in N38b-19's step 7; deps N38b-19, N38-REF; tests citation_refused_without_record made exact, screen_before_audit_refused"
+  },
+  {
+   "bead": "N38a-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "known answer cited the discarded 32 × 32 rut layout: now the kept layout (1,024 tiles of 8 × 8 f32, 256 B each) with the same 256 KiB budget as the pilot"
+  },
+  {
+   "bead": "N38a-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "cost clause said 'paired upper bound' in the trigger and 'lower bound' in the evaluation: now fires on the lower bound (as KILL-TACTILE), straddling bounds recorded and not firing; e2e assert on the lower bound; known answers use the kept rut layout"
+  },
+  {
+   "bead": "N38a-39",
+   "kinds": [
+    "correct"
+   ],
+   "what": "e2e cost assert made explicit: the paired ratio's lower bound against 1.25, upper bound logged"
+  },
+  {
+   "bead": "N38a-40",
+   "kinds": [
+    "users",
+    "deps"
+   ],
+   "what": "U18b request: Traction's cx block of 4 for N18-CX (trac-arc, trac-resid, trac-lambda, trac-mode) added to requests known at conversion; contact added to the chapters with late cases; dep N38-REF and its three reasons printed as reason=<id>"
+  },
+  {
+   "bead": "STD-E2E",
+   "kinds": [
+    "users",
+    "complete"
+   ],
+   "what": "U19a request: helper list gains e2e_scene_ready <scene_id> [--tiers] (BD-228 writes it when FROB-REF-318 is switched on; runs scene accept when the verb is listed, a logged skip before)"
+  },
+  {
+   "bead": "STD-TEST",
+   "kinds": [
+    "correct",
+    "coherent",
+    "tests"
+   ],
+   "what": "articulation-point review: scope kept minimal; acceptance made exact (CONTRACT citation for crates existing at close; profiles and platforms lanes tested on recorded pairs here, their plants in G5 by N38a-35 and N35-03, instead of an unbacked 'each lane has a control'); one-reader rule for the three registries; Rel(0.02) example was ill-posed at the boundary (f64 0.98 lies below 0.98): now 0.985/0.975 plus an exact boundary case; test det_pair_helper_reports_first_diff"
+  },
+  {
+   "bead": "BD-417",
+   "kinds": [
+    "correct",
+    "coherent"
+   ],
+   "what": "plan outline used the discarded 32 × 32 sinkage tiles and a compaction factor: now the kept 8 × 8 Δz layout of N18b-17 (1,024 tiles, 256 KiB per world) and Degraded plus caller policy with rut-capacity-overflow"
+  },
+  {
+   "bead": "BD-418",
+   "kinds": [
+    "correct",
+    "coherent"
+   ],
+   "what": "tactile-array sensor is N20a-19's (Frontier, frob-sense) and named in Out; KA-523's tolerance and control attributed to N20a-19, not N38a-31; task list says N38a-31 is the pads"
+  },
+  {
+   "bead": "BD-421",
+   "kinds": [
+    "correct"
+   ],
+   "what": "actor-subject refusal named by its slug actor-subject-claim"
+  },
+  {
+   "bead": "BD-432",
+   "kinds": [
+    "coherent"
+   ],
+   "what": "acceptance names the dry run's three planted false acceptances, matching N38a-34"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38-REF",
+   "what": "register the harness reasons this slice's beads emit (each with tool, meaning, repairs, exit): claim-evidence-mismatch (recorder; a reality row whose evidence is a ParityResult; record as parity, cite evidence of the claimed kind, leave not-run; exit 3) from N38a-05; no-potency-record and not-potent (recorder; an analysis, screen or attribution cited without a current potent record) from N38a-36; ka-second-file and boundary-only (known-answer loader) from N38a-12; relation-without-control, control-without-relation, mutation-survived, mutation-stale, due-unbound (metamorphic registry and G3 runner) from N38a-14 to N38a-19; unexpected-owner (pilot-ledger completeness check) from N38a-10; unallocated-number, missing-number, provisional-tag-past-due (allocation validator) from N38a-40. N38a-05, -10, -12, -14, -36 and -40 now depend on N38-REF"
+  },
+  {
+   "bead": "N25d-40",
+   "what": "N38a-09 now accepts plan_time_records and integrated_gate; the register names the owning section `owner` and the running bead `bead` (not `section`, `carrier_beads`): use those names or ask for list support"
+  },
+  {
+   "bead": "N24b-01",
+   "what": "one trigger table: registries/batteries/triggers.toml stays yours (file, format, loader, smoke row); the fixtures row's path list is owned by N38a-22 and is the union of both lists (adds crates/frob-sense/src/packet/**, crates/frob-arena/src/fixtures/**, assets/cards/**, crates/frob-conformance/registry/known_answers.toml); BD-146 and N38b-25 read the same file"
+  },
+  {
+   "bead": "N19-REF",
+   "what": "register the uncoded Habitat slug actor-subject-claim (3xx, exit 3, retry after-change, pointer to the atom, metric or column and the actor id; meaning: a claim about a scripted actor was requested; repairs: state the claim about the robot under the declared script; drop the actor from the subject) and file its number request in the allocation ledger (N35-33); raised by N38a-33, which now depends on N19-REF"
+  },
+  {
+   "bead": "N38b-19",
+   "what": "step 7 of the recorder runs, besides the register layer's validator, the two checks other beads add in this crate: claim_matches_evidence (N38a-05; reason claim-evidence-mismatch) and potency_current (N38a-36; reasons no-potency-record, not-potent); list the three reasons beside the recorder's own"
+  }
+ ],
+ "unchanged": 6,
+ "notes": "complete: 45 beads reviewed; unchanged N38a-01, -02, -06, -23, -24, -34. All eight items addressed to the slice handled (N38a-09; N38a-10 dup-08 and U25d; N38a-11 dup-08; N38a-12 dup-07; N38a-29; N38a-40; STD-E2E) and STD-TEST checked as an articulation point. Main patterns fixed: '(needs)' placeholders with empty needs (N38a-11, -12, -15 to -18, -36); verb calls not in the verb registry (N38a-13, -19 to -22, -27, -32); refusals without code or slug (N38a-21, -29, -33); a duplicate trigger table (N38a-22 vs N24b-01); the superseded 32 × 32 rut layout in N38a-37, -38, BD-417; e2e scripts deferred to a dependent bead (N38a-25, -26). Slice looks settled apart from the requests filed to N38-REF, N24b-01, N19-REF, N38b-19 and N25d-40.",
+ "merged": []
+}

@@ -1,0 +1,256 @@
+{
+ "round": 4,
+ "slice": "F-U16b",
+ "reviewed": 36,
+ "changed": [
+  {
+   "bead": "BD-263",
+   "kinds": [
+    "request",
+    "registry",
+    "plan",
+    "convention"
+   ],
+   "what": "Request F-U16c applied: step 2 calls N16c-15's execution_qualified(result) and returns FROB-REF-820 with detail solve-queues-unqualified (N16-REF's held form), dep N16c-15 added (moved from related; no cycle, M2). Request H-verbs-3 applied in part: a D4 or unrecorded result is FROB-REF-825 (N35-07's Promotion licence in the handler, N37-28's dispatcher boundary first from M3); acceptance and test refusal_561_d4_arm became 825 (refusal_825_d4_or_unrecorded). Not applied: '561 on a cross-family pair without D1'. Plan §35.3 licenses promotion at D3 with a frozen envelope; the fast-tier result and its higher-tier re-evaluation are two tiers (D3 by construction) and usually two device families (GPU against the CPU referee), so requiring D1 would refuse every promotion of a GPU result and the trust ladder could never establish one; the clause was dropped from the bead, test cross_tier_d3_admitted added, and a request goes to VERBS-eval. 561 stays for the undeclared solve-path mismatch; the 'interim' and 'no code is assigned yet' narration (convention 13) is gone. BD-263 cannot assert 825 through N37-28 (N37-28 depends on BD-263, convention 7), so its 825 test runs on N35-07's licence, a dependency."
+  },
+  {
+   "bead": "BD-264",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "GATE-CHRON-09's acceptance required interval coverage to pass, while KILL-DR's trigger is that coverage failing after one repair cycle and the decision bead N16b-10 depends on BD-264: had coverage failed, BD-264 could not close and KILL-DR could never be decided (convention 10). The criterion now runs the one repair cycle and closes on the gate's record whichever way it falls."
+  },
+  {
+   "bead": "BD-265",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Round-3 request applied: the four planted populations of the certifier check are registered as named fixtures (tier-pair-planted-0.8, -0.6, -0.3, tier-pair-winner-lost) in crates/frob-opt/fixtures/rank_agreement/, read by the row's fixture input (N23b-35's form, which depends on BD-265), with a registration test that recomputes each declared mode; without it N16b-32 could not reach them through any verb. Registry: the row lists FROB-REF-546 (calibration from survivors), which the bead never stated although its margin goes through N28b-14's check; added with a test. The row's first_milestone M4 with form tier-pair from M3 and 724 for a rung pair before BD-328 stated (VERBS-eval)."
+  },
+  {
+   "bead": "N16b-03",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Request F-U24c applied: dep N24cp3-01 (eval.run on the batched tiers; no cycle). eval.run's battery form takes no seed: --run-seed 7 beside --battery is FROB-REF-802 (VERBS-eval), so step 1 as written would refuse; dropped and the BatteryId logged. The sweep's `frob sim run <scenario>` had no valid positional and no --key (convention 5): it now re-runs the densest battery item at its own address (design, --task, --seed, --world-addr) under a distinct key per capacity."
+  },
+  {
+   "bead": "N16b-07",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The pilot register path was frob-conformance/registry/pilots.toml; convention 3 names crates/frob-conformance/registry/pilots.toml (schema frob.gauntlet.pilot/1), so an implementer could have created a second file."
+  },
+  {
+   "bead": "N16b-09",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Applied the F-U40 request (addressed to N16bx-01, naming N16b-09): kill_gate was to-register, which N38a-09's fundable check reads as blocking, so the segment mode of N16b-08 could never be funded even on a supporting verdict. The record now names KILL-SEGMENT, the row N40-24 enters by an introduce amendment (trigger, fallback, decided M3, mode pilot-before-funding, as N18a-07 does for KILL-HULL); dep N40-24, gate KILL-SEGMENT; the acceptance line 'N16b-08 is updated' became the fundable answers. Request recorded to N40-24. The pilot identifier note no longer says the register assigns numbers (N38a-09 has no allocator)."
+  },
+  {
+   "bead": "N16b-11",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "The script ran `eval.run --battery <pilot subset>`, but battery names are the closed set smoke, fixtures, standard, full, hard, covering (N24b-01) and eval.run selects no part of a battery, so the pilot could not score anything. It now uses eval.run's single-task form (two tasks, 16 worlds each, --run-seed 17, same addresses on both tiers); step 4 and the evidence block follow. Step 9 said the register assigns the next free number if the identifier is taken; N38a-09 has no allocator (uniqueness is its check), so the record now states the KIN numbering (01 to 05 for N16b-09, N16b-11, N16b-16, N16b-22, N16bx-01)."
+  },
+  {
+   "bead": "N16b-12",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Acceptance and the e2e note said the opt.cascade half is 'logged skipped by N16b-32 until M4' (conventions 7 and 13). The cascade's promote-only plan is asserted by BD-352 (plan_only_promote_only_charges_higher_tier, scripts/e2e/opt_cascade.sh step 5), which reads this default; the bead now names that owner."
+  },
+  {
+   "bead": "N16b-30",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request H-verbs-3 applied: --run-seed 17 dropped from eval.run's battery form (FROB-REF-802 beside --battery); the BatteryId from bound is logged and asserted equal on both tiers. Mechanical C13 finding confirmed: the --cases half said 'requested of VERBS-fidelity ... logged skipped'; VERBS-fidelity's row now lists cases, so the step states the input as a fact and the acceptance no longer allows that skip."
+  },
+  {
+   "bead": "N16b-32",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Steps 3 and 4 logged 'skipped' while BD-265's fixtures were requested (convention 13): BD-265 now registers them, and the steps call `eval.rank-agreement --fixture tier-pair-planted-0.8|0.6|0.3` and `tier-pair-winner-lost` with their own keys; dep N23b-35 added (the fixture form). The opt.cascade halves of steps 5 and 6 ran a later-milestone verb conditionally (convention 7); they are BD-352's (its script steps 2 and 5, tests finalists_from_non_selective_545 and plan_only_promote_only_charges_higher_tier) and are now named there instead of being run here."
+  },
+  {
+   "bead": "N16b-34",
+   "kinds": [
+    "registry"
+   ],
+   "what": "eval.run's battery form takes no seed: `frob eval run quad-a --battery smoke ... --run-seed 17` is FROB-REF-802 (VERBS-eval), so step 1's evaluation receipt would never exist; --run-seed dropped and the BatteryId logged instead."
+  },
+  {
+   "bead": "BD-268",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The acceptance required the M3 section of background_referee.sh, including `planted-policy` (the detection clause), to pass, while KILL-SHADOW's trigger is exactly that clause (or cost or coverage) failing after one repair cycle and its decision bead N16b-19 depends on BD-268: on a back end where detection fails, BD-268 could never close and KILL-SHADOW never be decided (convention 10). `honest` and `ledger-pairs` must pass; `planted-policy` is recorded as the clause's measurement and the bead closes on the recorded values whichever way they fall."
+  },
+  {
+   "bead": "N16b-15",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The controls register was written frob-conformance/registry/controls.toml; convention 2 places registry files under crates/frob-conformance/registry/, so an implementer could have created a second register that the gates never read."
+  },
+  {
+   "bead": "N16b-19",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Step 4 said KILL-SHADOW's `scope_kind = \"backend\"` is set by N40-24 '(requested)'; N40-24's table now carries it (convention 13), so the step states the row's field as a fact."
+  },
+  {
+   "bead": "N16b-25",
+   "kinds": [
+    "request",
+    "deadlock",
+    "registry"
+   ],
+   "what": "Request F-U21b applied: N16b-25 depended on N35-04, which reaches the device capstones (N35-04 -> N35-02 -> BD-176 -> BD-172; N35-04 -> BD-178 -> N21b-29 -> N21b-22), while BD-172, BD-174 and N21b-22 run their scripts through `frob sim run --tier gpu-*`, the tier input VERBS-sim gives this bead at M2: each waited on the verb that waited on it (convention 7). The dep is dropped (N35-04 now related; no other path to a device bead); `--determinism` and `--precision` are stated as N35-04's, wired into this handler by N35-04 and answering 802 in a build without it (the request said 724; VERBS-sim's rule is that an input enters the schema in its owner's change and is an unknown parameter, 802, before it, as N16b-24 states for --present, so 802 was applied); device-tier cancellation (no leaked device memory) is N21b-22's. Requests sent to N35-04, BD-172, BD-174 and N21b-22. Request H-verbs-8 applied: dep N16ap4-01 (no cycle); with --task and no length each episode runs to the task's horizon (the default of 2 s is for runs without a task, which the bead stated for every run), each episode carries frob.verdict/1, --task admission applies N24a-16's settled-pose check (FROB-REF-529, on VERBS-sim's list and missing here), and --init with --task is admitted on every tier (N16ap4-01 hands that decision to this bead, and EnvRequest already carried init); tests added. foreign_codes_pass_through now plants each code at its raiser's boundary, since the raisers are no longer dependencies."
+  },
+  {
+   "bead": "N16b-27",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Item 6 called eval.promote's 561 'the D4 arm refused by BD-263'; BD-263 now raises 825 for a D4 or unrecorded result (N35-07's Promotion licence, §35.3) and 561 for arms that cannot be paired, so the check would have asserted a meaning the row does not have. The note on eval.rank-agreement's first milestone required VERBS-eval to print M3 and called an M4 row a defect, while VERBS-eval (the authority, convention 12) prints M4 with the tier-pair and fixture forms answering from M3 and a rung pair before BD-328 answering 724; item 2 and milestones_match_chapter now assert that, so the check does not fail against the registry it reads. The 'request to VERBS-fidelity' note in executor_names_current is gone (the row names N16bp1-01)."
+  },
+  {
+   "bead": "N16b-28",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Mechanical C13 finding confirmed: the INV-KIN-07 variant half was narrated as 'reported not run until N16b-13 adds it'; it now states that the test is N16b-13's (which depends on this bead and registers it) and that the register lists a registered half with no run as not run. Also the controls register path gained crates/ (convention 2)."
+  },
+  {
+   "bead": "N16b-31",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Request H-verbs-3 applied: `--run-seed 17` beside `--battery` is FROB-REF-802, so the freeze run of step 16 would refuse; dropped there and in the seed note. Request F-U29b applied: step group 19 `rounds-*` (rounds-dr opens a stored round; rounds-late, a second process opening a round over addresses with outcomes, is FROB-REF-811 detail outcome-before-assignment; rounds-store runs N29b-08's tier_rounds.sh as a stage), with an acceptance line and dep N29b-08 (already transitive through BD-264; no cycle). Without it the user-side check of INV-CHRON-13 had no owner. Step 14 asserted 561 for a D4 or unrecorded result; BD-263 and N35-07 give 825, so the step would have failed on a correct build: now `refusal-825`."
+  },
+  {
+   "bead": "N16b-33",
+   "kinds": [
+    "registry"
+   ],
+   "what": "`frob eval run ... --battery standard ... --run-seed 17` (step 8, and the seed note) is FROB-REF-802 (VERBS-eval: the battery form takes no seed), so the battery measurement of GATE-FID-06 would never run; --run-seed dropped and the BatteryId logged."
+  },
+  {
+   "bead": "N16b-35",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Its acceptance drives every row of N16b-25's validation matrix through the real binary; N16b-25 now has the --task rows (horizon with frob.verdict/1 per episode, FROB-REF-529 on a model with no settled-pose cache), so step 3b gains them; otherwise the acceptance line could not be met as written."
+  },
+  {
+   "bead": "N16bp1-01",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request F-UF-1 applied: NFp3-11 (which depends on this bead) is listed among the users of record_rebaseline with --cause upstream:FD-FSIM-12, and the acceptance line and rebaseline_once_per_cause cover that cause, accepted once and independent of the other two; the cause was in the closed list but no criterion asserted it. Mechanical C13 finding confirmed: 'cases ... requested of VERBS-fidelity' now states the row's --cases input."
+  },
+  {
+   "bead": "N16bp2-01",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Request F-U24c applied: dep N24cp3-01 (eval.run on the batched tiers, the handler this hook extends; no cycle). Request F-U29b applied: the fidelity block lists tier_correction: [{ stratum, claim }] (VERBS-eval's block), filled by N29b-07's import, which depends on this bead, and empty when no row was updated; acceptance line added. Request H-verbs-3 applied: --run-seed 17 beside --battery is FROB-REF-802, so step 1 of the script would refuse; dropped and the BatteryId logged; the unit test that paired runs 'with run seed 18' through the battery form now uses a scratch battery at seed 18. 'The options are requested of the eval and sim registry beads' (C13) now cites VERBS-eval's row, which lists them with this bead as owner."
+  },
+  {
+   "bead": "N16bx-01",
+   "kinds": [
+    "request",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "F-U40 request: the record carried kill_gate to-register, which N38a-09's fundable check reads as blocking, so N16bx-02 would answer Blocked even on PASS, against the bead's own acceptance (Fundable on PASS and PARTIAL). It now names KILL-RUNTIMECLOSURE, entered by N40-24's introduce amendment (trigger clause (a) or (c), the fallback, decided M6, mode pilot-before-funding); dep N40-24 (no cycle), gate added, register test updated; request recorded to N40-24. 'The register assigns the next free number' contradicted N38a-09 (no allocator) and is replaced by its uniqueness check."
+  },
+  {
+   "bead": "N16bx-03",
+   "kinds": [
+    "request",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Same as N16bx-01 (F-U40's list): kill_gate to-register would block the funding of any mechanism bead a PASS licenses; the record names KILL-CONTINUUM, entered by N40-24's introduce amendment (trigger: item 5's falsifier holds; fallback: the labelled serial-chain proxy; decided M8; pilot-before-funding); dep N40-24 (no cycle), gate added, acceptance asserts the row. The 'register assigns the next free number' clause is replaced as in N16bx-01."
+  },
+  {
+   "bead": "N16bx-04",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "The script's `sim replay --tier referee` from a fast-tier snapshot lacked --comparison, so every window replay would be a continuation under another numerical profile, FROB-REF-894 (VERBS-sim), and no pair could be measured. The envelope record's basis was \"p95\", which is not a value of N16bp1-01's Basis (GateThreshold, MeasuredP95, DecisionExact); now MeasuredP95, N16bp1-01's rule for an ungated quantity."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.promote's 561 clause names 'the fast-tier result and its higher-tier re-evaluation paired across device families without class D1'. Plan §35.3 licenses promotion at D3 with a frozen envelope (N35-07's Promotion rule: D3 or better admitted, D4 or unrecorded 825); a promotion pairs two tiers, which are D3 by construction and usually two device families (GPU against the CPU referee), so that clause would refuse every promotion of a GPU result. Drop it: on eval.promote 561 answers arms that cannot be paired (the undeclared solve-path mismatch). BD-263 now states this; its acceptance asserts a gpu-cuda D2 result admitted against the referee."
+  },
+  {
+   "bead": "N35-07",
+   "what": "The sentence under the codes-by-site table says 'eval.promote and eval.detect answer a D4 or unrecorded arm with 561 (VERBS-eval)'; your own Promotion rule (and VERBS-eval's DESIGN '825 and 561 on eval.promote') gives 825 on eval.promote. Restate it as: eval.detect 561; eval.promote 825 (Promotion use)."
+  },
+  {
+   "bead": "N16-REF",
+   "what": "The row of `solve-path-mixed-study` (5xx, an assigned number, raised by N16c-38) names 'a paired study, promotion or comparison' as its trigger, but VERBS-eval's eval.promote and eval.compare rows give the undeclared solve-path mismatch to FROB-REF-561 and list no other number; only study.plan lists the assigned number. Narrow the trigger to study.plan (or have VERBS-eval list the assigned number), so that BD-263 and N16c-38 raise one code for one situation."
+  },
+  {
+   "bead": "N23b-35",
+   "what": "BD-265 (your dependency) registers the tier-pair certifier fixtures tier-pair-planted-0.8, -0.6, -0.3 and tier-pair-winner-lost as TOML files under crates/frob-opt/fixtures/rank_agreement/<name>.toml (name, synthetic, class, strata, per design y_lo and y_hi, planted τ, declared mode and mode_reason). Make the fixture form of eval.rank-agreement load that directory and register forty-design-winner-third there, so N16b-32 steps 3 and 4 reach BD-265's fixtures through --fixture."
+  },
+  {
+   "bead": "N40-24",
+   "what": "Enter by introduce amendment, as for KILL-HULL (dated before each protocol is frozen, mode pilot-before-funding, reads the pilot record), the kill rows of three Kinesis pilots whose records carried kill_gate to-register, which N38a-09's fundable check reads as blocking for ever: KILL-SEGMENT (trigger: the segment-mode pilot's falsifier holds, AUC lower bound at or below 0.5 in both reference classes; fallback: no segment mode, whole-episode promotion only; decided M3; §29.11; pilot N16b-09 PILOT-KIN-01; mechanism N16b-08); KILL-RUNTIMECLOSURE (trigger: clause (a) or (c) of the runtime-closure pilot's falsifier holds: under strict a capture velocity or energy loss of fixture A off by more than 1e-9 relative or an energy-ledger residual across an attachment above the transaction's tolerance, or a world's digest changed by a co-tenant's attachment; fallback: run-time loops admitted under strict on batch-cpu only, lockstep refused FROB-REF-724 with repair --profile strict, training uses the compile-time weld; decided M6; §14.10; pilot N16bx-01 PILOT-KIN-05; mechanism N16bx-02); KILL-CONTINUUM (trigger: the continuum-arm pilot's falsifier of its item 5 holds; fallback: the labelled serial-chain proxy stays the only form of the variant; decided M8; §14.10 and Appendix C.1.4 item 8; pilot N16bx-03 PILOT-KIN-06; no mechanism bead yet). N16b-09, N16bx-01 and N16bx-03 now depend on N40-24 and name these rows. N16b-22's proposed KILL-CLOSUREROW is outside this slice."
+  },
+  {
+   "bead": "N35-04",
+   "what": "Depend on N16b-25 (sim.run on every tier, M2) and wire the shared admission step of --determinism and --precision into its handler as into BD-024's; N16b-25 no longer depends on N35-04, because N35-04 reaches the device capstones (N35-02 -> BD-176 -> BD-172; BD-178 -> N21b-29 -> N21b-22) whose scripts run `frob sim run --tier gpu-*` through N16b-25 (convention 7). In your Scope, 'the later handlers call (sim.run on the Spark tiers N16b-25 ... depend on this bead)' becomes: N16b-25's handler exists before this bead, which wires into it; before this bead's change the two inputs are unknown parameters, FROB-REF-802, by VERBS-sim's rule (N16b-25 states this). No cycle: N16b-25 does not depend on N35-04."
+  },
+  {
+   "bead": "BD-172",
+   "what": "Depend on N16b-25: your scripts run `frob sim run --tier gpu-cuda --workload Q --worlds N ...`, and VERBS-sim gives --tier beyond referee and --worlds on every tier to N16b-25 (M2). N16b-25 no longer depends on N35-04, so it reaches no device bead and the dependency makes no cycle."
+  },
+  {
+   "bead": "BD-174",
+   "what": "Depend on N16b-25: your scripts run `frob sim run --tier gpu-metal ...`; VERBS-sim gives --tier beyond referee to N16b-25 (M2), and lists no device bead as an owner of the tier value, so 'wires --tier gpu-metal into sim.run' is registering the backend that N16b-25's handler routes to. No cycle (N16b-25 no longer reaches device beads)."
+  },
+  {
+   "bead": "N21b-22",
+   "what": "Depend on N16b-25: your script runs `frob sim run --tier <t> --workload Q --worlds 1024 --key ...` on the device tiers. N16b-25 now leaves device-tier cancellation (drain with no leaked device memory) to your protocol and script, and asserts cancellation on referee and batch-cpu only. No cycle."
+  },
+  {
+   "bead": "N29b-08",
+   "what": "N16b-31 now owns the step group rounds-* of scripts/e2e/promotion.sh (step 19: rounds-dr, rounds-late refused FROB-REF-811 detail outcome-before-assignment, rounds-store running your tier_rounds.sh as a stage) and depends on you; drop '(it is requested there)' from your e2e paragraph (convention 13)."
+  },
+  {
+   "bead": "N29b-07",
+   "what": "N16bp2-01 now lists tier_correction: [{ stratum, claim }] in eval.run's fidelity block, filled by your import of its committed pair rows and empty when no row is updated; drop 'requested of N16bp2-01, which owns the block, and of VERBS-eval' (convention 13; VERBS-eval already lists the member)."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "Unchanged after review: BD-212, BD-214, BD-266, N16b-04, N16b-10, N16b-14, N16b-20, N16b-23, N16b-24, N16b-26, N16bx-02. Requests not applied as asked: H-verbs-3's '561 on a cross-family pair without D1' for BD-263 (against plan §35.3; a request goes to VERBS-eval instead); F-U21b's '724 until N35-04 is in the build' for N16b-25 (VERBS-sim's rule gives 802 for an input whose owner has not landed). Stage forms kept as convention 7 allows: N16b-30 step 5, N16b-33 step 6's M3 verb halves, N16b-35 steps 14, 16, 18 and the --policy case. Unchanged: BD-212, BD-214, BD-266, N16b-04, N16b-10, N16b-14, N16b-20, N16b-23, N16b-24, N16b-26, N16bx-02."
+}

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "solid", "arena", "frob-spec", "test"]
 parent: "WP-41"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["N10-CX", "N10-KA3", "N10a-01", "STD-E2E", "STD-TEST", "VERBS-operator"]
 needs: []
-related: ["BD-122", "BD-194", "BD-255", "BD-257", "N10-CX", "SPEC-C-31", "N10c-10", "BD-121", "N10a-02"]
+related: ["SPEC-C-31", "BD-121", "BD-122", "BD-257"]
 gates: ["GATE-ARENA-03", "GATE-CORTEX-10"]
 plan_refs: ["§10 C-30", "§24.5", "§24.6", "§38.7 MR-19 MR-20", "Appendix D.7", "Appendix I.8", "Appendix M.9", "Appendix N.7"]
 ---
@@ -166,8 +166,9 @@ success over the shaped reward across five seeds, requirements stay acceptance m
 - [ ] Every mutant below fails its named law.
 - [ ] KA-149 to KA-152 are registered with derivation files; KA-150 and KA-152, printed with no control, have the
       controls named below.
-- [ ] MR-19 and MR-20 are registered; controls from CX-072 and CX-073 are attached to GATE-ARENA-03 and
-      GATE-CORTEX-10.
+- [ ] Controls from CX-072 and CX-073 are attached to GATE-ARENA-03 and GATE-CORTEX-10; MR-19 and MR-20 are
+      attached to the same gates once the relation registry N38a-17 (M2) has entered them, and are reported
+      `pending` here until then.
 - [ ] `scripts/e2e/spec_c30.sh` exits 0.
 - [ ] Row C-30 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
       Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
@@ -196,15 +197,30 @@ success over the shaped reward across five seeds, requirements stay acceptance m
   1; the mirrored trace gives the same for S.
 - `negation_duality`: ρ(¬G φ) equals ρ(F ¬φ) bit for bit.
 - `exact_atom_margin`: an integer-valued atom has margin +1 or −1.
+- `window_ticks_exact_rational`: at period T = 1/10 s the window [0, 3/10 s] holds the four ticks 0 to 3, because
+  3·(1/10) ≤ 3/10 holds in rationals; the floating-point comparison 3 × 0.1 ≤ 0.3 is false and drops tick 3
+  (mutant `float_window_bound`, which must be caught here and by `ka_152_bounded_future_rewrite` on such windows).
+- `relied_refusals`: on the reference model's admission step, a window bound of 0.25 s at period 0.1 s with no
+  declared rounding is refused with FROB-REF-538; an online window of 4,097 ticks is refused with FROB-REF-528
+  and one of 4,096 is admitted; a declared horizon of 30 s under a verdict of reach 45 s is refused with
+  FROB-REF-526; a signal read across clocks without a declared reduction is refused with FROB-REF-525. The
+  production language owes the same codes at BD-121 (GATE-ARENA-03); the step is logged `pending` there until
+  then.
 - `memory_arithmetic`: 600 s at 50 Hz is 30,000 samples.
 - `decided_at_prefix`: an always-clause first violated at tick 8 reports `decided_at` 8.
 - `nan_marks_faulted` and `negative_zero_canonical`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c30.sh`: `frob --json doctor`; `cargo test -p frob-spec --test laws_c30`; `cargo test -p
-frob-conformance --test g1 -- KA-149 KA-150 KA-151`; `cargo test -p frob-conformance --test g3 -- KA-152 MR-19
-MR-20`; file and registry checks. Log to `target/e2e-logs/spec_c30/<utc>.ndjson` with a transcript; each line has
+`scripts/e2e/spec_c30.sh`: `frob --json doctor`; `cargo test -p frob-spec --test laws_c30`; then the known-answer
+and relation rows in the conformance form of BD-025 (ADR-GAUNT-01; the test targets are named by the rows'
+`tier` field): `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-149 KA-150
+KA-151` and `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g3_metamorphic -- KA-152`
+(with `--features gauntlet-mutations` for the run that enables the mutants named below); the same
+`g3_metamorphic` run for MR-19 and MR-20 is logged `pending` until N38a-17 enters the two relations (its
+milestone is M2, later than this bead's), while `unit_invariance_property` (MR-19) and
+`ka_150_streaming_equals_bruteforce` with `ka_152_bounded_future_rewrite` (MR-20) cover them on the reference
+model; file and registry checks. Log to `target/e2e-logs/spec_c30/<utc>.ndjson` with a transcript; each line has
 `ts`, `script`, `bead`, `step`, `event`, command line, exit code, wall time, the evidence block (claim Known
 answer, class Tested, tier, determinism D0 for rational rows and bit equality for `f64` rows, seed), measured and
 expected margins with their binding atoms, and on failure the first differing tick and value with the trace file

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-03", "BD-054", "BD-055", "BD-056", "BD-106", "N14b-11", "BD-048", "BD-245"]
+deps: ["BD-048", "BD-054", "BD-055", "BD-056", "BD-106", "BD-245", "N14b-03", "N14b-11", "NEG-30", "NEG-31"]
 needs: []
-related: ["SPEC-C-07", "N14b-07", "BD-246", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 10", "§14.10", "C-07", "§13.5", "Appendix M KA-270"]
 ---
@@ -25,8 +25,13 @@ at M3.
 
 ## Scope
 
-In: `zoo/omni-3.fbot`, its expectation file and controls. Out: the template (N14b-03); the roller law
-(BD-245); stage 4 and A-07 (N14b-11, BD-106); the three-wheel omnidirectional controller (N14b-07).
+In: `zoo/omni-3.fbot` (the template instantiated at its defaults), its expectation file with the full
+known-answer table below, the variant file of the parallel-wheel control, and the generated golden tests
+(`zoo_omni3…`). Out: the template itself with its manifest, levers, presets and default parameter values, and
+the template-level unit tests of the wheel map (`omni3_map_inverse_identity`, `omni3_pure_rotation`), all in
+N14b-03: the wheel angles 90°, 210°, 330° and the 3 × 3 map are the template's, defined there and repeated
+here. Also out: the roller law (BD-245); stage 4 and A-07 (N14b-11, BD-106); the three-wheel omnidirectional
+controller (N14b-07).
 
 ## Technical approach
 

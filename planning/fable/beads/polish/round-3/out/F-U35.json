@@ -1,0 +1,296 @@
+{
+ "round": 3,
+ "slice": "F-U35",
+ "reviewed": 37,
+ "changed": [
+  {
+   "bead": "BD-177",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Gate rows are entered with the record_gate example (N38b-19) by a non-implementing session; the planted bias is built here as decision-bias-1-in-50 (feature; loaded by name through N21b-42 only from N35-12 on, since N21b-42 comes after this bead), its control seeded by N38b-05 from KA-789; the states-only control names N35-09's plant; added this bead's own lane scripts/e2e/spark_decisions.sh (A/A, the batch-cpu f32/f64 pair, the controls, short ensemble, missing key 805), since its only end-to-end text was N35-12's script, which depends on it."
+  },
+  {
+   "bead": "BD-181",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "Applied F-U16c's request (interrupted reviewer, checked and finished): the solve-queues axis is in the axes table through N16c-15's hook with a unit test; the pass conditions say GATE-SPARK-15 uses the five axes alone to shard and GATE-KIN-05 adds jacobian; each row lists extra axes with their mismatch counts."
+  },
+  {
+   "bead": "BD-269",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied both H-owners-1 requests (interrupted reviewer; checked complete): the planted-study driver is the declared example `cargo run -p frob-conformance --example licence_harness -- plant-study|check`; the gate run uses --test g5_determinism with FROB_TEST_SEED."
+  },
+  {
+   "bead": "N35-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-ka-2's request (interrupted reviewer; checked complete): KA-804's compile-fail plant is a developer-level ka_804_ test at M0; the row is N35-KA's at M1 and the runner entry ka:KA-804@host is BD-146's."
+  },
+  {
+   "bead": "N35-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The CX-366 arm is built under N35-CX's plant id seeded-reordered-arm (planted-input) with its synthetic fixture, writing no controls.toml row (interrupted reviewer; checked)."
+  },
+  {
+   "bead": "N35-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Finished the interrupted edit: controls load through N21b-42's one loader in one namespace; debug-fold and snapshot-without-warm-start reused by name; the other five are Control rows (kind mutation, feature, gate list, seed GATE-GAUNT-07). Added cpu_lane_controls_load_by_name."
+  },
+  {
+   "bead": "N35-04",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "scope"
+   ],
+   "what": "S52: removed dep BD-203 (not a prerequisite: sim.replay's --precision with --tier is BD-204's, the 894 binding is N29a-18's), moved to related with BD-204, BD-205, N29-REF, N29a-18; the split-at-snapshot clause moved to N35-03's resume lane. H-verbs-4: a restore under another profile labelled a continuation is the container's 894 on sim.replay, BD-204 and run.fork, never 247; acceptance and unit test profile_record_binds_plan rewritten; the 247/894 pair added to N35-REF."
+  },
+  {
+   "bead": "N35-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "H-ref-2: ceilings computed with N36-05's ceiling() and filed as frob.perf.ceiling/1 records admitted by admit_experiment (the only raiser of 866), dep N36-05 added; defined --conformance-lag (conformance build only, domain 0-8, 802 otherwise, enters the identity, non-citable, distinct from --lag-bound) with unit tests ceiling_records_admitted and conformance_lag_ring; keys per run; negative control through admit_experiment. Ceiling arithmetic re-verified."
+  },
+  {
+   "bead": "N35-06",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "The citation check is cite_check, which every citing verb calls and BD-269 wires (861); deps aligned; added its own lane scripts/e2e/num_fast_training.sh (D4 train with keys, knob refusals, no default, device-replay re-evaluation under two keys, cite) per drift rule 11; a D4 arm is 542/533/561 by site."
+  },
+  {
+   "bead": "N35-07",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "S67 and H-verbs-2: a 'codes by raising site' table (check() direct, eval.compare/study.compare, study.plan/submit, eval.qualify) for D4, unrecorded, different classes, D3 without record, cross-family exact without D1, D3 exact; eval.compare answers 542 for a D4 arm, 561 for an unrecorded arm and an exact pairing the placement cannot license; KA-802 keeps 561 at check(). Added own lane scripts/e2e/num_licence_table.sh and licence_table_golden; dep STD-E2E."
+  },
+  {
+   "bead": "N35-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "H-verbs-2: step 2 uses eval.compare's one placement input --backend 1=<T> --backend 2=batch-cpu with --pairing by-address (unpaired with a finding where no decision-equivalence verdict exists); added the S67 leg: --pairing exact across families without D1 is 561 under its own key; fidelity ledger call given its required --tier-pair; removed the stale 'not yet on the row' sentence; no-device machines log skips."
+  },
+  {
+   "bead": "N35-09",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The states-only negative control is built under N35-CX's plant id states-only-comparator (feature of frob-chronicle), the one BD-177 and N35-30 row 4 load; no controls.toml row (H-cx-2)."
+  },
+  {
+   "bead": "N35-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "CX-365's plant zero-discordant-small-n is built here (verdict step 1 removed; zero_discordant_small_n_is_insufficient must fail on it); its control row is the seeding tool's (H-cx-2). Clopper-Pearson and U_net tables re-verified."
+  },
+  {
+   "bead": "N35-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The density run's sim.run call used --worlds 4096 with --designs, which the row makes exclusive with --worlds-per-design; now --worlds-per-design 1024. Operating-characteristic table, 149/299/598 and the planted-control probabilities re-verified exactly."
+  },
+  {
+   "bead": "N35-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "S56 already met (keys distinct for A/A and pair; g5_determinism; record_gate); step 7 now names BD-177's test and N35-09's plant states-only-comparator."
+  },
+  {
+   "bead": "N35-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "pad-plus-zero was built twice in one mutant namespace (here and in N35-15); it is CX-367's plant built once here (BD-160 fires it through the tile path before N35-15 exists), its control seeded by N38b-05; this bead writes no controls.toml row. Worked values (0x3F800007/0x3F800008, the midpoint-split capacities) re-verified."
+  },
+  {
+   "bead": "N35-15",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "F-U21b, H-cx-2, H-verbs-6: N21b-42 is the one loader of --mutant <name>[:<key>] (no second parser; the ten names are keyless, a key suffix is 802); each name has one BD-025 Control row with no private field: batch-wide-reduction (KA-785), pad-plus-zero (CX-367, N35-13's plant, reused) and normalizer-in-segment (CX-368) written by N38b-05's seeding tool, the other seven by this bead with seed GATE-SPARK-15; axes, divergences, admission and the specificity matrix stay in the bead's committed test table. Test batch_mutants_load_by_name replaces mutant_loader_conformance_only."
+  },
+  {
+   "bead": "N35-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "counter-reset named as N21b-42's mutant, reused by name."
+  },
+  {
+   "bead": "N35-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "S56: every spark check call spells --backend and its own --key (conditions, padding, draws, alone, each axis, repeat, controls); --report uses BD-181's form (--workload, --key, no run); --mutant through N21b-42 without key suffix."
+  },
+  {
+   "bead": "N35-18",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "S48: corpus_allowed_passes used det_sin, which N21a-11's registered set deliberately lacks (an unregistered det_* is a build error); now det_cos_2pi, with dep N21a-11 added (no cycle)."
+  },
+  {
+   "bead": "N35-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "S48: hz01_det_functions_table tabulates det_cos_2pi and det_ln (N21a-11's registered transcendental functions) instead of det_sin and det_cos. HZ-27, -25, -24, -18, -07 numbers re-verified."
+  },
+  {
+   "bead": "N35-22",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Drift rule 7: the lane ran sim.run on the referee with a draw-perturbed fixture, several worlds and a registry overlay, but sim.run at this milestone runs one world with zero torques (BD-024) and the registry (N35-23) comes later; the lane now drives the fixture through RefereeDynamics in its own example (stream_fixture) with a second StreamId and in-process world sets. All five pinned blocks and the Random123 vectors re-verified with a Philox4x32-10 implementation."
+  },
+  {
+   "bead": "N35-23",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "It had no own lane and pointed at N35-22's script, which precedes it; added scripts/e2e/streams_registry.sh (loader tests, N35-22's example extended with --registry under an appended and a renumbering copy, check-generated) with logging; N35-16 and N35-17 named as later lanes."
+  },
+  {
+   "bead": "N35-24",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "F-U24a-2 and drift rule 7: the lane's referee runs needed a task with a timed push and tile-friction randomization (N16b-25, BD-200, which depend on this bead) and used retired telemetry.query options; the lane is now host-level (design templates, a keying_fixture example, added sensor, sequential-stream, halved step) with BD-200's step 3 as the run-level later lane; the referee acceptance reworded accordingly. SequentialStream is built under CX-371's plant id sequential-stream."
+  },
+  {
+   "bead": "N35-32",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "H-owners-1: g5_determinism with FROB_TEST_SEED; keys on every run verb; case 1 expects 542 at eval compare and 561 at the check through licence_harness; distinct re-evaluation keys asserting idempotent_replay false; hand-off by record_gate."
+  },
+  {
+   "bead": "N35-REF",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "H-ref-2, H-verbs-2, H-verbs-7: row 561 states its sites (eval.compare/study.compare 542 first; 561 for an unrecorded arm or an exact pairing the placement cannot license; Arena admission 533; check() direct 561, KA-802); neighbour row 561/542/533/825; new row 247/894; symmetric-related test extended; N28-REF, N24-REF, N29-REF considered."
+  },
+  {
+   "bead": "N35-27",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "S52: the block now carries, as separate running maxima, closure_max, penetration_max (beyond compliance) and complementarity_max beside membership_ulp_max, and the energy group is rho_max = |R|/W with zero_work_worlds excluded and counted, which BD-179 and N21bp2-01 read; acceptance line and tests energy_rho_excludes_zero_work and contact_violations_separate added; script thresholds renamed."
+  },
+  {
+   "bead": "N35-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Drift rule 7: the lane's 865 case went through 'the shared citation check', which is N35-06's (M3, not a dependency); 865 is now raised by this bead's one function frob_core::summary::check_offered on every verb's input path, and the lane calls it."
+  },
+  {
+   "bead": "N35-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "H-cx-2: the host-form plants are built under N35-CX's identifiers (uncentred-offset-range, chol-scale-by-ten, unscaled-residual-tolerance; device forms BD-179 and BD-156) and the other controls are reused by name (states-only-comparator N35-09, sequential-stream N35-24, pad-plus-zero N35-13, the N35-15 mutants); no controls.toml row written here. Row 1's alone/co-tenancy arms now use sim.replay --alone and --co-tenants with their own keys; row 6 follows N35-24's host-level lane."
+  },
+  {
+   "bead": "N35-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Its continuation of a default snapshot under stiff expected 247; one condition, one code: run.fork --precision stiff and sim.replay --tier --precision without --comparison now expect the container's 894 (never 247), the comparison replay admitted; 894 added to the acceptance codes; stale 'VERBS-sim is asked' clause removed (the row lists --require); rho_max naming. No 561/542 case at M2 (they are N35-32's)."
+  },
+  {
+   "bead": "N35x-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "H-owners-1: N35-33 rule 8 assigns no 8xx before the hold, so the 'number assigned before the hold stands' clause is replaced; the first round's 8xx requests (Kinesis 2, Arena six by N24-REF's count, Performance 1, Surface 2) are counted with N35x-02's 21 (32 against 4); 838 is a held proposal, never an interim (rule 7); tests first_round_8xx_all_held and held_proposal_not_interim."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N21b-42",
+   "what": "its Control rows write gate as a string; BD-025's Control record has gate as a list (gate = [\"GATE-...\"])."
+  },
+  {
+   "bead": "N29-REF",
+   "what": "row 894 should name 247 as its neighbour (247: the class a verb requires is not attainable on the placement; 894: a snapshot restored under another numerical profile labelled a continuation), with one sentence each, as N35-REF now does."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "add --conformance-lag <l> to train.start (N35-05: conformance build only, 0 to 8, 802 otherwise, enters the identity, non-citable; distinct from N36-12's --lag-bound)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "FROB-REF-861 (a training-time or D4 summary cited as evidence) is raised by every citing verb through cite_check (N35-06, wired by BD-269) but appears in no row's refusal list; list it on the citing verbs."
+  },
+  {
+   "bead": "N37-REF",
+   "what": "its line grouping 'D4 or unrecorded' as 542 at eval.compare: VERBS-eval and BD-262 give 561 for an unrecorded arm there (542 is the D4 arm); split the two."
+  },
+  {
+   "bead": "N35-CX",
+   "what": "CX-367's 'Planted by' names N35-15, but pad-plus-zero is built by N35-13 (BD-160 fires it through the tile path and does not depend on N35-15; N35-30 row 2 binds it to N35-13); name N35-13 as planter and N35-15 as a user."
+  },
+  {
+   "bead": "N38a-16",
+   "what": "MR-01's two registered mutations (a reduction tree shaped by capacity; a batch-wide normalizer) are N35-15's capacity-shaped-tree (Control row seed GATE-SPARK-15) and normalizer-in-segment (CX-368's seeded control); bind MR-01's records to those controls rather than new nc-<nnnn> features, so one plant has one control (N38b-05 step 4)."
+  }
+ ],
+ "unchanged": 6,
+ "notes": "All 37 reviewed. Unchanged: N35-14, N35-20, N35-21, N35-25, N35-26, N35-29 (numbers re-verified, e.g. Philox blocks, histogram bins, OC tables). Most changes apply the one-loader, one-plant-id and one-code conventions and give BD-177, N35-23 and N35-24 lanes that use only their dependencies. Reading of H-cx-2 for N35-15: rows with a CX or KA seed are the seeding tool's; the seven mutants no entry states are registered by N35-15 with seed GATE-SPARK-15 (BD-025's form, as N35-03 and N21b-42 do)."
+}

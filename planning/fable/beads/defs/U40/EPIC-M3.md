@@ -4,12 +4,12 @@ title: "Milestone M3, places, tasks, adversaries, qualification: comparable resu
 type: "epic"
 priority: 2
 milestone: "M3"
-labels: ["m3", "delivery", "solid", "gate", "tenfold"]
+labels: ["m3", "delivery", "solid", "gate", "tenfold", "review-notes-open"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-319", "N40-14", "N40-15", "N40-19", "N40-20", "N40-22", "N40-25", "N40-26", "N40-04", "N40-05", "EPIC-M2", "EPIC-M4"]
-gates: ["GATE-TENFOLD-03", "GATE-TENFOLD-04", "GATE-TENFOLD-05", "GATE-TENFOLD-06", "GATE-TENFOLD-10", "GATE-TENFOLD-11", "GATE-TENFOLD-13", "GATE-QUAL-01", "GATE-QUAL-02", "GATE-NEMESIS-02", "GATE-AUTOPSY-03", "GATE-ATEL-01", "GATE-REFLEX-02", "GATE-FID-02", "GATE-TETHER-01", "GATE-GAUNT-01", "KILL-STATIC", "KILL-BASELINE", "KILL-NEMESIS", "KILL-AUTOPSY", "KILL-AUGUR-TIE", "KILL-FAMILYCERT", "KILL-TENFOLD-SPEED", "KILL-TENFOLD-TIE"]
+related: ["EPIC-M4", "EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-14", "N40-15", "N40-19", "N40-20", "N40-22", "N40-25", "N40-26", "N40-28"]
+gates: ["GATE-TENFOLD-03", "GATE-TENFOLD-04", "GATE-TENFOLD-05", "GATE-TENFOLD-06", "GATE-TENFOLD-10", "GATE-TENFOLD-11", "GATE-TENFOLD-13", "GATE-QUAL-01", "GATE-QUAL-02", "GATE-NEMESIS-02", "GATE-AUTOPSY-03", "GATE-ATEL-01", "GATE-REFLEX-02", "GATE-FID-02", "GATE-TETHER-01", "GATE-GAUNT-01", "KILL-STATIC", "KILL-BASELINE", "KILL-NEMESIS", "KILL-AUTOPSY", "KILL-AUGUR-TIE", "KILL-FAMILYCERT", "KILL-TENFOLD-SPEED", "KILL-TENFOLD-TIE", "KILL-TENFOLD-ADJ", "KILL-TENFOLD-REACH"]
 plan_refs: ["§43.6", "§43.1", "§43.2", "§40.6", "§40.3", "§40.4", "§40.5", "§43.12", "§39.12"]
 ---
 ## Background
@@ -203,7 +203,10 @@ complete before sealing). Then GATE-TENFOLD-06, the partial gate: on `legged-qua
 `envelope` and `sensing` where ready, the pooled ratio with its interval, verdict, completion, coverage, tie test
 and phase ledgers for arms A, B and C, with the outcome rules applied; met when the record exists, whatever the
 ratio; M3 does not exit without it. GATE-TENFOLD-13: the recovery ratios with 95% intervals and the three phase
-ablations. GATE-TENFOLD-09, GATE-GROUND-01, GATE-SAFE-01, GATE-GAUNT-01 to -03 recur.
+ablations. GATE-TENFOLD-09, GATE-GROUND-01, GATE-SAFE-01, GATE-GAUNT-01, -02, -03, -05 and -10 recur; at this exit
+GATE-GAUNT-02 must print zero for the count of Appendix M rows due by M3 whose tolerance is `to set` or whose
+control is `none stated`. GATE-GAUNT-08 at each funding decision: the Frontier parts of WP-27, WP-53, WP-55, WP-57
+and WP-59 are funded only on a pilot record with a falsifier, a computed ceiling, a fallback and a result.
 
 **5. Kill gates decided here.** In brief: KILL-STATIC → `design check` verdicts become advisory lints and the
 pruning claim is withdrawn. KILL-BASELINE → synthesis is limited to the classes that pass; others route to the
@@ -213,7 +216,7 @@ KILL-AUTOPSY → single-factor paired re-runs from the episode start. KILL-DR an
 referee episodes alone; the referee at promotion time only. KILL-FAMILYCERT and KILL-AUGUR-TIE, read at the
 partial gate → mission answers come from generic solvers behind the same verbs, schema and checker.
 KILL-AUGUR-FALSECERT applies to both arms of the partial gate. The rule of BET-13 is applied per mission class at
-the partial gate (KILL-TENFOLD-SPEED, -TIE, -REACH for the classes run).
+the partial gate (KILL-TENFOLD-SPEED, -TIE, -ADJ and -REACH, one decision per cell run, taken again at M7: N40-28).
 
 | Kill gate | Trigger | Fallback, named in advance | Decided | Owner (consumer) |
 |---|---|---|---|---|
@@ -270,7 +273,10 @@ adapter is a supported binding; default: built and gated for the test and for co
 (a quantifier-elimination or SMT engine as a production dependency; default: comparator only). OPEN-HAB-1 and
 OPEN-HAB-4 (cited sources for dimensional norms and retrofit prices; default: generic ranges labelled `assumed`,
 constraints marked unchecked). OPEN-SHIELD-2 (α = 10⁻³ and a budget of 10⁻³ per episode by default). OPEN-SAFE-4
-(retention defaults as at M2).
+(retention of job logs, idempotency keys and retired confirmation clusters; default: job logs and keys 30 days,
+retired clusters sealed indefinitely). OPEN-TENFOLD-4, the compute envelope of the partial gate (a campaign class
+per run, and the pretraining class where an arm builds a standing asset); its default blocks this exit (see
+Considerations; decision bead N39b-29).
 
 **9. Stop or re-plan.** The partial gate decides, by the rule written before it runs. A measured ratio under 3 on a
 mission class withdraws the speed claim for that class. Under 3 on every class, speed work is no longer funded, the
@@ -308,7 +314,8 @@ gate labelled `self-adjudicated`.
 - [ ] Every part in the gate tables has a recorded value and a caught negative control.
 - [ ] GATE-TENFOLD-03, -04, -05, -10, -11 are recorded before the sealed suite is opened; GATE-TENFOLD-06 and -13
       are recorded with a phase ledger per arm; the outcome rules are applied per class.
-- [ ] The 28 kill gates of the compiled table and the 6 late ones each have an ADR with an outcome;
+- [ ] The 28 kill gates of the compiled table and the 6 late ones each have an ADR with an outcome; each cell run
+      at the partial gate has its decisions of KILL-TENFOLD-SPEED, -TIE, -ADJ and -REACH (N40-28);
       KILL-AUGUR-REUSE, KILL-TENFOLD-CERT and KILL-TENFOLD-LEAK are registered as standing from here.
 - [ ] NS-03, NS-04, NS-09, NS-15, NS-16 and NS-17 run from a clean checkout through `frob --json` and `frob-mcp`.
 - [ ] GATE-CORTEX-12 is recorded as a pilot and GATE-AUGUR-09 as a pilot; neither is printed as the whole gate.
@@ -337,7 +344,10 @@ bootstrap certifying ten-fold in 78.6% ± 3 points of rare-tail campaigns.
 ## Considerations
 
 - The partial gate exceeds the default compute envelope (HYPOTHESIS: about 70 device-hours per design cell; worst
-  case 288). Without approval it is recorded `not run` and M3 does not exit.
+  case 288) and needs the owner's approval of a campaign class per run (OPEN-TENFOLD-4). At its default nothing
+  above the default class runs: a partial gate whose every stratum is `not run` is no outcome and M3 does not exit;
+  CPU strata recorded with the device strata `not run`, each with its reason, are a recordable outcome (the M3 exit
+  check of N41-15).
 - 28 + 6 kill decisions in one exit is the heaviest decision load but one; each needs its ADR, not a summary.
 - A class withdrawn at M3 stays withdrawn until M7 measures it on fresh sealed families.
 

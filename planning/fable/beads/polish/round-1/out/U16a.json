@@ -1,0 +1,290 @@
+{
+ "round": 1,
+ "slice": "U16a",
+ "reviewed": 36,
+ "changed": [
+  {
+   "bead": "BD-081",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Restorable was said to be implemented by frob-actuate, frob-contact and frob-scene, which rank below frob-dyn and cannot implement its trait (L-1); frob-dyn now implements it over their exported state types and only the crates above (frob-sense, frob-chronicle) implement it as an L-10 inversion. Inventory and packet-queue omission tests that need frob-sense moved to N16c-03 (as BD-083 already says); the taxonomy mapping of numerical-fault is BD-094's (higher seed, cannot be a dep) and asserted end to end. Added dep N22a-01 (controller/state-source save/load used for restore component 6)."
+  },
+  {
+   "bead": "BD-082",
+   "kinds": [
+    "title",
+    "correct",
+    "tests"
+   ],
+   "what": "Title said T4.1 to T4.7 but T4.7 is BD-093's. The refinement law was said to be implemented by BD-083; it is N16c-01's (which depends on this bead, so a hook, not a dep). The accumulation test claimed the restitution-0.5 ball from 1 mm trips E_max = 64; recomputed: impacts accumulate at 42.835 ms and the gap falls below one 30.5 ns cell after about 14 impacts in that base interval, so the level clause (L_max) fires; test corrected and a separate 65-touchdown fixture added for the count clause."
+  },
+  {
+   "bead": "BD-088",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The heavy-top fixture at nutation 90 degrees lowers the spherical pivot to three one-axis joints; a yaw-pitch-roll order sits exactly on its gimbal singularity there. Fixed the order (vertical, nodal, symmetry axis; singular only at 0 and 180 degrees) and the lint that refuses the singular one. Other numbers recomputed and correct (T = 2.1540 s, K(1/2) = 1.68575, Omega = 4.905 rad/s, 2R values)."
+  },
+  {
+   "bead": "BD-089",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "The reference-robot asset beads (ROBOT-a1, -anymal-b, -anymal-c, -fsim-g1, -g1, -go1, -go2, -h1, -spot, -stretch3, -tiago; all M1) are prerequisites of the gate and became deps instead of related; the KUKA iiwa 7 asset lands at M3 (ROBOT-iiwa7), so its row is recorded as pending at M1 and added by re-running at M3."
+  },
+  {
+   "bead": "BD-159",
+   "kinds": [
+    "self-contained",
+    "scope",
+    "users",
+    "tests"
+   ],
+   "what": "Graph bottleneck: kept as one driver (its parts are one piece of work) but made explicit which stage kernels are bound here and which by later beads that depend on it (K-np-sdf/K-np-thin BD-166, K-ledger-step BD-208, K-sense-* N20b-30/N20b-44/BD-189, K-obs BD-189, K-film BD-230), with the bound kernel set in the StepPlanId, FROB-REF-724 at admission for an empty slot whose input is present, and K-reset written here as the masked reset primitive the Reset overflow policy needs. Recorded the 722-versus-610 conflict (KA-349 names 722 on every lockstep site). Added two unit tests."
+  },
+  {
+   "bead": "BD-169",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "WorldSlots must be defined in frob-dyn (frob-phylum ranks above it); said so. The CLI acceptance used --designs, which N16b-25 adds after this bead (N16b-25 depends on BD-169); the bead now accepts on the library entry point and the CLI form is asserted by N16a-19. Reflected-inertia test wording fixed (0.0081 to 0.0144 is the N^2*J_rotor term, not the whole diagonal)."
+  },
+  {
+   "bead": "BD-384",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "Acceptance (c) made the mechanism record the kill decision, which N16a-22 (depending on it) owns; now the bead records the inputs clause A and B read (lower bound of the paired per-step ratio against 2; repair cycles of the momentum row). The tree energy-band test is labelled a HYPOTHESIS test never printed as a claim, matching the plan's 'not claimed' wording."
+  },
+  {
+   "bead": "BD-385",
+   "kinds": [
+    "scope",
+    "deps",
+    "correct"
+   ],
+   "what": "Addressed the reconciliation request: KILL-SKEL-PORT's ADR is N14a-24's, KILL-TREEOP's N16a-23's. Part B duplicated N14a-22 (packet type, recursion, PO-SKEL-04 property tests) and N14a-23 (hand pilot); narrowed to the packets' use inside the tree-operator prototype (batched packets, base solve, contact routing, timing arm) with N14a-22's output attached; added dep N14a-22. All operation counts recomputed and correct (375/969, 1742/7140, 5744/43680, solves 216/324, 647/1225, 1600/4096)."
+  },
+  {
+   "bead": "N16-KA",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Owners of KA-340 and KA-341 corrected: the refinement law and its statistical test are N16c-01's (BD-083 uses it under retry); the packet-queue omission control needs frob-sense and is N16c-03's, the warm-start control stays in BD-081. All arithmetic recomputed and correct (byte formulas, KA-350, -352, -354, -361, -362)."
+  },
+  {
+   "bead": "N16a-01",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The inversion list was wrong on four counts: KernelBackend is BD-014's in frob-kernels; Controller, ActionFilter and StateSource are declared by N22a-01 in loop_traits.rs (a duplicate definition); frob-actuate, frob-contact and frob-scene rank below frob-dyn and cannot implement its trait (frob-dyn implements Restorable for their types); EpochReader is a struct of BD-081 and not an inversion. Now declares Restorable and EnergySink with markers, adds their two L-10 register rows under ADR-WS-05 (ADR-WS-04 is N34x-01's) and moves the register count from five to seven; tests and acceptance for rows, an unlisted implementor and single definition. Deps BD-003, N34-06, N34-14."
+  },
+  {
+   "bead": "N16a-02",
+   "kinds": [
+    "complete",
+    "tests",
+    "correct"
+   ],
+   "what": "Admitted is not built: at M1 only the referee step exists, so an admitted pair whose step is absent (batch-cpu lockstep until BD-159, strict until BD-161) now refuses with FROB-REF-724 (exit 5, agreeing with frob capabilities) instead of being confused with FROB-REF-222 (exit 3, outside the matrix); acceptance and unit test added. Removed the claim that this bead registers FROB-REF-222 (N16-REF, a dep, does)."
+  },
+  {
+   "bead": "N16a-03",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Warm start was missing from the hashed StepPlan although with a fixed iteration count it changes the iterates (OPEN-KIN-1 decides iterations 'with warm start'); added with its sensitivity test. The pairing refusal on solve_path is now this bead's predicate StepPlan::pairable that studies call. The two-identity property test now handles the declared coupling of a clock edit (physical, N16a-04) with the derived world_steps_per_control."
+  },
+  {
+   "bead": "N16a-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Strict-fallback routing asserted completion on batch-cpu:strict at M1, but the strict profile is BD-161 at M2; the M1 behaviour is now defined (the referee's FROB-REF-721 returned with the repair marked not in this build, adjudicator none, nothing approximated) and completion is asserted at M2 by N16a-20. The no-truncation test used an interposed test airlock; it is now an instrumented wrapper forwarding to the real airlock."
+  },
+  {
+   "bead": "N16a-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The noise tree addressed by (base interval, level, index) is N16c-01's, not BD-083's."
+  },
+  {
+   "bead": "N16a-07",
+   "kinds": [
+    "correct",
+    "related"
+   ],
+   "what": "Prescribed-surface boundary work is credited through the EnergySink trait frob-dyn defines and enters check 5; no M1 scene has a moving surface (moving surfaces are N24a-43 at M4), so the end-to-end reading of the ledger line is N24a-43's, not N16a-10's; related N24a-43."
+  },
+  {
+   "bead": "N16a-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Check 5 depends on BD-092 (frob-chronicle, layer 6), which frob-dyn may not link; said how the balance is computed in frob-dyn from its own and lower crates' terms and written through EnergySink. The check-8 test is rebuilt as a backstop, since T4 refuses the 65th event before T5 runs."
+  },
+  {
+   "bead": "N16a-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The positive-control fixture is a 1 mm drop but its accumulation time was computed for a 1 m drop (1.3546 s); recomputed: t* = 14.278 ms, accumulation at 42.835 ms in base interval [42, 44) ms; stated which clause of FROB-REF-220 fires at L_max 16 and 21 and that the table records it."
+  },
+  {
+   "bead": "N16a-10",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Added the admitted-but-not-built admission check (FROB-REF-724) read against frob capabilities; corrected the accumulation step (level clause, interval [42, 44) ms); the M1 strict-fallback step is asserted (721 with repair not in this build) instead of skipped; added a thin-plate run for check 6's audit record that N16a-08 claimed of this script; one metric line per check; physical_params_digest equality on forced retries that N16a-04 claimed of this script; dep BD-094 (telemetry.failures is used)."
+  },
+  {
+   "bead": "N16a-11",
+   "kinds": [
+    "tests",
+    "related"
+   ],
+   "what": "The acceptance that linear_tick_map equals stepping the integrator d times had no test; added linear_tick_map_equals_stepping with an exact-hold mutant. Noted that K-ledger-step is bound by BD-208 (receipt says energy_ledger absent until then). All arithmetic recomputed and correct (Cayley maps, slider radii for every d, 0.952381 damping, 30 Hz on 400 Hz lateness)."
+  },
+  {
+   "bead": "N16a-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "PO-KIN-02 test padded a size-35 system to 24; sizes now padded only to capacities at least their size. Named who enforces each of the eight batch-independence rules (N35-14 audit, N21a-06 registration, N21b-15 rule L4, N35-13 kernels) and added step-level tests for rules 5, 6 and 7, which had none."
+  },
+  {
+   "bead": "N16a-13",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Digest identity of the path-table store fails for any world that overflows its dense side buffer R_dense, a Degraded reason that exists only under that store; the overflow count is now part of the gate record and blocks the default switch per shape class. P_cap and R_dense move with jacobian_store when it becomes an execution option, or a digest-neutral option would still change StepPlanId."
+  },
+  {
+   "bead": "N16a-14",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Cited the standard battery as N16b-01, which is superseded by N38a-20. All byte-model, row-rule and share arithmetic recomputed and correct."
+  },
+  {
+   "bead": "N16a-15",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Cited superseded N16b-01 (now N38a-20). The rule test claimed a tail of exactly 1e-4 above 40 contacts passes at C = 40, contradicting the rule's use of the 95% upper bound; rewritten with exact counts (200 and 50 in 1e6) and a test of the lowering clause added."
+  },
+  {
+   "bead": "N16a-16",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Merged content of N16c-06 verified present (hold-unsafe, admissibility rule with 1.15/1.0 gain, frob.frontier/1, clock-changing negative control). Fixed: decimation 2 is not hold-unsafe (radius 0.784, stable but fails 49 of 64 deadline cases) and decimations 1 and 2 are not in the grid; grid radii given (0.461, 0.418, 0.395, 0.316). The sampled-loop analysis N16c-42 depends on this bead (via BD-212), so the stability check now uses N16c-41's fixture and N16a-11's linear_tick_map; deps N16c-41, N16c-43; N16b-01 replaced by N38a-20."
+  },
+  {
+   "bead": "N16a-17",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "The harness needs every reference robot's model: the eleven M1 ROBOT asset beads became deps; the KUKA iiwa 7 (ROBOT-iiwa7, M3) is pending at M2, as in BD-089."
+  },
+  {
+   "bead": "N16a-18",
+   "kinds": [
+    "complete",
+    "deps"
+   ],
+   "what": "Other beads claimed steps this script lacked: retraction and max_omega_h (N16a-11), iteration count and gradient-norm certificate (BD-159), the held-command run at d = 1 and 4 (N16a-11), the dense-row-overflow count of the path-table step (N16a-13); added. The energy-ledger assertion needs K-ledger-step: deps BD-208 and N16c-41."
+  },
+  {
+   "bead": "N16a-19",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Sweeps per reference robot need the robot assets: ROBOT deps added, iiwa 7 pending until M3. The invalid-cone refusal is named (FROB-REF-240, exit 3)."
+  },
+  {
+   "bead": "N16a-20",
+   "kinds": [
+    "complete",
+    "deps"
+   ],
+   "what": "N16a-05 and N16a-10 defer the completion of strict-fallback to this script; added the single-run step (adjudicator batch-cpu:strict with referee_refusal attached; referee-only exits 5 with FROB-REF-721); dep BD-161 made direct."
+  },
+  {
+   "bead": "N16a-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Aligned with the kill-gate record format of N40-03: ADR path docs/delivery/adr/ADR-KILL-VARIATIONAL-M5.md, outcomes not-fired/fired/not-reached instead of pass/killed, beads re-read as superseded by the ADR instead of re-closing BD-384 (already closed, as a dep), the capability renamed to its fallback. The killed-at-pilot path stated how this bead is released (BD-384 closed unfunded) and tested."
+  },
+  {
+   "bead": "N16a-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Reconciliation request already satisfied (KILL-TREEOP only). Aligned with N40-03 as N14a-24 requested: ADR docs/delivery/adr/ADR-KILL-TREEOP-M5.md (M2 if the early read closes it), decision row with outcome not-fired/fired, the KILL-SKEL-PORT record path corrected, BD-385 and N16a-24 re-read instead of re-closed; decision-row test added. Ceiling arithmetic recomputed and correct."
+  },
+  {
+   "bead": "N16ax-01",
+   "kinds": [
+    "deps",
+    "related",
+    "tests"
+   ],
+   "what": "The strict-profile behaviour needs BD-161 (dep added) and a test that a retried interval does not double-count changes. The consumers (N17a-12, BD-356, N17b-22, N22a-30) already depend on this bead, so the promised cross-check moved to their own tests; N16b-24 still has a private ModeSignature (request filed)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N21b-23",
+   "what": "Capacity overflow under the refuse policy is raised as FROB-REF-610 (exit 6) on devices, while KA-349 and BD-159 use FROB-REF-722 (exit 5) for the same condition on the lockstep, CUDA and Metal sites; one condition should have one code across tiers (KA-349 favours 722)."
+  },
+  {
+   "bead": "N17a-03",
+   "what": "WorldSlots is defined by BD-169 in frob-dyn (the step reads it and frob-phylum ranks above frob-dyn); N17a-03 lists the type in its own In-scope and should use BD-169's definition instead of declaring it."
+  },
+  {
+   "bead": "N22a-01",
+   "what": "Controller, ActionFilter and StateSource are declared in frob-dyn (layer 3) and implemented by frob-control (layer 4): L-10 inversions. Add their marker lines and register rows in crates/xtask/src/inversions.rs citing ADR-WS-05 (written by N16a-01, a dep of N22a-01), and raise the register's row count accordingly."
+  },
+  {
+   "bead": "N34x-01",
+   "what": "Kinesis adds L-10 rows at M1 (N16a-01: restorable, energy-sink under ADR-WS-05; N22a-01: the three loop traits), so at M3 the register is not at five: the member-sizer row is one more row, the count change is from the M3 count, and the rule that rows beyond the fifth cite an ADR must accept the ADR-WS-05 rows. ADR-WS-04 stays N34x-01's."
+  },
+  {
+   "bead": "N34-06",
+   "what": "The known answer 'exactly five inversions exist' and the test register_has_five_rows hold only at M0; N16a-01 raises the count at M1. Consider stating it as five standing rows plus any later row with its ADR, so later beads extend rather than contradict it."
+  },
+  {
+   "bead": "N16b-24",
+   "what": "Its ModeSignature (active set plus each row's law region) is a fourth definition of the contact mode that N16ax-01 (M2) defines once as ContactSetSig; compose it from ContactSetSig plus the row-law bits, as BD-356 does for lanes, and add N16ax-01 as a dependency."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "complete: 36 of 36 reviewed; unchanged BD-150, BD-213, N16a-04, N16a-21, N16a-24; no new beads, no merges"
+}

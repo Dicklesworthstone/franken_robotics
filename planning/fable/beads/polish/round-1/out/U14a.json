@@ -1,0 +1,344 @@
+{
+ "round": 1,
+ "slice": "U14a",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "BD-054",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "the escaped-duplicate example had lost its backslash (`\"a\"` and `\"a\"`); restored `\"a\"` and `\"\\u0061\"` in the acceptance and the unit test, with the planted raw-name reader as control; the reachability criterion through `frob design show` (N14a-21, which depends on this bead) is now asserted there, and here through the crate API on the golden corpus"
+  },
+  {
+   "bead": "BD-055",
+   "kinds": [
+    "correct"
+   ],
+   "what": "labelled the refusal code of a missing `power_bus` (FROB-REF-103) as DESIGN with its reason; the plan names no code for a missing required block"
+  },
+  {
+   "bead": "BD-059",
+   "kinds": [
+    "sense",
+    "deps"
+   ],
+   "what": "Considerations said `design.edit` is implemented as a patch of length one, which inverts the dependency on BD-058; now both verbs share BD-058's engine and this bead's commit step, kept in step by the metamorphic test"
+  },
+  {
+   "bead": "BD-061",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "the frames criterion depended on N14a-21 (a downstream bead); now asserted through the crate API, with CLI reachability left to N14a-21; named the upstream item FD-FSIM-01 for the interim joint lowering and added FD-FSIM-01/-04 as related"
+  },
+  {
+   "bead": "BD-062",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Scope now names who measures the second clause of GATE-SKEL-07 (archetype masses within 15%): BD-109 at M1, BD-246 at M3"
+  },
+  {
+   "bead": "BD-066",
+   "kinds": [
+    "correct",
+    "risks",
+    "deps"
+   ],
+   "what": "acceptance claimed GATE-SKEL-01 rows for every MJCF robot while the approach closes on two hand-captured fixtures (BD-067 follows); reconciled, full rows recorded by N14a-31. The `armature` open point contradicted the mapping table; now: override applied and listed with severity high until the lead confirms; the import-over-limit refusal is now named FROB-REF-832 (N37-REF) and deps add N37-REF, with N37-05 related"
+  },
+  {
+   "bead": "BD-077",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "a stale `--parent` argument was refused with FROB-REF-112, which N14-REF and N32-REF reserve for a design.patch document; now FROB-REF-804 (exit 7); added 803 and 805 to the refusal row; labelled the condition evaluations DESIGN and conservative"
+  },
+  {
+   "bead": "BD-227",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "added deps NAB-09 (the source register the loader checks `norm:`/`measured:` against) and N19a-05 (the manifest recount its acceptance compares with); named the register file and schema"
+  },
+  {
+   "bead": "N14-KA",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance said six rows lack a stated control; there are seven (KA-262, -263, -269, -287, -288, -290, -292) and KA-269 had none: added a planted control (pole with gravity reversed); KA-292's controls were attributed to BD-059 alone, the binary64 migration control is N14a-18's"
+  },
+  {
+   "bead": "N14a-01",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "the unit parser handled only scale factors; added the exact affine conversion of `degC` in absolute-temperature fields and its refusal in temperature-difference fields, with a unit test"
+  },
+  {
+   "bead": "N14a-02",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "acceptance compares extraction on the unexpanded term with the elaborated tree and reads every block, but deps had only BD-054: added N14a-07 (which carries every block bead); the known-answer section cited `copied_port_is_delivered_twice`, which was not in the unit-test list: added it"
+  },
+  {
+   "bead": "N14a-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "missing `material` and missing `mass_properties` refused with no code; now FROB-REF-103 with `observed: missing` (DESIGN, reason stated), repair offered never applied"
+  },
+  {
+   "bead": "N14a-05",
+   "kinds": [
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "the interface-material check could not run on a `declared` end effector with no material (every imported body); defined the rule (interface material recorded as sole material, provenance `assumed`) and added a unit test"
+  },
+  {
+   "bead": "N14a-07",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "an expansion over its instance or depth limit had no code; now FROB-REF-832 (N37-REF, added as dep), computed before allocation; acceptance names codes 101, 103 and 832"
+  },
+  {
+   "bead": "N14a-08",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "stage-1 table lacked FROB-REF-107 (missing limits) and named the card catalog and module format by bead; added the row, 832 as uncounted, the fixture count (at least 23) and the rule that no other code may appear"
+  },
+  {
+   "bead": "N14a-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "SensorChannel and ContactBinding carried `CardHash`, a second name for the plan's `CardId`; renamed throughout with the test `override_changes_card_id`"
+  },
+  {
+   "bead": "N14a-10",
+   "kinds": [
+    "deps"
+   ],
+   "what": "the per-subtree pseudo-inertia sums read `declared`/`massless` bodies (N14a-13) and union/difference/mesh bodies (N14a-14) but neither was a dependency; added both"
+  },
+  {
+   "bead": "N14a-11",
+   "kinds": [
+    "placement"
+   ],
+   "what": "the symmetry functor of frob-model sat under WP-38 (modules, archetypes, preflight); moved to WP-07, the work package of the frob-model functors"
+  },
+  {
+   "bead": "N14a-13",
+   "kinds": [
+    "sense",
+    "users"
+   ],
+   "what": "BD-100 (A-02) re-implements the consistency, mass-support and massless checks with a weaker ball-only support test and a non-refusing massless finding; stated that the checks are written once here as frob-model functions that A-02 calls, with the refusing massless rule and all enclosing sets"
+  },
+  {
+   "bead": "N14a-14",
+   "kinds": [
+    "correct",
+    "complete",
+    "risks"
+   ],
+   "what": "the milestone note said the mesh half (N33a-30) arrives at M2; it was moved to M1 and is a dependency, so the note now states the M1 plan with the fail-closed fallback; a mesh that fails admission and an over-wide quadrature bound were refused with no code: now filed with the allocation ledger (N35-33, added as dep) and raised meanwhile on interim FROB-REF-102 (N14a-03's code for a Region value outside its domain) behind a named constant with pointers region.admission/region.bound, payload and repairs, with an acceptance line"
+  },
+  {
+   "bead": "N14a-16",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "decision record now follows N40-03 (ADR path and fields, `decision` in gates.toml, recording session not an implementer, no second repair cycle, `not-reached` outcome); dep N40-03 added; acceptance no longer requires the downstream M1 exit review; the decide script's NDJSON lines and failing controls specified"
+  },
+  {
+   "bead": "N14a-17",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "row 12's fixture (`foot-patch` → `pad`) is illegal on quad-a's sphere feet (FROB-REF-121 per N14a-05): fixture is now `skid` on quad-a and `pad` on a box-foot variant, with a test; acceptance said all seven one-instance rows are tested but the unit test named five: rows 1 and 12 added"
+  },
+  {
+   "bead": "N14a-18",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance said the envelope carries 'six listed fields'; it lists eight (validity optional); named them, with a unit test"
+  },
+  {
+   "bead": "N14a-19",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "had no end-to-end script; added `scripts/e2e/skel_sexpr_admission.sh` with eight logged steps (pin, requirements, corpus, fuzz, build cost, layers, negative control, summary checked against the ADR), an acceptance line and dep STD-E2E"
+  },
+  {
+   "bead": "N14a-20",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "same N40-03 alignment as N14a-16 (ADR path and fields, gates.toml decision, session rule, no second cycle); acceptance no longer requires the downstream exit review; added `scripts/e2e/decide_kill_skel_sexpr.sh` with logged lines and failing controls; deps N40-03 and STD-E2E"
+  },
+  {
+   "bead": "N14a-21",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "design.new lacked the registry's outputs (parameter point, computed symmetry groups) and design.show the levers and locks: added `result.params`, `result.symmetry` and a `levers` section (dep N14a-06); name conflict, unknown name and missing catalog had no codes: FROB-REF-804, -802, -724; evidence class per verb (static vs pass-through, weakest section); the scope-check criterion needed the M2 token check (N32b-01) and is now left to it; `--at` now takes a file of configurations (one compile, frame sets in order, at most 10⁵) so the GATE-SKEL-01 parity run of N14a-31 is one invocation; file arguments go through the path jail (dep N37-11, FROB-REF-734)"
+  },
+  {
+   "bead": "N14a-22",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "had no end-to-end script; added `scripts/e2e/skel_limb_port.sh` (default build has no port symbols, exact fixtures, the pilot's two-link values, the 10⁴-limb PO-SKEL-04 battery with thresholds, planted controls caught, summary = the PO-SKEL-04 receipt N14a-24 reads) and dep STD-E2E"
+  },
+  {
+   "bead": "N14a-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Case B's rank was stated as 'at most 4'; it is 3 (two point masses give rank 5, two free joints remove two); worked the exact Case B packet (seven non-zero entries), pivots 9/100 and 8/25, and bias (0,0,0; −10/3, −5/2, 0), checked by Newton's equations, as fixed expected values with a unit test"
+  },
+  {
+   "bead": "N14a-24",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "decision record aligned with N40-03 (ADR path and fields, `decision` outcome vocabulary in gates.toml instead of `pass`/`killed`, session rule, propagation), the KILL-TREEOP record found through its gates.toml row instead of a hard-coded path; acceptance no longer requires the downstream M5 exit review; dep N40-03"
+  },
+  {
+   "bead": "N14a-25",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "export refusals had no codes: `--out` outside the roots FROB-REF-734 (path jail N37-11, added as dep), `--visuals glb` before N14b-21 FROB-REF-724, private asset or licence FROB-REF-731/-733 at the export door (N37-18, M3); acceptance and unit tests for them and for a stage-1-refused design"
+  },
+  {
+   "bead": "N14a-26",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "acceptance required the product canonicalizer (BD-054, which depends on this bead); the harness is now a function over any canonicalizer, accepted with the reference and failing with three planted canonicalizers, and the product run is BD-054's; added `scripts/e2e/skel_design_golden.sh` (selftest, fresh regeneration reproduces every expectation, harness) and dep STD-E2E"
+  },
+  {
+   "bead": "N14a-27",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "other beads state this script asserts things it had no step for: added steps 12 (bored-box exact mass, capsule-mesh fit; N14a-14), 13 (FROB-REF-115 at stage 6 with set-fill first; N14a-10), 14 (verb refusals 803, 805, 804, 802, 103; N14a-21), the quad-a stages 1-5 pass (N14a-11), budget values and the levers section; removed the stale 'skip a missing verb' consideration (every verb is a dependency)"
+  },
+  {
+   "bead": "N14a-28",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "step 9 named no code or verb: now FROB-REF-892 through an `artifact-identity<design>` parameter (N34-24, added as dep), with view and respelled-JSON cases; the batching through one invocation that BD-057's verb does not offer was replaced by one call per conversion with a labelled per-change count"
+  },
+  {
+   "bead": "N14a-29",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "patches required A-11 and A-13 with neither analysis a dependency: added BD-103 and BD-104 and named A-11's code FROB-REF-131 in step 8; step 3 names FROB-REF-803; step 9 takes each row's fixture from the catalogue (row 12 `pad` is illegal on quad-a's sphere feet)"
+  },
+  {
+   "bead": "N14a-30",
+   "kinds": [
+    "deps"
+   ],
+   "what": "step 11 runs `frob design check`; added BD-110"
+  },
+  {
+   "bead": "N14a-31",
+   "kinds": [
+    "correct"
+   ],
+   "what": "step 3 batched 10⁴ configurations 'through one invocation' with no such input; now uses `--at @file` added to N14a-21; the `include` outside the root names FROB-REF-734"
+  },
+  {
+   "bead": "N14a-32",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "the realism claim's calling side (flag `--claims-realism`) and the promotion path are N19a-39's, which was not a dependency: added; step 6 now creates the run it reports on; removed the 'skip a missing verb' escape (every verb is carried by a dependency)"
+  },
+  {
+   "bead": "N14ax-01",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "the optional block is a minor version under N14a-18's rule (absence stays absence; the implicit posture is synthesized in the model, never written), stated with a test; acceptance required A-18 (N19b-34, a dependent): now `TravelSpec` exposes the fields and an `evidence_cap`; added deps for the verbs and analyses it uses (BD-058, BD-063, BD-104, BD-110, BD-113, N14a-18, N14a-21)"
+  },
+  {
+   "bead": "N14ax-02",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "two acceptance lines required N23a-27 (a dependent); now stated as this bead's record completeness for every topology edit, with the consumer's use left to it; added deps BD-113 (design.diff output it extends) and N14b-01 (the generator of its 10⁴ sequences)"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14-REF",
+   "what": "list the uncoded stage-1 refusal 'Region not admissible as a mass support' (N14a-14: a mesh that fails closure, orientation or positive-volume admission, or a quadrature Region whose relative mass bound exceeds 10⁻²; exit 3; interim FROB-REF-102 with pointer region.admission or region.bound) beside the unnumbered import refusal, and note that the block 101 to 129 has only 129 left for it and for N14ax-01's two requests, so the allocation ledger (N35-33) assigns the numbers"
+  },
+  {
+   "bead": "BD-100",
+   "what": "A-02 steps 2, 3 and 5 should call N14a-13's `declared::consistency`, `support::check` and `massless::check` instead of restating them: step 3 tests only the smallest enclosing ball where N14a-13 tests every enclosing set of the Region (slabs, tube, ellipsoid), and step 5 reports a massless chain as a High finding where N14a-13 (and §14.5) refuse it with FROB-REF-104 at stage 2. BD-100 already depends on N14a-13"
+  },
+  {
+   "bead": "BD-385",
+   "what": "Scope 'Out: the decision records (N16a-23)' still gives both ADRs to N16a-23; per the reconciliation (dup-10) it should read: KILL-TREEOP by N16a-23, KILL-SKEL-PORT by N14a-24 (as its own later line already says)"
+  },
+  {
+   "bead": "N16a-23",
+   "what": "its ADR paths `docs/adr/ADR-KILL-TREEOP.md` and the cited `docs/adr/ADR-KILL-SKEL-PORT.md` differ from N40-03's decision format (`docs/delivery/adr/ADR-<gate>-<milestone>.md`, `decision = {outcome, adr, date, session}` in gates.toml); N14a-24 now follows N40-03 and reads the KILL-TREEOP record through its gates.toml row, so N16a-23 should write `docs/delivery/adr/ADR-KILL-TREEOP-M5.md` and fill its row's `decision`"
+  }
+ ],
+ "unchanged": 7,
+ "notes": "all 46 reviewed. Recurring fixes: acceptance lines that needed downstream beads (exit reviews, A-18, N23a-27, BD-054) restated on the bead's own side; kill-gate decisions (N14a-16/-20/-24) aligned with N40-03; refusals without codes given registered ones (724, 734, 802, 804, 832, 892, 131, 803) or a ledger request; e2e scripts made to carry every step other beads attribute to them, and beads without a script given one (N14a-19, -22, -26). Program-wide, ADR paths are split between docs/adr and docs/delivery/adr; only this slice and N16a-23 were addressed."
+}

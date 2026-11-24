@@ -4,11 +4,11 @@ title: "upstream frankensim: `fs-assimilate` windowed or streaming entry to the 
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "suite", "ground", "upstream", "frankensim", "frontier"]
+labels: ["m5", "suite", "ground", "upstream", "frankensim", "frontier", "review-notes-open"]
 parent: "WP-68"
-deps: ["BD-037", "BD-391", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-391", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-388", "BD-390", "FD-FSIM-24", "FD-FSIM-25"]
+related: ["FD-FSIM-24", "FD-FSIM-25", "N30a-05", "N30a-22", "N30b-17", "N33b-13"]
 gates: ["GATE-GROUND-04"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§30.4", "§30.9", "§33.9", "§33.8"]
 ---
@@ -75,7 +75,11 @@ the row cap becomes a cap per block with a stated maximum number of blocks.
 Additive: the 256-row entry is unchanged.
 
 **Interim posture here.** Traces enter as windows of summary features; the window definition (length, overlap,
-features) is part of the calibration record and of the identity of the fit.
+features) is part of the calibration record and of the identity of the fit. The cap of 256 rows binds one
+call, so a calibration set is assimilated one experiment per call, the posterior of one call being the prior
+of the next, with every shared calibration bias carried in the state (N30a-22). That chaining is not the
+rejected one: it keeps the shared bias as one unknown across calls, and for a linear model it equals the
+single update over all rows.
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FSIM-23/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-FSIM-23`, compiled as the `frob-conformance` integration test `upstream_fd_fsim_23` and
@@ -109,9 +113,9 @@ windowed route stays available, since summary features are sometimes the right m
 
 ## Acceptance criteria
 
-- [ ] In FrankenSim: the streaming entry reproduces the single-call update bit for bit on problems of at most 256 rows, and matches the closed form on the linear-Gaussian case below at 10⁴ rows.
+- [ ] In FrankenSim: given one block of at most 256 rows, the streaming entry reproduces the single-call update bit for bit; given the same rows split into several blocks, it agrees with the single call to 10⁻¹² relative (the summation order differs, so bit equality is not claimed across block sizes); it matches the closed form on the linear-Gaussian case below at 10³ and 10⁴ rows.
 - [ ] In FrankenSim: with a declared shared bias, posterior variance does not fall below the common-mode floor however many rows are streamed.
-- [ ] Here: the airlock exposes the entry at the new pin; a fit's calibration record states which route was used.
+- [ ] Here: the airlock exposes the entry at the new pin, reached with `--windows raw`; a fit's calibration record states which route was used.
 - [ ] Here: the both-ways comparison is recorded for one dataset; GATE-GROUND-04 passes with the streaming entry.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
@@ -121,12 +125,13 @@ windowed route stays available, since summary features are sometimes the right m
 
 ### Unit tests
 In FrankenSim (added):
-- `streaming_equals_batch_small`: 200 rows in blocks of 64; expected bit equality with the single call.
-- `linear_gaussian_closed_form`: scalar state with prior N(0, 1); 1,000 observations yᵢ = x + noise of variance 4; expected posterior variance 1/(1 + 1000/4) = 1/251 = 0.003984 and mean (Σyᵢ/4)/251, to 10⁻¹² relative.
+- `streaming_equals_batch_small`: 200 rows as one block; expected bit equality with the single call. The same 200 rows in blocks of 64 (four blocks); expected agreement of posterior mean and covariance to 10⁻¹² relative.
+- `linear_gaussian_closed_form`: scalar state with prior N(0, 1); 1,000 observations yᵢ = x + noise of variance 4; expected posterior variance 1/(1 + 1000/4) = 1/251 = 0.003984 and mean (Σyᵢ/4)/251, to 10⁻¹² relative. At 10⁴ observations (40 blocks of 250): variance 1/2501 = 3.9984·10⁻⁴ and mean (Σyᵢ/4)/2501, to the same tolerance.
 - `common_mode_floor_holds`: the same with a shared bias of variance 0.01 declared; expected posterior variance of x no smaller than the floor implied by the bias (at least 0.0099 as rows tend to infinity; checked at 10⁵ rows).
 - `block_order_is_fixed`: permuting the order in which blocks are supplied does not change the result, because the entry sorts by block identity.
 Here:
 - `calibration_record_names_route`: `windowed` or `streaming`, with the window definition or the block list.
+- `raw_without_streaming_entry_refused`: on a scratch airlock listing with no streaming entry (the state of the old pin), `--windows raw` answers `FROB-REF-724` naming FD-FSIM-23, exit 5, with no fit started and no calibration record written.
 - `both_ways_comparison_is_stored`: the record holds one row per parameter.
 
 ### End-to-end script and logging
@@ -135,8 +140,16 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_23 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob ground identify --json` twice on the rehearsal dataset, once
-per route, and asserts the stored comparison.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob ground identify` twice on the rehearsal dataset, once
+per route: `frob ground identify <rehearsal dataset> --stage actuators --windows <def> --key fd23-win --json` and
+`frob ground identify <rehearsal dataset> --stage actuators --windows raw --key fd23-raw --json` (a run verb: the
+dataset is the positional input, the stage is named so that the second call re-fits the same stage and not the
+next one, and the two compared calls carry distinct keys), and asserts the route named in each calibration record
+(`windowed`, `streaming`) and the stored comparison. DESIGN, how a caller chooses the route: by the verb's
+existing option `--windows`. A window definition is the windowed route, as today; the value `raw`, which this
+bead adds and requests of the `ground.identify` row (VERBS-ground, BD-391), sends the raw rows through the
+streaming entry. At a pin whose airlock has no streaming entry, `raw` answers `FROB-REF-724` naming FD-FSIM-23
+before any fit, so the interim posture cannot be bypassed.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_23/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -150,7 +163,7 @@ gates touched. No private-scene data is logged.
 ### Known answers and negative controls
 - Known answers: the posterior variance 1/251; the synthetic rehearsal's planted parameters (recovered within 10% after the designed excitation).
 - Negative controls: chaining 256-row posteriors as if independent, with a shared bias present, must report a variance below the floor and be caught by `common_mode_floor_holds`; a streaming entry with naive summation must lose the last digits at 10⁵ rows against the compensated one.
-- Determinism lanes: bit-identical twice on one machine and across block sizes; cross-machine comparison is not claimed for this crate's ensemble lane (FD-FSIM-24) and is claimed here only as far as the crate's contract states.
+- Determinism lanes: bit-identical twice on one machine at a fixed block size (agreement to 10⁻¹² relative across block sizes, as above); cross-machine comparison is not claimed for this crate's ensemble lane (FD-FSIM-24) and is claimed here only as far as the crate's contract states.
 
 ## Considerations
 

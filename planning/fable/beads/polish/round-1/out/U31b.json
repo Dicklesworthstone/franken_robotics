@@ -1,0 +1,515 @@
+{
+  "round": 1,
+  "slice": "U31b",
+  "reviewed": 54,
+  "changed": [
+    {
+      "bead": "BD-400",
+      "kinds": [
+        "deps",
+        "correct",
+        "tests",
+        "e2e-logging",
+        "self-contained"
+      ],
+      "what": "deps reduced from 24 to 18: dropped the transitively implied non-component edges (BD-090, BD-125, BD-259, N16b-13, N33b-14, N38a-20, VERBS-foundry; each still reached through a component), added N31b-04 (the hand derivations its KA tests run against); free-body residual aligned with its component N31a-07 (scales S_F and S_M, unloaded floor, f64 evaluation, off-port samples, statistics max/99.9th/median); single-precision tiers named (gpu-cuda, gpu-metal; batch-cpu is double); schema names corrected to the registry's frob.foundry.loads.in/1 and .out/1 and --key added; CX-337 offset-payload fixture spelled out; e2e script aligned with its owner N31a-53 (fixtures, tiers, command forms) and given the full logging fields"
+    },
+    {
+      "bead": "BD-402",
+      "kinds": [
+        "deps",
+        "tests",
+        "e2e-logging",
+        "risks",
+        "correct"
+      ],
+      "what": "request of U12-2: N12-50 moved from related to deps with a d10_oracle_agreement test (rainflow with carried residues and damage against the D.10 oracles); N31b-04 added (hand derivations); e2e logging completed (standard fields, failure data, relation to N31a-55); kill-gate posture stated (no kill gate of its own; fatigue no-claim until GATE-FOUNDRY-03 passes; KILL-LOADS and KILL-TOPOPT effects); e2e calls of the run verb foundry.check now carry idempotency keys (FROB-REF-805 otherwise, plan 32.7)"
+    },
+    {
+      "bead": "BD-403",
+      "kinds": [
+        "deps",
+        "correct",
+        "tests",
+        "e2e-logging",
+        "users"
+      ],
+      "what": "deps reduced from 22 to 18 (dropped BD-104, BD-107, BD-259, N33b-14, N33bx-04, VERBS-foundry, all reached through components; added N12-50 per the U12-2 request and N31b-04); verb inputs settled on the registry's --links flag (the N31b-13 reconciliation note left the flag name to the verb's owner), --key, in/out schema names; refusal list completed to the registry row (164, 166, 167, 169, 260, 261, 262); d10_oracle_agreement test; e2e logging completed and its run-verb calls given idempotency keys"
+    },
+    {
+      "bead": "BD-404",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "GATE-FOUNDRY-06 clause made consistent with its own arithmetic: plain iteration needs seven iterations to reach 1e-6 while the budget is five, so the gate run must evaluate the Aitken proposal (2.823529 kg after iteration 2); e2e logging completed; optimize calls given idempotency keys"
+    },
+    {
+      "bead": "BD-405",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "fixture battery counts corrected to its component N31a-30 (fifteen planted, three per violation kind, and five clean; the bead said ten and ten), with the battery's matching rule; FROB-REF-860 of the verb's packet mode noted; e2e logging completed; check calls given idempotency keys"
+    },
+    {
+      "bead": "BD-406",
+      "kinds": [
+        "deps",
+        "correct",
+        "tests",
+        "e2e-logging",
+        "users"
+      ],
+      "what": "deps reduced from 20 to 13 (dropped BD-011, BD-046, BD-061, BD-243, N13-10, N33b-13, N33b-14, N33bx-06, VERBS-foundry, reached through components; added N12-50 per the U12-2 request and N31b-04); robust-path semantics aligned with the governing component N31a-33 (default boxes with exit 2, FROB-REF-165 under --method statistical, quadratic fixture x^2/L with 100 um box); report actions and schema frob.foundry.tol/1 aligned; verb inputs (--method, --out, --verify monte-carlo); unit tests split accordingly plus d10_oracle_agreement; e2e aligned with the script's owner N31a-56 and logging completed"
+    },
+    {
+      "bead": "BD-407",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "open-shell refusal code stated (FROB-REF-824 with the decoder's reason, as N31a-35 specifies); e2e logging completed with failure data; export calls given idempotency keys"
+    },
+    {
+      "bead": "BD-408",
+      "kinds": [
+        "deps",
+        "scope",
+        "complete",
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "deps reduced from 32 to 22 (dropped BD-005, BD-055, BD-075, BD-078, BD-259, BD-405, N34-22, N37-28, SPEC-C-12, VERBS-foundry, reached through seeds and components); N31ax-01 (prototype-spend precondition, FROB-REF-830/819) added to the component table and to admission; FROB-REF-261 added to admission and the refusal list per the registry row; verb inputs and schemas named (--packet, --profile reduced, --priced, --key); references to superseded N31b-14 redirected to NS-20; e2e steps aligned with the script's owner N31a-57 (command forms, FROB_TEST_KILL_AT) and logging completed"
+    },
+    {
+      "bead": "BD-423",
+      "kinds": [
+        "self-contained"
+      ],
+      "what": "Scope named the mechanism children 'in needs' while needs is empty: now lists N31a-47 to N31a-50 with their parts"
+    },
+    {
+      "bead": "BD-438",
+      "kinds": [
+        "self-contained"
+      ],
+      "what": "Scope named the mechanism children 'in needs' while needs is empty: now lists N31a-44, -45, -46 and -62 with their parts"
+    },
+    {
+      "bead": "N31-CX",
+      "kinds": [
+        "correct",
+        "testable",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "control records aligned with the negative-control registry and runner N38b-04 (NC ids, cfg(feature nc-<n>) branches under gauntlet-mutations, release-profile compile error, stale/caught/missed outcomes, history file) instead of an invented planted-defects feature; acceptance no longer requires every control caught at this registry's closure (the mutations are written by the M5 mechanism beads that come after it): stale until the owning bead lands, caught recorded with each gate; e2e runs the runner and logs per-control status with the full standard fields"
+    },
+    {
+      "bead": "N31-REF",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "testable",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "FROB-REF-824 trigger completed (open shell or non-triangle face, carried with the STEP sibling's reason, as N31a-35 and GATE-FOUNDRY-09 require); Table 2 export row aligned with N31a-51 (820, 830, 819, packet-inconsistent); Table 3 grown from three to the ten uncoded refusals (the nine of N31b-45 plus N31a-43's packet-inconsistent) with family, ledger status and interim per the allocation ledger N35x-02 and the 8xx hold N35x-01 (never 9xx, which is internal with exit 9); Table 4 adds 819; acceptance re-scoped so the registry can close before the battery N31a-52 that depends on it (rows bound or pending: N31a-52, failing at M5 exit), Table 2 comparison runs against N31a-51's rows; own unit tests and an own registry e2e script with negative controls; N31b-45 moved from related to deps (the decision precedes the registry that lists its outcome); later in the round: Table 2 aligned row for row with N31a-51 (169 for class load sets on size, check and export; 113 under --strict-data on lifecycle; the uncoded firmware-receipt-mismatch and review-record-packet-mismatch on check) and extended with 821 and 820 on foundry.loads (N31b-35, N31b-36); Table 3 interim of brief-already-used set to FROB-REF-844 (a cluster used twice, the plan's own analogy) instead of 886"
+    },
+    {
+      "bead": "N31b-01",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "planted violations registered through the N38b-04 runner mechanism (nc-<n> features under gauntlet-mutations); INV-FOUNDRY-06 and -07 clauses for the Moonshot features stated for M5, when lifecycle (M6) and firmware (M8) do not exist yet (feature-absent refusal asserted, full checks switch on when the features compile; their gate scripts rerun the battery); e2e logging completed"
+    },
+    {
+      "bead": "N31b-02",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "e2e used an invented --check-superposition flag and a gate-foundry-02 campaign: the superposition test is part of every referee loads result (N31a-09, read by N31a-53 on camp-small), so the script reads superposition.max_rel from that call; run-verb calls given idempotency keys; ledger path; logging completed"
+    },
+    {
+      "bead": "N31b-03",
+      "kinds": [
+        "deps",
+        "correct",
+        "testable",
+        "e2e-logging"
+      ],
+      "what": "dependency inversion removed: the byte-identity test ran `frob foundry export`, but the packet verb BD-408 depends on this firewall; the test now writes a packet-min fixture through the container writer N31a-36 (added to deps; no cycle) in default and all-features builds, the verb-level repeat belongs to BD-408 and the invariant battery N31b-01, and the --with-firmware clause runs when the feature exists; deletion drill scoped to the packet path present at closure; e2e runs all four planted violations and logs the standard fields"
+    },
+    {
+      "bead": "N31b-04",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "e2e now runs its two negative controls and logs the standard fields, per-row digests and failure data"
+    },
+    {
+      "bead": "N31b-05",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "user-side replays: run verbs given idempotency keys, the read verb foundry.size left without one, STEP format named; control runner outcomes logged; standard fields and failure data"
+    },
+    {
+      "bead": "N31b-07",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "pilot script: per-call idempotency keys so a re-run resumes an iteration, standard logging fields and failure data"
+    },
+    {
+      "bead": "N31b-08",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "pilot script sources the logging helper with the standard fields and failure data; exit rule stated"
+    },
+    {
+      "bead": "N31b-09",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "acceptance said 'the four controls' and listed five (the known answer and four potency controls); pilot logging fields completed"
+    },
+    {
+      "bead": "N31b-10",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "obligation O8 corrected: its outcome is predictable (p up to about 28,900 counts plus I up to 32,000, independent, so satisfiable) and the useful figure is the largest clamp bound for which it is unsatisfiable (about 3,867), not the smallest; its role for the exporter's output bound stated; self-check output_bound_interval added; logging completed"
+    },
+    {
+      "bead": "N31b-11",
+      "kinds": [
+        "correct",
+        "self-contained",
+        "e2e-logging"
+      ],
+      "what": "macro step rule stated (explicit z <- z + H*eps*<g>(z) of the method, local error of order H^2); the step-doubling self-check named the midpoint rule, which does not match the fourfold reduction it asserts; logging completed"
+    },
+    {
+      "bead": "N31b-12",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "the measured-by column (the declarations' measured_by: bead and script) named only capstones; it now names the gate scripts and their owning beads (foundry_loads.sh N31a-53, foundry_check.sh N31a-55, foundry_structure_loop.sh N31a-54, foundry_tolerance.sh N31a-56, foundry_export_packet.sh N31a-57) and the 15+5 composition of GATE-FOUNDRY-07; e2e runs its four negative controls with standard logging"
+    },
+    {
+      "bead": "N31b-13",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "the reconciliation note addressed to this bead is closed: e2e commands use the registry's --links lower-leg for optimize and size and --link for check, idempotency keys on the run verbs (loads, optimize, check) and none on the read verb size, so a re-run resumes a pair; logging fields and failure data completed"
+    },
+    {
+      "bead": "N31b-15",
+      "kinds": [
+        "deps",
+        "faithful",
+        "e2e-logging"
+      ],
+      "what": "deps set to the components whose receipts the kill rule reads (N31b-05, -06, -07, -13); the GATE-FOUNDRY-04 row and N31b-05's receipt added to what is read; e2e logging completed, the fallback run keyed kt-fallback"
+    },
+    {
+      "bead": "N31b-16",
+      "kinds": [
+        "deps",
+        "faithful",
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "deps BD-400, N31a-53, N31b-02, N31b-05; reads the battery receipt; e2e uses `foundry loads --declare` and `foundry check --link` with idempotency keys; logging completed"
+    },
+    {
+      "bead": "N31b-17",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "what is read corrected to the GATE-FOUNDRY-07 battery as built (15 planted parts, three per kind, and 5 clean; N31a-30 via N31a-55); e2e calls keyed; logging completed"
+    },
+    {
+      "bead": "N31b-18",
+      "kinds": [
+        "deps",
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "deps BD-406, N31a-56, N31b-05, N31b-08; boxes carry class Estimated (INV-FOUNDRY-06) with `enclosure: interval`, Certified sensitivities recorded as inputs; the GATE-FOUNDRY-08 clause follows N31a-33's robust path (quadratic fixture boxed at sqrt(margin*L) = 100 um); tolerance is a read verb (no key); logging completed"
+    },
+    {
+      "bead": "N31b-19",
+      "kinds": [
+        "deps",
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "deps BD-407, BD-408, N31a-57, N31b-05, N31b-09; e2e uses the keyed export and `frob-verify --packet`; logging completed"
+    },
+    {
+      "bead": "N31b-21",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "e2e runs `export --with-firmware` with a key and audits with `frob-verify --packet`; logging completed"
+    },
+    {
+      "bead": "N31b-23",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "e2e `design edit` written in the registry's form (positional path and value, --expected-parent, --key) and `eval run` keyed; logging completed"
+    },
+    {
+      "bead": "N31b-24",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "pilot script sources the STD-E2E helper with the standard fields and runs its two negative controls"
+    },
+    {
+      "bead": "N31b-25",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "flag spelling `--priced` (the packet verb's, N31a-43/BD-408) instead of `--prices` in acceptance and e2e; keys fp-1 to fp-3; logging completed"
+    },
+    {
+      "bead": "N31b-26",
+      "kinds": [
+        "deps",
+        "placement",
+        "e2e-logging"
+      ],
+      "what": "deps BD-408 and N31a-41 (its tests drive the harness code); scope says N31a-41 implements the default checks and table admission is added here if adopted; e2e keyed export of packet-min; logging completed"
+    },
+    {
+      "bead": "N31b-27",
+      "kinds": [
+        "deps",
+        "self-contained",
+        "e2e-logging"
+      ],
+      "what": "deps BD-402 (the check verb and cycle counter its tests and script drive) and N31a-22 (the card's structural fields and validity test); card fields restated as additions to N31a-22's valid_for vocabulary (cnc-3axis, cnc-5axis, sheet, fdm, sls, slm) instead of a parallel process list; e2e `foundry check --structure` keyed ffa-1..3; logging completed"
+    },
+    {
+      "bead": "N31b-28",
+      "kinds": [
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "deps N31a-48 (laws and card reader) and N31a-50 (verb foundry.lifecycle), whose code its tests and script drive; `foundry lifecycle` calls keyed flc-1..3; logging completed"
+    },
+    {
+      "bead": "N31b-29",
+      "kinds": [
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "dep N31a-45 (the query builder its measurement and budget tests drive; effort cap and watchdog added there if B or C is adopted); pilot logging fields, failure data and the negative controls in the script"
+    },
+    {
+      "bead": "N31b-30",
+      "kinds": [
+        "correct",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "refusals of rows 5-8 follow the ledger: 8xx held under N35x-01, raised under interims FROB-REF-841, -883, -844, -843 with a detail discriminator behind named constants; N31b-45 moved from related to deps; logging completed (codes and detail, never brief contents)"
+    },
+    {
+      "bead": "N31b-31",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "runner's mutating calls carry idempotency keys derived from (brief, step, attempt) with recovery by key after a crash (FROB-REF-805 otherwise); e2e adds a kill-and-restart run asserting the same packet address; dep N31b-32 (the script runs the pre-review); logging completed"
+    },
+    {
+      "bead": "N31b-32",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "M1 failures are the packet reader's refusals (FROB-REF-860 or the integrity refusal, exit 3, record in the payload, no sidecar), M2-M6 exit 2 (INV-FOUNDRY-01: a mutated packet is rejected); evidence class Estimated instead of Tested (INV-FOUNDRY-06, checked by the N31b-01 battery); verb takes --key; acceptance and e2e updated; logging completed"
+    },
+    {
+      "bead": "N31b-33",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "review-record-packet-mismatch is row 4 of N31b-45, 8xx held with no fitting interim: mechanism refuses with detail and the point stays open (N35x-01); a packet failing pre-review returns `review_import: not-attempted` and stores nothing (was an uncoded 'refusal to import'); import takes --key and is idempotent; acceptance and e2e updated; logging completed"
+    },
+    {
+      "bead": "N31b-34",
+      "kinds": [
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "deps N31b-12 (the GATE-FOUNDRY-13 row) and N38b-19 (the gate recorder that writes the row and requires controls caught in the same run); `foundry check` calls keyed; logging fields and failure data completed"
+    },
+    {
+      "bead": "N31b-35",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging",
+        "risks"
+      ],
+      "what": "settling stretch (first 0.05 s) moved into the approach with a unit test; the wrench-envelope stratum named as the existing dependency N16bx-04; e2e uses keyed `foundry loads` and `sim replay <replay address> --tier referee --key` (the invented --from-snapshot/--window flags removed; snapshot-and-window address requested of the replay verb's owner); logging completed"
+    },
+    {
+      "bead": "N31b-36",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "provisional-load-case-in-packet tied to row 3 of N31b-45 (8xx held; interim FROB-REF-820 with detail behind a named constant); metamorphic relation corrected (scaling by c = 1.2 gives r_g^m times the baseline counted damage, not 'unchanged' for in-band gauges); unregistered flags noted for the verb registry; e2e keyed, exploratory run spelled out; logging completed"
+    },
+    {
+      "bead": "N31b-37",
+      "kinds": [
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "deps N31b-12 and N38b-19 (row written through the gate recorder); the two mutation controls registered in controls.toml (N38b-04 via N31-CX) and run in the script; every run-verb call keyed; logging and failure data completed"
+    },
+    {
+      "bead": "N31b-38",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "kernel script runs the tests, the micro-benchmark and the three planted defects through the control runner; standard fields, inertia metric and failure data added (all known answers re-derived and correct)"
+    },
+    {
+      "bead": "N31b-39",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "acceptance aligned with its own unit test (20 kg robot at factor 3: 588.6 N, floor 0.1382 kg, ratio 2.76, the chapter's 0.141/2.8 being the 600 N rounding); negative controls named correctly (two defects plus the pinned rule); e2e `design edit` in registry form with --expected-parent and --key, `design check` read; logging completed"
+    },
+    {
+      "bead": "N31b-40",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "under-built-promotion is row 2 of N31b-45, assigned FROB-REF-171 by the ledger and loaded by N31b-45 (name with detail only while pending); e2e commands spelled with keys (sim run, eval promote, design edit with --expected-parent), the three planted defects run; logging completed"
+    },
+    {
+      "bead": "N31b-41",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "sized-fill-unsatisfiable is row 1 of N31b-45, assigned FROB-REF-170 (FROB-REF-105 with detail only until the row loads); e2e commands keyed (sim run, design edit resolve-sized with --expected-parent), read verbs unkeyed, planted defects run; logging completed"
+    },
+    {
+      "bead": "N31b-42",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "campaign calls keyed per (campaign, arm, step) so an interrupted campaign resumes; standard fields and control-failure data added (binomial bounds re-derived and correct)"
+    },
+    {
+      "bead": "N31b-43",
+      "kinds": [
+        "correct",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "planted design stated with its own floor (588.6 N, 0.1382 kg, ratio 2.76) instead of the 600 N case; dep N38b-19 (row written through the gate recorder; three mutation controls registered and required caught); run verbs keyed; logging completed"
+    },
+    {
+      "bead": "N31b-44",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "standard fields, codes per mutation, planted-defect runs and failure data added to the auditor script; the rest is sound"
+    },
+    {
+      "bead": "N31b-45",
+      "kinds": [
+        "correct",
+        "faithful",
+        "tests",
+        "e2e-logging",
+        "risks"
+      ],
+      "what": "rewritten to the ledger: rows 1-2 are 1xx requests assigned 170/171 and loaded here; rows 3-10 are 8xx held under N35x-01 with interims (820, none, 841, 883, 844, 843, 890, none) behind named constants with detail, rows 4 and 10 open in their raising beads; the 9xx continuation 901-907 withdrawn (9xx is internal, exit 9, section 35.11); row 10 packet-inconsistent (requested by N31a-43) added; ledger slug mismatch recorded with a closure-test map; tests (no_9xx_row_entered, held_rows_raised_under_interim_with_detail, open_rows_refuse_without_interim, interim_swap_changes_constant_only, planted interim-without-detail) replace the alias and retirement tests"
+    }
+  ],
+  "new_beads": 0,
+  "superseded": 0,
+  "requests": [
+    {
+      "bead": "N31a-53",
+      "what": "step 3 runs the single-precision clause of GATE-FOUNDRY-02 (10^-3) with --tier batch-cpu, which is a double-precision tier (BET-08; tier names referee, batch-cpu, gpu-cuda, gpu-metal); it should use gpu-metal or gpu-cuda (BD-400 now says so)"
+    },
+    {
+      "bead": "N31a-54",
+      "what": "the link-class flag of foundry.optimize: VERBS-foundry's registry example and BD-403 (the verb's handler) use --links <class>[,...]; N31a-54 writes --class lower-leg"
+    },
+    {
+      "bead": "N31a-57",
+      "what": "step 2 writes `export --fixture tetrahedron --geometry part --format step` where BD-407, N31a-34 and N31a-35 write `--geometry-only --format step`; its gate-record text cites N31b-14 for the NS-20 demonstration, but N31b-14 is superseded by NS-20"
+    },
+    {
+      "bead": "VERBS-foundry",
+      "what": "foundry.export's refusal list lacks the codes N31a-51 already carries for it: FROB-REF-820 (interim of provisional-load-case-in-packet, N31b-36), FROB-REF-830 and -819 (N31ax-01's prototype-spend precondition, whose acceptance requires them in the verb's registered list) and the uncoded packet-inconsistent (N31a-43); N31-REF's Table 2 comparison test will report the difference until the row is completed"
+    },
+    {
+      "bead": "N31a-53",
+      "what": "with N31a-54, -55, -56 (only where foundry.check or export is called), -57, -58, -59 and the battery N31a-30: every `frob foundry loads|optimize|check|export|lifecycle` call in these scripts omits --key, but those are job-submitting run verbs (VERBS-foundry kinds; N31a-51 step 5; plan 32.7) and are refused with FROB-REF-805 without one; foundry.size and foundry.tolerance are read verbs and take none"
+    },
+    {
+      "bead": "N35x-02",
+      "what": "Foundry rows of the ledger: keep the names the raising beads, N31-REF, N31a-51 and N31b-45 use as slugs (its own rule keeps an existing chapter slug): no-stock-wall -> sized-fill-unsatisfiable, link-under-built-measured -> under-built-promotion, review-record-wrong-packet -> review-record-packet-mismatch, brief-set-uncommitted -> brief-set-not-committed, binary-not-frozen-pipeline -> pipeline-not-frozen-or-different, timing-receipt-mismatch -> firmware-receipt-mismatch; replace the 'proposed number' interims 901-907 (forbidden by N35x-01 step 3) with N31b-45's interims (820; none; 841; 883; 844; 843; 890); file the tenth request packet-inconsistent (N31a-43, 8xx, no fitting interim); correct the 'stated in' sections (load case 31.22; review record and briefs 31.21; timing receipt 31.13)"
+    },
+    {
+      "bead": "N31a-43",
+      "what": "it raises row 10 of N31b-45 (packet-inconsistent) but does not depend on N31b-45; add the dep, and replace 'N31b-45 already accepts a bare name with exit 3 as an interim' with the held rule: no fitting interim, so the mechanism refuses with detail behind a named constant and the bead stays open on that point until the ledger assigns a number (N35x-01)"
+    },
+    {
+      "bead": "N31a-62",
+      "what": "firmware-receipt-mismatch (row 9 of N31b-45) is an 8xx request held under N35x-01: raise it under the interim FROB-REF-890 with detail 'firmware-receipt-mismatch' behind a named constant, and have its tests assert the interim code and detail rather than a bare name"
+    },
+    {
+      "bead": "VERBS-foundry",
+      "what": "with N31a-51: foundry.loads lacks FROB-REF-821 (re-extraction against an unfrozen wrench envelope, N31b-35) and 820 (interim of provisional-load-case-in-packet under --admit packet, N31b-36) and the flags --for packet and --admit packet; foundry.check lacks --exploratory (N31b-36), --firmware-receipt (N31a-62) and the uncoded review-record-packet-mismatch with --review-record (N31b-33); N31-REF's Table 2 now lists these codes and its comparison test reports the gap"
+    },
+    {
+      "bead": "VERBS-sim",
+      "what": "with BD-203 and BD-204: sim.replay lists only a world address and --tier as inputs, but N31b-35 returns, and its e2e replays, a replay address naming a snapshot and tick (a comparison replay over a 1 s window on the referee); the replay verb should accept that address form, or say which verb reproduces such a window"
+    }
+  ],
+  "unchanged": 1,
+  "notes": "All 54 beads reviewed (N31b-14, -20, -22 are superseded and outside the slice; coverage.md is not a bead). 53 changed, 1 unchanged (N31b-06); no new beads, no merges. Main themes: run-verb calls in e2e scripts lacked idempotency keys (FROB-REF-805) and logs lacked the charter fields; several decision and e2e beads lacked deps on the mechanisms their tests drive or on the gate recorder N38b-19; the late Foundry refusals were moved off the forbidden 9xx block onto the ledger (170/171 assigned; 8xx rows held with interims + detail, two open). Checks: deps.py check passes on every bead file, graph_check cycles = 0, no dep on a later milestone. The slice looks settled on its own side; what remains open is outside it (ten requests: ledger slugs and interims in N35x-02, N31a-43/-62 refusal wording, verb-registry rows in VERBS-foundry/N31a-51 and VERBS-sim, and the U31a e2e key and flag issues)."
+}

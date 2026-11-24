@@ -1,0 +1,102 @@
+{
+ "round": 3,
+ "slice": "F-U27a",
+ "reviewed": 21,
+ "changed": [
+  {
+   "bead": "BD-205",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied H-verbs-4: synopsis gains --determinism, --precision, --on-degraded (N35-04's shared parser and admission, called before classification); their defaults on a fork are the parent's recorded ProfileRecord (a bare fork of a `stiff` parent stays a continuation); options resolving to another determinism profile, precision profile or width are 894; --on-degraded may differ (248 under refuse, flag under continue-flagged); admission order 245/247/604, 562, 894, classification. Refusal table gains 245, 247, 248, 604 (exit 6); --field-reuse/--no-field-reuse answer 724 until N19c-35 (M6). The change appends 580-583 to run.fork's `refusals` list in registries/verbs.toml (RL-06 staging), with an acceptance line. Applied H-ref-2: 580 repairs in N27-REF's order; 562 repairs aligned with N35-REF's row. Tests profile_defaults_to_parent, numerical_options_refused, degraded_child_248, field_reuse_answers_724; dep N35-04 made direct (the handler calls it). Noted that the example's forced_by is abbreviated. The 894 repair now spells the comparison replay with sim.replay's own options (--tier <t> [--precision f32|f64] --comparison)."
+  },
+  {
+   "bead": "N27a-02",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the S64 request: new mechanism kind `actuator-limit` (model.joint[<sel>].torque_limit := off | <torque> | nominal; empty dependency set) classified exogenous with labels InterventionFromTick and Diagnostic always, exogenous_until = first saturation tick (T1 saturation events; fail closed when not retained); the actuator card's own limit fields stay `design` (structural). Test torque_limit_is_exogenous_diagnostic and its negative control. Diagnostic on both torque-limit rows follows N27b-01 (owner of the diagnostic-factor registry), not the request's 'diagnostic for off' only. 580 repairs reordered to N27-REF's row. `design` examples and the fixed forced_by order gain the payload state (mass and slosh), which the plan's worked fork (Appendix L) names and the list lacked. Catalogue count 41."
+  },
+  {
+   "bead": "N27a-05",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Exogenous restore installs the actuator-limit row from tick f and writes the classifier's labels (InterventionFromTick, Diagnostic); test torque_limit_off_restores_everything. Ownership corrected: the diagnostic-factor list is N27b-01's (was BD-279), the forced fork's admission rule N27a-15's and its request `autopsy.intervene --diagnostic-force` (was 'the re-run verb')."
+  },
+  {
+   "bead": "N27a-07",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Added catalogue row E9 (knee torque limit := off: exogenous, intervention-from-tick, diagnostic, exogenous_until = first saturation), under the bead's own rule that a new changeable field brings a row; catalogue is 41 rows (gate threshold 40 is a floor; all rows must pass); forced_by order gains payload; test renamed catalogue_rows; pairs_correct threshold 41; title updated."
+  },
+  {
+   "bead": "N27a-08",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "correct"
+   ],
+   "what": "Convention 5: every run-verb call in the steps now carries --key (sim run, fork point, catalogue loop, graft and control). Step 2 asserts the fork point records Q's ProfileRecord (BD-205's default). Step 6 adds BD-205's numerical-option refusals (245, 247, 894; 604 exit 6 on a device). The vague 562 case ('a run under the unspecified-determinism training profile', which sim.run cannot record) replaced by N35-31's method: in the conformance build, the fingerprint override (BD-176's seam) makes the tier's batch-independence record stale, in --self-test mode. Catalogue loop 41 rows, 43 calls; pairs_correct threshold 41."
+  },
+  {
+   "bead": "BD-281",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Stated that the enumeration mode `singles` is what the wire value `--coalitions none` selects (VERBS-autopsy has no value `singles`)."
+  },
+  {
+   "bead": "BD-283",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Brought into line with VERBS-autopsy's row: --key required (805); refusal table gains design.edit's chapter codes (101-126 as VERBS-design lists, passed through from step 1); the unnamed 'reset cache's own refusal' is FROB-REF-529 (N24a-16), and its repair 'accept Degraded: unsettled worlds' contradicted N24a-16's non-adopted reading, replaced by fixing the named spawn draws; Degraded: unsettled pairs classified unscored as BD-195/N24a-16 state. 562 repairs in N35-REF's order, read for a re-run (--tier batch-cpu first). Tests unsettled_edit_refused_529, design_edit_refusal_passed_through, missing_key_refused_805. The gate paragraph's edit spelling 'regear joint 16' aligned with N27a-17's 'regear joint[0] 16'."
+  },
+  {
+   "bead": "N27a-16",
+   "kinds": [
+    "correct",
+    "conventions",
+    "tests",
+    "deps"
+   ],
+   "what": "Out line said BD-283 records GATE-AUTOPSY-06; BD-283 and N27a-17 both say N27a-17 records it (convention 9), corrected. The private registry file registry/fixtures/thermal-regear.toml (the only registry/fixtures/ path in the program, holding a second copy of KA-675's rows) replaced by the fixture directory crates/frob-conformance/fixtures/autopsy/thermal-regear/ (header synthetic; design, task and scenario.toml) bound to KA-675 in known_answers.toml (convention 2); the copper variant is a `recorded` fixture. New test scenario_matches_ka_675 and acceptance line; deps N27-KA and STD-TEST. All closed-form numbers rechecked (37.951 s, 113.283 C, 42.415 s, 81.984 C; samples; 1/N defect 58.8 s and 101.0 C; 1% tau shifts the trip 0.38 s)."
+  },
+  {
+   "bead": "BD-375",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "The harness precondition reads the recorded results of the subsystem's single-cause, coalition, abstention and re-run gates, but the bead depended on none of their recorders (convention 7): named GATE-AUTOPSY-03 (N27b-09), -04/-05 (N27a-18), -06 (N27a-17) and added those three deps (no cycle); test refuses_without_subsystem_gates. E-value figures rechecked (1.7e4; 19.1 < 20 at 60 pairs)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-autopsy",
+   "what": "autopsy.rerun starts episodes on a newly edited model and raises FROB-REF-529 (no complete settled-pose cache; N24a-16: 'raised by any verb that starts episodes') when the edited design's spawn draws do not settle; add 529 to the row's chapter refusals (BD-283 now lists it)."
+  },
+  {
+   "bead": "N20ax-01",
+   "what": "it raises FROB-REF-441 at a fork (new link law beyond the ring capacity) but does not depend on N20-REF, which enters 441; add dep N20-REF (M1), or RL-06 makes the code a load-time error when N20ax-01 lands first."
+  }
+ ],
+ "unchanged": 12,
+ "notes": "Unchanged: N27a-01, N27a-06, N27a-09, N27a-10, N27a-11, N27a-12, N27a-13, N27a-14, N27a-17, N27a-18, N27a-19, BD-282 (numbers rechecked: Fisher p-values in BD-282, Shapley values in N27a-11, fork counts 505/689/113/137, the doubling-map and probe arithmetic of N27a-14, the e-process bounds 1.64/19.1/19.6/25.8 of N27a-19). Request S64 to N27a-02 applied with both torque-limit rows diagnostic, following N27b-01 (owner of the diagnostic-factor list) rather than only `off`. BD-375 keeps `--test <tier>` resolved from the gate record's tier field: N38a-01 maps the experiment register to G2 while sibling design-comparison gates use g1_known_answers, so no target was invented. The slice looks settled apart from the two requests."
+}

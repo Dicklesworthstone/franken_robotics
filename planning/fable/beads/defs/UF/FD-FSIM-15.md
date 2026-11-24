@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid"]
 parent: "WP-01"
-deps: ["BD-037", "BD-031", "NF-01", "STD-E2E"]
+deps: ["BD-031", "BD-037", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-005", "FD-FSIM-31", "NF-02", "NF-03", "NF-05"]
+related: ["FD-FSIM-31", "N33b-08", "N33c-02", "N33c-05", "N33c-06", "N33c-08", "N33c-47", "NF-02", "NF-03", "NF-05"]
 gates: ["INT-TOOLCHAIN-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.12", "§33.2", "§33.13", "§33.16", "§41"]
 ---
@@ -74,7 +74,12 @@ current head before it is edited.
    declarative macro from one table: for every pair (A, B) in the table whose exponent sum (or difference) is
    itself in the set, `impl Mul<B> for A` (or `Div`) with that output.
 3. Two aliases may share a dimension and still be distinct types: torque and energy both have exponents
-   (kilogram 1, metre 2, second −2), and adding one to the other must not compile.
+   (kilogram 1, metre 2, second −2), and adding one to the other must not compile. A trait has one `Output`
+   per operand pair, so where an exponent sum matches two aliases the table names the output explicitly: the
+   type `fs-qty` returns for that product with the feature off (re-read at the pin; for force × length, the one
+   it names), and the other alias is reached only through the named operation the crate already provides for it
+   (for torque, the moment of a force about a point). The macro rejects a table in which one pair has two
+   outputs, and the differential test compares output types as well as dimension vectors.
 4. A product whose result is not in the set does not compile, with a message naming the missing alias; data
    loaded at run time uses the existing runtime-checked quantity.
 5. The public names and methods of the aliases are identical under both feature settings, so downstream code
@@ -142,6 +147,7 @@ In FrankenSim (added, in `fs-qty`):
 - `macro_products_match_const_generic`: for every pair in the table, the output dimension vector equals the const-generic result. Spot values: force × length = energy (1, 2, −2 in kilogram, metre, second); force ÷ area = pressure (1, −1, −2); energy ÷ time = power (1, 2, −3); torque ÷ length = force (1, 1, −2).
 - `pressure_plus_time_does_not_compile`, `torque_plus_energy_does_not_compile`, `unknown_product_does_not_compile`: compile-fail tests with the expected diagnostics.
 - `value_bits_survive_feature_switch`: 10⁴ seeded quantities serialized under one setting and read under the other are bit-identical.
+- `shared_dimension_products_keep_their_type`: force × length has the same output type under both settings, and a downstream test crate that forms a torque through the moment operation and an energy through force × length compiles unchanged under both; a table with two outputs for one pair fails to expand.
 Here:
 - `fs_qty_alone_builds_without_nightly_features`: the fixture.
 - `qty_reexport_is_the_only_route`: a scratch crate importing `fs_qty` directly fails `check-deps`.

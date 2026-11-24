@@ -1,0 +1,232 @@
+{
+ "round": 3,
+ "slice": "H-ka-1",
+ "reviewed": 14,
+ "changed": [
+  {
+   "bead": "N00-KA",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Records used a private field set (site, owner_bead) that N38a-12's loader refuses as unknown fields: now the N38a-12 schema with a column-to-field map, fixture names, label, due and printed; carriers and owing beads go to the derivation front matter. KA-003 to KA-008 get a derivation file naming the defect report (else obligation: derivation). Carriers: KA-002 adds N38b-14 (cites it), KA-018 adds BD-182 (devices). xtask check-generated replaced by N38a-12's printout test. Recompute tests for thesis, stance and docking rows (all values rechecked: 25/3, 100/13, 4000/297, 3/14, 165 N, docking witnesses). The §1.8 memory-share correction is carried by KA-348 and KA-816 (N38b-58), computed by N00-17; REC-01/REC-02 named for KA-001/KA-010. E2E rewritten to STD-E2E with header, row runs by tier target, plants and log fields."
+  },
+  {
+   "bead": "N09-KA",
+   "kinds": [
+    "correct",
+    "sense",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "KA-035's re-run carrier was BD-043, which excludes the wheel-loop pilot: now N38a-11 (row 17, one plant per NEG-10). Dropped the private rerun/rerun_receipt row fields: re-run state lives in the pilot register (N38a-10 rejected a second home); derivation files name PILOT-PT-01/-15/-17/-07 and rerun_gate reads pilots::rerun_status (dep N38a-10 added, no cycle). Fixture names aligned with N00-KA and N10b-08's docking-fixture.md so same_as validates. Row filter ka:033 replaced by the real selection (KA-033 is G2, so g2_parity). Unit tests that needed the solvers, kernels or grid enumeration (later beads) became hand recomputations; e2e no longer calls spark.probe (no dependency); GATE-GAUNT-08 removed from gates (recorded by the re-run owners). Added a note on KA-036's two grids: the pilot's 34,590 of 34,590 (PILOT-PT-07) against N10b-08's exact enumeration on the 561-cell grid, 327 of 344 reversing and the 17 cells with ε = 0 staying admitted, so a 561-grid test expects 327 and 17."
+  },
+  {
+   "bead": "N10-KA1",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "All 55 rows checked against M.9 and SPEC-C-01..15 (23 tolerances, 27 controls set, agree with the specs); recomputed KA-044..046 (275,967/80,000), KA-049, KA-059, KA-061, KA-064, KA-072 (8 subgroups, 23 pairs, 6 with H = G; mutant 26/8), KA-073, KA-077, KA-081, KA-089 (16, 22), KA-090. Restored (GB-01) in KA-052; KA-085 tolerance names GATE-SPARK-02 as kind gate. Acceptance no longer requires owners' runs to pass (KNOWN_DRIFTS 7), covers g2/g3 targets; added ka1_hand_values_recompute; e2e to STD-E2E form."
+  },
+  {
+   "bead": "N10-KA2",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Rows carried 'to set'/'none stated' for cells the owners have since registered: now carries 4 tolerances and 18 controls set by SPEC-C-16/-18/-19/-20/-21/-22/-23/-24/-25/-27 and N10b-08 (KA-108/-109/-111), marked (set: <bead>); 3 tolerances and 5 controls stay open with owners. Note that KA-138's control fails only against the looser bound (29,957 vs 29,958; exact 29,956). Recomputed KA-096, -101, -113, -123..-127, -132, -134, -136, -138, -140, -110. Unit test and e2e rewritten."
+  },
+  {
+   "bead": "N10-KA3",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Same as N10-KA2: 13 tolerances and 15 controls now registered by SPEC-C-28/-29/-30/-34/-35/-36/-37/-38/-39 carried with their mutants; 4 tolerances (KA-171, -175..-177) and 7 controls stay open. Recomputed KA-153 (50.5/45.5 ms), -154, -155, -158, -160, -161, -164, -165, -167, -169, -171, -183, -185, -188, -189. Unit tests and e2e rewritten."
+  },
+  {
+   "bead": "N11-KA",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "All 16 rows agree with M.10 and their carriers (KA-192/198/199/201/203 mechanism carriers cite by range or owner). Its e2e named N13-01's shared conventions.sh as its own (KNOWN_DRIFTS 11): now owns scripts/e2e/ka_conventions.sh with header, tier-target row runs (unbound, never pass), three plants and full STD-E2E fields; dep STD-E2E added. Added a test file and ka_conventions_arithmetic (KA-193 (0,−1,0), KA-197 shell ratio 0.604443 → 2/3 and 64.8/3.45 kg, KA-200 bracket sign, KA-201 1,200/3/12/40/120, KA-202 brute force, KA-204 20 N)."
+  },
+  {
+   "bead": "N13-KA",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Restored dropped printed text (GB-02 on KA-232, GB-01 and the 64/16-ulp gate bound on KA-237, A-09 on KA-254, KILL-MARROW-GUARD on KA-260). KA-239/KA-256 control.nc no longer lists all eight mutations: per N13-18's table the bit-parity fixture catches only M2, M5, M6 (BD-010 registers those plus Ad_g→Ad_g⁻¹), and no mutation breaks a group axiom, so KA-239 is obligation: control (binding rule of N38b-28). turn-B's DESIGN control sin(n(φ+2πk)) equals sin(nφ) in ℝ: recomputed, 2.7% of single f64 evaluations agree bit for bit at k = 1, none at k = 10⁶, so the control restores at k = 10⁶ and compares the whole replay. Shared fixtures with N10-KA1 (KA-228/049, KA-230/070, KA-238/044). Block request gets path and section. All values recomputed (KA-228, -229, -232..-236 incl. 13,421,773·2⁻⁵⁰, -238, the 45/324 fixture). Log-scraping e2e replaced by tier-target runs and plants; dep STD-E2E."
+  },
+  {
+   "bead": "N14-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied the KA-270 request: snake-crawler element marked OPEN (Skeleton lead, N14bp1-01: C₂×C₂ if palindromic, C₂ by the sagittal mirror if actuator mass is one-sided), reported blocked and the row not counted while open. Owner-set cells carried: KA-265 10⁻⁹ rel (BD-109), KA-266 10⁻⁹ rel (N14b-03), KA-269 closed form p = 8.49628 s⁻¹ with N38b-47's derivation, 10⁻⁹ rel and cosh within 1% (N14b-03), KA-267 sideways cost 10⁻⁶ rel. Carriers fixed: KA-266/269 to N14b-03 (BD-246 cited neither), KA-285 to N15b-03/N15b-30 (BD-075 does not cite), N14b-18's corpus for the rejection fixtures and KA-291. Restored GB-03 and GB-05. Deps BD-025, N38b-05 (acceptance needs the seeding; no cycle). Values recomputed (KA-261 incl. gyration 0.023566, -262, -264, -265, -267 incl. 0.178512/0.553669, -269, -274; all five late rows). Test file and e2e rewritten."
+  },
+  {
+   "bead": "N16-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request verified: rows already go to known_answers.toml in N38a-12's schema (kinesis.toml appears only as its planted second-file control). Carried owner-set cells: KA-343 tolerance and control (N16a-06, 488 ns), controls of KA-345 (N16a-12), KA-348 (N16a-14, 28,076 B), KA-356/357/358 (BD-088), KA-359 (BD-089), KA-360 (N16a-17); open now KA-352/361/362 controls (N38b-31 proposes) and KA-354's tolerance. Found KA-356/357 stated at two fixtures (BD-088: compound pendulum 60°, T = 2.15395 s; top at 90°, Ω = 4.905; N38b-47: point pendulum 0.5 rad, T = 2.037868 s; tilted top Ω = 2.5500): registry carries BD-088's (the measuring bead), request to N38b-47. Restored the §36.3 row 7 reference in KA-361. All arithmetic rows and the eight byte counts recomputed. Test file and e2e rewritten. The owner-set paragraph cited the polishing conventions file; it now cites N38b-27's rule (an owner's value stands)."
+  },
+  {
+   "bead": "N17-KA",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the KA-371 request: both readings pinned (rounded Ω = 3.5: 14.8, 5.0, 1.35/1.16, 0.67/0.96 ms, crossover 360; exact Ω = 3.4908: 14.75, 5.00, 1.344/1.156, 0.673/0.964 ms, crossover 361.3), as N17a-04 states; `printed` records the rounded one. Recomputed every row: 86,185 and 166,870; 500,500; brute-forced 735,471/24,546 and 56/54, 495/395; the nine Ω fractions and bounds; mixing ratios; speedups; 2,624. E2E called frob phylum plan/quotient, verbs of beads it does not depend on (KNOWN_DRIFTS 8): now tier-target row runs and plants only; printout check names N38a-12's test."
+  },
+  {
+   "bead": "N18-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Carried the controls owners have set (N18b-32, BD-085, N18a-27, BD-230, N18a-03, N18b-25, N18b-27, BD-079) for KA-387 to -389, -391 to -395, -397, -402, -405 to -407, -411, -414 to -417, -419, -422, -423, -425, and the tolerances of KA-388 (0.5%), KA-395 (verdict at tan α 0.38/0.42), KA-413 (0.5%), KA-414 (10⁻¹²); open: controls of KA-398 and KA-424, tolerances of KA-390 and KA-407. KA-390 carriers BD-033, N18b-01 and BD-109's fixture. E2E called eval.run (a verb of a bead it does not depend on) and wrote a chapter file that the one-file rule refuses: now tier-target runs, scratch copies and three plants; acceptance selects rows by tier target. Owner paragraph cites N38b-27 instead of the polishing conventions file."
+  },
+  {
+   "bead": "N19-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the request: the reflected room is checked through the preview form `frob --json scene accept --source fixtures/imports/asym-room-mirrored.glb --preview --key hka-2` (exit 3, FROB-REF-302, det L = −1, residual 2 m), since stage 2 refuses it and no pack exists; the 6 mm doorway compiles then runs `--only enclosure-selftest`. The script's own acceptance now runs only a `registry` stage (tier-target row runs, unbound never passed, plants); `compile` and `accept` are hook stages for N19a-42 and N19a-43, which depend on this bead. Scope said this bead writes controls.toml records: now control.text only, seeded by N38b-05 (dep added). Carried owner-set controls KA-432/433/435 (N19a-24), KA-455 (BD-369), KA-463 (BD-164) and KA-440's free-slab tolerance (BD-231, 9.8 N within 10%); KA-444 flagged boundary-only until N38b-28's mutation (2.73 against 2.48 mm, recomputed). Listed the eight unnumbered late answers HKA-A to HKA-H that N19c-28 enters under its own block. Every arithmetic row recomputed and agrees (2.44 µm; 0.0377, 2.26, 0.763 s; 4/3, 0.75; 0.626 m/s; 1.3456 m; 35.36 + 39.27 mm, 18.66 and 5.99 mm; 1,228,800 cells, 4.69 MiB; 351.6 → 352 against 19² = 361 tiles; 10,700; 614 GB; sag 0.29234 m; h_max 2.48 and 9.98 mm; ω₁ 8.9556 rad/s; 202.9 GB/75 MB = 2,706)."
+  },
+  {
+   "bead": "N20-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "sense",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Rows agree with M.19 except two truths changed in transit, restored: KA-514 '(§15)', KA-516 'by the coadjoint action of §11' (was 'at the time of application'). Carried the values owners have set: 12 of 18 tolerances (KA-482, -484, -495, -511, -512, -514 to -518, -520, -523) and 23 of 35 controls (KA-474, -482, -485, -492, -494, -499, -500, -502, -505, -510 to -523), plus BD-099's second control of KA-468; open: tolerances KA-466 to -469 (BD-099 proposes 10⁻⁹ at the gate), -481, -483; 12 controls left to N38b-32. Carriers: KA-497 named BD-215, which does not cite it (now N20b-09, -10, -12); docking rows gain N20b-13/-14, KA-494 N20b-01, KA-495/496 N20b-05/-06. KA-489/496 flagged boundary-only with N38b-28's mutations; KA-504 is FACT under PILOT-PT-15 (obligation: rerun); the KA-475/KA-204 flag runs under N20a-49's fail-closed default. Late rows: N20b-45 files the block (after KA-849 at least), not 'after KA-524'. E2E called sense.schedule and sense.alias (not dependencies) and read N38a-13 receipts: now tier-target runs, plants and full log fields. Every row recomputed and agrees (incl. 27/32, 459/512, 3,807/4,096; 9/10, 3.2, 27/512, 225/256; 344/217/9 and 353 under ≤; 1/65 at 64/65; β/3, β/2, β/4; owners' 5.3852/3.2311 m, 15.17 A, 48.9 °C, 10,340/2,148, 4.11/4.10 m, 86.6 s)."
+  },
+  {
+   "bead": "N21-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the request: KA-541's carriers are BD-179 (every clause but the energy residual) and N21bp2-01 (the energy clause; records GATE-SPARK-05), with both beads' controls. Restored KA-528's tie-to-even clause and KA-537's '(rule R2)'; KA-547's worst-member figures are bounds (≤ 1.45, ≤ 3.08, printed 3.1), recomputed. Carriers that did not cite their row replaced or supplemented (KA-535 BD-203 → N21b-33; KA-537 BD-174 → N21b-07; cited mechanism beads added for KA-527/528, -534, -536, -542 to -548, -551, -552). Owner-set controls carried for KA-541, -545 (N21b-16), -547 (N17a-04), -551 (N21c-26), -552 (N21c-25); KA-548 to -550 left to N38b-32. FACT rows name PILOT-PT-15 and PILOT-PT-S2. Dep N40-02 added for the gates.toml criterion (no cycle). E2E ran only the g1 target and joined logs of N21b-40 and N21a-25, which do not depend on it: now per-tier targets, plants and full log fields. All arithmetic recomputed and agrees."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "to": "N38a-12",
+   "what": "Add a computed eligibility state `obligation: rerun` from pilots::rerun_status for rows whose derivation front matter names a pilot (N09-KA KA-033..036), with no new row field; N38a-10 rejected a second store of re-run state."
+  },
+  {
+   "to": "BD-041",
+   "what": "Name the docking fixture's derivation file docs/derivations/docking-fixture.md (owned by N10b-08, used by N00-KA, N09-KA and N20b-13), not docs/derivations/docking.md."
+  },
+  {
+   "to": "SPEC-C-01, SPEC-C-17, SPEC-C-18, SPEC-C-21, SPEC-C-22, SPEC-C-32, SPEC-C-38, N10b-08",
+   "what": "Replace `cargo test -p frob-conformance --test g1|g0|g3 -- KA-…` with the tier targets g1_known_answers, g0_laws, g3_metamorphic (KNOWN_DRIFTS 1)."
+  },
+  {
+   "to": "SPEC-C-16",
+   "what": "Set KA-094's tolerance and KA-096's control (N10-KA2 carries them open; fail-closed until set)."
+  },
+  {
+   "to": "SPEC-C-18, SPEC-C-19, SPEC-C-23",
+   "what": "Set the open controls of KA-107 (C-18) and KA-115 (C-19), and the tolerances and controls of KA-129 and KA-130 (C-23); N10-KA2 carries them open."
+  },
+  {
+   "to": "SPEC-C-29, SPEC-C-34, SPEC-C-35, SPEC-C-36",
+   "what": "Set the cells N10-KA3 still carries open: controls of KA-147, KA-148 (C-29) and KA-167 (C-34); KA-171's tolerance and the controls of KA-169, KA-171 (C-35); the tolerances of KA-175 to KA-177 and the controls of KA-176, KA-177 (C-36; KA-177's 'ω = 0 is the control' is not a mutation)."
+  },
+  {
+   "to": "N13-18",
+   "what": "Its sentence 'the eight mutations are themselves the negative controls of KA-239 and KA-256' contradicts its operations table: the bit-parity fixture (KA-256) catches only M2, M5, M6, and no mutation is caught by a group-axiom law (KA-239). State the rows each mutation is a control of (the binding rule admits only controls that make the row fail)."
+  },
+  {
+   "to": "N38b-30",
+   "what": "Register a control for KA-239 (group axioms) that breaks associativity, identity or inverse; none of N13-18's eight does, so N13-KA reports KA-239 obligation: control. Check KA-256's control.nc (M2, M5, M6) under the binding rule."
+  },
+  {
+   "to": "N13-35",
+   "what": "periodic_wheel_lifted_law_mutant_caught: sin(n(φ+2πk)) = sin(nφ) in exact arithmetic, and in f64 2.7% of single evaluations agree bit for bit at k = 1; restore from k = 10⁶ (no agreement in 10⁵ draws) and assert that the digests of the whole replay differ, not the first step after the restore."
+  },
+  {
+   "to": "N38b-47",
+   "what": "KA-356 and KA-357 derivation files use fixtures different from the ones BD-088 (a dependency) measures (point pendulum at 0.5 rad, T = 2.037868 s, and a top at θ = π/3, Ω = 2.5500, against BD-088's compound pendulum at 60°, T = 2.15395 s, and top at 90°, Ω = 4.905). One row, one fixture (your own KA-269 rule): write the files at BD-088's fixtures; the tilted top, which catches the fast-top shortcut (3.8% low), may enter as a second case if BD-088 adds its test."
+  },
+  {
+   "to": "N38b-31",
+   "what": "KA-348's owner control (Jacobian term computed as R·n_b) is registered by N16a-14, not N16a-18."
+  },
+  {
+   "to": "N19a-42",
+   "what": "Step 17: run `scripts/e2e/habitat_known_answers.sh --stage compile`; the script's default stage is now the registry stage only, and the compile stage (KA-426, KA-428) is the hook this bead runs."
+  },
+  {
+   "to": "N19a-43",
+   "what": "Part B (e): run `scripts/e2e/habitat_known_answers.sh --stage accept`; its reflected-room case uses the preview form `frob --json scene accept --source fixtures/imports/asym-room-mirrored.glb --preview --key hka-2` (exit 3, FROB-REF-302), since the room does not compile, and its 6 mm case compiles and runs `--only enclosure-selftest`."
+  },
+  {
+   "to": "N38b-32",
+   "what": "KA-520: the card rounds to the nearest multiple of `range_lsb` (N20a-20, step 5), so the control is truncation (4.10 m against 4.11 m at 0.1 rad), as the owner N20a-20 states; 'rounding in place of the card's truncation' reads the card the wrong way round."
+  },
+  {
+   "to": "N20a-18",
+   "what": "KA-523's tolerance is N20a-19's (10⁻¹² relative in double precision, 10⁻⁴ in single; N38a-31 carries the same), not the 10⁻⁶ of an earlier draft; cite the owner's value (the point-sampling control still fails by far)."
+  },
+  {
+   "to": "BD-030",
+   "what": "Cite KA-504 beside the 452 / 23,438 figures: your re-run of PILOT-PT-15 clears the obligation: rerun of KA-504 (Sensorium) as well as KA-530."
+  },
+  {
+   "to": "N21c-32",
+   "what": "GATE-SPARK-05 row: the measuring beads are BD-179 (membership, closure and contact clauses) and N21bp2-01 (the energy-ledger residual clause), and N21bp2-01 records the gate (BD-179 says so); the row names BD-179 alone."
+  },
+  {
+   "to": "WP-22",
+   "what": "List N21bp2-01 (its child, which records GATE-SPARK-05) beside BD-179 in the member list and the gate's line."
+  },
+  {
+   "to": "BD-036, BD-156, BD-164",
+   "what": "Cite the known-answer row each states: BD-036 the 2×2 stride case (KA-532), BD-156 the n³/3 counts 1,944 and 14,292 (KA-552), BD-164 the 75,411-slot dense directory (KA-551, beside CX-227)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 14 registry beads reviewed in full against Appendix M and their carriers; every recomputable value recomputed (none disagrees beyond the discrepancies already recorded and the KA-547 bound restored). Incoming requests applied: N14-KA KA-270, N16-KA single file (already true), N17-KA KA-371, N19-KA preview accept, N21-KA KA-541 carriers. The KA-541 correction needs no EPIC-M2 change: EPIC-M2 names no measuring bead per gate. STD-TEST already uses `sites`, so no request. Owner-set cells are carried as '(set: <bead>)' (N38b-27); cells only proposed by program beads (N38b-31, N38b-32) stay open. Deps added: N19-KA N38b-05, N21-KA N40-02; no cycle (neither depends on the registry bead). No br write, no file deleted."
+}

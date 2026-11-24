@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "kinesis", "frob-dyn", "solid", "spine", "spec", "test"]
 parent: "WP-10"
-deps: ["BD-007", "BD-025", "N10a-01", "SPEC-C-02", "STD-TEST", "STD-E2E"]
-needs: ["§16: the bead that creates crate frob-dyn (the law suite lands in crates/frob-dyn/tests/ and runs first against the referee through frob-fsim)"]
-related: ["BD-088", "BD-089", "BD-150", "BD-385", "CARD-T-16", "CARD-T-33", "SPEC-C-05", "N10-KA1", "BD-047"]
+deps: ["BD-007", "BD-025", "N10a-01", "N16a-01", "SPEC-C-02", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-047", "BD-080", "BD-089", "BD-150", "BD-159", "SPEC-C-05", "SPEC-C-08", "SPEC-C-13"]
 gates: ["GATE-KIN-01", "GATE-KIN-02", "GATE-KIN-03", "GATE-MARROW-04"]
 plan_refs: ["§10 C-04", "§11.2", "§13.3", "§13.10", "§16", "§12.3 T-16 T-33", "Appendix D.1", "Appendix I.1", "Appendix M KA-047 to KA-051", "Appendix N CX-023 CX-024"]
 ---
@@ -187,15 +187,23 @@ against the pinned oracle, joint accelerations within 10⁻⁹ relative in `f64`
 - `s7_limb_packet_psd`: the elimination formula on the identity and on 10³ random positive-definite rational
   inertias: one zero pivot, five positive.
 - `s8_three_compilations`: symbolic expression, CPU operator, device kernel on the two-link fixture; exact for
-  the symbolic route, within the tier's tolerance on devices.
+  the symbolic route; on a device bit-equal to `batch-cpu` in `f32` for class D1 and within 4 ulp per output for
+  class D3 (KA-049's device tolerance). Without a device the device half is logged `not run` with the reason,
+  never `pass`.
 - `s9_recursions_agree`: 10⁴ random states per reference robot.
 
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c04.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G0 and G1 rows
-KA-047 to KA-051; `frob --json sim run --tier referee --robot builtin:g1 --scenario ballistic --seed 7
---steps 10000` followed by `frob --json telemetry energy <run>`; assertions on the momentum and
-centre-of-mass residuals read from the envelope, with its evidence block (claim kind known answer, tier
+KA-047 to KA-051; `frob sim run crates/frob-conformance/fixtures/kin/ballistic-g1.fbot --tier referee
+--seconds 20 --seed 7 --key spec-c04-ballistic-7 --json` (the built-in biped released in free flight, 10⁴
+referee steps at h = 2 ms; the design is the fixture file, as BD-088's runs pass theirs, because `sim.run` has
+no robot or scenario option, and it is a run verb that needs an idempotency key), followed by `frob telemetry
+energy <run> --json` (the energy ledger) and `frob telemetry query <run> --stream kinematics --from 0 --to
+10000 --limit 500 --json` (N24a-36's one spelling: a closed range of ticks through `--from` and `--to`, the
+page size through the common `--limit`, and the next page through `--cursor` with the returned `next_cursor`) for
+the momentum and centre-of-mass
+channels; assertions on the momentum and centre-of-mass residuals computed from those pages, with the evidence block (claim kind known answer, tier
 `referee`, determinism class, model identity, seed). Log `target/e2e-logs/spec_c04/<utc>.ndjson` with
 transcript: commands, exit codes, wall times, residuals with units and thresholds, run digests, and on failure
 the first step at which a residual exceeded its bound and the run identifier to replay. Final `summary` line.
@@ -209,8 +217,10 @@ the first step at which a residual exceeded its bound and the run identifier to 
   (set here): the Coriolis factor taken as Ṁ (the term −½·∂(vᵀ·M·v)/∂q dropped), so Ṁ − 2C = −Ṁ is symmetric
   and not skew; and a composite inertia accumulated without transforming the child inertia to the parent
   frame, which breaks the energy identity.
-- KA-049 two-link chain: exact in rationals; tolerance on devices from the tier; G1 · all tiers. Control:
-  taking the lower three rows of the space Jacobian as the point Jacobian.
+- KA-049 two-link chain: exact in rationals; on devices the kernel fidelity rule against `batch-cpu` in `f32`
+  (bit-equal for determinism class D1, at most 4 ulp per output for class D3, GATE-SPARK-02's figure), and
+  both device powers within 4 ulp of −0.3 W rounded to `f32` (the value N10-KA1 registers); G1 · all tiers.
+  Control: taking the lower three rows of the space Jacobian as the point Jacobian.
 - KA-050 point-velocity column: exact; G0 · host. Control: the same shortcut.
 - KA-051 limb elimination: exact; G1 · host. Control: a limb packet treated as positive definite (a Cholesky
   factorization of the packet must fail; the mutant that inverts it at the port is caught).

@@ -8,7 +8,7 @@ labels: ["m0", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
 deps: ["BD-027", "N12-06", "SPEC-C-05"]
 needs: []
-related: ["N12-33", "N12-39", "CARD-T-02", "BD-011", "BD-019", "BD-021"]
+related: ["CARD-T-03", "CARD-T-13", "GB-01", "N12-20", "N12-28", "N12-33", "N12-39", "N12-41"]
 gates: ["GATE-LEMMA-00"]
 plan_refs: ["§12.3 (T-01)", "§12.6", "§12.7", "§10 C-05", "Appendix D.1 (Cayley map)"]
 ---
@@ -44,7 +44,9 @@ through the `poly-identity` kind, its accepted specimen and mutants. Out: produc
    clearing the denominator: NᵀN = D²·I (nine entries, degree 4) and det N = D³ (degree 6). The nonvanishing
    condition D ≠ 0 is recorded as a side condition of the bundle and holds over the reals because D ≥ 4. The
    identities are extracted from the kernel's own straight-line program by symbolic execution, not from this
-   formula, so the certificate is about the kernel that ships.
+   formula, so the certificate is about the kernel that ships. In the kernel's symbols (BD-019) ω here is the
+   dimensionless increment a = h·ω, N = 4·R(c) for the increment quaternion c = (1, a/2) the program forms, and
+   D = 4·d for its output d = 1 + a·a/4; the extracted statements are R(c)ᵀ·R(c) = d²·I and det R(c) = d³.
 2. Checker: FrankenSymPy's proof kernel at build time (claim `AlgebraicIdentity`, rule `PolynomialNormalForm`);
    the offline auditor `frob-verify` re-checks the bundle by expanding both sides to normal form over ℚ. The
    bundle carries the kernel content hash, so it certifies `K-cay-step` at one `KernelId`.
@@ -56,8 +58,8 @@ through the `poly-identity` kind, its accepted specimen and mutants. Out: produc
 5. Relies on it: construction C-05 (time stepping stays on the group); the kernels `K-cay-step` and the
    articulated Cayley step; card T-02; the North-Star scenario "a kernel with a certificate" (the update stays on
    the group); GATE-MARROW-01, which cites this gate.
-6. Artifacts: `docs/math/cards/T-01.md`; the row `T-01` in `registries/theorems.toml`; `K-cay-step.cert` and its
-   `.frobcert` bundle; specimens `crates/frob-cert/tests/specimens/poly-identity/accept-T-01.frobcert` and three
+6. Artifacts: `docs/math/cards/T-01.md`; the row `T-01` in `registries/theorems.toml`; the T-01 entry of
+   `K-cay-step.cert` (BD-021) and its `.frobcert` bundle; specimens `crates/frob-cert/tests/specimens/poly-identity/accept-T-01.frobcert` and three
    mutants.
 
 ## Acceptance criteria
@@ -78,13 +80,18 @@ through the `poly-identity` kind, its accepted specimen and mutants. Out: produc
 
 `crates/frob-lemma/tests/cards/t01.rs`: `t01_normal_form_identity` (NᵀN − D²·I expands to the zero polynomial);
 `t01_det_identity` (det N − D³ = 0); `t01_specimen_accepts`; `t01_changed_coefficient_rejects`;
-`t01_wrong_kernel_hash_not_accepted`; `t01_numeric_spot_check` (exact rationals: ω = (1, 2, 2) gives D = 13 and
-R = N/13 with RᵀR = I exactly).
+`t01_wrong_kernel_hash_not_accepted`; `t01_mutated_statement_rejects` (the bundle's statement det N = −D³:
+`reject`, the normal form of det N + D³ is 2·D³, not zero); `t01_numeric_spot_check` (exact rationals: ω = (1, 2, 2)
+gives D = 13 and R = N/13 with RᵀR = I and det R = 1 exactly).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) certifies, replays offline and logs the verdicts, the hashes and
-the rule of each rejected mutant.
+the rule of each rejected mutant. Its NDJSON lines for this card (STD-E2E helper) carry `ts`, `script`, `bead`
+("CARD-T-01"), `step` (`T-01/<specimen-or-mutant>`), `event`, the exact `frob prove kernel K-cay-step --json` and
+`frob-verify` command lines, exit codes, wall time, the envelope's `evidence` block (claim Proof, class
+`Certified`, `KernelId`, certificate hash, checker identity), the expected and observed verdict, and on a mismatch
+the first failing rule and the bundle path to reproduce.
 
 ### Known answers and negative controls
 

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-03", "BD-054", "BD-055", "BD-056", "BD-101", "BD-100", "BD-102"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-100", "BD-101", "BD-102", "N14b-03", "NEG-30", "NEG-31"]
 needs: []
-related: ["N14b-07", "BD-246", "BD-368", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 15", "§14.10", "§28.4 A-01, A-08", "Appendix M KA-270"]
 ---
@@ -25,8 +25,13 @@ stability on slopes. No reference robot is on file. It lands at M3.
 
 ## Scope
 
-In: `zoo/rocker-bogie.fbot`, its expectation file and controls. Out: the template (N14b-03); mobility (BD-101);
-static stability (BD-100); the wheeled controller family (N14b-07); curb and stair task families (BD-368).
+In: `zoo/rocker-bogie.fbot` (the template instantiated at its defaults), its expectation file with the full
+known-answer table below, the three variant files of the controls, and the generated golden tests
+(`zoo_rocker_bogie…`). Out: the template itself with its manifest, levers, presets and default parameter
+values, and the template-level unit tests (`rocker_bogie_mobility_three`, `rocker_bogie_tip_angle`), all in
+N14b-03: the differential closure, the C₂ group on file and the side-slope fixture (half-track 0.30 m, centre
+of mass 0.25 m high) are the template's, defined there and repeated here. Also out: mobility (BD-101); static
+stability (BD-100); the wheeled controller family (N14b-07); curb and stair task families (BD-368).
 
 ## Technical approach
 

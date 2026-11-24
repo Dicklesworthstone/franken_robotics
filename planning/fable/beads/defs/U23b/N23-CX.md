@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "cortex", "gauntlet", "frob-conformance", "frob-learn", "solid", "registry", "test"]
 parent: "WP-48"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§38.11: assignment of stable `NC-…` identifiers in `frob-conformance/registry/controls.toml` by the registry owner; this bead supplies the records and proposes no numbers", "§23.3 to §23.9: the mechanisms whose planted defects these controls are (VecEnv BD-192, tensor views BD-193, task terms BD-194, PPO BD-197, training BD-198, sharding BD-199, requirement monitors BD-255, distillation BD-323); each must expose the build switch or mutation point named in its row"]
-related: ["BD-192", "BD-193", "BD-194", "BD-197", "BD-198", "BD-199", "BD-255", "BD-266", "BD-323", "N23b-07", "N23b-08", "N23b-15", "N23b-18", "N23b-30", "N23b-32", "N23b-34", "N23b-35", "N23b-39", "N23-REF"]
+deps: ["BD-025", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["N23-KA", "N23-REF", "N23b-07", "N23b-08", "N23b-15", "N23b-17", "N23b-29", "N23b-30", "N23b-32", "N23b-33", "N23b-34", "N23b-35", "N23b-38", "N23b-39", "N33c-37", "N38b-04"]
 gates: []
 plan_refs: ["Appendix N (N.20)", "§23.3", "§23.4", "§23.5", "§23.6", "§23.9", "§23.16", "§23.21", "§23.25", "§23.26", "§23.27", "§23.28", "§23.29", "§38.11"]
 ---
@@ -27,19 +27,41 @@ and is reviewed at each milestone exit.
 
 This bead is the registry of the counterexamples that belong to Cortex: the thirteen numbered entries CX-246 to
 CX-258 and five late cases that were written after the numbered catalogue closed and have no number yet. It carries
-every case with its numbers, so that no mechanism bead has to rediscover them, and it turns each into a control
+every case with its numbers, so that no mechanism bead has to rediscover them, and it gives each entry what the seeding tool needs to turn it into a control
 record. Why a separate bead: the cases are owned by many mechanism beads, and a control that lives only in the test
 file of one mechanism is not visible to the gate runner, which reads the registry and nothing else.
 
 ## Scope
 
-In: the eighteen cases below with their numbers; one or more control records per case in
-`frob-conformance/registry/controls.toml`; the registry tests; the rule for the five late cases (provisional
-identifiers until the catalogue owner numbers them).
-Out: the mechanisms themselves and their gate measurements (named per row). The planted-exploit corpus for the
-exploitation detectors is N23b-07; the chapter's fixture battery is N23b-18.
+In: the eighteen cases below as entries of the counterexample catalogue
+`crates/frob-conformance/registry/counterexamples.toml`, each with the substance it needs to become a control
+(the rule identifiers and gates it protects, the kind of control, and the identifier of its planted defect); the
+block request for the numbers of the five late cases; a host test that recomputes every number; the script that
+shows each planted defect is caught.
+Out, with the bead that has it: the catalogue's record schema and loader, and the seeding tool that turns
+catalogue entries into rows of `crates/frob-conformance/registry/controls.toml`, allocates their `NC-`
+identifiers, keeps the seed map and proves completeness by the join (N38b-05, a dependency). This bead writes no
+row of `controls.toml` by hand: its controls appear there when the seeding is re-run over its entries, which is
+append-only and idempotent (DESIGN, correcting an earlier draft that wrote control records directly: one writer
+of that file means control identifiers are allocated once and never rewritten). The control runner and the rule
+that a gate with no control cannot pass (N38b-04). The number blocks (N38a-40). The mechanisms themselves, the
+planted variants (built by the bead named in each row) and their gate measurements. The planted-exploit corpus
+for the exploitation detectors is N23b-07; the chapter's fixture battery is N23b-18.
 
 ## Technical approach
+
+**Data.** Each row below is one entry of the catalogue in its record schema (N38b-05): `id` (the CX number),
+`shortcut`, `case`, `numeric` (true for all eighteen), `plan_case` (`"numbers"` for all eighteen), `rule`,
+`rule_ids` (the gates of the last column with the invariants, obligations, rules and refusal codes of the rule
+column), `defined_in`, `same_as`, `label` (DESIGN, or FACT with its source for CX-250 to CX-252 and the first
+late case, whose figures were read in a sibling's source; they are registered with `rerun = false` and re-run by
+the beads named under **FACT entries** below), `rerun` and `rerun_receipt` on those four,
+`control_kind` and `plant`, and for a late entry `slug`. The fifth column gives the control's kind, target,
+defect and expected observation: its first word is `control_kind`; the planted variant it describes is the
+entry's `plant` (for a `mutation`, the Cargo feature that puts the shortcut into the real component, built by
+the bead that owns the component; for the other kinds, the fixture); and the defect and the expected
+observation are the texts the seeding tool copies into the control's `defect` and `expect`. Every gate among an
+entry's `rule_ids` must fail with the plant enabled.
 
 **The numbered cases.** "Gates" lists every gate whose run must catch the control.
 
@@ -59,58 +81,90 @@ exploitation detectors is N23b-07; the chapter's fixture battery is N23b-18.
 | CX-257 | A learning gate passes when the pipeline runs | An exported checkpoint with an all-zero policy head passes a test that training runs, exports and reloads. Zero-weight, random and shuffled-label policies must fail the same return threshold | Behaviour, not plumbing (INV-CORTEX-05; FROB-REF-544) | planted-design; a gate record whose "trained" policy is the zero-weight policy; the record must fail its threshold and a record without controls must be refused | GATE-CORTEX-01, GATE-CORTEX-14 |
 | CX-258 | A ranking found under a pyramidal (box) friction cone is a ranking | A friction cone linearized as a box grants √2·μ along its diagonals, 41% more traction. A planted policy that drives diagonally flips a planted ranking; the result is typed `model-conditional`, and an honest policy on the circular cone is not flagged | Rank robustness of finalists; FROB-REF-830 | planted-design; a finalist whose advantage is diagonal traction; flagged `law-sensitive`, ranking `model-conditional` | GATE-CORTEX-04, GATE-CORTEX-15 |
 
-**The late cases (no number yet).** Provisional identifiers `CX-23-L1` … `L5`; the catalogue owner replaces them
-with numbers and the registry tests then fail until this table is updated (a deliberate tripwire).
+**The late cases (no number yet).** They are appended to the catalogue, which is append-only. A bead never
+invents a number above the plan-time maximum (CX-384): the numbers come from the allocation ledger
+`crates/frob-conformance/registry/allocations.toml` (schema `frob.gauntlet.alloc/1`, N38a-40). This bead files
+one `[[block]]` request there with `registry = "cx"`, `count = 5`, `owner = "N23-CX"` and
+`section = "§23.25 to §23.29"`; the allocator fills `first` and `last`; the five tags `CX-23-L1` … `CX-23-L5`
+are then mapped to the block's numbers in table order in one commit, and each entry keeps its tag in `slug`.
+Until the block is issued an entry is cited by its tag; a tag still used as an identifier in a registry, a test
+name or a derivation file at this bead's milestone (M2) fails the ledger check `provisional-tag-past-due`.
 
 | Provisional | The tempting shortcut | The smallest case that breaks it | The rule it protects | Control | Gates |
 |---|---|---|---|---|---|
-| CX-23-L1 | A sampler with correct marginals samples the law the likelihood assumes | A Box–Muller cosine whose phase uniform is a linear function of a counter advanced by a constant: consecutive draws differ in phase by the fixed fraction 0.167245 of a turn, so two adjacent channels agree in sign with probability 1 − 2·0.167245 = 0.665510 where independence gives 0.5; counts of 66,552, 66,552 and 66,551 in 100,000 two-channel calls on three seeds; each channel alone is positive half the time | The joint law of sampled actions (P-12) | planted-design; the linear-phase sampler re-implemented; adjacent-channel agreement 0.6655 ± 0.005, more than 100 standard deviations from ½ at N = 10⁵ | GATE-CORTEX-18, GATE-WS-06 (sampler row) |
-| CX-23-L2 | A reward handed to the actor is not an observation | Three one-second ticks, hidden gain g ∈ {1, 2}, acceleration g·u, first command u₀ = ¼: x₁ = g/8, so the shaped reward −abs(1 − x₁) is −7/8 under g = 1 and −3/4 under g = 2. With the velocity packet late no causal policy docks in both worlds; with that reward delivered before the second command the commands (¼, ½, −¾) and (¼, 0, −¼) dock both | The actor's information contract lists every readable field (E-10) | planted-input (four of them): previous reward wired to the actor; an `info` field carrying a hidden parameter; an action mask computed from hidden state; a termination flag delivered early. Each fails the causal test in 100 of 100 seeds | GATE-CORTEX-19 |
-| CX-23-L3 | The first evaluation look that clears the target is the time of attainment | True success rate 0.89, target 0.90, 30 episodes per look. 30 of 30 has an exact one-sided 95% lower bound of 0.05^(1/30) = 0.90497. One look does this with probability 0.89³⁰ = 0.0303; over 50 looks, 1 − (1 − 0.0303)⁵⁰ = 0.78548 | A threshold crossing is not attainment | a-a style; the attainment procedure replaced by the unadjusted first-crossing rule; reports attainment in about 78.5% of 2,000 simulated trainings of a policy that never attains | GATE-CORTEX-20, GATE-CORTEX-05 |
+| CX-23-L1 | A sampler with correct marginals samples the law the likelihood assumes | A Box–Muller cosine whose phase uniform is a linear function of a counter advanced by a constant: consecutive draws differ in phase by the fixed fraction 0.167245 of a turn, so two adjacent channels agree in sign with probability 1 − 2·0.167245 = 0.665510 where independence gives 0.5; counts of 66,552, 66,552 and 66,551 in 100,000 two-channel calls on three seeds; each channel alone is positive half the time | The joint law of sampled actions (P-12) | planted-design; the linear-phase sampler re-implemented, which is the one fixture `frob_conformance::plants::linear_phase_sampler` of N33c-37 (this entry's `plant`; that bead builds the fixture and registers no second control for it); adjacent-channel agreement 0.6655 ± 0.005, more than 100 standard deviations from ½ at N = 10⁵ | GATE-CORTEX-18, GATE-WS-06 (sampler row), GATE-WS-07 (row `m2-sampler`) |
+| CX-23-L2 | A reward handed to the actor is not an observation | Three one-second ticks, hidden gain g ∈ {1, 2}, acceleration g·u, first command u₀ = ¼: x₁ = g/8, so the shaped reward −abs(1 − x₁) is −7/8 under g = 1 and −3/4 under g = 2. With the velocity packet late no causal policy docks in both worlds; with that reward delivered before the second command the commands (¼, ½, −¾) and (¼, 0, −¼) dock both | The actor's information contract lists every readable field (E-10) | planted-input (four of them, the entry's four plants `leak.cortex.1` to `leak.cortex.4` of N23b-32, one control each): previous reward wired to the actor; an `info` field carrying a hidden parameter; an action mask computed from hidden state; a termination flag delivered early. Each fails the causal test in 100 of 100 seeds | GATE-CORTEX-19 |
+| CX-23-L3 | The first evaluation look that clears the target is the time of attainment | True success rate 0.89, target 0.90, 30 episodes per look. 30 of 30 has an exact one-sided 95% lower bound of 0.05^(1/30) = 0.90497. One look does this with probability 0.89³⁰ = 0.0303; over 50 looks, 1 − (1 − 0.0303)⁵⁰ = 0.78548 | A threshold crossing is not attainment | a-a; the attainment procedure replaced by the unadjusted first-crossing rule; reports attainment in about 78.5% of 2,000 simulated trainings of a policy that never attains | GATE-CORTEX-20, GATE-CORTEX-05 |
 | CX-23-L4 | A rung with Kendall τ above 0.7 near the top keeps the winner | Forty designs; the cheap rung reproduces the true order except that the true best is ranked third. Among the true top ten, 2 of 45 pairs are inverted: τ = (43 − 2)/45 = 41/45 ≈ 0.911. A cut keeping the top 5% (two designs) discards the winner | The winner check: containment rank and regret | planted-design; the forty-design fixture with a request to select k = 2; must be refused, and accepted at k = 3 | GATE-CORTEX-21 |
 | CX-23-L5 | A gradient through a long differentiable rollout tells the optimizer where to go | At a closed-loop exponent of 0.16 per control step a perturbation grows by e^(0.16·K): 13 at K = 16, 167 at K = 32, 7.8 × 10⁸ at K = 128. A gradient through 128 steps is dominated by its variance | Short windows, a cosine monitor and step labels in short-horizon gradient training | planted-input; a run with the window forced to K = 128 and the monitor off; the median cosine against paired central differences falls below 0.5 and the run must switch to the stencil or stop | GATE-CORTEX-22 |
 
-**Control record format (FACT about the registry).** One TOML record per control: `id` (stable, never reused,
-assigned by the registry owner), `seed` (the CX it came from), `gate` (every gate that must catch it), `kind`
-(`mutation`, `planted-input`, `planted-design`, `planted-world` or `a-a`), `target` (crate path of the mutation
-point or the fixture identity), `defect`, `expect`, and `last_seen = { caught, session, date }`. Rules that bind
-this bead: a gate with no control cannot record PASS; a control is run every time its gate is run; a control is a
-defect and not a boundary (the control for a refusal is the build or input in which the refusal was removed).
+**Who builds each plant (DESIGN).** `plant` is written `<building bead>:cx-<nnn>` (or `<building bead>:<tag>`, or
+the fixture path the row names), the bead that owns the component and cites the entry: CX-246 N23a-07 (the
+single-flag recursion; BD-197 reproduces it in the PPO battery); CX-247 BD-192 (the per-step penalty, registered
+against GATE-CORTEX-06); CX-248 N23a-07 (the per-step γ); CX-249 N23a-08; CX-250, CX-251 and CX-252 BD-197 (the
+three planted defects that reproduce the sibling's errors); CX-253 and CX-254 N23a-19; CX-255 BD-193 (N23b-12 for
+the adapter's views); CX-256 N23a-05; CX-257 BD-198; CX-258 N23b-08 (GATE-CORTEX-15), with the planted-exploit
+corpus N23b-07 for GATE-CORTEX-04; CX-23-L1 N33c-37; CX-23-L2 N23b-32; CX-23-L3 N23b-34; CX-23-L4 N23b-35; CX-23-L5
+N23b-39 (the cosine monitor and step labels of GATE-CORTEX-22).
 
-**Mutation points (DESIGN).** Each `mutation` control is a `cfg(frob_planted = "…")` switch compiled only into the
-conformance build of the owning crate, never into a release binary; `xtask check-generated` fails a release graph
-in which any planted switch is reachable. `planted-input` and `planted-design` controls are fixtures under
-`crates/frob-conformance/fixtures/cortex/` with a recorded hash.
+**FACT entries.** CX-250, CX-251, CX-252 and CX-23-L1 carry `label = "FACT"` with their source (the sibling's
+training code, or its sampler, at a pinned commit) and `rerun = false` until the bead that reproduces them here
+records a receipt: BD-197 for CX-250 to CX-252, N33c-37 for CX-23-L1. Until then the seeding tool writes their
+controls as `obligation` (not runnable; no gate made eligible).
+
+**What the seeding tool writes from an entry (the schema of the negative-control registry, owned by BD-025).**
+One `[[control]]` record per control: `id` (`NC-` plus four digits, stable, append-only, never reused, assigned by the registry
+owner), `seed` (the CX it came from; for a late case its issued number), `gate` (every gate that must catch it; each
+must exist in `registries/gates.toml`), `kind` (`mutation`, `planted-input`, `planted-design`, `planted-world` or
+`a-a`), `target` (the code path, verb, fixture or procedure the defect is planted in), `defect`, `expect` (an
+observable: a value, a refusal code, a failed row), `last_seen = { caught, session, date }` (written by the
+control runner, never by hand), and the optional `feature` (for a `mutation`) or `fixture` (for the other
+kinds). Rules that bind this bead: a gate with no control cannot record PASS; a control is run every time its
+gate is run; a control is a defect and not a boundary (the control for a refusal is the build or input in which
+the refusal's check was removed, recorded in `removed_check`).
+
+**Mutation points (DESIGN, following BD-025).** Each `mutation` control is a Cargo feature of the owning crate
+(named by its plant, as N38b-05's seeding writes it and BD-025 records it: `feature = "cx-<nnn>"`, or the tag,
+for the plant `<building bead>:cx-<nnn>`; declared in that crate's manifest by the building bead), enabled only under the conformance configuration's
+`gauntlet-mutations` umbrella, which does not compile under the release profile, so no planted defect can reach a
+release binary. `planted-input` and `planted-design` controls are fixtures under
+`crates/frob-conformance/fixtures/cortex/` with a `synthetic` kind header and a recorded hash.
 
 ## Acceptance criteria
 
-- [ ] `frob-conformance/registry/controls.toml` holds at least one record for each of CX-246 to CX-258 and each of the five late cases, schema-valid, each naming its gates.
-- [ ] Every gate named in the tables has at least one of these controls in its `controls` list in `registries/gates.toml` (the Cortex rows are N23b-16).
-- [ ] For each `mutation` control the named switch exists in the owning crate's conformance build and is absent from release builds.
-- [ ] Each control's expected observation is reproduced by a test that plants the defect and asserts the stated wrong value (for example 0.5 for CX-253, element 12 for CX-255, 1.582459 for CX-252).
-- [ ] The registry test fails if a late case still carries a provisional identifier after the catalogue assigns numbers, and fails if any numbered CX of this chapter has no control.
-- [ ] `last_seen.caught` is true for every control whose gate has run; a control never caught is listed for the milestone exit review.
+- [ ] `crates/frob-conformance/registry/counterexamples.toml` holds the thirteen entries CX-246 to CX-258 and the five late entries, each with `control_kind`, a `plant` and its gates among `rule_ids`. After the seeding tool of N38b-05 is re-run, each entry has at least one control in `controls.toml` whose `seed` names it (the second late entry has four), each naming its gates; the tool's second run changes no byte and the join passes. No record of `controls.toml` is written by this bead.
+- [ ] Every entry's `plant` names the bead that builds it (the list above); the four FACT entries carry `rerun = false` and seed as obligations until their reproducing bead records a receipt.
+- [ ] `cx_values_recomputed` reproduces every expected observation from first principles (for example 0.5 for CX-253, element 12 for CX-255, 1.582459 for CX-252).
+- [ ] The five late entries carry numbers from a block issued to N23-CX in `allocations.toml`, in table order, with their tags in `slug`; `registry::alloc::validate` passes, no tag remains as an identifier at M2, and the registry test fails if any CX of this chapter has no control.
+- [ ] `scripts/e2e/cortex_controls.sh` exits 0.
 
 ## Test plan
 
 ### Unit tests
 
 `cargo test -p frob-conformance cortex_controls`:
-- `cx_cortex_all_present`: the registry holds controls seeded by CX-246 … CX-258 (13) and CX-23-L1 … L5 (5).
+- `cx_cortex_all_present`: the catalogue holds CX-246 … CX-258 (13) and the five late entries (by tag before the block is issued, by number and `slug` after), and after seeding the control registry holds at least one control per entry.
+- `cx_cortex_block_request_of_five`: the ledger holds the request; after issue the five numbers are contiguous and in table order.
 - `cx_values_recomputed`: recomputes from first principles and asserts 9.9 (CX-246); 500 and 1,000 (CX-247); 2.000·r, 1.995·r, 1.990·r and the per-step 2.0·r, 1.0·r (CX-248, to four significant digits); 3.15149 and 1.64872 (CX-249); 0.25 and 0.5 (CX-253); 4/3 and 32/9 as exact rationals (CX-254); elements 3 and 12 and the order (1, 0, 3, 2) (CX-255); margins 0.5 and 1.2 (CX-256); 0.665510 from the two constants 0x9E3779B97F4A7C15 and 0x94D049BB133111EB (CX-23-L1); −7/8 and −3/4 (L2); 0.90497, 0.0303, 0.78548 (L3); 41/45 (L4); 12.9, 167.3, 7.84 × 10⁸ (L5).
+- `cx_cortex_plants_and_labels`: every `plant` names its building bead; CX-250, CX-251, CX-252 and CX-23-L1 are FACT with `rerun = false`; every other entry is DESIGN.
 - `control_is_defect_not_boundary`: each record's `kind` is one of the five kinds and its `defect` names a removed or altered rule.
 - `gate_without_control_cannot_pass`: a synthetic gate row with an empty `controls` list is refused PASS.
 
 ### End-to-end script and logging
 
 `scripts/e2e/cortex_controls.sh` (sources the shared helper of `STD-E2E`; newline-delimited JSON to
-`target/e2e-logs/cortex_controls/<utc>.ndjson` with a transcript beside it). It builds the conformance
-configuration, runs each control against its gate's test through `cargo test -p frob-conformance --test
-cortex_gates -- --control <id>`, and asserts that every control is caught. Each line carries `ts`, `script`,
-`bead`, `step`, `event`, the exact command, exit code, wall time, the control identity, the expected and observed
-values, and on a miss the first differing value and the fixture path. Controls whose mechanism is not yet built
-are logged `skipped: capability absent`, never as caught. The `summary` line gives controls caught, missed and
-skipped and the gates touched.
+`target/e2e-logs/cortex_controls/<utc>.ndjson` with a transcript beside it; it calls only cargo targets of its
+dependencies, so no `frob` command). It runs the unit tests above; re-runs N38b-05's seeding tool, `cargo test -p
+frob-conformance --test seed_controls -- --ignored seed`, twice, asserting that the second run leaves the digest
+of the committed `controls.toml` unchanged; runs the join, `cargo test -p frob-conformance --test seed_join`; and
+reads the control runner's history `registry/control_history.ndjson` (N38b-04) to report each control's latest
+outcome. Running a gate's conformance entries with the plant off and with `--features gauntlet-mutations` is the
+control runner's, invoked by the building beads' own scripts, and is not repeated here. Each line carries `ts`,
+`script`, `bead`, `step`, `event`, the exact command, exit code, wall time, the control identity, its building
+bead, its state (`runnable`, `obligation`, `stale` while the plant is unbuilt) and latest outcome; the digest of
+`controls.toml` before and after the second seeding; on failure the first missing entry or unresolved gate.
+Controls whose plant is not yet built are logged `stale: capability absent`, never as caught. The `summary` line
+gives controls caught, missed, never run and stale, and the gates touched.
 
 ### Known answers and negative controls
 
@@ -122,8 +176,9 @@ skipped and the gates touched.
 
 - CX-256 is stated with a thermal margin in kelvin: a temperature margin is a difference, so its scale is written in kelvin even where a source text writes degrees Celsius.
 - The 1.582459 of CX-252 and the finite differences of CX-250 are FACTs read from a sibling's training code at a pinned commit and re-run at admission; the fixture reproduces them from the fixture's own definition, not from that code, and the sibling is never linked.
-- The five late cases have no catalogue number. Until they are numbered, gates cite the provisional identifiers; nothing else changes when numbers arrive.
-- CX-258 is shared with the fidelity chapter's model-form check and the optimization chapter's finalist stage; one control record lists all three gates, so the planted finalist is one fixture.
+- Owed by other beads, not by this registry: every gate named in the tables has at least one of these controls in its `controls` list in `registries/gates.toml` (the Cortex rows, N23b-16); each `mutation` feature is declared in the owning crate's manifest, reachable only through `gauntlet-mutations`, and does not compile under the release profile (the building beads); each control's expected observation is reproduced by a test that plants the defect (the building beads); `last_seen.caught` is true for every control whose gate has run, and a control never caught is listed for the milestone exit review (N38b-04).
+- The five late cases have no catalogue number until their block is issued. Until then gates and beads cite the tags; when the numbers arrive the tags move to `slug` in one commit and nothing else changes.
+- CX-258 is shared with the fidelity chapter's model-form check and the optimization chapter's finalist stage; one control record lists both gates of its row (GATE-CORTEX-04, GATE-CORTEX-15), so the planted finalist is one fixture.
 
 ## References
 

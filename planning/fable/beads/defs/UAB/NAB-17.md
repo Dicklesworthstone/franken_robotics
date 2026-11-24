@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
 parent: "EPIC-M0"
-deps: ["BD-002", "BD-005", "BD-025", "STD-TEST"]
-needs: ["§40.4: the kill-gate records of `registries/gates.toml`, against which the kill gates named in a row are resolved (N40-03, N40-23 to N40-29)", "§0.7, §44.2: the funding record per work package and the pilot ledger, which read a row's decision before a package is funded (N00-07, N00-09)", "§0.8: the hypothesis verdict register, whose verdict changes are the only source of a changed score on a carried row (N00-10)"]
-related: ["NAB-18", "NAB-19", "NAB-20", "NAB-21", "NAB-22", "NAB-32", "NAB-50", "N00-07", "N00-09", "N00-10", "N00-22", "N40-03"]
+deps: ["BD-002", "BD-005", "BD-025", "N40-03", "STD-TEST"]
+needs: []
+related: ["NAB-23", "NAB-24", "NAB-25", "NAB-26", "NAB-27", "NAB-28", "NAB-29", "NAB-30", "NAB-31", "NAB-42"]
 gates: []
 plan_refs: ["Appendix C (preamble)", "Appendix C.1", "§0.7", "§0.8", "§9 (D-6, D-10)"]
 ---
@@ -82,16 +82,33 @@ kill_gates  = ["KILL-KIR"]
 gates       = []
 bets        = []
 killed_idea = []                          # KI-nn records a rejection rests on
+reason      = ""                          # rejected rows: why it is not built (the text after the colon of the
+                                          #   decision, or the qualifier after the decision word: "under D-2")
 reopen_on   = ""                          # parked and deferred rows: the evidence that reopens the question
 needed_by   = ""                          # an adopted row below 2.0: what needs it
 carried     = true                        # true when the row existed in the earlier version of the matrix
 rescored_from = ""                        # the earlier printed score when a verdict changed it ("3.0")
-queue       = ""                          # MQ-nn when the item waits in the Moonshot queue
+queue       = []                          # the MQ-nn items of the Moonshot queue that wait for this row (EV-F45
+                                          #   has two); filled from the queue records' `family` (NAB-21)
 
   [[family.history]]                      # appended by a re-score (NAB-22); never edited
-  exit = ""; impact = 0; confidence = 0; effort = 0; score = ""; decision = ""
-  reason = ""; evidence = []              # gate records, kill-gate ADRs, hypothesis-register changes
+  exit       = ""                         # the milestone exit that re-scored it ("M3")
+  impact     = 0
+  confidence = 0
+  effort     = 0
+  score      = ""
+  decision   = ""
+  reason     = ""
+  evidence   = []                         # gate records, kill-gate ADRs, hypothesis-register changes, pilot ids
+  session    = ""                         # the sweep session that wrote the entry (NAB-22 independence rule)
+  unchanged  = false                      # true for "looked at and unchanged"; then `looked_at` is non-empty
+  looked_at  = []                         # the evidence examined when nothing changed
+  move       = ""                         # "frontier-moonshot → parked" when a fired kill gate moves the row
 ```
+
+A history entry must carry non-empty `evidence`, or `unchanged = true` with non-empty `looked_at`; the loader
+refuses any other entry (`ev.history-without-evidence`), which is what makes "unchanged" and "not swept"
+different objects.
 
 **2. The score function.** `score(i, c, e)` = the exact rational i·c/e rounded to one decimal, half away from
 zero, formatted with one digit after the point. It is computed in integer arithmetic: `t = (20·i·c + e) / (2·e)`
@@ -125,9 +142,24 @@ where the rejection rests on a calculation, `killed_idea` names the record that 
 **6. Lints** (`crates/frob-conformance/tests/ev_matrix.rs`; `cargo test -p frob-conformance --test ev_matrix`).
 Findings: `ev.score-mismatch`, `ev.unsorted`, `ev.below-two-unjustified`, `ev.carried-changed-silently`,
 `ev.construction-missing`, `ev.kill-gate-unknown` (a kill gate not in the gate register), `ev.rejected-without-
-reason` (a rejected row with neither `killed_idea` nor reason text after the colon in `decision_text`),
-`ev.parked-without-reopen`, `ev.tier-table-mismatch`, `ev.queue-mismatch` (an "admitted … queued" row with no
-`queue`, or a queue item with no row), `ev.history-edited`.
+reason` (a rejected row with neither `killed_idea` nor a non-empty `reason`; three rejected rows of the plan,
+EV-P14, EV-P39 and EV-P40, have no colon in their decision text, which is why the reason is a field),
+`ev.parked-without-reopen`, `ev.tier-table-mismatch`, `ev.queue-mismatch` (checked in both directions against
+the queue records of NAB-21: an `admitted` row, or a row whose decision text says "queued", with an empty
+`queue`; a row whose `queue` lists an item whose `family` does not name the row; a queue item whose `family`
+names a row that does not list it, or a row that does not exist. A queue item with `family = []` has no row and
+is not a finding), `ev.history-edited`, `ev.history-without-evidence`.
+
+*Kill rows that land later (DESIGN).* The kill rows of the gate register are entered in seven ledger groups: two
+at M0 (the foundations; Chronicle, Ground, Foundry and Tether) and five at M1 (the body; control, learning and
+tasks; Augur, synthesis, Nemesis, Autopsy and Atelier; the ten-fold test; the late subsections). The matrix is an
+M0 registry and names kill gates of all seven. The kill gates the three tables and the queue name (82 at plan
+time) are therefore frozen, each with its ledger group and that group's milestone, in
+`tests/fixtures/ev/kill_gates.tsv`. A name of the frozen list that is absent from the register is reported with
+a recorded `skip` (the name and the group still to land) while the exit record of its group's milestone does
+not exist; once that exit record exists it is `ev.kill-gate-unknown`. A name that is in neither the register nor
+the frozen list is `ev.kill-gate-unknown` at once. This is how the row beads (NAB-18, NAB-19, NAB-21) meet the
+criterion "resolves in the gate register" at M0; the M1 sweep (NAB-24) requires that no such skip remains.
 
 **7. Generated printout.** `xtask::generate::ev_matrix` renders `docs/decisions/ev-matrix.md` (three tables and
 the Moonshot queue) from the registry under `check-generated`. It is a row of the generator table, not a new
@@ -147,7 +179,7 @@ sweeps (NAB-23 to NAB-31); the revive lint of the killed-idea register (NAB-32).
       below 2.0 and each has an [M] tier or a `needed_by`; 32 rows of table `parked` are below 2.0 and 11 are at
       2.0 or above with a stated reason.
 - [ ] Rule 3 holds: C-01 to C-40 each occur in a row's `where`.
-- [ ] Each of the eleven findings of step 6 is produced by its planted fixture.
+- [ ] Each of the twelve findings of step 6 is produced by its planted fixture.
 - [ ] `docs/decisions/ev-matrix.md` is current under `check-generated`; `xtask` still has six subcommands.
 
 ## Test plan
@@ -184,7 +216,7 @@ Known answers: 143 rows (41 + 59 + 43); 0, 16 and 32 rows below 2.0; the highest
 the lowest is 0.4 (continuation on the GPU with root certificates checked inside a proof kernel). Negative
 controls: a row whose printed score is "2.2" for (3,3,4); a Solid row at 1.5 with no `needed_by`; a carried row
 whose confidence was changed with no history; a rejected row with an empty reason; a kill gate name that does
-not exist. Metamorphic relation: permuting rows of equal score within a table changes no lint result except
+not exist; a history entry with empty `evidence` and `unchanged = false` (`ev.history-without-evidence`). Metamorphic relation: permuting rows of equal score within a table changes no lint result except
 the frozen-order comparison.
 
 ## Considerations

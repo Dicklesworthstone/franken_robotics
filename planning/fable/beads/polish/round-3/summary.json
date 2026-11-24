@@ -1,0 +1,916 @@
+{
+ "round": 3,
+ "slices": 108,
+ "slices_without_result": [],
+ "live_beads": 3634,
+ "superseded_total": 119,
+ "totals": {
+  "reviewed": 2961,
+  "changed": 2363,
+  "new": 14,
+  "superseded": 0,
+  "requests": 1512
+ },
+ "kinds": {
+  "correct": 1823,
+  "e2e-logging": 1143,
+  "tests": 908,
+  "deps": 681,
+  "complete": 572,
+  "users": 100,
+  "scope": 85,
+  "self-contained": 82,
+  "e2e": 51,
+  "sense": 34,
+  "convention": 33,
+  "risks": 30,
+  "request": 27,
+  "title": 23,
+  "placement": 19,
+  "correctness": 13,
+  "gates": 11,
+  "coherence": 10,
+  "split": 9,
+  "conventions": 7,
+  "inputs": 4,
+  "outputs": 3,
+  "params": 3,
+  "optimal": 2,
+  "refusals": 2,
+  "implemented-by": 2,
+  "notes": 2,
+  "examples": 1,
+  "actions": 1,
+  "related": 1,
+  "paginated": 1,
+  "acceptance": 1
+ },
+ "definition_problems": 0,
+ "validation_failures": [],
+ "per_slice": [
+  {
+   "slice": "H-cx-1",
+   "beads": 14,
+   "changed": 14,
+   "new": 0,
+   "superseded": 0,
+   "requests": 37
+  },
+  {
+   "slice": "H-cx-2",
+   "beads": 11,
+   "changed": 11,
+   "new": 0,
+   "superseded": 0,
+   "requests": 32
+  },
+  {
+   "slice": "H-ka-1",
+   "beads": 14,
+   "changed": 14,
+   "new": 0,
+   "superseded": 0,
+   "requests": 19
+  },
+  {
+   "slice": "H-ka-2",
+   "beads": 14,
+   "changed": 14,
+   "new": 0,
+   "superseded": 0,
+   "requests": 15
+  },
+  {
+   "slice": "H-ka-3",
+   "beads": 6,
+   "changed": 6,
+   "new": 0,
+   "superseded": 0,
+   "requests": 15
+  },
+  {
+   "slice": "H-owners-1",
+   "beads": 8,
+   "changed": 8,
+   "new": 0,
+   "superseded": 0,
+   "requests": 176
+  },
+  {
+   "slice": "H-owners-2",
+   "beads": 5,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 50
+  },
+  {
+   "slice": "H-owners-3",
+   "beads": 3,
+   "changed": 3,
+   "new": 0,
+   "superseded": 0,
+   "requests": 27
+  },
+  {
+   "slice": "H-ref-1",
+   "beads": 14,
+   "changed": 14,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "H-ref-2",
+   "beads": 12,
+   "changed": 12,
+   "new": 0,
+   "superseded": 0,
+   "requests": 41
+  },
+  {
+   "slice": "H-verbs-1",
+   "beads": 9,
+   "changed": 9,
+   "new": 0,
+   "superseded": 0,
+   "requests": 37
+  },
+  {
+   "slice": "H-verbs-2",
+   "beads": 6,
+   "changed": 6,
+   "new": 0,
+   "superseded": 0,
+   "requests": 39
+  },
+  {
+   "slice": "H-verbs-3",
+   "beads": 8,
+   "changed": 8,
+   "new": 0,
+   "superseded": 0,
+   "requests": 35
+  },
+  {
+   "slice": "H-verbs-4",
+   "beads": 8,
+   "changed": 8,
+   "new": 0,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "H-verbs-5",
+   "beads": 4,
+   "changed": 4,
+   "new": 0,
+   "superseded": 0,
+   "requests": 35
+  },
+  {
+   "slice": "H-verbs-6",
+   "beads": 3,
+   "changed": 2,
+   "new": 0,
+   "superseded": 0,
+   "requests": 72
+  },
+  {
+   "slice": "H-verbs-7",
+   "beads": 6,
+   "changed": 6,
+   "new": 0,
+   "superseded": 0,
+   "requests": 37
+  },
+  {
+   "slice": "F-U00-1",
+   "beads": 42,
+   "changed": 40,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "F-U00-2",
+   "beads": 42,
+   "changed": 30,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "F-U10a",
+   "beads": 18,
+   "changed": 12,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U10b",
+   "beads": 28,
+   "changed": 27,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U10c",
+   "beads": 24,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U12-1",
+   "beads": 33,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "F-U12-2",
+   "beads": 32,
+   "changed": 22,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-U13",
+   "beads": 21,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "F-U14a",
+   "beads": 33,
+   "changed": 27,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U14b-1",
+   "beads": 26,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U14b-2",
+   "beads": 25,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U15a",
+   "beads": 20,
+   "changed": 18,
+   "new": 1,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "F-U15b-1",
+   "beads": 25,
+   "changed": 22,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-U15b-2",
+   "beads": 25,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "F-U16a",
+   "beads": 31,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U16b",
+   "beads": 38,
+   "changed": 33,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "F-U16c",
+   "beads": 42,
+   "changed": 40,
+   "new": 3,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "F-U17a",
+   "beads": 21,
+   "changed": 13,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U17b",
+   "beads": 25,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U18a",
+   "beads": 46,
+   "changed": 34,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U18b-1",
+   "beads": 26,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "F-U18b-2",
+   "beads": 26,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "F-U19a-1",
+   "beads": 28,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "F-U19a-2",
+   "beads": 28,
+   "changed": 16,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U19b-1",
+   "beads": 26,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U19b-2",
+   "beads": 26,
+   "changed": 17,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "F-U19c-1",
+   "beads": 25,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U19c-2",
+   "beads": 24,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "F-U20a-1",
+   "beads": 24,
+   "changed": 16,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U20a-2",
+   "beads": 24,
+   "changed": 22,
+   "new": 1,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-U20b",
+   "beads": 38,
+   "changed": 34,
+   "new": 0,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "F-U21a",
+   "beads": 34,
+   "changed": 23,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U21b",
+   "beads": 45,
+   "changed": 34,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U21c",
+   "beads": 37,
+   "changed": 30,
+   "new": 0,
+   "superseded": 0,
+   "requests": 16
+  },
+  {
+   "slice": "F-U22a",
+   "beads": 46,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "F-U22b",
+   "beads": 38,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-U22c",
+   "beads": 43,
+   "changed": 40,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U23a-1",
+   "beads": 24,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U23a-2",
+   "beads": 24,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "F-U23b-1",
+   "beads": 24,
+   "changed": 19,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U23b-2",
+   "beads": 23,
+   "changed": 23,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U24a-1",
+   "beads": 26,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U24a-2",
+   "beads": 26,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 23
+  },
+  {
+   "slice": "F-U24b",
+   "beads": 29,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "F-U24c",
+   "beads": 36,
+   "changed": 28,
+   "new": 2,
+   "superseded": 0,
+   "requests": 21
+  },
+  {
+   "slice": "F-U25a",
+   "beads": 32,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U25b",
+   "beads": 33,
+   "changed": 23,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U25c-1",
+   "beads": 26,
+   "changed": 22,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "F-U25c-2",
+   "beads": 26,
+   "changed": 22,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U25d-1",
+   "beads": 25,
+   "changed": 22,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-U25d-2",
+   "beads": 25,
+   "changed": 18,
+   "new": 0,
+   "superseded": 0,
+   "requests": 15
+  },
+  {
+   "slice": "F-U25e",
+   "beads": 42,
+   "changed": 37,
+   "new": 0,
+   "superseded": 0,
+   "requests": 16
+  },
+  {
+   "slice": "F-U26a",
+   "beads": 32,
+   "changed": 18,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U26b",
+   "beads": 22,
+   "changed": 17,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U27a",
+   "beads": 21,
+   "changed": 9,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U27b",
+   "beads": 30,
+   "changed": 16,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "F-U28a",
+   "beads": 45,
+   "changed": 45,
+   "new": 0,
+   "superseded": 0,
+   "requests": 20
+  },
+  {
+   "slice": "F-U28b",
+   "beads": 30,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "F-U28c",
+   "beads": 46,
+   "changed": 33,
+   "new": 1,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "F-U29a",
+   "beads": 37,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U29b",
+   "beads": 20,
+   "changed": 19,
+   "new": 0,
+   "superseded": 0,
+   "requests": 19
+  },
+  {
+   "slice": "F-U30a",
+   "beads": 35,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "F-U30b",
+   "beads": 27,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U31a-1",
+   "beads": 27,
+   "changed": 27,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "F-U31a-2",
+   "beads": 27,
+   "changed": 24,
+   "new": 1,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U31b",
+   "beads": 42,
+   "changed": 35,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-U32a-1",
+   "beads": 27,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "F-U32a-2",
+   "beads": 26,
+   "changed": 19,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "F-U32b",
+   "beads": 31,
+   "changed": 26,
+   "new": 0,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "F-U33a",
+   "beads": 32,
+   "changed": 18,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U33b",
+   "beads": 40,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "F-U33c",
+   "beads": 42,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U34",
+   "beads": 32,
+   "changed": 25,
+   "new": 1,
+   "superseded": 0,
+   "requests": 23
+  },
+  {
+   "slice": "F-U35",
+   "beads": 37,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-U36",
+   "beads": 31,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "F-U37",
+   "beads": 31,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "F-U38a",
+   "beads": 35,
+   "changed": 24,
+   "new": 1,
+   "superseded": 0,
+   "requests": 30
+  },
+  {
+   "slice": "F-U38b",
+   "beads": 39,
+   "changed": 35,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "F-U39a",
+   "beads": 40,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "F-U39b",
+   "beads": 30,
+   "changed": 23,
+   "new": 1,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "F-U40",
+   "beads": 45,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 19
+  },
+  {
+   "slice": "F-U41-1",
+   "beads": 27,
+   "changed": 17,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "F-U41-2",
+   "beads": 26,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "F-U44-1",
+   "beads": 28,
+   "changed": 22,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U44-2",
+   "beads": 28,
+   "changed": 19,
+   "new": 0,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "F-UAB",
+   "beads": 29,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-UEG-1",
+   "beads": 40,
+   "changed": 17,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "F-UEG-2",
+   "beads": 40,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-UF-1",
+   "beads": 33,
+   "changed": 23,
+   "new": 2,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "F-UF-2",
+   "beads": 33,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-UJL",
+   "beads": 17,
+   "changed": 12,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  }
+ ]
+}

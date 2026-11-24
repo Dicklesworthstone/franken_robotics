@@ -1,10 +1,414 @@
 {
  "group": "G34",
- "needs": [],
- "edges": [],
+ "needs": [
+  {
+   "bead": "BD-145",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "the request cites the class table (E2, at most 48 device-hours), which the bead restates; the ruling that approves it is N41-08, which already depends on BD-145. The registration must not wait on an owner ruling: with none, class E0 holds and the bead closes on the recorded default"
+  },
+  {
+   "bead": "BD-145",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-07",
+    "N38a-09"
+   ],
+   "note": "N38a-07 is the six-part registration form of a method experiment (GATE-GAUNT-09); N38a-09 is the pilot register pilots.toml in which this bead writes its row (GATE-GAUNT-08)"
+  },
+  {
+   "bead": "N34-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N41-27",
+    "N41-29"
+   ],
+   "note": "the release manifest is defined by N41-27 and its check-contracts cells by N41-29, both of which depend on this check (recorded by G41). Until the manifest exists this bead reads the verbs whose registry row is marked released, as its body says, so it is finished first"
+  },
+  {
+   "bead": "N34-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-28"
+   ],
+   "note": "the rubric by milestone supplies the list of release paths that --release reads (an acceptance line of this script); the release manifest N41-27 is reached through it. N41-27 lists this runner as related (G41) and N41-30 depends on it, so no cycle"
+  },
+  {
+   "bead": "N34-20",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the byte-level guard is built in this bead itself, in front of the transports of its dependency BD-023 (frob-mcp v0). The upstream raw-frame hook is needed only if the bead's hypothesis test fails; the upstream group has since written it as the conditional bead NF-13, which depends on this bead"
+  },
+  {
+   "bead": "N34-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-26"
+   ],
+   "note": "no bead carried the ledger block of doctor; written as the new bead N34-26 (row counts per table and the commit sequence, read-only)"
+  },
+  {
+   "bead": "N34-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "the negative-control registry and the registry loaders at M0 are its dependencies BD-025 and STD-TEST; BD-146 is M1 (a later milestone) and depends on this registry bead"
+  },
+  {
+   "bead": "N34-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "the loader that binds a known-answer row to its realizing test at M0 is in its dependencies STD-TEST and BD-025; BD-146 is M1 (a later milestone) and depends on this registry bead"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "N34-25",
+   "dep": "BD-001",
+   "as": "dep",
+   "why": "coverage (d) of U34: the [auditor] table is added to the stack lock that BD-001 creates"
+  },
+  {
+   "bead": "N34-08",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "coverage (d) of U34 and (e) 22: check-contracts validates contract.toml against the schema file BD-002 creates; BD-002's own need on the checks was settled as related by G25ab, so no cycle remains"
+  },
+  {
+   "bead": "BD-004",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "coverage (e) 22 of U34 in its settled direction: check-generated calls the status-table generator that BD-002 supplies"
+  },
+  {
+   "bead": "N34-05",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "coverage (d) of U34: the [api.float_ok] table is added to schemas/contract.schema.json, which BD-002 creates"
+  },
+  {
+   "bead": "N34-19",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "coverage (d) of U34: the format-registry file and the generated schemas whose rows gain a number rule, a view kind and a declared writer are BD-002's"
+  },
+  {
+   "bead": "N34-12",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "coverage (d) of U34: the demo.yaml schema, to which this bead adds expect_exit, expect_refusal, compare and tier"
+  },
+  {
+   "bead": "BD-141",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "coverage (d) of U34: the registry file and schemas the seven format rows are entered in"
+  },
+  {
+   "bead": "N34-24",
+   "dep": "NJL-01",
+   "as": "dep",
+   "why": "coverage (d) of U34: the parameter kinds artifact-input, artifact-ref, artifact-identity and foreign-file extend the verb entry schema of NJL-01 (its params field)"
+  },
+  {
+   "bead": "N34-09",
+   "dep": "NJL-01",
+   "as": "dep",
+   "why": "coverage (d) of U34: the released mark of a verb row, read by the demo rule until the release manifest exists"
+  },
+  {
+   "bead": "BD-021",
+   "dep": "N34-07",
+   "as": "dep",
+   "why": "coverage (d) of U34: the doorway scan BD-021 expects in the six checks is in check-unsafe (N34-07), not in BD-004"
+  },
+  {
+   "bead": "BD-014",
+   "dep": "N34-06",
+   "as": "related",
+   "why": "coverage (d) of U34: BD-014 writes the first backend trait, KernelBackend in frob-kernels, and row 1 of the inversion register of N34-06 now names that crate; either can land first"
+  },
+  {
+   "bead": "N34-14",
+   "dep": "BD-025",
+   "as": "dep",
+   "why": "coverage (d) of U34: the seven plants are registered in the negative-control registry and the two gate lines are written through the conformance crate's recorder"
+  },
+  {
+   "bead": "N34-15",
+   "dep": "N21c-35",
+   "as": "related",
+   "why": "coverage (d) of U34: the machine-envelope guard enforces the default class E0 that OPEN-SPARK-2 ratifies or amends; the guard does not wait for the ruling"
+  },
+  {
+   "bead": "N41-29",
+   "dep": "N34-09",
+   "as": "dep",
+   "why": "coverage (d) of U34: the release-manifest cells are added to check-contracts on top of its demo and format rules"
+  },
+  {
+   "bead": "N41-27",
+   "dep": "N34-09",
+   "as": "dep",
+   "why": "need 1 of N34-09 read in its true direction: the release checker reads demo files that this check validates"
+  },
+  {
+   "bead": "N41-30",
+   "dep": "N34-12",
+   "as": "dep",
+   "why": "need 1 of N34-12 read in its true direction: release_check.sh runs the demos through this runner"
+  },
+  {
+   "bead": "N41-02",
+   "dep": "N34-04",
+   "as": "dep",
+   "why": "coverage (d) of U34: GATE-WS-07 at M0 reads the JSON-library guard's report for the planted feature unification"
+  },
+  {
+   "bead": "N41-02",
+   "dep": "N34-03",
+   "as": "dep",
+   "why": "coverage (d) of U34: GATE-WS-07 at M0 resolves with every optional group enabled, using the feature-group rules of check-deps"
+  },
+  {
+   "bead": "N33c-27",
+   "dep": "N34-11",
+   "as": "dep",
+   "why": "overlap with distinct scope: N33c-27 round-trips the identifier text forms that N34-11 defines in frob-core (tests follow mechanisms)"
+  },
+  {
+   "bead": "BD-095",
+   "dep": "N34-11",
+   "as": "dep",
+   "why": "overlap with distinct scope: the artifact graph stores ClaimId, EvidenceId, DecisionPolicyId and TraceId, whose types, pre-images and text forms are N34-11 (also recorded by G29)"
+  },
+  {
+   "bead": "N29b-09",
+   "dep": "N34-11",
+   "as": "dep",
+   "why": "overlap with distinct scope: the OPEN-CHRON-3 decision compares importing the identifier types with the local ones of N34-11 (also recorded by G29)"
+  },
+  {
+   "bead": "N34-26",
+   "dep": "VERBS-operator",
+   "as": "related",
+   "why": "the ledger block extends the doctor row of the operator cluster; the row comes first and does not wait for it"
+  },
+  {
+   "bead": "BD-410",
+   "dep": "N34-27",
+   "as": "dep",
+   "why": "the final record prints plan formats and added formats separately, by the ruling of N34-27"
+  },
+  {
+   "bead": "BD-396",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "whether the kit manifest gets a format row is decided by N34-27 (the gap G30 reported); the fail-closed default lets the kit proceed"
+  },
+  {
+   "bead": "N30b-38",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "whether the bench protocol frob.ground.protocol/1 gets a format row is decided by N34-27 (the gap G30 reported)"
+  },
+  {
+   "bead": "N31b-33",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "whether the review record frob.review/1 is a format or a record is decided by N34-27"
+  },
+  {
+   "bead": "N28c-01",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "whether the decision-core table frob.core-table/1 is a format or a record is decided by N34-27"
+  }
+ ],
  "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "cross_group_duplicates": [
+  {
+   "mine": "N34-13",
+   "other": "N33a-05",
+   "note": "both specify xtask check-stack: the verify and write modes, the comparison of lock, newest receipt and trees, the dirty-tree rule and the read-only sibling rule"
+  },
+  {
+   "mine": "N34-13",
+   "other": "N33a-04",
+   "note": "both specify the resolution receipt frob.stack-receipt/1: fields, tree hash of a dirty sibling, drift classes, duplicate-package scan. They disagree on the writer: frob-core's canonical writer here, a small local writer in xtask there"
+  },
+  {
+   "mine": "N34-13",
+   "other": "N33a-03",
+   "note": "both specify the franken-stack.lock fields and its strict reader; N34-13 adds the [json_library] and [auditor] tables"
+  },
+  {
+   "mine": "N34-03",
+   "other": "N33c-09",
+   "note": "both enter the suite deny rules in check-deps: asupersync 0.5.0, the frankentui executor feature, never-dependency siblings"
+  },
+  {
+   "mine": "N34-03",
+   "other": "N33c-29",
+   "note": "both define and test one asupersync package per binary (INV-SUITE-02, INV-WS-04) and airlock confinement (INV-SUITE-01) as check-deps rules with plants"
+  },
+  {
+   "mine": "N34-03",
+   "other": "BD-008",
+   "note": "BD-008 also wires per-binary asupersync uniqueness, the 0.5.0 ban and the frankentui feature into check-deps; N34-03 names BD-008 only for the measured admission record"
+  },
+  {
+   "mine": "N34-04",
+   "other": "N33c-38",
+   "note": "both state the one-version rule for serde_json per binary against the stack lock; N34-04 adds the unified feature set, N33c-38 the exact-pin conflict probe (G33 made N33c-38 depend on N34-04)"
+  },
+  {
+   "mine": "N34-01",
+   "other": "N21a-01",
+   "note": "annex, apps and worker workspace layout, one lockfile each, toolchain-file rules and the no-GPU-in-core plant (also reported by G21)"
+  },
+  {
+   "mine": "N34-07",
+   "other": "N21a-01",
+   "note": "the capsule registry format and the SAFETY.md section list (also reported by G21)"
+  },
+  {
+   "mine": "N34-25",
+   "other": "N25b-05",
+   "note": "both write the record of GATE-WS-03: N34-25 assembles the row from four clauses, N25b-05 measures three of them end to end (also reported by G25ab)"
+  },
+  {
+   "mine": "N34-12",
+   "other": "N00-29",
+   "note": "scripts/e2e/demos.sh and the North-Star index runner both run every demo.yaml and check its outputs; one runner should remain (also reported by G00)"
+  },
+  {
+   "mine": "N34-11",
+   "other": "BD-095",
+   "note": "both define ClaimId, EvidenceId, DecisionPolicyId and TraceId in frob-core; N34-11 (M0) owns the types and BD-095 consumes them (also reported by G29, which aligned its beads)"
+  },
+  {
+   "mine": "N34-15",
+   "other": "N36-20",
+   "note": "two enforcement points of the same machine limits: the script guard scripts/lib/envelope.sh and the verb admission with its meter; one record of limits and approvals should feed both (also reported by G36)"
+  }
+ ],
+ "new_beads": [
+  "N34-26",
+  "N34-27"
+ ],
+ "gaps": [
+  {
+   "section": "§34.5, §34.9, §34.12",
+   "what": "BD-002's schemas do not list the keys the workspace beads validate: plane, [api.float_ok], [[replaces]], [[controller]] in schemas/contract.schema.json; a number rule, a view kind (lossless or export) and a declared writer on format rows; expect_exit, expect_refusal, compare and tier in the demo.yaml schema. Each workspace bead states its keys and adds them (N34-08 now says so), but BD-002 should name them",
+   "needed_by": [
+    "N34-05",
+    "N34-08",
+    "N34-10",
+    "N34-19",
+    "BD-141",
+    "N34-12"
+   ]
+  },
+  {
+   "section": "§34.14, §33.5",
+   "what": "BD-001's stack lock has no [json_library] table (version, unified features, allowed crates) and no [auditor] table (the checker's stable channel); N34-13 and N34-04 define them, BD-001 should create them empty",
+   "needed_by": [
+    "N34-04",
+    "N34-13",
+    "N34-25"
+   ]
+  },
+  {
+   "section": "§34.7",
+   "what": "STD-E2E's shared script helper does not source the machine-envelope guard scripts/lib/envelope.sh that N34-15 adds to it",
+   "needed_by": [
+    "N34-15"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-003",
+   "what": "seed order: BD-005 moved from deps to related; the order is still carried by its dependency N34-17, which depends on BD-005"
+  },
+  {
+   "bead": "BD-004",
+   "what": "BD-002 moved from related to deps: the settled direction of coverage (e) 22 (the edge G25ab recorded)"
+  },
+  {
+   "bead": "N34-08",
+   "what": "BD-002 moved from related to deps; acceptance line added: keys introduced by other beads are added to the schema file BD-002 creates, naming plane, [api.float_ok], [[replaces]], [[controller]], the verbs list of NJL-03 and the [[gate]] block of N40-09 and N40-30 (the gap G40 reported)"
+  },
+  {
+   "bead": "N34-21",
+   "what": "N34-26 added to deps; Scope and step 7 name the ledger block of doctor and its commit sequence"
+  },
+  {
+   "bead": "N34-20",
+   "what": "N34-26 and NF-13 added to related; the acceptance line names the ledger block read at M0; the hypothesis note names the conditional upstream bead NF-13"
+  },
+  {
+   "bead": "N34-09",
+   "what": "the single-parser search exempts the auditor's standard-library reader of .frun (N29a-03) as the one sanctioned second implementation, with an acceptance line (the gap G29 reported); Scope names the rule of N34-27"
+  },
+  {
+   "bead": "N34-19",
+   "what": "registry rule 1 admits the auditor's second reader of the .frun manifest and column header (the storage chapter's duty), recorded in the FMT-FRUN row"
+  },
+  {
+   "bead": "BD-141",
+   "what": "Considerations name the auditor_reader entry of the FMT-FRUN row and the decision bead N34-27"
+  },
+  {
+   "bead": "BD-410",
+   "what": "Considerations: files beyond the thirteen get a row only by N34-27 and are printed as added formats"
+  },
+  {
+   "bead": "N34-06",
+   "what": "row 1 of the inversion register names frob-kernels, where BD-014 defines KernelBackend, with the reason (the gap G21 reported; coverage (e) 24)"
+  },
+  {
+   "bead": "N34-02",
+   "what": "Considerations: frob-core's cap is re-read against the performance types other beads place there (the gap G36 reported)"
+  },
+  {
+   "bead": "N34-01",
+   "what": "layout table gains fixtures/golden/ (NJL-07) and zoo/ (NEG-30, the gap GEG reported)"
+  },
+  {
+   "bead": "N34-23",
+   "what": "N34-27 added to related: its script gains the step that plants a verb parameter without a format row"
+  },
+  {
+   "bead": "BD-145",
+   "what": "title shortened to 106 characters"
+  },
+  {
+   "bead": "N34-03",
+   "what": "title shortened to 106 characters"
+  },
+  {
+   "bead": "N34-11",
+   "what": "title shortened to 109 characters"
+  },
+  {
+   "bead": "N34-12",
+   "what": "title shortened to 106 characters; N41-28 added to deps (the rubric's list of release paths)"
+  }
+ ]
 }

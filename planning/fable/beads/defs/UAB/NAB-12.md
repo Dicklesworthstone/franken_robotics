@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "tenfold", "gauntlet", "delivery", "solid", "registry"]
 parent: "WP-34"
 deps: ["NAB-09"]
-needs: ["§1.1, §1.4: the incumbent capability register, whose 21 rows cite these sources by id (N00-13)", "§0.1 (rule 1), Appendix K.5: the review that re-reads every published figure the thesis, the audit and the bets quote (N00-34)", "§36.3, §39: the incumbent harness with pinned revisions, which records the licences and versions of the incumbent packages it installs (BD-039)"]
-related: ["NAB-10", "NAB-13", "NAB-14", "NAB-16", "N00-13", "N00-14", "N00-18", "N00-34", "BD-039", "BD-040"]
+needs: []
+related: ["NAB-13", "NAB-14"]
 gates: []
 plan_refs: ["Appendix H.3", "Appendix H.1", "§1.1", "§36.3"]
 ---
@@ -46,12 +46,19 @@ other nine topics (NAB-13); the schema (NAB-09); the lint (NAB-10); the re-reads
 2. Each bracket after a source becomes one `reading`: the letter is the `mark`; text after a colon or after
    "at" is `covers` and `version` ("P at 4.0.1: the 3.7.0 entry on electrical and thermal actuators" →
    `mark = "P"`, `version = "4.0.1"`, `covers = "the 3.7.0 entry on electrical and thermal actuators"`).
-   "P for X; S elsewhere" becomes two readings.
+   "P for X; S elsewhere" becomes two readings (P covering X, S covering "elsewhere"); "P; also read at tag
+   v1.8.0 with …" becomes two P readings, the second with `version = "1.8.0"`. In these four topics that rule
+   applies three times: the Genesis README, the mixed-batch paper and the Newton determinism page, so the 61
+   brackets become 64 readings.
 3. A source named without a URL (a page of a versioned documentation set, a file at a release tag, a support
    page by number) has `locator = ""`, `unlocated = true` and a `title` that names it exactly; the first
    re-read records its URL. At plan time the text says explicitly "no URL was recorded" for three: the MuJoCo
    Warp nightly benchmark page; the Isaac Sim 6.2.0 documentation pages (Warehouse Creator, agent interface)
-   with the community server's package description; and the two retail-scene generators of NAB-13.
+   with the community server's package description; and the two retail-scene generators of NAB-13. A phrase
+   that names several parts of one versioned documentation set or release without URLs is one record titled
+   by the whole phrase, with one reading (the Isaac Sim 6.2.0 Warehouse Creator and agent-interface pages; the
+   Isaac Lab 3.0.0 release notes, benchmark table and G1 configuration; the Newton 1.8.0 solver class
+   documentation and test suite), so these topics hold no shared-bracket copies (contrast NAB-13 rule (c)).
 4. `licence = "n/a"` for a document that is only cited for a fact. The licence of an incumbent *package* that
    the incumbent harness installs is recorded by that harness with its pinned revision, not here.
 5. Figures that gates or the incumbent capability register quote are entered as typed `figures` on their
@@ -145,7 +152,8 @@ source that two records marked differently is listed once, with each mark and wh
 
 - [ ] The register holds one record for each of the 49 URLs of these four topics and one for each document
       named without a URL, each with its readings and marks exactly as above.
-- [ ] Mark counts over the readings of this bead: 24 P, 29 F, 8 S, no R, M or U (61 bracketed readings).
+- [ ] Mark counts over the 61 brackets of these topics: 24 P, 29 F, 8 S, no R, M or U; over the 64 readings the
+      register holds after the split rule: 25 P, 29 F, 10 S.
 - [ ] The eleven figures of the table are typed `figures` with hardware and `how`; the 410 s figure has
       `how = "figure-by-eye"` and `uncertainty = "± 20 s"`.
 - [ ] Every unlocated source has `unlocated = true` and an exact title; none has an invented URL.
@@ -161,7 +169,8 @@ source that two records marked differently is listed once, with each mark and wh
 
 - `forty_nine_urls`: the frozen URL list of this bead equals the set of non-empty `locator` values of the four
   topics.
-- `mark_counts_24_29_8`.
+- `mark_counts`: readings of the four topics number 64 (18, 20, 9 and 17 per topic) with marks 25 P, 29 F,
+  10 S; the frozen bracket list of this bead gives 61 brackets with 24 P, 29 F, 8 S.
 - `split_marks_are_two_readings`: the Genesis README (P at 1.4.7 for three README sentences; S elsewhere), the
   mixed-batch paper (P for its abstract and Table A.5; S elsewhere) and the Newton determinism page (P; also read
   at tag v1.8.0 with its per-solver table) each have the readings the text states.
@@ -179,8 +188,8 @@ STD-E2E: counts as `metric` lines with expected values; the digest of the regist
 
 ### Known answers and negative controls
 
-Known answers: 49 URLs (14, 13, 6 and 16 per topic); 61 bracketed readings (18, 18, 8 and 17 per topic);
-marks 24 P, 29 F, 8 S. Arithmetic pins on the figures: 262 ns per world-step is 1 ÷ 262 ns = 3.82 M
+Known answers: 49 URLs (14, 13, 6 and 16 per topic); 61 brackets (18, 18, 8 and 17 per topic) with marks
+24 P, 29 F, 8 S; 64 readings after the split rule (18, 20, 9 and 17) with marks 25 P, 29 F, 10 S. Arithmetic pins on the figures: 262 ns per world-step is 1 ÷ 262 ns = 3.82 M
 world-steps/s for that trace, of which the stages a design-specialized recursion could touch are 53 ns (20%),
 the solve 124 ns (47%) and constraint construction 38 ns; 8,192 worlds × 88.4 kB = 724 MB for the humanoid
 batch. The test `figures_have_units` refuses a figure without a unit or without its hardware. Negative

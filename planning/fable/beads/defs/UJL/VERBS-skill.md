@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "tether", "reflex", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-62"
-deps: ["BD-022", "NJL-01", "NJL-02", "STD-E2E"]
+deps: ["BD-022", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []
-related: ["BD-336", "BD-436", "N22b-07", "N22b-05", "BD-376", "NJL-03", "NJL-04", "NJL-05"]
+related: []
 gates: ["GATE-TETHER-02"]
 plan_refs: ["Appendix J (J.1, J.2, J.3, J.5)", "§22.10", "§32.6", "§32.12.3", "§32.21 (GATE-TETHER-02)"]
 ---
@@ -18,8 +18,9 @@ FrankenRobotics (a robotics simulation and design system) is reached through the
 `frobd` and the MCP server `frob-mcp` (the Model Context Protocol, by which an agent harness lists and calls tools).
 Every capability is a verb, `cluster.verb`, declared once in `registries/verbs.toml` (crate `frob-verbs`, tier
 Solid). The CLI, the daemon protocol, the MCP tools, the schemas, the refusal table and the agent guide are
-generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 243 verbs
-in 44 clusters (namespaces).
+generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 244 verbs
+in 44 clusters (namespaces): the 243 of the specification and `artifact.import` (VERBS-artifact); the
+count of record is NJL-03's.
 
 This bead is the registry of record for the cluster `skill`. The cluster covers skill artifacts: compiling a
 `.fskill` and a design to per-mode maps and a program, checking feasibility of a skill over a set of states, showing
@@ -37,7 +38,7 @@ gate), M Moonshot; `S/F` is a Solid core with Frontier extensions.
 DESIGN: a registry bead per cluster exists beside the implementing beads because a row missing from the registry,
 spelled twice, or served with different refusal lists on the CLI and over MCP is a surface defect that no mechanism
 test catches. Rejected: rows left to the implementing beads alone (nothing checks their union against the
-inventory); one bead for all 243 rows (too large to review).
+inventory); one bead for all the rows (too large to review).
 
 ## Scope
 
@@ -68,29 +69,63 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
   establish a comparison.
 
 **`skill.check`** (MCP tool `skill_check`; owner `frob-control`)
-- Inputs: skill; design; a set of states.
-- Outputs: a feasibility or infeasibility witness for the skill over the states. Evidence: *certificate*.
-- Chapter refusals: `FROB-REF-448` (a skill's task wrench lies outside the body's attainable set).
+- Inputs (BD-336): a compiled skill (a `CompiledSkillId`), or a skill (a `.fskill` path or `SkillId`) with
+  `--design <design>`, in which case the verb compiles first or reuses the memoized compilation (the form of the
+  row's example; both forms give the same `CompiledSkillId` and outcome); the set of states, as (a) the samples of
+  each phase's reference at the skill's clock rate (the default), (b) a recorded run (`--run <run | file.frun>`,
+  the `run` parameter below), or (c) a grid over the assumption box (`--grid <N>`: N states over friction from
+  `mu_min` upward, the payload range and slope up to `slope_max`); `--run` with `--grid` is `FROB-REF-802`; `--refinement` (adds
+  the refinement check); `--replay` (re-applies each feasible witness on the referee for one step and compares the
+  realized task quantity); idempotency key; budget.
+- Outputs: per state and mode `feasible` or `infeasible` with a witness, or `unknown`; counts of the three; the
+  first infeasible state with its failure report; the refinement verdict; `sufficiency: "necessary-only"`;
+  certificate bundle references. Evidence: *certificate* (per-state witnesses Certified about the declared model;
+  a verdict over sampled states `Tested`).
+- Chapter refusals: `FROB-REF-444` (a refinement counterexample under `--refinement`: the uncovered successor is
+  named); `FROB-REF-448` (a skill's task wrench lies outside the body's attainable set). Both as N22-REF's
+  raised-by column states.
 - Implemented by: BD-336.
 
 **`skill.compile`** (MCP tool `skill_compile`; owner `frob-control`)
-- Inputs: a `.fskill`; design.
-- Outputs: per-mode maps and a control program. Evidence: *static*.
+- Inputs (BD-336): a skill (path or `SkillId`); a design; optional mode list; optional state-sampling
+  specification; idempotency key; budget.
+- Outputs: `CompiledSkillId`; per phase and mode the map digest, program identity, condition notes and scope
+  findings (content-addressed and memoized on skill and model). Evidence: *static*.
 - Chapter refusals: `FROB-REF-448` (a skill's task wrench lies outside the body's attainable set).
 - Implemented by: BD-336.
 
 **`skill.show`** (MCP tool `skill_show`; owner `frob-control`)
-- Inputs: skill.
-- Outputs: the skill artifact, its phases and assumptions. Evidence: *pass-through*.
+- Inputs: a skill or a compiled skill.
+- Outputs: the skill artifact, its phases and assumptions, the five limit texts (N22b-01), the evidence block and
+  the flags; for a compiled skill also the modes and program identities. Evidence: *pass-through*.
 - Chapter refusals: none of its own.
 - Implemented by: BD-336.
 
 **`skill.transport`** (MCP tool `skill_transport`; owner `frob-control`)
-- Inputs: skill; source and target bodies.
-- Outputs: the skill moved to another body with a learned residual; carries no certified claim unless
-  `mission.transport` issued the interface certificate. Evidence: *screening*.
-- Chapter refusals: `FROB-REF-444` (a transported skill does not refine its specification).
+- Inputs (N22b-07): a `.fskill` with a non-null `residual`; the target design (`--design`); the task family
+  (`--task`); budget; idempotency key. The verb exists behind the Moonshot feature (a build without it answers
+  `FROB-REF-724`).
+- Outputs: the skill moved to another body with a learned residual: success with interval, the comparison with
+  the tuned baseline where one exists, the residual's saturation fraction and both cost denominators; a target
+  outside the residual's training envelope gives the finding `outside-training-envelope`, exit 2, with no score.
+  It carries no certified claim unless `mission.transport` issued the interface certificate. Evidence:
+  *screening* (class at most `Tested`, standing `screening`).
+- Chapter refusals: `FROB-REF-444` (a transported skill does not refine its specification); `FROB-REF-448` (the
+  exact layer is infeasible on the target, refused before any learned component runs: N22b-07 step 1).
 - Implemented by: BD-436, N22b-07.
+
+**Parameters that accept a path to a file** (NJL-01's `params` rule: an `artifact-input<F>` parameter appends
+891, 734 and 828; the formats are rows of `registries/formats.toml`, BD-002: FMT-FSKILL, FMT-FBOT, FMT-FRUN). Each
+parameter also accepts the identifier or name, as `task.verdict`'s `run` does:
+
+| Row | `params` |
+|---|---|
+| `skill.check` | `{ skill = "artifact-input<skill>", design = "artifact-input<design>", run = "artifact-input<run>" }` (`run` is the recorded-run state source) |
+| `skill.compile` | `{ skill = "artifact-input<skill>", design = "artifact-input<design>" }` |
+| `skill.show` | `{ skill = "artifact-input<skill>" }` |
+| `skill.transport` | `{ skill = "artifact-input<skill>", design = "artifact-input<design>" }` |
+
+All four rows carry `needs_groups = []`: no handler of the cluster raises `FROB-REF-790` (BD-336, N22b-07).
 
 **Machine fields of each row.**
 
@@ -99,7 +134,7 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
 | `skill.check` | `skill:run` | `frob.skill.check.out/1` | `shield`, `transfer` | `frob skill check carry.fskill --design quad-tray --key skc-1 --json` |
 | `skill.compile` | `skill:run` | `frob.skill.compile.out/1` | `shield` | `frob skill compile carry.fskill --design quad-tray --key sk-1 --json` |
 | `skill.show` | `skill:read` | `frob.skill.show.out/1` | `shield`, `transfer` | `frob skill show carry.fskill --json` |
-| `skill.transport` | `skill:run` | `frob.skill.transport.out/1` | `transfer` | `frob skill transport carry.fskill --to carrier-b --key skt-1 --json` |
+| `skill.transport` | `skill:run` | `frob.skill.transport.out/1` | `transfer` | `frob skill transport carry.fskill --design carrier-b --task carry-level --key skt-1 --json` |
 
 The remaining fields follow by rule: `input_schema` is `frob.<verb name>.in/1`; `refusals` is the chapter list of
 the verb's block; `idempotent` is `true` for `read` and `admin` and `false` for `run` and `mutate` (which take an
@@ -118,7 +153,7 @@ tier = "S"
 capabilities = ["skill:run"]
 input_schema = "frob.skill.check.in/1"
 output_schema = "frob.skill.check.out/1"
-refusals = ["FROB-REF-448"]
+refusals = ["FROB-REF-444", "FROB-REF-448"]
 idempotent = false
 cost_model = "estimated: `--estimate` returns CPU core-seconds, GPU seconds, memory and disk with a conformal interval"
 first_milestone = "M4"
@@ -127,6 +162,8 @@ examples = ["frob skill check carry.fskill --design quad-tray --key skc-1 --json
 owner = "frob-control"
 purpose = "A feasibility or infeasibility witness for a skill over a set of states"
 wait = { cli = "to-completion", mcp_ms = 5000, mcp_max_ms = 30000 }
+needs_groups = []
+params = { skill = "artifact-input<skill>", design = "artifact-input<design>", run = "artifact-input<run>" }
 ```
 
 **Conventions the rows follow.**
@@ -135,16 +172,31 @@ wait = { cli = "to-completion", mcp_ms = 5000, mcp_max_ms = 30000 }
    `frob.envelope/1` with `result` specialized to the output schema; its `evidence` block is a claim product (the
    weakest class, tier and determinism class among the inputs).
 2. The generator adds the common input properties of the kind (`run`: `sync_wait_ms` from 0 to 30,000 with MCP
-   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel`; `mutate`: `idempotency_key`,
-   `expected_parent`) and appends the surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid),
-   724 (not implemented in this build) and 802 (schema failure, including an unknown parameter) for every verb; 701
-   to 704 (budget and admission), 803 (key reused with different content) and 805 (missing key) for `run`; 725, 803,
-   804 (stale parent) and 805 for `mutate`; 806 and 807 for paginated reads; 808 for an out-of-range integer.
+   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel` (`leave`, the default, or
+   `cancel_job`) and `envelope_scope` (`--envelope-scope <gate:…|campaign:…|pretrain:…>`: the approved compute
+   envelope scope the job cites; its schema, its place in the scope order and its refusals are NJL-01's);
+   `mutate`: `idempotency_key`, `expected_parent`). `idempotency_key` is in no JSON-schema `required` array: the
+   annotation `x-frob-key` (`"required"`, or `"optional"` on a `key_optional` entry) carries the rule, and a
+   missing key is refused with 805 by the admission transaction on both surfaces. The generator appends the
+   surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid), 724 (not implemented in this
+   build) and 802 (schema failure, including an unknown parameter) for every verb; 701 to 704 (budget and
+   admission), 761 (above the compute envelope in force), 803 (key reused with different content) and 805
+   (missing key) for `run`; 725, 803, 804 (stale parent) and 805 for `mutate`. The other properties and codes are
+   added by field, as the variation table of NJL-01 lists them (that table is the one list; its variations 10
+   to 16, which later beads land, are read there and not copied here): 806 and 807 for paginated reads; 808 (an
+   integer outside ±(2⁵³ − 1)) for an entry whose generated input schema has an `int53` property and for no
+   entry by kind (every `run` entry has one in `sync_wait_ms`, every paginated entry in `limit`); a
+   `key_optional` entry is not given 805; a non-`run` entry with `estimable = true` gets `estimate_only`; 790
+   for a non-empty `needs_groups`; 891 to 893 for artifact `params`; 734 and 828 for a parameter that accepts a
+   path to a file (`artifact-input<F>`, `artifact-identity<F>`, `foreign-file`).
 3. Exit codes: 0 done; 2 done with findings; 3 refused input (1xx to 5xx, and 8xx other than conflicts); 4 budget
-   (70x); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
+   (70x and 761); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
    indeterminate; never 1 on purpose.
-4. Rows are entered when the cluster is first registered (M4). Until its own milestone a verb answers one envelope
-   with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json` lists it as absent.
+4. Rows are entered when the cluster is first registered (M4); each row's tool is added to the task-cluster
+   tables its `task_clusters` names in the same change (NJL-05's staging rule). A verb whose handler is not in
+   the build answers one envelope with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json`
+   lists it as absent; a reduced form that lands before the row's `first_milestone` answers and is listed as
+   implemented with its form named (NJL-01, NJL-03: the field keeps the appendix's milestone).
 
 **Notes for this cluster.**
 
@@ -168,7 +220,7 @@ wait = { cli = "to-completion", mcp_ms = 5000, mcp_max_ms = 30000 }
       verb runs its registry example with the result its implementing bead specifies; a misspelt parameter is
       `FROB-REF-802`, exit 3; a `run` or `mutate` call without a key is `FROB-REF-805`, exit 3.
 - [ ] The generated refusal table lists for each verb exactly its chapter codes plus the codes appended for its
-      kind, and every code exists in `registries/refusals.toml`.
+      kind and fields (NJL-01), and every code exists in `registries/refusals.toml`.
 - [ ] The gate row is recorded with the measured counts by a session that did not write the rows.
 
 ## Test plan
@@ -183,14 +235,22 @@ strings labelled `synthetic`):
   `skill.transport` is `run` at M8).
 - `schemas_and_scopes`: input schemas are `frob.<name>.in/1`; output schemas and capabilities equal the
   machine-fields table.
-- `refusal_lists`: each row's chapter codes equal its block (`skill.check`: 448; `skill.compile`: 448; `skill.show`:
-  none); the appended codes equal the rule for its kind.
-- `mcp_names_one_to_one`: the tool names are the mapped names (`skill_check`, `skill_compile`, `skill_show`), with
-  no collision against any other cluster.
+- `refusal_lists`: each row's chapter codes equal its block (`skill.check`: 444, 448; `skill.compile`: 448;
+  `skill.show`: none; `skill.transport`: 444, 448); the appended codes equal the rule for its kind and fields
+  (891, 734 and 828 on all four from `params`; no 790).
+- `inputs_by_row`: `skill.check` accepts a `CompiledSkillId` and the `.fskill --design` form, which give the same
+  `CompiledSkillId` and outcome (BD-336's `check_accepts_skill_and_design`), the three state sources (the
+  default reference samples, `--run <run | file.frun>`, `--grid <N>`; `--run` with `--grid` is 802) and
+  `--refinement` and `--replay`;
+  `skill.transport` takes `--design` and `--task` (a planted `--to` is 802).
+- `mcp_names_one_to_one`: the tool names are the mapped names (`skill_check`, `skill_compile`, `skill_show`,
+  `skill_transport`), with no collision against any other cluster.
 - `task_clusters_and_examples`: every row sits in a task cluster of at most seven tools or is a base tool; each
   example parses against the generated CLI and its command path is the row's own.
-- `kind_behaviour`: a `run` row has the five common properties and refuses `sync_wait_ms = 30001` with code 802; a
-  verb whose capability is absent returns code 724, exit 5, one envelope.
+- `kind_behaviour`: a `run` row has the six common properties (`sync_wait_ms`, `idempotency_key`, `budget`,
+  `estimate_only`, `on_cancel`, `envelope_scope`), with `idempotency_key` outside the schema's `required` array
+  and annotated `x-frob-key: "required"`, and refuses `sync_wait_ms = 30001` with code 802; a verb whose
+  capability is absent returns code 724, exit 5, one envelope.
 
 ### End-to-end script and logging
 

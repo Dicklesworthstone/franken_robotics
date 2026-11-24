@@ -1,0 +1,303 @@
+{
+ "round": 2,
+ "slice": "S84",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "N31a-17",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "AC 1 required the 20-of-20 measurement of N31a-18, a bead that depends on this one (KNOWN_DRIFTS 7): restated as the fixture entry and per-fixture record this bead exposes, with the battery N31a-18's and the gate row N31a-54's. The conformity limit (1/10 of the length scale) and the same-family grid (0.7 spacing, offset 0.37/0.61/0.83 cell) contradicted the OPEN-FOUNDRY-1 decision bead N31b-24 (0.05 of the length scale; 1.5 times finer, half-cell offset): aligned to the decision. KA-744 check stated on volume (3.5186e-5 m3), the mass being N31a-23's."
+  },
+  {
+   "bead": "N31a-18",
+   "kinds": [
+    "deps",
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Compliance uses the independent check's displacement on the body-fitted mesh: dep N31a-19 added. Both this bead and N31a-54 wrote the GATE-FOUNDRY-04 row; N31b-12 names BD-403 with script N31a-54: this bead now produces the battery receipt, bound into the Gauntlet as G1 row (`cargo test -p frob-conformance --test g1_known_answers -- GATE-FOUNDRY-04`, controls under gauntlet-mutations), and N31a-54 records the row. Scope separates the gate's 20 density-field fixtures from N31b-24's mesher corpus. Script calls gained --exploratory and --key."
+  },
+  {
+   "bead": "N31a-19",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Case list takes the `transient`-tagged peak instants and `model-conditional` labels of N31a-12, which was not a dependency: added. Verb sketch now carries --key and the named-fixture input with --load (options requested of VERBS-foundry, KNOWN_DRIFTS 8); script calls gained keys and the neck-optimized fixture name."
+  },
+  {
+   "bead": "N31a-20",
+   "kinds": [
+    "deps",
+    "tests",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The modal floor uses f99 from N31a-12's load-power spectrum and repair 3 its transient path: dep N31a-12 added and the f99 definition stated. `cargo test -p frob-foundry check::buckling check::modes` passes two test-name filters, which cargo rejects: moved after `--`. Script calls gained distinct keys. The Euler and modal answers named as N31-KA's foundry/F-10 and F-11."
+  },
+  {
+   "bead": "N31a-21",
+   "kinds": [
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Combination over contact variants and the model-conditional rule come from N31a-12 (variant spectra, (Dmax/Dmin)^(1/m) > 1.20): dep added and the rule stated with a worked test (1.145 no label; 1.260 label). Cargo command fixed (two filters). Script calls gained keys. 'a rule of unit U31b' named as N31b-36."
+  },
+  {
+   "bead": "N31a-22",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "Under --strict-data an assumed field refused with FROB-REF-163, while the program's strict-data code is FROB-REF-113 (N15b-06, a dependency; used by foundry.lifecycle, actuator cards and N31-REF Table 4): aligned on 113 with repairs (DESIGN: one code for the flag); 163 stays for absent, unprovenanced or non-applicable fields. The TOML sketch used `;` separators, which TOML does not allow: one key per line."
+  },
+  {
+   "bead": "N31a-23",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests"
+   ],
+   "what": "AC required a `Checked<Geometry>` that no bead defined: the wrapper is specified here with two constructors (a passing BD-402 StructureCheck of the same geometry and a mesh that is not the optimizer grid; a passing N31a-61 beam record) and deps BD-402 and N31a-61 added (no cycle). Cargo command fixed (two filters) and the wrapper's tests added."
+  },
+  {
+   "bead": "N31a-24",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Requests applied. Stated that lambda-hat uses the weights of x_k in numerator and denominator (else 0.158 at k = 2). AC 1 listed a fifth iterate the run never computes: the run's iterates are four, the fifth is the map's (KA-743). Settled when the driver evaluates an Aitken proposal (DESIGN policy: only when plain iteration is predicted to miss 2% within the budget; never on the gate fixture), how a proposal iteration is counted and its change measured, with a slow-loop worked case (lambda 0.6: plain budget-exhausted at 4.39%; with the proposal 19.5 kg, converged at iteration 4). Added the zero rule (0/0 on piecewise-constant beam-rung maps) and map-not-deterministic. Budget-exhausted and two-size-cycle tests made concrete (the planted map defined). Script calls gained --loop and --key."
+  },
+  {
+   "bead": "N31a-25",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script step called `frob foundry optimize <finalist> --outer actuators` without --loop, fixture or --key: now the two torque fixtures with --loop and distinct keys; --outer requested of VERBS-foundry."
+  },
+  {
+   "bead": "N31a-60",
+   "kinds": [
+    "tests",
+    "self-contained"
+   ],
+   "what": "Cargo command passed three test-name filters (rejected by cargo): moved after `--`. The hand values named as N31-KA's foundry/F-23 to F-28, with F-28's note on the closed forms against the Saint-Venant series."
+  },
+  {
+   "bead": "N31a-61",
+   "kinds": [
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Request applied: the saving is printed through N31a-02's format_saving (its AC that no saving is formatted for NotBeamLike or a primitive relies on it): dep N31a-02. The checked baseline runs the reference solid through the independent check (BD-402's check_structure), which was not a dependency: added (no cycle). Cargo command fixed (three filters). Hand values named as F-29 to F-31."
+  },
+  {
+   "bead": "N31a-53",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "users"
+   ],
+   "what": "Requests applied. No run call carried --key (FROB-REF-805): the cluster key convention of N31a-51 stated, distinct keys for the determinism repeats. The single-precision clause used `--tier batch-cpu` alone, which runs f64: now `--precision f32` on batch-cpu and the GPU tiers where present, asserting f32 in the evidence (BD-400). Replay call was `frob sim replay <addr> --to-tick`: now the sim.replay row's `--run --world --episode --to --capture digests --key`. Added step 10b, the KILL-LOADS switch (exit 5, FROB-REF-724, --declared statics offered; N31a-13). Gate value recorded with record_gate. Self-test mutants built with gauntlet-mutations,frob-foundry/nc-<n> per N31-CX (dep added). foundry.loads options missing from the registry row noted and requested."
+  },
+  {
+   "bead": "N31a-54",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Graph finding checked: each of the 23 deps is used by a step (none removable). Step 6 called foundry.export, whose writer BD-408 is not a dependency (KNOWN_DRIFTS 7/8): the packet-side refusal of an exploratory result moved to BD-408's script (request), this step keeps the optimize-side admission. Step 5 ran an unnamed `cargo test ... topology_battery`: now N31a-18's Gauntlet row with and without gauntlet-mutations, against N31b-24's limits. Planted-gain step asserts four run iterates and aitken_used false (KA-743's fifth value is the map's). Outer step given its fixtures and --loop. Determinism repeats under distinct keys. GATE-FOUNDRY-04 (with N31a-18's receipt) and -06 recorded with record_gate. Self-test builds named. --links was already used (request satisfied)."
+  },
+  {
+   "bead": "N31a-55",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "No foundry.check call carried --key: convention stated, distinct keys for compared runs; options beyond the row listed and requested. Step 8 used a test-only CLI helper `mutate finish-per-episode`: now CX-338's registered control built with gauntlet-mutations,frob-foundry/nc-<n> (dep N31-CX), helper test replaced by a no-nc-feature check of the product binary. Three gates recorded with record_gate; GATE-FOUNDRY-07 was recorded by both this script and N31a-30's battery: this script records it once, citing N31a-30's receipt (request to N31a-30)."
+  },
+  {
+   "bead": "N31b-06",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script sources the STD-E2E helper: dep added and the required log fields named. The construction's window-halving clause was said to be read in the stage-1 record, which has three static cases and no history: stated as read in stage 2 (N31b-07, which does)."
+  },
+  {
+   "bead": "N31b-07",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Keys `s2-<k>-<step>` were the same for iteration 1 and its noise-floor repeat on another address set, which would return the stored receipt (KNOWN_DRIFTS 5): keys now carry the digest of the call's inputs. STD-E2E dep added (the script sources its helper). The record had no identifier, while row C-35's pilot check (SPEC-C-35) resolves `PILOT-C-35` and fails a record lacking the construction's falsifier (both clauses), ceiling or fallback: the record is named PILOT-C-35 and states them beside the chapter's 5% and 2% clauses."
+  },
+  {
+   "bead": "N31b-24",
+   "kinds": [
+    "priority",
+    "deps",
+    "correct",
+    "self-contained"
+   ],
+   "what": "Owner decision at M4 blocking BD-402, BD-403, N31a-17 and BD-378: priority 2 -> 1. Script sources the STD-E2E helper: dep added. 'It becomes the gate's 20 fixtures' contradicted N31a-18, whose 20 density-field fixtures go through the full extraction path: corpus stated as the decision corpus. AC 6 required behaviour of beads that depend on this one (KNOWN_DRIFTS 7): restated as the default the record states for N31a-17, BD-402 and the register to apply, with the limit and grid values they use."
+  },
+  {
+   "bead": "N31b-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied: the ledger rows used a Foundry-only shape (discharged_by, bound, measured, commit; status not-applicable) that N28cp2-01's shared loader refuses: rows now in the union schema of eleven fields with a table of mechanism, due and gate per obligation; PO-FOUNDRY-04 is `open`, due M8; dep N28cp2-01 (file, loader) added; chapter check `obligations_foundry` with tests. 'Written to the gate rows' replaced: gate rows are recorded once from N31a-53/N31a-54 receipts, the ledger rows name the gates. Script keys from foundry_key."
+  },
+  {
+   "bead": "N31b-04",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Five late rows D31-1..5 were to be submitted for KA numbers, while the registry N31-KA (which depends on this bead) records them as Part 3, `foundry/S-1` to `S-6`, with no number, in derived.md: aligned to those ids (S-3, the pre-snap verdict, split from the cross-export control), derivations written as derived.md sections, no numbers requested. The e2e link check and its control used registry rows that only N31-KA writes (KNOWN_DRIFTS 7): restated over this bead's files. STD-E2E dep added (script sources it)."
+  },
+  {
+   "bead": "N31b-13",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Request applied: literal keys g05-<i>-* replaced by foundry_key (input digest with registration, address-set and stack-lock digests), so a pin move is measured afresh. AC adds record_gate and the form_hash condition of N31b-12, and distinct keys per pair and control arm."
+  },
+  {
+   "bead": "N31b-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "ADR path docs/adr/KILL-TOPOPT.md -> docs/adr/ADR-KILL-TOPOPT-M5.md with N40-03's required fields (amendments, receipts, capability name, beads re-read, recorder) (KNOWN_DRIFTS 4). Literal key replaced by foundry_key; AC command given its fixture and key. `--offline` noted as an option requested only on that branch."
+  },
+  {
+   "bead": "N31b-16",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Fallback used `foundry.loads --declare statics.toml`, an option no bead defines: aligned to N31a-13's `--declared statics [--dynamic-factor] [--patterns]`, the declared-loads file read by `--loads`, and the KILL-LOADS switch (--campaign refuses FROB-REF-724, exit 5). ADR path -> docs/adr/ADR-KILL-LOADS-M5.md with N40-03 fields. Reads N31b-02's PO-FOUNDRY-01 ledger row (a dep). Keys from foundry_key; script asserts the 724 refusal."
+  },
+  {
+   "bead": "N31b-27",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "`--strict-data` refusal named as FROB-REF-113 (aligned with N31a-22) with AC, test and script step. AC on the gate registration (N31b-13, not a dependent) restated as what the record states. Literal keys replaced by foundry_key."
+  },
+  {
+   "bead": "N31b-35",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Requests applied. The script said sim.replay lacked snapshot and window inputs; the VERBS-sim row now has them: replay quoted as `--run --world --episode --from-snapshot <hash> --to <tick> --tier referee --comparison --capture t2 --key` (the row makes --from and --from-snapshot alternatives, so not both as requested; --comparison avoids FROB-REF-894). Added before/after-freeze steps in a scratch store (821 before; EnvelopeId and ledger hash after; freeze precedes records). AC: comparison calls N16bx-04's delta function and N31a-10's projection, never a copy. Added N16bx-04's below-floor label (|p_ref| < 0.05), missing here. Keys from foundry_key."
+  },
+  {
+   "bead": "N31b-36",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Admission now names N31b-35's below-envelope-floor label (DESIGN: admitted with label, referee value). A consideration said the flags and codes were missing from VERBS-foundry; the rows now carry them: corrected. Literal keys replaced by foundry_key. N31a-21's mention of this bead corrected to what it does (scales counted ranges, re-sums damage)."
+  },
+  {
+   "bead": "N31b-37",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Request applied: the spike goes only through `--conformance-plant` with a `stiffness` section (N29a-25's plant file, N18bx-03's admission), with an AC checking StepPlanId, plant record, active steps (inactive redrawn) and the release binary's lack of the option; deps N29a-25 and N31-CX added. The two mutation controls were said to be registered 'through N31-CX', which holds only L31-2: registered here, branches being N31b-35's and N31b-36's planted builds. record_gate and Gauntlet control commands stated; literal keys replaced."
+  },
+  {
+   "bead": "N33b-14",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "The script step ran `frob foundry size`, the verb of BD-401, which depends on this bead (KNOWN_DRIFTS 7): the step's evidence is now the lane (`cargo test -p frob-fsim --features structure --test int_fsim_15`) and the 790 test on the build without the group; the verb-level rows are BD-401's (its steps 3 and 6) and run once it lands. Gate value recorded with record_gate."
+  },
+  {
+   "bead": "SPEC-C-35",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KA-168's row is entered by N10-KA3 (tolerance `to set`, control `none stated`, owner SPEC-C-35): the AC said 'registered', which would make a second row; now completes N10-KA3's row in registry/known_answers.toml, dep N10-KA3 added (no cycle, M1). Scope gave all gate recording and the kill decision to BD-403: named as N31a-54 (GATE-FOUNDRY-04, with N31a-18's receipt), N31b-13 (GATE-FOUNDRY-05) and N31b-15 (KILL-TOPOPT). Script ran `--test g1`, not a target (KNOWN_DRIFTS 1): `FROB_TEST_SEED=<seed> ... --test g1_known_answers -- KA-168`, with the mutation run for its control."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-foundry",
+   "what": "Options used by the M5 scripts and defined by mechanism beads are missing from the rows (KNOWN_DRIFTS 8). foundry.loads: --tier, --precision f32|f64, --fixture, --variants, --transient impact-windows (BD-400, N31a-12), --declared statics [--dynamic-factor k] [--patterns ...] (N31a-13), and FROB-REF-724 exit 5 (the KILL-LOADS switch on --campaign). foundry.size: --loads <file> (BD-401). foundry.check: --fixture, --load <N>, --cases, --stress, --modes, --all, --fab, --require fatigue (N31a-19 to -22, N31a-26). foundry.optimize: --fixture, --loop, --rung, --outer actuators, --plate (N31a-24, N31a-25, N31a-54). --strict-data with FROB-REF-113 on foundry.size, check and optimize (N31a-22, N31b-27)."
+  },
+  {
+   "bead": "N31-REF",
+   "what": "FROB-REF-113 (a card field of class `assumed` under --strict-data) is listed only for foundry.lifecycle; N31a-22 and N31b-27 now raise it from foundry.size, foundry.check and foundry.optimize (163 stays for absent, unprovenanced or non-applicable fields): add it to those rows."
+  },
+  {
+   "bead": "BD-404",
+   "what": "Test `fixed_point_estimate_is_aitken_of_last_three` takes 2.8275, 2.824125, 2.82361875, but the run stops after four iterates and never computes the fifth (N31a-24, KA-743): use the run's last three, 2.85, 2.8275, 2.824125, whose Aitken value is also 48/17. State N31a-24's proposal policy (ProposalPolicy::Auto default or Off; at most one proposal, only when lambda-hat^(5-k)*|Delta_k| > 0.02; none on the gate fixture, aitken_used false) in the Aitken paragraph."
+  },
+  {
+   "bead": "N31a-15",
+   "what": "AC 1 says the two-bar measurement 'and its gate row are N31a-18's'; the row of GATE-FOUNDRY-04 is now recorded once by N31a-54 from N31a-18's battery receipt (as BD-403 states): say 'the measurement is N31a-18's battery and the gate row N31a-54's'."
+  },
+  {
+   "bead": "N31a-30",
+   "what": "Step 'record' records GATE-FOUNDRY-07 with record_gate itself, while BD-405 and N31a-55 say the row is written by scripts/e2e/foundry_check.sh (N31a-55): produce the battery receipt (Gauntlet G1 row with its controls) only, and leave the record_gate call to N31a-55, which cites this receipt."
+  },
+  {
+   "bead": "BD-408",
+   "what": "N31a-54 no longer exports (KNOWN_DRIFTS 7): add to foundry_export_packet.sh a step requesting a packet for a qualified design whose cited structural evidence is a `foundry.optimize --exploratory` result, asserting exit 3, FROB-REF-166 and no packet directory (the unit test exploratory_input_rejected_in_packet has no script counterpart; step 5 covers only the --exploratory flag)."
+  },
+  {
+   "bead": "N31-KA",
+   "what": "Part 3's heading says 'tests drafted by unit U31b': name N31b-04 (a dependency) as the author of the foundry/S-1 to S-6 derivation sections in docs/derivations/foundry/derived.md and of their tests (s_1_... to s_6_member_sizing); N31b-04 no longer requests KA numbers."
+  },
+  {
+   "bead": "N40-03",
+   "what": "The decision ADR path is docs/delivery/adr/ADR-<gate-name>-<milestone>.md (and the OPEN default the same), while KNOWN_DRIFTS 4 retires docs/delivery/adr/: docs/adr/ADR-<gate-name>-<milestone>.md (N31b-15 and N31b-16 now write there)."
+  },
+  {
+   "bead": "N16bx-04",
+   "what": "Optional, for step 8 ('stated so that the two beads agree'): add that a `below-envelope-floor` case is admitted to a packet with its label printed and the referee's value (N31b-36, DESIGN), so the provisional reason is not read as a packet refusal."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "Reviewed all 31 in work-package order; 28 changed, 3 unchanged (N31a-63, N33bx-04, N33bx-05: hand values re-derived, e.g. tetrahedron 12.5 and 2.0833 kg m2, two-material box 0.0141667, tube 0.0950 kg; Euler characteristics 1 and 2). Main threads: one recorder per gate (04 N31a-54 from N31a-18's receipt; 06 N31a-54; 02 N31a-53; 07 N31a-55 from N31a-30's receipt; 05 N31b-13; 14 N31b-37); literal or missing keys replaced by foundry_key with distinct keys for compared runs; checks that waited on dependents moved to their owners (N31a-17, N31a-54, N31b-04, N31b-24, N33b-14); OPEN-FOUNDRY-1 limits aligned to N31b-24; strict-data on 113; ledger rows in N28cp2-01's union schema; Aitken policy settled in N31a-24; PILOT-C-35 named. N31b-02 depends on N28cp2-01, a round-2 new bead of S42 not yet in INDEX.tsv. `--test g0_doctrine` (SPEC-C-35 AC) kept: it is N10a-01's doctrine target, used by 25 beads, not a Gauntlet tier. Mechanism beads without a direct STD-E2E dep reach it transitively and are not end-to-end beads; left. The VERBS-sim request about --from/--from-snapshot was not filed: the row already makes them alternatives (802). Settled apart from the requests, chiefly the VERBS-foundry options the scripts depend on."
+}

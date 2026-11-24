@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "phylum", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-02", "BD-054", "BD-055", "BD-056", "BD-060", "BD-049", "BD-080", "BD-100", "BD-171"]
+deps: ["BD-049", "BD-054", "BD-055", "BD-056", "BD-060", "BD-080", "BD-100", "BD-171", "N14b-02", "NEG-30", "NEG-31"]
 needs: []
-related: ["GB-17", "GB-41", "BD-168", "BD-246", "N14b-08", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 4", "§14.10", "§17.5", "§16.6", "§28.4 A-08", "Appendix M KA-270"]
 ---
@@ -39,7 +39,7 @@ bodies 25; end effectors 8.
 
 **What preflight must report (stages 1 to 6 at defaults; no refusal).** Stage 1: 25 fills, 8 foot laws, one
 leg module used eight times. Stage 2: eight equal leg subtree masses. Stage 3: 24 revolute joints, no loops,
-tree mobility 30. Stage 4: not-applicable. Stage 5: D₈ (radial) or C₂ (spider), assertion accepted. Stage 6:
+tree mobility 30. Stage 4: `passed` with the note `not-applicable` (legged, N14b-11). Stage 5: D₈ (radial) or C₂ (spider), assertion accepted. Stage 6:
 positive support margin on eight feet, and a positive margin for each of the eight single-leg failures in the
 radial layout (leg locked, foot lifted; the remaining seven feet's support polygon contains the centre of
 mass).

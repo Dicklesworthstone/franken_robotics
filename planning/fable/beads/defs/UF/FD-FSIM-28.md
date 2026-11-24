@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "foundry", "upstream", "frankensim", "frontier"]
 parent: "WP-70"
-deps: ["BD-037", "BD-401", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-401", "BD-403", "N31b-13", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-403", "BD-404", "FD-FSIM-27", "FD-FSIM-30"]
+related: ["FD-FSIM-30", "N31a-04", "N31a-15", "N31a-29", "N33b-14", "NFx-02"]
 gates: ["INT-FSIM-15", "GATE-FOUNDRY-05"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§31.4", "§31.7", "§33.9", "§33.3", "§33.16"]
 ---
@@ -36,7 +36,10 @@ method with different artefacts, kept as a fallback, not a substitute).
 
 In: in `fs-topopt`, the `sdf3` entry points that Foundry uses made available without the Frontier feature,
 with a contract; here, the feature gate removed from the airlock entry. Out: the topology rung itself and the
-inertia feedback loop (BD-403, BD-404); plane stress in two dimensions (FD-FSIM-27); surface extraction for
+inertia feedback loop (BD-403, BD-404). BD-403, which owns `foundry.optimize`, and N31b-13, which measures
+GATE-FOUNDRY-05 and writes its row, are dependencies, because the switch-over compares that row's saving and
+iteration count across the pin move; the INT-FSIM-15 test it extends is N33b-14's, reached through BD-403.
+Also out: plane stress in two dimensions (FD-FSIM-27); surface extraction for
 export, which FrankenSim does not provide and Foundry owns.
 
 ## Technical approach
@@ -99,10 +102,13 @@ against the new pin.
 `structure` group no longer enables `cutfem-marquee`, and the group gate INT-FSIM-15 is re-run (a tolerance
 allocation on a two-term stack reproduces the hand-computed variance split; a mesh written through `fs-io`
 reads back with the same hash; a STEP file above the stated bound is quarantined with a receipt, not parsed),
-with one known answer through `sdf3::design` added to it. Then the topology rung's gate, GATE-FOUNDRY-05 (the
-stage-2 pilot: saving at least 7%, the kill threshold, with 15% the target; the convergence test passes within
-five iterations; coarse solve at most 120 s per link class), is re-run at the new pin to show that results did
-not move with the gate's removal.
+with one known answer through `sdf3::design` added to it (DESIGN): the two-bar slab of KA-739 (N31a-18's
+fixture `twobar`: load P at distance L from a wall; minimum volume under a stress cap is 2·P·L/σ_allow, reached
+by two bars at ±45°) run through the airlock with `cutfem-marquee` off, asserting two bars at 45° ± 5° and
+compliance within 10% of 4·P²·L²/(E·V) at the achieved volume V. Then the topology rung's gate,
+GATE-FOUNDRY-05 (the stage-2 pilot: saving at least 7%, the kill threshold, with 15% the target; the
+convergence test passes within five iterations; coarse solve at most 120 s per link class), is re-measured at
+the new pin by its own script (N31b-13) to show that results did not move with the gate's removal.
 
 **Fallback if the change cannot land.** The feature-gated route, re-admitted at every pin move. If the lane
 breaks at a pin, KILL-TOPOPT's fallback applies: the sizing rung (beams and the engineered baseline) is the
@@ -112,7 +118,7 @@ product for that pin.
 
 - [ ] In FrankenSim: the stable subset builds and is tested with `cutfem-marquee` off; the contract states the limits and the stability rule; with the feature on, existing tests are unchanged.
 - [ ] Here: `frob-fsim` does not enable `cutfem-marquee` at the new pin (`cargo tree -e features` on the `structure` group shows it absent), and `foundry optimize` still runs.
-- [ ] Here: INT-FSIM-15 passes at the new pin with the added `sdf3` known answer; GATE-FOUNDRY-05's recorded saving and iteration count at the new pin equal those at the old pin to the solver's tolerance.
+- [ ] Here: INT-FSIM-15 passes at the new pin, as N33b-14 states it (the two-term stack, the mesh round trip, the quarantined STEP file) and with the added two-bar `sdf3::design` known answer; GATE-FOUNDRY-05's saving and iteration count at the new pin equal those in its row recorded at the old pin to the solver's tolerance.
 - [ ] Here: results still carry the sibling's own disclaimer (not a continuum certificate) in their evidence.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
@@ -128,7 +134,8 @@ In FrankenSim (added, default features):
 Here:
 - `structure_group_has_no_frontier_feature`: parses the resolved feature set.
 - `verb_refuses_without_group`: a binary built without `structure`; expected `FROB-REF-790`.
-- `two_term_stack_variance_split`: tolerances t₁, t₂ with sensitivities s₁ = 1, s₂ = 2 and costs c₁ = c₂: the cost-optimal allocation has tᵢ ∝ (cᵢ/sᵢ²)^(1/3), so t₁/t₂ = 4^(1/3) = 1.5874; the variance shares are s₁²t₁² : s₂²t₂² = 2.5198 : 4 (the hand-computed split).
+- INT-FSIM-15 re-run at the new pin (N33b-14's `crates/frob-fsim/tests/admission/int_fsim_15.rs`, lane `--features structure`), unchanged: KA-770's two-term stack with sensitivities (1, 4), equal costs under the 1/t model, k = 3 and √B = 10 µm returns t = (15.99, 6.35) µm to 10⁻⁹ relative and the variance split 28.41 and 71.59 µm² summing to 100 µm² to 10⁻¹² (N33b-14 sets these values and tolerances; this bead does not restate KA-770 with other numbers); the mesh hash round trip; the over-bound STEP file quarantined.
+- `sdf3_twobar_known_answer` (added to that file at the switch-over): the two-bar slab through `sdf3::design` with the feature off: two bars at 45° ± 5°; compliance within 10% of 4·P²·L²/(E·V) at the achieved volume; hand values from N31a-18 (L = 0.10 m, P = 1,000 N; least volume 1.449 × 10⁻⁶ m³ at 138 MPa).
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_28.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
@@ -136,8 +143,12 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_28 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry optimize --json` on the reference link class at both
-pins' recorded settings and compares saving, iteration count and wall time.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post`
+also re-runs pair 1 of the GATE-FOUNDRY-05 measurement at the new pin in N31b-13's command forms, under keys of
+its own (the old pin's keys would return the stored envelopes): `frob foundry loads quad-ref --campaign
+<set-1> --key fd28-post-loads --json`, `frob foundry optimize quad-ref --links lower-leg --mode coarse --loop
+--key fd28-post-opt --json` and `frob foundry check quad-ref --link lower-leg --key fd28-post-check --json`,
+and compares saving, iteration count and wall time with pair 1 of the row recorded at the old pin.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_28/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -149,7 +160,7 @@ and the artifact paths needed to reproduce. A final `summary` line gives asserti
 gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
-- Known answers: KA-770 (the two-term variance split; the mesh hash round trip); the cantilever block's monotone volume decrease under an active stress cap.
+- Known answers: KA-770 (the two-term variance split; the mesh hash round trip, as N33b-14 states them); KA-739 (the two-bar optimum through `sdf3::design`); the cantilever block's monotone volume decrease under an active stress cap.
 - Negative controls: a probe that calls an entry still behind the feature must fail to build (so that "ungated" is tested, not assumed); a STEP file above the stated bound must be quarantined, not parsed.
 - Determinism lanes: the optimization twice on one machine gives identical iterates; debug and release; same-platform class.
 
@@ -172,4 +183,4 @@ gates touched. No private-scene data is logged.
 
 ## References
 
-Appendix F.1 (row FD-FSIM-28), F.3; §31.4 (`fs-topopt`), §31.7 (the topology rung), §33.9 (INT-FSIM-15), §33.3 (airlock groups), §33.16 (FROB-REF-790); GATE-FOUNDRY-05; KILL-TOPOPT; KA-770.
+Appendix F.1 (row FD-FSIM-28), F.3; §31.4 (`fs-topopt`), §31.7 (the topology rung), §33.9 (INT-FSIM-15), §33.3 (airlock groups), §33.16 (FROB-REF-790); GATE-FOUNDRY-05 (N31b-13); KILL-TOPOPT; KA-770 (N33b-14); KA-739 (N31a-18).

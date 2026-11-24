@@ -1,0 +1,697 @@
+{
+ "group": "gap-C",
+ "filled": [
+  {
+   "gaps": [
+    69,
+    76,
+    85,
+    105
+   ],
+   "bead": "N35x-02",
+   "also": [
+    "N35x-01"
+   ],
+   "note": "second allocation round under N35-33's ledger and rule: the 43 uncoded refusals of fifteen chapters filed with a family each (the reuse figure of §28.26, the energy binding of §29.22, the four of §30, the referee refusal proposed as 792); the 549/560 pair recorded as a neighbour pair; N35x-01 is the owner decision on the 8xx family, which has four free numbers for nineteen of these requests"
+  },
+  {
+   "gaps": [
+    133
+   ],
+   "bead": "NJLx-02",
+   "note": "the two appendices had no known-answer registry bead: eighteen rows (five for the verb registry's baseline counts, thirteen for the worked artifacts L.1 to L.9) with truth, tolerance, tier, control and owner, and a block request of eighteen numbers filed with N38a-40; simulation-produced golden values stay fixtures"
+  },
+  {
+   "gaps": [
+    91
+   ],
+   "bead": "N34x-01",
+   "note": "the ADR and the sixth row of the inversion register (member-sizer: defined in frob-analyze, implemented in frob-foundry, wired by frob-verbs); rows beyond the fifth must cite an ADR; behaviour with no sizer attached"
+  },
+  {
+   "gaps": [
+    122
+   ],
+   "bead": "N34x-02",
+   "note": "the [[gate]] declaration block in contract.schema.json with both shapes (gate and kill gate), five check-contracts rules, one shared reader in frob-core, and the migration that ends registries/gate_declarations.toml"
+  },
+  {
+   "gaps": [
+    108
+   ],
+   "bead": "N34x-03",
+   "note": "contract keys are added by the bead that introduces each (N34-08's rule); the four demo.yaml keys and the four format-row fields had no owner and are added here, with a test that every key a reader accepts is in its schema and the reverse"
+  },
+  {
+   "gaps": [
+    99
+   ],
+   "bead": "N37x-01",
+   "note": "the threat register's own rule asks for a new threat row by ADR when a network listener appears: four rows (unauthenticated network party, misbehaving peer, private data crossing a link, budget exhaustion over a link), a closed listener register with a source scan, the owner-held key that enables a listener, the ten-item checklist the peer link's acceptance cites, and a test that a default daemon listens on no network"
+  },
+  {
+   "gaps": [
+    116
+   ],
+   "bead": "N39ax-01",
+   "also": [
+    "N39ax-02",
+    "N39ax-03"
+   ],
+   "note": "no bead wrote the development missions that sealing step 1 publishes: N39ax-01 builds the development-pool checks and package and authors the 24 missions of envelope and sensing; N39ax-02 authors the 24 of legged-quad and wheeled with solvability witnesses; N39ax-03 (child of BD-428) is the enlarged pool at M7: retired M3 families and the seven strata first run then"
+  },
+  {
+   "gaps": [
+    127
+   ],
+   "bead": "N39ax-04",
+   "also": [
+    "N39ax-05",
+    "N39ax-06",
+    "N39ax-03"
+   ],
+   "note": "the plan splits an M6 to M8 epic into tasks when its milestone opens (§45.7 to §45.9), so most of the eleven are childless by design and their pilots exist beside them: BD-422 (N16c-23 to N16c-28), BD-424 (N18a-24, N18a-23), BD-429 (N39b-16), BD-431 (N39b-17), BD-439 (N23b-01, N23b-02, SPEC-C-24, N10b-16), N18b-08 (N18b-07); N18a-06 and N33b-07 exist only on a branch of a decision (N18a-05, N33b-05) and get tasks if it is taken. Three epics named a pilot that no bead carried, written now as their children: BD-428 suite-authoring pilot (N39ax-04; also N39ax-03), BD-430 refresh pilot (N39ax-05), BD-433 publication dry run (N39ax-06). The lead may re-parent the pilots listed above to their epics; this pass cannot edit them"
+  }
+ ],
+ "already": [
+  {
+   "gaps": [
+    5
+   ],
+   "bead": "N35-33",
+   "also": [
+    "N38a-40"
+   ],
+   "note": "refusal numbers: N35-33 owns registries/refusals.toml as a whole and its first round names Marrow's late refusals and the colliding proposal 127; known-answer and counterexample numbers: N38a-40 issues the blocks"
+  },
+  {
+   "gaps": [
+    13,
+    29,
+    51,
+    55,
+    64,
+    70,
+    77,
+    84,
+    98,
+    125
+   ],
+   "bead": "N38a-40",
+   "note": "the allocation ledger of known-answer and counterexample numbers now exists (blocks after KA-835 and CX-384, issued per owner in commit order; provisional tags mapped in table order); each chapter registry files its request with its exact count"
+  },
+  {
+   "gaps": [
+    50
+   ],
+   "bead": "N38a-40",
+   "also": [
+    "N35-33"
+   ],
+   "note": "Arena's eight known-answer groups and eight counterexamples get blocks from N38a-40; its fifteen refusals by symbolic name are a first-round request of N35-33"
+  },
+  {
+   "gaps": [
+    37
+   ],
+   "bead": "N35-33",
+   "note": "the registry as a whole has an owner; Spark's 619 proposal and its internal-family code are first-round requests"
+  },
+  {
+   "gaps": [
+    113
+   ],
+   "bead": "N35-33",
+   "note": "the unit-ordering rejection (interim 862, pointer rates.ordering) is a first-round request; its 8xx number waits for the owner decision N35x-01"
+  },
+  {
+   "gaps": [
+    35
+   ],
+   "bead": "N40-09",
+   "also": [
+    "N40-10"
+   ],
+   "note": "the two readings (327 of 344 reversed, 17 stay admitted; the M1 part of GATE-SENS-08 is the linearized CPU form) are recorded for entry by amendment; N40-10 folds GATE-SENS-15 to -18 and KILL-VISIBILITY into the tables"
+  },
+  {
+   "gaps": [
+    38
+   ],
+   "bead": "N34-06",
+   "note": "the inversion register's first row names frob-kernels (KernelBackend, BD-014) with the reason; check-layers fails if the row and the trait's crate disagree"
+  },
+  {
+   "gaps": [
+    114
+   ],
+   "bead": "N34-02",
+   "note": "the crate map now records that frob-core's cap of 8 thousand lines is re-read when the first perf module lands, with the two outcomes at 115%"
+  },
+  {
+   "gaps": [
+    72,
+    83,
+    90
+   ],
+   "bead": "N34-27",
+   "note": "the decision bead states the criterion for a format row against a record, classifies the kit manifest, the bench protocol, the review record and the decision-core table, and its fail-closed default covers every schema-named file it does not list (the other five Atelier records and frob.firmware.receipt/1)"
+  },
+  {
+   "gaps": [
+    74
+   ],
+   "bead": "N34-09",
+   "note": "the single-parser search now exempts the files under crates/frob-cert/src/frun/ that carry the marker frob:auditor-reader and are listed in the FMT-FRUN row"
+  },
+  {
+   "gaps": [
+    109
+   ],
+   "bead": "N34-13",
+   "also": [
+    "N34-04",
+    "N34-25"
+   ],
+   "note": "the stack-lock format of check-stack includes [json_library] and [auditor]; N34-04 lands the first with its guard and N34-25 reads the second"
+  },
+  {
+   "gaps": [
+    110
+   ],
+   "bead": "N34-15",
+   "note": "N34-15 writes scripts/lib/envelope.sh and adds its sourcing to the shared helper of STD-E2E, on which it depends"
+  },
+  {
+   "gaps": [
+    129
+   ],
+   "bead": "N34-01",
+   "note": "the layout tree now has the row zoo/ (pinned archetype instances, added by NEG-30)"
+  }
+ ],
+ "rejected": [],
+ "new_beads": [
+  "N35x-01",
+  "N35x-02",
+  "NJLx-02",
+  "N34x-01",
+  "N34x-02",
+  "N34x-03",
+  "N37x-01",
+  "N39ax-01",
+  "N39ax-02",
+  "N39ax-03",
+  "N39ax-04",
+  "N39ax-05",
+  "N39ax-06"
+ ],
+ "edges": [
+  {
+   "bead": "N28-REF",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "gap 69: the registry row for the reuse-figure refusal needs its ledger row"
+  },
+  {
+   "bead": "N28c-44",
+   "dep": "N35x-02",
+   "as": "related",
+   "why": "gap 69: raises the refusal as a generation failure with exit 3 until a number exists"
+  },
+  {
+   "bead": "N29-REF",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "gap 76: the uncoded energy-binding refusal is numbered there"
+  },
+  {
+   "bead": "N29b-22",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "gap 76: the mechanism stays open until the refusal has a code and no interim code fits"
+  },
+  {
+   "bead": "N30-REF",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "gap 85: three requests filed and one merged into 102"
+  },
+  {
+   "bead": "N30a-31",
+   "dep": "N35x-02",
+   "as": "related",
+   "why": "gap 85: raised under an interim code; only the constant changes"
+  },
+  {
+   "bead": "N30a-12",
+   "dep": "N35x-02",
+   "as": "related",
+   "why": "gap 85: raised under an interim code; only the constant changes"
+  },
+  {
+   "bead": "BD-139",
+   "dep": "N35x-02",
+   "as": "related",
+   "why": "gap 85: raised under an interim code; only the constant changes"
+  },
+  {
+   "bead": "N33-REF",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "gap 105: a registry row beyond the printed set needs an assigned ledger row (792)"
+  },
+  {
+   "bead": "N33a-13",
+   "dep": "N35x-02",
+   "as": "related",
+   "why": "gap 105: raises the code its registry bead enters"
+  },
+  {
+   "bead": "N19c-42",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "its default enters proposed numbers; the ledger assigns first"
+  },
+  {
+   "bead": "N31b-45",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "its default enters proposed numbers, seven of them in 9xx; the ledger assigns first"
+  },
+  {
+   "bead": "N25e-45",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "its five 8xx rows and the sixth row are requests of the second round"
+  },
+  {
+   "bead": "N25e-45",
+   "dep": "N35x-01",
+   "as": "dep",
+   "why": "its five rows are in the full 8xx family"
+  },
+  {
+   "bead": "N20b-45",
+   "dep": "N35x-02",
+   "as": "dep",
+   "why": "its three refusal requests are numbered there; its proposal 448 is a printed code"
+  },
+  {
+   "bead": "N36-REF",
+   "dep": "N35x-01",
+   "as": "related",
+   "why": "gap 113: its 8xx request is affected by the capacity decision"
+  },
+  {
+   "bead": "N21c-39",
+   "dep": "N35-33",
+   "as": "related",
+   "why": "gap 37: its refusal numbers come from the first round"
+  },
+  {
+   "bead": "N21c-28",
+   "dep": "N35-33",
+   "as": "related",
+   "why": "gap 37: its refusal numbers come from the first round"
+  },
+  {
+   "bead": "N13-34",
+   "dep": "N35-33",
+   "as": "related",
+   "why": "gap 5: raises the turn-state refusal numbered in the first round"
+  },
+  {
+   "bead": "NJL-03",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: its count rows are known answers JL-01 to JL-04"
+  },
+  {
+   "bead": "NJL-05",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: its task-cluster counts are known answer JL-05"
+  },
+  {
+   "bead": "ART-L1",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: rows JL-06 and JL-07"
+  },
+  {
+   "bead": "ART-L2",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: row JL-08"
+  },
+  {
+   "bead": "ART-L3",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: rows JL-09 and JL-10"
+  },
+  {
+   "bead": "ART-L4",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: rows JL-11 and JL-12"
+  },
+  {
+   "bead": "ART-L5",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: rows JL-13 and JL-14"
+  },
+  {
+   "bead": "ART-L6",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: row JL-15"
+  },
+  {
+   "bead": "ART-L7",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: row JL-16"
+  },
+  {
+   "bead": "ART-L8",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: row JL-17"
+  },
+  {
+   "bead": "NJL-09",
+   "dep": "NJLx-02",
+   "as": "dep",
+   "why": "gap 133: row JL-18"
+  },
+  {
+   "bead": "N13-KA",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 5: block for the late turn-count rows"
+  },
+  {
+   "bead": "N13-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 5: block for the late counterexamples"
+  },
+  {
+   "bead": "N15-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 13: block for the four shortcuts of §15.15"
+  },
+  {
+   "bead": "N15-KA",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 13: block for the §15.15 answer"
+  },
+  {
+   "bead": "N19-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 29: block for CXH-A to CXH-D"
+  },
+  {
+   "bead": "N19c-28",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 29: block for HKA-A to HKA-H"
+  },
+  {
+   "bead": "N24-KA",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 50: block for the eight late known-answer groups"
+  },
+  {
+   "bead": "N24-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 50: block for the eight late counterexamples"
+  },
+  {
+   "bead": "N27-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 64: block for late-01 and late-02"
+  },
+  {
+   "bead": "N27-KA",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 64: block for lane-1 and lane-2"
+  },
+  {
+   "bead": "N27b-21",
+   "dep": "N38a-40",
+   "as": "related",
+   "why": "gap 64: cites the lane rows by number once issued"
+  },
+  {
+   "bead": "N28-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 70: block for the two late counterexamples"
+  },
+  {
+   "bead": "N29-KA",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 77: block for K1 to K3"
+  },
+  {
+   "bead": "N29b-23",
+   "dep": "N38a-40",
+   "as": "related",
+   "why": "gap 77: cites K1 to K3 by number once issued"
+  },
+  {
+   "bead": "N30-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 84: block for CX-G-01 to CX-G-12"
+  },
+  {
+   "bead": "N32-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 98: block for the three provisional cases"
+  },
+  {
+   "bead": "N41-KA",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 125: block for K41-01 to K41-40"
+  },
+  {
+   "bead": "N41-CX",
+   "dep": "N38a-40",
+   "as": "dep",
+   "why": "gap 125: block for X41-01 to X41-51"
+  },
+  {
+   "bead": "N31b-39",
+   "dep": "N34x-01",
+   "as": "dep",
+   "why": "gap 91: its trait marker fails check-layers without the register row"
+  },
+  {
+   "bead": "N31b-41",
+   "dep": "N34x-01",
+   "as": "dep",
+   "why": "gap 91: resolution of the sized fill calls the same trait"
+  },
+  {
+   "bead": "N40-09",
+   "dep": "N34x-02",
+   "as": "dep",
+   "why": "gap 122: the register lint reads [[gate]] blocks through the shared reader"
+  },
+  {
+   "bead": "N40-30",
+   "dep": "N34x-02",
+   "as": "dep",
+   "why": "gap 122: the kill-decision cross-check reads the same blocks"
+  },
+  {
+   "bead": "N34-12",
+   "dep": "N34x-03",
+   "as": "dep",
+   "why": "gap 108: its demos use tier, expect_exit, expect_refusal and compare, which the demo schema must accept"
+  },
+  {
+   "bead": "N34-19",
+   "dep": "N34x-03",
+   "as": "dep",
+   "why": "gap 108: FormatRow reads float_rule and the view kind, which the row schema must accept"
+  },
+  {
+   "bead": "BD-141",
+   "dep": "N34x-03",
+   "as": "dep",
+   "why": "gap 108: the M1 format rows carry the new fields"
+  },
+  {
+   "bead": "N34-05",
+   "dep": "N34x-03",
+   "as": "related",
+   "why": "gap 108: its [api.float_ok] key is held to the schema by the key test"
+  },
+  {
+   "bead": "N34-10",
+   "dep": "N34x-03",
+   "as": "related",
+   "why": "gap 108: its [[replaces]] and [[controller]] keys are held to the schema by the key test"
+  },
+  {
+   "bead": "N28c-03",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "gap 72: its record schema falls under the format-row decision"
+  },
+  {
+   "bead": "N28c-13",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "gap 72: its record schema falls under the format-row decision"
+  },
+  {
+   "bead": "N28c-34",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "gap 72: its record schema falls under the format-row decision"
+  },
+  {
+   "bead": "N28c-42",
+   "dep": "N34-27",
+   "as": "related",
+   "why": "gap 72: its record schema falls under the format-row decision"
+  },
+  {
+   "bead": "NEG-30",
+   "dep": "N34-01",
+   "as": "dep",
+   "why": "gap 129: the zoo/ directory is a row of the layout the workspace bead fixes"
+  },
+  {
+   "bead": "N36-03",
+   "dep": "N34-02",
+   "as": "related",
+   "why": "gap 114: places a module in frob-core, whose cap the crate map re-reads"
+  },
+  {
+   "bead": "N36-13",
+   "dep": "N34-02",
+   "as": "related",
+   "why": "gap 114: places a module in frob-core, whose cap the crate map re-reads"
+  },
+  {
+   "bead": "N20b-21",
+   "dep": "N40-09",
+   "as": "related",
+   "why": "gap 35: its reading of the M1 part of GATE-SENS-08 enters the register by amendment"
+  },
+  {
+   "bead": "BD-190",
+   "dep": "N40-09",
+   "as": "related",
+   "why": "gap 35: its count 327 and 17 corrects the brief of GATE-SENS-13 by amendment"
+  },
+  {
+   "bead": "N32a-35",
+   "dep": "N37x-01",
+   "as": "dep",
+   "why": "gap 99: its acceptance requires the listener checklist and the register row"
+  },
+  {
+   "bead": "BD-314",
+   "dep": "N39ax-01",
+   "as": "dep",
+   "why": "gap 116: the protocol capstone publishes the development suite at sealing step 1"
+  },
+  {
+   "bead": "BD-314",
+   "dep": "N39ax-02",
+   "as": "dep",
+   "why": "gap 116: the development missions of the two design strata"
+  },
+  {
+   "bead": "N38a-34",
+   "dep": "N39ax-01",
+   "as": "dep",
+   "why": "gap 116: the adjudication dry run is held on published development missions"
+  },
+  {
+   "bead": "N38a-34",
+   "dep": "N39ax-02",
+   "as": "dep",
+   "why": "gap 116: two development families per stratum that has a product"
+  },
+  {
+   "bead": "N39b-17",
+   "dep": "N39ax-03",
+   "as": "dep",
+   "why": "gap 116: the dress rehearsal runs on the enlarged development pool"
+  },
+  {
+   "bead": "N39b-16",
+   "dep": "N39ax-01",
+   "as": "related",
+   "why": "the decision-rule pilot reads development-suite times"
+  },
+  {
+   "bead": "N39b-13",
+   "dep": "N39ax-06",
+   "as": "dep",
+   "why": "gap 127: the publication generator is fixed by the dry run before the tournament's freeze"
+  },
+  {
+   "bead": "N39b-13",
+   "dep": "N39ax-05",
+   "as": "dep",
+   "why": "gap 127: the refresh pilot sets each stratum's re-tuning budget before the freeze"
+  },
+  {
+   "bead": "N39b-13",
+   "dep": "N39ax-04",
+   "as": "dep",
+   "why": "gap 127: the authoring pilot decides which strata the tournament attempts"
+  },
+  {
+   "bead": "BD-434",
+   "dep": "N39ax-04",
+   "as": "dep",
+   "why": "gap 127: the exit review checks that the sealed-suite epic's pilot has run"
+  },
+  {
+   "bead": "BD-434",
+   "dep": "N39ax-05",
+   "as": "dep",
+   "why": "gap 127: the exit review checks that the incumbent-arms epic's pilot has run"
+  },
+  {
+   "bead": "BD-434",
+   "dep": "N39ax-06",
+   "as": "dep",
+   "why": "gap 127: the exit review checks that the publication epic's pilot has run"
+  },
+  {
+   "bead": "N40-21",
+   "dep": "N39ax-03",
+   "as": "related",
+   "why": "suite hygiene reads the easy wins of the development pool"
+  },
+  {
+   "bead": "N20b-14",
+   "dep": "N40-09",
+   "as": "related",
+   "why": "gap 35: its M1 scope of GATE-SENS-08 is the reading the register records by amendment"
+  }
+ ]
+}

@@ -8,8 +8,8 @@ labels: ["m1", "delivery", "solid", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-147", "N40-11", "N40-13", "N40-18", "N40-04", "N40-05", "EPIC-M0", "EPIC-M2"]
-gates: ["GATE-AUGUR-01", "GATE-AUGUR-07", "GATE-LEMMA-03", "GATE-LEMMA-04", "GATE-SKEL-01", "GATE-KIN-01", "GATE-ARENA-03", "GATE-CHRON-10", "GATE-GROUND-01", "GATE-SAFE-01", "GATE-SPARK-21", "GATE-TENFOLD-02", "GATE-TENFOLD-09", "GATE-GAUNT-01", "KILL-SKEL-SEXPR", "KILL-SKEL-SUBST", "KILL-AUGUR-FALSECERT", "KILL-MCP", "KILL-DEVORACLE"]
+related: ["EPIC-M2", "EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-11", "N40-13", "N40-18", "N40-28"]
+gates: ["GATE-AUGUR-01", "GATE-AUGUR-07", "GATE-LEMMA-03", "GATE-LEMMA-04", "GATE-SKEL-01", "GATE-KIN-01", "GATE-ARENA-03", "GATE-CHRON-10", "GATE-GROUND-01", "GATE-SAFE-01", "GATE-SPARK-21", "GATE-TENFOLD-02", "GATE-TENFOLD-09", "GATE-GAUNT-01", "KILL-SKEL-SEXPR", "KILL-SKEL-SUBST", "KILL-AUGUR-FALSECERT", "KILL-MCP", "KILL-DEVORACLE", "KILL-TENFOLD-LEVER"]
 plan_refs: ["§43.4", "§43.1", "§43.2", "§40.6", "§40.3", "§40.4", "§40.5", "§43.12"]
 ---
 ## Background
@@ -79,8 +79,9 @@ ledger and the removable share of every lever (a lever under 10% is struck from 
 - Lineage basics: content-addressed design versions, `frob design diff`, typed patches.
 - Every M1 verb on the CLI and over MCP; `robot-docs` generated from the registry.
 
-**2. Gates with a part due at this exit (compiled register tables: 4 admission, 59 convergence).** Where a row
-names `strict` or `batch-cpu`, only its referee or CPU part is due here.
+**2. Gates with a part due at this exit (compiled register tables: 4 admission, 60 convergence).** Where a row
+names `strict` or `batch-cpu`, only its referee or CPU part is due here. The count is 60 where the plan's load
+table prints 59: GATE-MARROW-01, recorded at M0 for SO(3) and SE(3), has its completing part here (N40-02).
 
 | Gate | Claim | Part due | Pass criterion in brief (TARGET) | Defined in |
 |---|---|---|---|---|
@@ -113,6 +114,7 @@ names `strict` or `batch-cpu`, only its referee or CPU part is due here.
 | GATE-KIN-04 | Known answer | M1 (referee); M2 (`strict`) | The transactional rows of §16.16 on `referee` and `strict`: impact time within 10⁻⁹ s; tied sliders exact to 10⁻¹² N·s; zero uncommitted reads in 10⁵ injected faults; forced-retry digests equal; refinement statistics inside 3σ at 10⁶ draws; the redraw mutation caught. | §16.17 |
 | GATE-LEMMA-03 | Known answer | M1 | Every proof kind in use has one specimen that `frob-verify` accepts and at least three mutations it rejects; the four stance mutations, an unknown kind with consistent hashes and a changed quantifier are all rejected; the binary has no dependency outside the standard library and runs in an empty environment. | §12.6 |
 | GATE-LEMMA-04 | Proof | M1, repeated at M4 | The first mission slice of §25 ships its inner cells and its exclusions as bundles; a re-check on a second machine accepts every one; the seeded-defect suite yields zero accepted false certificates. One accepted false certificate fails the gate. | §12.6 |
+| GATE-MARROW-01 | Known answer | M0 (SO(3) and SE(3)); M1 (complete: every group and the whole law table) | All laws pass on 10⁶ cases each: at most 64 ulp in `f64`; at most 16 ulp in `f32` for single operations. T-01, T-03, T-04 certified (GATE-LEMMA-00). | §13.10 |
 | GATE-MARROW-02 | Known answer | M1 | Character tables and isotypic projectors correct for Cₙ and Dₙ with n ≤ 12, their products with C₂, and S₄, against tables on file. | §13.10 |
 | GATE-REFLEX-01 | Known answer | M1 (referee); M2 (`batch-cpu`); M3 (all but tracked and hybrid); M4 | Each archetype stands for 10 s and traverses 5 m of flat ground under its baseline controller: at M1 the first archetypes, on `referee` only, restricted to those whose contact law exists at M1 and whose contact count fits the referee's 21-contact cap (§16.6); at M2 the same set on `batch-cpu`; at M3 all eighteen on `batch-cpu`, except tracked and hybrid archetypes, which follow at M4 with their contact laws. | §22.18 |
 | GATE-REFLEX-03 | Known answer | M1 | Filter consistency inside χ² bounds on the simulated IMU; position drift under 2% of distance on a flat trot, scored by the gauge rule; PO-REFLEX-01; the comparator's `overconfident` flag fires on a planted bias. | §22.18 |
@@ -152,7 +154,7 @@ names `strict` or `batch-cpu`, only its referee or CPU part is due here.
 
 | Gate | Part due at this exit | Statement (from the defining subsection) | Defined in |
 |---|---|---|---|
-| GATE-MARROW-06 | whole | Known answer. The spring fixture is exact to 10⁻¹² in double precision on the referee and within 10⁻⁵ relative on device tiers; snapshot, restore and teleport preserve k on 10⁴ random states; the mutant that omits k from the snapshot is caught by an energy jump of π² J; `sense.alias` returns the witness for a single-turn encoder and none for a multi-turn encoder. M1. | §13.11 |
+| GATE-MARROW-06 | the referee rows | Known answer. The spring fixture is exact to 10⁻¹² in double precision on the referee and within 10⁻⁵ relative on device tiers; snapshot, restore and teleport preserve k on 10⁴ random states; the mutant that omits k from the snapshot is caught by an energy jump of π² J; `sense.alias` returns the witness for a single-turn encoder and none for a multi-turn encoder. M1. | §13.11 |
 | GATE-SKEL-11 | whole | Known answer. On 10³ random trees with fixed joints the folded model's mass, first moment and pseudo-inertia equal the sums over the unfolded links exactly in rationals and to 10⁻¹² relative in double precision; forward dynamics of the folded model and of the unfolded model with the joints held as constraints on the referee agree to 10⁻⁹; every named attachment resolves to the same world pose at 100 random configurations. The hand case is exact, and the mutant without the offset term fails it. The `g1-reduced-30` profile reports its omissions, sums to 31.96314202 kg, and the 320 N fixture passes on it and fails on the full import. M1. | §14.17 |
 | GATE-SINEW-10 | whole | Known answer. The one-rotor table is exact: the envelope has one generator (1, 1) N·m, the command (1, −1) N·m is refused as outside the image, the reflected inertia is [[1, 1], [1, 1]] and the two energies are 0 J and 2 J; the diagonal mutant reports 1 J twice and fails. For 10³ random couplings with up to four motors and six joints the power τ_jointᵀ·q̇ equals τ_motorᵀ·θ̇ to 10⁻¹², and the mass matrix with pulled-back rotors equals the mass matrix of the model with explicit rotor coordinates to 10⁻¹⁰. The signed motion witness passes on every card of the catalog and fails on each card with its ratio negated. M1. | §15.15 |
 | GATE-TRAC-12 | on the referee | Known answer. The arc fixture is detected on 1,000 of 1,000 seeded variants (radius 0.2 to 2 m, angle up to π, sphere radius 1 to 10 cm, an obstacle on the arc and outside the padded chord); the chord-only mutant fails the gate. On 10⁴ random two- and three-joint sweeps the bound of the second item contains 1,000 sampled path points per sweep with no exception. In the tunnelling audit (`contact.audit`) no missed contact is attributed to a broad-phase rejection. M1 on the referee, M2 on the transactional batch profile. | §18.20 |
@@ -170,7 +172,12 @@ ledgers; if unmet, M1 does not exit and the composed table of published figures 
 GATE-TENFOLD-09 (N40-18), ceiling before speed, first run here and at every exit after. The schedule gate
 (N40-11): M0 plus M1 against 7 weeks; not met above 10.5 weeks for the cause BET-12 names; then the program pauses
 for a written re-plan before M2. GATE-SPARK-21 complete. Recurring from here: GATE-GROUND-01 (the `reality:` line)
-and GATE-SAFE-01 (the flags). GATE-GAUNT-01.
+and GATE-SAFE-01 (the flags). Recurring since M0, each re-run at the exit candidate's commit: GATE-GAUNT-01;
+GATE-GAUNT-02 (every Appendix M row due by M1 passes on its tier with a derivation file, and the count of rows with
+tolerance `to set` or control `none stated` is printed); GATE-GAUNT-05 (oracle hygiene); GATE-GAUNT-10 (the status
+table equals a fresh generation from `gates.toml`). GATE-GAUNT-08 at each funding decision: the Frontier part of
+WP-42, the first mission slice, is funded only on a pilot record with a falsifier, a computed ceiling, a fallback
+and a result.
 
 **5. Kill gates decided here.**
 
@@ -188,7 +195,8 @@ and GATE-SAFE-01 (the flags). GATE-GAUNT-01.
 KILL-AUGUR-FALSECERT stands from this milestone on: one certificate accepted by `frob-verify` and shown false
 removes its proof kind if the rule is at fault. The first reading of KILL-AUGUR-TIE (decided at M3) is taken on the
 docking slice: if a conventional scenario-tree program gives the better answer per engineering hour, that program
-ships behind the same verbs. KILL-TENFOLD-LEVER is applied to the rival's ledger.
+ships behind the same verbs. KILL-TENFOLD-LEVER is applied to the rival's ledger: its first decision, recorded here
+(N40-28) and taken again at M2 on our own profile.
 
 **6. Exit rule.** Recorded by a fresh-context session (seed BD-147, procedure N40-05). The exit line: *NS-01, NS-07
 and the docking scenario demonstrated; the schedule gate met.* Every report prints its `reality:` line from here on.
@@ -239,8 +247,8 @@ verbs, schema and checker.
 - [ ] NS-01, NS-07, NS-22 and NS-13 (CPU) run from a clean checkout through `frob --json` and through `frob-mcp`.
 - [ ] GATE-TENFOLD-02 and -09 are recorded; GATE-SPARK-21 is complete; the schedule gate is evaluated with its
       cause attribution.
-- [ ] KILL-SKEL-SEXPR, KILL-SKEL-SUBST, KILL-DEVORACLE and the M1 re-read of KILL-MCP have ADRs;
-      KILL-AUGUR-FALSECERT is registered as standing.
+- [ ] KILL-SKEL-SEXPR, KILL-SKEL-SUBST, KILL-DEVORACLE, the M1 re-read of KILL-MCP and the M1 decision of
+      KILL-TENFOLD-LEVER on the rival's ledger have ADRs; KILL-AUGUR-FALSECERT is registered as standing.
 - [ ] Every report prints `reality: no-claim` (no dataset exists) and every exported artifact carries the three
       flags, all false.
 - [ ] The exit report for M1 is `exit-ready`; the exit record is written by a fresh-context session.
@@ -249,7 +257,7 @@ verbs, schema and checker.
 
 ### Unit tests
 
-Carried by member beads. Epic check: due counts for M1 are 4 admission, 59 convergence, 4 kill decisions, plus 12
+Carried by member beads. Epic check: due counts for M1 are 4 admission, 60 convergence, 4 kill decisions, plus 12
 late parts and 1 late kill decision.
 
 ### End-to-end script and logging
@@ -269,7 +277,7 @@ with zero false accepts; 200 mutated witnesses per proof kind; the negative batt
 
 ## Considerations
 
-- M1 has 59 convergence parts in five weeks; it is the first real test of bet BET-12 (narrow purity is affordable).
+- M1 has 60 convergence parts in five weeks; it is the first real test of bet BET-12 (narrow purity is affordable).
 - The split of gates into referee parts (M1) and `strict` or batch parts (M2) must not let a part print as a whole
   pass: the register records parts (N40-01).
 - The incumbent design-loop measurement needs an agent and device time on `trj`; it is an owner-approved run.

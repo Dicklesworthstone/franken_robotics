@@ -1,0 +1,495 @@
+{
+"BD-001": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first"
+],
+"N13-03": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first",
+"has no prerequisite at all, yet 1 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N22b-27": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first",
+"has no prerequisite at all, yet 5 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N24c-13": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first",
+"has no prerequisite at all, yet 5 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N24c-16": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first"
+],
+"N28c-27": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first",
+"has no prerequisite at all, yet 2 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N30b-25": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first",
+"has no prerequisite at all, yet 3 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N30b-26": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first",
+"has no prerequisite at all, yet 3 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N30b-28": [
+"nothing depends on this bead and it depends on nothing (`bv` orphan): check whether beads that follow from it should depend on it, and what it needs first"
+],
+"BD-044": [
+"has 42 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-110": [
+"has 19 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link",
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-137": [
+"has 29 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link",
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-146": [
+"has 71 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link",
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-147": [
+"has 54 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-222": [
+"has 32 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-224": [
+"has 88 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-299": [
+"has 35 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-312": [
+"has 60 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-314": [
+"has 34 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-315": [
+"has 19 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-317": [
+"has 32 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-318": [
+"has 24 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-319": [
+"has 122 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-329": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-333": [
+"has 21 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-352": [
+"has 25 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link",
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-376": [
+"has 40 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-378": [
+"has 109 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-391": [
+"has 21 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-400": [
+"has 24 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-403": [
+"has 22 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-406": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-408": [
+"has 32 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-409": [
+"has 24 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-412": [
+"has 56 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link",
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-427": [
+"has 65 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-434": [
+"has 35 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"BD-442": [
+"has 41 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N00-16": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N00-22": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N00-23": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N00-33": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N10a-05": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N10a-22": [
+"has 21 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N10b-19": [
+"has 26 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N12-42": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-43": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-44": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-45": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-46": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-47": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-48": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-49": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N12-50": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N19c-27": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N20b-19": [
+"has 24 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link",
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N20b-20": [
+"has 19 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N20b-45": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N21-CX": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N21a-03": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N21c-27": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N24a-42": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N24c-10": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N26-CX": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N27b-30": [
+"has 24 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N28b-28": [
+"has 19 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N28c-07": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N28c-23": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N28c-24": [
+"has 21 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link",
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N29bx-01": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N30-KA": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N31a-54": [
+"has 23 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N31a-59": [
+"has 21 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N31b-05": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N32a-01": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N32a-19": [
+"has 36 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N33a-28": [
+"has 28 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N33b-08": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N35-20": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-29": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-30": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-31": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-32": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-33": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-34": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-48": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-49": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N38b-61": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N39a-31": [
+"has no prerequisite at all, yet 4 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N39b-12": [
+"has 24 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N39b-13": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N39b-18": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N39b-31": [
+"has no prerequisite at all, yet 10 beads depend on it: check what must exist before it can start (at least the workspace or crate skeleton it lives in)"
+],
+"N40-31": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"N40-33": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N41-04": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N41-32": [
+"has 37 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N41-33": [
+"has 20 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N41-34": [
+"has 24 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"N41-35": [
+"has 33 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"NAB-31": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NAB-41": [
+"has 19 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"NAB-50": [
+"has 28 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"NEG-17": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-18": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-19": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-20": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-21": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-23": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-24": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-25": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-26": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NEG-27": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NJL-04": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"NS-20": [
+"has 22 blocking dependencies: check each is a real prerequisite and not a transitive or merely related link"
+],
+"VERBS-algebra": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-artifact": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-contact": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-evidence": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-fleet": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-job": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-operator": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-opt": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-policy": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-predict": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-prove": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-result": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-run": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-sense": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-session": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-solve": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-study": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"VERBS-telemetry": [
+"a registry bead that nothing depends on: the mechanism and test beads that use its rows should depend on it"
+],
+"BD-159": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-259": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-253": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-247": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-302": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-212": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-116": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-203": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-109": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-219": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-355": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-303": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-255": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-022": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-292": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-271": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-172": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-348": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-243": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"N36-33": [
+"a top bottleneck of the graph (`bv` betweenness): many paths run through it; check it is split finely enough that it does not hold up work that needs only part of it"
+],
+"BD-006": [
+"an articulation point of the graph (`bv`): removing it disconnects the graph; check its scope is minimal and its acceptance exact"
+],
+"BD-008": [
+"an articulation point of the graph (`bv`): removing it disconnects the graph; check its scope is minimal and its acceptance exact"
+],
+"BD-248": [
+"an articulation point of the graph (`bv`): removing it disconnects the graph; check its scope is minimal and its acceptance exact"
+],
+"N00-05": [
+"an articulation point of the graph (`bv`): removing it disconnects the graph; check its scope is minimal and its acceptance exact"
+],
+"N13-04": [
+"an articulation point of the graph (`bv`): removing it disconnects the graph; check its scope is minimal and its acceptance exact"
+],
+"N28c-01": [
+"an articulation point of the graph (`bv`): removing it disconnects the graph; check its scope is minimal and its acceptance exact"
+],
+"STD-TEST": [
+"an articulation point of the graph (`bv`): removing it disconnects the graph; check its scope is minimal and its acceptance exact"
+]
+}

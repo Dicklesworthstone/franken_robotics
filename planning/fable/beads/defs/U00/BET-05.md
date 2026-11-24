@@ -6,9 +6,9 @@ priority: 1
 milestone: "M3"
 labels: ["m3", "atelier", "frob-analyze", "solid", "bet", "gate"]
 parent: "WP-25"
-deps: ["N00-28", "BD-248", "BD-250", "STD-E2E"]
-needs: ["§28.12 and §26.10: the blinded audit of discarded strata and the planted winner (the screening audit applied by the cascade), needed for the second and third falsifier clauses"]
-related: ["BD-110", "BD-345", "BET-17", "NS-01", "N00-20", "N00-15"]
+deps: ["BD-248", "BD-250", "N00-28", "N28a-22", "STD-E2E"]
+needs: []
+related: ["BET-17", "N00-15", "N00-20", "N26b-03", "N26b-05", "N40-31", "NS-01"]
 gates: ["GATE-ATEL-01", "KILL-STATIC"]
 plan_refs: ["§4 (BET-05)", "§40.5", "§2.2", "§2.5", "§28.23", "§1.6 (N2)"]
 ---
@@ -27,8 +27,11 @@ that silently removes the best design is worse than no screen. Tier: Solid.
 
 ## Scope
 
-In: pre-registration, the M3 reading on the design corpus, verdict and decision record. Out: the analyses, the
-corpus, the heuristic arm and the audit lane.
+In: pre-registration, the M3 reading on the design corpus, verdict and decision record. Out, with the beads that
+have them: the design corpus and its frozen labels (BD-248); the validation of the analyses against the
+heuristic arm, the GATE-ATEL-01 row and the discard audit on the corpus (BD-250); the KILL-STATIC decision
+(N28a-22), which this bead reads and cites and never re-decides; the campaign-time screening audit (BD-345) and
+the stage audit verb (N26b-05, M4).
 
 ## Technical approach
 
@@ -38,8 +41,11 @@ corpus, the heuristic arm and the audit lane.
       the ROC curve below 0.8, or less than 0.05 above the heuristic.
    b. The blinded audit of discarded strata finds a discarded design in the true top-k.
    c. The planted winner is discarded.
-2. **Competing arm.** A mass-and-torque heuristic (total mass against summed peak actuator torque at the joints
-   that carry weight), given the same designs. **Potency controls.** A planted winner that the screen represents
+2. **Competing arm.** The mass-and-torque heuristic as BD-250 fixes it, given the same designs:
+   s_heur = min over actuated joints j of τ_cont,j·N_j·η_j/(m·g·r_j), with τ_cont the card's continuous torque,
+   N the gear ratio, η the forward efficiency, m the total mass, g gravity and r_j the horizontal lever from the
+   joint to its limb's contact at the reference stance (the wheel radius for a driven wheel); one definition,
+   owned by BD-250. **Potency controls.** A planted winner that the screen represents
    poorly; sampled discarded strata; planted defective designs that must be flagged and a planted sound design
    that must pass.
 3. **Deciding gate (TARGET).** GATE-ATEL-01 (Design comparison, M3): on the corpus, area under the ROC curve at
@@ -63,20 +69,34 @@ corpus, the heuristic arm and the audit lane.
 - [ ] Pre-registered with the corpus digest; labels frozen before `design check` is run on the corpus.
 - [ ] Measured area under the curve for both arms with the paired 95% lower bound of their difference.
 - [ ] The audit of discarded strata and the planted-winner result are recorded.
-- [ ] Verdict and the KILL-STATIC decision recorded as an ADR at M3 exit.
+- [ ] The verdict is recorded as `docs/adr/bet-05-m3.md` at M3 exit by a session that did not implement the
+      analyses, and it cites the KILL-STATIC decision `docs/adr/ADR-KILL-STATIC-M3.md` (N28a-22) by identifier and
+      hash, whatever its outcome; this bead writes no kill ADR, and with no decision on record the verdict is not
+      filed.
 
 ## Test plan
 
 ### Unit tests
-`bets.rs`: `bet05_auc_0_86_vs_0_78_holds` (difference lower bound 0.055); `bet05_auc_0_79_falsifies_a`;
+`crates/frob-conformance/tests/bets.rs` (N00-28's verdict function on `synthetic` gate records):
+`bet05_auc_0_86_vs_0_78_holds` (difference lower bound 0.055); `bet05_auc_0_79_falsifies_a`;
 `bet05_auc_gap_0_04_falsifies_a`; `bet05_discarded_design_in_top_k_falsifies_b`;
-`bet05_planted_winner_discarded_falsifies_c`; `bet05_kill_static_downgrades_to_lint`.
+`bet05_planted_winner_discarded_falsifies_c`; `bet05_reads_kill_static_record` (N28a-22's record with outcome
+`fired` → the bet's record carries that outcome and its hash, and the ADR names the fallback "advisory lints, no
+pruning claim"; with no record on file the verdict is not filed).
 
 ### End-to-end script and logging
-`scripts/e2e/bet_05_decide.sh` recomputes the verdict from the gate row and audit records, and under a fired
-kill gate checks that `frob design check --json` returns findings with severity `advisory` and that no ladder
-record lists an elimination by static verdict. Logged per STD-E2E: both curves' areas, the paired bound, audit
-sample sizes and findings, the planted cases' outcomes; `summary` naming GATE-ATEL-01 and KILL-STATIC.
+`scripts/e2e/bet_05_decide.sh` reads the gate row and the audit records with `cargo run -p frob-conformance
+--example registry_report -- gates --chapter 28 --milestone M3 --json`, recomputes the counts, reads the verdict
+of BET-05 from the bet register's report (`cargo run -p frob-conformance --example bets -- status --json`,
+example `bets` of N00-28, the one verdict rule), checks that
+`docs/adr/bet-05-m3.md` cites the same values and the KILL-STATIC outcome of N28a-22, and under a fired kill gate
+checks that `frob design check <the corpus's planted top-heavy design> --json` exits 2 (not 3) with the
+formerly refusing finding reported at severity High (the advisory form of N28a-22), and that no ladder record
+lists an elimination by static verdict. Logged per STD-E2E (`target/e2e-logs/bet_05_decide/<utc>.ndjson`: `ts`,
+`script`, `bead`, `step`, `event`, the exact command line, exit code, wall time, the envelope's `evidence`
+block): both curves' areas, the paired bound against 0.05, AUC_check against 0.8, audit sample sizes and
+findings, the planted cases' outcomes, the receipt hashes; on failure the first value that differs between the
+ADR and the gate row; `summary` naming GATE-ATEL-01 and KILL-STATIC.
 
 ### Known answers and negative controls
 KA-015 (1/(1 − 0.16) = 25/21 ≈ 1.19). CX-006. Negative controls: the planted winner; the planted defective and
@@ -86,8 +106,9 @@ sound designs; labels recomputed after seeing the screen's output (rejected by t
 
 - The curve is computed against simulated failure under the baseline controller; a design that fails only
   because its controller is poor is a controller finding, and the label set records which is which.
-- Top-k and the audit sample size are fixed at registration; thirty clean audited discards bound the discard
-  error rate at 9.5%.
+- Top-k and the audit sample size are fixed at registration: k = 10 per archetype family (BD-250), and with no
+  top-k design among m audited discards the discarded-winner rate is at most 1 − δ^(1/m) at confidence 1 − δ, so
+  thirty clean audited discards bound it at 1 − 0.05^(1/30) = 9.5%.
 - A screen can be predictive and still unsafe; clauses (b) and (c) are independent of (a).
 
 ## References

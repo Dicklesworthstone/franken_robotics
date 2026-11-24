@@ -1,0 +1,287 @@
+{
+ "round": 1,
+ "slice": "U22b",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "BD-327",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "the gravity-fixed and event-identity tolerances were 'declared numbers' with no value; now cites the defaults fixed in the mechanism beads (0.1 deg between P_g g and g; 1e-8 relative residual for analytic saltation; tau_graze 1e-2)."
+  },
+  {
+   "bead": "N22b-37",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "gave the gravity-stabilizer tolerance a DESIGN default (0.1 deg between P_g g and g, i.e. a side tilt of 0.05 deg for m_lr), said what a group admitted inside the tolerance computes on (the symmetrized context, so the reduced-against-full check compares like with like), and added the unit test gravity_tolerance (0.01 deg keeps m_lr as Tested, 1 deg removes it, zero tolerance removes it)."
+  },
+  {
+   "bead": "N22b-40",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "defined transversality as |Dgamma f-|/(|Dgamma||f-|), which differs from the transversality_norm and tau_graze (default 1e-2) that the saltation bead N22a-33 fixes for every derivative bead; now reads the event record's number and the shared threshold, checks both e and g.e, and the grazing test asserts the flag carries the record's number."
+  },
+  {
+   "bead": "N22b-02",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "rank tolerance and condition ceiling were unnumbered; DESIGN defaults 1e-12 sigma_max for rank and 1e8 for the condition ceiling, with the band between them giving unknown; added unit test ill_conditioned_unknown."
+  },
+  {
+   "bead": "N22b-05",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the e2e lacked the CX-243 control (fixed-base pullback on the floating-base cart) that BD-336 lists; added it as step 8 and as a planted defect (the mutant calls 60 N feasible with 6 N m of wheel torque where the production path refuses at 49.05 N)."
+  },
+  {
+   "bead": "N22b-07",
+   "kinds": [
+    "self-contained",
+    "users"
+   ],
+   "what": "residual-saturated threshold was 'a declared fraction'; now 0.2, the same default and flag name as the baseline-plus-residual rung, with a 25%/15% test; a target outside the residual's training envelope now has a defined outcome (finding outside-training-envelope, exit 2, the groups out of range, next actions) instead of an undefined 'declined'."
+  },
+  {
+   "bead": "BD-337",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "accepted the U12-2 request: N12-47 (compendium D.7 oracle library) moved from related to deps; added unit test card_matches_compendium_d7 comparing the verb's card figures with the D.7 oracle and feeding the oracle's negative control."
+  },
+  {
+   "bead": "N22b-09",
+   "kinds": [
+    "placement",
+    "complete"
+   ],
+   "what": "accepted the U10c request: the pilot record is named PILOT-C-31 in pilots.toml so construction row C-31's pilot field resolves; acceptance checks the resolution."
+  },
+  {
+   "bead": "N22b-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "bit_budget test could not fire: at 1e-18 J a 1e6 kg cap at 10 m/s is about 2^86 steps, far under the 256-bit cap; rewritten at 1e-80 J (about 2^292, refused) with the 1e-18 J case as the accepted control."
+  },
+  {
+   "bead": "N22b-12",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "the probabilistic-cutoff class rule contradicted itself (approach: may exceed Estimated if the delay distribution is measured; considerations: default no); reconciled to the fail-closed default no, with owner and the cutoff_tail test asserting the refusal of a Tested request."
+  },
+  {
+   "bead": "N22b-14",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps",
+    "title"
+   ],
+   "what": "N22bx-01 promised that the auditor recomputes W_abs from the absorber card bytes in the bundle, but the payload and checker carried no card; a writer that re-hashes an inflated w_abs_j passed every rule. Added payload member absorber_card and the absorber step (rule energy.absorber-mismatch) implemented here beside run replay, mutant 16, unit test absorber_step, dep N22bx-01 (from related); title said 'offline checker' though N12-17 owns it, now 'run-replay check'. Request filed to N12-17."
+  },
+  {
+   "bead": "N22b-15",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "'exceedance under the premises' had no per-world test: the fixture now declares the rail guide (premise 4 declared-guide) and the hard 25 ms stop-path bound (premise 3 bounded); premises 1, 2, 4 are checked once on the budget and premise 3 per world through cutoff-overrun, with such worlds reported, never dropped."
+  },
+  {
+   "bead": "N22bx-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the auditor recomputation of W_abs is now tied to the step and rule that implement it (N22b-14, energy.absorber-mismatch) instead of asserting a checker capability no bead carried."
+  },
+  {
+   "bead": "N22b-18",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "N22bx-01 and N22b-17 put e2e steps into this script that the script did not list; added steps 12 (absorber card) and 13 (provenance and class), mutant 16 in step 8, the planted defect 'auditor without the absorber step', and the extra command."
+  },
+  {
+   "bead": "BD-338",
+   "kinds": [
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "accepted the U12-2 request: N12-47 (compendium D.7 oracles) moved from related to deps, with unit test matches_compendium_d7 for the single-row shield (1, 0.5) against both wrong answers and for the residual-risk bound including the oracle's delta1 = 0 negative control; the Scope's 'two late subsections' rules named under needs' (needs is empty) now names N22c-28 (timeliness, GATE-SHIELD-06) and N22c-44 (sampled-damping bound, GATE-SHIELD-07) and what fit does until they land; fit output echoes the OPEN-SHIELD-2 levels with their source (test levels_echoed)."
+  },
+  {
+   "bead": "N22b-19",
+   "kinds": [
+    "placement",
+    "self-contained"
+   ],
+   "what": "the pilot record had no identifier; named PILOT-C-31-shield in pilots.toml (PILOT-C-31 belongs to the tier-1 pilot N22b-09 and a register record carries one frozen protocol); acceptance registers it under that name. Request filed to N10c-10."
+  },
+  {
+   "bead": "N22b-20",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "accepted the U10c request: dep N10c-02 (tier-3 specification, written first); acceptance requires its row laws (inter_sample_margin, split_cones, ka_156_quantifier_order) to pass on this production code."
+  },
+  {
+   "bead": "N22b-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "interface comment said dim 2 to 12 while the table has a one-axis capture point of 1 state and the acceptance says 1 to 12; aligned."
+  },
+  {
+   "bead": "N22b-22",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "accepted the U10c request: dep N10c-02; acceptance requires its single-row laws (ka_155_one_row_worked, project_then_clip_is_wrong, breakpoint_equals_active_set_oracle, po_shield_02_million, infeasible_row_invokes_backup) to pass on the production projection."
+  },
+  {
+   "bead": "N22b-23",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "accepted the U10c request: dep N10c-02; acceptance discharges its compile-fail law checked_command_only (logged pending there until this bead) and the multi-row laws, turning N10c-02's log line from pending to pass."
+  },
+  {
+   "bead": "N22b-24",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "depended on N22bx-02 without saying so: now wraps the M3 laws (no second implementation) and reads their defaults (kappa = 1/2 etc.) from backup.toml; defines sampled_gain_bound as the one function N22c-44's shield.fit calls, and a damping backup with latency reports TestedOnly until N22c-44's A-22 certificate exists; tests same_law_as_m3 and latency_reports_tested_only."
+  },
+  {
+   "bead": "N22b-25",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "named the beads behind 'the pre-slip aliasing bead' (N22c-28, which reads latency_ticks as its l) and 'the bound's bead' (N22b-26)."
+  },
+  {
+   "bead": "N22b-26",
+   "kinds": [
+    "correct",
+    "optimal",
+    "tests"
+   ],
+   "what": "B-hat put an empirical-Bernstein bound on E[N_silent] into the stated bound; for a count ranging over W windows no distribution-free bound on the mean can fall below about W ln(3/eta)/n (3.7e-3 for Bernstein at W = 5, n = 15,000), so the 10^-3 budget was unreachable and contradicted N22b-27's arithmetic and BD-339's Phase A; B-hat now uses the binomial bound on P(N_silent >= 1) (valid by the Markov step, never looser), with E[N_silent], its Bernstein bound and delta1 still reported. hand_table gains its upper bounds (B-hat 3.89e-3); new test zero_event_phase_a (8.19e-4 at 15,000, Bernstein mutant caught). Corrected 'unequal split of eta' (the equal split minimizes the zero-event sum) and the strata line (81 modes; 27 under C2 x C2, 45 under the sensor subgroup; use the observation subgroup)."
+  },
+  {
+   "bead": "N22b-27",
+   "kinds": [
+    "deps",
+    "placement",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "answered the graph finding: dep N41-OPEN4 (the M0 open-question row that names this bead; reaches BD-025, STD-TEST, STD-E2E); the 'orphan' finding is stale (BD-339, N22b-26, N22b-28, N22b-29 and BD-319 depend on it). The M3 decision's acceptance and e2e required M4 code (shield.fit, shield.report, frob-shield tests): the registry entry, loader, lint and arithmetic now live in frob-conformance and run at M3, and each consumer check is written into the M4 bead that carries it (BD-338, N22b-29, N22b-26, BD-339, BD-340, N22b-32). Budget no longer claimed part of the margin key (it does not change a margin); recorded with every bound."
+  },
+  {
+   "bead": "N22b-29",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the one-rank-low mutant control could not fail: at n = 999 (the coverage_simulation size) and n = 1,999 both index formulas give the same rank; simulation moved to the default n = 2,000 (1,999 vs 1,998; 9.995e-4 vs 1.499e-3 expected miscoverage). alpha now read from the OPEN-SHIELD-2 registry entry and checked with the key (FROB-REF-457, pointer alpha), as N22b-27 requires; tests margin_refused_below_minimum_n and alpha_in_scope."
+  },
+  {
+   "bead": "BD-339",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the potency rule (unshielded >= 10 x shielded) passes with 0 and 0; floor of 50 of 5,000 added (test potency_floor). 'bound contradicted' was fixed at 10 for B = 10^-3 whatever B is; now the exact binomial threshold for the frozen B (10 at 1e-3, 7 at 6e-4). Phase B on the tier of Phase A; receipt-levels test against the OPEN-SHIELD-2 entry."
+  },
+  {
+   "bead": "BD-340",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "claimed the rank-ceil(n(1-alpha)) calibrator is a planted failure of this gate, but at n = 2,000 it moves expected exceedances from 10 to 15 of 10^4, far inside 110; now attributed to N22b-29's simulation with the count logged here. Report blocks gain the conformal index, held-out exceedance count and violation counts with upper bounds that N22b-27 requires; tests receipt_alpha_mismatch_rejected and levels_and_counts_printed."
+  },
+  {
+   "bead": "N22b-30",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "p-values were ranked against the fixed calibration set; those are each uniform but dependent through the shared set (correlation 0.16 at n = 4), so the product is not a test martingale and the Ville false-alarm bound did not hold. Now the standard online conformal p-value against the regime's growing bag (independent uniform under exchangeability); the margin itself stays the calibration quantile. Hand test extended to the second and a tied score; new test online_p_values_independent with the fixed-bag mutant; log carries score and bag size for offline recomputation."
+  },
+  {
+   "bead": "N22b-32",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "added step 14, the M4 continuation of the OPEN-SHIELD-2 script: levels echoed against the registry, fit at 998 (refused, needed 999) and 999 calibration episodes, and the single-source check with --registries-root on a scratch entry (fit, stored-margin refusal with pointer alpha, report budget, gate-script registry call all change together); planted defect 'margin lookup ignores stored alpha'; logged fields named."
+  },
+  {
+   "bead": "N22b-33",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "placement"
+   ],
+   "what": "the plan's falsifier says 'coverage under 90% of the operating set' but 21% of the operating rectangle is unviable for any controller (at most 78.6% coverable); the reading against the viable reference is now stated, registered and reported beside the plain ratio. The reference omitted the model's own disturbance set D (5% less deceleration), charging the table for it; now included. Record named PILOT-C-31-tube."
+  },
+  {
+   "bead": "N22b-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "coverage acceptance now cites the pilot's reference set (with D, sampling, latency, sensing error) and reports the plain ratio beside it, consistent with N22b-33."
+  },
+  {
+   "bead": "N22b-35",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the True-semantics lookup located x-hat + (-E), the wrong sign: with true = measured + e the belief is x-hat + E (which the builder's E + (-E) erosion guarantees fits one cell); fixed with the reason and the test true_semantics_belief_sign (asymmetric E, the mutant answers covered where the belief straddles two cells)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N12-17",
+   "what": "add to the energy-budget payload the member absorber_card {hash, bytes} (the canonical .fcard of kind absorber, N22bx-01) and to the rule vocabulary energy.absorber-mismatch, a step between terms and inequality implemented by N22b-14 (as run replay is): recompute W_abs from the card's lower envelope (trapezoids to x_lim, uncertainties subtracted, rounded down) and reject a budget whose W_abs exceeds it or whose card hash differs; without it a consistently re-hashed bundle with an inflated w_abs_j is accepted (N22b-14 mutant 16)."
+  },
+  {
+   "bead": "N10c-10",
+   "what": "list the three C-31 pilots by their own register identifiers: PILOT-C-31 (tier 1, N22b-09, M4), PILOT-C-31-shield (tier 3, N22b-19, M4), PILOT-C-31-tube (tier 2, N22b-33, M8). A pilot record carries one frozen protocol (N38a-09), so the three cannot share one identifier; the script should follow row C-31's pilot field to PILOT-C-31 and the tier pilots by these names."
+  },
+  {
+   "bead": "N22c-44",
+   "what": "call N22b-24's sampled_gain_bound(M_min, h, K_d) for the rational LDL^T check of 2 M - h K_d >= 0 and M - h K_d >= 0 instead of a second implementation; N22b-24 now defines it as the one function and reports TestedOnly for a damping backup with actuation latency or other storage until this bead's A-22 contraction certificate exists, which this bead should state it supplies."
+  }
+ ],
+ "unchanged": 18,
+ "notes": "All 50 read in full against §22.10-22.13, 22.21, 22.25 and the gate and kill registers; arithmetic rechecked. Main fixes: N22b-26 stated bound used a Bernstein mean bound that made the 10^-3 budget unreachable; N22b-30 p-values against a fixed bag voided Ville's bound; N22b-29 and BD-340 mutant controls that could not fail; N22b-35 lookup sign; N22b-27 (M3) acceptance needed M4 code, now split to its consumers, with dep N41-OPEN4 (graph finding; the 'orphan' half is stale, five beads depend on it); absorber recomputation in the auditor (N22b-14, request to N12-17). Requests from U12-2 and U10c applied. Slice looks settled after this round."
+}

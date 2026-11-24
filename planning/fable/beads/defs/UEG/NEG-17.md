@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "habitat", "frob-scene", "solid", "test", "asset", "registry"]
 parent: "WP-23"
-deps: ["N19b-02", "BD-225", "BD-226", "BD-162", "N19a-05"]
+deps: ["BD-162", "BD-225", "BD-226", "N19a-05", "N19b-02"]
 needs: []
-related: ["NEG-27", "NEG-16", "BD-227", "BD-228", "NEG-28", "N19a-07"]
+related: ["NEG-18", "NEG-19", "NEG-21", "NEG-27", "NEG-28", "NEGp1-51"]
 gates: []
 plan_refs: ["Appendix G.2 (row 1)", "§19.7", "§19.9", "§37", "FROB-REF-310"]
 ---
@@ -27,10 +27,19 @@ including the common case "from us", and a pack that claims to be purely procedu
 
 ## Scope
 
-In: the register row for `frob-scene`; the rule that generated content carries exactly one licence entry
-with this source; the purity check for packs and for the starter pack; the lint that keeps third-party files
-out of the generator crates. Out: the grammar mechanism and the proxies (BD-225, BD-226); the licence
-manifest, the register and the pack-time refusal (N19b-02); the fixture library (N19a-07).
+In: the values of the register row for `frob-scene` and the tests of that row; the rule that generated
+content carries exactly one licence entry with this source; the purity check of a pack against its provenance
+block (`pack_is_pure_procedural`), applied to generated packs and to every scene of the starter pack; the
+regeneration of the starter pack from its recorded seeds; the lint that keeps third-party files out of the
+generator crates.
+
+Out, with the bead that has it: the licence manifest type, the schema and loader of the register
+`assets/licences/sources.toml` that this row is checked against, the pack export check with its refusal
+`FROB-REF-310`, and the licence-manifest check of the starter pack (join class `redistributable`, every entry
+of source `frob-scene` or of a repository file tagged `synthetic`), all in N19b-02, on which this bead
+depends. The two starter-pack checks are layered: N19b-02's reads the licence manifests, this bead's then
+proves from the provenance block that the content really came from the generators. Also out: the grammar
+mechanism and the proxies (BD-225, BD-226); the fixture library (N19a-07).
 
 ## Technical approach
 
@@ -50,6 +59,19 @@ identity, grammar version, seed, draws), and no blob in the pack has an asset id
 The starter pack must pass it for every scene it ships, apart from files explicitly tagged `synthetic` (test
 fixtures authored in the repository).
 
+**The starter-pack rule (DESIGN, stated identically in N19b-02).** The plan's rule is "the starter pack ships
+only synthetic and redistributable fixtures". "Redistributable" is read as the licence class of that name,
+and within it as this source alone: the starter pack holds content of source `frob-scene` and repository
+files tagged `synthetic`, and nothing else. Reason: the pack then carries no notice obligation and every
+scene in it can be regenerated bit for bit from its recorded seeds, so it is checked and not trusted. An
+`attribution` asset from another default-pipeline source (a scanned object, a kitchen fixture) is refused
+by the starter-pack check of N19b-02 and fails the purity check here, although the same asset may be
+exported in an ordinary pack with its notice.
+
+**The row's fields.** The row uses the schema of N19b-02 (`key`, `licence`, `class`, `default_pipeline`,
+`redistribute`, `read`, `kind`, `use`, `citation`, `read_on`) with no source-specific field;
+`redistribute = "always"` gives every entry of this source `redistribution = Allowed`.
+
 **No third-party files in the generator crates (`generators_have_no_foreign_assets`).** A lint over the
 `frob-scene` crate and `assets/`: every non-source file (mesh, texture, table) has a provenance header or a
 sidecar naming its source row; files with source `frob-scene` must have been authored in this repository
@@ -66,7 +88,9 @@ with its own provenance (`assumed`, `norm`, `measured`), not from the generator'
 - [ ] A generated warehouse and a generated commercial kitchen each have a one-entry licence manifest, pass
       the purity check and export without a refusal.
 - [ ] The starter pack passes the purity check; adding a `synthetic` stand-in tagged research-only to it makes
-      the check fail and the export refuse with FROB-REF-310.
+      the check fail and the export of the pack refuse with FROB-REF-310 (raised by the pack export check of
+      N19b-02; exit 3); adding a stand-in tagged `attribution` from another default-pipeline source makes the
+      purity check fail too, with no export refusal.
 - [ ] The foreign-asset lint passes on the tree and fails on a planted mesh with no provenance.
 - [ ] Regenerating the starter pack from its recorded seeds reproduces every `SceneId`.
 
@@ -83,14 +107,29 @@ with its own provenance (`assumed`, `norm`, `measured`), not from the generator'
 
 ### End-to-end script and logging
 
-`scripts/e2e/assets_licences.sh` (NEG-16), scene-asset loop: `frob scene gen` for two archetypes, `frob scene
-show --json` to read the licence manifest, an export, and the starter-pack scan; log lines carry the source
-key, class, entry count, `SceneId` and the purity verdict.
+`scripts/e2e/assets_licences.sh` (the M3 scene-asset loop, owned and run by NEGp1-51, which depends on this bead
+and sources the STD-E2E helper; this bead lists the steps of its row and writes no script of its own):
+1. `frob --json scene gen --family warehouse --seed 1 --key al-frob-scene-w` and `frob --json scene gen --family
+   kitchen-commercial/galley --seed 1 --key al-frob-scene-k` (a `run` verb: each call its own key).
+2. `frob --json scene show <id>` on each: the licence manifest has exactly one entry, source `frob-scene`, class
+   `redistributable`, redistribution `Allowed`, no notice.
+3. `frob --json artifact export <id> --out exports/ --key al-frob-scene-x-<n>` on each: exit 0, no notice item.
+4. The purity check on both packs and on every scene of the starter pack, and the regeneration of the starter
+   pack from its recorded seeds with every `SceneId` reproduced (the checks of this bead's unit tests, run by
+   the script as `cargo test -p frob-scene purity` and logged as one command with its exit code).
+5. The planted cases through `e2e_expect_caught`: a research-only stand-in added to a scratch copy of the starter
+   pack (the purity check fails and the export answers `FROB-REF-310`, exit 3); an `attribution` stand-in from
+   another default-pipeline source (the purity check fails, no export refusal); a mesh with no provenance
+   sidecar (the foreign-asset lint fails).
+Log lines carry `ts`, `script`, `bead: "NEG-17"`, `step`, `event`, the exact command, exit code, wall time, the
+`evidence` block, the source key, class, entry count, `SceneId`, the purity verdict, each refusal code with its
+exit code, and on failure the first blob whose origin is not a recorded generator call with the pack path.
 
 ### Known answers and negative controls
 
-The rule "the starter pack ships only synthetic and redistributable fixtures". Controls: the planted
-research-only stand-in; the planted unprovenanced mesh; a generator that embeds a third-party table without a
+The rule "the starter pack ships only synthetic and redistributable fixtures", in the reading of the DESIGN
+note above. Controls: the planted research-only stand-in; the planted `attribution` stand-in from another
+default-pipeline source; the planted unprovenanced mesh; a generator that embeds a third-party table without a
 sidecar. Determinism: `SceneId` equality across runs and platforms.
 
 ## Considerations

@@ -1,0 +1,150 @@
+{
+ "round": 3,
+ "slice": "F-UJL",
+ "reviewed": 17,
+ "changed": [
+  {
+   "bead": "ART-L2",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Script step (8): the two `frob design patch` calls carried no key (a mutate call without one is 805) and the static patch files cannot hold the current head as the required `parent` (BD-059 refuses a stale parent with 112 before the lock check, so the expected 111 was unreachable). Added `--key l2-p1` and `--key l2-p2` and the rule that the script writes the captured head into `parent`."
+  },
+  {
+   "bead": "ART-L4",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Script step (7) called `frob mission refute` (a run verb in VERBS-mission) without a key, which the admission transaction refuses with 805 from M1; added `--key l4-ref` (convention 5)."
+  },
+  {
+   "bead": "ART-L5",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S68: `frob shield check <run> --budget <id>` is now `--energy-budget <id>` (VERBS-shield row and BD-337; `--budget` is the generated compute budget of every run verb). The consideration that hedged on whether BD-337 takes `--cutoff-delay` and `--absorber` now states that both are inputs of the registered shield.budget row."
+  },
+  {
+   "bead": "NJL-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied all four requests. (S34) `scene.import` removed from LATE_ROWS, now thirteen rows, with the reason: N19a-46 ships its asset form at M3, so the row is listed implemented from its own milestone and the entry could never take effect and would fail the stale self-check at M5; the `--kind place` 724 is VERBS-scene's script's concern. (H-owners-1) `frob-surface-diff` declared as a `[[bin]]` with explicit name and path and a CONTRACT.md binary-table row stating what it reads and writes; acceptance cites BD-025's `binaries_declared`. (H-owners-3) the registry-wide script runs stages 1 to 3, 5 and 6 of NJL-01's verbs_registry_schema.sh as a logged stage, with acceptance; Check A step 5 follows NJL-01's kinds table and all thirteen arms of its variation table, expects `x-frob-key` with `idempotency_key` never in `required`, and 808 exactly when an int53 input exists; the 805 spot check (step 6 and verbs_lib.sh step 5) is a logged skip naming N32a-09 in an M0 build and required from M1; Check C classes a new optional input property (variations 10 to 13) as additive. Step 5 applied in adapted form: the harness keeps its own table-driven implementation (`expect.rs`) and a unit test `expectation_equals_derivation` requires it to equal `common_properties()` and `all_refusals()` on every committed row; using `common_properties()` itself as the expectation would make the judge run the generator's code, against this bead's own rule that the tool shares no code with the build script. New tests `expectation_equals_derivation`, `missing_key_skipped_before_admission`; `late_rows_closed` and the snapshot tests extended. Count sentence now 244 (247 from M3) with rows entering M0 to M4."
+  },
+  {
+   "bead": "NJL-03",
+   "kinds": [
+    "correct",
+    "complete",
+    "sense",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied H-verbs-1: `artifact.import` counted as a row registered by DESIGN (VERBS-artifact): complete registry 244, 84 run, M2 42, `artifact` cluster 4; 'exactly the 243 and no others' restated as the 243 plus rows a VERBS bead registers by DESIGN, each with an `[[addition]]` record naming its owning bead; `fidelity.rank` kept independent (245). Found and fixed a convention-7 defect: the bead closes at M1 but asserted 243 verbs in 44 clusters on the registry and on `frob capabilities`, while rows enter with their cluster beads from M0 to M4 (NJL-05 and BD-137 state this), so its acceptance could not be met at M1. Added the staging rule: this bead now owns `fixtures/golden/verbs/baseline-243.txt` (cited by NJLx-02 and NJLx-51 but written by nobody; line format defined), asserts the baseline counts on that list from M1, checks at every milestone that each registered row is a line of the list or has an addition record (`not-in-baseline`, `baseline-mismatch`), and evaluates the whole-registry statement from the first build in which all 44 clusters have a row (`not-due` before, never a pass). Kind columns stated as kinds printed by the specification, since cluster beads have declared actions on further rows (the test no longer asserts exactly three rows with an `actions` list). Inventory record, acceptance, unit tests, script steps, metrics and plants rewritten to match."
+  },
+  {
+   "bead": "NJL-05",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "Applied H-verbs-1: `artifact_import` takes the seventh seat of `operate` in place of `spark_devices`, which keeps `devices` and `fleet`; the note on the job, artifact, device and session verbs now counts eleven verbs with four artifact verbs and gives the reason and the rejected alternative; registry count 244, 241 seated plus three base tools (244 seated after NJLx-51). Table re-verified by script: 45 clusters, 241 distinct seated tools, none above seven, still 61 verbs unseated by the 28 named clusters."
+  },
+  {
+   "bead": "NJL-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The two statements of the verb count now read 244 (NJL-03's count of record with `artifact.import`); nothing else changed."
+  },
+  {
+   "bead": "NJL-07",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "Applied S10: NJL-02 added to `related`, with the rule that a row renamed, re-blessed or removed in IDENTITIES.toml is changed in `fixtures/verbs/identities.toml` in the same commit (NJL-02's `example_identities_agree`). Applied H-owners-1: `frob-golden` declared as a `[[bin]]` with explicit name and path and a CONTRACT.md binary-table row (reads, writes), with an acceptance criterion citing `binaries_declared`."
+  },
+  {
+   "bead": "NJL-08",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Applied S32: the step file's A9 sends `{from: <answer 1>}` without `strategy: \"refine\"` (N25a-12 refines with `from` alone; `refine` is BD-362's lane and answers 724 at M1), the specimen text staying as printed; A7's `next_actions` command is asserted as a registered path whose CLI twin reproduces A9, not compared with the specimen's string. Applied H-owners-1: `frob-mcp-drive` declared as a `[[bin]]` with a CONTRACT.md row. Also found: A10 `mission_refute` is a run verb called without a key (805); the step file now adds key `ref-1`."
+  },
+  {
+   "bead": "NJL-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The sealed-read refusals were expected as `FROB-REF-840` with exit 3; 840 is the one Arena code with exit 5 (N24-REF row, BD-261, VERBS-eval). Corrected to `e2e_expect_refusal FROB-REF-840 5`."
+  },
+  {
+   "bead": "NJLx-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-owners-1: `--test g0` is now `--test g0_laws`, and the unit-test file is stated as a module of that tier target. Counts follow NJL-03: JL-01's committed value is baseline plus additions (244 with `artifact.import`, 247 with NJLx-51) and, while clusters are unregistered, the list restricted to registered clusters; `jl_total_is_baseline_plus_additions`, `jl_cluster_counts`, script step (2) and the consideration on committed values restated accordingly (`[counts]` read only once NJLx-51 has written it). JL-02 counts the three rows printed with two kinds rather than rows with an `actions` list, which cluster beads have since added to further rows."
+  },
+  {
+   "bead": "NJLx-51",
+   "kinds": [
+    "correct",
+    "sense",
+    "title"
+   ],
+   "what": "Counts moved by `artifact.import`: before 244, after 247 (139 read, 84 run, M2 42, 84 outside the inventory, 244 seated); title now says 247 rows; four `[[addition]]` records (the first written by VERBS-artifact at M1). Added the staging rule this M3 bead lacked: the table describes the complete registry, the eight clusters whose beads land at M4 are not in the file at M3, `[counts]` states the totals of the rows the file holds at each commit, and the baseline direction of `unrecorded-addition` skips clusters with no row yet (it would otherwise fail on every M4 name). `by_kind` semantics stated (a row with `actions` counts under `two_kinds`); acceptance, tests, script metrics and known-answer sums updated."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "Add `FROB-REF-816` to the chapter refusals of `sim.replay`: N26a-19 maps the `frob.mcw/1` reader's rejection of a `.fmcw` positional whose no-authorization flag is missing or not false to 816, exit 3 (its test `true_flag_surfaces_as_816`), and ART-L6 step (9) asserts it through `frob sim replay <copy.fmcw>`; without the code in the row RL-06 fails the verb."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "what": "(1) `FROB-REF-840` is exit 5, not 3 (N24-REF's row, BD-261, VERBS-eval): correct the `artifact.read` block and the exit-code note. (2) Write the `[[addition]]` record of `artifact.import` (`added_by = \"VERBS-artifact\"`, `defined_in = \"§21.17\"`) in the change that enters the row; NJL-03's staged check fails `not-in-baseline` without it (N32a-02 admits the table from M0)."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "`spark.devices` task clusters become `devices`, `fleet`: NJL-05's target gave its `operate` seat to `artifact_import` (VERBS-artifact's request), and `task-cluster-mismatch` fails while the row still lists `operate`."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "Drop the sentence saying `scene.import` is also in LATE_ROWS for its `place` form: NJL-02 removed the entry (thirteen rows); the row is checked by the ordinary rule from M3 and the `--kind place` 724 stays in this bead's script."
+  },
+  {
+   "bead": "VERBS-prove",
+   "what": "`prove.bundle` lists no claim source for an energy budget (or a run's energy replay), yet N22b-14, N22b-18 (M4) and ART-L5 call `frob prove bundle <budget> --key <k> --json`, and the row says the remaining claim kinds answer 724 until M5. Register the budget form with its milestone (M4, N22b-14), or have those beads verify the bundle `shield.budget` already emits (BD-337 step 7)."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "(1) LATE_ROWS now has thirteen rows (scene.import removed); the text says fourteen. (2) Action rule 1 gives one CLI spelling, `--action <name>`, and no per-action flag, but VERBS-eval spells `eval.ledger --open | --close | --seal` and VERBS-task `task.check --coupling`, and ART-L7, ART-L9 and NJL-09 call those spellings: settle which holds. (3) By-kind counts: rows given an `actions` list by cluster beads are counted under `two_kinds` in `[counts]` (NJLx-51); NJL-03 states kinds as the specification prints them."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "Top-level tables: `[[addition]]` records are written from M1 (`artifact.import`, checked by NJL-03's `additions_recorded`), not first at M3; `[counts]` states the totals of the rows the file holds at each commit, and the baseline direction of `unrecorded-addition` skips clusters with no row yet (NJLx-51's staging)."
+  },
+  {
+   "bead": "BD-137",
+   "what": "The count rows of NJL-03 it cites are now: 243 on the baseline list, 244 for the complete registry with `artifact.import`. At M1 the registry holds only the clusters registered so far, so cite NJL-03's staged check (registered rows equal the list restricted to registered clusters plus additions), not '243 rows in 44 clusters' on the registry."
+  },
+  {
+   "bead": "BD-409",
+   "what": "Registry completeness: the reference is NJL-03's baseline list plus the `[[addition]]` records, which is 247 names under the defaults (the 243, `artifact.import` and NJLx-51's three), not 246; 248 with `fidelity.rank`, one lower with `solve.run` withdrawn."
+  },
+  {
+   "bead": "VERBS-module",
+   "what": "Its background still says the registry holds 243 verbs; the count of record is NJL-03's 244 (as VERBS-design and the other cluster beads now state)."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All eleven requests applied (H-owners-3's step-5 item in adapted form, reason given under NJL-02); none refused. Unchanged after a full read against their registry rows: ART-L3, ART-L6, ART-L7, ART-L8, ART-L9. The main finding beyond the requests is that the two count owners (NJL-03 at M1, NJLx-51 at M3) asserted whole-registry totals before the M4 clusters are registered; both now assert on the baseline list and stage the registry check. The 244th verb still awaits the owner's acceptance; its reversal is one row, one record and one seat."
+}

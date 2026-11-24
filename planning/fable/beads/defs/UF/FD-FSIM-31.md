@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid"]
 parent: "WP-01"
-deps: ["BD-037", "BD-031", "NF-01", "STD-E2E"]
+deps: ["BD-031", "BD-037", "N33b-04", "NF-02", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-15", "FD-FSIM-09", "BD-005", "BD-026", "NF-02"]
+related: ["N33c-02", "N33c-05", "N33c-08", "N33c-47", "NF-03"]
 gates: ["INT-TOOLCHAIN-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.12", "§33.3", "§33.9", "§41"]
 ---
@@ -109,8 +109,17 @@ against the new pin.
 gains rows "`fs-evidence` without `qty`" and "`fs-ivl` without `qty`" on every column and on a stable release,
 and the record states the recomputed counts before and after (reported: 22 coupled, 8 freed). Then the
 decision rule is re-read as for FD-FSIM-15. Here, crates that need only evidence and interval types (the
-certificate proposers; the bedrock-direct users that never name a quantity) switch to the feature-off form, so
-that a regression of `generic_const_exprs` on some future T would break fewer of this project's crates.
+certificate proposers; the bedrock-direct users that never name a quantity) switch to the feature-off form. What
+that buys must be stated exactly, because Cargo unifies features over the packages one build selects: if any
+package in a build enables `qty` on `fs-evidence` (it is on by default), every user of `fs-evidence` in that
+build links `fs-qty`; and while the escape hatch is closed `frob-core` itself depends on `fs-qty` (its `qty`
+module), so every crate of the core workspace stays coupled through `frob-core` whatever form it uses. The
+feature-off form therefore frees a crate only (a) in a build whose closure enables `qty` nowhere and does not
+contain `frob-core` (the standalone probes of the matrix, an out-of-tree worker), or (b) after the escape hatch
+opens and `frob-core` re-exports `frob-units` instead, when it is what keeps a regression of
+`generic_const_exprs` on a future T from reaching the evidence and interval crates. The record of the
+switch-over states, per crate switched, which of (a) and (b) applies; it does not claim a count of freed crates
+of this project while `frob-core` links `fs-qty`.
 
 **Fallback if the change cannot land.** The coupling stays as it is and is carried by FD-FSIM-15 or, failing
 that, by `frob-units`.
@@ -145,7 +154,11 @@ section shows this item with its status); `cargo test -p frob-conformance --test
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Both phases print the two counts and the list of coupled crates; phase `post` also runs
-the new matrix rows with `scripts/train/toolchain_train.sh --dry-run` and logs one line per cell.
+the two new matrix rows on every column and on a stable release with the matrix harness of N33c-01
+(`scripts/admission/toolchain_matrix.sh --sets <the two feature-off probe sets> --channels <the matrix columns>,<stable>`;
+the two probe sets are added in that harness's probe form, `tests/admission/toolchain/<set>/` with default features
+off), then the dry matrix on the current T with `scripts/train/toolchain_train.sh --to <T> --dry-run` (NF-02's one
+dry-run entry point; `--to` is required), and logs one line per cell.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_31/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -163,7 +176,7 @@ gates touched. No private-scene data is logged.
 
 ## Considerations
 
-- RISK-21: the `fs-qty` coupling ties the whole build graph to nightlies on which an incomplete feature still builds one crate. This item is the cheaper of the two preferred mitigations and should land first if both are in flight.
+- RISK-21: the `fs-qty` coupling ties the whole build graph to nightlies on which an incomplete feature still builds one crate. This item is the cheaper of the two preferred mitigations and should land first if both are in flight. Its count of 8 freed crates is a count inside FrankenSim's graph; for this project the freeing is conditional on feature unification and on `frob-core`'s own dependency, as stated in the switch-over above.
 - `fs-checker`, FrankenSim's standalone evidence-package checker, is a pattern for this project's auditor and is not linked "because it depends on `fs-qty` and the auditor may depend on nothing"; freeing `fs-evidence` does not change that decision.
 - FD-FSIM-09 (a device-receipt type in the evidence crates) touches the same crate; share the reservation.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the

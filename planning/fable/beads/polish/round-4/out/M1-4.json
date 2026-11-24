@@ -1,0 +1,153 @@
+{
+  "round": 4,
+  "slice": "M1-4",
+  "reviewed": 12,
+  "changed": [
+    {
+      "bead": "VERBS-design",
+      "kinds": ["request"],
+      "what": "design.diff: the run-control action is selected only by `action`: CLI `--action run-control` with `--key` (example `frob design diff quad-a@prev quad-a --reuse --action run-control --key rc-1 --json`), MCP `\"action\": \"run-control\"`, no `--run-control` flag (NJL-01 action rule 1). design.check and design.show: `no_memo` is stated as generated from the row's `memo = true` by NJL-01's variation 14 (meaning as before, disposition `NoMemo`) and not declared by the row; the machine-fields rule paragraph states both rows have `memo = true` (BD-111, M1) and why (`common-property-shadowed`); the test notes `no_memo` comes from `memo = true` on both rows; convention 2 reads variations 10 to 16 (it now cites variation 14)."
+    },
+    {
+      "bead": "VERBS-eval",
+      "kinds": ["request", "users"],
+      "what": "eval.ledger: actions selected only with `--action open|close|seal` (MCP `action`), no per-action flag; the three actions stay `admin` (plan §24.13: `qual:admin`; BD-258's lint would refuse a `mutate` action carrying only an admin scope; campaigns are not objects of the caller's namespace), so they take no key: `--key` on the tool is 802, and each is idempotent by its effect (a repeated open answers `campaign-already-open`, exit 7, naming the campaign, index untouched; a repeated close `campaign-not-open`, exit 3; a seal of a name already sealed writes nothing, and with the same bytes returns the stored name and digest); the seal name is the seal action's own input `name` (`--name`); FROB-REF-803 removed from the chapter list, the refusal_lists test (now 840, 886), the acceptance criterion and the ledger_actions test; `campaign-already-open` also covers a battery label with an open campaign (so a repeated battery open creates nothing); e2e step 8 uses `--action open` without a key. eval.compare and eval.run: `no_memo` stated as generated from `memo = true` (variation 14) and not declared by the row; eval.run gains the `no_memo` bullet, BD-111 and BD-220 in its Extended by, and `no_memo` in the owners_and_options test; the rule paragraph states both rows have `memo = true`; convention 2 reads variations 10 to 16 with 14 to 16 named. envelope_scope was already present (convention 2, kind_behaviour)."
+    },
+    {
+      "bead": "VERBS-evidence",
+      "kinds": ["request"],
+      "what": "Convention 2: NJL-01's later variations read 10 to 16. envelope_scope was already listed."
+    },
+    {
+      "bead": "VERBS-experiment",
+      "kinds": ["request"],
+      "what": "Convention 2: NJL-01's later variations read 10 to 16. envelope_scope was already listed."
+    },
+    {
+      "bead": "VERBS-explain",
+      "kinds": ["request"],
+      "what": "Convention 2: NJL-01's later variations read 10 to 16. envelope_scope was already listed."
+    },
+    {
+      "bead": "VERBS-fidelity",
+      "kinds": ["request"],
+      "what": "Convention 2: NJL-01's later variations read 10 to 16. envelope_scope was already listed."
+    },
+    {
+      "bead": "VERBS-fleet",
+      "kinds": ["request"],
+      "what": "Convention 2: the later variations read 10 to 16, the parenthesis naming 14 to 16 (`no_memo` for `memo = true`, the reality guard's refusals for `reports = true` or an artifact reader, `diagnostic_override` with the `[[admission_check]]` codes)."
+    },
+    {
+      "bead": "VERBS-foundry",
+      "kinds": ["request"],
+      "what": "Convention 2: the later variations read 10 to 16, the parenthesis naming 14 to 16. envelope_scope was already listed."
+    },
+    {
+      "bead": "VERBS-gait",
+      "kinds": ["request"],
+      "what": "Convention 2: the later variations read 10 to 16, the parenthesis naming 14 to 16. envelope_scope was already listed."
+    },
+    {
+      "bead": "VERBS-ground",
+      "kinds": ["request"],
+      "what": "Convention 2: the later variations read 10 to 16, the parenthesis naming 14 to 16. envelope_scope was already listed; ground.band already writes `--action retire` with no key (that request holds)."
+    },
+    {
+      "bead": "VERBS-job",
+      "kinds": ["request"],
+      "what": "Convention 2: the later variations read 10 to 16, the parenthesis naming 14 to 16."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "NJL-01",
+      "what": "ANSWER: (M1-4) Added: eval.ledger's actions `open`, `close` and `seal` are selected only with `--action`, and they keep kind `admin` with no key (the second of your two options; `mutate` would need a write scope under BD-258's `scope_acts` lint, while plan §24.13 gives opening and closing to `qual:admin`, and a campaign is not an object of the caller's namespace). `--key` on eval.ledger is 802; a repeat is idempotent by its effect (open: `campaign-already-open`, exit 7, naming the campaign; close: `campaign-not-open`, exit 3; seal of a sealed name: nothing written). The seal name is the action's input `name`. The present form holds for: `envelope_scope` in VERBS-eval, -evidence, -experiment, -explain, -fidelity, -foundry, -gait and -ground (each already lists six `run` properties); ground.band (already `--action retire`, no key). Where your two-kind paragraph lists eval.ledger, state its actions as `admin` with no key."
+    },
+    {
+      "bead": "N24b-15",
+      "what": "From VERBS-eval (round 4, mop-up M1-4; NJL-01 action rule 1 and the admin rule): eval.ledger's actions are selected only with `--action open|close|seal` (MCP `action`; there is no `--open`, `--close` or `--seal` flag), and being of kind `admin` they take no idempotency key: `--key` on eval.ledger is 802, and each action is idempotent by its effect. Restate: the entry paragraph (lines 137-145: drop `Each action ... takes its own idempotency key ... FROB-REF-803 (exit 7)`; the commands become `frob eval ledger --action open --task <TaskId> ... --json`, `frob eval ledger --action open --kind battery --label <name> --json`, `frob eval ledger <campaign> --action close --json`); the acceptance criterion on admin actions (line 166: reachable as `--action` and as MCP `action` with one handler; no key, `--key` is 802; a repeated open answers `campaign-already-open` naming the campaign, a repeated close `campaign-not-open`); the tests `ledger_admin_actions_cli_and_mcp` (`--action open|close`), `ledger_admin_action_idempotent` (a repeated open leaves one campaign and answers `campaign-already-open`, exit 7, the index sequence untouched; `--key` is 802; no 803), `campaign_close_irreversible` (a second close, no key); the e2e steps 2, 3, 4, 6 and 7 (lines 203-217: no keys; step 3's same-key replay and the 803 on a changed `--alpha` become a repeated open answering `campaign-already-open`); drop FROB-REF-803 from the References if it is cited only for these actions. Also: extend the one-open rule to battery campaigns: an open with a battery label that has an open campaign is `campaign-already-open`, exit 7, naming it (otherwise a retried battery open would create a second campaign), with a test."
+    },
+    {
+      "bead": "BD-261",
+      "what": "From VERBS-eval (round 4, mop-up M1-4; NJL-01 action rule 1 and the admin rule): the seal action is `frob eval ledger <campaign> --action seal --name <name> --file <path> --json` (MCP `\"action\": \"seal\"` with `name` and `file`); `name` is the seal action's own input; the action is `admin` and takes no key (`--key` is 802). Restate lines 141-143 and the e2e (line 212: `frob eval ledger --action open ... --json`; line 217: `--action seal` by the owner, no key; line 219: the owner's `--action close`). VERBS-eval states that a seal of a name already sealed in the campaign writes nothing, and with the same bytes returns the stored name and digest: state that in the seal paragraph with a test, and state what a seal of an already-sealed name with other bytes answers (nothing overwritten; a refusal under a pending slug of your choosing, convention 5, or an existing code if one fits), so that VERBS-eval can list it."
+    },
+    {
+      "bead": "BD-259",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate line 214 as `frob eval ledger --action open ... --json` and line 228's close as `--action close` with no key."
+    },
+    {
+      "bead": "BD-260",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 174-178: `frob eval ledger --action open --task <coin task> ... --json` and `frob eval ledger <campaign> --action close --json`."
+    },
+    {
+      "bead": "BD-312",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate line 165's open as `frob eval ledger --action open --task <task> ... --json` (and its close, if any, as `--action close`), with no key."
+    },
+    {
+      "bead": "BET-21",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 91-92: `frob eval ledger --action open ...` and `frob eval ledger <campaign> --action close`, without `--key` (the qualification requests keep theirs)."
+    },
+    {
+      "bead": "N24a-34",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate line 105 (`frob eval ledger --action open`), line 173 (`frob eval ledger --action open --task <coin task> --world-family synthetic:null-absolute/1 --json`) and line 178 (`frob eval ledger <campaign> --action close --json`)."
+    },
+    {
+      "bead": "N24b-10",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 122-123 (`frob eval ledger --action open --task <fixture TaskId> ... --json`, no key) and line 137 (`frob eval ledger <campaign> --action close --json`)."
+    },
+    {
+      "bead": "N24b-17",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 186-188: `frob eval ledger --action open --task <synthetic TaskId> --world-family <family> --json`, then `--action close`, then a new `--action open` on the same family (FROB-REF-886, exit 3), all without keys."
+    },
+    {
+      "bead": "N24b-19",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 139-140 (`frob eval ledger --action open ... --json`) and line 153 (`frob eval ledger <campaign> --action close --json`), without keys."
+    },
+    {
+      "bead": "N24b-23",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate line 74 as `frob eval ledger --action open ... --json`, without a key."
+    },
+    {
+      "bead": "N24b-24",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802); the seal name is the seal action's input `name`. Restate step 1 (lines 54-61: `--action open`, no keys; the same open repeated is not a replay under a key but answers `campaign-already-open`, exit 7, naming the campaign, as a second open does), step 14a (lines 118-119: `frob eval ledger --action open --kind battery --label e2e --json` and `frob eval ledger q:battery-e2e/1 --action seal --name key-1 --file <scratch object> --json`), line 124 (`--action close`, no key) and line 165 (the admin actions `--action open|close|seal`)."
+    },
+    {
+      "bead": "N32b-37",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802); the seal name is the seal action's input `name`. Restate lines 113-118 (`frob eval ledger --action open --kind battery --label diag --json`; `frob eval ledger q:battery-diag/<serial> --action seal --name <task-id> --file <path> --json`) and lines 125-126 (`--action close`, no key). A retried seal of the same task id with the same bytes writes nothing and returns the stored name and digest."
+    },
+    {
+      "bead": "N32b-39",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 127-128 as `frob eval ledger q:battery-diag/<serial> --action close --json`."
+    },
+    {
+      "bead": "N37-16",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 161-164: `frob eval ledger --action open --task <synthetic task> --world-family <synthetic sealed family> --json` and `frob eval ledger <campaign> --action close --json`."
+    },
+    {
+      "bead": "NS-17",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate step a0 (lines 48-49: `frob eval ledger --action open --task M ...`, no key) and step i (line 84: `frob eval ledger <campaign> --action close --json`)."
+    },
+    {
+      "bead": "ART-L7",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 205-206 (`frob eval ledger --action open --task <L.3 TaskId> --world-family <its sealed family> --clusters-per-request 200 --json`) and line 212 (`frob eval ledger <campaign> --action close --json`)."
+    },
+    {
+      "bead": "ART-L9",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate lines 187-188 (`frob eval ledger --action open --task t:kitchen-tray@88c1... --json`, no key) and line 196 (`frob eval ledger <campaign> --action close --json`)."
+    },
+    {
+      "bead": "NJL-09",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no key (`--key` on eval.ledger is 802). Restate line 259 (`open` and `close` actions without keys; the agent's session is refused `--action open`), lines 340-343 (`frob eval ledger --action open --task ...` and `frob eval ledger <campaign> --action close --json`, no keys) and line 347 (`--action open`)."
+    },
+    {
+      "bead": "N24-REF",
+      "what": "From VERBS-eval (round 4, mop-up M1-4): eval.ledger's actions are selected only with `--action open|close|seal` and, being `admin`, take no idempotency key, so FROB-REF-803 is not raised by them. Restate line 116 (`eval.ledger --action open`) and line 136 (drop `and at eval.ledger --open and --close, N24b-15` from 803's raisers; if 803's verbs column names eval.ledger, remove it)."
+    }
+  ],
+  "answered": {"added": 14, "holds": 3, "declined": 0},
+  "unchanged": 1,
+  "notes": "17 listed items: 14 added, 3 hold (VERBS-control's incoming ANSWER from H-owners-1 needs nothing: its Notes already cite mpc-episode-cap by slug, and insufficient-calibration is shield.fit's, not a control verb's; VERBS-eval's envelope_scope and ground.band's action form were already as asked, answered to NJL-01 in one ANSWER entry). The envelope_scope half of the compound requests to VERBS-evidence, -experiment, -explain, -fidelity, -foundry, -gait and -ground was already carried; their variations half was added. VERBS-design and VERBS-eval had no variations request, but now cite variation 14, so their 10 to 13 became 10 to 16 to avoid contradicting the added lines. eval.ledger: the lead's note and H-owners-3 offered mutate-or-no-key; the actions stay admin with no key (reasons in VERBS-eval's changed entry). N37-16, N24b-19, N32b-39 and N24-REF were not in H-owners-3's user list but spell the ledger actions with flags or keys, so they got requests too. N28c-44 already has H-owners-3's `--action run-control` request; BD-111 already has its `memo = true` request (design.check, design.show, eval.run, eval.compare among the rows). Left untouched (outside the listed requests, rule 3): VERBS-control line 295 still says variations (10 to 13), so the next round should send it the same request; VERBS-experiment lines 92-95 narrate review history (interim form; Correction (round 3)), convention 13; fidelity.shadow's example uses a positional `start`, which the next reviewer should check against NJL-01 action rule 1."
+}

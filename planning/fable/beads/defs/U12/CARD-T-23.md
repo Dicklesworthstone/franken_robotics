@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-cert", "frob-lemma", "solid", "test"]
 parent: "WP-42"
-deps: ["BD-132", "N12-06", "SPEC-C-19"]
+deps: ["BD-041", "BD-132", "N12-06", "SPEC-C-19"]
 needs: []
-related: ["BD-041", "BD-134", "N12-39", "CARD-T-30", "N12-35", "N12-05", "BD-129"]
+related: ["CARD-T-30", "GB-24", "N10b-08", "N12-05", "N12-35", "N12-39", "N12-46", "N25d-36"]
 gates: []
 plan_refs: ["§12.3 (T-23)", "§10 C-19", "§10 C-17", "§10 C-18", "§12.7", "Appendix D.6 (docking boundary)"]
 ---
@@ -54,9 +54,11 @@ registry row for that output.
 
 ## Technical approach
 
-1. Instance grid (DESIGN, the grid of the plan-time pilot to be re-run): 561 cells of (U, ε) with the packet on
-   time; the expected classification is 344 admitted, 217 excluded, with nine cells on the boundary
-   ε = (U + ½)/4, which are excluded; every late-packet cell is excluded.
+1. Instance grid (DESIGN, the grid of the plan-time pilot to be re-run): U = ½ + i/32 for i = 0…16 and ε = j/64
+   for j = 0…32, 17 × 33 = 561 cells with the packet on time. A cell is admitted exactly when 2j < 32 + i (that is
+   ε < (U + ½)/4): for even i that is (32 + i)/2 values of j, for odd i (33 + i)/2, so 180 + 164 = 344 admitted and
+   217 excluded, of which the nine cells with 2j = 32 + i (even i) lie exactly on the boundary and are excluded;
+   all 561 late-packet cells are excluded.
 2. Inclusion certificate for a cell (kind `finite-game`): the policy table is the first command p and, for each
    reading interval, the pair (u₁, u₂). With p = (U + ½)/2 (the largest admissible probe) the readings for gain 1
    lie in [p − ε, p + ε] and for gain 2 in [2p − ε, 2p + ε], disjoint exactly when ε < p/2 = (U + ½)/4. The auditor
@@ -98,12 +100,20 @@ two terminal equations); `bounds_give_probe_interval` (1 − U ≤ p ≤ (U + ½
 reach (1, 0) exactly); `three_quarters_probe_tolerances` (at U = ¾ the probe p = ¼ tolerates ε < 1/8 and the probe
 p = 5/8 tolerates ε < 5/16); `inclusion_three_quarters_quarter` (p = 5/8: commands (−¼, −3/8) for g = 1 and
 (−¾, 1/8) for g = 2); `equality_shared_reading_15_16`; `late_packet_commands_differ_by_half`;
-`grid_counts_344_217_9`; `quantifier_reorder_rejects`; `open_threshold_not_attained`.
+`grid_counts_344_217_9`; `quantifier_reorder_rejects`; `open_threshold_not_attained`;
+`table_not_function_rejects` (the (¾, ¼) table with two different command pairs for the reading 1);
+`alias_histories_differ_rejects` (the late-packet alias pair with the packet delivered before the second command
+in one world: the histories differ and the pair is rejected).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_second_machine.sh` (bead N12-35) ships the docking cells as bundles and re-checks them on the
-second machine; `lemma_auditor_mutations.sh` (bead N12-34) runs the mutants.
+second machine; `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the mutants. For this card their
+NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-23"), `step` (`T-23/U=<i>/eps=<j>` or
+`T-23/<mutant>`), `event`, the exact command line, exit code, wall time, the cell's (U, ε) as rationals, the
+expected class (admitted, excluded, boundary, late) and the observed verdict, the bundle's BLAKE3 on each machine,
+and on a mismatch the first failing rule and the path to reproduce; a `metric` line gives the counts against
+344, 217, 9 and 561 late-packet exclusions.
 
 ### Known answers and negative controls
 

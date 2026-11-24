@@ -6,9 +6,9 @@ priority: 3
 milestone: "M2"
 labels: ["m2", "suite", "spark", "upstream", "frankensim", "solid"]
 parent: "WP-46"
-deps: ["BD-037", "BD-014", "NF-01", "STD-E2E"]
+deps: ["BD-014", "BD-017", "BD-037", "N21b-32", "N21c-28", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-172", "BD-174", "BD-178", "BD-029", "FD-FSIM-31", "FD-FKER-01"]
+related: ["FD-FSIM-31"]
 gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§21.2", "§21.22", "§33.3", "§33.8"]
 ---
@@ -145,9 +145,16 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_09 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob spark probe --json` and `frob sim run --tier batch-cpu --json`
-with the device check enabled where a device is present, asserting that the envelope carries all twelve fields
-and that its receipt digest equals the stored one for the same run identity.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs,
+where a device is present, `frob spark probe --device <id> --suite canary --quick --key fsim09-probe-<id>-<run-id>
+--json` (BD-017) and `frob spark check --kernel K-selftest --backend <b> --key fsim09-check-<b>-<run-id> --json`
+(N21b-32; the check fills AE-08), and in every case `frob spark check --kernel K-selftest --backend batch-cpu
+--key fsim09-selftest-<run-id> --json`, whose `batch-cpu` receipt also carries the twelve fields, so the phase
+asserts something on a host with no device. These are `run` verbs: each call carries its own idempotency key
+(`FROB-REF-805` without one) and its envelope must show `idempotent_replay: false`. The script asserts that every
+envelope's receipt carries all twelve fields and passes the schema check of INV-SPARK-02 (N21c-28), and that each
+receipt, re-read from the record through the replaced type, has the canonical bytes and the digest that were
+stored when it was written (the type replacement must not move a digest).
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_09/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

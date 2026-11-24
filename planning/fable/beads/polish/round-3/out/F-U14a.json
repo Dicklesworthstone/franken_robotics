@@ -1,0 +1,267 @@
+{
+ "round": 3,
+ "slice": "F-U14a",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-055",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "an inadmissible lever declaration (lo >= hi, R+ with lo <= 0, finite with bounds, choices with another manifold) now has its code (111, first repair declare-lever), both/neither of bounds and choices is 103 and bounds of the wrong dimension 102 (DESIGN; the acceptance item said only 'refuse'); unit test lever_declaration_codes; the cargo test line passed four positional filters, which cargo rejects: now one filter blocks::"
+  },
+  {
+   "bead": "BD-059",
+   "kinds": [
+    "users",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "rule for one key and one parent: the key may be in the document, given as --key, or both (equal, else 802); a call's --expected-parent must equal the document's parent (else 802); stale parent stays 112, never 804; the refusal row now lists 103 and the precondition codes of design.edit's row that a refused operation returns, as the registry row should (request filed); CLI line shows --key and --expected-parent with the registry example; GATE-SKEL-08 has one recorder, N14a-29 (as N29ax-01 states): the crate battery measures and logs, writes no row; unit test key_and_parent_once"
+  },
+  {
+   "bead": "BD-066",
+   "kinds": [
+    "correct"
+   ],
+   "what": "refusal list aligned with the design.import registry row: added 828 (the dispatcher's sniff, N37-03), 103 and 125 (bug guards on the produced term), and named the mass-dropped ledger slug import-mass-dropped (N14b-34 raises it under the number N35x-02 assigns)"
+  },
+  {
+   "bead": "BD-077",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "the Evidence row had fallen out of the verb table below a paragraph; put back; GATE-SKEL-06 recording made single: crate tests log, N14a-30 records from its receipt with record_gate"
+  },
+  {
+   "bead": "N14a-29",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests"
+   ],
+   "what": "the script wrote the gate record itself (convention 9): now a receipt, and this bead enters GATE-SKEL-08 with record_gate as its one recorder; every mutate and run call carries a seed-derived key, and the sim.run of step 11 had none (convention 5): the recorded run and its re-execution carry distinct keys so the idempotency binding cannot answer in place of re-execution; step 3 also asserts 802 for a --key differing from the document's key and 805 with no key anywhere (BD-059's rule)"
+  },
+  {
+   "bead": "N14a-30",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the script wrote GATE-SKEL-06 itself: now a receipt, recorded by this bead with record_gate as the gate's one recorder"
+  },
+  {
+   "bead": "BD-227",
+   "kinds": [
+    "correct"
+   ],
+   "what": "request of H-owners-1 applied: the registry-load refusal is named as N35x-02's row hazard-registry-invalid (3xx); HAZARD_REGISTRY_INVALID carries the assigned number, and until then the ledger's interim 802 with detail \"hazard-registry-invalid\"; no change of behaviour; N35x-02 added to related"
+  },
+  {
+   "bead": "N14a-01",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "a JSON integer above 2^53 - 1 'refuses' with no code: now FROB-REF-808 (the surface's code for exactly that condition; DESIGN), in the rule-5 paragraph, the refusal table, the acceptance item and wide_integer_rule"
+  },
+  {
+   "bead": "N14a-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "a mesh Region given as a file path refused with no code: now FROB-REF-103 with required b3:<64 hex> (DESIGN), test mesh_path_refuses; the cargo test line passed two positional filters (cargo rejects them): filters moved after --"
+  },
+  {
+   "bead": "N14a-14",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "request of H-owners-1 applied: the Region refusal is N35x-02's row region-not-admissible, raised behind the named constant REGION_NOT_ADMISSIBLE carrying the assigned number, interim 102 with pointer region.admission or region.bound; acceptance names the constant and covers the bound case; cargo test line had four positional filters: now geom::; related N14-REF, N35x-02"
+  },
+  {
+   "bead": "N14a-21",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "request of H-verbs-1 applied: the entry sketches now reproduce VERBS-design's rows (which this bead implements and does not write): design.new idempotent = false, chapter codes 102, 103, 111, 125; design.show 102, 103, 125; appended codes by kind and field stated; registry example kept (quadruped-12dof is N14bx-03's alias). Stage-1 codes (105, 121, 126 among them) are findings of design.new, exit 2 with the design stored; the earlier text refused 'a missing physics field', which contradicted that; acceptance and tests (registry_rows_match, the no-fill and no-clock files stored with exit 2); 'ten verbs' corrected to twelve; cargo test filters moved after --"
+  },
+  {
+   "bead": "N14a-11",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "request of S26 applied: the functor passes N13-15's required input field base: Free | Fixed from the design's base kind (Free for every design the format expresses: the root hangs on a free joint, BD-061; Fixed only from a design-level field if a schema decision adds one), so a free base is re-rooted at its centre and root-moving automorphisms are found; stated that indices, permutations and signs come back in the design's own rooting; unit test free_base_passed_and_rooting_kept (nine-body free chain: order 4) and a planted control passing Fixed"
+  },
+  {
+   "bead": "N14a-12",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the cargo test line passed two positional filters, which cargo rejects: now one filter lower::"
+  },
+  {
+   "bead": "N14a-15",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps"
+   ],
+   "what": "the pilot record had no identifier or schema and put its data in a private file registries/pilots/skel-substitution-reuse.toml (convention 2): now one frob.gauntlet.pilot/1 record of N38a-09's register, PILOT-SKEL-<nn> (next free number, set shared with N14a-23), with its fields, registered before the diff, the verdict as one appended pilot.result with the script's receipt, the data filed with the protocol document; the diff tool is an example target of frob-conformance, not a binary (BD-025); the e2e design show calls name the design file; acceptance item for the record; N38a-09 added to deps (M0)"
+  },
+  {
+   "bead": "N14a-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the ADR path was the retired docs/delivery/adr/: now docs/adr/ADR-KILL-SKEL-SUBST-M1.md (convention 4); the decision table gains N40-03's receipts field (GATE-SKEL-06 receipt and the pilot result's receipt); GATE-SKEL-06 is read as N14a-30's record, not recorded here"
+  },
+  {
+   "bead": "N14a-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the e2e line named frob design edit without a key (a mutate): now each row's fixture edit carries a distinct seed-derived --key, names N14a-29's step 9, and asserts the declared effect, computed groups and computed invalidation set the design.edit row outputs"
+  },
+  {
+   "bead": "N14a-18",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "the re-execution of the recorded run in the migration steps now runs under a key distinct from the recorded run's (convention 5; otherwise the idempotency binding answers with the stored receipt); the migration clause states that these tests measure and log and that N14a-29 is GATE-SKEL-08's one recorder"
+  },
+  {
+   "bead": "N14a-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the decision table gains N40-03's receipts field; the script read the KILL-TREEOP decision with frob evidence trace <receipt>, but evidence.trace takes only clm:<64 hex> (a receipt is 802): now read from the KILL-TREEOP row's decision (adr, receipts), with evidence trace on a cited claim id"
+  },
+  {
+   "bead": "N14a-25",
+   "kinds": [
+    "correct"
+   ],
+   "what": "refusal row aligned with the design.export registry row: adds FROB-REF-816 (no-authorization flags missing or not false, the export door's first check) beside 731 and 733, all three raised by the door N37-18 (M3); at M1 step 7 writes the flags"
+  },
+  {
+   "bead": "N14a-26",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the defaults group had 6 files for the five written-out defaults of step 4 (one omitted/explicit pair each): now 10 files, five pairs; corpus count stated (47 as listed, at least 40)"
+  },
+  {
+   "bead": "N14a-27",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "step 7b registered every lint trigger and ran every repair under the one key $K, which answers 803 from the second trigger on: key paragraph with distinct seed-derived keys per call (the planted same-key case kept); the script recorded GATE-SKEL-07 and GATE-SKEL-04 values itself (convention 9): now measured values go into a receipt, and the register's recorders (N14b-06 for SKEL-07, BD-110 for SKEL-04) record"
+  },
+  {
+   "bead": "N14a-28",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "the script wrote GATE-SKEL-05 itself (convention 9): now a receipt, and this bead (the register's recorder) enters it with record_gate, never from a --count 500 run; step 1 passed inline text to design.view, which takes a design or a file: the text is saved to a file first"
+  },
+  {
+   "bead": "N14a-31",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "the script wrote GATE-SKEL-01 rows itself (convention 9): its MJCF rows now go into a receipt that N14b-24, the gate's one recorder per the register, reads by hash; the scripted set-contact-law edit and the export re-imports had no key (mutates): each now carries its own key, distinct from step 1's"
+  },
+  {
+   "bead": "N14a-32",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "the script gave frob a --root option, which STD-E2E says frob does not have: it now calls e2e_registries_scratch (the one way a script edits registries; FROB_REGISTRIES_ROOT, run marked override and not gate-claimable); the second scratch root of step 10, which the helper cannot make, is replaced by editing home.toml last in the same copy"
+  },
+  {
+   "bead": "N14a-33",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "no sim.run call carried --key (convention 5): key rule added, with distinct keys for step 10's two repetitions; --tier strict is not a tier: the script's tier tokens are mapped to --tier batch-cpu --profile strict|lockstep; the open-loop command files are passed as --controller open-loop:<schedule> (frob.openloop/1, N15ap3-01, added to deps) and tasks as fixture task files; step 2 asserted a refusal from contact.capacity, which reports overflow as a finding (exit 2), never a refusal"
+  },
+  {
+   "bead": "N14ax-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request of H-owners-1 applied: the two travel refusals are N35x-02's rows travel-value-out-of-domain and travel-envelope-optimistic, raised behind TRAVEL_VALUE_OUT_OF_DOMAIN and TRAVEL_ENVELOPE_OPTIMISTIC carrying the assigned number (interim 111 with pointers travel.domain / travel.posture-limits and travel.envelope); acceptance and tests name the constants; N35x-02 in related; the e2e design edit had no key; the conditional 'when A-18 exists' step (convention 7) is now a stage left for N19b-34 to add"
+  },
+  {
+   "bead": "N14ax-02",
+   "kinds": [
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "the e2e design edit and design patch calls, including each inverse, had no keys: each carries its own, an inverse distinct from its forward edit; states that --correspond is an input this bead adds to design.edit at M3 and is requested of VERBS-design (convention 8)"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-design",
+   "what": "design.patch row: (1) its chapter refusals should list the precondition codes a refused operation returns (BD-059 step 5 refuses the whole patch with the operation's code: 101, 102, 103, 105, 106, 107, 108, 111, 114, 121, 123, 125, 126, as design.edit's row) besides 112, and say that a refusing required analysis returns its stage code; (2) state BD-059's rule that the key may be in the document or --key (both equal, else 802) and that a call's expected_parent must equal the document's parent (else 802), so 804 is never raised for the patch's parent"
+  },
+  {
+   "bead": "N29ax-01",
+   "what": "its script scripts/e2e/chron_reexec_migration.sh calls frob sim run with no --key (convention 5); the recorded run and the re-execution of recorded_command must carry distinct keys, or the idempotency binding returns the stored receipt instead of re-executing (N14a-29 step 11 now does this)"
+  },
+  {
+   "bead": "N14a-20",
+   "what": "its kill-gate ADR path is the retired docs/delivery/adr/ADR-KILL-SKEL-SEXPR-M1.md: use docs/adr/ (convention 4; N40-03 refuses an adr outside docs/adr/ with decision-adr-path), and give the decision table N40-03's receipts field"
+  },
+  {
+   "bead": "BD-054",
+   "what": "unit-test line `cargo test -p frob-design term canon id` passes three positional filters, which cargo rejects: move them after -- (`cargo test -p frob-design -- term canon id`)"
+  },
+  {
+   "bead": "BD-061",
+   "what": "unit-test line `cargo test -p frob-model kin model lower` passes three positional filters: move them after --"
+  },
+  {
+   "bead": "N14a-04",
+   "what": "unit-test line `cargo test -p frob-design blocks::joint blocks::actuation` passes two positional filters: move them after --"
+  },
+  {
+   "bead": "N14a-13",
+   "what": "unit-test line `cargo test -p frob-model geom::declared geom::support geom::massless` passes three positional filters: move them after -- or use geom::"
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.view row: inputs omit --pretty, which BD-057's CLI defines (result.canonical false) and N14a-28 step 3 uses (convention 8); and the rows of the verbs that parse a design document (design.new --file, design.show on a file, design.view) should list FROB-REF-808 for a JSON integer outside +-(2^53 - 1), which N14a-01's rule 5 now raises"
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.edit row: add the input --correspond <kind>:<from>=<to>[,...] (N14ax-02, M3; validated with 101 and 103) and the output `correspondence` (frob.design.corr/1 with its digest); design.diff row: add the composed correspondence record along the lineage path, or `no lineage path` (N14ax-02)"
+  }
+ ],
+ "unchanged": 6,
+ "notes": "Unchanged after a full check: BD-245, N14a-06, N14a-07, N14a-10, N14a-22, N14a-23 (Case A and B packet, pivots, bias and rank recomputed in exact rationals: all as written). Gate recorders follow the register N14b-26 throughout: SKEL-05 N14a-28, SKEL-06 N14a-30, SKEL-08 N14a-29 (as N29ax-01 states); SKEL-01, -04 and -07 are recorded outside the slice (N14b-24, BD-110, N14b-06), and the slice's scripts now only write receipts for them. The three refusal-allocation requests (BD-227, N14a-14, N14ax-01) are applied with named constants and the N35x-02 interims. What remains is in the requests, mostly registry rows (VERBS-design) and cargo filter lines in U14a beads of other slices. The slice looks settled."
+}

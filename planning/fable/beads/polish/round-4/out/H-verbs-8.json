@@ -1,0 +1,206 @@
+{
+  "round": 4,
+  "slice": "H-verbs-8",
+  "reviewed": 3,
+  "changed": [
+    {
+      "bead": "VERBS-sim",
+      "kinds": [
+        "request",
+        "convention",
+        "registry",
+        "plan",
+        "deadlock",
+        "broken",
+        "users"
+      ],
+      "what": "All 32 requests, the C13 finding and the convention-14 note answered. Owners: --task, --controller (baseline, ControllerId) and --init get the new M1 referee owner N16ap4-01 (N16b-25 stays M2 for every tier; the M1 gate scripts could not depend on an M2 owner); --worlds BD-090 at M1; the positional design N29ax-01 (stored designs, M1); open-loop N15ap3-01; --thermal-start N15a-29 (M1, derived TaskId, 132); --family-world N14b-17 (M3); --no-memo N28b-38; --family-lanes BD-356; --capacity-step BD-170 and --inject-device-loss N21b-23 (conformance); --host-workers N21b-39; plant kinds of N16b-15 and N21b-23 on --conformance-plant; --chaos BD-081 and --chaos-plan/--numerical-plan-floor BD-083 as a table with domains. Identities per plan: --law StepPlanId (§16.6, N16b-25 added as M2 owner), --adjudicate manifest, --solve-queues and --family-lanes exec_options_digest. Rows filled from their owners: --capacity (rows=<R> alone, 802 on the referee, rut-tiles of N38a-29), --intra-step (N20a-12 item 0), --fault (N20a-31 grammar incl. impact trigger), --snapshot-every, --param (102; N24b-03's 530 rule with --fixture), --fixture <space>/<name> (traction/, kin/), --scene .fscene path, --solve-path after KILL-ANCESTOR point A (724, ADR) and point B, KILL-GYMADAPT wording. sim.estimate: --require-living-tier, 726 with purpose-not-eligible, solve_queues group, role and preferred_machines. sim.replay: 792, 816, the w:<hash> resolution and 'none (first run)'. Codes: 726 moved from the worded table into sim.run and sim.estimate (assigned by N35-33); 791, 792, 102, 132 added; worded rows disturbance-registry-invalid and ancestor-path-after-kill added. Airlock: actuation under predicate design-has-port-actuators (registered by N15a-05, enters with it). Real defects fixed: sim.run lacked FROB-REF-529, which N24a-16 raises at admission of every verb that starts episodes (a --task run without a settled-pose cache would have raised a code outside the row's list); the stale 'BD-024 calls it fixture; rename requested' (BD-024 already uses design); the stale N15bp2-01 note; kind_behaviour counted five common properties (envelope_scope makes six). Count sentence 244, item 2 per NJL-01, envelope_scope in the common inputs, every 'requested' marker and narration removed; tests refusal_lists, worded_refusals_pending, run_inputs updated."
+    },
+    {
+      "bead": "VERBS-skill",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "skill.check records BD-336's state-set spellings (default reference samples, --run <run | file.frun>, --grid <N>; both together 802) in the row and in inputs_by_row; count sentence 244 with NJL-03 as count of record; conventions item 2 per NJL-01 (x-frob-key, on_cancel leave|cancel_job, 808 by int53 field, envelope_scope, variations 10 to 13 by reference); kind_behaviour now checks six common properties (it would have failed once envelope_scope is generated)."
+    },
+    {
+      "bead": "VERBS-solve",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Count sentence 244; conventions item 2 per NJL-01 with envelope_scope; kind_behaviour checks six common properties; the removal rule cites N32ap1-01's decision record instead of 'N32ap1-01's request to this bead' (C13)."
+    }
+  ],
+  "new_beads": [
+    {
+      "bead": "N16ap4-01",
+      "why": "verb sim.run on the referee at M1: --task, --controller (baseline, ControllerId, registered names) and --init. The VERBS-sim rows gave these inputs only to N16b-25 (M2), yet GATE-REFLEX-01 and -03 (N22a-11, N22a-05, N22c-01), the archetype catalog (N14b-06), GATE-MARROW-06 (N13-36), N15a-27, N15a-29 and N24b-05 call them on the referee at M1; requesters F-U13, F-U14b-1 and F-U22a asked for an M1 owner or an extension of BD-024. Reuses N24c-04's episode step, N24c-02's verdict, N24a-16's 529 check and BD-118's baseline binding; deps checked for cycles against every M1 user."
+    }
+  ],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "BD-081",
+      "what": "ANSWER (F-U16a part d): `--chaos faults=<n>,seed=<s>,point=<p>` is BD-081's; `--chaos-plan <file>` and `--numerical-plan-floor <k>` are BD-083's (F-U16c, and N16c-02 cites 'the chaos-build inputs BD-083 defines'): schema `frob.chaos.retry/1`, entries `{ world, base_interval, fail_attempts_below = k }` with 1 <= k <= N_retry, and the floor only with `--chaos-plan` (802 otherwise). BD-081's own definitions (schema `frob.chaos-plan/1`, k up to N_retry + 1, a floor without a plan) contradict BD-083's: drop the two from its input list and cite BD-083; its test `txn::chaos_inputs` keeps `--chaos` and checks the plan seam at library level (the CLI forms are tested by BD-083)."
+    },
+    {
+      "bead": "BD-356",
+      "what": "ANSWER (F-U17a): `--family-lanes` is in sim.run's row (owner BD-356, M4) with identity `exec_options_digest`, not `StepPlanId`: lanes are an execution option of the step plan (step 5) and N16a-03 item 3 records execution options outside `StepPlanId`. Refusal: 724 while the crate flag `family-lanes` is off or KILL-FAMILYLANE's decision in force is `fired`; label `experimental-execution` and refused as promotion evidence until the digest comparison passes on the backend. State the identity so in step 5."
+    },
+    {
+      "bead": "BD-175",
+      "what": "ANSWER (F-U21a): of the five hooks, three are sim.run inputs and are in the row: the NaN plant and forced overflow are plant kinds `nan` and `overflow` of `--conformance-plant` (N21b-23), and device loss is `--inject-device-loss open|chunk=<k>` (N21b-23, 601). The other two are not sim.run inputs (N21b-23): an over-budget request needs no hook (a world count whose estimate exceeds the real device budget is 602 at admission), and a compile failure from the command line is `frob spark precompile <device> --unit <file>` (N21a-10, 603). Use those forms."
+    },
+    {
+      "bead": "BD-090",
+      "what": "Own `--worlds <n>` on the referee at M1 (VERBS-sim's row names BD-090: any positive count, world i at address (run_seed, i, 0), each recorded at the run's telemetry level; N29a-04/05/06/08 and BD-090's T2 sample rely on it). Also fix its own script: `frob sim run --tier referee --fixture g1 ...` is 802 (BD-024: `--fixture g1` at M0 is 802; `--fixture` is N24b-03's M1 input, not a dependency of BD-090): use the positional catalog model, `frob sim run g1 --tier referee --seconds 2 --seed 7 --telemetry <L> --key tl-<L> --json`."
+    },
+    {
+      "bead": "N16b-25",
+      "what": "Depend on N16ap4-01 (M1): the referee form of `--task`, `--controller` (baseline, ControllerId, names) and `--init` is that bead's, and N16b-25 extends them to every tier. State on every tier what the referee form fixes: with `--task` and no length input each episode runs to the task's horizon (BD-024's default of 2 s is for runs without a task); the result carries each episode's `frob.verdict/1`; `--task` admission applies N24a-16's settled-pose check (FROB-REF-529, now in sim.run's list); and decide `--init` together with `--task` (802 at M1 on the referee)."
+    },
+    {
+      "bead": "N22a-11",
+      "what": "Add dep N16ap4-01: its referee runs `frob sim run <design> --task <t> --controller <ControllerId>` at M1 use the inputs N16ap4-01 owns (VERBS-sim)."
+    },
+    {
+      "bead": "N22a-05",
+      "what": "Add dep N16ap4-01: its M1 referee runs with `--task` and `--controller` use the inputs N16ap4-01 owns (VERBS-sim)."
+    },
+    {
+      "bead": "N22c-01",
+      "what": "Add dep N16ap4-01: its script (and BD-117's reflex_wheeled_baseline.sh, which it runs) calls `frob sim run <design> --tier referee --task stand-10s|traverse-5m-flat` at M1; `--task` and `--controller` on the referee are N16ap4-01's."
+    },
+    {
+      "bead": "N14b-06",
+      "what": "Add dep N16ap4-01: the standing rows run `frob sim run <id> --tier referee --task stand-10s|traverse-5m-flat` at M1; `--task` on the referee is N16ap4-01's (its `fixture:<name>` controller form stays its own, on the `--controller` input N16ap4-01 adds)."
+    },
+    {
+      "bead": "N13-36",
+      "what": "Add dep N16ap4-01: `--init A|B` on the referee at M1 is N16ap4-01's (VERBS-sim's row); the two named conditions are declared in turn-spring.fbot's `init` block (N14a-03, requested)."
+    },
+    {
+      "bead": "N15a-27",
+      "what": "Add dep N16ap4-01: `frob sim run quad_knee_undersized --task <stairs> --tier referee --worlds 4 ...` at M1 uses `--task` (N16ap4-01) and `--worlds` (BD-090)."
+    },
+    {
+      "bead": "N15a-29",
+      "what": "Add dep N16ap4-01: `--thermal-start` applies when `sim.run` binds a task (its item 5), and `--task` on the referee at M1 is N16ap4-01's. The row now names N15a-29 the owner of `--thermal-start` (M1) with identity the derived TaskId listed in `bound` and FROB-REF-132 for a start out of range."
+    },
+    {
+      "bead": "N15ap3-01",
+      "what": "Add dep N16ap4-01: the `open-loop:<schedule>` form extends the `--controller` input, which N16ap4-01 adds to sim.run at M1 (the row names N15ap3-01 owner of the form, with its refusals a to d)."
+    },
+    {
+      "bead": "N15a-12",
+      "what": "Add dep N16ap4-01 (the `--controller` input of its open-loop runs) and cite `--chaos-plan` as BD-083's chaos-build input (schema `frob.chaos.retry/1`, `fail_attempts_below = 1` fails attempt 0), not BD-081's; add dep BD-083."
+    },
+    {
+      "bead": "N15a-24",
+      "what": "Add dep N16ap4-01: its M1 runs pass `--controller`, an input N16ap4-01 adds to sim.run on the referee (open-loop forms N15ap3-01's)."
+    },
+    {
+      "bead": "N24b-05",
+      "what": "Add dep N16ap4-01 and run the user-side sub-step `frob sim run <A|B> --task <TaskId> --tier referee ...` unconditionally: `--task` on the referee is N16ap4-01's at M1 (not N16b-25's at M2); drop the `e2e_skip` 'once `frob sim run --help --json` lists `--task`' (C13)."
+    },
+    {
+      "bead": "N24c-06",
+      "what": "Add dep N16ap4-01: its M1 referee runs with `--task` use the input N16ap4-01 owns."
+    },
+    {
+      "bead": "N24a-42",
+      "what": "Add dep N16ap4-01: `frob sim run <cart design> --task <id> --tier referee` at M1 uses the input N16ap4-01 owns."
+    },
+    {
+      "bead": "N14a-03",
+      "what": "Define the top-level .fbot block `init` (named initial conditions), which `sim.run --init <name>[=<value>]` selects (N16ap4-01 at M1, N16b-25 at M2) and whose selected condition enters `ModelId`: each condition a name, joint coordinates and rates and the floating base's pose and twist, and at most one declared parameter with dimension and domain (as `drop` in `drop=0.1m`). Users: N13-36 (`A`, `B` of turn-spring.fbot), N18b-20 (`flippers-down`), N16a-18 (`free-flight`, `drop=0.1m`), BD-384. No bead declares the block today, so every `--init` run would be 802."
+    },
+    {
+      "bead": "N15a-05",
+      "what": "Register the predicate `design-has-port-actuators` in `frob_verbs::admission::predicates` (N33c-32's rule: a predicate is registered by the bead that needs it): true when the resolved request's design, or a design of `--designs`, has an actuator whose level builds this bead's port-Hamiltonian elements through `fs-phs`. sim.run's `needs_groups` gains `{ groups = [\"actuation\"], when = \"design-has-port-actuators\" }` in the change that registers it; test that a binary without `actuation` answers such a referee run with FROB-REF-790 naming the group, and a design without such actuators does not require it."
+    },
+    {
+      "bead": "BD-068",
+      "what": "Acceptance 'at M1 no row names it' no longer holds: sim.run's row names `actuation` under the predicate `design-has-port-actuators`, registered by N15a-05 (which depends on BD-068). BD-068 keeps its generic 790 check on a synthetic row; the sim.run case is asserted by N15a-05's test and by N33b-21's `actuation` stage."
+    },
+    {
+      "bead": "N33b-21",
+      "what": "The `actuation` stage (M1): on a binary without the group, `frob sim run <design with port actuators> --tier referee ...` exits 5 with FROB-REF-790 naming `actuation`, and a design without them runs; with the group, both run. Replace the log line that no row names the group (VERBS-sim's row now does, predicate `design-has-port-actuators`, N15a-05)."
+    },
+    {
+      "bead": "N14b-17",
+      "what": "Define the sim.run input `--family-world <i>` (M3), as VERBS-sim's row states: with `--task` only; the index of one world of `Task::alias_family()` in index order; the run sets the task's parameters to that world's values; manifest; an index outside the family 802; a task whose family is not finite 802 naming the parameters. Users BD-244 (KILL-SKEL-ALIAS's hand-built-policy check) and N14b-13."
+    },
+    {
+      "bead": "BD-244",
+      "what": "`--family-world <i>` is in sim.run's row (owner N14b-17, M3); drop '`--family-world` is requested of VERBS-sim, see Considerations' (C13) and the matching Considerations note."
+    },
+    {
+      "bead": "N18a-37",
+      "what": "Step 7 `retry_restores_film`: the row lists `--chaos-plan <file>` (BD-083, chaos build, schema `frob.chaos.retry/1`); run the forced retry with a plan file and drop the `e2e_skip` 'needs the chaos-plan option of sim.run (VERBS-sim)' (C13); add dep BD-083."
+    },
+    {
+      "bead": "N22c-29",
+      "what": "With `--fixture`, a value outside a fixture-declared parameter's domain is FROB-REF-530 (pointer `free.<name>.domain`), N24b-03's stated rule, which VERBS-sim's `--param` row now carries; 802 stays for undeclared or fixed names and for a controller parameter out of its domain. Drop 'interim DESIGN rule, requested of N24b-03' (N24b-03 states it)."
+    },
+    {
+      "bead": "N24b-03",
+      "what": "The fixture registry resolves a conformance fixture named `<space>/<name>` to `crates/frob-conformance/fixtures/<space>/<name>` (BD-080's `traction/<name>` referee fixtures, used at M1 by BD-085, N18b-32 and N33ap1-01; BD-083's `kin/<name>`), registered by its owner; state that form beside `assets/fixtures/<name>/fixture.toml` (VERBS-sim's `--fixture` row lists both)."
+    },
+    {
+      "bead": "BD-082",
+      "what": "Its M1 run `frob sim run .../ballistic-drop.fbot --scene plane --tier referee ...`: `--scene` is N16b-25's input (M2; scenes arrive with BD-162 at M2), so this M1 referee run is FROB-REF-802: pass the environment through a registered conformance fixture that carries it as primitives (BD-080's form, `--fixture <space>/<name>` in N24b-03's registry, a fixture this bead or one of its dependencies registers), or move the step to a bead after N16b-25."
+    },
+    {
+      "bead": "N16a-07",
+      "what": "Its M1 run `frob sim run .../tied-sliders.fbot --scene wall --tier referee ...`: `--scene` is N16b-25's input (M2; scenes arrive with BD-162 at M2), so this M1 referee run is FROB-REF-802: pass the environment through a registered conformance fixture that carries it as primitives (BD-080's form, `--fixture <space>/<name>` in N24b-03's registry, a fixture this bead or one of its dependencies registers), or move the step to a bead after N16b-25. (BD-083's `kin/tied-sliders` cannot serve: BD-083 depends on N16a-07.)"
+    },
+    {
+      "bead": "N16a-10",
+      "what": "Steps 3 and 5 pass `--scene plane` and `--scene wall` at M1: `--scene` is N16b-25's input (M2; scenes arrive with BD-162 at M2), so this M1 referee run is FROB-REF-802: pass the environment through a registered conformance fixture that carries it as primitives (BD-080's form, `--fixture <space>/<name>` in N24b-03's registry, a fixture this bead or one of its dependencies registers), or move the step to a bead after N16b-25. (N16a-10 depends on BD-083, so BD-083's `kin/<name>` fixtures can serve.)"
+    },
+    {
+      "bead": "N18b-45",
+      "what": "Its M1 runs pass `--scene` with `traction/arc-arm*.fbot`: `--scene` is N16b-25's input (M2; scenes arrive with BD-162 at M2), so this M1 referee run is FROB-REF-802: pass the environment through a registered conformance fixture that carries it as primitives (BD-080's form, `--fixture <space>/<name>` in N24b-03's registry, a fixture this bead or one of its dependencies registers), or move the step to a bead after N16b-25."
+    },
+    {
+      "bead": "NJL-01",
+      "what": "The estimate block that every `run` verb returns under `--estimate` (the common `estimate_only` property) carries the optional fields `role` and `preferred_machines`, filled by N21c-07's `role_of` and absent without it (N21c-07's rendering rule; BD-219 declares them in `frob.sim.estimate.out/1`); add them to the common estimate output. VERBS-sim's common-inputs paragraph states it for sim.run and sim.replay."
+    },
+    {
+      "bead": "N21b-23",
+      "what": "Drop 'requested of VERBS-sim' after `--inject-device-loss open | chunk=<k>` (C13): the conformance table lists it with owner N21b-23 and 601."
+    },
+    {
+      "bead": "N29ap1-02",
+      "what": "Drop 'requested by the registry round' from the `--snapshot-every` item (C13): the row names N29ap1-02 owner with the domain and both 802 cases."
+    },
+    {
+      "bead": "N38a-29",
+      "what": "Drop 'requested of the verb registry VERBS-sim' (C13): sim.run's `--capacity` row carries `rut-tiles=<T>` with owner N38a-29, the default, StepPlanId, 724 and 802 as stated."
+    },
+    {
+      "bead": "N26a-19",
+      "what": "Drop '(an output label requested of VERBS-sim's sim.replay row)' (C13): the row now states the first-run label `none (first run)`, exit 0, and lists 816."
+    },
+    {
+      "bead": "N17a-13",
+      "what": "sim.run's row now has `--family-lanes` (BD-356, identity exec_options_digest); drop '(`sim.run` has no `--family-lanes` in its row; ...)' and use either verb's spelling."
+    },
+    {
+      "bead": "BD-336",
+      "what": "Drop 'the spellings are fixed here, as the registry row leaves them to this bead' (C13): VERBS-skill's skill.check row now records `--run <run | file.frun>`, `--grid <N>`, the default reference samples and 802 for both together."
+    }
+  ],
+  "answered": {
+    "added": 41,
+    "holds": 0,
+    "declined": 0
+  },
+  "unchanged": 0,
+  "notes": "41 items (34 on VERBS-sim incl. the C13 finding and the lead note, 4 on VERBS-skill, 3 on VERBS-solve), each added; three were added with one part answered rather than taken as written (F-U16a part d: the plan inputs are BD-083's per F-U16c; F-U17a: identity exec_options_digest, not StepPlanId; F-U21a: two hooks are not sim.run inputs), with ANSWER entries to BD-081, BD-356 and BD-175. The C13 finding was real. One new bead, N16ap4-01, owns the M1 referee forms of --task, --controller and --init; its index row and the users' deps are for the sync and their reviewers. Open point for a later reviewer: sim.replay --tier referee on an actuated design may also need the actuation group (not asked; left as is)."
+}

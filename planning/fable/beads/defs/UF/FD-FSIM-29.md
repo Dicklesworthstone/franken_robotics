@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "foundry", "upstream", "frankensim", "frontier"]
 parent: "WP-71"
-deps: ["BD-037", "BD-405", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-405", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-408", "BD-403", "FD-FSIM-26"]
+related: ["N31a-04", "N31a-26", "N31a-28", "N31a-29", "N31a-30", "N31b-17", "N33b-14", "NFx-02"]
 gates: ["GATE-FOUNDRY-07"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§31.4", "§31.10", "§33.9", "§33.8"]
 ---
@@ -69,6 +69,13 @@ current head before it is edited.
    existing vocabulary) when it faces downward and β < β_min, unless it lies on the build plate. The evaluator
    returns the violating area, its connected regions with centroids, and the worst inclination, and feeds the
    worst value to the existing overhang-angle limit.
+   *Two angle conventions meet here.* The local evaluator of N31a-28 (and BD-405) reports the overhang angle
+   from the vertical, ψ = asin(−n·b) (0° for a vertical wall, 90° for a ceiling), against a maximum
+   `overhang_max_deg`; the inclination above is measured from the build plane, so ψ = 90° − β and a card's
+   ψ_max corresponds to β_min = 90° − ψ_max (45° on both sides for the usual limit; a 30° chamfer in β is a
+   60° overhang in ψ). Which of the two the existing `fs-fab::overhang_angle` limit reads is a FACT to re-read
+   at the pin (the sibling's source is what counts); the adapter converts once, the differential test of the
+   switch-over compares converted values, and a unit test pins the conversion on the 30° and 60° ramps.
 2. *Tool access.* Given a tool of radius r and a set of approach directions, a surface point is reachable if a
    cylinder of radius r along some approach direction touches it without cutting the part. The evaluator
    returns the unreachable area with its regions, and the smallest internal corner radius found, which it feeds
@@ -127,10 +134,12 @@ In FrankenSim (added):
 - `horizontal_ceiling_is_an_overhang`: a box with a rectangular pocket open downward, build direction +z; the pocket's ceiling has β = 0 and is reported in full (its area exactly), with β_min = 45°.
 - `chamfer_angles`: a downward chamfer at 60° from the build plane passes at β_min = 45°; one at 30° is reported, with worst inclination 30°.
 - `face_on_build_plate_is_exempt`: the part's bottom face is not reported.
-- `slot_width_against_tool`: a through slot 6 mm wide is reachable by a tool of radius 2.5 mm along the slot's axis and unreachable by one of radius 4 mm; the unreachable area equals the slot's wall and floor area.
+- `slot_width_against_tool`: a slot 6 mm wide through a 10 mm plate, with semicircular ends of radius 3 mm, approach direction along the slot's depth; expected every slot wall reachable by a tool of radius 2.5 mm (diameter 5 mm), and unreachable by one of radius 4 mm (diameter 8 mm), with the unreachable area equal to the slot's wall area (a through slot has no floor).
 - `sharp_internal_corner`: an internal corner of radius 1 mm with a tool of radius 2.5 mm is reported with repair target "fillet radius at least 2.5 mm".
 - `undercut_needs_another_direction`: a T-slot is unreachable from +z alone and reachable when the side direction is added.
 Here:
+- `overhang_convention_bridge`: the 30° and 60° ramps of BD-405 read ψ = 30° and 60° locally and β = 60° and 30° from the sibling; the adapter's converted values agree, and a 45° card limit gives the same verdicts on both sides.
+- `five_axis_cone_through_sibling`: N31a-28's `five_axis_cone_reaches_tilted_face` fixture (a 30° cone reaching a face tilted 20° past vertical) passes through the sibling's evaluator fed the 32 cone directions.
 - `differential_on_gate_parts`: as in the acceptance line.
 - `no_local_evaluator_remains`: a source scan after deletion.
 
@@ -140,7 +149,7 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_29 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry check --json` on the twenty gate parts and asserts
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry check --fab --fixture <part> --process <p> --key "$(foundry_key post-<part>)" --json` on the twenty gate parts (a `run` verb, so each call carries a key from the cluster preamble, N31a-51) and asserts
 verdict, location and repair for each, and the `review: no-claim` line.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
@@ -162,7 +171,7 @@ gates touched. No private-scene data is logged.
 
 - "Manufacturable" is not claimed by this project at any tier of evidence: the report is a screen, and a build packet's `fabrication_released` flag is always false.
 - `fs-fab` is thin today; this item roughly doubles it. Whether the evaluators belong there or beside the other geometric measures in `fs-geocon` is FrankenSim's call under its layer checks.
-- Tool access by swept cylinders along a few directions is a three-axis model; five-axis access is out of scope and is said to be so in the measurement's declared resolution.
+- Tool access by swept cylinders along given directions is a fixed-axis model. Foundry's `cnc-5axis` check is kept through it: Foundry passes, for each setup, the 32 sampled directions of the setup's tilt cone (N31a-28) as approach directions, so the local five-axis check is reproduced by the sibling's evaluator before the local one is deleted (the differential test includes the `cnc-5axis` fixtures). Continuous simultaneous five-axis tool paths are out of scope and are said to be so in the measurement's declared resolution.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
   milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its

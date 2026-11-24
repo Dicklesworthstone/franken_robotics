@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "lemma", "marrow", "kinesis", "frob-lie", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§10 C-36: the pilot, kill gate and ceiling of the articulated variational lane, which C-05 delegates to construction C-36 (SPEC-C-36 and its pilot bead, written by the unit that owns C-28 to C-40)"]
-related: ["BD-011", "BD-012", "BD-017", "BD-019", "BD-020", "BD-021", "BD-087", "BD-384", "SPEC-C-36", "CARD-T-01", "CARD-T-02", "CARD-T-03", "CARD-T-06", "CARD-T-13", "N10-KA1", "BD-010"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-010", "BD-011", "BD-012", "BD-019", "BD-020", "BD-087", "SPEC-C-36"]
 gates: ["GATE-MARROW-01", "GATE-LEMMA-00", "GATE-SPARK-00", "GATE-SPARK-01", "GATE-KIN-01"]
 plan_refs: ["§10 C-05", "§13.2", "§13.3", "§13.7", "§13.8", "§13.9", "§12.3 T-01 T-02 T-03 T-06 T-13", "Appendix D.1", "Appendix E GB-01", "Appendix M KA-052 to KA-054", "Appendix N CX-025"]
 ---

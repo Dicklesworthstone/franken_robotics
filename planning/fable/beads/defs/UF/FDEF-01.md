@@ -2,13 +2,13 @@
 key: "FDEF-01"
 title: "defect report, frankensim `ppo_update`: reversed clip branch, stale critic gradient, sequences across resets"
 type: "task"
-priority: 2
+priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "cortex", "upstream", "frankensim", "solid", "test"]
 parent: "WP-37"
 deps: ["BD-034", "BD-037", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-10", "FDEF-06", "BD-197", "BD-025"]
+related: ["FDEF-06"]
 gates: ["INT-FSIM-06"]
 plan_refs: ["Appendix F.2 row 1", "§33.11", "§23.6", "§33.10", "Appendix F.3", "§0.1"]
 ---
@@ -127,8 +127,8 @@ and the artifact paths needed to reproduce. A final `summary` line gives asserti
 gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
-- KA-773 and KA-774 are the table above (tolerance 10⁻³ relative in single precision for the clip cases; ratio 1 to 10⁻⁶). CX-357 (≡ CX-252): "a sibling's training code can serve as an oracle or a baseline" is the shortcut this report refutes.
-- Negative control: a corrected reference implementation of the three rules, written in the reproduction itself (twenty lines of scalar arithmetic), must produce the "correct" column; if the reproduction reports "not reproduced" against that reference, the reproduction is wrong.
+- KA-773 and KA-774 are the table above (tolerance 10⁻³ relative in single precision for the clip cases; ratio 1 to 10⁻⁶). CX-357: "a sibling's training code can serve as an oracle or a baseline" is the shortcut this report refutes (finite differences −0.25, −0.5, 0 where 0, −0.5, −1 are correct; critic gradient 0 where 2 is correct); its sequence case is also CX-252 ("concatenated episodes may be evaluated as one sequence": ratios 1 and 1, 1.582459 read across the reset; rule P-6).
+- Controls inside the reproduction, each about twenty lines of scalar arithmetic run through the same comparison as the sibling. Positive control: a corrected reference of the three rules must produce the "correct" column and be classified "not reproduced". Negative control (the planted defect the reproduction must catch): a copy of the reported logic (the reversed inequality for Â < 0, the stored value in the critic gradient, recurrent state carried across the reset) must produce the "reported" column for the clip and critic cases (−0.25, −0.5, 0; 0) and a second ratio different from 1, and be classified "reproduced". If either control is misclassified, the reproduction is wrong and its verdict on the sibling is void.
 - Determinism lanes: the reproduction twice on one machine prints identical values; debug and release agree to the stated tolerance.
 
 ## Considerations

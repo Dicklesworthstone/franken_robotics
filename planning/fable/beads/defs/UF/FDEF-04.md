@@ -2,13 +2,13 @@
 key: "FDEF-04"
 title: "limit report, frankensim sustained contact step: fixed witnesses, fixed frame, capacity of 21 contacts"
 type: "task"
-priority: 1
+priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "kinesis", "traction", "upstream", "frankensim", "solid", "test"]
 parent: "WP-37"
 deps: ["BD-035", "BD-037", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-12", "FD-FSIM-13", "BD-093", "BD-080", "BD-086", "BD-213"]
+related: []
 gates: ["INT-FSIM-07", "INT-FSIM-04"]
 plan_refs: ["Appendix F.2 row 4", "§33.11", "§16.4", "§18.11", "§33.3", "§33.10", "Appendix F.3"]
 ---
@@ -42,8 +42,9 @@ Read in source on 2026-11-21 at `483d09c682f2`: confirmed as a documented scope 
 In: the report (`tests/upstream/FD-FSIM-12/REPORT.md`, covering both items and filed as the mirrored beads of
 FD-FSIM-12 and FD-FSIM-13); the standalone reproduction of both refusals; the observed refusals copied from the
 admission records; the statement of the guard. Out: the admission tests (BD-035); witness migration in the
-transactional step (BD-093); the capacity check and refusal in the airlock (BD-007, BD-080); the upstream
-changes (FD-FSIM-12, FD-FSIM-13).
+transactional step (BD-093); the capacity check in the airlock (`RefereeContact`, `ContactCapacities`, N33a-14)
+and the refusal conversion (N33a-13); the production referee step on generated contact sets (BD-080, M1); the
+upstream changes (FD-FSIM-12, FD-FSIM-13).
 
 ## Technical approach
 
@@ -102,7 +103,7 @@ tracker under its `AGENTS.md`; store the identifiers in the two registry rows.
 - [ ] `tests/upstream/FD-FSIM-12/REPORT.md` has the sections Limit, Evidence (files, lines, commit), the two cases, Expected and observed (the refusal variants), What is asked for, Interim posture, and `observed_at`; `tests/upstream/FD-FSIM-13/` links to it.
 - [ ] The reproduction compiles against `fs-mbd` and `fs-contact` alone at the pin and prints the refusal for the wheel transition, the refusal for 22 contacts, and a successful solve for 21.
 - [ ] The report is filed in FrankenSim's tracker and its identifier is the `mirror` of both registry rows.
-- [ ] Through the airlock, the 22-contact set returns `FROB-REF-721` carrying the upstream reason, and the capacity read from `RefereeContact` equals the constant read from FrankenSim at the pin (21).
+- [ ] Through the airlock, the 22-contact set returns `FROB-REF-721` with `observed` 22 and `required` 21 before any sibling call, the wheel transition returns `FROB-REF-721` carrying the upstream reason verbatim, and the capacity read from `RefereeContact` equals the constant read from FrankenSim at the pin (21).
 - [ ] No code path above the airlock truncates a contact set: a planted truncation is caught by the capacity fixture.
 
 ## Test plan
@@ -110,16 +111,21 @@ tracker under its `AGENTS.md`; store the identifiers in the two registry rows.
 ### Unit tests
 - `repro_wheel_edge_transition_refuses`: wheel radius 0.10 m, riser 0.03 m, approach 0.5 m/s; expected a typed refusal at the pin (variant recorded in the report).
 - `repro_22_contacts_refuse_21_solve`: expected refusal and success respectively.
-- `airlock_capacity_field_matches_upstream`: `RefereeContact::capacity()` equals `fs_contact`'s `MAX_CONTACTS`; expected 21 at the pin, and the test reads the constant instead of hard-coding it, so a larger upstream capacity changes the field and not the test.
-- `airlock_refusal_carries_upstream_reason`: the typed referee refusal for case 2 contains the upstream variant and is not retried.
+- `airlock_capacity_field_matches_upstream`: `capacities().max_contacts_per_solve` of `RefereeContact` (N33a-14) equals `fs_contact`'s `MAX_CONTACTS`; expected 21 at the pin, and the test reads the constant instead of hard-coding it, so a larger upstream capacity changes the field and not the test.
+- `airlock_refusal_carries_upstream_reason`: the typed referee refusal for case 1 (the wheel transition) contains the upstream variant and message verbatim and is not retried (one sibling call); the refusal for case 2 is raised by the airlock before any sibling call and carries `observed` 22 and `required` 21.
 - `no_truncation_mutant`: an adapter mutant that keeps the first 21 of 22 contacts must fail the capacity fixture (the two arms of a tracked-against-point-foot comparison then differ in refused worlds, and the verdict must be labelled `capacity-biased`).
 
 ### End-to-end script and logging
-`scripts/e2e/defect_fdef_04.sh`: runs the reproduction in `target/upstream-scratch/frankensim@<rev>`; then, from
-the user's side, `frob sim run <wheel-riser fixture> --tier referee --json` with witness migration disabled by
-its test flag (expected exit with the refusal envelope naming the upstream reason) and
-`frob sim run <22-contact fixture> --tier referee --json` (expected refusal `FROB-REF-721`); asserts both, and
-reads the two registry rows with `frob doctor --json`.
+`scripts/e2e/defect_fdef_04.sh`: runs the reproduction in `target/upstream-scratch/frankensim@<rev>`; then runs
+the admission lane of BD-035 and reads the two refusal records it writes in the envelope's refusal shape
+(`target/admission/int_fsim_04.json`, `target/admission/int_fsim_07_refusal.json`), asserting `FROB-REF-721`
+and the exit code 5 the registry maps the code to, with the upstream reason verbatim for the wheel transition
+and `observed` 22, `required` 21 for the capacity case (the airlock refuses that one before calling the sibling;
+the sibling's own refusal of 22 contacts is what the reproduction shows); compares the refusal
+variants with those printed by the reproduction and written in the report; reads `frob doctor --json` (section
+`referee`: `max_contacts_per_solve` 21, `fixed_witnesses` true) and the two registry rows. At M0 no `frob` verb
+reaches a contact step (`sim.run` at M0 is the contact-free G1 form of BD-024); the verb-level form, `frob sim
+run` on the lip fixture exiting 5, belongs to BD-093's script at M1.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/defect_fdef_04/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -132,7 +138,7 @@ gates touched. No private-scene data is logged. Refusals are logged as `refusal`
 and the interval at which they occurred.
 
 ### Known answers and negative controls
-- KA-778: the flat-to-edge-to-top transition returns the typed refusal through the airlock at the pin and completes under witness migration with the energy ledger closed to its stated residual; negative control: over capacity (21 contacts) refuses.
+- KA-778: the flat-to-edge-to-top transition returns the typed refusal through the airlock at the pin and completes under witness migration with the energy ledger closed to its stated residual; negative control: a set over the capacity of 21 contacts (the case of 22) refuses, while 21 solves (the plan's row reads "over capacity (21 contacts) refuses", meaning over a capacity of 21).
 - Negative control: the truncation mutant above; and a scene of a wheel on a flat floor only (no edge) must not refuse, so that the refusal is shown to come from the transition.
 - Determinism lanes: the refusal occurs at the same interval twice on one machine and across worker counts (same-platform class; FrankenSim's `fs-mbd` makes no cross-ISA claim).
 

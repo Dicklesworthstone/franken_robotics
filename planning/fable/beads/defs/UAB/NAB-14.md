@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "gauntlet", "delivery", "solid", "registry"]
 parent: "WP-01"
-deps: ["NAB-09"]
-needs: ["Appendix K.5: the audit of the eighteen planning claims that were never audited (N00-31)", "§21.16, §21.26: the hardware fingerprint and its rate probes, which measure the unverified hardware items (BD-029, N21c-01)", "Appendix G, §19.8, §19.12: the hazard registries and the retrofit catalogue, whose dimensions and prices are `assumed` (BD-227, BD-369)"]
-related: ["NAB-10", "NAB-12", "NAB-13", "NAB-16", "N00-31", "N00-34", "N00-35", "BD-017", "BD-029", "BD-033", "BD-039", "BD-142", "BD-311", "BD-380", "BD-399"]
+deps: ["N40-10", "N41-03", "NAB-09"]
+needs: []
+related: ["NAB-28"]
 gates: []
 plan_refs: ["Appendix H.4", "Appendix H.6", "§0.1", "§0.7"]
 ---
@@ -45,7 +45,13 @@ table); the lint (NAB-10).
 **1. Standard references.** One `[[source]]` per listed item, `kind = "reference"`, `locator = ""`,
 `unlocated = true`, one `reading` with `mark = "M"` and `covers` = what the specification uses it for, and
 `group` = one of: `carried` (the 18 references of the first design), `mission-and-synthesis` (14),
-`numerics` (4), `scene-and-sensing` (6), `control` (1). `licence = "n/a"`. A confirmation is a `reread` entry
+`numerics` (4), `scene-and-sensing` (6), `control` (1). `licence = "n/a"`. Record boundaries, so the counts
+are reproducible (DESIGN): in `mission-and-synthesis` "Merlet, and Neumaier, on interval methods in design" is
+two records (Merlet; Neumaier) and "the nine-point, Stewart–Gough and 6R solution counts" is one record whose
+reading covers the three counts, giving the fourteen: Bretl and Lall; Orsolino et al.; Fadini et al.; Flow*;
+Scenic; decision-region determination; ASID; saltation matrices; contact-size dependence in gel indentation;
+Merlet; Neumaier; the three solution counts; Burmester theory; Smale's α-theory. In `numerics` "Demmel, van der
+Sluis and Higham on scaling" is one record. A confirmation is a `reread` entry
 with the edition, chapter or equation number, and `result = "confirmed"`; the citation lint treats an M reading
 without one as uncitable by a gate.
 
@@ -99,7 +105,7 @@ record      = ""                         # gate record or source id once settled
 | NV-05 | Rigid-body simulation by an incumbent on Apple silicon at stated throughput. A search found no benchmark | The parity baseline on this Mac (BD-142) |
 | NV-06 | The reference-robot figures used as published anchors for Parity at M3. They are at search-summary level (mark R) | The published-anchor comparison (BD-311), after the re-read review (N00-34) |
 | NV-07 | Licences of ProcTHOR-10K data, Replica and YCB, and of the retail and warehouse generators | The asset-licence register and asset-populated interiors (N19b-02, BD-399) |
-| NV-08 | Ratification status of glTF physics extensions | The import and export work; until read, no importer claims conformance to an extension |
+| NV-08 | Ratification status of glTF physics extensions | The glTF export (N14b-21), which carries visuals only, and the M5 exit sweep that settles the item or carries it forward (NAB-28); until read, no importer or exporter claims conformance to an extension |
 | NV-09 | Every hazard dimension of the hazard registries and every retrofit price. No norm, regulation, standard or price list was read | Each value stays `assumed` with its provenance field (BD-227, BD-369; OPEN-HAB-1, OPEN-HAB-4) |
 | NV-10 | The reported numbers of the five foundation defects beyond what reading the source confirms: the ratio 1.582459, the zero-translation run and the wrong in-bounds read were not re-executed | The foundation-defect admission tests (BD-033, BD-034, BD-035, BD-036) |
 | NV-11 | Sources marked M or U, and the 18 claims the second audit left pending | The audit of the eighteen claims (N00-31) and the re-read review (N00-34) |
@@ -111,7 +117,8 @@ confirmed re-read (`read`), or an ADR (`withdrawn`). The citation lint reads `st
 
 **3. Mark note (a finding of the conversion).** The mark table defines R and M, and NV-11 speaks of "sources
 marked M or U" among the public sources; yet no public-source reading carries R or M (the public register has
-39 P, 92 F, 30 S and 2 U). The recalled sources are the standard references of this bead, which is why they
+163 brackets marked 39 P, 92 F, 30 S and 2 U, which NAB-12 and NAB-13 enter as 174 readings: 43 P, 95 F, 34 S,
+2 U). The recalled sources are the standard references of this bead, which is why they
 are entered with mark M, and the search-summary figures are those of NV-06, entered with mark R when the
 published-anchor bead registers them.
 
@@ -123,7 +130,8 @@ published-anchor bead registers them.
 - [ ] 13 `[[unverified]]` records exist with the statements and settling gates of the table; each `measured_by`
       identifier exists in the gate register, the open-question list or the bead graph.
 - [ ] With every record at `status = "unverified"`, the citation lint fails a planted contract that states NV-01
-      as fact, and passes it after GATE-SPARK-21 has a recorded value and the record is set to `measured`.
+      as fact, and passes it after GATE-SPARK-21 has a recorded value and the record is set to `measured`
+      (shown by NAB-16's end-to-end script, which runs NAB-10's lint over these records).
 - [ ] No reference is cited by a recorded gate without a `reread` entry naming edition and location.
 
 ## Test plan
@@ -136,7 +144,9 @@ published-anchor bead registers them.
 - `context_only_reference_is_flagged`; `conformity_wording_is_refused` (a fixture sentence "conforms to the
   collaborative-robot specification" fails).
 - `thirteen_unverified`; `each_unverified_names_a_settler`; `settlers_resolve` (gate ids against
-  `registries/gates.toml`, open questions against the open-question list).
+  `registries/gates.toml` as N40-02 and N40-10 fill it, open questions against the open-question register
+  `registries/open.toml` of N41-03, bead ids against the tracker export `.beads/issues.jsonl`; NV-08 resolves
+  to N14b-21 and NAB-28).
 - `status_change_requires_record`: `status = "measured"` with empty `record` is refused.
 - `nv06_anchor_figures_are_mark_r` (once BD-311 registers them).
 - `public_register_has_no_r_or_m_reading` (the finding of step 3, pinned so a later change is noticed).

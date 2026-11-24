@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-algebra", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§20.13: the observation-term transformation declarations that Γ_obs filters on (BD-241)", "§14.7: the design constructors mirror and radial with their declared generators (BD-056)"]
-related: ["BD-102", "BD-241", "BD-325", "BD-326", "BD-327", "N10a-10", "SPEC-C-10", "SPEC-C-22", "CARD-T-10", "CARD-T-16", "N10-KA1", "BD-048"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-048", "BD-102", "BD-241", "BD-326", "N10a-10", "N13-18", "SPEC-C-12", "SPEC-C-16", "SPEC-C-22", "SPEC-C-23", "SPEC-C-24"]
 gates: ["GATE-MARROW-03", "GATE-MARROW-04", "GATE-REFLEX-07", "GATE-CORTEX-03"]
 plan_refs: ["§10 C-09", "§9 D-14", "§11.4", "§13.2", "§13.4", "§13.8", "§13.10", "§12.3 T-10 T-16", "§38.7", "Appendix D.5", "Appendix E GB-02", "Appendix M KA-066 KA-068 to KA-071", "Appendix N CX-031 to CX-033"]
 ---
@@ -191,6 +191,10 @@ tied; M4); GATE-CORTEX-03 (the three-arm experiment; M4). Cards: T-10, T-16.
 - [ ] `cargo test -p frob-algebra --test laws_c09` passes on the exact reference and on the production
       symmetry computation once BD-102 lands.
 - [ ] Parity fixture exact; a sign table that flips all three axes and one that flips none both fail S1.
+- [ ] The §13.8 mutation "a missing parity sign on a mirrored axis" is registered and fails at least three
+      of this suite's fixtures in this run: S3's axis images, S1's step equivariance and the signed-permutation
+      derivation; the log names them. The cross-construction count that GATE-MARROW-04 reads is the mutation
+      harness N13-18, where this suite registers its fixtures.
 - [ ] Front-lidar fixture: C₂ × C₂, C₂, breaker = lidar mount; one-sided payload: Γ_obs trivial and the
       consumer falls back to the full calculation with no edit by the author.
 - [ ] Two-latch fixture: tied class excluded; the report text asserts nothing about the task.

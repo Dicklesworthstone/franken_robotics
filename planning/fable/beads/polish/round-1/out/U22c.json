@@ -1,0 +1,273 @@
+{
+ "round": 1,
+ "slice": "U22c",
+ "reviewed": 47,
+ "changed": [
+  {
+   "bead": "BD-118",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N22a-03 (estimated and privileged state sources and the paired report that the standing smoke runs on); named it in Scope."
+  },
+  {
+   "bead": "N22-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "split",
+    "deps",
+    "title",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "entries now in N38b-05's catalogue schema (plant, rule_ids, control_kind, same_as, slug; no hand rows in controls.toml); provisional CX-R22-a..g replaced by slugs and an N38a-40 cx block request (count 9); bundled row g split into three entries (gain bound, held work, delay kappa) because the seeding tool derives one control per entry; pre-slip entries marked same_as CX-012 as the owed numeric instance; CX-243 DESIGN case made runnable; deps N38a-40, N38b-05, STD-E2E; seeding-and-join step, NC ids and caught-by test in the e2e log; tests for CX-243 and the three split entries."
+  },
+  {
+   "bead": "N22-REF",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "four worded refusals routed through the N35x-02/N35-33 allocation ledger (interim form until assigned; this bead enters the assigned numbers) instead of 'whoever adds the row takes the next 4xx'; deps N35x-02, STD-E2E; the 431 fold trigger was the rimless wheel, which has no fold (multiplier cos^2(2a) on every slope): replaced by a planted saddle-node planar loop with known values; 431 trigger stated for autonomous loops (section map or bordered matrix); 817 payload gains planning-model-not-compiled at freeze."
+  },
+  {
+   "bead": "N22c-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "log lines for controller_id per archetype and state source, the identity read back by control.show, and step 11's two digests side by side."
+  },
+  {
+   "bead": "N22c-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "INV-REFLEX-01 at M1 narrowed to what exists then (compile-fail tag, in-process tag count, N22a-12 fallback log per non-nominal run), telemetry form moved to N22c-03 (N22a-15 is M3); dep N22a-12; e2e driven from control.synth JSON; PO-REFLEX-01 case B now shifts the whole scene (robot and ground) with a 1e-9 relative tolerance instead of bit identity."
+  },
+  {
+   "bead": "N22c-03",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "carries the telemetry form of INV-REFLEX-01 with N22a-15's conservation laws and the silent-fallback plant; PO-SHIELD-04 consideration now cites theorem card T-39 (N12x-04, already a dep); KILL-RESIDUAL added to the kill-gate interaction (PO-REFLEX-02 retired)."
+  },
+  {
+   "bead": "N22c-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "provisional KA-R22-a..h replaced by slugs and an N38a-40 ka block request (count 8, owner N22c-04) with rows appended to known_answers.toml; deps N38a-40, STD-E2E; pre-slip speed limit printed as 1.5696 m/s (root 1.569687; 1.5697 is outside the constraint); tests for the block and the rounding."
+  },
+  {
+   "bead": "N22c-15",
+   "kinds": [
+    "deps"
+   ],
+   "what": "falsified pilot closes BD-330 not-funded, releasing the decision; rule-table case added."
+  },
+  {
+   "bead": "N22c-16",
+   "kinds": [
+    "deps"
+   ],
+   "what": "falsified pilot closes BD-331 not-funded, releasing the decision; rule-table case added."
+  },
+  {
+   "bead": "N22c-17",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "new rule 0: a falsified orbit pilot (N22a-28) fires KILL-GAIT and closes BD-335 not-funded, releasing the decision; rule-table case added."
+  },
+  {
+   "bead": "N22c-22",
+   "kinds": [
+    "correct",
+    "title"
+   ],
+   "what": "numbered FD-FSIM-39 (assigned by NFx-01); REV-1 wording: this program makes the change in FrankenSim's repository under its rules; removed 'proposed for maintainers' and 'left to FrankenSim's priorities'; kill-gate closure follows NFx-01's permanent-number rule."
+  },
+  {
+   "bead": "N22c-26",
+   "kinds": [
+    "deps"
+   ],
+   "what": "pilot falsification closes N22c-23/-24/-25 not-funded, releasing the decision from its N22c-25 dependency; rule-table case added."
+  },
+  {
+   "bead": "N22c-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "provisional KA/CX ids replaced by the slugs of N22c-04 and N22-CX; notes reflex-untimely is the numeric instance of CX-012."
+  },
+  {
+   "bead": "N22c-28",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "speed-limit admitting change printed rounded down (1.5696 m/s): 1.5697 gives 0.4500073 > 0.45, so the printed limit did not admit; test asserts the rounding; refusal routed through the ledger's interim form."
+  },
+  {
+   "bead": "N22c-29",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "speed limit 1.5696; consideration was wrong: for v0 > 2.5 m/s the 0.05 m trigger margin is below one period's travel, so full-friction episodes can overshoot (up to 0.01 m at 3 m/s); expected violations now counted from closed-form m < 0, with arm1_sampling_overshoots logged."
+  },
+  {
+   "bead": "N22c-31",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "model_privileged truth table contradicted the definition ((estimated, estimated) is not privileged); freeze refuses a non-compiled planning model (the stated fail-closed rule had no test); cancellation test for the latency measurement that acceptance required."
+  },
+  {
+   "bead": "N22c-34",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "rule 0: a falsified delivered-lane pilot fires KILL-MPCRECORD and closes N22c-31/-32/-33 not-funded, releasing the decision; rule-table case added."
+  },
+  {
+   "bead": "N22c-36",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "provisional KA/CX ids replaced by slugs; was 'funded only if the pilot was not falsified', but KILL-FREEPERIOD's fallback (section form only) is this bead, so it is now built whatever the pilot's verdict and the pilot gates only N22c-37."
+  },
+  {
+   "bead": "N22c-38",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "states what the gate script does when KILL-FREEPERIOD fired at the pilot: bordered clauses logged and recorded 'killed: fallback adopted', section clauses decide the row."
+  },
+  {
+   "bead": "N22c-39",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "pilot falsification now closes N22c-37 not-funded and lets N22c-38 run section-only, releasing the decision; rule-table case added."
+  },
+  {
+   "bead": "N22c-41",
+   "kinds": [
+    "correct"
+   ],
+   "what": "provisional KA/CX ids replaced by the slugs reflex-two-modes and reflex-mode-seq."
+  },
+  {
+   "bead": "N22c-43",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "rule 5: a pilot-read firing closes N22c-41 and N22c-42 not-funded, releasing the decision; the fallback's recovery test named as BD-333's finite-perturbation test; rule-table case added."
+  },
+  {
+   "bead": "N22c-44",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "refusal payload names the bound that applied (no-reversal by default, passivity with --allow-reversal, contraction under latency) and both scalar gain limits; the max-gain test contradicted step 2 (2M/h is admissible only with the flag); new test for a gain between the bounds; slugs for CX/KA; refusal routed through the ledger's interim form."
+  },
+  {
+   "bead": "N22c-45",
+   "kinds": [
+    "correct"
+   ],
+   "what": "provisional CX-R22-g replaced by the split entry reflex-held-work."
+  },
+  {
+   "bead": "N22c-46",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "fit assertions and metrics now give both gain limits (100 no-reversal, 200 passivity) consistent with N22c-44, and check the refusal with --allow-reversal; theorem card is T-39 (N12x-04), no longer 'no number'."
+  },
+  {
+   "bead": "N22c-47",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "step 5 read fallback events from telemetry, which lands at M3 (N22a-15); at M2 it now reads N22a-13's lockstep end states and N22a-12's fallback log; metric and acceptance renamed accordingly."
+  },
+  {
+   "bead": "N22c-49",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N22-CX: the controls field it writes holds NC ids that the N38b-05 seeding derives from N22-CX's entries; pending or obligation controls keep a gate ineligible."
+  },
+  {
+   "bead": "N22c-50",
+   "kinds": [
+    "placement"
+   ],
+   "what": "priority 2 -> 1: an owner decision at M3 is one step more urgent, as its siblings N22c-51 and -52 are."
+  },
+  {
+   "bead": "N22c-54",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "bar order sensitivity at beta = 1/3 is sqrt(3)/4 = 0.4330 (the two mirror orderings), not 0.25 (ordering against coupled), under the bead's own max-over-pairs definition; closed forms and tests added."
+  },
+  {
+   "bead": "N22c-37",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "planted fold was the rimless wheel, which has no fold; replaced by the saddle-node planar loop r' = r(theta + r^2 - r^4) at theta = -1/4 with multipliers and dr*/dtheta as known values; slug replaces KA-R22-e."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38b-05",
+   "what": "CX-243 now carries a chapter-supplied DESIGN numeric case (N22c-04 fixture 16) with numeric = true and a plant, discharging obligation (a) for it; count the seventeen word-only entries by the plan's catalogue text (or a chapter-supplied-case marker), not by numeric = false, so the loader's count stays 17. Obligation (b) (CX-012's numeric instance) is supplied by N22-CX's reflex-untimely entry (same_as CX-012)."
+  },
+  {
+   "bead": "N00-CX",
+   "what": "CX-012 is recorded as 'owed: numeric instance'; the instance now exists as N22-CX's reflex-untimely (and reflex-intersample), both same_as CX-012, with plant list_untimely_assumption_as_monitored on the N22c-27 fixture; switch CX-012 from owed to that fixture and plant once those entries land."
+  },
+  {
+   "bead": "N22a-34",
+   "what": "test bar_order_sensitivity_mass_norm expects sqrt(m)*v/4 = 0.353553 and 0.25 normalized; that is one ordering against the coupled solve. The order sensitivity (largest difference over all selections) at beta = 1/3 is attained by the two mirror orderings: sqrt(3)/4 = 0.4330 normalized, 0.612372 in the mass norm for m = 2 kg, v = 1 m/s (N22c-54 now states this)."
+  },
+  {
+   "bead": "N22-KA",
+   "what": "Scope cites the late hand cases as 'KA-R22-a to -h'; N22c-04 now names them by slug (reflex-lift-linear ... reflex-sampled-damper) and numbers them from an N38a-40 ka block (count 8, owner N22c-04); update the citation."
+  }
+ ],
+ "unchanged": 17,
+ "notes": "Main fixes: late KA/CX/refusal numbers now go through the N38a-40 and N35x-02 ledgers (slugs replace the CX-R22/KA-R22 tags); pilot-falsified kill decisions can now close; arithmetic corrected (speed-limit rounding, bar order sensitivity, a rimless-wheel 'fold' that has no fold, a privileged truth table). The slice looks close to settled. U22c/coverage.md (not a bead, not edited) still cites the old provisional tags."
+}

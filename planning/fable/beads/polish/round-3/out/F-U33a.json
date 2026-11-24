@@ -1,0 +1,184 @@
+{
+ "round": 3,
+ "slice": "F-U33a",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "BD-015",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request of S56 applied (by the interrupted reviewer, checked complete here): the precompile step is now feasibility only on trj with CUDA_VISIBLE_DEVICES empty (and a GPU-less Linux host when available); the v0 cache writes no entry without the target's driver identity; N21b-12's TargetIdentity from the fingerprint record with FROB-REF-606 named; the Mac cannot be that host (NVRTC not published for macOS, FROB-REF-601). Added the acceptance line, the unit test nvrtc_compiles_without_visible_device and the logged outcome."
+  },
+  {
+   "bead": "BD-044",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "risks"
+   ],
+   "what": "Request of H-owners-2 applied (by the interrupted reviewer, checked here): NF-05 moved from deps to related with its legs NF-03 and NF-04 (exempt under N41-16 3(b)); NFx-01 made a direct dep; FDEF-01..05 kept as deps with the reason recorded (in-repository M0 reports, no register item among their ancestors); unit test m0_upstream_exempt_listed. Also: KILL-FSIM/KILL-MCP ADRs checked at docs/adr/ (written by N33b-05, N32a-05 in N40-03's form) instead of written here; --key on every run call of step 5. Finished here: added dep N39-CX (moved to M0 by H-cx-2, otherwise an M0 orphan of this exit)."
+  },
+  {
+   "bead": "BD-096",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Brought into line with conventions 1, 5 and 9 (by the interrupted reviewer, checked complete here): the committed await-point list crates/frob-conformance/chaos/await_points.toml shared with N29a-24 and N33c-17; the plant named plant-lost-chunk under gauntlet-mutations; FROB_TEST_SEED; GATE-CHRON-11's CPU part run through g4_chaos and recorded with record_gate --part M1 by this bead; INT-ASUP-02's gates.toml row left to N33c-17; the script writes no gate record."
+  },
+  {
+   "bead": "BD-105",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "placement"
+   ],
+   "what": "Request of S24 applied: K-ik-leg3r and K-jac-leg3r are emitted into the kernel library frob-kernels (layer 3), because frob-control (N22a-10, swing IK and footstep clamp) consumes them and may not depend on frob-analyze (layer 4, rule L-1); A-05/A-06 are the design-check views of the same kernels. Scope and labels (+frob-kernels) follow. Known answers recomputed and correct."
+  },
+  {
+   "bead": "BD-398",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "Request of H-verbs-5 applied: --repair none|fill (BD-163's values, as VERBS-scene and N19a-46), not explicit. Added the --private row the registry lists for both forms; the note that the registry lacks the place-form rows replaced (VERBS-scene now carries them and governs)."
+  },
+  {
+   "bead": "N33a-06",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Request of H-owners-2 applied: the Gauntlet harness receipt (frob.gauntlet.receipt/1, N38a-02) listed among the places stamped with the stack receipt (stack_receipt and stack_dev, INV-SUITE-03, N40-01's rule; check-stack N33c-30; the recorder refuses stack_dev); Scope says the writer is N38a-02's; related + N38a-02, N40-01. Its e2e step identity_on_results now names the second verb (frob capabilities --json, a read verb of BD-022) instead of 'one cheap verb'."
+  },
+  {
+   "bead": "N33a-11",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Request of S17 (round 2, not yet applied) applied: the non-group feature conformance = [mode-inproc], off by default, enabled only by frob-conformance, absent from Group, BUILT_WITH and the feature records; it compiles frob_fsim::conformance (cfg(any(test, feature = conformance))) that N33c-36, N33c-43 and N33c-44 fill. group_records_match_manifest excludes the mode features and conformance; tests conformance_feature_is_not_a_group and conformance_enabled_only_by_frob_conformance; acceptance line; related + the three probe beads."
+  },
+  {
+   "bead": "N33a-13",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "Request of S34 applied: the enum's arms listed (six at M0; FormatVersion and AuthorizationFlags added at M1 by N33a-17, when N34-REF's 891 loads); the Session adapter's five rows tabled (891 AfterChange, 816 Never, 792 OutsideDomain twice, 792 Other Never); the rule that an adapter raises a workspace code (891, 816) where a registry requires it of every reader of this system's artifacts, 792 only where no registry names the condition; related + N33a-17."
+  },
+  {
+   "bead": "BD-220",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "The e2e script called eval.compare, whose full row is M3 (BD-262; before M3 it answers only N33b-19's CPU referee form), on batch-cpu runs from this M2 bead, and ran run and mutate verbs without --key: the comparison is now a paired anytime study (study.plan, study.submit with --key, polled by study.status, N33b-19's verbs), and every run or mutate call carries its own --key so no rerun is answered by an earlier receipt. Dep N33b-19 added (the study verbs the script calls)."
+  },
+  {
+   "bead": "N33a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 1 of the comparison listed 'a row toolchain off T after INT-TOOLCHAIN-01' among the errors of StackLock::check_admitted; N33a-03 rule 9 says a row toolchain off T is never a LockError, and this bead's own table reports it as stack.toolchain kind off-T (N33c-08). The parenthesis now names only the two state-dependent rules and points to the off-T row."
+  },
+  {
+   "bead": "N33a-07",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Stated how an admission record relates to the gate's register row (convention 9): the writer never writes registries/gates.toml; the gate's bead runs its tier, writes the record and enters the row with record_gate from the same harness receipt (the form N33c-17, N33c-20, N33c-28 follow). Added the record field harness_receipt (hash of the run's frob.gauntlet.receipt/1, or null for an attempt through no tier; key required), the writer argument, tests harness_receipt_key_required and writer_leaves_gates_toml_alone, an acceptance line; related + N33c-17, N33c-20, N38a-02."
+  },
+  {
+   "bead": "BD-380",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Convention 9: the script wrote the two admission records and nothing entered the rows of INT-FLN-01/02. Now each gate's tier run (FROB_TEST_SEED, --features gauntlet-mutations, the tier the gate record names) carries the twins and the flipped capsule as registered controls, the records cite its receipt as harness_receipt, and this bead enters each row with record_gate; the script writes no row. Acceptance and e2e follow; dep N38b-19 added (no cycle)."
+  },
+  {
+   "bead": "N33a-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "may_cite was to be called by 'whatever records a gate result', and its acceptance required a gate-runner refusal that only the later recorder can show (convention 7). Now names the one caller, record_gate (N38b-19), reading the binary's mode from the harness receipt (N38a-02); the acceptance tests may_cite itself (refuses Performance and Parity under dev-salt, accepts admission). related + N38a-02, N38b-19."
+  },
+  {
+   "bead": "N33a-17",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "N33a-13 says the arms FormatVersion and AuthorizationFlags enter RefereeRefusalKind with this bead at M1; this bead now says it adds them (eight arms) with their mapping rows, and the acceptance checks the two arms. related + N33a-34 (owner of the admission step)."
+  },
+  {
+   "bead": "N33a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The bead carries gate INT-FSIM-14 but records only the fs-race admission record; it now says it writes no gates.toml row: the M1 part is entered by N33b-12 with record_gate and the M3 part by N33b-13 (one recorder per gate part). Known answers rechecked (exact binomial tail 0.00088 at 569, 0.00102 at 568; e-BH; combine_average)."
+  },
+  {
+   "bead": "N33a-22",
+   "kinds": [
+    "deps",
+    "placement",
+    "e2e-logging"
+   ],
+   "what": "Convention 7: an acceptance line required GATE-CORTEX-02 to be recorded 'not run: oracle absent' with the feature off, a gate this bead does not measure and whose fallback paths are N23a-15's (a dependent); moved to Considerations, naming N23a-15 and the gate's bead BD-196 (related + both). Its admission step frankentorch_cpu_admission is written into N33a-34's airlock_groups.sh, but N33a-34 was only related: now a dep (as N33a-31 has it; no cycle), with the step reported skipped before M2. GRU, Adam, tanh and linear-gradient known answers recomputed and correct."
+  },
+  {
+   "bead": "N33a-27",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Step identity_on_results ran 'one cheap verb' (convention 8: scripts call named verbs from their rows); now frob doctor --json and frob capabilities --json, two read verbs of BD-022 (so no --key is needed)."
+  },
+  {
+   "bead": "N33a-29",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Convention 5: the four sim run calls (a run verb) had no --key, so the binary would refuse them for the missing key (FROB-REF-805, as N33ap1-01 notes) before the 790, 802 or 724 the steps assert. Each call now carries its own key (ar-absent, ar-present, ar-misspelt, ar-tier-m2)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38a-02",
+   "what": "The harness receipt frob.gauntlet.receipt/1 must carry (1) stack_receipt (sr: form of BUILT_UNDER) and stack_dev, as N40-01 (rule on gate receipts, INV-SUITE-03) and N33a-06 state, with a dep on N33a-06; and (2) the producing binary's build_identity (dev-salt | depgraph-receipt, frob_core::stack::BUILD_IDENTITY_MODE), so the recorder can apply N33a-08's may_cite (no Performance or Parity pass from a dev-salt build), with a dep on N33a-08 (no cycle). Its field list has none of the three. N33a-07's admission records now cite this receipt as harness_receipt."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "BD-220's e2e and acceptance use --no-memo (property no_memo) on eval.run and study.submit (the memo bypass of BD-111 and N28b-38: look nothing up, compute, still store); neither row in VERBS-eval or VERBS-study lists it. Same request as F-U28b and F-U33b made: register no_memo as a common input of every verb the memo wrapper wraps, so these two rows carry it."
+  },
+  {
+   "bead": "N33a-28",
+   "what": "Under --record the script writes the M0 admission records (INT-FSIM-01, INT-FSQL-01, INT-CUDA-01, INT-FT-01, INT-FSYM-01, -02, INT-FNP-01, -02) but nothing enters their rows in registries/gates.toml. Convention 9 and N33a-07 (now: the admission writer never writes gates.toml; a record carries harness_receipt) need each gate's tier run (FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier> --features gauntlet-mutations -- <gate>), the record citing that receipt, and the row entered with record_gate from it by this bead (as N33c-17, N33c-20 do); the script itself writes no row. The steps of BD-007, BD-015 and BD-019 run inside this script."
+  },
+  {
+   "bead": "N38b-19",
+   "what": "N33a-08 defines frob_core::stack::build_identity::may_cite(gate_class), which refuses a Performance or Parity pass from a dev-salt binary with dev-build-identity, and names record_gate as its one caller; the recorder neither calls it nor reads the producing binary's BUILD_IDENTITY_MODE. Add the refusal dev-build-identity (beside receipt-dirty-tree) and a test, with a dep on N33a-08 (no cycle); the mode reaches the recorder through the harness receipt (see the request to N38a-02)."
+  },
+  {
+   "bead": "N33a-21",
+   "what": "Its admission is the step fnp_linalg_admission of scripts/e2e/airlock_groups.sh, which N33a-34 says each adding bead writes, but N33a-21 does not depend on N33a-34 (N33a-31, N33b-22 and N33bx-03..07 do; N33a-22 now does). Add dep N33a-34 (M1; no cycle) and say N33a-34 provides the script, its step table and the skip logic."
+  }
+ ],
+ "unchanged": 14,
+ "notes": "Resumed after the interrupted reviewer: its edits to BD-015, BD-044 and BD-096 checked and completed (BD-044 also needed dep N39-CX, an M0 orphan after H-cx-2). All seven slice requests applied. Main finding beyond them: the relation between an admission record (N33a-07) and the gate's gates.toml row was unstated, so INT-gate beads wrote records while nothing entered their rows (convention 9); N33a-07 now states it and adds harness_receipt, BD-380 enters its rows with record_gate, and N33a-28 (owner of the M0 admission runs of BD-007, BD-015, BD-019) is asked to do the same. Unchanged (14): BD-007, BD-019, BD-300, BD-416, N33a-01, N33a-02, N33a-03, N33a-04, N33a-14, N33a-16, N33a-19, N33a-31, N33a-34, N33ap1-01; their known answers were recomputed where numeric. All 32 staging files parse (one-line JSON lists, seven sections, deps and related name existing beads); graph has no cycle."
+}

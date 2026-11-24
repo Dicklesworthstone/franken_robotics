@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-quad-mammal", "BD-109", "N14b-24", "BD-089", "BD-201", "ROBOT-go2", "ROBOT-a1"]
+related: ["ROBOT-go2", "ZOO-quad-mammal"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -41,8 +41,9 @@ stores).** 12 actuated revolute joints (hip abduction, hip pitch, knee per leg);
 links per leg); floating base, so n_v = 18; total mass on the order of 12 kg; one actuator per joint with a
 control range; foot contact by a sphere geom per foot.
 
-**Import path.** `frob design import --format mjcf assets/robots/go1/source/<entry> --out
-assets/robots/go1/import.fbot --json`. Expected loss-report entries (HYPOTHESIS until the file is read):
+**Import path.** `frob design import assets/robots/go1/source/<entry> --format mjcf --name go1 --key
+asset-go1-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). Expected loss-report entries (HYPOTHESIS until the file is read):
 visual meshes carried as visuals only; mesh collision geometry on the trunk and thighs replaced by fitted
 primitives with a recorded fitting error; solver and contact parameters of the source (`solref`, `solimp`,
 `condim`) not mapped to a native contact law and listed; joint `armature`, `damping` and `frictionloss` mapped
@@ -65,7 +66,9 @@ terrain task families at M2.
       read date recorded.
 - [ ] `import.fbot` has a pinned `DesignId`; the loss report equals its golden; counts equal the manifest.
 - [ ] Mirror consistency of the legs is reported, with the computed Γ_mech of the import stated.
-- [ ] The mass on file is written by validation and consumed by the `quad-mammal@go1` preset row.
+- [ ] The mass on file is written by validation into the manifest field that the `quad-mammal@go1` preset row reads; the preset and its
+      GATE-SKEL-07 row are BD-109's, which reads the pinned fixture, so this bead checks the field (present, sourced,
+      equal to the validated total) and does not wait on the preset.
 
 ## Test plan
 

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "suite", "traction", "upstream", "frankensim", "frob-contact", "solid"]
 parent: "WP-10"
-deps: ["BD-037", "BD-079", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-079", "BD-080", "N24b-03", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-080", "BD-158", "BD-166", "BD-232", "BD-035", "FD-FSIM-12"]
+related: ["FD-FSIM-12", "N16a-05", "N16b-21", "N33a-16", "N33b-10", "NF-10"]
 gates: ["GATE-TRAC-02"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§16.4", "§18.3", "§33.8", "§33.10"]
 ---
@@ -142,8 +142,16 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_03 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob contact probe --json` on the four fixture pairs and the parity gate's sampler,
-asserting the maximum distance and normal disagreements against their thresholds.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also re-runs the parity gate in the Gauntlet's cargo form (ADR-GAUNT-01, BD-025; no `frob
+conformance` command exists) `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity --
+GATE-TRAC-02` over the enlarged pair set, asserting from its receipt the maximum distance and normal
+disagreements against their thresholds and a non-zero count for every pair kind; and, from the user's side, runs
+`frob sim run --tier referee --fixture traction/sphere_on_heightfield --seed <s> --key fsim03-hf-<s> --json` (a sphere dropped on a
+flat heightfield, a field pair the referee could not check at the pin; the fixture is registered by this bead as
+`assets/fixtures/traction/sphere_on_heightfield/fixture.toml` in the fixture registry of N24b-03, and the run is
+the referee step of BD-080, both dependencies), asserting a committed run whose contacts
+carry their ε_g. (No verb takes a raw primitive pair: `contact.probe`, N18b-29, evaluates laws at a contact state,
+and the four fixture queries are asserted by the `upstream_fd_fsim_03` test, not through `frob`.)
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_03/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

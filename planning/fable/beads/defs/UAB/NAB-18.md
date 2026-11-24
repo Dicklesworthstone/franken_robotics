@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-17"]
-needs: ["§40.4: the kill-gate records that the decision column names, each with its trigger, fallback and deciding milestone (N40-23 to N40-27)"]
-related: ["NAB-19", "NAB-20", "NAB-21", "NAB-22", "NAB-50", "N40-30"]
+deps: ["N40-23", "N40-27", "NAB-17"]
+needs: []
+related: ["NAB-19", "NAB-20", "NAB-21", "NAB-22"]
 gates: []
 plan_refs: ["Appendix C.1.1", "Appendix C.1"]
 ---

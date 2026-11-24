@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "N14b-20", "NEG-15", "ROBOT-go1", "ROBOT-go2"]
 needs: []
-related: ["ZOO-quad-mammal", "BD-109", "N14b-24", "BD-089", "ROBOT-go1", "ROBOT-go2"]
+related: ["ROBOT-barkour", "ROBOT-go1", "ROBOT-go2", "ZOO-quad-mammal"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -38,8 +38,9 @@ the no-endorsement clause.
 **Expected facts (recalled, mark M; the pinned files govern).** 12 actuated revolute joints; 13 bodies;
 n_v = 18; total mass on the order of 12 kg; one actuator per joint; sphere feet.
 
-**Import path.** `frob design import --format mjcf assets/robots/a1/source/<entry> --out
-assets/robots/a1/import.fbot --json`. Expected loss-report entries (HYPOTHESIS until read): as for the other
+**Import path.** `frob design import assets/robots/a1/source/<entry> --format mjcf --name a1 --key
+asset-a1-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): as for the other
 Unitree quadrupeds (visual meshes; fitted collision primitives with recorded error; unmapped solver and
 contact parameters; `armature`, `damping`, `frictionloss` to an `assumed` actuator card; keyframes to named
 poses).
@@ -60,7 +61,9 @@ comparison above as a metamorphic test of the importer.
 - [ ] `import.fbot` has a pinned `DesignId`; loss report equals its golden; counts equal the manifest.
 - [ ] The parameter-stripped skeletons of `go1`, `go2` and `a1` are identical, or every difference is
       explained by a named field of the sources.
-- [ ] The mass on file is written by validation and consumed by the `quad-mammal@a1` preset row.
+- [ ] The mass on file is written by validation into the manifest field that the `quad-mammal@a1` preset row reads; the preset and its
+      GATE-SKEL-07 row are BD-109's, which reads the pinned fixture, so this bead checks the field (present, sourced,
+      equal to the validated total) and does not wait on the preset.
 
 ## Test plan
 

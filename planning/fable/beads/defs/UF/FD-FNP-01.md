@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "spark", "upstream", "franken_numpy", "frankentorch", "solid"]
 parent: "WP-37"
-deps: ["FDEF-03", "NF-01", "STD-E2E"]
+deps: ["FDEF-03", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-036", "BD-037", "BD-193", "BD-301"]
+related: ["N21a-05", "N33b-08"]
 gates: ["INT-FNP-02", "INT-FNP-01"]
 plan_refs: ["Appendix F.1", "Appendix F.2 row 3", "Appendix F.3", "§33.11", "§21.5", "§33.4", "§33.8"]
 ---
@@ -64,9 +64,12 @@ this item's registry row.
 allocation's extent in bytes. Output: element origin o_e = o_b/s and unsigned element strides e_k = b_k/s. It
 fails, with the reason and the axis, when: s does not divide o_b (`MisalignedOrigin`); s does not divide some
 b_k (`NotMultipleOfItemSize`); some b_k is negative (`NegativeStride`); or the largest addressed element
-o_e + Σ (n_k − 1)·e_k lies outside the extent (`OutOfExtent`).
+m = o_e + Σ (n_k − 1)·e_k lies outside the allocation, that is (m + 1)·s > extent in bytes (`OutOfExtent`).
+A view with some n_k = 0 addresses nothing and is never out of extent.
 
-*Elements to bytes.* b_k = e_k·s and o_b = o_e·s, failing on arithmetic overflow or `OutOfExtent`.
+*Elements to bytes.* Input: item size s; element origin o_e; unsigned element strides e₁ … e_d; shape; the
+extent in bytes. Output: b_k = e_k·s and o_b = o_e·s, failing on arithmetic overflow (`Overflow`, checked
+multiplication in `isize`) or on the same `OutOfExtent` condition.
 
 Neither function copies data or reinterprets a buffer; each is a statement about index arithmetic. In
 franken_numpy the functions sit beside its view type and name FrankenTorch's convention in their documentation;
@@ -113,7 +116,7 @@ have landed their half; with one half landed, the local arithmetic stays for the
 - [ ] In each repository: the two functions and the error type exist, documented with the other library's convention named, and pass the cases below; existing view tests are unchanged.
 - [ ] Here: the boundary converter contains no stride arithmetic of its own at the new pins (a source scan); its policy tests still pass.
 - [ ] Here: INT-FNP-02 and INT-FNP-01 pass at the new pins with their results recorded.
-- [ ] Here: a function at an interchange boundary that takes a bare stride tuple is still caught by the converter crate's boundary lint.
+- [ ] Here: a bare stride tuple still cannot cross the boundary: BD-036's compile-fail test `bare_tuple_does_not_compile` and its run-time test `foreign_descriptor_without_unit_refused` still pass at the new pins.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
@@ -126,7 +129,8 @@ In each repository (added):
 - `negative_stride_is_refused`: s = 4, o_b = 4, byte strides (8, −4); expected `NegativeStride { axis: 1 }`. (The view addresses elements (1, 0, 3, 2), which unsigned strides cannot express.)
 - `non_multiple_is_refused`: s = 4, byte strides (6, 4); expected `NotMultipleOfItemSize { axis: 0 }`.
 - `misaligned_origin_is_refused`: s = 4, o_b = 2; expected `MisalignedOrigin`.
-- `out_of_extent_is_refused`: element strides (8, 4), shape (2, 2), extent 12 elements; the largest addressed element is 12, outside; expected `OutOfExtent`.
+- `out_of_extent_is_refused`: elements to bytes with s = 4, o_e = 0, element strides (8, 4), shape (2, 2), extent 48 bytes (12 elements); the largest addressed element is 12, and (12 + 1)·4 = 52 > 48; expected `OutOfExtent`. The same view with extent 52 bytes is accepted.
+- `overflow_is_refused`: elements to bytes with s = 8 and an element stride of 2⁶²; expected `Overflow`.
 - Property test: for 10⁴ random shapes up to rank 4, item sizes in {1, 2, 4, 8} and non-negative strides that are multiples of the item size, bytes → elements → bytes is the identity, and every index addresses the same element on both sides.
 Here:
 - `boundary_uses_library_conversions`: a source scan and a behaviour test at the new pins.
@@ -153,7 +157,7 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - KA-777: index [1, 1] is element 3; the negative-stride view addresses (1, 0, 3, 2) and is materialized or refused; negative control: copying (8, 4) verbatim addresses element 8 + 4 = 12, in bounds. CX-353: "a stride tuple means the same thing in every array library".
-- Negative controls: a conversion that drops the divisibility check must accept (6, 4) and be caught; one that takes absolute values of negative strides must return a view that reads (0, 1, 2, 3) for the reversed case and be caught by the element-order test.
+- Negative controls: a conversion that drops the divisibility check must accept (6, 4) and be caught; one that takes absolute values of negative strides turns origin 1 and strides (2, −1) into (2, 1), addresses (1, 2, 3, 4) where (1, 0, 3, 2) is right (element 4 outside a four-element allocation), and must be caught by the element-order test; one that checks the extent in elements against a byte count must accept the 48-byte case above and be caught.
 - Determinism lanes: exact integer arithmetic, identical on every platform (class D0).
 
 ## Considerations

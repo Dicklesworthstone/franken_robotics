@@ -1,0 +1,358 @@
+{
+ "round": 1,
+ "slice": "U28b",
+ "reviewed": 48,
+ "changed": [
+  {
+   "bead": "BD-090",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Manifest gains `pin`, `filters` and the bundle-hash definition that N29a-02 writes and N29a-03 recomputes; frun::verify reports `check` in the auditor's vocabulary and fixed order (non-canonical, schema, authorization-flag, run-identity, content, header, partition, chain, frontier, gap) so the N29a-03 differential is well defined; the swap test was wrong under that order (an exchanged pair fails `header`/`content` first; `chain` only in a mutant) and is restated with new tests; the e2e script drove verbs of later beads (run.export, frob-verify, telemetry.query) and is replaced by the step groups of N29a-08 and N24a-39 with this bead's logging fields; kind enum non-exhaustive for N24a-44."
+  },
+  {
+   "bead": "BD-248",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "users"
+   ],
+   "what": "Planted single causes did not match the plan's attribution known answer (KA-670: friction drop, torque cap, payload shift, latency, terrain step; 'bus sag' is not a class): now 20 entries, four per class, each with plant and inverse as do() strings, two inert interventions, margin stratum and 16 world addresses so N27b-08 can build its 40 failures per class and out-of-list controls; counts test 18/102/54/10/20 (204); out-of-scope pointer N28b-29 (superseded) replaced by N26b-03/N26b-05; deps BD-110 (the e2e runs design check) and STD-E2E."
+  },
+  {
+   "bead": "BD-332",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "KA-072 mutant corrected (abelian-quotient test: 8 pairs with H whole, 26 in all, not 7; request from U10a); the per-atlas T-25 group-enumeration certificate that CARD-T-25 requires of the producer added (step 8a; Certified only with an accepted certificate, else Tested as the registry's static label); vague 'FROB-REF-1xx' replaced by FROB-REF-802 (unknown network, schema enum) and FROB-REF-214 (the registry row's chapter refusal) with tests; deps CARD-T-25 (moved from related), N12-45 (D.5 oracles; request from U12-2) and STD-E2E."
+  },
+  {
+   "bead": "BD-345",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Renamed to the audit record's vocabulary (request from dup-14): frob.nemesis.audit/1, verdicts passed/screen-biased/bound-above-tolerance/void, plant status sealed/survived/missed/not-run/commitment-mismatch, prepare and run actions; added bypass_in_force before each stage (bypasses persist across campaigns per screen version); decided the bound-above-tolerance case the audit leaves to the cascade (uninformative, no label; DESIGN with reason) and set the lane's merge floor m_min to ceil(ln d/ln(1-t)) = 59 so merges happen before scores; missed plant affects every stratum of its family; GATE-NEMESIS-07 is read from N26b-07 (dep added), not measured here."
+  },
+  {
+   "bead": "BD-346",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Build-packet/promotion misuse is FROB-REF-830 under the one-code precedence of N16b-04 and N28-REF, 557 only for presentation without the condition (tests and e2e updated); the e2e drove opt.cascade, whose verb BD-352 depends on this bead: GATE-ATEL-10 is now measured by a cargo gate test on stage-4 fixtures from N16b-15's planted exploits, and the script is run as N28b-28's stage5 step; deps N16b-04, N28-REF, STD-E2E."
+  },
+  {
+   "bead": "BD-374",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "sense"
+   ],
+   "what": "Lower bound L redefined as the maximum of the rejected prefix of the c-grid (valid at level alpha without assuming monotone e-processes; tests for an isolated rejection and for coverage); BET-10's FAIL consequence now reads N28b-43's per-cluster effect table, not usage counts (contradicted section 6); KILL-SOLVE is decided by N32a-32, not BD-372; the three base tools named."
+  },
+  {
+   "bead": "N28b-43",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "Per-cluster e-process defined (BD-374's betting e-process at c = 1 on (ablated - full)/(2H), its null and span) and the e-BH rule written out; e-BH fixtures rechecked (none, two, three rejected). Launch order now refers to N28b-11's balanced keyed schedule (a plain permutation of (brief, index, arm) cannot guarantee balance)."
+  },
+  {
+   "bead": "N28b-01",
+   "kinds": [
+    "placement",
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "The M3 bead's only e2e was a step of the M4 script; it now writes the edit_invalidation step of the script's M3 section (the pattern BD-113 uses for M1), N28b-06 keeps it; KA-700 test made precise (only the relay's doorway is widened, so the cart's feasibility obligations are untouched); deps BD-113 (design.diff --invalidation surface) and STD-E2E."
+  },
+  {
+   "bead": "N28b-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Probe semantics made consistent with the paired predicate: v0 is the reference and never probed, so P = ceil(log2 L) + e with e in {0,1} (was 0..2) and the scan budget is L-1+e (was L+1); undecided bad endpoint returns bracket (0, L); a version better than v0 maps to pass; path rule aligned with the verb (--via, else fewest edits) instead of first-parent; Identical migrations contracted via N28b-05 (dep added); tests for each."
+  },
+  {
+   "bead": "N28b-03",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "The synthetic error lane could not fail (inert versions far from the null boundary): added a least-favourable configuration and a per-record threshold check (decided e-value >= P/alpha) that catches the alpha-per-probe mutant deterministically; off-by-one mutant defined (lo <- mid+1) with a manifest floor of 6 lineages it must break; relabel mutant guaranteed by lineage 0; reversal metamorphic moved to the rules level (the verb requires bad to descend from good)."
+  },
+  {
+   "bead": "N28b-04",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Heads in one namespace held by two stores could not be merged order-independently (the exit-7 rule needs a live writer): heads are now a grow-only set of head updates with derived values (a multi-value register), conflicted names listed with candidates, edits against them exit 7, a resolving update names all candidates; tests, e2e step and a last-writer-wins mutant added."
+  },
+  {
+   "bead": "N28b-05",
+   "kinds": [
+    "correct",
+    "tests",
+    "placement",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Missing refusal codes named: FROB-REF-791 (producer worker absent, section 33.16) and FROB-REF-125 (unknown schema, as N29ax-01); the bisect-contraction test could not fail (ceil log2 8 = ceil log2 7) and tested an M4 planner from an M3 bead: now tests lineage::contract_identical_migrations with nine edits; writes the migration step of the M3 e2e section; dep STD-E2E."
+  },
+  {
+   "bead": "N28b-06",
+   "kinds": [
+    "placement",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script split into m1/m3/m4 sections owned by the beads that ship them; bisect assertions corrected to the endpoint-probe budget (alpha/4 for the six-version case; alpha/5 and interior probes v6, v9, v7 for the twelve-edit case, which takes three interior probes, not four); gate_query reads N28b-03's receipt instead of re-running a battery of hours inside a 15-minute script; merge step covers the conflicted-head case."
+  },
+  {
+   "bead": "N28b-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "saving_gpu_s was inflated by memo hits (zero seconds in the denominator) and the claimed invariant saving_gpu_s <= saving_obs is false with unequal costs: baseline defined per candidate, memo hits charged their recompute cost on both sides and reported as memo_gpu_s_avoided, invariant restated for equal costs; worked test 64/19 vs 32/17; negative controls updated."
+  },
+  {
+   "bead": "N28b-09",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "FROB-REF-541 (member outside the family policy's generator support) passed through with a test; radius shrink factor fixed at 1/2 to match the test; dep STD-E2E (the bead owns an e2e script)."
+  },
+  {
+   "bead": "N28b-10",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Owns scripts/e2e/design_benchmark_brief.sh sourcing the STD-E2E helper: STD-E2E added to deps. Acceptance arithmetic re-verified (0.9440, 0.9279, 0.9179, 0.8916; rmt 6,000 s; pooled 6/5)."
+  },
+  {
+   "bead": "N28b-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Launch order was a plain keyed permutation of (brief, index, arm), which cannot satisfy its own balance test: now (brief, index) blocks in keyed order with a keyed balanced arm order inside each block, generalized to ablation arms; test rewritten with the unbalanced-permutation mutant; dep STD-E2E (writes the dry-run script's protocol steps)."
+  },
+  {
+   "bead": "N28b-13",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "dup-14 rename: out-of-scope pointer N28b-29 (superseded) replaced by N26b-02/04/05 and the frob.nemesis.audit/1 record; cancelled campaign marks lane pairs incomplete and the audit's strata `void` (N26b-02), which BD-345 treats as missing."
+  },
+  {
+   "bead": "N28b-15",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Added agrees_with_pilot_reference: the shipped survivor rule must reproduce the decisions of the pilot's reference implementation on the pilot log, so KILL-LADDER's pilot evidence speaks for the rule that ships."
+  },
+  {
+   "bead": "N28b-16",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The survivor-fed negative control claimed false alarms on clean data, which a stationary population does not produce: replaced by the input refusal (FROB-REF-546) and a drift-below-survivors fixture that the audit-fed alarm catches and the survivor-fed mutant misses; tests added."
+  },
+  {
+   "bead": "N28b-18",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The M3 pilot's conformal chooser used 'the real modules' including the survivor rule and 3k check, which are N28b-15 (M4, depending on this pilot): those two are now a reference implementation in the pilot crate, with the audit draw, margin and alarm the real M3 modules; N28b-15 carries the differential test."
+  },
+  {
+   "bead": "N28b-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "e2e used `--allocation table`; the verb (BD-352) spells it `--allocation fixed`."
+  },
+  {
+   "bead": "N28b-20",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Firing rule made unambiguous: fails on first run and again after the repair cycle on any measured condition (not necessarily the same), or no repair registered; fixtures added for the mixed-condition and no-repair cases."
+  },
+  {
+   "bead": "N28b-12",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The sampling-controller refusal at R3/R4 had no code: FROB-REF-817 (section 22.14, passed through from the controller chapter; the code its deps N22c-31/32 use) named in the rule, acceptance and test."
+  },
+  {
+   "bead": "N28b-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Inputs plant_lost/audit_missing replaced by one audit_uninformative flag that BD-345 sets from the audit record's vocabulary (missed, screen-biased, bound-above-tolerance, void, commitment-mismatch, audit-missing, bypass in force); exhaustive test re-specified (four tau cases x 2^6 flags) and a mapping test added; the sticky case is now the bypass."
+  },
+  {
+   "bead": "N28b-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The registered not-run list lacked reasons that sibling controls emit (trivial-symmetry, no-mirror-pair from N28b-26; no-exclusions from N28b-30), so their not-run outcomes would be rejected: list moved to a registry file and completed; test scans every control's reasons."
+  },
+  {
+   "bead": "N28b-27",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The null-race replay permuted candidate labels within addresses, which is undefined once the real race has eliminated candidates (no outcome to hand a live replay candidate) and loses potency exactly when a defective rule eliminates early: replay candidates now draw from each address's recorded pool (without replacement, then with), which keeps the null exact; tests added."
+  },
+  {
+   "bead": "N28b-28",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Graph finding: of 19 deps, 18 were implied through BD-352/BD-377; kept the beads the script uses directly (BD-302, BD-342, BD-346 whose script it runs, BD-352, BD-377, STD-E2E), added N28b-31 (its screening_audit.sh is invoked as stage3), moved the mechanism beads to related; stage5 step now asserts BD-346's 557/830 refusals; gate_query reads the register row instead of re-running the gate-scale campaign and no longer compares reduced-scale values with the gate-scale row."
+  },
+  {
+   "bead": "N28b-30",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Out-of-scope pointer N28b-29 (superseded) replaced by the screening audit N26b-01..05; GATE-ATEL-09 receipt owner (BD-345) named. Arithmetic re-verified (0.4507, 0.0950, 0.94176 J, sample sizes)."
+  },
+  {
+   "bead": "N28b-31",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "dup-14 rename done: N28b-29 spellings (under-sampled, reached-finalists, lost, --campaign) mapped to the frob.nemesis.audit/1 vocabulary (bound-above-tolerance, survived, missed, positional campaign with --campaign as alias); steps assert BD-345's trust rule (missed -> every stratum of the plant's family plus bypass; bound-above-tolerance -> uninformative, no label, 'audit insufficient'; audit-missing via bypass_in_force); clean step no longer claims modes unchanged where the reduced population cannot reach 59 audits."
+  },
+  {
+   "bead": "N28b-32",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Surface lacked the plan's walkthrough form (a design target with --since, answered per verdict with an inherited/invalidated/reruns summary) and the run field N28b-33 needs, so later steps would change the schema: both added from M1 with tests. The bead could not be tested at its close (no engine until N25a-13/BD-292, which depend on it): a scripted fixture engine and a no-engine default (every obligation revoked, reason no-engine) make every surface rule testable; e2e surface section rewritten and later sections attributed correctly; STD-E2E dep added."
+  },
+  {
+   "bead": "N28b-33",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its plan step is now stated as added by this bead to N28b-32's script on the real engine, and covers the doorway fixture its acceptance names."
+  },
+  {
+   "bead": "N28b-34",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "The polarity e2e step drove grade 3 through BD-347, which depends on this bead: fixtures now posed as mission answers so the step runs on the upstream mission-side grader (N25ap1-01), with BD-347's script covering other verdict kinds; Out pointer corrected (registry and grader are N25ap1-01, not BD-292)."
+  },
+  {
+   "bead": "N28b-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "GATE-ATEL-11 is a known-answer gate (only KILL-REUSE's one-fifth is TARGET); acceptance label fixed. Composition (30) and saving arithmetic re-verified."
+  },
+  {
+   "bead": "N28b-38",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Shadow selection by key hash alone means about 63 of 64 nodes are never shadowed however often served (so the e2e step 'repeat until a shadow fires' could never fire on them, and the 300-hit detection figure assumed distinct keys): selection now hashes the key with the node's hit ordinal, still deterministic; test every_node_shadowed_periodically with the key-only mutant. Mode advance (10^4 clean shadowed hits) contradicted its own e2e and the batteries' temporary stores: rollout record placed in the release configuration, with a test store profile marked test-override."
+  },
+  {
+   "bead": "N28b-40",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Incremental lane runs under the test store profile, so setting mode analyses on a temporary store is allowed by N28b-38's rollout rule."
+  },
+  {
+   "bead": "N28b-41",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "All members of a digest class share one memo key per address, so key-only shadow selection would shadow all or none: aligned with the ordinal selector; 'detected within 64 hits' had a 0.36 miss probability, now 640 hits (4e-5), hits-to-detection logged. Ballast counts 735,471/24,546 and 210/182 and the 30.0/20.6 factors re-verified by enumeration."
+  },
+  {
+   "bead": "N28b-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Tripwire repeats the same episodes until a shadow fires, which now works with the ordinal selector (at most 640 repeats); lanes under the test store profile."
+  },
+  {
+   "bead": "N28bx-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "A verdict that already passes was mapped to FROB-REF-869 (dangling citation): now a finding NothingToFlip with exit 2; 869 kept for dangling or tombstoned verdicts; tests added. Friction-demand values and 0.63 m/s re-verified."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N29a-08",
+   "what": "verify-* group expects a byte-swap of two chunk files (manifest unchanged) to fail with first_failure.check = chain; under the shared check order of BD-090/N29a-03 (content and header before chain) it fails `content` at the lower index. Expect `content` for exchanged file bytes (and `header` for exchanged index entries)."
+  },
+  {
+   "bead": "N29a-03",
+   "what": "Use BD-090's check names for the first failure (non-canonical, schema, authorization-flag, run-identity, content, header, partition, chain, frontier, gap) and its order (manifest-level checks, then per chunk content, header, partition, chain, then frontier and gap) so the differential with frun::verify compares like with like."
+  },
+  {
+   "bead": "BD-343",
+   "what": "Align with N28b-02 (the rules it depends on): alpha per probe is alpha/P with P = ceil(log2 L) + 1 when the bad endpoint has no stored outcome (state 'bad endpoint stored' in probe_level_is_alpha_over_log2 and the L = 32 acceptance line); with --scan-prefix P = L - 1 + e; result labels `bracket` (inconclusive probe) and `no-change` (endpoints not different, exit 2) instead of `inconclusive`/refusal to start; a version settled better than the good endpoint is `unchanged`, not inconclusive; Identical migrations are contracted (N28b-05)."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "All 48 beads reviewed. Unchanged after review: N28b-07, -14, -17, -22, -24, -26, -36, -37, -39. Main themes: M3 beads now write their own section of shared e2e scripts (lineage_queries.sh m3; result_revalidate.sh surface) instead of relying on later scripts; vocabulary aligned with frob.nemesis.audit/1 after N28b-29 was superseded (N28b-13, -23, -30, -31); statistical repairs (N28b-03 lane that could not fail, N28b-16 survivor-fed control, N28b-27 null replay after eliminations, BD-374 prefix bound, N28b-38/-41 shadow selection by hit ordinal); N28b-28 deps trimmed from 19 to 7 (18 were implied through BD-352/BD-377; mechanism beads moved to related; N28b-31 added). No cycles (graph_check cycles = 0); no dependency on a later milestone; all slice files pass the front-matter and seven-section check. Requests filed for beads outside the slice: BD-343 (bisect budget and labels vs N28b-02), N29a-03 and N29a-08 (BD-090 check names and order). Possible follow-up outside the slice: N25a-13 and BD-347 may wish to cite the design-target/--since form and the run field now fixed in N28b-32's M1 schema."
+}

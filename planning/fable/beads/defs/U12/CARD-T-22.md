@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-cert", "frob-lemma", "solid", "test"]
 parent: "WP-42"
-deps: ["BD-132", "N12-06", "CARD-T-21", "SPEC-C-32"]
+deps: ["BD-132", "CARD-T-21", "N12-06", "SPEC-C-32"]
 needs: []
-related: ["BD-042", "BD-133", "N12-35", "N12-34", "N12-05", "BD-382", "BD-130"]
+related: ["GB-31", "N12-05", "N12-34", "N12-35", "N12-46", "N25c-10", "N25c-11", "N25d-36"]
 gates: []
 plan_refs: ["§12.3 (T-22)", "§10 C-32", "§25.5.3", "§25.13", "§7 NS-13", "Appendix D.6 (stance family)"]
 ---
@@ -64,10 +64,15 @@ that bead's acceptance; the receipt produced there is what moves the registry ro
    feasible law on the whole rectangle: bilinear weights reproduce affine functions of P, so the three
    equalities hold, and a convex combination of vectors in the box stays in the box. It is not affine: an affine
    law would need f(++) + f(−−) = f(+−) + f(−+), but the witnesses give (160, 240, 240, 160) against
-   (240, 160, 160, 240). Within the class of affine laws f(P) = f₀ + G·P the equalities force f₀ = 100 N per foot
-   and the worst foot carries 100 + 60/(4a) + 30/(4b) = 145 + 15/(2b) N, so the rating 160 N needs b ≥ 1/2 m. The
-   bundle therefore declares `law_class: adjustable` with `law: multilinear-vertex` over the arguments P_x, P_y;
-   the same vertices labelled as one affine law are rejected.
+   (240, 160, 160, 240). Within the class of affine laws f(P) = f₀ + G·P the equalities leave a one-dimensional
+   freedom along the null vector n = (1, −1, −1, 1) of A: f₀ = 100·(1, 1, 1, 1) + t·n and G = G_sym + n·sᵀ, where
+   G_sym·P = (P_x/(4a))·(1, 1, −1, −1) + (P_y/(4b))·(1, −1, 1, −1). Adding foot ++ at P = (60, 30) to foot +− at
+   (60, −30) gives 290 + 15/b + 60·s_y N, and foot −+ at (−60, 30) plus foot −− at (−60, −30) gives
+   290 + 15/b − 60·s_y N (t and s_x cancel in both). With every force at most 160 N the four terms sum to at most
+   640 N, so 580 + 30/b ≤ 640 and b ≥ 1/2 m for every affine law; the symmetric law (t = 0, s = 0) attains it, its
+   worst foot carrying 100 + 60/(4a) + 30/(4b) = 145 + 15/(2b) N. The bundle therefore declares
+   `law_class: adjustable` with `law: multilinear-vertex` over the arguments P_x, P_y; the same vertices labelled
+   as one affine law are rejected.
 4. Exclusion for every b < 3/14 m (kind `lp-farkas`, class `Certified`). In the chart v = 1/b with relaxation
    A·f = (W, 3·P_x, v·P_y), the dual y = (0, ½, ½) gives yᵀA = (1, 0, 0, −1), so yᵀA·f = f₊₊ − f₋₋ ≤ 160, while
    yᵀ(W, 3·P_x, v·P_y) = 90 + 15·v at the vertex P = (60, 30), which exceeds 160 for all v > 14/3. At b = 1/5 m
@@ -101,14 +106,22 @@ that bead's acceptance; the receipt produced there is what moves the registry ro
 `corner_equation_gives_three_fourteenths` (90 + 15/b ≤ 160 ⇔ b ≥ 3/14); `bilinear_interpolant_feasible_on_grid`
 (a 13 × 7 rational grid of loads, all equalities exact, all forces in [0, 160]); `witnesses_not_affine`
 ((160, 240, 240, 160) ≠ (240, 160, 160, 240)); `affine_class_needs_half_metre` (145 + 15/(2b) ≤ 160 ⇔ b ≥ 1/2);
-`dual_at_one_fifth_is_165`; `dual_sign_on_open_cell`; `swapped_ports_rejects` (Σ x·f = 140/3 ≠ 60);
+`affine_pair_sum_bound` (for random rational t and s the four vertex terms sum to 580 + 30/b exactly, so no affine
+law fits under 160 N per foot for b < 1/2); `dual_at_one_fifth_is_165`; `dual_sign_on_open_cell`;
+`swapped_ports_rejects` (Σ x·f = 140/3 ≠ 60); `force_floor_rejects`, `passive_authority_rejects`,
+`moment_as_torque_rejects` ((60, 30) where (30, −60, 0) is expected) and `affine_label_rejects`, each with its
+first failing rule; `closed_end_rejects` (the exclusion cell [14/3, 6]: at v = 14/3 the value is 160, not above);
 `passive_springs_counterexample` (at b = ¼ m active allocation gives (155, 135, 105, 5) N and equal passive
 springs give (175, 115, 85, 25) N, above the cap).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) and `scripts/e2e/lemma_second_machine.sh` (bead N12-35)
-run the specimen and its mutations and log each first failing rule.
+run the specimen and its mutations and log each first failing rule. For this card their NDJSON lines (STD-E2E
+helper) carry `ts`, `script`, `bead` ("CARD-T-22"), `step` (`T-22/<specimen-or-mutation>`), `event`, the exact
+command line, exit code, wall time, per vertex the recomputed Σ f, Σ x·f and Σ y·f against W and P in N and N·m,
+the dual margin yᵀw − β in N, the bundle's BLAKE3 on each machine, the expected and observed verdict, and on a
+mismatch the first failing rule and the path to reproduce.
 
 ### Known answers and negative controls
 

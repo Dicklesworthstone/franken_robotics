@@ -4,11 +4,11 @@ title: "Owner decision: the sixteen ideas listed as not yet placed (seven since 
 type: "task"
 priority: 1
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record", "owner-decision"]
+labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record", "owner-decision", "review-notes-open"]
 parent: "EPIC-M0"
-deps: ["NAB-42", "NAB-32", "NAB-48"]
-needs: ["§36: the M2 profile of the batched step by stage, which is the trigger for one conditional idea (BD-217)", "§19.15: the brick pool's deduplication and rebuild measurements at GATE-HAB-13, the trigger for another (BD-164)", "§16.12, Appendix F: the upstream work item for exact loop closure in the sibling multibody crate (FD-FSIM-04)"]
-related: ["NAB-25", "NAB-29", "NAB-40", "NAB-41", "NAB-46", "NAB-50", "N14b-28", "N16c-29", "N19c-33", "N20b-32", "N24c-20", "N24c-29", "N25e-18", "N28c-32", "BD-060", "BD-112", "BD-163", "BD-167", "BD-187", "BD-200", "BD-418", "BD-422"]
+deps: ["NAB-32", "NAB-42", "NAB-48"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix B.8", "Appendix B.6.3", "§45.12", "§0.7"]
 ---
@@ -48,7 +48,8 @@ owner's decision record. Out: building any of the ideas; the seven placed mechan
 `why_not_placed`, `suggested_home` (verbatim), `standing` and `default_disposition` (the last two columns),
 `carriers` (for the seven placed), `killed_idea` (for the parked and declined), `trigger` (for the
 conditional), `owner_decision` (empty until decided) and `disposition`: `placed`, `parked`, `declined`,
-`conditional` or `owner-to-decide`.
+`conditional` or `owner-to-decide`. `counts_toward_tally` is true on UP-01 to UP-11 and false on the five review
+ideas (the join of NAB-42 §3: UP-03 and UP-04 count as placed, the other nine as not placed).
 
 **2. The sixteen.**
 
@@ -69,7 +70,7 @@ conditional), `owner_decision` (empty until decided) and `disposition`: `placed`
 | Task-specification audit by ghost bodies | review | Run degenerate or deliberately capable bodies against the task predicate | Not examined by a second pass | §24.5 beside `task.check`; compare with the detectors of §23.16 | Placed by a later subsection: `task.audit`. N24c-20 to N24c-28 | Placed |
 | Calibrated item bank for batteries | review | A response model over battery items, sampled by importance | Not examined by a second pass | §26.11 and DC-10 | Placed by a later subsection: the item bank. N24c-29 to N24c-35 | Placed |
 | Convex synthesis from inverse dynamics | review | One cone program over inertial parameters, gearing and actuator sizing along nominal trajectories | Not examined by a second pass | §25.21, beside mass placement | Placed by a later subsection: placement and sizing along a prescribed motion. N25e-18 to N25e-22 | Placed |
-| Self-occlusion in sensor coverage | review | Include occlusion by the robot's own links in coverage and observability analyses | Not stated in A-14 or §20.11 | A-14 (§28.4) and §20.11 | Placed by a later subsection: visibility under self-occlusion, and sensor mounts as design variables. N20b-32 to N20b-38 | Placed |
+| Self-occlusion in sensor coverage | review | Include occlusion by the robot's own links in coverage and observability analyses | Not stated in A-14 or §20.11 | A-14 (§28.4) and §20.11 | Placed by a later subsection: visibility under self-occlusion, and sensor mounts as design variables. N20b-32 to N20b-34, N20a-35 (the pilot), N20b-36 to N20b-38 | Placed |
 
 **3. The nine residual ideas, by default disposition.**
 
@@ -137,7 +138,7 @@ idea and requires it to cite its record.
 - `sixteen_records`; `dispositions_are_7_4_1_2_2`.
 - `placed_have_carriers`: UP-03 → N16c-29 to N16c-34; UP-04 → N19c-33 to N19c-37; UP-12 → N28c-32, N28c-35,
   N28c-37, N28c-41; UP-13 → N24c-20 to N24c-28; UP-14 → N24c-29 to N24c-35; UP-15 → N25e-18 to N25e-22; UP-16 →
-  N20b-32 to N20b-38.
+  N20b-32 to N20b-34, N20a-35, N20b-36 to N20b-38.
 - `residual_count_equals_tally`: 9.
 - `parked_and_declined_records_exist`.
 - `conditional_has_trigger_and_reader`: UP-06 and UP-10 name a measurement and the sweep that reads it.

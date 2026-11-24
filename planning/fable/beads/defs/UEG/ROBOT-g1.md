@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20", "N14b-33"]
+deps: ["BD-066", "BD-067", "N14b-20", "N14b-33", "NEG-15"]
 needs: []
-related: ["ZOO-humanoid", "ROBOT-fsim-g1", "N14b-34", "BD-109", "N14b-24", "BD-089", "BD-007", "ROBOT-h1"]
+related: ["ROBOT-h1", "ZOO-humanoid"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07, GATE-SKEL-11", "§14.17", "Appendix F.2", "Appendix H.3"]
 ---
@@ -26,8 +26,10 @@ of a Reality claim.
 ## Scope
 
 In: `assets/robots/g1/` (manifest, licence text, pinned source record, import, loss-report and validation
-goldens); the mass on file for `humanoid@g1`; the comparison record against the sibling builder's roll-up.
-Out: the shared layout and checks (NEG-15); the importer (BD-066); folding of fixed joints (N14b-33); reduced
+goldens); the mass on file for `humanoid@g1`; the comparison record against the sibling builder's roll-up; the
+checks of the fold on this robot (the compiled body count and mass, and the import with `--fold-fixed`).
+Out: the shared layout and checks (NEG-15); the importer (BD-066); folding of fixed joints as a mechanism, with
+its battery on random trees for GATE-SKEL-11 (N14b-33, on which this bead depends); reduced
 models and the `g1-reduced-30` profile (N14b-34); the sibling asset (ROBOT-fsim-g1).
 
 ## Technical approach
@@ -41,8 +43,9 @@ text and the no-endorsement clause.
 attachments; total mass 33.34014202 kg; n_v = 35 after welded links are folded (30 moving bodies). Mass window
 of the archetype gate: within 15%, that is 28.339 kg to 38.341 kg.
 
-**Import path.** `frob design import --format mjcf assets/robots/g1/source/<entry> --out
-assets/robots/g1/import.fbot --json`. The import keeps all 38 links; welded links are fixed joints in the
+**Import path.** `frob design import assets/robots/g1/source/<entry> --format mjcf --name g1 --key
+asset-g1-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). The import keeps all 38 links; welded links are fixed joints in the
 design term and are folded at compile by the pseudo-inertia sum (mass, first moment and second moment add in
 the parent's frame), so the compiled model has 30 bodies and exactly the source's total mass. Expected
 loss-report entries (HYPOTHESIS until read): visual meshes; fitted collision primitives; unmapped solver and
@@ -53,7 +56,11 @@ linkages are not in the file.
 **Validation specifics.** (1) Mass conservation under folding: Σ of the 38 source masses equals the compiled
 30-body total exactly in decimal arithmetic. (2) Comparison with the sibling builder's roll-up: the
 difference, 33.34014202 − 31.96314202 = 1.37700000 kg, must equal the summed mass of the welded links the
-builder omits, link by link; the record lists them. (3) Inertia consistency per folded body.
+builder omits, link by link; the record lists them. (3) Inertia consistency per folded body. (4) Import of the
+same source with `frob design import assets/robots/g1/source/<entry> --format mjcf --fold-fixed --name
+g1-folded --key asset-g1-folded-<source hash> --json`: every folded link appears in the loss report and
+every named attachment keeps its identifier and its world pose (the fold bead N14b-33 checks this on a generated
+tree; here it is checked on the real source, which that bead cannot do before this asset exists).
 
 **Use.** The mass row of `humanoid@g1` (GATE-SKEL-07); import parity and contact-free dynamics parity; the
 fold-equivalence battery (a folded model's dynamics equal the unfolded model's).
@@ -63,7 +70,8 @@ fold-equivalence battery (a folded model's dynamics equal the unfolded model's).
 - [ ] `assets/robots/g1/` passes the licence check and validation; `mark = "P"`; the 38-link mass is the value
       computed at the pin, and a difference from 33.34014202 kg is recorded as a dated amendment of every row
       that used it.
-- [ ] Folding conserves mass exactly; the compiled model has 30 bodies and n_v = 35.
+- [ ] Folding conserves mass exactly; the compiled model has 30 bodies and n_v = 35; the import with
+      `--fold-fixed` lists every folded link in its loss report and keeps every attachment identifier.
 - [ ] The 1.377 kg difference from the sibling builder is accounted for link by link.
 
 ## Test plan
@@ -76,6 +84,8 @@ fold-equivalence battery (a folded model's dynamics equal the unfolded model's).
 - `robot_g1_fold_conserves_mass_and_first_moment`: exact decimal equality of mass and of the whole-body centre
   of mass at the reference pose before and after folding.
 - `robot_g1_vs_sibling_omitted_links`: omitted masses sum to the difference.
+- `robot_g1_fold_fixed_import_lists_folded_links`: the loss report of the `--fold-fixed` import names each of
+  the links that the fold removes (38 − 30 of them) and no other.
 - `robot_g1_loss_report_golden`, `robot_g1_design_id_pinned`.
 
 ### End-to-end script and logging

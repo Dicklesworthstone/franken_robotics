@@ -1,0 +1,22 @@
+# Polishing round 3, slice H-owners-3
+
+3 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| NJL-01 | M0 | task | WP-06 | yes | registries/verbs.toml: the entry schema of one verb, the four kinds, the tool-name map and the registry lints | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-01.md` |
+| STD-E2E | M0 | task | WP-14 | yes | scripts/e2e: end-to-end harness, structured NDJSON log, runner, linter, gate report and self-test | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U38a/STD-E2E.md` |
+| STD-TEST | M0 | task | WP-14 | yes | unit-test conventions, test kit, registry loaders, determinism lanes and the no-control-no-pass rule | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U38a/STD-TEST.md` |
+
+## Addressed to your beads
+
+- `NJL-01`: request from round 2, slice S09: BD-022 and BD-023 consume its derived members (input_schema_with_common_fields, envelope_schema, short_doc, tags, annotations) while it depends on BD-022: drop that dep so BD-022 can depend on NJL-01, or state that its MCP step (4) runs green in BD-023's acceptance and step (7) in BD-138 (M1), logged not-run before. Spell the on_cancel value `leave` (BD-022, N32a-04, N32a-17), not `leave_running`. List N28a-02's generated override/override_reason properties (verbs with a loop requires) as a field-driven variation. State that FROB-REF-990 is never appended to a generated refusal list (N32a-02 RL-06 DESIGN). Its test field_appended_codes uses needs_groups = ["gpu-cuda"], which N33c-32's lint needs-groups-known rejects (not one of the ten airlock groups): use a real group such as "stats".
+- `NJL-01`: request from round 2, slice S34: Its kinds table gives on_cancel the values `leave_running` (default) or `cancel_job`; BD-022 and N32a-17 (the bead that serves the option) use `leave` (default) and `cancel_job`. One spelling: `leave`.
+- `NJL-01`: request from round 2, slice S57: Add `--machine mac|trj` as a common job input (DESIGN in N41-12): a job addressed to the other machine is refused with MACHINE_NOT_LOCAL, exit 3.
+- `NJL-01`: request from round 2, slice S68: entry schema: add the optional field engines (values native, reference, external; default ["native"]) and, for rows listing more than native, the generated optional input engine (N32ax-02 reads both and owns neither)
+- `NJL-01`: request from round 2, slice S68: add a lint that fails a row input whose name shadows a common property of its kind (budget, idempotency_key, sync_wait_ms, estimate_only, on_cancel, expected_parent): shield.check and shield.fit had an energy budget spelled --budget beside the generated compute budget (now --energy-budget in VERBS-shield)
+- `NJL-01`: request from round 2, slice S77: add from_proposal (CLI --from-proposal <id>) as a common input of the run kind: N28c-14 freezes a bought proposal's prediction in the admission transaction of whatever run verb the proposal's command names; no row has it.
+- `STD-E2E`: request from round 2, slice S22: Every `run` and `mutate` verb takes an idempotency key (N32a-09, FROB-REF-805 exit 3), yet about 510 e2e commands across the beads call `frob sim run … --json` without `--key`. Either the shared helper's frob wrapper must supply a deterministic key (script, step, seed) to run/mutate verbs that lack one and log the command as sent, or every script must pass one; state which, so those scripts do not fail with 805.
+- `STD-E2E`: request from round 2, slice S58: `@fixture:<name>` arguments are used in 53 beads and defined in none; define how a script's fixture reference resolves to a design, task, policy or run.
+- `STD-E2E`: request from round 2, slice S70: Item 11's e2e_scene_ready runs `frob --json scene accept <scene_id>` with no key; scene.accept is a run verb, and BD-228 writes the helper with `--key e2e-ready-<run_id>-<scene_id>` (drift 5). Align the text.
+- `STD-TEST`: request from round 2, slice S11: testkit's `Control` type (Controls::for_gate) lists only id, seed, gate, kind, target, defect, expect; as the one parser of controls.toml it must also carry BD-025's optional fields feature, fixture, due, permanent, removed_check, last_seen and state (runnable | obligation, written by N38b-05's seeding), or BD-025's validator, which runs on the parser's rows, cannot check rules 3 and 5 or the obligation rule.

@@ -1,0 +1,292 @@
+{
+ "round": 1,
+ "slice": "U18a",
+ "reviewed": 54,
+ "changed": [
+  {
+   "bead": "BD-037",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "upstream_registry.sh log lines now carry the first differing value, fixture directory, expected.toml and the exact cargo command to reproduce, plus named steps (load, fixture/<id>, negative/<case>); added dep STD-E2E (the script sources its helper)."
+  },
+  {
+   "bead": "BD-080",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "tests"
+   ],
+   "what": "BD-080 redefined the RefereeContact trait (max_contacts/step) differently from N33a-14 (capacities/check_static/step_frictional), which owns it at M0; now uses N33a-14's trait, capacity checks and refusal mapping, and adds only contact-set generation, ContactBound derivation, propagation and frob-dyn use. Added deps N18a-10 and N18a-11 (step 2 generates sets with them); replaced the duplicate capacity-constant test by a ContactBound test."
+  },
+  {
+   "bead": "BD-085",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance named the endpoint-only mutant, which no row of this battery can catch (it is BD-086's); replaced by the friction-disabled incline mutant. KA-389 chord test now states v, yaw rate and duration (0, 2/π) m. Added named tests for the friction-disabled and skip-silently mutants; KA-396 asserts exit code 3."
+  },
+  {
+   "bead": "BD-086",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "randomized thin-barrier draw used v·h instead of v·h·cos θ for oblique incidence, so far endpoints were not guaranteed clear; fixed, plate extent stated, 10⁶ valid crossings made explicit. Removed the 3×3 OPEN-TRAC-5 sweep that duplicated N18b-38's 5×6 sweep (N18b-38 owns it and depends on this bead); fixture takes the tolerances as parameters. Added oblique-geometry and parameter tests; FROB-REF-220 count reported."
+  },
+  {
+   "bead": "BD-154",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "acceptance required the cone rows under strict, but BD-161 (strict) depends on BD-154 through BD-159→BD-156; strict cone rows are now BD-161's. OPEN-TRAC-2 ADR was claimed here while N18a-27 (which depends on BD-154) owns it; reworded. Added dep N18b-29 (contact.probe, used in acceptance). Failure lines carry the first differing value and repro path."
+  },
+  {
+   "bead": "BD-158",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "stage-3 inflation by the speculative margin now names the per-primitive margin buffer this bead defines, since N18a-12 (the rule) depends on BD-158; the kernels do not wait for it."
+  },
+  {
+   "bead": "BD-165",
+   "kinds": [
+    "correct"
+   ],
+   "what": "e2e reference pointed to superseded N18a-41; now N19a-30 (owner of scene_gen_terrain.sh), with terrain/<family> and terrain/stones names and the 1,000-seed lane."
+  },
+  {
+   "bead": "BD-230",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Couette sled test did not state μ_b, so whether the viscous cap binds was undetermined; μ_b = 0.1 given (μ_v = 0.0157) and no viscous-capped flag asserted. Limits test now states 'μ_v where μ_v ≤ μ_b, capped otherwise', matching the governing capped law."
+  },
+  {
+   "bead": "N18-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "carrier fields held prose ('soil bead of the other Traction unit', 'precision bead') though acceptance requires bead keys; set to N18b-12/-13, N18b-04, N18b-17, N18b-22, N18b-25, N18b-27, N18b-01, N18b-02 beside the seed capstones. Added dep STD-E2E for traction_registry.sh and full log fields."
+  },
+  {
+   "bead": "N18a-01",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "deps set to BD-004, BD-005, BD-007, BD-022, STD-E2E; the ADR-TRAC-07 reason row now carries the plan's numbers (κ·u₁₆ = 2.34, the 37-64% and 9-18% shares, 9k/n costs, about 200 unknowns, panels, Apple GPUs, power-of-two exactness) and the rejected alternative names unscaled single precision."
+  },
+  {
+   "bead": "N18a-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance required `frob contact probe`, but contact.probe (N18b-29) depends on this bead through BD-080 and N18a-10; the gap budget now serializes to a stated JSON form that contact.probe prints, with a new gap_budget_json_form test."
+  },
+  {
+   "bead": "N18a-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "FACT: fs-query has no hull or capsule support maps at the pin (FD-FSIM-03); the measurement now uses an independent hull oracle in frob-conformance (Frank-Wolfe with away steps to a duality gap below 10⁻¹² m, cross-checked on box-box and sphere-box), with test hull_oracle_agrees_with_fs_query_on_primitives."
+  },
+  {
+   "bead": "N18a-08",
+   "kinds": [
+    "correct"
+   ],
+   "what": "parity step and acceptance use the hull oracle of N18a-07 (fs-query after FD-FSIM-03, the independent reference before); the gate record names the oracle used."
+  },
+  {
+   "bead": "N18a-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "foot sample rule made exact, k = clamp(ceil(L/(2w)) - 1, 0, 2) per long edge (4/6/8 samples); probe acceptance replaced by the model compile report that contact.probe reads (cycle via BD-080); tests for foot placement and wheel rim count and sag with numbers."
+  },
+  {
+   "bead": "N18a-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "probe acceptance had the contact.probe cycle (N18b-29 -> BD-080 -> this bead); the filter record is now stored in the compiled model for contact.probe to print. The clearance exclusion relied on a static clearance analysis that is A-13 (BD-104), not upstream: now reads a ClearanceTable with a stated conservative meaning, fail-closed (no exclusion) without one; BD-104 related; sweep and no-table tests."
+  },
+  {
+   "bead": "N18a-12",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "the mutant case could not catch the mutant: with the plate 1 mm ahead, m₀ = 1 mm alone already activates it. Activation now tested at d = 3 mm (11 mm margin activates, 1 mm does not, both endpoints clear). Step-level lockstep verdict needs K-np-thin (BD-166, which depends on this bead): moved to N18a-36's step."
+  },
+  {
+   "bead": "N18a-15",
+   "kinds": [
+    "complete"
+   ],
+   "what": "CL-H is registered here but ContactLaw only returns a convex term; added the ComplementarityLaw form (cone, shift s = μ·|u_T|, natural-map residual) that routes CL-H to complementarity solvers, with exactly-one-form registration checked."
+  },
+  {
+   "bead": "N18a-16",
+   "kinds": [
+    "deps"
+   ],
+   "what": "acceptance and e2e use contact.probe; added dep N18b-29 (no cycle)."
+  },
+  {
+   "bead": "N18a-18",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "acceptance required the model-form check to flip a planted winner, but N16b-13 and BD-266 depend on this bead; now this bead makes CL-2 selectable as an arm and the flip fixture is theirs."
+  },
+  {
+   "bead": "N18a-20",
+   "kinds": [
+    "deps"
+   ],
+   "what": "parity fixtures compare against pinned oracle captures; added dep BD-067 (the capture scripts and fixtures)."
+  },
+  {
+   "bead": "N18a-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance required the battery (BD-085), receipts (BD-082) and the island refusal (N16a-07), all downstream; now the checker is run through the referee on three analytic cases, the indeterminacy rule is a function clh_classify (Painleve indeterminate vs frictional degeneracy), and the receipt field is a round-trip test; battery row stays with BD-085 and N18a-35."
+  },
+  {
+   "bead": "N18a-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Background said BD-386 is done only when this decision is on record, contradicting the graph (this bead depends on BD-386; a mechanism never waits for its kill decision); reworded so the seed's 'KILL-HARDCONTACT decided' item is carried here."
+  },
+  {
+   "bead": "N18a-26",
+   "kinds": [
+    "correct"
+   ],
+   "what": "same contradiction as N18a-23 for BD-367 and KILL-RESPONSE; reworded."
+  },
+  {
+   "bead": "N18a-27",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the OPEN-TRAC-2 measurement used the referee's patch quadrature, which is N18a-28's, and N18a-28 depends on this bead through N24b-12 -> BD-167; the reference is now the referee's own dense-layout result (at most 21 point samples, load-weighted moment and stop time) via BD-080 (dep added); tests for the dense-layout moment, the 22-sample refusal and the fixed recommendation rule; failure logging."
+  },
+  {
+   "bead": "N18a-29",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "acceptance used the standard battery and fidelity ledger (BD-212) and demonstrated the film law (BD-230) as consumer, all downstream of this bead; now runs on its own fixtures, serializes the coefficient-lag row for BD-212 to freeze, and demonstrates the test law plus the joint stiction bound frozen by N15a-08 (dep added) in one digest; downstream consumers named; two tests added."
+  },
+  {
+   "bead": "N18a-30",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "outcome study runs battery scenarios; added dep BD-212; failure lines carry fixture, step size, profile and .frun path."
+  },
+  {
+   "bead": "N18a-31",
+   "kinds": [
+    "deps"
+   ],
+   "what": "film-precedence rule and its test need the film law; added dep BD-230 (no cycle)."
+  },
+  {
+   "bead": "N18a-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "claimed to depend on BD-084 and measured KA-402/KA-403 on its referee solve, but BD-084 depends on this bead; now carries the closed forms as joint_row_known_answers() (adds the 1.04 mJ closure loss) checked against N18-KA (dep added), and the referee, strict and lockstep measurements are BD-084's, N18b-32's and BD-155's; tests renamed to closed-form checks; e2e on batch-cpu with referee runs via N15a-12."
+  },
+  {
+   "bead": "N18a-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "same 'seed done only when this decision is on record' contradiction as N18a-23 for BD-230 and KILL-FILM; reworded."
+  },
+  {
+   "bead": "N18a-36",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "step speculative_margin now uses d = 1 mm and d = 3 mm, since only d = 3 mm can catch the margin-base-only mutant, and asserts the step-level verdict N18a-12 hands over; explicit deps BD-161, BD-166, BD-212 (called directly)."
+  },
+  {
+   "bead": "N18a-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "sled step omitted σ, load and μ_b, so whether the viscous cap binds was open; now BD-230's parameters (σ 50 µm, 50 N, μ_b 0.1) with no viscous-capped flag asserted."
+  },
+  {
+   "bead": "N18a-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Considerations described a test-binary fallback for a clearance verb that is a dependency (N19b-33); replaced with fail-on-missing."
+  },
+  {
+   "bead": "N18ax-02",
+   "kinds": [
+    "deps"
+   ],
+   "what": "adds device steps to N18a-40's script; added dep N18a-40."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "WP-17",
+   "what": "still names N18a-41 as the bead of scripts/e2e/scene_gen_terrain.sh; N18a-41 is superseded by N19a-30, which owns the script (BD-165 updated)."
+  },
+  {
+   "bead": "N18b-29",
+   "what": "add a model-inspection branch to contact.probe (--model with --gap-budget, --samples, --pairs) that prints the records N18a-02 (gap budget JSON), N18a-10 (sample layout, static maximum, provenance in the compile report) and N18a-11 (filter record with reasons and smallest clearances) store in the compiled model; these beads can no longer call contact.probe (it depends on them via BD-080), and N18a-35 steps 2-3 use the branch."
+  },
+  {
+   "bead": "BD-084",
+   "what": "register breakaway_on_ramp and gap_crossing_time as the referee rows of KA-402 and KA-403 (GATE-TRAC-04), asserting against N18a-32's joint_row_known_answers(); N18a-32 no longer measures on the referee because BD-084 depends on it."
+  },
+  {
+   "bead": "BD-212",
+   "what": "freeze the coefficient-lag rows (per law and contact mode, median and 95th percentile per robot class on the standard battery) that N18a-29 serializes; N18a-29 no longer writes the ledger because BD-212 depends on it through BD-167."
+  }
+ ],
+ "unchanged": 21,
+ "notes": "slice reviewed in full. Unchanged: BD-161, BD-232, BD-367, BD-386, BD-422, BD-424, N18a-03, N18a-04, N18a-05, N18a-06, N18a-13, N18a-14, N18a-22, N18a-24, N18a-25, N18a-28, N18a-33, N18a-35, N18a-40, N18ax-01, N18ax-03. Recurring defect: acceptance or tests that need a bead which depends on this one (contact.probe via BD-080; BD-084; BD-212; BD-166; N16a-07; N18a-28; BD-266); fixed by moving the measurement downstream and stating it. Three decision beads said the mechanism waits for its kill decision; reworded. All files parse; graph_check reports no cycle; no dep is on a later milestone."
+}

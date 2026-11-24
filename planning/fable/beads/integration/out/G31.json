@@ -1,0 +1,3575 @@
+{
+ "group": "G31",
+ "needs": [
+  {
+   "bead": "BD-400",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-400",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-090",
+    "BD-207"
+   ],
+   "note": "BD-207 is already a drafted dependency; BD-090 defines the channel kinds"
+  },
+  {
+   "bead": "BD-400",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N16b-13"
+   ],
+   "note": "the stiffness and contact-law variant arms with their identity rules are N16b-13; BD-266 types the result and is not needed to re-extract"
+  },
+  {
+   "bead": "BD-400",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-125",
+    "N38a-20"
+   ],
+   "note": "the qualified task set is read from eval.qualify (BD-259); the push-recovery template is `recover-push` of the M1 families (BD-125); the drop scenario is a row of the standard battery's grid (N38a-20)"
+  },
+  {
+   "bead": "BD-400",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry"
+   ],
+   "note": "the registry rows are VERBS-foundry; BD-409 is a higher-numbered seed that depends on BD-408 and is recorded as related"
+  },
+  {
+   "bead": "BD-402",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-402",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "the structural card fields themselves are its component N31a-22"
+  },
+  {
+   "bead": "BD-402",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N31b-24"
+   ],
+   "note": "the independent mesh exists only on the branch where fs-mesh conforms; otherwise the fallback `check: same-family`"
+  },
+  {
+   "bead": "BD-403",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-403",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-259"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-403",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry"
+   ],
+   "note": "BD-409 is a higher-numbered seed downstream of BD-408: related"
+  },
+  {
+   "bead": "BD-403",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N31a-29"
+   ],
+   "note": "the differentiable process constraints are the component N31a-29; BD-405 is a higher-numbered seed that depends on BD-403 and stays related"
+  },
+  {
+   "bead": "BD-404",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-15"
+   ],
+   "note": "fs-mbd-material is admitted with the airlock's referee group by N33a-15; the volume moments reach Foundry through the inertia functor BD-062, already a dependency"
+  },
+  {
+   "bead": "BD-404",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-116",
+    "BD-247"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-404",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-180"
+   ],
+   "note": "randomness by world address; the paired campaign itself is the component N31a-06"
+  },
+  {
+   "bead": "BD-404",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N31b-02"
+   ],
+   "note": "N31b-02 depends on BD-404 (the obligation ledger discharges against the mechanism): a dependency would close a cycle"
+  },
+  {
+   "bead": "BD-405",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-405",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-405",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry"
+   ],
+   "note": "BD-409 is a higher-numbered seed downstream of BD-408: related"
+  },
+  {
+   "bead": "BD-406",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14",
+    "N33b-13"
+   ],
+   "note": "fs-toleralloc is in group `structure`; fs-uq::product_epistemic is in group `stats` (N33b-13)"
+  },
+  {
+   "bead": "BD-406",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-011",
+    "BD-046",
+    "N13-10",
+    "BD-061"
+   ],
+   "note": "exponential map with differentials (BD-011), joint maps from a screw basis (BD-046), the exact-arithmetic kernel (N13-10), the kinematic functor (BD-061); the derivative assembly is the component N31a-31"
+  },
+  {
+   "bead": "BD-406",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-395"
+   ],
+   "note": "the as-built audit consumes the allocation; BD-395 is the later consumer, not a prerequisite"
+  },
+  {
+   "bead": "BD-406",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry"
+   ],
+   "note": "BD-409 is a higher-numbered seed downstream of BD-408: related"
+  },
+  {
+   "bead": "BD-407",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-407",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-395",
+    "N30a-45"
+   ],
+   "note": "a shared convention: the fiducial rule is stated in the export bead; as-built registration consumes the packet"
+  },
+  {
+   "bead": "BD-408",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-22"
+   ],
+   "note": "the format-registry harness and row schema; BD-410 (the thirteen-format gate) depends on BD-408 and is a higher-numbered seed: related"
+  },
+  {
+   "bead": "BD-408",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "SPEC-C-12",
+    "BD-075",
+    "BD-055"
+   ],
+   "note": "typed electrical ports (C-12), the shared power bus (BD-075) and the .fbot bus and sink fields (BD-055)"
+  },
+  {
+   "bead": "BD-408",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-078"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-408",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-259"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-408",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry"
+   ],
+   "note": "BD-409 depends on BD-408 and is a higher-numbered seed: related"
+  },
+  {
+   "bead": "BD-408",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N31b-25",
+    "N31b-26"
+   ],
+   "note": "the fail-closed defaults (no prices; density against the card limit) are built in BD-408 and hold until the decisions are taken"
+  },
+  {
+   "bead": "BD-423",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "delivered by the epic's own children N31a-47 to N31a-50 (parent BD-423); an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-423",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N15b-16"
+   ],
+   "note": "an epic carries no dependencies; its child N31a-48 follows the decision"
+  },
+  {
+   "bead": "BD-423",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-276"
+   ],
+   "note": "an epic carries no dependencies; its child N31a-49 already depends on BD-276"
+  },
+  {
+   "bead": "BD-423",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-333"
+   ],
+   "note": "an epic carries no dependencies; its child N31a-49 already depends on BD-333"
+  },
+  {
+   "bead": "BD-423",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-170"
+   ],
+   "note": "an epic carries no dependencies; its child N31a-50 carries the dependency"
+  },
+  {
+   "bead": "BD-423",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N41-09"
+   ],
+   "note": "an epic carries no dependencies; the funding order gates the first child N31a-47"
+  },
+  {
+   "bead": "BD-438",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "delivered by the epic's own children N31a-44 to N31a-46 and N31a-62 (parent BD-438); an epic carries no dependencies"
+  },
+  {
+   "bead": "BD-438",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-018",
+    "BD-030"
+   ],
+   "note": "an epic carries no dependencies; its children N31a-44 and N31a-46 already depend on both"
+  },
+  {
+   "bead": "BD-438",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-380",
+    "CARD-T-14"
+   ],
+   "note": "an epic carries no dependencies; its child N31a-45 already depends on both"
+  },
+  {
+   "bead": "BD-438",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-337"
+   ],
+   "note": "an epic carries no dependencies; its child N31a-44 carries the dependency"
+  },
+  {
+   "bead": "BD-438",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N41-09"
+   ],
+   "note": "an epic carries no dependencies; the funding order gates the first child N31a-44"
+  },
+  {
+   "bead": "N31-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31-KA"
+   ],
+   "note": "two registries of one chapter that must agree row for row; a registry depends only on the registry skeleton"
+  },
+  {
+   "bead": "N31-CX",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the control runner and the five rules of the negative-control registry; BD-025 is already a dependency"
+  },
+  {
+   "bead": "N31-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31-KA",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-04",
+    "N31b-32",
+    "N31b-36",
+    "N31b-38"
+   ],
+   "note": "a registry never depends on the beads that test its rows"
+  },
+  {
+   "bead": "N31-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-45"
+   ],
+   "note": "the allocation is the new decision bead N31b-45; a registry does not wait for it (interim names hold)"
+  },
+  {
+   "bead": "N31-REF",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-409",
+    "VERBS-foundry"
+   ],
+   "note": "a registry never depends on a mechanism; the verb rows are VERBS-foundry"
+  },
+  {
+   "bead": "N31a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": "the crate manifest names the airlock feature `structure`, which N33b-14 creates"
+  },
+  {
+   "bead": "N31a-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-09"
+   ],
+   "note": "the source register `registries/sources.toml` with its re-read rule"
+  },
+  {
+   "bead": "N31a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-100"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-15"
+   ],
+   "note": "BD-259 (the verdict writer) is already a dependency"
+  },
+  {
+   "bead": "N31a-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-36"
+   ],
+   "note": "this bead defines the admission hook and N31b-36 plugs the provisional-case refusal into it; the edge N31b-36 → N31a-03 is recorded under edges"
+  },
+  {
+   "bead": "N31a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-14",
+    "N33a-30"
+   ],
+   "note": "group `structure` (N33b-14) and `MeshExchange` of group `geometry` (N33a-30)"
+  },
+  {
+   "bead": "N31a-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-03",
+    "N33a-06"
+   ],
+   "note": "the stack-lock schema and the stack-lock digest in memo keys"
+  },
+  {
+   "bead": "N31a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06",
+    "N31b-07"
+   ],
+   "note": "both stages of the structure-loop pilot; stage 2 is the paper-scale run of the paired iterations this bead automates"
+  },
+  {
+   "bead": "N31a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-118"
+   ],
+   "note": "BD-247 widens it to every archetype and is resolved for BD-404"
+  },
+  {
+   "bead": "N31a-05",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-08",
+    "N29a-05"
+   ],
+   "note": "the job ledger and state machine, and stopping at a safe boundary with the terminal receipt"
+  },
+  {
+   "bead": "N31a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": "stage 1 of the structure-loop pilot, as for its capstone BD-400"
+  },
+  {
+   "bead": "N31a-06",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the T2 channel kinds and the device-side T2 path are its existing dependencies BD-090 and BD-207; the Foundry channel declarations are made in this bead"
+  },
+  {
+   "bead": "N31a-06",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-125",
+    "N38a-20"
+   ],
+   "note": "qualified task set (BD-259); the `recover-push` template (BD-125); the drop row of the standard battery (N38a-20)"
+  },
+  {
+   "bead": "N31a-06",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N24a-36"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-062",
+    "BD-061"
+   ],
+   "note": "the inertia functor and the compiled `RobotModel` with its `ModelId`"
+  },
+  {
+   "bead": "N31a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31a-63"
+   ],
+   "note": "the per-port boss declaration is part of the new structure-declarations bead N31a-63 (no design-language bead carried it)"
+  },
+  {
+   "bead": "N31a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-203"
+   ],
+   "note": "sim.replay to a tick with its digest; the tier teleport BD-204 is used by the referee re-extraction N31b-35"
+  },
+  {
+   "bead": "N31a-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31b-35"
+   ],
+   "note": "this bead stores the replay address and direction; N31b-35 consumes them (edge N31b-35 → N31a-10 recorded under edges)"
+  },
+  {
+   "bead": "N31a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N13-15",
+    "N13-02"
+   ],
+   "note": "Γ_mech as isometries from the constructors (N13-15); the isometry type with determinant and the parity rule (N13-02)"
+  },
+  {
+   "bead": "N31a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-13",
+    "N18a-18"
+   ],
+   "note": "the stiffness and law variant arms as part of model identity (N16b-13); the alternative convex law CL-2 (N18a-18); BD-167 is already a dependency"
+  },
+  {
+   "bead": "N31a-12",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31a-20",
+    "BD-401"
+   ],
+   "note": "mutual use inside the loop, each reading the other's previous-iteration value: no order of work (coverage (e) 18 of U31a); BD-401 also depends on BD-400, whose component this bead is"
+  },
+  {
+   "bead": "N31a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-100"
+   ],
+   "note": "A-08 static support solution; the inverse statics at a pose are computed in this bead from the model"
+  },
+  {
+   "bead": "N31a-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-39"
+   ],
+   "note": "class load factors and the bounded statics load set are defined by the preflight sizing check N31b-39 (M3)"
+  },
+  {
+   "bead": "N31a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07"
+   ],
+   "note": "stage 2 of the structure-loop pilot decides whether the topology rung is funded"
+  },
+  {
+   "bead": "N31a-14",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-104 (A-13 with swept charts)"
+  },
+  {
+   "bead": "N31a-14",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N31a-63",
+    "BD-069"
+   ],
+   "note": "keep-in envelope, clearance margin and cable ports are declared by the new bead N31a-63; housing and seat volumes come from the cards (BD-069)"
+  },
+  {
+   "bead": "N31a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06",
+    "N31b-07"
+   ],
+   "note": "both stages; a negative stage 2 means the topology rung is not funded (as for its capstone BD-403)"
+  },
+  {
+   "bead": "N31a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-107",
+    "N31a-63"
+   ],
+   "note": "A-12 with the bandwidth check (BD-107); the declared deflection budget per link class (N31a-63)"
+  },
+  {
+   "bead": "N31a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31a-19"
+   ],
+   "note": "recorded as related at the drafter's request (coverage (e) 18 of U31a): the plate is checked by N31a-19 inside the loop; N31a-19 does not wait for plates and plates reuse its interface"
+  },
+  {
+   "bead": "N31a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-24"
+   ],
+   "note": "the body-fitted mesh exists only on the branch where fs-mesh conforms; the experiment measures the sibling, not this bead"
+  },
+  {
+   "bead": "N31a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12",
+    "N38b-04",
+    "N38b-19"
+   ],
+   "note": "known-answer registry schema, negative-control rules and the gate recorder"
+  },
+  {
+   "bead": "N31a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-107"
+   ],
+   "note": "A-12 gives the bandwidth; the reflected inertia of the distal subtree is computed here from the model"
+  },
+  {
+   "bead": "N31a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31a-63"
+   ],
+   "note": "declared notches are part of the new structure-declarations bead N31a-63"
+  },
+  {
+   "bead": "N31a-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31b-27"
+   ],
+   "note": "the fail-closed default (`fatigue: no-claim` for printed parts) is built here and holds until the decision"
+  },
+  {
+   "bead": "N31a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15b-06"
+   ],
+   "note": "--strict-data and the assumed-and-generic share; per-field provenance is its dependency BD-069"
+  },
+  {
+   "bead": "N31a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07"
+   ],
+   "note": "stage 2 pilots the five loads–mass iterations this feedback closes"
+  },
+  {
+   "bead": "N31a-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14a-13",
+    "BD-051"
+   ],
+   "note": "the `declared` fill with FROB-REF-106, and the mass-support predicate"
+  },
+  {
+   "bead": "N31a-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33a-15"
+   ],
+   "note": "fs-mbd-material is admitted with the referee group by N33a-15; frob-foundry is not on that group's consumer list (reported as a gap)"
+  },
+  {
+   "bead": "N31a-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-103"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-110",
+    "BD-244"
+   ],
+   "note": "stages 1 to 6 and stages 7 and 8"
+  },
+  {
+   "bead": "N31a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": "the build-packet pilot carries one part through the fab report and serves as the manufacturability pilot"
+  },
+  {
+   "bead": "N31a-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31a-63"
+   ],
+   "note": "the per-part process declaration is part of the new structure-declarations bead N31a-63"
+  },
+  {
+   "bead": "N31a-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-30"
+   ],
+   "note": "field queries of the airlock's geometry group at M2"
+  },
+  {
+   "bead": "N31a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-30"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07",
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31a-04",
+    "N33b-14"
+   ],
+   "note": "the capability probe belongs with the fact probes of N31a-04 against the `StructuralOpt` trait of N33b-14; no upstream item exists for the filter stage (reported as a gap)"
+  },
+  {
+   "bead": "N31a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04",
+    "N38b-19"
+   ],
+   "note": "negative-control rules and the gate recorder"
+  },
+  {
+   "bead": "N31a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-011",
+    "BD-046",
+    "N13-10"
+   ],
+   "note": "exponential map with differentials, joint maps from a screw basis, the exact-arithmetic kernel; BD-061 is already a dependency; the interval evaluation is built here"
+  },
+  {
+   "bead": "N31a-31",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33b-18"
+   ],
+   "note": "BD-243 (the registry wiring) is already a dependency"
+  },
+  {
+   "bead": "N31a-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-08"
+   ],
+   "note": "the pilot; the KILL-TOLERANCE decision N31b-18 depends on the capstone BD-406 and is recorded as related under edges (the worst-case boxes exist on both branches)"
+  },
+  {
+   "bead": "N31a-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "airlock group `stats` carries fs-uq; frob-foundry is not on its consumer list (reported as a gap)"
+  },
+  {
+   "bead": "N31a-33",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N30b-11",
+    "N30a-47",
+    "BD-395"
+   ],
+   "note": "the as-built tolerance audit consumes the allocation; it is the later consumer"
+  },
+  {
+   "bead": "N31a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-30"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": "the STEP surface of the exchange sibling is admitted under INT-FSIM-15 by N33b-14"
+  },
+  {
+   "bead": "N31a-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-22",
+    "N34-19"
+   ],
+   "note": "the round-trip harness and the format-registry types; the thirteen-format gate BD-410 depends on BD-408 and is the later consumer"
+  },
+  {
+   "bead": "N31a-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-37",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-33"
+   ],
+   "note": "N31b-33 depends on the capstone BD-408, whose component this bead is; the import changes a view, not this type"
+  },
+  {
+   "bead": "N31a-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "the proof-kind and artifact-kind registry; BD-026 is already a dependency"
+  },
+  {
+   "bead": "N31a-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-303"
+   ],
+   "note": "GATE-SAFE-01 is carried by BD-303; this bead registers its specimens there"
+  },
+  {
+   "bead": "N31a-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-39",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-25",
+    "N41-13"
+   ],
+   "note": "the fail-closed default (card references, no prices) is built here and holds until the decision"
+  },
+  {
+   "bead": "N31a-39",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28a-10",
+    "N25a-12"
+   ],
+   "note": "the exact shared-bus schedule (A-23, never a sum of peaks) and the mission existence query; BD-360 stays related"
+  },
+  {
+   "bead": "N31a-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-40",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30a-45",
+    "BD-395"
+   ],
+   "note": "a shared convention (at least three non-collinear fiducials with correspondences); Ground consumes the packet"
+  },
+  {
+   "bead": "N31a-40",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31b-32"
+   ],
+   "note": "N31b-32 depends on the capstones BD-407 and BD-408, whose component this bead is"
+  },
+  {
+   "bead": "N31a-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-41",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-26"
+   ],
+   "note": "the fail-closed default (current density against the card limit) is built here and holds until the decision"
+  },
+  {
+   "bead": "N31a-41",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-103",
+    "BD-075"
+   ],
+   "note": "A-11 actuator envelope and the shared-bus ceiling"
+  },
+  {
+   "bead": "N31a-41",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N31a-63"
+   ],
+   "note": "cable ports are part of the new structure-declarations bead N31a-63"
+  },
+  {
+   "bead": "N31a-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-42",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-078"
+   ],
+   "note": "BD-099 (sensor cards and mounts) is already a dependency"
+  },
+  {
+   "bead": "N31a-42",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-072",
+    "N15a-14"
+   ],
+   "note": "derating at L2 and the static thermal library"
+  },
+  {
+   "bead": "N31a-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-09"
+   ],
+   "note": "the pilot; the KILL-PACKET decision N31b-19 depends on the capstone BD-408 and is recorded as related under edges (the reduced profile exists on both branches)"
+  },
+  {
+   "bead": "N31a-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-35",
+    "N31b-36"
+   ],
+   "note": "the re-extraction record each case carries and the provisional-case refusal"
+  },
+  {
+   "bead": "N31a-43",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31b-32"
+   ],
+   "note": "N31b-32 calls this bead's cross-consistency function and depends on it (edge recorded under edges), not the reverse"
+  },
+  {
+   "bead": "N31a-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-10"
+   ],
+   "note": "the named carrier BD-438 is the parent epic and cannot be a dependency; the pilot is N31b-10; the KILL-FIRMWARE decision N31b-21 reads the gate and never precedes the mechanism; the funding order N41-09 is recorded under edges"
+  },
+  {
+   "bead": "N31a-44",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-26"
+   ],
+   "note": "the reserved fixed-point types for an embedded target; BD-018 is already a dependency"
+  },
+  {
+   "bead": "N31a-44",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-337"
+   ],
+   "note": "the energy-budget monitor kernel; the shield rows are its dependency BD-338"
+  },
+  {
+   "bead": "N31a-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-45",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-29"
+   ],
+   "note": "the fail-closed default (2 s, a timeout is undecided and refused) is built here and holds until the experiment decides"
+  },
+  {
+   "bead": "N31a-45",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-01"
+   ],
+   "note": "the proof-tool capability registry with the bit-vector route; the Linux-host checker BD-380 and CARD-T-14 are already dependencies"
+  },
+  {
+   "bead": "N31a-46",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-10"
+   ],
+   "note": "the pilot; the KILL-FIRMWARE decision N31b-21 is recorded as related under edges (the parameters-only output exists on both branches)"
+  },
+  {
+   "bead": "N31a-46",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-22",
+    "N21a-17"
+   ],
+   "note": "the kernel classes with `exact` at D0, and the exact-integer math mode; BD-030 is already a dependency"
+  },
+  {
+   "bead": "N31a-46",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-46",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-262"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-47",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-11"
+   ],
+   "note": "the named carrier BD-423 is the parent epic and cannot be a dependency; the pilot is N31b-11; the decision N31b-23 reads the gate and never precedes the mechanism; the funding order N41-09 is recorded under edges"
+  },
+  {
+   "bead": "N31a-47",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-169 (per-world parameter variants, level P-A)"
+  },
+  {
+   "bead": "N31a-47",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-333",
+    "N22a-36"
+   ],
+   "note": "gait orbits with their period, and the GaitOrbit record"
+  },
+  {
+   "bead": "N31a-48",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-48",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-28"
+   ],
+   "note": "the fail-closed default (generic cards marked `assumed`, refused by --strict-data) is built here and holds until the decision"
+  },
+  {
+   "bead": "N31a-48",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N15b-16"
+   ],
+   "note": "the cell-fade law reads the ageing law only on the branch where KILL-SINEW-AGE does not fire"
+  },
+  {
+   "bead": "N31a-48",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N15b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-49",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-49",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-49",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-276 (nemesis.bound)"
+  },
+  {
+   "bead": "N31a-50",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-11"
+   ],
+   "note": "the pilot; the KILL-LIFECYCLE decision N31b-23 is recorded as related under edges (hand-specified wear states exist on both branches)"
+  },
+  {
+   "bead": "N31a-50",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-170",
+    "N24c-04"
+   ],
+   "note": "model variants per slot (level P-B) and eval.run"
+  },
+  {
+   "bead": "N31a-50",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-273"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-50",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry"
+   ],
+   "note": "BD-409 is already a dependency"
+  },
+  {
+   "bead": "N31a-51",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-298",
+    "NJL-05"
+   ],
+   "note": "the generated MCP surface and the task-cluster assignment"
+  },
+  {
+   "bead": "N31a-51",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-297"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-51",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31b-32",
+    "N31b-33",
+    "N31b-35",
+    "N31b-39"
+   ],
+   "note": "each adds a mode or flag to a verb of this cluster and depends on the capstone; this bead's entries name them"
+  },
+  {
+   "bead": "N31a-52",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-52",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-53",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31b-16"
+   ],
+   "note": "the decision reads this script's gate record: N31b-16 depends on N31a-53 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31a-53",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-35",
+    "N31b-37"
+   ],
+   "note": "the re-extraction step has its own script N31b-37"
+  },
+  {
+   "bead": "N31a-53",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19",
+    "N31b-12"
+   ],
+   "note": "the gate record, the gate recorder and the Foundry rows"
+  },
+  {
+   "bead": "N31a-54",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-07"
+   ],
+   "note": "the script runs on the stage-2 pilot's frozen fixture and protocol; the KILL-TOPOPT decision N31b-15 reads the gate record through N31b-13 and is recorded as related under edges"
+  },
+  {
+   "bead": "N31a-54",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19",
+    "N31b-12"
+   ],
+   "note": "the gate record, the gate recorder and the Foundry rows"
+  },
+  {
+   "bead": "N31a-55",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31b-17"
+   ],
+   "note": "the decision reads this script's GATE-FOUNDRY-07 record: N31b-17 depends on N31a-55 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31a-55",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-32",
+    "N31b-34"
+   ],
+   "note": "the packet pre-review mode has its own script N31b-34"
+  },
+  {
+   "bead": "N31a-55",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19",
+    "N31b-12"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-56",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31b-18"
+   ],
+   "note": "the decision reads this script's record: N31b-18 depends on N31a-56 (edge recorded under edges); the pilot N31b-08 is already a dependency of the mechanisms the script exercises"
+  },
+  {
+   "bead": "N31a-56",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19",
+    "N31b-12"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-57",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31b-19"
+   ],
+   "note": "the decision reads this script's records: N31b-19 depends on N31a-57 (edge recorded under edges); the pilot N31b-09 is already a dependency of the mechanisms the script exercises"
+  },
+  {
+   "bead": "N31a-57",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31b-32",
+    "N31b-33",
+    "N31b-34"
+   ],
+   "note": "pre-review, review import and GATE-FOUNDRY-13 have their own script N31b-34"
+  },
+  {
+   "bead": "N31a-57",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "NS-20"
+   ],
+   "note": "NS-20 is the acceptance bead of the scenario and consumes the end-to-end record (N31b-14 runs the scenario); the gate-record dependencies N40-01, N38b-19 and N31b-12 are recorded under edges"
+  },
+  {
+   "bead": "N31a-58",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31b-21"
+   ],
+   "note": "the decision reads the GATE-FOUNDRY-11 record of this script; the pilot N31b-10 is already a dependency of the mechanisms it exercises"
+  },
+  {
+   "bead": "N31a-58",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-380"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-58",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19",
+    "N31b-12"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-59",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31b-23"
+   ],
+   "note": "the decision reads the GATE-FOUNDRY-12 record of this script; the pilot N31b-11 is already a dependency of the mechanisms it exercises"
+  },
+  {
+   "bead": "N31a-59",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15b-16"
+   ],
+   "note": "the cell-fade steps run with the law or with constants according to the decision"
+  },
+  {
+   "bead": "N31a-59",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19",
+    "N31b-12"
+   ],
+   "note": "the 100-hour reference run is stored as a `.frun` with its digest by the script itself"
+  },
+  {
+   "bead": "N31a-60",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-60",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-38"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-60",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-062",
+    "BD-055",
+    "BD-100"
+   ],
+   "note": "Region moments by fill, the declared fill, and the A-02 mass roll-up"
+  },
+  {
+   "bead": "N31a-60",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-107"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-60",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N31a-63"
+   ],
+   "note": "`member_end` and `section_up` are part of the new structure-declarations bead N31a-63"
+  },
+  {
+   "bead": "N31a-61",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-61",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-38"
+   ],
+   "note": "the stock search and exact decisions are the M3 kernel N31b-38; the named N31a-60 (section forces) is already a dependency"
+  },
+  {
+   "bead": "N31a-61",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N31a-63"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-61",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N31b-38",
+    "BD-069"
+   ],
+   "note": "stock cards are introduced with the M3 sizing kernel N31b-38 on the card schema of BD-069"
+  },
+  {
+   "bead": "N31a-62",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-10"
+   ],
+   "note": "the named carrier BD-438 is the parent epic and cannot be a dependency; the pilot is N31b-10"
+  },
+  {
+   "bead": "N31a-62",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-02"
+   ],
+   "note": "the foundation rows of the stack lock, with posture, admission gate and fallback"
+  },
+  {
+   "bead": "N31a-62",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33c-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31a-62",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N33c-09"
+   ],
+   "note": "the never-dependency siblings among the suite deny rules"
+  },
+  {
+   "bead": "N31a-62",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N31b-33"
+   ],
+   "note": "the sidecar store and manifest view of the review import"
+  },
+  {
+   "bead": "N31a-62",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "N31b-45"
+   ],
+   "note": "the new decision bead N31b-45 proposes and enters the row for `firmware-receipt-mismatch`"
+  },
+  {
+   "bead": "N31a-62",
+   "n": 7,
+   "as": "dep",
+   "keys": [
+    "N34-19",
+    "N34-22"
+   ],
+   "note": "the format-registry types and the round-trip harness; no bead enters a row for this sidecar (reported as a gap)"
+  },
+  {
+   "bead": "N31b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-005",
+    "BD-308"
+   ],
+   "note": "BD-308 is already a dependency"
+  },
+  {
+   "bead": "N31b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31a-45"
+   ],
+   "note": "the named BD-438 is an epic at a later milestone (M8); the certificates come from its child N31a-45; PO-FOUNDRY-04 stays open in the ledger until then"
+  },
+  {
+   "bead": "N31b-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-03"
+   ],
+   "note": "check-deps already holds the tier-feature rule (off by default, prefixed names)"
+  },
+  {
+   "bead": "N31b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-004"
+   ],
+   "note": "BD-003 is already a dependency"
+  },
+  {
+   "bead": "N31b-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N31-KA"
+   ],
+   "note": "N31-KA is at M5 and this bead at M4; the two must agree row for row and neither waits for the other"
+  },
+  {
+   "bead": "N31b-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-12",
+    "N38b-27",
+    "N38b-28"
+   ],
+   "note": "the row rules, and the two decisions that fix how `to set` tolerances and missing controls are supplied"
+  },
+  {
+   "bead": "N31b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-14",
+    "N38a-18"
+   ],
+   "note": "the relation registry and the block that holds MR-34"
+  },
+  {
+   "bead": "N31b-05",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-001"
+   ],
+   "note": "the stack lock with FrankenSim's pinned commit; the pilot runs the sibling tools outside the product"
+  },
+  {
+   "bead": "N31b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-001"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-180"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-001"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-001"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-10",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-380 (the fln tool pinned and run on the Linux host)"
+  },
+  {
+   "bead": "N31b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N40-10"
+   ],
+   "note": "the gate record and the register entry that folds the late gates into the tables"
+  },
+  {
+   "bead": "N31b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-12",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N15b-16"
+   ],
+   "note": "a consumer row; the decision is at M6, later than this registry bead"
+  },
+  {
+   "bead": "N31b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07",
+    "N38a-08",
+    "BD-216"
+   ],
+   "note": "the six-part register, the experiment statistics and the paired lower-bound routine of the performance harness"
+  },
+  {
+   "bead": "N31b-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "the hardware fingerprint record of both machines"
+  },
+  {
+   "bead": "N31b-13",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31b-27"
+   ],
+   "note": "the default (wrought-alloy fixture; printed fixtures `fatigue: no-claim`) holds until the decision"
+  },
+  {
+   "bead": "N31b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-409"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-29"
+   ],
+   "note": "the North-Star demo harness with its demo files"
+  },
+  {
+   "bead": "N31b-14",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-346"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision: BD-412 depends on N31b-15 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision: BD-412 depends on N31b-16 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision: BD-412 depends on N31b-17 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision: BD-412 depends on N31b-18 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision: BD-412 depends on N31b-19 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31a-44",
+    "N31a-45",
+    "N31a-46"
+   ],
+   "note": "the named BD-438 is the parent epic; its mechanism children are N31a-44 to N31a-46"
+  },
+  {
+   "bead": "N31b-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-030"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "CARD-T-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-442"
+   ],
+   "note": "the exit review reads the decision: BD-442 depends on N31b-21 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31a-47",
+    "N31a-48",
+    "N31a-49",
+    "N31a-50"
+   ],
+   "note": "the named BD-423 is the parent epic; its mechanism children are N31a-47 to N31a-50"
+  },
+  {
+   "bead": "N31b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15b-14",
+    "N15b-16"
+   ],
+   "note": "the ageing states as scenario constants and the decision that says whether the law or the constants run"
+  },
+  {
+   "bead": "N31b-22",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-155",
+    "BD-084"
+   ],
+   "note": "backlash rows on the batched tiers and on the referee; the per-world parameter row is BD-169"
+  },
+  {
+   "bead": "N31b-22",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry",
+    "BD-409"
+   ],
+   "note": "the cluster's registry rows and the declared entries of the M6 verbs"
+  },
+  {
+   "bead": "N31b-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-427"
+   ],
+   "note": "the exit review reads the decision: BD-427 depends on N31b-23 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15b-16"
+   ],
+   "note": "this decision cites the outcome of KILL-SINEW-AGE"
+  },
+  {
+   "bead": "N31b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-001"
+   ],
+   "note": "the stack lock with FrankenSim's pinned commit"
+  },
+  {
+   "bead": "N31b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N41-03",
+    "N41-OPEN6"
+   ],
+   "note": "the open-question register with its decision rule, and the Foundry rows with their owners"
+  },
+  {
+   "bead": "N31b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03",
+    "N41-OPEN6",
+    "N40-35"
+   ],
+   "note": "register, Foundry rows and the owner-input calendar; N41-13 decides the same question and is reported as a cross-group duplicate"
+  },
+  {
+   "bead": "N31b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N37-17",
+    "N15b-06"
+   ],
+   "note": "the licence join over lineage, and --strict-data"
+  },
+  {
+   "bead": "N31b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03",
+    "N41-OPEN6"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "already a drafted dependency"
+  },
+  {
+   "bead": "N31b-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03",
+    "N41-OPEN6"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "already a drafted dependency"
+  },
+  {
+   "bead": "N31b-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03",
+    "N41-OPEN6"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N15b-15",
+    "N15b-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N15b-06"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03",
+    "N41-OPEN6"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-30",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "not a bead: an owner input with a fail-closed default stated in this bead (a fresh-context session jailed away from the fixtures)"
+  },
+  {
+   "bead": "N31b-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-261"
+   ],
+   "note": "BD-259 is already a drafted dependency"
+  },
+  {
+   "bead": "N31b-30",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-258"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-372",
+    "BD-352"
+   ],
+   "note": "BD-372 is already a drafted dependency"
+  },
+  {
+   "bead": "N31b-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-135"
+   ],
+   "note": "already a drafted dependency"
+  },
+  {
+   "bead": "N31b-31",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-314"
+   ],
+   "note": "the ceiling here is `no time claim`; a time from brief to accepted packet may only be measured in that stratum of the ten-fold protocol"
+  },
+  {
+   "bead": "N31b-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-066",
+    "N14a-25"
+   ],
+   "note": "the integrating exporter (BD-066, already a dependency) and URDF and MJCF export with the loss report (N14a-25)"
+  },
+  {
+   "bead": "N31b-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-095"
+   ],
+   "note": "already a drafted dependency"
+  },
+  {
+   "bead": "N31b-32",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-259"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-32",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "VERBS-foundry"
+   ],
+   "note": "the cluster's registry rows; BD-409 (the completed M5 registry) is recorded as related under edges"
+  },
+  {
+   "bead": "N31b-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-28"
+   ],
+   "note": "the release rubric this bead's hook prints into"
+  },
+  {
+   "bead": "N31b-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-45"
+   ],
+   "note": "the new decision bead N31b-45 proposes and enters the row for `review-record-packet-mismatch`"
+  },
+  {
+   "bead": "N31b-33",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N34-19",
+    "N34-22"
+   ],
+   "note": "the format-registry types and the round-trip harness; no bead enters a row for this sidecar (reported as a gap)"
+  },
+  {
+   "bead": "N31b-33",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "not a bead: an owner input; without a reviewer the count stays `no-claim` and nothing is blocked"
+  },
+  {
+   "bead": "N31b-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N31b-30"
+   ],
+   "note": "already a drafted dependency"
+  },
+  {
+   "bead": "N31b-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review records this gate: BD-412 depends on N31b-34 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-212",
+    "BD-264"
+   ],
+   "note": "the fidelity ledger with frozen envelopes and the tier-correction ledger; no bead adds the `port-wrench projection` stratum (reported as a gap; this bead adds and freezes it first)"
+  },
+  {
+   "bead": "N31b-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-203",
+    "BD-204"
+   ],
+   "note": "BD-204 is already a drafted dependency"
+  },
+  {
+   "bead": "N31b-35",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-213"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-207"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-45"
+   ],
+   "note": "the new decision bead N31b-45 proposes and enters the row; FROB-REF-820 stays the interim"
+  },
+  {
+   "bead": "N31b-36",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-263"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-37",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§18: no bead carries a test-only stiffness override on a fast tier for one contact over a registered tick interval; the run-level stiffness arm N16b-13 is recorded as related under edges"
+  },
+  {
+   "bead": "N31b-37",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review records this gate: BD-412 depends on N31b-37 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": "already a drafted dependency; the stock-card kind is added in this bead"
+  },
+  {
+   "bead": "N31b-38",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-401"
+   ],
+   "note": "BD-401 is at M5, later than this M3 kernel; BD-401 depends on N31b-38 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-06"
+   ],
+   "note": "the L-10 inversion traits and their list; the architecture decision admitting a sixth inversion has no bead (reported as a gap)"
+  },
+  {
+   "bead": "N31b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-109",
+    "BD-246"
+   ],
+   "note": "BD-109 is already a drafted dependency"
+  },
+  {
+   "bead": "N31b-39",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-110"
+   ],
+   "note": "already a drafted dependency"
+  },
+  {
+   "bead": "N31b-40",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§29.5: no bead carries an event-level (T1) device-side capture of one time-coherent sample per link per episode at the running maximum of a registered scalar; its telemetry dependencies BD-090 and BD-207 stand"
+  },
+  {
+   "bead": "N31b-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-45"
+   ],
+   "note": "the new decision bead N31b-45 proposes and enters the row for `under-built-promotion`"
+  },
+  {
+   "bead": "N31b-40",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-005",
+    "BD-308"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-055",
+    "BD-062"
+   ],
+   "note": "both already drafted dependencies"
+  },
+  {
+   "bead": "N31b-41",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N31b-45"
+   ],
+   "note": "the new decision bead N31b-45 proposes and enters the row; FROB-REF-105 stays the interim"
+  },
+  {
+   "bead": "N31b-41",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N31b-42"
+   ],
+   "note": "N31b-42 depends on this bead (the experiment runs the fill); the template default is switched after it"
+  },
+  {
+   "bead": "N31b-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07",
+    "N38a-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-42",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-262",
+    "BD-254"
+   ],
+   "note": "both already drafted dependencies"
+  },
+  {
+   "bead": "N31b-42",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "the cost model that prices thirty campaigns before admission"
+  },
+  {
+   "bead": "N31b-43",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-319"
+   ],
+   "note": "the exit review records this gate: BD-319 depends on N31b-43 (edge recorded under edges)"
+  },
+  {
+   "bead": "N31b-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-110"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N31b-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "the closed proof-kind registry; the revision admitting `packet-manifest` has no bead (reported as a gap)"
+  },
+  {
+   "bead": "N31b-44",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-026 and BD-027 (the auditor reads bundles only; the manifest's canonical bytes are embedded in a bundle here)"
+  },
+  {
+   "bead": "N31b-44",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-11",
+    "N37-23"
+   ],
+   "note": "the flag sweep with FROB-REF-833 and the M1 flags with FROB-REF-816"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-401",
+   "dep": "N31b-38",
+   "as": "dep",
+   "why": "coverage (e) 2 of U31b and (e) 3 of U31a: the M5 beam rung extends the M3 sizing kernel instead of duplicating it"
+  },
+  {
+   "bead": "BD-409",
+   "dep": "N31a-51",
+   "as": "dep",
+   "why": "the M5 verb capstone depends on the Foundry cluster's entries; N31a-51 no longer depends on BD-409 (a component never depends on its capstone)"
+  },
+  {
+   "bead": "N31a-51",
+   "dep": "VERBS-foundry",
+   "as": "dep",
+   "why": "the cluster's seven registry rows come first; N31a-51 fills them with schemas, refusal lists and examples"
+  },
+  {
+   "bead": "N31b-36",
+   "dep": "N31a-03",
+   "as": "dep",
+   "why": "N31a-03 defines the admission hook into which N31b-36 plugs the provisional-case refusal (need 2 of N31a-03)"
+  },
+  {
+   "bead": "N31b-35",
+   "dep": "N31a-10",
+   "as": "dep",
+   "why": "N31a-10 stores the replay address and direction of each envelope case that the re-extraction reads (need 3 of N31a-10)"
+  },
+  {
+   "bead": "N31b-32",
+   "dep": "N31a-43",
+   "as": "dep",
+   "why": "pre-review items M3 and M6 call the assembler's cross-consistency function (need 3 of N31a-43)"
+  },
+  {
+   "bead": "N31b-16",
+   "dep": "N31a-53",
+   "as": "dep",
+   "why": "KILL-LOADS is decided on the GATE-FOUNDRY-02 record this script writes"
+  },
+  {
+   "bead": "N31b-17",
+   "dep": "N31a-55",
+   "as": "dep",
+   "why": "KILL-FAB is decided on the GATE-FOUNDRY-07 record this script writes"
+  },
+  {
+   "bead": "N31b-18",
+   "dep": "N31a-56",
+   "as": "dep",
+   "why": "KILL-TOLERANCE is decided on the GATE-FOUNDRY-08 record this script writes"
+  },
+  {
+   "bead": "N31b-19",
+   "dep": "N31a-57",
+   "as": "dep",
+   "why": "KILL-PACKET is decided on the GATE-FOUNDRY-09 and -10 records this script writes"
+  },
+  {
+   "bead": "BET-29",
+   "dep": "N31b-13",
+   "as": "dep",
+   "why": "the bet is read on the registered GATE-FOUNDRY-05 measurement"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N31b-15",
+   "as": "dep",
+   "why": "the M5 exit review records this kill decision as an architecture decision record (need 1 of N31b-15)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N31b-16",
+   "as": "dep",
+   "why": "the M5 exit review records this kill decision as an architecture decision record (need 1 of N31b-16)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N31b-17",
+   "as": "dep",
+   "why": "the M5 exit review records this kill decision as an architecture decision record (need 1 of N31b-17)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N31b-18",
+   "as": "dep",
+   "why": "the M5 exit review records this kill decision as an architecture decision record (need 1 of N31b-18)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N31b-19",
+   "as": "dep",
+   "why": "the M5 exit review records this kill decision as an architecture decision record (need 1 of N31b-19)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N31b-34",
+   "as": "dep",
+   "why": "the M5 exit review records GATE-FOUNDRY-13 in a fresh session (need 2 of N31b-34)"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N31b-37",
+   "as": "dep",
+   "why": "the M5 exit review records GATE-FOUNDRY-14 in a fresh session (need 2 of N31b-37)"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N31b-23",
+   "as": "dep",
+   "why": "the M6 exit review records the KILL-LIFECYCLE decision (need 1 of N31b-23)"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N31b-21",
+   "as": "dep",
+   "why": "the M8 exit review records the KILL-FIRMWARE decision (need 1 of N31b-21)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N31b-43",
+   "as": "dep",
+   "why": "the M3 exit review records GATE-FOUNDRY-15 in a fresh session (need 1 of N31b-43)"
+  },
+  {
+   "bead": "N31a-44",
+   "dep": "N41-09",
+   "as": "dep",
+   "why": "a Moonshot mechanism starts only when the owner's order under the cap of four activates its epic (need 5 of BD-438)"
+  },
+  {
+   "bead": "N31a-47",
+   "dep": "N41-09",
+   "as": "dep",
+   "why": "a Moonshot mechanism starts only when the owner's order under the cap of four activates its epic (need 6 of BD-423)"
+  },
+  {
+   "bead": "N31a-44",
+   "dep": "BD-408",
+   "as": "dep",
+   "why": "the seed dependency of the epic BD-438 on the build packet, carried by its first mechanism child"
+  },
+  {
+   "bead": "N31a-48",
+   "dep": "BD-402",
+   "as": "dep",
+   "why": "the seed dependency of the epic BD-423 on the structural check, carried by the child that reads fatigue damage"
+  },
+  {
+   "bead": "N31a-21",
+   "dep": "N10c-06",
+   "as": "dep",
+   "why": "the specification of cumulative fatigue damage (C-35 part) states the contract and law tests this mechanism implements"
+  },
+  {
+   "bead": "N31a-32",
+   "dep": "N10c-07",
+   "as": "dep",
+   "why": "the specification of tolerance stacks and allocation (C-35 part) states the contract and law tests this mechanism implements"
+  },
+  {
+   "bead": "N31a-57",
+   "dep": "N40-01",
+   "as": "dep",
+   "why": "need 3 of N31a-57: the gate record, the gate recorder and the Foundry rows"
+  },
+  {
+   "bead": "N31a-57",
+   "dep": "N38b-19",
+   "as": "dep",
+   "why": "need 3 of N31a-57: the gate record, the gate recorder and the Foundry rows"
+  },
+  {
+   "bead": "N31a-57",
+   "dep": "N31b-12",
+   "as": "dep",
+   "why": "need 3 of N31a-57: the gate record, the gate recorder and the Foundry rows"
+  },
+  {
+   "bead": "BD-400",
+   "dep": "BD-409",
+   "as": "related",
+   "why": "the named BD-409 is a higher-numbered seed that depends on BD-408; the registry rows are VERBS-foundry"
+  },
+  {
+   "bead": "BD-403",
+   "dep": "BD-409",
+   "as": "related",
+   "why": "the named BD-409 is a higher-numbered seed that depends on BD-408; the registry rows are VERBS-foundry"
+  },
+  {
+   "bead": "BD-405",
+   "dep": "BD-409",
+   "as": "related",
+   "why": "the named BD-409 is a higher-numbered seed that depends on BD-408; the registry rows are VERBS-foundry"
+  },
+  {
+   "bead": "BD-406",
+   "dep": "BD-409",
+   "as": "related",
+   "why": "the named BD-409 is a higher-numbered seed that depends on BD-408; the registry rows are VERBS-foundry"
+  },
+  {
+   "bead": "BD-408",
+   "dep": "BD-409",
+   "as": "related",
+   "why": "the named BD-409 is a higher-numbered seed that depends on BD-408; the registry rows are VERBS-foundry"
+  },
+  {
+   "bead": "N31b-32",
+   "dep": "BD-409",
+   "as": "related",
+   "why": "the completed M5 registry lists the packet mode; not a prerequisite of the mode"
+  },
+  {
+   "bead": "BD-408",
+   "dep": "BD-410",
+   "as": "related",
+   "why": "the thirteen-format gate depends on BD-408 and is a higher-numbered seed"
+  },
+  {
+   "bead": "N31a-36",
+   "dep": "BD-410",
+   "as": "related",
+   "why": "the thirteen-format gate consumes the packet format"
+  },
+  {
+   "bead": "N31a-33",
+   "dep": "N31b-18",
+   "as": "related",
+   "why": "the decision depends on the capstone BD-406; the worst-case boxes exist on both branches"
+  },
+  {
+   "bead": "N31a-43",
+   "dep": "N31b-19",
+   "as": "related",
+   "why": "the decision depends on the capstone BD-408; the reduced profile exists on both branches"
+  },
+  {
+   "bead": "N31a-46",
+   "dep": "N31b-21",
+   "as": "related",
+   "why": "the decision reads the gate; the parameters-only output exists on both branches"
+  },
+  {
+   "bead": "N31a-50",
+   "dep": "N31b-23",
+   "as": "related",
+   "why": "the decision reads the gate; hand-specified wear states exist on both branches"
+  },
+  {
+   "bead": "N31a-54",
+   "dep": "N31b-15",
+   "as": "related",
+   "why": "the decision reads the GATE-FOUNDRY-05 row of N31b-13, which depends on N31a-54"
+  },
+  {
+   "bead": "N31b-37",
+   "dep": "N16b-13",
+   "as": "related",
+   "why": "the run-level stiffness arm is the nearest existing mechanism to the missing per-contact override"
+  },
+  {
+   "bead": "N31b-25",
+   "dep": "N41-13",
+   "as": "related",
+   "why": "both decide OPEN-FOUNDRY-2 (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "N31b-14",
+   "dep": "NS-20",
+   "as": "related",
+   "why": "both script the NS-20 chain (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "N31b-12",
+   "dep": "N40-27",
+   "as": "related",
+   "why": "both enter the seven Foundry kill-gate rows (reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "N31b-15",
+   "dep": "BET-29",
+   "as": "related",
+   "why": "two readings of GATE-FOUNDRY-05: the kill gate and the bet"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N31b-20",
+   "keep": "N31a-58",
+   "note": "both specify scripts/e2e/foundry_firmware.sh for GATE-FOUNDRY-11; two fixtures, the vector-set composition, the artifact scan, the budget clause, the PO-FOUNDRY-04 row, the conformance unit tests, three controls and the dependencies folded into N31a-58"
+  },
+  {
+   "drop": "N31b-22",
+   "keep": "N31a-59",
+   "note": "both specify scripts/e2e/foundry_lifecycle.sh for GATE-FOUNDRY-12; the hourly reference, the error metric with its floor, the robot-level planted collapse, synthetic cards, the potency control, the conformance unit tests and the dependencies folded into N31a-59"
+  },
+  {
+   "drop": "N31a-38",
+   "keep": "N31b-44",
+   "note": "both teach frob-verify to audit a packet (GATE-FOUNDRY-10); N31b-44's bundle design is kept because frob-cert reads only certificate bundles; the manifest and section checks, reason tokens, the specimen set, the differential test and the planted defects of N31a-38 folded into N31b-44"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N31b-25",
+   "other": "N41-13",
+   "note": "both are the owner decision OPEN-FOUNDRY-2 (parts catalogue and price data, licence; default no prices); N41-13 also decides OPEN-SKEL-2"
+  },
+  {
+   "mine": "N31b-14",
+   "other": "NS-20",
+   "note": "both script the North-Star NS-20 chain from qualified design to verified packet with a demonstration file (scripts/e2e/foundry_pipeline_ns20.sh and docs/demos/ns-20.toml against scripts/e2e/ns_20.sh and demos/ns-20/demo.yaml)"
+  },
+  {
+   "mine": "N31a-51",
+   "other": "VERBS-foundry",
+   "note": "both enter the seven registry rows of cluster foundry; here N31a-51 depends on VERBS-foundry and adds schemas, the corrected refusal lists, the bounded wait and parity"
+  },
+  {
+   "mine": "N31b-12",
+   "other": "N40-02",
+   "note": "both enter the rows of GATE-FOUNDRY-01 to -12 in registries/gates.toml with claim and earliest milestone"
+  },
+  {
+   "mine": "N31b-12",
+   "other": "N40-10",
+   "note": "both fold the late gates GATE-FOUNDRY-13 to -15 into the gate register"
+  },
+  {
+   "mine": "N31b-12",
+   "other": "N40-27",
+   "note": "both enter the seven Foundry kill gates with trigger and fallback"
+  },
+  {
+   "mine": "N31b-38",
+   "other": "BD-401",
+   "note": "overlap with distinct scope: the M3 closed-form sizing kernel in beam/{section,criteria,stock,size}.rs and the M5 beam rung in the same modules; BD-401 should depend on N31b-38 and its Scope should say it extends the kernel"
+  },
+  {
+   "mine": "N31a-60",
+   "other": "BD-401",
+   "note": "overlap with distinct scope: N31a-60 extends BD-401's load model from a tip wrench to a full time-coherent link load and adds `foundry.size --diagram`; it depends on BD-401"
+  },
+  {
+   "mine": "N31a-61",
+   "other": "BD-401",
+   "note": "overlap with distinct scope: stock sizing under campaign loads with notch fatigue and the engineered baseline; it depends on BD-401"
+  }
+ ],
+ "new_beads": [
+  "N31a-63",
+  "N31b-45"
+ ],
+ "gaps": [
+  {
+   "section": "§33.9",
+   "what": "`fs-mesh` (tetrahedral meshing with its audits) is on no airlock group's crate list or consumer list; Foundry's extraction and independent check need it",
+   "needed_by": [
+    "N31a-17",
+    "N31a-19",
+    "BD-402",
+    "BD-403",
+    "N31b-24"
+   ]
+  },
+  {
+   "section": "§33.9",
+   "what": "`fs-mbd-material` is admitted only in the airlock group `referee` (N33a-15), whose consumer list (N33a-11, N33b-09) omits `frob-foundry`; Foundry computes mass properties of checked and exported geometry with it",
+   "needed_by": [
+    "N31a-23",
+    "N31a-40",
+    "BD-404",
+    "BD-407"
+   ]
+  },
+  {
+   "section": "§33.9",
+   "what": "`fs-uq::product_epistemic` is in the airlock group `stats` (N33b-13), whose consumer list omits `frob-foundry`; the worst-case boxes of tolerance allocation need it",
+   "needed_by": [
+    "N31a-33",
+    "BD-406"
+   ]
+  },
+  {
+   "section": "§33.9, Appendix F",
+   "what": "no upstream work item and no airlock probe for an external differentiable filter stage in the sibling optimizer's filter stack; without it the overhang filter runs as a post-check only",
+   "needed_by": [
+    "N31a-29"
+   ]
+  },
+  {
+   "section": "§34.9",
+   "what": "no format-registry row for the two sidecars `frob.review/1` and `frob.firmware.receipt/1` (BD-410 completes thirteen formats, none of them these)",
+   "needed_by": [
+    "N31b-33",
+    "N31a-62"
+   ]
+  },
+  {
+   "section": "§34.3",
+   "what": "rule L-10 lists five standing trait inversions; no bead records the architecture decision that admits a sixth (a sizing trait defined in `frob-analyze`, implemented in `frob-foundry`, wired by `frob-verbs`), which the M3 preflight sizing check needs to pass check-layers",
+   "needed_by": [
+    "N31b-39",
+    "N31b-41"
+   ]
+  },
+  {
+   "section": "§12.4",
+   "what": "no bead carries the registry revision that admits the record kind `packet-manifest` among the closed, versioned proof kinds (ADR-LEMMA-04)",
+   "needed_by": [
+    "N31b-44"
+   ]
+  },
+  {
+   "section": "§16.8, §29.11",
+   "what": "no bead adds a fidelity-ledger stratum for the quantity `port-wrench projection`, with its envelope frozen and hashed before any re-extraction",
+   "needed_by": [
+    "N31b-35"
+   ]
+  },
+  {
+   "section": "§29.5",
+   "what": "no bead carries an event-level (T1) device-side capture of one time-coherent sample per checked link per episode at the running maximum of a registered scalar",
+   "needed_by": [
+    "N31b-40"
+   ]
+  },
+  {
+   "section": "§18",
+   "what": "no bead carries a test-only contact-stiffness override on a fast tier for one contact over a registered interval of ticks, needed to plant the fast-tier artifact of GATE-FOUNDRY-14",
+   "needed_by": [
+    "N31b-37"
+   ]
+  },
+  {
+   "section": "§14 (OPEN-SKEL-4)",
+   "what": "no decision bead for OPEN-SKEL-4 (lattice anisotropy; owner: the Foundry lead); its default (isotropic fraction, the assumption printed) is carried in N31a-61",
+   "needed_by": [
+    "N31a-61"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-400",
+   "what": "made the capstone of its components: N31a-06 to N31a-13 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-402",
+   "what": "made the capstone of its components: N31a-19 to N31a-22 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-403",
+   "what": "made the capstone of its components: N31a-03, N31a-05, N31a-14 to N31a-18, N31a-29 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-404",
+   "what": "made the capstone of its components: N31a-23 to N31a-25 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-405",
+   "what": "made the capstone of its components: N31a-26 to N31a-30 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-406",
+   "what": "made the capstone of its components: N31a-31 to N31a-33 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-407",
+   "what": "made the capstone of its components: N31a-34, N31a-35, N31a-40 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-408",
+   "what": "made the capstone of its components: N31a-03, N31a-36, N31a-37, N31a-39, N31a-41 to N31a-43 (with N31a-51 and N31a-52 where it has a verb or a refusal) added to deps; Scope rewritten with a part-by-component table"
+  },
+  {
+   "bead": "BD-403",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-406",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-408",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N31a-43",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N31a-46",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N31a-51",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N31b-32",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N31b-44",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-408",
+   "what": "exploratory export made to agree with N31a-03, N31a-36 and N31a-43 (coverage (e) 5 of U31a): `foundry.export --exploratory` of a packet is refused with FROB-REF-166; no manifest with `exploratory: true` or `qualification: null` is written; the other reading is recorded in Considerations for the owner"
+  },
+  {
+   "bead": "N31b-32",
+   "what": "wording on a packet with `exploratory: true` aligned with the refusal"
+  },
+  {
+   "bead": "N31a-51",
+   "what": "BD-409 moved from deps to related (a component must not depend on its capstone; the dependency would close a cycle through BD-408); Scope names VERBS-foundry as the registry bead"
+  },
+  {
+   "bead": "N31a-58",
+   "what": "overlap with N31b-20 merged here (kept bead); dependencies and content folded; the exit rule of a completed failing measurement stated once"
+  },
+  {
+   "bead": "N31a-59",
+   "what": "overlap with N31b-22 merged here (kept bead); dependencies and content folded; error metric, hourly marks and synthetic-card label reconciled"
+  },
+  {
+   "bead": "N31b-44",
+   "what": "overlap with N31a-38 merged here (kept bead); checks of the superseded design carried by embedding section headers and mesh hashes in the bundle; one command spelling (`frob-verify --packet`)"
+  },
+  {
+   "bead": "N31a-36",
+   "what": "writes the auditor's bundle `certs/packet.frobcert` and depends on N31b-44; reader refuses a null verdict; hosts the reader-against-auditor differential test"
+  },
+  {
+   "bead": "N31a-54",
+   "what": "re-scoped against N31b-13: measures GATE-FOUNDRY-04 and -06 and runs the comparison once as a functional test; GATE-FOUNDRY-05 and KILL-TOPOPT removed from gates; title changed"
+  },
+  {
+   "bead": "N31b-13",
+   "what": "re-scoped against N31a-54: sole writer of the GATE-FOUNDRY-05 row with the three kill-trigger fields; depends on N31a-54; equal-margin rule aligned with N31a-61"
+  },
+  {
+   "bead": "N31a-57",
+   "what": "re-scoped against N31b-14: the verb's script and the two gate records; the NS-20 demonstration moved to N31b-14; auditor command and kill-point count updated; title changed"
+  },
+  {
+   "bead": "N31b-14",
+   "what": "re-scoped against N31a-57: the chain and the NS-20 demonstration; depends on the five verb scripts N31a-53 to N31a-57"
+  },
+  {
+   "bead": "N31a-01",
+   "what": "re-scoped against N31b-03 (crate side of the firewall) and N31b-38 (extends the M3 crate; dependency added); Cargo feature renamed `moonshot-firmware-export` per workspace rule L-12 (coverage (e) 6 of U31a, (e) 20 of U31b)"
+  },
+  {
+   "bead": "N31b-03",
+   "what": "re-scoped against N31a-01 (checker side of the firewall); depends on N31a-01"
+  },
+  {
+   "bead": "N31a-44",
+   "what": "Cargo feature name changed to `moonshot-firmware-export` in command lines, to agree with N31b-03"
+  },
+  {
+   "bead": "N31a-45",
+   "what": "Cargo feature name changed to `moonshot-firmware-export` in command lines, to agree with N31b-03"
+  },
+  {
+   "bead": "N31a-46",
+   "what": "Cargo feature name changed to `moonshot-firmware-export` in command lines, to agree with N31b-03"
+  },
+  {
+   "bead": "N31a-62",
+   "what": "Cargo feature name changed to `moonshot-firmware-export` in command lines, to agree with N31b-03"
+  },
+  {
+   "bead": "N31b-29",
+   "what": "Cargo feature name changed to `moonshot-firmware-export` in command lines, to agree with N31b-03"
+  },
+  {
+   "bead": "N31-REF",
+   "what": "re-scoped against N31a-52 (rows and registry-level checks here; payloads, per-code tests and the repair-replay script there); Table 2 made equal to the refusal lists of N31a-51; uncoded refusals pointed at N31b-45"
+  },
+  {
+   "bead": "N31a-52",
+   "what": "re-scoped against N31-REF; depends on N31-REF and STD-E2E"
+  },
+  {
+   "bead": "N31-KA",
+   "what": "re-scoped against N31b-04 and N31b-05 (rows entered once, here)"
+  },
+  {
+   "bead": "N31b-05",
+   "what": "re-scoped against N31-KA: binds rows to fixtures and tiers and enters none"
+  },
+  {
+   "bead": "N31b-38",
+   "what": "Scope names the beads that extend the kernel and the crate (BD-401, N31a-60, N31a-61, N31a-01)"
+  },
+  {
+   "bead": "N31a-60",
+   "what": "depends on the M3 kernel N31b-38, named in Scope"
+  },
+  {
+   "bead": "N31a-61",
+   "what": "depends on the M3 kernel N31b-38, named in Scope"
+  },
+  {
+   "bead": "N31a-37",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31a-43",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "BD-423",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "BD-438",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31b-02",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31b-10",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31b-11",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31b-12",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31b-21",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31b-23",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "N31b-28",
+   "what": "references to superseded beads repointed to the kept beads (N31a-58, N31a-59, N31b-44)"
+  },
+  {
+   "bead": "BD-423",
+   "what": "epic: seed dependencies BD-391 and BD-402 moved from deps to related (an epic carries none); its children carry them; Scope says so"
+  },
+  {
+   "bead": "BD-438",
+   "what": "epic: seed dependencies BD-338 and BD-408 moved from deps to related (an epic carries none); its children carry them; Scope says so"
+  },
+  {
+   "bead": "BD-407",
+   "what": "decimation rule and the triangle bound made to agree with its component N31a-35 (`--decimate` produces a new geometry that is re-checked; 285,712 as the largest even face count)"
+  },
+  {
+   "bead": "N31-REF",
+   "what": "triangle bound in the known answers aligned with N31a-35 and BD-407 (285,712)"
+  }
+ ]
+}

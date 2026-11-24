@@ -1,0 +1,220 @@
+{
+ "round": 3,
+ "slice": "F-U14b-2",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "N14b-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "step 1 called `frob card show`, which no registry has; now `frob actuator show <card>` (VERBS-actuator: every field with its provenance). Step 4 executed next_actions verbatim yet derived a key: design.edit is mutate and refuses a keyless call (805), so `--key` is appended only when the printed command has none (unit test updated). `--sample N` claimed 'a gate row is recorded only from a full run' although the script records none: a sampled run now logs step 10 as skip."
+  },
+  {
+   "bead": "N14b-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the coverage defect was an exit-9 integrity fault with no code; it is now the internal fault FROB-REF-990 of N32a-03 (retry never, the one code outside every list) with kind importer-coverage-defect, as every other engine-defect fault in the program."
+  },
+  {
+   "bead": "N14b-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "aligned with N14a-25's row: `--out` is a directory under the export root (734 outside), not a file path; the capability refusals named as FROB-REF-724. E2E: `design new` lacked name and key (805); now `quad-glb --key glb-new-1`; the vague 'conformance tool' read-back is the helper scripts/e2e/tools/glb_readback over the airlock reader; log path and helper stated. Kept `--format glb`, `--frames`, `--chord` (plan: glTF export for visuals) and requested them of VERBS-design."
+  },
+  {
+   "bead": "N14b-22",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "`--format sdf` before the importer lands answered 724 through a BD-065 dispatch that BD-065 never took and the registry does not list; per VERBS-design's rule for later values it is FROB-REF-802 (an `<sdf>` root without --format is 122), and `sdf` enters the enum additively when this bead lands; stale BD-065 request replaced by a VERBS-design request. The mass-dropped refusal is named as N14b-34's ledger row."
+  },
+  {
+   "bead": "N14b-24",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "step 8 wrote the GATE-SKEL-01 record itself (convention 9). Now: this bead is the one recorder of GATE-SKEL-01 and GATE-SKEL-11; it owns their tier tests (g2_parity, g1_known_answers), step 9 runs them with e2e_tier, compares each receipt with the script's rows and N14a-31's MJCF rows, and the values are entered with record_gate by a non-implementing session. fk-parity declared as an operator binary per BD-025. Reduced fixture names the import-mass-dropped refusal; the 320 N support check made concrete (design show --mass against fixtures/skel/support-320N.toml). Added unit tests stale_row_is_not_run, routes_compared, support_check_320N and control (e)."
+  },
+  {
+   "bead": "N14b-33",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "applied the S20 request: the --fold-fixed import path is owned by BD-065 (hand case), ROBOT-g1 (real source) and N14b-24 (fold fixture), logged as one skip line; no export-and-reimport step exists. The undefined 'conformance tool fold-battery' is now the example `cargo run -p frob-model --example fold_battery` over frob_model::fold::battery (BD-025's rule) with --mutant behind feature fold-mutants; log path stated; 'maxima recorded' corrected to logged, with N14b-24 named as the gate's one recorder."
+  },
+  {
+   "bead": "N14b-34",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "applied the H-verbs-1 request: the refusal is ledger row import-mass-dropped (N35x-02), raised under its slug until assigned and then under the assigned number, through one generated constant; never 'the next free code (127)'. `--reduced <profile>` is the registry's one option (a named profile or a profile file, which carries the explicit list); profile mismatches given codes (103 for an unknown body, the mass-dropped refusal for a missed one). The 320 N check made concrete as a weight comparison via design show --mass. E2E commands given names, distinct keys, log path; the synthetic rating numbers computed (34.335 N vs 29.43 N against 30 N). N14b-24 named as the gate's recorder."
+  },
+  {
+   "bead": "N14b-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the battery ran as `cargo test -p frob-conformance skeleton_invariants`, not a tier form (convention 1): now `e2e_tier g0_laws skeleton_invariants --mutations`, so controls run in the same run with a receipt. The binary step's `design edit assert-symmetry` lacked --expected-parent and --key (805); the false assertion is now refused by `design check --stages 5` (109), since design.edit does not raise 109 (VERBS-design). Log path and helper stated."
+  },
+  {
+   "bead": "N14b-26",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the 'Measured by' column named roles ('the import beads', 'the fold and reduced-model beads'), while the acceptance requires keys and convention 9 one recorder per gate: each gate part now names its recorder key first (01 and 11 N14b-24; 02 BD-063; 03 N14b-06/BD-247; 04 BD-110/BD-244; 05 N14a-28; 06 N14a-30; 07 N14b-06/BD-246; 08 N14a-29; 09 N14b-32; 10 N14b-30), `measured_by` says so, and `every_row_has_carrier` checks one recorder per part. E2E: the validator and pilot check named by their example forms, planted violations in `e2e_registries_scratch`, log path stated."
+  },
+  {
+   "bead": "N14b-27",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the pilot's script was scripts/pilots/ with ad-hoc lines and no STD-E2E; now scripts/e2e/pilot_capability_stance.sh with the STD-E2E header, charter fields, declared plants for the three controls, like the other 149 pilot scripts. Named register tests added (row complete, registered before result, hand values in rationals, counts consistent). Deps gain N38a-09 and STD-E2E."
+  },
+  {
+   "bead": "N14b-28",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "convention 11: the verb module.characterize had no script of its own ('covered by N14b-32', which waits on the archetypes); added scripts/e2e/module_characterize.sh on its own deps (leg-1r, ART-L2's std/leg-3r-qdd): hand case, key replay, --strict-data 113 and the Estimated table, 114, cancellation via job cancel, two plants. The inner-in-outer tool (a vague 'conformance tool' in N14b-32) is now this bead's example `cargo run -p frob-analyze --example capability_check`. Stale note that the registry lacked --strict-data/113/114 removed (VERBS-module now has them). Deps gain N29a-23 (job wait, job cancel) and STD-E2E."
+  },
+  {
+   "bead": "N14b-29",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "scope",
+    "deps"
+   ],
+   "what": "convention 11: own script scripts/e2e/skel_composed_screen.sh with the stance known answers; the fixture designs centred/shifted and task fixtures trot-stance and a new froude-0.8 moved here from N14b-32 (they are this bead's known answers). The certificate step used `frob prove bundle`, whose row has no claim source for a design-check certificate; now `artifact export` then `prove verify` and the offline `frob-verify`. Exclusion asserted as FROB-REF-124; the exclusion_refuses=false branch stated; plants twist-map, stance-blind, outer-admits. Dep STD-E2E."
+  },
+  {
+   "bead": "N14b-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "'Records: registries/gates.toml row' and a vague 'statistics tool' contradicted conventions 1 and 9: the tally is an artifact, the tier run `g1_known_answers -- GATE-SKEL-10` recomputes the statistics and runs the controls, and this bead's session (not the implementer) enters the value with record_gate. Every run verb in the script now carries a derived --key; log path stated."
+  },
+  {
+   "bead": "N14b-31",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "convention 10: the decision used unregistered outcomes ('pass', 'killed: fallback adopted') and no path; now docs/adr/ADR-KILL-SKEL-CELL-M4.md with N40-03's required fields, outcomes not-fired/fired per clause, and a `deferred` row for N14b-30's partial-gate case (tracked and hybrid not run), with its downstream rule; truth-table test extended; the script validates the entry with validate_register and runs fallback configurations in e2e_registries_scratch."
+  },
+  {
+   "bead": "N14b-32",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests"
+   ],
+   "what": "follows convention 11: runs N14b-28's and N14b-29's scripts as stages instead of re-specifying their steps; keeps the archetype-wide inner-in-outer (with N14b-28's capability_check example, replacing a 'tool in frob-conformance' that BD-025 would not allow undeclared), edit locality with --expected-parent and keys, and a step 6 that compares the tier run's receipt with the script's values; helper tests stage_summary_read and routes_compared added."
+  },
+  {
+   "bead": "N14bp1-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`--format usd` before the importer lands answered FROB-REF-724 through a BD-065 dispatch that the registry does not list; per VERBS-design's rule for later values it is FROB-REF-802 (exit 3), exactly as N14b-22 now has for `sdf`; acceptance updated (usd in the input schema, no longer 802)."
+  },
+  {
+   "bead": "N14bp2-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "steps 4 to 9 of the design.edit sequence gave no key (design.edit is mutate: 805 without one); each step is now one call with `--expected-parent` of the previous version and key ic-<step>, step 9 as edit plus returned inverse (ic-9a, ic-9b), with replays logged."
+  },
+  {
+   "bead": "N14bp2-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "two stale notes: 'request to N14-REF' (FROB-REF-121's row now lists the braked-pair triggers and repairs; acceptance now asserts equality with that row), and a request to BD-365 to reconcile 'switching is a controller mode' (BD-365 now depends on this bead and reports the role and law in force with law-switch events)."
+  },
+  {
+   "bead": "N14bp2-03",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "`frob design new --template <archetype>` had no name (design.new requires one); the single-world comparison now uses sim.run's `--world-addr 17` with its own key; dep N16a-12 added (the owner of `--world-addr` and of batch-independent digests, INV-KIN-04, which the acceptance asserts)."
+  },
+  {
+   "bead": "N14bx-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the script named checks on 'the quadruped archetype' and 'the sill fixture' with no commands; now concrete steps: plan_check printed from the unit target, `design new st2-quad --template quad-mammal --key …`, N28a-07's `cart-a --task sill --budget stored=0.90J` (115, 0.94176 J), N28a-10's bus fixture with and without --all, --stages 1-5; steps whose runner or joining bead has not landed log `skip` with reason not-landed and the owner, never a pass."
+  },
+  {
+   "bead": "N14bx-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "decision record `docs/adr/ADR-SKEL-lattice.md` broke the program's naming for open-question decisions (`ADR-OPEN-<chapter>-<n>`, as in 39 other beads) and collided with the ADR-SKEL-nn architecture series; now `docs/adr/ADR-OPEN-SKEL-4.md`."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N28ap1-01",
+   "what": "next_actions entries are 'runnable frob design edit commands', but design.edit is a mutate verb that refuses a call without --key (805) and takes --expected-parent. State whether the printed command carries `--expected-parent <the checked DesignId>` (it should, so a repair applies only to the version it was computed for) and that the key is left to the caller (a printed key would replay the first answer); N14b-19 appends --key only when absent."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.export: add `glb` to `format` from M2 (N14b-21: a standalone GLB of the visuals for the viewer and stills, the plan's 'glTF export for visuals'), with the glb-only options `frames` and `chord` (default 0.5 mm), and name N14b-21 under 'Extended by'. design.import: list `sdf` (N14b-22) and `usd` (N14bp1-03) as later values of `format`, as fsim-catalog is listed for NEG-32; before they land a call is 802 by the row's own rule."
+  },
+  {
+   "bead": "N14a-31",
+   "what": "'Gate receipt. The script writes the MJCF rows of GATE-SKEL-01' and the acceptance 'the MJCF rows are recorded' contradict convention 9: the script logs those rows (metric lines tagged GATE-SKEL-01) and never writes a gate record; GATE-SKEL-01 is entered once by N14b-24 from its g2_parity tier run's receipt, which re-measures the MJCF robots and is compared with these rows."
+  },
+  {
+   "bead": "N40-29",
+   "what": "KILL-SKEL-CELL has two independent clauses with different fallbacks (A: no automatic discard; B: exclusion rule suspended); consider `scope_kind = \"clause\"` with `clause:usefulness` and `clause:soundness` (and the matching row in N40-03's closed scope table, as for KILL-COUPLING), so each clause can be decided and propagated on its own. N14b-31 meanwhile writes one decision entry with one ADR section per clause."
+  },
+  {
+   "bead": "N14a-28",
+   "what": "the script 'writes the gate receipt' of GATE-SKEL-05; under convention 9 and STD-E2E only a tier run (`e2e_tier`) produces a receipt and only record_gate enters a value. State the tier run (`g1_known_answers -- GATE-SKEL-05`) whose receipt N14a-28 records from, and that the script writes no gate row (N14b-26 names N14a-28 as the recorder)."
+  },
+  {
+   "bead": "N14a-30",
+   "what": "'Gate receipt. On success the script writes GATE-SKEL-06 with …' contradicts convention 9 (a script never writes a gate record; STD-E2E's self-recording lint). Name the tier run whose receipt N14a-30 records GATE-SKEL-06 from with record_gate, and keep the timing table as a logged artifact for the KILL-SKEL-SUBST decision."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.templates and design.new: N14bx-03 (M1) adds template aliases: design.templates outputs gain `aliases: [{name, preset, reason}]` per entry (additive, `--name <alias>` returns the canonical entry), and design.new's `--template` accepts a registered alias, echoing `template`, `preset` and `alias_used` in the result while the family stays canonical. List both under the rows and name N14bx-03 under 'Extended by'."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "All 25 beads reviewed. Unchanged: N14b-23, N14bp1-01, N14bp1-02, N14bx-03. Both slice requests applied (N14b-33 from S20, N14b-34 from H-verbs-1). Main round-3 issues were convention 9 (scripts writing gate rows; now tier-run receipts plus record_gate by one named recorder), convention 11 (N14b-28 and N14b-29 had no script of their own), verbs or tools named outside their registry rows, and N40-03's outcome names in N14b-31. Every touched file parses (front matter, list fields, seven sections); no dependency cycle. The slice looks close to settled; what is left is outside it (the requests)."
+}

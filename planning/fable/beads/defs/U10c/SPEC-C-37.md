@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "solid", "traction", "sinew", "frob-contact", "frob-actuate", "test"]
 parent: "WP-10"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-027", "N10-CX", "N10-KA3", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-084", "BD-115", "BD-154", "BD-155", "BD-167", "N10c-08", "N10-CX", "N10c-10", "CARD-T-07", "BD-050", "BD-069", "BD-079", "N10a-02"]
+related: ["BD-050", "BD-069", "BD-079", "BD-115", "N10c-08"]
 gates: ["GATE-SINEW-04", "GATE-TRAC-04"]
 plan_refs: ["§10 C-37", "§10 C-06", "§18.6", "§18.7", "§15.6", "§12.3 T-07", "Appendix D.3", "Appendix E GB-20", "Appendix I.1", "Appendix M.9", "Appendix N.7"]
 ---
@@ -98,6 +98,15 @@ Closed-form projection onto {‖x̄‖ ≤ μ·x₀}, derived here and confirmed
 return x; if μ·‖x̄‖ ≤ −x₀ return 0; otherwise with t = (x₀ + μ·‖x̄‖)/(1 + μ²) return (t, μ·t·x̄/‖x̄‖). For 𝒦, x̄ is
 (λ_t1, λ_t2, λ_s/r).
 
+Coordinates of the projection (DESIGN convention fixed by this contract). The projection and the three identities
+of A4 are taken in the homogeneous coordinates y = (λ_n, λ_t1, λ_t2, λ_s/r), every component an impulse in N·s. In
+them 𝒦 is the standard cone of slope μ, its Euclidean dual is {μ·‖ȳ‖ ≤ y₀}, and that dual is 𝒦* written for the
+paired velocities (v_n, v_t1, v_t2, r·ω_n), since ω_n·λ_s = (r·ω_n)·(λ_s/r). A Euclidean projection in the raw
+coordinates (λ_n, λ_t1, λ_t2, λ_s) adds squares of N·s to squares of N·m·s, so it changes with the unit of λ_s;
+it satisfies the three identities for the dual of its own unit-dependent metric, which shows that the identities
+alone do not fix the projection. This convention fixes it, and the raw projection is not the projection of this
+contract.
+
 ### B. Joint-level rows
 
 | Id | Statement | Class |
@@ -130,7 +139,8 @@ return x; if μ·‖x̄‖ ≤ −x₀ return 0; otherwise with t = (x₀ + μ·
   resultant wrench; a patch that must carry a tilting moment keeps at least three non-collinear contacts.
 - On the fast tiers stiction is a convex potential with a stated stiction speed and backlash closure a compliant
   row; under a transactional profile both are exact rows with located events. Requesting backlash rows for a card
-  with no rotor state is refused (a code of the Traction chapter).
+  with no rotor state is refused with the Traction chapter's `FROB-REF-241` "No rotor state" (exit 3; repair, as N18-REF
+  registers it: raise the card level to an actuator level that carries rotor state).
 
 ### Law-test layout, registry, implementers and gates
 
@@ -178,6 +188,10 @@ profile, and smooth-model results carry a flag.
 - `ka_180_projection_identities`: inputs whose tangential-and-spin part has rational norm (for example (2, 3, 6)
   of norm 7 and (1, 4, 8) of norm 9), rational μ and r, in all three regions: the three identities hold exactly.
 - `dual_pairing`: 10³ seeded pairs: ⟨v, λ⟩ ≥ 0 on 𝒦* × 𝒦, with zero attained on boundary pairs.
+- `projection_unit_invariant`: one physical impulse with r = 20 mm, written with λ_s in N·m·s (r = 1/50 m) and in
+  N·mm·s (r = 20 mm), projects to the same physical impulse in both, exactly over ℚ, and the identities of A4 hold
+  in the homogeneous coordinates in both; mutant `raw_coordinate_projection` (projects (λ_n, λ_t1, λ_t2, λ_s)
+  directly) gives two different physical answers and is caught.
 - `r_zero_is_three_dimensional`: with r = 0 the spin component is masked.
 - `ka_181_stiction_ramp`: τ_s = 2 N·m, ramp 4 N·m/s: no motion up to 0.5 s; the first nonzero velocity lies in
   (0.5 s, 0.5 s + one step]; the multiplier stays in [−2, 2] N·m.
@@ -189,9 +203,12 @@ profile, and smooth-model results carry a flag.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c37.sh`: `frob --json doctor`; the two cargo test targets; `cargo test -p frob-conformance
---test g0 -- KA-180`; `cargo test -p frob-conformance --test g1 -- KA-178 KA-179 KA-181 KA-182`; `frob --json
-prove list` filtered to card T-07; file and registry checks. Log to `target/e2e-logs/spec_c37/<utc>.ndjson` with a
+`scripts/e2e/spec_c37.sh`: `frob --json doctor`; the two cargo test targets; the registry rows in the
+Gauntlet's tier targets (ADR-GAUNT-01, BD-025: there is no `g0` or `g1` target), `FROB_TEST_SEED=<seed> cargo test
+-p frob-conformance --test g0_laws -- KA-180` and `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test
+g1_known_answers -- KA-178 KA-179 KA-181 KA-182`, each also with `--features gauntlet-mutations` for its control,
+the receipt hash logged; `frob --json prove list` with the card row T-07 selected from its output; file and
+registry checks. Log to `target/e2e-logs/spec_c37/<utc>.ndjson` with a
 transcript; each line has `ts`, `script`, `bead`, `step`, `event`, command line, exit code, wall time, the
 evidence block (claim Known answer, class Tested, tier, determinism D0 for rational rows and the host class for
 `f64` rows, seed), measured forces, moments, times and amplitudes with units against expected and thresholds, and

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "marrow", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-02", "BD-054", "BD-055", "BD-056", "BD-060", "BD-048", "BD-049", "BD-102"]
+deps: ["BD-048", "BD-049", "BD-054", "BD-055", "BD-056", "BD-060", "BD-102", "N14b-02", "N24c-16", "NEG-30", "NEG-31"]
 needs: []
-related: ["GB-19", "GB-02", "BD-285", "BD-325", "N14b-08", "BD-332", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 3", "§14.10", "§13.5", "§13.6", "§17.11", "§28.11", "OPEN-ARENA-2", "Appendix M KA-233, KA-270, KA-365, KA-697"]
 ---
@@ -21,14 +21,18 @@ table, orbit counting with a non-trivial cycle index, a subgroup lattice rich en
 pairs of subgroups, and, when the leg module is chiral (handed), a group C₆ with no reflections whose
 two-dimensional real representations are of complex type, so that an equivariant map takes two real parameters
 per pair of copies of such a block instead of one. It also demonstrates static walking with three feet down.
-No reference model with a permissive licence is on file (open question OPEN-ARENA-2 tracks one; until then the
-baseline scorecard is the archetype's own template). It lands at M3.
+No reference model with a permissive licence is on file (open question OPEN-ARENA-2 tracks one; its decision
+record, N24c-16 at M2, fixes the default "none; the hexapod template stands alone" and writes the register row
+this bead reads; until a model is admitted the baseline scorecard is the archetype's own template and the mass
+clause of GATE-SKEL-07 is reported `not applicable` for this archetype). It lands at M3.
 
 ## Scope
 
 In: `zoo/hexapod-radial.fbot`, its expectation file, the handed variant and controls. Out: the template
 (N14b-02); the module format (BD-060); groups, characters and orbits (BD-048, BD-049); the symmetry analysis
-(BD-102); campaign quotienting (BD-285); the multi-legged controller (N14b-08); the gait atlas (BD-332).
+(BD-102); campaign quotienting (BD-285); the multi-legged controller (N14b-08); the gait atlas (BD-332); the
+OPEN-ARENA-2 decision record and the hexapod row of the reference-robot register (N24c-16), which this bead
+reads and does not write.
 
 ## Technical approach
 
@@ -43,7 +47,7 @@ sensor mount.
 
 **What preflight must report (stages 1 to 6 at defaults; no refusal).** Stage 1: 19 fills, 6 foot laws, one
 module resolved by hash and used six times. Stage 2: six leg subtree masses bit-identical. Stage 3: 18 revolute
-joints, no loops, tree mobility 24. Stage 4: not-applicable (legged). Stage 5: Γ_mech = D₆ of order 12 with its
+joints, no loops, tree mobility 24. Stage 4: `passed` with the note `not-applicable` (legged, N14b-11). Stage 5: Γ_mech = D₆ of order 12 with its
 generators; the assertion `D6` accepted. Stage 6: positive support margin on six feet and on each of the two
 alternating tripods; envelope, thermal and bus rows pass.
 
@@ -62,6 +66,7 @@ alternating tripods; envelope, thermal and bus rows pass.
 | Commutant of the regular representation of C₆, one copy | dimension 6 = 1 + 1 + 2 + 2 | count |
 | Tripod gait | the pair (H, K) with H the whole spatiotemporal symmetry and K the subgroup fixing every leg's phase: legs {1, 3, 5} in phase, {2, 4, 6} half a period later; K ⊇ the rotation by 120°, H/K of order 2 | exact (found in the subgroup lattice) |
 | Static walking | with either tripod lifted, the centre of mass projects inside the support triangle of the other; margin positive | exact (sign) |
+| Reference robot and mass clause | `[reference_robots] names = []`; `registries/decisions/open-arena-2.toml` reads the default "none" and the register's hexapod row reads `reference: none` with its reason; the GATE-SKEL-07 mass row for this archetype is `not applicable` with that reason, never a pass and never a window invented from another robot | exact |
 
 **Control variants.** (a) `variants/handed.fbot` asserting `D6` → refused with FROB-REF-109 (computed C₆);
 (b) orbit count taken under rotations only on the unhanded design (166,870 where 86,185 is right);
@@ -84,12 +89,17 @@ alternating tripods; envelope, thermal and bus rows pass.
   under C₆ reports two complex-type blocks.
 - `zoo_hexapod_tripod_pair_in_lattice`.
 - `zoo_hexapod_tripod_support_margin`: positive for both tripods at the default stance radius.
+- `hexapod_mass_check_not_applicable` (the consumer-side test N24c-16 names): reads the OPEN-ARENA-2 record and
+  the register row, asserts `reference: none` and a mass row `not applicable` with the record's reason; a
+  planted register row naming a reference with no admitted licence is refused by the register's manifest check
+  (NEG-15) and the test fails rather than inventing a window.
 
 ### End-to-end script and logging
 
 `scripts/e2e/zoo_goldens.sh` (NEG-31) at M3: instance, symmetry (default, handed, forward sensor), stages 1 to
 6, `frob algebra orbits` for the count rows, `frob algebra irreps` for the block types; log lines carry group
-orders, generators, counts and block types.
+orders, generators, counts and block types, and one line for the mass clause with `reference: none`, the
+OPEN-ARENA-2 record's identifier and the status `not applicable`.
 
 ### Known answers and negative controls
 
@@ -107,4 +117,5 @@ identities.
 
 ## References
 
-Appendix G.4 row 3; §14.10; §13.5; §13.6; §17.11; §28.11; OPEN-ARENA-2; KA-233, KA-270, KA-365, KA-697.
+Appendix G.4 row 3; §14.10; §13.5; §13.6; §17.11; §28.11; OPEN-ARENA-2 (decision record N24c-16);
+GATE-SKEL-07 (mass clause); KA-233, KA-270, KA-365, KA-697.

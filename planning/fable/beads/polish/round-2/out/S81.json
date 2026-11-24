@@ -1,0 +1,338 @@
+{
+  "round": 2,
+  "slice": "S81",
+  "reviewed": [
+    "N25c-08",
+    "N25c-09",
+    "N25c-17",
+    "N25c-18",
+    "N25c-24",
+    "N25c-25",
+    "N25c-26",
+    "N25c-27",
+    "N25c-36",
+    "N25c-37",
+    "N25c-38",
+    "N25c-39",
+    "N25c-40",
+    "N25d-30",
+    "N25d-38",
+    "N25d-44",
+    "N25e-01",
+    "N25e-02",
+    "N25e-03",
+    "N25e-05",
+    "N25e-14",
+    "N25e-23",
+    "N25e-24",
+    "N25e-25",
+    "N25e-26",
+    "N25e-35",
+    "N25e-37",
+    "N25e-38",
+    "N25e-39",
+    "N25e-40",
+    "N25e-41",
+    "N25ex-01",
+    "N33bx-01",
+    "SPEC-C-40"
+  ],
+  "changed": [
+    {
+      "bead": "N25c-08",
+      "kinds": [
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "the 1,000-pair campaign criterion had no test: added campaign_1000_pairs; the e2e stage now names its verbs with idempotency keys, the full re-solve as one solo sim run per design with keys distinct from the batch run (drift 5)"
+    },
+    {
+      "bead": "N25c-09",
+      "kinds": [
+        "e2e-logging",
+        "self-contained"
+      ],
+      "what": "tier runs carry distinct --key values and run under both kernel classes with --placement two-shards; the KA-656 row generator is stated inline (counts 34,590/30,946/1,820 re-derived)"
+    },
+    {
+      "bead": "N25c-17",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "'the registered numerical tolerance' was undefined: now each end within 1e-4 with the 0.0158 gap kept (DESIGN); added compiled_pad_reading_sets unit test (V,C [0.8737,0.9362]; P [0.9520,0.9982], re-derived); keys on mission distinguish and each sim run"
+    },
+    {
+      "bead": "N25c-18",
+      "kinds": [
+        "correct",
+        "scope",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "proposal commands used the unregistered --split and a non-tier 'referee' (now --cell/--paving and --profile referee, with keys); budget keys gpu_s/wall_s per N32a-15; the verb's registry row is VERBS-experiment's, this bead is the handler; e2e distinguish carries a key; the friction fixture's probe menu is stated so its tests are determinate"
+    },
+    {
+      "bead": "N25c-24",
+      "kinds": [
+        "complete",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "pilot had no register record: it now commits the frozen protocol to PILOT-C-40 (row 11 of N25d-40, new dep) and appends [[pilot.result]]; falsifier's 'similar cost' bound to N25c-27's tolerance; the reachability tool pinned as an [[oracle]] row of oracles.toml (N38a-04), not a private manifest; per-draw, per-design sim run keys"
+    },
+    {
+      "bead": "N25c-26",
+      "kinds": [
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "step 8 calls mission.revalidate, whose verb bead N25a-16 it did not reach: dep added (no cycle); keys for every run call, distinct where runs are compared; gate recorded with record_gate"
+    },
+    {
+      "bead": "N25c-27",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "ADR now docs/adr/ADR-KILL-AUGUR-DOMINANCE-M4.md with N40-03's required fields; register entry decision = {outcome fired|not-fired, adr, date, session} replaces 'pass/killed: fallback adopted'; missing_arm test re-worded to that vocabulary; e2e asserts ADR and row agree"
+    },
+    {
+      "bead": "N25c-38",
+      "kinds": [
+        "deps",
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "step 2 needs the colouring-bound checker: dep N12p2-01 added (no cycle) and the assertion is positive; comparators pinned as [[oracle]] rows of oracles.toml instead of an 'oracle manifest'; keys per call (inner/outer/true distinct); record_gate"
+    },
+    {
+      "bead": "N25c-39",
+      "kinds": [
+        "complete",
+        "deps",
+        "e2e-logging",
+        "risks"
+      ],
+      "what": "Moonshot pilot had no register record: commits its protocol to row 13 of N25d-40 (new dep), appends the result, and states the four-Moonshot cap (Blocked{moonshot-cap}); keys on sim run, synthesize (inner and outer distinct) and replays"
+    },
+    {
+      "bead": "N25c-40",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "ADR docs/adr/ADR-KILL-AUGUR-LABELS-M4.md with N40-03's fields; decision outcome fired|not-fired|not-reached; pilot_not_run yields not-reached (was 'killed: fallback adopted'); e2e asserts ADR and row agree"
+    },
+    {
+      "bead": "N25d-30",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The per-cell timing record is now BD-354's frob.speedcmp/1 (integer-nanosecond phases closing within 2%, otherwise ledger-open; f, r, h, model, ceiling, u and the unreachable flag; FROB-REF-866); acceptance moved from 1% to 2% closure; ADR per cell group in docs/adr/ADR-AUGUR-SLICE4-<group>-M4.md; unit tests ledger_open_at_3_percent and record_is_speedcmp; the e2e uses --tier and --kernel-class (there is no --backend) with distinct keys slice4-reval-/slice4-syn-."
+    },
+    {
+      "bead": "N25d-38",
+      "kinds": [
+        "correct",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "Fixed the derivation wording of the guarded-screen widths (half the group spread, 1/8 and 1/4, plus); KA-645 sites now include the colouring-bound object, with dep N12p2-01 (no cycle); the e2e rewritten to the Gauntlet targets (FROB_TEST_SEED=1 cargo test -p frob-conformance --test g1_known_answers -- KA-6nn, g5_determinism for KA-656, controls under --features gauntlet-mutations), with keys and the full STD-E2E fields and log path."
+    },
+    {
+      "bead": "N25d-44",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The census moves into docs/adr/ (ADR-OPEN-AUGUR-5.census.json, drift 4); acceptance reads five synthetic records; oa5_keep_default now sets D_small = 0 and a new oa5_dsmall_branch covers D_small = 10 (keep-default with the cost recorded); the e2e names the helper, the NDJSON path, the fields and a census-digest assert."
+    },
+    {
+      "bead": "N25e-01",
+      "kinds": [
+        "complete",
+        "deps",
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "Added the pilot record PILOT-COUPLING-01 (DESIGN id) in pilots.toml with protocol docs/pilots/PILOT-COUPLING-01.md hashed before the run, every frob.gauntlet.pilot/1 field, fallback KILL-COUPLING and integrated gate GATE-AUGUR-25, result appended as [[pilot.result]]; dep N38a-09 (no cycle); acceptance and e2e check the registration; the KILL-COUPLING decision is now named as N25ex-01 (M4) and N25e-06 (M8); known answers tagged augur-late-01/02."
+    },
+    {
+      "bead": "N25e-02",
+      "kinds": [
+        "correct",
+        "complete"
+      ],
+      "what": "Verb syntax gains --certificate and --key; the options this bead needs on mission.transport (--relation, --certificate, --claims, the finite-model --from/--to) are noted as a request to VERBS-mission; known answers tagged augur-late-01/02; KILL-COUPLING decided by N25ex-01 (M4) and N25e-06 (M8)."
+    },
+    {
+      "bead": "N25e-05",
+      "kinds": [
+        "complete",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "Every transport and prove call carries a distinct key; new step 7(e) runs frob-verify on N25e-03's specimens and 200+ mutations (with an acceptance line for the specimen manifest), so the checker rules of N25e-03 are exercised end to end; the gate is recorded with record_gate GATE-AUGUR-25; known-answer tags; Out names N25ex-01 and N25e-06."
+    },
+    {
+      "bead": "N25e-14",
+      "kinds": [
+        "deps",
+        "self-contained"
+      ],
+      "what": "Applied the round-1 request (checked against §28 and the graph): dep BD-348 replaced by N28ap1-02 (A-24), no cycle and no other path to BD-348; the approach names A-20 (BD-108) and A-24; the worked case tagged augur-late-06. Hoeffding 0.607 and the binomial bound 0.6908 re-derived."
+    },
+    {
+      "bead": "N25e-23",
+      "kinds": [
+        "complete",
+        "e2e-logging",
+        "self-contained"
+      ],
+      "what": "Added the pilot record PILOT-WEAKVAR-01 (DESIGN id) in pilots.toml (protocol docs/pilots/PILOT-WEAKVAR-01.md hashed before the run; tier F; fallback = ADR-AUGUR-06 as first written under KILL-WEAKVAR; ceiling none on speed; integrated gate GATE-AUGUR-30; result appended, citing docs/pilots/weak_variable.md), an acceptance line, a registration check in the e2e, and the augur-late-09/10 tags."
+    },
+    {
+      "bead": "N25e-24",
+      "kinds": [
+        "self-contained",
+        "e2e-logging"
+      ],
+      "what": "The refute command carries --key; the options --split-cap, --region and --boxes are noted as added to VERBS-mission by request; known answers tagged augur-late-09/10."
+    },
+    {
+      "bead": "N25e-25",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "Every mission refute call has its own key (known, control, and per arm R/W so the compared arms never share receipts) and prove bundle a key; phylum generate and frob-verify stated as reads; the gate recorded with record_gate GATE-AUGUR-30; known answers tagged augur-late-09/10."
+    },
+    {
+      "bead": "N25e-26",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The record is now docs/adr/ADR-KILL-WEAKVAR-M4.md with N40-03's fields (values beside thresholds, re-read beads, session independence), and the kill row receives decision = {outcome fired|not-fired, adr, date, session} in place of pass/killed: fallback adopted (step, acceptance and the planted-failure known answer); the fallback e2e refute carries a key and asserts that ADR and row agree."
+    },
+    {
+      "bead": "N25e-35",
+      "kinds": [
+        "complete"
+      ],
+      "what": "Known answers tagged augur-late-14 (N25-KA) in place of an untraceable note."
+    },
+    {
+      "bead": "N25e-37",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "Each synthesize call (per channel fixture and generated instance) and each prove bundle carries its own key; the gate is recorded with record_gate GATE-AUGUR-33; tag augur-late-14."
+    },
+    {
+      "bead": "N25e-38",
+      "kinds": [
+        "self-contained",
+        "complete"
+      ],
+      "what": "States that --scope (distinguish, refute, experiment.suggest) and --witness (refute) are added to the verb rows by request; margin table tagged augur-late-15."
+    },
+    {
+      "bead": "N25e-39",
+      "kinds": [
+        "complete"
+      ],
+      "what": "Known answers tagged augur-late-16. Probe table, three-law gaps (0.0158, 0.0312) and margins re-derived on the 201 x 201 grid and confirmed."
+    },
+    {
+      "bead": "N25e-40",
+      "kinds": [
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "Added the pilot record PILOT-NUISANCE-01 (DESIGN id; the Appendix K enclosure has no plan-time ledger record) with protocol docs/pilots/PILOT-NUISANCE-01.md, tier F, ceiling 5/3, fallback of KILL-AUGUR-PROBE, integrated gate GATE-AUGUR-34 and verdicts reproduced/differs/falsifier-holds; acceptance line; e2e checks the registration; tags augur-late-15/16. Margin and probe tables re-derived (4.4994, 4.7240, -13.0598, -10.0162; 0.2836, -0.0776, -15.0751)."
+    },
+    {
+      "bead": "N25e-41",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "Distinct keys for every run-verb call (shared and --scope ignore margins never share a receipt; the scoped D companion has its own); experiment suggest, frob-verify and the case harness stated as reads; the gate recorded with record_gate GATE-AUGUR-34; the clause C reading is appended to N25c-16's ADR as a measured value only, the decision entry left to a session that did not run it (N40-03); tags augur-late-15/16."
+    },
+    {
+      "bead": "N25ex-01",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The record is docs/adr/ADR-KILL-COUPLING-M4.md with N40-03's fields (the M8 decision writes its own ADR); per N40-29 the kill row's decision is an array and this bead appends {scope clause:finite, exit M4, outcome not-fired|fired, adr, date, session}, the readings mapped to those outcomes, not decided writing no entry; propagation now uses status killed with the fallback detail; acceptance updated; new test reading_maps_to_register; transport calls in the known answer carry keys."
+    },
+    {
+      "bead": "N33bx-01",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "fs-checker is now also an [[oracle]] row of oracles.toml (N38a-04, reached through NFx-01): posture out-of-process, commit pin, admission mirroring the record, roles as second checker, held_out while FD-FSIM-42 is open; planted drivers registered in controls.toml; acceptance line and test oracle_row_held_out_until_admitted."
+    },
+    {
+      "bead": "SPEC-C-40",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "The e2e used nonexistent test targets g1 and g0: now FROB_TEST_SEED=1 cargo test -p frob-conformance --test g1_known_answers -- KA-189 and --test g0_laws -- KA-190 (drift 1)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-mission",
+      "what": "Register the options the slice's beads call (drift 8). mission.synthesize: --tier, --placement, --kernel-class (N25c-09, N25a-28, N25d-30) and --split-cap (N25e-24). mission.distinguish: --grammar (N25c-17) and --scope ignore (N25e-38). mission.refute: --baseline, --baseline-policy, --paired-plan (BD-359, N25c-26), --split-cap, --region per-constraint, --boxes (N25e-24), --scope ignore and --witness independent-extremes (N25e-38). mission.transport: --relation, --certificate, --claims, and --from/--to accepting finite models (*.fkernel.json) (N25e-02). Your 'Verb registry (U32)' line lists --split-cap among flags but the rows do not carry it."
+    },
+    {
+      "bead": "VERBS-experiment",
+      "what": "experiment.suggest: add --scope ignore (N25e-38, used by N25e-41) and state the budget input spelling (wall_s, gpu_s, cpu_core_s) that N25c-18's proposals use."
+    },
+    {
+      "bead": "N25d-40",
+      "what": "Row 11's carrier is N25c-24 with id PILOT-C-40 (as SPEC-C-40 and N10c-10 say); row 13's carrier is N25c-39, proposed id PILOT-LABELS-01; both now depend on you and register under your rows. Your linkage test calls --test g0: the target is g0_laws (drift 1)."
+    },
+    {
+      "bead": "N25e-06",
+      "what": "N25ex-01 now writes docs/adr/ADR-KILL-COUPLING-M4.md and the decision entry {scope clause:finite, exit M4}. Your step 3 still writes docs/adr/ADR-KILL-COUPLING.md with pass/killed: fallback adopted: write docs/adr/ADR-KILL-COUPLING-M8.md with N40-03's fields and append {scope = \"clause:tray\", exit = \"M8\", outcome, adr, date, session}; when the M4 entry is fired, close citing ADR-KILL-COUPLING-M4.md (no M8 entry needed, or not-reached for clause:tray)."
+    },
+    {
+      "bead": "N40-03",
+      "what": "Section 6 and OPEN still place decision ADRs in docs/delivery/adr/ (drift 4 settles docs/adr/); N25c-27, N25c-40, N25e-26 and N25ex-01 now write docs/adr/ADR-<gate>-M4.md."
+    },
+    {
+      "bead": "N38a-04",
+      "what": "Three new [[oracle]] rows are declared by slice beads: the hybrid-reachability comparator (Flow* or equivalent, role comparator:hybrid-reachability, N25c-24), the SMT and mixed-integer label comparators (N25c-38, capture scripts under tools/oracle/labels/), and fs-checker (out-of-process, held_out until FD-FSIM-42 lands, N33bx-01). Please admit the role names in your schema."
+    },
+    {
+      "bead": "N38a-09",
+      "what": "Four DESIGN pilot ids are proposed by slice beads: PILOT-COUPLING-01 (N25e-01), PILOT-WEAKVAR-01 (N25e-23), PILOT-NUISANCE-01 (N25e-40), PILOT-LABELS-01 (N25c-39), alongside PILOT-C-40 (N25c-24). Confirm the mnemonic sets or rename them in one place."
+    },
+    {
+      "bead": "N10a-01",
+      "what": "Optional: the G0 test target g0_doctrine is not one of the six Gauntlet targets of drift 1 (g0_laws, ...); SPEC-C-40 still cites it in an acceptance line (left as is). Either fold the d2_* family into g0_laws or record g0_doctrine as an allowed extra target in KNOWN_DRIFTS."
+    }
+  ],
+  "unchanged": [
+    "N25c-25",
+    "N25c-36",
+    "N25c-37",
+    "N25e-03"
+  ],
+  "notes": "All 34 beads read in full, in work-package order. 30 changed, 4 unchanged (N25c-25, N25c-36, N25c-37, N25e-03: correct as written; their e2e is carried by N25c-26 and N25c-38). The round-1 request on N25e-14 was checked against the graph and applied. Main repairs: drift 1 (test targets in SPEC-C-40, N25d-38), drift 3 (pilot records for N25c-24, N25c-39, N25e-01, N25e-23, N25e-40), drift 4 (kill ADRs and decision entries for N25c-27, N25c-40, N25e-26, N25ex-01; per-clause entry for KILL-COUPLING per N40-29), drift 5 (keys on every run verb in the e2e scripts, distinct where answers are compared), drift 8 (options requested of VERBS-mission and VERBS-experiment), and record_gate for each gate. New deps checked with tools/graph_check.py; none closes a cycle. Numbers re-derived: KA-656 counts, pad reading sets, the margin and probe tables (201 x 201 grid), Hoeffding and binomial bounds, the Clopper-Pearson check. N25ex-01 keeps its plan trigger ('survives a repair cycle': a second cycle is refused and a persisting violation fires); this agrees with N40-03 section 5, which only says a second cycle would need a deferred ADR. registries/gates.toml is kept as the kill register (N40-02, record format N40-01)."
+}

@@ -1,0 +1,328 @@
+{
+ "round": 3,
+ "slice": "F-U18a",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "BD-037",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the S06 request: FD-ASUP-01 and FD-FMCP-01 precede this bead, open their own fixtures in its form and hand their rows over; the bead now adopts both fixtures unchanged, enters the FD-ASUP-01 row from its closing record, keeps FD-FMCP-01's self-written row, and covers both in every check (new unit test upstream_p0_rows_adopted). Fixture check made status-dependent (open/landed must fail at the pin, adopted must pass with a newer receipt). mirror is one identifier per repo. Script reads `frob doctor --section upstream` (BD-022's section)."
+  },
+  {
+   "bead": "BD-080",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Added dep BD-024 (the sim.run handler its acceptance runs through). Named the four referee fixtures and their M1 command-line form (`--fixture traction/<name>`, with --seed and --key), the form N33ap1-01 says this bead defines; acceptance commands now carry subject and key."
+  },
+  {
+   "bead": "BD-085",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Acceptance now spells the one recording of GATE-TRAC-01's referee rows with the record_gate example (convention 9). The S49 request (replace --fixture by design and --scene) was not applied: sim.run now has --fixture (N24b-03, VERBS-sim) and --scene arrives only at M2 (N16b-25), so the M1 form keeps --fixture traction/<row>; request to VERBS-sim for the conformance-fixture name space."
+  },
+  {
+   "bead": "BD-086",
+   "kinds": [
+    "users",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied the H-verbs-6 request: defined the sim.run input --count <n> (valid draws of the randomized family by (seed, index), discarded draws counted, manifest/RunId, 802 with pointer /count without a fixture that declares a family or for 0), its `draws` output block, acceptance and unit test count_option_contract. E2E commands gain --key, --count 10000 default and 10^6 in the long lane, and the sill regression with --step after BD-093. Thin-barrier rows recorded by this bead with record_gate; fixtures run as --fixture <name>, not fixture:<name>."
+  },
+  {
+   "bead": "BD-154",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Gate record line: GATE-TRAC-04 is recorded once, by N18a-36 from its script's receipt (one recorder per gate); this bead's tests carry the cone-row values."
+  },
+  {
+   "bead": "N18a-29",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the S52 request: the lag accumulator now serializes per committed world address and (law, contact mode) a deterministic integer histogram (bins fixed: zero bin, 80 log bins 1e-9 to 10, overflow; table lookup, no logarithm), drained by N16bp2-01, in the form N16b-02's intrinsic stratum reads (n, median, p95, p99, max). lag_row_serialization rewritten against that form; new test lag_histogram_bins_exact. E2E fidelity call fixed to --tier-pair batch-cpu,batch-cpu (intrinsic rows, VERBS-fidelity)."
+  },
+  {
+   "bead": "N18a-36",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Applied the H-verbs-6 request (--law CL-1|CL-2) and both S49/S52 requests: step speculative_margin spelled with N18a-12's design, --scene and distinct keys, and the tunnelling control is margin-base-only together with BD-166's endpoint-only-thin (margin-base-only alone cannot tunnel through K-np-thin's sweep); step lagged_coefficients reads `frob fidelity ledger --class <c> --tier-pair batch-cpu,batch-cpu --quantity coefficient-lag`. GATE-TRAC-04 recording spelled with record_gate (this bead is its one recorder). Step r_eff now also runs the spin-stop fixture under N18a-27's three r_eff sources, which N18a-27 says this step carries."
+  },
+  {
+   "bead": "BD-165",
+   "kinds": [
+    "complete",
+    "tests",
+    "users"
+   ],
+   "what": "Applied the S36 request: the mixed-route map is now stated (sill s(d) = 5 + 20*d mm; friction contrast entry round(8d) of the nine (outdoor, indoor) pairs in registries/terrain/mixed-route.toml, stored with the generator version; the exterior patch at the same d; without --difficulty both are drawn). --grid names its schema frob.scene.grid/1 with a row in registries/formats.toml; the output carries derivations = 1 (BD-225). New acceptance and tests gen_mixed_route_map, gen_derivations_field, gen_grid_schema. Request (2) on --param was already satisfied."
+  },
+  {
+   "bead": "BD-230",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The FROB-REF-242 refusal named no verb; --strict-data is the strict_data input of contact.probe (VERBS-contact), and sim.run has no such option. Regime paragraph, acceptance and film_strict_data_refuses now say: the probe with --strict-data refuses, the probe without it and any stepped run flag the contact extrapolated. Gate acceptance now says GATE-TRAC-05 is recorded once, by N18a-37 from its script's receipt, and GATE-HAB-06 by N19b-06 (one recorder per gate)."
+  },
+  {
+   "bead": "BD-367",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2E stage anchor ran frob sim run with no subject; it now runs the reference quadruped quad-mammal (ROBOT-go1's baseline, a dependency), the stance N18b-41 uses."
+  },
+  {
+   "bead": "BD-386",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "--law spelled CL-H as N18b-28's table and VERBS-sim spell it (lowercase is 802; acceptance asserts both). The run-level cases had no registered subject (sliding-block was a bare positional name no bead registers): new DESIGN paragraph registering fixtures sliding-block, incline-creep and multi-contact-slide in N24b-03's registry and the command form --fixture <name> ... --key, used by N18a-40, N18a-23, N18a-24 and N18ax-02. The forced one-pass case gets a test-only override FROB_TEST_CLH_PASSES (gauntlet-mutations build only, in the step-plan identity), since no sim.run option sets P; clh_unconverged_flagged extended."
+  },
+  {
+   "bead": "BD-424",
+   "kinds": [
+    "correct"
+   ],
+   "what": "--law spelled CL-H (lowercase is 802)."
+  },
+  {
+   "bead": "N18a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pilot register command was `cargo run -p frob-conformance -- pilots fundable`; now N38a-09's example form `--example pilots -- fundable --all --json` (the crate has no default binary)."
+  },
+  {
+   "bead": "N18a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Decision record brought to N40-03's one form (convention 10): ADR with every required field (trigger as registered, measured values with receipt hashes, outcome, fallback and capability name, beads re-read N18a-06 and BD-232, downstream changes, recording session); the KILL-MESHGPU row gets decision = {outcome, adr, date, session, receipts}, and no measured value (a kill row carries none, so 'gates.toml carries ... measured values' was wrong); an M6 device firing is a second decision entry written by N18a-06's child."
+  },
+  {
+   "bead": "N18a-23",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "GATE-TRAC-09 is recorded by N18a-40 from its script's receipt (the script writes none, convention 9); decision entry gains its required receipts field (N40-03); --law CL-H throughout, including the refusal command and the fallback-label test. The refusal check runs BD-386's `--fixture sliding-block` (the bare positional name was registered nowhere)."
+  },
+  {
+   "bead": "N18a-40",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "Step 9 had the script run record_gate itself (convention 9): the script now writes and logs its summary receipt and this bead, the one recorder of the batch-cpu rows (device rows N18ax-03), records it. --law CL-H in title, background, steps and considerations, with the lowercase 802 check added to admission; every run names BD-386's fixtures (--fixture sliding-block, incline-creep, multi-contact-slide) and its own key; the one-pass step uses BD-386's FROB_TEST_CLH_PASSES override."
+  },
+  {
+   "bead": "N18a-35",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied the S28 request: dep BD-093; the sill step is a regression at the registry constants (KA-409 read from known_answers.toml) on `--fixture wheel-over-lip --step <h> --key`, with the sill rows N18b-38's. The request's 'record the thin-barrier rows from step 9' is applied as one recorder per gate: BD-086 records them (it cannot wait on this later bead), and step 9 logs the receipt hash of its GATE-TRAC-06/referee/thin-barrier run beside that record; the acceptance no longer has this script's bead recording GATE-TRAC-01 or 06. Steps stand, drop, capacity and the battery rows now name BD-080's fixtures (--fixture traction/<name>) with keys; thin_barrier uses BD-086's --count and draws block; gap_budget in step 3 gets the --scene and --pose the model branch requires; the M1 reason for not using --law CL-H --tier batch-cpu corrected (--law is N18b-28's at M1; batch-cpu is M2)."
+  },
+  {
+   "bead": "N18a-07",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Pilot registration lacked the ceiling and set fallback.kill_gate to none, which N38a-09's registration check rejects; now ceiling `none on speed` with reason, status registered with protocol hash, and kill_gate `to-register` with proposed wording (the plan names no hull kill gate), noting that funding of N18a-08 waits for that row."
+  },
+  {
+   "bead": "N18a-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Kill-rule consideration aligned with N18a-07's to-register kill gate (not fundable before the row exists); device steps absent are logged with e2e_skip, not 'skip with code 77' (77 is a whole-script skip in STD-E2E)."
+  },
+  {
+   "bead": "N18a-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "E2E note said --law of sim.run arrives with N16b-25 at M2; VERBS-sim gives --law to N18b-28 at M1, and it is the batch-cpu tier that arrives at M2."
+  },
+  {
+   "bead": "N18a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "--law spelled CL-2 (lowercase is 802), including the run of N18a-36's script, whose law parameter takes CL-1|CL-2."
+  },
+  {
+   "bead": "N18a-20",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Its script ran `frob sim run` with no subject and no key under `--law cl-m`, using an option whose owner (N18b-28) it did not depend on. Added deps N18b-28 and N24b-03; new DESIGN paragraph registering the two parity fixtures clm-box-slide and clm-sphere-rest (frob.fixture/1, imported design, oracle capture) run at M1 as `frob sim run --tier referee --fixture <name> --law CL-M --seed --key`; result label law: CL-M; lowercase cl-m asserted as 802."
+  },
+  {
+   "bead": "N18a-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "--law CL-H/CL-1 spellings; runs name BD-386's `--fixture sliding-block`; registration lists N38a-09's four parts (ceiling added); fallback.kill_gate KILL-HARDCONTACT (its M6 per-backend entry) instead of none, which the register rejects; absent device steps use e2e_skip, exit 77 only when both are absent."
+  },
+  {
+   "bead": "N18a-25",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Pilot registration now lists the four parts N38a-09 checks (falsifier, ceiling, fallback.ships 'full solves per query', kill_gate KILL-RESPONSE); they were stated in the Background but not registered."
+  },
+  {
+   "bead": "N18a-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Decision outcomes fired-usefulness and fired-soundness are not in N40-03's closed set: outcome is fired with the trigger stated in the ADR; the row gets decision = {outcome, adr, date, session, receipts}; a family-restricted decision is per scope family:<name>, a kind requested of N40-03; rule-table test and fixtures updated."
+  },
+  {
+   "bead": "N18a-30",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Pilot registration lacked the ceiling and set fallback.kill_gate to none (rejected by N38a-09); now ceiling `none on speed` with reason and kill_gate `to-register` with wording, funding of N18a-31 waiting on that row. The step-size study claimed sim.run has no step option and used fixture variants `stick-slip-belt@h<h>ms`; it now uses `--step <h>` (N16a-03, VERBS-sim), and the fixture runs as `--fixture traction/stick-slip-belt` (BD-080's conformance-fixture form)."
+  },
+  {
+   "bead": "N18a-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The stick_slip step ran `frob sim run stick-slip-belt` (a bare name); now `--fixture traction/stick-slip-belt`. `--law-option stribeck` checked: it is a parameter of N18a-36's script, which lists it, not a frob option."
+  },
+  {
+   "bead": "N18a-32",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2E text said the joint-row steps run `frob sim run --tier batch-cpu`; N18a-36's script (their owner) runs them as `frob task fixture trac-ramp-breakaway|trac-gap-crossing --tier --profile --seed --key`, now spelled so."
+  },
+  {
+   "bead": "N18a-33",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Measurement was written 'in the gate record for KILL-FILM', but a kill row carries no measured value (N40-03): it is now a receipt under receipts/gates/ whose hash N18a-34 cites."
+  },
+  {
+   "bead": "N18a-34",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision record brought to N40-03's one form (convention 10): ADR with every required field, decision = {outcome, adr, date, session, receipts} on the row, no measured values on the kill row (the acceptance asked for them); a per-backend firing needs scope_kind backend (requested of N40-24); the fallback check's sim runs name --tier batch-cpu (strict and lockstep need a CPU tier)."
+  },
+  {
+   "bead": "N18a-37",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "GATE-TRAC-05 recording spelled: this bead is the one recorder, with record_gate from the script's summary receipt, the script writing none (convention 9). Step strict_data names the verb: `frob contact probe --film … --strict-data` (contact.probe's strict_data input), matching BD-230."
+  },
+  {
+   "bead": "N18ax-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the H-verbs-6 request: the law is spelled CL-1R as N18b-28's table and VERBS-sim spell it, in contact.laws, the probe branch, its unit test and the script; lowercase cl-1r is 802 (new case in probe_hold_branch). The claim that contact.probe's row lacks the law and the hold inputs was stale (the row lists them, spelling the law cl-1r); VERBS-contact is asked to spell it CL-1R. The lockstep refusal control names --tier batch-cpu."
+  },
+  {
+   "bead": "N18ax-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied the H-verbs-6 request (--law CL-H; lowercase is 802); the capture step runs BD-386's `--fixture sliding-block`."
+  },
+  {
+   "bead": "N18ax-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied the H-verbs-6 request: admission record and acceptance spell CL-H (lowercase stays 802); the admitted-run check names a subject and a key."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run --fixture: add the conformance-fixture name space traction/<name> (crates/frob-conformance/fixtures/traction/<name>), used at M1 by BD-080's referee fixtures, BD-085, N18b-32 and N33ap1-01's rest<n>/tip<n>; the row today names only assets/fixtures/<name>/fixture.toml."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.gen --grid: the input is artifact-input<frob.scene.grid/1> (schema, levels >= 2, columns, tile_m; row in registries/formats.toml, BD-165), not foreign-file."
+  },
+  {
+   "bead": "N18b-41",
+   "what": "scripts/e2e/lambda_lo.sh runs `frob sim run --tier batch-cpu --profile lockstep ...` with no subject; name the designs (the reference quadruped quad-mammal for ll-quad, the humanoid for ll-humanoid), as BD-367's anchor stage now does."
+  },
+  {
+   "bead": "N40-24",
+   "what": "KILL-HARDCONTACT's row needs scope_kind = \"backend\": N18a-23, N18a-24 and N18ax-03 record a device-only firing at M6 as a second, per-backend decision entry; also list it in N40-03's scope-kind table."
+  },
+  {
+   "bead": "N40-24",
+   "what": "Enter a kill row for the convex-hull pilot N18a-07 (Traction §18.3; trigger: the pilot's falsifier holds, or N18a-08's hull parity lane fails after one repair cycle; fallback: primitive unions with their recorded fitting error; mode pilot-before-funding, M6). N38a-09 rejects a pilot with no kill gate and a to-register gate blocks funding, so N18a-08 can never be funded without it."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Add a scope kind `family` (family:counterfactual|adjoint|stencil) for KILL-RESPONSE, so N18a-26 can admit contact.response for the low-share column families only, as its decision rule allows."
+  },
+  {
+   "bead": "VERBS-contact",
+   "what": "contact.probe's law list and its held-displacement branch spell the law `cl-1r`; N18b-28's table and VERBS-sim spell it `CL-1R` (lowercase is 802 on sim.run). Spell it CL-1R and state the same 802 rule for a lowercase law on contact.probe (N18ax-01)."
+  },
+  {
+   "bead": "N40-24",
+   "what": "Enter a kill row for the Stribeck pilot N18a-30 (Traction §18.6; trigger: a falsifier of N18a-30 holds; fallback: constant dry coefficients, or the lagged law on transactional profiles only if only the step-size falsifier fired; mode pilot-before-funding, M6); without it N38a-09 blocks funding of N18a-31."
+  },
+  {
+   "bead": "N40-24",
+   "what": "KILL-FILM's row needs scope_kind = \"backend\" if a firing for one backend only is kept (N18a-34 rule 2, 'for the offending backend, at least'); otherwise N18a-34 records one entry for all lockstep tiers."
+  }
+ ],
+ "unchanged": 12,
+ "notes": "All 46 reviewed; unchanged: N18a-12, BD-158, BD-422, N18a-03, N18a-06, N18a-13, N18a-14, N18a-16, N18a-22, N18a-27, N18a-28, N18a-38. Every request addressed to the slice was applied except two parts, not applied with reasons: S49 to BD-085 (replace --fixture by a design with --scene): sim.run has --fixture from M1 (N24b-03) and --scene only from M2 (N16b-25), so the M1 form keeps --fixture traction/<row>; S28 to N18a-35 asks it to record the thin-barrier rows from step 9: applied as BD-086 recording them (one recorder per gate; BD-086 cannot wait on the later N18a-35), with step 9 logging its receipt hash. The remaining changes bring scripts to registered options and fixtures (law spellings, --fixture subjects, --step, keys), recorders to convention 9, and pilot and kill-gate records to N38a-09 and N40-03. The slice is close to settled; what is left sits in the registry requests (fixture name space, CL-1R on contact.probe, kill rows for the hull and Stribeck pilots, backend and family scope kinds)."
+}

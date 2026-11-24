@@ -1,0 +1,252 @@
+{
+ "round": 2,
+ "slice": "S11",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "BD-025",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Validation runs on the rows of STD-TEST's one parser of controls.toml; loader rule 1 names the registry-diff reasons out-of-order, reused, removed, renumbered and rule 4 the reason defect-or-expect-empty; rule 3's feature/fixture existence check now applies only to controls of gates not 'not-run' (seeding at M0 precedes the plants; an unbuilt plant otherwise gives 'stale' at run time, N38b-04), where before it made the registry unloadable at M0; the optional field state = runnable | obligation that N38b-05's seeding writes is now in the schema, and registry-check step 3 counts only runnable controls (an obligation control supports no pass); the ambiguous 'six planted malformed controls' acceptance replaced by twelve named reasons with tests; step 2 requires a non-empty control list only for gates not 'not-run'; the e2e plant now sets the emptied gate to 'pass', since on a clean M0 tree every gate is 'not-run' and the old plant could not fail."
+  },
+  {
+   "bead": "BD-146",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "Applied U00-2's request: deps N00-33 and N00p1-13. Also added the M1 beads that make rows countable for GATE-GAUNT-02 by the same reasoning: N38b-27, N38b-29, N38b-30, N38b-31, N38b-33; Scope's ordering note says so and names BD-223 as owner of the M2 closures. No cycle."
+  },
+  {
+   "bead": "BD-223",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "The M2 capstone, unlike BD-146, did not depend on its milestone's registry beads, so it could become ready before the M2 controls were entered and seeded: added deps N17-CX, N19-CX, N19-KA, N21-CX, N23-CX, N23-KA, N27-KA and the M2 control closures N38b-32, N38b-34 (removed three from related); ordering note in Scope."
+  },
+  {
+   "bead": "BD-318",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "Same gap at M3: added deps N26-CX, N26-KA, N27-CX, N39-CX, N39-KA (removed two from related); Scope names them."
+  },
+  {
+   "bead": "BD-411",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Same gap at M5: added dep N31-CX, named in Scope; removed a duplicated unit-test name (structure_rows_registered was listed twice)."
+  },
+  {
+   "bead": "N00p1-13",
+   "kinds": [
+    "deps",
+    "correct",
+    "scope"
+   ],
+   "what": "The bead required the KA-019 and KA-020 bundle mutations to be shared cases of BD-136's mission mutation corpus, but BD-136's nine stance cases contain neither and nothing ordered the two: this bead now appends the two cases to BD-136's corpus (dep BD-136 added, moved out of related); recomputed every control's hand check: correct."
+  },
+  {
+   "bead": "N09-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "The bead wrote controls.toml directly with fields outside BD-025's schema (status, rerun = '<bead>'), contradicting N38b-05, under which a chapter's CX bead writes catalogue entries to registry/counterexamples.toml and the seeding tool writes the controls. Rewritten to N38b-05's framework, as round 1 did for N11/N12/N13/N18-CX: a field table for CX-016 to CX-018 (rule_ids, label FACT with re-run beads BD-042, BD-030, BD-043 and BD-041, rerun false, so their controls are seeded in state obligation; plants by N10a-02, N10a-07, N10a-06); CX-018's rule D-19 resolves to no gate and is a seed finding until N10a-06 maps it; dep N38b-05; unit tests, e2e (g0_laws, seeding in check mode, scratch plants) and negative controls rewritten."
+  },
+  {
+   "bead": "N10-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Applied U13's request: CX-020 is the catalogue entry of Marrow mutation M2, control_kind mutation, plant 'N13-18:M2', gates GATE-MARROW-01 and GATE-MARROW-04. Like N09-CX, the bead wrote controls.toml rows directly; rewritten to N38b-05's catalogue framework (79 entries, one control each by seeding; plant naming '<planting bead>:cx-<nnn>' or the named mutants; the five FACT entries become obligations until re-run); CX-034's numeric case (the §22.9.2 transverse-instability fixture, e^(-T) against e^(+T)) carried with case_supplied_by; dep N38b-05 (moved from related), N13-18 related; unit tests, e2e log counts and negative controls reworded to catalogue entries."
+  },
+  {
+   "bead": "N09-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The bead defined its own record ([[known_answer]] with where, site, status, rerun = '<bead>') for the one file whose row schema N38a-12 owns: now written as [[ka]] rows in that schema (field table: section, fixture with same_as KA-019/KA-018/KA-026, sites, label FACT with re-run bead, due M0, derivation), with the pilot re-run state carried as rerun/rerun_receipt (request to N38a-12); KA-035's tolerance is printed-digits (half a unit in the last digit); the wheel-loop derivation file is the one shared with the Arena and Atelier rows KA-610 and KA-686; deps N38a-12 and N38b-05 (seeding fills control.nc); acceptance and unit tests reworded (rerun_gate), runner name g1_known_answers with N38a-13's ka:<id> filter (was 'g1'); e2e plants two scratch defects. Recomputed 3/14 m, (160, 130, 110, 0) N and the 1/65 m bound."
+  },
+  {
+   "bead": "N10-KA1",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Same schema conflict: rows were records {where, site, control[], owner = SPEC bead}; now [[ka]] rows in N38a-12's schema with the column mapping, the owning SPEC bead and test named in the derivation file's front matter (N38a-12 rule 1; the row's own owner is the gate). Deps N38a-12 and N38b-05 (its acceptance requires every row's control.nc seeded into controls.toml). Runner names fixed (g0_laws, g1_known_answers with ch:10, were 'g0'/'g1'). Re-derived KA-072 (8 subgroups, 23 and 6 pairs; 26 and 8 under the abelian mutant), KA-073, KA-077, KA-089 (16 and 22 pairs), KA-090 (0.0662 needs 97.5%; 0.0560 and n = 72 at 95%), KA-045; counts 23 + 7 + 17 = 47 tolerances and 27 + 23 + 22 = 72 controls agree with the plan."
+  },
+  {
+   "bead": "N10-KA2",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Same schema conflict as N10-KA1: rows now [[ka]] in N38a-12's schema; open cells reported by N38a-12's computed eligibility (obligation: tolerance / control), not by a status 'passing' field the schema lacks; owner in the derivation file; acceptance and planted defects reworded; dep N38a-12. Checked the open-obligation lists against the table (7 to set, 23 none stated) and every arithmetic spot check (86,185; C(24,8) = 735,471; 27/32, 459/512, 3807/4096)."
+  },
+  {
+   "bead": "N10-KA3",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Same fix as N10-KA2 (N38a-12 schema, eligibility instead of status, owner in derivation file, dep N38a-12). Verified the obligation lists (17 tolerances, 22 controls, matching the Considerations) and every spot check ((13 - 3*sqrt(17))/4 = 0.157671, 0.0505, 11.1%, 35.8, the 1:2 tolerance split)."
+  },
+  {
+   "bead": "N10a-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The D-2 cross-registry check read a KA row's 'where' field; N38a-12's schema calls it 'section'. A failing_test control must be runnable (an obligation control, BD-025, does not discharge D-2)."
+  },
+  {
+   "bead": "N10a-05",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Applied U38b-1's request: dep BD-146 (the M1 capstone) replaced by N38b-05, which owns PO-GAUNT-03's seed join (BD-146 to related); D-9 general coverage reads N38b-05's seed_map and seed_findings and reports obligation controls as owed; e2e runner name g3_metamorphic (was 'g3')."
+  },
+  {
+   "bead": "N10a-06",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "CX-018 (D-19) resolves to no gate because the plan names none for D-19, so its control would stay a seed finding with no owner: this bead, which plants it, now adds the row D-19 -> GATE-LEMMA-03, GATE-LEMMA-06 (the gates its D-19 checks record under) to registry/rule_gates.toml, with an acceptance line and test d19_rule_gates_row; dep N38b-05; N09-CX related. Recomputed the d19 live-dependency allocations (155, 135, 105, 5) and (175, 115, 85, 25) N."
+  },
+  {
+   "bead": "N10a-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 3d ran 'cargo test --test g<tier> -- <row>' (no such targets under ADR-GAUNT-01) and tested raw 'to set'/'none stated' text: now requires N38a-12's computed eligibility and runs the row's tier target with the ka:<id> filter. Map totals verified (55 rows, 22 CX, 22 cards)."
+  },
+  {
+   "bead": "N10c-10",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Applied U22b's request: the three C-31 pilots by their own identifiers (PILOT-C-31, PILOT-C-31-shield, PILOT-C-31-tube); by the same reason (one record, one frozen protocol) the C-34 lanes and C-35 stages are found by their records' bead field. Applied U38b-2's request: dep N38b-29. Step 3d fixed as in N10a-22 (eligibility, tier targets, ka:<id>)."
+  },
+  {
+   "bead": "N11-CX",
+   "kinds": [
+    "deps"
+   ],
+   "what": "N38b-05 was both a dep and in related; removed from related. Content (catalogue framework of round 1) checked against N38b-05 and left as is."
+  },
+  {
+   "bead": "N11-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope"
+   ],
+   "what": "The rows used a field `negative_control` and stored a per-tier status, neither in N38a-12's [[ka]] schema: now control.text with control.nc filled by N38b-05's seeding (dep N38b-05 added), Scope Out names the seeding, and Considerations say the runner reports the outcome per site (N38a-13) and the row stores no status."
+  },
+  {
+   "bead": "N13-KA",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its acceptance requires every row's control seeded into controls.toml, which N38b-05 does: N38b-05 moved from related to deps (no cycle)."
+  },
+  {
+   "bead": "N14-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Like N09-CX and N10-CX it wrote [[control]] records into controls.toml directly; rewritten to N38b-05's catalogue framework, as N13-CX is: thirteen entries in registry/counterexamples.toml with a control_kind / plant ('<planting bead>:cx-<nnn>') / rule_ids table (CX-125 to CX-134 plants by BD-055, BD-062, N14a-13, BD-077, N14a-22, N14b-11, N14b-13, N14a-11, BD-109); CX-127 same_as CX-021 (two rules, two controls, one shared fixture; values re-derived: tr(I_C)/(2m) = 0.012 > 0.010 m2); the three late cases (CX-14.16-a, -17-a, -17-b) get slugs and a block request [[block]] registry = cx, count = 3, owner = N14-CX (N38a-40) with provisional-tag-past-due at M1; second defects of CX-133 and the reduced-model entry stay planted cases of their owners (one control per entry); CX-129 resolves through its kill gate KILL-SKEL-PORT. Deps N38a-40, N38b-05, STD-TEST (N38b-05 out of related; N10-CX and N14-KA related). Acceptance, unit tests (cx_registry_skel_complete, cx_entries_have_kind_and_plant, cx127_same_as_cx021, cx_late_slugs_mapped), e2e (seeding check mode, NC per entry, digest stable on reseed) and catalogue plants on scratch copies rewritten."
+  },
+  {
+   "bead": "N14b-25",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Registered a second control record for four mutations that the Skeleton catalogue already seeds (CX-125 solid default fill, CX-126 rescaled density, CX-129 definite packet, CX-133 consumer reading the assertion), giving one mutation two NC records: those four rows now cite the seeded controls (dep N14-CX, no cycle) and the other nine register controls with seed INV-SKEL-nn / PO-SKEL-nn; last_seen by the control runner. Re-derived the torso card (22.68 kg; 1.9227375 kg shell; inner 0.415 x 0.195 x 0.095) and the shell limits."
+  },
+  {
+   "bead": "N14b-26",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "The bead enters six rows of pilots.toml but did not depend on N38a-09, which owns that file's schema (frob.gauntlet.pilot/1), loader and completeness check: dep added (no cycle) and the schema named in Scope. Gate, kill-gate and open-question tables checked against N40-02/-10/-23/-29 wording and left as is."
+  },
+  {
+   "bead": "N16-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests",
+    "complete"
+   ],
+   "what": "The bead created registry/known_answers/kinesis.toml, a second known-answer file that N38a-12's loader refuses (ka-second-file), with private fields (where_stated, gate, owner_bead, stored status), per-row derivation files ka-<nnn>.md, and wrote control records itself: now [[ka]] rows in the one file with the column mapping, computed eligibility, one derivation file per fixture, controls by N38b-05's seeding (reusing CX-144 to CX-152's). The late answers sat in a 'pending' section the schema lacks and were to take 'the next free numbers' from their owning beads, against N38a-40 (every number above KA-835 issued by block, the registry bead enters the rows): now 21 rows by slug (counted as the late gate beads count them: 3+5+2+4+3+4) with a block request count = 21, owner N16-KA; the planted-input rows' controls named from N16c-21 (velocity-only-bound, ignore-message-clause) or left obligation: control. Deps N38a-40, N38b-05. Recomputed KA-348 bytes (26,668 ... 92,104; tracked 36,464 against 37 kB printed), KA-343, -350, -352, -354, -361, -362, the decoupled-stepping, adjoint, four-bar (98.857 deg n = 0.3722; -135.727 deg n = -0.1722) values."
+  },
+  {
+   "bead": "N17-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "It registered each row's control into controls.toml itself; now each row states control.text and N38b-05's seeding writes the control and fills control.nc (dep N38b-05; N38a-12 was both dep and related, removed from related). Its self-test ran 'cargo test --test known_answers', a target that does not exist under ADR-GAUNT-01: now BD-025's registry_check target. Brute-forced every count (86,185; rotation-only 166,870; C(24,8) = 735,471 in 24,546 classes; 56/54 with first collision {1,5,6}/{2,3,7}; 495/395; 13 and 92) and recomputed the nine Omega fractions, card, mixing ratios, bounds and 2,624: all correct."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38-REF",
+   "what": "register the control-loader reason `defect-or-expect-empty` (a control whose defect or expect is empty, or whose expect states no observable; repair: state the planted defect and the observable value, refusal code or failed row); BD-025's loader rule 4 now uses it."
+  },
+  {
+   "bead": "STD-TEST",
+   "what": "testkit's `Control` type (Controls::for_gate) lists only id, seed, gate, kind, target, defect, expect; as the one parser of controls.toml it must also carry BD-025's optional fields feature, fixture, due, permanent, removed_check, last_seen and state (runnable | obligation, written by N38b-05's seeding), or BD-025's validator, which runs on the parser's rows, cannot check rules 3 and 5 or the obligation rule."
+  },
+  {
+   "bead": "N38a-12",
+   "what": "admit two optional fields on a [[ka]] row with label FACT, `rerun` (Boolean, false until the pilot or source has been reproduced here) and `rerun_receipt` (the receipt hash), the same pair N38b-05 uses on catalogue entries, and compute the eligibility `obligation: rerun` for a FACT row with rerun = false (reject rerun = true with no receipt). N09-KA's four pilot rows (KA-033 to KA-036) use them; today rule text only notes 'to be re-run before a gate cites it' and nothing computes it."
+  },
+  {
+   "bead": "N38b-05",
+   "what": "state how each seeded control's BD-025 fields are filled from the catalogue entry: target (the component the plant mutates), defect (from `shortcut`), expect (the observable refutation from `case`), and feature (the plant's Cargo feature, for a mutation) or fixture (for planted-input/design/world, from `plant`); BD-025's loader rejects an empty defect or expect (defect-or-expect-empty) and checks feature/fixture existence for gates not 'not-run', so seeding as now specified would write controls the loader rejects. N10-CX names plants '<planting bead>:cx-<nnn>' (or the named mutants such as 'N13-18:M2'), from which the feature is cx-<nnn>."
+  }
+ ],
+ "unchanged": 20,
+ "notes": "All 45 beads read in full, in slice order. Unchanged: BD-067, BD-141, BD-377, FD-FSIM-07, N10a-02, N10a-03, N10a-04, N10a-07, N10a-08, N12-41, N12-42, N12-43, N12-44, N12-45, N12-46, N12-47, N12-48, N12-49, N12-50, N13-CX. Main theme: chapter CX and KA registry beads that wrote controls.toml or a private KA schema directly (N09-CX, N10-CX, N14-CX; N09-KA, N10-KA1/2/3, N11-KA, N16-KA, N17-KA) now follow N38b-05 (catalogue + seeding) and N38a-12 (one known_answers.toml, [[ka]] rows, computed eligibility), with late cases numbered through N38a-40 block requests; capstones BD-146/223/318/411 now depend on their milestone's registry beads. Every added dep was cycle-checked with tools/graph_check.py path. Slice looks settled after this round."
+}

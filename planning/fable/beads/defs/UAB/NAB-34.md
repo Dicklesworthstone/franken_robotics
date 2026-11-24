@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "chronicle", "spark", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-32"]
-needs: ["§35.5: the batch-composition invariance test, which is the standing test any alternative telemetry summary must pass (BD-181)", "§16.11: the sampled background referee and its coverage gate GATE-FID-07 (BD-214, BD-268)"]
-related: ["NAB-33", "NAB-35", "NAB-41", "NAB-20", "NAB-25", "N19c-33", "BD-164", "BD-203", "BD-205", "BD-207", "BD-214", "BD-349"]
+needs: []
+related: ["NAB-35"]
 gates: []
 plan_refs: ["Appendix C.2.2", "§0.8 (H-11)", "§21.20", "§29.7", "§35.5", "§35.7"]
 ---
@@ -146,7 +146,7 @@ wall-clock feedback. KI-16: causal tile reuse, incremental replay, recompute onl
   residuals and never time (DC-08; §28.19). The lockstep iteration count is a constant of the shape class
   (§16.6).
 - *Revive only if.* Never on a replayable profile. One pair of runs at one world address on a loaded and an idle machine with different digests is the standing counterexample.
-- *Carried by.* BD-349 (the DC-08 guard table), BD-296.
+- *Carried by.* BD-349 (the decision-core compiler), N28a-28 (the DC-08 guard-table record), N28c-11 (its GATE-ATEL-13 rows: the effort-profile risk control), BD-296.
 
 **KI-16. Causal tile reuse across replays**
 - *Strong form.* Reuse the unchanged tiles of a replay, for a factor near 12.7 if 95% of the replay is reusable.

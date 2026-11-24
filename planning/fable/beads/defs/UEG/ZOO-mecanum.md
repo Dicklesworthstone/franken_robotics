@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "BD-109", "BD-054", "BD-055", "BD-056", "BD-106", "N14b-11", "BD-102"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-102", "BD-106", "BD-109", "N14b-11", "NEG-30"]
 needs: []
-related: ["ROBOT-tiago", "BD-245", "BD-117", "SPEC-C-07", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 9", "§14.10", "§14.11 (stage 4 needs both tests)", "§13.3", "C-07", "Appendix M KA-268, KA-270", "Appendix N CX-131"]
 ---

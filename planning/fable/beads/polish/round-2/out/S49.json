@@ -1,0 +1,185 @@
+{
+ "round": 2,
+ "slice": "S49",
+ "reviewed": 15,
+ "changed": [
+  {
+   "bead": "BD-153",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "A frictionless card (mu = 0, admitted: FROB-REF-240 refuses only mu < 0) made R_t = v_s/(mu*...) infinite and mu_hat = mu*R_t/R_n = 0*inf = NaN, and the stick-before-open region order returned an adhesive normal impulse; now R_t is stored as its inverse, mu_hat = v_s/(R_n*max(gamma_bar, h*N_nom)) and mu_tilde^2 = mu*mu_hat, open is tested before stick, and the potential is evaluated without R_t (DESIGN, identical expressions in the N18a-16 reference so bits agree). Added test frictionless_card with values, mu_hat = 0.06 and mu_tilde^2 = 0.048 to setup_constants, and mutants (d) and (e). The f32 boundary set ran to 1e20, where the squares inside y_r overflow: now 1e-15..1e15 in f32 (1e-20..1e20 kept in f64) with the reason in Considerations. The open clauses now name the later beads that carry them (BD-176, BD-159/N16a-18, BD-154/N18a-36), all verified to depend on this bead."
+  },
+  {
+   "bead": "N18a-16",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Same mu = 0 defect in the law's construction, fixed identically (R_t^-1 stored, mu_hat direct, open before stick, potential without R_t). Applied request from U12-2: dep N12-43 added, with tests cl1_projection_matches_d3_oracle ((1,3,4) -> (14/5, 21/25, 28/25)) and cl1_one_contact_matches_d3_fixture (-5/11 m/s, 6/11 N*s). The vague spring-decay criterion now has numbers (T = 2m/(k*tau_d) = 20 ms within 2% at h = 10 us; scheme value 19.8 ms, checked numerically). Defined the host point-mass stepper the stepping tests use, named cl1_incline_threshold and cl1_spring_decay, and replaced a negative control that relied on BD-154 (a later bead) with the cone-membership check plus the D.3 box row. P2 now cites the cone of BD-050 (a dependency)."
+  },
+  {
+   "bead": "BD-158",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The margin rule it quoted, max(v*h + eps_g, floor), contradicted its owner N18a-12 (m0 + speed*h + eps_g); corrected. Acceptance used `frob spark check --json` to list the kernels and wrote rows into registries/kernels.toml, both owned by N21a-04, which was only related: N21a-04 moved to deps (no cycle). The e2e step used a nonexistent `--kernels` list option and no idempotency key: now one `--kernel` call per kernel with `--key`, and `--workers 1`/`--workers 8` with distinct keys. BD-149 added to related."
+  },
+  {
+   "bead": "BD-166",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The e2e mutant run expected the endpoint-only thin mutant alone to tunnel on lockstep, which it cannot: with the full margin every plate a step crosses lies within |v_c|*h of the start point, so the start query activates. The mutant run now combines endpoint-only-thin with N18a-12's margin-base-only from start gaps above m0 + eps_g (speeds above 3.5 m/s), and logs why each alone is caught. Stated the sphere's mass and the plate's stiffness so the 'no pass-through' assertion is decidable (overshoot about 0.5 mm at 10 m/s against 4 mm allowed)."
+  },
+  {
+   "bead": "N18a-12",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Stated that for thin primitives the margin and K-np-thin's sweep are independent protections, so a step-level tunnel needs both removed (the e2e control is now margin-base-only with endpoint-only-thin). Made the kernel change concrete: this bead adds the stage-1 twists to K-geom-pose (dep BD-149 added) and writes per-sample |v_c|*h and a sound per-primitive bound (|v_p| + |omega|*R_p)*h; activation tests add m0 and their own eps_g. Added tests margin_primitive_speed_bound (2.4 mm), margin_from_twist_matches_reference, margin_speed_term_counter. The e2e command used a nonexistent `--fixture` option and no key: corrected. The criterion that needed the M2 battery (a later bead) now exposes a counter that BD-168 reports."
+  },
+  {
+   "bead": "BD-168",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "Applied request from S22: the M2 part's receipt now carries machine-readable row_results ({ka, site, outcome, receipt} per row and per N18b-32 site; a site not run is absent and listed in not_run, never pass), with a load check, a unit test and an acceptance criterion read back through contact.laws (N18b-28, already a transitive dep); GATE-TRAC-09's recorder reuses it. Fixed the Gauntlet invocation (`--test g1` -> g1_known_answers with FROB_TEST_SEED, record_gate) and the registry path. The GATE-TRAC-03 control and thin_barrier_margin test relied on the margin alone, which K-np-thin's sweep makes ineffective: now the combined controls on the 3 mm case. The consideration that the battery is frozen by a later bead was stale (N38a-20, a dependency, freezes it). Digest comparisons now use distinct keys. Added the share of margin-created rows to the capacity audit."
+  },
+  {
+   "bead": "N18b-23",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied request from UJL-1: the refusal sentence now names FROB-REF-222 as a listed code of the Kinesis registry. The miss criterion and e2e expected misses with the margin disabled alone, but K-np-thin's sweep still catches the crossing and the 1 mm case is active under the base margin: now the 3 mm case with margin-base-only and endpoint-only-thin together (interval 0.6 to 1.8 ms), plus unit test thin_barrier_three_mm_needs_both_controls. Fixed the sim.run line (no `--fixture` option; key added), the replay command (sim.replay takes --run/--world/--from and a key), distinct keys for the digest comparison, `--key` on the battery audit. Added deps N38a-20 (the standard battery the acceptance audits) and N29a-23 (job.cancel/job.find the e2e calls); no cycles."
+  },
+  {
+   "bead": "N12-51",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The CL-1 certificate was written over R_t and mu_hat = mu*R_t/R_n, undefined at mu = 0 (admitted); re-parametrized with W_t = R_t^-1 >= 0, mu_hat > 0 and the side relation mu = mu_hat*R_n*W_t, regions in the order open, stick, slide, with the stick identity and the slide Lagrange identity restated (checked against the small exact test). The admission guard now names its effect: status not-certified in contact.laws and refusal FROB-REF-246 at admit (agents branch on codes). Added a frictionless criterion and test cl1_frictionless_card_certified; uncertified_law_not_admitted now calls admit; the e2e step reads `frob contact laws --tier batch-cpu --json`."
+  },
+  {
+   "bead": "N18b-20",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "It read patch reductions 'from the registry of N18b-21', but N18b-21 depends on it (KNOWN_DRIFTS 7): this bead now defines the schema and loader of registries/patch_reductions.toml and computes reduced counts from k, N18b-21 enters the qualified rows; an empty registry lists 'none qualified' with the qualification fixture as next action. The acceptance clause 'checked by BD-168' (a later bead) is replaced by the bead's own upper_bound_property; added criteria for the empty registry and a synthetic k = 4 sole row, unit test reduction_registry_listing; e2e evidence label 'exact' corrected to D0."
+  },
+  {
+   "bead": "N18b-21",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "For k >= 3 the rule set each reduced contact's r_eff to the cluster's mean radius about its own centroid, which over-states the patch's pure-spin capacity (8.3% on the bead's own sole, so the 1% spin step of its fixture would fail): r_eff,j = sqrt(m_j^2 - d_j^2) with m_j the cluster's mean distance from the patch centre, which preserves it exactly for every k (DESIGN with derivation); hull_shrink now asserts r_eff 10.25 mm and ratio 1, with the 25 mm placement as negative control. Defined how a caller selects a reduction (`--patch-reduction <name>` on sim.run, reduced sample lists in the ModelId) and the registry row fields shared with N18b-20. The e2e used a nonexistent `--fixture` option and no keys: now design + --scene + distinct key per arm."
+  },
+  {
+   "bead": "N18b-22",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Capacity refusals counted only FROB-REF-721 and -722, so a GPU arm refused with FROB-REF-610 (KNOWN_DRIFTS 6) would escape the rule: all three are counted, kept distinct, and named per arm (refusal_codes field); unit test refusal_codes_by_tier with a planted 721/722-only rule. The swapped-arms and default-capacity studies now carry their own keys (cb-2, cb-3) instead of implicitly reusing cb-1."
+  },
+  {
+   "bead": "N18b-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 4 used a nonexistent `--contact-cap 8` option: the overflow is now forced by the tracked-flipper fixture (80 stations against C = 64), with design, --scene and distinct keys, and the GPU code FROB-REF-610 noted. Step 6's negative control was 'margin disabled', which K-np-thin's sweep catches: now margin-base-only with endpoint-only-thin on the 3 mm case (consistent with the revised N18b-23). Step 7 is spelled as a real contact.audit call on the smoke battery with --key; step 8's determinism repeats use new keys (a repeated key returns the stored receipt) and set the worker count through the pool configuration. Acceptance and planted-failure lists updated accordingly."
+  },
+  {
+   "bead": "N18b-34",
+   "kinds": [
+    "correct",
+    "complete",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The decision rule named a confidence interval without level or method and had no outcome for 'one reduced, the other worse': now a two-sided 95% paired percentile bootstrap over scenarios (10^4 resamples, seed registered; DESIGN) and an inconclusive outcome that funds nothing. Form B ('CL-1's cone on the Hunt-Crossley normal') was undefined although its gradient and Hessian are acceptance criteria: defined as CL-1's maximization over the cone with the normal part replaced by the conjugate of the HC potential (reduces to CL-1 exactly at p = 1, d = 0, checked algebraically), new test friction_form_b_reduces. Record moved to crates/frob-conformance/registry/pilots.toml with N38a-09's schema, protocol file and verdict names (KNOWN_DRIFTS 3; 'falsified' -> falsifier-holds). The e2e now spells design, --scene, keys, the test-only build and a FROB-REF-246 check on the release build, with full NDJSON fields. The 'pre-baseline thresholds' consideration contradicted the BD-212 dependency: corrected."
+  },
+  {
+   "bead": "N18b-44",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The planted control for the audit clause (broad-phase box shrunk 1 mm, on the thin-barrier scene) could never fail: the scene plate is found by K-np-thin through the scene index, not the dynamic broad phase, and with m0 = 1 mm a 1 mm shrink still leaves |v|*h + eps_g, the step's travel. Replaced by a test-only flag bp-box-base-only on a free-plate fixture (pair dynamic; 3 mm gap at 5 m/s; production box 11 mm) with unit test bp_box_base_only_control. Gauntlet invocation fixed (`--test g1` -> g1_known_answers, FROB_TEST_SEED, record_gate), sim.run spelled with design, --scene and keys, and the source of the record's audit part (standard battery, per tier, own keys) stated."
+  },
+  {
+   "bead": "N33c-44",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e and record run through N33c-48's suite_ws09.sh --m2-rows mode, which N33c-48 writes at M0 with this row 'not-run: N33c-44', but N33c-48 was only related: moved to deps (no cycle). The 'frob contact audit on the fixture scene' step had no run, key or tier: now sim.run on batch-cpu strict for the arc-aware and chord-only builds with distinct keys, each audited with its own key, with a new assert for the mutant's broad-phase-rejection miss and the full NDJSON field set; the audit acceptance now says 'no missed contact' rather than 'reports the contact'."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N18a-36",
+   "what": "Step collision_kernels calls `frob spark check --kernels K-geom-pose,K-bp-sort,K-bp-pairs,K-np-prim`, but spark.check (VERBS-spark, N21b-32) takes one `--kernel` per call and is a run verb needing `--key`: loop over the four kernels with `--kernel <name> --backend <b> --key <k>`. Step speculative_margin says the d = 3 mm case at 5 m/s must tunnel under `margin-base-only`; it cannot, because K-np-thin's sweep (BD-166) finds the crossing whatever the margin. The tunnelling control is `margin-base-only` together with BD-166's `endpoint-only-thin` (see N18a-12 and BD-166 as revised); spell the sim.run command (design, --scene, --key, distinct keys per case) as N18a-12 now does."
+  },
+  {
+   "bead": "N18b-28",
+   "what": "Add the status not-certified to the law-admission derivation, checked first for lockstep cells: a lockstep law whose current definition hash has no convexity certificate from N12-51 is not-certified and is refused at admit with FROB-REF-246 (N12-51 as revised is the carrier)."
+  },
+  {
+   "bead": "N18-REF",
+   "what": "Widen the 'raised when' of FROB-REF-246 (row 57) to include a lockstep law with no convexity certificate for its current definition hash (N12-51)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "Add `--patch-reduction <name>` (repeatable; a qualified row of registries/patch_reductions.toml) to sim.run's inputs, as N18b-21 now defines it (KNOWN_DRIFTS 8); an unqualified name raises patch-reduction-unqualified (N18-REF)."
+  },
+  {
+   "bead": "N18b-33",
+   "what": "Its e2e reads the pilot record from `frob-conformance/registry/pilots.toml`: the file is crates/frob-conformance/registry/pilots.toml (KNOWN_DRIFTS 3). N18b-34 now reports verdicts falsifier-rejected / falsifier-holds / inconclusive; treat inconclusive like a negative pilot (CL-2 stays the fallback, N18a-18 not funded)."
+  },
+  {
+   "bead": "BD-085",
+   "what": "Its acceptance spells `frob sim run --tier referee --fixture traction/<row> ...`, but sim.run has no --fixture option (VERBS-sim): use the design and --scene of the row's fixture under crates/frob-conformance/fixtures/traction/ (N18b-32), keeping the key."
+  },
+  {
+   "bead": "N18b-45",
+   "what": "The e2e `hand` step runs `frob sim run --tier referee --key ... --json` with no design or --scene: name the hand instance's design and scene (N18b-44 and N33c-44 now run the same instance with them)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 15 beads read in full against plan_refs, the brief and KNOWN_DRIFTS; all needed changes. Main defects: mu = 0 (admitted) gave NaN/adhesion in CL-1 (BD-153, N18a-16, N12-51); the thin-plate tunnelling controls assumed the margin alone can tunnel, but K-np-thin's sweep is an independent protection (BD-166, N18a-12, BD-168, N18b-23, N18b-24; request to N18a-36); the k >= 3 patch reduction over-stated spin capacity by 8.3%; N18b-44's planted control could not fail; N18b-34's form B and decision interval were undefined; nonexistent options (--kernels, --fixture, --contact-cap) and missing keys. Numbers checked with scratchpad scripts (spring decay, spin capacity). Dependency cycle check: 0 cycles. The slice should be settled after these edits; the CL-1 frictionless fix and the combined tunnelling controls are the points a later round should re-check against N18a-36 and N18b-28 once their requests land."
+}

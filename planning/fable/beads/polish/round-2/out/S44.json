@@ -1,0 +1,356 @@
+{
+ "round": 2,
+ "slice": "S44",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "N30-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the round-1 request after checking N30a-20, -25, -31: FROB-REF-879 now lists the stage-order case (pointer `stage`, its two repairs; clocks are stage 0) and ground.predict names the consumed schema refusal 802. Found: BD-387 raises 883 from ground.ingest (a later bundle that would unseal a sealed, unscored chunk) but the ingest list lacked 883, against the rule that no verb raises an unlisted code; added 883 to the ingest list and row. The 873 trigger now names the overlapping-split and unassigned-episode cases beside split-by-rows. A note states how 876 appears at ground.ingest (inside an exit-2 result, the dataset admitted) as against ground.score (a refused call), the behaviour BD-389 now fixes. Two registry tests added."
+  },
+  {
+   "bead": "BD-139",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the round-1 request: the `cards:` line now has N30a-03's `synthetic=<f>` column (k = generic + assumed + synthetic, one decimal) and N walks the closed list of nine card kinds (plan format registry: actuator, transmission, battery, interface, material, soil, optical, sensor, payload), with a test that fails if a kind is skipped. The line is scoped to results with a bound model (the bead's own Scope and N30a-03's omit test said so; item 7 said every report). Clarified that the `synthetic` mark on planted records is the fixture label, not the dataset origin: with origin synthetic, rows 16 to 25 would be refused 814/895 before the retirement and pooling checks they test."
+  },
+  {
+   "bead": "N30a-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The bead plants three firewall mutants (serial crate, std::net, process spawn) in its unit tests and script but registered and accepted only two; acceptance and the control registration now name all three, and the Scope line says N30b-23 re-runs two of the three."
+  },
+  {
+   "bead": "BD-311",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "It defined `registry/anchors.toml` with its own field list while N38b-01 (M1) fixes that file's format and loader with different fields (id, published, fixture, tolerance, due, result): one artifact, two formats. BD-311 now extends N38b-01's record (DESIGN, reason stated), maps its fields onto it, uses `tolerance` in the outcome label, writes `result`, and depends on N38b-01 (no cycle). `cargo run -p frob-conformance --bin anchors` contradicted the conformance crate (no binary; ADR-GAUNT-01): now a library function reached from the g2_parity test target and an example target. Tests for the tolerance rule and base-record loading added."
+  },
+  {
+   "bead": "N30a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The script called a `--bin anchors` binary of frob-conformance, which has no binary; it now uses the example target BD-311 defines. Its M5 band call lacked `--task-family` and `--level`, so it would have met a schema refusal before the 895 it asserts; the call now has every required input and names the metric with its unit."
+  },
+  {
+   "bead": "BD-387",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "tests"
+   ],
+   "what": "Capability was `ground:write`; the verb registry gives ground.ingest `ground:import`. The split, denominator, digest and relabel refusals had no code: now 873 with pointers (as the 873 registry row lists them), and 814 for a relabelled synthetic set with a recomputed id (BD-139 row 27). The 883 case is defined (a later bundle declaring a sealed, unscored chunk unsealed), re-admission of an identical bundle under a new key is determinate (`already_admitted: true`, no event), and the verb's other listed codes are attributed to their beads (876 BD-389, 812 BD-395, 886 N30a-34). Admission writes the `synthetic_chunk`, `dataset` and `cell` record rows. The cell rule would have refused every bench scale reading and every scan (no controller, firmware, surface or task): such components are now written explicitly as `none` (DESIGN), never omitted. Acceptance and six unit tests added."
+  },
+  {
+   "bead": "N25a-29",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Capability `ground:write` → `ground:import`. `--bin ground-synth` and 'the conformance binary' → the example target (the crate has no binary). Step 2's outcome was 'refused or returned as already admitted': now determinate, plus the 883 unseal attempt. The six uncoded refusals of step 3 now assert 873 with pointers, and a 814 row is added for the relabelled set with a recomputed id. Step 6's sandboxed ingest runs with no daemon (a CLI-to-daemon call needs a socket) and names the sandbox tool per platform."
+  },
+  {
+   "bead": "N30a-07",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "'At admission every episode must be contained' had no owner and no test: BD-387 lands first and does not call containment. N30a-07 now adds the call to the admission path (873, pointer `rig.envelope`, DESIGN), puts the CellId in the admission result, and has an acceptance line and a unit test for the 24.1 °C episode. The key's components can hold the explicit value `none` (BD-387's rule for bench and scan data), encoded under its own tag, with a test."
+  },
+  {
+   "bead": "N30a-06",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The bucket encoding and its property test take a `CellId` and generated cell keys, so N30a-07 (the cell key type) is a prerequisite: moved from related to deps (no cycle)."
+  },
+  {
+   "bead": "N30a-09",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "The precondition 'identify needs the clock step' had no refusal code; it is now 879 with pointer `stage` naming `clocks` (clocks are stage 0 of the fixed order and ground.identify lists no clock code), as N30a-20 and BD-389 now state."
+  },
+  {
+   "bead": "N30a-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied the round-1 request: `ground kit --rehearsal emit` is not a registered form; step 1 now uses the rehearsal generator's entry point (BD-388, fixture R-04). Two out-of-order expectations named codes their verb does not list: `identify` before `ingest` was 873 (now the schema refusal 802, as an unknown card is at ground.predict) and `identify` on a one-mark clock was 876 (now: the ingest exits 2 reporting 876, and identify is refused 879 pointer `stage`)."
+  },
+  {
+   "bead": "N30a-11",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The piecewise model was said to be declared in the manifest, but no schema bead defines a field for it; the two optional `[[clock]]` fields (`model`, `knots`) are now stated here as an addition to schema minor 1."
+  },
+  {
+   "bead": "N30a-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied the round-1 request after recomputing the binomial tails: P(X ≤ 989 | 1,000, 0.990) = 0.417 (42%, not 38%) and 0.0249 at 0.9945 (2.5%, not 2%); 0.022 at the integration's 0.9946. `frob-conformance run ground.clock … as a job` is a binary form the conformance crate does not have: now the g1_known_answers test-target form. Control A states the ingest's exit code (2, completed with findings) and where the 876 object sits. `--field delay` → `--params delay`, the flag BD-391 defines."
+  },
+  {
+   "bead": "N30a-20",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Gating condition (a), a clock without a fit, had no refusal code while (b) and (c) did: now 879, pointer `stage`, naming `clocks`, with two repairs and a unit test. States the Stribeck-shape rule the chapter had missed: §30.9 writes the Gaussian form, while the actuator card carries `stribeck_shape` (lorentzian or gaussian) with lorentzian the batched default (§15); the shape is a card field, never fitted, named in the record, and the chapter's fixtures pin `gaussian`. The 0.07 N·m closed-form case now states its shape (0.070297 under lorentzian), with a test."
+  },
+  {
+   "bead": "BD-388",
+   "kinds": [
+    "correct",
+    "risks",
+    "tests"
+   ],
+   "what": "The generator's entry point was a `frob-conformance gen …` binary; the conformance crate has test and example targets only, so it is now a library function plus an example target (the old spelling is declared to mean it). The planted values live in the same crate as the estimators, and the lint only guarded the truth directory: it now also forbids modules outside `rehearsal/` and `kit.rs` from importing `crate::rehearsal`, with a planted import as its control. Rig R-04 states its card's Stribeck shape (`gaussian`). The drift power figures were recomputed and hold (0.70/0.92/0.99 fresh; 0.58/0.86/0.94/0.98 after ten clean episodes)."
+  },
+  {
+   "bead": "BD-389",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "The capstone left open what `ground.ingest` returns when a clock fit is refused, while N30a-09, -12 and -14 require the dataset to stay admitted: now fixed (exit 2, `ok: true`, the 876 object in `clocks[i].refused`, time-based metrics unavailable; later time-based uses refused with exit 3). Rule 2 named a different detector and label (`clock-fitted-to-event`, a 3·σ_t comparison) from its part N30a-13 and the gate script (`clock::verify`, `clock-not-from-marks`): aligned to the part. The piecewise trigger and the oscillator consideration now agree with N30a-11's adequacy test. Acceptance and one unit test added."
+  },
+  {
+   "bead": "BD-390",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "The verb's synopsis (`--design d:…`, `--params` required) could not run the verb registry's own example (`frob ground excite cart-a --cards drive-60 --rig stand-A`): the design is now positional, `--rig` takes a file or a stored rig, and `--params` defaults to every card field with a prior uncertainty. The guard's repairs were in the reverse of the registry row's order and lacked the third (hold at prior); they now follow the registry, with the rule that an aliased set is dropped together, since fitting one member with the other at its prior is the regularized fit under another name; two unit tests added."
+  },
+  {
+   "bead": "N30a-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Alias 7's exact-rank claim (tail e⁻²⁵ at 5·v_s) holds only for the card's `gaussian` Stribeck shape; the actuator card's default on batched tiers is `lorentzian` (tail 1/26). The fixture now states its card shape and what happens under the other."
+  },
+  {
+   "bead": "N30a-18",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The flatness rule compared the 95% profile half-width (1.96·CRB for a linear model) with 0.5·σ_prior and called that 'the same criterion as the precision check', which tests the one-sigma bound: every linear parameter with CRB between 0.26 and 0.5 of the prior would pass the precision check and be overturned as flat, and the bead's own claim that the two checks agree for a linear model was false. The threshold is now 1.96·0.5·σ = 0.98·σ (DESIGN, reason stated), with a boundary test."
+  },
+  {
+   "bead": "N30a-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`--bin ground-alias` and 'the conformance binary' → the example target and the g1_known_answers test target (the conformance crate has no binary); the alias datasets are the rehearsal's R-02 bundles, so one generator makes them; the excite commands use the positional design as BD-390 and the registry now have it."
+  },
+  {
+   "bead": "N30a-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The velocity mask of 5·v_s leaves 3.8% of the Stribeck excess in the kept samples under the `lorentzian` card shape; the default is now 5·v_s for `gaussian` and 10·v_s for `lorentzian`, with a test."
+  },
+  {
+   "bead": "N30a-22",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Pass B capped the rows of the whole dataset at 256 in one update, while the capstone BD-391 specifies experiments assimilated one after another (posterior of one the prior of the next) and tests a floor over 1,000 windows, which one call cannot hold: two algorithms for one mechanism. N30a-22 now has the sequential rule in full (cap per experiment, fixed order, shared calibration biases carried in the state so the common-mode floor holds across calls), with acceptance lines, five unit tests (including linear sequential = joint) and a negative control."
+  },
+  {
+   "bead": "BD-391",
+   "kinds": [
+    "correct",
+    "users",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Capability `ground:write` → `ground:run` (verb registry). The synopsis lacked the flags its parts and scripts use (`--params`, `--combination`, `--keep-prior`) and required `--cell` and `--stage`, so the registry's example could not run: it is now the union, with `--stage` defaulting to the earliest stage without a record and parameter names shared with ground.excite. Pass A restated N30a-21 wrongly (three Stribeck speeds, ordinary least squares): aligned (five, weighted). Pass B's window definition aligned with N30a-22's features. The clock pre-check now agrees with N30a-20 (time-free features allowed; time-stamped use refused 879). Stribeck shape noted. Three unit tests added."
+  },
+  {
+   "bead": "BD-393",
+   "kinds": [
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "Round-1 request (wire a real band into the viewer) checked: the work is real and unowned, but it is viewer code that can only land after this bead, so it is a new M5 bead in the viewer's work package (N32bp2-44), named here in Scope and related. Found while checking it: the verb's synopsis lacked the `--design … --task-family` form the registry and N30a-04 use, `--status` required a cell although N30a-09 lists all cells, and `--for <result>` was never defined; all three are now stated (authorization order of N30a-37 unchanged), with two unit tests."
+  },
+  {
+   "bead": "BD-394",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The power 'after ten covered episodes' was printed as 0.58, 0.86, 0.98; recomputed by first-passage recursion from e = 0.641¹⁰ = 0.0117 it is 0.43, 0.78, 0.97 (thirteen or more misses in twenty are needed). The printed figures are the rehearsal's average over the calibration draw, where the ten clean episodes are not all covered (BD-388, recomputed and confirmed); the status text and the unit test asserted the wrong case. Retirement reasons were `rank-drift`/`miss-count`; the monitors emit `RankDrift`/`MissDrift` (N30a-02, -41, -42)."
+  },
+  {
+   "bead": "BD-395",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "A scan was said to carry 'the cell', but a scanned part has no controller, firmware, surface or task family and the scan form passes no `--task-family`, so admission's cell rule would refuse every scan. It now uses the explicit-`none` rule added to BD-387 and says such a cell can never support a band."
+  },
+  {
+   "bead": "BD-396",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Capability `ground:read` plus 'the session's export scope' → `ground:run` and `export:packet` (verb registry, which records that the draft's names were not adopted); the export door's codes on the build form (816, 731, 733, 734) are now named; a manifest `license = \"private\"` is stated to be licence class `proprietary` (stub), distinct from the private mark (899). Two unit tests added."
+  },
+  {
+   "bead": "BD-397",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the round-1 request: `frob-conformance record ground.lane` is not a binary; the record is now written by the lane's own code (a library function run as the gate's row of the conformance test target) and the row is entered with the recorder's example target (N38b-19, added to deps). The two status requests (no-claim with detail; blocked on OPEN-GROUND-1) were already in the text; `detail` is now named. The 'recorder refuses synthetic form A with FROB-REF-814' is restated as it can happen: the writer never writes it, the gate recorder refuses synthetic evidence for a reality gate (`origin-not-admissible`), and a relabelled set stops at admission (814). The script now has six steps on a scratch register with full logging."
+  },
+  {
+   "bead": "BET-28",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The verdict's clause on real data reads the Reality lane's record (form A's coverage, or form B's recorded no-claim), which BD-397 produces, but the decision did not depend on it: BD-397 added to deps (no cycle) and the acceptance line names the record."
+  },
+  {
+   "bead": "FD-FSIM-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its interim posture and its rejected alternative ('chaining posteriors as if chunks were independent') now state that pass B's per-experiment sequential assimilation (N30a-22) is not the rejected chaining: the shared biases are carried in the state, and for a linear model it equals the single update."
+  },
+  {
+   "bead": "FD-FSIM-24",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The post-phase step ran `frob ground kit --json`, which is not a form of the verb; it is now `frob ground kit build --result … --out … --json`."
+  },
+  {
+   "bead": "FD-FSIM-25",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The interim posture and the fallback said a scan without fiducials is not admitted; the plan (§30.14) and BD-395 also admit a scan registered by an identified external tool whose identity is recorded as provenance. Restored that route in the background, the interim posture and the fallback, with the refusal code 812 for a scan with neither."
+  },
+  {
+   "bead": "N19b-22",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The script used unregistered verb forms (`ground predict --law film`, `ground score --dataset`, `report run --claim reality`). It now uses the registered forms of the Reality lane's verbs, asserts the late-prediction refusal (883) and the two ways a realism claim is stopped (802 for a status-setting parameter, 889 from the reality guard), and depends on N30b-06, the scoring verb it calls."
+  },
+  {
+   "bead": "N20b-08",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the round-1 request (dep VERBS-sense, moved from related). Checked against that registry: the form for imported logs is `--edges <file>`, and the bead used `--dataset … --cell …`, which the row does not have. The flow now reads the edges out of the admitted dataset with `artifact.read` (where the sealed-store guard refuses sealed parts with 883) and passes them with `--edges`; a file naming an unadmitted dataset, a sealed part or two cells is the schema refusal 802; the Reality request is `--claim reality`. Acceptance, unit tests and the script follow."
+  },
+  {
+   "bead": "N20b-27",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The script scored each glass rule with `frob ground score` without a frozen prediction, which the lane refuses (883) and which contradicts the bead's own pre-registration rule; it now freezes each rule's prediction first, and depends on the scoring verb N30b-06."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N32bp2-44",
+   "why": "Round-1 request to BD-393 from the viewer's reviewer: nobody carries the wiring of a real `ground.band` into the viewer (the live source's tool list and `snapshotFromEnvelopes` land at M3 and M2, before the verb). New M5 feature under WP-52 (the viewer's package), depending on BD-393, N32b-10, N32b-12, N32bp1-01: `ground_band` read forms in the live source, the band envelope and its refusals in the snapshot, the legend rules for a `synthetic` band, and `scripts/e2e/viewer_reality_band.sh` with three control builds."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-ground",
+   "what": "Add FROB-REF-883 to ground.ingest's refusal list (and to the one-place list): BD-387 raises it when a later bundle declares unsealed a chunk hash an earlier admission committed as sealed and unscored; N30-REF's ingest list and 883 row now carry it. ALSO: Three examples cannot run against their handlers: `frob ground ingest stand-A-01/ --key gin-1 --json` lacks `--design` and `--task-family`, which BD-387 requires to form the cell (873 otherwise); `ground.identify` and `ground.excite` inputs should list the flags BD-391 and BD-390 now define (`--stage` optional with a default, `--params`, `--combination`, `--keep-prior`; excite's positional design, `--rig` file or stored name, `--params` optional). Also note that ground.ingest reports an under-determined clock as exit 2 with the 876 object in `clocks[i].refused` (BD-389), not as a refused call. ALSO: `ground.predict`'s example `frob ground predict --trial sill-day-3 --key gp-1 --json` uses a `--trial` input that BD-392 (the handler) does not define; its synopsis is `--dataset <id> --part validation|holdout --metric <name>:<level>… --decision <spec> --study fixed-n:<n>|anytime` (as N30b-31 calls it). Align the example, or define `--trial` as a file carrying those inputs. `ground.band --for <result>` is now defined in BD-393."
+  },
+  {
+   "bead": "N30b-01",
+   "what": "Step `guess-share` prints the old `cards:` grammar; BD-139 and N30a-03 now print `cards: guessed=<k>/<N> (<pct>%) [generic=<a> assumed=<b> synthetic=<f> datasheet=<c> measured=<d> candidate=<e>]` with k = a + b + f, so assert `synthetic=0 measured=0 candidate=0` at M1. Also say that the `synthetic` label on planted records is the fixture label and that the planted dataset records of rows 16 to 25 have origin `real` (BD-139 Considerations), otherwise those rows return 814/895. Its `frob-conformance plant ground.misuse` call is a binary form the conformance crate does not have (BD-025: test and example targets only)."
+  },
+  {
+   "bead": "N38bp1-01",
+   "what": "Check 4 and script step 5 assert `card fields guessed: <k> of <n> (<share>%)` over four card kinds; the line N30a-03 and BD-139 print is `cards: guessed=<k>/<N> (<pct>%) [generic=… assumed=… synthetic=… datasheet=… measured=… candidate=…]` with k = generic + assumed + synthetic over the nine card kinds. Also: BD-311 now fills your `result` field and labels the outcome `inside-sweep` when |gap| ≤ `tolerance`; its generated report sentence should sit beside your Parity sentence."
+  },
+  {
+   "bead": "N38b-01",
+   "what": "Check 4's registered text has the old share line (`card fields guessed: <k> of <n>`, four card kinds); align with N30a-03's `cards:` grammar and nine kinds. BD-311 now extends your `[[anchor]]` record with optional fields (`robot.model`, `quantity.metric`, `published.spread`, `published.locator`, `read_level`, `conditions_unstated`, `licence`, `captured_by`) and depends on you: the loader must accept them (BD-311 adds them to the loader at M3)."
+  },
+  {
+   "bead": "N30a-34",
+   "what": "N30-REF's 886 row and N30b-37 expect ground.ingest to refuse a later dataset that declares a spent chunk hash as `holdout` or `validation`; your check is at score-token minting only. Add the admission-side check (BD-387 names you as its owner) with a test."
+  },
+  {
+   "bead": "N30b-31",
+   "what": "Step `generate` writes `frob-conformance gen ground.rehearsal …`, a binary the conformance crate does not have; BD-388 now gives the entry point as `cargo run -p frob-conformance --example ground_rehearsal -- gen --fixture all --seed 1 --out $D`. Step `ingest`: the one-pulse variant is not a refused call; per BD-389 the ingest exits 2 with the dataset admitted and FROB-REF-876 in `clocks[0].refused`."
+  },
+  {
+   "bead": "N30b-30",
+   "what": "Uses `frob-conformance gen ground.rehearsal --fixture R-15 --seed 1`; the entry point is now the example target `cargo run -p frob-conformance --example ground_rehearsal -- gen --fixture R-15 --seed 1 --out <dir>` (BD-388). ALSO: Uses `frob ground identify … --field exposure_delay`; BD-391 defines the flag as `--params <names>` (names shared with the ground.excite report), so `--params exposure_delay`."
+  },
+  {
+   "bead": "N30b-37",
+   "what": "The 876 row fires 'one mark only' and 'two marks both before the trial' through ground.ingest as refused calls; per BD-389 the ingest completes with exit 2 (dataset admitted) and carries the 876 refusal object in `clocks[i].refused`, so assert that form; the exit-3 form of 876 is at ground.score. Its `frob-conformance plant ground.refusal` call is a binary the conformance crate does not have (BD-025). Add the stage-order case of 879 (pointer `stage`) and the 883 case at ground.ingest (a sealed, unscored chunk re-declared as calibration), which N30-REF now lists."
+  },
+  {
+   "bead": "N30ax-01",
+   "what": "Add to schema minor 1 the two optional `[[clock]]` fields N30a-11 now states: `model = \"affine\" | \"piecewise\"` (default affine) and `knots = [<raw source timestamps>]`, hashed with the manifest."
+  },
+  {
+   "bead": "N30a-27",
+   "what": "BD-391 now names the stage-1 parameters accepted by `--params` (`armature`, `viscous`, `coulomb`, `static`, `stribeck_speed`, `delay`, `lag`, `kt_scale`) and says the card writer maps them to card fields (`coulomb`, `breakaway`, `stribeck_velocity`, `viscous`, driver `latency`, …): state that map, and write `stribeck_shape` unchanged from the prior card (the shape is never fitted; N30a-20)."
+  },
+  {
+   "bead": "N30a-26",
+   "what": "ground_identify.sh: assert the calibration record names the card's `stribeck_shape` (the rehearsal rig R-04 pins `gaussian`), that experiments are assimilated sequentially in identifier order with the common-mode floor holding across them (N30a-22), and use `--params` for parameter selection (BD-391)."
+  },
+  {
+   "bead": "N32b-12",
+   "what": "The `reality-band` strip is described as a trace with lower and upper curves, but a reality band is a statement about one scalar metric per episode: N32bp2-44 (new, M5) draws the run's value as a marker with the interval as a bar and supplies a frozen `realityBand` block (`band`, `no-claim` with code and counts, or `unread`). Please let the overlay's element list admit that scalar form and the `synthetic` legend, and list N32bp2-44 in related."
+  }
+ ],
+ "unchanged": 16,
+ "notes": "The slice is the first half of Ground (WP-68): registries, the reality line, admission, clocks, excitation, identification and the capstones. Round 1 left each bead sound on its own; most of what this round found lies between beads written by two units: capstones that restated their parts differently (pass A and B, the clock detector, the band and identify synopses), verb forms and capabilities that disagreed with the verb registry, conformance-crate binaries that cannot exist, and refusals with no code. Three findings are substantive: pass B's row cap against sequential assimilation, the profile-flatness threshold, and the Stribeck shape (the card's default is lorentzian, the chapter's formula and fixtures assume gaussian). All nine round-1 requests were checked and applied (two were already in the text); one became a new M5 viewer bead. A third round should find little here beyond the requests passed to the second half of the chapter and to VERBS-ground."
+}

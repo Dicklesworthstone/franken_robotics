@@ -4,11 +4,11 @@ title: "Milestone M4, amortized control, co-design, mission queries at scale: de
 type: "epic"
 priority: 2
 milestone: "M4"
-labels: ["m4", "delivery", "solid", "frontier", "gate"]
+labels: ["m4", "delivery", "solid", "frontier", "gate", "review-notes-open"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-378", "N40-34", "N40-25", "N40-26", "N40-04", "N40-05", "EPIC-M3", "EPIC-M5", "EPIC-M7"]
+related: ["EPIC-M5", "EPIC-M7", "EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-25", "N40-26", "N40-34"]
 gates: ["GATE-REFLEX-04", "GATE-CORTEX-12", "GATE-ATEL-07", "GATE-CORTEX-11", "GATE-CORTEX-13", "GATE-CORTEX-03", "GATE-ATEL-03", "GATE-AUGUR-15", "GATE-SHIELD-01", "GATE-HAB-11", "GATE-GAUNT-01", "KILL-FAMILY", "KILL-INHERIT", "KILL-RANK", "KILL-LADDER", "KILL-EQUIV", "KILL-DISTILL", "KILL-GAIT", "KILL-MPC", "KILL-SHIELD", "KILL-ENERGY", "KILL-RETROFIT"]
 plan_refs: ["§43.7", "§43.1", "§43.2", "§40.6", "§40.3", "§40.4", "§43.12"]
 ---
@@ -153,7 +153,9 @@ the tracked and hybrid archetypes.
 | GATE-AUGUR-35 | whole | Known answer. On the scalar pack the lane returns a bracket whose upper end passes F(U) ≤ U and lies within 1 g of 100 kg; the increment-stopping mutant returns 99.5 kg and is refused. On the three-build catalog all three builds are returned with dispositions; a weights-only mutant omits (4, 4) and fails; the budget query returns (4, 4). On 20 generated catalogs of at most 200 options the returned set equals brute-force dominance filtering. M4. | §25.39 |
 | GATE-ATEL-18 | whole | Design comparison ¦ On 30 designs in three classes with an oracle (a specialist per design over five seeds, and the sampling controller at 8,192 samples): top-3 regret at equal total compute at most half that of ranking at the base budget; J∞ closer to the oracle than J(b_max) for at least half the designs ¦ M4 | §28.25 |
 
-**4. Recurring gates.** GATE-TENFOLD-09, GATE-GROUND-01, GATE-SAFE-01, GATE-GAUNT-01, -02, -03, -05, -10.
+**4. Recurring gates.** GATE-TENFOLD-09, GATE-GROUND-01, GATE-SAFE-01, GATE-GAUNT-01, -02, -03, -05, -10;
+GATE-GAUNT-08 at each funding decision (no Frontier part of WP-28 to WP-30, WP-61, WP-62 or WP-64 to WP-67 is funded
+without a pilot record that has a falsifier, a computed ceiling, a fallback and a result).
 
 **5. Kill gates decided here.** In brief: KILL-FAMILY → no family policy; specialists with inheritance from the
 nearest parent, and the baseline screens. KILL-INHERIT and KILL-DISTILL → children train from the class prior or

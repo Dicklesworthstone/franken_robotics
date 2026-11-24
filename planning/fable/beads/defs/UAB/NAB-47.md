@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-42"]
-needs: ["§40.4: the kill-gate records named in the resolutions, each with trigger, fallback and deciding milestone (N40-23 to N40-29)"]
-related: ["NAB-44", "NAB-45", "NAB-46", "NAB-26", "NAB-27", "NAB-30", "NAB-36", "NAB-50", "BD-186", "BD-217", "BD-264", "BD-285", "BD-331", "BD-353"]
+deps: ["N40-27", "NAB-42"]
+needs: []
+related: ["NAB-48"]
 gates: []
 plan_refs: ["Appendix B.5", "Appendix B.2", "§2.3", "§2.4"]
 ---
@@ -45,7 +45,11 @@ to NAB-46); the decisions themselves (the decision beads of the owning units).
 `argument_against`, `resolution` (verbatim), `decided_by` (the last column: the gate, the kill gate and the
 beads that take the measurement and record the decision), `placed_rows` (the `IP` records the idea
 corresponds to), `status` (`open` until the deciding gate is recorded; then `settled` with the measured
-values, or `fell-back`).
+values, or `fell-back`). `counts_toward_tally = false`. `disposition` is `placed-narrowed` where the record has
+placed rows, whose carriers and gates it shares; CT-12 is `declined` with `killed_idea = ["KI-16"]` (the
+robot-neighbourhood form; its far-field sibling is UP-04); CT-19 is a program rule (`tiers` empty,
+`tier_text = "Program rule"`, gates GATE-TENFOLD-01 to -13, kill gate KILL-PARITY, carriers from its last
+column).
 
 Correspondence to placed rows: CT-01 ↔ IP-12; CT-02 ↔ IP-03; CT-03 ↔ IP-04; CT-04 ↔ IP-16; CT-05 ↔ IP-13;
 CT-06 ↔ IP-60; CT-07 ↔ IP-25; CT-08 ↔ IP-26; CT-09 ↔ IP-21; CT-10 ↔ IP-70; CT-11 ↔ IP-45; CT-12 has no placed
@@ -66,15 +70,15 @@ CT-18 ↔ IP-18; CT-19 has no placed row (it is the thesis).
 | A probability bound from assumption monitors (IP-26) | Splitting a guarantee at assume-and-guarantee interfaces keeps the proof part honest about what it assumes | The bound cannot validate itself: a monitor cannot label its own silent breaches; distribution shift moves the miss rate; four independent feet with three states each give 27 strata and 162 transitions under the symmetry group, not 14 (FACT by count, C-16) | The typed product is [S] and is in every output envelope. The bound is reported only with breach labels drawn from hidden state independently of the monitor, with shifted worlds reported separately (GATE-SHIELD-03) | BD-339 (independent breach labels, GATE-SHIELD-03), BD-308 (the typed product at the boundary) |
 | Observation-alias witness as a new capability (IP-21) | It shows before any training that every policy on an interface must fail, and names the cheapest fix | Deriving the admissible action sets from a contact-rich plant is most of the work; given the same sets, an ordinary exact solver recovers every frontier (FACT, the planning review log) | Adopted as a checked witness, with no claim of a new algorithm. Structural and enumerated witnesses are [S]; searched witnesses are [F] and labelled experiment-specific. One false witness triggers KILL-ALIAS | BD-240 (searched lane), N20a-43 (KILL-ALIAS: one false witness) |
 | Joint paired-outcome certification (IP-70) | It closes whole parameter boxes of a design comparison at once | A conventional reachability tool handles the same product model, and one mislabelled draw voids the certificate | [F], on one contact transition. KILL-AUGUR-DOMINANCE falls back to paired replay; the rule that shared inputs are indexed by position and not by tick is kept in either case | BD-359 (GATE-AUGUR-16), N25c-27 (KILL-AUGUR-DOMINANCE) |
-| Verdict reuse beyond a keyed cache (IP-45) | Four passes proposed it; repeated work in a campaign is real | Executed check: a correctly keyed dependency graph skipped exactly the work the richer receipt skipped, and omitting one dependency inherited a false promotion (FACT, the planning review log) | The memo graph is [S] with a shadow recompute. Reuse by implication is [F] under KILL-REUSE and KILL-AUGUR-REUSE: one unsafe reuse removes the rule. Reuse by sensitivity margin is withdrawn (the killed-idea register) | BD-292, BD-347 (GATE-ATEL-11), N28a-23 (pilot) and N28a-24 (KILL-REUSE), N25a-19 (KILL-AUGUR-REUSE) |
+| Verdict reuse beyond a keyed cache (IP-45) | Four passes proposed it; repeated work in a campaign is real | Executed check: a correctly keyed dependency graph skipped exactly the work the richer receipt skipped, and omitting one dependency inherited a false promotion (FACT, the planning review log) | The memo graph is [S] with a shadow recompute. Reuse by implication is [F] under KILL-REUSE and KILL-AUGUR-REUSE: one unsafe reuse removes the rule. Reuse by sensitivity margin is withdrawn (the killed-idea register) | BD-292, BD-347 (GATE-ATEL-11), N28a-23 (pilot) and N28b-36 (KILL-REUSE), N25a-19 (KILL-AUGUR-REUSE) |
 | Recomputing only what an intervention touches | A fork that recomputes only the descendants of its dirty frontier would make interventions cheap: a factor of 1/(0.05 + 0.019 + 0.01) = 12.7 if 95% of replay is addressable and 2% is dirty (HYPOTHESIS as proposed) | In a robot-centric scene the robot and its contact neighbourhood dominate compute and are always dirty; the dependency surface is large; full replay is simpler and exact | Not built. Forks copy full state by index, and a prefix is reused only when identical by construction (§29.8). A far-field lane is listed in the not-yet-placed list (NAB-49) | Not built. The far-field lane was later given a pilot: N19c-33 with KILL-FARFIELD (GATE-HAB-15) |
 | Counterfactual branching: what a fork may claim (IP-33) | Seven passes proposed it; it tells an agent which experiment to try next | Carrying state across a geometry, inertia or gearing edit is invalid; a mid-run rescue is conditional on a state the edited robot might never reach; coalition values can be negative and cannot establish necessity | [S], narrowed: diagnostic interventions fork from the snapshot; design-parameter edits re-run from the episode start (§27.8); forks are classified and the invalid ones refused (GATE-AUTOPSY-02); placebo forks and the flip rate bound instability (§27.5, §27.6); attributions are labelled and are never cited as established (FROB-REF-880) | BD-205 (GATE-AUTOPSY-02), BD-279, BD-280 (GATE-AUTOPSY-03), BD-283; N27b-11 (KILL-AUTOPSY) |
-| Structure and manufacture inside the loop (IP-37) | Distal link inertia changes dynamic rankings, the sibling structural crates exist, and a design that cannot be built is not a result | It adds scope and not decision speed; loads taken from compliant contact are artifacts of contact stiffness; sibling readiness was overstated and conceded | [F], declared an output-quality subsystem and not a speed lever (§31.2). Load cases are time-coherent and come from referee-tier telemetry (§31.6). Each stage has a kill gate with a simpler fallback | BD-400 to BD-406 with KILL-LOADS, KILL-TOPOPT, KILL-FAB and KILL-TOLERANCE recorded at BD-412 |
+| Structure and manufacture inside the loop (IP-37) | Distal link inertia changes dynamic rankings, the sibling structural crates exist, and a design that cannot be built is not a result | It adds scope and not decision speed; loads taken from compliant contact are artifacts of contact stiffness; sibling readiness was overstated and conceded | [F], declared an output-quality subsystem and not a speed lever (§31.2). Load cases are time-coherent and come from referee-tier telemetry (§31.6). Each stage has a kill gate with a simpler fallback | BD-400 to BD-406 with N31b-16 (KILL-LOADS), N31b-15 (KILL-TOPOPT), N31b-17 (KILL-FAB) and N31b-18 (KILL-TOLERANCE), recorded at BD-412 |
 | Catalog co-design by monotone bounds (IP-74, IP-75) | Discrete component selection is largely monotone, cheap to test on a CPU, and a sound cut on a partial assignment saves point checks multiplicatively | Monotonicity breaks under dynamics; a quasi-static filter can mis-rank; a shared resource is joint and time-dependent | [S] for catalog closure, [F] for antichains and cuts. KILL-SYNTH-CODESIGN fires on one falsely pruned design or on more than 20% of top designs mis-ranked; KILL-AUGUR-CUTS on one false cut | BD-360 with N25d-11 (KILL-SYNTH-CODESIGN); BD-357 with N25b-16 (pilot) and N25b-17 (KILL-AUGUR-CUTS) |
 | The estimator for cheap referee promotion (IP-35) | Coupled estimation reuses an existing sibling estimator and gains (1 − ρ²); randomized audits stay unbiased when promotion targets are chosen after seeing fast-tier results | A unit-coefficient correction does not have the quoted variance; ρ falls on long contact episodes; inverse-propensity weights can exhaust the budget | Both, as one estimator: a fitted, frozen control-variate coefficient with a doubly robust audit correction on logged propensities (C-25). KILL-DR at ρ below 0.7 on 200 addresses falls back to the plain paired promotion | BD-264 (GATE-FID-08, GATE-CHRON-09), N16b-10 (KILL-DR) |
 | Sharing test cases across symmetry orbits (IP-02) | An exact saving with no approximation | Interiors are asymmetric; floating point and unmirrored noise break exact invariance; the saving is on work one would not create | Orbits are taken only under the group that preserves robot, sensors, task and scene, and members have equal outcome distributions, not equal outcomes at equal addresses (§17.11). The known answers bound the lever: 86,185 orbits of 10⁶ labelings under the full dihedral group, 500,500 under a mirror alone. KILL-QUOTIENT below 5% of dispatches saved | BD-285 (GATE-PHYLUM-01), N17a-29 (KILL-QUOTIENT) |
 | Clearance complexes (IP-18) | Fits, cannot fit or unresolved before any dynamics, reusable across a footprint family | It covers wheeled or rigidly folded bodies only; a conventional planning library could hold the same index; its share of design time is small and disputed | [F], two-sided with a reported band; a nonholonomic base without a steering primitive is labelled geometric only. KILL-FCLEAR falls back to a route-graph check labelled heuristic | BD-233 (GATE-HAB-10), N19b-36 (KILL-FCLEAR) |
-| Where the ten-fold comes from | Kernel throughput multiplies into every other mechanism | An infinitely fast environment step speeds training by at most about 7.7 times (1/(1 − 0.87)) on one incumbent stack and about 1.4 on another (FACT, §2.3) | Engine throughput is a parity requirement (KILL-PARITY); the ten-fold is sought in avoided trainings, family answers and fewer agent rounds (§2.4), and is measured, not argued (§39) | BD-217 (KILL-PARITY), BD-314 to BD-317 (partial gate at M3), BD-428 to BD-433 (tournament at M7) |
+| Where the ten-fold comes from | Kernel throughput multiplies into every other mechanism | An infinitely fast environment step speeds training by at most about 7.7 times (1/(1 − 0.87)) on one incumbent stack and about 1.4 on another (FACT, §2.3) | Engine throughput is a parity requirement (KILL-PARITY); the ten-fold is sought in avoided trainings, family answers and fewer agent rounds (§2.4), and is measured, not argued (§39) | BD-217 (the parity rows), N36-27 (KILL-PARITY), BD-314 to BD-317 (partial gate at M3), BD-428 to BD-433 (tournament at M7) |
 
 **Four disagreements did not move under cross-examination.** The planning record settles none of them by
 argument; each has a measurement:
@@ -111,7 +115,9 @@ opposite edges, (10⁶ + 10³)/2 = 500,500.
       gate register with a trigger whose numbers equal those quoted (KILL-MEGA: a paired lower bound of 2.0;
       KILL-DR: ρ below 0.7 on 200 addresses; KILL-QUOTIENT: below 5%; KILL-SYNTH-CODESIGN: one falsely pruned
       design or more than 20% of top designs mis-ranked; KILL-AUGUR-CUTS: one false cut; the rank-agreement
-      thresholds 0.7 and 0.5).
+      thresholds 0.7 and 0.5); so do the triggers quoted for the standing disagreements (KILL-PARITY: below
+      0.33 of the incumbent; KILL-FDGRAD: variance ratio below 2 at every horizon of 50 steps or more, or sign
+      agreement below 70%).
 - [ ] The four standing disagreements each point to a record and a measurement, and their `status` is `open`
       at plan time.
 - [ ] The harness recomputes the six calculation rows; the dihedral count is also checked by brute force.
@@ -125,7 +131,9 @@ opposite edges, (10⁶ + 10³)/2 = 500,500.
 
 - `nineteen_records`; `placed_rows_resolve`; `two_records_have_no_placed_row` (CT-12, CT-19).
 - `decided_by_resolves` (beads and gates).
-- `kill_trigger_numbers_match_register`: the six quoted triggers against `registries/gates.toml`.
+- `kill_trigger_numbers_match_register`: the six quoted triggers, and the KILL-PARITY and KILL-FDGRAD
+  triggers of the standing disagreements, against `registries/gates.toml`. KILL-DR is entered at M0; the
+  other rows are entered at M1 and are compared under a recorded `skip` until then (the rule of NAB-17 step 6).
 - `ct06_ratio`: 1.875. `ct12_factor`: 1/0.079 = 12.66. `ct19_ceilings`: 7.69 and 1.41.
 - `ct07_projection`: (1.25, 0.25) violates the box; the exact optimum is (1, 0.5).
 - `ct08_strata_and_transitions`: enumerate 3⁴ = 81 labelings and 648 directed single-foot transitions; orbits

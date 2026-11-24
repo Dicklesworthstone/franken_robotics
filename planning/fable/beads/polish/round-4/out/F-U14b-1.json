@@ -1,0 +1,123 @@
+{
+ "round": 4,
+ "slice": "F-U14b-1",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "BD-144",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The PILOT-PHYLUM-01 record lacked `ceiling`, one of the four parts N38a-09 checks at registration, so the loader would refuse the record and the pilot could never be filed; and its result receipt was only the hash of docs/delivery/pilots/phylum-m1.json, which N38a-09 rule 2a refuses (`pilot-receipt-uncommitted`) unless the bytes are committed at receipts/pilots/<hash>.json. Added the ceiling from §17.5 (the mixing ratio D·(c_L + W·τ)/(c_L + Ω·D·W·τ): about 40 at W = 16 down to 1.1 at W = 2,048; the pilot supports no speed claim) and the committed-receipt rule, with the acceptance line."
+  },
+  {
+   "bead": "BD-244",
+   "kinds": [
+    "request",
+    "convention",
+    "plan"
+   ],
+   "what": "Request F-U20a-2 (round 3) applied after reading N20a-34 item 5 and N20a-47 stage 11: plan §20.11 requires a design-check warning on a route stretch whose smallest Gramian eigenvalue falls below a threshold, N20a-34 hands its surfacing to BD-244, and without it the warning was carried by nobody and N20a-47's stage 11 stayed `not due` forever. Added dep N20a-34 (M3, no cycle; moved from related); stage 8's A-17 step calls observability::route_finding when the task binds a route of the scene and reports each weak stretch as finding `A-17.weak-stretch` (Reported, High; grading carried as below_by = 1 − λ_min/λ_warn, since N14bx-01 gives a kind one severity) with N20a-34's typed repairs; charged to stage 8's budget; acceptance line, unit test route_weak_stretch_surfaced with a planted drop, script step 4a, plan_refs and References §20.11. Request H-verbs-8 applied: `--family-world <i>` is in sim.run's row (owner N14b-17, M3, reached through N14b-13), so step 7 states it as fact and the Considerations note narrating the request and the interim e2e_skip is removed (convention 13); left as it was, the script would have skipped a step whose option exists."
+  },
+  {
+   "bead": "N14b-01",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The acceptance line and the e2e script read fixtures/skel/quad-a.fbot, which BD-063 delivers, and BD-063 depends on this bead, so the fixture did not exist when N14b-01 had to close. Switched to fixtures/edits/quad-a.fbot, BD-058's copy of the worked quadruped (BD-058 is a dependency), with a script note saying why."
+  },
+  {
+   "bead": "N14b-06",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Requests F-U24c and H-verbs-8 applied: the standing rows run `frob sim run <id> --tier referee --task stand-10s|traverse-5m-flat` at M1, using BD-125's tasks through N16ap4-01's `--task` input. Neither was a dependency, so the rows could run before the tasks or the input existed. Added deps BD-125 and N16ap4-01 (no cycle), and step 8 now names BD-125's tasks instead of N22c-47's. VERBS-sim's `--controller` row gives the `fixture:<name>` form to this bead (N16ap4-01 hands `fixture:` to its loader), but the bead never defined that form, so `fixture:zero-gain` (used by N14b-09 and BD-244) had no loader and no file format. Added it to Scope and as a design paragraph: fixtures/controllers/<name>.toml, schema frob.controller.fixture/1, a `kind` with a builder (`baseline-scaled` here), canonical bytes in ControllerId, 802 at /controller on any failure. Added the unit test fixture_controller_form."
+  },
+  {
+   "bead": "N14b-07",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The evidence script passed `--task turn-radius-sweep`, `pivot-90-mu0.4` and `pivot-90-mu0.8` to sim run as bare names. These are task files this bead writes, not registered tasks, and sim.run's `--task` (N16ap4-01, VERBS-sim) refuses an unregistered name with 802. It takes a file path only after task.check has admitted it. So every sweep and pivot step would have been refused. The script now checks each fixtures/reflex/tasks/<t>.ftask with `frob task check` (a read verb) and passes the paths. The `--state estimated`, tier and key forms are unchanged."
+  },
+  {
+   "bead": "N14b-08",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The script ran `--task push-recovery` as a bare name, but no bead registers that task and this bead did not declare it as a file, so all 20 push trials would have been refused with 802 under sim.run's `--task` rule (N16ap4-01). The bead now names the task file it adds, fixtures/reflex/tasks/push-recovery.ftask (the 0.3 m/s lateral push over 0.1 s from the acceptance criteria), checks it first with `frob task check`, and passes it by path."
+  },
+  {
+   "bead": "N14b-09",
+   "kinds": [
+    "registry"
+   ],
+   "what": "`weight-shift`, `push-recovery`, `threshold-crossing` and `reach-moving-target` were passed to sim run as bare names. No bead registers them, so sim.run would refuse each with 802 (N16ap4-01) and the frontier evidence script could not run. The bead now says these four are task files it adds under fixtures/reflex/tasks/, each checked with `frob task check` and passed by path. stand-10s and traverse-5m-flat stay BD-125's registered tasks."
+  },
+  {
+   "bead": "N14b-10",
+   "kinds": [
+    "request",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Requests F-U28a and H-verbs-2 applied after reading N13-04, BD-110, N14b-18 and VERBS-design (design.check lists 168 at stage 2, 31 codes). N13-04 raises FROB-REF-168 at stage 2 through A-02, but STAGES' row 2 refused only 104 and 106, so every 168 was an out-of-row refusal that this bead's own conformance suite rejects, and refusal_union_matches_registry could never equal the registry. Row 2 now carries 168, with a sentence on why (§11.5, N13-03), the count is 29 and the union pin includes 168. Note (a) and the test solid_quarter_advisory said a 4 kg solid under mass_max 14 kg only gets an advisory, which contradicts N13-04's rule (refused with 168 unless written {solid: {intended: true}}, advisory only with no mass_max). Both now follow N13-04. Added dep N12-REF, the bead that registers 168 in refusals.toml (M0, no cycle): without it, the build-time check that every table code exists in the refusal registry could run before 168 is there. plan_refs and References gain §11.5. On 808 (H-verbs-2): stage 1 is where the design file is parsed, so it is answered by a request to VERBS-design and not added here ahead of the registry."
+  },
+  {
+   "bead": "N14b-11",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The C13 finding: the stage-4 shape-changer row said \"expected `undecided` ... until BD-243 registers A-09\". That narrates a future registration and leaves nothing to say what the row expects once A-09 lands at M3, so the row would fail then. The row now expects one of two outcomes. If the stage record lists A-09 as `not-run: not-landed`, stage 4 is `undecided` with `analysis not available`. With A-09 present (BD-243's, M3), stage 4 reaches a decision, `passed` or 118, and is never that `undecided`. Checked: the archetypes the bead uses are BD-109's assets/archetypes/, a dependency, so there is no deadlock with the ZOO beads."
+  },
+  {
+   "bead": "N14b-12",
+   "kinds": [
+    "convention"
+   ],
+   "what": "\"Until the catalog exists the field reads `retrofit: catalog-absent`\" named no owner. The retrofit catalog is BD-369's (M4), and its catalog.for_bottleneck(feature) is the entry point the place stage uses. The payload now names that function and owner and keeps `catalog-absent` for builds without the catalog. The missing call from stage 7 is requested of BD-369. Numbers checked: e = 74.6, 18.7 and 6.0 mm; doors +30 and −10 mm; corridor 1.346 m; lip friction 4/3 and 0.75; 149 mm."
+  },
+  {
+   "bead": "N14b-13",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The hand-policy rows said \"until VERBS-sim has that option, BD-244's crate test hand_policy_check runs these rows\". VERBS-sim's sim.run row already carries `--family-world <i>` (owner N14b-17, a dependency), so as written the rows would go through a crate test when the frob command already exists. They now state the option as fact: world i of the task's declared family, in index order. TV bounds 3/4, 27/32, 459/512 and 3807/4096 checked."
+  },
+  {
+   "bead": "N14b-14",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The pilot said its log and script digest are 'attached to the pilot record'. N38a-09 rule 2a refuses a result whose receipt is not committed byte-identical at receipts/pilots/<hash>.json (pilot-receipt-uncommitted). The likely implementation, citing the log under target/, would never load, and N14b-12's first acceptance line (pilot record exists, falsifier did not hold) could never be met. The bead now states the receipt and the commit. The C11 finding is answered in the test plan: the bead delivers nothing a frob command reaches, so its script is scripts/pilots/, not scripts/e2e/. The 22% near-fit share and the hand table were checked."
+  },
+  {
+   "bead": "N14b-15",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Same as N14b-14: the receipt is now committed at receipts/pilots/<hash>.json (N38a-09 rule 2a), otherwise the result is refused and N14b-13's pilot acceptance blocks. The test plan says it delivers nothing a frob command reaches (C11). The information matrix, the third-beacon intervals and the three-read TV of 11/16 were checked."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14bx-01",
+   "what": "Add the finding kind `A-17.weak-stretch` (policy Reported, severity High) to A-17's `kinds` in CHECK_ANALYSES and its policy row to registries/preflight.toml (fifteen kinds): BD-244 now surfaces N20a-34's route_finding weak-stretch finding in stage 8 of design.check (plan §20.11's design-check warning). Without the row, item 7's conformance test (one policy row per kind, no kind outside the constants) fails on the first design check of a route with a weak stretch. The grading by how far λ_min falls below λ_warn travels as the finding's `below_by` field, since a kind has one severity."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check: place FROB-REF-808 at stage 1 (32 codes; design.patch then 112 plus 32). design.check takes a design file (NS-01), and stage 1 ('Parse either view', N14b-10 row 1) is where N14a-01's reader runs. Row 1 already owns the reader's 102, 103 and 125. Rule 5's 808 (a JSON integer outside ±(2⁵³ − 1)) is therefore raised inside stage 1, and while 808 is outside the row the out-of-row conformance check (N14b-10) rejects the runner on any such file. The alternative is a runner that drops the code or rounds the integer silently. When the row lists 808 at stage 1, N14b-10 adds it to row 1 and to refusal_union_matches_registry (30 codes there). This answers H-verbs-2's question to N14b-10."
+  },
+  {
+   "bead": "BD-369",
+   "what": "Wire catalog.for_bottleneck(feature) into preflight stage 7's 119 refusal: fill the payload's `retrofit` field (N14b-12, 'Refusal payload') with the kit and its price provenance, keeping `retrofit: catalog-absent` when the catalog does not load. Add dep BD-244, which wires stage 7 into design.check (no cycle: BD-244 does not reach BD-369), and an acceptance row: a door-bottleneck refusal on a scene whose hazard key has a kit names that kit. Today nobody makes this call. N14b-12 and BD-244 land at M3 without the catalog, and BD-369 only provides the entry point, so the plan's 'the retrofit that removes it' (§14.11, stage 7) would read catalog-absent forever."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "Unchanged (11): BD-063, BD-065, BD-109, BD-117, BD-185, BD-225, BD-226, BD-246, BD-247, N14b-03, N14b-05. Outside the slice, for the owners' reviewers: N14b-19 step 9 still says A-09 'arrives at M3' as an until-clause (now consistent with N14b-11's two-outcome row); BD-244 Considerations says 'The retrofit catalog lands at M4. Until then ... catalog-absent', which is consistent with N14b-12 and the BD-369 request. H-verbs-2's request to N14b-10 had an empty text in the slice file; its full text (168 at stage 2; check 808) was read from round-4/out/H-verbs-2.json and handled as above."
+}

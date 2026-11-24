@@ -1,0 +1,286 @@
+{
+ "round": 2,
+ "slice": "S52",
+ "reviewed": 22,
+ "changed": [
+  {
+   "bead": "N21b-37",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Host type AnchoredPos moved from frob-dyn to frob-kernels (frob-dyn cannot be imported by frob-kernels or frob-contact under layer rule L-1; N13-01's conventions row and GB-04 already name frob-kernels). from_world_f64 said cell = round(x/8): Rust's round sends x = -4.0 to cell -1, offset +4, outside [-4, 4); now cell = floor(x/8 + 1/2) with the f32 rounding-to-4.0 case handled. to_world_f64 was called exact; it is a correctly rounded f64 sum (c = 125, o = 2^-50 is lost), so coord_exact added as the oracle for every 'unchanged/exact' check. Tests host_type_faces and to_world_is_rounded_not_exact added; KA-790, KA-791, KA-792, CX-369, CX-370 named by number with the g0_laws command."
+  },
+  {
+   "bead": "BD-179",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "scope",
+    "self-contained"
+   ],
+   "what": "Closure and contact envelopes were said to be frozen in the fidelity ledger, which holds no such quantity (its rows are cross-tier disagreements); the plan gives no number, so the envelope is now DESIGN E = max(2*M64, F) fixed from the f64 arm and pre-registered (envelopes.toml). The energy-residual clause needed BD-208, a later seed, so the bead could not close (drift 7): clause moved to new bead N21bp2-01, which records GATE-SPARK-05; BD-179 records GATE-SPARK-18. Script called `sim.run --battery precision --steps` (no such options) and `--test g1`: now per-scenario `sim.run --task ... --seconds 2000 --precision ... --key`, `g1_known_answers` with FROB_TEST_SEED and record_gate. Deps N16b-25, N35-04, N35-27 added (the script runs sim.run on batched tiers with --precision and reads the certificate block). Crossing measure said 'exact from snapshots', which exist per tick, not per step: replaced by a conformance-only anchor audit. Cost recomputed (21 jobs, 5.4e9 world-steps, about 45 min; was 3e9 from a count of 3 scenarios where the table has 5). KA-790/791/796/798/799/792, CX-369/370 named."
+  },
+  {
+   "bead": "BET-08",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Dep N21bp2-01 added (it records GATE-SPARK-05); pre-registration now names the envelope numbers and their source (BD-179's envelopes.toml); unit tests given inputs and expected verdicts, plus bet08_energy_clause_not_run_is_untested; the script names the command it runs (`cargo run -p frob-conformance -- bets status --json`)."
+  },
+  {
+   "bead": "N16b-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "scope"
+   ],
+   "what": "Stratum key lacked the step plan although N16bp1-01, BD-212 and N16a-16 treat a new step plan as a new stratum (N16a-16's forty settings would have pooled): step-plan pair added (DESIGN). Creep distance added as an eleventh pair quantity (the bead and RISK-05 call creep a ledger quantity; the table had none). Intrinsic row kind with `coefficient-lag` added for ADR-TRAC-06 (round-1 request to BD-212). The battery-run pairing hook, which no bead carried, is now N16bp2-01 (Out); BD-204's replay is no longer said to carry scenario draws (they are functions of the address). Dep N18a-29; three tests added."
+  },
+  {
+   "bead": "N16bp1-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "record_rebaseline refused a second record per gate, while FD-FSIM-02 and FD-FSIM-12 each need the plan's 're-baseline the fidelity ledger once': now one record per (gate, cause) over a closed cause list, old strata untouched. Freeze and `fidelity.ledger` handle intrinsic coefficient-lag strata. Stale sentence that --freeze-envelopes was only requested of VERBS-eval removed (the row has it); input spelled `battery` as in the registry with limit/follow; stratum key gains step-plan pair; deps N24c-04 (the handler it extends) and N16bp2-01 (completeness)."
+  },
+  {
+   "bead": "BD-212",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "Round-1 request applied: coefficient-lag rows of each reference class are written and frozen here (ADR-TRAC-06), with an acceptance line and a test. Creep-distance rows join the KILL-CONTACT input record. Pairs are formed by N16bp2-01 (dep), not by 'the cross-tier replay of BD-204 through the battery runner'. Re-baseline recorded under cause `m2-baseline`."
+  },
+  {
+   "bead": "N16b-30",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Script called `frob task list --battery` (no such option), `eval.run` without its design, with `--seed` (the verb takes `--run-seed`) and `--profile` (not in the row), and a 32-address subset no option selects: now the registry form on the `smoke` battery per change and `standard` nightly, the battery identity read from eval.run's bound block, the incomplete-stratum check made before the referee has run, distinct keys on repeated runs, and a read of the coefficient-lag rows. Dep N16bp2-01."
+  },
+  {
+   "bead": "N16b-04",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Deps N16-REF (its own code 820) and N28-REF (557) added; the acceptance line on `sim.run` results needed N16b-25, which depends on this bead: restated as a serializer test here, with the verb-level check left to N16b-25 and N16b-35."
+  },
+  {
+   "bead": "N16c-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Acceptance required the bound to be hashed into the ledger 'in the same change as the GATE-FID-01 re-baseline', which is BD-212's act and BD-212 depends on this bead (drift 7): the bead now closes on the ADR (`docs/adr/ADR-KIN-OPEN-6.md`) and its table hash in the OPEN-KIN-6 registry row; BD-212 writes the ledger. Script ran `sim.run --battery --step --law cl-1` without a key and `fidelity energy --run`: now `eval.run` with the step-plan options of N16bp2-01 (dep), `--law CL-1`, keys, and the positional run of `fidelity.energy`. Out names the owning beads."
+  },
+  {
+   "bead": "N16c-43",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "users"
+   ],
+   "what": "The options it adds (`study.plan --kind step-refinement --base --steps`, `sim.run --refine-step`) are in neither registry row: marked as this bead's additions and requested of VERBS-study and VERBS-sim; stated that the kind is an arm constructor and not a third study type beside `anytime` and `fixed_n`; deps N33b-19 (study.plan, study.submit) and N16b-25 (sim.run at M2) added; keys on the run calls."
+  },
+  {
+   "bead": "N16a-16",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Script read the ledger with `--pair batch-cpu:referee` (the verb takes `--tier-pair batch-cpu,referee`) and ran `sim.run --battery` without a key: now `eval.run` per cell with the forwarded step-plan options, the referee side once per class, distinct keys for the repeated cell. Deps N16bp1-01 (the verb it calls) and N16bp2-01 (pairs and options) added."
+  },
+  {
+   "bead": "N18b-33",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Decision record given its path `docs/adr/ADR-KILL-CONTACT-M2.md` with the required fields (drift 4); the input record BD-212 writes for it (`registries/decisions/KILL-CONTACT.input.toml`) is now named as its input; 'creep speed' aligned with the ledger's creep-distance quantity; script's `fidelity ledger --json` given its required `--class` and `--tier-pair`, `sim.run` a key, and the pilot register its real path `crates/frob-conformance/registry/pilots.toml` (drift 3)."
+  },
+  {
+   "bead": "N33c-14",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "ADR path `docs/adr/ADR-KILL-FSIM-M2.md`; the script said only 'starts a device run in mode remote': now the two builds of BD-038, the exact commands with keys (`sim.run --workload`, `fidelity shadow start|status`, `sim.replay --tier referee`), and the STD-E2E line contents with failure fields."
+  },
+  {
+   "bead": "FD-FSIM-02",
+   "kinds": [
+    "scope",
+    "split",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Its post phase read the fidelity ledger and re-ran GATE-FID-01, which need N16bp1-01 and BD-212 (late M2); depending on them would have held this P1 upstream work back. The fidelity side of the switch-over is split into NFp2-01; this bead keeps the upstream change, the pin move and the referee-side re-runs, and its row stays `landed` until NFp2-01 has read the gate. 'Re-baseline once' is now stated as new strata under cause `upstream:FD-FSIM-02`, never an edit; the case of adoption before the M2 freeze is stated. `sim.run` calls carry keys."
+  },
+  {
+   "bead": "BD-203",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Graph finding (84 dependents): its first acceptance line was GATE-CHRON-01 itself, measured by N29a-19, which depends on this bead, so it could not close (drift 7). Restated as the three compositions on 200 worlds of batch-cpu and each device present; the gate is N29a-19's. The verb line listed refusals '606 and 894' against the row's 222, 601, 606, 840, 894. Stated how runs to replay exist before `sim.run` answers on batched tiers (N16b-25 depends on this bead). Scope checked: already split to engine and verb only."
+  },
+  {
+   "bead": "BD-204",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Battery lived in a seventh test target `g1_teleport` with `--trials` and `--seed` arguments (drift 1): now entries of `g1_known_answers`, run with FROB_TEST_SEED and `--features gauntlet-mutations`, recorded with record_gate. The D1 criterion is conditional on a D1 family existing. The two user-side replays shared one key `t1` for different runs."
+  },
+  {
+   "bead": "N29a-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`tests/g5_replay.rs` and `--test g5 -- GATE-CHRON-01 --backend` replaced by entries of `g5_determinism` per site with FROB_TEST_SEED and record_gate (drift 1); step group `plant-*` of N29a-25 added to the script's list (N29a-25 named it, this bead did not); distinct keys for the repeated source run."
+  },
+  {
+   "bead": "N29ap1-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its script ran `sim.run --tier batch-cpu` and read published digests, which need N16b-25, BD-207 and BD-210, all dependents of this bead (drift 7): script split into a `kernel` stage it can run and a `digest-*` stage first run by N29a-19. That stage queried the Provenance stream without tracing any world: `--telemetry T2 --trace-rate 1/1` added. Two acceptance lines that waited on later beads (published record fields; cost measured by N29a-17) restated to what the kernel delivers; test digest_single_pass added."
+  },
+  {
+   "bead": "N29ap1-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Same drift 7: `snapshot_store.sh` needs `sim.run` on batched tiers and BD-210, which depend on this bead; split into a `kernel` stage and the `snapshot-store-*` stage first run by N29a-19; `--telemetry T2` added so the traced worlds of the schedule exist."
+  },
+  {
+   "bead": "N29a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its script stage asked for 'snapshots every 50 ticks', which the T3 schedule of N29ap1-02 cannot give (full snapshots at chunk boundaries of traced worlds): now a 20 s run with every world traced, snapshots at ticks 256, 512, 768; stated that the stage is first run by N29a-19."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N21bp2-01",
+   "why": "split from BD-179's done-condition: the energy-ledger residual clause of GATE-SPARK-05 needs BD-208, a later seed that BD-179 cannot depend on; this bead re-runs the battery with the ledger on, measures the clause and records the gate"
+  },
+  {
+   "bead": "N16bp2-01",
+   "why": "carried by nobody: the hook in frob-arena's battery run that matches two tiers' runs by address, routes a named referee refusal to `strict`, drains the lag accumulator and writes the pair rows (N38a-20 pointed to N16b-02, which only defines pure functions in layer 3); also forwards step-plan options on eval.run so non-default strata can be measured"
+  },
+  {
+   "bead": "NFp2-01",
+   "why": "split from FD-FSIM-02: the one re-baseline of the fidelity ledger at the switch-over needs both the adopted upstream change and the M2 ledger (BD-212, N16bp1-01); as a bead after both, the upstream work can start early and no script calls a verb its bead does not depend on"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "`sim.run` row lacks options that beads use: `--refine-step` (added by N16c-43); the numerical-plan options `--step`, `--newton-iterations`, `--warm-start` (N16a-03, N16a-18; forwarded to eval.run by N16bp2-01); `--telemetry`, `--trace-rate`, `--fixture`, `--seed` (BD-090, BD-207, N29a-19, N29ap1-01/-02). List them with their owners. `--battery` on `sim.run` (N16c-08, -09, -16, -36, N21b-18) has no owner: a battery is `eval.run`'s input."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "`eval.run` row: add the step-plan options N16bp2-01 forwards (`--profile`, `--law`, `--step`, `--newton-iterations`, `--warm-start`) under 'Extended by: N16bp2-01', the `fidelity` result block it adds, and spell the seed `--run-seed` as N24c-04 does. No option selects part of a battery, yet N38a-20's script runs 'the first eight scenarios'."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "`study.plan` row: add `--kind step-refinement --base <run or plan> --steps <list>` under 'Extended by: N16c-43' (an arm constructor; the study type stays `anytime` or `fixed_n`)."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "`fidelity.ledger`: rows now carry `kind` (pair or intrinsic) and, for intrinsic `coefficient-lag` rows, `sub_key {coefficient_law, contact_mode}`; intrinsic rows are asked for with a tier pair naming one tier twice (N16bp1-01). Update the golden help file with the row."
+  },
+  {
+   "bead": "N18a-36",
+   "what": "Step `lagged_coefficients` (and N18a-29's text for it) calls `frob fidelity ledger --json` without the required inputs; the coefficient-lag rows are read with `--class <c> --tier-pair batch-cpu,batch-cpu --quantity coefficient-lag`, and exist once BD-212 has frozen them."
+  },
+  {
+   "bead": "N18a-29",
+   "what": "The ledger form of the lag row is now defined by N16b-02 (intrinsic stratum: integer histogram of the relative lag per world address, coefficient law and contact mode; summary n, median, p95, p99, max); the accumulator is drained per address by N16bp2-01. Check `lag_row_serialization` against that form."
+  },
+  {
+   "bead": "N15b-35",
+   "what": "`frob fidelity ledger --battery sinew-act-fidelity --json` omits the verb's required `--class` and `--tier-pair`."
+  },
+  {
+   "bead": "N38a-20",
+   "what": "Its Out line gives 'running pairs on two tiers and computing disagreement' to N16b-02; the runner is now N16bp2-01 (N16b-02 holds the pure comparison and the store). Its script's 'first eight scenarios' has no option on `eval.run`; use the `smoke` battery or request a selector of VERBS-eval."
+  },
+  {
+   "bead": "N16b-03",
+   "what": "It, N16b-31 and N16b-33 call `frob eval run --battery standard --class <c> --tier <t> --profile ...` with no design and with `--profile`, which `eval.run` has only through N16bp2-01: add the design, and either that dependency or drop the option (lockstep is the default profile of the batched tiers)."
+  },
+  {
+   "bead": "N16c-16",
+   "what": "It, N16c-08, N16c-09, N16c-36 and N21b-18 run a battery with `frob sim run --battery ...`; no bead defines that option. Batteries run through `eval.run` (with N16bp2-01's step-plan options where a law, profile or step is chosen)."
+  },
+  {
+   "bead": "FD-FSIM-12",
+   "what": "Its one ledger re-baseline is the cause `upstream:FD-FSIM-12` of N16bp1-01's re-baseline record (new strata, no edit of frozen envelopes). Its post phase needs BD-212 and N16bp1-01, which it does not depend on; NFp2-01 shows the split made for FD-FSIM-02 (a bead after both), which would suit it too."
+  },
+  {
+   "bead": "N21-KA",
+   "what": "KA-541's carrier: BD-179 measures all clauses but the energy residual; N21bp2-01 measures that clause and records GATE-SPARK-05. The same correction applies wherever BD-179 is named as the recorder of GATE-SPARK-05 (N21c-32's gate table, EPIC-M2, WP-22)."
+  },
+  {
+   "bead": "N35-KA",
+   "what": "KA-790 and KA-791 name 'the anchored-position bead of the Spark unit' as carrier of the device form: it is N21b-37."
+  },
+  {
+   "bead": "BD-166",
+   "what": "Add the test that the scene compiler's cell indices equal `AnchoredPos::from_world_f64` (cell = floor(x/8 + 1/2), cell c covering [8c - 4, 8c + 4)) on 10^6 seeded points and on every cell face within 2 km; `frob-scene` cannot import the type from `frob-kernels` (layer 3), so the rule is duplicated and must be pinned."
+  },
+  {
+   "bead": "N35-27",
+   "what": "BD-179 and N21bp2-01 read from the certificate block, per run, the running maxima of group-membership error (in ulp), loop-closure residual, penetration beyond compliance and complementarity residual (separately), and the relative energy residual |R|/W with the count of zero-work worlds excluded; confirm the block carries each."
+  },
+  {
+   "bead": "N35-04",
+   "what": "It depends on BD-203, so `sim.run` on the batched tiers (N16b-25 depends on N35-04) exists only after replay. BD-203, N29ap1-01, N29ap1-02 and N29a-18 therefore cannot drive a batched run from the command line in their own scripts (their user-side stages are now first run by N29a-19). If that edge is not a real prerequisite, removing it would let those stages run where they are written."
+  },
+  {
+   "bead": "BD-025",
+   "what": "BD-204 now states that `--features gauntlet-mutations` also turns on the `conformance` feature of `frob-dyn` and `frob-kernels` (the plant hook of N29a-25, used by 16 beads under that name); confirm the umbrella does so, or name the feature the batteries must pass."
+  },
+  {
+   "bead": "N41-OPEN2",
+   "what": "N16c-11 now closes on the OPEN-KIN-6 row carrying the hash of the bound table of `docs/adr/ADR-KIN-OPEN-6.md`, and on the registry check refusing a second, different hash for a decided row; confirm the row schema has the field and the check."
+  },
+  {
+   "bead": "WP-22",
+   "what": "Three new children: N21bp2-01 (records GATE-SPARK-05), N16bp2-01 (cross-tier pairing in eval.run), NFp2-01 (fidelity re-baseline at the FD-FSIM-02 switch-over). Kill-gate records of this package are `docs/adr/ADR-KILL-CONTACT-M2.md` and `docs/adr/ADR-KILL-FSIM-M2.md` (N40-23, N40-24 list them)."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 22 read in full; 20 changed, GB-04 and N29a-25 unchanged. Round 1 left three recurring faults that only show in build order: beads whose acceptance or script needed a bead that depends on them (BD-179, BD-203, N29ap1-01, N29ap1-02, N16c-11, N16b-04, FD-FSIM-02), scripts calling options no verb row has, and the fidelity ledger described three ways (stratum key without the step plan, no creep row, one re-baseline per gate against two upstream re-baselines). The DESIGN choices made here (precision-battery envelopes from the f64 arm; intrinsic ledger rows; re-baseline causes) and the 19 requests should be read in round 3; the slice is not yet settled."
+}

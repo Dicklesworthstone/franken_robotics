@@ -1,0 +1,169 @@
+{
+ "group": "dup-11",
+ "decisions": [
+  {"a": "BD-171", "b": "N17a-04", "action": "rescope", "note": "BD-171 is the capstone of phylum.plan (verb, envelope, KILL-BUCKET report, time fields, no-backend proof); N17a-04 alone specifies the padding arithmetic, both break-even forms, the mixing ratio and the one definition of padding waste; the seed's arithmetic tests and KA-547, KA-548 folded into N17a-04"},
+  {"a": "BD-171", "b": "N17a-05", "action": "rescope", "note": "N17a-05 alone specifies the cost model, the exact dynamic program, the two capacity modes, min_buckets, the plan record and FROB-REF-741; BD-171 embeds the record and calls min_buckets for the KILL-BUCKET report; the seed's planner tests and controls (equal-capacity merge, largest-gap, always-one-bucket of CX-222) folded into N17a-05"},
+  {"a": "BD-171", "b": "N17a-07", "action": "rescope", "note": "N17a-07 alone specifies the memory model, the placement table, the verdict rule and FROB-REF-740; BD-171 prints its table and returns its refusal"},
+  {"a": "BD-219", "b": "N16b-26", "action": "rescope", "note": "BD-219 is the estimator capstone (base record, memory and time model, device budget, fit test, FROB-REF-602, GATE-SPARK-22); N16b-26 adds the four Kinesis output groups to that record and specifies no fit test or byte arithmetic of its own; its fit arithmetic tests now live in BD-219"},
+  {"a": "BD-219", "b": "N17a-07", "action": "rescope", "note": "one per-world byte function, frob_kernels::estimate::per_world_bytes, and one DeviceBudget record, both written by N17a-07 (needed first by phylum.plan); BD-219 builds the estimator on them, replaces the planning state estimate with the slab catalogue's exact bytes and asserts both verbs print the same bytes"},
+
+  {"a": "FD-FSIM-18", "b": "N26b-22", "action": "rescope", "note": "N26b-22 writes the admission tests that pass at the pin, the interim-posture tests and the OPEN-NEMESIS-4 record, and names its tests in the row's admission_test field; the row is BD-037's and the failing fixture tests/upstream/FD-FSIM-18/ is kept by FD-FSIM-18; the two stay related, as the upstream group's integrator recorded"},
+  {"a": "FD-FSIM-18", "b": "N26b-24", "action": "rescope", "note": "FD-FSIM-18 is the change inside FrankenSim, its fixture and its pre/post script, and ends at registry status landed; N26b-24 (Procedure A) alone specifies the switch-over here and sets adopted; the cap pass-through, the 3·10⁶ differential row with the factor-of-3 target, the gate numbers and the receipt check moved from FD-FSIM-18 into N26b-24"},
+  {"a": "FD-FSIM-19", "b": "N26b-22", "action": "rescope", "note": "as for FD-FSIM-18: N26b-22 has the admission test no_splitting_estimator and the decision record; the row is BD-037's, the fixture tests/upstream/FD-FSIM-19/ is FD-FSIM-19's; related, not blocking"},
+  {"a": "FD-FSIM-19", "b": "N26b-24", "action": "rescope", "note": "FD-FSIM-19 is the estimator inside fs-uq with its closed-form tests, fixture and script, ending at landed; N26b-24 (Procedure B) alone specifies the airlock admission, the differential test, the choice rule, the ADR and the gate re-run; the agreement statistic, variance per simulated step and the planted-trap run moved into N26b-24"},
+
+  {"a": "BD-207", "b": "N21c-40", "action": "rescope", "note": "BD-207 has the ring, the drain handler after each completed receipt and the drain of the t0, t1, t2 sections; N21c-40 alone adds run-level bins into 64-bit totals (placement, zeroing, the ledger transaction, back-pressure, conservation) as a hook on that handler; BD-207 no longer adds a bin into a total"},
+  {"a": "BD-207", "b": "N35-21", "action": "link", "note": "BD-207 declares which channels get histograms; every declared channel uses the quantized form of N29a-13, which is built on N35-21's bin function; no direct dependency"},
+  {"a": "N29a-13", "b": "N35-21", "action": "rescope", "note": "one octave-splitting bin function, frob_core::hist::int_bin with its inverse, written in N35-21 and called by N29a-13; N35-21 keeps the f32-pattern histogram Hist14 for values without a quantum; N29a-13 keeps quantization, the (m, s) layouts, saturating counts, the quantile query and canonical bytes, and governs every declared channel"},
+
+  {"a": "N29a-23", "b": "N32a-09", "action": "rescope", "note": "N32a-09 alone specifies the lookup find_by_key over the unique index (principal, verb, key); N29a-23 is the verb job.find behind it (schemas, envelope, found: false); N32a-09's scope no longer names BD-210 as owner of the registry entry (the row is VERBS-job's, the verb N29a-23's)"},
+  {"a": "N29a-23", "b": "N32a-16", "action": "rescope", "note": "N32a-16 alone specifies the bounded wait (sync_wait_ms, the loop and its clock, the attach-and-wait function, the deferred envelope, eta_s and poll_after_ms, the 500 ms budget, the 40 s request timeout); N29a-23 is the verb job.wait that calls it and adds nothing to the timer; N32a-16's tests reach the function at the dispatch interface or by same-key replay, so it does not wait on the verb"},
+  {"a": "N29a-23", "b": "N32a-17", "action": "rescope", "note": "N29a-23 has the verb job.cancel (scope check FROB-REF-720, steps, acknowledgement fields, stalled-device answer); N32a-17 alone specifies what a cancelled waiting call does on each surface, on_cancel, progress mapping and the rule that only the daemon drains; N32a-17 tests through the job verbs and depends on N29a-23"},
+
+  {"a": "BD-300", "b": "N32b-06", "action": "rescope", "note": "seed and component: BD-300 is the capstone (assembly, the records of INT-FTUI-01, INT-F3D-01 and GATE-TETHER-14, the KILL-TUI outcome decided by N32b-31, the assembling script); the dashboard's program structure and its unit tests are N32b-06's alone, and BD-300 only summarizes the properties its gates rely on"},
+  {"a": "BD-300", "b": "N32b-10", "action": "rescope", "note": "seed and component: the viewer page (snapshot model, sources, poses, picking, test entry) is N32b-10's alone at M2; BD-300 adds nothing to the page and now lists N32b-10 among its dependencies"},
+
+  {"a": "GB-22", "b": "N18b-27", "action": "rescope", "note": "N18b-27 has the refusal FROB-REF-245, KA-423 and the one software half-precision type with the 48-row rank-one fixture; GB-22 is the card (golden table, two lanes) and runs its demonstration on that type and fixture with no emulation or threshold of its own"},
+  {"a": "N18b-27", "b": "N21c-25", "action": "rescope", "note": "N21c-25 has the registry registries/rejected_mechanisms.toml with the half-precision row, KA-552 (operation counts) and the build-time guard on kernel source; the values u, κ and κ·u and the non-contraction demonstration are asserted once, in N18b-27, and N21c-25 cites and reuses them"},
+
+  {"a": "N16b-27", "b": "VERBS-fidelity", "action": "rescope", "note": "VERBS-fidelity alone writes the five rows of cluster fidelity; N16b-27 writes no row and keeps the owner decision on the rank verb's name (with the note on fidelity.shadow's milestone), the Kinesis option and output-group names, and a check of the rows against the dynamics chapter; retitled accordingly. Left for the owner of VERBS-eval, outside this packet: its row of eval.rank-agreement prints M4 while the tier-pair form (BD-265) is delivered at M3"},
+  {"a": "N16b-27", "b": "VERBS-sim", "action": "rescope", "note": "VERBS-sim alone writes the rows of sim.run and sim.estimate, including what the dynamics chapter adds; N16b-27 checks them against the chapter's verb and refusal tables"},
+
+  {"a": "N32a-25", "b": "NJL-06", "action": "rescope", "note": "NJL-06 has frob://docs/clusters in full (generator, text, the handler serving it from M1); N32a-25 has the resource scheme and the other groups at M3, keeps that handler under the common parser and builds no second one"},
+  {"a": "N32b-18", "b": "NJL-06", "action": "rescope", "note": "one generator of the task-cluster directory, frob_verbs::docs::cluster_directory in NJL-06; N32b-18's resource renderer returns its string unchanged and keeps the skill file, the other two docs texts, the prompts and the drift check"},
+
+  {"a": "BD-100", "b": "N14a-10", "action": "rescope", "note": "one fold over the tree: N14a-10 sums mass, first moment and pseudo-inertia per subtree (card masses included) and raises FROB-REF-115; BD-100's A-02 reads those summaries and derives its report, with the per-body checks and findings its own"},
+  {"a": "BD-245", "b": "N18b-06", "action": "rescope", "note": "BD-245 (M3) alone derives and tests the scrub known answers and holds the seed's two conditions, the binding table and the M3 belt form; N18b-06 (M4) is the drive-tied belt with the sprocket column, measures itself against those forms and falls back to the M3 form"},
+  {"a": "BET-02", "b": "N21b-34", "action": "link", "note": "the kill-gate bead applies the trigger and writes the kill ADR; the bet reads it and writes the bet verdict; BET-02's scope and its acceptance line now name N21b-34"},
+  {"a": "BET-31", "b": "N17a-29", "action": "link", "note": "the kill-gate bead decides KILL-QUOTIENT from the quotient audit; the bet reads that record and adds its own falsifiers; BET-31's scope and its acceptance line now name N17a-29"},
+  {"a": "N00-16", "b": "N33a-09", "action": "rescope", "note": "one registry of sibling facts and one runner, N33a-09's (file, schema, probe kinds, result vocabulary, report, stale marking, disposition at a pin move); N00-16 adds the forty rows of the thesis chapter's fact sheet under sheet = foundation, the behaviour links and a thin wrapper script; the kinds symbol-exists, text-absent and behaviour, the fields label, consequence and admission, and the result `moved` folded into N33a-09"},
+
+  {"a": "N10b-13", "b": "N17a-25", "action": "merge", "keep": "N17a-25", "note": "one pilot, PILOT-C-22 (the ballast fixture end to end with replay); kept in the chapter that owns the digest, at M2; N10b-13's stage on every tier with 200 merged, 50 control and 20 A/A pairs on a wheeled host, its arms, potency control, six-part statement, gate GATE-GAUNT-08 and harness tests folded in"},
+  {"a": "N14b-06", "b": "NEG-31", "action": "rescope", "note": "NEG-31 (zoo_goldens.sh) alone compares each archetype's default instance with the zoo goldens; N14b-06 (skel_archetypes.sh) runs it as its first stage and adds the catalog as a capability (listing, presets, views, controller, standing rows, mass window, four controls); one gate record per milestone, from N14b-06's log"},
+  {"a": "N17b-12", "b": "VERBS-phylum", "action": "merge", "keep": "VERBS-phylum", "note": "one registry bead for the seven rows of cluster phylum; the option table with its gating, the seven-verb check, the gated-option tests, the schema-print step and the kill-gate notes of N17b-12 folded in"},
+  {"a": "N19a-40", "b": "N38a-32", "action": "rescope", "note": "the dressing pilot is split by item so that each verdict is made once: N19a-40 (M5) decides asset-populated interiors and records actor marks as candidates with no verdict; N38a-32 (M6) alone decides kinematic actors, holding those candidates to its hand-checked-case rule"},
+
+  {"a": "N25a-27", "b": "N25c-06", "action": "link", "note": "the pilot measures f, r, h and the floor of one amended-mission workflow; the audit script reads that record among the registered comparisons; formulas agree; no body change"},
+  {"a": "N27a-09", "b": "N29a-21", "action": "rescope", "note": "two gates on one mechanism, each with its own row; the shared fixtures and mutants (two-tick pair builder with shape check, minimal digest sequences, pointwise and gap-skipping mutants, loose-bound and missing-samples fixtures) are built once in N29a-21 and imported by N27a-09, which keeps its 100 single-plant trials, fork, topology and soundness cases, the two proof obligations and the derivation file; the plant hook is N29a-25's"},
+  {"a": "N32a-34", "b": "N41-12", "action": "rescope", "note": "pilot, then decision: N32a-34 runs the week-of-traces pilot and writes the memo and records no decision (retitled, owner-decision label dropped); N41-12 alone records the owner's ruling (ADR, fleet.peer_link, register row), applies the pilot's pre-stated rule, holds the per-branch consequences and the checks that the ruling is in force; the link N32a-35 depends on the decision"},
+  {"a": "N39b-47", "b": "N40-22", "action": "rescope", "note": "N39b-47 is the one end-to-end script of GATE-TENFOLD-13 and the one completeness check tenfold13(record); N40-22 is the program gate: register row with M3 and M7 parts, per-stratum decision rule with ADR, the word rule and the funding pre-check; N40-22's second script tenfold_13.sh and its copy of the check removed, its extra negative control added to the script's plants"}
+ ],
+ "superseded": [
+  {"drop": "N10b-13", "keep": "N17a-25", "note": "the same pilot written by the construction unit; record id PILOT-C-22 and the every-tier stage carried over"},
+  {"drop": "N17b-12", "keep": "VERBS-phylum", "note": "the same seven registry rows written by the Phylum unit; option table and seven-verb check carried over"}
+ ],
+ "edges": [
+  {"bead": "BD-171", "dep": "N17a-04", "as": "dep", "why": "capstone depends on its component: the padding arithmetic"},
+  {"bead": "BD-171", "dep": "N17a-05", "as": "dep", "why": "capstone depends on its component: the bucket planner"},
+  {"bead": "BD-171", "dep": "N17a-07", "as": "dep", "why": "capstone depends on its component: the memory model and placement table"},
+  {"bead": "N16b-26", "dep": "BD-219", "as": "dep", "why": "the Kinesis groups are added to the estimator's base record"},
+  {"bead": "BD-219", "dep": "N17a-07", "as": "dep", "why": "the estimator builds on the per-world byte function and the device-budget record written there; the reverse direction would close a cycle through BD-171"},
+  {"bead": "N16b-26", "dep": "N17a-07", "as": "related", "why": "group 2 prints sums of the one byte function; reached through BD-219"},
+
+  {"bead": "FD-FSIM-18", "dep": "N26b-22", "as": "related", "why": "kept as the upstream group's integrator recorded it: the Nemesis bead has the admission tests and the interim posture, the upstream bead the change in the sibling; no order of work beyond the milestones"},
+  {"bead": "FD-FSIM-19", "dep": "N26b-22", "as": "related", "why": "kept as the upstream group's integrator recorded it: shared subject, not blocking"},
+  {"bead": "N26b-24", "dep": "FD-FSIM-18", "as": "dep", "why": "the switch-over starts when the change is on the sibling's main"},
+  {"bead": "N26b-24", "dep": "FD-FSIM-19", "as": "dep", "why": "the switch-over starts when the estimator is on the sibling's main"},
+  {"bead": "N26b-24", "dep": "N26b-22", "as": "dep", "why": "the switch-over rewrites the admission tests and replaces the interim routing"},
+
+  {"bead": "N21c-40", "dep": "BD-207", "as": "dep", "why": "the wide-count transaction is registered as a hook on BD-207's drain handler"},
+  {"bead": "N29a-13", "dep": "N35-21", "as": "dep", "why": "the channel histogram calls frob_core::hist::int_bin, written once in N35-21"},
+  {"bead": "BD-207", "dep": "N35-21", "as": "dep", "why": "existing dependency kept: the channels BD-207 declares are binned by the function N35-21 writes (also reached through N29a-13)"},
+
+  {"bead": "N29a-23", "dep": "N32a-09", "as": "dep", "why": "job.find calls find_by_key of the admission bead"},
+  {"bead": "N29a-23", "dep": "N32a-16", "as": "dep", "why": "job.wait calls the attach-and-wait function and prints eta_s and poll_after_ms by that bead's rule"},
+  {"bead": "N32a-17", "dep": "N29a-23", "as": "dep", "why": "the surface's cancel and progress behaviour is tested through job.find, job.status, job.wait and job.cancel"},
+
+  {"bead": "BD-300", "dep": "N32b-06", "as": "dep", "why": "capstone depends on its component: the dashboard core"},
+  {"bead": "BD-300", "dep": "N32b-10", "as": "dep", "why": "capstone depends on its component: the viewer page"},
+
+  {"bead": "GB-22", "dep": "N18b-27", "as": "dep", "why": "the card tests the refusal and runs on that bead's emulation fixture"},
+  {"bead": "N21c-25", "dep": "N18b-27", "as": "dep", "why": "the registry row cites N18b-27's derivation and tests, and the demonstration runs on its fixture"},
+  {"bead": "GB-22", "dep": "N21c-25", "as": "dep", "why": "lane B of the card checks the row of registries/rejected_mechanisms.toml that N21c-25 writes"},
+
+  {"bead": "N16b-27", "dep": "VERBS-fidelity", "as": "dep", "why": "the check reads the five fidelity rows that the registry bead writes"},
+  {"bead": "N16b-27", "dep": "VERBS-sim", "as": "dep", "why": "the check reads the rows of sim.run and sim.estimate"},
+  {"bead": "N16b-27", "dep": "VERBS-eval", "as": "dep", "why": "the check reads the rows of eval.promote and eval.rank-agreement"},
+
+  {"bead": "N32a-25", "dep": "NJL-06", "as": "dep", "why": "the M3 resource scheme adopts the docs/clusters handler built at M1"},
+  {"bead": "N32b-18", "dep": "NJL-06", "as": "dep", "why": "the resource renderer returns the directory of NJL-06's generator and the drift check covers it"},
+  {"bead": "NJL-06", "dep": "N32b-17", "as": "dep", "why": "the directory is the clusters section of robot-docs: the generator renders the documentation model's cluster list and the equality test calls the verb"},
+
+  {"bead": "BD-100", "dep": "N14a-10", "as": "dep", "why": "A-02 reads the per-subtree summaries the budget functor folds"},
+  {"bead": "N18b-06", "dep": "BD-245", "as": "dep", "why": "the M4 belt uses the binding table and the scrub known answers of the M3 seed"},
+  {"bead": "BET-02", "dep": "N21b-34", "as": "dep", "why": "the bet's decision reads the kill-gate record"},
+  {"bead": "BET-31", "dep": "N17a-29", "as": "dep", "why": "the bet's decision reads the kill-gate record"},
+  {"bead": "N00-16", "dep": "N33a-09", "as": "dep", "why": "the fact sheet is rows of the registry and a wrapper over the runner that N33a-09 builds"},
+
+  {"bead": "N17a-25", "dep": "BD-170", "as": "dep", "why": "stage B of the pilot runs designs in a mixed batch with co-tenants (carried over from N10b-13)"},
+  {"bead": "N17a-25", "dep": "N38a-09", "as": "dep", "why": "the pilot writes its record in the pilot register (carried over from N10b-13)"},
+  {"bead": "N17a-25", "dep": "N10b-12", "as": "related", "why": "the specification of the projection quotient is an M3 bead; the M2 pilot uses a prototype digest and must not inherit this dependency from N10b-13"},
+  {"bead": "N14b-06", "dep": "NEG-31", "as": "dep", "why": "the catalog script runs the zoo script as its first stage"},
+  {"bead": "VERBS-phylum", "dep": "N17-REF", "as": "related", "why": "the rows list refusal codes of the chapter's refusal registry; two registries, no order of work (carried over from N17b-12 as non-blocking)"},
+  {"bead": "N38a-32", "dep": "N19a-40", "as": "dep", "why": "the actor pilot re-examines the candidate list the scene pilot records"},
+
+  {"bead": "N25a-27", "dep": "N25c-06", "as": "dep", "why": "the audit reads the pilot's measured f, r and h"},
+  {"bead": "N27a-09", "dep": "N29a-21", "as": "dep", "why": "the Autopsy battery imports the fixtures and mutants built by Chronicle's gate bead"},
+  {"bead": "N27a-09", "dep": "N29a-25", "as": "dep", "why": "the battery arms the plant hook of the step"},
+  {"bead": "N41-12", "dep": "N32a-34", "as": "dep", "why": "the owner decision reads the peer-link pilot's record and memo"},
+  {"bead": "N32a-35", "dep": "N41-12", "as": "dep", "why": "the link exists only on the branch `build`, so it depends on the decision"},
+  {"bead": "N40-22", "dep": "N39b-47", "as": "dep", "why": "the program gate applies the check and cites the receipt of the gate's one script"}
+ ],
+ "fixes": [
+  {"bead": "BD-171", "what": "padding waste was 1 − r in BD-171 and Ω₁ − 1 in N17a-04 and N17a-05; the plan gives no formula; DESIGN: Ω₁ − 1 governs (it makes the 25% limit, q = 1.25 and eight buckets for 12 to 66 one statement), with 1 − r printed beside it; stated with its reason in BD-171 and N17a-04"},
+  {"bead": "BD-171", "what": "per-bucket cost model τ·Σ a_p·(c/c_ref)ᵖ replaced by N17a-05's population-weighted model, the one that reproduces the worked card (5.0 ms, not 6.7 ms, for two buckets)"},
+  {"bead": "BD-171", "what": "capacity mode named `exact` in BD-171 and population-specific in N17a-05; DESIGN: the printed name is `population` (the program is exact in both modes), `exact` accepted as a synonym; stated in both"},
+  {"bead": "BD-171", "what": "the waste limit was a reported figure in BD-171 and a hard constraint in N17a-05; DESIGN: hard constraint (fail-closed default of OPEN-PHYLUM-1), the cheaper over-limit plan attached as the repair; the 128-world row of the worked card restated accordingly in both"},
+  {"bead": "BD-171", "what": "brute-force equality check was 10³ instances in BD-171 and 10⁴ in N17a-05; 10⁴ kept; mixing ratios printed as 3.46, 1.44, 1.11 (three significant figures) to agree with N17a-04"},
+  {"bead": "BD-171", "what": "placement cells spelled `fits`, `at-the-edge`, `does-not-fit` as in N17a-07 (BD-171 had `at the edge`, `does not fit`)"},
+  {"bead": "N17a-07", "what": "the two printed forms of the byte formula (five terms, KA-814; with 40·n of solver vectors, KA-348) are named sums `five_terms` and `formula` of one function, so BD-219, N16b-26 and N17a-07 no longer compute bytes three ways"},
+  {"bead": "N16b-26", "what": "the Kinesis group's field renamed `formula_bytes` (31,276 for the quadruped) so that it does not collide with the base record's `per_world_bytes` (about 35 kB); fit and largest-world-count fields are BD-219's `memory.fits` and `memory.largest_worlds_that_fit` only"},
+
+  {"bead": "FD-FSIM-18", "what": "zero-failure counts were 29,958, 299,574 and 2,995,733 (the approximation ⌈ln 20/p⋆⌉); corrected to the exact rule of §26.9 and KA-664, 29,956, 299,572 and 2,995,731, as N26b-22 has them"},
+  {"bead": "FD-FSIM-18", "what": "a certified bound was labelled `Certified`; §26.9 makes its class `Tested` at confidence 1 − δ, never `Certified`; the criterion, now in N26b-24, says so (FD-FSIM-19's 'never labelled Certified' likewise became 'Estimated, never offered as a bound')"},
+  {"bead": "N26b-24", "what": "the registry row after the switch-over was `landed`; by the registry schema (open, landed, adopted) and FD-FSIM-18 it is `adopted`; `landed` is set when the change reaches the sibling's main"},
+  {"bead": "N26b-22", "what": "the rows' failing fixture was given as the admission tests; by BD-037's fixture rule the `fixture` field is tests/upstream/FD-FSIM-18/ and tests/upstream/FD-FSIM-19/ (tests that fail at the pin), and the admission tests (which pass at the pin) are the `admission_test` field; the FD-FSIM-18 fixture now also requests 10⁶ + 1 importance evaluations so that both caps are covered"},
+  {"bead": "N26b-24", "what": "the rule that chooses between the two splitting estimators was 'smaller variance per simulated step' in FD-FSIM-19 and 'not worse on the gate fixture' in N26b-24; the plan says only 'then choose one'; DESIGN: upstream is adopted only if it is at least as good on both, otherwise ours is kept; stated with its reason in both"},
+
+  {"bead": "BD-207", "what": "exactly-once rule of the drain was keyed by (epoch, attempt) with replacement in BD-207 and by drained_epoch in one ledger transaction in N21c-40; DESIGN: the key is the epoch; rows are idempotent by replacement, sums are exactly-once by N21c-40's transaction, whose drained_epoch is the one record for the whole ring; stated in both"},
+  {"bead": "N21c-40", "what": "bin area was 1,280 u32 per channel; with the overflow bin per sign of N29a-13 and the kernel's flat layout it is 1,282"},
+  {"bead": "N35-21", "what": "two binnings for one evidence path (f32 pattern in N35-21, declared quantum in N29a-13); the plan has both (§35.7, §29.7); DESIGN: the quantized form governs every declared telemetry channel, the pattern form serves only values without a quantum; stated with its reason in both"},
+  {"bead": "N35-21", "what": "the quantile object had two shapes for the telemetry verb; the schema definition QuantileInterval now admits exactly the Hist14 shape and the channel-histogram shape that telemetry.histogram prints, and no scalar"},
+  {"bead": "N29a-13", "what": "relative resolution written 3.1% here and 3.2% or 3.125% in N35-21; both now state 2⁻⁵ = 3.125%"},
+
+  {"bead": "N32a-09", "what": "job.find was called as `frob job find --key k1` in N32a-09 and N32a-17 and with `--verb` and `--key` in N29a-23 and in the registry row of VERBS-job; a key is scoped to (principal, verb), so both now use `frob job find --verb <verb> --key <key>` (BD-211, outside this packet, still prints the form without --verb in one acceptance line)"},
+  {"bead": "N29a-23", "what": "output schema was one `frob.job.out/1` and task clusters 'every cluster'; aligned with the registry rows of VERBS-job: `frob.job.<name>.out/1` per verb; job.wait and job.cancel base tools, job.find and job.status in operate, job.list in operate and fleet"},
+  {"bead": "N29a-23", "what": "the `job` block had nine fields here and six in N32a-08, N32a-16 and §32.4; the six are the base block, and the three additions (verb, submitted_at, receipt) are labelled DESIGN with their reason in N29a-23 and noted in N32a-16"},
+  {"bead": "N32a-16", "what": "eta_s for an uncalibrated stratum was 'marked uncalibrated' in N32a-16 and 'marked and widened by a fixed factor of 2' in N29a-23; §32.9 gives the factor of 2 to admission; DESIGN: the printed interval is the point estimate divided and multiplied by that factor, computed once in N32a-16; stated in both"},
+  {"bead": "N29a-23", "what": "job.cancel without the scope now names its refusal, FROB-REF-720 (exit 5), as N32a-17 and §32.18 have it"},
+  {"bead": "BD-300", "what": "the gate text said KILL-TUI is 'decided here' while the scope and N32b-06 say it is decided by N32b-31; the gate text now says decided by N32b-31 and recorded here"},
+  {"bead": "GB-22", "what": "the refusal FROB-REF-245 carried the repair 'use f32 with scaled variables' in GB-22 and no repair in N18b-27; §18.14 says 'None; not offered'; GB-22 corrected to an empty repair list"},
+  {"bead": "N18b-27", "what": "three different emulations and pass criteria for 'half-precision refinement does not contract' (per-operation binary16 with ratio at least 1 at every step in N18b-27; rounded factor with error not below 10⁻² in GB-22; rounded factor on a 3 × 3 matrix over 7 steps in N21c-25); DESIGN: one per-operation binary16 type and one 48-row fixture over 200 seeds in N18b-27, criterion at least 90% of seeds with ten-step error at least 10⁻² of initial and at least half with it at least initial; a plan-time check found 99% and 68.5%, found the every-step criterion true for about a third of seeds only, and found that a rounded exact factor contracts on every seed; stated in all three"},
+  {"bead": "N18b-27", "what": "the 'registry entry of the rejected mechanism' was claimed by N18b-27 (killed-idea register), by N21c-25 (registries/rejected_mechanisms.toml) and checked by GB-22; the row of rejected_mechanisms.toml is N21c-25's, the entry KI-01 of killed_ideas.toml is NAB-33's, and N18b-27 supplies the derivation file both cite"},
+  {"bead": "N21c-25", "what": "the replacement for sketches named K-x-hist with f32-pattern bins; aligned with the histogram decision: K-x-hist accumulates the quantized form (N29a-13), the pattern form is N35-21's Hist14"},
+
+  {"bead": "N16b-27", "what": "first milestone of fidelity.shadow was M2 by default in N16b-27 and M3 in VERBS-fidelity (and acknowledged as M3 by BD-214); both verb tables of the plan print M3; N16b-27 corrected: the row says M3, the verb is delivered at M2 behind the feature frontier-shadow, and moving the row is the owner's question; stated in both"},
+  {"bead": "VERBS-fidelity", "what": "refusal list of fidelity.modelform was 557 in VERBS-fidelity and 830, 722 in N16b-27; the plan gives the verb no list; DESIGN: the row carries 557, 722 and 830, each marked by who raises it (722 the verb, 557 and 830 the consumers of a model-conditional result); stated in both"},
+  {"bead": "VERBS-sim", "what": "the refusal list of sim.run lacked FROB-REF-212, which §16.14 lists for the dynamics chapter's run and N16b-27 had; added"},
+  {"bead": "N16b-27", "what": "an unlanded verb was 'listed as planned' by capabilities in N16b-27 and 'absent' in the registry beads; N16b-27 now says absent, with its first milestone"},
+  {"bead": "N32b-18", "what": "the task-cluster directory held 'tools with one-line purposes' in N32b-18 and tool names only in NJL-06 (and in robot-docs, N32b-17); N32b-18 corrected: name, activity line and tool names; purposes belong to robot-docs --cluster <name>"},
+  {"bead": "NJL-06", "what": "the directory was printed by `frob robot-docs --clusters` in NJL-06 and sourced from `robot-docs --cluster` in N32a-25; the verb (N32b-17) has neither form for it: it is the section `clusters` of robot-docs, and --clusters is the server's launch flag; both corrected"},
+  {"bead": "N32a-25", "what": "text resources ended with an evidence footer in N32a-25 while N32b-18 and NJL-06 require the docs texts to equal robot-docs byte for byte; DESIGN: the three documentation resources carry no footer (their source answer is operational); stated in all three; likewise a malformed docs URI is rejected by the parser and an unknown verb name is a not-found"},
+
+  {"bead": "N00-16", "what": "two registry files for sibling facts (foundation_facts.toml with ids FF-nn in N00-16; sibling_facts.toml, schema frob.sibling-facts/1, ids SF-<REPO>-nnn in N33a-09, already used by N31a-04, N30a-05 and N33a-28); one file and one id scheme, N33a-09's; a fact both lists hold (contact capacity 21, the nightly feature) is one row"},
+  {"bead": "N00-16", "what": "result vocabulary was holds / moved / changed in N00-16 and unchanged / changed / unreadable in N33a-09; one vocabulary: unchanged, changed, moved, unreadable, plus the admission status for behaviour rows"},
+  {"bead": "N00-16", "what": "the recheck refused when a sibling checkout was off the stack lock (N00-16) while the probe reads the pinned commit through git (N33a-09); DESIGN: never refuse for an off-pin checkout, read at the pin and say so; stated in both"},
+  {"bead": "N33a-09", "what": "line-count tolerance was ±10% in N00-16 and ±5% in N33a-09; default 5% with a per-row `tolerance`; the fln-anvil row declares 10%"},
+
+  {"bead": "N17a-25", "what": "the ballast fixture had slot pitch 1/20 m in N17a-25 and 1/40 m (slug mass 3/10 kg) in N10b-13 and in the specification bead N10b-12; one fixture file: 1/40 m and 3/10 kg (DESIGN: fits a wheeled base and is not a binary fraction)"},
+  {"bead": "N17a-25", "what": "the pilot had milestone M2 in N17a-25 and M3 in N10b-13; a pilot precedes the M3 mechanism, so M2; verdict values unified to funded / fallback; one script, scripts/pilots/phylum_mission_digest_ballast.sh, and one record id, PILOT-C-22"},
+  {"bead": "N14b-06", "what": "DesignId, n_v and the symmetry groups of a default instance were pinned both in N14b-06's table and in the zoo expectation files; DESIGN: one source, the zoo files; N14b-06's table pins them only for presets and options the zoo has no instance of; stated in both"},
+  {"bead": "VERBS-phylum", "what": "N17b-12 gave phylum.sweep the task cluster `populate`, the scopes design:read and sim:run and an example without a key; Appendix J.5 assigns `families`, and the registry row has phylum:run and a keyed example; the merged bead keeps the registry's values"},
+  {"bead": "N19a-40", "what": "two verdicts and two rules for funding kinematic actors (N19a-40: admissible reason; N38a-32: a hand-checked case in which only motion provokes the failure); one verdict, N38a-32's, under its rule; verdict values falsifier-holds / falsifier-rejected in both; register entries dressing.assets (N19a-40) and dressing.actors (N38a-32)"},
+
+  {"bead": "N27a-09", "what": "the real-step two-tick pair was built by a cancelling re-arm in N27a-09 and by a first plant on a recorded-but-not-fed-back output in N29a-21; one construction, N29a-21's, with its shape check; the gap-skipping mutant's answer is tick 60 in both"},
+  {"bead": "N32a-34", "what": "the decision record was docs/adr/tether/OPEN-TETHER-5.md in N32a-34 and docs/adr/ADR-PROG-12-peer-link.md in N41-12, and the answers were standalone / build against Standalone / Keep the link; one record, N41-12's ADR, with the ruling values standalone and build mapped to fleet.peer_link = false | true; stated in both"},
+  {"bead": "N41-12", "what": "the evidence for the decision was the fleet pilot's g alone in N41-12 and the queue-trace overlap alone in N32a-34; the evidence page now carries both, and the overlap pilot's pre-stated rule (under 10% or insufficient: standalone unless the owner states a reason) is applied by N41-12"},
+  {"bead": "N40-22", "what": "two scripts (tenfold_13.sh, tenfold_recovery_ablation.sh) and two module paths (tenfold/recovery.rs, tenfold::gate13) for the check of one gate; one script and one function, frob_conformance::tenfold::gate13::tenfold13, in N39b-47"}
+ ]
+}

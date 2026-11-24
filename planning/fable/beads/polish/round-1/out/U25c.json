@@ -1,0 +1,243 @@
+{
+ "round": 1,
+ "slice": "U25c",
+ "reviewed": 55,
+ "changed": [
+  {
+   "bead": "BD-129",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "The family chart s = 4ε − U straightens the boundary but turns the edge ε = 0 into the slanted line s = −U, so the cells were not boxes as the partition kind requires; replaced by the chart λ = 4ε/(U + 1/2) with the declared domain U ∈ [1/2, 1], λ ∈ [0, 2] (DESIGN, reason stated), inner cell λ < 1, excluded λ ≥ 1, and the vertex rule for functions affine in each variable. Added unit tests for the point inclusion table, the three-piece point exclusion and the cell partition."
+  },
+  {
+   "bead": "BD-291",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Overlap of reading sets is now declared only with a concrete alias witness; a pair neither separated nor witnessed within budget gives a new Unresolved answer variant, never Ambiguous (INV-AUGUR-06), with acceptance and a unit test. Labelled the largest-gap tie-break DESIGN with its reason; redirected the superseded N25c-19 to N19c-05 and named N25e-38/N25e-39 as owners of the shared-nuisance rule and the four-law probe; recorded the milestone conflict with the verb registry (M4 there, M3 here)."
+  },
+  {
+   "bead": "BD-363",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "The minimality step (no (k − 1)-colouring) had no proof kind in the closed registry; specified the checker's enumeration, requested a registry kind, and stated the fail-closed default (interval with attained false, FROB-REF-853 on a forged minimum). Added acceptance and the triangle unit test. Moved N10b-09 (the spec of the label count as a hypergraph colouring) from related to deps (specifications come first)."
+  },
+  {
+   "bead": "N25c-02",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "The M4 static core had no end-to-end script of its own (its script belonged to the M8 experiment bead); added scripts/e2e/mission_transport_static.sh with six steps and full NDJSON logging, an acceptance line and dep STD-E2E. Stated the box form the lp-farkas checker needs (shifted actuator boxes, cone generators capped by a declared normal-force limit)."
+  },
+  {
+   "bead": "N25c-03",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its end-to-end steps were assigned to N25c-04's script, which runs before the kill decision this bead waits on and so cannot exercise the relation path; gave it its own scripts/e2e/mission_transport_relation.sh with steps, logging and acceptance, and dep STD-E2E."
+  },
+  {
+   "bead": "N25c-04",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its script now runs N25c-02's static script first as the verb's self-check."
+  },
+  {
+   "bead": "N25c-16",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Clause C (the trigger added by §25.38: a certificate from unshared values of a shared parameter passes the checker) was to be read from evidence that only exists at M4 (N25e-38, N25e-41), after this M3 decision; it is now read at M3 on BD-291's enclosures and split-parameter mutants and stays armed, so N25e-41's reading can fire the gate at M4 with the same fallback. Added the unit test and acceptance line; the decision script now states the standard NDJSON fields and per-clause metrics."
+  },
+  {
+   "bead": "N25c-18",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Redirected the scene measurement request from the superseded N25c-19 to N19c-05. The test prediction_per_mechanism asserted the r = 2 probe, which BD-291 returns only under the smallest-radius tie-break; it now names the tie-break and the default largest-gap answer (r = 3, P set [0.9674, 1.0102])."
+  },
+  {
+   "bead": "N25c-17",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The 'second engineer, 20 of 20 cases' acceptance named no cases; fixed them (five world addresses per law V, P, C at the nuisance corners and centre, five planted readings that fit no law) with the expected decision rule and the stored record. The script log gains the first differing reading or decision and the summary line."
+  },
+  {
+   "bead": "N25c-23",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "three_hidden_values gave no expected answer; derived it (u1 = 1/g - 2p, u2 = p - 1/g; admissible probes 0 < p <= 5/8, infimum 0 not attained, 5/8 attained with g = 4 binding)."
+  },
+  {
+   "bead": "N25c-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "tick_pairing_false_regression said friction 0.5 everywhere yet drew a tick sample of 0.2; restated as one random field realized by position (both robots read 0.5) against a tick-indexed realization of the same field."
+  },
+  {
+   "bead": "BD-359",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "The hand-off of joint labels to paired studies was in scope with no interface or test, and study.submit takes no supplied outcomes; specified it (DESIGN, reason stated) as a per-address outcome table evaluated by the frozen paired rule (INV-ATEL-02), surfaced as refute --paired-plan, with the test label_table_matches_replay and dep BD-262."
+  },
+  {
+   "bead": "N25c-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 6 fed labels to `frob study submit`, which runs both arms itself; now goes through BD-359's outcome table and logs both table digests."
+  },
+  {
+   "bead": "N25c-27",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance asked for the four consequences of a false certificate but the body listed three; now lists all four of §25.5.5 and the hand-off to KILL-AUGUR-FALSECERT, with a unit test. The decision script states the standard NDJSON fields and per-clause metrics."
+  },
+  {
+   "bead": "N25c-29",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Redirected the request verb from the superseded N25c-19 to N19c-05."
+  },
+  {
+   "bead": "N25c-31",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The priced-field table and the plan list floor availability; the Price record lacked it. Added."
+  },
+  {
+   "bead": "N25c-33",
+   "kinds": [
+    "correct",
+    "placement"
+   ],
+   "what": "Redirected N25c-19 to N19c-05; named the owners of the multi-room shift (N25cp1-01 to -03) in Out."
+  },
+  {
+   "bead": "N25c-34",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "N25c-29, N25c-31 and N25c-32 put their e2e stages (under-shelf residual, facility sill fixture, hot restart, charger loss, pendulum promotion) in this script, but its steps omitted them; added as step 10 with assertions. Out names the multi-room beads."
+  },
+  {
+   "bead": "N25c-35",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "The multi-room commission was 'not yet split into beads', so no bead carried it; now names N25cp1-01 to -03 and how they close if the gate fires. Script logging brought to the STD-E2E fields."
+  },
+  {
+   "bead": "BD-435",
+   "kinds": [
+    "complete",
+    "placement"
+   ],
+   "what": "Child list lacked N25cx-01 and N19bx-01, and the multi-room shift and three transfer tests were 'not yet split'; added the children, the three new beads and an acceptance line."
+  },
+  {
+   "bead": "N25c-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 2 asserted the fixed-map count 3 as exact, which needs a colouring proof kind the closed registry lacks (request to N12-02); the step now states the fail-closed [2, 3] answer and that the gate cannot pass until the kind exists."
+  },
+  {
+   "bead": "N25c-40",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Decision script logging brought to the STD-E2E fields with per-clause metrics."
+  },
+  {
+   "bead": "N25c-42",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Text calls N10a-16 (PILOT-C-08) a dependency and reuses its fixture and prototype, but deps lacked it; added."
+  },
+  {
+   "bead": "N25c-46",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Decision script logging brought to the STD-E2E fields with per-clause metrics."
+  },
+  {
+   "bead": "N25cx-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Equal-cost grid rows were ordered by row id, while the acceptance claimed the pad answer r = 2 and BD-291 defaults to the largest-gap tie-break (r = 3 at 125 ms; r = 3 at 0.5 s with D). The ordering now uses BD-291's tie-break; acceptance and tests give both tie-break answers with recomputed sets and gaps."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N25cp1-01",
+   "why": "Nobody carried the multi-room shift (BD-435 and N25c-35 said 'not yet split'); this is its short plan, paper-scale three-room pilot with falsifier, and the owner's funding record, behind the stop rule."
+  },
+  {
+   "bead": "N25cp1-02",
+   "why": "The flagship commission of §25.17 (stockroom, retail aisle, kitchen; pack temperatures, delivery windows, five-objective Pareto set; withheld evidence; comparator) and slice 5's 'then commission the multi-room shift' had no bead."
+  },
+  {
+   "bead": "N25cp1-03",
+   "why": "The three transfer tests of §25.17 (dry loading bay, furnished apartment, sloping outdoor terrain, with new geometry, measurements and holdouts) had no bead."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.distinguish has first milestone M4 in the rows table, but BD-135 serves a reduced form from M1 and BD-291 (seed, M3) lands the probe mechanism that the M3 e2e N25c-13 drives through the public verb for the M3 decision KILL-AUGUR-PROBE; under the registry's rule 4 the verb answers FROB-REF-724 until M4. Align the row (first milestone M1 reduced, full at M4, or M3)."
+  },
+  {
+   "bead": "N12-02",
+   "what": "BD-363 needs a proof kind in frob.cert.kinds/1 for hypergraph non-colourability (payload: variants, edges each with an lp-farkas emptiness sub-certificate, the claimed k − 1; checker: enumerate maps to k − 1 colours with first-use symmetry breaking, accept only if each leaves an edge monochromatic). No row carries it; GATE-AUGUR-19's three-reading fixture (fixed map needs 3) depends on it. Admit it, or name the existing kind that carries it (revision ledger N12x-08)."
+  },
+  {
+   "bead": "VERBS-experiment",
+   "what": "experiment.suggest is listed at M4 only, implemented by BD-351 and N25c-18; N25cx-02 ships its M3 expert-grid form (needed by GATE-TETHER-15 and KILL-AUGUR-PROBE's fallback at M3) and sets first_milestone M3 with forms ['expert-grid']. Under rule 4 the verb would answer FROB-REF-724 at M3. Add the M3 form and N25cx-02 to 'Implemented by'. Also reconcile the owner: the registry says frob-opt, N25c-18 says the mission chapter registers and owns the verb, and N25cx-02 puts the grid in frob-mission."
+  }
+ ],
+ "unchanged": 30,
+ "notes": "All 55 beads reviewed. Pad reading sets, docking, thermal, slope, holonomy and label numbers recomputed and confirmed. The open items are cross-slice: the registry milestones of mission.distinguish and experiment.suggest, and a registry proof kind for hypergraph colouring. coverage.md in defs/U25c still names N25c-19 for scene.probe-request (not a bead; left)."
+}

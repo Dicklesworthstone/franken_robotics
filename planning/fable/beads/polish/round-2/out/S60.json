@@ -1,0 +1,399 @@
+{
+ "round": 2,
+ "slice": "S60",
+ "reviewed": 57,
+ "changed": [
+  {
+   "bead": "N27a-01",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "ChildSpec lacked three of the five fields the child key hashes (N27a-04): added SeriesTag, StreamMode and the fields series, index, streams; wire names for them (13 strings became 19); rule 9 (a child specification holds everything the key hashes; Perturbation::Rekey and StreamMode::Rekey are one fact); one acceptance line and the tests child_spec_rekey_is_one_fact and a ChildSpec round trip."
+  },
+  {
+   "bead": "N27a-02",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "FROB-REF-580 pointer shape aligned with the registry row of N27-REF (pointer the checkpoint, observed the contract or missing field; was 'pointer at the sensor contract'); added dep N27-REF (the classifier is the first raiser of 580 to 582 and needs the rows)."
+  },
+  {
+   "bead": "N27a-05",
+   "kinds": [
+    "complete",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Applied S29's request: stated where in the boundary the checkpoint S sits (the fence snapshot is stage 1 of the seven-stage boundary at f, before deliveries and decision; the child resumes at stage 2), with the seven stages written out; packets clamped to f are delivered by the child's stage 4 after the parent's deliveries at f; RetimeRefusal::AfterDecision cannot arise from a fence snapshot and is an integrity fault (exit 9) if returned; latency_zero_flushes_in_order now names the placement and has a packet of ordinary arrival f; new test section_after_decision_never_passed."
+  },
+  {
+   "bead": "BD-205",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied UJL-2's request: scope sim:run became run:run and VERBS-run moved from related to deps. Output schema name frob.fork/1 became frob.run.fork.out/1 (the registry row). --key was shown optional; it is required (805). --children <n> had no meaning (n children of what?) while GATE-AUTOPSY-01 needs 512 different children through the verb: defined --children <plan file> (schema frob.fork.children/1, the canonical JSON of ChildSpec) with defaults, partial refusals and admission, and --co-tenants <seed>. DESIGN: a fork point whose null replay mismatches is reported (exit 2) but spawning children from it is FROB-REF-583 (the registry row listed 583 for run.fork while the bead said it never raises it; children of an unsound record were unspecified). Pointer shapes of 580 and 582 aligned with N27-REF. Four unit tests and two acceptance lines added."
+  },
+  {
+   "bead": "N27-REF",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Row 583: first needed M2, raised by run.fork when children are asked of a mismatched fork point (BD-205, spawn_refused_on_mismatch_583), opening the point is not refused; background and the M2 binding test now count four codes raised at M2; the partial-refusal convention extends to a run.fork child plan."
+  },
+  {
+   "bead": "N27a-06",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests"
+   ],
+   "what": "The script called run fork with --children 512 (undefined) and no --key, and could not produce three arrangements of one child address in one store: it now writes child plans, runs alone, batch and --co-tenants arrangements under distinct keys and separate scratch state roots (FROB_STATE), and the gate is run as the g5_determinism tier entry and recorded with record_gate (known drift 1)."
+  },
+  {
+   "bead": "N27a-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Rows C6 and C7 state the 580 refusal in the registry's shape; the five planted classifier defects are controls.toml rows of kind mutation with nc-<nnnn> features (was 'a test-only feature'); the two gates are run as g1_known_answers entries and recorded with record_gate."
+  },
+  {
+   "bead": "N27a-08",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Step 9 ('start a 512-child fork') now says how: a child plan of 512 replicate children under rekey-disturbances with a key; the self-test also expects FROB-REF-583 when a child is asked of the corrupted fork point."
+  },
+  {
+   "bead": "N27a-09",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied U29a's round-1 request, which had not been applied: the missing-samples fixture answers interval [40, 60] with gap [40, 59] (step 6, tolerance_gap_interval, acceptance, e2e), as N29a-20 section 5 states. The e2e's 'conformance build's fault flag' is now the real option --conformance-plant <file> of N29a-25, with distinct keys on the two sim runs; the gate is run as a g1_known_answers entry and recorded with record_gate."
+  },
+  {
+   "bead": "SPEC-C-29",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Statement S7 and its law test said two replicates with distinct fork paths read different draws, which contradicts S4 and N27a-04 (a child reads the parent's streams unless a stream is re-keyed): S7 and child_address_gives_fresh_streams are now stated over the explicit stream modes. The type sketch is marked as the appendix's, with the production types of N27a-01 named (ChildAddr, the class order, the stream mode). The script's `--test g5` and `--test g3` became the real targets g5_determinism and g3_metamorphic with FROB_TEST_SEED (known drift 1)."
+  },
+  {
+   "bead": "N29a-21",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied U29b's round-1 request, which had not been applied: part 6 and script step 7 re-measure the first-divergence query end to end on a 1,000-chunk pair at the decided chunk length (bound 1 s, cold and warm), append the figures to docs/adr/ADR-CHRON-13.md and mark condition (d) re-measured; dep N29b-18 added. Recomputed the pointwise-mutant counts: the bead had 255 and 256 swapped (the mutant is never right for t_a = 255 and right for t_a = 256 exactly when g <= 6; 720 of 17,400 free draws); the mutant's midpoint rule is now stated so the count is reproducible, with a test. `cargo test --test g1 -- GATE-CHRON-06 --trials 100 --seed` became the g1_known_answers tier run with FROB_TEST_SEED; record_gate named."
+  },
+  {
+   "bead": "BD-206",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied U29b's round-1 request, which had not been applied: two runs recorded with different chunk lengths are aligned on ticks and the chain is compared at the coarser partition's boundaries (align step 5, exact step 1), with the test divergence_across_different_len (128 against 256: agree; planted at tick 300 in either recording: tick 300) and an acceptance line; N29b-18 moved from related to deps (it adds chunk_len to manifests and sim.run)."
+  },
+  {
+   "bead": "BD-207",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The sim run of the driving scripts carries --key (known drift 5)."
+  },
+  {
+   "bead": "N29a-11",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied U27a's round-1 request, which had not been applied: the ring arithmetic now reads as in N27a-03 (20 snapshots at ticks 415 to 510, the oldest 1.7 s before the failure; the 2 s lead lies 0.3 s before it; serving it needs a 2.3 s ring of 23 snapshots, a 2.2 s ring's oldest is tick 405); failure_capture_window asserts those figures."
+  },
+  {
+   "bead": "N29a-12",
+   "kinds": [
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "Applied S24's request: step 9 says the bead replaces the M1 body of sample::traced_set (N24a-36) and keeps signature and option, with the harness fallback removed; manifests without trace fields keep the M1 answer. The sim.run spellings --trace-rate and --trace-size, used by six scripts and defined nowhere, are defined here with FROB-REF-802 for invalid input; two tests and an acceptance line added."
+  },
+  {
+   "bead": "N29a-14",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "spark check is a run verb: the script's call now carries --backend and --key."
+  },
+  {
+   "bead": "N29a-15",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "--resolution was used in Considerations and absent from the inputs: defined; the command-line spellings of all inputs listed; the gap between this bead and its registry row (inputs, paginated, codes 840 and 888) stated and requested."
+  },
+  {
+   "bead": "N29a-16",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied S24's request: --traced-worlds and --aggregate exist from M1 (N24a-36), both harness fallbacks removed. `cargo test --test g5 -- GATE-CHRON-07 --backend --variations` became the g5_determinism tier run with a site filter; spark check carries --backend and --key; record_gate named."
+  },
+  {
+   "bead": "N29a-17",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied U29b's round-1 request, which had not been applied: configuration T01 runs with the failure monitors (K-x-monitor, N29b-05) in the step and B without; dep N29b-05 added; test t01_includes_failure_monitors. `cargo test --test perf` (not a target) became the tier run named by the gate record with a site filter; the confirming sim run carries --key; the 'fake receipt stream' of a unit test is now a recorded stream re-timed and labelled synthetic (the charter allows no fakes); record_gate named."
+  },
+  {
+   "bead": "BD-209",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Script step 7 ran `cargo test --test g1 -- GATE-CHRON-12 --cycles 10000`: now the g1_known_answers tier run with FROB_TEST_SEED, recorded with record_gate. Step 6's forced collection had no key, and without a key store.collect is a dry run by this bead's own rule: it now carries one and asserts exit 3 and unchanged pinned bytes."
+  },
+  {
+   "bead": "N29b-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The planning estimate priced a snapshot at 2 kB while the ring bead it depends on (N29a-11) sizes a quadruped snapshot at 35 kB: the assumption (sparse differences) is now stated beside the full-snapshot figure (780 kB per capture, 38 GB per hour, 64 GB in under two hours), and which holds is named as the first measurement."
+  },
+  {
+   "bead": "N29b-17",
+   "kinds": [
+    "placement",
+    "e2e-logging"
+   ],
+   "what": "Applied S46's request: priority 2 became 1, because the M2 exit review BD-224 (priority 1) depends on this bead; the Considerations line that justified the lower priority is rewritten. The script's run export call (a run verb) carries --out and --key."
+  },
+  {
+   "bead": "NS-02",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The demo's plant was 'a test-only build feature' with no mechanism named: it is the conformance plant hook of N29a-25, passed as --conformance-plant with a plant file, on a binary built with the conformance feature; the unplanted run uses another key."
+  },
+  {
+   "bead": "N13-37",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "The script's run verbs had no keys (known drift 5): one key per tier, world and step. The gate's tier run and record_gate named, with the script stated as the user-side measurement that does not write the row. --init <A|B> is flagged as an input no registry row has."
+  },
+  {
+   "bead": "N29ap1-03",
+   "kinds": [
+    "title"
+   ],
+   "what": "Title was 134 characters; shortened to 114 with the artifact and the outcome kept. Body unchanged (it agrees with the sim.replay registry row)."
+  },
+  {
+   "bead": "BD-191",
+   "kinds": [
+    "correct",
+    "complete",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Output schema frob.telemetry.stills/1 became the registry's frob.telemetry.stills.out/1. --max-tiles was used in the text and absent from the synopsis; --size, --sheet/--single and --depth were in the synopsis and undefined: all four defined. The cost line was off by four (four 320 x 240 views are one 640 x 480 depth frame, not four). The private-scope refusal is named (FROB-REF-731, exit 5). The plan says stills carry the same overlays as the viewer (ten); the bead had seven and built five: it now says which five it builds and that film, clearance, ghost, world-diff and reality-band on stills are N24ap2-60. Setup runs carry keys. Three unit tests added."
+  },
+  {
+   "bead": "N24a-40",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "Output schema became the registry's frob.telemetry.inspect-pixel.out/1. The registry example (`--at failure --pixel 412,230`) did not parse against the bead's run form (`--tick --view`): the run form now takes the stills verb's frame and view options, with a test that the example resolves to tile (0, 1), local (90, 230). 'All refusals exit 3' was wrong for the private-scope refusal: 731 exits 5; 840 and 802 exit 3; test added."
+  },
+  {
+   "bead": "N24a-41",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Applied S10's request: section 5b names the four export-path codes (731, 733, 816, 734) with order, pointers and exits, as run.export makes them at M1, with the M3 door (N37-18) replacing the handler's own calls; five unit tests incl. the private-scene case; deps N37-11 and N37-23 added (the door itself is M3 and cannot be a dependency). Applied U32b's round-1 request, which had not been applied: every export envelope reports page: {bytes, manifest_digest} from viewer_page::{LEN, MANIFEST_DIGEST}, with a test and an acceptance line. The writer never said how it uses the bundle's placeholder comment: it replaces the one <!--FROB-PACKET-BLOCKS--> and changes no other byte (test). The header's /authorization/banner member is reserved for N37p1-01."
+  },
+  {
+   "bead": "N32b-12",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S44's request after checking plan 30.12 (a band is a statement about one scalar metric): the reality-band strip admits the scalar form (marker and bar at the stored bounds) beside the trace form; the three block kinds (band, no-claim, unread), the synthetic legend and the block's field names are stated as the overlay's input contract; no arithmetic in the page; two unit tests and an acceptance clause; N32bp2-44 added to related and the stale 'requested of BD-393' sentence replaced."
+  },
+  {
+   "bead": "N32bp2-44",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Wording aligned with N32b-12's scalar form. The rehearsal's run and mutate calls carry keys. New script step 9b and acceptance line: the same band on a still (N24ap2-60), probed with inspect-pixel; dep N24ap2-60 added."
+  },
+  {
+   "bead": "N32b-40",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied U37's round-1 request in the only acyclic form (N37p1-01 depends on this bead): line 1 of the banner shows the generated no-authorization sentence verbatim from the header's /authorization/banner when the packet carries it, with the short summary beside it; the page holds no copy of the sentence. The acceptance clause on 'page markers' (undefined) now states the check exactly: undo the insertion at the placeholder and compare with the committed bundle. Two unit tests."
+  },
+  {
+   "bead": "N32b-41",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The 17-fork refusal named no code: FROB-REF-802, exit 3."
+  },
+  {
+   "bead": "N32b-43",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`--window 3s` is not the option's form (it takes the two ends); the placebo fork is made with a one-element child plan (run.fork's --children) and the null fork is the one run at open; setup run verbs carry keys; target/gates/GATE-TETHER-16.json is stated to be the measurement record, with the row entered by record_gate from the tier run's receipt."
+  },
+  {
+   "bead": "N32b-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "The procedure called `telemetry stills --tick` and `inspect-pixel --x --y`, which neither verb has: now `--at tick=<t> --single` and `--pixel <x>,<y>`. The query step no longer invents filter spellings. Dep N24ap2-60 added: the script probes film, clearance and a ghost through stills, which no bead built. The two runs of each noninterference pair carry different keys, and every run verb of the script its own."
+  },
+  {
+   "bead": "BD-300",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The capstone's script 'writes the gate records', which the gate recorder forbids (one writer, no self-certification): it writes measurement records and the three rows are entered by record_gate from tier-run receipts. Step 3 said export-html runs 'by both routes'; the verb always embeds the committed plain bundle, and the two routes are two page builds."
+  },
+  {
+   "bead": "N32b-06",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "related named N33a-23, which does not exist (superseded by N33c-23, already a dependency): removed. The text said job.list's follow option was 'requested of N29a-23, until it exists': N29a-23 (M2, a dependency) defines follow and all_agents; the polling fallback is kept as failure behaviour only."
+  },
+  {
+   "bead": "N32b-31",
+   "kinds": [
+    "placement",
+    "correct"
+   ],
+   "what": "Priority 2 became 1: a kill-gate decision that blocks others (BD-300 and the M3 exit review) is one step more urgent than its milestone. The decision record's path and fields are named: docs/adr/ADR-KILL-TUI-M3.md (known drift 4)."
+  },
+  {
+   "bead": "N32b-32",
+   "kinds": [
+    "placement",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Priority 2 became 1 (blocks the M3 exit review). Decision record named: docs/adr/ADR-KILL-REPLAYPACK-M3.md. The fallback's run export call carries --out and --key."
+  },
+  {
+   "bead": "FD-FTUI-01",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Phase post replayed the event stream into frob-tui against frobd, neither of which its dependencies deliver (known drift 7): it now uses the admission probe of N33c-23, and the real binary is BD-300's rerun."
+  },
+  {
+   "bead": "N32b-09",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The noninterference check runs the job set twice from the same seeds; with one set of idempotency keys the second pass would return the first's stored receipts (known drift 5). The job script takes a key prefix and the two passes use two."
+  },
+  {
+   "bead": "N20a-33",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its stage of the optical-failures script repeats a run with stills disabled and compares digests: the repeat is stated to run under a different idempotency key."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N24ap2-60",
+   "why": "Plan 32.15: 'stills carry the same overlays' as the viewer (ten). BD-191 builds five; film and clearance on stills were marked M3 with no builder, and ghost, world-diff and reality-band on stills were carried by nobody, while N32b-14 (GATE-TETHER-14) probes film, clearance and a null-fork ghost through telemetry.stills. New M3 feature bead under WP-52 with the five overlays, --fork and --band, value buffers for inspect-pixel, unit tests and an e2e step group; N32b-14 and N32bp2-44 depend on it."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-run",
+   "what": "run.fork row: add the inputs BD-205 now defines and scripts use: --children <plan file> (child plan frob.fork.children/1, a JSON array of ChildSpec), --co-tenants <seed>, --horizon <time> | --to-horizon. The row's refusal list (562, 580, 581, 582, 583, 840, 894) is now exact: BD-205 raises 583 when children are requested from a fork point whose null replay is a mismatch (opening such a point stays exit 2)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run row: add the telemetry inputs that beads use and no row lists: --telemetry <T0|T1|T2|T3> (37 beads), --trace-rate <a/b> and --trace-size <k> (mutually exclusive; the manifest fields trace.rate and trace.size of N29a-12, which now defines the spellings and FROB-REF-802 for invalid input), and --chunk-len <L> (N29b-18)."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "what": "telemetry.histogram row: its inputs are 'run; channel; bins' and its refusal list is 898 alone, while the implementing bead N29a-15 and the plan's own example use --quantile, and the handler raises 840 and 888 and pages its bin list. Add --quantile <p> (repeatable), --scope run|world|traced, --world, --bins, --against <run>, --method, --at-frontier, --resolution; set paginated = true (appends 806, 807); add 840 and 888 to the chapter list and to the refusal_lists test."
+  },
+  {
+   "bead": "N13-36",
+   "what": "Its referee script and N13-37's device script start the two spring worlds with `frob sim run turn-spring --init <A|B>`; no bead defines `--init` and the sim.run row does not list it. Define how worlds A (theta = 0, k = 0) and B (theta = 2 pi, k = 1) are selected (a named initial condition of the fixture, or two fixture designs) and request the row of VERBS-sim; N13-37 follows whatever N13-36 fixes. Its sim run calls also carry no --key."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run: `--init <name>` (a fixture's named initial condition) is used by N13-36 and N13-37 and is in no row; add it once N13-36 defines it, or state the fixture mechanism that replaces it."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "what": "telemetry.stills row: inputs are 'run; world; instant; --overlay list'; add what BD-191 defines (--episode, --at <selector>, --views, --size, --sheet | --single, --max-tiles, --depth) and what N24ap2-60 adds (--fork <path>, --band <result>; overlay ids ghost, world-diff, reality-band); add FROB-REF-840 (BD-191 raises it) and 562 (ghost on an unlicensed class) to the chapter list. telemetry.inspect-pixel row: add the still-id form, --overlay and --grid, and the codes 731 and 840 (the row says 'none of its own'; N24a-40 raises both)."
+  },
+  {
+   "bead": "N24a-36",
+   "what": "The filter spellings of telemetry.query are not fixed anywhere: its own script writes `--stream contact --ticks 0:…`, the registry example `--stream contact --from 10s --to 12s`, and other beads `--world <w> --channel <c> --tick <t>`. Fix one spelling for world, stream, channels and tick range, and have VERBS-telemetry's row quote it; N32b-14 and N24ap2-60 follow it."
+  },
+  {
+   "bead": "N37p1-01",
+   "what": "N32b-40 now reserves line 1 of the replay page's banner for the string in the packet header's /authorization/banner, shown verbatim (N24a-41 reserves the member). N32b-40 cannot depend on N37p1-01 because N37p1-01 depends on it. Please have the exporter write that member from frob_core::auth::banner and pin it with the golden test; the page holds no copy of the sentence."
+  },
+  {
+   "bead": "N37-18",
+   "what": "N24a-41 now makes the four export-path checks itself at M2 (731, 733, 816, 734, in that order, as N29a-02 does for run.export). When the door lands at M3, replace those handler calls by export::admit for telemetry.export-html with codes, exits and order unchanged."
+  }
+ ],
+ "unchanged": 16,
+ "notes": "All 57 beads read in full against their plan sections and the known-drift list. 41 changed, 16 left as they are, 1 new bead (N24ap2-60), 9 requests. Every request addressed to the slice was applied after checking it against the plan; five round-1 requests had not been applied by round 1 (N27a-09, N29a-11, N29a-17, N29a-21, BD-206, plus the envelope field of N24a-41) and are applied now. The largest finds: run.fork had no way to request a batch of different children (its --children took a count), ChildSpec lacked three of the five fields the child key hashes, the spec's law test on fresh streams contradicted the fork default, a mutant count in N29a-21 had two ticks swapped, and five of the ten overlays had no builder on stills although GATE-TETHER-14 probes three of them there. The slice is not settled yet: a third round should confirm the new child-plan surface (BD-205, N27a-01, N27a-06, N27a-08, N32b-43), the new bead and the registry rows requested of VERBS-run, VERBS-sim and VERBS-telemetry. No cycle; no bead depends on a later milestone; every file parses."
+}

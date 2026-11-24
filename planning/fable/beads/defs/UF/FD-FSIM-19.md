@@ -1,14 +1,14 @@
 ---
 key: "FD-FSIM-19"
-title: "upstream frankensim: a splitting estimator (adaptive multilevel splitting) beside the importance sampler of `fs-uq`"
+title: "upstream frankensim: an adaptive multilevel splitting estimator beside the importance sampler of `fs-uq`"
 type: "task"
 priority: 3
 milestone: "M4"
 labels: ["m4", "suite", "nemesis", "upstream", "frankensim", "frontier"]
 parent: "WP-55"
-deps: ["BD-037", "BD-277", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-277", "N26a-32", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-276", "BD-205", "FD-FSIM-17", "FD-FSIM-18"]
+related: ["N26a-28", "N26b-22", "N26bp1-01", "N33b-13"]
 gates: ["GATE-NEMESIS-05"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§26.9", "§10 C-27", "§26.16", "§33.9"]
 ---
@@ -30,9 +30,25 @@ treating our splitting estimate as certified (its trials are dependent and its a
 ## Scope
 
 In: in `fs-uq`, an adaptive multilevel splitting estimator on a generic simulator interface with a
-closed-form fixture; here, the differential test and the choice between the two. Out: this project's splitting
-on forks and its fork classification (BD-277, BD-205); the certification lane (BD-276); the sample caps
-(FD-FSIM-18).
+closed-form fixture and its tests there; the mirrored bead in the sibling's tracker; here, the item's failing
+fixture `tests/upstream/FD-FSIM-19/` kept current, the script `scripts/e2e/upstream_fd_fsim_19.sh` with its two
+phases, and the registry row moved from `open` to `landed`. This bead closes when the estimator is on the
+sibling's `main`.
+
+Out, with the bead that has it:
+- the switch-over on this side once the estimator has landed: N26bp1-01 (Procedure B, split from N26b-24 in
+  polishing round 1), which depends on this bead. It admits the new entry through the airlock (with the duplicate-children control), runs the
+  differential test of the two estimators on the random-walk fixture and on the fixture of the exploration
+  gate, applies the rule that chooses one, records the choice as an architecture decision record, re-runs
+  GATE-NEMESIS-05 with the chosen estimator, runs this bead's script in phase `post`, and moves the row to
+  `adopted`. The differential test and the choice rule are specified there and not here.
+- the admission test that records the absence of a splitting estimator at the pin, and the decision record of
+  OPEN-NEMESIS-4: N26b-22, a related bead of M3 (the admission test comes first and the upstream item second,
+  which the milestones already give; the link is not a blocking one, because this item's own fixture is opened
+  by BD-037 and nothing in the sibling change needs the Nemesis tests).
+- the row itself and the form of every fixture: BD-037.
+- this project's splitting on forks and its fork classification (BD-277, BD-205); the certification lane
+  (BD-276); the sample caps (FD-FSIM-18).
 
 ## Technical approach
 
@@ -79,7 +95,10 @@ marked `#[ignore]` so that the default suite stays green, with `expected.toml` b
 recorded at the pinned commit (`observed_at`, the failing assertion and the observed value). It fails at the pin
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
 itself a failure of the registry check. It asks the airlock's `stats` group for a splitting estimator (absent at
-the pin) and, when present, runs the random-walk fixture below through it.
+the pin) and, when present, runs the random-walk fixture below through it. The fixture is not the admission
+test: `no_splitting_estimator` (N26b-22, in `frob-fsim`) passes at the pin by recording the absence, and is
+named in the row's `admission_test` field; this fixture fails at the pin by asking for the estimator, and is
+the row's `fixture`.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -92,14 +111,23 @@ T moves while a ten-fold tournament is running. If a gate named here does not ex
 the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
 against the new pin.
 
-**What the switch-over re-runs.** The rule is a **differential test of the two estimators on the random-walk
-fixture, then choose one**. Both estimate the same closed-form probability over 10⁴ repetitions; each must
-bracket the truth with its own replica-based interval at its stated rate, and their means must agree within
-the combined standard error. The one with the smaller variance per simulated step is chosen for the
-exploration lane and the choice is an ADR; the other stays as the differential check. GATE-NEMESIS-05 is then
-re-run with the chosen estimator (planted failures of probability 10⁻⁴ and 10⁻⁵, one with two separate modes,
-equal budget, 30 repetitions: at least 10 times fewer episodes than crude sampling at 10⁻⁵; both modes found in
-at least 80% of repetitions).
+**Who runs the switch-over.** The register's rule for this item is a **differential test of the two estimators
+on the random-walk fixture, then choose one**. The steps of the train that are particular to this item are one
+procedure, written once, in N26bp1-01 (Procedure B): the admission of the new entry, the differential test (both
+estimators on the same closed-form probability over 10⁴ repetitions at equal budget; unbiasedness, coverage,
+agreement of the two means, variance per simulated step), the comparison on the fixture of the exploration
+gate, the choice rule, the decision record, and the re-run of GATE-NEMESIS-05 with the chosen estimator.
+DESIGN, stated in both beads: the upstream estimator replaces ours on the default path only if it is at least
+as good on both measures, a variance per simulated step on the random walk no larger than ours and episodes to
+first failure on the gate fixture no worse than ours; otherwise ours is kept. Reason: the register says only
+"then choose one"; the estimator already on the default path has passed the kill gate on this project's forks,
+so replacing it must be justified both where the truth is known in closed form and on the measure the
+exploration lane is judged by. Whichever is not chosen stays as the differential check. What this bead owes
+that procedure: the estimator must return, per run, the estimate, the iteration count J, the level history, a
+replica-based variance and the number of simulated steps it consumed, so that variance per simulated step can
+be computed for it as for ours. This bead hands over an estimator on the sibling's `main`, a fixture that will
+flip from failing to passing at a pin that contains it (the train notices the flip and sets the row to
+`landed`), and the script whose phase `post` that procedure runs.
 
 **Fallback if the change cannot land.** Our estimator alone, checked on the closed-form fixture; if it fails
 its own falsifier, crude sampling alone.
@@ -108,11 +136,11 @@ its own falsifier, crude sampling alone.
 
 - [ ] In FrankenSim: the estimator exists with the random-walk fixture as its own test and labels its output as an estimate.
 - [ ] In FrankenSim: over 10⁴ repetitions on the fixture the mean of p̂ is within 3 standard errors of the closed form, for two different score functions (unbiasedness whatever the score).
-- [ ] Here: the differential test runs both estimators on the fixture and records means, variances per simulated step and the agreement statistic.
-- [ ] Here: the choice is recorded as an ADR; GATE-NEMESIS-05 passes with the chosen estimator; splitting output is never labelled `Certified`.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] In FrankenSim: each run returns the estimate, J, the level history, a replica-based variance and the count of simulated steps; the output type cannot be passed where a bound is expected.
+- [ ] Here: the fixture `upstream_fd_fsim_19` fails at the pin with the signature in `expected.toml` (no splitting entry in the `stats` group), and phase `pre` of the script passes.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, the admission test of N26b-22, this bead and the mirrored bead in the sibling's tracker; its `status` is `landed`, with the sibling commit that contains the estimator. The status `adopted` is set by the switch-over (N26bp1-01, Procedure B), not by this bead. If KILL-RARE has fired first, the row is closed by the recorded decision "no consumer" and this bead closes with it.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
-- [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
+- [ ] Nothing in this repository patches, forks or vendors the sibling. (The pin move, the new receipt and the record in `DEPENDENCY_ADMISSION.md` are checked in N26bp1-01.)
 
 ## Test plan
 
@@ -122,9 +150,10 @@ In FrankenSim (added, in `fs-uq`):
 - `unbiased_for_a_poor_score`: the same with a score that is a noisy function of position; expected the same mean and a larger variance.
 - `branch_uses_fresh_randomness`: two children of one parent diverge after the branch point with probability 1 on the fixture.
 - `estimate_formula`: with N = 100 and J = 880 iterations, p̂ = 0.99⁸⁸⁰ = 1.44·10⁻⁴.
-Here:
-- `fork_duplicates_are_detected`: children that share the parent's streams are reported as duplicates (the fork control).
-- `two_estimators_agree_on_random_walk`: the differential test, with the agreement statistic below 3.
+- `duplicate_children_are_reported`: branches made to share the parent's stream are reported as duplicates by the estimator itself (the control the airlock's admission test of N26bp1-01 relies on).
+Here: the fixture `upstream_fd_fsim_19` (ignored; fails at the pin). The tests on this side that follow the
+change (`duplicate_children_control` through the airlock, and the differential test `random_walk_differential`
+with its agreement statistic below 3) are in N26bp1-01, where the switch-over is specified.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_19.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
@@ -132,8 +161,16 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_19 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob nemesis search --json` on the planted-trap fixture once per
-estimator and logs episodes to first discovery for each.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob nemesis search … --method splitting --first --key <k> --json` on the planted-trap
+fixture once per estimator and logs episodes to first discovery for each. The two calls are compared, so each
+carries its own idempotency key; which estimator a call uses is selected by the configuration value
+`nemesis.splitting.estimator = ours | upstream`, which the switch-over bead N26bp1-01 defines when it admits the
+upstream entry (the verb has no option for it, and this bead adds none): the phase sets it per call in a scratch
+configuration, on one binary and never with a separate build, and asserts the `estimator` named in each result's
+method block (`frob-nemesis` under `ours`, `fs-uq` with the sibling commit under `upstream`), so that a call which
+silently ran the other estimator fails the phase. This bead writes both phases and runs phase `pre`;
+phase `post` is run by the switch-over (`scripts/e2e/nemesis_switchover_splitting.sh` of N26bp1-01 calls it
+after the pin move), which is where its assertions are accepted.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_19/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -155,6 +192,10 @@ gates touched. No private-scene data is logged.
 - Published evidence cuts both ways: adaptive splitting with temporal-logic scores has been reported to estimate 3.5·10⁻⁴ for a true 4.8·10⁻⁵, with a spread five times the mean (FACT from the plan's source register, to be re-read). That is why splitting stays exploration-only here whichever implementation is chosen.
 - OPEN-NEMESIS-2: when the requirement margin is flat until shortly before failure there is no useful score, and the default is no splitting for that requirement.
 - Ceiling, stated: discovery speed only; the certification price is unchanged.
+- This bead exists on one branch of a kill-gate decision, so it depends on the decision bead of KILL-RARE
+  (N26a-32, M3): the sibling work starts only after that decision is on record as `not-fired`. If the gate
+  fired, splitting has no consumer here, no sibling work is done, and the row is closed by that recorded
+  decision (the acceptance line above).
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
   milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its

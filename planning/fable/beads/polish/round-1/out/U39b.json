@@ -1,0 +1,302 @@
+{
+ "round": 1,
+ "slice": "U39b",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "BD-143",
+   "kinds": [
+    "deps",
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "added deps N39a-03 (campaign clock and censoring) and N39a-26 (pooled shares and per-lever removable-share bound), which the measurement runs; scope names the mechanism beads it uses instead of rebuilding them; refusal reason `factor-on-removed-work` replaced by the registry's `tenfold.order-rule-violation` (FROB-REF-866) in approach and unit test; e2e log fields made explicit (evidence block, metrics with units and thresholds, digests, failure paths, summary naming GATE-TENFOLD-02); N39a-38 added to related"
+  },
+  {
+   "bead": "BD-317",
+   "kinds": [
+    "correct"
+   ],
+   "what": "futility stop stated as the rule (E_n = Π(1 + ½(1 − 2Y_i)) reaching 20, eight consecutive below 3 being the shortest stop) instead of 'eight consecutive families'; bootstrap named bias-corrected and descriptive. 32 deps checked: every one is used directly by the procedure; 27 are also reachable transitively through BD-314/315/316, N39b-12 or N39b-47 and are kept as direct inputs, none is merely related"
+  },
+  {
+   "bead": "N39-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "TF-CX-06 recomputed: the uncorrected normal mutant also differs at m = 4 (passes 4 of 4, making the unreachable cell reachable) and at the Holm level 0.0125 for m = 6 and m = 12, not only at m = 12 and 32; acceptance 'no gate with an empty control list' was false for GATE-TENFOLD-01, -02 and -07: added TF-CX-25 (pin moved during the tournament freeze), TF-CX-26 (futility stop requested at M7), TF-CX-27 (incumbent pin drift at the M0 audit) and attached TF-CX-13 to -02; counts 24 -> 27"
+  },
+  {
+   "bead": "N39-REF",
+   "kinds": [
+    "placement",
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "moved M3/WP-60/P2 -> M0/WP-34/P0: the harness skeleton (M0) and the M1 ceiling and speed-comparison beads already emit its reasons, and registries come first; per-row producing tests arrive with their raising beads (`producing_test`, `pending` rows, none pending at GATE-TENFOLD-03 for mechanisms due by M3, none at M7); second-half table listed four aliases as emitted slugs, contradicting 'aliases are never emitted': now the ids `frozen-arm-changed`, `role-conflict`, `record-hash-mismatch`, `family-reused`; registered reasons used by slice beads but unregistered: `incumbent-pin-drift`, `warm-config-provenance` (N39b-08), `exclusion-not-harness-fault` (N39b-04), `kit-gate-open`, `kit-credential-found` (N39b-18), `agent-revision-differs`, `agent-caps-provisional` (N39b-31), `incumbent-licence-not-cleared` (N39b-32), and product code FROB-REF-816 (kit reader); exit code 1 reserved for the two check modes (scorer `--check`, gate auditor N39b-23), which the registry previously contradicted; e2e logging detailed"
+  },
+  {
+   "bead": "N39b-01",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained"
+   ],
+   "what": "added dep N25b-03 (the false-certificate procedure this engine invokes for arm A) and related N25b-04; named them in Scope; emitted reason `tenfold.arm-changed` (an alias) corrected to `tenfold.frozen-arm-changed`, exit 9"
+  },
+  {
+   "bead": "N39b-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "numeric canary: 40 bits do not fit a 12-digit decimal (2^40 - 1 has 13 digits); now a 13-digit zero-padded decimal, with a round-trip unit test"
+  },
+  {
+   "bead": "N39b-03",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Scope names the beads it hands to (N39a-07, BD-317 certificate audit, N25b-03, N25b-04) instead of 'the mission subsystem'"
+  },
+  {
+   "bead": "N39b-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the refusal of an exclusion inside a leaked cell now has a registered reason (`tenfold.exclusion-not-harness-fault`, added to N39-REF)"
+  },
+  {
+   "bead": "N39b-05",
+   "kinds": [
+    "optimal",
+    "tests",
+    "self-contained"
+   ],
+   "what": "the outcome table is exported once (`outcome_table()` with digest bound to the parameter block) so that BD-317, N40-15's check tenfold06, the kill-gate decisions and the wording lint read it rather than restate it (dup-08); states that the parameter-block file is written and ratified by N39b-33 and loaded here (one implementation of the binding); tests `outcome_table_digest_bound`, `amendment_between_gates_accepted`"
+  },
+  {
+   "bead": "N39b-08",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "acceptance named a provenance negative control with no test: added `warm_config_tuned_on_mission_refused` and `pin_drift_stops_before_timing`; N39b-32 cited a step `licences` of this bead's script that did not exist: added it"
+  },
+  {
+   "bead": "N39b-06",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "its e2e cited a step `kill-speed` of N39b-12 that did not exist and could not: N39b-12 precedes BD-317, on which this decision depends (cycle). Now owns `tenfold_kill_speed.sh`, run on N39b-12's kept replay record, with steps, plants (upper-bound reader, retest on the same suite) and NDJSON fields"
+  },
+  {
+   "bead": "N39b-07",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "same defect as N39b-06 for `kill-tie`; now owns `tenfold_kill_tie.sh` on the kept replay record, with the fallback actions asserted as the approach states them (tie sentence, ten-fold removed, layer opened as new work, engine beads re-read, arm D opened) and plants"
+  },
+  {
+   "bead": "N39b-11",
+   "kinds": [
+    "optimal",
+    "scope",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "dup-08: BD-317 step 13 and this bead both produced the train-share, family-certificate and arm-C tables; now BD-317 computes them once with digests, this bead recomputes the train share only as an exact check, takes the three ten-fold decisions and writes decisions.json, N12-30 and N25a-18 read BD-317 directly, N40-15 step 4 decides nothing; its e2e cited a step of N39b-12 that cannot run its code (cycle): now owns `tenfold_side_decisions.sh` on the kept replay record with four plants"
+  },
+  {
+   "bead": "N39b-12",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct",
+    "complete"
+   ],
+   "what": "added dep N39b-38 (counterbalanced plan, isolation, blind release now asserted); eleven slice beads cite steps of this script: added the missing `envelope` step (N39b-29) and the `leak-drill`/`false-cert-drill` sub-steps (N39b-02/-03/-04), extended `roles` (N39b-27/-28), `seal` (N39b-30/-33) and `run` (N39b-31/-38) with the assertions those beads name; `--keep-gate` replay record for the post-gate scripts of N39b-06/-07/-11, which cannot be steps here; logging metrics added"
+  },
+  {
+   "bead": "N39b-30",
+   "kinds": [
+    "correct"
+   ],
+   "what": "negative control said the arm-B-mean mutant 'loops to the stop'; it actually ends at H = 79,200 s (79,200/7,920 = 10), so the test detects it by the value of H"
+  },
+  {
+   "bead": "N39b-31",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "had no deps though it builds a module of frob-conformance: added N39a-01 (crate), N39a-03 (cap breach censoring), N39-REF, N41-OPEN8 (its register row); the caps were derived from M1 baseline runs that need the caps first (circular): caps are now `provisional` at M1, re-derived by the twice-p90 rule from BD-143 and recorded `final` before the partial gate's freeze; unit tests named mechanisms of M3 beads (freeze manifests): replaced by record-level tests, freeze-time equality left to N39a-19; own e2e `tenfold_agent_pin.sh`; reasons `agent-revision-differs`, `agent-caps-provisional` registered"
+  },
+  {
+   "bead": "N39b-32",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "test `manifest_with_unpublishable_engine_refused` needed the M3 freeze manifest: the bead now provides the check `licences::cleared` with a registered reason, its own tests, and leaves the freeze-time call to N39a-18; deps N39-REF, N41-OPEN8; e2e logging detailed"
+  },
+  {
+   "bead": "N39b-33",
+   "kinds": [
+    "optimal",
+    "tests"
+   ],
+   "what": "the parameter block's binding and `parameters-frozen` refusal were implemented and tested both here and in N39b-05 (which depends on this bead): this bead now owns the ratified block file and record, N39b-05 the binding; tests replaced by block-level ones (ten values, amendment needs date and reason, config table matches block, one page cites measured figures)"
+  },
+  {
+   "bead": "N39b-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "rare-tail test divided E[X] by 1,000 while the bead's example plan has H = 14,400 s: the test now states its plan's H (1,000 s, as in §39.20) and checks the 14,400 s case (−0.006236)"
+  },
+  {
+   "bead": "N39b-37",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "emitted the alias `tenfold.arm-changed`; now `tenfold.frozen-arm-changed`, exit 9; e2e header, plants and NDJSON fields specified"
+  },
+  {
+   "bead": "N39b-38",
+   "kinds": [
+    "optimal"
+   ],
+   "what": "campaign-start revision check now calls N39b-31's `agentpin` instead of a second implementation"
+  },
+  {
+   "bead": "N39b-41",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "warm-card test omitted S_B = 0 and the N* arithmetic"
+  },
+  {
+   "bead": "N39b-47",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "fixture mode took its three-arm record from `tenfold_06.sh` of N40-15, which depends on this bead through BD-317: the fixture is now this bead's own, which N40-15 may reuse"
+  },
+  {
+   "bead": "N39b-18",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "N39b-32 (OPEN-TENFOLD-7, what the kit may carry of incumbents) was only related though the builder applies it: now a dep, cited in step 3; incumbent-file refusal given its code FROB-REF-899; open-gate and credential refusals given registered reasons (`tenfold.kit-gate-open`, `tenfold.kit-credential-found`, never logging the matched text); tests `open_gate_refused`, `licence_decision_limits_contents`"
+  },
+  {
+   "bead": "N39b-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "known-answer test used Phi(1.6449) = 0.95 to 1e-9, which is false (Phi(1.6449) = 0.9500048): replaced by full-precision quantiles 1.6448536269514715 and 1.9599639845400534 to 1e-12; 'three points' corrected to four; exit codes completed per N39-REF (2 flags, 9 integrity fault, 1 only for --check)"
+  },
+  {
+   "bead": "N39b-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "sampling rule hashed (suite hash, stratum, 'level-2') with no family id, so every family got the same key and the draw was undefined; the family id now enters the hash, compared as a big-endian integer"
+  },
+  {
+   "bead": "N39b-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "plants given their registered codes: incumbent-file FROB-REF-899, missing-receipt `tenfold.kit-incomplete`, true-flag FROB-REF-816 (reader) with FROB-REF-860 for a missing flags object at export"
+  },
+  {
+   "bead": "N39b-22",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "control registry count updated to TF-CX-27; TF-CX-06 mutant rows completed (4 of 4 at 0.05; 6 of 6 and 10 of 12 at 0.0125); the script now runs the refusal registry's e2e and fails on any `pending` row due by the gate instance (dup-13); acceptance added; states which controls this gate runs (TF-CX-01 to -15, -24) and which belong to other gates"
+  },
+  {
+   "bead": "N39b-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "auditor exits 1 on findings, which contradicted the registry's 'exit 1 only for --check'; the registry now reserves 1 for both check modes and the auditor exits 9 on an unverifiable record"
+  },
+  {
+   "bead": "N39b-26",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests added for each acceptance criterion with none (candidate used by an arm rejected per stratum, rule order, no-candidate referral to KILL-TENFOLD-ADJ, record before suite hash); e2e header, NDJSON fields, failure paths and summary specified; second negative control"
+  },
+  {
+   "bead": "N39b-27",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "tests added for label derivation, the wording lint under the default, no upgrade within a gate, and the named human; e2e logging fields specified"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N40-13",
+   "what": "still uses the refusal reason `factor-on-removed-work`; the registry N39-REF names it `order-rule-violation` (FROB-REF-866), as N40-18 and BD-143 now do"
+  },
+  {
+   "bead": "N40-20",
+   "what": "cites `tenfold.arm-changed`, which N39-REF registers only as an alias that is never emitted; the emitted id is `tenfold.frozen-arm-changed` (exit 9)"
+  },
+  {
+   "bead": "N40-15",
+   "what": "check tenfold06 should call N39b-05's exported `outcome_table()`/`apply` and compare the table digest bound with the parameter block, instead of restating the outcome-rule table"
+  },
+  {
+   "bead": "N39a-37",
+   "what": "N39-REF moved to M0: N39a-37 and N39a-38 (M1) emit its `ceiling-*` and `order-rule-violation` reasons and should add dep N39-REF; likewise N39a-24 and N39a-25 (M0) for their ledger and tag-map reasons"
+  },
+  {
+   "bead": "N40-15",
+   "what": "its §7 defines c as 'concurrent devices per run'; in plan §39 c is the number of campaigns per family (n = m·c). It should also depend on N39b-11 and cite its decisions.json in step 4 rather than restating the side decisions; `tenfold_06.sh` may reuse N39b-47's three-arm fixture (crates/frob-conformance/fixtures/tenfold/three_arm/) instead of defining a second one"
+  },
+  {
+   "bead": "N41-15",
+   "what": "the `[agent]` table should carry `caps_status` (provisional|final, N39b-31 step 2) and the freeze precondition should refuse provisional caps with `tenfold.agent-caps-provisional`"
+  },
+  {
+   "bead": "N39a-19",
+   "what": "add dep N39b-31 and call its `agentpin` module for the campaign-start revision check (`tenfold.agent-revision-differs`) instead of a second check; the freeze hook should refuse `provisional` caps"
+  },
+  {
+   "bead": "N39a-18",
+   "what": "add dep N39b-32 and call `licences::cleared` at freeze (`tenfold.incumbent-licence-not-cleared`); add the test that a manifest naming an engine with publication `unclear` is refused (moved here from N39b-32)"
+  }
+ ],
+ "unchanged": 19,
+ "notes": "All 50 beads read in full against plan §39 and §40.5; arithmetic of every worked number re-computed (guards, Holm, zero-count bounds, Hoeffding counts, rare-tail, warm card, recovery ratios, ablation bounds, cost envelope, deadline rule, normal quantiles). Main defects fixed: alias slugs emitted as ids; reasons used but unregistered (now in N39-REF); a rehearsal script cited for steps it lacked or could not contain without a dependency cycle (N39b-06/-07/-11 now own post-gate scripts on its kept replay record); an M1 decision with no dependencies and a circular cap derivation (N39b-31); duplicated ownership of the parameter block (N39b-33/N39b-05) and of decision inputs (dup-08); a level-2 sampling hash without the family id; a false normal-quantile test value; a fixture borrowed from a later bead. Unchanged: BD-429, N39-KA, N39b-10, -13, -14, -15, -16, -17, -28, -29, -35, -36, -39, -40, -42, -43, -44, -45, -46. No cycles after the edits. Slice looks settled apart from the requests."
+}

@@ -1,0 +1,246 @@
+{
+ "round": 4,
+ "slice": "F-U14a",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-054",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Unit-test line now `cargo test -p frob-design -- term canon id`: cargo takes one positional filter, so the line as written failed to run. The closed top-level key list now includes `init` (N14a-03) and says `travel` joins it at M3 (N14ax-01): a BD-054 implementer following the old closed list would refuse N14a-03's `init` with 103, the contradiction an implementer of either bead would hit."
+  },
+  {
+   "bead": "BD-057",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "H-verbs-2 applied: the CLI table types the file form as a path parameter with the generator's 734 (exit 5) and 828 (exit 3), lists `--pretty` and 808 (N14a-01 rule 5) among the refusals, and states evidence *pass-through* as VERBS-design does; otherwise the generated schema and the bead's table differ and the registry parity test fails. Convention 9: the battery runs as `e2e_tier g3_metamorphic GATE-SKEL-05 --mutations` and N14a-28 records from that receipt; nothing in this bead writes a gate row."
+  },
+  {
+   "bead": "BD-061",
+   "kinds": [
+    "request"
+   ],
+   "what": "Unit-test line now `cargo test -p frob-model -- kin model lower`; with three positional filters cargo refuses the command, so the bead's own test step could not run."
+  },
+  {
+   "bead": "BD-066",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Two places said N14a-31 records the GATE-SKEL-01 MJCF rows; under convention 9 N14a-31 measures and logs them and N14b-24, the one recorder (N14b-26), enters the gate from its g2_parity receipt. Left as it was, two beads would each write the gate and STD-E2E's self-recording lint fails N14a-31's log."
+  },
+  {
+   "bead": "BD-077",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "The gate acceptance and the e2e paragraph said N14a-30 records GATE-SKEL-06 from the receipt its script writes; they now name the two tier runs of this battery (`g1_known_answers` for KA-273, `g3_metamorphic` for KA-272 and KA-289) whose receipts N14a-30 records from, matching N14a-30's step 12. Left as it was, the two beads disagree on what the recorder cites and the script would be built to write a receipt STD-E2E's linter rejects."
+  },
+  {
+   "bead": "BD-227",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U24c applied: a Considerations bullet and `related` entry state that N24cp3-02's `registries/disturbances.toml` (M2) reuses the row schema under its own file, schema and address `registry:disturbances/<slug>`, and that sharing the parser at M3 changes neither; without it the M3 implementer could fold the two files or their addresses together and break N24cp3-02's identities. Convention 13: the interim FROB-REF-802 for `hazard-registry-invalid` is gone (N35x-02 assigns the row at M0, before this M3 bead), the code is the constant `HAZARD_REGISTRY_INVALID`, and the review narration about VERBS-scene is replaced by the statement of what VERBS-scene lists."
+  },
+  {
+   "bead": "N14a-03",
+   "kinds": [
+    "request",
+    "users"
+   ],
+   "what": "H-verbs-8 applied: the optional top-level block `init` is defined: conditions with `id` (so the S-expression view renders the block by BD-057's rule 4 with no new shape-table row), `q`, `qd`, `base` (pose and twist of the root's free joint, both required: no physics field has a silent default, and no new written-out default reaches N14a-26's oracle), at most one `param` (dimension, domain, optional default) filling one `{\"param\": offset}` slot; the lifted-angle rule for revolute values (BD-012's k, so N13-36's world B is k = 1); identity (in `DesignId`, in no mechanical subterm; the selection enters the run's `ModelId`); `init::bind` at stage 1 (103, 102, 107 including the domain ends against joint limits) and `init::resolve` with typed errors that `sim.run` reports as 802; acceptance items and five unit tests. Without it every `--init` run of N16ap4-01, N16b-25, N13-36, N16a-18, N18b-20 and BD-384 has nothing to select and is refused with 802."
+  },
+  {
+   "bead": "N14a-04",
+   "kinds": [
+    "request"
+   ],
+   "what": "Unit-test line now `cargo test -p frob-design -- blocks::joint blocks::actuation`; cargo refuses two positional filters, so the test step could not run."
+  },
+  {
+   "bead": "N14a-13",
+   "kinds": [
+    "request"
+   ],
+   "what": "Unit-test line now `cargo test -p frob-model -- geom::declared geom::support geom::massless`; cargo refuses three positional filters."
+  },
+  {
+   "bead": "N14a-14",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-ref-1 applied: N35x-02's M0 run assigns `region-not-admissible` before this M1 bead, so the interim FROB-REF-102 is removed from the approach and the acceptance line; the refusal is the constant `REGION_NOT_ADMISSIBLE` with its assigned number and the two pointers. Left as it was, an implementer would ship 102 for a condition the ledger numbers otherwise and the registry parity check fails."
+  },
+  {
+   "bead": "N14a-28",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U14b-2 applied with one correction: step 10 is the tier run `e2e_tier g3_metamorphic GATE-SKEL-05 --mutations`, not g1_known_answers as the request said, because GATE-SKEL-05's row KA-288 is a G3 row (N14-KA), as BD-063 records GATE-SKEL-02 from g3; a g1 run would carry no GATE-SKEL-05 line and the record would have no receipt to cite. The script produces only that receipt and logs gate-tagged metrics; record_gate takes the receipt hash; the log's `bead` is N14a-28 (the STD-E2E helper sets one bead per run)."
+  },
+  {
+   "bead": "N14a-30",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "F-U14b-2 applied: step 12 runs `e2e_tier g1_known_answers GATE-SKEL-06 --mutations` and `e2e_tier g3_metamorphic GATE-SKEL-06 --mutations` (KA-273 is G1, KA-272 and KA-289 are G3), and N14a-30 records with both receipts (N38b-19's receipt set); the script writes no gate row; the timing table is the logged artifact `<utc>.artifacts/timing.json` for N14a-16. Broken: the mutate calls of steps 3 and 5 to 10 had no `--key`, so each would have been refused with 805 before the refusal the step expects; each now carries its own `--key \"$(e2e_key <label>)\"`. BD-111 added to deps: steps 4, 9 and 10 call `design show --no-memo`, which exists only once BD-111 sets `memo = true` on the row (NJL-01 variation 14), so the script could otherwise be built against a binary that answers 802."
+  },
+  {
+   "bead": "N14a-31",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U14b-2 applied: the MJCF rows of GATE-SKEL-01 are logged as metric lines tagged `--gate GATE-SKEL-01`; the script produces no receipt and no gate record; N14b-24 records once from its g2_parity receipt and compares with these rows. The log's `bead` is N14a-31 for every line (the helper sets it once at e2e_init; the old per-step bead could not be produced)."
+  },
+  {
+   "bead": "N14a-32",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Steps 6, 8 and 9 run `frob sim run quad-a …` in the run's fresh `FROB_STATE`, where no design `quad-a` exists, so `sim.run` would refuse and steps 6 to 9 could never pass. The script now creates it first (`frob design new quad-a --template quad-mammal --key sh-des-1 --json`, BD-109's archetype through N14a-21, both dependencies through BD-225). The H-owners-3 request (`frob --root`) was already met in round 3: the script calls `e2e_registries_scratch` and states that frob has no `--root`; no change for it."
+  },
+  {
+   "bead": "N14ax-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: the interim FROB-REF-111 for `travel-value-out-of-domain` and `travel-envelope-optimistic` is removed from the approach, the acceptance line and the unit test (N35x-02's M0 run assigns both before this M3 bead; its interim column lapses at that run). Left as it was, an implementer would test for 111 that can never be emitted."
+  },
+  {
+   "bead": "BD-059",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The gate acceptance said N14a-29 records GATE-SKEL-08 'from its script's receipt'; under convention 9 only a tier run makes a receipt, so it now names the tier run `e2e_tier g4_chaos GATE-SKEL-08 --mutations` (KA-292 is a G4 row) that runs this battery. Left as it was, the recorder would cite a script-written file that record_gate does not accept."
+  },
+  {
+   "bead": "N14a-15",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The pilot result's `receipt` was 'the BLAKE3 of the script's receipt', a file no tool writes; it is now `blake3:<hash>` of one JSON file (the script's log and digest) committed at `receipts/pilots/<hash>.json` (N38a-09 rule 2a), without which the register's loader refuses the result (`pilot-receipt-uncommitted`) and N14a-16 has nothing to cite. BD-111 added to deps: the script's `design show --products --no-memo` needs the flag BD-111 generates (NJL-01 variation 14), and the two cold compiles the pilot rests on depend on it."
+  },
+  {
+   "bead": "N14a-16",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Input 2 now reads the GATE-SKEL-06 record entered from the two tier-run receipts of N14a-30's step 12 (g1 and g3), input 4 names N14a-30's artifact `timing.json`, and the ADR and the `decision.receipts` cite both GATE-SKEL-06 receipts and the pilot receipt. As it was, the decision cited one 'script receipt' that no longer exists, and N40-03 would not resolve it."
+  },
+  {
+   "bead": "N14a-17",
+   "kinds": [
+    "request"
+   ],
+   "what": "F-U31b applied after checking N31b-41 (M3, step 6a): row 24 `resolve-sized` is stated with its input, example, symmetry effect `preserved`, scope {body-inertia, whole-robot-sums}, no inverse and the two-pass fixture, and row 9's `set-fill` accepts `{shell: sized}` from that change; the acceptance item lets the counts grow to 24 rows and 34 kinds, and the generated row tests cover row 24. Left as it was, N31b-41's landing would fail this bead's 23-row and 33-kind assertions. N14a-17 does not depend on N31b-41 (convention 7); `related` names it."
+  },
+  {
+   "bead": "N14a-18",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The migration clause said N14a-29 records 'from its script's receipt'; it now names the receipt of `e2e_tier g4_chaos GATE-SKEL-08 --mutations` (KA-292, G4), the one form record_gate takes."
+  },
+  {
+   "bead": "N14a-20",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "The ADR path is now `docs/adr/ADR-KILL-SKEL-SEXPR-M1.md` (convention 4; N40-03 refuses an adr outside docs/adr/ with `decision-adr-path`, so the decision could not be entered), and the `decision` carries `receipts` naming the GATE-SKEL-05 receipt (N40-03 requires at least one for `not-fired`). Input 1 now names that receipt as the one of N14a-28's g3_metamorphic tier run."
+  },
+  {
+   "bead": "N14a-21",
+   "kinds": [
+    "registry"
+   ],
+   "what": "VERBS-design lists FROB-REF-808 among the chapter refusals of `design.new` and `design.show`; the quoted rows, the no-canonical-form refusal, step 3 and `registry_rows_match` now carry it (and a unit test of a 2^53 integer), otherwise the registry parity test fails and a wide integer in a design file would not be refused. `--no-memo` is stated as the common input NJL-01 generates from the row's `memo = true`, which BD-111 sets at M1, so the row declares no `no_memo` (a declared one fails `common-property-shadowed`)."
+  },
+  {
+   "bead": "N14a-24",
+   "kinds": [
+    "registry"
+   ],
+   "what": "`decision.receipts` listed 'the PO-SKEL-04 summary receipt', a log digest that resolves in neither of N40-03's receipt directories, so the decision entry would be refused. It now lists the two pilot results' receipts (N14a-23's and BD-385's, the latter carrying PO-SKEL-04's output, under receipts/pilots/) and the KILL-TREEOP decision's, and cites the log digest in the ADR."
+  },
+  {
+   "bead": "N14a-25",
+   "kinds": [
+    "users"
+   ],
+   "what": "The reverse loss report's not-written row now lists `init` (N14a-03) and `travel` (N14ax-01, M3). The report's coverage check requires every top-level block to be written or listed, so without the entries an export of any design that declares initial conditions or travel postures fails the check."
+  },
+  {
+   "bead": "N14a-27",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Convention 9: the script claimed to write a receipt of steps 4 and 7 that gate recorders may cite; it runs no tier, so the values are now `metric` lines and the text says it produces no receipt (N14b-06 and BD-110 record from their own tier runs). Broken: the log's `bead` varied per step, which STD-E2E's helper (bead fixed at e2e_init) cannot write, so it is `N14a-27` with the subject in the step title; and step 11's `--no-memo` exists only with BD-111, now a dependency."
+  },
+  {
+   "bead": "N14a-29",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Convention 9: the script wrote its own receipt file for GATE-SKEL-08; it now has step 13, `e2e_tier g4_chaos GATE-SKEL-08 --mutations` (KA-292 is G4) asserting the gate line and the five planted controls KA-292 lists, the measured counts are gate-tagged metrics, and record_gate takes step 13's receipt hash. Without it the one recorder has nothing record_gate accepts. Broken: the per-step `bead` values are replaced by `N14a-29` (the helper sets it once)."
+  },
+  {
+   "bead": "N14a-33",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Every command named fixture designs (`skid4`, `belt2`, …) as designs in the run's fresh FROB_STATE, where none exists, and `contact.capacity`'s `design` is not a path parameter in VERBS-contact; the script now creates each fixture design first with `frob design new <name> --file fixtures/contact/<name>.fbot --key …` (N14a-21 is a dependency). Without it steps 2 to 10 could never pass."
+  },
+  {
+   "bead": "N14ax-02",
+   "kinds": [
+    "convention",
+    "users"
+   ],
+   "what": "Convention 13: 'its row in VERBS-design does not list it yet, and the addition is requested' is replaced by the fact that VERBS-design lists `correspond` (M3, this bead's, codes 101 and 103) and the `correspondence` outputs. Users: N31b-41's `resolve-sized` (row 24, M3) is given its rule (no non-Same entries) in scope, table and acceptance; without a rule that kind would produce no correspondence record and fail the completeness check of every resolve-sized edit."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-scene",
+   "what": "Rows `scene.hazards` and the `scene.gen` interior extension (lines 108-115, 325, 352-353): list the assigned number of `hazard-registry-invalid` (BD-227's constant `HAZARD_REGISTRY_INVALID`, exit 3) among the chapter refusals and drop 'on the interim FROB-REF-802 until then'; N35x-02 assigns the row at M0, before BD-227 (M3), so the interim is never emitted and the rows' refusal lists would not match what the verbs raise."
+  },
+  {
+   "bead": "N14a-08",
+   "what": "Add check 3h to stage 1's validate step: initial conditions, N14a-03's `init::bind` on the expanded tree (FROB-REF-103 for an unresolved joint, a wrong coordinate count, a parameter with no slot or two, an empty or inverted domain, a missing `twist`; FROB-REF-102 for a dimension; FROB-REF-107 for an `init` coordinate outside its joint's limits), and name N14a-03 as the owner of these cases in the table's 103, 102 and 107 rows. Without it a typo in a condition's joint reaches `sim.run` instead of `design check`."
+  },
+  {
+   "bead": "N14-REF",
+   "what": "Row FROB-REF-107: add to the stage column 'stage 1 (an `init` coordinate outside its joint's limits, N14a-03)' and to the payload 'or the `/init/...` pointer'; otherwise the registry's code-to-stage parity fails when N14a-03 raises 107 at stage 1."
+  },
+  {
+   "bead": "N14a-22",
+   "what": "Its `summary` line's log digest is called 'the receipt the decision cites'; N40-03 resolves `decision.receipts` only under receipts/gates/ and receipts/pilots/, so state that the output is attached to BD-385's pilot result (whose receipt is committed at receipts/pilots/<hash>.json) and that the KILL-SKEL-PORT ADR cites the log digest, as N14a-24 now does."
+  },
+  {
+   "bead": "N16ap4-01",
+   "what": "Item 4 and the fixture `fixtures/sim/init-two-states.fbot` can state N14a-03's spelling: conditions are objects with `id`, `q`, `qd`, `base` (`pose` and `twist` both required), and `param` {dimension, domain, optional default} filling one `{\"param\": offset}` slot; the selection is `init::resolve`, whose typed errors (undeclared id, value without `param`, missing value without `default`, value outside the domain, wrong dimension) this verb reports as 802, and whose `selection()` bytes enter the ModelId."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Unchanged (byte-identical): BD-055, N14a-01, N14a-11, N14a-12, N14a-26. Requests addressed to the slice: all applied except as follows. N14a-28 (F-U14b-2) named `g1_known_answers -- GATE-SKEL-05`; applied as `g3_metamorphic`, because KA-288, GATE-SKEL-05's row, is a G3 row (N14-KA) and BD-063 records GATE-SKEL-02 the same way; a g1 run carries no GATE-SKEL-05 line. N14a-32 (H-owners-3, `frob --root`) was already met in round 3, so the change made there answers a different defect (an uncreated `quad-a`). BD-057's request text was empty in the slice file and was taken from out/H-verbs-2.json. Further edits beyond the requests follow convention 9 for every gate script of the slice (GATE-SKEL-01, -05, -06, -08: tier-run receipts, gate-tagged metrics, one recorder), the BD-111 origin of `--no-memo`, and the new `init` block's users. No bead was superseded or created. Process note: dependency paths were first checked with read-only `path` queries of tools/graph_check.py, which I did not write in this session (against the slice rule); every added dependency was then re-checked for cycles and unknown keys with my own scratchpad script (3,756 nodes, none found)."
+}

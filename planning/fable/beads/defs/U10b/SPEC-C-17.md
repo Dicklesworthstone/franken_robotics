@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "frontier", "frob-mission", "frob-conformance", "test"]
 parent: "WP-42"
-deps: ["BD-025", "N10b-08", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-17", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-098 to KA-100 and CX-045 to CX-047; this bead binds them to tests", "§25.4: the crate `frob-mission` is created by a bead that implements this construction (BD-128) and is expected to depend on this bead; it is deliberately not in `deps`, and it binds its real types to the law suite"]
-related: ["N10b-04", "N10b-05", "SPEC-C-18", "SPEC-C-19", "SPEC-C-30", "SPEC-C-32", "BD-126", "BD-128", "BD-129", "BD-130", "BD-133", "BD-135", "BD-136", "N10a-02"]
+deps: ["BD-022", "BD-025", "N10-CX", "N10-KA2", "N10a-01", "N10b-08", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["SPEC-C-19", "SPEC-C-30", "SPEC-C-32"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-17", "§9 D-12", "§9 D-13", "§9 D-17", "§9 D-18", "§12.2", "§25.3", "§25.4", "§25.5", "Appendix D.6", "Appendix I.3", "Appendix M.9 KA-098 to KA-100", "Appendix N.7 CX-045 to CX-047"]
 ---
@@ -153,8 +153,8 @@ with more budget produces a new answer that refines it.
 - `crates/frob-conformance/tests/laws_c17.rs`, generic over `C17Subject { fn answer(&self, q: &FiniteQuery) ->
   FiniteAnswer; fn accept_evidence(&self, q, ev: &Evidence) -> Verdict }`. `tests/support/c17_ref.rs`: finite
   queries decided by exhaustive enumeration in exact rationals (designs, worlds, policies as explicit finite
-  sets; the docking worlds come from `docking_ref.rs`). `tests/support/c17_mutants.rs`: mutants under the cargo
-  feature `controls`.
+  sets; the docking worlds come from `docking_ref.rs`). `tests/support/c17_mutants.rs`: mutants under the umbrella feature
+  `gauntlet-mutations` (BD-025; no feature is named `controls`).
 - Register row C-17: `verb = "mission.synthesize"` (with `mission.refute`), `failing_test` =
   `frob-conformance::laws_c17::s10_per_world_evidence_rejected`, `payoff.gate = "GATE-AUGUR-03"`,
   `known_answers = KA-098 … KA-102`, `pilot = "PILOT-C-17"`, `generic_comparator = "a lifted robust linear
@@ -170,7 +170,7 @@ with more budget produces a new answer that refines it.
 
 - [ ] `docs/math/C-17.md` has the ten sections, the definition of F verbatim, the answer triple, statements
       C-17.S1 to S10 with classes and the three worked fixtures.
-- [ ] `cargo test -p frob-conformance --test laws_c17` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-conformance --test laws_c17` passes; with `--features gauntlet-mutations` every mutant fails.
 - [ ] KA-098: on the late-packet docking query the reference returns F = ∅ for the joint query and a nonempty
       answer for each single-world query; evidence made of one policy per world is rejected with FROB-REF-826.
 - [ ] KA-099: the cell (U, ε) = (¾, 5/16) is excluded under the strict predicate and admitted by the
@@ -187,11 +187,17 @@ with more budget produces a new answer that refines it.
 - `s1_definition_by_enumeration`: 500 seeded finite queries (at most 4 designs, 4 worlds, 8 policies, Boolean
   outcome tables): F computed by the formula equals the brute-force set.
 - `s2_sandwich`: on the same queries I ⊆ F ⊆ O; with budget cut to zero, I = ∅ and O = D (unknown is a verdict).
-- `s3_deadlock_is_not_success`: an execution table with an empty T(d, π, w) excludes d from F.
+- `s3_deadlock_is_not_success`: an execution table with an empty T(d, π, w) excludes d from F; an execution
+  marked as stopping short of the horizon without a declared terminal outcome (deadlock), as Zeno, or as having
+  undefined dynamics fails A and cannot make d robust.
 - `s4_solver_failure_is_unknown`: a cell whose evaluation returns `SolverFailure` is `Unresolved`, never
   `Excluded` and never `Inner`.
 - `s5_strict_boundary`, `s5_infimum_not_attained`: the KA-099 values.
 - `s6_fork_branch`: a world with a stick/slip fork whose slip branch fails invalidates the inner verdict.
+- `s7_policy_indexed_by_nominal_build`: a finite query whose worlds carry two as-built values of a tolerance:
+  a policy table indexed by the as-built value with no calibration observation in the channel is rejected at
+  admission; the same table is admitted once a calibration observation that reveals the value arrives before
+  the decision; a table indexed by the nominal build alone is admitted.
 - `s8_failed_training_is_not_exclusion`: evidence "policy π₁ failed" leaves d in O.
 - `s9_chance_joint_law`: the KA-100 values; budgets 1/20 + 1/20 certify 18/20.
 - `s10_per_world_evidence_rejected`: the KA-098 values.
@@ -200,7 +206,8 @@ with more budget produces a new answer that refines it.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c17.sh` (idempotent; seed 1700 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-098 KA-099 KA-100`; existence of
+`--features gauntlet-mutations`; `FROB_TEST_SEED=1700 cargo test -p frob-conformance --test g1_known_answers -- KA-098
+KA-099 KA-100` (the tier target of the rows' G1 tier; `g1` is not a target name); existence of
 `docs/math/C-17.md` and the derivation files. Sources the STD-E2E helper; writes
 `target/e2e-logs/spec_c17/<utc>.ndjson` and a transcript; each line has `ts`, `script`, `bead` (`SPEC-C-17`),
 `step`, `event` (`start`, `cmd`, `assert`, `metric`, `refusal`, `end`), command line, exit code, wall time,

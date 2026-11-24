@@ -1,13 +1,13 @@
 ---
 key: "EPIC-PROGRAM"
-title: "FrankenRobotics: robot proving ground, agent design studio and mission-query engine, measured against a composed rival"
+title: "FrankenRobotics: proving ground, agent design studio, mission-query engine, measured against a composed rival"
 type: "epic"
 priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "tenfold", "solid"]
 deps: []
 needs: []
-related: ["EPIC-M0", "EPIC-M1", "EPIC-M2", "EPIC-M3", "EPIC-M4", "EPIC-M5", "EPIC-M6", "EPIC-M7", "EPIC-M8", "STD-E2E", "STD-TEST"]
+related: ["N00-04", "N00-21", "N00-22", "N00-30", "N41-26", "STD-E2E", "STD-TEST"]
 gates: ["GATE-TENFOLD-06", "GATE-TENFOLD-07", "GATE-GAUNT-01"]
 plan_refs: ["header", "§0.1", "§0.2", "§0.5", "§0.7", "§0.8", "§1.4", "§1.5", "§1.8", "§2", "§3", "§8", "§35.1", "§38.2", "§38.11", "§43.1", "§43.2", "§47.1", "AGENTS.md", "REVISION_2.md"]
 ---

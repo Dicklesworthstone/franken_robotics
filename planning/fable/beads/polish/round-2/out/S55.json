@@ -1,0 +1,256 @@
+{
+ "round": 2,
+ "slice": "S55",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "BD-151",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied (checked against 15.5, GATE-SINEW-08 'on all tiers', N15a-23 step 7): acceptance criterion and conformance test `passivity_battery_kernels` replaying N15a-23's sinew-passivity addresses through K-act-l2 and K-passive on batch-cpu f64/f32 and device families (smoke 1e4 per change, gate 1e6 at M2), numerical dissipation 0.5*L*(i+ - i)^2 as its own term, minima beside N15a-23's M1 referee minima; planted negated-copper-loss control; GATE-SINEW-08 added to gates (receipt stays N15b-32's); KA-294 cited. E2E commands gain --key (distinct per precision) and spark.check --backend (KNOWN_DRIFTS 5, 8)."
+  },
+  {
+   "bead": "BD-155",
+   "kinds": [
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "N15b-24's script used `--joint-friction rows|smooth`, which no verb row has (KNOWN_DRIFT 8): defined the step-plan field joint_friction = rows|smooth (in StepPlanId, smooth drops stiction rows only, lockstep tiers only, FROB-REF-136 under strict or on the referee, condition `smooth-joint-friction` on every result), receipts carry the iteration histogram and throughput; requested of VERBS-sim. CLI runs stay N15b-24's (BD-159 depends on this bead, KNOWN_DRIFT 7). Tests added: `bound_includes_iron_coulomb` (tau_b 0.314 N m with iron_coulomb 0.014, friction/iron split of dissipation) and `smooth_comparator_selected`. E2E text: fixtures through task.fixture with --key."
+  },
+  {
+   "bead": "BD-154",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "sim.run in the e2e text carries --key, distinct per run (KNOWN_DRIFT 5)."
+  },
+  {
+   "bead": "N15a-07",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Request applied (checked against OPEN-SINEW-3 in 15.14 and BD-071's law, which the battery's referee side already computes): the L2 host reference carries P_fe = k_h|w_e| + k_e w_e^2, the eddy share N^2 k_e p^2 as implicit damping, the hysteresis share iron_coulomb = |N| k_h p exported to the stiction row, no P_fe/w quotient, iron heat booked as the shares' dissipation, flag/condition when coefficients are absent; class (b) of the GATE-SINEW-03 battery compares P_fe and both shares. New acceptance line, test `iron_loss_host_reference` (BD-071's card: 1.89 W, 4.9e-5, 0.014; N = 9: 3.969e-3, 0.126; 400 steps -> 1.89 J), negative control (iron loss dropped). E2E task.fixture call gains --key."
+  },
+  {
+   "bead": "N15b-35",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script called options that do not exist (KNOWN_DRIFTS 5, 8): spark.check gains --backend/--reference/--seed/--key; every task.fixture call gains --key (distinct per compared run) and device tiers are spelled cuda/metal; the fixture manifest now declares its axes (precision, seed, profile, three composition variants) so FROB-REF-530 cannot fire; fidelity.ledger gains the required --class and --tier-pair; brownout/empty-battery run through task.fixture (sim.run has no --seeds); mutants through --control; the worker-count lane through spark.check --workers (task.fixture has none); composition invariance through declared variants."
+  },
+  {
+   "bead": "N15b-37",
+   "kinds": [
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Removed the private `trac04-backlash` fixture, its step and the GATE-TRAC-04 receipt: it duplicated N15a-12's `trac-gap-crossing` (KA-403) and the batched GATE-TRAC-04 joint rows belong to N18a-36 (N15a-12's scope says so); gates list now GATE-SINEW-04/09, with an acceptance line that nothing of GATE-TRAC-04 is redefined. Script: --key on every run, --precision passed, ledger call with --class/--tier-pair/--quantity (no --fixture option exists), quad-12-backlash and the equivalence fixture through task.fixture with declared axes (cotenants variant keeps the co-tenant lane), spark.check with --backend/--workers, mutants via --control; the with/without-elimination quadruped comparison N15b-08 promised is now a whole-step row of the equivalence fixture."
+  },
+  {
+   "bead": "N15a-11",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Ledger rows were said to be written through fidelity.ledger, a read verb: now recorded by N16b-02's recording path with the three quantities added to its quantity registry, read back through fidelity.ledger with the required --class/--tier-pair. The script ran sim.run at h, h/2, h/4 with no such option: three fixtures registered with declared variants (load levels, step sizes, reduced/full) run through task.fixture with distinct keys. Tests added: `quantities_registered`, `fixture_axes_declared`."
+  },
+  {
+   "bead": "N15b-24",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "placement"
+   ],
+   "what": "Decision record path brought to KNOWN_DRIFT 4 (docs/adr/ADR-KILL-SINEW-ROWS-M2.md) with N40-03's required fields (receipt hashes beside thresholds, fallback in force and its name, beads re-read, downstream changes). Script: sim.run with --tier, --workload, --key distinct per arm/tier/workload; --joint-friction now defined by BD-155 and requested of VERBS-sim; throughput from BD-216's campaign; the FROB-REF-136 refusal of smooth under strict asserted."
+  },
+  {
+   "bead": "N15b-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Script used --stiction-eps/--stribeck-shape, which no verb has: the grid is now ten declared variants (constant overrides of the card's eps and shape) on fixtures `<name>/stiction-grid` registered here (N24bx-01's follow-up naming, since N15a-12's fixtures are first run at M1), plus quadruped-slope-hold, run through task.fixture with distinct keys; undeclared value refused 530. Decision record in docs/adr/, OPEN-SINEW-2 closed in registries/open.toml: N41-OPEN1 moved from related to deps. The promised re-baseline now names N16bp1-01's freeze action and single record_rebaseline (added to deps; no cycle). Tests `grid_fixtures_declared`, `rebaseline_once_for_gate`."
+  },
+  {
+   "bead": "N15b-08",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E text matched to N15b-37's script (task.fixture with --key, ledger with --class/--tier-pair); the with/without-elimination comparison it promised through an unspecified test-only switch is now a whole-step row of the equivalence fixture on the host reference; interim cargo test command added. Algebra and numbers verified (d = 0.617384, S = 0.0280987, rigid limit 0.0081, coupled block [[1,1],[1,1]])."
+  },
+  {
+   "bead": "BD-156",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Round 1 missed that N15b-08 assigns carrying rotor elimination to K-hess/K-chol here, and BD-156 never mentioned it: K-hess now folds each rotor (d_i, c_i, diagonal g_i(J_r+hb+s)/d_i, reduced rhs) before scaling, recovers rotor directions straight-line, line search/potentials/stop test on the full v (PO-SINEW-02), factor at link dimension (GATE-SINEW-09's structural clause); N15b-08 moved from related to deps (no cycle). Acceptance and tests `rotor_fold_hand_case`, `rotor_fold_random`, `factor_dim_with_backlash`. GATE-TRAC-10 first clause stated as K-chol on N18b-25's fixture. --test g3 -> g3_metamorphic (KA-422 is G3); spark.check gains --seed/--key."
+  },
+  {
+   "bead": "N18b-25",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied (checked against Appendix D.2 and PO-TRAC-03): N12-42 added to deps (no cycle); PO-TRAC-03's Cholesky is stated as the D.2 compendium reference factorization with K-scale-diag's S, since K-chol is BD-156's which depends on this bead (KNOWN_DRIFT 7); new conformance tests `d2_oracle_power_of_two`, `d2_oracle_scaling_by_three` against N12-42's oracles, moved with `chol_scale_invariance` to frob-conformance so frob-kernels takes no dependency on it; acceptance line for the oracle agreement. --test g3 -> g3_metamorphic, mutant pass with --features gauntlet-mutations. Exponent-rule numbers verified."
+  },
+  {
+   "bead": "N18b-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Stale width sentence (width pin, `--precision` default|stiff only) replaced by N35-04's `--precision {default|stiff|f32|f64}` resolved per tier; the printed repair is `--tier batch-cpu --precision f64` with a fresh key, run at the CLI by N18b-30 (N35-04 depends on this bead, so it stays related). --test g3 -> g3_metamorphic with the mutations feature; ADR placed in docs/adr/."
+  },
+  {
+   "bead": "N18b-27",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied (checked against N35-04's table and recognized-and-refused list): width sentence removed, `--precision {default|stiff|f32|f64}` stated, the five half spellings entered in the x-frob-refused list with FROB-REF-245 (schema passes them on CLI and MCP, admission step 1 refuses); acceptance and `refusal_spellings` now accept f32/f64 and check the list's contents. --test g1 -> g1_known_answers; sim.run calls carry distinct keys. Refuting arithmetic re-verified (4,801; 2.344; 63/27, 54/35, 3; 216)."
+  },
+  {
+   "bead": "N18b-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 12 used the retired width pin: now `--precision f32` on batch-cpu and each device tier, repair `--tier batch-cpu --precision f64` (f64 on a device is FROB-REF-604); every sim.run call (law refusals, stiffness, half precision on devices) carries its own --key."
+  },
+  {
+   "bead": "N18a-36",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "`--kernels a,b,c` does not exist: per-kernel spark.check with --backend/--reference/--seed/--key and the worker lane via --workers. Step 11 had bare numbers (17.5 ms, 0.083) and no fixture: now runs N15a-12's trac-ramp-breakaway and trac-gap-crossing through task.fixture against N18a-32's joint_row_known_answers() (0.5 s; 17.45 ms, 0.0833 rad/s, 1.04 mJ), N15a-12 added to deps (no cycle); scope and acceptance now say this script alone writes GATE-TRAC-04's batched joint rows and receipt (N15b-37 no longer duplicates them). Default command form with keys for fixture steps; mutants stated as compiled controls, dead-zone as BD-084's mutant-backlash-deadzone."
+  },
+  {
+   "bead": "N18a-27",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "`pressure_profile (uniform, hertz)` contradicted BD-167's `pressure: PressureModel (Uniform | Hertzian | Unspecified)`: aligned, card r_eff takes precedence over the pressure model, enum defined here and used by BD-167. Tests that needed a loaded card (BD-167 depends on this bead, KNOWN_DRIFT 7) recast on plain `CardRadiusSource` inputs; the card-load forms are BD-167's (its new `card_r_eff_in_model_identity`). Derivations and numbers verified (pi/16, 17.7 mm, 0.153 s vs 0.102 s)."
+  },
+  {
+   "bead": "BD-167",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied (checked against N12-51's scope, which assigns BD-167 to run its generator on the rolling and torsional rows, and PO-KIN-01/INV-TRAC-01): N12-51 moved from related to deps (no cycle); technical section, scope, acceptance and tests `rolling_row_certified`, `torsional_aniso_certified` for LawConvexity certificates bound to definition hashes, else not-certified and FROB-REF-246 on lockstep tiers. Added `card_r_eff_in_model_identity` (moved from N18a-27). E2E sim.run calls carry distinct keys; contact.laws shows the certificate status. Coast-down, sphere and ring numbers verified."
+  },
+  {
+   "bead": "N18a-28",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Ledger read lacked the required --class/--tier-pair: now with --profile-pair strict,referee per model class; runs keyed."
+  },
+  {
+   "bead": "N18a-29",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Ledger read now `--class <c> --tier-pair batch-cpu,referee --quantity coefficient-lag` (required options); frozen rows named as BD-212's, reached by the script's own bead N18a-36."
+  },
+  {
+   "bead": "N18bx-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The two compared referee runs (with and without the pulse card) carry distinct keys, else the second returns the first's receipt (KNOWN_DRIFT 5). Pulse numbers verified (9.935 ms, 158.1 N, [9.069, 11.107] ms)."
+  },
+  {
+   "bead": "GB-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "NEG-02's submission was 'a step plan requesting f16', which N18b-27 makes unrepresentable: now `frob sim run <design> --tier batch-cpu --precision f16 --key <k>` through the recognized-and-refused list."
+  },
+  {
+   "bead": "GB-20",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Surface said contact.probe is implemented by BD-167, which GB-20 does not depend on: now N18b-29 with the cone branch wired by BD-154, inline parameters, so no card kind is needed. Numbers verified (42.43 N, 0.8485 N m, 84.85 N, 1.8 N m)."
+  },
+  {
+   "bead": "N21b-38",
+   "kinds": [
+    "complete",
+    "tests",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Added the refinement-count hook N35-29's evidence item 3 needs (runs with 0, 1, 2 steps): FROB_STIFF_REFINE_STEPS=0|1|2 read by the harness only, count and source recorded in every line and receipt, non-default runs labelled exploratory and never the gate row, other values rejected; acceptance and test `refine_steps_hook`. Harness commands moved from a private `--test precision` target and FROB_FIXTURE_SEED to the Gauntlet tier targets (KA-796 g3_metamorphic, KA-799 g1_known_answers) with FROB_TEST_SEED (KNOWN_DRIFT 1)."
+  },
+  {
+   "bead": "N35-29",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Step 2 named 'the precision battery's script options' that no bead defines: it now runs N21b-38's harness with FROB_STIFF_REFINE_STEPS=0|1|2 through `--test g1_known_answers -- KA-799` (N35-29 reaches N21b-38); the pass-through in BD-179's script is requested. Decision rules and arithmetic verified (3,675/14,292; 972/1,944)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "Add to the sim.run row the option `--joint-friction rows|smooth` (default rows; a step-plan field in StepPlanId; smooth admitted on lockstep tiers only, else FROB-REF-136; result condition `smooth-joint-friction`), extender BD-155; N15b-24's kill-gate script calls it."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "The sim.run row lists no seed input, yet 84 beads call `frob sim run ... --seed <n>` (BD-216's perf harness among them) and N16b-25's evidence block carries the seed: list `--seed <n>` (the run's root seed of the world-address scheme) in the row, or settle the spelling program-wide. `--seeds 1..100` (N15b-30) is not an option either."
+  },
+  {
+   "bead": "N15a-12",
+   "what": "Declare in the manifests of the six registered fixtures (ramp-breakaway, spring-coulomb, held-load, reversal-in-gap, gap-hysteresis, gap-closure) and of trac-ramp-breakaway and trac-gap-crossing, before their first run: axes.seed = [9], axes.profile = [lockstep, strict], axes.precision = [f64, f32]. N15b-37 and N18a-36 run them on batch-cpu/cuda/metal with these values; undeclared, task.fixture refuses FROB-REF-530 (N24bx-01)."
+  },
+  {
+   "bead": "N15b-30",
+   "what": "Step 5 runs `frob sim run --tier referee brownout-trials --seeds 1..100 --seconds 1`: sim.run has no --seeds; run the registered fixture with `frob task fixture brownout-trials --tier referee --key <k> --json` (its 100 seeded draws), as N15b-35 now does on batch-cpu; add --key to the other run calls."
+  },
+  {
+   "bead": "BD-179",
+   "what": "Give scripts/e2e/spark_precision_battery.sh a pass-through option for N21b-38's refinement-count hook (FROB_STIFF_REFINE_STEPS=0|1|2, runs labelled exploratory) so N35-29's evidence item 3 can also be produced through the battery script."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Step 6 still places the kill-gate decision ADR in docs/delivery/adr/ADR-<gate-name>-<milestone>.md; KNOWN_DRIFT 4 retired that directory: docs/adr/ADR-<gate-name>-<milestone>.md (N15b-24 now uses docs/adr/ADR-KILL-SINEW-ROWS-M2.md)."
+  },
+  {
+   "bead": "BD-216",
+   "what": "Gate tests are placed in tests/g1.rs under GATE-SPARK-19::*; KNOWN_DRIFT 1's target is g1_known_answers (tests/g1_known_answers.rs)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 25 beads read in full against their plan_refs (15.2, 15.5, 15.6, 15.13, 15.14, 16.6, 18.6, 18.7, 18.12, 18.15, 18.17, 20.23, 35.10, 35.15, Appendix D.2), the eight points and KNOWN_DRIFTS. All five requests addressed to the slice were checked against the plan and applied (BD-151, BD-167, N15a-07, N18b-25, N18b-27). Most changes are drift repairs in scripts (run verbs without --key, options that exist in no VERBS row: --joint-friction, --stiction-eps, --stribeck-shape, --kernels, ledger --fixture, --seeds, h-step runs; fidelity.ledger without its required --class/--tier-pair; --test g1/g3/precision). Substantive findings round 1 missed: BD-156 did not carry rotor elimination although N15b-08 assigns it there; N15b-37 duplicated N15a-12's KA-403 fixture and GATE-TRAC-04's receipt with N18a-36; N18a-27 and BD-167 disagreed on the pressure-model field; N15a-11 wrote ledger rows through a read verb; N35-29 needed a refinement-count hook that no bead exposed; N15b-26's re-baseline and register closure lacked their deps. New deps (all cycle-checked; graph_check cycles = 0): BD-156->N15b-08, N18b-25->N12-42, BD-167->N12-51, N18a-36->N15a-12, N15b-26->N16bp1-01 and N41-OPEN1. GATE-TRAC-04 removed from N15b-37's gates (owned by N18a-36). Every number re-derived (iron loss, Schur fold, exponent rule, kappa 4,801, pulse durations, cone and spin-stop values). The slice looks settled once the VERBS-sim and N15a-12 requests land."
+}

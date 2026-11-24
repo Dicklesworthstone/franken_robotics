@@ -1,0 +1,345 @@
+{
+  "round": 3,
+  "slice": "F-U24c",
+  "reviewed": 36,
+  "changed": [
+    {
+      "bead": "BD-125",
+      "kinds": [
+        "complete",
+        "users"
+      ],
+      "what": "Registers traverse-5m-flat (the second GATE-REFLEX-01 task) beside stand-10s: horizon, cmd_speed term echoed in the run header, progress signal, atoms and verdict with DESIGN numbers, labelled traces, acceptance criterion and unit test traverse_requirement_on_synthetic_traces."
+    },
+    {
+      "bead": "N24c-02",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests",
+        "deps"
+      ],
+      "what": "task defaults to the run's recorded TaskId; synthetic traces with no TaskId need --task, not --re-evaluate, and are labelled synthetic; FROB-REF-526 replaces a dead 520-539 row; stage-concatenation trigger made exact; CX-269 fixture (cx269-mission.ftask, stage-a/b, stitched, continuous) with case_supplied_by written to counterexamples.toml; plants N24c-02:cx-259, cx-260, cx-269; dep N24-CX; five unit tests added. The S30 request for --evaluator/--recompute-online/--check-online was not applied (see notes)."
+    },
+    {
+      "bead": "N24c-04",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests",
+        "deps",
+        "scope"
+      ],
+      "what": "Applied the four S30 items and H-verbs-2: battery form with optional --class and the class-only candidate via assets/robots/ (dep NEG-15), 802 rules for design/class and controller/policy, battery-manifest-invalid as a symbolic refusal, battery::item loop, 802 for a scorecard over two BatteryIds, outward rounding, not-observable quantile record; non-referee tiers answer 724 until N24cp3-01; CX-261 plant; four unit tests added. S57 (N35-04) and F-U21b (N21b-23) moved to the new M2 bead N24cp3-01 because both are M2 and N24c-04 is M1."
+    },
+    {
+      "bead": "N24c-06",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests"
+      ],
+      "what": "ref_<code> steps now drive BD-122's files of record instead of copies; adds the nine-code constant GATE_ARENA_03_REFUSALS in frob-conformance with files_of_record_complete (the check N24a-42 asked for) and its acceptance criterion; --key on task new; verdict_examples now records its own referee run via design new, task settle and sim run with keys; synthetic short-trace/boundary steps carry --task per N24c-02's rule; the script writes a receipt, not a gate row (convention 9)."
+    },
+    {
+      "bead": "N24c-08",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "Cites CX-265 and CX-266 with their numbers and builds plants N24c-08:cx-265 (Cargo feature letting the fixed-n planner admit a tie at n = 64) and N24c-08:cx-266 (a-a fixture: early-stopping adversary against a fixed-n study); new unit test cx_265_tie_at_64_refused; acceptance criterion; FROB-REF-532 referenced."
+    },
+    {
+      "bead": "N24c-09",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "Cites CX-267 and builds plant N24c-09:cx-267 (a-a fixture: resubmitting adversary against reused clusters at a constant level), caught by inv_qual_02 and inv_qual_03; acceptance criterion added."
+    },
+    {
+      "bead": "N24c-10",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "Registration rewritten to N24-KA's rules: no new known-answer records and no stored status; Gauntlet entries in g1_known_answers/g0_laws for KA-594..598, 615, 618, 619 with test names written into derivation front matter; each row's control referenced from its owner (BD-123, the CX plants of N24c-02/-04/-08, N24a-10) instead of written twice; rows 4 and 5 reported not run, added by the fixture-2 beads at M2; --key and --control on task.fixture per its row, NDJSON path; corrected the claim that every grouped KA record has a control."
+    },
+    {
+      "bead": "N24c-14",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Run-verb calls in the inputs script (task fixture, control synth, sim run) now carry distinct --key values (convention 5)."
+    },
+    {
+      "bead": "N24c-17",
+      "kinds": [
+        "complete",
+        "tests",
+        "deps"
+      ],
+      "what": "Cites ARENA-W1 and ARENA-W2 and builds plants N24c-17:arena-w1 (moment rows dropped) and :arena-w2 (average-of-coefficients closed form), each with its catching test and an acceptance criterion; names KA-ARENA-W1/W2 and fills their derivation front matter; deps N24-CX and N24-KA (both M1, no cycle)."
+    },
+    {
+      "bead": "N24c-22",
+      "kinds": [
+        "complete",
+        "tests",
+        "correct"
+      ],
+      "what": "Cites ARENA-A1 and KA-ARENA-A1 and supplies the planted design N24c-22:arena-a1 (a task with no dwell, synthetic fixture with the sled and resting-body traces) with acceptance criterion; finding arm name actual-design changed to actual to match the task.audit row's --arms values."
+    },
+    {
+      "bead": "N24c-23",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Stale note that the task.audit row lacks a listing mode replaced: the row lists --list-bodies (with --arms foil) and a build without this bead answers 724."
+    },
+    {
+      "bead": "N24c-24",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Comparator findings carry arm: actual, matching N24c-22's schema and the row."
+    },
+    {
+      "bead": "N24c-27",
+      "kinds": [
+        "complete",
+        "tests",
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Cites ARENA-A2 and KA-ARENA-A2 and builds plant N24c-27:arena-a2 (idle arm runs no idle law) caught by hand_case_parked_collects_full_reward (extended to assert the finding) and the gate count; the parked run re-evaluated under the amended TaskId now uses --re-evaluate (N24c-02's rule); the script writes a receipt and the bead records the gate with record_gate (convention 9)."
+    },
+    {
+      "bead": "N24c-28",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Fixtures say the synthetic traces record no TaskId and add reach-goal-sealed.ftask; amended_verdicts re-judges the recorded sled run with --task <new> --re-evaluate and the synthetic resting-body trace with --task only (N24c-02's rule); idle_resolve takes --re-evaluate; cancel_audit uses --sync-wait-ms 0 to get the job handle; sealed_refused registers the sealed fixture with task new, then audits --arms idle."
+    },
+    {
+      "bead": "N24c-29",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Depends on N38a-09: the pilot writes its record into the pilot register pilots.toml (schema frob.gauntlet.pilot/1) that N38a-09 creates (registries first; no cycle)."
+    },
+    {
+      "bead": "N24c-30",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Stale note that eval.items lacks class and fit replaced: the row lists class, fit and the paginated inputs (cursor, limit, follow; 806, 807)."
+    },
+    {
+      "bead": "N24c-31",
+      "kinds": [
+        "complete",
+        "tests",
+        "correct"
+      ],
+      "what": "Cites ARENA-I1/I2 and KA-ARENA-I1/I2 (derivation front-matter lines). Plant N24c-31:arena-i1 (frob-opt feature admitting epsilon = 0 and reporting the forecast variance) caught by wrong_model_unbiased; plant N24c-31:arena-i2 (planted-input fixture crates/frob-opt/tests/fixtures/arena_i2/) caught by refuse_with_tier_correction. The epsilon = 0 mutation-switch text now names the plant; the stale row note names the listed inputs."
+    },
+    {
+      "bead": "N24c-32",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "items_for_comparison uses --battery two-value --class synthetic --comparison <id> (spelling requested of VERBS-eval); refuse_fixed_n uses the row's fixed-n block (--fixed-n 64 --rule paired-clopper-pearson/1 --declared-verdicts ...); refuse_rare_bound uses nemesis bound --episodes and expects FROB-REF-560; gate-record paragraph says the script writes only the receipt and which options the rows list; E2E_PLANT_FAILURE runs on the arena-i1 plant."
+    },
+    {
+      "bead": "N24c-33",
+      "kinds": [
+        "deps",
+        "correct"
+      ],
+      "what": "Depends on N24cp3-01 (eval.run on batch-cpu is the M2 tier form); matrix recording uses its spellings --determinism reference-replay --run-seed <protocol seed>; the epsilon = 0 control runs on the arena-i1 plant."
+    },
+    {
+      "bead": "N24c-35",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Rare-bound refusal step is frob nemesis bound ... --episodes <run set> --key ss-r-bound (FROB-REF-560); stale note on the stratified value replaced: VERBS-eval lists it on eval.compare and eval.qualify with this bead as implementer."
+    },
+    {
+      "bead": "N24c-36",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "S66: the example drew from registry:hazards/push and registry:hazards/gust, which address no registry (BD-227's address is registry:hazards/<archetype>:<slug>, M3) and no plan source exists for push or gust laws; the draws now cite the new disturbance-law registry N24cp3-02 (registry:disturbances/push#impulse_per_mass, gust#intensity_per_mass); the :from paragraph and legality rule 5 name the three sources. Deps N24cp3-02 and STD-E2E. Convention 11: the bead pointed at N24c-38's script; it now owns scripts/e2e/exposure_domains.sh (compile, exposure table, TaskId change, the five planted refusals, sim run at 2 ms and 1 ms with keys) with NDJSON logging."
+    },
+    {
+      "bead": "N24c-37",
+      "kinds": [
+        "complete",
+        "correct",
+        "tests",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "States the verb surface as task.check's run action coupling (key, FROB-REF-805 without one, budget refused at admission, bounded wait and exit 8, cancel, 724 without the bead) with inputs --arms, --tier, --worlds and an example. Cites ARENA-E1/E2 and KA-ARENA-E1/E2 and builds plants N24c-37:arena-e1 (tick-keyed adapter) and :arena-e2 (footfall-keyed adapter) caught by rate_detects_tick_key and retiming_detects_footfall_key; acceptance criteria added. Deps N24-CX and STD-E2E. Convention 11: owns scripts/e2e/task_coupling.sh with keyed calls, job wait, the 805 case, the study before and after the pass, and the two plants."
+    },
+    {
+      "bead": "N24c-38",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "H-verbs-7: every run-kind call carries --key (task new, task check --coupling, eval compare) with job wait on exit 8. Its controls were task copies that differ only in the push's key, which FROB-REF-556 refuses at compile time before any check runs; they are now N24c-37's plants arena-e1 and arena-e2 on a gauntlet-mutations build, carrying KA-ARENA-E1/E2. eval compare --worlds (not in the row) dropped. The gate record is written as a receipt and recorded with record_gate (convention 9). The call-order generator, which N24-CX does not plant, is now credited to N24c-37's unit test instead of a 'mutation switch'."
+    },
+    {
+      "bead": "N24c-39",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Depends on N38a-09, the pilot register it writes its record into (registries first; no cycle)."
+    },
+    {
+      "bead": "N24c-40",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "H-verbs-7: --choose and --pilot-worlds are options of task.check's run action coupling, with --key, 805, exit 8 and stored-choice replay; the cap of 16 candidates gets the worded refusal coupling-family-too-large (pointer, detail, repairs) with a test and criterion. The example draw used :from card:...:uncertainty and :stream world.material (refused by N24c-36 with 103); now BD-200's form and the scene-field row. The baseline arm cannot run through eval.compare (an untested table is refused, and an anytime study may stop before the equal count), so both arms are measured with eval.run at equal N on shared world addresses (dep N24cp3-01), the baseline under a test-only Cargo feature. record_gate wording per convention 9."
+    },
+    {
+      "bead": "N24c-41",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "H-verbs-7: the user-side choose call carries --key (the key N24c-40's choose step used, so the stored choice comes back with no second lock, asserted from the ledger sequence)."
+    },
+    {
+      "bead": "N24cp1-01",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "--list-bodies (N24c-23, only with --arms foil) goes with the foil arm: refused with audit-arm-not-built on the gate-fired branch, 724 on the pilot-falsified branch; unit test and criterion extended."
+    },
+    {
+      "bead": "N24cp1-02",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "H-verbs-7: choose_refused carries --key and names coupling-choice-not-built as the worded refusal the task.check row lists. The adapter example named streams world.material, world.push, world.gate and sensor.imu, which are not rows of N35-23's registry that the fallback keeps (N24c-36 refuses such names with 103); now scene-field, disturbance-process, disturbance-event and sensor-noise, and :from uses BD-200's form."
+    }
+  ],
+  "new_beads": [
+    {
+      "bead": "N24cp3-01",
+      "why": "eval.run at M2 on batch-cpu and the GPU tiers had no implementing bead, though N16b-03, N16bp2-01, BD-201 and N24a-24 call it; carries the S57 (N35-04 shared profile admission) and F-U21b (N21b-23 evaluation fault policy: 608, 610 on GPU, 722 on batch-cpu) requests addressed to N24c-04, which as an M1 bead cannot depend on M2 mechanisms."
+    },
+    {
+      "bead": "N24cp3-02",
+      "why": "N24c-36's push and gust draws had no law source: they are neither card fields (BD-200) nor hazards of a place (BD-227, M3, addressed by archetype), and the section's rule forbids ranges in the task. This M2 bead adds registries/disturbances.toml (rows push and gust, DESIGN values, provenance assumed, BD-227's row schema), its loader and worded refusal disturbance-registry-invalid, the source kind registry:disturbances/<slug>#<id> resolved beside BD-200's card resolver, and how an impulse and a BrownianDyadic gust (N16c-01) are applied; unit tests and scripts/e2e/disturbance_registry.sh."
+    }
+  ],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-eval",
+      "what": "eval.run: add FROB-REF-248 (N35-04's degraded refusal), add the conformance-only input conformance_plant (as on sim.run), and set Implemented by to N24c-04 (M1 referee form) and N24cp3-01 (M2 tier form)."
+    },
+    {
+      "bead": "VERBS-task",
+      "what": "task.verdict: mark the task input optional, defaulting to the TaskId the run recorded and required for a trace that records none (N24c-02)."
+    },
+    {
+      "bead": "N24a-04",
+      "what": "Drop calls to task.verdict --evaluator / --recompute-online / --check-online, which the VERBS-task row does not list; the three-evaluator and online-vs-recomputed checks are Gauntlet rows (cargo test -p frob-conformance --test g1_known_answers -- KA-596; --test g5_determinism -- GATE-ARENA-03)."
+    },
+    {
+      "bead": "N24a-07",
+      "what": "Same as N24a-04: no --evaluator / --recompute-online / --check-online on task.verdict; use the Gauntlet rows."
+    },
+    {
+      "bead": "N24a-08",
+      "what": "Same as N24a-04: no --evaluator / --recompute-online / --check-online on task.verdict; use the Gauntlet rows."
+    },
+    {
+      "bead": "N24a-42",
+      "what": "Same as N24a-04 for its e2e steps; and read the constant GATE_ARENA_03_REFUSALS that N24c-06 now delivers in frob-conformance (gates::arena) in planted_table_complete."
+    },
+    {
+      "bead": "N24c-07",
+      "what": "Add traverse-5m-flat (now registered by BD-125) to the loop table; add --key to its eval run calls with distinct keys for compared runs; do not write the gate row itself (convention 9)."
+    },
+    {
+      "bead": "N14b-06",
+      "what": "Add dep BD-125 (it uses the stand-10s / traverse-5m-flat tasks BD-125 registers; no cycle)."
+    },
+    {
+      "bead": "N22a-11",
+      "what": "Step 4 describes stand-10s's verdict as tilt below 5 degrees and height within 10%; BD-125 defines tilt 20 degrees and height ratio 0.8 with no off-site contact. Align, or state the tighter figures as the bead's own assertions beside the task's verdict."
+    },
+    {
+      "bead": "N16b-03",
+      "what": "Depend on N24cp3-01 for eval.run on batched tiers (check for a cycle first)."
+    },
+    {
+      "bead": "N16bp2-01",
+      "what": "Depend on N24cp3-01 for eval.run on batched tiers (check for a cycle first)."
+    },
+    {
+      "bead": "BD-201",
+      "what": "Depend on N24cp3-01 for eval.run on batched tiers (check for a cycle first)."
+    },
+    {
+      "bead": "N24a-24",
+      "what": "Depend on N24cp3-01 for eval.run on batched tiers (check for a cycle first)."
+    },
+    {
+      "bead": "VERBS-eval",
+      "what": "eval.items: name the comparison input that N24c-32's items_for_comparison step uses (proposed --comparison <id>: q, w and draw counts of one item-bank comparison)."
+    },
+    {
+      "bead": "VERBS-eval",
+      "what": "eval.compare: add coupling-choice-after-draw (N24c-40, registered in N24-REF) to the pending refusals beside exposure-table-untested; and list an input naming a study's run seed (eval.run's spelling --run-seed), which N24c-40's refuse_pre_lock_addresses step needs to submit a study on the pilot seed, or say how a study's addresses are chosen so the step can be spelt."
+    },
+    {
+      "bead": "VERBS-task",
+      "what": "task.check, action coupling: list the worded refusal coupling-family-too-large (N24c-40: more than 16 candidate tables under --choose), and --tier among the action's inputs (N24c-37). task.new and task.check: list the worded refusals stream-adapter-missing (N24cp1-02, fallback branch) and disturbance-registry-invalid (N24cp3-02)."
+    },
+    {
+      "bead": "VERBS-sim",
+      "what": "sim.run --task: list the worded refusal disturbance-registry-invalid (N24cp3-02), raised at environment admission when registries/disturbances.toml does not load."
+    },
+    {
+      "bead": "N24-REF",
+      "what": "Register two worded refusals: coupling-family-too-large (N24c-40; exit 3; more than 16 candidate tables) and disturbance-registry-invalid (N24cp3-02; exit 3; the disturbance-law registry does not load, pointer file, slug and field)."
+    },
+    {
+      "bead": "BD-200",
+      "what": "The :from resolution gains the source kind registry:disturbances/<slug>#<dimension id>, resolved by N24cp3-02's resolver beside the card resolver; the randomization block records its row identifier and provenance like a card field's."
+    },
+    {
+      "bead": "BD-122",
+      "what": "The randomization section's rule 'each traced to an uncertainty on a card or a hazard registry entry' should also admit a disturbance-registry entry (N24cp3-02), as N24c-36's legality rule 5 now states."
+    },
+    {
+      "bead": "BD-227",
+      "what": "Note in related or considerations that N24cp3-02's registries/disturbances.toml (M2) reuses the hazard row schema with its own file and address registry:disturbances/<slug>; sharing the row parser at M3 must change neither."
+    }
+  ],
+  "unchanged": 8,
+  "notes": "Reviewed all 36. Unchanged: BD-064, BD-122, N24c-16, N24c-20, N24c-21, N24c-25, N24c-26, N24c-34. Not applied: the S30 request to N24c-02 for task.verdict options --evaluator definitional, --recompute-online and --check-online; the VERBS-task row (the authority, convention 12) and the plan list none of them, and the comparisons they would expose are already Gauntlet checks (KA-596, GATE-ARENA-03), so the requests go to the callers instead. S66 (N24c-36) was applied by creating N24cp3-02 rather than an eighth hazard file or a card kind: a push belongs to no place and BD-227 is M3, after the M2 exposure domains need it. N24c-37 and N24c-38 (here for requests) also got the ARENA-E1/E2 plants that N24-CX assigns to N24c-37; N24c-38's old task-copy controls could never reach the coupling checks because 556 refuses them at compile time. The pilots N24c-29 and N24c-39 lacked the edge to the pilot register N38a-09; other slices' pilots carry it."
+}

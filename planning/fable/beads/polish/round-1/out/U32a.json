@@ -1,0 +1,430 @@
+{
+ "round": 1,
+ "slice": "U32a",
+ "reviewed": 56,
+ "changed": [
+  {
+   "bead": "BD-022",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Request from U21b honoured: doctor gained a section interface (DoctorSection trait, static table, --section, unknown section 802 with pointer) and the later sections kernels (N21b-01), ledger (N34-26) and registries (N32ax-03). The over-budget row of GATE-TETHER-03 had no estimable run verb at M0: added the test-lane overlay `synthetic-verbs` (synthetic.deferred, synthetic.estimable with a fixed estimate and the worked 701 case), excluded from release builds. The grammar unit test used design.check, which is not registered at M0: made it a synthetic entry. The component scripts of N32a-03 and N32a-04 drive `frob`, which first exists here, so they are now run green in this bead's acceptance. Added dep N32a-01 (the ADR-TETHER-01 verb-literal lint this bead asserts; also resolves the graph finding that nothing depended on N32a-01). Round two of edits: the overlay's uncalibrated interval is [0.5, 2], N32a-15's rule point/2 to point*2 (was [1, 2])."
+  },
+  {
+   "bead": "N32a-01",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "ADR-TETHER-10's governing bead was 'the beads of the other Tether unit'; the index needs keys: named N32b-06 and N32b-10, measured by N32b-09 and N32b-14."
+  },
+  {
+   "bead": "N32a-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "RL-06 required a non-empty chapter refusal list for every verb taking input, which the operator rows (refusals = []) violate: the rule now applies to the full list (chapter plus appended codes). RL-15 said the scope registry arrives at M3 with BD-258; it arrives at M2 with N32b-01 (BD-258 adds admin scopes at M3). Added the field `key_optional` and lint RL-21 for the one optional-key exemption (study.plan) that N32a-09 and N32a-13 cite but no field carried. Fixed the cluster count (243 verbs in about 44 clusters; 34 is the mechanical inventory's). RL-21 also admits session.focus (key_optional; its appended list omits 805), whose keyless calls the kind rule would otherwise refuse."
+  },
+  {
+   "bead": "N32a-03",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "The panic envelope carried 'a 9xx integrity code' but no 9xx code exists in the refusal registry: chose FROB-REF-990 internal-fault (provisional, DESIGN, clear of the proposed 901-907 and the 999 sentinel) with retry never and repairs; request to N32-REF to enter the row. Its e2e drives `frob`, which BD-022 builds on this crate: the script is authored here and run green in BD-022; added the unit test exit_fixture_rows so the fixture is checked here."
+  },
+  {
+   "bead": "N32a-04",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests",
+    "deps"
+   ],
+   "what": "Step 7 routed run verbs by an 'in-process limit' registry field that N32a-02's closed schema does not have, and running a run verb in a client while a daemon is up would bind its key outside the one ledger (INV-TETHER-05): routing is now a rule of kind, tier and daemon reachability, with the M0 no-ledger case stated. The conformance suite and e2e named the M0 operator verbs, which BD-022 builds on this interface: they now run a synthetic dispatch fixture through frob-rpc-serve and frob-rpc-call, and BD-022 reruns them on the operator verbs. Added test route_by_kind_and_daemon. Moved N33c-35 (the OPEN-SUITE-6 decision on Cx, which the trait signature uses) from related to deps."
+  },
+  {
+   "bead": "N32ax-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "scope"
+   ],
+   "what": "The scratch-approval hold needs a job row, which does not exist until the ledger (M1) and the daemon (M2), and the bead had no path into the admission transaction: made the hold a pure function scratch_hold, stored in N32a-08's new `hold` column and written by N32a-09; at M0 a would-be-held run is refused 761 with scratch_verdict admitted. Acceptance and tests staged accordingly."
+  },
+  {
+   "bead": "BD-023",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Handler fault now carries FROB-REF-990 (consistent with N32a-03). The smoke test required doctor to exit 0, which fails on a host with an absent device: 0 or 2, equal to the CLI's. definition_from_entry used sim.run and an admin entry that are not in this bead's dependencies: synthetic entries; added handler_fault_990."
+  },
+  {
+   "bead": "N32a-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "kill_mcp_decision.sh diffed the tool list against `frob schema --list`, which no bead defines: now against `frob capabilities --json`. Named the M0 verb-serving loop (frob-rpc-serve) for the rehearsal and added failure details to its log."
+  },
+  {
+   "bead": "N32a-06",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Log lines lacked the evidence block, the asupersync count per workspace and failure details; added."
+  },
+  {
+   "bead": "N32a-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Schema file path was the rejected `registries/schemas/frob.common@1.json`; now schemas/frob.common.1.json per N32a-02. Out-of-range int53 emission is FROB-REF-990 with a test."
+  },
+  {
+   "bead": "N32a-08",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Added the `hold` column and the held-job rule (never started by queue or recovery; only admitted to cancelled), which N32ax-03's scratch-approval hold needs and no table carried; test held_job_never_starts."
+  },
+  {
+   "bead": "N32a-09",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "The admission transaction now writes the scratch hold (N32ax-03's scratch_hold with N36-20's needed class); deps N32ax-03 and N36-20 added. The optional-key exemption names its registry field key_optional and lint RL-21. Tests scratch_hold_set_in_transaction and key_optional_content_addressed."
+  },
+  {
+   "bead": "N32a-14",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "e2e used `frob job find --key` (the reconciled form is --verb and --key) and the verb job.find is registered by N29a-23, which depends on this bead: that step is logged skipped until then and the lookup is asserted by the new unit test restart_then_find_by_key. The queue never dequeues a held job; test held_job_never_dequeued."
+  },
+  {
+   "bead": "N32a-10",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The live-pin cap had no number: 256 per principal, LRU expiry to 807, with a test. The e2e paged `telemetry.query`, whose verb bead (N24a-36) does not depend on this one: the script now pages a synthetic paginated verb from BD-022's test overlay and is parameterized so BD-211 reruns it on telemetry.query and job.list (dep BD-022 added); evidence block added to the log."
+  },
+  {
+   "bead": "BD-137",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "module.list, module.show and module.check are built by N15b-02, which nothing in the M1 capstone's dependency set reached (the only M1 verb bead missing from it): added the dep and named it in the cluster table. The checklist used the field `when`; the registry's spelling is `use_when` (N32a-02), and a run entry also needs its `wait` table."
+  },
+  {
+   "bead": "BD-138",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "session.focus is a mutate verb, so the kind rule (RL-08) would make the generator require an idempotency key and refuse every `session_focus {cluster}` call, including all of the plan's worked session, with 805: the row is now key_optional under RL-21 (a set-to-value change of the caller's own session). Clarified that the refusal column shows appended codes. Test focus_needs_no_key."
+  },
+  {
+   "bead": "N32a-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Acceptance called verb_invoke one of four allowlisted non-registry tools; the other three allowlisted names are the base tools, which are registry verbs (N32a-11)."
+  },
+  {
+   "bead": "N32a-13",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "The PairCounts integrity fault had no code: FROB-REF-990 (exit 9). The optional key on study.plan is now one of the two RL-21 cases (with session.focus). study.cancel is first due at M2 in the appendix and lands here at M3: stated that it answers 724 at M2 and that a study is cancelled through job.cancel on its job meanwhile."
+  },
+  {
+   "bead": "N32a-15",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "The registry lint 'estimable on every verb whose cost model can exceed one second' had no owner or decidable rule, and BD-222's negative control relies on it: defined lint `estimate-required` here (estimable iff the cost model has the `estimated:` form; every job-submitting run verb estimable; a static bound above 1 s is a warning, design.check at M2), with a test."
+  },
+  {
+   "bead": "N32a-16",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The wait table was spelled `{ cli = \"complete\", mcp_default_ms, max_ms }`, the draft N32a-02 replaced; now `{ cli = \"to-completion\", mcp_ms, mcp_max_ms }`. job.wait is a read verb that takes sync_wait_ms, contradicting 'read verbs do not accept it': stated as its own input property, with no wait table (RL-18)."
+  },
+  {
+   "bead": "N32a-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "A progress regression was 'an integrity fault' with no code or outcome: the frame is dropped, the job untouched, the wait ends with FROB-REF-990 and the job-find repair."
+  },
+  {
+   "bead": "N32a-18",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "A1 read the chunk index through 'telemetry query (or the store's audit read verb)'; no verb exposes the raw chunk index: A1 is the conformance frontier audit over a ledger copy, cross-checked from the user's side by telemetry.query."
+  },
+  {
+   "bead": "N32a-19",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "The code-to-exit check runs at M2 while the refusal beads of §26, §39 (M3) and §31 (M5) land later: stated that it is a standing per-commit test and BD-299 records it with them. Added 990 to the family-default test."
+  },
+  {
+   "bead": "N32a-21",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Acceptance asserted the hysteresis band and a tested KILL-PREEMPT configuration with no unit test for either: added hysteresis_enter_10_leave_5 and preempt_disabled_config."
+  },
+  {
+   "bead": "N32a-25",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "The oversize resource read had no code and the bead 'blocked on this point'; N32-REF assigns FROB-REF-838 (provisional): used it with its payload and repairs. The schema URI example used the rejected `@` form; schema ids in a URI are written with `/` as `.`."
+  },
+  {
+   "bead": "N32a-26",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Its identifier pattern differed from the one N32b-18 owns as data (no `/`): now N32b-18's. The seven workflow files were attributed to BD-313, which depends on this bead, while this bead's tests need them: their step form is written here, BD-313 builds the full sessions on them. Stated the omission rule both renderings share so prompt and robot-docs stay equal in every build; tests added."
+  },
+  {
+   "bead": "N32a-32",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "Read KILL-SOLVE's clause 1 (the paper ceiling) after the verb it gates had been built (it depends on BD-372), while BD-372 was gated only on the pilot's own verdict; the decision's stricter conservative recount could then fire after the work was spent. Clause 1 moved to the new decision bead N32ap1-01 between the pilot and BD-372; this bead keeps clause 2 and completes the same ADR and row."
+  },
+  {
+   "bead": "BD-372",
+   "kinds": [
+    "deps",
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Now depends on the clause-1 decision N32ap1-01 and is closed as not built on its `fired: ceiling` entry. Its registry row is VERBS-solve's (dep added; no second copy): the row declares `solve:run`, where this bead listed opt:run, sim:run, study:submit as the row's capabilities; those are now checked as the called verbs' scopes before any job (720 naming the missing scope). Out names the A/B bead (BD-374) and both decision beads. Tests called_scopes_checked_first and campaign_class_704 (the campaign-class refusal is named)."
+  },
+  {
+   "bead": "N32a-33",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The wait table used the replaced spelling; per-verb override is `wait.mcp_ms` (N32a-02); the schema read is `frob schema sim.run --in --json`."
+  },
+  {
+   "bead": "N32a-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The count of further conditions disagreed with the four listed; the default was ambiguous: it stays blocked unless the decision reads `build`, standalone machines being the intended default."
+  },
+  {
+   "bead": "N32a-35",
+   "kinds": [
+    "complete",
+    "risks",
+    "tests",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The peer link had no kill gate, though it forwards jobs between machines: added KILL-PEERLINK (triggers: a double admission or charge; a forbidden-class or private byte on the wire; recovered device time below 10% over 4 weeks; fallback standalone), with acceptance, test kill_peerlink_decision and the log summary. A forwarded job introduced a ninth job state the 8-state ledger does not have: the row stays `running` with `forwarded_to` and `peer_job` columns; test forwarded_job_keeps_eight_states. Out names N32a-34 and N41-12."
+  },
+  {
+   "bead": "N32ax-01",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "e2e used job find without the verb; now `frob job find --verb sim.run --key k2`; dep N29a-23 (the job.find verb) added."
+  },
+  {
+   "bead": "BD-211",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Acceptance used `frob job find --key <k>`; a key is scoped to principal and verb: now --verb and --key. The e2e now reruns N32a-10's pagination script on telemetry.query and job.list, which N32a-10 hands to this bead and nothing ran. Deps N24a-36 (telemetry.query) and N29a-23 (the job verbs) added; no cycle."
+  },
+  {
+   "bead": "BD-222",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "Its daemon-era common codes by kind were a shorter second list (no 704, 723, 808; 720 only once tokens exist) where BD-137 and NJL-01 have one rule: now the same appended sets, with test appended_refusals_one_rule. telemetry.inspect-pixel and export-html are built by N24a-40 and N24a-41, not BD-191: deps added. study.cancel is registered declared (724) until N32a-13 at M3; test study_cancel_declared_at_m2. The task-cluster assignment is NJL-05's; this bead checks it. The estimable rule cites N32a-15's lint."
+  },
+  {
+   "bead": "BD-295",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Acceptance required 'the pilot for slot dispatch' without naming it: N21b-20 (a dependency), with its queue trace, ceiling and falsifier and a funding verdict."
+  },
+  {
+   "bead": "N32a-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The not-fired branch named the mode `--dispatch=slots`; BD-295's modes are per-job, shadow and shared: now `--dispatch=shared`."
+  },
+  {
+   "bead": "BD-296",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The deficit round-robin increment q0 was undefined: the scheduling quantum (5 s default, OPEN-TETHER-4), the one N32a-21 measures the deficit against."
+  },
+  {
+   "bead": "BD-298",
+   "kinds": [
+    "scope",
+    "correct"
+   ],
+   "what": "Claimed 'the complete task-cluster assignment' and carried its own starting assignment of eleven further clusters, a second table beside NJL-05's 45-cluster assignment (a dependency) against which the every-verb-seated lint is checked: the assignment and its lints are NJL-05's; this bead checks the served surface (M-focus) and keeps no list. Acceptance reworded to the served-surface check."
+  },
+  {
+   "bead": "BD-299",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The handler-fault skeleton had no code: FROB-REF-990 (N32a-03), retry never, job-find repair. The by-kind 805 stimulus would fail the key_optional rows (session.focus, study.plan): excepted, with test key_optional_rows_skip_805. Recovery used job.find by key alone: now by verb and key. Recorded N32a-19's hand-off: the M3 code-to-exit reading lists the chapters present (§26, §39 now) and names §31 absent. The sealed-read row in Considerations had no test or acceptance: added sealed_read_refusal_reveals_no_world."
+  },
+  {
+   "bead": "BD-312",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "Same refusal-set drift as BD-222 (a shorter list by kind): now the one rule of NJL-01/BD-137, test appended_refusals_one_rule. Sealed-read refusal named FROB-REF-840 (N39-REF). Task-cluster assignment deferred to NJL-05 (dep). Estimable rule cites N32a-15 (dep). declared_verbs_724 covers shield.check too. Dependency count corrected (about sixty)."
+  },
+  {
+   "bead": "BD-313",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The guide's recovery text named job.find without the verb. The step form of the workflow files is N32a-26's (now a direct dep): this bead adds the sessions' commands and keeps steps equal, test worked_sessions_follow_workflow_files."
+  },
+  {
+   "bead": "BD-373",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Named the two KILL-SOLVE decision beads (clause 1 N32ap1-01, final N32a-32) and the not-run case of the second arm. The bead runs the fresh agent 'only on a build where session_mission.sh passes' but nothing checked it: the e2e now runs that script first and the record cites it."
+  },
+  {
+   "bead": "BD-376",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained",
+    "scope",
+    "tests"
+   ],
+   "what": "Depended on N32a-32 (the final KILL-SOLVE status, after the A/B) while its freeze rule allows the decision to be pending: now depends on the clause-1 decision N32ap1-01, N32a-32 related. When clause 1 fires, solve_run leaves `search` with six tools (NJL-05's rule; its `opt_cascade` proposal is requested of NJL-05). 'All eight conditions' spelled out. Sealed read named 840. Assignment deferred to NJL-05 (dep)."
+  },
+  {
+   "bead": "BD-409",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "Proposed two clusters of its own (`reality-2`, `make-2`) for verbs NJL-05 already seats (calibrate, structure, proofs, places-check): withdrawn in favour of NJL-05 (dep), test m5_verbs_seated_per_njl05. The completeness test cited 34 clusters; the registry has 44 (the 34 of the inventory and those the chapters add)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N32ap1-01",
+   "why": "split from N32a-32: KILL-SOLVE's clause 1 must be decided between the pilot (N32a-31) and the verb (BD-372), not after the verb is built"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N32-REF",
+   "what": "Enter FROB-REF-990 `internal-fault` (provisional number, family 9xx internal per BD-005): a handler panicked or returned an unhandled error, or a serializer refused an out-of-range int53; exit 9; retry never; repairs (1) `frob job find --verb <verb> --key <key>` when the call carried a key, (2) `frob doctor`; the diagnostic file path in `observed`. N32a-03, BD-022, BD-023 and N32a-07 raise it."
+  },
+  {
+   "bead": "N36-20",
+   "what": "Under a scratch registries root (N32ax-03) admission still decides from the scratch registry, but a job needing more than the class in force of record is held (from M1: admitted with hold scratch-approval, never started; at M0: refused 761 with scratch_verdict admitted). The acceptance line 'approving E1 in a scratch registry admits it' should assert the decision and the hold, and zero worlds stepped."
+  },
+  {
+   "bead": "N24a-36",
+   "what": "telemetry.query should be wired through N32a-10's Paginated wrapper and depend on N32a-10: a cursor reused with a changed filter, order or pin answers FROB-REF-806 at the surface (the plan's §32.8.1 code) with FROB-REF-896 as its cause, not a bare 896; the response's cursor is the authenticated frob.cursor/1."
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "BD-022 gives `doctor` the input `--section <name>` (sections toolchain, stack, stack_receipt, upstream, devices, kernel_cache, probes, daemon, plus kernels, ledger, registries from later beads) and `capabilities` the filters `--verb`, `--device`; the rows list both verbs' inputs as none."
+  },
+  {
+   "bead": "VERBS-session",
+   "what": "session.focus: set `key_optional = true` (N32a-02 RL-21 now admits it: a set-to-value change of the caller's own session; the plan's worked session calls session_focus with no key, which RL-08 would refuse with 805). Its appended refusal list then omits 805."
+  },
+  {
+   "bead": "VERBS-solve",
+   "what": "If KILL-SOLVE's clause 1 fires (N32ap1-01), remove the solve.run row before the M4 freeze in the same change (solve_run then leaves `search`, NJL-05). 'Implemented by: BD-372, N32a-32' should read 'implemented by BD-372; decided by N32ap1-01 (clause 1) and N32a-32 (clause 2)'. The row's capability `solve:run` stands; BD-372 additionally checks the called verbs' scopes (opt:run, sim:run, study:submit, qual:run when stop_at = qualify) and refuses 720 before any job; the row's description may say so."
+  },
+  {
+   "bead": "N32b-25",
+   "what": "Add the KILL-PEERLINK row to the kill-gate register (N32a-35): triggers (a) a double admission or double charge of a forwarded job, (b) a forbidden-class or private byte on the wire, (c) recovered device time below 10% over a four-week reading; fallback: standalone machines; read at the end of the four weeks."
+  },
+  {
+   "bead": "N41-12",
+   "what": "Name KILL-PEERLINK (N32a-35) as the gate whose recorded pass enables `fleet.peer_link = true`; until then the default is standalone."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check's cost model is `static: under 2 s`, which N32a-15's new lint estimate-required reports as a warning (a static bound above 1 s): add an `estimated:` cost model or tighten the static bound to at most 1 s."
+  },
+  {
+   "bead": "NJL-05",
+   "what": "BD-376 had proposed seating `opt_cascade` in `search` when KILL-SOLVE fires; it now follows NJL-05's rule (six tools). Decide whether `opt_cascade` should take the vacated seat and, if so, state it in the KILL-SOLVE line of the assignment."
+  }
+ ],
+ "unchanged": 12,
+ "notes": "All 56 beads of the slice reviewed against the plan and the brief. Cross-cutting reconciliations: the job-find form (--verb and --key) everywhere; FROB-REF-990 for internal faults; the wait table spelled per N32a-02; one appended refusal rule per kind (BD-222, BD-312 had shorter lists); task-cluster assignment owned by NJL-05 only (BD-298, BD-312, BD-376, BD-409 had second tables); KILL-SOLVE split so clause 1 (new N32ap1-01) sits between the pilot and BD-372; KILL-PEERLINK added in N32a-35. coverage.md updated for N32ap1-01 and KILL-PEERLINK. graph_check: 0 cycles. The slice looks settled pending the listed requests."
+}

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M2"
 labels: ["m2", "suite", "cortex", "upstream", "frankensim", "solid", "test"]
 parent: "WP-48"
-deps: ["BD-034", "BD-037", "STD-E2E"]
-needs: ["§23.25: the joint-law battery of rule P-12 in `frob-conformance` and its planted sampler (GATE-CORTEX-18), whose record this report copies"]
-related: ["FD-FSIM-32", "FDEF-01", "BD-197", "BD-180"]
+deps: ["BD-034", "BD-037", "N23b-30", "N33c-37", "STD-E2E"]
+needs: []
+related: ["N41-38"]
 gates: ["GATE-CORTEX-18", "GATE-WS-06"]
 plan_refs: ["Appendix F.2 row 6", "§33.17", "§23.25", "§23.6", "§41", "Appendix F.3"]
 ---
@@ -70,8 +70,12 @@ decision, since its exported checkpoints were trained with it.
 **Admission test and pass condition.** The joint-law battery (rule P-12, GATE-CORTEX-18), run in
 `frob-conformance` against a sampler's manifest, with four statistics over N decisions: the sign-agreement
 frequency of every pair of channels; the same for one channel at consecutive decisions; the same for one
-channel in adjacent worlds; and the empirical covariance of the standardized noise. Program-level signal
-threshold: a pairwise sign-agreement frequency outside ½ ± 0.005. Pass conditions touching this report: the
+channel in adjacent worlds; and the empirical covariance of the standardized noise. GATE-CORTEX-18's terms: for
+action dimensions 2, 12 and 29, N = 10⁵ decisions and 64 worlds, every channel-pair, consecutive-decision and
+adjacent-world agreement lies in ½ ± 0.005, every off-diagonal entry of the standardized covariance is below
+4/√N = 0.01265 in magnitude, and the planted linear-phase sampler is rejected with an agreement of
+0.6655 ± 0.005. Program-level signal threshold: a pairwise sign-agreement frequency outside ½ ± 0.005. Pass
+conditions touching this report: the
 planted copy of the sibling's sampler is rejected (GATE-WS-06, sampler row, at M2); this project's sampler
 passes.
 
@@ -100,12 +104,14 @@ mirrored bead of FD-FSIM-32 in FrankenSim's tracker under its `AGENTS.md`; store
 - `phase_step_from_constants`: integer arithmetic on the two constants modulo 2⁶⁴; expected fraction 0.167245 to six places and predicted agreement 0.665510.
 - `repro_sign_agreement_three_seeds`: N = 100,000 per seed; expected (if the defect is real) a frequency within 0.005 of 0.6655; expected for a correct sampler ½ ± 3·0.00158.
 - `repro_marginals_are_fine`: each channel positive in ½ ± 0.005 of calls, mean within 0.01 of 0 and variance within 0.02 of 1 for the standardized noise.
-- `planted_sampler_matches_sibling`: the planted copy and the sibling's sampler, from one seed, produce identical first 1,000 two-channel draws (so that the negative control really is the sibling's law).
+- `planted_sampler_matches_sibling`: from one starting counter, the planted copy and the sibling's sampler produce bit-identical phase uniforms, and therefore identical sign patterns, over the first 1,000 two-channel draws (so that the negative control really has the sibling's joint law). The radius uniforms are not compared: the plant takes its radius from an independent addressed draw by design (N33c-37), so that only the joint law is defective.
 
 ### End-to-end script and logging
 `scripts/e2e/defect_fdef_06.sh`: runs the reproduction in `target/upstream-scratch/frankensim@<rev>`; runs the
-battery of `frob-conformance` on the planted sampler (expected: rejected, with the offending pair and its
-frequency in the envelope) and on this project's sampler (expected: qualified); reads the registry row with
+battery of `frob-conformance` on the planted sampler and on this project's sampler (`FROB_TEST_SEED=<seed> cargo
+test -p frob-conformance --features gauntlet-mutations --test g1_known_answers -- GATE-CORTEX-18`; expected: the
+plant rejected, with the offending pair and its frequency in the rejection record, and this project's sampler
+qualified); reads the registry row with
 `frob doctor --json`.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
@@ -126,11 +132,11 @@ band ½ ± 0.005.
 
 ## Considerations
 
-- Program risk (high): a sampler with correct marginals and a wrong joint law makes the likelihood ratio wrong and correlates exploration across channels; earliest signals are a pairwise sign-agreement frequency outside ½ ± 0.005 and a learning curve that changes when channels are reordered.
+- RISK-58 (high): a sampler with correct marginals and a wrong joint law makes the likelihood ratio wrong and correlates exploration across channels; its planted instance is GATE-WS-07's M2 row (N41-38); earliest signals are a pairwise sign-agreement frequency outside ½ ± 0.005 and a learning curve that changes when channels are reordered.
 - The fraction 0.6655 is arithmetic on constants read from source, so it survives a re-read better than a measured number; it must still be recorded at the pin before anything cites it.
 - No milestone waits for the fix: nothing here links the sibling sampler. If it never lands, the sibling trainer simply never becomes a comparison baseline.
 - When it lands it is adopted only through its switch-over rule (re-run the joint-law battery against the corrected sampler; only then may it serve as a comparison baseline); neither a pin nor the toolchain moves during the ten-fold tournament.
 
 ## References
 
-Appendix F.2 (row 6), F.3; §33.17 (row 6), §23.25 (rule P-12), §23.6; GATE-CORTEX-18, GATE-WS-06; FD-FSIM-32; RISK-24.
+Appendix F.2 (row 6), F.3; §33.17 (row 6), §23.25 (rule P-12), §23.6; GATE-CORTEX-18, GATE-WS-06; FD-FSIM-32; RISK-58, RISK-24.

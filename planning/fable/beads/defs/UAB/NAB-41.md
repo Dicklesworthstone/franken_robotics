@@ -6,11 +6,11 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
 parent: "EPIC-M0"
-deps: ["NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-39", "NAB-15", "BD-025", "STD-TEST"]
-needs: ["§2.2, §2.3: the thesis arithmetic calculators that own the step-share ceiling and the solver-pilot ceiling (N00-17)", "§40.7: the gate register's own list of discrepancies it resolved, where the milestone of lifecycle compression is fixed at M6 (N40-09, N40-10)"]
-related: ["NAB-40", "NAB-05", "NAB-06", "NAB-14", "NAB-21", "NAB-43", "NAB-49", "NAB-50", "N00-17", "N40-09"]
+deps: ["BD-025", "N00-17", "N38b-50", "N40-02", "N40-27", "NAB-05", "NAB-06", "NAB-14", "NAB-15", "NAB-21", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-39", "NAB-40", "NAB-43", "NAB-49", "STD-TEST"]
+needs: []
+related: ["NEG-03", "NEG-05", "NEG-06"]
 gates: []
-plan_refs: ["Appendix C.3", "§0.1", "§2.3", "§18.12", "§19.10.1", "§21.20", "§40.7"]
+plan_refs: ["Appendix C.3", "§0.1", "§2.3", "§18.12", "§19.10.1", "§21.20", "§40.7", "Appendix M.38", "Appendix E.7"]
 ---
 ## Background
 
@@ -28,17 +28,39 @@ earlier state of a register, a missing glossary row, three declined ideas with n
 measurement, a reference to marks that no source carries, and a milestone stated two ways). They are pinned
 here in the same form so that the beads that corrected them cannot silently regress.
 
+Two other lists of the same kind exist, each made by a different recomputation: the reconciliation register
+of the known-answer suite (`crates/frob-conformance/registry/reconciliations.toml`, records REC-01 to REC-11,
+bead N38b-50) and the discrepancy register of the worked cards (`registries/cards/discrepancies.toml`, twelve
+items E7-…, bead NEG-03). Two records here are also records there: DX-02 is REC-02 and E7-2 (the ceiling at a
+step share of 87%), and DX-03 is REC-01 and E7-3 (the solver pilot's ceiling). The three registers stay
+separate files, but the search for a withdrawn figure in its context is one engine, built in N38b-50 and run
+by all three.
+
 Tier: Solid. This is hygiene, bounded to seventeen records and one test file.
 
 ## Scope
 
-In: seventeen `[[discrepancy]]` records, the recomputation tests, the withdrawn-figure lint. Out: the
-calculators and registries that own the corrected values (named per record); the general wording and
-evidence-label lints (N00-01).
+In: seventeen `[[discrepancy]]` records in `crates/frob-conformance/registry/discrepancy_pins.toml`; the
+recomputation tests; the owner-agreement tests; the withdrawn-figure lint, which is the shared scan run over
+these records and reported as the finding `dx.withdrawn-figure`; the links of DX-02 and DX-03 to the
+reconciliation register.
+
+Out, with the bead that has it:
+- the scan engine (entry form, the 200-character window, the walk set, the exemption list with the marker
+  `stale-as-control: <id>`, the hit record, link resolution): N38b-50. This bead registers its file as a
+  source of that engine and specifies none of the engine's rules a second time;
+- the settled values of the two shared records in the known-answer rows: N38b-51 (REC-02) and N38b-50
+  (REC-01); the print rule and the ceiling formatter for the first: NEG-05; the rule that a ceiling is a ratio
+  of two timed totals, for the second: NEG-06; the twelve E7 items: NEG-03;
+- the calculators and registries that own the corrected values (named per record);
+- the general wording and evidence-label lints (N00-01).
 
 ## Technical approach
 
-**1. Record** (in `crates/frob-conformance/registry/discrepancies.toml`, schema `frob.discrepancy/1`):
+**1. Record** (in `crates/frob-conformance/registry/discrepancy_pins.toml`, schema `frob.discrepancy/1`.
+DESIGN: the file is named for the pins, after its test target `discrepancy_pins`, and not
+`discrepancies.toml`, because `registries/cards/discrepancies.toml` is the worked cards' register of NEG-03
+with a different schema, and two registers of one base name in one workspace would be taken for each other):
 
 ```toml
 [[discrepancy]]
@@ -46,13 +68,22 @@ id        = "DX-02"
 topic     = "step share and its ceiling"
 withdrawn = "a ceiling of about 7.8 at a step share of 87%"
 correct   = "1/(1 − 0.87) = 7.69, printed as about 7.7"
-expr      = "1/(1 - 0.87)"; value = "7.692"; tol = "1e-3"
+expr      = "1/(1 - 0.87)"
+value     = "7.692"
+tol       = "1e-3"
 context   = ["step share", "87%", "ceiling"]       # words that must co-occur with the withdrawn value
 withdrawn_tokens = ["7.8"]                         # the token refused in that context
 owner     = "N00-17"                               # bead or registry that holds the corrected value
 status    = "corrected-in-chapters"                # corrected-in-chapters | consistent-as-printed | resolved-by-register |
                                                    #   corrected-in-conversion | open
+same_as   = ["REC-02"]                             # the reconciliation register's record of the same correction
+                                                   #   (DX-02 → REC-02, DX-03 → REC-01; absent on the other fifteen)
 ```
+
+`context` and `withdrawn_tokens` are this register's form of a stale entry of the shared scan: the loader
+hands each token to the engine as a literal `pattern` with the `context` words as its `all_of` list. A linked
+record's `value` is compared with the figure the REC record settles, within `tol` (7.692 against 100/13;
+1.464 against 8428/5757).
 
 **2. The eight recorded discrepancies.**
 
@@ -78,7 +109,7 @@ status    = "corrected-in-chapters"                # corrected-in-chapters | con
 | DX-13 | Glossary: a hypothesis verdict is "supported, narrowed or refuted", for H-01 to H-24 | The register has four states (ACTIVE, NARROWED, REFUTED, DEFERRED) and rows to H-29 | NAB-05 corrects the row |
 | DX-14 | Every idea of the refuted-or-declined list "is treated in the killed-idea register with the calculation or evidence that refuted it" | Three have no entry: debates as a product lever; custom stator and gearbox co-design; live editing in the viewer | NAB-40 enters them as declined records pending the owner's confirmation |
 | DX-15 | The unretained CPU-rate check measured "a reference quadruped at 2 ms" (the checks table) and "a humanoid" (the review log) | Two texts, two robots, one check | NAB-15 stores the table's wording; the re-run records the model |
-| DX-16 | The not-verified list speaks of public "sources marked M or U" | No public reading is marked M or R (39 P, 92 F, 30 S, 2 U); the recalled sources are the standard references | NAB-14 enters the references with mark M |
+| DX-16 | The not-verified list speaks of public "sources marked M or U" | No public bracket or reading is marked M or R (163 brackets: 39 P, 92 F, 30 S, 2 U; entered as 174 readings: 43 P, 95 F, 34 S, 2 U); the recalled sources are the standard references | NAB-14 enters the references with mark M |
 | DX-17 | The expected-value tables hold "every construction C-16 to C-40" and, in the planning tally, 112 distinct ideas of which 90 are placed, 13 refuted or declined and 9 not placed | Both hold as counted: C-01 to C-40 all occur; 90 + 13 + 9 = 112. Pinned because both counts are easy to break when a row moves | NAB-17 and NAB-42 hold the checks |
 
 **4. Tests and lint** (`crates/frob-conformance/tests/discrepancy_pins.rs`):
@@ -86,10 +117,18 @@ status    = "corrected-in-chapters"                # corrected-in-chapters | con
 1. *Recompute.* Each record with an `expr` is evaluated and compared with `value`.
 2. *Owner agrees.* For each record with an `owner` registry, the corrected value is read from that registry
    (the killed-idea record, the thesis calculator's fixture, the source register, the glossary) and compared.
-3. *Withdrawn figure in context.* Over contracts, `docs/**`, `README.md`, registries and report templates: a
-   sentence that contains every word of `context` and one of `withdrawn_tokens` is the finding
-   `dx.withdrawn-figure` with the record id and the correct value. The killed-idea document, this registry and
-   quoted fixtures are exempt.
+3. *Withdrawn figure in context.* The file is registered as a source of the scan engine of N38b-50, with the
+   finding code `dx.withdrawn-figure` and the killed-idea document as its declared exempt printout, and the
+   engine is run over the records. Over contracts, `docs/**`, `README.md`, registries, test directories and
+   report templates (the engine's walk set), a match of one of `withdrawn_tokens` whose window contains every
+   word of `context` is the finding `dx.withdrawn-figure` with the record id, every linked id and the correct
+   value. The window is the engine's: 200 characters either side of the match on text with white space
+   collapsed (DESIGN: this replaces "within one sentence", so that the three registers match by one rule; a
+   sentence splitter breaks on decimal points, and the window keeps the result unchanged under reflow). The
+   killed-idea document, the three register files, a record's derivation file and quoted fixtures are exempt;
+   a quoted fixture is a line that carries the engine's marker `stale-as-control: <id>`.
+4. *Links.* `resolve_links` of the engine is called: DX-02 and DX-03 name REC-02 and REC-01, and their values
+   agree with the figures those records settle.
 
 ## Acceptance criteria
 
@@ -99,6 +138,10 @@ status    = "corrected-in-chapters"                # corrected-in-chapters | con
 - [ ] The lint fails each planted sentence of the test plan with `dx.withdrawn-figure` and passes the corrected
       sentence.
 - [ ] No withdrawn figure occurs in its context anywhere in the tree outside the exempt files.
+- [ ] The lint is the scan engine of N38b-50 run over this register: no second matching rule, walk set or
+      exemption list exists in `discrepancy_pins.rs`.
+- [ ] DX-02 and DX-03 resolve to REC-02 and REC-01 with agreeing values; a planted DX-02 sentence is reported
+      once, under DX-02, REC-02 and E7-2.
 - [ ] The test target runs in under 2 s (TARGET) and is not an `xtask` subcommand.
 
 ## Test plan
@@ -121,12 +164,19 @@ status    = "corrected-in-chapters"                # corrected-in-chapters | con
 - `dx11`: seven of the sixteen not-yet-placed ideas have carriers; nine have a disposition and no carrier.
 - `dx12`, `dx13`: the glossary has `Reflex`, and its `Hypothesis verdict` row lists four states.
 - `dx14`: `KD-01` to `KD-03` exist.
+- `dx15`: the source register's record `SRC-CHK-22` (PC-22) stores the checks table's wording "a reference
+  quadruped at 2 ms" and names the review log's "humanoid" as the conflicting text; its re-run record, once
+  written, names the model it ran.
 - `dx16`: the public register has no reading marked R or M.
 - `dx17`: C-01 to C-40 occur in the matrix; 90 + 13 + 9 = 112.
 - `withdrawn_in_context_is_caught`: planted sentences "an infinitely fast step gives a ceiling of about 7.8 at
   a step share of 87%" (DX-02), "the unremovable share of 94% gives a ceiling of 1.46" (DX-03), "a fork copy
   costs a quarter of one batch step" (DX-06).
 - `figure_out_of_context_is_not_caught`: "7.8 mm clearance" passes.
+- `links_resolve_and_agree`: DX-02 → REC-02 (7.692 against 100/13 within 10⁻³); DX-03 → REC-01 (1.464 against
+  8428/5757 within 10⁻³); a link to a record that does not exist fails.
+- `quoted_fixture_is_exempt`: a planted sentence on a line marked `stale-as-control: DX-02` passes; the same
+  sentence unmarked is the finding.
 
 ### End-to-end script and logging
 
@@ -148,7 +198,11 @@ revision. Metamorphic check: the lint's result is unchanged by reflowing a sente
   differently. Their owner is the gate register and the pilot ledger.
 - If a later review finds another figure that does not follow from its formula, it is appended as `DX-18`
   onward with the same three checks; the list is append-only.
+- DX-02 and DX-03 are recorded three times in the workspace (here, as E7-2 and E7-3, and as REC-02 and
+  REC-01) because three recomputations found them. The settled values live in the known-answer rows the REC
+  records name; this register and the worked cards' register point at those records and must agree with them.
 
 ## References
 
-Appendix C.3 (items 1 to 8); §0.1 (every number carries a label); §2.3; §18.12; §19.10.1; §21.20; §40.7.
+Appendix C.3 (items 1 to 8); §0.1 (every number carries a label); §2.3; §18.12; §19.10.1; §21.20; §40.7;
+Appendix M.38 (rows 1 and 2) and Appendix E.7 (rows 2 and 3), which record the same two corrections.

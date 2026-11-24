@@ -4,11 +4,11 @@ title: "spec C-20 (frob-sense, frob-analyze): observability as a Gramian modulo 
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "lemma", "spine", "spec", "solid", "frob-sense", "frob-analyze", "test"]
+labels: ["m1", "lemma", "spine", "spec", "solid", "frob-sense", "frob-analyze", "test", "review-notes-open"]
 parent: "WP-49"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-20", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-116 to KA-118 and CX-055; this bead binds them to tests, sets the tolerance the appendix leaves `to set` and registers the controls it leaves unstated"]
-related: ["BD-120", "BD-239", "BD-242", "BD-244", "BD-390", "SPEC-C-13", "SPEC-C-19", "SPEC-C-21", "SPEC-C-31", "SPEC-C-39", "BD-078", "N10a-02"]
+deps: ["BD-022", "BD-025", "N10-CX", "N10-KA2", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-078", "SPEC-C-21", "SPEC-C-31", "SPEC-C-39"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-20", "§10 C-13", "§20.11", "§28.4 A-17", "Appendix A", "Appendix D.6", "Appendix M.9 KA-116 to KA-118", "Appendix N.7 CX-055"]
 ---
@@ -56,7 +56,7 @@ first seed in `frob-sense`): that bead is listed in `related` and is not a prere
 over its subject trait and closes on the exact reference model and the mutants in its own test support. If
 `frob-sense` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -85,7 +85,10 @@ and is logged `pending` here until then.
 - Units. Outputs are whitened by R_k. States are made dimensionless with declared scales before the singular
   values are taken (DESIGN: the canonical scales of the design, length ℓ₀, time t₀ = √(ℓ₀/g), angle one radian),
   because a singular value of a matrix with mixed units has no meaning.
-- Windows are half-open, (a, b]; the window length and the trajectory are part of the result.
+- Windows: the sum runs over the samples k = 0, …, N − 1 counted from the window start, with Φ_0 = I, so the
+  start sample is included and the end is not (the Sensorium chapter's sum, which BD-120 and BD-239 use; this
+  is not the exposure-window boundary convention, which N20a-49 decides); the window length and the trajectory
+  are part of the result.
 
 ### 3. Worked fixtures
 
@@ -125,8 +128,8 @@ axis is 0: the robot is blind along x although both sensors return valid ranges.
   fn empirical_gramian(&self, traj, delta: f64) -> Mat; fn index(&self, w: &Mat, gauge: &Subspace) -> f64;
   fn ambiguities(&self, problem: &RangeProblem) -> Vec<Alternative> }`. `tests/support/c20_ref.rs`: the reduced
   legged model, the range-anchor problems in exact rationals with √2 handled symbolically (squared ranges), a
-  symmetric eigen-solver in `f64` (Jacobi) for the gauge test. `tests/support/c20_mutants.rs`: mutants under
-  the cargo feature `controls`.
+  symmetric eigen-solver in `f64` (Jacobi) for the gauge test. `tests/support/c20_mutants.rs`: mutants under the crate's cargo feature
+  `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
 - Register row C-20: `verb = "sense.observability"`, `failing_test` =
   `frob-sense::laws_c20::s6_full_rank_is_not_distinguishability`, `payoff.gate = "GATE-SENS-08"`,
   `known_answers = KA-116, KA-117, KA-118`, no pilot (Solid), `generic_comparator = "sensor coverage geometry
@@ -141,7 +144,7 @@ axis is 0: the robot is blind along x although both sensors return valid ranges.
 
 - [ ] `docs/math/C-20.md` has the ten sections, statements C-20.S1 to S6 with classes, the formulas and the
       four fixtures.
-- [ ] `cargo test -p frob-sense --test laws_c20` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-sense --test laws_c20` passes; with `--features conformance` every mutant fails.
 - [ ] KA-116: the null space of W on the reduced legged model has dimension exactly four (singular values
       below 10⁻¹⁰·σ_max counted as zero) and its largest principal angle to span{p_x, p_y, p_z, ψ} is at most
       10⁻⁸ rad; the empirical form at δ = 10⁻⁴ gives the same dimension and non-zero eigenvalues within 5%.
@@ -172,7 +175,8 @@ axis is 0: the robot is blind along x although both sensors return valid ranges.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c20.sh` (idempotent; seed 2000 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-116 KA-117 KA-118`; existence of
+`--features conformance`; `FROB_TEST_SEED=2000 cargo test -p frob-conformance --test g1_known_answers -- KA-116
+KA-117 KA-118` (the G1 target of N38a-02, in convention 1's form); existence of
 `docs/math/C-20.md` and three derivation files. Sources the STD-E2E helper; writes
 `target/e2e-logs/spec_c20/<utc>.ndjson` and a transcript; each line has `ts`, `script`, `bead` (`SPEC-C-20`),
 `step`, `event` (`start`, `cmd`, `assert`, `metric`, `refusal`, `end`), command line, exit code, wall time,

@@ -1,0 +1,160 @@
+{
+ "round": 3,
+ "slice": "H-verbs-4",
+ "reviewed": 8,
+ "changed": [
+  {
+   "bead": "VERBS-opt",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "S41 applied: opt.cascade's 557 sentence reworded (build packet, promotion, prototype budget on a model-conditional result is 830 by N16b-04's check; 557 only for a ranking presented without its condition, raised by report.design/report.campaign; neither in this row). S77 applied: opt.start gains --override-alias diagnosis (N20a-41), --objective flip-verdict with --verdict, --max-edits, --max-price and the frob.opt.flip/1 result reported through opt.status (N28bx-01), 869, 545 with its raising site (BD-341, N28b-07 mf-bo rule), the worded refusal foil-as-candidate (N24-REF symbolic, numbered through N35-33, enters the list with its number as task.check/sim.run do), the spec section `sensing` (N20b-36, [F]); 'the design positional' replaced by --design. S89 applied: --gradient adjoint (N16c-26, [M], M6; 724 until built). Notes on N28-REF agreement and archive spellings updated (show already dropped by N17b-18/BD-342). refusal_lists and inputs_by_row tests extended. Gate acceptance rewritten to convention 9 (the script leaves a receipt; BD-376 records GATE-TETHER-02 M4 with record_gate). Deps on the chapter refusal registries whose codes the rows list (N14-REF, N17-REF, N20-REF, N23-REF, N24-REF, N28-REF, N29-REF), since acceptance requires every code to exist in refusals.toml."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "S35 applied: phylum.plan gains population descriptors for --designs, --max-buckets (802 above 8), --tau, --launch, --shares (labelled given), --bucket-set (candidate rows), `exact` as synonym, KILL-BUCKET report output (BD-171). S43 applied: phylum.generate gains --enumerate (802 on a non-enumerable spec) and --split <spec> with outputs; Extended by N17a-18/19/20; quotient enumeration form may omit --slots/--types for an @fixture sweep (BD-285). S56 applied: --tables shared|plain in the gated table (N21b-17). S72 applied: --fill licensed and 852 on phylum.sweep (N25e-07). S89 applied in corrected form: --both-sides and 602 registered on phylum.gradient; 724 not repeated in the chapter list because NJL-01 appends it to every verb. Row-vs-implementer: phylum.quotient now lists 162 (BD-285 raises it on the memoized path). --solve-queues value set and lockstep-only rule (N16c-15) in the table; sweep Extended-by list; exit rule now names 74x/76x/79x (N35-33). Paging note: --limit, not --page-size. Gate acceptance to convention 9. Deps N17-REF, N21-REF, N25-REF."
+  },
+  {
+   "bead": "VERBS-policy",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "S73 applied: policy.apply lists FROB-REF-545 (select through a record whose mode is not selective) beside 537, with N28b-23's division as N23a-24/N23a-25 implement it; 537 meaning narrowed accordingly; TOML and refusal_lists updated; note that N28-REF's 545 verbs column must gain policy.apply. Gate acceptance to convention 9. Deps N23-REF, N28-REF."
+  },
+  {
+   "bead": "VERBS-predict",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "No requests. --for <target> text corrected against BD-344 (`next` is the caller's next run or campaign in this session, bound at dispatch; the garbled 'which the caller may read' clause fixed); no-outcome reasons next-unbound and target-replanned added. Gate acceptance to convention 9. Deps N30-REF (883) and N28cx-01 (the code decisions the row cites)."
+  },
+  {
+   "bead": "VERBS-prove",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "S16 applied: dep N12-REF (823, 826, 829, 833, 834). S54 applied: prove.bundle gains the claim source `--run <id> --kind control-program` (BD-251, M3; a run with no records is 802). S79 applied: the card form `--card <T-nn> --capsule <path>` (BD-381, M5; 834/826), and prove.verify takes a capsule file positionally after its lean-capsule bundle (otherwise `unsupported`); two claim sources in one call is 802; Extended by N24b-19, BD-251, BD-381. S86 applied: prove.reflect lists 826, 829, 833, 834 beside 823 (the auditor's code for its first failing rule, passed through by BD-382/N12-28). 845 (N24b-19's extension; registry N24-REF at M1) is staged: RL-06 would fail the M0 entry naming it, so it enters the TOML list in N24b-19's change (M3), DESIGN, written beside the list. Notes: bundle forms by milestone; N12-38 now writes --key. Gate acceptance to convention 9 (BD-022 at M0, then BD-137, BD-409). Deps N12-REF, N37-REF; plan_refs §22.5. refusal_lists and inputs_by_row tests extended."
+  },
+  {
+   "bead": "VERBS-report",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "No requests; 557/830 text already right. Row-vs-implementer: FROB-REF-822 added to all four rows (each takes --cite through N16b-04's citation check, which returns 822, not 820 or 557, for a capacity-biased comparison cited as a verdict; N18b-22's script asks report.design to cite one at M3 and expects 822); TOML, refusal_lists and the raised-by cross-check test updated, with a note why 830 stays on none. Gate acceptance to convention 9 (BD-312 at M3, then BD-376 for report.campaign). Deps on the registries of every listed code, all at or before M3: N16-REF (820), N18-REF (822), N19-REF (312), N20-REF (447), N24-REF (845), N28-REF (557, 872), N29-REF (869), N35-REF (862, 863, 865), N37-REF (731, 733, 816, 819)."
+  },
+  {
+   "bead": "VERBS-result",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "No requests. Row-vs-implementer (N28b-32): the change is exactly one of --after-edit, --since, --between or `--amendment field=value,…` (the amendment spelling was missing); two or none is 802 with pointer /change; --estimate named as the CLI spelling of estimate_only; rerun commands printed with --key (N28b-32's sample prints --idempotency-key). inputs_by_row test extended. Gate acceptance to convention 9 (BD-137 at M1, then BD-376). Deps N12-REF (835), N24-REF, N25-REF (854), N28-REF (870, 872), N29-REF (869)."
+  },
+  {
+   "bead": "VERBS-run",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "S60 applied: run.fork gains --children <plan file> (frob.fork.children/1, ChildSpec defaults; a file parameter, so 734 and 828 appended), --co-tenants <seed>, --horizon <time> | --to-horizon (N27a-03's ToEpisodeEnd; default failure + 1 s), the full output (classified, double_precision, children, refused, horizon_s) and BD-205's exits 0/2/8/3; 583 reworded (children from a mismatch point; opening it stays exit 2); 581/582 detail. S57 applied in corrected form: --determinism, --precision, --on-degraded with N35-04's enumerations, plus the codes its shared admission raises on a fork: 245, 247 (inapplicable profile; the class check is 562 here by N35-REF's division), 248, 604 (exit 6); a note that a differing profile makes a continuation 894. S88 applied in corrected form: --field-reuse auto|require|off and --no-field-reuse ([M], M6, 724 before) with the field_reuse block and 322 (N19c-42's proposed number, its failed_precondition values split between N19c-34 and N19c-35); run.show gains --receipt and --phase-ledger, but --phase-ledger is attributed to N21a-27, since N19cp1-02 calls it and cannot wait on N19c-35, which waits on it. RL-06 staging: the M1 entry lists only codes already registered; 580-583 (N27-REF, M2) are appended in BD-205's change and 322 in N19c-35's. Notes on KILL-FARFIELD withdrawal. refusal_lists extended, inputs_by_row added. Gate acceptance to convention 9 (BD-137, BD-222). Deps N18-REF, N21-REF, N29-REF, N34-REF, N35-REF, N37-REF, N39-REF; plan_refs §27.3, §35.2, §19.21, §36.9."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N28-REF",
+   "what": "Add `opt.start` to the verbs column of FROB-REF-543 (BD-341 raises it for a race on a metric with no declared span; a race is an anytime e-process study) and `policy.apply` to the verbs column of FROB-REF-545 (N23a-24/N23a-25 raise it for --score-for-ladder selecting through a non-selective record, by N28b-23's division); verbs_lists_agree fails until both are added."
+  },
+  {
+   "bead": "N16c-26",
+   "what": "State, for `opt.start --gradient adjoint`, where the adjoint horizon K (at most 32) comes from (an opt.start input, or the task's horizon capped at 32) and what opt.start does when the reverse-sweep store exceeds the device budget (refuse 602 at admission, or fall back to the rank-based update with a warning); VERBS-opt registers the option without either until stated."
+  },
+  {
+   "bead": "N28b-28",
+   "what": "Convention 5: the `run` stage's `frob opt cascade --spec <task> --population seeded-81 --budget … --seed 3 --json` and the `fixed_table` stage carry no `--key`; give each its own key (the two are compared, so distinct keys)."
+  },
+  {
+   "bead": "N17b-18",
+   "what": "Its script pages phylum.map with `--page-size 50`, which no row has; paginated reads take NJL-01's common properties `--cursor`, `--limit`, `--follow`: write `--limit 50`."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare, eval.promote and eval.qualify raise the worded refusal `foil-as-candidate` through N24c-23's candidate-admission function at M3; name it in their blocks as VERBS-opt now does for opt.start (registered by symbolic name in N24-REF, numbered through N35-33, entering the refusals list with its number)."
+  },
+  {
+   "bead": "N17-REF",
+   "what": "The 541 row's raising-bead column says 'the scoring site is policy.apply (N23a-25)'; by N23-REF's division policy.apply raises 534 and cites the 541 finding, so state that explicitly so that the row is not read as policy.apply listing 541 (VERBS-policy lists 541 as cited, not raised)."
+  },
+  {
+   "bead": "N24b-19",
+   "what": "In its change, append FROB-REF-845 to prove.bundle's `refusals` list in registries/verbs.toml: VERBS-prove (M0) cannot list it, because N24-REF enters 845 at M1 and RL-06 fails an entry naming an unregistered code; the row's block already names 845 with this bead as its raiser."
+  },
+  {
+   "bead": "BD-302",
+   "what": "Its citation path for report.design, report.run, report.campaign and report.mission goes through N16b-04's cite_as_established, which returns FROB-REF-822 for a capacity-biased comparison cited as a verdict (N18b-22 step 4; its script asks report.design to cite one at M3); add 822 to its refusal list and a test, as VERBS-report now lists it on all four rows."
+  },
+  {
+   "bead": "N35-04",
+   "what": "Its Snapshots paragraph and the acceptance line 'a continuation of a default snapshot under stiff is refused with FROB-REF-247' give 247 for a restore under another profile labelled a continuation, but on sim.replay and run.fork the registries give 894 (N29-REF's row names BD-203 and BD-205; N27-REF's boundary_894_vs_580). One condition, one code: name 894 for restores through the replay and fork verbs, say which verb the 247 line concerns, and add the pair 247/894 to N35-REF's neighbouring-codes table."
+  },
+  {
+   "bead": "BD-205",
+   "what": "(1) State the defaults of --determinism, --precision and --on-degraded on a fork (the parent's recorded ProfileRecord keeps a bare fork a continuation; N35-04's per-tier default would not for a parent run under `stiff`) and list in its refusal table the codes N35-04's admission raises through its handler: 245, 247, 248, 604 (exit 6), as VERBS-run now does. (2) In its change, append 580, 581, 582 and 583 to run.fork's `refusals` list in registries/verbs.toml: the cluster's entry is made at M1 and N27-REF enters those codes at M2, so RL-06 forbids them in the M1 entry."
+  },
+  {
+   "bead": "N21a-27",
+   "what": "Build `run.show --phase-ledger`, printing the run's phase ledger from the step profile record (frob.stepprofile/1) with the share a of step time in field tile updates among its fields, and state what it returns for a run recorded without profiling mode. N19cp1-02's script calls it, and it cannot come from N19c-35, which waits on N19cp1-02 through N19c-34 (KNOWN_DRIFTS 7); VERBS-run registers it with this bead as its builder."
+  },
+  {
+   "bead": "N19c-34",
+   "what": "Its script field_reuse_smoke.sh calls `--no-field-reuse` ('the flag is N19c-35's') and `--field-reuse require`, but N19c-35 depends on N19c-34 (KNOWN_DRIFTS 7 and 8). Either build the reuse-mode option here (auto|require|off, with --no-field-reuse as off), since this bead already owns the mode's semantics and 322's emit site for determinism-class and no-stencil, leaving N19c-35 the receipt and its three preconditions, or move those script steps into N19c-35's script."
+  },
+  {
+   "bead": "N19c-35",
+   "what": "In its change, append FROB-REF-322 (under the number the ledger assigns, N19c-42) to run.fork's `refusals` list; and its acceptance line names run.show's `--phase-ledger` among the options it adds, but that option must exist for N19cp1-02, which N19c-35 waits on: N21a-27 is asked to build it, so this bead only reads a from it and adds `--receipt`."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "State the staging rule for codes whose registry lands after a row is entered: at registration a row's `refusals` holds only codes already in refusals.toml (RL-06, N32a-02, makes any other a load-time error); a code of a later registry is appended in the change of the bead that raises it, and the refusal-table and coverage checks count it from that change. VERBS-prove (845) and VERBS-run (580-583, 322) now do this; other early rows need the same, for example the M0 VERBS-sim entry naming FROB-REF-103, which N14-REF enters at M1."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All eight registry beads reviewed and changed; all sixteen round-2 requests applied, three in corrected form (S89 on VERBS-phylum, S57, S88). Rows now agree with their implementers, apart from the fourteen downstream requests above (registry columns, staging of late codes, two option-ownership order problems in the field-reuse chain). The slice looks settled pending those requests."
+}

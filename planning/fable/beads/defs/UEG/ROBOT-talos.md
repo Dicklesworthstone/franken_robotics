@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20", "BD-074"]
+deps: ["BD-066", "BD-067", "BD-074", "BD-105", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-humanoid", "N14b-24", "BD-171", "ROBOT-apollo", "ROBOT-op3"]
+related: ["ZOO-humanoid"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01", "§17.5", "Appendix H.3"]
 ---
@@ -36,14 +36,17 @@ NOTICE, files unmodified.
 **Expected facts (recalled, mark M; the pinned files govern).** On the order of 32 actuated joints (legs of
 six, a two-joint torso, arms of seven, grippers, a two-joint head); total mass on the order of 95 kg.
 
-**Import path.** `frob design import --format mjcf assets/robots/talos/source/<entry> --out
-assets/robots/talos/import.fbot --json`.
+**Import path.** `frob design import assets/robots/talos/source/<entry> --format mjcf --name talos --key
+asset-talos-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section).
 
 **What this robot adds to coverage (HYPOTHESIS until the file is read).** (1) Size class: with a floating
 base its generalized-velocity count is expected near 38 to 45, which lands in the 48 bucket of the default
-set {12, 18, 24, 36, 48, 64} and above the reference humanoid's 35; the validation records n_v, the bucket,
-and the padding overhead of this robot in that bucket (48/n_v to the powers 1, 2, 3), as a data point for the
-bucket planner. (2) Coupled gripper fingers: if the source couples them by an equality or a tendon, they are
+set {12, 18, 24, 36, 48, 64} and above the reference humanoid's 35; the validation records n_v and, as DATA for the
+bucket planner (labelled DESIGN: the default set is the planner's, N17a-05 at M2, and is quoted here, not
+implemented), the expected bucket and the padding overhead of this robot in it ((capacity/n_v) to the powers
+1, 2, 3). The planner's own assertion on this robot (`frob phylum plan` choosing that bucket) is M2 work and is
+requested of N17a-08's script; this M1 bead does not wait on it. (2) Coupled gripper fingers: if the source couples them by an equality or a tendon, they are
 imported as one actuator through a coupling matrix; if it writes them as independent position actuators with
 the same command, the import keeps them independent and the loss report says that a mechanical coupling may
 exist on the real robot and is absent from the file. (3) Seven-joint arms: Jacobian rank 6 with a
@@ -66,8 +69,9 @@ always), joint limits and limb mirror consistency as for every robot.
 
 - `robot_talos_manifest_valid`, `robot_talos_licence_apache2_notice`.
 - `robot_talos_counts` (as computed at the pin).
-- `robot_talos_bucket_and_padding`: the bucket is the smallest default capacity ≥ n_v; overheads computed as
-  (capacity/n_v)ᵖ.
+- `robot_talos_bucket_and_padding_recorded`: the manifest records n_v, the expected bucket (the smallest capacity
+  ≥ n_v in the quoted default set) and the overheads (capacity/n_v)ᵖ for p = 1, 2, 3, each labelled DESIGN data
+  for the planner; a planted n_v of 49 makes the recorded bucket 64.
 - `robot_talos_gripper_coupling_accounted`.
 - `robot_talos_arm_rank_six_null_one` (each arm).
 - `robot_talos_mass_properties_consistent`, `robot_talos_joint_limits_valid`,
@@ -75,8 +79,8 @@ always), joint limits and limb mirror consistency as for every robot.
 
 ### End-to-end script and logging
 
-`scripts/e2e/assets_licences.sh` (NEG-16): import, both checks, golden comparison; `frob phylum plan` on the
-single robot for the bucket row once that verb exists; logs commit, licence, counts, mass, bucket, overheads
+`scripts/e2e/assets_licences.sh` (NEG-16): import, both checks, golden comparison; the bucket row is logged
+as recorded data (the planner's check is N17a-08's at M2); logs commit, licence, counts, mass, bucket, overheads
 and findings.
 
 ### Known answers and negative controls

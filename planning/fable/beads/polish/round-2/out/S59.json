@@ -1,0 +1,358 @@
+{
+ "round": 2,
+ "slice": "S59",
+ "reviewed": 48,
+ "changed": [
+  {
+   "bead": "BD-208",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Contact compliance energy was a separate 'stored line' added to r beside d_potential ('gravity and springs of the model'), a line no registry has and a double count if springs include it; now booked inside d_potential (line kind store of N29b-22, as N29b-02 and N16b-14 do), r restated, algorithmic-exchange pair noted as zero. Added the omitted-compliance mutant and a unit test that ledger writes leave physics digests. E2E: --key on every sim run; replaced the slot-order rerun and 'ledger emission on/off' (no such verb options) with --workers 1/24 reruns on batch-cpu and a second-key rerun on devices."
+  },
+  {
+   "bead": "BD-213",
+   "kinds": [
+    "self-contained",
+    "users"
+   ],
+   "what": "The coverage campaign had no invocation ('an admin run of the conformance battery'); now one eval.run job per class with --adjudicate (N16a-05's policy names) and --record coverage, options this bead adds to eval.run's row (requested of VERBS-eval). Its optional battery input is named --battery and requested of VERBS-fidelity."
+  },
+  {
+   "bead": "BD-214",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "Round-1 request applied: dep N36p1-02 (no cycle). Predicted coverage now says H-COV-1 and H-COV-2 are on record in N36p1-02's register before this bead measures, and N36-15 scores them."
+  },
+  {
+   "bead": "BD-264",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Round-1 request applied: PO-CHRON-02's simulation (constant, negation, noise; 10^4 rounds; within three standard errors) named as the obligation's discharge, with the obligations.toml row set to discharged with the claim id; dep N29b-16 (creates the row) moved from related. Clarified that background pairs enter a round only when p_out >= 1/20 (the one-step sampler's p ~ 0.002 would break the weight bound of 20). --key on the e2e promote call."
+  },
+  {
+   "bead": "BD-268",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Consideration said the detection clauses need the estimator; the kernel-defect clause is built and rehearsed at M2 (N16b-17, N16b-34 step 9) and only the tier-sensitive clause needs N16b-18 and BD-264. Took over acceptance of the M3 section of background_referee.sh (steps planted-policy, honest, ledger-pairs), which N16b-34 (M2) cannot accept without waiting on later beads. Its acceptance of steps 11-13 needs N16b-34's script: N16b-34 moved from related to deps (no cycle)."
+  },
+  {
+   "bead": "BET-03",
+   "kinds": [
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "Stated how the M2 reading works for an M3 bead: taken at the M2 exit by BD-224 from gate rows through N00-28 and N40-31 (KILL-CONTACT on record by N18b-33), and bet-03-m2.md written at M3 from that recorded reading. E2E names the bets status command."
+  },
+  {
+   "bead": "BET-34",
+   "kinds": [
+    "correct",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "Removed the contradiction 'adjudicator wherever coverage is under 80%' against the 90% the bead and register use (register governs). Same M2-reading clarification as BET-03 (BD-224 reads at M2; ADRs written at M3). E2E called fidelity coverage without --run/--class (refused) and sim run without keys; now explicit."
+  },
+  {
+   "bead": "N16a-20",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "eval.run and sim.run calls lacked --key; '--adjudicate strict' is not a value of N16a-05's policy enum (referee-only, patch-reduction, strict-fallback), now strict-fallback; dropped eval.run --profile (not in its row; the battery fixes seeds); the campaign options are attributed to BD-213."
+  },
+  {
+   "bead": "N16b-34",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "Acceptance required the M3 section (steps 11-15, needing N16b-18, N16b-19, N16b-20, none of them deps) to pass: a bead waiting on what waits on it. The steps stay as skipping script stages and their acceptance moves to BD-268 (11-13), N16b-19 (14) and N16b-20 (15). The composition step asked for a slot order no verb option sets; now another world count and --workers, with the permutation case left to BD-214's unit test."
+  },
+  {
+   "bead": "FD-FSIM-17",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The switch-over compares the sibling's batched multilevel entry against our multilevel estimate, which is N16b-08's: moved N16b-08 from related to deps and named it in Scope. Phase post called fidelity ledger without --class/--tier-pair and eval promote without a result or key, with no way to pick the driver; now GATE-CHRON-09 runs once per driver through cargo test (feature uq-driver-fsuq, DESIGN) and the user-side calls carry their required inputs and a key."
+  },
+  {
+   "bead": "GB-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Lane B named receipt fields that BD-264 does not define (rho_hat, recommendation use-correction/fall-back); restated in BD-264's estimate fields (rho, replaced_count against n_audited, the named switch-off trigger). eval promote calls carry --key."
+  },
+  {
+   "bead": "GB-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Lane B configured the sampler 'for a share' and read a 'coverage' receipt field; BD-214's sampler takes --p and the receipt carries referee_coverage.share = shadowed_world_seconds / gpu_world_seconds, whose expectation is p without drops."
+  },
+  {
+   "bead": "N16b-07",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "A consideration called ρ_ep 'the switch of the rank-agreement ledger'; it is the tier-correction ledger's switch (0.7 is shared with the rank-agreement kill threshold). E2E read pilot rows through fidelity ledger without its required --class/--tier-pair; now validates PILOT-C-25 through the pilot register's command and cross-checks addresses against the ledger's pair rows."
+  },
+  {
+   "bead": "N16b-09",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Segment replays called 'frob sim replay --tier referee' with no run, world, window or key; now --run/--world/--from/--to/--tier referee/--comparison/--key per segment (BD-203's window, BD-204's teleport; comparison replay so FROB-REF-894 cannot fire)."
+  },
+  {
+   "bead": "N16b-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-DR.md brought to the settled form docs/adr/ADR-KILL-DR-M3.md with N40-03's required fields listed."
+  },
+  {
+   "bead": "N16b-11",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Scoring called eval.run with --designs, --profile and --seed (none in its row) and no key; now one eval.run per design with --battery, --tier and a key per tier, pilot record validated through the pilot register's command."
+  },
+  {
+   "bead": "N16b-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "ADR named docs/adr/ADR-KILL-RANK-tier-pairs-M3.md (settled form with milestone), marked as the consumer reading distinct from the M4 kill decision. Acceptance required a campaign plan at M3, where no campaign verb exists: now the policy reader and FROB-REF-537 at M3, the plan wording through opt.cascade --plan-only from M4, matching N16b-32 step 6."
+  },
+  {
+   "bead": "N16b-13",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E printed the variant table through 'fidelity modelform ... --explain-variants', an option not in the row; now reads the variants array of the model-form record (fidelity modelform --study <id> --key <k>), which carries every ModelFormVariant field (BD-266 extended accordingly)."
+  },
+  {
+   "bead": "BD-266",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The model-form record's variants entries carried only family, arm, step_plan, admitted, overlap and order, so neither the one-thing-changes audit nor INV-KIN-07's digests could be read from the verb; each entry now carries every field of N16b-13's ModelFormVariant (base and variant step plan, model id, both parameter digests, overlay, reason)."
+  },
+  {
+   "bead": "N16b-15",
+   "kinds": [
+    "complete",
+    "tests",
+    "title",
+    "correct"
+   ],
+   "what": "Round-1 request applied (checked against §29.9's known fixtures and KA-709): third conformance-only mutation M3 explicit-penalty (k·d from start-of-step penetration, no damping, semi-implicit), fixture F3 (1 kg, 0.2 m drop, k = 1e6 N/m, h = 2 ms; apexes 0.258/0.566/3.754 m, recomputed), registry record for GATE-CHRON-08, guard, acceptance, unit tests (one-step gain 3v, apexes, implicit-in-position mutant misses, force from start-of-step); states that transactional profiles refuse its creation at commit. Eight registry records; title says three plants. Unit test pyramid_arm_only_via_variant_builder used 'frob sim run --cone pyramid4', an option sim.run does not have; the direct request now goes through sim.run's --law input (the cone kind is part of the law and the StepPlanId)."
+  },
+  {
+   "bead": "N29a-22",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Round-1 request applied: contact-active now computes N_f and G_f in relative velocity (row work w_k = Σ λ·½(u⁻+u⁺); prescribed-surface boundary work to the external-work line), the passivity rule N_f > ε·G_f + E_floor as N29b-03 evaluates it, and two double-float accumulators per slot (N_f, G_f) besides the integer counters; unit tests for the conveyor case, the absolute-velocity mutant and the two accumulators; scope Out reworded. Trampolining fixture now names N16b-15's M3 (no longer 'not run'). E2E: under the strict profile the energy-creating plants meet BD-161's T5 energy-residual check before any monitor (retry or numerical-fault), so the script asserts that outcome there instead of flags."
+  },
+  {
+   "bead": "N29ax-02",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Round-1 request applied: VERBS-sim moved from related to deps (--peak-capture is on sim.run's row; no cycle). Compared runs in the e2e now carry distinct keys (pk-<device>, pk-off, pk-beam, pk-budget)."
+  },
+  {
+   "bead": "N16b-14",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Named the verb's output schema frob.fidelity.energy.out/1 (was frob.fidelity.energy/1, which no registry has). GATE-FID-06's 'both planted exploits' now names M1 (energy-created) and M2 (cone-excess), M3 belonging to GATE-CHRON-08."
+  },
+  {
+   "bead": "N16b-19",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "ADR named docs/adr/ADR-KILL-SHADOW-M3.md with N40-03's required fields. Accepts step 14 (kill-default) of background_referee.sh, as N16b-34 hands it over; the e2e text claimed an offline-only share receipt, which is step 15 (N16b-20's)."
+  },
+  {
+   "bead": "N16b-20",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Accepts step 15 (fallback-audit) of background_referee.sh as N16b-34 hands it over (skips with 'branch not taken' otherwise); e2e assertions and logging detailed (no worker during the job, share zero with pending note, pin held, planted stage named, outcome_pairs 0)."
+  },
+  {
+   "bead": "N16b-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "fidelity.energy's executor listed as BD-208 alone; the row and N29a-22 name BD-208 and N29a-22."
+  },
+  {
+   "bead": "N16b-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Steps 5 and 6 relied on a campaign step and 'opt cascade --plan-only', but every opt.* verb lands at M4: refusals 537/545/548 and the promote-only reader now run through BD-265's and N16b-12's tests at M3, with the opt.cascade halves skipped with a logged reason until the verb is present. Step 11b used a report.design 'section list' option that does not exist: now report.design prints the condition and the 557 refusal runs through N16b-04's test (report.campaign --compact at M4). Step 7 reads the variants array of step 8's record. Dep BD-302 (report.design) added."
+  },
+  {
+   "bead": "N16b-33",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 6 called eval.promote and fidelity.modelform, both M3 verbs, from this M2 script: now the claim product's status and condition and N16b-04's tests at M2, with the verb halves run once present. eval.run lost --profile (not in its row) and gained the design. KA-709 attributed to N29a-22's script."
+  },
+  {
+   "bead": "N16c-04",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "Gauntlet rows used '--test g5'/'--test g1' and a '--mutant' selector; now FROB_TEST_SEED=<seed> with g5_determinism and g1_known_answers, controls under --features gauntlet-mutations (KNOWN_DRIFTS 1). E2E called 'sim run --capacity' (no such option): row 5 now through BD-181's spark check --invariance, row 6 through --designs with keyed homogeneous runs, promote and sim calls keyed. Acceptance claimed '--rows m2 passes at the M2 exit' for an M3 bead with M3 deps; now the selector runs rows 5, 6 and 9 alone, the M2 records staying with their own beads."
+  },
+  {
+   "bead": "N16c-44",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "E2E calls lacked keys, used 'eval promote --run' (result is positional) and an unnamed citation; now keyed sim.run per decimation through N16c-41's surface, keyed eval compare, eval promote <result>, and the citation through report.run --cite (dep BD-302 added, no cycle). The surface notes --run/--across as this bead's extension (requested of VERBS-eval)."
+  },
+  {
+   "bead": "N18a-18",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its acceptance runs N18a-36's script with --law cl-2, but N18a-36 was only related: moved to deps (M2, no cycle); invocation given with the script's own --tier/--profile options."
+  },
+  {
+   "bead": "N23b-08",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "eval run without design/battery/key, fidelity modelform without key, and 'eval promote --result' (result is positional); now explicit keyed calls, steps numbered so the planted-promotion control names step (3)."
+  },
+  {
+   "bead": "N24a-38",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "sim.run calls on planted fixtures and controls had no key; each compared run now has its own key."
+  },
+  {
+   "bead": "N29b-05",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance said this bead records GATE-CHRON-08's failure rows, while N29b-06 (which depends on it) writes the single row; now this bead produces the measurements and N29b-06 records. Key on the described sim.run."
+  },
+  {
+   "bead": "N29b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Its control sweep counted 'the two solver mutations'; N16b-15 now registers three against GATE-CHRON-08 (M1, M2, M3), named. sim.run calls keyed per fixture, tier and determinism repeat. The audit-join step had no command: now study plan / study submit (M2 verbs; eval.compare is M3) with distinct keys for the audit-off run, and evidence trace on audit_join_ref."
+  },
+  {
+   "bead": "N29b-07",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The two compared sim.run calls carry distinct keys."
+  },
+  {
+   "bead": "N29b-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Said BD-263 depends on this bead; it does not (unordered); BD-264 (the dr method) and N16b-31 do. eval promote call keyed."
+  },
+  {
+   "bead": "NEG-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Receipt share described as 'selected world-seconds'; now BD-214's referee_coverage.share = shadowed_world_seconds / gpu_world_seconds (dropped snapshots lower it)."
+  },
+  {
+   "bead": "SPEC-C-25",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Gauntlet calls used --test g1/g0/g3; now FROB_TEST_SEED=2500 with g1_known_answers, g0_laws, g3_metamorphic, and again under --features gauntlet-mutations."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run's row lacks the options BD-213's coverage campaign and N16a-20's script use: --adjudicate referee-only|patch-reduction|strict-fallback (N16a-05's policies) and --record coverage (writes the referee_class_coverage row); add them with BD-213 as the extender."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "fidelity.coverage's row lists --run or --class only; BD-213 takes an optional --battery (default the frozen standard battery of the class). Add it with BD-213 as the implementer."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run's row lacks --adjudicate (N16a-05's single-run routing; used by N16a-10 and N16a-20 scripts). Add --adjudicate referee-only|patch-reduction|strict-fallback with N16a-05 in 'Extended by'."
+  },
+  {
+   "bead": "N16a-05",
+   "what": "Its e2e text and N16a-10's use '--adjudicate strict' while the policy enum is referee-only, patch-reduction, strict-fallback; N16a-20 now uses '--adjudicate strict-fallback'. Use the policy names as the flag's values (and request the same of N16a-10)."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "fidelity.modelform's output names the record's per-variant fields as family, arm, step plan, admitted, top-k overlap, order; BD-266 now carries every field of N16b-13's ModelFormVariant per variant (base_step_plan, step_plan, model_id, param_digest_base, param_digest, overlay, admitted, reason, top_k_overlap, order). Update the output description and schema snapshot."
+  },
+  {
+   "bead": "N16b-31",
+   "what": "Step 14 hands 'the blocked_by: energy-created exit 2' to created_energy_gate.sh (N16b-33), an M2 script in which eval.promote (M3) is absent; N16b-33 now runs it only once the verb is present. Assert it in promotion.sh as well (an energy-created fixture result promoted: exit 2, blocked_by energy-created, status provisional)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare's row lists two designs, task, scenes, level, budget; N16c-44 (named in 'Extended by') uses '--run <coarse> --across decimation'. Add both inputs to the row with N16c-44 as extender."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "spark.check's row lists only --invariance from BD-181; BD-181 states it adds --invariance, --axes, --episodes, --cotenancies and --report, and N16c-04 now calls --axes and --cotenancies. List them."
+  },
+  {
+   "bead": "BD-352",
+   "what": "opt.cascade --plan-only should read the class default rank.tier_pair_use that N16b-12 sets: on a promote-only class every surviving candidate is charged at the higher tier and the plan says so, and no survivor set is derived from a fast-tier order (FROB-REF-537). N16b-32 steps 5 and 6 assert this once opt.cascade is present; add it to BD-352's acceptance and tests."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "Slice reviewed in build order. Mostly settled after this round: remaining open items are registry rows (VERBS-eval, VERBS-fidelity, VERBS-sim, VERBS-spark) and three requests to beads outside the slice (N16a-05, N16b-31, BD-352). Program-wide drifts left as they are: --fixture and --seed on sim.run (in many beads, not chased)."
+}

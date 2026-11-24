@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "frob-lemma", "frob-analyze", "frontier", "test"]
 parent: "EPIC-M3"
-deps: ["BD-027", "N12-06", "SPEC-C-08"]
-needs: ["§0.7: the paper-scale budget pilot arm for the truncated-series identity (N12-22, arm E, which is scheduled at M4; at M3 this card runs that arm itself on its one fixture before any other work)"]
-related: ["N12-22", "BD-425", "CARD-T-16", "BD-243"]
+deps: ["BD-027", "N12-06", "N12-34", "SPEC-C-08", "STD-E2E"]
+needs: []
+related: ["N12-22", "N12-41", "N13-05", "N25c-43"]
 gates: []
 plan_refs: ["§12.3 (T-20)", "§11.6", "§10 C-08", "Appendix D.1 (curvature of the connection, reconstruction)"]
 ---
@@ -53,6 +53,13 @@ output.
 
 ## Technical approach
 
+0. Budget arm first (DESIGN). The budget pilot for Frontier cards (N12-22) is scheduled at M4, after this card's
+   milestone, so this card runs that pilot's arm E itself, on its one fixture, before any other work: produce the
+   truncated-series identity of step 3 for 3×3 matrices (𝔰𝔬(3)) and 4×4 homogeneous matrices (𝔰𝔢(3)) at total
+   degree 2, submit it to FrankenSymPy's proof kernel, and record the bytecode operation count against the
+   8,192-operation cap, wall time, peak memory and the verdict, together with the control (the plus-bracket
+   formula submitted the same way must be rejected). A result over the cap stops the card at `budget-exceeded`
+   and the record is handed to N12-22; the card is then `Tested` by exact evaluation of the series on the fixture.
 1. Setup: the connection's components 𝔸₁(s), 𝔸₂(s) are matrices whose entries are polynomials in the shape
    coordinates with rational coefficients (matrix Lie algebra: 𝔰𝔬(3) or 𝔰𝔢(2), 𝔰𝔢(3)), expanded about a base point.
 2. Compute the holonomy of the rectangle (0,0) → (a,0) → (a,b) → (0,b) → (0,0) as the ordered product of four
@@ -69,8 +76,10 @@ output.
    crosses slip or lift-off cannot borrow its old connection).
 6. Relies on it: construction C-08 (locomotion is holonomy); the connection-curvature analysis; the wrong-sign
    negative control of that construction.
-7. Artifacts: `docs/math/cards/T-20.md`; registry row; certificate; specimen `poly-identity/accept-T-20.frobcert`
-   with mutants.
+7. Artifacts: `docs/math/cards/T-20.md`; registry row; certificate; specimen
+   `crates/frob-cert/tests/specimens/poly-identity/accept-T-20.frobcert` with its mutants beside it (the corpus
+   that the auditor script of N12-34 walks); the card's own script for the budget arm, its law tests and its
+   files (below).
 
 ## Acceptance criteria
 
@@ -81,6 +90,7 @@ output.
 - [ ] Fixture: the constant connection 𝔸₁ = e_x, 𝔸₂ = e_y on SO(3) (bracket = cross product): the curl vanishes,
       (D𝔸)₁₂ = −[e_x, e_y] = −e_z, and a small loop of area da rotates the body by +da about z.
 - [ ] Registry row `checked`, class `Certified`, with hash and checker identity.
+- [ ] `scripts/e2e/card_t20.sh` passes and its log ends with a `summary` line.
 
 ## Test plan
 
@@ -91,12 +101,27 @@ output.
 (exp(−a·e_x)·exp(−b·e_y)·exp(a·e_x)·exp(b·e_y) agrees with exp(a·b·e_z) through second order, in truncated exact
 rational series); `plus_bracket_predicts_minus_da` (the wrong formula gives −da: wrong by twice the answer);
 `non_constant_connection_curl_term` (𝔸₂ = s₁·e_z, 𝔸₁ = 0: holonomy coefficient −∂₁𝔸₂ = −e_z);
-`traversal_reversal_flips_sign`; `specimen_accepts`.
+`traversal_reversal_flips_sign`; `specimen_accepts`; `no_bracket_formula_rejects` (∂ᵢ𝔸ⱼ − ∂ⱼ𝔸ᵢ alone predicts zero
+rotation on the SO(3) fixture); `changed_coefficient_rejects`; `budget_arm_e` (runs arm E and writes its record);
+`budget_arm_record_complete` (the arm-E record has operation count, wall time, peak memory, verdict and the
+failing control).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the specimen and mutants; the analysis's own
-script logs the certificate hash bound to the curvature kernel.
+The budget arm is this card's own run, so it has its own script, `scripts/e2e/card_t20.sh` (header
+`bead=CARD-T-20 milestone=M3 labels=lemma,frob-lemma seed=0 needs=cpu`; sources the STD-E2E helper, idempotent,
+writes only under `target/`): `budget-arm-E`, `cargo test -p frob-lemma --test cards -- t20::budget_arm_e` (the
+identity of step 3 for 𝔰𝔬(3) and 𝔰𝔢(3) and the plus-bracket control submitted through the producer pipeline of
+BD-027; the record is written to `target/lemma/cards/T-20/budget-arm-E.json` and read back); `laws`, `cargo test
+-p frob-lemma --test cards -- t20`; `corpus`, `frob-verify --json` under `env -i` on `accept-T-20.frobcert` and its
+four mutants, asserting accept for the specimen and reject, with the rule, for each mutant of the acceptance list.
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34, a dependency) also walks the same files as part of its
+corpus; the analysis's own script (BD-243) logs the certificate hash bound to the curvature kernel. For this card
+the NDJSON lines (`target/e2e-logs/card_t20/<utc>.ndjson`, transcript beside it; N12-34's lines for these files
+carry the same `bead` value) carry `ts`, `script`, `bead` ("CARD-T-20"), `step` (`T-20/<specimen-or-mutant>` and
+`T-20/budget-arm-E`), `event`, the exact command line, exit code, wall time, peak memory, the operation count
+against 8,192 and the control's verdict, the bundle's BLAKE3, the expected and observed verdict, and on a mismatch
+the first failing matrix entry and the path to reproduce; the `summary` line counts assertions passed and failed.
 
 ### Known answers and negative controls
 

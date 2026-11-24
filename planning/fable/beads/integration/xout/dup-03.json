@@ -1,0 +1,657 @@
+{
+ "group": "dup-03",
+ "decisions": [
+  {
+   "a": "N13-REF",
+   "b": "N14-REF",
+   "action": "link",
+   "note": "two different uncoded refusals; no longer one code: N14-REF proposes FROB-REF-127 (mass dropped at import), N13-REF proposes 128 (lifted law on a joint without turn state); N14-REF now records that 128 is spoken for and 129 is the next free code"
+  },
+  {
+   "a": "N14-REF",
+   "b": "N32-REF",
+   "action": "link",
+   "note": "112 and 804 are two rows of one registry file; division by raising site written identically in both (a stale parent in a design.patch document is 112 from the patch reader and never also 804; 804 is the lineage write of every other mutate verb; both exit 7)"
+  },
+  {
+   "a": "N21-REF",
+   "b": "N36-REF",
+   "action": "rescope",
+   "note": "N21-REF owns row 602 in full (four trigger cases, slab-class pointer, one repair list per slab class incl. the scene and camera variants); N36-REF keeps the raising-site matrix, a test per trigger case, the two forbidden-repair checks and the script, and depends on N21-REF"
+  },
+  {
+   "a": "N23-REF",
+   "b": "N35-REF",
+   "action": "link",
+   "note": "861 and 867 divided by raising site, same text in both (and in N37-REF). Left for the lead: N23a-18 (not in this packet) tests a cited training return as 867, while the plan's KA-801 and KA-802 name 861 for it"
+  },
+  {
+   "a": "N27-REF",
+   "b": "N35-REF",
+   "action": "link",
+   "note": "562 and 584: the two readings already agreed (562 on the source run's class at admission; 584 at attribution time and on a fork set's own children); N35-REF's wording tightened to N27-REF's"
+  },
+  {
+   "a": "N29-REF",
+   "b": "N32-REF",
+   "action": "link",
+   "note": "878/810 and 896/806 are one event at two layers; the owed ruling is written as DESIGN in both (surfaces_as on 878 and on 896). Left for the lead: N29a-04's script (not in this packet) expects 896 from the CLI where the envelope's code is 806 with 896 as cause"
+  },
+  {
+   "a": "N32-REF",
+   "b": "N36-REF",
+   "action": "link",
+   "note": "704 and 761 divided by raising site, same text in N32-REF, N35-REF and N36-REF (daemon size classifier first: campaign class without an approved envelope is 704; every other over-envelope case is 761)"
+  },
+  {
+   "a": "N35-REF",
+   "b": "N36-REF",
+   "action": "rescope",
+   "note": "N35-REF owns rows 761, 862, 863, 866 in full: N36-REF's fuller trigger lists entered there and the two repair lists reconciled into one per row; N36-REF keeps the raising-site matrix, a test per trigger case, the ordering rejection and the script, and depends on N35-REF"
+  },
+  {
+   "a": "N35-REF",
+   "b": "N37-REF",
+   "action": "link",
+   "note": "561 and 825 divided by raising site, same text in both (561 at planning or admission of a paired comparison; 825 for a stored D4 result offered to the five consumers of the evidence boundary)"
+  },
+  {
+   "a": "BD-002",
+   "b": "N33a-07",
+   "action": "rescope",
+   "note": "BD-002 ships the first-commit header of DEPENDENCY_ADMISSION.md with no record; N33a-07 owns the record schema, writer, validator, never-inherited check and the generator, which keeps that header as its preamble (dependency N33a-07 on BD-002 already in place)"
+  },
+  {
+   "a": "N33a-07",
+   "b": "N40-07",
+   "action": "rescope",
+   "note": "N33a-07 holds the one implementation of never-inherited per use and per pin (unadmitted-use, admission-stale); N40-07 calls it at an exit and keeps only the milestone half (admission-inherited: a covering record written before the use existed)"
+  },
+  {
+   "a": "N33b-01",
+   "b": "N40-07",
+   "action": "rescope",
+   "note": "one home for the firewall data: required_at, optional_at, uses on the rows of franken-stack.lock (N33b-01, with loader, data-level test, classification and report); N40-07 renders the by-milestone table from it, enters only needs_note and if_missing in registries/milestones.toml, and owns the exit check over the built graph, the missing-route verdict and the audit of the M7 freeze window that N33b-03 enforces.. The status words of gates.toml used by the two (not run, killed: fallback adopted, blocked) are mapped to the file's tokens in BD-002 (see fixes)"
+  },
+  {
+   "a": "GB-30",
+   "b": "N24b-06",
+   "action": "link",
+   "note": "the card checks the enumerator of eval.preanalyze against an independent reference lane; its Out line and Lane B now name N24b-06 and use its field, token and flag spellings"
+  },
+  {
+   "a": "N24b-06",
+   "b": "N33b-19",
+   "action": "rescope",
+   "note": "N24b-06 is the only definition of eval.preanalyze (registry row, schemas, executor, tokens, flags, refusal 532 at the verb); N33b-19 keeps the other four verbs and the call from study.plan, which embeds frob.preanalysis/1 unchanged; its second input/output specification of the verb removed, the schema round-trip test moved to N24b-06"
+  },
+  {
+   "a": "N24b-21",
+   "b": "N33b-19",
+   "action": "rescope",
+   "note": "arena_study_preanalysis.sh (N24b-21) asserts the verb's tables, records GATE-ARENA-05 and provokes the admission refusals 552, 532 (no pre-analysis) and 533; study_two_types.sh (N33b-19) is the lifecycle: the planner's enumeration at 64 and 86 (GATE-ATEL-06), the declared tie refused at study.plan, submit, status, compare, the five comparison-time refusals; it compares hashes with the verb and asserts no table"
+  },
+  {
+   "a": "BD-140",
+   "b": "N25d-27",
+   "action": "rescope",
+   "note": "N25d-27 produces the slice's checker evidence (boundary, equality bundle, rival bundle accepted, stale bundle rejected) and measures four tie fields per producer; BD-140 keeps the fresh-agent trial, cites that slice record instead of re-running the steps, verifies only the stance bundle itself, adds authoring hours and states the first reading of KILL-AUGUR-TIE"
+  },
+  {
+   "a": "N25d-27",
+   "b": "NS-22",
+   "action": "rescope",
+   "note": "one demo directory for docking: demos/ns-22 (NS-22, the scenario the M1 exit demonstrates); N25d-27 drops demos/augur-docking and is the slice-evidence script and slice record; NS-22 keeps the four facts from the author's side (clock schedule, third gain, quantifier check) and cites the record"
+  },
+  {
+   "a": "BET-18",
+   "b": "N17b-10",
+   "action": "link",
+   "note": "the kill-gate bead applies the trigger of KILL-PHYLUM and writes the ADR; the bet bead reads that record and writes the bet verdict; triggers, thresholds (0.5, 0.70, eight buckets, 95%) and fallback agree with the plan's §17.19 in both"
+  },
+  {
+   "a": "BET-18",
+   "b": "N21b-19",
+   "action": "link",
+   "note": "the same for KILL-BUCKET, which defers to KILL-PHYLUM; values agree with §21.11"
+  },
+  {
+   "a": "N10a-13",
+   "b": "N13-29",
+   "action": "link",
+   "note": "two different pilots of construction C-03: the M1 hand pilot (ten-point geodesic) and the M5 identification pilot on planted parameters; the second runs only if the first passes"
+  },
+  {
+   "a": "N10a-13",
+   "b": "N30b-15",
+   "action": "link",
+   "note": "two identification pilots of the calibration lane with different subjects and falsifiers (rigid-body inertial parameters on the cone; one actuator joint through three passes); both use frob-conformance/registry/pilots.toml"
+  },
+  {
+   "a": "N20a-03",
+   "b": "N22a-03",
+   "action": "rescope",
+   "note": "one definition of the four namespace types, in frob-sense (N20a-03: TruthRef, MeasRef, BeliefRef, ObsRef, the access table); N22a-03's second set of wrappers in frob-dyn removed; it keeps the two state sources, the out-of-sequence rule, the decision record and the paired report, built on those types"
+  },
+  {
+   "a": "N20a-03",
+   "b": "N23a-03",
+   "action": "rescope",
+   "note": "one ActorSchema and CriticSchema, in frob-sense (N20a-03, with freeze_actor_schema, 442 at the freeze and the absent execution mode); N23a-03 re-exports them and keeps access classes, layout and projection, the manifest freeze, 524, isolated inference and the causality harness"
+  },
+  {
+   "a": "BD-040",
+   "b": "N41-23",
+   "action": "rescope",
+   "note": "BD-040 defines every row of the trj baseline and completes it; N41-23 (step 6 of the first session) takes only the first repetitions of four of those rows for one incumbent and writes the session record. Direction reversed by the capstone rule: the step needs the harness alone and opens the ledger; the seed, whose done-condition is the gate's trj rows, depends on it (N41-23's dependency on BD-040 removed from its front matter)"
+  },
+  {
+   "a": "BD-144",
+   "b": "N17a-17",
+   "action": "rescope",
+   "note": "one implementation of the padding and bucket arithmetic, the host-only tool of BD-144 (Ω, bucket plans, min_buckets, known answers); N17a-17 keeps the generator pilot (grammars, 1,000 samples per family, design check and rejection report, frozen export, its falsifier verdict) and runs that tool for its reports B and C. Two populations remain on purpose: archetypes plus 1,000 open-modular designs (BD-144), 1,000 per family (N17a-17)"
+  },
+  {
+   "a": "BD-275",
+   "b": "N26b-23",
+   "action": "rescope",
+   "note": "BD-275 keeps the set, its schema, admission and the four sub-commands show, add, retire, run at M3; N26b-23 adds the fifth, carry (with --refresh), at M4 and reaches a set only through BD-275's add; each Scope now says so"
+  },
+  {
+   "a": "BET-12",
+   "b": "N40-11",
+   "action": "rescope",
+   "note": "N40-11 measures the schedule gate (T, cause attribution, three-branch rule, row GATE-PROG-SCHEDULE, pause mechanism, required content of a re-plan); BET-12 keeps the pre-registration, the verdict by branch with its ADR and the refusal of M2 funding records; its second statement of the measurement and attribution removed. N40-11 does not depend on BET-12"
+  },
+  {
+   "a": "CARD-T-18",
+   "b": "N10b-02",
+   "action": "link",
+   "note": "the spec part states C-16.S14 to S17 with law tests in frob-gait; the card issues the per-pair certificates for S14. The two-ball fixture and the stratum counts (27 and 162 under C2 x C2; 45 and 324 under the two-element subgroup) agree"
+  },
+  {
+   "a": "N10a-04",
+   "b": "N21a-20",
+   "action": "rescope",
+   "note": "N21a-20 generates derivative programs, labels each within the closed set, and is the one definition of the manifest's derivative field; N10a-04 is the doctrine check over the whole manifest and every boundary and reads that field as spelled there; the duality law and its tolerance are SPEC-C-14's for both"
+  },
+  {
+   "a": "N10c-11",
+   "b": "N25c-15",
+   "action": "link",
+   "note": "one experiment read by two pilots: N25c-15 runs the probe experiment for KILL-AUGUR-PROBE; the comparator clause of PILOT-C-39 reads its record (dependency already in place)"
+  },
+  {
+   "a": "N15b-17",
+   "b": "N31a-48",
+   "action": "rescope",
+   "note": "one battery ageing law, in frob-actuate (N15b-17: closed form and rate form, the card's ageing group, validity group); N31a-48 keeps wear, fatigue and insulation and drives the cell state through an adapter to that law, with window-level domain tracking and the class rule"
+  },
+  {
+   "a": "N18b-17",
+   "b": "N38a-29",
+   "action": "rescope",
+   "note": "divided at the device boundary: N18b-17 (M4) is the one definition of the rut field and its leak row on batch-cpu under the transactional profile; N38a-29 (M6) carries the same field to device pools and batch scale (kernels, capacity at scale, telemetry and soil work, cost bound, the 4,096-world leak measurement) and holds no second layout"
+  },
+  {
+   "a": "N20b-17",
+   "b": "VERBS-sense",
+   "action": "merge",
+   "keep": "VERBS-sense",
+   "note": "one registry bead for the eight rows of cluster `sense`; VERBS-sense kept (the registry's own bead and the fuller); folded in from N20b-17: refusal codes 441, 447, 214 and the admission codes of the run verbs, the five reduced forms that answer at M1, wait behaviour of the run verbs, its controls and tests, the stills-are-not-observations rule, the two uncoded refusals. Left for the lead: BD-241 and BD-242 (not in this packet) name the capabilities design:read and sim:run where the registry rule gives sense:read and sense:run; BD-258 decides"
+  },
+  {
+   "a": "N25c-18",
+   "b": "N28c-13",
+   "action": "rescope",
+   "note": "N28c-13 (frob-opt) holds the one proposal record frob.proposal/1 and the studio's contract for measurement proposals as an admission check before ranking; N25c-18 (frob-mission) generates the proposals, calling mission.distinguish for the partition, and fills that record. frob-opt is a lower layer and holds no partition algorithm; the four partition tests of the friction-law fixture moved to N25c-18"
+  },
+  {
+   "a": "N30a-02",
+   "b": "N38b-01",
+   "action": "link",
+   "note": "N30a-02 defines the six Reality statuses, their transitions and the line grammar; N38b-01 holds the conformance checks that read them (it restates the statuses and the line identically and lists the definitions as out of scope)"
+  },
+  {
+   "a": "N38b-20",
+   "b": "N41-28",
+   "action": "rescope",
+   "note": "one source for the three sentences of a rubric row: registries/rubric.toml (N41-28), printed once in docs/delivery/releases.md; N38b-20 keeps the views generated from gates.toml alone (README table, dashboard feed, the gate section docs/release/STATUS.md) and no longer copies the sentences; N41-28 reads gate statuses through N38b-20's generator and registers its document in N38b-20's register of generated views"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N20b-17",
+   "keep": "VERBS-sense",
+   "note": "same eight registry rows; N20b-17's dependencies on BD-078, BD-099 and BD-119 are not carried over (a registry bead never depends on a mechanism; they are related)"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "N13-REF",
+   "dep": "N14-REF",
+   "as": "related",
+   "why": "two registries proposing adjacent free codes (127, 128) of one block"
+  },
+  {
+   "bead": "N14-REF",
+   "dep": "N32-REF",
+   "as": "related",
+   "why": "rows 112 and 804 state one division of the stale-parent case"
+  },
+  {
+   "bead": "N36-REF",
+   "dep": "N21-REF",
+   "as": "dep",
+   "why": "the matrix, tests and script read row 602, which N21-REF writes"
+  },
+  {
+   "bead": "N36-REF",
+   "dep": "N35-REF",
+   "as": "dep",
+   "why": "the matrix, tests and script read rows 761, 862, 863, 866, which N35-REF writes"
+  },
+  {
+   "bead": "N23-REF",
+   "dep": "N35-REF",
+   "as": "related",
+   "why": "rows 867 and 861 state one division by raising site"
+  },
+  {
+   "bead": "N27-REF",
+   "dep": "N35-REF",
+   "as": "related",
+   "why": "rows 584 and 562 state one boundary"
+  },
+  {
+   "bead": "N29-REF",
+   "dep": "N32-REF",
+   "as": "related",
+   "why": "rows 878/896 surface as 810/806"
+  },
+  {
+   "bead": "N32-REF",
+   "dep": "N36-REF",
+   "as": "related",
+   "why": "704 and 761 divided by raising site"
+  },
+  {
+   "bead": "N32-REF",
+   "dep": "N35-REF",
+   "as": "related",
+   "why": "row 704 and row 761 state one division of the envelope refusals"
+  },
+  {
+   "bead": "N35-REF",
+   "dep": "N37-REF",
+   "as": "related",
+   "why": "rows 561/861 and 825 state one division of the D4 codes"
+  },
+  {
+   "bead": "N33a-07",
+   "dep": "BD-002",
+   "as": "dep",
+   "why": "the generator prints the first-commit header BD-002 ships"
+  },
+  {
+   "bead": "N40-07",
+   "dep": "N33a-07",
+   "as": "dep",
+   "why": "the exit check calls never_inherited and reads admission records"
+  },
+  {
+   "bead": "N40-07",
+   "dep": "N33b-01",
+   "as": "dep",
+   "why": "the exit check reads the firewall data and the classification from the stack lock"
+  },
+  {
+   "bead": "N33b-01",
+   "dep": "N33a-07",
+   "as": "dep",
+   "why": "the stale-admission item of the consistency test calls never_inherited"
+  },
+  {
+   "bead": "N40-07",
+   "dep": "N33b-03",
+   "as": "related",
+   "why": "the M7 exit audits the freeze window that N33b-03 defines and enforces (later milestone)"
+  },
+  {
+   "bead": "GB-30",
+   "dep": "N24b-06",
+   "as": "dep",
+   "why": "Lane B of the card runs the enumerator of eval.preanalyze"
+  },
+  {
+   "bead": "N33b-19",
+   "dep": "N24b-06",
+   "as": "dep",
+   "why": "study.plan calls the enumerator and embeds its record"
+  },
+  {
+   "bead": "N24b-21",
+   "dep": "N33b-19",
+   "as": "dep",
+   "why": "steps 8 and 9 of the script drive the executors of study.plan and study.status"
+  },
+  {
+   "bead": "BD-140",
+   "dep": "N25d-27",
+   "as": "dep",
+   "why": "the gate record cites the slice record for its checker evidence and tie fields"
+  },
+  {
+   "bead": "NS-22",
+   "dep": "N25d-27",
+   "as": "dep",
+   "why": "the scenario cites the slice record and runs the same mission"
+  },
+  {
+   "bead": "BET-18",
+   "dep": "N17b-10",
+   "as": "dep",
+   "why": "the bet's verdict reads the KILL-PHYLUM decision record"
+  },
+  {
+   "bead": "BET-18",
+   "dep": "N21b-19",
+   "as": "dep",
+   "why": "the bet's verdict reads the KILL-BUCKET decision record"
+  },
+  {
+   "bead": "N10a-13",
+   "dep": "N13-29",
+   "as": "dep",
+   "why": "the Riemannian arm exists only on the pass branch of the hand pilot"
+  },
+  {
+   "bead": "N10a-13",
+   "dep": "N30b-15",
+   "as": "related",
+   "why": "sibling pilots that both gate the identification step BD-391"
+  },
+  {
+   "bead": "N13-29",
+   "dep": "BD-025",
+   "as": "dep",
+   "why": "the pilot is entered in the pilot register that BD-025 creates"
+  },
+  {
+   "bead": "N22a-03",
+   "dep": "N20a-03",
+   "as": "dep",
+   "why": "the state sources are built from the namespace reference types"
+  },
+  {
+   "bead": "N23a-03",
+   "dep": "N20a-03",
+   "as": "dep",
+   "why": "the learner re-exports and freezes the schema type of frob-sense"
+  },
+  {
+   "bead": "N41-23",
+   "dep": "BD-040",
+   "as": "related",
+   "why": "the step is the first reading of rows that BD-040 defines; it must not wait for the complete baseline (overrides the drafted dependency)"
+  },
+  {
+   "bead": "BD-040",
+   "dep": "N41-23",
+   "as": "dep",
+   "why": "the campaign completes the rows whose first repetitions the session step recorded"
+  },
+  {
+   "bead": "N17a-17",
+   "dep": "BD-144",
+   "as": "dep",
+   "why": "reports B and C and the falsifier's bucket count are computed by the tool BD-144 builds"
+  },
+  {
+   "bead": "N26b-23",
+   "dep": "BD-275",
+   "as": "dep",
+   "why": "carry offers re-promoted worlds to the add of the hard-world set"
+  },
+  {
+   "bead": "BET-12",
+   "dep": "N40-11",
+   "as": "dep",
+   "why": "the bet's verdict reads the schedule gate's record"
+  },
+  {
+   "bead": "CARD-T-18",
+   "dep": "N10b-02",
+   "as": "dep",
+   "why": "the card certifies statement C-16.S14, which the spec part states and whose fixture it reuses"
+  },
+  {
+   "bead": "N10a-04",
+   "dep": "N21a-20",
+   "as": "dep",
+   "why": "the D-8 check reads the manifest field and runs the duality law over the pairs N21a-20 generates"
+  },
+  {
+   "bead": "N10c-11",
+   "dep": "N25c-15",
+   "as": "dep",
+   "why": "the comparator clause of the pilot is evaluated from the probe experiment's record"
+  },
+  {
+   "bead": "N31a-48",
+   "dep": "N15b-17",
+   "as": "dep",
+   "why": "the cell slow state is the battery ageing law of N15b-17 in its rate form"
+  },
+  {
+   "bead": "N38a-29",
+   "dep": "N18b-17",
+   "as": "dep",
+   "why": "the device form implements the field N18b-17 defines"
+  },
+  {
+   "bead": "N25c-18",
+   "dep": "N28c-13",
+   "as": "dep",
+   "why": "the Augur side builds values of the record N28c-13 defines and hands its list to that bead's admission check"
+  },
+  {
+   "bead": "N38b-01",
+   "dep": "N30a-02",
+   "as": "dep",
+   "why": "the checks read the status type and the line grammar"
+  },
+  {
+   "bead": "N41-28",
+   "dep": "N38b-20",
+   "as": "dep",
+   "why": "the rubric document shows gate statuses from the status generator and is listed in the register of generated views"
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N14-REF",
+   "what": "records that FROB-REF-128 is proposed by N13-REF, so its own proposal stays at 127 and the next free code of the block is 129"
+  },
+  {
+   "bead": "N14-REF",
+   "what": "112 against 804: DESIGN division by raising site added (the plan defines both and does not divide them); row 112 and a test say a stale parent in a design.patch document is never also 804"
+  },
+  {
+   "bead": "N32-REF",
+   "what": "the four layer pairs (804/112, 806/896, 810/878, 704/761) rewritten as one DESIGN division each, identical to the partner registries; rows 704 and 804 name their partner codes"
+  },
+  {
+   "bead": "N29-REF",
+   "what": "896 against 806: corrected to the plan's §32.8.1 and GATE-TETHER-06 (a changed filter with an old cursor is 806 for every caller of a verb); 896 is the store's code with surfaces_as = FROB-REF-806; the proposal to retire 806 removed; the script step for 896 now asserts 896 at the store interface and 806 with cause 896 through the verb"
+  },
+  {
+   "bead": "N35-REF",
+   "what": "rows 761, 862, 863, 866: one trigger list and one repair list per row (N36-REF's list had a third repair for 863, a fourth for 866 and different wording for 761 and 862); pointer of 862 and 866 set to the field at fault (DESIGN), where N35-REF had the figure or experiment as a whole"
+  },
+  {
+   "bead": "N36-REF",
+   "what": "its second copy of the trigger, pointer and repair lists of 761, 862, 863, 866 and 602 removed in favour of the owners' rows; a test checks that its trigger cases equal the rows' trigger lists"
+  },
+  {
+   "bead": "N21-REF",
+   "what": "row 602 extended with the scene and camera cases (never fewer worlds for scenes; never a lower resolution or cadence for frames); its script step for 602 used 2,000,000 worlds on either backend, which fits the Mac's 203 GB budget, so the Metal step now takes a count above the largest that fits"
+  },
+  {
+   "bead": "N35-REF",
+   "what": "761 against the 70x codes: the row said 70x are per-session budgets only; 704 also concerns the envelope, and the DESIGN division of 704 and 761 by raising site is now stated (same text in N32-REF and N36-REF)"
+  },
+  {
+   "bead": "N23-REF",
+   "what": "867 against 861 and 825: reading changed to agree with N35-REF and the plan's row of 861 and KA-801/KA-802 (a training-time number is 861 everywhere; an un-re-evaluated D4 policy is 867 at frob-learn's own verbs and 861 elsewhere); '825 about the export boundary' corrected to the evidence boundary's five consumers"
+  },
+  {
+   "bead": "N37-REF",
+   "what": "row 825 and the neighbour table now state the same division of 561, 825, 861 and 867 as N35-REF and N23-REF (paired statistics under 825 means statistics computed from stored results; a D4 arm at planning or admission is 561); 867 added to the neighbours"
+  },
+  {
+   "bead": "N40-07",
+   "what": "finding `used-without-admission` renamed to N33a-07's `unadmitted-use` (one condition, one name); the stale-pin case reports N33a-07's `admission-stale`"
+  },
+  {
+   "bead": "N33b-01",
+   "what": "fastmcp_rust at M7: the plan's §33.7 prints the cell as required and §43.2 lists it under uses-if-admitted; DESIGN in N33b-01 and N40-07: optional (KILL-MCP's last fallback is the CLI; no milestone blocked by one failed bet)"
+  },
+  {
+   "bead": "N33b-01",
+   "what": "a required foundation's gate was accepted only as pass or killed, which contradicted N40-07 and the no-GPU variant of M2 (§43.2); the data test now classifies (admitted, fallback-adopted, missing) and the blocking verdict is given once, in N40-07 step 5 (route on record)"
+  },
+  {
+   "bead": "N33b-01",
+   "what": "staleness was tested on the receipt (newest receipt listing the foundation) where N33a-07 tests sibling_rev against the lock's pin; N33b-01 now calls N33a-07's function"
+  },
+  {
+   "bead": "N40-07",
+   "what": "the by-milestone firewall was a second entry (needs, uses_if_admitted in registries/milestones.toml) of what franken-stack.lock holds; now a rendered view, with needs_note and if_missing the only fields entered; the M7 window is defined by [freeze].opened and .closed of N33b-03"
+  },
+  {
+   "bead": "N24b-06",
+   "what": "verdict tokens and flags fixed in one place (DESIGN, from the plan's sample plan in Appendix L.8): promote, inferior, practical-tie, inconclusive; --declared-verdicts; output field first_reachable. The three other beads had --declare promote,…,tie (N33b-19), --declared prefer-b,b-inferior,practical-tie (N24b-21) and --expect tie / --kind fixed --n (GB-30), and the fields first_n_reachable (N33b-19) and first_n_for_tie (GB-30); all now follow N24b-06"
+  },
+  {
+   "bead": "N33b-19",
+   "what": "the pre-analysis block of a plan is the frob.preanalysis/1 record embedded unchanged (DESIGN: Appendix L.8 spells it otherwise as a proposal), so a plan's preanalysis.hash equals the hash eval.preanalyze prints; gates field reduced to GATE-ATEL-06 (GATE-ARENA-05 is recorded from N24b-21's script)"
+  },
+  {
+   "bead": "N25d-27",
+   "what": "two demo files for one demonstration (demos/augur-docking and demos/ns-22): the first removed, DESIGN with reason in N25d-27 and NS-22 (the chapter's M1 demonstration and the docking scenario of the exit line are one)"
+  },
+  {
+   "bead": "BD-140",
+   "what": "the first tie-rule reading had two field lists (BD-140: same scope, turnaround, authoring hours; N25d-27: lines of code, wall time, checker time) and three beads claiming to take it; now one list of five fields, four measured by N25d-27 and authoring_hours added by BD-140, which states the reading; NS-22 cites it"
+  },
+  {
+   "bead": "N13-29",
+   "what": "registration moved from a document alone (docs/delivery/pilots/…) to an entry in the pilot register frob-conformance/registry/pilots.toml of the plan's §38.5, as N10a-13 and N30b-15 have it; the document stays as the protocol whose hash the entry carries. Left for the lead: twelve other beads outside this packet register pilots only under docs/delivery/pilots/"
+  },
+  {
+   "bead": "N22a-03",
+   "what": "namespace wrappers Truth<T>, Measured<T>, Belief<T>, PolicyObs<T> in frob-dyn were a second definition of N20a-03's TruthRef, MeasRef, BeliefRef, ObsRef in frob-sense; DESIGN in both: frob-sense is the one home (the ADR is the sensing chapter's; frob-sense follows frob-dyn in layer 3; frob-control and frob-learn are layer 4); compile-fail tests moved to crates/frob-control/tests/ui/; two controller rows added to N20a-03's access table"
+  },
+  {
+   "bead": "N23a-03",
+   "what": "second ActorSchema/CriticSchema struct (with layout, digest, frozen_at) replaced by re-exports of frob-sense's types; layout is computed from the schema and frozen_at is recorded in the checkpoint manifest"
+  },
+  {
+   "bead": "N23a-03",
+   "what": "442 against 524: both codes covered an actor schema naming a privileged channel (N23-REF had 524 'at schema freeze', the sensing beads 442 at freeze_actor_schema); DESIGN division by raising site written identically in N20a-03, N23a-03 and N23-REF: 524 is the learner's class check before any freeze, 442 is the freeze's for a channel privileged by source or not of actor access. Left for the lead: N20-REF (not in this packet) should carry the same sentence in its row of 442"
+  },
+  {
+   "bead": "N41-23",
+   "what": "repetition counts for the same GATE-SPARK-21 rows differed (N41-23: 5 cold, 5 and 5 edits, 1 run; BD-040: 5 cold and 10 warm, 20 and 20 edits, 5 runs); the plan fixes none. DESIGN in both: BD-040's counts are the rows'; the session takes the first 5, 5, 5 and 1 with the counts in the disclosure block, and BD-040 keeps them as first repetitions (or as a `first-session` row if the harness identity changed)"
+  },
+  {
+   "bead": "N41-23",
+   "what": "the 20% explanation had two homes (the session record; docs/perf/explanations/ in BD-040): the reproduction judgement and its explanation file are BD-040's, the step notes the likely cause only"
+  },
+  {
+   "bead": "N17a-17",
+   "what": "claimed that BD-144 consumes its 1,000 designs, while BD-144 generates its own with the open-modular generator of N14b-01 and N17a-17 now depends on BD-144; the claim and the matching acceptance line corrected"
+  },
+  {
+   "bead": "BD-144",
+   "what": "the falsifier (more than eight buckets needed at 25% waste) had no computation in BD-144 (its plans minimise padded work under a cap); min_buckets moved in from N17a-17 as step 3c and the falsifier is evaluated on it in both beads; the pilot register named as frob-conformance/registry/pilots.toml (§38.5) with docs/delivery/pilots/phylum-m1.json as the output file it cites"
+  },
+  {
+   "bead": "N17a-17",
+   "what": "negative control 1 was arithmetically wrong under the bead's own definition of waste (Ω₁ − 1 on a bucket's members): sizes spread evenly over 12 to 66 need 4 buckets, not more than 8. Replaced in N17a-17 and BD-144 by a planted population that provably needs nine (nine sizes each twice the last, equal weights: 33.3% waste for any pair)"
+  },
+  {
+   "bead": "BD-275",
+   "what": "the entry field carried_from was written by N26b-23 into frob.hardset/1 without being in BD-275's schema; now declared there as optional (absent on M3 entries, part of the canonical bytes when present), and the surface note names the fifth sub-command"
+  },
+  {
+   "bead": "BET-12",
+   "what": "start and end of the elapsed time differed (BET-12: first implementation session to the M1 exit record; N40-11: `started` of M0 in registries/milestones.toml to the candidate exit of M1); the plan's §40.5 names no event. DESIGN in both: N40-11's events (written by the exit runner; the first M0 bead is the first bead of the first session)"
+  },
+  {
+   "bead": "BET-12",
+   "what": "verdict mapped to N40-11's three branches (branch 3, an overrun not caused by a sibling, is 'not falsified, slip recorded'); 'attribution by the exit-review session' reconciled with cause tags written at blocking time (the tags are raw data, the attribution record is the session's); gates field set to GATE-PROG-SCHEDULE"
+  },
+  {
+   "bead": "N40-11",
+   "what": "re-plan routes completed with the two BET-12 listed and it lacked (more upstream capacity; the worker-process fallback), so that the list has one home"
+  },
+  {
+   "bead": "N21a-20",
+   "what": "adjoint-duality tolerance was 16 ulp of the pairing's magnitude against 64 ulp of the sum of absolute terms in f64 and 1e-5 relative in f32 in N10a-04 and the contract SPEC-C-14 (the plan's KA-086 says 'to set'); N21a-20 corrected to the contract's figure"
+  },
+  {
+   "bead": "N21a-20",
+   "what": "validity label `piecewise` is not in the closed set of nine that N10b-01 owns and N10a-04 enforces; a derivative program with switching predicates is now labelled `fixed-mode` with the predicates as its frozen sequence (DESIGN with reason)"
+  },
+  {
+   "bead": "N10a-04",
+   "what": "manifest derivative field had two spellings (N10a-04: program {jvp, vjp: KernelId} / excuse {…}; N21a-20 and the library index: present with hashes / excused); one form defined in N21a-20, `present { jvp, vjp }` with program hashes or `excused { reason, estimator }` with the closed reason list and estimator forms moved in from N10a-04, and N10a-04 reads it"
+  },
+  {
+   "bead": "N31a-48",
+   "what": "cell-fade coefficients were named a_cal, a_cyc and taken per equivalent full cycle, against k_cal, k_cyc, r_cal, r_cyc per ampere-hour on the same battery card in N15b-17. DESIGN in both: one group, per ampere-hour (the plan: 'fade per unit of charge throughput'); equivalent full cycles are a reporting unit; KA-753 restated in card units (5 A·h cell, 3,000 A·h)"
+  },
+  {
+   "bead": "N15b-17",
+   "what": "validity domain of the cell law: ranges differed (temperature and depth of discharge; temperature, state-of-charge window and current rate) and so did the refusal condition (any excursion; more than 1% of a window). One validity group with current_rate added, and the 1% share-of-time rule in both, with the payload and repairs of FROB-REF-831 as N31a-48 states them"
+  },
+  {
+   "bead": "N38a-29",
+   "what": "one mechanism of one crate had two layouts: 8 x 8 tiles of offsets Δz ≤ 0 with write rule Δz ← min(Δz, −(1 − ρ_e)·z) (N18b-17) against 32 x 32 tiles of sinkage z ≥ 0 with z ← max(z, z*) (N38a-29); the plan fixes none. DESIGN in both: N18b-17's layout, sign and write rule on every tier (keyed like the scene's bricks; one digest across tiers); N38a-29 sets the batch-scale capacity T_rut = 1,024, the same 256 KiB and area as its former 64 tiles, and its capacity sweep becomes 512, 1,024, 2,048"
+  },
+  {
+   "bead": "N38a-29",
+   "what": "tile-capacity overflow marked the world `Faulted`; the plan's §16 and §21 rules mark every capacity overflow `Degraded` with the caller's policy choosing refuse, reset or continue-flagged (`Faulted` is for non-finite values); corrected to `Degraded: rut-capacity`, and N18b-17 now states the same three policies"
+  },
+  {
+   "bead": "N18b-17",
+   "what": "second-pass rule completed with the card's optional unloading–reloading slope, which only N38a-29 had"
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "first_milestone of the five verbs with M1 forms: N20b-17 wrote M1 with a coverage note, VERBS-sense the appendix's M2/M3 with FROB-REF-724 until then; resolved by the rule BD-137 states for all registry beads (the appendix's value; a reduced form that lands early answers and is listed with its `form`), with a table of the early forms; capability scopes (design:read, sim:run against sense:read, sense:run) and task clusters (`perceive` against NJL-05's assignment) settled on the registry-wide rules, DESIGN until BD-258"
+  },
+  {
+   "bead": "N25c-18",
+   "what": "two Proposal records for one verb (frob-mission: kinds probe, measure, rerun-higher-tier, split-cell with target, relevance, condition, command; frob-opt: frob.proposal/1 with seven kinds); DESIGN in both: one record in frob-opt (the ranking's crate, layer 4 below frob-mission), with the kind RerunHigherTier and the fields target, command, relevance and partial added, and `condition` named model_class"
+  },
+  {
+   "bead": "N28c-13",
+   "what": "its assembly steps re-implemented the partition of BD-291 inside frob-opt, which may not call frob-mission (crate map, §34); restated as the contract the arriving records must meet. The comparator rule is aligned (N25c-18 said 'when a probe is proposed', N28c-13 'for every measurement proposal'; now every probe or card-field measurement), and dropped_irrelevant is in the output block. Left for the lead: scripts/e2e/experiment_suggest.sh is described by N25c-18 and owned by N28c-16 (not in this packet); N25c-18 now calls its steps a stage of that script"
+  },
+  {
+   "bead": "N38b-20",
+   "what": "the three rubric sentences were copied 'from registries/milestones.toml', which has no such fields (N40-06), while N41-28 keeps them in registries/rubric.toml; the copy removed and DESIGN stated in both beads"
+  },
+  {
+   "bead": "N38b-20",
+   "what": "not a reported pair, found while reading the packet: BD-002 and N38b-20 both specified the README status-table generator, with different block markers (status:begin / gates:begin), row order (sorted by id / file order) and cell for a gate with no measured value (`open`, the seed's done-condition in the plan's §45 / `not run`). One generator: BD-002 ships it and N38b-20 moves and extends it (controls column, footer); the seed's markers, ordering and `open` stand in both"
+  },
+  {
+   "bead": "BD-002",
+   "what": "gates.toml status tokens lacked `blocked` (the plan's §40.1 lists `blocked: <open question>`); added, with the mapping of the plan's status words to the file's tokens (`not run` → not-run; `killed: fallback adopted` → killed with its fallback recorded), which settles the vocabulary difference with N33b-01 noted under the pair N33b-01 / N40-07"
+  }
+ ]
+}

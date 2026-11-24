@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "tenfold", "registry", "solid"]
 parent: "EPIC-M0"
-deps: ["N41-01"]
-needs: ["§43.2: the exit record that carries the pre-mortem readings beside the risk review (N40-05)"]
-related: ["N41-RISK1", "N41-RISK2", "N41-RISK3", "N41-RISK4", "N41-04", "N40-12", "N40-15", "BET-13", "N00-08"]
+deps: ["N40-05", "N41-01", "N41-REF", "N41-RISK1", "N41-RISK2", "N41-RISK3", "N41-RISK4", "STD-E2E"]
+needs: []
+related: ["N41-04", "N41-KA", "N41-CX"]
 gates: []
 plan_refs: ["§41.1", "§41.2", "§41.4"]
 ---
@@ -65,7 +65,7 @@ of the plan with countermeasures corrected to the present mechanisms; 16 to 27 a
 | 19 | Family policies did not transfer | The pre-funding pilot; return with no adaptation under 70% of specialists; OPEN-CORTEX-1 at its default when M4 opens | KILL-FAMILY; inheritance for parameter edits; the baseline and sampling rungs; the variant of M4 with no family policy | The class is decided by specialists, and the humanoid range narrows | RISK-28 |
 | 20 | Mixed batches lost to per-family templates | The M1 pilot of padding overhead and bucket count; the template arm expressing at least 95% of the mutation corpus | The head-to-head with outcomes declared in advance; KILL-PHYLUM and KILL-BUCKET; parameter variants within a topology are Solid and unaffected | Two performance differentiators are withdrawn | RISK-29 |
 | 21 | The plan's breadth starved the spine: forty-three crates, nine milestones and more than four hundred gates spread a swarm thin | Crates that hold only Frontier or Moonshot content gain lines while an M1 or M2 exit slips; more than four Moonshot items active; a work package funded without its pilot | A tier on every mechanism; features that select a tier are off by default; rule D-6 and the cap of four; pilots before funding; M1 needs three foundations; the program gate; exits defined by demonstrations and not by gate counts | Breadth is the brief, and the cap is enforced by people | RISK-33 |
-| 22 | Qualification was gamed | A campaign with many requests and no close; a receipt field outside the listed set; a denominator that shrank | The blinded lane: sealed clusters, pre-committed requests, α_i = α/[i·(i + 1)]; GATE-QUAL-01 under 500 adaptive retries; the firewall gates GATE-QUAL-02 and GATE-SAFE-03; scorecard accounting (GATE-ARENA-07) | Whoever holds the qualification administrator scope is trusted | RISK-34, RISK-15, RISK-44 |
+| 22 | Qualification was gamed | A campaign with many requests and no close; a receipt field outside the listed set; a denominator that shrank | The blinded lane: sealed clusters, pre-committed requests, α_i = α/[i·(i + 1)]; GATE-QUAL-01 under 500 adaptive retries; the firewall gates GATE-QUAL-02 and GATE-SAFE-03; scorecard accounting (GATE-ARENA-07) | Whoever holds `qual:admin` (the qualification administrator scope) is trusted | RISK-34, RISK-15, RISK-44 |
 | 23 | Certificates were issued for the wrong statement | A bundle whose embedded statement differs from the query; a changed quantifier accepted with consistent hashes | Rule D-12; the bundle embeds the canonical bytes of the statement; the mission identity changes with any quantifier; the mutation suites of GATE-LEMMA-03 and GATE-AUGUR-01, -06; KILL-AUGUR-FALSECERT; one false certificate disqualifies an arm of the ten-fold test | A true certificate of an uninteresting statement still reads as evidence (OPEN-AUGUR-8) | RISK-35, RISK-36 |
 | 24 | A foundation defect surfaced late | A known answer or a baseline that cites a module before its admission test has passed | Four reported defects recorded as facts to recheck; the admission gates INT-FSIM-05, -06, -07 and INT-FNP-02; an admission is never inherited; the file-by-file tests run at M0 | Unreported defects exist | RISK-24, RISK-58 |
 | 25 | The toolchain train stalled: the siblings could not be brought onto one toolchain, and a merge was blocked | A failing cell in the matrix of INT-TOOLCHAIN-01; two asupersync packages in `cargo tree -d` | One toolchain T chosen at INT-TOOLCHAIN-01, with candidate (b) in reserve; FD-FMCP-01 and FD-ASUP-01 done at M0; KILL-MCP's fallbacks; the `frob-units` escape hatch; `check-deps` | Four nightlies and one stable release are the starting state (FACT) | RISK-02, RISK-03, RISK-21, RISK-57 |
@@ -95,16 +95,32 @@ available.
 (from the risk review), and for each outcome reason whose first-readable milestone has been reached, the measured
 value of its signal with the artifact that holds it. A reason whose signal is adverse (for example, no incumbent
 phase measurement at the M0 exit) is listed under "outcome-level warnings" in the exit record and must be answered
-there in writing.
+there in writing. An exit record with an adverse reason and no written answer fails the exit: the runner exits 3
+with `reason=premortem-warning-unanswered` (harness reason of N41-REF), naming the reason's rank and its signal.
+This bead adds the two readings and that check to the exit runner of N40-05 as one attached check, by a record
+of `scripts/exit/checks.toml`: `id = "premortem"`, `owner = "N41-PM"`, `step = 9`, `since = "M0"`, `after =
+"risk-review"` (it reads the fired readings of `risk-review.json`), `command = "scripts/exit/premortem.sh"`. The
+crate `frob-conformance` has no binary of its own name (BD-025, ADR-GAUNT-01), so the reading is an example
+target that this bead declares, `crates/frob-conformance/examples/premortem.rs`, and the wrapper, run by the
+runner as `scripts/exit/premortem.sh <Mn> --root <dir> --json`, calls `cargo run -p frob-conformance --example
+premortem -- read <Mn> --root <dir> --json`. Under the runner's check contract that command prints one object
+`{check, milestone, section, blocks, warnings}` and exits 0 whenever it ran. Its section holds the two readings;
+an adverse reason with a written answer is a warning, and one with no answer is a block whose reason is
+`premortem-warning-unanswered`, which is how the runner comes to fail the exit as stated above (a check that
+exited non-zero would be read as `not-run`). It does not change the runner's other steps.
 
 ## Acceptance criteria
 
 - [ ] `registries/premortem.toml` holds 27 stories and 6 outcome reasons; every story lists at least one register
       row that exists; every outcome reason names a measurable signal and a first-readable milestone.
-- [ ] The exit runner prints the two readings in every exit record from M0 onward.
+- [ ] The exit runner prints the two readings in every exit record from M0 onward, through the attached check
+      `premortem`, which runs after `risk-review`.
 - [ ] At the M0 exit, reason 1 is evaluated from the gate register: with no recorded incumbent phase measurement
       the warning is present; with the measurement recorded it is absent.
+- [ ] An exit record carrying an adverse reason with no written answer fails with
+      `premortem-warning-unanswered`; the same record with the answer passes.
 - [ ] The three cluster statements are in the registry header and are printed with the stories of each cluster.
+- [ ] `scripts/e2e/premortem_exit.sh` passes, and fails under its plant `answer-not-required`.
 
 ## Test plan
 
@@ -113,16 +129,40 @@ there in writing.
 `clusters_partition_stories` (carried 1 to 15; thesis 16 to 20; evidence 22 to 24; program 21, 25, 26, 27);
 `outcome_reason_1_warns_without_ledger` and `..._clears_with_ledger` on a synthetic gate register;
 `outcome_reasons_have_rank_and_milestone` (ranks are exactly 1 to 6 and each record names the first exit at which
-its signal can be read).
+its signal can be read); `unanswered_warning_fails_exit` (an M0 exit record with reason 1 adverse and an empty
+answer gives `premortem-warning-unanswered`; with a written answer it passes); `story_rows_resolve` (story 25
+names RISK-02, RISK-03, RISK-21 and RISK-57, all present in the loaded register); `premortem_as_exit_check`
+(through the runner of N40-05 on a scratch repository: the check runs after `risk-review`, a story whose row
+RISK-02 fired is printed as fired, an answered adverse reason is a warning and an unanswered one a block).
 
 ### End-to-end script and logging
-Part of `scripts/e2e/registers_exit.sh` (N41-04): one `metric` line per outcome reason that is readable, with its
-measured value and source artifact, and one `assert` line for the presence or absence of each warning.
+`scripts/e2e/premortem_exit.sh` (this bead; header `bead=N41-PM milestone=M0 labels=delivery,registry
+plants=answer-not-required`) sources the shared helper of STD-E2E and uses only this bead and its dependencies: a
+scratch repository root holding copies of the registries and a scratch M0 exit directory (no registry of record
+is changed; the script claims no gate). Steps: (1) `cargo run -p frob-conformance --example premortem -- read M0
+--root <scratch> --json` with no incumbent phase measurement in the scratch gate register and no written answer:
+exit 0, reason 1 listed as adverse, one block with `premortem-warning-unanswered` naming rank 1 and its signal;
+(2) the same with a written answer in the scratch exit record: a warning and no block; (3) the same with the
+measurement recorded in the scratch gate register: neither; (4) `scripts/exit/review.sh M0` of N40-05 on the
+scratch root of step 1: the check `premortem` runs after `risk-review`, its section is in the exit record, and
+the verdict is `not exited` naming the check; (5) a scratch register in which RISK-02's reading is `fired`: story
+25 is printed as fired. With the plant `answer-not-required` (a reading built to treat an unanswered adverse
+reason as a warning) step 1 has no block and the script must fail. It writes
+`target/e2e-logs/premortem_exit/<utc>.ndjson` and a transcript; every line has `ts`, `script`, `bead`, `step` and
+`event`; `cmd` lines carry the exact command line, exit code and wall time; one `metric` line per readable
+outcome reason gives its measured value, unit and source artifact; one `assert` line per warning gives the
+expected and observed state; a `refusal` line carries `premortem-warning-unanswered` with the rank and the first
+repair; the digests of the real registries before and after are logged (equal); on failure the log names the
+first reading that differed and the scratch path; a final `summary` counts assertions passed and failed.
+
+`scripts/e2e/registers_exit.sh` (N41-04) later walks whole exits over the three registers together and reads the
+same two readings there.
 
 ### Known answers and negative controls
-Known answers: the counts; the cluster partition; the thresholds quoted (20%, 0.67, 0.5, 70%, 95%, 1.5, 500, 90%,
-1%), compared with the gate register where a gate owns them. Negative controls: a story with an empty `risks`
-list; an outcome reason with no signal; an exit record that omits a readable reason.
+Known answers (K41-01, K41-02): the counts; the cluster partition; the thresholds quoted (20%, 0.67, 0.5, 70%, 95%,
+1.5, 500, 90%, 1%), compared with the gate register where a gate owns them. Negative controls: a story with an
+empty `risks` list; an outcome reason with no signal; an exit record that omits a readable reason; X41-48, an M0
+exit with no incumbent phase measurement on record and no written answer.
 
 ## Considerations
 

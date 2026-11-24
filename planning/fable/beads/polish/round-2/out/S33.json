@@ -1,0 +1,362 @@
+{
+ "round": 2,
+ "slice": "S33",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "N25a-21",
+   "kinds": [
+    "tests",
+    "correct",
+    "deps",
+    "self-contained"
+   ],
+   "what": "The two corrupted bundles (port order; first moment as torque) are now made by BD-136's frame-unit operators with every hash recomputed, and must be rejected by frob-verify with FROB-REF-829 and the typing rule; an integrity rejection fails the control (it proved nothing about the witness check). Step 7 names the three repairs (165 N ratings; v = 14/3; abs(P_y) <= 28 N*m, all attained). Step 3 asserts result.resolution (N25a-33 relies on this script for it). Added dep BD-136. Later in this round (from NS-13's review): the fixture declares policy_class.law adjustable, which N25e-28 requires for an inclusion over a load set and BD-132's first law check presumes; dep N25e-28 added."
+  },
+  {
+   "bead": "N25a-22",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "The six corrupted pusher certificates are re-sealed with consistent hashes (BD-136's mutation library) and must be rejected by a witness rule of their kind, never by integrity. Added dep BD-136."
+  },
+  {
+   "bead": "N25a-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Case a10 (FROB-REF-724, exit 5) is registered with retry: never, but the generic assertion required retry: after-change for every case; the exception and a10's first repair (frob capabilities) are now stated. The round-1 request from U24b (the two 868 documents and the clairvoyant 887 are N24b-26's) was already applied in Scope; checked against N24b-26 step 7."
+  },
+  {
+   "bead": "N25a-24",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Scope names BD-138 as the holder of MCP parity; the log carries the result.resolution block (metric plus one assert per obligation), which N25a-33 says this script records."
+  },
+  {
+   "bead": "N25a-32",
+   "kinds": [
+    "sense",
+    "scope",
+    "tests",
+    "self-contained"
+   ],
+   "what": "The probe bead (M1, meant to run before mission code) carried a frob-mission test of the OpportunityLoss scheduler with the stats feature on and off, and an e2e stance run, though the scheduler is built by N25b-12 at M4 (which depends on this bead) and the bead's own Scope excludes wrappers. Moved those checks out (order invariance at M1 is N25d-33's; the feature on/off identity is requested of N25b-12), replaced the e2e step by the firewall check with a planted forbidden edge, and named the building bead for each missing piece (N25b-09, N28ax-01, BD-362, N25d-22) and for each reuse decision."
+  },
+  {
+   "bead": "N25b-02",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "Applied S16's request: field 13 review, schema.review-missing, hash.equations-digest, the schema document entry and the golden markers are N12-03's from M0; item 3, Scope, acceptance and the unit tests now cite them and keep only the writer rule, the claim rule and one cross-check (marker_accepted_by_auditor in frob-conformance, the one crate that may link both). Named N00-25 and N37-26 for the citation boundary."
+  },
+  {
+   "bead": "N25b-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "planted_false_farkas: on the full box [2, 6] a closed exclusion [14/3, 6] doubly owns 14/3 with the inner cell and is rejected by the partition rule, so the planted >= defect would never be exercised; the test now narrows the domain to [14/3, 6] and states the equality 160 = 160 that the defect admits."
+  },
+  {
+   "bead": "N25b-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The drill had the same trap as N25b-03: it now narrows the stance box to [14/3, 6] so only the Farkas comparison stands between the false bundle and acceptance, and makes the bundle with BD-136's boundary operator (hashes recomputed)."
+  },
+  {
+   "bead": "N25b-07",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "877's payload did not say at what grain the minimal conflicting subset is reported (BD-126, N25a-23 and this bead used atoms in one place and rows in another): the payload now carries the world, `subset` as rows `<atom id>[<port or index>]` and `atoms` as the atom list (DESIGN), with the 90 N fixture's five rows and two atoms; the docking acceptance names the first conflicting world of the family in declared order (both worlds conflict) instead of an undetermined one."
+  },
+  {
+   "bead": "N25c-10",
+   "kinds": [
+    "correct",
+    "scope",
+    "placement"
+   ],
+   "what": "The chart-affinity rejection carried 848 (unknown kind) where BD-133 and BD-136 case B1 give FROB-REF-829 on both surfaces; the invalid-torque fixture now reads 829 from the auditor and 850 from a mission verb. Scope wrote a second projected-row generator in frob-mission; it now extends BD-130's single generator in frob-conformance (crates/frob-conformance/src/fixtures/stance_projected.rs), so the independent lowering stays out of the proposer's crate; label frob-conformance added."
+  },
+  {
+   "bead": "N25c-11",
+   "kinds": [
+    "split",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "The bead owned both the proposer's passive lowering (frob-mission) and the auditor's authority check (frob-cert), against the producer/checker separation; BD-132's rule (g) admits only the independent tag, so the passive certificates this bead emits for the GATE-AUGUR-02 amendment would be withheld. The checker rule moved to new bead N25cp2-01 (a dependency). Codes made consistent with BD-133: auditor FROB-REF-829 with its rule, mission verb FROB-REF-851 for caller-supplied evidence; the three mutated bundles are re-sealed with BD-136's library (dep added) and checked by both prove verify and standalone frob-verify."
+  },
+  {
+   "bead": "N25c-12",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Applied U23a's request: the bead was called the one holder of the grid, but BD-042 (a dependency) re-derives the same grid at M0; it is now the holder of the gate fixture and must equal the pilot's counts (new test counts_equal_pilot). It promised `frob task fixture stance-grid` without the registry bead N24b-03 (dep added, manifest in frob.fixture/1 specified) and a checker re-check without BD-132 (dep added); the vague 'sample of infeasible states' is now every one of the 9,266, each with an lp-farkas object the checker accepts."
+  },
+  {
+   "bead": "N25c-20",
+   "kinds": [
+    "complete",
+    "tests",
+    "users"
+   ],
+   "what": "The comparator emitted proof objects only for admitted cells (finite-game) and late cells (alias-pair), so its 217 excluded on-time cells carried no evidence and its answer was not a complete rival answer for frob-verify (N25d-27). Added their pieces as BD-129 has them (two lp-farkas pieces from the duals of solves 1 and 2, an alias-pair piece, a partition entry), an acceptance line with the count per kind, and unit test excluded_cell_pieces at (U, eps) = (1/2, 1/4) (single probe 1/2, shared reading 3/4, second commands 0 and -1/2; recomputed). Scope now owns the test option `--lowering scenario-tree` that N25c-22 calls, and states that N25d-34 selects the same program as `--lowering second` (DESIGN). Edit begun by the interrupted reviewer; checked and finished."
+  },
+  {
+   "bead": "N25c-21",
+   "kinds": [
+    "users",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The 854 check had no surface (N25c-22 step 9 and N25e-32 needed one; N25e-32 defined `--reuse` on its own): this bead, which owns the eligibility record, now owns `--reuse <screen, classifier or bundle>` on mission.synthesize and mission.refute, with pointer, observed and required, a positive control, and HiddenSupport as a finite set or a rational interval ({1, 2} differs from [1, 2]). The first repair `mission.revalidate` answers only from M3 (VERBS-mission), so an M1 caller was handed a verb that refuses with 724; the repair now carries the M1 command of the same engine, `frob result revalidate a:... --against q:...` (N25a-13). The withdrawal relied on a polarity rule (exclusion preserved under enlargement) that N25a-13 (a dependency) says does not exist at M1; it now runs through M1 grades (every cell reads world.hidden.g, so all are invalidated) and the re-solve, with the exclusions re-confirmed by re-emitted alias-pair proofs. Tests set_and_interval_supports_differ and first_repair_runs_at_m1 added; withdrawal_counts asserts the mask. Counts 327/17/217 and 1/65 m, 63/130, -191/260 recomputed."
+  },
+  {
+   "bead": "N25c-22",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Applied U25a's round-1 request: steps 5a and 5b assert N25a-10's docking cost claims through the CLI (minimize U at eps = 5/16: attained false, lower bound and open threshold 3/4, candidate U = 1 with gap 1/4, the warning; catalog {1/2, 5/8, 3/4, 7/8, 1}: minimum 7/8 attained, three cheaper entries excluded), with two new fixtures. Step 4 logs cold and warm wall times of both lowerings (N25c-20's first KILL-AUGUR-TIE reading); step 6 also runs the late mission with --lowering scenario-tree, so all 51 programs of KA-657 are exercised through the verbs. Step 8 names its commands (KA-638 point fixture added; withdrawal via result.revalidate then synthesize --from, 327 withdrawn, 17 kept, 217 excluded); step 9 names the --reuse command, pointer, the M1 repair command (run and asserted to answer) and the accepted control. Step numbers cited elsewhere (4, 5) kept."
+  },
+  {
+   "bead": "N25d-26",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "'A slice with no ADR blocks the exit review' had no mechanism, and none of the four exit reviews (BD-147, BD-319, BD-378, BD-442) mentions the slice ADRs; added `xtask augur-slices --exit <milestone>` (fails when a slice due at that milestone has no ADR, an unresolvable one, or no evidence-met/stopped decision), the rule that slice 2 (M1-M3) is decided at M3, unit test slice_adr_due, and the check in the e2e script; requests filed to the four exit reviews. The script's logging now states the STD-E2E fields; dep STD-E2E added."
+  },
+  {
+   "bead": "N25d-27",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "The non-strict control said '345 admitted'; with <= all nine boundary cells are admitted, 353 (as N25c-22 has it). Step 4 listed the proof kinds without lp-farkas, which BD-129's excluded cells carry. Step 7 said the standalone checker rejects the on-time bundle 'for the late query' without saying how a query reaches the checker; it now uses prove.verify / frob-verify --query (FROB-REF-826 by the query-match rule on plant.policy_class) and notes the bundle is still accepted without --query. Step 6 names the rival's command (--lowering scenario-tree)."
+  },
+  {
+   "bead": "N25d-31",
+   "kinds": [
+    "users",
+    "correct",
+    "tests"
+   ],
+   "what": "854's ready command `frob mission revalidate` names a verb that answers only from M3 (VERBS-mission), while 854 is raised from M1 (N25c-21, N25e-32): repair commands are now rendered for a verb the build answers (capability report), so before M3 854 hands out `frob result revalidate a:... --against q:...` (N25a-13, same engine); new test r854_command_follows_build. Considerations listed 854 among codes raisable only later ('revalidation'); corrected to 852, 857, 858, 859 and 856's region trigger, with 854 from M1."
+  },
+  {
+   "bead": "N25d-32",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied U25a's round-1 request: the table now cites N24b-26 (mission_check_echo.sh) for the unlabelled-clairvoyant 887 trigger (step 5) and the two document-level 868 triggers (step 7), and reads that log; dep N24b-26 added. 854 was 'pending until revalidation (M3)' though N25c-21 raises it at M1 and N25c-22 step 9 asserts it: the row is now M1, read from N25c-22's log (dep added), so sixteen codes are asserted at M1 and four (852, 857, 858, 859) wholly pending; the M3 exit item, the counts, the unit test and a planted-absence control follow."
+  },
+  {
+   "bead": "N25d-33",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The INV-AUGUR-04 withdrawal test uses the passive-spring amendment through result.revalidate, which no dependency carried; added dep N25a-13 (with N25c-11 behind it). The script's log now has its path and the STD-E2E fields."
+  },
+  {
+   "bead": "N25d-35",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The two-host, two-worker encoding of PO-AUGUR-05 now runs through the verbs (mission synthesize and prove bundle on stance, docking and pusher; dep BD-135), and the log states its path, the STD-E2E fields, the thresholds compared and 'not run' for a missing host."
+  },
+  {
+   "bead": "N25d-37",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KA-638's exclusion is an alias-pair certificate (N25c-21) but was missing from the rows that must pass the standalone checker; added. Log path and STD-E2E fields stated. Recomputed: dual (0, 1/2, 1/3) gives 140 against a box maximum of 160 (no witness), 841/800, the coefficient-2 scenario-tree control, x3 = 2 for the KA-636 control. Fixtures over a load set declare policy_class.law (KA-624 and KA-626 adjustable), since N25e-28 refuses one without it; dep N25e-28."
+  },
+  {
+   "bead": "N25d-41",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The Carrier column (written to measured_by) named only mechanism beads for GATE-AUGUR-02 to -05, but their gate rows are written by the e2e beads N25a-21, N25c-22, N25a-22 and N25b-06; each row now names the recording bead too (and N25c-20, N25c-21 for -03). The script's log states its path and the STD-E2E fields; dep STD-E2E added."
+  },
+  {
+   "bead": "N25d-43",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "|W2| was given only as 'at least 11,574 plus the family programs' while the unit tests used N = 11,587, so the 'insufficient' rule had no exact threshold; |W2| is now 11,584 (11,520 grid + 10 family programs, four vertex programs and one dual in each of two forms, + 54 docking), retries counted in R, and the tests use 11,584 (rates recomputed: 0.026%, 1.73%). The script names the scenario-tree lowering on both docking missions and its log path and fields."
+  },
+  {
+   "bead": "N25d-46",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Said the mission verbs' budget-stop script runs probes q1 to q3, but N25a-24 runs the tray fixture and does not; the probes are run by N25d-48 (row 7), now named in the acceptance and the script text. Log path and STD-E2E fields stated."
+  },
+  {
+   "bead": "N25e-30",
+   "kinds": [
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "Step 9's two rejected certificates were hand-edited copies of a bundle: with stale hashes they fail integrity, and with only law_class relabelled they fail rule 2 (law.class-kind, against the embedded query) before rule 4, so neither exercised the law check the gate claims. They are now made by BD-136's mutation library with every hash recomputed, the relabel also sets the embedded query's policy_class.law and fits f0 and A through three vertices (N25e-29's specimen), and the assertion requires law.affine (160 + 0 != 130 + 110) and law.present with FROB-REF-829; dep BD-136 added."
+  },
+  {
+   "bead": "N25e-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope"
+   ],
+   "what": "Defined the --reuse surface and called itself 854's first emitter, while N25c-21 (eligibility record, M1) raises 854 on the three-gain amendment; it now uses N25c-21's record, check and surface (dep added) and adds the interval case (HiddenSupport [1, 2] differs from {1, 2}; pointer /world/hidden/g with observed and required), with the M1 repair command. Certificate arithmetic recomputed (39/64, 41/64, 79/64, 81/64; 41/42; 49/64 and 63/100; -0.1736; 133,185)."
+  },
+  {
+   "bead": "N25e-33",
+   "kinds": [
+    "users",
+    "tests"
+   ],
+   "what": "Step 7 now asserts the 854 pointer (/world/hidden/g, observed {1, 2}, required [1, 2]), nothing published, and the first repair's M1 command `frob result revalidate`, consistent with N25c-21 and N25d-31."
+  },
+  {
+   "bead": "N25e-45",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied U25d's round-1 request: a seventh uncoded refusal, a synthesis query outside a lane's admitted scope (free contact schedule, topology choice, more than 17 parameters), slug synthesis-out-of-scope already filed by N35x-02 as shared with this decision and emitted by BD-362 under interim FROB-REF-857 with that detail. Row content fixed (pointer, observed/required, after-change, three ranked repairs, exit 3, family 8xx, held), distinguished from 857's own cap refusals; title, Background, Scope, steps 1, 3, 4, new step 7, acceptance, tests (seven_rows_loaded_or_held, six interim cases, seventh_row_content) and the milestone-gated e2e (row 7 from M4; due counts 1/2/6/7) updated; the summary's 'pending count (six of six at M6)' corrected."
+  },
+  {
+   "bead": "NS-13",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The stance query omitted policy_class.law, which N25e-28 (M1) refuses for an inclusion over a load set; it now declares adjustable (dep N25e-28) and the authority names are BD-130's (independent-normal-force; passive-equal-spring, not 'commanded'/'passive-equal-springs'). Step e claimed M1 revalidation reports the spring forces; under N25a-13 it invalidates by dependency support (reason, inherited exclusion, reruns), and the forces come from the re-solve `frob mission synthesize --from` (step f), which also gives b >= 1/2 m. Log path and STD-E2E fields stated."
+  },
+  {
+   "bead": "NS-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "'Every positive label reverses' under the third gain is false on the recorded grid: the 17 cells at eps = 0 keep exact docking (N25c-21, N25c-22: 327 withdrawn, 17 kept). Fact 4, step e and the acceptance now say so; step e follows the M1 flow (revalidate invalidates all, inherits none; synthesize --from withdraws 327 naming (1, 33/32) and (65/64)p; the point mission gives 1/65 m at c = 64/65, not 'at least 1/65'). Scope now describes N25d-27's late-query rejection as 826 under --query. Log path and STD-E2E fields stated."
+  },
+  {
+   "bead": "SPEC-C-17",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Statement C-17.S7 (policy indexed by the nominal build) had no test; added s7_policy_indexed_by_nominal_build (as-built-indexed table rejected without a calibration observation, admitted with one, nominal-indexed admitted). s3 now also covers Zeno and undefined dynamics, which S3 names. Arithmetic of KA-098 to KA-100 rechecked."
+  },
+  {
+   "bead": "SPEC-C-18",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "The stance half of the twelve moves (KA-224) was described but had no test, reference or acceptance; added s2_twelve_moves_stance on SPEC-C-32's stance reference model (a dependency) with the fresh verdicts derived from 2(alpha + beta) <= cap - floor (e.g. grow W reverses b = 1/4 m at 100 > 80; cap 170 N reverses b = 1/5 m at 82.5 <= 85; floor 10 N confirms (160, 130, 100, 10)); W moves stated as half-sizes (a full-size reading would make 'grow' a shrink). GATE-AUGUR-03's phrase now says every positive cell goes to recheck and those with eps >= 1/64 are withdrawn, matching N25c-21. The twelve docking moves rechecked."
+  },
+  {
+   "bead": "SPEC-C-32",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its script runs KA-157 to KA-160 and KA-033 through the g1/g2 harnesses and its acceptance binds CX-077 to CX-079 and CX-016, but it depended on none of the registry beads that create those rows; deps N10-KA3, N09-KA, N10-CX, N09-CX added and the division of labour stated (registry beads create records; this bead supplies derivations and controls). Derivation, cells, Farkas vectors (r^T y = -5), authority case, torque sign and grid example rechecked."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N25cp2-01",
+   "why": "split from N25c-11: the auditor's authority rule (tag equals the query's; compatibility rows computed by frob-cert from the foot coordinates, present exactly under passive-equal-spring) is checker code in another crate, and BD-132 admits only the independent tag, so the amendment's passive certificates had no checker"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N25b-12",
+   "what": "Moved from N25a-32 (which cannot test a scheduler at M1): add the answer-identity check of the stats feature, i.e. with frob-fsim's stats feature off (fallback order: largest unresolved measure first) the stance and pusher answers have the same inner and excluded point sets as with OpportunityLoss on, and the mutant scheduler that drops a cell whose opportunity-loss score is negative is caught."
+  },
+  {
+   "bead": "BD-132",
+   "what": "Step (g) of lp-primal compares the authority tag with the fixed string 'independent normal forces'; N25cp2-01 (M1) generalizes it to the closed list {independent-normal-force, passive-equal-spring} with compatibility rows computed by the auditor, for lp-primal and lp-farkas. Suggest a sentence in step (g) naming N25cp2-01 as the bead that widens the rule, and N25cp2-01 in related."
+  },
+  {
+   "bead": "BD-136",
+   "what": "Case B4 (a passive-suspension query witnessed by the active allocation (155, 135, 105, 5) N) is rejected by the authority rule of N25cp2-01 (lp-primal.authority-equations, or authority-query if the tag is independent); suggest naming that rule in B4's row and N25cp2-01 in related."
+  },
+  {
+   "bead": "BD-147",
+   "what": "Add to the M1 exit checklist: run `xtask augur-slices --exit M1` (N25d-26); a failure (an Augur slice due at M1 neither delivered with its gate rows nor recorded stopped/deferred by ADR) blocks the exit."
+  },
+  {
+   "bead": "BD-319",
+   "what": "Add to the M3 exit checklist: run `xtask augur-slices --exit M3` (N25d-26); a failure (an Augur slice due at M3 neither delivered with its gate rows nor recorded stopped/deferred by ADR) blocks the exit."
+  },
+  {
+   "bead": "BD-378",
+   "what": "Add to the M4 exit checklist: run `xtask augur-slices --exit M4` (N25d-26); a failure (an Augur slice due at M4 neither delivered with its gate rows nor recorded stopped/deferred by ADR) blocks the exit."
+  },
+  {
+   "bead": "BD-442",
+   "what": "Add to the M8 exit checklist: run `xtask augur-slices --exit M8` (N25d-26); a failure (an Augur slice due at M8 neither delivered with its gate rows nor recorded stopped/deferred by ADR) blocks the exit."
+  },
+  {
+   "bead": "N12-03",
+   "what": "The query-match rule (query.prefix, query.domain, query.assumptions) should also compare the policy class and observation timing of the embedded query (plant.policy_class / arrival instants), so that the on-time docking bundle offered with `--query` for the late-packet query is rejected with FROB-REF-826, as N25d-27 step 7 asserts; without that comparison the bundle passes, since prefix and domain are equal."
+  },
+  {
+   "bead": "N25-REF",
+   "what": "Row FROB-REF-854 is raised from M1 by N25c-21's `--reuse` check on mission.synthesize and mission.refute (and by N25e-32 on the interval); add N25c-21 to its binding column and the M1 smallest triggering fixture (the two-gain bundle offered with --reuse to the three-gain docking mission: pointer /world/hidden/g); note that the first repair's ready command before M3 is `frob result revalidate a:… --against q:…` (rendered by N25d-31)."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "refusal_lists: mission.synthesize and mission.refute should list 854 from M1 (raised by their `--reuse` option, N25c-21), and their input schemas should carry `--reuse <stored screen, classifier or bundle>`."
+  },
+  {
+   "bead": "BD-362",
+   "what": "Add dep N25e-45 (M1): N25e-45 now fixes the content of the seventh uncoded row, synthesis-out-of-scope, whose interim (FROB-REF-857 with that detail) this bead emits; the other emitters of N25e-45's rows depend on it."
+  },
+  {
+   "bead": "BD-130",
+   "what": "State that the stance query of this family declares `policy_class.law: adjustable` (N25e-28, M1, refuses an inclusion over a load set without a law class, and BD-132's first law check presumes that class); the amendment to passive-equal-spring keeps the class."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "Complete: 45 of 45 reviewed. Unchanged: N25a-33, N25a-34, N25b-01, N25b-06, N25d-34, N25d-36, N25d-42, N25d-48, N25e-28, N25e-29, N25e-31. Main cross-bead fixes this pass: FROB-REF-854 raised at M1 (N25c-21 owns --reuse; repair command result revalidate) made consistent across N25c-21/22, N25d-31/32, N25e-32/33; stance fixtures declare policy_class.law adjustable (N25e-28 refuses otherwise): N25a-21, NS-13, N25d-37; third-gain withdrawal is 327 of 344, 17 at eps = 0 kept (NS-22, SPEC-C-18). Open: whether N25e-28's law-class admission rule covers the multi-tick docking games (read-error box) is not settled by the plan; left unchanged."
+}

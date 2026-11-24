@@ -1,0 +1,145 @@
+{
+ "round": 4,
+ "slice": "F-U16a",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "BD-081",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-verbs-8 ANSWER applied: `--chaos-plan` and `--numerical-plan-floor` dropped from this bead's chaos-build inputs (its schema `frob.chaos-plan/1`, k up to N_retry + 1 and a floor without a plan contradicted BD-083 and VERBS-sim, so an implementer would have built a second, incompatible CLI form); the paragraph now owns only `--chaos` and cites BD-083's two inputs in BD-083's form. `txn::chaos_inputs` keeps `--chaos` (parse, manifest, StepPlanId, 802 cases, absent feature) and checks the plan seam at library level: the harness's forced T5 failure on attempts 0 and 1 commits on attempt 2, equal in state digest to a provider that starts at plan 2. Convention 13: the Considerations line 'Exit-code detail to confirm with the surface owner' now states the rule as fact, as BD-083 states it for FROB-REF-221 (per-world record and exit 2 in a multi-world run; exit 3 when every world faulted)."
+  },
+  {
+   "bead": "BD-082",
+   "kinds": [
+    "request",
+    "contradiction",
+    "convention"
+   ],
+   "what": "H-verbs-8: the ballistic-drop step ran `--scene plane` at M1, which is FROB-REF-802 (scenes are N16b-25's, M2), so the step could never pass; it now runs `frob sim run --fixture kin/ballistic-drop ...`, the conformance fixture N16c-02 already registers (N16a-10, the script's owner, depends on N16c-02). Contradiction: BD-083 (`kin/tied-sliders`, 'the design tied-sliders.fbot of BD-082') and N16c-02 (`kin/ballistic-drop`) both wrap .fbot designs they attribute to this bead, which listed none, so nobody was charged with writing them; Scope now delivers `crates/frob-conformance/fixtures/kin/ballistic-drop.fbot` and `tied-sliders.fbot` with their static environment as primitives (BD-080's form). Convention 9: the done-condition said 'recorded with measured values'; it now says the referee part is recorded from N16a-10's receipts by its recording session, never by this bead."
+  },
+  {
+   "bead": "BD-088",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U24a-2: telemetry.query is now `--channels <list> --from 0 --to <n> --limit 500`, paging by passing the envelope's `cursor` back with `--cursor` (N24a-36 retired `--ticks` and has no `--page-size`; the old call is 802 and the script would fail on every row). Convention 8: the script passes `--profile` (N16a-02) and `--step 1ms` (N16a-03; h = 1 ms is what the pendulum row is defined at) but depended on neither, so the bead could be taken up and fail before those inputs exist; dep N16a-03 added (it depends on N16a-02; graph_check finds no path back, all M1)."
+  },
+  {
+   "bead": "N16a-07",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-verbs-8: the tied-slider run used `--scene wall` at M1 (802). The run is a step of N16a-10's script, not this bead's: a run of the tied sliders through sim.run needs BD-082's event location, which depends on this bead, so this bead's checks are its unit tests (now said). The step runs `--fixture kin/tied-sliders`, which BD-083 registers over BD-082's design; the request's objection (BD-083 depends on N16a-07) does not apply because the step's owner N16a-10 depends on BD-083."
+  },
+  {
+   "bead": "N16a-10",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Two requests (F-U16c round 3, H-verbs-8): steps 3, 5 and 12 now run `--fixture kin/ballistic-drop` (N16c-02), `--fixture kin/tied-sliders` and `--fixture kin/unsolvable-island` (BD-083) instead of `--scene plane|wall` at M1 (802); the fixtures paragraph states the M1 form for every non-g1 run, names step 14's fixture (BD-080's `traction/referee_capacity_22`) and charges this bead with its own three fixtures (`kin/accumulation`, `kin/painleve-rod`, `kin/thin-plate`), which had no command form at all. Broken: step 4 selected its control with `FROB_CONTROL=NC-kin-endpoint-only`, an environment variable no bead defines and an unnumbered NC (a cargo feature cannot be chosen at run time); the control builds of steps 4, 6, 7 and 16 are now BD-025's form, `--features gauntlet-mutations,frob-dyn/nc-<nnnn>` for N16c-03's and BD-081's registered controls, run with `e2e_expect_caught`."
+  },
+  {
+   "bead": "BD-159",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Convention 9: GATE-KIN-03 had two recorders, this bead ('closes the gate record') and N16a-18 (step 19 records each gate's batch-cpu part from step 13's receipt), and N16a-17's request would have made a third. Seed done-condition (b) now requires the four rows passing with controls caught in the receipt of the g2_parity entry `GATE-KIN-03` and says the gate is recorded from N16a-18's step-13 receipt by N16a-18's recording session, never by this bead: the same split as BD-081 and N16a-10 for GATE-KIN-04. Nothing about the measurement is weakened."
+  },
+  {
+   "bead": "N16a-17",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U16a round-3 request: the script ran `cargo run -p frob-conformance --bin frob-parity -- kin03 ...`, a binary no bead declares (BD-025: autobins off, no binary runs a tier), so the script could not run. It now runs `e2e_tier g2_parity GATE-KIN-03/<robot>/<row> [--mutations]` and asserts on the hash-named receipt; item 7 names the entries (`GATE-KIN-03/<robot>/<row>`, rows kinematics, rnea, crba, fd) in the cargo form. Convention 9 and 7: item 7's 'GATE-KIN-03 is recorded PASS' is now the receipt's gate line, and the record is N16a-18's (this harness lands before the kernels and the step it compares, so it could never record the gate itself); acceptance reworded to the receipt's gate line never reading pass with a row missing."
+  },
+  {
+   "bead": "N16a-18",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Convention 9: step 19 recorded GATE-KIN-07's batch-cpu part, but N16b-03 records GATE-KIN-07 whole (battery rate and forced-overflow sweep) from its own g1_known_answers entry: two recorders of one gate. Step 19 now names this bead the one recorder of GATE-KIN-03 (step 13; BD-159 and N16a-17 record nothing) and of GATE-KIN-05's batch-cpu part (device rows BD-181's), and keeps the g4_chaos GATE-KIN-07 receipt as an unrecorded user-side check of KA-349. Broken: steps 8 and 10 named control builds `NC-kin-capacity-tree` and `NC-kin-silent-truncation`, identifiers outside the NC-nnnn form with no build recipe; they are now KA-344's and KA-349's registered controls, built with BD-025's `--features gauntlet-mutations,<crate>/nc-<nnnn>` and run with `e2e_expect_caught`."
+  },
+  {
+   "bead": "BD-213",
+   "kinds": [
+    "request"
+   ],
+   "what": "F-UF-1: item 6 now states that a regeneration appends rows under the new key and never overwrites one, so rows at an older stack-lock digest are kept as history, and names NFp3-11 and NFp3-12 as users that compare new rows with old ones cause by cause (NFp3-12 already asserts 'the rows at the old digest are unchanged'; without this, an implementer could upsert by class and destroy the baseline those switch-over beads compare against). Added unit test `coverage::history_kept`."
+  },
+  {
+   "bead": "N16a-09",
+   "kinds": [
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "The sweep script ran `frob sim run <fixture>` over fixtures the bead names `fixture:wheel-over-lip` and `fixture:cart-sill-dock`, the positional fixture form VERBS-sim retires (802), so the sill runs the whole decision rule rests on could not run; it now runs `frob sim run --fixture <name>` and names each fixture's owner. Convention 8: the accumulation positive control (`kin/accumulation`, N16a-10), the ballistic drop (`kin/ballistic-drop`, N16c-02, through N16a-10) and the archetype stand runs (`--task`/`--controller`, N16ap4-01) were outside its deps, so the bead could be taken and its script fail or force the implementer to rebuild another bead's fixture; deps N16a-10 and N16ap4-01 added (graph_check: no path back; N16a-10 already re-pins its StepPlanId expectations if OPEN-KIN-5 changes a constant). The restitution-0.9 drop had no owner; it is this bead's `kin/ballistic-drop-e09`. Contradiction: 'about 18 impacts' at L_max = 21 disagrees with BD-082's own count (gap t*·0.5^k below the 0.95 ns cell at k = 24, impacts 6 to 24 = 19); now 19."
+  },
+  {
+   "bead": "N16ap4-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Every run of this bead (acceptance and script) is on a stored design or a design path on the referee at M1, which VERBS-sim's positional-design row gives to N29ax-01 (before it, a design other than g1 is 724 by BD-024); the bead named N29ax-01 only as Out and related, so it could close with its acceptance unpassable. Dep N29ax-01 added (no cycle). This also orders the thirteen M1 users that run stored designs through this bead (N22a-11, N14b-06, N13-36, N22a-05, BD-117 among them), none of which reached N29ax-01 before."
+  },
+  {
+   "bead": "N16a-14",
+   "kinds": [
+    "request"
+   ],
+   "what": "F-U36 (round 3): item 2 now calls N36-02's `frob_core::perf::workload::row_cap` instead of defining `default_rows` a second time, and cites Q's raise from 152 to 160 as the `row_cap_override` of N36-02's Q workload record; acceptance follows. Without it two implementations of the one row rule coexist and a Q run with a changed contact capacity could get different R through the registry and through `--capacity`."
+  },
+  {
+   "bead": "N16a-15",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-verbs-3: `--run-seed 7` dropped from `frob eval run --battery standard ...`; eval.run's battery form takes no seed and `--run-seed` beside `--battery` is 802 (VERBS-eval), so every battery run of the script was refused and the decision had no data."
+  },
+  {
+   "bead": "N16a-19",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Steps 1 and 2 ran `frob sim run <robot> --designs <sweep file>`; a positional design beside `--designs` is 802 (N16b-25, a dep, and VERBS-sim), so every run of the gate script was refused. The robot positional is dropped; the sweep file's rows are the variant designs. Step 8 used a control build `NC-kin-late-param-read` that no bead defines, describing a different defect (a host write mid-step) from KA-347's control; it now runs BD-169's mutant `mutant-late-param-read` in BD-025's control-build form under `e2e_expect_caught` (BD-169's name, because the NC record is N16c-04's, which depends on this bead). Convention 8: `--precision f64` (N35-04) and `frob spark cache` (BD-173) were outside the deps; both added (graph_check: no path back)."
+  },
+  {
+   "bead": "N16a-20",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Steps 8 and 9 named control builds `NC-kin-referee-truncates` and 'the control build that marks refused scenarios' with no NC id and no build recipe, so the controls the gate entry needs could not be built; they are now GATE-FID-03's controls (a) and (b) as BD-213 registers them, in BD-025's `--features gauntlet-mutations,<crate>/nc-<nnnn>` form under `e2e_expect_caught`. Step 10 passed `<22-contact island fixture>` as the positional, the retired fixture form (802); it now runs `--fixture traction/referee_capacity_22`, BD-080's fixture that N16a-10's step 14 uses for the M1 half."
+  },
+  {
+   "bead": "N16ax-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 8: the script runs 1,024 worlds on `batch-cpu` (`--worlds` and the batch tiers of sim.run are N16b-25's at M2), in both precisions (`--precision`, N35-04) and calls `frob telemetry divergence` (BD-206); none was reachable from the deps, so the bead could be taken before any of them and its script answer 802 or 724. Deps N16b-25, N35-04 and BD-206 added (all M2; graph_check: none reaches this bead; no cycles), and the e2e paragraph names the three owners."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N16-REF",
+   "what": "Row FROB-REF-222's trigger names only `strict` or `referee` on a GPU tier, but its raising site N16a-02 refuses all seven pairs outside the profile-by-tier matrix with 222 (also `referee` on `batch-cpu`, `lockstep` or `strict` on `referee`; its test `tier::matrix_exhaustive`, a DESIGN the plan leaves open: no pair is silently remapped, and the repair names the profile that exists on that tier). Widen the trigger to those four pairs (repair: the profile the tier has); otherwise the raising site and the registry disagree and an implementer following the row has no code for those pairs. VERBS-sim's `--profile` row ('222 for strict or referee on a GPU tier') should say the same."
+  },
+  {
+   "bead": "BD-169",
+   "what": "Acceptance (library entry point) gives the command-line form `frob sim run <design> --designs <sweep file> --tier batch-cpu --json`, but a positional design beside `--designs` is 802 by N16b-25's table and VERBS-sim's positional-design row (N16c-04 says the same). Drop `<design>` (`frob sim run --designs <sweep file> --tier batch-cpu --json`, the form N16a-19 now runs), or an implementer of N16b-25 following BD-169 builds an admission the registry refuses. Also state the feature of the control build of `mutant-late-param-read`: BD-025's form is `<crate>/nc-<nnnn>`, and N16a-19 can only name it by BD-169's mutant name because its NC record is N16c-04's, which depends on N16a-19."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "Unchanged (8): N16a-02, BD-089, BD-384, BD-385, N16a-21, N16a-22, N16a-23, N16a-05. Checked and left: BD-385's hand counts (375/969, 1,742/7,140, 5,744/43,680, solves, the Amdahl bound) recompute exactly; N16a-21's PILOT-KIN-07 and BD-385's PILOT-KIN-08/-09 conform to N38a-09's grammar and its rule that identifiers are mnemonic and registration-ordered, and `frob-pilot` is declared under BD-025's operator-binary list; N16a-22's and N16a-23's decision entries match N40-03; `-- KA-<nnn>` filters are BD-025's admitted form. Observation, not edited: N16a-19's step 9 runs the GATE-KIN-06 g5 entry with --mutations, while KA-347's row and control are registered by N16c-04, which depends on N16a-19; BD-025's no-control check keeps the gate from being recorded before that registration, so nothing is recorded wrongly. Graph after all edits: graph_check cycles = 0. Front matter of all 16 touched files parses; seven sections each."
+}

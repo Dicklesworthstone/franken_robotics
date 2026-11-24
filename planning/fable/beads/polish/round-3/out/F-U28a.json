@@ -1,0 +1,485 @@
+{
+ "round": 3,
+ "slice": "F-U28a",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "N28a-04",
+   "kinds": [
+    "optimal",
+    "tests"
+   ],
+   "what": "Applied S27's request: the Analysis trait gains finding_kinds() -> &'static [(FindingKind, Severity)] (highest reported severity, never Refusing) so N28ap1-01's policy file is held to every registered analysis at build time; the registration macro generates a third contract test emitted_kinds_declared; acceptance and unit test undeclared_kind_caught added."
+  },
+  {
+   "bead": "N28ap1-01",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "Applied S26: --estimate (estimate_only, VERBS-design estimable = true) returns plan_check's plan priced by stage and row budgets and runs nothing, with acceptance and test estimate_runs_nothing; carries VERBS-design's 31-code refusal list (168 noted as pending by request) with test refusal_list_equals_registry; registry row text corrected (estimated cost_model, phase from registries/phases.toml, not a row field; --time-budget default 10 s; binding flags). Applied F-U14b-2: next_actions carry --expected-parent <checked DesignId> and no --key (left to the caller; N14b-19 appends one); a moved head is 804. The build-time policy test now also reads N28a-04's finding_kinds() for first-table analyses; policy-missing stays as the run-time fail-visible net."
+  },
+  {
+   "bead": "BD-110",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied F-U13: dep N13-04 (moved from related); stage 2 row and legs carry the solid-fill plausibility refusal 168 (torso 22.68 kg against 3.5 kg). Applied S27: registers N15b-01's check_joins (stage 1: 101, 114) and check_structure (stage 5: 108) with legs; the conformance run over the real analyses fails on any policy-missing (acceptance, tests no_policy_missing_in_conformance and stage_entry_points_registered). Refusal count 30 -> 31 (308 added in VERBS-design). Gate rows recorded through the record_gate example from receipts (convention 9)."
+  },
+  {
+   "bead": "N28a-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-verbs-1: A-03 and A-05 printed S/F; the generator registers S/F as tier S and emits estimable = true for analyze.regimes only; generated_block_equals_registry now lists the exact chapter lists the generator must emit (215 on symmetry and workspace; 263 and 852 on symmetry from M6; 133 on envelope; 113 on sensitivity; 115 not 451 on energy-budget; none of its own and not 879 on identifiability, not 263 on regimes); tests tiers_single_valued and only_regimes_estimable added; exit 3 also for a code the analysis raises itself (215, 308, 263, 113, 440), as VERBS-analyze states."
+  },
+  {
+   "bead": "N28a-02",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Applied H-owners-3: this bead writes variation 10's arm of NJL-01's derive.rs (override, override_reason from a requires row of registries/loop.toml) in the change that adds the properties, override_properties_generated being its test; NJL-01 added as a direct dep. Acceptance no longer waits on explain.run (not a dependency; the echo is asserted in N28a-29) and names a fresh key for the overridden run."
+  },
+  {
+   "bead": "N28a-03",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied H-verbs-2: frob evidence trace --session --phases does not exist (evidence.trace takes a claim id). DESIGN: the session's intervals are read through session.show --phases (BD-138's verb, extended here, requested of VERBS-session), which returns the intervals also in N39a-23's raw-record form; the e2e step writes them to intervals.ndjson and runs frob-tenfold phase attribute for the exclusive table and 2% closure. run.show --phase-ledger was not used: it is one run's step profile (N21a-27, M2), not a session ledger. Dep BD-138; test session_show_phases_raw_records."
+  },
+  {
+   "bead": "BD-100",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e"
+   ],
+   "what": "Applied F-U13: A-02 wraps N13-04's plausibility verdict as A-02.<body>.solid-fill, Refusing(FROB-REF-168); without mass_max a Low density warning only when the 2.5 mm shell would weigh under a quarter of the solid (box warned, slender bar not); dep N13-04; torso leg 22.68 kg against 3.5 kg; tests solid_fill_wraps_168, solid_fill_low_without_mass_max; control CX-101. Convention 11: own script scripts/e2e/analyze_mass_stability.sh (design-new fixtures via N14a-21, design-check legs e2e_skip 'needs BD-110', declared plant). Stance and mass numbers re-derived and correct."
+  },
+  {
+   "bead": "BD-101",
+   "kinds": [
+    "deps",
+    "e2e"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_mobility.sh with declared plant count-as-verdict; fixtures stored with design.new (dep N14a-21); Bennett design-check leg left to N28a-29. Numbers re-derived and correct."
+  },
+  {
+   "bead": "BD-106",
+   "kinds": [
+    "deps",
+    "e2e"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_maneuverability.sh on synthetic fixtures, repair applied with --expected-parent and a fresh key, plant curvature-for-wheels; dep N14a-21. Numbers (0.179/0.566/0.55 m, alpha 0.72, R 0.5543 m, 0.3606 m) re-derived and correct."
+  },
+  {
+   "bead": "BD-107",
+   "kinds": [
+    "deps",
+    "e2e"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_modes.sh (two-mass, two-inertia, sym-quad, payload, unbalanced stance), plant obs-group; dep N14a-21. Numbers re-derived and correct."
+  },
+  {
+   "bead": "BD-108",
+   "kinds": [
+    "e2e",
+    "gates"
+   ],
+   "what": "Convention 11: own script scripts/e2e/check_a20_a23.sh (four fixtures stored with design.new, design check --stages 6 with A-20 bound, stage-6 order and policy outcomes asserted, controls through the Gauntlet). Convention 9: it records GATE-ATEL-05's four A-2x parts from receipts with record_gate; the 2 s template sub-part, which needs the higher seeds BD-109/BD-110, is recorded by N28a-29 (the text said it was written 'into the rows this bead creates')."
+  },
+  {
+   "bead": "N28a-07",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e"
+   ],
+   "what": "Spellings of the verb's inputs fixed (--task, --budget stored=..,peak=.., --declare <source>, --approach-speed, --approach-energy as an upper bound used as T0, --contact-energy-cap): the e2e used --declare and --approach-energy that no text defined (convention 8). Convention 11: own script scripts/e2e/analyze_energy_budget.sh, design and task stored first (deps N14a-21, BD-122), contact-cap legs added, plant no-kinetic-source."
+  },
+  {
+   "bead": "N28a-08",
+   "kinds": [
+    "deps",
+    "e2e"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_deadlines.sh: the docking design and its three arrival variants stored (design.new, task.new; deps N14a-21, BD-122), exits 0/0/2 asserted, the 400/100/30 Hz case added, plant content-only (CX-310)."
+  },
+  {
+   "bead": "N28a-09",
+   "kinds": [
+    "deps",
+    "e2e"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_loop_stability.sh; the e2e asked for slider decimations 2 and 4, but --decimation arrives at M2 (N16c-42): the M1 script runs decimation 1 (tier-unstable) and leaves the table to unit tests; plant instantaneous-current (CX-308); dep N14a-21."
+  },
+  {
+   "bead": "N28a-10",
+   "kinds": [
+    "deps",
+    "e2e"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_bus_schedule.sh (deadline 1 and 2, divisible Farkas case), plant sum-of-peaks (CX-303); the design-check 133 leg stays with BD-108 and N28a-29; dep N14a-21."
+  },
+  {
+   "bead": "N28ap1-02",
+   "kinds": [
+    "deps",
+    "e2e"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_wrench.sh (arm and quadruped stored with design.new, the 3.5 N.m feasible leg added, the skill passed as a path per BD-336), run by BD-348 as an M4 stage. Dep N28a-29 removed (rule 4; reach to BD-110 remains through BD-336), dep N14a-21 added."
+  },
+  {
+   "bead": "BD-348",
+   "kinds": [
+    "e2e"
+   ],
+   "what": "Convention 11: the M4 section of N28a-29's atelier_check.sh (owner named) now runs as stages the own scripts of A-24, A-25 and A-26 (N28ap1-02, N28a-13, N28a-16) instead of re-running their verbs; A-16 to A-19 keep their verb legs in the registered example form; the script writes no gate row, this bead records the M4 rows with record_gate (convention 9)."
+  },
+  {
+   "bead": "BD-113",
+   "kinds": [
+    "correct",
+    "e2e"
+   ],
+   "what": "E2E: the stale-parent replay now uses a fresh key (with the original key the idempotency layer returns the stored answer, never 804), the verbatim replay is separate; design patch spelled in full (--file, --expected-parent root, --key) so the diff's edits are applied to the root version."
+  },
+  {
+   "bead": "BD-262",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e",
+    "deps",
+    "gates"
+   ],
+   "what": "Applied H-verbs-2: accepts per-arm --backend <i>=<placement> (unnamed arms take the default; bad index 802; cross-family arms paired by address, exact demanded without D1 is 561); adds and owns --state on the shared plan (464 from N22a-03's run admission); names the extender of each other row input and code (controller_arm N33b-19, pairing and 561 N35-07, auto_causal N20b-12, claim N28a-20, 502 N24a-31, 843 N24c-30, 890 N33c-31) and passes them through on devices; registry now the authority (stale 'requested of that row' text removed). Tests per_arm_backend_parse, per_arm_cross_family_licence, state_passed_to_both_arms, extender_codes_reach_device_form; e2e steps 7 and 8; dep N33c-31. Also: Convention 9: the comparison row of GATE-ATEL-04 is this bead's per the gate register, but its measurement had been left to N28a-30's script; step 9 now runs it in the cargo form, logs the receipt, and this bead records it with record_gate; N28a-30 runs this script as a stage and re-measures."
+  },
+  {
+   "bead": "BD-310",
+   "kinds": [
+    "correct",
+    "e2e"
+   ],
+   "what": "Convention 3: pilot records were two ad-hoc files under registries/pilots/; now PILOT-RANK-01 in crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1, N38a-09), results appended as [[pilot.result]], integrated_gate GATE-CORTEX-12, a pilot result never sets a gate part; part B's replay results go to N28b-18's own record in the same file; e2e step 4 checks the register with cargo test --test pilots. Unit-test numbers re-derived and correct."
+  },
+  {
+   "bead": "BD-329",
+   "kinds": [
+    "correct",
+    "e2e"
+   ],
+   "what": "S54 not applied here (see notes): opt.cascade is BD-352's and BD-352 depends on this bead, so the acceptance that 'the assembled layer runs frob opt cascade' was a forward reference; it now selects the rule through the library entry and a shipped driver (cargo example ladder_shadow). Convention 11: own script scripts/e2e/ladder_conformal.sh (fixed vs conformal on a synthetic ladder log, drift alarm, 546 cases, KA-696 and three plants through the Gauntlet); the gate script stays N28b-19's."
+  },
+  {
+   "bead": "BD-352",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e",
+    "deps"
+   ],
+   "what": "Applied S42 (seven chapter refusals: 546, 548, 549 passed on, with acceptance and test passed_on_546_548_549; 871 also given an acceptance), S59 (--plan-only reads rank.tier_pair_use from N16b-12: promote-only charges every survivor at the higher tier, a fast-tier order is 537), S73 (under OPEN-PROG-4's default every rung uninformative, --finalists-from 537, report prints unranked and k survivors) and S54 redirected from BD-329 (reflex_standing.sh --stage consume and no_record_no_elimination run here, the verb's owner; dep N22a-17). Convention 11: own script scripts/e2e/opt_cascade.sh. Stage 2 and report.campaign call BD-347's consumer check (870, requested of the rows)."
+  },
+  {
+   "bead": "BD-343",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e"
+   ],
+   "what": "Applied H-verbs-1: a non-descendant --bad is 802 (pointer /bad, not-descendant, no probe; 802 is surface-wide so no chapter code); a found change (a-change, first-change) exits 0. Applied H-ref-2 by routing every probe plan through pairing::admit (then N35-07's licence) before the error budget is fixed: 542, 543 (span-less metric predicate) and 561, zero probes; tests found_change_exits_0, probes_admitted_before_budget. Convention 11: own script scripts/e2e/design_bisect.sh, run by N28b-06's lineage_queries.sh M4 section as a stage."
+  },
+  {
+   "bead": "BD-347",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e",
+    "deps"
+   ],
+   "what": "Applied H-ref-2: the consumer check revalidate::require_licence and the verbs that raise 870 from M4 are named with their tests: report.design, report.mission, study.compare wired here (deps BD-302, N28a-21); opt.cascade stage 2 and report.campaign wired by BD-352. E2E: result.revalidate calls carry keys (convention 5; the two arms differ), mission amendments use the row's --amendment, consumer 870 legs added, NDJSON path and summary line added."
+  },
+  {
+   "bead": "BD-349",
+   "kinds": [
+    "gates",
+    "e2e"
+   ],
+   "what": "Convention 9: the text said the GATE-ATEL-13 rows are 'written by N28c-08 to N28c-11' and 'assembled into the gate record here'; the register names one M4 recorder, N28cp3-01. Now the row beads measure and produce receipts, N28cp3-01 records with record_gate, and this bead writes no row. EVSI and monitor numbers re-derived and correct. Also: Convention 11: atelier_cores.sh is named as this bead's own script and runs N28a-27's and N28a-28's own scripts as stages; it records no row (N28cp3-01 does)."
+  },
+  {
+   "bead": "BD-351",
+   "kinds": [
+    "gates"
+   ],
+   "what": "Convention 9: its script recorded GATE-ATEL-15 with record_gate, but the register's one recorder is N28c-16 (which already says it records both clauses); the script now only logs the replay receipt."
+  },
+  {
+   "bead": "N28a-06",
+   "kinds": [
+    "e2e"
+   ],
+   "what": "E2E CLI spot check ran 'frob analyze stability <fixture>' on an unstored file; it now stores the authority-row body with design.new (keyed, N14a-21 reached through BD-100) and runs both --authority models (independent-normal-force exit 0 with (155, 135, 105, 5) N; passive-equal-spring exit 2). All six counts re-derived exactly (2,254; 114; 1,596; first lexicographic (2,2,(0,0,160,240)); named case infeasible at all five states)."
+  },
+  {
+   "bead": "N28a-11",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e",
+    "deps"
+   ],
+   "what": "Applied H-cx-2: controls are written to controls.toml by N38b-05's seeding tool from N28-CX's entries (not 'the control record N28-CX entered'); the executable parts live in this bead's own test table (ROWS in atelier_shortcuts.rs) joined by CX number, with no extra field in controls.toml; plants built under N28-CX's ids. Six are due here at M1 (a08-polygon-screen, a23-additive-peak, a03-tie-under-mechanical-group as the planted input CX-305 is, a20-no-approach-energy, a22-instantaneous-current, a21-content-only); the three whose analysis is later are named with their builders (a09-curvature-only BD-243 M3, a17-per-reading-accuracy BD-240 M3, a25-convenient-run N28a-13 M4) since an M1 bead cannot build them. Tests controls_seeded_from_cx, rows_join_by_cx, plants_only_under_feature. Convention 11: own script atelier_shortcuts.sh (run by N28a-29 as a stage). Deps N28-KA (its truths), STD-E2E."
+  },
+  {
+   "bead": "N28a-13",
+   "kinds": [
+    "deps",
+    "e2e",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 11: own script scripts/e2e/analyze_identifiability.sh, run by BD-348 as a stage of the M4 section (it was steps inside N28a-29's script). Dep on N28a-29 removed (direction rule 4: a mechanism never depends on an end-to-end bead; kept in related); deps N14a-21 and N28a-05 added. Spellings --params, --excitation and --decision fixed (the e2e's decision-partition step had none). Also: Builds the plant a25-convenient-run (CX-309) behind gauntlet-mutations and binds row 8 of N28a-11's shortcut table (shortcut_8_caught runs from M4); dep N28a-11 added."
+  },
+  {
+   "bead": "N28a-29",
+   "kinds": [
+    "e2e",
+    "gates",
+    "correct"
+   ],
+   "what": "Applied H-verbs-2 (session phases via session show --phases plus frob-tenfold phase attribute, not evidence trace); step 4 drops the unregistered --assert-obs for a fixture with assert_obs; --estimate leg; keyed run verbs (convention 5). Step 3 now runs the nine analysis beads' own scripts as stages (convention 11). Convention 9: the script writes no gate row; this bead records only GATE-ATEL-05's M1 template-timing part with record_gate, and re-measures the parts BD-110 and BD-108 record. Also: Step 9 runs N28a-11's own atelier_shortcuts.sh as a stage before the gate runs (convention 11)."
+  },
+  {
+   "bead": "N28a-14",
+   "kinds": [
+    "complete",
+    "e2e"
+   ],
+   "what": "Applied H-owners-2: files N44-01's reserved row R19 (E1, gate:KILL-ATLAS, WP-11, 6 to 9 device-hours) before the first run above E0, never a new identifier; WP-11's Envelope bullet names it; if R19 is declined or unanswered the bead closes withdrawn citing R19 and its decision record, KILL-ATLAS is recorded not run, and N28a-15 takes its fail-closed branch. Acceptance and e2e name R19. Skill arithmetic re-checked."
+  },
+  {
+   "bead": "N28a-15",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e"
+   ],
+   "what": "Added the fail-closed branch H-owners-2 needs: rule 4, pilot withdrawn for want of R19 -> outcome not-reached (N40-03's closed set), A-26 in its descriptive form, N28a-14 listed 'withdrawn before this decision'. Outcomes spelled not-fired/fired/not-reached; the register entry now uses N40-03's one decision form with receipts (convention 10). Tests: rule table gains the withdrawn case, not_reached_is_not_a_pass; e2e reads R19 when the pilot has no result."
+  },
+  {
+   "bead": "N28a-16",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e"
+   ],
+   "what": "Applied H-verbs-1: the read verb obtains its paired perturbation runs in two calls, N33b-18's pattern: call (a) returns the perturbation plan and next_actions (design patch with --expected-parent and key, study plan, study submit) and labels nothing trust; call (b) --from-study <study> fits the local models; --budget is a token budget, never an episode budget. Tests plan_call_returns_next_actions, from_study_fits_and_labels, budget_is_tokens. Convention 11: own script scripts/e2e/analyze_regimes.sh; the run comes from a registered fixture via --fixture and --telemetry T2 (the old line used a placeholder scene and the word 'traced'). Dep N28a-29 removed (rule 4), deps N28a-05 and N33b-19 added. Also: The fallback branch of its script is also the not-reached outcome (N28a-15 rule 4)."
+  },
+  {
+   "bead": "N28a-17",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "840 given its scope semantics and exit 5 (N24-REF) in the approach and acceptance; unit test sealed_study_840_exit_5 added (the acceptance line had no test)."
+  },
+  {
+   "bead": "N28a-18",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e",
+    "gates",
+    "deps"
+   ],
+   "what": "Applied H-cx-2: built the planted inputs pair-world-epoch (CX-311) and pair-by-draw-index (CX-312) as fixtures under N28-CX's ids; supplied CX-312's numeric case (field 0.8 with a 0.3 patch on [1.0,1.5) m; contacts every 0.5 m vs every 0.25 m: same cell at 4 of 4 common points space-indexed, a shared draw at 1 of 4 by draw order, 4 of B's draws unmatched) and set numeric = true and case_supplied_by, plan_case unchanged. Tests cx312_draw_index_counts, plant refusals, mutant admission, cx312_entry_supplied. Convention 11: own cargo-form script pairing_discipline.sh (the CLI legs belong to eval.compare's beads, which depend on this one). Convention 9: the refusal clause is recorded by this bead with record_gate, the script writes none. Deps N28-CX, STD-E2E."
+  },
+  {
+   "bead": "N28a-19",
+   "kinds": [
+    "e2e",
+    "deps"
+   ],
+   "what": "Convention 11: own script fixed_n_rule.sh (cargo tests plus eval.preanalyze, reachable through BD-124 -> N24b-06), with the registered required --rule paired-clopper-pearson/1 and rational levels for the first-reachable-tie checks; the study-level curtailment legs stay in N28a-30, which runs this script as a stage. All known answers re-derived (enumerations at 64/86/128/256, least b, power 0.117/0.406/0.962, first tie 86/99/178/328, 478, 0.04573, curtailment states, 76 errors at 156 and 230 at 256). Dep STD-E2E."
+  },
+  {
+   "bead": "N28a-20",
+   "kinds": [
+    "correct",
+    "e2e"
+   ],
+   "what": "Stale text: 'claim' is listed on eval.compare's row with this bead as extender, no longer requested. E2E waits on a job (exit 8); plants described as STD-E2E header plants. e-BH, claim:all and the 38-of-512 quantile re-checked."
+  },
+  {
+   "bead": "N28a-21",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e"
+   ],
+   "what": "Applied H-verbs-7: an unknown study is 802 with pointer study, exit 3 (N32a-13), not 809 exit 7; 840 exits 5 (N24-REF), not 3; the stale 'requested of VERBS-study' sentence replaced (the row lists 553 and 840); 990 for a failed identity noted. Test unknown_study_802_pointer_study; e2e steps 5 and 6 corrected."
+  },
+  {
+   "bead": "N28a-22",
+   "kinds": [
+    "e2e",
+    "gates"
+   ],
+   "what": "Convention 10: register entry uses N40-03's decision form with receipts. E2E stores the top-heavy fixture with design.new before checking it and gives sim.run a tier and a length."
+  },
+  {
+   "bead": "N28a-23",
+   "kinds": [
+    "correct",
+    "e2e"
+   ],
+   "what": "Applied F-U10b and H-owners-1: the pilot record is PILOT-REUSE-01 (N38a-09's grammar PILOT-<SET>-<nn>; PILOT-REUSE-GRADE3 fails the load with pilot-id-form; N10b-07 already cites the new id), written as a [[pilot]] row with its fields and an appended [[pilot.result]]; protocol docs/pilots/PILOT-REUSE-01.md and results docs/pilots/PILOT-REUSE-01-results.toml. E2E: each mission.synthesize move carries its own key, budget and sync wait (a run verb, convention 5), and the register is checked with cargo test --test pilots. Docking boundary, move counts and the 14 derivations re-checked."
+  },
+  {
+   "bead": "N28a-27",
+   "kinds": [
+    "gates",
+    "e2e"
+   ],
+   "what": "Convention 9: rows were 'measured and written by N28c-10'; now measured by N28c-10 and recorded by N28cp3-01 (the register's M4 recorder of GATE-ATEL-13); this bead writes none. Convention 11: own script cores_dc04_dc06.sh (it was a --cores section of a script shared with no named owner), run by BD-349's atelier_cores.sh as a stage; the 549 leg stays in the unit test because opt.cascade (BD-352) depends on this bead. DC-04 counts (29,958/299,574/2,995,733 and 29,956/299,572/2,995,731), times, cv 0.0735 and the 689 forks re-derived."
+  },
+  {
+   "bead": "N28a-28",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e",
+    "gates",
+    "deps"
+   ],
+   "what": "Applied S80 and F-U12-1: dep N12-18 (orbit-count, group-enumeration; nothing here uses it) replaced by N12p2-02, the rewrite-trace checker; this bead now owns DC-11's identity rule (a kernel keeps its identity across a rewrite only with a certificate N12p2-02 accepts; any other verdict or none means the unrewritten kernel or a new identity), with acceptance and test dc11_identity_kept_only_with_accepted_class_e_certificate; CARD-T-27 related. Convention 9 (rows recorded by N28cp3-01) and 11 (own script cores_dc07_dc08_dc11.sh, run by BD-349 as a stage). DC-08 bounds and the f32 example re-checked."
+  },
+  {
+   "bead": "N28a-30",
+   "kinds": [
+    "correct",
+    "e2e",
+    "gates"
+   ],
+   "what": "Convention 9: step 12 recorded GATE-ATEL-04 and -06 with record_gate from this e2e script; the recorders are BD-124, N28a-18 and BD-262, so this run now only re-measures and compares. Step 0 runs N28a-18's, N28a-19's and BD-262's own scripts as stages. Step 1 adds the required --rule paired-clopper-pearson/1. Step 11: 840 exits 5 and an unknown study is 802 pointer study (H-verbs-7). Step 3 adds CX-312's planted input beside CX-311's (six invalid plans)."
+  },
+  {
+   "bead": "N28ax-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e"
+   ],
+   "what": "Convention 1/8: the e2e ran 'the conformance battery binary', but frob-conformance has no binary (ADR-GAUNT-01); steps 2 to 4 now use cargo test forms, with a new unit test lowering_registry for the registry check. Box-case numbers (mass, reach, energy 0.94176/0.8829/1.00062, stance 165-125-95-15 over the cap by 5 N) re-derived."
+  },
+  {
+   "bead": "BD-250",
+   "kinds": [
+    "gates",
+    "e2e"
+   ],
+   "what": "Convention 9 (missed on first reading): step 4 of its script ran record_gate itself; the script now logs the receipt and this bead, the register's recorder for GATE-ATEL-01, records it by a session that did not write the analyses; acceptance worded the same. All other content correct."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14b-10",
+   "what": "N13-04 raises FROB-REF-168 (solid body above the plausibility bound, no fill declared) at preflight stage 2 and BD-110 now assembles it there, but STAGES' stage-2 row refuses only 104 and 106, so N28ap1-01's owned-codes test would fail on 168: add 168 to stage 2's refuses and to refusal_union_matches_registry."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check's chapter list should carry FROB-REF-168 (stage 2, N13-04, assembled by BD-110), making 32 codes; analyze.mass in VERBS-analyze already lists it. The bisect block's two open points are answered in BD-343 (see its entry)."
+  },
+  {
+   "bead": "VERBS-session",
+   "what": "session.show gains the option phases (M1, N28a-03): the caller's session clock, its phase interval records (paged with the existing cursor) with each also in N39a-23's raw-record form, and summed seconds per ledger phase; Extended by: N28a-03. N28a-29's script calls frob session show --phases --json."
+  },
+  {
+   "bead": "N13-04",
+   "what": "BD-100's A-02 now wraps your plausibility verdict as A-02.<body>.solid-fill (Refusing 168) and BD-100 depends on you, so your design check leg cannot run in your own script before the analysis and the runner exist: move that leg (torso 22.68 kg against mass_max 3.5 kg -> 168 at stage 2) to BD-110, which now carries it, and keep the verb-free unit tests here."
+  },
+  {
+   "bead": "N28c-25",
+   "what": "Gate register measured-by column, one recorder per part (convention 9), each through record_gate from a receipt: GATE-ATEL-02 (M1) and GATE-SKEL-04 recorded by BD-110 (the row also names N28a-29 for the M1 run on the templates; say that N28a-29 re-measures and does not record); GATE-ATEL-05: the four A-2x parts by BD-108, the M1 timing on the archetype templates (design check under 2 s with A-20 to A-23 on) by N28a-29, the M4 part by BD-348; GATE-ATEL-06: enumeration clause BD-124, refusal clause (553, 555, 542, 543, 556 at 100 of 100) N28a-18, which depends on BD-124 and is not named today; GATE-ATEL-04: comparison row BD-262 (M3), bisect row N28b-03 (M4; BD-343 names the battery as measurer and recorder and cannot wait for it), not BD-343."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.regimes gains --from-study <study> (N28a-16, the spelling N33b-18 uses on analyze.sensitivity): call (a) returns the perturbation plan with next_actions, call (b) reads the completed paired study; 802 on the KILL-ATLAS fallback branch. analyze.energy-budget's inputs: the spellings N28a-07 now fixes (--declare, --approach-speed, --approach-energy). analyze.identifiability: --params, --excitation, --decision (N28a-13)."
+  },
+  {
+   "bead": "N22a-17",
+   "what": "Your consume stage is now called by BD-352's scripts/e2e/opt_cascade.sh, not BD-329's: opt.cascade is BD-352's verb and BD-352 depends on BD-329, so BD-329 can never call it. Replace 'The ladder's own script (BD-329)' with BD-352."
+  },
+  {
+   "bead": "N28b-06",
+   "what": "BD-343 now owns scripts/e2e/design_bisect.sh (convention 11: bisect on the 12-edit wheel-leg lineage, scan and monotone variants, 550, 802 non-descendant, 543, merge bytes). Run it as a stage of your M4 section instead of repeating those steps; keep the planted bisect, two-agent merge and gate query."
+  },
+  {
+   "bead": "N28b-18",
+   "what": "Convention 3: register the chooser-replay pilot in crates/frob-conformance/registry/pilots.toml under a conforming id (for example PILOT-LADDER-01) and append its GATE-ATEL-08 pilot rows and chooser comparison as [[pilot.result]]; BD-310 no longer names registries/pilots/ladder-replay.toml, and docs/delivery/experiments/ is not the register."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.bisect: list FROB-REF-542, FROB-REF-543 and FROB-REF-561 (every probe plan passes pairing::admit and N35-07's licence before the first probe, BD-343); a non-descendant --bad is the surface's 802 (pointer /bad), so the 'names no code (requested)' note can go; exit 0 for a found change (a-change, first-change), 2 for bracket and no-change."
+  },
+  {
+   "bead": "N28-REF",
+   "what": "FROB-REF-543: add design.bisect to the raised-by column (a metric worse-by predicate on a metric with no declared span, BD-343). FROB-REF-870: the consumer verbs from M4 are report.design, report.mission and study.compare (wired by BD-347) and opt.cascade (stage 2) and report.campaign (wired by BD-352)."
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "report.design, report.mission and report.campaign gain FROB-REF-870 (a verdict presented after an edit without a grade and a licence; BD-347's consumer check, wired by BD-347 and by BD-352 for report.campaign)."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "study.compare gains FROB-REF-870 (an absolute verdict a comparison record cites across an edit without a grade and a licence; BD-347)."
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "opt.cascade gains FROB-REF-870, passed on from stage 2 (an inherited verdict without a grade and a licence; BD-347's check, wired by BD-352), making eight chapter codes."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare: name BD-262 as the implementer of state (both forms, through the shared plan; 464 raised by N22a-03's run admission), since no extender is listed for it."
+  },
+  {
+   "bead": "N28-CX",
+   "what": "CX-304, CX-307 and CX-309 name N28a-11 (an M1 bead) as planting their M3 and M4 halves; it cannot depend on the later analyses. Name the builders of the plants: a09-curvature-only by BD-243 (M3), a17-per-reading-accuracy (alias half) by BD-240 (M3), a25-convenient-run by N28a-13 (M4), each binding its row of N28a-11's table. CX-305's target is analyze.symmetry but the refusal it expects belongs to the learning subsystem at M4; consider naming that verb."
+  },
+  {
+   "bead": "BD-243",
+   "what": "Build the plant a09-curvature-only (CX-304: a roller-alignment check that uses connection curvature only) in frob-conformance behind gauntlet-mutations and bind row 3's mutant half of N28a-11's atelier_shortcuts table (not-yet-due until then)."
+  },
+  {
+   "bead": "BD-240",
+   "what": "Build the plant a17-per-reading-accuracy (CX-307: a redundancy score from per-reading accuracy, 0.929 where 0.75 is true) against the alias search behind gauntlet-mutations and bind row 6's alias half of N28a-11's table."
+  },
+  {
+   "bead": "N28b-19",
+   "what": "BD-329 now owns scripts/e2e/ladder_conformal.sh (fixed against conformal on a synthetic ladder log, drift alarm, 546 cases, KA-696 and three plants through the Gauntlet). Run it as a stage of the GATE-ATEL-08 script instead of repeating those legs (convention 11)."
+  },
+  {
+   "bead": "N28b-28",
+   "what": "BD-352 now owns scripts/e2e/opt_cascade.sh (seven refusals including 546, 548, 549 passed on; --plan-only promote-only charging; OPEN-PROG-4 unranked report; N22a-17's consume stage; no_record_no_elimination). Run it as a stage of the cascade e2e (convention 11)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Reviewed all 45 beads of F-U28a; 45 changed, 0 unchanged, no new or superseded beads. Requests applied as written except: (1) S54 (BD-329 to call reflex_standing.sh --stage consume and carry no_record_no_elimination) was applied to BD-352 instead, because opt.cascade is BD-352's verb and BD-352 depends on BD-329 (BD-352 -> BD-346 -> BD-329), so BD-329 can never call it; BD-329 instead got a library-level driver (cargo example ladder_shadow) and its own script; request to N22a-17 to name BD-352. (2) H-cx-2 on N28a-11 ('build the nine mutants'): CX-305 is a planted input per N28-CX, not a mutant, and three plants (a09-curvature-only, a17-per-reading-accuracy's alias half, a25-convenient-run) mutate analyses of M3/M4 that an M1 bead cannot depend on (time rule); N28a-11 builds the six due at M1 and names the later builders (BD-243, BD-240, N28a-13, the last applied here), with requests to N28-CX, BD-243 and BD-240. (3) CX-312's numeric case supplied by N28a-18 is DESIGN (the chapter gives none). Convention-9 sweep: every e2e script in the slice now writes no gate row; recorders follow the register, with N28c-25 asked to name the parts the register omits or misnames (GATE-ATEL-06 refusal clause N28a-18; GATE-ATEL-04 bisect row N28b-03; GATE-ATEL-02 recorded by BD-110 with N28a-29 re-measuring). Convention-11 sweep: each mechanism or test bead owns its script; e2e beads (N28a-29, BD-348, N28a-30, BD-349's atelier_cores.sh) run them as stages. All numeric known answers touched were recomputed in scratch scripts (stance battery counts, fixed-n enumerations and curtailment error counts, EVSI, DC-04 counts, e-BH and the binomial quantile). Files of other slices under defs/U28a (N28-KA, N28a-12, N28a-24 to 26, N28a-31, N28a-32) were not touched. graph_check: 0 cycles; all 45 files parse with every field, JSON lists and the seven sections."
+}

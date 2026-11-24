@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "suite", "kinesis", "upstream", "frankensim", "frob-fsim", "solid"]
 parent: "WP-10"
-deps: ["BD-037", "BD-061", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-061", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-089", "BD-159", "BD-046", "BD-032", "BD-088"]
+related: ["FD-FSIM-04", "N16a-05", "N16a-17", "N33b-07"]
 gates: ["GATE-KIN-02", "GATE-KIN-03"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§16.4", "§33.8", "§33.3"]
 ---
@@ -78,6 +78,15 @@ integrates on the group (a quaternion retraction, renormalized), not in Euler an
 a helical one: a helical joint has one degree of freedom with translation tied to rotation by its pitch.
 Existing kinds, their numerics and their golden values do not change.
 
+**How the model compiler here maps design joints onto the native kinds.** The design grammar's joint classes are
+`fixed`, `R`, `P`, `H`, `C`, `E` (planar), `S` and `free` (BD-061). `C`, `E` and `S` map one to one onto the
+native cylindrical, planar and spherical kinds. A universal joint is not a subgroup (construction C-01), so the
+grammar has no `U` class and an author writes it as two `R` joints on perpendicular intersecting axes joined by a
+massless link. DESIGN: after adoption the referee lowering fuses exactly that pattern (two `R` joints, axes
+perpendicular to 10⁻¹² and intersecting to 10⁻¹² m, the link between them massless) into one native universal
+kind, records the fusion in the compiled model's coordinate map, and leaves any other product of `R` joints as
+it is; a design is never rewritten, only its referee lowering.
+
 **Interim posture here.** The referee lowers the four classes to products of one-axis joints, with the axis
 order recorded in the compiled model; near a lowering singularity the referee refuses by name instead of
 returning an ill-conditioned answer.
@@ -114,7 +123,7 @@ oracle in tests and for a worker process held at an older pin.
 
 - [ ] In FrankenSim: the four kinds exist, are documented with their coordinates, and pass its own tests; every existing test and golden value for the old four kinds is unchanged.
 - [ ] In FrankenSim: momentum and energy checks pass for each new kind on a free and a driven case, at the tolerances its own contact-free tests use.
-- [ ] Here: `RefereeDynamics` reports the four classes native at the new pin, and the model compiler uses them.
+- [ ] Here: `RefereeDynamics` reports the four classes native at the new pin, and the model compiler uses them (`C`, `E`, `S` one to one; the universal pattern of two `R` joints fused, and nothing else fused).
 - [ ] Here: native and lowered models of the same mechanism agree in joint-space accelerations to 10⁻¹⁰ relative on 10⁴ random states away from the lowering's singularities.
 - [ ] Here: GATE-KIN-02 and GATE-KIN-03 pass at the new pin with measured values recorded against 10⁻⁹ and 10⁻¹⁰.
 - [ ] Here: the spherical fixture passes through the configuration at which the lowered model refuses.
@@ -134,6 +143,7 @@ Here:
 - `referee_reports_native_joint_classes`: expected all four true after adoption, all four false at the starting pin.
 - `native_matches_lowered_away_from_singularity`: 10⁴ seeded states; tolerance 10⁻¹⁰ relative.
 - `lowered_spherical_refuses_at_gimbal`: middle angle within 10⁻⁶ rad of 90°; expected the named refusal on the lowered path and a finite answer on the native path.
+- `universal_pattern_is_fused_and_others_are_not`: two `R` joints on perpendicular intersecting axes with a massless link fuse into one native universal (coordinate map recorded; accelerations equal to the unfused model to 10⁻¹⁰ relative on 10³ states); the same pair with axes 0.01 rad from perpendicular, or with a 1 g link, is not fused.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_01.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).

@@ -1,0 +1,1407 @@
+{
+ "group": "G36",
+ "needs": [
+  {
+   "bead": "BD-040",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "OPEN-SPARK-2 blocks this gate as specified: N21c-35 records the class in force and N44-01 the ruling on this package's request; enforcement (meter and refusal) is N36-20; under E0 the two-card training row is recorded not run"
+  },
+  {
+   "bead": "BD-040",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-08",
+    "N40-12"
+   ],
+   "note": "both read these rows into GATE-TENFOLD-01 and already depend on this bead"
+  },
+  {
+   "bead": "BD-142",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "OPEN-SPARK-2 blocks this gate as specified: N21c-35 records the class in force and N44-01 the ruling on this package's request; enforcement (meter and refusal) is N36-20; under E0 only the 1- and 8-thread rows run"
+  },
+  {
+   "bead": "BD-142",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23b-28"
+   ],
+   "note": "OPEN-CORTEX-6 is decided at M2 from this baseline and depends on this bead"
+  },
+  {
+   "bead": "BD-149",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-17"
+   ],
+   "note": "the harness supplies the state files and the comparison API the kernel beads call; it depends on no kernel (BD-150 depends on it the same way)"
+  },
+  {
+   "bead": "BD-149",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-12",
+    "BD-013",
+    "BD-018"
+   ],
+   "note": "the derivation worker with checked-in sources, the dialect prelude and lint, and the Rust and dialect emitters; BD-019 (already a dependency) is the M0 instance of the pattern"
+  },
+  {
+   "bead": "BD-149",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-021",
+    "BD-027"
+   ],
+   "note": "instance certificates as claims and the bundle writer bound to the kernel's content hash; N12-20 (M5 pipeline per kernel family) is later and not blocking"
+  },
+  {
+   "bead": "BD-149",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N21b-37",
+    "BD-179"
+   ],
+   "note": "the anchored representation is built on K-anchor (BD-157), which depends on this bead; a dependency would close a cycle, and BD-179 is a higher-numbered seed"
+  },
+  {
+   "bead": "BD-199",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "OPEN-SPARK-2 blocks this gate as specified: N21c-35 records the class in force and N44-01 the ruling on this package's request; enforcement (meter and refusal) is N36-20; under E0 the gate is recorded not run"
+  },
+  {
+   "bead": "BD-199",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23a-19"
+   ],
+   "note": "the reducer, statistics merge and the parity clauses of GATE-CORTEX-08 precede the two-card measurement"
+  },
+  {
+   "bead": "BD-199",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23b-33"
+   ],
+   "note": "both arms' times are read under the attainment rule"
+  },
+  {
+   "bead": "BD-216",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-014",
+    "BD-172",
+    "BD-174",
+    "N21b-28"
+   ],
+   "note": "the device receipt type, device completion times from both device backends (INV-PERF-02 and the A/A count per device family), and the placement record; N21b-28 is the record component of the capstone BD-178"
+  },
+  {
+   "bead": "BD-216",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-25",
+    "N36-33"
+   ],
+   "note": "sim.run with its options on all tiers, and the --workload selector, which no bead carried (written now as N36-33); train.start (N23a-14) is only driven by the training rows and is related in the file"
+  },
+  {
+   "bead": "BD-216",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N40-01"
+   ],
+   "note": "the gate recorder (receipt to row, controls caught in the same run) and the gate record schema"
+  },
+  {
+   "bead": "BD-219",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-10"
+   ],
+   "note": "the layout planner called in plan-only mode, with the slab catalogue and the allocated-bytes counter"
+  },
+  {
+   "bead": "BD-219",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16b-26"
+   ],
+   "note": "N16b-26 adds the four Kinesis output groups on top of this model and depends on this bead"
+  },
+  {
+   "bead": "BD-219",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-297"
+   ],
+   "note": "later milestone (M3) and a higher-numbered seed; it generalizes the M2 interval"
+  },
+  {
+   "bead": "BD-219",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N21c-12"
+   ],
+   "note": "later milestone (M4); the fleet job record is a consumer and already depends on this bead"
+  },
+  {
+   "bead": "N36-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-02",
+    "N21c-32"
+   ],
+   "note": "two registries that cite each other by identifier: the gate rows read thresholds from this file by row number; neither waits"
+  },
+  {
+   "bead": "N36-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21b-18"
+   ],
+   "note": "later milestone (M2): OPEN-SPARK-3 freezes what this record holds as defaults"
+  },
+  {
+   "bead": "N36-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16b-03"
+   ],
+   "note": "later milestone (M2); the capacity audit already depends on this record through BD-216"
+  },
+  {
+   "bead": "N36-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "ROBOT-go1",
+    "ROBOT-go2",
+    "ROBOT-g1",
+    "ROBOT-fsim-g1"
+   ],
+   "note": "later milestone (M1): the record names the robots at M0 and takes their ModelId once the admitted models exist"
+  },
+  {
+   "bead": "N36-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the ledger record with its exclusive phases (it brings the phase vocabulary N39a-23)"
+  },
+  {
+   "bead": "N36-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-143"
+   ],
+   "note": "later milestone (M1); BD-143 recomputes the ceilings on the agent-driven round and depends on this bead through BD-040"
+  },
+  {
+   "bead": "N36-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-186"
+   ],
+   "note": "the head-to-head is the consumer and already depends on this bead"
+  },
+  {
+   "bead": "N36-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the register's lint calls this bead's refusal for a pilot whose falsifier is a speed ratio; neither waits (N00-07 drafts the same register)"
+  },
+  {
+   "bead": "N36-05",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N21a-27"
+   ],
+   "note": "later milestone (M2); the funding screen depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N36-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-039",
+    "N36-25"
+   ],
+   "note": "the harness that runs a frozen arm and the decision that freezes the comparators"
+  },
+  {
+   "bead": "N36-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-22"
+   ],
+   "note": "addressed random streams on the host (M1) for the reproducible arm order; BD-180 is the device kernel and is not needed"
+  },
+  {
+   "bead": "N36-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-27"
+   ],
+   "note": "the profile record and the screen verdict that each ledger entry carries"
+  },
+  {
+   "bead": "N36-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "the frozen fidelity envelopes are the behaviour proof where bits legitimately change"
+  },
+  {
+   "bead": "N36-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-203"
+   ],
+   "note": "per-world digests for the digest-identity proof"
+  },
+  {
+   "bead": "N36-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-19"
+   ],
+   "note": "this bead runs the reducer, merge and two-phase update on two physical cards"
+  },
+  {
+   "bead": "N36-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-03"
+   ],
+   "note": "the peer-access answer and host-staged rate read at per-shard admission"
+  },
+  {
+   "bead": "N36-08",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-181"
+   ],
+   "note": "the invariance test's shard lane exercises this runtime; a mechanism does not depend on its test"
+  },
+  {
+   "bead": "N36-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register, where the prediction and falsifier are frozen before the two-card run (N00-07 drafts the same register)"
+  },
+  {
+   "bead": "N36-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24",
+    "N23a-18"
+   ],
+   "note": "the ledger's resource table and the per-iteration learner share recorded by the training job (BD-198, already a dependency, depends on N23a-18)"
+  },
+  {
+   "bead": "N36-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-24"
+   ],
+   "note": "the kill-gate record with its ADR rule, and the registered KILL-SHARD row"
+  },
+  {
+   "bead": "N36-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the fail-closed default of the decision reads the class in force; the deciding measurement BD-199 carries the same dependency"
+  },
+  {
+   "bead": "N36-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-14",
+    "BD-211"
+   ],
+   "note": "the daemon's per-job dispatch and idempotent submission at M2; shortest-estimated-work assignment is BD-296 (M3), related in the file"
+  },
+  {
+   "bead": "N36-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-07"
+   ],
+   "note": "the role table and role tags that the default routing reads"
+  },
+  {
+   "bead": "N36-12",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-269 is already a dependency and brings the profile mechanism N35-06 with its pilot N35-05"
+  },
+  {
+   "bead": "N36-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-324",
+    "N23b-23"
+   ],
+   "note": "its arm of the equal-wall-clock pilots and its row of KILL-ALTALGO; N36-09 is the pilot of the scaling ceiling"
+  },
+  {
+   "bead": "N36-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-039"
+   ],
+   "note": "the incumbent harness is a consumer of the block (edge recorded: BD-039 depends on this bead)"
+  },
+  {
+   "bead": "N36-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-28",
+    "BD-178"
+   ],
+   "note": "later milestone (M2); the field holds a digest and is not applicable before the record exists"
+  },
+  {
+   "bead": "N36-13",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N35-04",
+    "N35-06"
+   ],
+   "note": "later milestones; the block carries the names as strings until the profiles exist"
+  },
+  {
+   "bead": "N36-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-01"
+   ],
+   "note": "battery manifests with identity and the smoke battery"
+  },
+  {
+   "bead": "N36-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-12"
+   ],
+   "note": "the content-addressed kernel cache that keeps the baseline binaries"
+  },
+  {
+   "bead": "N36-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-27"
+   ],
+   "note": "this bead reads the profile record and adds no profiler"
+  },
+  {
+   "bead": "N36-15",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-214 is already a dependency and brings its coverage pilot N16b-16"
+  },
+  {
+   "bead": "N36-15",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28c-14",
+    "BD-344"
+   ],
+   "note": "later milestone (M4); until that register exists the hypotheses are filed in this bead's own file"
+  },
+  {
+   "bead": "N36-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19c-16"
+   ],
+   "note": "the scene byte-model functions and the recount from a compiled pack, written once in frob-scene (reported as a cross-group overlap); the world bank BD-236 is M3 and a consumer"
+  },
+  {
+   "bead": "N36-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-07"
+   ],
+   "note": "the role table cites this arithmetic and the repairs name the Mac; neither waits"
+  },
+  {
+   "bead": "N36-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-297"
+   ],
+   "note": "later milestone (M3); it takes over this bead's residual store unchanged"
+  },
+  {
+   "bead": "N36-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33c-15"
+   ],
+   "note": "settled by the admission of the sibling lab runtime: its calibrator is not a general interval library and is not consumed; this bead implements the index itself"
+  },
+  {
+   "bead": "N36-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-01"
+   ],
+   "note": "the fingerprint's compile-time and launch-cost probes"
+  },
+  {
+   "bead": "N36-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-01"
+   ],
+   "note": "kernel manifests with per-buffer footprints"
+  },
+  {
+   "bead": "N36-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-06"
+   ],
+   "note": "the access recorder on batch-cpu that validates the footprint-derived figure (N21c-29 is superseded by it)"
+  },
+  {
+   "bead": "N36-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-01"
+   ],
+   "note": "the measured bandwidth, launch and commit costs"
+  },
+  {
+   "bead": "N36-18",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N21a-27"
+   ],
+   "note": "the profile prints the same figure from the same footprints (reported as a cross-group overlap); neither waits"
+  },
+  {
+   "bead": "N36-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N20a-01"
+   ],
+   "note": "sensors as components of the model identity and the observation service identity; the camera models BD-187 and BD-188 are already dependencies"
+  },
+  {
+   "bead": "N36-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-07"
+   ],
+   "note": "the role table cites this arithmetic; neither waits"
+  },
+  {
+   "bead": "N36-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the record registries/compute_envelope.toml, its lint and the default in force, which this bead reads and never writes (the needed-class function is specified in both: reported)"
+  },
+  {
+   "bead": "N36-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-296"
+   ],
+   "note": "later milestone (M3): the daemon's campaign class keeps its own refusal FROB-REF-704"
+  },
+  {
+   "bead": "N36-20",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N44-01",
+    "N44-02"
+   ],
+   "note": "N44-01 is a second record of approvals per package (overlap with N21c-35, reported by its group); N44-02 exercises this refusal and depends on this bead through BD-219"
+  },
+  {
+   "bead": "N36-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-23",
+    "N39a-24"
+   ],
+   "note": "the thirteen phases and the ledger record whose vocabulary the export uses"
+  },
+  {
+   "bead": "N36-21",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-184 is already a dependency"
+  },
+  {
+   "bead": "N36-21",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-28"
+   ],
+   "note": "the device-result schema check that makes AE-11 (phase wall-time attribution) present on every result; it brings the M0 field list N21a-02"
+  },
+  {
+   "bead": "N36-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-34",
+    "N23b-33"
+   ],
+   "note": "no bead carried the humanoid first-stage flat-ground task (written now as N36-34); the attainment rule is N23b-33"
+  },
+  {
+   "bead": "N36-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-007",
+    "BD-024"
+   ],
+   "note": "the referee over the reference humanoid and the verb that runs it"
+  },
+  {
+   "bead": "N36-22",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N44-01"
+   ],
+   "note": "OPEN-SPARK-2 blocks this gate as specified: N21c-35 records the class in force and N44-01 the ruling on this package's request; enforcement (meter and refusal) is N36-20; row 9 is recorded not run under E0"
+  },
+  {
+   "bead": "N36-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-110",
+    "BD-244",
+    "BD-111"
+   ],
+   "note": "design.check stages 1 to 6 and 7 to 8, and the memo graph in front of the analyses"
+  },
+  {
+   "bead": "N36-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-118"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N36-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-163",
+    "BD-225",
+    "BD-226"
+   ],
+   "note": "scene.compile and the interior grammar with the seven structural proxies"
+  },
+  {
+   "bead": "N36-23",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-248"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N36-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N21c-32"
+   ],
+   "note": "the amendment-before-measurement rule of the gate record, and the registered row of GATE-SPARK-03"
+  },
+  {
+   "bead": "N36-24",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-142, which depends on the measured incumbent ledger BD-040"
+  },
+  {
+   "bead": "N36-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-039"
+   ],
+   "note": "the decision freezes what the harness has pinned and tuned (commits, container digests, warm configurations); the harness works on the default candidates and does not wait for the decision"
+  },
+  {
+   "bead": "N36-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "NAB-09",
+    "NAB-12"
+   ],
+   "note": "the source register and its rows on incumbent engines, whose release list is the default answer"
+  },
+  {
+   "bead": "N36-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-16"
+   ],
+   "note": "OPEN-KIN-1 is the trigger of the restatement"
+  },
+  {
+   "bead": "N36-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-02",
+    "N21c-32"
+   ],
+   "note": "gate rows cite this register by row number and are regenerated from it; registries do not wait for a decision"
+  },
+  {
+   "bead": "N36-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-24"
+   ],
+   "note": "the kill-gate record with its ADR rule, and the registered KILL-PARITY row"
+  },
+  {
+   "bead": "N36-27",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-10",
+    "BD-317"
+   ],
+   "note": "the ten-fold unit redoes its arithmetic on measured rates whatever this decision is; BD-317 is M3"
+  },
+  {
+   "bead": "N36-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-27"
+   ],
+   "note": "the profile run again after the first pass"
+  },
+  {
+   "bead": "N36-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-10"
+   ],
+   "note": "consumer of the measured-rate packet; it runs on both branches and does not wait for this fallback"
+  },
+  {
+   "bead": "N36-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N00-20"
+   ],
+   "note": "the registered table of expected ranges that the packet restates"
+  },
+  {
+   "bead": "N36-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-039 is already a dependency"
+  },
+  {
+   "bead": "N36-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the ledger record in which the script writes the phase rows"
+  },
+  {
+   "bead": "N36-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-25",
+    "N36-33"
+   ],
+   "note": "sim.run on the batched tiers and the --workload selector (new bead)"
+  },
+  {
+   "bead": "N36-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-197",
+    "N23a-19"
+   ],
+   "note": "the battery cortex-ppo and its rule P-10 fixtures; N23b-18 depends on BD-199 and cannot be a prerequisite"
+  },
+  {
+   "bead": "N36-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-09"
+   ],
+   "note": "the policy evaluation report used to re-evaluate each arm's final policy"
+  },
+  {
+   "bead": "N36-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16b-26",
+    "N16b-35"
+   ],
+   "note": "the Kinesis groups have their own script; shared verb, nothing repeated"
+  },
+  {
+   "bead": "N36-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-10"
+   ],
+   "note": "the allocated-bytes counter the script reads before and after"
+  },
+  {
+   "bead": "N36-CX",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-025 is already a dependency and holds controls.toml and counterexamples.toml"
+  },
+  {
+   "bead": "N36-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-171"
+   ],
+   "note": "later milestone (M2); a registry does not depend on a mechanism"
+  },
+  {
+   "bead": "N36-KA",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the row schema, the five rules and the derivation files"
+  },
+  {
+   "bead": "N36-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-REF"
+   ],
+   "note": "the registry that owns the rows of 761 and 862 to 866 (two repair lists for one row: reported)"
+  },
+  {
+   "bead": "N36-REF",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21-REF"
+   ],
+   "note": "the registry that owns the row of 602"
+  },
+  {
+   "bead": "N36-REF",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "nothing blocks: the rejection is raised as FROB-REF-862 with pointer rates.ordering (N36-03, BD-216) and the dedicated code is proposed here to the owner of the 86x rows; no bead assigns codes across chapters (reported under gaps)"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "N36-20",
+   "dep": "N21c-35",
+   "as": "dep",
+   "why": "coverage (d) of U36: the enforcement reads the decision's record and never writes it"
+  },
+  {
+   "bead": "N21a-27",
+   "dep": "N36-05",
+   "as": "dep",
+   "why": "coverage (d) of U36: the funding screen calls the bound, the ceiling record and the one raising function of FROB-REF-866 instead of defining its own"
+  },
+  {
+   "bead": "BD-039",
+   "dep": "N36-13",
+   "as": "dep",
+   "why": "coverage (d) of U36: the incumbent harness emits frob.perf.disclosure/1 and uses its completeness check instead of a second field list"
+  },
+  {
+   "bead": "BD-039",
+   "dep": "N36-03",
+   "as": "dep",
+   "why": "coverage (d) of U36: every incumbent figure is a typed rate with its decimation"
+  },
+  {
+   "bead": "BD-039",
+   "dep": "N36-25",
+   "as": "related",
+   "why": "coverage (d) of U36 asked for a dependency; recorded as related because the decision freezes what the harness pins (N36-25 depends on BD-039) and the reverse edge would close a cycle"
+  },
+  {
+   "bead": "BD-217",
+   "dep": "N36-07",
+   "as": "dep",
+   "why": "the one-lever optimization pass lands each lever through the optimization ledger (ceiling, screen verdict, behaviour proof, bound 1.03), which BD-217 otherwise restates"
+  },
+  {
+   "bead": "N36-26",
+   "dep": "N16a-16",
+   "as": "dep",
+   "why": "coverage (d) of U36: OPEN-KIN-1 is the trigger of OPEN-PERF-4"
+  },
+  {
+   "bead": "N35-11",
+   "dep": "BD-219",
+   "as": "related",
+   "why": "replaces the drafted dep: closes a cycle"
+  },
+  {
+   "bead": "BD-172",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-173",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-174",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-175",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-176",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-178",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-181",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-183",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-208",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "BD-217",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "GB-16",
+   "dep": "N36-33",
+   "as": "related",
+   "why": "its worked command uses the --workload selector written as N36-33; a card or record does not wait for it"
+  },
+  {
+   "bead": "GB-41",
+   "dep": "N36-33",
+   "as": "related",
+   "why": "its worked command uses the --workload selector written as N36-33; a card or record does not wait for it"
+  },
+  {
+   "bead": "N19c-31",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21-REF",
+   "dep": "N36-33",
+   "as": "related",
+   "why": "its script uses the --workload selector written as N36-33; a registry does not depend on a mechanism"
+  },
+  {
+   "bead": "N21b-05",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-06",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-07",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-09",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-13",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-14",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-18",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-22",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-24",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-25",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-26",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-28",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-29",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-31",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-35",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21b-39",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21c-16",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21c-17",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21c-21",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N21c-23",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N29a-17",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N29a-19",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N29a-21",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N35-12",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "N35-17",
+   "dep": "N36-33",
+   "as": "dep",
+   "why": "its commands use `--workload`, which no bead carried; the selector is written as N36-33 (its own prerequisites are M0 beads)"
+  },
+  {
+   "bead": "NEG-07",
+   "dep": "N36-33",
+   "as": "related",
+   "why": "its worked command uses the --workload selector written as N36-33; a card or record does not wait for it"
+  },
+  {
+   "bead": "NEG-11",
+   "dep": "N36-33",
+   "as": "related",
+   "why": "its worked command uses the --workload selector written as N36-33; a card or record does not wait for it"
+  },
+  {
+   "bead": "ZOO-humanoid",
+   "dep": "N36-33",
+   "as": "related",
+   "why": "names the --workload selector written as N36-33, which is a later milestone"
+  },
+  {
+   "bead": "N40-33",
+   "dep": "BD-217",
+   "as": "dep",
+   "why": "rows 13 to 15 of §36.3 are measured by BD-217 (its acceptance names them, and they are the Performance rows of the no-GPU variant); answers the missing carrier noted in need 3 of N40-33"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N36-20",
+   "other": "N21c-35",
+   "note": "Keep both: a decision and its enforcement. N21c-35 is the one home of the record registries/compute_envelope.toml (states, per-run E3 approvals, lint), the decision packet with per-package requests and fallbacks, and the default E0 as a fact. N36-20 is the one home of enforcement: demand vector, device-hour meter, the admission function with its timeout, the Admitted token, the out-of-process hook, KA-823. Duplicated in both: the needed-class function (two frob-core modules, compute_envelope and envelope, each with its own case table), the tests of the 761 refusal, the point-against-upper-end control, the not-run reason, and one e2e script each (open_spark_2.sh, perf_envelope_meter.sh). N36-20 has what N21c-35 lacks: consumption so far per scope inside the class computation, the reading that E2 and E3 inherit E1's per-run limits, the 24-thread and 20 GiB cases, the refusal payload with the split repair, the timeout rule, the whole KA-823 arithmetic. N21c-35 has what N36-20 lacks: the registry schema and lint, the FROB-REF-704 campaign case, the train.start path in its script, outcome handling. Suggested: one function needed_class(demand, consumed, registry) in one module, built in N36-20 (it needs the meter) on the record N21c-35 defines; N21c-35's acceptance lines 2, 3 and 5 cite N36-20's tests. N36-20 depends on N21c-35 (recorded)"
+  },
+  {
+   "mine": "N36-05",
+   "other": "N21a-27",
+   "note": "Keep both; one part is duplicated. N36-05 (M0) is the one home of the bound 1/(1 − f + f/r + h), min_fraction_for, the family-batch bound, the three usage rules, the record frob.perf.ceiling/1 with before-experiment order checked from the ledger, and the raising function of FROB-REF-866. N21a-27 (M2) keeps profiling mode, the phase ledger, shares, derived figures, frob.stepprofile/1 and the two doctrine thresholds (50% and 15%). Step 3 of its screen recomputes the same ceiling, raises 866 itself and repeats N36-05's known answers (13.5, 6.7, 0.92, 842.8 ÷ 575.7 = 1.46) and the pruning control (20, not 50); it should call ceiling() and admit_experiment() and file a ceiling record (edge recorded). N21a-27 has what N36-05 lacks: refusal of a request with no profile or with a profile whose fingerprint is not the machine's, the candidate's transfer and synchronization cost charged before the 15% test, and KA-549 (the specialization ceiling). N36-05 has what N21a-27 lacks: rules 1 and 3 (warm strong baseline, queue time counted), the record schema with late-record rejection, four ranked repairs, the pilot-register hook"
+  },
+  {
+   "mine": "N36-18",
+   "other": "N21a-27",
+   "note": "bytes touched per world-step from manifest footprints at active counts is computed in both (N36-18 in every run receipt with validation, budget and bandwidth test; N21a-27 as a derived figure of the profile); one function should serve both, and the profile should read the receipt's table"
+  },
+  {
+   "mine": "N36-16",
+   "other": "N19c-16",
+   "note": "the scene byte model (dense 2·V/s³, band fraction, labels 12.5%, directory, capacity counts) is written twice, in frob_kernels::estimate::scene and in frob-scene bytes.rs; N19c-16 says the job estimator calls its model. Their directory formulas differ (4-byte slots per 8³-voxel brick, 75,411 slots and 0.3 MB for a 10 × 10 × 3 m interior, against 6 bytes per coarse cell, 73,242 cells and 0.44 MB). Keep the functions and recount in N19c-16; N36-16 keeps the slabs, the group memory.scenes, the two modes and the repairs (dependency recorded)"
+  },
+  {
+   "mine": "N36-04",
+   "other": "N00-17",
+   "note": "the Amdahl ceiling calculators with exact known answers exist in both (seven limits, KA-818 to KA-820 here; nine calculators, KA-009 to KA-016 there), and again over ledger records in N39a-37 and on card GB-09; one module should hold the arithmetic"
+  },
+  {
+   "mine": "N36-25",
+   "other": "BD-039",
+   "note": "the comparator registry is defined twice with different fields and paths (registries/comparators.toml here; crates/frob-conformance/registry/comparators.toml with commit, container digest, licence, recipe and warm configuration in the seed). Keep the seed's file and schema; N36-25 keeps the decision (row-to-comparator table, freeze and change rules, ADR) and adds rows[], matched and native configurations, frozen_at and state to it. N36-25 depends on BD-039 (recorded)"
+  },
+  {
+   "mine": "N36-25",
+   "other": "N38b-35",
+   "note": "OPEN-PERF-2 and OPEN-GAUNT-4 decide the same comparator set of releases and container digests; one decision record is needed"
+  },
+  {
+   "mine": "N36-25",
+   "other": "N38a-04",
+   "note": "a third definition of registry/comparators.toml, in the oracle register bead"
+  },
+  {
+   "mine": "N36-13",
+   "other": "BD-039",
+   "note": "BD-039 carries its own field list, minimal writer and FROB-REF-862 check for the disclosure block because it expected the block only at M2; N36-13 delivers the schema, completeness check and refusal at M0 and BD-039 should use them (edge recorded)"
+  },
+  {
+   "mine": "N36-06",
+   "other": "N38a-08",
+   "note": "the one-sided paired lower bound and the A/A procedure are implemented in both (N38a-08 at M1 in ratio and difference form; N36-06 at M2 with the campaign protocol, the PerfRatio type and FROB-REF-863); N36-06 should call N38a-08's estimator and quantile table"
+  },
+  {
+   "mine": "N36-05",
+   "other": "N38a-08",
+   "note": "the ceiling-from-phases formula appears in both; N36-05 (M0) is the earlier and holds the record and the refusal"
+  },
+  {
+   "mine": "N36-REF",
+   "other": "N35-REF",
+   "note": "N35-REF owns the registry rows of 761, 862, 863 and 866; N36-REF writes triggers, pointers and ranked repairs for the same rows, and the two repair lists differ in wording and order. One row, one list: N36-REF's fuller triggers and repairs should be entered in N35-REF's rows, and N36-REF keeps the raising-site matrix and the script"
+  },
+  {
+   "mine": "N36-REF",
+   "other": "N21-REF",
+   "note": "the row of FROB-REF-602 is owned by N21-REF; N36-REF adds the scene and camera repair variants (never fewer worlds for scenes; never a lower resolution or cadence for frames), which the owner's row should carry"
+  },
+  {
+   "mine": "N36-20",
+   "other": "N34-15",
+   "note": "two enforcement points of the same machine limits (the script guard scripts/lib/envelope.sh and the verb admission with its meter); with N44-01's registries/envelopes.toml and N21c-35's registries/compute_envelope.toml there are also two approval records. One record of limits and approvals should feed both guards"
+  },
+  {
+   "mine": "BD-219",
+   "other": "N16b-26",
+   "note": "one verb, sim.estimate: BD-219 is the model, record and gate; N16b-26 adds the four Kinesis groups and depends on it. Distinct scope; both Scope sections say so"
+  },
+  {
+   "mine": "BD-219",
+   "other": "N17a-07",
+   "note": "one byte model per padded world printed by phylum.plan and by sim.estimate; the per-world terms should live once, in the estimator"
+  },
+  {
+   "mine": "N36-07",
+   "other": "BD-217",
+   "note": "the landing rule of an optimization (ceiling beforehand, screen verdict, behaviour proof, paired bound at least 1.03, one lever) is specified in the ledger bead and restated as acceptance of the optimization pass; BD-217 should land levers through the ledger (edge recorded)"
+  },
+  {
+   "mine": "N36-27",
+   "other": "BD-217",
+   "note": "KILL-PARITY: the seed's done-condition says decided; N36-27 is the decision bead and BD-217 supplies the measurement (already re-scoped by its group)"
+  }
+ ],
+ "new_beads": [
+  "N36-33",
+  "N36-34"
+ ],
+ "gaps": [
+  {
+   "section": "Appendix O",
+   "what": "no bead assigns refusal codes across chapters: a report whose rates violate the unit ordering (INV-PERF-01, GATE-SPARK-19) must be rejected and has no code; it is raised as FROB-REF-862 with pointer rates.ordering until the owner of the 86x rows assigns one",
+   "needed_by": [
+    "N36-REF",
+    "N36-03",
+    "BD-216"
+   ]
+  },
+  {
+   "section": "§34.2",
+   "what": "frob-core's scope cap of about 8 thousand lines is not re-checked against the perf module the performance beads place there (typed units and rates, the disclosure block, the ceiling arithmetic, the envelope demand, the workload record); nothing may depend on frob-conformance, so these types cannot move there",
+   "needed_by": [
+    "N36-03",
+    "N36-13",
+    "N36-05",
+    "N36-20",
+    "N36-02"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-199",
+   "what": "seed order: dependency on the higher-numbered seed BD-216 moved to related; Scope names the harness parts it depends on (N36-06, N36-07)"
+  },
+  {
+   "bead": "BD-219",
+   "what": "made the capstone of GATE-SPARK-22: now depends on its components N36-16, N36-17, N36-18, N36-19; Scope rewritten; the components' verb-level acceptance and the four-clause gate record folded in"
+  },
+  {
+   "bead": "N36-16",
+   "what": "component no longer depends on its capstone BD-219 (moved to related); depends on the slab catalogue N21b-10; Scope and three acceptance lines re-scoped to slabs, group value and repairs"
+  },
+  {
+   "bead": "N36-17",
+   "what": "component no longer depends on its capstone BD-219 (moved to related); input JobShape stated; Scope and two acceptance lines re-scoped"
+  },
+  {
+   "bead": "N36-19",
+   "what": "component no longer depends on its capstone BD-219 (moved to related); depends on the slab catalogue N21b-10; Scope and two acceptance lines re-scoped"
+  },
+  {
+   "bead": "N36-18",
+   "what": "Scope names BD-219 as the capstone that writes the gate record from this bead's table"
+  },
+  {
+   "bead": "N36-REF",
+   "what": "registry: dependencies on the mechanisms N36-05, N36-06, N36-13, N36-20 and BD-219 moved to related; Scope names the row owners N35-REF and N21-REF and says when the trigger tests and script steps are enabled"
+  },
+  {
+   "bead": "BD-216",
+   "what": "Scope names the verbs the runner drives (sim.run with the selector N36-33; train.start related); the ordering rejection now states FROB-REF-862, in agreement with N36-03 and N36-REF"
+  },
+  {
+   "bead": "N36-30",
+   "what": "the ordering rejection is asserted with FROB-REF-862 and pointer rates.ordering, in agreement with N36-03 and N36-REF"
+  },
+  {
+   "bead": "N36-11",
+   "what": "the default routing no longer relies on the daemon's shortest-estimated-work rule, which is M3 (BD-296, now related); an M2 rule is stated"
+  },
+  {
+   "bead": "N36-02",
+   "what": "the record type, parser and WorkloadId placed in frob-core (nothing may depend on frob-conformance, and run verbs resolve workloads); Scope names N36-33"
+  },
+  {
+   "bead": "N36-22",
+   "what": "Scope, the equal-quality step and one consideration now name the new task bead N36-34 in place of an unowned humanoid task"
+  }
+ ]
+}

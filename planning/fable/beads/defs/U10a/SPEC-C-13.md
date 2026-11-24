@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "reflex", "frob-control", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-12"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§22: the bead that creates crate frob-control (BD-114 or BD-115 lands first; the law suite is created with the crate skeleton if neither has)", "§10 C-20: observability modulo a gauge, which states that position and yaw are gauge freedoms (SPEC-C-20, another unit)", "§10 C-31 and C-32: barrier certificates for reduced-order templates and the separating dual witness (SPEC-C-31, SPEC-C-32, another unit)"]
-related: ["BD-114", "BD-115", "BD-116", "BD-117", "BD-118", "BD-249", "BD-251", "N10a-20", "SPEC-C-04", "SPEC-C-06", "N10-KA1", "BD-045"]
+deps: ["BD-025", "N10a-01", "N22a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-045", "BD-114", "BD-115", "BD-116", "BD-118", "BD-251", "N10a-20", "SPEC-C-20", "SPEC-C-31", "SPEC-C-32"]
 gates: ["GATE-REFLEX-01", "GATE-REFLEX-03", "GATE-REFLEX-05"]
 plan_refs: ["§10 C-13", "§22.3", "§22.4", "§22.5", "§6 GOAL-13", "§4 BET-06", "Appendix D.7", "Appendix M KA-081 to KA-084", "Appendix N CX-038"]
 ---
@@ -114,10 +114,18 @@ hides an error, because a 2 m estimate of a 1 m motion has zero residual after a
 
 **Fixtures** (DESIGN constants, set here where the construction names a test without numbers).
 
-- *Consistency level.* N = 50 Monte Carlo runs, error dimension n = 9 (rotation, velocity, position). The
-  time-averaged normalized estimation error squared ε̄ satisfies N·ε̄ ~ χ² with N·n = 450 degrees of freedom;
-  the two-sided 95% acceptance interval is [χ²₀.₀₂₅(450), χ²₀.₉₇₅(450)]/N ≈ [7.82, 10.18] (normal
-  approximation 450 ± 1.96·√900; the derivation file carries the exact quantiles).
+- *Consistency level.* N = 50 Monte Carlo runs of 10 s, each starting from an initial estimation error drawn
+  from N(0, P₀) (the standard Monte Carlo protocol: the error is then a draw from the reported covariance, so
+  all n = 9 components, rotation, velocity and position, are scored, gauge directions included; recorded runs
+  that initialize yaw and position at the gauge origin are scored on the observable part only, by the rule of
+  the scoring bead N22a-02). The statistic is the run average at each checked instant tⱼ, ε̄(tⱼ) =
+  (1/N)·Σᵢ εᵢ(tⱼ) with εᵢ = ξᵢᵀ·Pᵢ⁻¹·ξᵢ, not a time average: N·ε̄(tⱼ) ~ χ² with N·n = 450 degrees of
+  freedom at each instant. The two-sided 95% interval is [χ²₀.₀₂₅(450), χ²₀.₉₇₅(450)]/N = [7.862, 10.213]
+  (exact quantiles, normative; the normal approximation 450 ± 1.96·√900 gives [7.82, 10.18] and is not used).
+  Instants are checked every 0.1 s (100 instants); the criterion is at least 90 of the 100 inside the
+  interval (DESIGN: a consistent filter is outside at about 5 of them by construction, so "inside at every
+  instant" would fail a correct filter; the planted gyro bias drives ε̄ above the upper bound for most of
+  the run).
 - *Attitude near π.* Inertia diag(1, 2, 3) kg·m², initial attitude error 179° about the axis
   (1, 1, 1)/√3, zero initial rate, gains k_R = 20 N·m/rad and k_ω = 8 N·m·s/rad on the unit-inertia axis
   scaled by the inertia; truth: the error falls below 1° within 5 s and never passes through the antipode.
@@ -127,7 +135,12 @@ hides an error, because a 2 m estimate of a 1 m motion has zero residual after a
   infeasible variant: x₁ ≤ −1 together with the cone constraint, whose dual witness is the unit vector on the
   first axis.
 - *Scoring.* A straight 1 m motion estimated as a straight 2 m motion: residual after translation-and-yaw
-  alignment is 1 m at the end point; after an additional fitted scale it is 0.
+  alignment is 1 m at the end point; after an additional fitted scale it is 0. The alignment is fixed here
+  (DESIGN, so that the figure is unambiguous and equals the 1 m of the gauge-scoring row KA-554): the one
+  translation and one yaw that map the estimate's first pose onto the truth's first pose. A least-squares fit
+  of the same two freedoms over the whole trajectory would centre the two lines and report 0.5 m at either end
+  for this case; it may be logged as a second statistic and is never the score. Either way no scale is fitted,
+  and a scale fit is refused (FROB-REF-464).
 
 **What it does not claim.** Consistency under unmodelled biases or delays; global attitude convergence
 (rotations by π are excluded); any barrier certificate for full-order dynamics; that a baseline controller's
@@ -150,8 +163,9 @@ gate KILL-BASELINE.
       conditions, the gauge rule, the four limits, the eight statements and the fixtures.
 - [ ] `cargo test -p frob-control --test laws_c13` passes on the reference implementations and on production
       code as BD-114 and BD-115 land.
-- [ ] Consistency: ε̄ inside [7.82, 10.18] at N = 50 on the nominal IMU; outside it with a planted gyro bias,
-      with the `overconfident` flag raised.
+- [ ] Consistency: the run-averaged ε̄(tⱼ) inside [7.862, 10.213] at no fewer than 90 of the 100 checked
+      instants at N = 50 on the nominal IMU; with the planted gyro bias it is above the upper bound at more
+      than 10 of them, with the `overconfident` flag raised.
 - [ ] Attitude: from 179° the error is below 1° within 5 s; at exactly π the test asserts e_R = 0 and makes no
       convergence claim.
 - [ ] Cone program: the four residuals are below 10⁻⁸ (scaled, `f64`); the infeasible variant returns a dual
@@ -165,10 +179,14 @@ gate KILL-BASELINE.
 
 - `s1_log_linear_error`: two estimates with the same initial invariant error, different trajectories; the
   propagated log-errors differ by second-order terms only (ratio of difference to error squared bounded).
-- `s2_nees_consistency`: the consistency fixture; `s7_planted_bias`: the same with a constant gyro bias of
-  0.01 rad/s not in the filter's model.
-- `s3_pd_near_pi`: the attitude fixture; `s4_antipode`: e_R = 0 at diag(−1, −1, 1); `s4_zero_set`: 10³ random
-  rational rotations, e_R = 0 only at the identity and at rotations by π.
+- `s2_nees_consistency`: the consistency fixture (run-averaged NEES per instant, 90 of 100 inside
+  [7.862, 10.213]); `s2_shrunk_covariance_caught`: the same with the reported covariance scaled by 0.8 fails;
+  `s7_planted_bias`: the same with a constant gyro bias of 0.01 rad/s not in the filter's model.
+- `s3_pd_near_pi`: the attitude fixture, with the traversed rotation recorded; `s3_unwinding_control`: the
+  10° start with a negative-scalar stored quaternion, correct law (traverses at most 15°) and the planted
+  quaternion law without the sign rule (traverses about 350°, caught); `s4_antipode`: e_R = 0 at
+  diag(−1, −1, 1); `s4_zero_set`: 10³ random rational rotations, e_R = 0 only at the identity and at rotations
+  by π.
 - `s5_kkt_small_program`: residuals; `s5_infeasible_certificate`: dual witness accepted by the exact checker;
   a witness with one multiplier perturbed is rejected.
 - `s6_scoring_gauge`: the 1 m against 2 m case; also a trajectory rotated by a yaw of 30° and shifted by
@@ -179,21 +197,30 @@ gate KILL-BASELINE.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c13.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G1 rows KA-081
-to KA-084; when the verbs exist, `frob --json sim run --tier referee` on the reference quadruped standing with
-a seeded IMU noise card, then `frob --json control estimate <run>` asserting the consistency statistic, the
-filter label (`invariant` or `imperfect-invariant`) and the scoring-gauge fields (one translation, one yaw,
-no scale); `frob --json control synth` on a template asserting one of the three outcomes. Evidence block: claim
+to KA-084; when the verbs exist, `frob sim run templates/quad-mammal --tier referee --seconds 10 --seed <s>
+--key spec-c13-stand-<s> --json` (the reference quadruped as the positional design, standing, with a seeded
+IMU noise card; a run verb, so it carries its idempotency key), then `frob control estimate <run> --json` on the
+run identifier it returns, asserting the consistency statistic, the filter label (`invariant` or
+`imperfect-invariant`) and the scoring-gauge fields (one translation, one yaw, no scale); `frob control synth
+templates/quad-mammal --key spec-c13-synth --json` (a run verb) asserting one of the three outcomes. Evidence block: claim
 kind known answer, class `Tested`, tier `referee`, seed. Log `target/e2e-logs/spec_c13/<utc>.ndjson` with
 transcript: commands, exit codes, ε̄ against its interval, residuals against 10⁻⁸, convergence time against
 5 s, and on failure the first run whose statistic left its interval. Final `summary` line.
 
 ### Known answers and negative controls
 
-- KA-081 filter consistency: level set to two-sided 95% over 50 runs; G1 · referee. Control (set here): a
-  planted unmodelled gyro bias, on which the consistency test must fail and the `overconfident` flag fire.
-- KA-082 geometric PD near π: tolerance set to "below 1° within 5 s from 179°" for the stated gains;
-  G1 · referee. Control (set here): the attitude error taken as the vector part of the error quaternion
-  without the sign rule, which unwinds the long way and misses the time bound.
+- KA-081 filter consistency: level set to two-sided 95% over 50 runs, run-averaged NEES per instant inside
+  [7.862, 10.213] at 90 of 100 instants; G1 · referee. Controls (set here): a planted unmodelled gyro bias,
+  on which the consistency test must fail and the `overconfident` flag fire; and a filter whose reported
+  covariance is scaled by 0.8 (expected ε̄ = 9/0.8 = 11.25, above 10.213), which must fail the criterion.
+- KA-082 geometric PD near π: tolerance set to "below 1° within 5 s from 179°" for the stated gains, and the
+  total rotation traversed at most the initial error plus 5°; G1 · referee. Controls (set here): (a) the
+  attitude error taken as the vector part of the stored error quaternion without the sign rule, run from a 10°
+  error whose stored quaternion has a negative scalar part (q and −q are the same attitude, and stored state is
+  not sign-canonicalized, OPEN-MARROW-1): it unwinds through about 350° and is caught by the traversed-rotation
+  bound. At 179° both routes are within 2° of each other, so the unwinding control is not run there and the
+  near-π case does not claim to catch it. (b) e_R with its sign reversed, which makes the antipode attracting:
+  from 179° the error stays near 180° and misses the time bound.
 - KA-083 control programs: residuals below 10⁻⁸ scaled; G1 · host. Control (set here): complementarity left
   unchecked, so a feasible non-optimal point is accepted; the stationarity residual catches it.
 - KA-084 scoring gauge: exact rule; G1 · host. Control: a scale-fitted score (a 2 m estimate of a 1 m motion

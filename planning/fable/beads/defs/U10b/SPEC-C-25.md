@@ -4,13 +4,13 @@ title: "spec C-25 (frob-arena): coupled fidelity estimators: control variate, mu
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "lemma", "spine", "spec", "solid", "frontier", "frob-arena", "test"]
+labels: ["m3", "lemma", "spine", "spec", "solid", "frontier", "frob-arena", "test", "review-notes-open"]
 parent: "WP-50"
-deps: ["BD-025", "SPEC-C-15", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-25", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-132 to KA-135 and CX-062; this bead binds them to tests and registers the controls the appendix leaves unstated", "§38.7: the metamorphic-relation registry row MR-33 (tier-corrected estimate) in `frob-conformance/registry/relations.toml` (Gauntlet beads); this bead supplies its statement and control"]
-related: ["N10b-17", "BD-262", "BD-263", "BD-264", "BD-212", "BD-214", "BD-268", "SPEC-C-26", "BD-124", "N10a-02"]
+deps: ["BD-022", "BD-025", "N10-CX", "N10-KA2", "N10a-01", "N38a-14", "SPEC-C-15", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-124", "BD-263", "BD-264", "N16b-07", "SPEC-C-26"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
-plan_refs: ["§10 C-25", "§10 C-15", "§16.8", "§29.11", "§38.7 MR-33", "Appendix B.5", "Appendix D.8", "Appendix E GB-15", "Appendix F FD-FSIM-17", "Appendix M.9 KA-132 to KA-135", "Appendix N.7 CX-062"]
+plan_refs: ["§10 C-25", "§10 C-15", "§16.8", "§16.17", "§29.11", "§29.20", "§38.7 MR-33", "Appendix B.5", "Appendix D.8", "Appendix E GB-15", "Appendix F FD-FSIM-17", "Appendix M.9 KA-132 to KA-135", "Appendix N.7 CX-062"]
 ---
 ## Background
 
@@ -21,7 +21,7 @@ pair** and gives three estimators that use the coupling to buy referee-grade est
 referee episodes where the tiers agree, with a valid error rate where they do not.
 
 Tier: Solid [S] for the estimators as mathematics (this bead); Frontier [F] for their use across contact-rich
-tiers and for the audited correction (pilot N10b-17). Owning chapters: Arena (statistics, crate `frob-arena`)
+tiers and for the audited correction (pilot N16b-07). Owning chapters: Arena (statistics, crate `frob-arena`)
 with the dynamics and evidence chapters (the tier-correction ledger). The decision already taken on which
 estimator ships: both control variate and audit, as one estimator: a fitted, frozen control-variate
 coefficient with a doubly robust audit correction on logged propensities.
@@ -45,7 +45,7 @@ the construction register.
 
 Out: the tier-correction ledger, propensity logging and the promotion rule as product features (BD-263,
 BD-264); the anytime-valid machinery itself (SPEC-C-15, BD-124, BD-262); the batched multilevel entry point in
-the sibling library (an upstream work item, FD-FSIM-17); the pilot (N10b-17).
+the sibling library (an upstream work item, FD-FSIM-17); the pilot (N16b-07).
 
 Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
 N10a-01). This bead is written before the code it specifies and does not depend on BD-124 (the two study types of
@@ -53,7 +53,7 @@ N10a-01). This bead is written before the code it specifies and does not depend 
 subject trait and closes on the exact reference model and the mutants in its own test support. If `frob-arena`
 does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -119,7 +119,7 @@ before Yᵢ exists and Aᵢ to be drawn independently of Yᵢ.
   eps2: f64) -> Vec<f64>; fn dr_term(&self, m: Q, a: bool, y: Option<Q>, p: Q) -> Q }`.
   `tests/support/c25_ref.rs`: exact enumeration over finite outcome spaces in rationals (expectation and
   variance of Z); a seeded generator of correlated Gaussian pairs for the simulation tests (seed printed).
-  `tests/support/c25_mutants.rs`: mutants under the cargo feature `controls`.
+  `tests/support/c25_mutants.rs`: mutants under the crate's cargo feature `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
 - Register row C-25: `verb = "eval.promote"` (with the tier-correction ledger), `failing_test` =
   `frob-arena::laws_c25::s4_audit_after_outcome_is_biased`, `payoff.gate = "GATE-CHRON-09"`, `known_answers =
   KA-132 … KA-135`, `pilot = "PILOT-C-25"`, `generic_comparator = "fixed escalation of finalists to the
@@ -128,13 +128,22 @@ before Yᵢ exists and Aᵢ to be drawn independently of Yᵢ.
   null comparisons with optional stopping; equals the paired mean at pᵢ = 1; a planted between-tier reversal is
   not established; ρ and the replaced higher-tier count printed) and GATE-CHRON-09 at M3 (equal to the plain
   mean at n = N; coverage at least nominal − 0.03; referee episodes per established verdict 16 / 64 / 256 at
-  the 50th / 95th / 99th percentile). Kill gate KILL-DR (N10b-17 states it).
+  the 50th / 95th / 99th percentile).
+- Pilot (carried in full; run by N16b-07, record `PILOT-C-25`): ρ on 200 world addresses, from paired data the
+  fidelity gate already pays for. Falsifier (TARGET): ρ below 0.7, or failure to beat referee-only by a factor
+  of 2 on high-agreement strata. Ceiling: 1/(1 − ρ²) on the referee share of a decision. Fallback: fixed
+  escalation of finalists to the referee.
+- Kill gate KILL-DR (decided at M3; §29.20 governs where §16.17 differs): ρ_ep below 0.7 on 200 paired
+  addresses in every stratum tested, or GATE-CHRON-09 coverage fails after one repair cycle. Fallback: the tier
+  correction is off and promotion returns to the plain paired label of construction C-15, from referee
+  episodes alone (segment mode stays an option inside that fallback); the ledger keeps recording ρ_ep. The
+  effective-sample-size diagnostic of the correction is recorded and is not a trigger.
 
 ## Acceptance criteria
 
 - [ ] `docs/math/C-25.md` has the ten sections, statements C-25.S1 to S7 with classes, the derivations and the
       worked numbers.
-- [ ] `cargo test -p frob-arena --test laws_c25` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-arena --test laws_c25` passes; with `--features conformance` every mutant fails.
 - [ ] KA-132: the simulated variance of the control-variate estimator at β* matches σ_hi²/n·(1 − ρ²·(1 − n/N))
       within 3% over 20,000 seeded replications at (n, N, ρ) = (64, 6,400, 0.9); the quoted thresholds 0.894
       and 0.949 are reproduced to three digits.
@@ -164,9 +173,11 @@ before Yᵢ exists and Aᵢ to be drawn independently of Yᵢ.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c25.sh` (idempotent; seed 2500 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-132 KA-133 KA-134`;
-`cargo test -p frob-conformance --test g0 -- KA-135`; `cargo test -p frob-conformance --test g3 -- MR-33` on
-the host site. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c25/<utc>.ndjson` and a transcript;
+`--features conformance`; `FROB_TEST_SEED=2500 cargo test -p frob-conformance --test g1_known_answers -- KA-132
+KA-133 KA-134`; `FROB_TEST_SEED=2500 cargo test -p frob-conformance --test g0_laws -- KA-135`;
+`FROB_TEST_SEED=2500 cargo test -p frob-conformance --test g3_metamorphic -- MR-33` on the host site (the six
+Gauntlet targets of BD-025; each again with `--features gauntlet-mutations`, under which every registered
+control of these rows must fail). Sources the STD-E2E helper; writes `target/e2e-logs/spec_c25/<utc>.ndjson` and a transcript;
 each line has `ts`, `script`, `bead` (`SPEC-C-25`), `step`, `event` (`start`, `cmd`, `assert`, `metric`,
 `refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class, tier G0 or
 G1 host, determinism class, seed), measured against expected variance or expectation with the tolerance, the
@@ -201,4 +212,4 @@ debug and release.
 
 Plan §10 C-25, C-15; §16.8; §29.11; §38.7 (MR-33); Appendix B.5 (the estimator for cheap referee promotion);
 Appendix D.8 (control-variate, multilevel and doubly robust estimators); Appendix E GB-15; FD-FSIM-17; KA-132
-to KA-135; CX-062; GATE-FID-08; GATE-CHRON-09; KILL-DR.
+to KA-135; CX-062; GATE-FID-08; GATE-CHRON-09; KILL-DR (§29.20, §16.17); PILOT-C-25 (N16b-07).

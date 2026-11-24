@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["CARD-T-17", "CARD-T-10", "N12-21", "N12-22", "N12-06", "SPEC-C-16"]
-needs: ["§20: Γ_obs per robot and task with its action on states, contacts and parameters (BD-241)"]
-related: ["BD-333", "BD-426", "BD-327", "CARD-T-16"]
+deps: ["CARD-T-10", "CARD-T-17", "N12-06", "N12-21", "N12-22", "SPEC-C-16"]
+needs: []
+related: ["N10b-02", "N12-42", "N22b-40"]
 gates: []
 plan_refs: ["§12.3 (T-18)", "§10 C-16", "§10 C-09", "§25.20", "Appendix D.2 (symmetry–event identity)"]
 ---
@@ -79,13 +79,21 @@ symmetry that fixes its state, history, parameters and event.
 swaps L and R; Ξ for the left ball's impact is block diag(Ξ_ball(r), I); ρ(h)·Ξ_L·ρ(h)ᵀ = Ξ_R exactly);
 `two_balls_unequal_restitution_fails` (the residual's entries are multiples of r_L − r_R);
 `axial_sign_missing_rejects`; `transversality_numbers_must_match`; `not_symmetric_reports_parameter`;
+`same_event_substituted_rejects` (Ξ_e offered in place of Ξ_{h·e}: with the left impact, block diag(Ξ_ball(r), I)
+does not equal ρ(h)·Ξ_L·ρ(h)ᵀ, `reject`); `forged_certificate_unequal_rejects` (a bundle claiming the identity at
+r_L = ½, r_R = ¾: the normal form leaves entries proportional to r_L − r_R = −¼, `reject`);
 `bookkeeping_strata_count` (four feet with states open, stick and slip under the leg-permutation group C₂ × C₂
 give (3⁴ + 3·3²)/4 = 27 strata and 648/4 = 162 one-foot transitions, a related known answer for enumerating the
 event classes this card ranges over).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_coverage.sh` (bead N12-36) lists the pairs, their routes and verdicts.
+`scripts/e2e/lemma_coverage.sh` (bead N12-36) lists the pairs, their routes and verdicts. For this card its NDJSON
+lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-18"), `step` (`T-18/<model>/<generator>/<event-class>`),
+`event`, the exact command line, exit code, wall time, peak memory, the route (`poly-identity` or randomized, with
+d, |S|, k and the error bound), the envelope's `evidence` block (claim, class, certificate hash or test-record
+digest, checker identity), `not symmetric: <parameter>` where it applies, and on a mismatch the first failing
+entry and the path to reproduce.
 
 ### Known answers and negative controls
 

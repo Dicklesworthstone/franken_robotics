@@ -1,14 +1,14 @@
 ---
 key: "BET-22"
-title: "Decide BET-22: minimal counterexample worlds (adversarial search beats randomization; failures shrink to ≤ 3 edits)"
+title: "Decide BET-22: minimal counterexample worlds (adversarial search beats randomization; shrink to ≤ 3 edits)"
 type: "task"
 priority: 1
 milestone: "M3"
 labels: ["m3", "nemesis", "frob-nemesis", "frontier", "bet", "gate"]
 parent: "WP-55"
-deps: ["N00-28", "N00-07", "BD-271", "BD-273", "BD-274", "STD-E2E"]
-needs: ["§26.4: the scenario-language generator arm given the same monitors, and the planted-trap fixtures of nominal probability at most 3 × 10⁻⁵"]
-related: ["BD-270", "BD-272", "BD-275", "BET-32", "BET-37", "NS-15", "N00-11", "N00-20"]
+deps: ["BD-271", "BD-273", "BD-274", "N00-28", "N26a-07", "N26a-11", "N26a-12", "N26a-35", "N38a-09", "STD-E2E"]
+needs: []
+related: ["BET-24", "BET-32", "BET-37", "N00-11", "N00-20", "N40-31", "N40-32", "NS-15"]
 gates: ["GATE-NEMESIS-02", "GATE-NEMESIS-03", "KILL-NEMESIS", "KILL-MCW"]
 plan_refs: ["§4 (BET-22)", "§40.5", "§2.4 (lever 4)", "§0.8 (H-07)", "§26.15", "§43.12"]
 ---
@@ -30,7 +30,13 @@ failure mode the search's proposal misses can cost far more.
 ## Scope
 
 In: pre-registration, the M3 reading, verdict and decision record. Out: the legality set, the oracle, the
-search, the shrinker, the artifact guard.
+search, the shrinker, the artifact guard. Also out: the decisions of the two kill gates. KILL-NEMESIS is decided
+by N26a-12 and KILL-MCW by N26a-35 (both dependencies): each applies its trigger literally and writes its own
+record (`docs/adr/ADR-KILL-NEMESIS-M3.md`, `docs/adr/ADR-KILL-MCW-M3.md`: a kill-gate decision is
+`docs/adr/ADR-<gate-name>-<milestone>.md`). This bead reads those two records, evaluates
+the bet's falsifier clauses and writes the bet verdict (`docs/adr/bet-22-m3.md`), which cites them. Where a line
+below says a kill decision is recorded, it means on record by those beads; where a test of the bet's evaluator
+says a kill gate fires, the evaluator is reproducing their rule and must agree with their record.
 
 ## Technical approach
 
@@ -68,7 +74,10 @@ search, the shrinker, the artifact guard.
       counterexamples with a witness against 70%.
 - [ ] Shrinking: exact recovery count out of 100; replay count out of 100; the share of unplanted failures with
       at most three edits.
-- [ ] The unsolvable world was rejected and illegal edits refused; verdict and kill decisions recorded as ADRs.
+- [ ] The unsolvable world was rejected and illegal edits refused.
+- [ ] The verdict is recorded as `docs/adr/bet-22-m3.md` by a session that did not implement the adversary, citing
+      by identifier and hash the KILL-NEMESIS record of N26a-12 and the KILL-MCW record of N26a-35, whatever their
+      outcomes; this bead writes no kill ADR, and with either record missing the verdict is not filed.
 
 ## Test plan
 
@@ -79,8 +88,11 @@ search, the shrinker, the artifact guard.
 
 ### End-to-end script and logging
 `scripts/e2e/bet_22_decide.sh` recomputes the paired ratio from the ledger, replays every recorded
-minimal-counterexample file with `frob sim replay` and compares digests, removes each edit of three sample
-worlds in turn and checks the failure disappears, and recomputes the verdict. Logged per STD-E2E: trap,
+minimal-counterexample file with `frob sim replay <file>.fmcw --key b22-replay-<n> --json` and compares digests,
+replays for three sample worlds each one-edit-removed neighbour the file lists in `neighbours_passing` (`frob sim
+replay w:<hash> --key b22-nb-<n> --json`) and checks the failure is absent (1-minimality), reads the verdict of
+BET-22 from the bet register's report (`cargo run -p frob-conformance --example bets -- status --json`, example
+`bets` of N00-28, the one verdict rule) and checks the ADR against it. Logged per STD-E2E: trap,
 repetition, steps per arm, ratio and bound, witness labels, replay digests, edit counts; `summary` naming the
 gates and kill gates.
 

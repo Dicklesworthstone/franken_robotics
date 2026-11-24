@@ -1,14 +1,14 @@
 ---
 key: "BET-02"
-title: "Decide BET-02: one kernel source, three backends, inside declared determinism classes; worlds independent of batch"
+title: "Decide BET-02: one kernel source, three backends, in declared determinism classes; worlds independent of batch"
 type: "task"
 priority: 0
 milestone: "M2"
 labels: ["m2", "spark", "frob-kernels", "solid", "bet", "gate"]
 parent: "WP-46"
-deps: ["N00-28", "BD-017", "BD-176", "BD-177", "BD-181", "STD-E2E"]
-needs: ["§35.14: the two negative controls of the invariance test (a planted fused multiply-add contraction in one backend; a planted read of another world's rows)"]
-related: ["BD-020", "BD-203", "BD-204", "BET-08", "BET-09", "N00-15", "N00-14", "NS-02", "NS-10"]
+deps: ["BD-017", "BD-176", "BD-177", "BD-181", "N00-28", "N21b-34", "STD-E2E"]
+needs: []
+related: ["BET-08", "BET-09", "BET-18", "BET-23", "N00-14", "N00-15", "N40-31", "NS-02", "NS-10", "NS-14"]
 gates: ["GATE-SPARK-01", "GATE-SPARK-02", "GATE-SPARK-15", "GATE-SPARK-16", "KILL-D1"]
 plan_refs: ["§4 (BET-02)", "§40.5", "§35.1", "§35.5", "§1.2", "§1.6 (N6)"]
 ---
@@ -36,7 +36,9 @@ CPU, paired comparison on common world addresses, counterfactual forks and attri
 
 In: pre-registration, the readings at M0 (the arithmetic probe) and M2 (kernels, the full step, the invariance
 test, decision-level equivalence), the per-device-family verdict and the decision record. Out: the probe,
-kernels, digest machinery and tests themselves.
+kernels, digest machinery and tests themselves; applying the trigger of KILL-D1 per device family and writing
+the kill ADR, which is the kill-gate decision bead N21b-34, a dependency: this bead reads that record,
+evaluates the bet's own falsifier clauses and writes the bet verdict, and writes no second kill record.
 
 ## Technical approach
 
@@ -79,8 +81,8 @@ kernels, digest machinery and tests themselves.
 - [ ] A verdict per device family (CUDA, Metal): the class attained against `batch-cpu`, the stored
       per-kernel disagreement record, and the invariance result.
 - [ ] Both planted controls and the one-in-fifty bias were caught in the recorded runs.
-- [ ] KILL-D1 is recorded as fired or not fired per family, with the wording consequence applied through the
-      claims-wording registry.
+- [ ] KILL-D1 is recorded as fired or not fired per family (on record by N21b-34, and cited here by its ADR),
+      with the wording consequence applied through the claims-wording registry.
 
 ## Test plan
 

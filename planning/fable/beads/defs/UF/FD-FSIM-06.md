@@ -1,14 +1,14 @@
 ---
 key: "FD-FSIM-06"
-title: "upstream frankensim: one vector vocabulary across `fs-mbd` and `fs-ga` (conversions in the sibling, then none here)"
+title: "upstream frankensim: one vector vocabulary across `fs-mbd` and `fs-ga` (conversions there, then none here)"
 type: "task"
 priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "marrow", "upstream", "frankensim", "frob-fsim", "solid"]
 parent: "WP-02"
-deps: ["BD-037", "BD-032", "NF-01", "STD-E2E"]
+deps: ["BD-024", "BD-032", "BD-037", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-007", "BD-010", "BD-047", "FD-FSIM-33", "FDEF-05"]
+related: ["FD-FSIM-33", "FDEF-05", "NF-08"]
 gates: ["INT-FSIM-02", "INT-FSIM-03"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§13.2", "§33.3", "§33.8"]
 ---
@@ -127,8 +127,10 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_06 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob sim run g1 --tier referee --seconds 2 --json` and compares
-the final digest with the digest recorded before the deletion at the same pin.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob sim run g1 --tier referee --seconds 2 --key fd06-g1-after --json` and compares
+the final digest with the digest recorded before the deletion at the same pin by the same command under the key
+`fd06-g1-before` (a run verb: two runs that are compared carry distinct keys, or the second returns the first
+one's stored receipt; both envelopes show `idempotent_replay: false`).
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_06/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

@@ -1,0 +1,496 @@
+{
+ "group": "gap-D",
+ "filled": [
+  {
+   "gaps": [
+    2
+   ],
+   "bead": "N10ax-01",
+   "note": "certified inverse kinematics as a mechanism in frob-analyze (M4, after its pilot and the interval-root checker)"
+  },
+  {
+   "gaps": [
+    3
+   ],
+   "bead": "N10bx-01",
+   "note": "the mandatory-work family at M1: the sill energy exclusion issued under rule 1 as an lp-farkas mission bundle with a complete source list; the energy-budget kind takes over as a second encoding at M4"
+  },
+  {
+   "gaps": [
+    9
+   ],
+   "bead": "N16bx-02",
+   "note": "run-time closures through a grasped payload (dual-arm variant, Frontier, M6) with its pilot N16bx-01; the continuum arm (Moonshot) gets its plan-and-pilot bead N16bx-03, blocked on KILL-LIVING and the upstream dynamic rod"
+  },
+  {
+   "gaps": [
+    21
+   ],
+   "bead": "N16ax-01",
+   "note": "ContactSetSig: one order-independent per-step signature of the rows after compaction (set and mode), computed by K-contact-sig, in the step outputs and in T0/T1/T2"
+  },
+  {
+   "gaps": [
+    24
+   ],
+   "bead": "N14ax-01",
+   "note": "optional .fbot block `travel`: postures, safety margin, envelope and capabilities with provenance; derived defaults; consistency checks; fail-closed `unknown` when absent"
+  },
+  {
+   "gaps": [
+    33
+   ],
+   "bead": "N18bx-01",
+   "note": "optional `pulse` group on the interface card (shape, fixed or from-stiffness duration, provenance), the PulseModel type, and the effective mass published with each impulse record"
+  },
+  {
+   "gaps": [
+    44
+   ],
+   "bead": "N15ax-02",
+   "note": "optional `attachment` group on the interface card of the gripper-payload pair: retention force and moment about the grasp origin, box or ellipse rule, capture tolerance, provenance-capped class"
+  },
+  {
+   "gaps": [
+    80
+   ],
+   "bead": "N15ax-03",
+   "note": "the card schema admits, from M1, the blocks a measured version carries (covariance, delay_set, parent, measured-class provenance, hierarchical class fields) with validation and canonical form; actuator.show and actuator.check handle them; status stays in the ledger"
+  },
+  {
+   "gaps": [
+    42
+   ],
+   "bead": "N14ax-02",
+   "note": "a role model and a computed, complete correspondence record (frob.design.corr/1) in every edit record, with a rule per edit kind, caller overrides, inverse and composition laws, and upgrade of older records"
+  },
+  {
+   "gaps": [
+    52
+   ],
+   "bead": "N12x-06",
+   "note": "alias-pair version 2: the stochastic payload (two laws, derivation, dependence, priors) and nine exact rules that recompute TV and the Bayes bound; version 1 unchanged"
+  },
+  {
+   "gaps": [
+    92
+   ],
+   "bead": "N12x-08",
+   "note": "the registry's revision ledger with admission conditions and compatibility rules, and the first revision: record kind packet-manifest version 1 (cap Tested, scope build) and alias-pair version 2"
+  },
+  {
+   "gaps": [
+    57
+   ],
+   "bead": "N12x-07",
+   "note": "owner-decision bead for the Lemma lead: refinement proofs as composed existing kinds or a new kind, and the coupling budget as a transport block or a kind; options, frozen decision rules, mutation campaigns, fail-closed defaults, and the registry-ledger rows each outcome produces"
+  },
+  {
+   "gaps": [
+    71
+   ],
+   "bead": "N14bx-01",
+   "note": "second table of the preflight staging contract: stage, order, binding, refusal policy and budget for A-20 to A-23 (stage 6, BD-108's order kept) and for the other analyses marked in check with no row (A-17 in stage 8, A-18 in stage 7, A-24 in stage 6); registry rows and a conformance test"
+  },
+  {
+   "gaps": [
+    93
+   ],
+   "bead": "N16bx-04",
+   "note": "ledger quantity port-wrench-projection defined with the consumer's formula, measured on a registered battery slice, envelopes frozen per stratum and port kind before any re-extraction, with an ordering guard"
+  },
+  {
+   "gaps": [
+    95
+   ],
+   "bead": "N18bx-03",
+   "note": "conformance-only StiffnessPlant: a multiplier on one contact's normal stiffness over a half-open tick interval, lockstep fast tiers only, part of the StepPlanId, absent from release builds; impact fixture with closed form"
+  },
+  {
+   "gaps": [
+    96
+   ],
+   "bead": "N14bx-02",
+   "note": "owner-decision bead for OPEN-SKEL-4 (Foundry lead): three options, a paper experiment on mass and stiffness, a frozen decision rule with five reachable verdicts, and the fail-closed isotropic default"
+  },
+  {
+   "gaps": [
+    101
+   ],
+   "bead": "N14bx-03",
+   "note": "`quadruped-12dof` registered as an alias of the canonical `quad-mammal` with a `studio` preset (knees undersized on purpose), resolved by design.new and listed by design.templates; identities carry the canonical name only"
+  },
+  {
+   "gaps": [
+    119
+   ],
+   "bead": "N18ax-03",
+   "note": "the device rows of GATE-TRAC-09 at M6 as a measurement and record bead (rows D1 to D7 per backend, pending row before the run, per-backend admission record, three negative controls), with the missing child of the epic it measures: N18ax-02, the port of CL-H to GPU tiers (shift and residual kernels, P captured passes, flags, identity, admission)"
+  },
+  {
+   "gaps": [
+    25
+   ],
+   "bead": "N12x-03",
+   "note": "PO-HAB-07 is not among N12-52's nine candidates: N12x-03 files it under that decision's standing rule (one polynomial identity, admissible) and is its card bead once the amendment assigns a number. PO-HAB-02 is ruled not a card by N12-52 (analytic; filed with the obligations no checker decides, with its written proof and randomized check), so no card bead is written for it; my earlier draft N12x-02 is on disk marked superseded_by N12-52 and is not a live bead"
+  },
+  {
+   "gaps": [
+    39
+   ],
+   "bead": "N12x-04",
+   "note": "the card bead for PO-SHIELD-04 as N12-52 admits it (T-39 in its numbering): the continuous identity as the general part (poly-identity) and the gain bound 2M - hK_d as instance certificates per fitted backup (rational-ldlt); latency stays Tested"
+  }
+ ],
+ "already": [
+  {
+   "gaps": [
+    16
+   ],
+   "bead": "N35-33",
+   "note": "the registry owner's allocation ledger takes the seven Kinesis requests of N16-REF in its first round (interim codes 820, 602, 540, 561, 721, 722 and the two with no fitting code) and assigns or merges each"
+  },
+  {
+   "gaps": [
+    28
+   ],
+   "bead": "BD-230",
+   "note": "BD-230 settles it: the viscous term is capped at μ_b, a contact where the cap binds is flagged `viscous-capped` (test film_cap_flag), and the pure-Couette limit of INV-TRAC-07 is tested where the cap does not bind; N19b-05 writes the same capped form"
+  },
+  {
+   "gaps": [
+    30
+   ],
+   "bead": "N20a-49",
+   "note": "the owner decision on the window boundary exists; N13-06 already lists it in deps and marks its boundary row pending on the ruling; N20a-06 carries the single membership function with the default"
+  },
+  {
+   "gaps": [
+    41
+   ],
+   "bead": "N22bx-01",
+   "note": "the gap-E reconciler filled the same need (its gap 22) with a new .fcard kind absorber (lower envelope, stroke, force limit, conditions, exact W_abs). My draft of the same work, N15ax-01 (an absorber group on the interface card, which is where the plan's table of terms places W_abs), is on disk marked superseded_by N22bx-01 and is not a live bead. Left for the lead: N22bx-01 adds a card kind to a list that BD-069 states as closed, so the formats registry needs that row"
+  },
+  {
+   "gaps": [
+    56
+   ],
+   "bead": "N18ax-01",
+   "note": "the gap-F reconciler filled the same need (its gap 23) with CL-1R, a relaxing compliant normal law selected by an interface card, with the pad laws V, P, C and D; N25c-17 already has its edge to it. My draft of the same work, N18bx-02, is on disk marked superseded_by N18ax-01 and is not a live bead"
+  },
+  {
+   "gaps": [
+    12
+   ],
+   "bead": "N12-52",
+   "note": "the Lemma decision bead on candidate cards rules on PO-SINEW-01 (recommended: one instance card, T-38 in its numbering; the general theorem not admitted). It asks for a card bead per admitted candidate and none existed: N12x-01 is that card bead (document, registry row content, certificate recipe, specimens and mutants), depending on N12-52"
+  },
+  {
+   "gaps": [
+    63
+   ],
+   "bead": "N12-52",
+   "note": "N12-52 rules on PO-NEMESIS-04 (the exact instance is a card capped at Tested by its kind, T-41 in its numbering; the analytic form is not a card) and the checker rule exists (rule 2 of the sample-coverage checker N12-13). N12x-05 is the card bead the decision asks for, bound to that rule"
+  }
+ ],
+ "rejected": [],
+ "new_beads": [
+  "N10ax-01",
+  "N10bx-01",
+  "N16bx-01",
+  "N16bx-02",
+  "N16bx-03",
+  "N12x-01",
+  "N12x-03",
+  "N16ax-01",
+  "N14ax-01",
+  "N18bx-01",
+  "N12x-04",
+  "N12x-05",
+  "N15ax-02",
+  "N15ax-03",
+  "N14ax-02",
+  "N12x-06",
+  "N12x-08",
+  "N12x-07",
+  "N14bx-01",
+  "N16bx-04",
+  "N18bx-03",
+  "N14bx-02",
+  "N14bx-03",
+  "N18ax-02",
+  "N18ax-03"
+ ],
+ "edges": [
+  {
+   "bead": "N10a-18",
+   "dep": "N10ax-01",
+   "as": "related",
+   "why": "gap 2: the pilot comes first; N10ax-01 depends on it"
+  },
+  {
+   "bead": "SPEC-C-11",
+   "dep": "N10ax-01",
+   "as": "related",
+   "why": "gap 2: the specification comes first; N10ax-01 depends on it"
+  },
+  {
+   "bead": "N10b-05",
+   "dep": "N10bx-01",
+   "as": "dep",
+   "why": "gap 3: the pilot's energy family"
+  },
+  {
+   "bead": "N14b-05",
+   "dep": "N16bx-02",
+   "as": "dep",
+   "why": "gap 9: the dual-arm variant's physics"
+  },
+  {
+   "bead": "N14b-05",
+   "dep": "N16bx-03",
+   "as": "related",
+   "why": "gap 9: the continuum arm is a later milestone (M8) and N16bx-03 depends on the proxy template of N14b-05"
+  },
+  {
+   "bead": "N15b-09",
+   "dep": "N12x-01",
+   "as": "dep",
+   "why": "gap 12: the card is the contract; the exact checks cite its identifier"
+  },
+  {
+   "bead": "N19a-21",
+   "dep": "N12x-03",
+   "as": "dep",
+   "why": "gap 25: the registration bead cites the card with its symbolic check"
+  },
+  {
+   "bead": "N16-REF",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 16: the Kinesis rows take their numbers from the allocation ledger"
+  },
+  {
+   "bead": "N16c-30",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 16: the branch-ambiguity refusal has no interim code; it needs its assigned number"
+  },
+  {
+   "bead": "N16c-43",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 16: the changed-clock refusal has no interim code; it needs its assigned number"
+  },
+  {
+   "bead": "N16c-15",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 16: assigned code replaces interim 820"
+  },
+  {
+   "bead": "N16c-26",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 16: assigned code replaces interim 602"
+  },
+  {
+   "bead": "N16c-38",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 16: assigned code replaces interim 561"
+  },
+  {
+   "bead": "N17a-12",
+   "dep": "N16ax-01",
+   "as": "dep",
+   "why": "gap 21: the lane guard compares the shared signature and its exact form"
+  },
+  {
+   "bead": "N17b-22",
+   "dep": "N16ax-01",
+   "as": "dep",
+   "why": "gap 21: the divergence step is read from the shared signature"
+  },
+  {
+   "bead": "N22a-30",
+   "dep": "N16ax-01",
+   "as": "dep",
+   "why": "gap 21: event matching of tangent worlds uses the shared signature"
+  },
+  {
+   "bead": "N19b-34",
+   "dep": "N14ax-01",
+   "as": "dep",
+   "why": "gap 24: A-18 reads posture, margin, envelope and capabilities from TravelSpec"
+  },
+  {
+   "bead": "N19b-30",
+   "dep": "N14ax-01",
+   "as": "dep",
+   "why": "gap 24: transition predicates read the declared capabilities"
+  },
+  {
+   "bead": "N19b-05",
+   "dep": "BD-230",
+   "as": "related",
+   "why": "gap 28: N19b-05's cap assertion follows BD-230's ruling; BD-230 consumes N19b-05's patch table, so no dependency in this direction"
+  },
+  {
+   "bead": "N20b-29",
+   "dep": "N18bx-01",
+   "as": "dep",
+   "why": "gap 33: the modeled grade reads the card's pulse model and m_eff"
+  },
+  {
+   "bead": "N22b-24",
+   "dep": "N12x-04",
+   "as": "dep",
+   "why": "gap 39: the damping-injection backup cites the card"
+  },
+  {
+   "bead": "N22c-03",
+   "dep": "N12x-04",
+   "as": "dep",
+   "why": "gap 39: the proof-obligation battery binds PO-SHIELD-04 to the card"
+  },
+  {
+   "bead": "N22c-44",
+   "dep": "N12x-04",
+   "as": "dep",
+   "why": "gap 39: the sampled bound's bead cites the continuous identity as a card"
+  },
+  {
+   "bead": "N26a-21",
+   "dep": "N12x-05",
+   "as": "dep",
+   "why": "gap 63: the zero-failure rule cites the card and its checker rule"
+  },
+  {
+   "bead": "N26b-16",
+   "dep": "N12x-05",
+   "as": "related",
+   "why": "gap 63: N26b-16 files the candidate and closes on the filing; the ruling follows it"
+  },
+  {
+   "bead": "N24a-30",
+   "dep": "N15ax-02",
+   "as": "dep",
+   "why": "gap 44: grasp retention is read from the card"
+  },
+  {
+   "bead": "N30a-27",
+   "dep": "N15ax-03",
+   "as": "dep",
+   "why": "gap 80: the version writer needs the schema to admit its blocks"
+  },
+  {
+   "bead": "N30a-30",
+   "dep": "N15ax-03",
+   "as": "dep",
+   "why": "gap 80: class cards need the hierarchical fields and measured-class provenance"
+  },
+  {
+   "bead": "N23a-27",
+   "dep": "N14ax-02",
+   "as": "dep",
+   "why": "gap 42: the inheritance map is built from the edit records' correspondences"
+  },
+  {
+   "bead": "BD-322",
+   "dep": "N14ax-02",
+   "as": "dep",
+   "why": "gap 42: train.inherit needs edits that carry correspondences"
+  },
+  {
+   "bead": "N25b-27",
+   "dep": "N12x-06",
+   "as": "dep",
+   "why": "gap 52: stochastic witnesses are checked by the version-2 rules before an answer returns"
+  },
+  {
+   "bead": "BD-290",
+   "dep": "N12x-06",
+   "as": "dep",
+   "why": "gap 52: mission.refute on the blind payload task emits version-2 alias-pair bundles"
+  },
+  {
+   "bead": "N31b-44",
+   "dep": "N12x-08",
+   "as": "dep",
+   "why": "gap 92: the packet-manifest checker needs its registry row"
+  },
+  {
+   "bead": "N25c-03",
+   "dep": "N12x-07",
+   "as": "dep",
+   "why": "gap 57: refinement certificates beyond the existing kinds wait for the ruling"
+  },
+  {
+   "bead": "N25e-03",
+   "dep": "N12x-07",
+   "as": "related",
+   "why": "gap 57: N25e-03 implements the default and supplies the specimens the decision reads; N12x-07 depends on it"
+  },
+  {
+   "bead": "BD-108",
+   "dep": "N14bx-01",
+   "as": "dep",
+   "why": "gap 71: BD-108 joins A-20 to A-23 to check against the staging rows"
+  },
+  {
+   "bead": "N31b-35",
+   "dep": "N16bx-04",
+   "as": "dep",
+   "why": "gap 93: re-extraction compares against the frozen envelope of this quantity"
+  },
+  {
+   "bead": "N31b-37",
+   "dep": "N18bx-03",
+   "as": "dep",
+   "why": "gap 95: the gate's planted spike is produced through this hook"
+  },
+  {
+   "bead": "N31a-61",
+   "dep": "N14bx-02",
+   "as": "related",
+   "why": "gap 96: the beam rung carries the default and feeds the decision's stiffness-side experiment; the decision depends on it"
+  },
+  {
+   "bead": "N32b-15",
+   "dep": "N14bx-03",
+   "as": "dep",
+   "why": "gap 101: the session script's first command names the alias"
+  },
+  {
+   "bead": "BD-313",
+   "dep": "N14bx-03",
+   "as": "dep",
+   "why": "gap 101: the worked session in the generated documentation uses the alias"
+  },
+  {
+   "bead": "BD-427",
+   "dep": "N18ax-03",
+   "as": "dep",
+   "why": "gap 119: the M6 exit review cites the recorded device rows of GATE-TRAC-09"
+  },
+  {
+   "bead": "N19c-27",
+   "dep": "N12-52",
+   "as": "dep",
+   "why": "gap 25: the Habitat ledger records PO-HAB-02 as not a card (the decision's disposition)"
+  },
+  {
+   "bead": "N19b-26",
+   "dep": "N12-52",
+   "as": "related",
+   "why": "gap 25: PO-HAB-02 stays a written proof with a randomized check, per the decision"
+  },
+  {
+   "bead": "N19c-27",
+   "dep": "N12x-03",
+   "as": "related",
+   "why": "gap 25: the M2 ledger names the PO-HAB-07 card; the card bead is M3"
+  }
+ ]
+}

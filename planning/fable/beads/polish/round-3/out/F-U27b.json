@@ -1,0 +1,149 @@
+{
+  "round": 3,
+  "slice": "F-U27b",
+  "reviewed": 30,
+  "changed": [
+    {
+      "bead": "BD-279",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Seed acceptance, first part, no longer waits on N27b-04 (which depends on this bead): the verb's own properties are the criterion, and the reading on 1,000 failing worlds is named as N27b-04's (convention 7)."
+    },
+    {
+      "bead": "BD-280",
+      "kinds": [
+        "correct",
+        "deps"
+      ],
+      "what": "Request applied: next action `frob nemesis shrink <w> --key <k>` with <w> the fork's failing world (`--world` is no option of nemesis.shrink). Added `--key <k>` to the rerun and intervene next actions. Seed acceptance restated as the crate-level measurement (`planted_single_causes_gate`). The gate row (recorded from N27b-09's receipt) and KILL-AUTOPSY (N27b-11) are closed by beads that depend on this one. Corrected who joins the lane clause: N27b-28, not N27b-09."
+    },
+    {
+      "bead": "BD-284",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Worked session: `--key` on the run-verb calls (run fork, autopsy intervene, autopsy rerun, eval compare; convention 5), and `--json` on eval compare."
+    },
+    {
+      "bead": "N27b-04",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Request applied: `frob eval run … --run-seed 20270301 --key e2e-eval-<tier> --json` (`--seed` is no alias). Step 1's run fork now carries `--key e2e-fork-<w>`, as step 3 of the bead requires."
+    },
+    {
+      "bead": "N27b-07",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Acceptance no longer requires reach through `frob autopsy attribute/intervene` (BD-279, BD-280 and N27b-19 depend on this bead). The route exposes 584, those beads read it, and N27b-19 asserts its reach through the binary."
+    },
+    {
+      "bead": "N27b-08",
+      "kinds": [
+        "correct"
+      ],
+      "what": "The forkable check's `run fork --classify-only` command carries `--key <k>` (convention 5). The deps were checked: N27b-06 is already reached through BD-279 → N27a-15."
+    },
+    {
+      "bead": "N27b-10",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Request applied: the pilot record is entered with `tier = \"S\"` and `required_by = \"§27.17\"` (N38a-09 rule 5a), and the funding rule treats it as an upper-tier record. The `tier = \"F\"` workaround was removed."
+    },
+    {
+      "bead": "N27b-14",
+      "kinds": [
+        "tests",
+        "correct"
+      ],
+      "what": "`deterministic_across_request_order` was untestable as written, because the repair verb takes no `--do`. It now builds two intervention sets from the same `--do` flags in two orders and shrinks each with `--ledger`. Added `--key <k>` to the rerun and eval compare next actions."
+    },
+    {
+      "bead": "N27b-16",
+      "kinds": [
+        "complete",
+        "correct"
+      ],
+      "what": "Step 1 now states the two points VERBS-autopsy shares with it. First, 866 is in no intervene row: it is raised at registration of N27b-27's speed experiment by N38a-07's check. Second, every row lists 840: the dispatcher's sealed-read refusal (BD-261), required by BD-312, which the coverage check does not report as listed-not-raised. The point count is corrected to four."
+    },
+    {
+      "bead": "N27b-20",
+      "kinds": [
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Acceptance 1 required the auditor clean on every e2e script's ledgers, but no script bead depends on this one (convention 7). It is now judged on its own real artifacts plus the `autopsy_audit` helper step, with new test `audit_helper_step`. The run over all scripts' ledgers is the exit review's (N27b-30 step 5, which depends on this bead). The e2e section says the same."
+    },
+    {
+      "bead": "N27b-21",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added deps N27b-14 and N27b-20: the binding table names their tests (repair tests for KA-673/674; `shapley_hand_cases`, `eight_tick_trap`, `gap_reports_interval_not_tick`), and the completeness check requires every named test to run. No cycle (graph_check). The S12 request was already met; see notes."
+    },
+    {
+      "bead": "N27b-22",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "The ceiling's T_fixed was called 'what both arms share' but was added to the device arm only. It is now per arm (T_fixed,cpu and T_fixed,dev; admission and variant compilation are the device arm's). `ceiling_formula` pins the reading: 2.98 with 60 s on the device arm only, 3.24 with 60 s on both."
+    },
+    {
+      "bead": "N27b-24",
+      "kinds": [
+        "deps"
+      ],
+      "what": "The 90% lane-clause criterion was 'measured by N27b-28', a dependent. The bead now records what the clause reads (admitted window, rank-one factor, label) and checks agreement on a wide-margin case. The clause itself is N27b-28's."
+    },
+    {
+      "bead": "N27b-26",
+      "kinds": [
+        "deps",
+        "tests"
+      ],
+      "what": "The criterion was set in the gate script (N27b-28, a dependent). It now says the cross-check's forks and wall time are charged to the lane arm in the job's cost record, which the gate script reads. Added test `crosscheck_cost_charged_to_lane`."
+    },
+    {
+      "bead": "N27b-27",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Both requests applied. FROB-REF-866 is raised when the speed experiment's record is registered, by N38a-07's admission check through N36-05's `admit_experiment`, and never by an autopsy.intervene call; step 5, the acceptance and `refuse_866_without_ceiling` were restated. The per-arm T_fixed reading is stated in `ceiling_formula`, as in N27b-22."
+    },
+    {
+      "bead": "N27b-28",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Step 1's `cargo test --test lane_admit a b c` would be rejected by cargo (one TESTNAME only). The test filters now follow `--`."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N27-REF",
+      "what": "FROB-REF-583's ranked repairs omit the DC-06 fallback. Plan DC-06 names a replay mismatch as the trigger of the first-anomaly ordering, and N27b-12 step 5 delivers 583 with that repair. Add `frob explain run <run> --budget 600` (labelled Estimated) as a repair."
+    },
+    {
+      "bead": "N27-REF",
+      "what": "FROB-REF-866 row: the raiser column names 'the bulk attribution of a failure cluster on a device (N27b-27)'. Change it to the method-experiment register's admission check (N38a-07, through N36-05's `admit_experiment`), which raises 866 when N27b-27's speed experiment is registered; an autopsy.intervene call never raises it. VERBS-autopsy's notes request the same."
+    },
+    {
+      "bead": "N38a-07",
+      "what": "`experiments::admit` raises FROB-REF-866 itself, while N36-05 states that `admit_experiment` is the only place the code is raised. State that the 866 branch of the admission check calls N36-05's `admit_experiment`, so the two owners agree (N27b-27 now cites both)."
+    },
+    {
+      "bead": "VERBS-report",
+      "what": "FROB-REF-880 (an Autopsy attribution cited as an established cause; N27b-15) is raised where report verbs cite through `--cite`, and VERBS-autopsy says it is listed under the verbs that cite. Yet report.run, report.design, report.mission and report.campaign do not list it. Add it, and define how a citation's role (Established, Reality) is spelled on the CLI; `--cite <id>` has no role, and N27b-18's script must cite as established."
+    }
+  ],
+  "unchanged": 14,
+  "notes": "Unchanged: N27b-01, N27b-03, N27b-05, N27b-09, N27b-11, N27b-12, N27b-15, N27b-17, N27b-18, N27b-19, N27b-25, N27b-29, N27b-30, N27bp2-01.\n\nRequest not applied (already met): S12's request for N27b-21. The bead already puts its rows in the one `crates/frob-conformance/registry/known_answers.toml`, entered by N27-KA. It writes no registry file and pins this with `no_private_registry_file`.\n\nRecomputed and correct:\n- Thermal re-gear: 37.95 s, 113.28 °C, 42.42 s, 81.98 °C.\n- Lane reachability table (R = 16, P = 32): 3/4/5/6 and 5/6/7/8.\n- Clopper–Pearson lower bounds: 0.851, 0.928, 0.898.\n- Sequential thresholds: 8, 11, 14, 14 rounds; E = 6561/256.\n- ddmin trace: 15 tests, ending at {c, d, e}.\n- Cost arithmetic: 704,000 world-seconds; 176 s, 704 s, 7,040 s.\n\nLeft as is: GATE-AUTOPSY-03 is recorded in two stages. N27b-09 records the double-precision clauses as not-eligible while the lane clause is pending, and N27b-28 records the row once the lane clause is measured. This keeps convention 7, because N27b-09 does not wait on the lane. Under convention 9 these are two calls to the one recorder; owners N38b-19 and N40-10 may wish to state that this is allowed for an amended gate whose clauses are measured by two beads.\n\nThe lane mechanism beads (N27b-24 to N27b-27) name N27b-28 as the owner of the shared script, as convention 11 permits."
+}

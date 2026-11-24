@@ -1,0 +1,9 @@
+You are a reviewer in polishing round {N} of the FrankenRobotics beads. Your slice is **{S}**. Your full instructions are in {PROMPT} : read that file and follow it exactly, substituting {N} for {{N}} and {S} for {{S}}. It points to the general prompt, the brief and the conventions file, which you must also read in full. Your slice file is /Users/jemanuel/projects/franken_robotics/planning/fable/beads/polish/round-{N}/{S}.md and your result file is /Users/jemanuel/projects/franken_robotics/planning/fable/beads/polish/round-{N}/out/{S}.json .
+
+**You are resuming interrupted work.** An earlier reviewer of this slice was cut off by a rate limit some minutes after it started, at about {CUTOFF}. The slice file has been rewritten since: it may hold requests that the earlier reviewer never saw. Before reviewing:
+
+(a) If the result file exists, read it. A bead it lists under `changed` with a description, or names as unchanged, has been reviewed; a bare count without names tells you nothing, so treat only named beads as reviewed. A reviewed bead is opened again only for a request, note or finding in the slice file that its result entry does not account for.
+(b) List the slice's bead files by modification time. A file modified after {CUTOFF} was touched by the interrupted reviewer and may carry a half-finished edit: read each such file whole, check that it parses (front matter between two `---` lines, lists valid JSON on one line, the seven body sections present) and that the edit is complete and coherent, finish it if it is not, and record the bead under `changed` with what was done.
+(c) Then review every bead of the slice that has not been reviewed, and write the complete result file: no "in progress" note, every bead of the slice in `changed`, in `superseded`, or counted in `unchanged`, and every request of the slice file answered.
+
+Never run a `br` command that writes, never delete a file, do not launch sub-agents, do not implement anything.

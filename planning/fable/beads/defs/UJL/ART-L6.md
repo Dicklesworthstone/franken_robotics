@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "nemesis", "frob-nemesis", "frob-conformance", "frontier", "test", "e2e"]
 parent: "WP-55"
-deps: ["BD-270", "BD-271", "BD-272", "BD-273", "BD-274", "ART-L1", "ART-L3", "NJL-07", "STD-E2E"]
+deps: ["ART-L1", "ART-L3", "BD-259", "BD-270", "BD-271", "BD-272", "BD-273", "BD-274", "NJL-07", "NJLx-02", "STD-E2E"]
 needs: []
-related: ["N26b-13", "BD-279", "BD-369", "BD-318", "BD-410", "ART-L9", "NJL-09"]
+related: ["ART-L9", "BD-279", "BD-318", "BD-369", "BD-410", "VERBS-nemesis"]
 gates: []
 plan_refs: ["Appendix L.6", "§26.3", "§26.5", "§26.6", "§26.7", "§26.13", "Appendix G.3"]
 ---
@@ -59,7 +59,8 @@ shrinking (measured by those beads); the layers and the identity map (NJL-07).
     {"op": "set", "path": "/fixtures/door[pass]/closer_torque", "from": "14 N·m", "to": "19 N·m",
      "changes": ["fixture"]},
     {"op": "set", "path": "/payloads/tray/fill", "from": "0.50", "to": "0.80", "changes": ["payload"]} ],
-  "minimality": {"kind": "1-minimal", "pairs_exhausted": true, "tests": 42, "seeds_failing": "55/64"},
+  "minimality": {"kind": "1-minimal", "pairs_exhausted": true, "one_minimal_verified": true, "tests": 42,
+                 "seeds_failing": "55/64"},
   "failure": {"class": "slip", "binding_atom": "upright", "margin": -0.42, "time_s": "11.3"},
   "replay": {"backend": "gpu-cuda", "class": "D2", "state_digests": "b3:0c55…"},
   "promotion": {"tier": "referee", "reproduced": true,
@@ -74,11 +75,21 @@ shrinking (measured by those beads); the layers and the identity map (NJL-07).
                        "sim_to_real_certified": false} }
 ```
 
+One field more than the specification prints (DESIGN, following the owner of the format): the specification's
+text of this artifact has no `one_minimal_verified` in `minimality`. The bead that owns `frob.mcw/1` (N26a-19)
+requires it in every file, because it is what tells a verified 1-minimal world of more than three edits from
+an unfinished shrink, and its reader rejects a file without it. A specimen that the format's own reader
+rejected could not be resolved and validated, so the specimen carries the field (true, as it must be with
+`1-minimal`); this is the case the fixture layout provides for (an owner bead fixes a spelling, and the specimen
+is entered from the amended artifact bead). The specification's text without the field is kept as a planted
+violation in the acceptance list.
+
 **Field by field.** `task`, `requirement`: the task of artifact L.3 and its verdict `delivered`. `candidate`:
 model, controller and policy identities. `base`: the scene and the world address (run seed, world, episode) of
 the passing base world. `edits`: atomic edits, each `{op, path, from, to, changes}`; `changes` declares the
 causal aspect of the scene the edit touches (`material`, `fixture`, `payload`), so that each edit can serve as
-one intervention in an autopsy. `minimality`: the kind, whether all single and pair subsets were tested, the
+one intervention in an autopsy. `minimality`: the kind, whether all single and pair subsets were tested, whether
+1-minimality was verified (`one_minimal_verified`: every single removal was tested and none fails), the
 number of tests, and the paired seeds on which the failure appears. `failure`: class, binding atom, margin and
 time. `replay`: backend, determinism class and state digests. `promotion`: the tier on which the failure was
 reproduced and the numerical variants it survived. `oracle`: the solvability class with a witness controller
@@ -127,6 +138,7 @@ files):
 | `neighbours_passing` has exactly one world per edit, each the world with that edit removed, and each passes on replay | three neighbours |
 | `seeds_failing` is `a/b` with b = 64 and a ≥ 48 | 55/64 |
 | If `pairs_exhausted` and the original list had n ≤ 12 edits, `tests` ≥ n + n·(n − 1)/2 | n = 7: 28 ≤ 42 |
+| `minimality.one_minimal_verified` is present; it is true when the kind is `1-minimal` | true |
 | `failure.binding_atom` is an atom of the task's requirement; `failure.margin` < 0 | `upright`, −0.42 |
 | `oracle.class` is `solvable-causal` or `plant-feasible`, with a witness and a margin > 0 | `solvable-causal`, 0.18 |
 | `legality.inside` is true; every touched bound of provenance `assumed` is listed | two listed |
@@ -162,8 +174,11 @@ not false: `FROB-REF-816`. Offering the world as a confirmation sample: `FROB-RE
       as a pass), and the invariants are asserted on the shrink of the search's own worst world.
 - [ ] Each planted violation of an invariant in a copy of the resolved file is rejected by the reader or by
       `frob-golden check`: a fourth edit with three neighbours; `seeds_failing: "40/64"`; `tests: 20` with
-      `pairs_exhausted: true`; an oracle class `unsolvable`; a true flag; a duplicate path.
-- [ ] The six refusals of the list above fire on their planted requests with the stated codes.
+      `pairs_exhausted: true`; an oracle class `unsolvable`; a true flag; a duplicate path; `minimality`
+      without `one_minimal_verified` (the specification's own text of the artifact), or with it false beside
+      `1-minimal`.
+- [ ] The six refusals of the list above fire on their planted requests with the stated codes, each from the
+      verb named in step (9) of the script.
 - [ ] The produced file is identical on two runs on one backend (determinism class D2 for the replay), and its
       canonical bytes do not depend on debug or release builds.
 
@@ -175,7 +190,7 @@ not false: `FROB-REF-816`. Offering the world as a confirmation sample: `FROB-RE
 `synthetic` failure predicate; no mocks of the simulator are used where a replay is asserted: those assertions
 are in the script):
 - `l6_specimen_parses_and_validates`; `l6_manifest_hash`; `l6_roundtrip_value`.
-- `l6_invariants_hold`: the twelve rows on the resolved specimen.
+- `l6_invariants_hold`: the thirteen rows on the resolved specimen.
 - `l6_invariant_violation_<n>`: one mutated copy per invariant row that can be checked statically; each fails
   and names the row.
 - `l6_margin_matches_task`: −0.42 = (12 − 17.04)/12 with the scale read from the task fixture.
@@ -190,17 +205,37 @@ are in the script):
 ### End-to-end script and logging
 
 `scripts/e2e/art_l6_fmcw.sh` (header: `bead=ART-L6 milestone=M3 labels=golden,appendix-l,nemesis,
-verb:nemesis.search,verb:nemesis.oracle,verb:nemesis.shrink seed=901 needs=cpu,cuda,frobd
+verb:nemesis.search,verb:nemesis.oracle,verb:nemesis.shrink,verb:eval.qualify seed=901 needs=cpu,cuda,frobd
 plants=drop-neighbour,non-replaying`). Steps: (1) create `quad-tray`, its baseline controller and the task from
-the fixtures of artifacts L.1 and L.3; (2) run the candidate in the base world (64 paired seeds), assert the
-verdict `satisfied`; (3) apply `world.seven-edits.json` and run, recording pass or fail as a metric; (4) `frob
+the fixtures of artifacts L.1 and L.3; (2) evaluate the candidate in the base world through the `given` arm
+of the search, the registered way to run a hand-written world through the whole pipeline: `frob nemesis search
+quad-tray --task <id> --legality kitchen-commercial/default --method given --worlds base.json --key l6-base
+--json`, where `base.json` is the base world as a world document with an empty edit list; assert one world
+searched, no promoted failure and every `not_counted` bucket at zero, which is how the result shows the verdict
+`satisfied` (not a failure, not invalid, not refused); the same fact on the 64 paired seeds is asserted in
+step (5), where `nemesis.shrink` must not answer `status: base-fails`; (3) the same call with `--worlds
+world.seven-edits.json --key l6-seven`, recording as a metric whether the seven-edit world is a promoted
+failure; (4) `frob
 nemesis search quad-tray --task <id> --legality kitchen-commercial/default --budget gpu_s=240 --key l6-nem
 --sync-wait-ms 5000 --json`, following the job handle with `frob job wait`, and assert the result's shape
 (worlds searched, classes, the baseline arm's count at equal budget, the artifact guard's line); (5) `frob
-nemesis shrink <failing world> --key l6-shr --json`; (6) assert the twelve invariants on the written file with
-`e2e_assert_json` and `e2e_assert_num`; (7) replay the file and each neighbour: `e2e_assert_digest_eq` for the
-file, verdict `satisfied` for each neighbour; (8) `frob nemesis oracle <mcw> --candidate quad-tray --json`,
-assert a solvable class; (9) the six refusals through `e2e_expect_refusal`; (10) `frob-golden check --artifact
+nemesis shrink <failing world> --key l6-shr --json`; (6) assert the thirteen invariants on the written file with
+`e2e_assert_json` and `e2e_assert_num`; (7) replay the file, `frob sim replay <the written .fmcw> --key l6-rp
+--json`, with `e2e_assert_digest_eq` on its state digests; then evaluate each neighbour (the file's world with
+one edit dropped, written as a world document) as in step (2), `--worlds <neighbour i> --key l6-nb-<i>`, and
+assert the verdict `satisfied` for each, by the same two conditions; (8) `frob
+nemesis oracle quad-tray --task <id> --world <the shrunk w:…> --legality kitchen-commercial/default --key l6-orc
+--json` (the registered input shape of the run verb), assert a solvable class; (9) the six refusals through
+`e2e_expect_refusal`, each through the verb that raises it: 564 by `nemesis shrink` on a failure whose replay
+digest is perturbed; 360 by `nemesis oracle` on a copy of the world with the closer torque outside the profile,
+naming the bound; 362 by `nemesis oracle` on a copy whose edit has an empty `changes`; 361 by `nemesis oracle
+… --require-cited` on the shrunk world itself (BD-270's option, accepted by the verb of BD-271; its two touched
+bounds are `assumed`); 816 by `frob sim replay <copy.fmcw> --key l6-816 --json` on a copy of the written file
+with one flag true (the `frob.mcw/1` reader of N26a-19, which every loader of a `.fmcw` calls, rejects it
+before anything runs); 567 by `frob eval qualify quad-tray --task <id> --claim <claim> --clusters <the shrunk
+w:…> --key l6-567 --json`, the shrunk world offered as a confirmation sample (the qualification lane, BD-259, a
+dependency for that reason; a request may name no worlds of its own); every one of these calls is of a run verb
+and carries its own idempotency key; (10) `frob-golden check --artifact
 L6`. Plants: `drop-neighbour` removes a neighbour from the produced file and must fail step (6);
 `non-replaying` perturbs one state digest and must fail step (7). The log
 (`target/e2e-logs/art_l6_fmcw/<utc>.ndjson`) records every command with exit code and wall time, the evidence

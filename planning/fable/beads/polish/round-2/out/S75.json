@@ -1,0 +1,363 @@
+{
+ "round": 2,
+ "slice": "S75",
+ "reviewed": [
+  "ART-L5",
+  "BD-337",
+  "BD-338",
+  "BD-339",
+  "BD-340",
+  "BET-25",
+  "CARD-T-28",
+  "GB-26",
+  "N10c-02",
+  "N12x-04",
+  "N22b-09",
+  "N22b-10",
+  "N22b-11",
+  "N22b-12",
+  "N22b-13",
+  "N22b-14",
+  "N22b-15",
+  "N22b-16",
+  "N22b-17",
+  "N22b-18",
+  "N22b-19",
+  "N22b-20",
+  "N22b-21",
+  "N22b-22",
+  "N22b-23",
+  "N22b-24",
+  "N22b-25",
+  "N22b-26",
+  "N22b-27",
+  "N22b-28",
+  "N22b-29",
+  "N22b-30",
+  "N22b-31",
+  "N22b-32",
+  "N22bx-01",
+  "N22c-27",
+  "N22c-28",
+  "N22c-29",
+  "N22c-44",
+  "N22c-45",
+  "N22c-46",
+  "N34p1-03",
+  "NEG-13",
+  "NS-23",
+  "SPEC-C-31"
+ ],
+ "changed": [
+  {
+   "bead": "ART-L5",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "l5_gravity_bound restated: the basis string is not parsed; the builder derives 105,948 µJ, a declared 0.10 J raises declared-below-derived (exit 2) and 105,948 enters, the declared 0.11 J enters with no finding. Every run call of the script carries a distinct --key; the referee run attaches the budget with --shield-budget."
+  },
+  {
+   "bead": "BD-337",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "CLI spellings fixed for the VERBS-shield row (positional design, --boundary, --absorber, --cutoff-delay, --load-path, --energy-step, --time-step, --reserve, --class, --reading-max, --key; shield.check <run> --budget); the run attachment --shield-budget on sim.run and eval.run defined here. not_admitted_is_a_result now names the kinetic term and gives v̂ 0.1991 m/s and the largest reading 0.1891 m/s (gravity unchanged: reflected inertia carries no weight). New tests card_product_reading (251,136; 1,491,136; 508,864; 50,443 µs; finding), attach_budget_to_run, laws_c31_on_production_budget (moved here from SPEC-C-31, which BD-337 depends on)."
+  },
+  {
+   "bead": "BD-338",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Requests applied: the three uncoded pending slugs listed beside 454/457; the S legs of NEG-29's hazard_covers.sh must run and pass (acceptance + logging). CLI spellings fixed (--controller, --tasks, --tier, --budget, --calibration, --reuse-margin, --listing, --backup … --param, --key; α only from the registry); --shield attachment on sim.run, eval.run, train.start defined. GATE-SHIELD-02 cases moved from a private gate_shield_02.rs into g1_known_answers with the cargo form and record_gate. Tests pending_slugs_uncoded, attach_shield_to_run, laws_c31_on_production_filter (moved from N10c-02). Deps N22b-26 (matches_compendium_d7 uses its estimator), N22b-27 (levels_echoed), NEG-29; no cycle."
+  },
+  {
+   "bead": "BD-339",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Its script called shield.report, but BD-340 depends on BD-339: the bound and rows are now computed by N22b-26's estimator inside the GATE-SHIELD-03 entry of g1_known_answers (cargo form, mutations for controls, record_gate). Pairing by address done there, not by eval.compare (whose arms are two designs). Every arm and set has its own --key and shielded runs use --shield. Private gate_shield_03.rs removed."
+  },
+  {
+   "bead": "BD-340",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Gate cases moved from gate_shield_04.rs into the GATE-SHIELD-04 entry of g1_known_answers; script spelled with positional design, --tasks, --shield, distinct keys, the reuse refusal, cargo form with mutations and record_gate; receipt hash logged."
+  },
+  {
+   "bead": "BET-25",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "A 50 J rating 'does not admit' (exit 2, a result) instead of 'refuses'. Script calls carry --key and the refusal code. Consideration added: §40.5 lists M3, M4 but both deciding gates and both kill gates fall at M4 (§40 governs), so one reading at M4."
+  },
+  {
+   "bead": "GB-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Rotor variant is not admitted (exit 2 with the largest admissible reading), not refused with exit 3; omitted-term fixtures are refused with 451; test renamed gb_26_mechanism_rotor_not_admitted; NEG-02 line updated with keys."
+  },
+  {
+   "bead": "N10c-02",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Script uses g1_known_answers/g0_laws with FROB_TEST_SEED and gauntlet-mutations. The shield.fit stage and the production-filter law run needed BD-338, which depends on this bead (drift 7): moved to BD-338 (laws_c31_on_production_filter, fit_* tests) and N22b-32 step 7; this bead exposes the fixtures."
+  },
+  {
+   "bead": "N12x-04",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "The 'when shield.fit exists … --emit-certs' stage used a nonexistent option and a later bead: replaced by a pending(N22c-46) line pointing at gate_shield_07.sh step 5, which fits the slider at 100/300 N·s/m with --backup damping --param and verifies the stored check."
+  },
+  {
+   "bead": "N22b-09",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Pilot register path crates/frob-conformance/registry/pilots.toml with schema frob.gauntlet.pilot/1; each referee cell run has its own --key."
+  },
+  {
+   "bead": "N22b-11",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Gravity term pinned (DESIGN): grade form stroke·grade, exact 251,136 µJ for the card (≥ the sine form 0.25034 J), which GB-26's product reading needs; gravitational mass excludes reflected rotor inertia (otherwise the rotor case would add 1.82 J of gravity). Declared-vs-derived rule stated with the finding declared-below-derived; printed reading when the scene has no slope. Tests gravity_outward (exact), gravity_declared_below_derived, gravity_excludes_reflected_inertia; e2e spelling with --key."
+  },
+  {
+   "bead": "N22b-13",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script spelled with positional design, --shield-budget (defined by BD-337) and distinct keys per backend and for shield check."
+  },
+  {
+   "bead": "N22b-14",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Request applied: ProofKind::EnergyBudget and its payload in crates/frob-core/src/proof/payload/energy_budget.rs per N25b-01 (no float, expects Excluded/Inner, support), and energy-budget removed from N25b-01's pending list; dep N25b-01 (M1, no cycle); test proof_object_energy_budget. Private energy_mutation_corpus.rs replaced by the g1_known_answers entry with rows in controls.toml; prove bundle calls keyed."
+  },
+  {
+   "bead": "N22b-15",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "gate_shield_01.rs replaced by the GATE-SHIELD-01 entry of g1_known_answers and MR-22 in g3_metamorphic; script runs the cargo forms with seed and mutations and records with record_gate; receipt logged."
+  },
+  {
+   "bead": "N22b-16",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Decision record named docs/adr/ADR-KILL-ENERGY-M4.md with N40-03's required fields; fallback-branch calls spelled with keys."
+  },
+  {
+   "bead": "N22b-17",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Decision record named docs/adr/ADR-OPEN-SHIELD-1.md; script calls spelled with positional design, --boundary and distinct keys."
+  },
+  {
+   "bead": "N22b-18",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Positional design and --key on every run call (budget, artifact export, prove bundle, sim run, spark probe, shield check); a product-reading fixture and assertions added beside the printed one; rotor step asserts v̂ 0.1991 and reading 0.1891 m/s; actuator list --kind absorber / actuator show in place of a nonexistent show --kind; deps N22b-17 (step 13) and N22bx-01 (step 12), no cycle."
+  },
+  {
+   "bead": "N22b-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pilot register path and schema frob.gauntlet.pilot/1."
+  },
+  {
+   "bead": "N22b-21",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script spelling: positional design, --controller, --tasks, distinct keys."
+  },
+  {
+   "bead": "N22b-26",
+   "kinds": [
+    "correct"
+   ],
+   "what": "E2e text no longer says BD-339's campaign calls shield.report; that campaign calls this estimator directly."
+  },
+  {
+   "bead": "N22b-27",
+   "kinds": [
+    "e2e-logging",
+    "complete",
+    "tests"
+   ],
+   "what": "Request applied: frob conformance run replaced by a shield_levels example of frob-conformance (honours FROB_REGISTRIES_ROOT) and the cargo test form; record named docs/adr/ADR-OPEN-SHIELD-2.md; test example_prints_entry."
+  },
+  {
+   "bead": "N22b-28",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Decision record named docs/adr/ADR-KILL-SHIELD-M4.md with N40-03's required fields."
+  },
+  {
+   "bead": "N22b-32",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Request applied (step 14 uses the shield_levels example, frob --registries-root). All steps spelled per the rows: positional design, --tasks, --shield on sim/eval/train, --key on every run call with distinct keys where runs are compared, eval/train/job cancel calls spelled."
+  },
+  {
+   "bead": "N22bx-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Surface: actuator.list --kind absorber (value requested of VERBS-actuator); show/check take the card by name instead of a --kind selector no row has; budget calls keyed; KA line gives 0.251136 J printed as 0.25 J."
+  },
+  {
+   "bead": "N22c-27",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Private tests/pre_slip_aliasing.rs replaced by the reflex-preslip-cart entry of g1_known_answers (cargo form, mutations) and the shift relation in g3_metamorphic."
+  },
+  {
+   "bead": "N22c-29",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Keys on every run, fixture draws via --param (sim.run's --world selects a world), telemetry divergence spelled, shield check with --shield, record_gate and the g1 form."
+  },
+  {
+   "bead": "N22c-44",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Request applied: the rational check calls N22b-24's sampled_gain_bound (no second LDLᵀ) and the bead states it supplies the A-22 certificate that lifts TestedOnly; --backup/--param spelling and --allow-reversal stated; tests one_gain_function, latency_lifts_tested_only; dep N22b-24; e2e lines named."
+  },
+  {
+   "bead": "N22c-46",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Keys on every run; --seconds in place of a --ticks option no row has; --param/--controller noted as requested; gate recorded with record_gate and the g1 form."
+  },
+  {
+   "bead": "N34p1-03",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Gate lane spelled as N34-22 runs it (g3_metamorphic/g4_chaos cargo forms, mutations) with record_gate; owner-crate --test conformance files identified as the harness's Subject files."
+  },
+  {
+   "bead": "NEG-13",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its stage in shield_energy_budget.sh made concrete (labels_e7c: governing, reserve and superseded fixtures with keys, codes and pointers); dep N22b-18 so the script exists (no cycle)."
+  },
+  {
+   "bead": "NS-23",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Shielded and shifted runs attach --shield; the pre-slip control now cites reflex-preslip-cart (N22c-27) instead of 'once its numbers exist'."
+  },
+  {
+   "bead": "SPEC-C-31",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "sense"
+   ],
+   "what": "Script uses g1_known_answers/g0_laws/g3_metamorphic with seed and mutations; the production-budget law run moved to BD-337; gravity discrepancy now points at the settled printed/product/outward readings; the pre-slip note no longer claims the plan has no numbers (§22.21, N22c-27)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run: add `--shield <ShieldId>` (BD-338: attaches a fitted shield's ActionFilter stage, enters the run identity, scope check at start with FROB-REF-457) and `--shield-budget <EnergyBudgetId>` (BD-337: attaches the specialized energy monitor); add `--param <name>=<value>` for parameters of fixture designs and fixture controllers (N22c-29 mu/v0/s0, N22c-46 m/v0/kd/h/latency_ticks), beside the already requested `--controller`, `--seed`, `fixture`."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run: add `--shield <ShieldId>` (BD-338) and `--shield-budget <EnergyBudgetId>` (BD-337); used by BD-339, BD-340, N22b-30, N22b-32 and NEG-29's S covers."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.start: add `--shield <ShieldId>` (BD-338; the filter as an environment stage, N22b-31); used by N22b-32 step 11."
+  },
+  {
+   "bead": "VERBS-shield",
+   "what": "Record the spellings now fixed by the implementing beads: shield.budget <design> --boundary --absorber --cutoff-delay --load-path --energy-step --time-step --reserve --class --reading-max --key (BD-337); shield.fit <design> --controller --tasks --tier --budget --calibration --reuse-margin --listing --backup <kind> --param k=v --key (BD-338) plus `--allow-reversal` (N22c-44); shield.check <run> --budget|--shield|--instance --key. Replace 'α and metric choices' among shield.fit's inputs: α is read only from the OPEN-SHIELD-2 entry (N22b-27), never an input."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "what": "actuator.list: add `absorber` to the `--kind` filter values (N22bx-01's absorber cards); note that actuator.show and actuator.check accept absorber cards by name (extended by N22bx-01)."
+  },
+  {
+   "bead": "N10a-01",
+   "what": "`--test g0_doctrine` (the d2_* obligation check) is not one of the six Gauntlet tier targets of KNOWN_DRIFTS 1; 18 beads call `cargo test -p frob-conformance --test g0_doctrine -- d2` (SPEC-C-31 among them). Move d2_* into g0_laws (or state the exception in BD-025) so the callers can be aligned."
+  },
+  {
+   "bead": "NEG-29",
+   "what": "BD-338 now requires the S legs of hazard_covers.sh; spell them as `frob --json shield check <run> --shield <id> --key …` (with `--budget <id>` for S:energy) on runs made with `sim.run --shield`, and name BD-338 as the bead that turns them on."
+  }
+ ],
+ "unchanged": [
+  "CARD-T-28",
+  "N22b-10",
+  "N22b-12",
+  "N22b-20",
+  "N22b-22",
+  "N22b-23",
+  "N22b-24",
+  "N22b-25",
+  "N22b-29",
+  "N22b-30",
+  "N22b-31",
+  "N22c-28",
+  "N22c-45"
+ ],
+ "notes": "All 45 read in full. Applied the 8 addressed requests (BD-337 dep already present; BD-338 x2; BD-340 dep present; N22b-14; N22b-27; N22b-32; N22c-44). Cross-bead fixes: one gravity reading rule (grade form, gravitational mass, declared-below-derived), rotor 'not admitted' exit 2 everywhere, --key on every run call, --shield/--shield-budget attachments defined in BD-338/BD-337 and requested, private gate test files moved into tier targets with record_gate, decision records in docs/adr/, rule-7 inversions (BD-339 on shield.report; N10c-02, N12x-04, SPEC-C-31 calling later beads) moved to the later beads. Kill-decision unit files frob-conformance/tests/kill_*.rs left (program-wide pattern, not a gate run). Front matter and seven sections parse in all 45 files; no dependency cycle. Slice looks settled once the verb-row requests land."
+}

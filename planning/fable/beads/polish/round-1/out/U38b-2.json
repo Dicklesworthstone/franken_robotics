@@ -1,0 +1,382 @@
+{
+ "round": 1,
+ "slice": "U38b-2",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "N38b-27",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "sense"
+   ],
+   "what": "'63 state a partial tolerance' was wrong: the 63 carry a qualifier (partial tolerance, printed precision or a gate name). Rule 5 contradicted the Considerations (performance rows with arithmetic on FACT inputs fall under rule 2 first): split rule 5 into quoted-number and arithmetic-on-quoted-inputs cases, both conditions printed. The M3-zero acceptance was not checkable at an M1 close: replaced by an enforced milestone rule with a planted row. Added the reason check (tolerance-without-rule) and named the control-gap rejection. Unit tests given inputs and expected values (100/13 vs 7.7, 616 exact, 133 to 110 after N10-KA1). The shared script ka_obligations.sh had its header in this M1 bead although M0 beads (N38b-28, N38b-49) use it: the script now belongs to N38b-49 and this bead has its own ka_tolerances.sh with full STD-E2E logging. Added dep N38b-49 (the burn-down report it feeds)."
+  },
+  {
+   "bead": "N38b-28",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "scope"
+   ],
+   "what": "KA-444 alternate 'limit without the factor 3/4 gives 2.8 mm' recomputed: 2.73 mm (true 2.48 mm); record carries removed_check. KA-033's registered control is N09-KA's (nominal non-robust program), so this bead's a-a proposal became an alternate like the fourteen of N00-33 (nine dispositions now). The three boundary rows' mechanisms land at M1/M3/M6 (N20a-37, N20b-06, N19b-08): records registered with due, run by the control runner from then on, logged not-due before. Unit tests with values (2.73 vs 2.48, 29,957 vs 29,956 cannot-fail, boundary-not-control, kind closed). Script ownership moved to N38b-49 with this bead's controls-* steps and full logging. Added dep N38b-49; related BD-042, N00-33 and the three mechanism beads. Rule 3 (cannot-fail) now states where the safe side is read from: the row's declared `safe` direction, with run-the-control (`missed`) for rows without one; N38b-57, which had defined the same rule a second time, now uses this one and depends on this bead."
+  },
+  {
+   "bead": "N38b-29",
+   "kinds": [
+    "correct",
+    "scope",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "All 45 rows of C-16 to C-39 already have registered controls in their specification beads (SPEC-C-16..39, N10b-02/06/08/09/14, N10c-01/05/06/07/08): this bead specified them a second time, differently. Reframed as for N10-KA1: owners' controls listed and checked, this bead's defects are alternates (16 coincide, 29 differ; 51 dispositions in all); rows open until their owner lands (M1 to M8). KA-072 registered control corrected to 8 pairs with H the whole group and 26 in all (request from U10a). Acceptance no longer requires running rows due after M1. Own script ka_controls_constructions.sh with plants and full logging; tests with values (138, 140, 171 added)."
+  },
+  {
+   "bead": "N38b-30",
+   "kinds": [
+    "scope",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Owners already register controls for most of these rows (N13-02, N13-06, N14-KA, BD-057/059/063/066): owners' table extended so the owner's record is first and this bead's proposal is linked (7) or a second record (12); only 198 and 222-226 keep this bead's as first. Unit tests with values (202: 3 against 4; 262: 2.439; 204 in two windows). Own script ka_controls_conventions_to_skeleton.sh with plants (duplicate-linked-record, uncaught-control) and full STD-E2E logging, replacing the shared script whose header sat in N38b-27. Related adds the owner beads."
+  },
+  {
+   "bead": "N38b-31",
+   "kinds": [
+    "correct",
+    "scope",
+    "sense",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "KA-372 control value wrong: with the formula D·(c_L + W·τ)/(c_L + Ω·D·W·τ) the dropped term gives 1/Ω ≈ 0.77, not 1. Out section names the N15-KA/N16-KA/N18-KA owners; owners' rule (examples linked 297, 315, 319, 422; second record 348) applied mechanically from the control registry. Unit tests given values (316, 343, 348 17,452 against 26,668 B, 352, 361, 372, 388). Own script ka_controls_body_physics.sh with plants and full logging."
+  },
+  {
+   "bead": "N38b-32",
+   "kinds": [
+    "scope",
+    "sense",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "N19-KA, N20-KA and N21-KA already name controls or guarded defects for several rows (427, 488, 500, 506, 509, 531, 540-552): owners' rule added (488, 500, 509 linked; 427 a second record, 8-bit storage differing from the withdrawn ±10 m range). Acceptance no longer requires running rows due later (logged not-due); M3 rule enforced by a planted row. Unit tests given 14 closed-form wrong values checked against the rows (427, 449, 450, 454, 459-462, 480, 547, 549-552). Own script ka_controls_scene_sense_spark.sh (M2) with device skips, plants (two-first-records, uncaught-control) and full logging."
+  },
+  {
+   "bead": "N38b-33",
+   "kinds": [
+    "scope",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Eleven rows already have owners' controls (N25-KA with N25d-37/38/39 for 636, 645, 649, 652, 653, 655, 657, 658; N27-KA for 674, 676; N28cp1-02 for 703): table added, owner first, five linked and six second records. KA-589 (N23-KA) and KA-674/676 (N27-KA) sit in M2 registries while this bead is M1: reported 'open: row not registered' until they land (no forward dep). Unit tests with checked values (559 0.05003, 589 585.4 printed 'about 590', 602, 614/694 0.04504 vs 0.04573, 649, 703) and an unsafe-side test for the counting rows. Own script ka_controls_decide.sh with plants (safe-side-count, two-first-records) and full logging."
+  },
+  {
+   "bead": "N38b-34",
+   "kinds": [
+    "scope",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "21 rows already have owners' controls (N29-KA, N30-KA, N31-KA, N32b-24, N33-KA, N35-KA, N35-01/16/18/22): table added, owner first, twelve linked and nine second records (KA-802's owner adds only acceptance controls). Ground and Foundry rows live in M5 registries while this bead is M2: reported open until registered. KA-776 control clarified (step along the initial heading, (1, 0), distinct from the owner's sinc-dropped (0, 1)). Unit tests extended with checked values (754, 762, 776, 815, 823, 824) and a removed_check test for the seven refusal rows. Own script ka_controls_evidence_to_safety.sh driving refusal verbs through frob --json, plants and full logging."
+  },
+  {
+   "bead": "N38b-35",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The decision's own record (exact pin, one oracle at most, pin moved after decided, closing record citing N36-25's ADR, firewall) was checked by no script: added scripts/e2e/open_gaunt_4.sh with four plants and full STD-E2E logging. The Known-answers control 'digest does not match the pulled image' had no test: added development_oracle_wrong_digest_detected. Deps add STD-E2E, STD-TEST; related N36-29, N38a-05, N38a-06, N38b-24."
+  },
+  {
+   "bead": "N38b-36",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps",
+    "scope"
+   ],
+   "what": "Acceptance 'repeated at M2 when device tiers exist' could not be checked at this M1 bead's close: sites unavailable at M1 are now entered 'not measured' with a dated line, and the M2 timing is carried by N38b-38 (which depends on this bead). Unit tests given inputs and values (560 s within 600 s, median/range, slowest ten, largest count in budget). E2E steps spelled out (sleep known answer, interleaved runs, A/A, plants slow-entry and rangeless-row) with full logging. Dep STD-TEST."
+  },
+  {
+   "bead": "N38b-37",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "No script ran the decision's lists (the battery and M2 wiring scripts do not): added scripts/e2e/open_gaunt_7.sh (referee termination per row, scenario count 180-220 as in N38a-20, default classes not-run, three plants) with full logging. Unit tests given values (196-scenario manifest, 179/221 bounds, deferred soft-ground row at M4). Acceptance adds the scenario-count bound. Deps STD-E2E, STD-TEST."
+  },
+  {
+   "bead": "N38b-38",
+   "kinds": [
+    "scope",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Takes over the M2 device-site timing that N38b-36 could not close at M1 (runs gauntlet_budget.sh on the sites left 'not measured', amends the OPEN-GAUNT-5 record with dates). Unit tests extended (extrapolation check, dropped relation rejected, dated amendment); e2e command corrected to N38a-19's g3_metamorphic form; full logging and a second plant. Dep STD-TEST. Detection-rate and cost-model numbers verified."
+  },
+  {
+   "bead": "N38b-39",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its only e2e was N38b-46's aggregate script, which lands at M1, so the M0 part of GATE-GAUNT-11 had no script to be recorded from: added scripts/e2e/ka_845_cayley.sh (M0) with the row, differential residual, the mutant requiring both failures, twice-determinism and full logging; acceptance cites its receipt. Math of the row re-derived and correct."
+  },
+  {
+   "bead": "N38b-40",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Metamorphic relation was wrong: scaling capacity and conductance by 2 changes the runaway rate to (s - 2G)/2C; corrected to scaling capacity, conductance and winding resistance together. Acceptance 'recorded as the M1 gate parts' depended on N38b-46, which depends on this bead: moved to N38b-46's acceptance, this bead's line now checks its entries are listed and pass. Unit tests given their values (all re-derived: 33.49 s, 0.006533, 27/45, 0.900/1.017 N·m, 0.7500/0.6459). Logging fields stated."
+  },
+  {
+   "bead": "N38b-41",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Records its gate part from N38b-46's script, which must exist first: dep N38b-46 added (M1 before M2). Logging fields, skips and failure output stated. Numbers (f32 cancellation, spacings 2 and 8) verified."
+  },
+  {
+   "bead": "N38b-42",
+   "kinds": [
+    "deps",
+    "scope",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "Applied U20b's request: N20b-07 no longer records GATE-GAUNT-11 and logs the single-edge demonstration as metric lines tagged ka: KA-849; this bead now cites them (new acceptance comparing them with host values) and depends on N20b-07. 'The one place the gate row is recorded' reconciled with N38b-46: recorded from adopted_known_answers.sh M3, which runs this bead's test; dep N38b-46. Logging fields stated. Adjoint arithmetic verified."
+  },
+  {
+   "bead": "N38b-43",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Metamorphic relation 'doubling track widths and load leaves p consistent with the formula' was vacuous (and doubling width changes k_c/b): replaced by doubling track length and load, which leaves p and every sinkage unchanged. Unit tests given values (0.03523/0.09787/0.04964 m; rho 2.384e-7, bound 7.947e-8). Dep N38b-46 for its gate-part script; logging fields stated. All sinkage and n=0.7 values re-derived."
+  },
+  {
+   "bead": "N38b-44",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Dep N38b-46 for its gate-part script; acceptance names the kill decision KILL-ADVECT (N19b-11) and the 'killed' outcome; logging fields, exponent thresholds and failure output stated. Stability arithmetic (2.48 mm at 2 cm and 2 ms) verified."
+  },
+  {
+   "bead": "N38b-45",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied U12-2's request: dep N12p1-01 (the alpha-root checker) added, N12-19 kept for tube erosion; Out section names each owner. Dep N38b-46 for its gate-part script. Unit test values for alpha/gamma (re-derived: beta 0.001412, gamma 1.497, alpha 0.002114, 1/(20 gamma) 0.03340). Logging fields stated."
+  },
+  {
+   "bead": "N38b-46",
+   "kinds": [
+    "sense",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The M0 part of GATE-GAUNT-11 cannot come from this M1 script: now recorded from N38b-39's own script, this script re-measuring KA-845 from M1. Single meta-test replaced by three with values (5 FID-09 and 9 GAUNT-11 rows by milestone; selection by argument; each row has a control). Logging adds skips, not-due and failure reproduction fields. Dep STD-TEST; related N38b-41 to -45 (which now depend on it)."
+  },
+  {
+   "bead": "N38b-47",
+   "kinds": [
+    "sense",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Five of the six rows already have NC records owned elsewhere (KA-061 N10-KA1/N38b-29, KA-269 N14-KA/N38b-30, KA-336/356/357 N38b-31): stated that this bead writes the value each control gives into the derivation file and registers only the new track-scrub row's control (no duplicate records). Orifice control wording corrected (linear law halves flow where the orifice law keeps 1/sqrt 2; 0.0460 m/s). Own script ka_derivations_owed.sh replaces the shared-script reference; acceptance reads the burn-down's derivation column; dep N38b-49. All six closed forms re-derived."
+  },
+  {
+   "bead": "N38b-48",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Its e2e was a step added to N38a-12's registry script (another bead's artifact): own script illustrative_cards.sh instead, with the per-formula listing, the 14-mark metric and three plants. Swap test given values; merged-fixture test added. Card values and the 14 marks verified against the plan."
+  },
+  {
+   "bead": "N38b-49",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "scope",
+    "deps"
+   ],
+   "what": "Now the owner of scripts/e2e/ka_obligations.sh (its header had sat in the M1 bead N38b-27 although M0 beads use it): full header with its plants and N38b-28's, steps coverage and burn-down, plants, full logging. Scope names which bead feeds each of the four report columns. Unit tests given values (325, 310, 312 rejected; M2 row in an M3 run; adopted rows add no obligation; chapters without rows). Table recounted from the plan: all 35 chapters, totals and tiers match."
+  },
+  {
+   "bead": "N38b-50",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "complete"
+   ],
+   "what": "Script expanded into its full step list (register, table, a generic rows step for every settled record, scan, three plants) with full logging; the ten value beads N38b-51 to N38b-60 add no script and are logged here. Record schema gains `confirmed_by` (the owning chapter's confirming session, checked at closure by N38b-61, which had required a field the schema lacked). Related N38b-49, NAB-41, NEG-03, NEG-06."
+  },
+  {
+   "bead": "N38b-51",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Register attribution corrected: E7-2 is in NEG-03's register and resolved by NEG-05 (not NEG-04). REC-02 lines of reconciliations.sh detailed. Negative control attributed to its owners (N00-33 for KA-010, N38b-34 for KA-818). 7.69/7.7 and 82/94 verified."
+  },
+  {
+   "bead": "N38b-52",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Duplicate mechanism removed: the 513 s planning value is stored and checked by N36-01's planning_values_consistent lint, not generated a second time here; dep N36-01. Retired entry for 515 s given in the engine's form; test rec_03_row_matches_register; e2e detail. 1.25 x 410 = 512.5 verified."
+  },
+  {
+   "bead": "N38b-53",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Settlement now points to the film store's own test (N19b-08 tile_bytes_and_counts) so product and row share one rule; retired entries for 352 tiles and 360 kB; e2e detail for KA-445. 351.6/9.8, 361/16, 400/25 and byte counts verified."
+  },
+  {
+   "bead": "N38b-54",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Found the correction had not reached the dependent row: KA-460's workstation column (2,500, 320, 320, 40, 4, 13, 1) divides 189 (GiB) by sizes in decimal GB; settled as whole scenes from bytes, 2,701, 337, 337, 42, 5, 14, 1 (printed about 2,700, 340, ...), matching BD-236 and N19-KA; card column upper ends 213 and 26 as whole scenes. Retired entries; tests rec_05_counts_follow and rec_05_unit_mixed_column_detected; e2e detail."
+  },
+  {
+   "bead": "N38b-55",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E7-6 attributed to NEG-03's register and NEG-09's settlement; retired entries for 615 and 2.5% in the engine's form; e2e runs KA-201 and KA-471 clean (600) and with the mutation (616). 616 = ceil(8000/13), 2.564%/2.667%, closed-window 601 verified."
+  },
+  {
+   "bead": "N38b-56",
+   "kinds": [
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "Acceptance's exception list for 76,963 now word for word NEG-04's (labelled controls, E7-1, REC-07, plus the engine's general exemptions), with the retired entry in the engine's form; e2e lines for REC-07 detailed (four exact counts, minimality powers, retired-string plant). Related N26a-21, N38b-57. 76,958.28 -> 76,959, 76,962.13 -> 76,963 and 0.0499991/0.0500041 verified; naming rule (N26a-21's function, this bead's oracle) consistent with NEG-04."
+  },
+  {
+   "bead": "N38b-57",
+   "kinds": [
+    "sense",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The cannot-fail loader rule was defined both here and in N38b-28 (M0): one rule, N38b-28's; this bead adds the `safe` declaration on every counting row (new test counting_rows_declare_safe) and the two replacement controls; dep N38b-28. E2E names what control_runner.sh and reconciliations.sh log, with values (0.0500041 vs 0.05; 0.0499991 vs 1/2200). 29,957.32, 29,955.82 and 47,003 verified."
+  },
+  {
+   "bead": "N38b-58",
+   "kinds": [
+    "sense",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "KA-816's tolerance is set by N38b-27's rule 2 for the whole row; this bead no longer sets it a second time, it cites the derivation file and states 0.005 GB. Retired entry for '1 to 1.5%'; e2e detail (KA-348 26,668 bytes, KA-816). Shares 0.68-1.81% and 0.96-3.07% verified. Related N38b-27, -31, -34, -54."
+  },
+  {
+   "bead": "N38b-59",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Asked for `--level 0.975` in confidence form with no default, contradicting the verb's owner N24b-06 (`--level` alpha, default 0.05, tail alpha/4): acceptance and e2e now use N24b-06's form (alpha 0.05 = 97.5%, 0.1 = 95%; first_reachable 86 and 72); what the draft wanted, the level printed beside every number, kept by a new check rec_10_level_printed (nothing is retired by REC-10). Tests rec_10_alpha_to_tail, preanalysis_records_level. 0.06618/0.05601 and 85.43/71.92 verified."
+  },
+  {
+   "bead": "N38b-60",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E lines for REC-11 stated (four fractions with inputs, CX-080's printed numbers asserted against 2^(-k/d); no retired entry since both values are right for their counts). 0.6373/0.4061/0.6310/0.3981 and 0.2154 verified."
+  },
+  {
+   "bead": "N38b-61",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "Unit tests given values (7 corrected and 4 remarks by id, 0 flagged rows, REC-12 reopen, decision tombstone); closure checklist aligned with the scan engine's exemptions and extended with REC-10's level check; closure mode's four plants and full logging stated; summary rows 5 and 10 carry the settled forms. Deps STD-E2E, STD-TEST."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N19b-08",
+   "what": "its test plan gives KA-444's control as 'a 4 mm film of water is refused or sub-cycled', a boundary behaviour that the control loader rejects (boundary-not-control); the registered control is N38b-28's mutation (the admission check removed, removed_check = film admission limit; or the limit without the factor 3/4, 2.73 mm against 2.48 mm)"
+  },
+  {
+   "bead": "N10c-10",
+   "what": "add dep N38b-29 (M1): the spine audit requires every C-28 to C-40 row's control, and N38b-29 checks the registered records of the rows printed none stated"
+  },
+  {
+   "bead": "N10b-19",
+   "what": "add dep N38b-29: the contract audit of C-16 to C-27 requires each row's control; N38b-29 checks the registered records of the rows printed none stated"
+  },
+  {
+   "bead": "N20b-07",
+   "what": "its Background says GATE-GAUNT-11's row for KA-849 is recorded 'in one place only, the conformance test of N38b-42'; N38b-42 now states it is recorded from the receipt of adopted_known_answers.sh M3 (N38b-46), which runs N38b-42's conformance test; please align the wording. N38b-42 now depends on N20b-07 and cites its ka: KA-849 metric lines."
+  },
+  {
+   "bead": "N15a-14",
+   "what": "add dep N38b-48 (M1): KA-308 and KA-185 are bound to the fixture identities thermal-runaway/chapter-card and thermal-runaway/construction-card with the shared formula field that N38b-48 registers"
+  },
+  {
+   "bead": "N18b-32",
+   "what": "add dep N38b-48 (M1): KA-403 is bound to the fixture identity backlash-closure/contact-card with the formula field inelastic-closure that N38b-48 registers"
+  },
+  {
+   "bead": "N24b-06",
+   "what": "add an output field `level` (the alpha given, beside `concordance_interval`) to frob.preanalysis/1 so that the record and its hash carry the level; N38b-59 (REC-10) requires every printed bound and first-reachable n to carry its level (0.0662 and 86 at alpha 0.05, 0.0560 and 72 at alpha 0.1)"
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 35 beads changed: the slice's shared scripts now each have one owner (ka_obligations.sh N38b-49, reconciliations.sh N38b-50, adopted_known_answers.sh N38b-46), each value bead states its exact e2e lines and retired entries, and duplicate rules (cannot-fail, planning value, KA-816 tolerance) have one owner. Every value of M.38 re-derived; KA-460's stale column found and settled. Seven requests open."
+}

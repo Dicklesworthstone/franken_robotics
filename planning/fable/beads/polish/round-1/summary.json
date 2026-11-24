@@ -1,0 +1,688 @@
+{
+ "round": 1,
+ "slices": 81,
+ "slices_without_result": [],
+ "live_beads": 3592,
+ "superseded_total": 119,
+ "totals": {
+  "reviewed": 3543,
+  "changed": 2909,
+  "new": 52,
+  "superseded": 0,
+  "requests": 773
+ },
+ "kinds": {
+  "correct": 1673,
+  "tests": 1487,
+  "deps": 1258,
+  "e2e-logging": 970,
+  "complete": 633,
+  "self-contained": 410,
+  "scope": 230,
+  "users": 136,
+  "placement": 105,
+  "sense": 66,
+  "risks": 62,
+  "title": 48,
+  "split": 47,
+  "e2e": 13,
+  "faithful": 12,
+  "coherent": 12,
+  "optimal": 10,
+  "testable": 4,
+  "related": 3,
+  "request": 1
+ },
+ "definition_problems": 0,
+ "validation_failures": [],
+ "per_slice": [
+  {
+   "slice": "U00-1",
+   "beads": 50,
+   "changed": 42,
+   "new": 2,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "U00-2",
+   "beads": 51,
+   "changed": 48,
+   "new": 1,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "U10a",
+   "beads": 41,
+   "changed": 27,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U10b",
+   "beads": 29,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "U10c",
+   "beads": 25,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U12-1",
+   "beads": 51,
+   "changed": 51,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "U12-2",
+   "beads": 50,
+   "changed": 36,
+   "new": 1,
+   "superseded": 0,
+   "requests": 58
+  },
+  {
+   "slice": "U13",
+   "beads": 51,
+   "changed": 45,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U14a",
+   "beads": 46,
+   "changed": 39,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "U14b",
+   "beads": 50,
+   "changed": 42,
+   "new": 3,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "U15a",
+   "beads": 33,
+   "changed": 27,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U15b",
+   "beads": 51,
+   "changed": 40,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "U16a",
+   "beads": 36,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U16b",
+   "beads": 45,
+   "changed": 37,
+   "new": 1,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U16c",
+   "beads": 45,
+   "changed": 41,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "U17a",
+   "beads": 33,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U17b",
+   "beads": 35,
+   "changed": 27,
+   "new": 1,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U18a",
+   "beads": 54,
+   "changed": 33,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "U18b",
+   "beads": 54,
+   "changed": 47,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "U19a",
+   "beads": 57,
+   "changed": 56,
+   "new": 0,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "U19b",
+   "beads": 51,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "U19c",
+   "beads": 49,
+   "changed": 41,
+   "new": 2,
+   "superseded": 0,
+   "requests": 26
+  },
+  {
+   "slice": "U20a-1",
+   "beads": 31,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "U20a-2",
+   "beads": 31,
+   "changed": 22,
+   "new": 1,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U20b",
+   "beads": 50,
+   "changed": 43,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U21a",
+   "beads": 38,
+   "changed": 31,
+   "new": 1,
+   "superseded": 0,
+   "requests": 15
+  },
+  {
+   "slice": "U21b",
+   "beads": 50,
+   "changed": 50,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U21c",
+   "beads": 42,
+   "changed": 34,
+   "new": 0,
+   "superseded": 0,
+   "requests": 25
+  },
+  {
+   "slice": "U22a",
+   "beads": 53,
+   "changed": 39,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U22b",
+   "beads": 50,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U22c",
+   "beads": 47,
+   "changed": 30,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "U23a",
+   "beads": 49,
+   "changed": 37,
+   "new": 1,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "U23b",
+   "beads": 52,
+   "changed": 42,
+   "new": 1,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "U24a",
+   "beads": 59,
+   "changed": 51,
+   "new": 1,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "U24b",
+   "beads": 37,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "U24c",
+   "beads": 42,
+   "changed": 37,
+   "new": 2,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "U25a",
+   "beads": 49,
+   "changed": 30,
+   "new": 1,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "U25b",
+   "beads": 36,
+   "changed": 30,
+   "new": 1,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "U25c",
+   "beads": 55,
+   "changed": 25,
+   "new": 3,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U25d",
+   "beads": 55,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U25e",
+   "beads": 51,
+   "changed": 44,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U26a",
+   "beads": 42,
+   "changed": 36,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U26b",
+   "beads": 28,
+   "changed": 19,
+   "new": 1,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U27a",
+   "beads": 25,
+   "changed": 23,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U27b",
+   "beads": 35,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "U28a",
+   "beads": 47,
+   "changed": 45,
+   "new": 2,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "U28b",
+   "beads": 48,
+   "changed": 39,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U28c",
+   "beads": 50,
+   "changed": 49,
+   "new": 2,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "U29a",
+   "beads": 41,
+   "changed": 40,
+   "new": 3,
+   "superseded": 0,
+   "requests": 18
+  },
+  {
+   "slice": "U29b",
+   "beads": 27,
+   "changed": 27,
+   "new": 1,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "U30a",
+   "beads": 52,
+   "changed": 42,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "U30b",
+   "beads": 40,
+   "changed": 30,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U31a-1",
+   "beads": 32,
+   "changed": 11,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "U31a-2",
+   "beads": 32,
+   "changed": 27,
+   "new": 1,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "U31b",
+   "beads": 54,
+   "changed": 53,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "U32a",
+   "beads": 56,
+   "changed": 44,
+   "new": 1,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "U32b",
+   "beads": 39,
+   "changed": 38,
+   "new": 1,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "U33a",
+   "beads": 45,
+   "changed": 39,
+   "new": 1,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "U33b",
+   "beads": 44,
+   "changed": 34,
+   "new": 0,
+   "superseded": 0,
+   "requests": 22
+  },
+  {
+   "slice": "U33c",
+   "beads": 53,
+   "changed": 49,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U34",
+   "beads": 38,
+   "changed": 36,
+   "new": 3,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U35",
+   "beads": 41,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U36",
+   "beads": 43,
+   "changed": 29,
+   "new": 2,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U37",
+   "beads": 42,
+   "changed": 28,
+   "new": 1,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "U38a",
+   "beads": 45,
+   "changed": 39,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "U38b-1",
+   "beads": 35,
+   "changed": 28,
+   "new": 3,
+   "superseded": 0,
+   "requests": 45
+  },
+  {
+   "slice": "U38b-2",
+   "beads": 35,
+   "changed": 35,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "U39a",
+   "beads": 56,
+   "changed": 53,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "U39b",
+   "beads": 50,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "U40",
+   "beads": 54,
+   "changed": 49,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "U41-1",
+   "beads": 34,
+   "changed": 33,
+   "new": 1,
+   "superseded": 0,
+   "requests": 22
+  },
+  {
+   "slice": "U41-2",
+   "beads": 33,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "U44-1",
+   "beads": 43,
+   "changed": 40,
+   "new": 0,
+   "superseded": 0,
+   "requests": 24
+  },
+  {
+   "slice": "U44-2",
+   "beads": 42,
+   "changed": 41,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "UAB",
+   "beads": 50,
+   "changed": 45,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "UEG-1",
+   "beads": 55,
+   "changed": 52,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "UEG-2",
+   "beads": 55,
+   "changed": 45,
+   "new": 4,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "UF-1",
+   "beads": 37,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "UF-2",
+   "beads": 36,
+   "changed": 23,
+   "new": 2,
+   "superseded": 0,
+   "requests": 1
+  },
+  {
+   "slice": "UJL-1",
+   "beads": 32,
+   "changed": 30,
+   "new": 0,
+   "superseded": 0,
+   "requests": 23
+  },
+  {
+   "slice": "UJL-2",
+   "beads": 32,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 76
+  }
+ ]
+}

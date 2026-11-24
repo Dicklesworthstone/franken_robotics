@@ -1,0 +1,291 @@
+{
+ "round": 2,
+ "slice": "S24",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "SPEC-C-13",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "NEES fixture called a time average but used N·n = 450 degrees of freedom, which hold only for the run average at one instant; restated as the run average per checked instant with the Monte Carlo protocol (initial error drawn from P0, so all nine components are scored), exact chi-square quantiles [7.862, 10.213] instead of the normal approximation [7.82, 10.18], and an acceptance rule of 90 of 100 instants (every-instant inclusion would fail a correct filter); added the potency control of a covariance scaled by 0.8 (expected 11.25)."
+  },
+  {
+   "bead": "N22a-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Reconciled NEES with SPEC-C-13: the observable-part restriction is explained by gauge-origin initialization; NIS may be time-averaged (white innovations), NEES may not; the overconfident flag's NEES clause now uses the window-end NEES against chi-square(5) at 99.9% (20.515); the full-state NEES negative control's reason corrected (gauge-origin initialization, not unbounded covariance growth, which a consistent filter tracks)."
+  },
+  {
+   "bead": "N22-REF",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "Applied three round-1 requests after checking BD-335, N22b-07, BD-338, N22b-29 and N22b-32: gait.continue raises fixed-period-shooting-on-free-period on an explicit --form stroboscopic; skill.transport raises 448; shield.fit raises 457; added the fifth worded refusal insufficient-calibration (n < (1 − α)/α, payload n, α and needed count, shield.fit, exit 3) with its smallest trigger (998 at α = 10⁻³, control 999), counts and tests moved from four to five worded refusals."
+  },
+  {
+   "bead": "N22c-49",
+   "kinds": [
+    "correct"
+   ],
+   "what": "GATE-REFLEX-03 measured_by named BD-114, whose scope excludes the gate record; now N22a-05 (control_estimate.sh, the referee record) on BD-114's library-level measurement."
+  },
+  {
+   "bead": "N22a-04",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "Registry TOML lacked paginated = true (VERBS-control has it and the body pages event lists); Considerations said capability run:read against the row's control:read; removed the stale 'requested of VERBS-control' note (VERBS-control already lists 888)."
+  },
+  {
+   "bead": "N22a-06",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Step 6 passed gains to A-22 in frob-analyze, an upward edge (frob-analyze ranks after frob-control in layer 4 and depends on its ControllerId via N28a-09; N22a-01 forbids it): the one-tick map is now computed in frob-control with the exact per-joint closed form (A_d, B_d of the nilpotent double integrator, delay augmentation) and a Padé exponential for the coupled check; BD-108 moved to related. Added values: ρ = 0.6387 with no delay, 1.2474 with one tick, three 0.8 reductions to 160.85 rad/s (ρ 0.8555). KA-082's tolerance was restated differently from SPEC-C-13 and N10-KA1 (below 1° in 5 s); now the bead binds to the registered fixture and keeps its own stricter test as a library test."
+  },
+  {
+   "bead": "N22a-10",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Stated that K-ik-leg3r and K-jac-leg3r are called from frob-kernels and the reachability clamp and singular-distance test are evaluated here, so frob-control takes no edge to frob-analyze (A-05, A-06) under rule L-1."
+  },
+  {
+   "bead": "N22a-12",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "The wording lint forbade 'bad design' in every template while the required body note says '... is not thereby a bad design': the fixed body-note constant is exempt and compared byte for byte. Added the reason route-not-built, which BD-118 returns for classes whose route lands later (it was not in the type); defined which flags make an ok exit 2."
+  },
+  {
+   "bead": "BD-118",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Applied the round-1 request: exit codes now follow N22a-12 (ok with a saturation or footstep-clamp flag exits 2), with an exit_codes_by_outcome test. Identity now cites N22a-07's record frob.control.id/1 (the 'eight identity fields' test missed kind, errors, schedule, residual and clock). Layering stated: the verb in frob-verbs runs A-07 and A-22 in frob-analyze and hands results to frob-control as inputs."
+  },
+  {
+   "bead": "N22c-01",
+   "kinds": [
+    "tests",
+    "complete"
+   ],
+   "what": "Applied the round-1 request: step 12 doubles one thigh link mass of quad-mammal by a typed edit and asserts a new controller_id, control.show listing the changed gains with derivation inputs (M̄, ω, K_p = M̄·ω²), a record diff confined to derived quantities, and one identity on a repeat; acceptance and logging added."
+  },
+  {
+   "bead": "N22a-07",
+   "kinds": [
+    "sense"
+   ],
+   "what": "Its e2e note said the user-level identity check was 'requested of N22c-01 in this round'; N22c-01 now carries it (steps 11 and 12)."
+  },
+  {
+   "bead": "BD-117",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Synthesis read A-07 and required A-22 from frob-analyze, an upward edge from frob-control: stated that the control.synth verb computes A-07 and evaluates A-22 on the synthesized record, with the combined tests in frob-conformance. Fixed the wheel order of omni_connection_values, without which (−9, 9, −9, 9) and (−2, 2, 2, −2) were ambiguous."
+  },
+  {
+   "bead": "N10a-20",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "The pilot's three outcomes were synthesized, degraded and not-synthesizable, which exist nowhere else; C-13's pilot is 'under the three-outcome report of §22': now ok, synthesized-failed (with first failing layer; numerical kept as unknown) and not-synthesizable, with the falsifier restated on ok."
+  },
+  {
+   "bead": "N15b-39",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its e2e script runs the legged baseline (frob sim run --controller legged-baseline) and frob telemetry query; added deps BD-116 and N24a-36 (no cycle; both M1)."
+  },
+  {
+   "bead": "N22c-02",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "PO-REFLEX-01 rank criterion (gap of 10⁶) differed from BD-114's (fourth-smallest below 10⁻¹⁰, fifth above 10⁻⁶ of the largest); adopted BD-114's so the mechanism test and the conformance case cannot disagree. The case and the script run control.synth: BD-118 moved from related to deps. The group mutation of INV-REFLEX-02 is restated for M1, where every baseline has group none."
+  },
+  {
+   "bead": "BD-090",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the three requests after checking BD-091, N29a-03, BD-209, N29b-12 and N29ax-02: state_digest follows BD-091's digest_kind rule (blake3-128 on the referee, full 32 bytes in the T0 row, manifest field digest_kind); the gap reasons are a registered CONTRACT.md table extended by later beads and mirrored by the auditor; under the mutant without header and partition checks only the exchanged-index-entries bundle reaches chain, the exchanged-bytes bundle still fails content. Stated the full check order (frontier and gap last; missing predecessor) as N29a-03 does. Tests added for each. Scope reviewed against its 103 dependents: coherent, not split."
+  },
+  {
+   "bead": "BD-094",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "Its terminal-receipt counts duplicated N29a-05's receipt type: now states that N29a-05 maps this bead's kinds one to one (physical to failed, numerical and protocol to refused, budget to unstarted) and that this bead guarantees one kind per outcome; named N24ax-01's brownout causes and registry fields in Out."
+  },
+  {
+   "bead": "BD-112",
+   "kinds": [
+    "sense",
+    "correct"
+   ],
+   "what": "Removed the stale note that VERBS-explain names frob-opt for explain.design (the row already names frob-chronicle). A numerical outcome's verdict is `invalid` (the verdict value that records a numerical fault, as BD-094 stores it), not a free 'unknown'."
+  },
+  {
+   "bead": "N24a-35",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Printed 'failed split by kind (physical, numerical, budget, protocol)', contradicting the receipt rule of N29a-05 (numerical and protocol are refused, budget is unstarted/interrupted): now reads the counts from the receipt under that rule, depends on N29a-05, with a test. The too-small-budget refusal had no code: FROB-REF-802 against a schema floor of 120, keeping the verb's refusal list empty as VERBS-telemetry states."
+  },
+  {
+   "bead": "N24a-36",
+   "kinds": [
+    "complete",
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied three requests: --aggregate over N29a-07's registry (898 for unregistered names, 888 over gaps, histogram/quantile handed to telemetry.histogram); --traced-worlds returning sample::traced_set with its M1 body (every world at T2), which N29a-12 replaces at M2 (N29a-12 depends on this bead, so not the reverse); pagination wired through N32a-10's Paginated adapter over N29a-04 with frob.cursor/1, a changed filter answering 806 with 896 as cause, 807 for a collected frontier. Deps N29a-07, N32a-10; stale 'M2 surface bead' Out text replaced."
+  },
+  {
+   "bead": "N29a-07",
+   "kinds": [
+    "sense"
+   ],
+   "what": "Its --aggregate step note said the option was 'requested' of N24a-36 with a harness fallback; N24a-36 now has it and depends on this bead, and N29a-08's script (which depends on both) runs the step."
+  },
+  {
+   "bead": "N24a-37",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the request: depends on N29b-01 and prints its rules. Its COT rule (null with reason no-distance at d = 0) contradicted N29b-01 and N24a-18 (floor 0.10 m, reason distance-below-floor): fixed. Added the aggregate residual_abs rule, positive and negative cell sums, per-actuator signed parts and circulation, the non_physical block with FROB-REF-865, and tests; acceptance runs N29b-01's step groups of the ledger script. Later in this round: showed all three audit flags on referee runs at M1, but contact-active and cone-excess are monitors of N29a-22 (M2) and the pyramid is a planted M2 law; now energy-created from N29b-02 (new dep) and the other two read not-run, never false; acceptance runs N29b-02's audit-referee-* group."
+  },
+  {
+   "bead": "N29b-01",
+   "kinds": [
+    "sense"
+   ],
+   "what": "Its e2e note said N24a-37 'consumes this bead's rules' without depending on it; N24a-37 now depends on it and runs these step groups to a pass."
+  },
+  {
+   "bead": "N24a-39",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "query-* expected FROB-REF-896 for a changed-filter cursor; through the verb it is 806 with 896 as cause. Added the --aggregate and --traced-worlds assertions of N24a-36, the receipt-rule split of refused and unstarted, and FROB-REF-802 for the too-small budget. Later in this round: step energy-* asserted contact-active and cone-excess and the pyramid and penalty-bounce fixtures on the referee at M1; replaced by the convex-law drop with energy-created clear and the two contact-level flags not-run (a false fails), the flagged cases left to N29a-22 at M2."
+  },
+  {
+   "bead": "N24a-44",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "Finished the interrupted edit (swept rule is the looser value; refinement law stated for added endpoints on one trajectory, not a halved step; acceptance split between a synthetic scene here and N24a-39's extremum-* group; tests refinement_law and producers_at_requirement_clock). Added: a swept bound contradicted by a committed endpoint records swept-bound-violated and the tick claims only committed-endpoints; layering (folds in frob-dyn as restore-set component dyn.extremum-folds, value published with the commit at a clock boundary and read by frob-chronicle through EpochReader, no edge or inversion upward) with a check-layers criterion and test fold_value_published_with_commit; e2e names the spike trace and control extremum-as-last and logs measured extrema; the stale open question on BD-090 replaced by the settled division."
+  },
+  {
+   "bead": "N29b-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "Its acceptance had the referee commit and flag the stiff penalty bounce, but the referee's commit check 5 (N16a-08) refuses any interval creating more than 1e-6 relative energy, so the bounce faults instead: the bounce is now evaluated on its point-mass model's sums on the host (apexes 0.26, 0.57, 3.75 m, recomputed), and the referee half is the convex drop (no flag) plus a ledger-side sign error on a motor lift (r = 2W per interval, flag raised while check 5 passes), which also makes the certifier row's 'sign error raises energy-created' true. The GATE-CHRON-14 fixtures are stated by parameters instead of by N29b-23 (which depends on this bead). The e2e group audit-referee-* had no runner: N24a-37 now runs it."
+  },
+  {
+   "bead": "N29b-23",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Ran telemetry.energy and telemetry.query and asserted the created-energy flags without depending on N24a-37, N24a-36 or N29b-02: all three added (no cycle), N24a-37 moved from related; ledger-* now asserts energy-created clear and the contact-level flags not-run."
+  },
+  {
+   "bead": "N29-KA",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "KA-718's control was described as 'the stage where the digest is first printed', differing from its carrier BD-204 and from N29-CX (a mutant that always names stage 9): aligned in the row and the derivation. KA-709's carriers now name N29b-02 for the M1 referee half; due may be M3 (KA-719's carrier BD-264 is M3), and the considerations list KA-719 and the split of KA-709."
+  },
+  {
+   "bead": "N29-REF",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "898 is raised at M1 by N29a-07's aggregate registry and reaches agents through telemetry.query --aggregate (N24a-36), but the row named only N29a-07 and BD-207 and the considerations put its fixture at M2: raisers and milestone corrected, and the e2e adds the M1 fixture frob telemetry query --aggregate tdigest beside the manifest declaration."
+  },
+  {
+   "bead": "N29ax-01",
+   "kinds": [
+    "deps"
+   ],
+   "what": "owns scripts/e2e/chron_reexec_migration.sh, logged per STD-E2E, without depending on STD-E2E: added."
+  },
+  {
+   "bead": "N29b-22",
+   "kinds": [
+    "deps",
+    "tests",
+    "sense"
+   ],
+   "what": "Acceptance read the lines through telemetry.query (N24a-36, not a dependency) and asserted the created-energy flags of the fixtures (N29b-02, not a dependency): now the library view here and the end-to-end reading in N29b-23, which depends on this bead and on both verbs; the flag criterion becomes the checkable fact that r (the monitor's input) is bit-identical with and without the pair, with test created_energy_input_unchanged; the stale not-run fallback note replaced."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N35x-02",
+   "what": "file a fifth Reflex row in refusal_allocations.toml: slug insufficient-calibration, family 4xx, defined_in §22.12.4 (shield.fit refuses a calibration count below (1 − α)/α; N22b-29 step 2, N22b-32 step 14); N22-REF now lists it with the four others."
+  },
+  {
+   "bead": "BD-105",
+   "what": "state that the derived kernels K-ik-leg3r and K-jac-leg3r are emitted into the kernel library frob-kernels (layer 3): frob-control (N22a-10, swing IK and footstep clamp) consumes them and may not depend on frob-analyze, which ranks after it in layer 4."
+  },
+  {
+   "bead": "N29a-12",
+   "what": "N24a-36 now adds the option --traced-worlds and the function sample::traced_set(manifest) with its M1 body (every world of the manifest, stratum all, weight 1, when the run's level includes T2); step 9 should say it replaces that body with the address-keyed selection, keeping the signature and the option, and that its step group reads the set through the option (this bead depends on N24a-36 through BD-094, so the harness fallback is not needed)."
+  },
+  {
+   "bead": "N29a-16",
+   "what": "--traced-worlds exists from N24a-36 (M1); the harness fallback 'until it exists' can go: read the traced set and envelopes through telemetry.query directly."
+  },
+  {
+   "bead": "BD-081",
+   "what": "add row 12 to the restore-set table: the interval-extremum folds (component dyn.extremum-folds, N24a-44), owned and implemented by frob-dyn, registered in the world manifest; include it in the inventory test that mutates each component after a checkpoint."
+  }
+ ],
+ "unchanged": 15,
+ "notes": "Slice complete: 46 beads, 31 changed, 15 unchanged, none merged or new. The interrupted N24a-44 edit was coherent and is finished. This pass also found a cross-milestone error running through N29b-02, N24a-37, N24a-39 and N29b-23: the stiff penalty bounce cannot be committed on the referee (commit check 5 refuses the created energy), and contact-active and cone-excess are M2 monitors; fixed in all four. The earlier partial file counted 12 unchanged but only 10 could be identified; the remaining beads were reviewed here."
+}

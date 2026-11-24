@@ -6,9 +6,9 @@ priority: 3
 milestone: "M2"
 labels: ["m2", "suite", "marrow", "lemma", "upstream", "frankensympy", "solid"]
 parent: "WP-05"
-deps: ["BD-037", "BD-019", "NF-01", "STD-E2E"]
+deps: ["BD-019", "BD-037", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-010", "BD-011", "BD-045", "BD-021", "FD-FSYM-03"]
+related: ["FD-FSYM-03"]
 gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§12.1", "§13.1", "§33.4", "§33.8"]
 ---

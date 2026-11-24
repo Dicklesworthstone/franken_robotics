@@ -1,0 +1,368 @@
+{
+ "round": 3,
+ "slice": "F-U22c",
+ "reviewed": 43,
+ "changed": [
+  {
+   "bead": "BD-118",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied H-verbs-1: the standing smoke's randomness is the verb's `seed` input (`--seed <u64>`, string on the wire, default 0, the domain of `sim.run --seed`); stated there is no `state` input (`--state` on control.synth is FROB-REF-802) because one call runs the estimated and privileged halves; the missing-sensor case prints the estimated half `not run`. GATE-REFLEX-01 M1: this bead measures at crate level (`smoke_first_archetypes_referee`) and records no row; the binary rows come from N22c-01's receipt (one recorder, BD-247). Added unit tests smoke_runs_both_states, smoke_seed_default_and_pairing, smoke_first_archetypes_referee; class `Certified` for a checked certificate (N22a-12 governs)."
+  },
+  {
+   "bead": "N22c-01",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied F-U14b-1 and H-verbs-1: no `frob gate record`; step `receipt` runs `e2e_tier g1_known_answers GATE-REFLEX-01 --mutations` (case gate_reflex_01_m1_rows plus N22a-11's legged case) and the M1 part is entered outside the script with `record_gate --gate GATE-REFLEX-01 --receipt <hash> --part M1` by a non-implementing session; `--state` dropped from control synth (both halves read from one envelope), `--seed` kept; keys on every run verb; design new/edit in registered forms (`--template`, `set-material` selector); frob-verify on conic certificates replaced by the planar lp-farkas helper (conic is in-process until N12-16); STD-E2E header with plants; related gains N14b-06 (GATE-SKEL-03 recorder)."
+  },
+  {
+   "bead": "N22c-02",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "PO-REFLEX-03 split: planar friction fixture checked offline as `lp-farkas` (BD-132) with bundles under target/conformance/reflex/po_reflex_03/, conic certificates `Certified (in-process; offline kind pending N12-16)`; e2e header, keys, Gauntlet-form tier runs (g0_laws, g1_known_answers) with mutations; records no gate (GATE-REFLEX-03 is N22a-05's, -05 BD-251's); CX-235 plant named with the bead prefix."
+  },
+  {
+   "bead": "N22c-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2E: Gauntlet-form tier runs; distinct `--key` on every run verb (sim.run, eval.qualify, eval.promote, gait.orbit, gait.gradient, shield.check); states it records no gate (BD-251, BD-333, BD-334, BD-338 own them)."
+  },
+  {
+   "bead": "N22c-04",
+   "kinds": [
+    "correct",
+    "scope",
+    "self-contained"
+   ],
+   "what": "Removed the `eval.run --battery fixtures` check (assigned to N24b-01/N24c-10, not this bead); renamed the hand-fixture schema to `frob.reflex.handfixture/1` because `frob.fixture/1` is N24b-03's run-manifest schema at a different layout (one name for two layouts lets either loader accept the other's file); AC adds the cross-refusal check."
+  },
+  {
+   "bead": "N22c-27",
+   "kinds": [
+    "scope",
+    "deps",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Registered the fixture in N24b-03's registry (`assets/fixtures/pre-slip-aliasing/fixture.toml`, sections, cart design declaring free params mu, v0, s0 with domains, controllers under fixtures/controllers/, the two monitored-assumption listings shield.fit reads); own e2e script `reflex_preslip_fixture.sh` (Gauntlet-form tier runs, `sim run --fixture` on referee and strict, 802 control, planted mutant); plant names with bead prefix; deps + N16b-25, N24b-03, STD-E2E; scope Out names N22c-29, N22c-04, N22-CX."
+  },
+  {
+   "bead": "N22c-29",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging",
+    "tests",
+    "complete"
+   ],
+   "what": "Applied H-verbs-6: owns `sim.run --param <name>=<value>` (syntax, resolution against design then controller declarations, 802 for undeclared/fixed/out-of-domain/repeat, 102 for wrong unit, ModelId vs ControllerId, manifest; interim rule that fixture hash covers declared domains not run values, requested of N24b-03) with unit tests in frob-verbs; `--fixture pre-slip-aliasing` replaces positional `fixture:`; shield.fit in BD-338's registered form (design positional, --controller, --tasks, --tier, --listing <file>); divergence exit 0 or 2; N22c-27's script runs as stage 0; recording moved out of the script (linter): tier run `e2e_tier g1_known_answers GATE-SHIELD-06 --mutations` with case gate_shield_06, one M4 part covering both tiers via `record_gate --part M4` by a non-implementing session."
+  },
+  {
+   "bead": "N22c-44",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct",
+    "scope"
+   ],
+   "what": "Its e2e was a paragraph pointing at N22c-46 (which depends on it): now owns `scripts/e2e/shield_sampled_damping.sh` on its own deps (unit tests via e2e_cmd, shield.fit on the slider design it delivers with controller and task family, the refusal at 300, --allow-reversal, 150 both ways, 100 admitted, latency refusal at 150 and admission at 90, physical damper, frob-verify on the rational-ldlt entry, plant no-bound); slider design file in scope; `--allow-reversal` now registered in VERBS-shield (no longer 'requested'); deps + STD-E2E; related + N22-CX, N22c-46."
+  },
+  {
+   "bead": "N22c-46",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "scope"
+   ],
+   "what": "Applied H-verbs-6: `--fixture free-slider` replaces positional forms; registers the free slider in N24b-03's registry with declared free params and the fixture controller sampled-damper (kd, h, latency_ticks); `--param` cited as N22c-29's (dep added, no cycle); step 5 runs N22c-44's script as a stage; recording moved out of the script: tier run `e2e_tier g1_known_answers GATE-SHIELD-07 --mutations` with case gate_shield_07, M4 part via `record_gate --part M4` by a non-implementing session; AC updated."
+  },
+  {
+   "bead": "N22c-49",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "complete"
+   ],
+   "what": "E2E used `frob gate list`, which does not exist: now runs the gates_reflex test, N40-01's `validate_register` and `cargo xtask check-generated`, with the planted controls written to an `e2e_registries_scratch` copy and their reasons asserted; STD-E2E header and log path. S54 checked (REFLEX-04 parts M3/M4 and REFLEX-06 M4-only already agree); added the reading that KILL-RESIDUAL's M4 clause is read from BD-330's tier-run receipt filtered by KILL-RESIDUAL. Background's status list made consistent with the seven per-part statuses."
+  },
+  {
+   "bead": "N22c-05",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its script uses `sim.run --task` (N16b-25) and `--controller fixture:<name>` (N14b-06) without depending on them (convention 8): deps added (no cycle). E2E now reads the two pilot records from pilots.toml and checks frozen protocol hash and date before the first run, and asserts `pilots -- fundable --bead N22a-21` is Fundable exactly when the predictive class is `fund`."
+  },
+  {
+   "bead": "N22c-06",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "E2E reads the pilot records from pilots.toml (frozen hash and date before the run); a referee capacity refusal (FROB-REF-721, exit 5) is logged `capacity`, not a controller failure, and repeated on `batch-cpu --profile strict`; the consideration that strict adjudicates is reconciled with the common Tool rule (a project tier before the oracle)."
+  },
+  {
+   "bead": "N22c-14",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Kill-row `decision` now includes `receipts` (N40-03 requires at least one for `not-fired`): BD-249's receipt hash; AC updated."
+  },
+  {
+   "bead": "N22c-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Kill-row `decision` now includes `receipts` (BD-330's receipt; none when the pilot fired the gate); AC updated."
+  },
+  {
+   "bead": "N22c-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Kill-row `decision` now includes `receipts` (BD-331's receipts before and after a repair); AC updated."
+  },
+  {
+   "bead": "N22c-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "It recorded the kill decision with `record_gate --gate KILL-GAIT` from inside its script: a kill row has no gate parts and scripts never record (conventions 9, 10). Now the kill row receives `decision = {outcome, adr, date, session, receipts}` from the recording session, GATE-GAIT-03 is killed through `apply_decisions`, the script only checks agreement; dropped the KNOWN_DRIFTS reference; e2e gains log path, evidence fields and the two declared plants its siblings carry."
+  },
+  {
+   "bead": "N22c-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The pilot runner `--bin pilot-soil-lift` is now declared as a `[[bin]]` with a CONTRACT.md row (frob-conformance sets autobins = false, BD-025) and writes no gate row; its unit tests run with `cargo test -p frob-conformance --bin pilot-soil-lift`."
+  },
+  {
+   "bead": "N22c-22",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Its switch-over script runs `gate_reflex_10.sh` (N22c-25) without depending on it: dep added (no cycle). The GATE-REFLEX-10 re-run is re-entered from the new receipt with `record_gate --part M6` by a non-implementing session, not by the script."
+  },
+  {
+   "bead": "N22c-23",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "Applied H-cx-1: cites N22-CX `reflex-lift-resid` (CX-R22-a) and builds its plant `N22c-23:admit_on_training_residual` (gauntlet-mutations), caught by `lift_abs_value_denied` and by GATE-REFLEX-10's tier run. Applied H-verbs-1: confirmed and stated that control.lift raises FROB-REF-243 and the worded slug, never FROB-REF-421, tier M; `--runs` is now registered (stale 'requested' removed); related + N22-CX."
+  },
+  {
+   "bead": "N22c-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "It used `control.mpc --state <file>` to start from a given state, but `--state` is the state source (`privileged|estimated`, BD-252); a file would be 802. Out-of-regime query now posed by a task variant it delivers, `soil-velocity-tracking-overspeed` (starts at 1.05 m/s, 5% above the box); verb surface and e2e updated."
+  },
+  {
+   "bead": "N22c-25",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Step 4's 200 episodes on one design and task would hit the three-episode screening cap: now run under a method-experiment entry (N38a-07, dep added) named with `--protocol`, asserting `mpc-episode-cap` once without it. Step 6's `--state <file>` replaced by 200 generated tasks registered with `task new`. Recording moved out of the script: `e2e_tier g1_known_answers GATE-REFLEX-10 --mutations` (case gate_reflex_10, controls incl. N22c-23's plant) and `record_gate --part M6` by a non-implementing session."
+  },
+  {
+   "bead": "N22c-26",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Kill-row `decision` table now names `receipts` (N22c-25's receipt for not-fired and rule 3), as its own unit test already required."
+  },
+  {
+   "bead": "N22c-30",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E was one line: now checks the frozen pilot record and the design-set hash against N22a-22's, runs the episodes, timing and both negative controls through the pilot harness, asserts `pilots -- fundable --bead N22c-31` matches the verdict, with log path and metrics for the controls."
+  },
+  {
+   "bead": "N22c-31",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its e2e was N22c-33's script, which depends on it (convention 11): now owns `scripts/e2e/control_planner_record.sh` (latency measurement, freeze and repeat digest, the three refusals posable at M3 with named conditions, control.show, replay of an episode under the record, plant zero-delay-frozen); deps + STD-E2E; related + N22c-33."
+  },
+  {
+   "bead": "N22c-32",
+   "kinds": [
+    "e2e-logging",
+    "complete",
+    "scope"
+   ],
+   "what": "Applied H-cx-1: cites N22-CX `reflex-privileged` (CX-R22-d) and registers its planted input `N22c-32:privileged_run_offered` (kind planted-input) in controls.toml. Its e2e was N22c-33's script, which depends on it: now owns `scripts/e2e/delivered_lane.sh` (crate tests, declared task, freeze through N22c-31, a `--dry` qualification over the conforming record, `no-record` on an undeclared task and on the privileged planted input, plant kind-label-check)."
+  },
+  {
+   "bead": "N22c-33",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "The cart fixture had no owner: this bead now delivers and registers `cart-wall-two-frictions` (design cart-wall, task cart-stop) in N24b-03's registry, entered with design new --file and task new; clause D used `eval ledger` (a campaign index) for the phase ledger: now `run show --phase-ledger` (N21a-27); tier run in `e2e_tier` form with case gate_reflex_11 and `record_gate --part M3`; control (a) cites N22-CX `reflex-privileged`."
+  },
+  {
+   "bead": "N22c-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Kill-row decision now carries `receipts`, and the deferred outcome adds `deferred_to = \"M4\"` with its reason, as N40-03 requires."
+  },
+  {
+   "bead": "N22c-36",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Dropped the stale note that `--period` was still requested (VERBS-gait lists `--form` and `--period` with this bead as owner); the CX-R22-e control is now a named plant `N22c-36:stroboscopic_on_autonomous_loop` under gauntlet-mutations."
+  },
+  {
+   "bead": "N22c-38",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The script no longer records: step 6 produces GATE-GAIT-04's receipt with `e2e_tier g1_known_answers GATE-GAIT-04 --mutations` (case gate_gait_04); a non-implementing session records the M4 part with `record_gate --part M4`."
+  },
+  {
+   "bead": "N22c-39",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Rule 4 maps to `deferred` (default M5); the decision is written as the kill row's `decision` with receipts (battery receipt and N22c-38's) and apply_decisions, not with record_gate; the script produces the battery receipt and records nothing; the KNOWN_DRIFTS reference is gone."
+  },
+  {
+   "bead": "N22c-41",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "tests",
+    "correct"
+   ],
+   "what": "Its own script used `stride-seq-*` fixtures that it attributed to the later N22c-42: this bead now registers the four fixtures (counterexample, self-loops, commuting, dense-12) and the task `alternating-risers`, and builds the CX-R22-f plant `N22c-41:per_mode_multiplier_test`; the stale note that `--task` on gait.orbit was still requested now cites VERBS-gait's row."
+  },
+  {
+   "bead": "N22c-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Its script called record_gate: step 5 now produces the receipt with `e2e_tier g1_known_answers GATE-GAIT-05 --mutations` (case gate_gait_05, the per-mode plant caught in the same run), and recording with `--part M4` happens outside the script; the fixtures and the plant are attributed to N22c-41."
+  },
+  {
+   "bead": "N22c-43",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KILL-STRIDESEQ was recorded with record_gate: it is now the kill row's `decision` (outcome, adr, date, session, receipts with N22c-42's receipt) entered by a non-implementing session, and GATE-GAIT-05 is killed through apply_decisions. The script records nothing and gains a log path and plants; the KNOWN_DRIFTS reference is gone."
+  },
+  {
+   "bead": "N22c-47",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-verbs-1: `control synth` no longer takes `--state` (estimated half of the standing smoke read instead); every run call has a `--key` and runs on a `design new` instance. Recording now goes through `e2e_tier g1_known_answers GATE-REFLEX-01 --mutations` (case gate_reflex_01_m2_rows beside N22a-13's legged case), and a non-implementing session records the M2 part with `--part M2`, matching BD-247 and N22a-13 (which writes no row)."
+  },
+  {
+   "bead": "N22c-48",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-verbs-1: no `--state` on `control synth`; the strict-profile check is now a `sim run --profile strict` per task, since control.synth has no profile input; designs are `design new` instances; the record names case gate_reflex_01_m4_rows and the e2e_tier form; the AC reads one M4 part with per-archetype values."
+  },
+  {
+   "bead": "N22c-50",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The script ran the predictive controller on device with `frob sim run`, but its own AC refuses that before the ADR. A measurement harness, `crates/frob-control/examples/open_reflex_1.rs`, now runs the device arms, and its batch-cpu arm is tied bit for bit to a `frob sim run` run. The rule is committed as a proposed ADR before data. The script asserts the refusal and gains a log path, plants, a summary and a unit-test file."
+  },
+  {
+   "bead": "N22c-51",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Removed the hedge \"(or the registry the ladder already reads)\": `registries/ladder.toml` is created here, and N22a-18's `registries/control_ladder.toml` does not repeat the constants."
+  },
+  {
+   "bead": "N22c-52",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The script's wrapped controller is made concretely (`sim run … --controller baseline+residual:zero`, ControllerId from the run header, then `control show`); the pilot record is read from pilots.toml. Added the identity change through the unit test, a plant, a summary line and the unit-test file."
+  },
+  {
+   "bead": "N22c-53",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "No 4 ms planner setting was registered (BD-252 has only the 20 ms published ones): this bead now registers `<setting>-h4` variants. The rule lives in the frozen experiment protocol; the script reads experiments.toml and pilots.toml, and gains a log path, the `unpaired-addresses` plant, a summary and a unit-test file."
+  },
+  {
+   "bead": "N22c-54",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Removed the KNOWN_DRIFTS reference. Named the unit-test file (beside N22a-34's simultaneous.rs). The script checks the ADR's precedence and gains a log path and summary."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N22a-11",
+   "what": "GATE-REFLEX-01 M1 has one recorder, N22c-01 (BD-247). Register your legged stand-and-traverse case under the GATE-REFLEX-01 entry of g1_known_answers so N22c-01's `e2e_tier g1_known_answers GATE-REFLEX-01 --mutations` receipt covers it, and write no gate row yourself. Also use registered CLI forms: `design new <name> --template <archetype> --key`, `design edit <design> <op> <target> …` (not `--replace-actuator --as`), `sim run <design>` (not `--design`), no `--gait --speed`, and `--key` on every run verb."
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "control.synth: state the exit codes N22a-12 fixes (ok with a saturation or clamp flag exits 2; a checked certificate's class is `Certified`), as BD-118 now cites them."
+  },
+  {
+   "bead": "N22c-28",
+   "what": "Its e2e coverage is only N22c-29's script, which depends on it (convention 11): give it its own script exercising the timeliness rule and `shield.check`'s `late-alarm` on the pre-slip fixture listings (N22c-27's `listing-arm1.toml`, `listing-arm2.toml`) and the planted distinguishing-sensor variant."
+  },
+  {
+   "bead": "N24b-03",
+   "what": "State in the fixture manifest and pre-run record how declared free parameters are handled: a section declaring each free parameter's name, dimension, domain and default; the ConstantsHash covering those declarations but not a run's `--param` values (so in-domain values are not FROB-REF-530, a changed domain or default is). N22c-29 uses this as an interim DESIGN rule."
+  },
+  {
+   "bead": "N12x-04",
+   "what": "Its pending verb stage cites `frob shield fit fixture:free-slider …` in step 5 of gate_shield_07.sh. The fit now lives in N22c-44's `scripts/e2e/shield_sampled_damping.sh` as `frob shield fit assets/fixtures/free-slider/slider.fbot --controller assets/fixtures/free-slider/hold.toml --tasks assets/fixtures/free-slider/tasks/hold.toml --backup damping --param kd=100 --param h=0.01 --key …`; log the stage as pending on that script."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "All 43 beads read in full; 40 changed, 3 unchanged (N22c-35, N22c-37, N22c-40). Defect classes that recurred: gate scripts calling record_gate, which now produce receipts with e2e_tier, with recording done outside the script with --part; kill decisions written with record_gate, now the kill row's decision with receipts and apply_decisions; decision tables without receipts; mechanism beads whose only e2e was a dependent's script, or whose script used fixtures a later bead registered (N22c-41, N22c-44, N22c-28 by request); `--state` misused on control.synth (H-verbs-1) and as an initial state on control.mpc; the control.mpc screening cap left unhandled; unowned fixtures and settings; the positional fixture: form on sim.run; stale 'requested' notes for options that are now registered; KNOWN_DRIFTS cited inside beads. Every dependency added was checked with graph_check and none forms a cycle. No bead was split, merged or superseded. Every touched file parses with front matter, valid list fields and seven sections. The slice looks settled apart from the five open requests."
+}

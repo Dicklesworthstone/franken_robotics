@@ -6,9 +6,9 @@ priority: 4
 milestone: "M8"
 labels: ["m8", "lemma", "frob-lemma", "frob-foundry", "moonshot"]
 parent: "WP-80"
-deps: ["BD-380", "N12-06", "N12-02"]
-needs: ["§31.13: the firmware exporter, its range analysis and Q-format assignment, which emit the overflow queries (BD-438)", "§21.7: the reserved fixed-point types q16_16 and q32_32 of the kernel IR (BD-018)"]
-related: ["BD-438", "N12-07", "CARD-T-09"]
+deps: ["BD-027", "BD-380", "N12-02", "N12-06", "N31b-10", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["N12-07", "N21a-16", "N21a-26", "N31a-44", "N31a-58", "N31b-02", "N31b-29"]
 gates: []
 plan_refs: ["§12.3 (T-14)", "§12.1 (bit-vector decisions)", "§31.13", "§31.16 (PO-FOUNDRY-04)", "§42 OPEN-FOUNDRY-6", "Appendix C (firmware export)"]
 ---
@@ -79,6 +79,7 @@ board (not claimed: `timing: no-claim` until a receipt from real hardware is imp
 - [ ] A query that exceeds the time budget is reported undecided and the export is refused.
 - [ ] Negative controls: a proof stream with one step altered fails replay; a certificate bound to another
       kernel hash is rejected; a range silently widened after certification invalidates the certificate.
+- [ ] `scripts/e2e/card_t14.sh` exits 0.
 
 ## Test plan
 
@@ -89,12 +90,27 @@ board (not claimed: `timing: no-claim` until a receipt from real hardware is imp
 `integrator_one_step_query_returns_32400`; `clamped_integrator_invariant_holds` (base and step queries
 unsatisfiable with a clamp at ±32,000); `correlated_terms_need_bitvectors` (a·x − a·y with x, y in a narrow
 common range: interval analysis reports a possible overflow that the bit-vector query refutes);
-`timeout_is_undecided_refused`; `altered_proof_stream_fails_replay`.
+`timeout_is_undecided_refused`; `altered_proof_stream_fails_replay`; `other_kernel_hash_rejected`;
+`widened_range_invalidates_certificate` (the declared input range of the PI loop's error widened by one count after
+certification: the certificate's range digest no longer matches and the export is refused); `parked_row_prints_no_class`.
 
 ### End-to-end script and logging
 
-The firmware epic's export script drives this card: it logs, per function, the number of queries, the slowest
-query against the 2 s budget, undecided counts (threshold 0 for export), and the certificate digests.
+`scripts/e2e/card_t14.sh` (owned by this bead; idempotent; no seed, the queries are exact). Steps: `laws`, `cargo
+test -p frob-lemma --test cards -- t14`; `row`, `frob --json prove list` filtered to T-14, asserting `parked` with
+no class while the epic is unfunded; `fixtures`, the card's fixture queries (the three seeded counterexamples, the
+clamped integrator's base and step queries, the correlated-terms query, the widened-range and other-kernel-hash
+certificates) decided through the test harness with `fln-verdict::bv_decide` and their proof streams replayed by
+`fln` on the Linux host of BD-380 (on a host without `fln` the replay step is logged `pending` with the reason and
+never passed); `controls`, the altered proof stream, which must fail replay. Its NDJSON lines (STD-E2E helper,
+`target/e2e-logs/card_t14/<utc>.ndjson` with a transcript) carry `ts`, `script`, `bead` ("CARD-T-14"), `step`
+(`T-14/<fixture>/<intermediate>`), `event`, the exact command line, exit code, wall time per query in seconds
+against 2 s, the verdict (`unsat`, `sat` with the model, or `undecided`), the formula digest, the proof stream
+digest and the `fln` replay result, the bound kernel's content hash, and on a `sat` answer the overflowing input
+and the intermediate's value at extended width; a `summary` with assertions passed, failed and pending. On the
+funded branch the firmware epic's export script, `scripts/e2e/foundry_firmware.sh` (N31a-58, which depends on this
+card: `frob foundry export <design> --with-firmware --controller knee-pi --json`), drives the card through the
+exporter on real controllers with the same line format; that run belongs to N31a-58.
 
 ### Known answers and negative controls
 

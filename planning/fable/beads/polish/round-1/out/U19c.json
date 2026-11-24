@@ -1,0 +1,476 @@
+{
+ "round": 1,
+ "slice": "U19c",
+ "reviewed": 49,
+ "changed": [
+  {
+   "bead": "BD-163",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "added dep N19c-27 (the invariant ledger, a registry that comes first; graph finding); stated which eps_tri the interim brick bound records (a-priori (sqrt3/2)*s = 17.3 mm only for bricks with a sharp source feature, the measured fine-cell-centre residual labelled Tested otherwise) instead of the ambiguous 'the larger of the two'"
+  },
+  {
+   "bead": "BD-164",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "layering: frob-scene (layer 2) cannot call the device-backend trait defined in frob-dyn (layer 3, rule L-10); the pool image is host bookkeeping, admit/release return an UploadPlan the layer-3 caller applies; device key opaque from frob-core. Dep N19c-16 added (one byte model) with test stats_match_byte_model. Smoke script logging gained the standard fields, thresholds, failure detail and summary"
+  },
+  {
+   "bead": "BD-235",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "three refusals had no code (no rule matched; move-group of a group cited by a frozen study; stored counts differ from a recount): now FROB-REF-324, -325 and -326 (integrity, exit 9) proposed in N19c-42; all-or-nothing add; stale parent and key reuse named as FROB-REF-804/-803 exit 7; tests for the new refusals; deps N19c-27 and N19c-42; references to superseded N19c-12 now N24a-31"
+  },
+  {
+   "bead": "BD-236",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "layering: the bank in frob-scene takes a DeviceBudgetSnapshot value from the caller and returns UploadPlans instead of calling the Spark arena; evicting a pinned pack was an uncoded refusal, now a finding (not_evicted with holder, exit 2) and --free reports its shortfall; cap arithmetic corrected to 189.295 GiB = 203.25 GB; test estimate_matches_byte_model"
+  },
+  {
+   "bead": "N19-CX",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e log lines now carry the standard fields and, for an uncaught mutant, the row, arm, first agreeing value and reproduce paths"
+  },
+  {
+   "bead": "N19-REF",
+   "kinds": [
+    "correct"
+   ],
+   "what": "item 4 cited a needs field that is empty; now names the seven uncoded refusals (four chapter, three split) and the proposed numbers 318, 319, 322 to 326; FROB-REF-502 raiser corrected from superseded N19c-12 to N24a-31"
+  },
+  {
+   "bead": "N19c-03",
+   "kinds": [
+    "deps"
+   ],
+   "what": "N19c-27 moved from related to deps (carries INV-HAB-04; graph finding)"
+  },
+  {
+   "bead": "N19c-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "negative control used an undefined symbol |s|; now the rule's accuracy a with the door D3 numbers"
+  },
+  {
+   "bead": "N19c-06",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "acceptance needs a probe request: dep N19c-05 added; e2e script runs scene.probe-request and logs the standard fields, failure detail and summary"
+  },
+  {
+   "bead": "N19c-07",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "used the withdrawn spelling 'probe-request --scene <id>'; now the positional reference with --status, plus a request on the unresolved answer of step 5c; dep N19c-09 added (OPEN-HAB-5 blocks the private lane)"
+  },
+  {
+   "bead": "N19c-09",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "its contract check and tests run the importer: dep N19c-04 added and scope says so; e2e adds the altered-schema case and standard logging"
+  },
+  {
+   "bead": "N19c-11",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep N19c-27 added (carries INV-HAB-09 rows; graph finding)"
+  },
+  {
+   "bead": "N19c-13",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "recount mismatch was an uncoded refusal: now FROB-REF-326 (integrity, exit 9) from N19c-42; a tag selector is a schema failure FROB-REF-802 exit 3; leak-suspect promotion refusal named FROB-REF-502; deps N19c-27 and N19c-42; tests and e2e assert codes and exits with standard logging; superseded N19c-12 reference now N24a-31"
+  },
+  {
+   "bead": "N19c-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "layering: the handle named Arena's types from frob-scene (layer 2 under frob-arena, layer 4); now reaches the service through a SealedScorer trait frob-scene defines (L-1, L-10), with test no_arena_dependency. Its tests and e2e used FROB-REF-840 (BD-261), eval.qualify and campaign close, all of which depend on this bead: now handler-level tests (a sealed identity answers exactly as an absent one, no existence oracle) and an e2e through a conformance case with a test key; the 840 path is N24b-24's. Retired family: typed SealedError::Retired, verb refusal left to N24b-17. Superseded N19c-12 reference now N24a-31"
+  },
+  {
+   "bead": "N19c-15",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "the corrupted-manifest step now asserts FROB-REF-326 exit 9 with its block; deps N19c-27 (INV-HAB-05, -09 rows) and N19c-42 added"
+  },
+  {
+   "bead": "N19c-16",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "recount needs compiled packs: dep BD-163 added; the e2e asserted the sim.estimate scene term, which N36-16 owns and already tests (it depends on this bead): now asserts the recount, the band interval and the three show fields, with standard logging; acceptance names the three consumers that depend on the model"
+  },
+  {
+   "bead": "N19c-18",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "decision script logs standard fields, the gate row's provenance, per-scene inputs with their class, both ratios, the repair cycle and the disagreeing values; checks the inputs against a recount"
+  },
+  {
+   "bead": "N19c-20",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "layering: 'uploads go through the backend trait' from frob-scene is barred (L-10); now host-side images and UploadPlans applied by the layer-3 caller. The 31-buffer plan check is BD-174's; the launch-group partition is placed in the placement planner of frob-kernels (BD-178) as launch_groups; planner and digest tests moved to frob-kernels and frob-conformance; new tests upload_plans_cover_segments and launch_groups_partition; standard logging"
+  },
+  {
+   "bead": "N19c-21",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the tie rule by SceneId contradicted the acceptance criterion (equal cost: least recently used goes) and made the worked ageing trace depend on identifier order: ties now by last-used epoch first, trace restated exactly; pins: admission refuses 314 without needless eviction, evict --free reports its shortfall with exit 2 as BD-236 says; dep N19c-20 (eviction works within segments); new tests; standard logging"
+  },
+  {
+   "bead": "N19c-22",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "dep N19c-27 (INV-HAB-03); it raises FROB-REF-319 but had no emit-site tests: admission and reset cases, the scene-set lease, and the job ending at the chunk boundary with committed chunks kept; e2e adds the 319 step; standard logging"
+  },
+  {
+   "bead": "N19c-23",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "identity mismatch named FROB-REF-323 (N19c-42 row 4, raised here) and private export FROB-REF-731 exit 5; dep N19c-27 (INV-HAB-10); test private_pack_not_sent_731; e2e adds both refusal steps and standard logging"
+  },
+  {
+   "bead": "N19c-25",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the placebo arm added five runs that the count of fifteen policies omitted: now 15 plus 5; tests episodes_not_units and placebo_contrast_includes_zero; standard logging with the leak-check result, sequences per look and no-recompilation counters"
+  },
+  {
+   "bead": "N19c-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "placebo input aligned with the experiment's B16' arm; standard logging with provenance, intervals, flag and the disagreeing values"
+  },
+  {
+   "bead": "N19c-27",
+   "kinds": [
+    "split",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "made a pure registry (graph finding: mechanism beads must depend on it, which its crate-wide tests on packs made impossible); crate-wide INV-HAB-01/-02 tests moved to new N19cp1-01; added controls and status fields, audit tests on synthetic test lists, STD-E2E dep, fuller e2e logging"
+  },
+  {
+   "bead": "N19c-28",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "the battery's acceptance requires every row due at M2 or M3 to pass, but the bead depended on none of those rows' beads: added the 19 mechanism and gate beads of those rows (tests follow mechanisms); M4 and M6 rows stay pending and run at those milestones' exit reviews; 'fourteen' controls corrected to fifteen"
+  },
+  {
+   "bead": "N19c-29",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "GATE-HAB-16 adapter clause now taken at M2 from the admission probe's real-sibling record (N33c-46), consistent with N19c-39 and N19c-40; e2e runs a planted-register negative case and logs standard fields per gate and part"
+  },
+  {
+   "bead": "N19c-30",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the inventory reads the seven hazard registries and the tests drive the promotion path: deps N19a-31 to N19a-37 and N19a-39 added; e2e adds the unsourced-norm loader case and standard logging"
+  },
+  {
+   "bead": "N19c-31",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "experiment logging now carries standard fields, pack identities, resident homes against 150, mismatches and the decision rule's clauses"
+  },
+  {
+   "bead": "N19c-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "said memory came from N19c-19's run at each candidate, which runs only the default and 1 cm for two archetypes: now this bead runs the battery at each candidate; dep N18b-37 added so the shared memory table's equality check is unconditional, with test memory_table_agrees_with_open_trac_1; standard logging"
+  },
+  {
+   "bead": "N19c-33",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Considerations named an open-plan variant that the fixture and acceptance lacked: added, reported beside and outside the falsifier; kill decision references now name stage A (N19cp1-02) and stage B (N19c-37); standard logging"
+  },
+  {
+   "bead": "N19c-34",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "dep N19cp1-02 (stage A of KILL-FARFIELD must clear before the mechanism); emit-site tests for FROB-REF-322 under mode require (D3 and no stencil); e2e adds the 322 step and standard logging"
+  },
+  {
+   "bead": "N19c-35",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "--field-reuse require refused 'if reuse cannot be used' with no code for budget, threshold or version reasons: all now FROB-REF-322 with failed_precondition (N19c-42 row 3 extended to match); dep N19c-42; tests for each reason; e2e adds the require refusal and cancel steps with standard logging"
+  },
+  {
+   "bead": "N19c-36",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "said the Habitat register bead creates the GATE-HAB-15 row; N40-10 creates it and N19c-29 adds controls and the owner's claim-reading confirmation, without which the record stays blocked: dep N19c-29 added and the script checks the record is unblocked"
+  },
+  {
+   "bead": "N19c-37",
+   "kinds": [
+    "split",
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "stage A (pilot falsifier and reachable a) must precede the mechanism, yet sat in a bead that depends on the mechanism's gate, so 'dated before any mechanism bead started' could not hold: stage A split to N19cp1-02, this bead is stage B with dep on it; stage A tests moved; new tests stage_b_requires_stage_a and stage_a_fired_short_circuits; standard logging"
+  },
+  {
+   "bead": "N19c-38",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e adds the refused non-uniform brick share and logs standard fields, singular values, the refinement method and expected values"
+  },
+  {
+   "bead": "N19c-39",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "e2e required the viewer's pick, which is not a dependency: now run where present and logged not-run otherwise (asserted by N19c-40 and N33c-46); adds the 10^3-case vectors run and standard logging"
+  },
+  {
+   "bead": "N19c-40",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "recorded the adapter clause only against the in-crate convention reproduction until M3, while N19c-39 and N33c-46 run the real sibling primitive at M2: dep N33c-46 added and the clause reads its record as 'adapter: sibling'"
+  },
+  {
+   "bead": "N19c-41",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the private-scope refusal is named: FROB-REF-731, exit 5, with no private path in its block"
+  },
+  {
+   "bead": "N19c-42",
+   "kinds": [
+    "complete",
+    "tests",
+    "title"
+   ],
+   "what": "added rows 5 to 7 (proposed FROB-REF-324, -325, -326; 326 an integrity fault with exit 9) for the split beads' uncoded refusals, with triggers, block fields, repairs, exits, verb lists, binding, tests, e2e steps and controls; rows 5 to 7 filed in the allocation registry of N35x-02 with an agreement test; row 3 extended to the require-mode reasons raised by N19c-35"
+  },
+  {
+   "bead": "N19cx-01",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "world-fixed test stated exactly (from the full group, a +x light leaves {identity, mirror x}); e2e log path and standard fields"
+  },
+  {
+   "bead": "N19cx-02",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e log path, standard fields, block and slot per address, field difference against bounds and skipped steps"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N19cp1-01",
+   "why": "split from N19c-27: crate-wide structural tests of INV-HAB-01 and -02 (no pack mutators, identity on every byte over 1,000 packs, GLB decoder reachable only from the viewer) need BD-162 and BD-163, so they cannot live in a registry bead that mechanisms depend on"
+  },
+  {
+   "bead": "N19cp1-02",
+   "why": "split from N19c-37: stage A of KILL-FARFIELD (the pilot's falsifier and the reachable a) must be decided before the mechanism starts; N19c-34 now depends on it, and N19c-37 keeps stage B after GATE-HAB-15"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N19a-09",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-10",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-26",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "BD-234",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-26",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-28",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-35",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-22",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-09",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-40",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-41",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "BD-162",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-20",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-30",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-45",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-14",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-01",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19b-05",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-16",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-21",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-23",
+   "what": "add N19c-27 to deps: this bead carries a row of the Habitat invariant ledger (INV-HAB or PO-HAB), and the ledger is now a pure registry that mechanism and test beads depend on (N19c-27 depends only on BD-025, N12-52, STD-E2E, STD-TEST, so no cycle)"
+  },
+  {
+   "bead": "N19a-23",
+   "what": "the crate-wide structural tests of INV-HAB-01 and -02 (no pack mutators, identity on every byte, GLB only in the viewer) are now N19cp1-01; reference them rather than repeating them"
+  },
+  {
+   "bead": "N35x-02",
+   "what": "registries/refusal_allocations.toml: reserve FROB-REF-324, -325 and -326 for the scene-split refusals of N19c-42 (unmatched group without default; move of a cited group; split recount mismatch, integrity, exit 9) so no other chapter's allocation takes them; N19c-42 files the rows and tests that both registries agree"
+  },
+  {
+   "bead": "N24b-17",
+   "what": "step 3 says opening a campaign on a retired family is refused but gives no code; assign one (N19c-14's handle returns the scorer's refusal for score on a retired sealed family and defers the code to this bead)"
+  },
+  {
+   "bead": "BD-178",
+   "what": "N19c-20 adds launch_groups(bucket, &VariantSegmentMap) to the placement module of frob-kernels (the plan's 'the placement planner groups worlds by segment'); add N19c-20 to related and call it when a bucket's variants span segments"
+  },
+  {
+   "bead": "BD-261",
+   "what": "N19c-14 now guarantees at handler level that a sealed identity answers exactly as an absent one; the sealed-field audit and FROB-REF-840 tests (and N24b-24's firewall steps) should iterate the same registry-derived handler list"
+  }
+ ],
+ "unchanged": 8,
+ "notes": "All 49 beads reviewed. Main themes: layering (frob-scene at layer 2 called device and Arena code), uncoded refusals (now rows 318, 319, 322 to 326 in N19c-42), ledger and test-before-mechanism dependency direction, and two-stage kill decisions. Superseded N19c-12 references replaced by N24a-31. Unchanged: N19c-01, N19c-02, N19c-04, N19c-08, N19c-10, N19c-17, N19c-19, N19c-24."
+}

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "skeleton", "frob-design", "frob-model", "frontier", "spine", "spec", "test"]
 parent: "WP-07"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§10 C-38: port-Hamiltonian actuator components, the target of the dynamic functor (SPEC-C-38, another unit)", "§29.9: the energy ledger, which reads the port structure at run time (BD-092)"]
-related: ["BD-056", "BD-060", "BD-061", "BD-062", "BD-063", "BD-076", "BD-077", "N10a-11", "N10a-19", "SPEC-C-02", "SPEC-C-09", "CARD-T-15", "CARD-T-29", "N10-KA1", "BD-054"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-054", "BD-056", "BD-060", "BD-061", "BD-063", "BD-076", "N10a-11", "N10a-19", "SPEC-C-38"]
 gates: ["GATE-SKEL-02", "GATE-SKEL-06", "GATE-SINEW-02", "GATE-CHRON-03"]
 plan_refs: ["§10 C-12", "§9 D-11", "§14.6", "§14.14", "§12.3 T-15 T-29", "§38.7", "Appendix C.1", "Appendix D.4", "Appendix M KA-075 KA-076 KA-078 KA-079", "Appendix N CX-037"]
 ---
@@ -165,8 +165,10 @@ single-precision tiers; M1 and M2). Cards: T-15, T-29 (and T-12 in N10a-11).
 - [ ] Each functor commutes with composition on 10⁴ random terms and substitutions.
 - [ ] The gear-train and motor–gear–link fixtures balance exactly in rational arithmetic.
 - [ ] The reversed-port design and the algebraic-loop design are refused with FROB-REF-108.
-- [ ] A `mirror`-built quadruped equals its hand-expanded form under all five functors (identical model
-      identity).
+- [ ] A `mirror`-built quadruped equals its hand-expanded form under all five functors: every functor's image
+      is equal with bodies paired by placement, and only identifiers, source sets and the parity record
+      differ. The two `ModelId`s may differ, because the kinematic section records each body's parity (BD-061);
+      this is the comparison N41p1-01 makes on the production compiler.
 - [ ] KA-075, KA-076 and KA-078 registered with tolerances and controls set; the register row of C-12 filled.
 
 ## Test plan
@@ -190,9 +192,11 @@ single-precision tiers; M1 and M2). Cards: T-15, T-29 (and T-12 in N10a-11).
 
 `scripts/e2e/spec_c12.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G0 and G1 rows
 KA-075, KA-076, KA-078; `frob --json design check fixtures/ports/reversed_sign.fbot` (expects FROB-REF-108
-with ranked repairs); `frob --json design check fixtures/ports/algebraic_loop.fbot` (same code); `frob --json
-sim run --tier referee` on the motor–gear–link fixture followed by `frob --json telemetry energy`, asserting
-the four ledger terms and the residual against 10⁻⁹ relative. Log `target/e2e-logs/spec_c12/<utc>.ndjson`
+with ranked repairs); `frob --json design check fixtures/ports/algebraic_loop.fbot` (same code); `frob sim run
+fixtures/ports/motor_gear_link.fbot --tier referee --seconds 2 --seed 0 --key spec-c12-mgl --json` (the
+fixture is the positional design; a run verb, so it carries its idempotency key) followed by `frob telemetry
+energy <run> --json` on the run identifier that envelope returns, asserting the four ledger terms and the
+residual against 10⁻⁹ relative. Log `target/e2e-logs/spec_c12/<utc>.ndjson`
 with transcript: commands, exit codes, refusal codes and repairs, ledger terms with units, the evidence block,
 and on failure the first functor and term whose images differed. Final `summary` line.
 

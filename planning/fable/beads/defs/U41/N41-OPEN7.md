@@ -1,14 +1,14 @@
 ---
 key: "N41-OPEN7"
-title: "registries/open.toml, part 7: open questions of suite consumption, workspace, numerics, performance and safety (23 rows, one decided)"
+title: "registries/open.toml, part 7: suite, workspace, numerics, performance, safety questions (23 rows, one decided)"
 type: "task"
 priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "suite", "workspace", "spark", "safety", "registry", "solid"]
 parent: "EPIC-M0"
 deps: ["N41-03"]
-needs: ["§33 to §37: the decision and experiment beads named in the last column are owned by the chapter units; for OPEN-SAFE-2, -3 and -4 this unit also wrote an owner packet (N41-11) and both keys are named"]
-related: ["N41-OPEN6", "N41-OPEN8", "N41-11", "N41-14", "N33c-33", "N33c-34", "N33c-35", "N33c-04", "N40-35"]
+needs: []
+related: ["N41-OPEN8"]
 gates: []
 plan_refs: ["§42.3", "§42.2", "§33.16", "§34.13", "§35.16", "§36.15", "§37"]
 ---
@@ -45,7 +45,7 @@ decisions.
 | OPEN-SUITE-5 | The budget for the cold build of the M1 closure on the build workers | The machine envelope: one hour, 16 GiB, 8 cores | Owner | INT-FSIM-01 | M0 | N33c-34 |
 | OPEN-SUITE-6 | Whether computational crates take asupersync's `Cx` or a capability-free token from `frob-core` | `Cx` wherever cancellation is observed; the token only if INT-ASUP-01 fails after FD-ASUP-01 and a fallback splits the graph | Tether lead | INT-ASUP-01 | M0 | N33c-35 |
 | OPEN-WS-1 | The rank order inside layers 4 and 5, where the product chapters may need edges the crate map did not foresee | The order of the crate map; a change is an ADR | Build lead | The first contract of each crate | M1 | N34-02; BD-003 |
-| OPEN-WS-2 | Whether `frob-tui` stays in the core workspace or becomes an annex | Core. If the admission INT-FTUI-01 shows that frankentui does not build on T, the remedy is an upstream change in frankentui or the toolchain train, with no dashboard until it lands | Tether lead | INT-FTUI-01 | M3 | N33c-23; BD-300 |
+| OPEN-WS-2 | Whether `frob-tui` stays in the core workspace or becomes an annex | Core. If the admission INT-FTUI-01 shows that frankentui does not build on T, the remedy is an upstream change in frankentui or the toolchain train, with no dashboard until it lands | Tether lead | INT-FTUI-01 | M3 | N33c-23 (pilot); N32b-31 (KILL-TUI); the dashboard it concerns is BD-300 |
 | OPEN-WS-3 | The stable release named in `frob-cert`'s toolchain file | The newest stable release on the day of its first commit, then moved only by ADR | Lemma lead | The first commit of `frob-cert` | M0 | BD-026; N34-25 |
 | OPEN-WS-4 | Whether the mission file format is owned by `frob-spec` or by `frob-mission` | `frob-spec`, so that there is one parser for requirement terms | Augur lead | The contract of `frob-spec` | M1 | N24a-01; N34-19 |
 | OPEN-WS-5 | Whether the Gymnasium adapter binds in process or across a process boundary | Across a process boundary with shared array files, so that no interpreter is ever in a `frob` binary | Cortex lead | The adapter's contract | M3 | N23b-27 |
@@ -55,8 +55,8 @@ decisions.
 | OPEN-NUM-4 | The limit for `Degraded: ill-conditioned` and the refinement count of the `stiff` profile | Conditioning figure κ̂·u above 0.1; one refinement step | Spark lead | GATE-SPARK-18 | M2 | N35-29 (also N21b-38) |
 | OPEN-PERF-1 | The tolerance ratio of 0.67 against the incumbent and the band below it | As stated; below 0.33 KILL-PARITY fires | Performance lead | GATE-SPARK-03 | M2 | N36-24 |
 | OPEN-PERF-2 | Which incumbent revisions and configurations are the comparators | The revisions in the source register, frozen by the ten-fold protocol before any paired run | Gauntlet lead | GATE-SPARK-21 | M0 | N36-25 |
-| OPEN-PERF-3 | A credible energy source on each machine | A named gap in every disclosure block | Performance lead | Nothing | none | considerations of BD-216 |
-| OPEN-PERF-4 | How the reference performance rows are restated if the default physics step moves from 2 ms (OPEN-KIN-1) | Every row is restated with its new decimation before any gate cites it | Performance lead | Every gate that cites the reference rows | M2 | N36-26 (with N16c-06) |
+| OPEN-PERF-3 | A credible energy source on each machine | A named gap in every disclosure block | Performance lead | Nothing | none | considerations of N36-13 (the disclosure block of the harness BD-216) |
+| OPEN-PERF-4 | How the reference performance rows are restated if the default physics step moves from 2 ms (OPEN-KIN-1) | Every row is restated with its new decimation before any gate cites it | Performance lead | Every gate that cites the reference rows | M2 | N36-26 (with N16a-16) |
 | OPEN-SAFE-1 | Which weight layout and which policy architectures are on the allowlist at M2 | The single layout and family of the learning chapter's reference policy | Cortex lead | GATE-SAFE-07 | M2 | N37-08 |
 | OPEN-SAFE-2 | Whether policy weights trained in a private or research-only scene inherit its mark and licence set | They inherit both | Owner | GATE-SAFE-04, GATE-SAFE-05 | M2 | N41-11 (owner packet); N37-20 |
 | OPEN-SAFE-3 | Whether sandboxed custom reward terms are admitted, and in what sandbox | Not admitted; the closed expression language only | Owner | M4 | M4 | N41-11 (owner packet); N37-09 |

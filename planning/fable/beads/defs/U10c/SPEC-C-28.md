@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "spine", "spec", "frontier", "nemesis", "frob-nemesis", "test"]
 parent: "WP-55"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["N10-CX", "N10-KA3", "N10a-01", "N26a-06", "STD-E2E", "STD-TEST", "VERBS-operator"]
 needs: []
-related: ["BD-271", "BD-272", "BD-274", "BD-275", "BD-279", "BD-293", "BD-369", "N10-CX", "SPEC-C-29", "SPEC-C-33", "N10c-10", "BD-270", "BD-052", "N10a-02"]
+related: ["SPEC-C-29", "SPEC-C-33", "BD-270", "BD-052", "BD-272", "BD-275", "BD-369", "N10c-10"]
 gates: ["GATE-NEMESIS-03", "GATE-NEMESIS-01"]
 plan_refs: ["§10 C-28", "§26.7", "§12.3", "Appendix D.6", "Appendix I.11", "Appendix M.9", "Appendix N.7"]
 ---
@@ -45,12 +45,22 @@ HYPOTHESIS; nothing has been run.
 ## Scope
 
 In: (1) `docs/math/C-28.md`, the construction as a contract; (2) the law tests in `crates/frob-nemesis/tests/`,
-each with a negative control; (3) registry entries: known answers KA-142 to KA-144 with derivation files, the
-controls seeded from CX-067 and CX-068, the pilot record, the non-claim recorded against the theorem-card table.
+each with a negative control; (3) registry obligations: the derivation files of the known-answer rows KA-142 to
+KA-144 (rows of N10-KA3, a dependency), each naming this bead and its test; the control of KA-143 and KA-144,
+whose cells were printed `none stated` and which N10-KA3 assigns to this bead as open obligations; the plants
+(mutants) behind the controls of CX-067 and CX-068 (entries of N10-CX, a dependency, from which the seeding tool
+of N38b-05 makes the control records: this bead writes no row of `controls.toml` by hand); the `pilot` field of
+the row and the check that it resolves to a complete record; the non-claim recorded against the theorem-card
+table. The pilot itself is not in this bead:
+it is the chapter's pilot N26a-06 (M2, a dependency), which runs ten planted traps in two interiors and an
+unsolvable trap in a third scene, registers the record `PILOT-C-28` before it runs and fills it. This bead
+neither registers nor runs a pilot, and the mechanism beads BD-273 and BD-274, which an earlier draft named as
+running it, depend on that pilot instead.
 
 Out: the shrinker itself, the `.fmcw` writer and the verb `nemesis.shrink` (BD-274); the solvability oracle
 `nemesis.oracle` (BD-271); the legality set and edit vocabulary (BD-270); the artifact guard (BD-272); the
-hard-world set (BD-275); recording GATE-NEMESIS-03 and deciding KILL-MCW (BD-274); the retrofit search on a
+hard-world set (BD-275); measuring GATE-NEMESIS-03 (the script of N26a-34, whose receipt a session that did not
+implement the capability records, N38b-19) and deciding KILL-MCW (N26a-35); the retrofit search on a
 `.fmcw` (BD-369); attribution on the passing neighbours (construction C-29, beads SPEC-C-29 and BD-279).
 
 Register row (the shared rule of N10a-01). The construction register
@@ -145,14 +155,26 @@ through the STD-TEST helper: row id, statement id, measured value, expected valu
 
 ### 5. Registry entries
 
-- `frob-conformance/registry/known_answers.toml`: rows KA-142, KA-143, KA-144 bound to the test ids of this suite,
-  each with a derivation file under `docs/derivations/` (created here if the chapter registry bead has not created
-  the rows; numbers are append-only).
-- `frob-conformance/registry/controls.toml`: one control per mutant, seeded from CX-067 and CX-068, attached to
-  GATE-NEMESIS-03 and GATE-NEMESIS-01.
-- `frob-conformance/registry/pilots.toml`: the pilot of this construction (below).
+- `crates/frob-conformance/registry/known_answers.toml`: rows KA-142, KA-143, KA-144 are N10-KA3's; this bead
+  writes their derivation files under `docs/derivations/`, whose front matter names this bead and the test of
+  each row (N38a-12's rule 1), and fills the open control obligation of KA-143 (the plant `keep_any_failure`, the
+  shortcut of CX-068) and of KA-144 (the plant `edit_changed_after_hash`) in the rows' `control` text; no number
+  is created here.
+- `crates/frob-conformance/registry/controls.toml`: the records are made by N38b-05's seeding tool from the
+  entries CX-067 and CX-068 of N10-CX and from the two control texts above, each naming its plant in
+  `tests/support/c28_mutants.rs` and attached to GATE-NEMESIS-03 and GATE-NEMESIS-01.
+- `crates/frob-conformance/registry/pilots.toml` (schema `frob.gauntlet.pilot/1`, N38a-09): the record
+  `PILOT-C-28` is written there by N26a-06 (below); this bead only checks that row C-28's `pilot` field resolves
+  to it.
 
-### 6. Pilot and ceiling (carried for the mechanism; run by BD-274 with BD-273)
+### 6. Pilot and ceiling (carried for the mechanism; run by N26a-06 before BD-273 and BD-274 are funded)
+
+A pilot comes before the mechanism it funds, so it cannot be run by the mechanism's own beads; it is the
+adversarial-worlds chapter's pilot N26a-06, which states the same pilot with its numbers (ten planted traps in
+two interiors against card randomization) and writes the one record `PILOT-C-28`. The three scenes of the
+statement below are that pilot's two interiors and its narrow-doorway scene with the planted unsolvable trap
+(DESIGN, stated in both beads); the two falsifiers below are among that pilot's falsifiers, with the same
+thresholds.
 
 Pilot: planted traps in three scenes. Falsifier (TARGET): fewer than 70% of returned worlds carry a solvability
 witness, or one returned world from which a single edit can still be removed. Ceiling: a better artifact per
@@ -172,18 +194,22 @@ traps receive a witness). This bead records neither gate; it supplies their know
 
 ## Acceptance criteria
 
-- [ ] `docs/math/C-28.md` exists with ten sections (definitions; statements S1 to S11 with proof classes;
-      conventions; failure cases; non-claims; foundations with the FACT about `fs-bisect`, its pin and date; law
-      tests; registry entries; pilot and ceiling; implementers and gates) and contains no formula with an
-      undefined symbol.
+- [ ] `docs/math/C-28.md` exists with the ten sections of `docs/math/TEMPLATE.md` in the template's order (the
+      Register row paragraph names them), carrying the definitions, statements S1 to S11 with proof classes, the
+      conventions, the failure cases, the non-claims, the foundations with the FACT about `fs-bisect` (its pin
+      and date), the known answers, the pilot and ceiling, and the implementation map with implementers and
+      gates; it contains no formula with an undefined symbol.
 - [ ] `cargo test -p frob-nemesis --test laws_c28` passes on the reference model, and on the production shrinker
       if BD-274 has landed.
 - [ ] `controls_are_caught` shows every mutant of the list below failing its named law.
-- [ ] KA-142, KA-143 and KA-144 are in the known-answer registry with derivation files, each with a stated
-      tolerance and a registered control (KA-143 and KA-144 were printed with no control; the controls below fill
-      them).
-- [ ] Controls seeded from CX-067 and CX-068 are in the control registry, attached to their gates.
-- [ ] The pilot record is in the pilot register with its falsifier, ceiling and fallback.
+- [ ] KA-142, KA-143 and KA-144 (N10-KA3's rows) have derivation files naming this bead and their tests, each
+      row with a stated tolerance and a control (KA-143 and KA-144 were printed with no control; the plants below
+      fill them), so that N38a-12's eligibility reports no open obligation for them.
+- [ ] The control records seeded by N38b-05 from CX-067, CX-068 and the two control texts name this bead's
+      plants and are attached to their gates; run with `--features gauntlet-mutations`, each is reported caught.
+- [ ] Row C-28's `pilot` field names `PILOT-C-28`, and that record, written by N26a-06, is in the pilot register
+      with the two falsifiers, the ceiling and the fallback of section 6; this bead's check fails if the field
+      does not resolve or the record lacks one of them.
 - [ ] `scripts/e2e/spec_c28.sh` exits 0 and its log has no failed assertion.
 - [ ] Row C-28 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
       Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
@@ -216,7 +242,12 @@ traps receive a witness). This bead records neither gate; it supplies their know
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c28.sh` (seed-explicit, idempotent): runs `frob --json doctor`; `cargo test -p frob-nemesis
---test laws_c28`; `cargo test -p frob-conformance --test g1 -- KA-142 KA-143 KA-144`; checks that
+--test laws_c28`; the registry rows in the Gauntlet's tier targets (BD-025: there is no `g1` or `g5` target),
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-142 KA-143` and
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g5_determinism -- KA-144` (row KA-144 is a G5
+referee row; the step is logged `pending` until BD-274 binds it, and `ka_144_replay_digest` covers it on the
+synthetic deterministic oracle meanwhile), the first also with `--features gauntlet-mutations` for the seeded
+controls, the receipt hash logged; checks that
 `docs/math/C-28.md` and the three derivation files exist; checks the registry rows. It sources the STD-E2E helper
 and writes `target/e2e-logs/spec_c28/<utc>.ndjson` plus a transcript. Every line has `ts`, `script`, `bead`
 (`SPEC-C-28`), `step`, `event` (`start`, `cmd`, `assert`, `metric`, `refusal`, `end`), the command line, exit code,

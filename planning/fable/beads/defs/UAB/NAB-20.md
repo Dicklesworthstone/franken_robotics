@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-17"]
-needs: ["§28.19.4: the list of methods considered for one decision core and rejected, which several rows summarize (BD-309, BD-349)", "§0.8: the hypothesis register rows H-01, H-02, H-06, H-09, H-15 and H-16 that six rejections cite (N00-11, N00-12)"]
-related: ["NAB-18", "NAB-19", "NAB-22", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-50"]
+needs: []
+related: ["NAB-22", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39"]
 gates: []
 plan_refs: ["Appendix C.1.3", "Appendix C.1", "§28.19.4"]
 ---
@@ -44,8 +44,12 @@ killed-idea records the rows point to; the revive lint (NAB-32).
 
 **Transcription rule.** One record per row, in table order, as in NAB-18. `decision` is the first word of the
 decision text mapped to `rejected`, `parked`, `deferred`, `kept-as-summary` ("Kept as a budgeted summary only")
-or `left-to-sibling` ("Left to FrankenSim's own lane; not built here"). The text after the colon is the reason.
-`killed_idea` holds the `KI-nn` named in the row. `reopen_on` is filled as follows (the text of the row where
+or `left-to-sibling` ("Left to FrankenSim's own lane; not built here"). `reason` is the text after the colon.
+Three rejected rows have no colon: for EV-P14 and EV-P40 `reason` is the qualifier after the decision word
+("under D-2"; "at current tool limits; inside the caps, certified inverse kinematics is [F]"), and for EV-P39,
+whose decision is the single word "Rejected", it is "below 2.0 (table rule 1); the plan states no other
+reason" (DESIGN). `killed_idea` holds the `KI-nn` named in the row. `queue` is `["MQ-21"]` for EV-P35 (general
+Lean theorems, the deferred item of the Moonshot queue, NAB-21) and `[]` for every other row. `reopen_on` is filled as follows (the text of the row where
 it gives one; otherwise the standing rule that a verdict changes only on new evidence of the kind that
 produced it):
 
@@ -171,6 +175,9 @@ Rows in this table: 43.
 - `eleven_rows_at_or_above_two_all_have_reasons`.
 - `decision_vocabulary`: 33 rejected, 5 parked, 3 deferred, 1 `kept-as-summary`, 1 `left-to-sibling`; total 43.
 - `killed_idea_references_resolve`.
+- `rejected_rows_have_reason`: each of the 33 rejected rows has a non-empty `reason` or a `killed_idea`; the
+  three rows without a colon (EV-P14, EV-P39, EV-P40) carry the `reason` of the transcription rule.
+- `deferred_lean_row_lists_mq21`: EV-P35 has `queue = ["MQ-21"]`, and no other row of this table has a queue.
 - `parked_and_deferred_have_reopen_on`.
 - `decision_text_frozen` against `tests/fixtures/ev/parked.tsv`.
 

@@ -8,7 +8,7 @@ labels: ["m6", "delivery", "frontier", "moonshot", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-427", "N40-24", "N40-29", "N40-35", "N40-04", "N40-05", "EPIC-M5", "EPIC-M8"]
+related: ["EPIC-M8", "EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-24", "N40-29", "N40-35"]
 gates: ["GATE-HAB-07", "GATE-HAB-08", "GATE-HAB-09", "GATE-AUGUR-20", "GATE-AUGUR-21", "GATE-TRAC-09", "GATE-FOUNDRY-12", "INT-FSIM-17", "INT-FTX-01", "KILL-LIVING", "KILL-ADVECT", "KILL-SLOSH", "KILL-PROXY", "KILL-SINEW-ROTOR", "KILL-SINEW-AGE", "KILL-LIFECYCLE", "KILL-AUGUR-PHASE", "KILL-AUGUR-SYMEVENT"]
 plan_refs: ["§43.9", "§43.1", "§43.2", "§40.6", "§40.3", "§40.4", "§9 (D-6)"]
 ---
@@ -133,15 +133,21 @@ pauses whenever M4 or M7 is slipping.
 
 ## Acceptance criteria
 
-- [ ] Each of the fourteen M6 epics (advected films; slosh; articulated proxies; rods, cloth and islands; soft soil
-      at scale; tactile sensing; the rotor port; RGB and splat scenes; moving people; gradients through contact;
-      lifecycle compression; the hard-contact law on GPU tiers; geometric phase; symmetry at contact) has a plan, a
-      pilot record with falsifier, ceiling, fallback and result, and a kill-gate decision ADR.
+- [ ] Each of the sixteen M6 epics (advected films; slosh; articulated proxies; rods, cloth and islands; soft soil
+      at scale; the hard-contact law on GPU tiers; the tree-operator route on devices; the mesh path on devices;
+      tactile sensing; the rotor port; RGB and splat scenes; moving people; gradients through contact; geometric
+      phase; symmetry at contact; lifecycle compression) has a plan, a pilot record with falsifier, ceiling, fallback
+      and result, and a kill-gate decision ADR. The tree-operator route and the mesh path on devices are epics only
+      where their earlier decisions kept them (KILL-TREEOP at M5, KILL-MESHGPU at M3); where those fired, the
+      earlier ADR is their record here and nothing further is due.
 - [ ] Every gate reached has a recorded value and a caught negative control; every gate not reached is `not-run`
       with a `not-reached` decision.
 - [ ] The nine kill gates of the compiled table and the four late ones each have an outcome.
 - [ ] At no commit of the milestone were more than four [M] items active.
-- [ ] No M6 feature flag is on by default; a build with all of them off reproduces the M4 digests.
+- [ ] No M6 feature flag is on by default; with every M6 flag off, the standard battery's digests equal the
+      reference recorded at the latest earlier exit (M4, or M5 or M7 where one closed later, since M6 runs beside
+      them), as re-recorded by the compatibility train's parity run if a pin or T has moved since, so no M6 change
+      leaks into the default path.
 - [ ] The exit report for M6 is `exit-ready`; the exit record is written by a fresh-context session.
 
 ## Test plan
@@ -155,7 +161,9 @@ parts and 4 late kill decisions.
 
 `scripts/exit/review.sh M6`: for every epic, the pilot is re-run from its registered record and its result
 compared with the recorded one; for every funded epic, its acceptance fixture is run through `frob --json` with
-its feature flag on and again with the flag off (the flag-off digests must equal the M4 reference). Logs carry
+its feature flag on and again with the flag off (the flag-off digests must equal the reference of the latest
+earlier exit, re-recorded by the compatibility train if a pin or T has moved; the log names that exit, the
+reference's commit and its pins). Logs carry
 the pilot's falsifier and measured value, the evidence block with the tier label Frontier or Moonshot, digests,
 and the gates touched.
 

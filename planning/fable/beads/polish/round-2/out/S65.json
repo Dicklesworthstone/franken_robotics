@@ -1,0 +1,219 @@
+{
+ "round": 2,
+ "slice": "S65",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "BD-301",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "risks"
+   ],
+   "what": "e2e native run now names the design positionally and carries a per-tier --key (drift 5); summary lists GATE-CORTEX-19, whose adapter rows step 7 records; dep N34-01 (the annex workspace bindings/frob-gymnasium is defined there) moved from related; performance and memory envelope of the default copy added."
+  },
+  {
+   "bead": "N23b-11",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "the pilot record is named as a row of crates/frob-conformance/registry/pilots.toml, schema frob.gauntlet.pilot/1 (drift 3)."
+  },
+  {
+   "bead": "N23b-13",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "eval command used --split dev and no key: now --stream dev (the spelling of its dependency BD-198) with a distinct key per look and for the zero-weight and random controls (drift 5)."
+  },
+  {
+   "bead": "N23b-14",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "the decision record is named: docs/adr/ADR-KILL-GYMADAPT-M3.md with N40-03's required fields and the beads re-read; N23b-13's final reading is a dated second entry in the same ADR; dep N40-03 (the ADR template and fields)."
+  },
+  {
+   "bead": "N23b-27",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "decision record named docs/adr/ADR-OPEN-CORTEX-4.md (answers OPEN-WS-5 too) from the register's template; register rows OPEN-CORTEX-4 and OPEN-WS-5 move to decided or defaulted; dep N41-03."
+  },
+  {
+   "bead": "N23bp1-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "verb surface aligned with the registry convention: design positional, --key instead of --idempotency-key; --policy is an ordinary sim.run input (N23a-02, N23a-34 use it at M2), only --horizon and --record trajectories are gated on KILL-GYMADAPT (the bead said 'two flags' and listed three); the native comparison run gets its own key; test capability_gated covers both gated inputs."
+  },
+  {
+   "bead": "N41-07",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests given inputs and expected outcomes; e2e script now sources STD-E2E, writes NDJSON with the charter fields, five steps with planted controls (advertising line, interpreter dependency, supported manifest without ADR) and a summary."
+  },
+  {
+   "bead": "BD-319",
+   "kinds": [
+    "deps",
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "Requests of S01, S03 and S33 applied. 113 deps added (the M3 beads no other M3 bead waits for, NAB-26 among them after its order was reversed), so every M3 bead is an ancestor except the three upstream items FD-F3D-01, FD-FSIM-17, FD-FTUI-01, which go to related and are read from the upstream registry; the 125 existing deps checked (the 14 seed deps of plan 45.4 kept). Body stated as N40-05's protocol on M3 data with the attached checks and owners; six dispositions (no-claim was missing); 56 risk rows readable (15 first at M3); 54 runnable and 5 declared plants (N41-35); principles block from M3 when unenforced; `xtask augur-slices --exit M3` for slices 2 and 3; GATE-GAUNT-02 zero rows due by M3 at 'to set' or 'none stated'; GATE-GAUNT-08 at each funding decision; open questions from the register's due(M3): 30 with deadline M3, OPEN-SAFE-4's default spelled out, OPEN-HAB-4 printed as asked (deadline M5), OPEN-TENFOLD-4 with N41-15's stratum reading (the consideration that said any unapproved compute means no exit is corrected); the BET-14 stop rule; branch beads (N23bp1-01, N24c-35, N24a-14) and upstream items. gates field lists all 34 kill gates decided and KILL-TENFOLD-ADJ, GATE-GAUNT-02, -08. Tests and acceptance for each."
+  },
+  {
+   "bead": "NAB-26",
+   "kinds": [
+    "deps",
+    "sense",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Order reversed as NAB-25 was at M2: the sweep depended on BD-319, so it could never be an ancestor of the M3 exit review whose runner executes its check. Now the review depends on the sweep, and the sweep depends on what it reads: the 22 kill-decision beads of step 1, the partial-gate record N40-15, the rank-agreement pilot BD-310, N22c-34 and N26a-12 (KI-26, KI-46), the late mechanisms N24c-26, N24c-34, N28c-39, N20b-32, N14b-29, the gate report N40-04, NAB-50 (its script) and STD-E2E. Unit tests given inputs and expected values; e2e logging written to the charter's fields; two acceptance items (sweep before the exit record; fired families renamed)."
+  },
+  {
+   "bead": "N41-35",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "Graph finding checked: all 34 deps are real (one per detector, fixture or the layer). Five of them (BD-250, N00-15, N38b-04, N39a-33, N39b-34) were not named in the body; the detector column and the procedure now name them, so each dependency is visibly used."
+  },
+  {
+   "bead": "CARD-T-20",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e is the auditor script of N12-34, which was neither a dependency nor named by its corpus path; dep N12-34 added (no cycle), specimen path given as crates/frob-cert/tests/specimens/poly-identity/accept-T-20.frobcert, and what the script asserts for the specimen and the four mutants stated."
+  },
+  {
+   "bead": "N13-28",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Round-1 request applied: the lattice answer fills BD-101's existing field `lattice: not-run | decided(n) | undecided(reason)` (no second field, schema unchanged, with an acceptance line); the agreement-rule failure is the internal-fault envelope FROB-REF-990 (exit 9), not an unnamed 'exit 9 class'; e2e design creation spelled with --file and a key per fixture, feature build named; dep STD-E2E."
+  },
+  {
+   "bead": "N16b-24",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Round-1 request applied: the mode signature composes N16ax-01's ContactSetSig (set and mode) with the bead's limit, closure and stiction row bits, as BD-356 does; renamed StepModeSignature (frob-phylum's lane-key ModeSignature omits stick and slip); equality decisions confirmed by the exact form; dep N16ax-01; test mode_signature_composes_contact_set_sig; e2e steps 16 and 18 of kinesis_surface.sh spelled out with keys and the logging fields."
+  },
+  {
+   "bead": "N22a-28",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Arithmetic checked (tau 0.8, Clopper-Pearson 0.302 and 0.492, fixed point (18/7, 10/7), rimless wheel c^2 = 1/2, ceiling 1.58 and 102.5). The pilot record named as a row of crates/frob-conformance/registry/pilots.toml, schema frob.gauntlet.pilot/1, with N38a-09's statuses and verdicts (drift 3)."
+  },
+  {
+   "bead": "N31b-12",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Its tests and script use the agreement lint N40-09, the ledger cross-check N40-30, the kill records of N40-27 and N40-23, the doctor registries section N32ax-03, xtask check-contracts N34-08 and the STD-E2E helper, none of which were dependencies (four were related): added (all M0 or M1, no cycle). Controls path corrected to crates/frob-conformance/registry/controls.toml (drift 2); the plan's five statuses tied to the record's seven."
+  },
+  {
+   "bead": "N31b-45",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Both round-1 requests were already applied (tenth refusal packet-inconsistent; 901-907 withdrawn in favour of the ledger). Step 4 was stale: N35x-02 now files the ten rows under this bead's names with the interims and row 10, so the slug map and the 'request filed' acceptance line are replaced by an equality check that fails on a retired slug."
+  },
+  {
+   "bead": "N36-23",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Verb calls corrected: control synth and scene gen are run verbs and take a distinct key per sample (a repeated key would time a stored receipt); scene gen already compiles (scene compile takes source geometry); both machines named. 'Fits the default envelope' was false by arithmetic (about 9,600 s at the limits): the campaign is six frob-launch runs each under one hour, and the large interiors need an approved envelope or are 'not run'. The 19c judged set defined (3.75e7 voxels). Tests for keys, the run split and the judged set; dep BD-165 (scene.gen)."
+  },
+  {
+   "bead": "WP-23",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Two children were missing from the table of contents: NEGp1-52 and NEGp1-54 (M5); added under an M5 group with the count 33 (M3 31, M5 2) and an M5 line under 'What lands'; NEG-23's line now carries its current title."
+  },
+  {
+   "bead": "WP-27",
+   "kinds": [
+    "complete",
+    "risks"
+   ],
+   "what": "S46 request applied and one more child found: N22a-22 and N22a-27 (M2) and N14bp2-03 (M3) added, count 48 (M2 3, M3 32, M4 13), with an M2 line under 'What lands'. Envelope bullet now names the two rows the pilots file by N44-01's rule from R19 (E2 campaign:pilot-reflex-mpc, ceiling 15 device-hours; E1 gate:KILL-RESIDUAL, 2 h per run, 12 device-hours) with their not-approved fallbacks; the pilots named by key, as rows of pilots.toml."
+  },
+  {
+   "bead": "WP-53",
+   "kinds": [
+    "risks"
+   ],
+   "what": "Round-1 request applied: the Envelope bullet cites row R4 of registries/compute_envelope.toml (the world bank on the M5 Ultra) in the form of WP-21."
+  },
+  {
+   "bead": "WP-55",
+   "kinds": [
+    "risks"
+   ],
+   "what": "Round-1 request applied: the Envelope bullet cites row R5 (a certified rate of 1e-6, GATE-NEMESIS-04)."
+  },
+  {
+   "bead": "WP-60",
+   "kinds": [
+    "risks"
+   ],
+   "what": "Round-1 request applied: the Envelope bullet cites row R6 (GATE-CORTEX-12, GATE-TENFOLD-06), and says that under the fallback the device strata are 'not run' with the reason (OPEN-TENFOLD-4). The binomial critical counts of KILL-TENFOLD-REACH were checked."
+  },
+  {
+   "bead": "WP-62",
+   "kinds": [
+    "complete",
+    "risks"
+   ],
+   "what": "Round-1 request applied (row R8, shared with WP-28). Table of contents fixed: VERBS-result (WP-06, M1) was listed but is not a child; VERBS-experiment moved from M4 to M3; two stale titles (N28cp1-02, N28c-24) updated; count 86 (M1 1, M3 24, M4 61)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run lists --policy only as a conditional input of the KILL-GYMADAPT fallback (refused with 724 otherwise), but N23a-02, N23a-34 and N23-REF drive worlds with `frob sim run --policy zero|@fixture:…` at M2 and BD-301 drives the native parity run with it. Make `policy` an ordinary input; keep only `--horizon` and `--record trajectories` conditional on KILL-GYMADAPT being killed (N23bp1-01 now says so)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run lists design, battery, tier, class and freeze_envelopes, but about twenty beads (BD-198, N23a-13, N23a-17, N23a-18, N23b-13, BD-321, BD-323, NS-09, NS-10, N37-07, N35-06 among them) call `frob eval run --policy <id>|zero:<spec>|random:<spec>:<seed> --task <t> --stream dev [--state estimated] [--seeds n]`. Add the inputs policy, task, stream (dev|test; N23b-13 now spells it --stream, one bead used --split), state and seeds, owned by frob-learn's evaluation path."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.gen's row gives its inputs as 'family; parameters; seed' and its example passes the family positionally (`frob scene gen terrain:stairs --difficulty 0.4 --seed 11 --key sg-1`), while BD-225, scene.split's example and N36-23 write `--family <name>` and `--param <name>=<value>`. State one spelling in the row (listing `--family` and `--param` if they are the options) so that scripts can follow convention 8."
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "N35-33, N35x-01, N35x-02 and N31b-45 read the refusal table with its interim list from `frob --json schema` with no argument, but the schema row requires one of a schema identifier, `--verb` or `--list`. Add the form that serves the refusal table and the interim list (no argument, or a named option), as N35-33 requires."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "All 32 beads reviewed. Also checked without change: N23b-12, WP-57, WP-24, WP-25, WP-26, WP-54, WP-56, WP-59, WP-63. Graph after the edits: no cycle; every M3 bead except the three upstream items is an ancestor of BD-319."
+}

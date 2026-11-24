@@ -1,0 +1,335 @@
+{
+ "round": 2,
+ "slice": "S05",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "N34-18",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "N34-17's checked-canonical path calls this writer while this bead depends on N34-17 (a two-way need): Admitted::into_canonical and its test view_and_canonical_agree are now built and tested here, with an acceptance line; mutant builds moved to the suite's one mutation mechanism of N38b-04 (nc-<nnnn> feature gated by gauntlet-mutations), which runs every chapter's controls, instead of a --cfg frob_nc flag the control runner cannot apply"
+  },
+  {
+   "bead": "N34-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "--quick said 100 entries per class in one place and 100 corpus entries in another: now 100 seeded surface entries, steps 1-6 always on all 1,000, and a quick run never writes the gate line; first-wins/last-wins reader mutants named as suite mutation controls (N38b-04)"
+  },
+  {
+   "bead": "N34-CX",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "rule 4 and test mutant_selection_is_cfg_not_feature contradicted the control runner N38b-04 (mutations are nc-<nnnn> features): aligned to the suite mechanism, DESIGN with reason (one mechanism; per-crate rebuild; unification closed by the compile_error guard and the product-binary check), tests replaced; CX-359 exercised-by now names BD-141 (records identities at the M1 first release), not only BD-410 at M5, so GATE-WS-02 at M1 is not left with an unbound control"
+  },
+  {
+   "bead": "N34-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the registry record (chapter, site, gates, realized_by, gate_extends) departed from the one known-answer file and row schema of N38a-12 (section, fixture, sites, control.nc, derivation, label, due): rows now in crates/frob-conformance/registry/known_answers.toml with a per-row field table and due milestones; binding is the runner entry ka:<id>@<site> of N38a-13; a later bead's entry is not-yet-due instead of blocking GATE-WS-02 at M1 until M5; KA-784's seventh plant in its derivation file and nc list; KA-781 realized_by follows the move of view_and_canonical_agree; dep N38a-12 added; tests later_entry_is_not_yet_due, rows_load_in_the_one_file"
+  },
+  {
+   "bead": "N35-33",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "allocation rule 4 searched the whole family, but a 7xx code's exit is fixed by its decade: a 76x budget request of §26 would have received 726 (72x, exit 5). Ledger gains subfamily (required in 7xx); rules 4 and 5 search the decade; range-full status reason; test alloc_respects_subfamily and an acceptance line; the 8xx capacity note now names N35x-01 and N35x-02"
+  },
+  {
+   "bead": "N35x-02",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "title"
+   ],
+   "what": "applied both requests after checking them against N26-REF, N26b-22, N31b-45, N31a-43 and plan §31.12/.13/.21/.22/.26.16: importance-over-sibling-cap filed (7xx, 76x, exit 4); Foundry rows take the raisers' slugs, N31b-45's interims (105-with-detail, none, 820, none, 841, 883, 844, 843, 890) in place of 901-907, corrected sections (load case §31.22, review record and briefs §31.21, timing receipt §31.13), and the tenth request packet-inconsistent (§31.12, 8xx, no interim); counts 47->49 (7xx 3, 8xx 21; 27 assigned, 1 merged, 21 held) through title, scope, acceptance, tests and known answers; tests importance_cap_in_76x_exit_4 and foundry_slugs_match_raisers"
+  },
+  {
+   "bead": "N35x-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "8xx request counts follow N35x-02's added packet-inconsistent: 22 by the chapters' classification, 21 after reclassification (structure and manufacture 8); the reclassified one named as the telemetry binding refused at run admission"
+  },
+  {
+   "bead": "N40-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e called frob capabilities, which BD-022 builds after this bead (BD-022 -> N38b-19 -> N40-03 -> N40-01): the step runs where the binary exists and logs skipped: capability absent otherwise, never as passed; the recurring-gate acceptance and test are proven on a synthetic register (the late rows are entered by N40-10, which depends on this bead), with a recurring_flagged metric"
+  },
+  {
+   "bead": "N40-03",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "step 7 (fallback names) had no function to test: apply_decisions(&Register) -> Register with the README and printout as its consumers; acceptance narrowed to what this bead can show (the capabilities listing is N00-02's and N40-37's, both later in the graph), e2e step 4 likewise"
+  },
+  {
+   "bead": "N40-04",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e: M0 exit-ready is asserted only after the two M0 kill decisions (KILL-FSIM, KILL-MCP) are recorded with ADRs, then RC-01 to RC-05, RC-13 and RC-14 are planted in turn; the consideration on a per-gate status fallback replaced (the due set reads parts only; N38b-18 and N40-01 carry status on parts); RC-61 (KILL-MCP without its M1 re-read) named as caught by kill_decisions_sum_113"
+  },
+  {
+   "bead": "N40-06",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e called frob capabilities before BD-022 exists in its graph: conditional with skipped logged; the estimate-cited check sat in xtask check-contracts (N34-08, not a dependency) and now runs in the frob-conformance register validator beside this file's loader, with acceptance and test"
+  },
+  {
+   "bead": "N40-CX",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "rows whose catching beads land at M1 or M2 would have been stale at M0 and left GATE-GAUNT-10 not-eligible: each row has a due milestone (BD-025's optional control due), counts 37/20/4, binding check and e2e per --milestone with due_counts; two new controls RC-60 (a sibling admission gate made blocking) and RC-61 (KILL-MCP without its M1 re-read) give N40-KA's R-08 and R-12 the control N38a-12 requires"
+  },
+  {
+   "bead": "N40-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "'the three amendments' for four amended gates: an amendment record of N40-03 changes a field, so GATE-CORTEX-05 and GATE-AUTOPSY-03 (briefs gain a clause) get one threshold amendment each, GATE-TETHER-01 and -13 (thresholds unchanged, plan §40.8) none; all four list the amending subsection in consumers; acceptance and test four_amended_gates"
+  },
+  {
+   "bead": "N40-23",
+   "kinds": [
+    "placement"
+   ],
+   "what": "labels lacked the crate and tier its sibling ledger beads carry: frob-conformance, solid"
+  },
+  {
+   "bead": "N40-27",
+   "kinds": [
+    "placement",
+    "tests"
+   ],
+   "what": "labels frob-conformance, solid added; RC-61 (KILL-MCP entered with no M1 re-read) named as caught by decided_by_exit"
+  },
+  {
+   "bead": "N40-32",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the coverage check was to show BET-02 covered at M0 with only the M0 ledger groups present, but its kill gate KILL-D1 (decided M2) is in N40-24's M1 group and §43.12 has no M0 row for it: BET-02 is tested at M0 only by the probe GATE-SPARK-01 and is pending: N40-24 at M0; acceptance and coverage_pending_before_m1 follow"
+  },
+  {
+   "bead": "N40-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "kept its own file known_answers/register.toml with pinned_by/bead fields, which its dependency N38a-12 forbids (one file, its row schema): rows now appended to known_answers.toml in that schema, numbers from a block of 30 filed with N38a-40 (a dependency the text never used) with R- tags mapped in table order; due per row from the pinning beads (22 M0, 6 M1, 2 M2) so GATE-GAUNT-02 is not blocked at M0 by rows of M1/M2 beads; binding via ka:<id>@host (N38a-13), unbound vs not yet due; R-08 and R-12 had no control (ineligible under N38a-12) and now cite RC-60 and RC-61; tests due_counts, block_and_tags"
+  },
+  {
+   "bead": "N40-02",
+   "kinds": [
+    "tests"
+   ],
+   "what": "names RC-60 (INT-FTUI-01 entered blocking) as a control its sibling_gates_do_not_block catches"
+  },
+  {
+   "bead": "N41-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "wrote two M0 rows (m0-json-features, m0-exact-pin) into GATE-WS-07, whose record N40-10 enters with one part per milestone (M0 'the two build rows', M2, M3; N40-01): both counts now go into the one M0 part's measured value, the register-wide clause into its receipt; acceptance and e2e summary follow; dep N40-10 added (the record it writes into did not exist in its graph)"
+  },
+  {
+   "bead": "N41-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the M0 confirmation was 'a check in the exit runner' with no route into it: N40-05 runs exit-time rules only as attached checks; the bead now adds record suite-02-confirm (step 10, since M0) to scripts/exit/checks.toml with the check-object contract, acceptance and test attached_check_contract; dep N40-05; e2e log path through STD-E2E named"
+  },
+  {
+   "bead": "N44-03",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "acceptance relied on BD-004's six-subcommand test and the tests on N34-15's precommit.sh, neither in its graph: acceptance now checks that no file under xtask/ is touched, tests run directly and by precommit once it exists; BD-004, N34-15, N44-04, N44-05 related. Known answers (139 -> 125 edges, the 14 removals, roots, longest chain 17 at WP-77) re-derived from plan §44.1 and confirmed"
+  },
+  {
+   "bead": "N44-04",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "check 11 reads rows R1 to R11 of registries/compute_envelope.toml that N44-01 writes, but N44-01 was not a dependency, so the run on the loaded graph had no register: dep N44-01 added and Scope says why; precommit wording as in N44-03. Milestone counts 10/15/18/14/8/5/4/2/3, 46 names and 157 pairs, ten single-package names and the nine exit-review keys re-checked"
+  },
+  {
+   "bead": "N44-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "acceptance said a bead under an unknown package fails 'at step 5', but the regenerator (steps 2 to 4) refuses an unknown package or broken parent chain first: both failing lines must name the bead"
+  },
+  {
+   "bead": "NAB-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "rule 4 required defined_in, but rows owned only by a construction or doctrine rule (Cayley map C-05, Canonical form C-21, Ceiling D-10) have an empty defined_in: a record needs defined_in or constructs, or structural = true; structural_records_may_omit_definition extended with a constructs-only case"
+  },
+  {
+   "bead": "NAB-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the sense rule reads a [glossary] senses table from contract.toml, but no bead adds that key to schemas/contract.schema.json, so every contract using it would fail contract.schema (N34-08): the bead adds the optional table, with Scope, an acceptance line and test senses_table_decides_and_validates"
+  },
+  {
+   "bead": "NAB-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the canonical order left Arena (device) against Arena (sense subsystem) undecided: order note added (Arena (device) first) and order_matches_frozen_list follows; the defined_in acceptance now reads defined_in or constructs, as NAB-01 rule 4"
+  },
+  {
+   "bead": "NAB-05",
+   "kinds": [
+    "tests"
+   ],
+   "what": "a stated rule (no sense is a number word) had no test: no_sense_is_a_number_word added"
+  },
+  {
+   "bead": "NAB-09",
+   "kinds": [
+    "deps"
+   ],
+   "what": "adds the sources_summary row to check-generated's generator table and asserts xtask still has six subcommands, both owned by BD-004, which was not a dependency (NAB-01, the sibling registry, depends on it): BD-004 added, no cycle"
+  },
+  {
+   "bead": "NAB-10",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "said it uses 'the shared walker of NAB-02', which is not in its graph and defines no shared walker: the bead now keeps NAB-02's FROB_LINT_ROOT convention and walks the tree itself, sharing a walker only where one already exists"
+  },
+  {
+   "bead": "NAB-11",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "the transcription rule left short paths (lie_differential.rs, articulated/generalized.rs), extension-less module names (tri_wheel_cluster, certified_ccd, product_copula ...) and a brace list unresolved, and seven sources named in words (READMEs and manifests, the S26 receipt, a toolchain file, a status file) got no record: rule 2 resolves them against the crate named before, new rule 7 gives each phrase a record at its repository; acceptance and every_listed_path_has_a_record compare (locator, covers) pairs with spot checks; the machine and planning records now state their reading mark (P), which NAB-16's citable count depends on. Source list re-diffed against plan H.2: identical"
+  },
+  {
+   "bead": "NAB-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "NV-08's settler was 'the import and export work', no identifier, so each_unverified_names_a_settler and settlers_resolve could not pass: now N14b-21 (glTF export, visuals only) and the M5 sweep NAB-28, which already carries NV-08; settlers_resolve reads gates.toml, open.toml and .beads/issues.jsonl, so deps N40-10 (gate rows incl. GATE-SPARK-23) and N41-03 (open-question register) added, no cycle; the lint-reliance acceptance names NAB-16 as where it is shown (NAB-10 is not in this bead's graph). 43 references (18/14/4/6/1) and 13 NV items re-checked against H.4 and H.6"
+  },
+  {
+   "bead": "NAB-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "step 3 asserted that only the 43 public P readings are citable, but machine and planning-record readings are P and citable under NAB-09's rule: the assertion is now about public readings, with local, reference and plan-check readings asserted uncitable before their re-read or re-run"
+  },
+  {
+   "bead": "NF-03",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "acceptance required the FD-FSIM row to equal T and INT-FSIM-01 to pass 'after NF-05', but NF-05 depends on this bead, so neither could close: the bead now closes at row FD-FSIM-40 landed (or blocked by fs-qty), the switch-over conditions are asserted by NF-05 and re-checked by this bead's post phase, as FD-FMCP-01 already does. Facts re-checked against plan §33.2/.12/.13"
+  },
+  {
+   "bead": "NF-05",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "legs_are_adopted required all three legs adopted, which fails under candidate (b) that the bead explicitly allows: legs that moved must be adopted, a leg that did not move must be on the ADR's awaiting list; rows named by their ids (FD-FSIM-40, FD-FSYM-06); the e2e's frob spark probe (BD-017, not in this graph) runs where it exists and logs skipped otherwise"
+  },
+  {
+   "bead": "NAB-13",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "the dial-mpc examples address is printed without a scheme, so it is none of the 98 URLs, 4 arXiv ids or 3 unlocated sources the acceptance counts, though its P reading is in the 110: stored with https:// and locator_derived, 106 records, test record_count_is_106; the hypothesis-resolution acceptance names N00-11 as its test. Re-counted from the text: 98 URLs (7, 25, 10, 13, 8, 14, 12, 4, 5), 102 brackets (15 P, 63 F, 22 S, 2 U), 110 readings (18 P, 66 F, 24 S, 2 U); list identical to plan H.3"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N34-17",
+   "what": "N34-18 depends on N34-17 but N34-17's step 7 (Admitted::into_canonical) and test view_and_canonical_agree call the canonical writer of N34-18: move both out of Scope to N34-18 (done there; N34-KA's KA-781 row now cites N34-18 for that test). Also replace the --cfg frob_nc mutant selection with the suite's mutation mechanism of N38b-04 (nc-<nnnn> features of frob-core compiled only with gauntlet-mutations; compile_error otherwise and under release), as N34-CX rule 4 now states"
+  },
+  {
+   "bead": "N34-22",
+   "what": "the no-key-sort negative control is selected with the compiler flag frob_nc=\"no-key-sort\"; the control runner N38b-04 applies mutations only as nc-<nnnn> features with gauntlet-mutations (N34-CX rule 4, N34-18): use frob-core/nc-<nnnn>"
+  },
+  {
+   "bead": "N34p1-01",
+   "what": "same as N34-22: the negative-control build frob_nc=\"no-key-sort\" becomes the suite mutation feature frob-core/nc-<nnnn> with gauntlet-mutations (N38b-04)"
+  },
+  {
+   "bead": "N41-KA",
+   "what": "keeps its own file crates/frob-conformance/registry/known_answers/delivery.toml with K41- ids and pinned_by/bead fields, which N38a-12 forbids (one file, its row schema): append the rows to known_answers.toml in N38a-12's schema, take a block from N38a-40 and map the K41- tags in table order, and give each row the due milestone of its pinning bead, as N40-KA now does"
+  },
+  {
+   "bead": "N41-32",
+   "what": "GATE-WS-07 has one part per milestone, at M0, M2 and M3 (N40-10 index from plan §40.8, N40-01 record rule); the row register-plants that N41-32 to N41-37 re-record at M0 to M5 has no part to go into (and would make N40-10's late-part counts wrong): keep the structural clause in the M0 part (N41-02 now puts it in that part's receipt) and record the per-exit counts in the exit's risk review (N41-01), or ask N40-10 for further parts with a reason"
+  },
+  {
+   "bead": "N40-05",
+   "what": "section 5a lists the beads that attach their own exit checks; add N41-14's suite-02-confirm (step 10, since M0), now attached by N41-14"
+  },
+  {
+   "bead": "NF-04",
+   "what": "same close-order deadlock as NF-03 had: the acceptance 'Here, after NF-05: the FD-FSYM row has toolchain equal to T; INT-FSYM-01 passes on the new receipt; regeneration reproduces the kernels' can only hold after NF-05, which depends on NF-04. Close at row FD-FSYM-06 landed (or the recorded blocked state), and leave the switch-over conditions to NF-05 and to this bead's post phase, as NF-03 now states"
+  },
+  {
+   "bead": "N38a-12",
+   "what": "the ka-second-file check (file names matching known_answers*.toml, or files under registries/known-answers/) misses the per-chapter paths still named by about fifteen chapter registry beads (crates/frob-conformance/registry/known_answers/<chapter>.toml for traction, spark, reflex, suite, autopsy, safe, perf, arena; registries/known_answers/skeleton.toml and atelier.toml): match any .toml under a directory named known_answers or known-answers, and have those beads aligned to the one file as N34-KA and N40-KA now are"
+  }
+ ],
+ "unchanged": 11,
+ "notes": "All 46 read in full in work-package order. The request addressed to N41-18 was already applied by round 1; checked and left. Systemic: chapter known-answer files outside the one file of N38a-12 (fixed here in N34-KA and N40-KA; requests to N38a-12 and N41-KA). GATE-WS-07 has one part per milestone, so N41-32's per-exit register-plants rows have nowhere to go (request). Recurring pattern found: acceptances or e2e steps that rely on beads outside the graph or on a dependent bead (N40-01, N40-06, N41-14, N44-03/04, NAB-09/10/14, NF-03/05); fixed by deps, conditional skipped logging, or moving the check to the bead that can run it. Glossary rows (NAB-07) and source lists (NAB-11, NAB-13) diffed against plan Appendix A and H.2/H.3: identical; counts re-derived. Not settled yet: the fixes are mostly cross-bead consistency, and a third pass over the ledger and source beads is worthwhile."
+}

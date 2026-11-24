@@ -1,14 +1,14 @@
 ---
 key: "FD-FMCP-01"
-title: "upstream fastmcp_rust: brought onto the one toolchain T, its test suite and MCP conformance checks passing there"
+title: "upstream fastmcp_rust: brought onto the one toolchain T, its test suite and MCP conformance checks passing"
 type: "task"
 priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "tether", "upstream", "fastmcp_rust", "solid"]
 parent: "WP-06"
-deps: ["BD-001", "BD-006"]
+deps: ["BD-001", "BD-006", "BD-025", "STD-E2E"]
 needs: []
-related: ["BD-023", "BD-031", "BD-008", "BD-044", "FD-ASUP-01", "NF-02", "NF-05", "STD-E2E"]
+related: ["BD-037", "N33b-08", "N33c-08", "N33c-26", "N34-16", "N44-04", "NF-02", "NF-03", "NF-04"]
 gates: ["INT-FMCP-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.8", "§33.13", "§33.15", "§32.12.2", "§46"]
 ---
@@ -68,7 +68,12 @@ conventions. It declares `rust-version = "1.100"` and workspace version 0.13.0 (
    forks, vendors or edits the sibling, and no tool of this repository writes into its checkout (INV-SUITE-04).
 5. The work is tracked twice: this bead, and a mirrored bead in the sibling's tracker whose identifier is stored
    in the `mirror` field of this item's row in `registries/upstream.toml` (schema `frob.upstream/1`). The row's
-   `status` moves `open` → `landed` (merged on the sibling's `main`) → `adopted` (switch-over run here).
+   `status` moves `open` → `landed` (merged on the sibling's `main`) → `adopted` (switch-over run here). This item
+   is executed before the register exists: BD-037, which writes the schema, the loader and the other 52 rows,
+   depends on BD-023 and through it on this bead. So this bead writes its own `[[item]]` row in BD-037's format
+   (`id`, `repo = ["fastmcp_rust"]`, `change`, `priority = "P0"`, `interim_posture`, `switch_over`, `fixture`,
+   `admission_test = "INT-FMCP-01"`, `bead = "FD-FMCP-01"`, `mirror`, `status`, `observed_at`), creating the file
+   with that one row if it is absent, and BD-037's loader validates the row when it lands (DESIGN).
 
 **The change, step by step.**
 
@@ -99,8 +104,8 @@ conventions. It declares `rust-version = "1.100"` and workspace version 0.13.0 (
 **Interim posture here.** Agents use the CLI (`frob --json`), which is complete on its own. `frob-mcp` is not
 added to the core graph while `fastmcp_rust` does not build on T; no script passes `--ignore-rust-version`.
 
-**Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FMCP-01/`, opened by BD-037 and kept current
-by this bead: one test tagged `FD-FMCP-01`, compiled as the `frob-conformance` integration test `upstream_fd_fmcp_01` and
+**Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FMCP-01/`, opened and kept current by this
+bead (for the same reason as the row: BD-037 comes after it, and adopts the fixture as it finds it): one test tagged `FD-FMCP-01`, compiled as the `frob-conformance` integration test `upstream_fd_fmcp_01` and
 marked `#[ignore]` so that the default suite stays green, with `expected.toml` beside it holding the signature
 recorded at the pinned commit (`observed_at`, the failing assertion and the observed value). It fails at the pin
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
@@ -156,11 +161,15 @@ Here (`tests/upstream/FD-FMCP-01/`, real builds, no mocks):
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fmcp_01.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
-section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fmcp_01 -- --ignored`,
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --section upstream --json`
+(the `upstream` section shows this item with its status; logged `not-run` while the `frob` binary of BD-022 does
+not exist yet, since this item does not wait for it); `cargo test -p frob-conformance --test upstream_fd_fmcp_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. In addition, both phases clone the pinned commit into `target/upstream-scratch/fastmcp_rust@<rev>` (never
+bead that exist are re-run, and the registry row must read `adopted` with a receipt newer than the pin move, or
+`landed` with that receipt while INT-FMCP-01 has not had its first run (it is BD-023's, which comes after this
+bead, so on the first `post` run the step for it is logged `not-run` with the key BD-023 and is never counted as
+a pass). In addition, both phases clone the pinned commit into `target/upstream-scratch/fastmcp_rust@<rev>` (never
 building inside the sibling's checkout), run its build, suite and conformance checks on T, and log the three
 results with the pass and fail counts against the baseline 112/115/0.
 

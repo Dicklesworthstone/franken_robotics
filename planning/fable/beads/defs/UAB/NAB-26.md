@@ -4,11 +4,11 @@ title: "M3 exit: sweep of the decision records after the partial ten-fold gate (
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "delivery", "gauntlet", "tenfold", "solid", "registry", "decision-record"]
+labels: ["m3", "delivery", "gauntlet", "tenfold", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M3"
-deps: ["NAB-22", "NAB-25", "BD-319"]
-needs: ["§40.6: the M3 exit report with its kill decisions (N40-04, N40-30)", "§39.12: the record of the partial ten-fold gate with its outcome rules applied (N40-15, BD-317)", "§28.10: the rank-agreement and ladder pilots (BD-310)", "§2.4: the lever register with expected ranges by mission class, scored at M3 (N00-20)"]
-related: ["NAB-17", "NAB-21", "NAB-32", "NAB-42", "NAB-49", "NAB-27", "N00-20", "N40-15", "N12-30", "BD-310", "BD-311", "BD-317"]
+deps: ["BD-289", "BD-310", "N00-20", "N12-30", "N14b-16", "N14b-29", "N16b-10", "N16b-19", "N17a-29", "N18a-34", "N19b-36", "N20a-43", "N20b-32", "N22c-14", "N22c-34", "N23b-13", "N23b-14", "N24a-15", "N24c-26", "N24c-34", "N25a-18", "N25a-19", "N25b-29", "N25c-16", "N26a-12", "N26a-32", "N26a-35", "N27b-11", "N28a-22", "N28c-39", "N32a-23", "N40-04", "N40-15", "NAB-22", "NAB-25", "NAB-50", "STD-E2E"]
+needs: []
+related: ["BD-319", "NAB-32", "NAB-37", "NAB-38", "NAB-42", "NAB-47", "NAB-49"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2", "Appendix B.5", "§43 (M3)", "§39.12", "§0.7", "§0.8"]
 ---
@@ -32,6 +32,19 @@ controller can be synthesized per morphology class, whether a requirement term h
 
 In: the M3 sweep record and report; history entries; proposals; the reader check of the registries. Out:
 deciding gates; the exit review (BD-319); the procedure (NAB-22).
+
+Order of work (DESIGN, as at M2 in NAB-25). The sweep is made at the exit candidate commit, before the exit record
+is written, and the exit review depends on it: the review's runner executes `decision-sweep check --exit M3` as
+the attached check of NAB-22 and copies the sweep's section into the exit record, so the record must exist first.
+What the sweep reads is produced before the review, not by it: the gate report at that commit (N40-04); the
+kill-decision ADRs written by their decision beads (step 1's table names the gate; the beads are N28a-22, N24a-15,
+N26a-32, N27b-11, N18a-34, N25c-16, N23b-14 with N23b-13, N16b-19, N22c-14, N25a-19, N17a-29, N16b-10, N26a-35,
+N19b-36, N20a-43, N25b-29, N14b-16, N12-30, N25a-18, N32a-23 and BD-289); the record of the partial ten-fold gate
+with its phase ledgers (N40-15); the rank-agreement pilot record (BD-310); the decision of the delivered-controller
+lane (N22c-34) and of the Nemesis search (N26a-12) that KI-26 and KI-46 read; and the late mechanisms of step 2's
+last paragraph (N24c-26, N24c-34, N28c-39, N20b-32, N14b-29). The dependency list names those beads for that
+reason. This is the order of NAB-22's design decision 1, which every sweep follows; what the sweep shares with
+the review is its independence rule (a session that implemented none of the cited beads).
 
 ## Technical approach
 
@@ -79,7 +92,7 @@ Family and kill-gate pairs due at this exit: 22.
 | KI-35 joint paving of design boxes | In the region pilot on the 12-parameter box, at most 90% undecided in the best arm and not more than 95% of decided volume from one monotone bound | Per-constraint region certificates are funded for M4 |
 | KI-34 verdict reuse by sensitivity margin | No incorrectly inherited verdict from an implication rule (a standing gate from M3) | Implication reuse may be piloted at M4 |
 | KI-40 rank fidelity assumed between rungs | The rank-agreement pilot: Kendall τ near the top, with containment and regret reported beside it (a cheap rung selects at τ ≥ 0.7 with the winner check passed, discards only between 0.5 and 0.7, and does neither below 0.5) | The mode per morphology class is recorded; the decisive experiment on our engine is at M4 |
-| KI-26 sampling control as a stand-in evaluator | The delivered-controller lane's gate; the measured cost per 20 s episode beside the break-even (2.0 GPU-seconds for a quadruped, 12 for a humanoid) | Only the delivered-controller lane admits its own episodes |
+| KI-26 sampling control as a stand-in evaluator | The delivered-controller lane's gate; the measured cost per 20 s episode (planning estimate about 0.33 and 1 GPU-minute for the quadruped and humanoid at a 20 ms planning step, 1.7 and 5.2 at 4 ms) beside the acceptance break-even of the revival condition (2.0 GPU-seconds for a quadruped, 12 for a humanoid: training once, under 10 and 60 GPU-minutes, divided by the 299 clean episodes acceptance needs) | Only the delivered-controller lane admits its own episodes; a screening comparison stays within the break-even count of its class (about 30 and 60 episodes at a 20 ms planning step; 6 and 12 at 4 ms) |
 | KI-46 unconstrained adversaries | Every reported failing world has a solvability witness | Stands |
 | KI-59, KI-60 engine alone; headline multipliers | The partial gate's phase ledger on both arms; the measured ratio with its interval | No multiplier is printed except the gate's measured value, with its ceiling |
 
@@ -123,6 +136,10 @@ lint). A registry with no reader is proposed for reduction to its generated prin
 - [ ] Step 4's table of shares and ceilings is stored with the sweep, and every changed Impact cites it.
 - [ ] The reader list of step 7 is in the record; a registry with no reader has a proposal.
 - [ ] No reading task is open for a gate recorded at M3.
+- [ ] The sweep record exists at the exit candidate commit before the M3 exit record is written, and the exit
+      runner's attached check reads it; the sweep's session implemented none of the beads it cites.
+- [ ] A family whose kill gate fired at M3 names its fallback in every registry of the decision records the same
+      day (no family reads "adopted" under a fired gate).
 
 ## Test plan
 
@@ -130,13 +147,29 @@ lint). A registry with no reader is proposed for reduction to its generated prin
 
 `crates/frob-conformance/tests/decision_sweep.rs`: `due_m3_families` (the nineteen ids `EV-S14`, `EV-S21`,
 `EV-S22`, `EV-S23`, `EV-S36`, `EV-S41`, `EV-F01`, `EV-F06`, `EV-F07`, `EV-F10`, `EV-F11`, `EV-F14`, `EV-F15`,
-`EV-F17`, `EV-F18`, `EV-F19`, `EV-F21`, `EV-F24`, `EV-F29`; 22 pairs); `impact_change_requires_phase_share`;
-`reader_check_lists_registries`.
+`EV-F17`, `EV-F18`, `EV-F19`, `EV-F21`, `EV-F24`, `EV-F29`; 22 pairs, because EV-F18 has three kill gates and
+EV-F21 two); `impact_change_requires_phase_share` (a fixture family scored Impact 5 whose phase share on our arm
+is 0.04 → the Impact change is accepted only with that share cited, ceiling 1/(1 − 0.04) = 1.042; an Impact change
+with no share → `check` fails); `reader_check_lists_registries` (a scratch registry with no reader in M0 to M3 →
+listed with a reduction proposal); `fired_gate_family_renamed` (a family whose kill gate fired, still reading
+`adopted` → `check` fails); `ki56_needs_partial_gate_record` (KI-56 `condition_met` with no partial-gate record
+cited → `check` fails).
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M3` (NAB-50): due list, `check`, 22 pairs, the eleven conditions of
-step 2 as `metric` lines with thresholds, the reader list. Logged per STD-E2E with the partial gate's receipt.
+`scripts/e2e/decision_records.sh --exit M3` (NAB-50): prints the due list, runs `decision-sweep check --exit M3`,
+and asserts the 22 pairs, the conditions of step 2, the share table of step 4 and the reader list of step 7; then
+replays the three negative controls below (fixtures under
+`tests/fixtures/sweep/M3/controls/` written by this bead, the hook of NAB-50) on scratch copies of the sweep record and asserts that `check` fails on
+each with its reason. Logged through the shared helper of STD-E2E to `target/e2e-logs/decision_records/<utc>.ndjson`
+with a transcript, every line with `ts`, `script`, `bead` (`NAB-26`), `step`, `event`: `cmd` lines with the exact
+command line, exit code and wall time; one `assert` per pair with the kill gate, the ADR identifier and the
+outcome; one `metric` per condition of step 2 with the measured number, its unit, the threshold and
+`condition_met`; one `metric` per family of step 4 with the phase share and the ceiling; the receipt identifier of
+the partial gate and the digests of the gate report and of the sweep record; `assert` lines of kind
+`negative-control` with `caught`; on failure the first due item without an outcome, or the first condition whose
+number does not resolve to a receipt, with the path of the sweep record; a `summary` with assertions passed and
+failed and the kill gates read.
 
 ### Known answers and negative controls
 

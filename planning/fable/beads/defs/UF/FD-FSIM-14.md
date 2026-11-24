@@ -1,14 +1,14 @@
 ---
 key: "FD-FSIM-14"
-title: "upstream frankensim: a documented build-identity setting for path consumers outside the tree (`fs-la/build.rs`)"
+title: "upstream frankensim: documented build-identity setting for path consumers outside the tree (`fs-la/build.rs`)"
 type: "task"
 priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid"]
 parent: "WP-01"
-deps: ["BD-037", "BD-006", "NF-01", "STD-E2E"]
+deps: ["BD-006", "BD-037", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-001", "BD-004", "BD-216", "NF-03"]
+related: ["FD-FSIM-16", "N33b-08", "NF-03"]
 gates: ["INT-FSIM-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.2", "§33.5", "§33.8"]
 ---
@@ -119,7 +119,7 @@ admission record.
 - [ ] Here: with both variables unset and the local `[env]` entry removed in a scratch copy, the probe build fails closed with the new message (or, if a default class is published, builds and records that class).
 - [ ] Here: every receipt's `build_env` names the class the binary was built in, and no receipt carries FrankenSim's own in-tree salt.
 - [ ] Here: INT-FSIM-01 passes at the new pin, and the G1 digest is unchanged by the change of documentation or class name.
-- [ ] Here: a performance record without a build-identity receipt is refused by the disclosure check.
+- [ ] Here: a performance record without a build-identity receipt is still refused: under the development salt (and under a published default class, which is a development class too) `may_cite` of N33a-08 answers `dev-build-identity` for a Performance or a Parity gate, at the old pin and at the new one. (The disclosure block of the performance harness, BD-216 at M2, prints the same identity; this bead does not wait for it.)
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
@@ -133,7 +133,7 @@ In FrankenSim (added):
 Here (`tests/upstream/FD-FSIM-14/`, real builds):
 - `fails_closed_without_identity`: scratch copy, `[env]` entry removed, both variables unset; expected `cargo check` failure in `fs-la`'s build script.
 - `local_salt_reaches_the_build_script`: with the entry present, the build succeeds and the receipt's `build_env` equals `{FRANKENSIM_DEPGRAPH_SALT = "franken-robotics-dev-v1"}`.
-- `foreign_salt_is_rejected`: a scratch copy that sets FrankenSim's own in-tree salt value; expected `cargo xtask check-stack` failure ("build identity claims another graph's class").
+- `foreign_salt_is_rejected`: a scratch copy that sets FrankenSim's own in-tree salt value; expected `cargo xtask check-stack` failure ("build identity claims another graph's class": identifier `stack.env`, kind `foreign-build-class`, the rule of N33a-08).
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_14.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).

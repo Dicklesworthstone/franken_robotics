@@ -8,7 +8,7 @@ labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-42"]
 needs: []
-related: ["NAB-43", "NAB-44", "NAB-45", "NAB-47", "NAB-49", "NAB-50"]
+related: ["NAB-47", "NAB-48", "NAB-49"]
 gates: []
 plan_refs: ["Appendix B.4", "Appendix B.2"]
 ---
@@ -39,7 +39,13 @@ NAB-45); the contested records (NAB-47); the not-yet-placed list (NAB-49).
 **Transcription rule.** As in NAB-44, with `proposals = 1` (or 0 for an idea that arose in an audited
 reasoning pass; the planning table does not distinguish, so 1 is stored and `proposals_note = "single pass or
 audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certification) and IP-74 with IP-75
-(catalog co-design by monotone bounds).
+(catalog co-design by monotone bounds). `ungated` is filled for the eight rows that name no gate or, at an
+upper tier, no kill gate, from their gates column and the notes below: IP-50 (the [F] screens are never trusted
+without a passed screening audit, GATE-ATEL-09 and GATE-NEMESIS-07, and each cascade stage has its own kill
+gate), IP-60 (a rule checked at compile time; its claim as a throughput lever is KI-08), IP-69 (the pilot
+falsifier of §18.17), IP-73 (the hand-computed eigenvalue test of C-10), IP-79 (the known answer of §25.21),
+IP-80 (static half only; dynamic recovery stays `Tested`), IP-81 and IP-83 (gated by a convergence or
+known-answer gate, GATE-GAIT-01 and GATE-PHYLUM-08).
 
 **Notes the one-line rows compress.**
 
@@ -51,6 +57,9 @@ audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certif
   exact only without base-coupled contact.
 - IP-60: checks at compile time and none at run time is a rule; its claim as a throughput lever is a killed
   idea (KI-08).
+- IP-61: the [F] advection half has its own kill gate, KILL-ADVECT (§19.10.7; BET-36 names KILL-FILM,
+  KILL-ADVECT and KILL-LIVING), which the row's gates column omits; `kill_gates` adds it, and `gate_text` stays
+  verbatim.
 - IP-65: whether idle fixtures sleep is an open question (OPEN-KIN-2).
 - IP-69: tactile micro-patches are a Moonshot whose gate is the falsifier of its pilot.
 - IP-73: the test is that the max-plus eigenvalue of a trot schedule equals the stride period computed by
@@ -69,7 +78,7 @@ audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certif
 
 | Id | Idea | Mechanism in one line | Where it lives | Tier | Gates, kill gates, bets | Carried by |
 |---|---|---|---|---|---|---|
-| IP-49 | Mission-observable quotient | Project a design onto exactly what a mission experiment can observe; designs with equal projections and equal reduced inputs share one run | Phylum §17.11 (the digest); C-22; Atelier §28.15 | [F] | GATE-PHYLUM-01, on the ballast fixture (FACT by enumeration, §17.18: 735,471 designs fall into 24,546 classes); KILL-QUOTIENT | BD-285, N10b-12, N10b-13, N17a-25 |
+| IP-49 | Mission-observable quotient | Project a design onto exactly what a mission experiment can observe; designs with equal projections and equal reduced inputs share one run | Phylum §17.11 (the digest); C-22; Atelier §28.15 | [F] | GATE-PHYLUM-01, on the ballast fixture (FACT by enumeration, §17.18: 735,471 designs fall into 24,546 classes); KILL-QUOTIENT | BD-285, N10b-12, N17a-25 |
 | IP-50 | Algebra applied at campaign time | Use algebra to remove simulations from a campaign (orbits, enumeration, screens with audits), not to shave the step | §2.4; Phylum §17.11; Atelier §28.11, §28.12; C-22 | [S] audits; [F] screens | GATE-ATEL-09 (planted winner); GATE-NEMESIS-07; BET-31 | BD-049, BD-285, BD-345, BD-352 |
 | IP-51 | Incremental compilation keyed to typed edits | An edit recompiles only the subterms it touches, and the result equals full compilation bit for bit | Skeleton §14.7 to §14.9 | [S] | INV-SKEL-02; GATE-SKEL-02. The scene-side half is in the not-yet-placed list (NAB-49) | BD-058, BD-063 |
 | IP-52 | Trajectory optimization with design variables | Direct transcription for one motion and a fixed contact schedule, with continuous design parameters among the unknowns; the output is a labelled candidate and never a score | Augur §25.21.2 | [F] | GATE-AUGUR-18; KILL-SYNTH-TRAJOPT | BD-362; N25d-15 (KILL-SYNTH-TRAJOPT) |
@@ -77,7 +86,7 @@ audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certif
 | IP-54 | Contact compaction with a capacity rule | Count, scan and write compaction at fixed capacity per world; an overflow is flagged and never silently clamped | Kinesis §16.6 (`K-compact`); Traction §18.11 | [S] | GATE-KIN-07 | BD-152, BD-168, N21a-08, N18b-22 |
 | IP-55 | Factor-once response batches | At a converged step, reuse the factor to solve many impulse or wrench interventions on a fixed active set, each column confirmed against residual and mode predicates | Traction §18.5 (`contact.response`) | [F] | KILL-RESPONSE | BD-367, N18b-40; N18a-26 (KILL-RESPONSE) |
 | IP-56 | Tree-structured factorization | Let limbs eliminate independently and couple through the base, with a dense fallback where contact couples them | Kinesis §16.6 (tree-operator route) | [F] | KILL-TREEOP | BD-385, N16a-24; N16a-23 (KILL-TREEOP) |
-| IP-57 | Specialized kernels for survivors | Fold one design's constants into the generic kernel only for tournament survivors, bit-identical to the generic kernel | Phylum §17.9; Spark §21.18 | [F] | GATE-SPARK-14; KILL-SPECIALIZE; NONGOAL-13 | BD-371, N21c-16, N17a-15 |
+| IP-57 | Specialized kernels for survivors | Fold one design's constants into the generic kernel only for tournament survivors, bit-identical to the generic kernel | Phylum §17.9; Spark §21.18 | [F] | GATE-SPARK-14; KILL-SPECIALIZE; NONGOAL-13 | BD-371, N21c-16, N21c-17 |
 | IP-58 | Determinism engineered instead of asserted | Stable-key sort and segmented reduction, per-tick digests, a determinism class on every receipt, and refusal of paired statistics under an uncontrolled class | §35.1 to §35.7; Spark §21.8, §21.15 | [S] | GATE-SPARK-08, -15, -16, -17; KILL-D1 | BD-152, BD-176, BD-177, BD-181, BD-203, BD-269 |
 | IP-59 | Multirate thermal state at power ports | Thermal nodes advance on a slower rational clock and receive the heat accumulated since their last tick | Sinew §15.5, §15.7 | [S] | GATE-SINEW-05 | BD-071, BD-072, N15a-06 |
 | IP-60 | Checks at compile time, none at run time | Frames, units and proofs are checked when the model compiles; batched kernels carry no tags and no proof objects | C-02, C-14; Spark §21.7 | [S] | Its claim as a throughput lever is in the killed-idea register | BD-018, BD-047, SPEC-C-02, SPEC-C-14 |
@@ -89,7 +98,7 @@ audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certif
 | IP-66 | Sustained-duty thermal limits | Winding temperature, resistance rise and the runaway condition decide whether a duty holds for a shift | Sinew §15.7; A-11 | [S] | GATE-SINEW-05; GATE-AUTOPSY-06 | BD-072, BD-103 (A-11), BD-283 |
 | IP-67 | Discriminating-instrument design | Return the cheapest realizable experiment that separates design decisions, or two indistinguishable worlds that demand different designs; every verdict is conditional on the stated law family | Augur §25.14; C-39 | [F] | GATE-AUGUR-11; KILL-AUGUR-PROBE | BD-291; N25c-14 to N25c-17 |
 | IP-68 | Calibration diagnosis on the sensor graph | A least-squares pose graph over overlapping sensor views; the residual pattern localizes a bad node where the graph permits | Sensorium §20.14 | [S] | GATE-SENS-11 | BD-242 |
-| IP-69 | Tactile micro-patches | A fingertip pad as a small array of four-dimensional contacts feeding the sensor models | C-37; Traction §18.17 (pilot table) | [M] | The pilot falsifier of §18.17 | BD-418, N18b-35, N38a-30 |
+| IP-69 | Tactile micro-patches | A fingertip pad as a small array of four-dimensional contacts feeding the sensor models | C-37; Traction §18.17 (pilot table) | [M] | The pilot falsifier of §18.17 | BD-418, N18b-35 |
 | IP-70 | Joint paired-outcome certification | Compile a fixed-controller comparison of two designs into one product system with shared, space-indexed inputs, and close parameter boxes where every compatible branch pair has the same joint outcome | Augur §25.16; C-40 | [F] | GATE-AUGUR-16; KILL-AUGUR-DOMINANCE. Contested, the contested-ideas record (NAB-47) | BD-359, SPEC-C-40; N25c-27 (KILL-AUGUR-DOMINANCE) |
 | IP-71 | Schedule and timing-race check | Enumerate orderings of sensor capture, packet arrival, estimator update, watchdog and actuator commit up to commutation, and test the daemon under seeded schedules | Sensorium §20.4.7; Chronicle §29.15 | [F] | GATE-CHRON-11; KILL-SCHED | BD-096, BD-189; N20a-09 to N20a-11 (KILL-SCHED) |
 | IP-72 | Kernel reflection for proof obligations | Checkers proved sound inside the proof kernel discharge instance certificates by evaluation | Lemma §12.1, §12.4 (`prove.reflect`) | [F] | GATE-LEMMA-05; KILL-REFLECT | BD-382; N12-32 (KILL-REFLECT) |
@@ -115,10 +124,10 @@ audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certif
 - [ ] Records `IP-49` … `IP-88` exist with the columns verbatim and carriers as listed; with NAB-44 and NAB-45
       the register holds 88 `IP` records.
 - [ ] Every carrier key exists as a bead; every gate and kill gate named exists in the gate register (23
-      distinct kill gates in these rows).
-- [ ] The twenty rows with no kill gate are Solid, or state the fallback or the limit in their text (IP-69: the
-      pilot's falsifier; IP-73: a hand-computed test; IP-79, IP-80, IP-81, IP-83: gated by a known answer or a
-      convergence gate).
+      distinct kill gates in these records: 22 in the gates column, plus KILL-ADVECT added to IP-61).
+- [ ] The twenty rows with no kill gate are Solid, or state the fallback or the limit in `ungated` (IP-50: the
+      screening audit; IP-60: a rule, its lever claim killed; IP-69: the pilot's falsifier; IP-73: a
+      hand-computed test; IP-79, IP-80, IP-81, IP-83: gated by a known answer or a convergence gate).
 - [ ] `FROB-REF-877` exists in the refusal registry.
 - [ ] The traceability lint of NAB-42 passes on these records.
 
@@ -129,7 +138,8 @@ audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certif
 `crates/frob-conformance/tests/idea_register.rs`, module `single_proposal`:
 
 - `forty_records`; `ids_49_to_88`; `total_ip_records_is_88`.
-- `kill_gates_are_23`; `rows_without_kill_gate_are_20`.
+- `kill_gates_are_23` (22 from the gates column and KILL-ADVECT on IP-61); `rows_without_kill_gate_are_20`;
+  `ungated_rows_are_8` (IP-50, IP-60, IP-69, IP-73, IP-79, IP-80, IP-81, IP-83).
 - `tiers`: 19 rows name [S], 23 name [F], 3 name [M] (IP-62, IP-69, IP-76).
 - `ballast_fixture_ratio`: 735,471 / 24,546 = 29.963.
 - `qualification_levels`: αᵢ = α/[i·(i + 1)] at α = 0.05 gives 0.025, 0.00833, 0.004167 for i = 1, 2, 3, and

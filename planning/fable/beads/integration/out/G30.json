@@ -1,0 +1,2813 @@
+{
+ "group": "G30",
+ "needs": [
+  {
+   "bead": "BD-139",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-022"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-139",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "later milestone (M3): the report verbs register as report surfaces when they land; BD-302 already depends on BD-139"
+  },
+  {
+   "bead": "BD-139",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-311"
+   ],
+   "note": "later milestone (M3) and a higher-numbered seed; BD-311 depends on BD-139"
+  },
+  {
+   "bead": "BD-311",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-311",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-066",
+    "BD-067"
+   ],
+   "note": "the reference robots are the MJCF imports (BD-066) with pinned, dated oracle fixtures and licences captured under tools/oracle (BD-067)"
+  },
+  {
+   "bead": "BD-311",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "the seed's done-condition is a printed report; BD-302 is the report generator (same milestone, lower seed number)"
+  },
+  {
+   "bead": "BD-388",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-099",
+    "BD-098"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-388",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-084"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-388",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-411"
+   ],
+   "note": "higher-numbered seed; BD-411 wires the rehearsal into the M5 batteries and already depends on Ground's records"
+  },
+  {
+   "bead": "BD-389",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-387"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-389",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-098"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-390",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-15"
+   ],
+   "note": "rule 8: a Frontier mechanism depends on its pilot"
+  },
+  {
+   "bead": "BD-390",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28a-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-390",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N30b-29",
+    "N30b-30"
+   ],
+   "note": "N30b-29 extends this bead's report and depends on it"
+  },
+  {
+   "bead": "BD-391",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-05",
+    "N33b-13"
+   ],
+   "note": "the adapter bead runs the first-use admission of these sibling functions at the M5 pin (admission is never inherited); N33b-13 supplies the fs-assimilate probe of the stats group; BD-124 is already a dependency"
+  },
+  {
+   "bead": "BD-391",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-070",
+    "BD-071"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-391",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-084"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-392",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-344 is already a direct dependency"
+  },
+  {
+   "bead": "BD-392",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-124 is already a direct dependency"
+  },
+  {
+   "bead": "BD-392",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-180"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-393",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-06",
+    "N33b-12"
+   ],
+   "note": "the adapter bead runs the first-use admission of these sibling functions at the M5 pin (admission is never inherited); N33b-12 is the first-use admission of fs-eproc"
+  },
+  {
+   "bead": "BD-393",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-349"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-394",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-06",
+    "N33b-12"
+   ],
+   "note": "the adapter bead runs the first-use admission of these sibling functions at the M5 pin (admission is never inherited); N33b-12 is the first-use admission of fs-eproc"
+  },
+  {
+   "bead": "BD-394",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-387"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-395",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-408"
+   ],
+   "note": "seed order (BD-408 is a higher-numbered seed); the fiducial declaration is reached through the component N30a-45, which depends on BD-408"
+  },
+  {
+   "bead": "BD-395",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N30a-05",
+    "N33b-14"
+   ],
+   "note": "the adapter bead runs the first-use admission of these sibling functions at the M5 pin (admission is never inherited); the structure group and INT-FSIM-15 are N33b-14 (the smaller bead behind BD-401, which is a higher-numbered seed and moved to related)"
+  },
+  {
+   "bead": "BD-396",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N37-17",
+    "N37-18"
+   ],
+   "note": "BD-305 is already a direct dependency; the licence join over lineage and the export refusal 733 are N37-17 and N37-18"
+  },
+  {
+   "bead": "BD-396",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-027",
+    "BD-133"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-396",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-410"
+   ],
+   "note": "higher-numbered seed, and the registration of the kit manifest is the registry owner's decision"
+  },
+  {
+   "bead": "BD-397",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-26"
+   ],
+   "note": "rule 7: the record depends on the dataset decision; N41-10 carries the same question (reported as a cross-group overlap)"
+  },
+  {
+   "bead": "BD-397",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads this record and already depends on it"
+  },
+  {
+   "bead": "BD-397",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-002"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "BD-025 is already a direct dependency; BD-146 consumes the registry at M1 (rule 5)"
+  },
+  {
+   "bead": "N30-CX",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30a-15",
+    "BD-390"
+   ],
+   "note": "rule 5 and later milestone: the registry is entered first; the fixtures are built by N30a-15"
+  },
+  {
+   "bead": "N30-KA",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-388"
+   ],
+   "note": "rule 5: a registry bead never depends on a mechanism; BD-388 plants the values the registry lists"
+  },
+  {
+   "bead": "N30-KA",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30b-29",
+    "N30b-30"
+   ],
+   "note": "the ninth alias has no Appendix M row; its values are stated in N30b-29 and N30b-30"
+  },
+  {
+   "bead": "N30-REF",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-137",
+    "BD-409"
+   ],
+   "note": "rule 5: the verb registries consume these rows"
+  },
+  {
+   "bead": "N30-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N24-REF",
+    "BD-124"
+   ],
+   "note": "the code 532 is a row of the Arena registry N24-REF and is raised by the study planner; shared registry, not blocking"
+  },
+  {
+   "bead": "N30-REF",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N37-18",
+    "BD-305"
+   ],
+   "note": "later milestone (M3); the codes are passed through unchanged"
+  },
+  {
+   "bead": "N30a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-02"
+   ],
+   "note": "BD-003 (check-layers) is already a dependency"
+  },
+  {
+   "bead": "N30a-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-007",
+    "BD-038"
+   ],
+   "note": "the M1 skeleton does not call the airlock; the adapters N30a-05 and N30a-06 depend on it"
+  },
+  {
+   "bead": "N30a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-022"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N38a-05"
+   ],
+   "note": "shared convention: the Parity record carries the status word this bead defines; neither blocks the other"
+  },
+  {
+   "bead": "N30a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38a-05"
+   ],
+   "note": "N38a-05 states the Gauntlet's duty; the mechanism is here"
+  },
+  {
+   "bead": "N30a-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28b-10",
+    "BD-254"
+   ],
+   "note": "the design benchmark and the scorecards are the reports that support a benchmark claim"
+  },
+  {
+   "bead": "N30a-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "later milestone (M5); until then the script records the verb step 'not run'"
+  },
+  {
+   "bead": "N30a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-13",
+    "N33b-14"
+   ],
+   "note": "the stats group (with the fs-assimilate probe) and the structure group with INT-FSIM-15; BD-401 itself is not needed"
+  },
+  {
+   "bead": "N30a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-12",
+    "N33b-13"
+   ],
+   "note": "BD-124 is already a dependency; N33b-12 admits fs-eproc and N33b-13 the stats group (fs-uq, fs-voi)"
+  },
+  {
+   "bead": "N30a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-078",
+    "N20a-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-09"
+   ],
+   "note": "N30b-09 consumes the variance computed here and depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N30a-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30b-13"
+   ],
+   "note": "the verb handlers call the check and depend on this bead, not the reverse"
+  },
+  {
+   "bead": "N30a-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-388"
+   ],
+   "note": "shared fixture: the estimator's unit tests state the planted values inline; the gate script N30a-14 depends on BD-388"
+  },
+  {
+   "bead": "N30a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-078",
+    "N20a-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30a-31",
+    "BD-392"
+   ],
+   "note": "N30a-31 already depends on this bead through N30a-27; a dependency would close a cycle"
+  },
+  {
+   "bead": "N30a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-19"
+   ],
+   "note": "rule 7: the decision depends on this measurement (edge recorded)"
+  },
+  {
+   "bead": "N30a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30b-29"
+   ],
+   "note": "the ninth alias is its own fixture and depends on BD-390"
+  },
+  {
+   "bead": "N30a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-167"
+   ],
+   "note": "interface cards by material pair and condition hold the friction, stiffness, dissipation and rolling rows"
+  },
+  {
+   "bead": "N30a-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-071",
+    "BD-072"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-16",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-396"
+   ],
+   "note": "the kit is the consumer"
+  },
+  {
+   "bead": "N30a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-08",
+    "N30b-09"
+   ],
+   "note": "the decision model depends on bands, which depend on BD-390 and so on this bead; the ranking used here comes from BD-351 and SPEC-C-39, already dependencies"
+  },
+  {
+   "bead": "N30a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10c-09"
+   ],
+   "note": "rule 6: the probe-design part of the C-39 specification"
+  },
+  {
+   "bead": "N30a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-391"
+   ],
+   "note": "not blocking: the script records the gate through the fit guard until the verb exists, and again through the verb"
+  },
+  {
+   "bead": "N30a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-15"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-391"
+   ],
+   "note": "rule 3: the capstone depends on this component"
+  },
+  {
+   "bead": "N30a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-15"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-15"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-15"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-078"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-24",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-092 is already a direct dependency"
+  },
+  {
+   "bead": "N30a-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30a-32",
+    "N30b-06"
+   ],
+   "note": "scoring reads the record and depends on it"
+  },
+  {
+   "bead": "N30a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-167"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30a-47",
+    "BD-395"
+   ],
+   "note": "as-built scans are an optional second source and live on one branch of KILL-ASBUILT; identification must not wait for them"
+  },
+  {
+   "bead": "N30a-25",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-238 is already a direct dependency"
+  },
+  {
+   "bead": "N30a-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-17"
+   ],
+   "note": "rule 7: the decision depends on this measurement (edge recorded)"
+  },
+  {
+   "bead": "N30a-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N30b-15"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-200"
+   ],
+   "note": "BD-200 is the M2 consumer; the read path through ground::effective is N30a-28, which depends on BD-200"
+  },
+  {
+   "bead": "N30a-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-292"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-32"
+   ],
+   "note": "the scoring rule defines the covering event; the verb N30b-06 depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N30a-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N23a-14"
+   ],
+   "note": "the M2 training job is the consumer; BD-200 (randomization from cards) is already a dependency"
+  },
+  {
+   "bead": "N30a-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-06"
+   ],
+   "note": "the verb calls the floor computation and depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N30a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-31",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-392"
+   ],
+   "note": "rule 3: the capstone depends on this component"
+  },
+  {
+   "bead": "N30a-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-180"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-06"
+   ],
+   "note": "the verb calls these functions and depends on this bead (edge recorded)"
+  },
+  {
+   "bead": "N30a-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-387"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-08",
+    "N30b-09"
+   ],
+   "note": "the decision model depends on bands and so on BD-392 and this bead; the cap of 30 episodes is stated inline"
+  },
+  {
+   "bead": "N30a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-387"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-392",
+    "N30b-06"
+   ],
+   "note": "rule 3: the verbs depend on this component"
+  },
+  {
+   "bead": "N30a-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-19"
+   ],
+   "note": "rule 7: the decision depends on this measurement (edge recorded)"
+  },
+  {
+   "bead": "N30a-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-14"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-36",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30b-08"
+   ],
+   "note": "the decision core regenerates the guard table from this bead's index rule and depends on BD-393"
+  },
+  {
+   "bead": "N30a-36",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "rule 3"
+  },
+  {
+   "bead": "N30a-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-14"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-37",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "rule 3"
+  },
+  {
+   "bead": "N30a-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-38",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "rule 3"
+  },
+  {
+   "bead": "N30a-39",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-18"
+   ],
+   "note": "rule 7: the decision depends on this measurement (edge recorded)"
+  },
+  {
+   "bead": "N30a-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N30b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-27"
+   ],
+   "note": "the fail-closed default (90 days, 200 hours) holds until the decision; only GATE-GROUND-10 waits for it (BD-397 depends on N30b-27)"
+  },
+  {
+   "bead": "N30a-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-176"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-14"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-41",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30b-08"
+   ],
+   "note": "the default 0.05 is stated inline; the decision core depends on the monitors through BD-394"
+  },
+  {
+   "bead": "N30a-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-14"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-42",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N30b-08"
+   ],
+   "note": "the default 0.05 and the trigger 20 are stated inline; the decision core depends on the monitors through BD-394"
+  },
+  {
+   "bead": "N30a-43",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "rule 3: the verb surface depends on its parts"
+  },
+  {
+   "bead": "N30a-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "BD-258 does not name the scope ground:retire (reported as a gap)"
+  },
+  {
+   "bead": "N30a-44",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-18"
+   ],
+   "note": "rule 7: the decision depends on this measurement (edge recorded)"
+  },
+  {
+   "bead": "N30a-44",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N30b-14"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-16"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-45",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-408 is already a direct dependency"
+  },
+  {
+   "bead": "N30a-46",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-16"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-46",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-30"
+   ],
+   "note": "the field queries of the airlock's geometry group; the Regions are BD-062, already a dependency"
+  },
+  {
+   "bead": "N30a-47",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30b-16"
+   ],
+   "note": "rule 8"
+  },
+  {
+   "bead": "N30a-47",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-062 (the geometry and inertia functor, which reaches fs-mbd-material through the airlock)"
+  },
+  {
+   "bead": "N30a-47",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-408"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30a-48",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N30b-20"
+   ],
+   "note": "rule 7: the decision depends on this measurement (edge recorded)"
+  },
+  {
+   "bead": "N30a-48",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N30b-16"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-138"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-05"
+   ],
+   "note": "N30b-02 is superseded by N30a-23; the ensemble feature is admitted by the adapter bead"
+  },
+  {
+   "bead": "N30b-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-078"
+   ],
+   "note": "N30b-02 is superseded by N30a-23"
+  },
+  {
+   "bead": "N30b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-092"
+   ],
+   "note": "N30b-03 is superseded by N30a-24; the check is evaluated on the referee's ledger, BD-208 is not needed"
+  },
+  {
+   "bead": "N30b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-095"
+   ],
+   "note": "N30b-03 is superseded by N30a-24"
+  },
+  {
+   "bead": "N30b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-06"
+   ],
+   "note": "N30b-04 is superseded by N30a-27; the copula job and its admission are in the adapter bead"
+  },
+  {
+   "bead": "N30b-04",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "N30b-04 is superseded by N30a-27; the width rule is N30a-28, which already depends on BD-200"
+  },
+  {
+   "bead": "N30b-04",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-061"
+   ],
+   "note": "N30b-04 is superseded by N30a-27"
+  },
+  {
+   "bead": "N30b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-05"
+   ],
+   "note": "N30b-05 is superseded by N30a-25"
+  },
+  {
+   "bead": "N30b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-390"
+   ],
+   "note": "N30b-05 is superseded by N30a-25"
+  },
+  {
+   "bead": "N30b-05",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-395",
+    "N30a-47"
+   ],
+   "note": "an optional second source on one branch of KILL-ASBUILT"
+  },
+  {
+   "bead": "N30b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-387"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-259"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-06",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-176"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-06",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-124",
+    "BD-262"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N30a-06"
+   ],
+   "note": "N30b-07 is superseded by N30a-38"
+  },
+  {
+   "bead": "N30b-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-254"
+   ],
+   "note": "N30b-07 is superseded by N30a-38"
+  },
+  {
+   "bead": "N30b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-309"
+   ],
+   "note": "BD-349 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-350"
+   ],
+   "note": "rule 4: the M4 interference tests are not a prerequisite of the M5 core; the DC-07 row is exercised when the core lands"
+  },
+  {
+   "bead": "N30b-09",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-351 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-264"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-09",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N30a-06",
+    "N28c-28"
+   ],
+   "note": "the VoiJob adapter, and the decision OPEN-ATEL-3 on admitting fs-voi or the local closed form"
+  },
+  {
+   "bead": "N30b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-292",
+    "BD-347"
+   ],
+   "note": "N30b-10 is superseded by N30a-43"
+  },
+  {
+   "bead": "N30b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-176"
+   ],
+   "note": "N30b-10 is superseded by N30a-43"
+  },
+  {
+   "bead": "N30b-10",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "N30b-10 is superseded by N30a-43"
+  },
+  {
+   "bead": "N30b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-406"
+   ],
+   "note": "N30b-11 is superseded by N30a-47"
+  },
+  {
+   "bead": "N30b-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-062"
+   ],
+   "note": "N30b-11 is superseded by N30a-47"
+  },
+  {
+   "bead": "N30b-11",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-170"
+   ],
+   "note": "N30b-11 is superseded by N30a-47"
+  },
+  {
+   "bead": "N30b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-177",
+    "BD-269"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-029"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-298"
+   ],
+   "note": "rule 5: the MCP generator consumes the registry entries"
+  },
+  {
+   "bead": "N30b-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-409"
+   ],
+   "note": "rule 5: BD-409 completes the registry from these entries"
+  },
+  {
+   "bead": "N30b-13",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-390"
+   ],
+   "note": "rule 5: the handler depends on its entry, not the reverse"
+  },
+  {
+   "bead": "N30b-13",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "rule 5: the scopes are named in the entries; the scope machinery consumes them"
+  },
+  {
+   "bead": "N30b-14",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-025 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-12"
+   ],
+   "note": "rule 8: the pilot needs only the first-use admission of fs-eproc"
+  },
+  {
+   "bead": "N30b-15",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-025 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "rule 8: the stats group with the fs-assimilate probe"
+  },
+  {
+   "bead": "N30b-16",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-025 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-14"
+   ],
+   "note": "rule 8: the structure group with fs-asbuilt"
+  },
+  {
+   "bead": "N30b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-002"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision (edge recorded)"
+  },
+  {
+   "bead": "N30b-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-002"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BET-28",
+    "BD-412"
+   ],
+   "note": "the bet verdict and the exit review read this decision and depend on it"
+  },
+  {
+   "bead": "N30b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-002"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision (edge recorded)"
+  },
+  {
+   "bead": "N30b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-002"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision (edge recorded)"
+  },
+  {
+   "bead": "N30b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-002"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the decision (edge recorded)"
+  },
+  {
+   "bead": "N30b-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-095"
+   ],
+   "note": "BD-002 is already a direct dependency; resolution in the artifact graph is a consumer of the rows (rule 5)"
+  },
+  {
+   "bead": "N30b-22",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-002 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-23",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-003 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "STD-TEST is already a direct dependency"
+  },
+  {
+   "bead": "N30b-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-021"
+   ],
+   "note": "a convention: the obligations are recorded as Tested, not as theorem cards"
+  },
+  {
+   "bead": "N30b-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-411"
+   ],
+   "note": "BD-411 consumes the measured row"
+  },
+  {
+   "bead": "N30b-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-26",
+    "N41-10"
+   ],
+   "note": "the owner's half of the same question, decided together (reported as a cross-group overlap)"
+  },
+  {
+   "bead": "N30b-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-305",
+    "N37-17"
+   ],
+   "note": "the licence classes are a convention the decision applies"
+  },
+  {
+   "bead": "N30b-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review lists the question; it does not block the decision"
+  },
+  {
+   "bead": "N30b-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-309"
+   ],
+   "note": "a convention of the core contract (changing a constant is a new policy version)"
+  },
+  {
+   "bead": "N30b-28",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-005",
+    "BD-021"
+   ],
+   "note": "background the decision must fit inside; not blocking"
+  },
+  {
+   "bead": "N30b-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-005"
+   ],
+   "note": "background; not blocking"
+  },
+  {
+   "bead": "N30b-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-390 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-242"
+   ],
+   "note": "the same alias binds the pose graph; neither blocks the other"
+  },
+  {
+   "bead": "N30b-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-188",
+    "BD-238"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-187"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-298",
+    "BD-409"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-31",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-411"
+   ],
+   "note": "BD-411 wires the script into the batteries and already depends on BD-397"
+  },
+  {
+   "bead": "N30b-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-210"
+   ],
+   "note": "N30b-32 is superseded by N30a-26"
+  },
+  {
+   "bead": "N30b-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-411"
+   ],
+   "note": "battery inclusion"
+  },
+  {
+   "bead": "N30b-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-387",
+    "BD-097"
+   ],
+   "note": "N30b-33 is superseded by N30a-35"
+  },
+  {
+   "bead": "N30b-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-096"
+   ],
+   "note": "N30b-33 is superseded by N30a-35"
+  },
+  {
+   "bead": "N30b-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-210"
+   ],
+   "note": "N30b-34 is superseded by N30a-39"
+  },
+  {
+   "bead": "N30b-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-351"
+   ],
+   "note": "N30b-34 is superseded by N30a-39; the planner rows are queried by the drift script N30a-44 (edge recorded)"
+  },
+  {
+   "bead": "N30b-34",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-411"
+   ],
+   "note": "battery inclusion"
+  },
+  {
+   "bead": "N30b-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-170"
+   ],
+   "note": "N30b-35 is superseded by N30a-48"
+  },
+  {
+   "bead": "N30b-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-411"
+   ],
+   "note": "battery inclusion"
+  },
+  {
+   "bead": "N30b-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-305"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-36",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-411"
+   ],
+   "note": "battery inclusion"
+  },
+  {
+   "bead": "N30b-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-299"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-409"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-390"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-38",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-167"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-39",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-123 is already a direct dependency"
+  },
+  {
+   "bead": "N30b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-408"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-39",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-406"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N30b-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N38b-26",
+    "N41-10"
+   ],
+   "note": "package E would answer the question by acquisition; the package already depends on BD-397, which depends on the decision"
+  },
+  {
+   "bead": "N30b-40",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-412"
+   ],
+   "note": "the exit review reads the release line"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-389",
+   "dep": "N30a-11",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-389",
+   "dep": "N30a-12",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-389",
+   "dep": "N30a-13",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-20",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-21",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-22",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-23",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-24",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-25",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-27",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-28",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-29",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-391",
+   "dep": "N30a-30",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-392",
+   "dep": "N30a-31",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-392",
+   "dep": "N30a-32",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-392",
+   "dep": "N30a-33",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-392",
+   "dep": "N30a-34",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-393",
+   "dep": "N30a-36",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-393",
+   "dep": "N30a-37",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-393",
+   "dep": "N30a-38",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-394",
+   "dep": "N30a-40",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-394",
+   "dep": "N30a-41",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-394",
+   "dep": "N30a-42",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-394",
+   "dep": "N30a-43",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-395",
+   "dep": "N30a-45",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-395",
+   "dep": "N30a-46",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-395",
+   "dep": "N30a-47",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-139",
+   "dep": "N30a-02",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-139",
+   "dep": "N30a-01",
+   "as": "dep",
+   "why": "coverage (d) of U30a: capstone pattern, the seed depends on its part"
+  },
+  {
+   "bead": "BD-395",
+   "dep": "BD-401",
+   "as": "related",
+   "why": "replaces the drafted dep: a seed never depends on a higher-numbered seed; the prerequisite is N33b-14"
+  },
+  {
+   "bead": "N30b-19",
+   "dep": "N30a-14",
+   "as": "dep",
+   "why": "rule 7: KILL-CLOCK reads the GATE-GROUND-02 record; N30a-14 replaces the clock half of the superseded N30b-32"
+  },
+  {
+   "bead": "N30b-19",
+   "dep": "N30a-35",
+   "as": "dep",
+   "why": "rule 7: KILL-CLOCK reads the GATE-GROUND-05 record (N30a-35 replaces N30b-33)"
+  },
+  {
+   "bead": "N30b-17",
+   "dep": "N30a-26",
+   "as": "dep",
+   "why": "rule 7: KILL-GROUND reads the GATE-GROUND-04 record (N30a-26 replaces N30b-32)"
+  },
+  {
+   "bead": "N30b-18",
+   "dep": "N30a-39",
+   "as": "dep",
+   "why": "rule 7: KILL-BAND reads the GATE-GROUND-06 record (N30a-39 replaces N30b-34)"
+  },
+  {
+   "bead": "N30b-18",
+   "dep": "N30a-44",
+   "as": "dep",
+   "why": "rule 7: KILL-BAND reads the GATE-GROUND-07 record (N30a-44 carries the drift half of the superseded N30b-34)"
+  },
+  {
+   "bead": "N30b-20",
+   "dep": "N30a-48",
+   "as": "dep",
+   "why": "rule 7: KILL-ASBUILT reads the GATE-GROUND-08 record (N30a-48 replaces N30b-35)"
+  },
+  {
+   "bead": "N30b-06",
+   "dep": "N30a-32",
+   "as": "dep",
+   "why": "the verb ground.score calls the scoring functions (need 1 of N30a-32)"
+  },
+  {
+   "bead": "N30b-06",
+   "dep": "N30a-34",
+   "as": "dep",
+   "why": "the verb retires the holdout and spends error through this part (need 2 of N30a-34)"
+  },
+  {
+   "bead": "N30b-06",
+   "dep": "N30a-28",
+   "as": "dep",
+   "why": "the verb admits or rejects candidates by this rule (need 1 of N30a-28)"
+  },
+  {
+   "bead": "N30b-06",
+   "dep": "N30a-29",
+   "as": "dep",
+   "why": "the floor is computed inside scoring (need 1 of N30a-29)"
+  },
+  {
+   "bead": "N30b-06",
+   "dep": "N30a-33",
+   "as": "dep",
+   "why": "the registered study is evaluated at its declared type and level"
+  },
+  {
+   "bead": "N30b-06",
+   "dep": "N30a-24",
+   "as": "dep",
+   "why": "admission consults the calibration record's labels (replaces the superseded N30b-03)"
+  },
+  {
+   "bead": "N30b-09",
+   "dep": "N30a-09",
+   "as": "dep",
+   "why": "the reality-gap variance is computed by step 10a of the procedure bead (need 1 of N30a-09)"
+  },
+  {
+   "bead": "BD-392",
+   "dep": "N30a-09",
+   "as": "dep",
+   "why": "the verb handler calls the per-cell precondition check (need 2 of N30a-09)"
+  },
+  {
+   "bead": "N30a-44",
+   "dep": "N30b-08",
+   "as": "dep",
+   "why": "the drift script walks the DC-07 automaton (folded from the superseded N30b-34)"
+  },
+  {
+   "bead": "N30a-44",
+   "dep": "N30b-09",
+   "as": "dep",
+   "why": "the drift script logs the real-batch rows before and after calibration (folded from N30b-34)"
+  },
+  {
+   "bead": "N30a-44",
+   "dep": "N30b-24",
+   "as": "dep",
+   "why": "the obligation battery settles the alarm level before the gate is measured (folded from N30b-34)"
+  },
+  {
+   "bead": "N30a-44",
+   "dep": "BD-351",
+   "as": "dep",
+   "why": "experiment.suggest is queried for the real-batch rows (need 2 of N30b-34)"
+  },
+  {
+   "bead": "N30a-44",
+   "dep": "BD-210",
+   "as": "dep",
+   "why": "the long batteries run as jobs (need 1 of N30b-34)"
+  },
+  {
+   "bead": "N30a-14",
+   "dep": "BD-210",
+   "as": "dep",
+   "why": "the 1,000-resample battery runs as a job (need 1 of N30b-32, clock half)"
+  },
+  {
+   "bead": "N30b-23",
+   "dep": "N30a-01",
+   "as": "dep",
+   "why": "rule 4: the firewall test follows the firewall mechanism"
+  },
+  {
+   "bead": "N30b-23",
+   "dep": "N30a-28",
+   "as": "dep",
+   "why": "rule 4: INV-GROUND-05 is tested on the width interface (replaces the superseded N30b-04)"
+  },
+  {
+   "bead": "N30b-31",
+   "dep": "N30a-09",
+   "as": "dep",
+   "why": "rule 4: the rehearsal script walks the procedure state built by N30a-09"
+  },
+  {
+   "bead": "N30b-31",
+   "dep": "N30a-10",
+   "as": "related",
+   "why": "overlap re-scoped: N30a-10 asserts order and fail-closed outcomes, N30b-31 asserts every known-answer row"
+  },
+  {
+   "bead": "N30a-25",
+   "dep": "N30a-27",
+   "as": "dep",
+   "why": "the stages write candidate card versions through the writer (folded from N30b-05)"
+  },
+  {
+   "bead": "N30a-25",
+   "dep": "BD-167",
+   "as": "dep",
+   "why": "folded from N30b-05: interface cards by material pair and condition"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N30b-17",
+   "as": "dep",
+   "why": "rule 7: the M5 exit review reads the KILL-GROUND decision"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N30b-18",
+   "as": "dep",
+   "why": "rule 7: the M5 exit review reads the KILL-BAND decision"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N30b-19",
+   "as": "dep",
+   "why": "rule 7: the M5 exit review reads the KILL-CLOCK decision"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N30b-20",
+   "as": "dep",
+   "why": "rule 7: the M5 exit review reads the KILL-ASBUILT decision"
+  },
+  {
+   "bead": "BD-412",
+   "dep": "N30b-21",
+   "as": "dep",
+   "why": "rule 7: the M5 exit review reads the KILL-KIT decision"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N30b-02",
+   "keep": "N30a-23",
+   "note": "both specify identification pass C; the rehearsal's 1/8-period grid, refusal 879 for a flat profile and for missing ramps, the skewness flag, the strict f64 profile and the planted controls folded into N30a-23"
+  },
+  {
+   "drop": "N30b-03",
+   "keep": "N30a-24",
+   "note": "both specify the calibration record and the energy cross-check; record identity and receipts, ledger event, per-channel autocorrelation bound, the 120 J hand case, verdict names and the planted controls folded into N30a-24"
+  },
+  {
+   "drop": "N30b-04",
+   "keep": "N30a-27",
+   "note": "one bead for the work of N30a-27 to N30a-30 (card versions, admission and width, floor, unit and class cards); its tests, the lint on independent sampling, the per-cell width query, the pre-validation floor and the unshrunk class estimate folded into those four"
+  },
+  {
+   "drop": "N30b-05",
+   "keep": "N30a-25",
+   "note": "same title and work (identification stages 2 to 4); stage gate refusal, uncertainty formulas, hand cases, condition-keyed cards, typed units and the order control folded into N30a-25"
+  },
+  {
+   "drop": "N30b-07",
+   "keep": "N30a-38",
+   "note": "band scope rules; the keyed per-unit pick folded into N30a-37, the budget arithmetic at n = 20, flag persistence and the report lint on the 1.3 ceiling folded into N30a-38"
+  },
+  {
+   "drop": "N30b-10",
+   "keep": "N30a-43",
+   "note": "scope-change and expiry triggers folded into N30a-40 (recorded time, unknown hours, the lenient envelope reading as a rejected alternative); the retirement transaction, idempotency key, chaos lane and stale-marking controls folded into N30a-43"
+  },
+  {
+   "drop": "N30b-11",
+   "keep": "N30a-47",
+   "note": "both specify as-built posteriors, mass properties, the variant and the tolerance audit; hand cases, the assumed-mass rule, the effective-density card field, audit rows and controls folded into N30a-47"
+  },
+  {
+   "drop": "N30b-32",
+   "keep": "N30a-26",
+   "note": "both are scripts/e2e/ground_identify.sh for GATE-GROUND-04; its clock battery (GATE-GROUND-02) folded into N30a-14, its 100-rig battery, job resume, read-log and plant controls into N30a-26"
+  },
+  {
+   "drop": "N30b-33",
+   "keep": "N30a-35",
+   "note": "both measure GATE-GROUND-05; the registry-generated list of read paths, the crash lane, the plant switches and the log lint folded into N30a-35 (script name ground_protocol.sh kept)"
+  },
+  {
+   "drop": "N30b-34",
+   "keep": "N30a-39",
+   "note": "its band battery and refusals are N30a-39 (GATE-GROUND-06); its drift, null and scope-change batteries, the DC-07 walk, the planner rows and the obligation step folded into N30a-44 (GATE-GROUND-07)"
+  },
+  {
+   "drop": "N30b-35",
+   "keep": "N30a-48",
+   "note": "both are scripts/e2e/ground_asbuilt.sh for GATE-GROUND-08; the R-13 fixture values, the joint 95% region rule over 200 seeds, the plant switches and the kill-gate fallback folded into N30a-48"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N30b-13",
+   "other": "VERBS-ground",
+   "note": "both enter the seven registry rows of cluster ground (kinds, schemas, refusal lists, MCP names); N30b-13 adds the corrected refusal lists, capabilities and the --retire parameter set"
+  },
+  {
+   "mine": "N30b-25",
+   "other": "N38b-26",
+   "note": "OPEN-GROUND-1 and OPEN-GAUNT-1 are two halves of one question (which real dataset is admitted first); two decision records for one decision"
+  },
+  {
+   "mine": "N30b-25",
+   "other": "N41-10",
+   "note": "N41-10 also decides OPEN-GAUNT-1; same decision"
+  },
+  {
+   "mine": "N30b-26",
+   "other": "N41-10",
+   "note": "both decide OPEN-GROUND-2 (whether bench hardware for packages A to F is acquired)"
+  },
+  {
+   "mine": "N30b-18",
+   "other": "BET-28",
+   "note": "overlap with distinct scope, as G00 recorded: the kill-gate bead decides KILL-BAND, the bet bead reads it"
+  },
+  {
+   "mine": "N30b-15",
+   "other": "N10a-13",
+   "note": "overlap, as G10 recorded: both are identification pilots on planted parameters before the lane is funded (N10a-13 for inertial parameters on the manifold, N30b-15 for one actuator through the three passes)"
+  },
+  {
+   "mine": "N30b-27",
+   "other": "N41-OPEN6",
+   "note": "overlap with distinct scope: N41-OPEN6 is the register row of OPEN-GROUND-3 and the other Ground questions; N30b-25 to N30b-28 are the decisions"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [
+  {
+   "section": "§30.5",
+   "what": "the dataset manifest frob.ground.dataset/1 of BD-387 lacks fields Ground's components read: the kind of each clock mark; a maintenance log and per-unit operating hours; fiducials, length unit and an external-registration block for scans; optional resolution and bias_sigma per instrument",
+   "needed_by": [
+    "N30a-13",
+    "N30a-40",
+    "N30a-45",
+    "N30a-08"
+   ]
+  },
+  {
+   "section": "§15.3",
+   "what": "the .fcard schema of BD-069 does not admit the blocks a measured version carries: [covariance], delay_set, parent, and the hierarchical class fields (class_mean, class_mean_sd, unit_spread, spread_dof, units_measured); actuator.show must print them",
+   "needed_by": [
+    "N30a-27",
+    "N30a-30"
+   ]
+  },
+  {
+   "section": "§32.13",
+   "what": "no bead defines the session capability scope ground:retire (BD-258 does not name it)",
+   "needed_by": [
+    "N30a-43",
+    "N30b-13"
+   ]
+  },
+  {
+   "section": "§32.12 and Appendix J.5",
+   "what": "a task-cluster assignment for ground_excite and ground_kit, which are outside the reality cluster of seven tools (N30b-13 proposes reality-plan)",
+   "needed_by": [
+    "N30b-13"
+   ]
+  },
+  {
+   "section": "§34.9",
+   "what": "the registry owner's decision whether the kit manifest and the bench protocol frob.ground.protocol/1 are registered file formats (BD-410 lists thirteen formats)",
+   "needed_by": [
+    "BD-396",
+    "N30b-38"
+   ]
+  },
+  {
+   "section": "Appendix N",
+   "what": "catalogue numbers for the twelve counterexamples §30 states with numbers and no CX identifier (local identifiers CX-G-01 to CX-G-12 in N30-CX)",
+   "needed_by": [
+    "N30-CX"
+   ]
+  },
+  {
+   "section": "Appendix O",
+   "what": "refusal codes for four conditions §30 refuses without a code: a unitless tolerance in a prediction, a timestamp with no declared instant, a dataset with no declared cell, an identity mismatch on a relabelled dataset (interim: FROB-REF-102, -873 or -876, -873, -873)",
+   "needed_by": [
+    "N30-REF",
+    "N30a-31",
+    "N30a-12",
+    "BD-139"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-389",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "BD-391",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "BD-392",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "BD-393",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "BD-394",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "BD-395",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "BD-396",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-06",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-08",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-09",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-14",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-15",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-16",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-17",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-18",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-19",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-20",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-22",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-23",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-24",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-25",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-27",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-29",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-31",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "N30b-37",
+   "what": "references to superseded beads repointed to the kept beads"
+  },
+  {
+   "bead": "BD-395",
+   "what": "BD-401 moved from deps to related (a seed never depends on a higher-numbered seed; the prerequisite is N33b-14)"
+  },
+  {
+   "bead": "N30b-17",
+   "what": "deps reduced to the capstone, the scoring verb and the kept gate script(s) N30a-26"
+  },
+  {
+   "bead": "N30b-18",
+   "what": "deps reduced to the capstone, the scoring verb and the kept gate script(s) N30a-39 and N30a-44"
+  },
+  {
+   "bead": "N30b-19",
+   "what": "deps reduced to the capstone, the scoring verb and the kept gate script(s) N30a-14 and N30a-35"
+  },
+  {
+   "bead": "N30b-20",
+   "what": "deps reduced to the capstone, the scoring verb and the kept gate script(s) N30a-48"
+  },
+  {
+   "bead": "N30b-38",
+   "what": "deps on superseded part beads dropped: the capstone seed already depends on the kept parts"
+  },
+  {
+   "bead": "N30b-39",
+   "what": "deps on superseded part beads dropped: the capstone seed already depends on the kept parts"
+  },
+  {
+   "bead": "N30b-40",
+   "what": "deps on superseded part beads dropped: the capstone seed already depends on the kept parts"
+  },
+  {
+   "bead": "BD-397",
+   "what": "deps on superseded part beads dropped: the capstone seed already depends on the kept parts"
+  },
+  {
+   "bead": "N30a-23",
+   "what": "N30b-02 folded in; delay grid set to T_c/8 to agree with fixture R-04 of BD-388"
+  },
+  {
+   "bead": "N30a-24",
+   "what": "N30b-03 folded in (record identity and receipts, verdict names, hand cases, controls)"
+  },
+  {
+   "bead": "N30a-25",
+   "what": "N30b-05 folded in (stage-gate refusal, uncertainty formulas, hand cases, condition-keyed cards, controls)"
+  },
+  {
+   "bead": "N30a-27",
+   "what": "N30b-04 folded in (writer part: synthetic origin counts as guessed, sampling lint, address collision)"
+  },
+  {
+   "bead": "N30a-28",
+   "what": "N30b-04 folded in (admission part: the width query takes the consumer's cell)"
+  },
+  {
+   "bead": "N30a-29",
+   "what": "N30b-04 folded in (floor part: display rule before validation, shared-bias fixture)"
+  },
+  {
+   "bead": "N30a-30",
+   "what": "N30b-04 folded in (class-card part: the unshrunk estimate recorded as the rejected alternative)"
+  },
+  {
+   "bead": "N30a-37",
+   "what": "N30b-07 folded in; the across-units statistic settled (keyed pick as default beside first-trial and unit-mean)"
+  },
+  {
+   "bead": "N30a-38",
+   "what": "N30b-07 folded in (budget arithmetic at n = 20, flag persistence, report lint on the 1.3 ceiling)"
+  },
+  {
+   "bead": "N30a-40",
+   "what": "N30b-10 folded in (recorded time, unknown hours); the envelope trigger settled as a retirement, the lenient reading recorded as rejected"
+  },
+  {
+   "bead": "N30a-43",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-43",
+   "what": "N30b-10 folded in (idempotency, reversion of widths, chaos lane, stale-marking control)"
+  },
+  {
+   "bead": "N30a-47",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-47",
+   "what": "N30b-11 folded in (assumed mass without a scale, effective-density card field, audit rows and hand cases)"
+  },
+  {
+   "bead": "N30a-14",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-14",
+   "what": "clock half of N30b-32 folded in; the gate's coverage clause settled as coverage at the registered instant, as in BD-389 (20 probes logged only)"
+  },
+  {
+   "bead": "N30a-26",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-26",
+   "what": "identification half of N30b-32 folded in; rig populations bound to fixtures R-04, R-06, R-07 of BD-388"
+  },
+  {
+   "bead": "N30a-35",
+   "what": "N30b-33 folded in (registry-generated read paths, crash lane, plant switches, log lint)"
+  },
+  {
+   "bead": "N30a-39",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-39",
+   "what": "band half of N30b-34 folded in (exact-coverage battery on R-08, metric thresholds, plant switches)"
+  },
+  {
+   "bead": "N30a-44",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-44",
+   "what": "drift half of N30b-34 folded in (obligation step, fixtures R-10 and R-11, DC-07 walk, planner rows); null horizon set to 200 episodes"
+  },
+  {
+   "bead": "N30a-48",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-48",
+   "what": "N30b-35 folded in (fixture R-13 as base, the joint 95% region reading over 200 seeds beside the per-quantity one, plant switches)"
+  },
+  {
+   "bead": "BD-389",
+   "what": "Scope rewritten as the capstone of N30a-11, N30a-12, N30a-13 (now deps); ledger event name conformed to N30a-11; gate script is N30a-14"
+  },
+  {
+   "bead": "BD-391",
+   "what": "Scope rewritten as the capstone of N30a-20 to N30a-25 and N30a-27 to N30a-30 (now deps)"
+  },
+  {
+   "bead": "BD-392",
+   "what": "Scope rewritten as the capstone of N30a-31 to N30a-34 (now deps)"
+  },
+  {
+   "bead": "BD-393",
+   "what": "Scope rewritten as the capstone of N30a-36, N30a-37, N30a-38 (now deps); reality line conformed to the grammar of N30a-02"
+  },
+  {
+   "bead": "BD-394",
+   "what": "Scope rewritten as the capstone of N30a-40 to N30a-43 (now deps); gate script is N30a-44"
+  },
+  {
+   "bead": "BD-395",
+   "what": "Scope rewritten as the capstone of N30a-45, N30a-46, N30a-47 (now deps)"
+  },
+  {
+   "bead": "BD-139",
+   "what": "Scope rewritten as the capstone of N30a-01 and N30a-02 (now deps): the crate is N30a-01's, the status type and grammar N30a-02's; reality line and cards line conformed to their grammars"
+  },
+  {
+   "bead": "BD-388",
+   "what": "reality line conformed to the grammar of N30a-02"
+  },
+  {
+   "bead": "N30a-02",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-02",
+   "what": "combination rule settled with BD-139 (synthetic is sticky, per INV-GROUND-06); script name corrected to ground_reality_line.sh"
+  },
+  {
+   "bead": "N30a-01",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-01",
+   "what": "module layout lists BD-139's reality and records modules; firewall scope split with N30b-23"
+  },
+  {
+   "bead": "N30b-23",
+   "what": "firewall re-scoped: the rule is N30a-01's (now a dep); this bead keeps the invariant battery and the additions"
+  },
+  {
+   "bead": "N30b-06",
+   "what": "Scope rewritten: the verb ground.score over the parts N30a-28, -29, -32, -33, -34 (now deps)"
+  },
+  {
+   "bead": "N30b-09",
+   "what": "re-scoped against N30a-09: the reality-gap variance estimator is N30a-09's (now a dep); this bead reads it"
+  },
+  {
+   "bead": "N30b-24",
+   "what": "Scope states the split with the mechanism beads that carry each obligation's property test"
+  },
+  {
+   "bead": "N30b-31",
+   "what": "Scope split with N30a-10 (order and fail-closed there, per-row values here); N30a-09 added to deps"
+  },
+  {
+   "bead": "N30a-10",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-10",
+   "what": "Scope split with N30b-31 (per-row values there, order and fail-closed here)"
+  },
+  {
+   "bead": "N30a-03",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-03",
+   "what": "Scope split with BD-139 (the M1 count and line there, in this bead's grammar; the M3 rule, breakdown and trend here)"
+  },
+  {
+   "bead": "N30a-31",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-31",
+   "what": "unitless-tolerance refusal named FROB-REF-102, as N30-REF and BD-392 have it"
+  },
+  {
+   "bead": "N30a-05",
+   "what": "first-use admission records at the M5 pin for fs-assimilate and fs-asbuilt added (coverage (d) of U30b found no carrier); N33a-07 added to deps"
+  },
+  {
+   "bead": "N30a-06",
+   "what": "first-use admission records at the M5 pin for fs-eproc, fs-uq and fs-voi added (coverage (d) of U30b found no carrier); N33a-07 added to deps"
+  },
+  {
+   "bead": "N30a-38",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-390",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-21",
+   "what": "title shortened"
+  },
+  {
+   "bead": "N30a-45",
+   "what": "title shortened"
+  },
+  {
+   "bead": "BD-390",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-15"
+  },
+  {
+   "bead": "N30a-20",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-15"
+  },
+  {
+   "bead": "N30a-21",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-15"
+  },
+  {
+   "bead": "N30a-22",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-15"
+  },
+  {
+   "bead": "N30a-23",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-15"
+  },
+  {
+   "bead": "N30a-36",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-14"
+  },
+  {
+   "bead": "N30a-37",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-14"
+  },
+  {
+   "bead": "N30a-41",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-14"
+  },
+  {
+   "bead": "N30a-42",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-14"
+  },
+  {
+   "bead": "N30a-45",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-16"
+  },
+  {
+   "bead": "N30a-46",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-16"
+  },
+  {
+   "bead": "N30a-47",
+   "what": "Frontier mechanism now depends on its pilot bead N30b-16"
+  }
+ ]
+}

@@ -1,0 +1,233 @@
+{
+ "round": 3,
+ "slice": "H-verbs-3",
+ "reviewed": 8,
+ "changed": [
+  {
+   "bead": "VERBS-foundry",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the five round-2 requests (S83, S84, S85, S87, S90) after checking each option in its mechanism bead: every row now names its options with the bead that fixes the spelling (foundry.loads per BD-400 step 8, N31a-12, N31a-13, N31b-35/36; foundry.optimize per BD-403 step 9 plus --outer actuators of N31a-25 and --strict-data of N31a-22; foundry.size per BD-401 with --load, --fe, --diagram (N31a-60), --strict-data; foundry.check with --link, --campaign/--loads, --cases, --load, --stress/--modes/--all (N31a-19), --structure/--fab (BD-405, which corrects the row's old reading of --structure), --process, --require fatigue, --strict-data; foundry.tolerance per BD-406; foundry.export with --profile reduced, --replace, --part/--format/--out/--exploratory for --geometry-only, --decimate, --strict-data, --firmware params-only, and the seven forbidden_keys mapped to 860 of N31a-37; foundry.lifecycle per N31a-50 step 6), --fixture on all seven. Refusals: 113 added on size, check and optimize (N31a-22); 890 added on check as row 9's interim, and the pending text of rows 4, 9 and 10 rewritten to N31b-45's held rule (the old text said the mechanism emits the bare name); firmware-controller-not-exportable (N31a-44, exit 5) recorded as held; 724's KILL-LOADS and KILL-LIFECYCLE/not-in-build statuses described (724 is appended, not a chapter code, so the S84/S87 requests to list it are applied as text). Added needs_groups (structure on check and tolerance; predicate forms on size --fe and optimize --rung topology, from BD-401, BD-403, N33a-11 and N31a-04) so 790 is generated, the file-path params statement (891/734/828, 892 on check's packet positional), 79x in the exit-5 list. Lifecycle's implementer named as N31a-50 with N31a-47 to -49 (BD-423 is an epic). Tests: refusal_lists updated, table2_equality reports 113/890 pending on N31-REF, new needs_groups_rows, export_forbidden_keys and held_refusals_follow_n31b45; e2e step (8) asserts every block option is in --help --json, plus the 860-not-802 check and a dropped-option plant. related: N31-REF, N31a-51, N31b-45, N33c-32, N34-24. Also (all seven beads but VERBS-job, which already had it): the Considerations sentence 'scope names are proposals until BD-258' replaced by BD-258's decided naming rule and implied-read closure (step 2 of BD-258), after checking that every row's scopes follow it."
+  },
+  {
+   "bead": "VERBS-operator",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied all four requests. S09(1): capabilities inputs and outputs now dated by their beads: --verb BD-022 (M0), --missing N00-02 (M0), --device/--status/--cluster/--milestone/--limit N32b-19 (M1); capabilities[]/summary from N00-02's status function read through BD-022's StatusSource; build, gates[], devices[] at M1 (N32b-19), not M2 (verified against BD-022's own table). S09(2): the schema positional admits a verb name as well as an identifier (DESIGN: identifiers carry /<version>, so no collision; callers N16b-27, N16c-15, N28c-21, N30b-37, N33b-19, N36-33 verified). S65: the bare form and --refusals (both spellings in use: N35-33, N35x-01/-02, N31b-45, N19-REF bare; N31-REF, N25-REF, N28-REF, N20-REF --refusals) serve the refusal table with the ledger's interim list. Beyond the requests (drift 8): registered --verbs (N28c-29, N28cx-01, N37-15), --path-args (N37-12), --exports (N37-24) and --echoing (BD-304), which scripts call and no row listed; frob.schema.out/1 carries one member per form. S68: robot-docs --workflow with the seven names and the workflow member (N32a-26, M3). Implementers split per form. Tests: inputs_by_row extended; new schema_positional_verb_equals_flag, schema_bare_equals_refusals, schema_list_forms_generated, capabilities_milestone_forms, robot_docs_workflow; e2e steps 12 to 14 and an interim-dropped plant. related added. Also (all seven beads but VERBS-job, which already had it): the Considerations sentence 'scope names are proposals until BD-258' replaced by BD-258's decided naming rule and implied-read closure (step 2 of BD-258), after checking that every row's scopes follow it."
+  },
+  {
+   "bead": "VERBS-gait",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied S74 and S87 after checking BD-333, BD-334, BD-335, N22c-36, N22c-41, N22a-31, N25d-02. gait.orbit: added --seed-orbit and operator-only --workers (BD-333 grammar), --period with --form stroboscopic (N22c-36), --task with --modes (N22c-41), --key; refusal 443 (Sensorium's code, an element outside Γ_obs, checked before 461; BD-333 acceptance lists it). gait.gradient: inputs per BD-334 (--edit, --wrt as continuous fixture key, --multipliers, --state-sensitivity, --check fd, --workers); the label list was wrong ('ordinary' is no C-16 label): now the nine labels of C-16; outputs and exit 2 rule; from M6 the symmetry_events block and 852 (Augur's code; N25d-02 as extender). gait.continue: --workers requested by BD-335. Implementers named (N22a-31; N22c-42 as the mode-set gate script). Tests: refusal_lists updated with cross-registry check of 263/443/852, new options_by_row and gradient_labels_are_c16. related: N20-REF, N25-REF, N25d-02. Also (all seven beads but VERBS-job, which already had it): the Considerations sentence 'scope names are proposals until BD-258' replaced by BD-258's decided naming rule and implied-read closure (step 2 of BD-258), after checking that every row's scopes follow it."
+  },
+  {
+   "bead": "VERBS-ground",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "Applied S44 after checking BD-387, BD-389, BD-390, BD-391, BD-392, BD-393, N30-REF. ground.ingest: 883 added (bundle declaring unsealed a sealed, unscored chunk; N30-REF already lists it), and 731 added beyond the request (BD-387 raises the private-scope refusal on this verb; exit 5); inputs --design and --task-family (tf:none for a bench bundle); outputs per BD-387 including already_admitted; an under-determined clock is exit 2 with 876 in clocks[i].refused (BD-389). ground.excite and ground.identify inputs per BD-390 step 1 (positional design, --rig file or stored name, optional --params, --budget-s, --decision, --seed) and BD-391 step 3 (--stage with default, --params, --combination, --keep-prior, --joints, --windows, --cell). ground.predict: inputs per BD-392's synopsis; the --trial example replaced by one with the handler's required options. ground.ingest example gains --design and --task-family. ground.band --for was already in the row. Tests: refusal_lists updated; new options_by_row and ingest_clock_refusal_is_exit_2. related added. Also (all seven beads but VERBS-job, which already had it): the Considerations sentence 'scope names are proposals until BD-258' replaced by BD-258's decided naming rule and implied-read closure (step 2 of BD-258), after checking that every row's scopes follow it."
+  },
+  {
+   "bead": "VERBS-job",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S42 after checking N28b-13 (step 6: no request may cancel an audit-lane episode short of cancelling the campaign; 546, exit 3), N28c-21 (case 546 (b) through `frob job cancel`) and N28-REF (whose 546 row already names job.cancel from M3): job.cancel lists FROB-REF-546 from M3 with its repair and the blinding note (lane membership read from the campaign controller); TOML specimen refusals updated; refusal_lists test checks 546 in both directions; a cluster note; N28b-13 as extender; related N28-REF, N28b-13, N28c-21. Rows checked against N29a-23's table (inputs, outputs, scopes): no other drift; the only off-row option found by a sweep (`frob job cancel --all`) is BD-304's planted injection string, not a call."
+  },
+  {
+   "bead": "VERBS-mission",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied all fifteen requests (S32, S33, S37, S41, S72 x5, S80, S81, S82, S87, S90 x2, S91) after checking each in its bead (BD-133, BD-135, N25-REF, N25c-21, N25e-34, N25e-36, N25e-15, BD-288, BD-291, N25c-14, N25e-07, N25e-11, BD-358, N25b-12, BD-357, N25b-15, BD-359, N25c-02, N25c-09, N25a-28, N25d-30, N25e-24, N25c-17, N25e-38, N25c-26, N25e-02, BD-360, BD-362, N25e-20, N25e-42, N25c-47, N25c-29, N25d-23, N25d-24, N25c-41, N25c-03, N25e-04, N25d-06, N25e-45, N35x-02). Refusals: refute and synthesize gain BD-133's mapped codes 848-852, 854, 833, 834, 826, 829 (BD-135 step 1); 854 also by --reuse (N25c-21) and a reused certificate (N25c-14); 852 by --fill licensed (N25e-07); distinguish gains 854 (BD-291, M3) and, beyond the requests, 850 as N25e-45 row 4's interim (N25e-38, M4); refute gains 856 (N25e-24: --region joint, --split-cap above 6); synthesize gains 263 pass-through (BD-362). Options registered with bead and milestone on synthesize (about 35), refute (15), distinguish, transport (finite models, --claims, --certificate, --relation file|compute, --lowering) and new (--from-scene). Corrected forms (DESIGN): S91's --budget paired-runs collides with the generated compute budget of every run verb, registered as --coupling-source paired-runs with --pairs and --level; S91's --derive-sets 802-without-flag changed to 724 not-in-build (a registered option stays in the schema; same rule as N25c-47, N25d-23, N25c-03, N25d-06); --transport-unchecked registered as a test-switches-only option absent from the release schema; --split-cap schema minimum only so that 7 stays 856. Beyond the requests (drift 8 sweep of every `frob mission` call): --enclosure (N25e-31), --lowering primary|second|scenario-tree on synthesize (N25c-20, N25d-34), --set on refute (BD-135 step 2), --since and 870 on revalidate (N28c-29, N28-REF), separate's canonical and inline forms (BD-293), show --order canonical|cost and the generated --limit, new --template/--set (BD-126, N25ax-01), and the foreign codes 304 on new (N25c-29, N19-REF) and 843 on transport (N25e-04, N24-REF). Transport's implementer BD-436 is an epic: replaced by its children N25c-03 and N25e-04 for the M8 form. Params statement (891/734/828 for file-path inputs). Tests: refusal_lists rewritten; new options_by_row, feature_gated_options, transport_unchecked_test_only, revalidate_one_change_form, split_cap_bounds; e2e step (8) option presence and a dropped-option plant. related added. Also (all seven beads but VERBS-job, which already had it): the Considerations sentence 'scope names are proposals until BD-258' replaced by BD-258's decided naming rule and implied-read closure (step 2 of BD-258), after checking that every row's scopes follow it."
+  },
+  {
+   "bead": "VERBS-module",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S26 after checking N14b-28 and N14-REF: module.characterize gains --strict-data and the codes 114 (digest or port signature mismatch on the reference given) and 113 (under --strict-data, an assumed torque-envelope field), with N14b-28's outputs and repairs; the tier check asked for is applied: tier F (the plan's §14.16 marks capability tables [F]; N14b-28 has the pilot and KILL-SKEL-CELL), and beyond the request module.substitute becomes S/F (BD-077: Solid for the format and port contract, Frontier for reuse under substitution, kill gate KILL-SKEL-SUBST). Beyond the request, against N15b-02's verb table: module.list is paginated (paging against a committed frontier), so paginated = true with 806 and 807; module.check names --bind (the cause of its listed 111) and --in-design … --at (the cause of 101); module.show and module.check accept a file path in the namespace, so a params statement (891, 734, 828) covers check, show and characterize (--box). TOML specimen updated (tier F, refusals 113, 114). Tests: kinds_milestones_tiers, refusal_lists updated; new options_by_row and characterize_strict_data; e2e step (8) option presence and a dropped-option plant. Scope-names sentence synced to BD-258. related N14-REF, N14b-28, N15b-02, N34-24."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S72 after checking N25e-07: nemesis.search gains --fill licensed (from M3; default off; fills appear as proved points) and FROB-REF-852 (a fill on a sweep with no licence, such as a dynamic rollout, with N25e-07's ranked repairs), the point-status grid in its outputs, and N25e-07 as extender. Checked --variants against N31a-50 (spelling and M6 agree). Beyond the request: N28-REF's 871 row names nemesis.cover (governed by DC-10, BD-309), so nemesis.cover gains --require-rule table and 871 (refusal only when the rule is pinned; a warning on the fallback otherwise), in the form VERBS-eval uses for eval.promote (N28c-02). A drift-8 sweep of every `frob nemesis` call found only BD-280's `frob nemesis shrink <run> --world <w>`, which no row or BD-274 defines (requested). Tests: refusal_lists (cover 565, 871; search adds 852), input-schema checks for fill and require_rule; e2e step (10) option presence and a dropped-option plant; the additions list in Considerations extended. Scope-names sentence synced to BD-258. related BD-309, N25-REF, N25e-07, N26-REF, N28-REF, N28c-02, N31a-50."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N31-REF",
+   "what": "Table 2: add 113 to foundry.size, foundry.check and foundry.optimize (N31a-22: --strict-data on the three verbs that read material cards, which N31a-22 requested of N31-REF) and 890 to foundry.check (the interim of row 9, firmware-receipt-mismatch, under N31b-45 step 6, as Table 2 already lists 820 for row 3); VERBS-foundry's table2_equality reports these as pending on N31-REF until then. Table 3: add firmware-controller-not-exportable (N31a-44, exit 5) once N31b-45 takes it. Table 4: add 734 and 828 (path jail and dispatcher sniff), generated on the rows whose params accept a file path (check, optimize, size, loads, lifecycle)."
+  },
+  {
+   "bead": "N31b-45",
+   "what": "N31a-44 holds `firmware-controller-not-exportable` (a controller outside the exportable set under --with-firmware; a capability refusal, exit 5, constant FIRMWARE_CONTROLLER_NOT_EXPORTABLE) 'until N31b-45 numbers it', but N31b-45's table has only ten rows and no other bead names it. Add it as an eleventh row (family by the exit: a 7xx capability code from the ledger, or a stated interim), with its verb list entry on foundry.export."
+  },
+  {
+   "bead": "N31a-51",
+   "what": "Repeat the registry's corrected lists: 113 on foundry.size, foundry.check and foundry.optimize (N31a-22), 890 on foundry.check (interim of row 9, which the bead's text already describes but its table omits as a code); and the rows' needs_groups (structure on check and tolerance, predicates foundry-size-fe and foundry-rung-topology on size and optimize) with a 790 test per verb in a build without the structure group."
+  },
+  {
+   "bead": "BD-401",
+   "what": "Register the needs_groups predicate `foundry-size-fe` (the --fe form needs the structure group) in frob_verbs::admission::predicates, as N33c-32's lint needs-groups-known requires; and state what foundry.size does when no load set is given (the registry example `frob foundry size quad-a --json` names none): a default load set, or a schema refusal (802), so the example either runs or is changed."
+  },
+  {
+   "bead": "BD-403",
+   "what": "Register the needs_groups predicate `foundry-rung-topology` (an explicit --rung topology needs the structure group; a defaulted rung falls back to beam) in frob_verbs::admission::predicates, as N33c-32's lint needs-groups-known requires."
+  },
+  {
+   "bead": "NS-20",
+   "what": "Step 1 calls `frob foundry loads … --variants stiffness,law`; --variants takes `all|nominal-only` (BD-400 step 8, N31a-12: the four variants nominal, k×0.5, k×2, alt-law run together under `all`, the default). Use `--variants all` or drop the option."
+  },
+  {
+   "bead": "BD-022",
+   "what": "VERBS-operator's schema row now registers, beyond BD-022's identifier/--verb/--in/--out: a positional verb name (same as --verb), --refusals and the bare form (the refusal table with N35-33's interim list; needed at M0 by N35-33, N35x-01, N35x-02), and the generated listings --verbs (N28cx-01, M1), --path-args (N37-12, M1) and --exports (N37-24, M1), each one member of frob.schema.out/1 read from the registries the handler already loads. Please implement them in the M0 handler with tests (or name the bead that does); --echoing is BD-304's."
+  },
+  {
+   "bead": "N32b-19",
+   "what": "Line 118 says the filter `--device` is 'from M0, BD-022'; BD-022's own table gives the M0 capabilities handler `--verb` only and assigns --device and the build/gates[]/devices[] sections to N32b-19 (M1). VERBS-operator now dates --device at M1 under N32b-19; please correct the note."
+  },
+  {
+   "bead": "N32b-20",
+   "what": "Its synopsis `frob schema [<schema_id> | --verb <name> | --list]` (and line 20's `frob schema <kind>`) should follow the registry row: the positional also accepts a verb name, and the row carries --refusals (and the bare form), --verbs, --path-args, --exports and --echoing, served by BD-022 and BD-304; the schema catalogue's --list stays this bead's."
+  },
+  {
+   "bead": "BD-304",
+   "what": "VERBS-operator registers `frob schema --echoing` (your list of echoing verbs and marked fields) as the member `echoing` of frob.schema.out/1, implemented by this bead at M3; please state the member's fields so the snapshot can pin it."
+  },
+  {
+   "bead": "N20-REF",
+   "what": "The 443 row's raised_by names only N20b-02; BD-333 and N22a-31 raise 443 through gait.orbit (an element outside Γ_obs, checked before 461), and VERBS-gait now lists it. Add them."
+  },
+  {
+   "bead": "N25-REF",
+   "what": "The 852 row's raised_by names BD-288 and N25e-07; N25d-02 (M6) raises 852 through gait.gradient (a symmetry transport across an event with no licence), and VERBS-gait now lists it. Add N25d-02 and the verb."
+  },
+  {
+   "bead": "N30b-31",
+   "what": "The excite step calls `frob ground excite --design … --cards … --rig …`; BD-390 and the registry row take the design as the positional argument (`--design` is an unknown parameter, 802). Also, the registry examples now name cart-a, stand-A-01 (with --design cart-a --task-family tf:none), ds:sill-day-3, c:9f2c41, sill-12mm and sill-crossing; let the rehearsal fixtures carry these names so that each example runs, or log an example that cannot run with its reason."
+  },
+  {
+   "bead": "N30-REF",
+   "what": "State in verbs_lists_agree that codes of other chapters listed on the ground rows are outside the two-direction comparison (828, 832 and 731 on ground.ingest, the last raised by BD-387 for a private bundle without the private scope; 816, 731, 733, 734 on ground.kit), and add 731's ingest use to the consumed codes paragraph."
+  },
+  {
+   "bead": "BD-135",
+   "what": "(1) The specimen entry of step 1 gives the run verb mission.synthesize `idempotent = true`, an example without `--key` and the appended codes 701, 702, 724, 802, 803, 805 inside `refusals`; the registry row (VERBS-mission) is the authority: `idempotent = false`, every run example carries `--key`, and appended codes are generated by kind, not listed. (2) VERBS-mission registers `mission.show --order canonical|cost` (cost: cells by cost bound ascending, ties canonical; DESIGN), which N32b-16 calls with `--order cost --limit 3`; please implement the cost order in step 9. (3) Step 2's inputs include `--set key=value`; the refute row now lists it, so state that refute accepts it."
+  },
+  {
+   "bead": "N25c-41",
+   "what": "Without `labels-from-contact`, `--derive-sets` should answer FROB-REF-724 (exit 5, status not-in-build, pointer /derive_sets, the feature named in the first repair), not 802: the option is registered, so it is in the generated schema of every build, and 802 would contradict that schema. This is the rule N25c-47 (--atlas), N25d-23 (--family), N25c-03 (--relation compute) and N25d-06 (strategies) already follow; VERBS-mission now states it."
+  },
+  {
+   "bead": "N25e-04",
+   "what": "`--budget paired-runs` (step 6 and the script at line 107) collides with the generated `budget` property of every run verb (the compute budget, `--budget cpu_core_s=60`). VERBS-mission registers the spelling `--coupling-source paired-runs` with `--pairs <n>` and `--level <α>` (DESIGN); please respell step 6, the script command, and the U25e coverage note that lists `--budget paired-runs`."
+  },
+  {
+   "bead": "N25e-06",
+   "what": "Step 4 says the `budget` field is removed from mission.transport's request schema if the tray clause fires; the run kind's compute `budget` must stay. The field meant is the coupling source (`--coupling-source paired-runs`, `pairs`, `level` in VERBS-mission); and, since registered options stay in the schema, the option should then answer FROB-REF-724 with status `killed` and the fallback named rather than be removed."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "Two entry-schema fields that registry rows now need: (1) options generated only under a non-release cargo feature (`--transport-unchecked` of BD-288 under `test-switches`), absent from the release schema and the help snapshot and answered 802 in a release build, so that the bidirectional option check and the snapshot treat them consistently; (2) `same_engine_as = \"<verb>\"`, which N28c-29 asks of the entries of mission.revalidate and result.revalidate. Until then VERBS-mission states both in its notes."
+  },
+  {
+   "bead": "N25a-16",
+   "what": "Accept `--since <identity>` on mission.revalidate (N28c-29's agreement test and script call `frob mission revalidate a:… --since <identity>`), with exactly one change form among --after-edit, --against and --since (two or none: 802, pointer /change, as on result.revalidate, N28b-32), and raise FROB-REF-870 as N28-REF's row lists for this verb from M3. VERBS-mission now registers both."
+  },
+  {
+   "bead": "N25-REF",
+   "what": "854's raised_by (BD-129; BD-292; N25e-32) lacks the beads that raise it on mission verbs and asked to be named: BD-291 (mission.distinguish, M3), N25c-14 (mission.synthesize, M3) and N25c-21 (--reuse on mission.synthesize and mission.refute, M1)."
+  },
+  {
+   "bead": "N24-REF",
+   "what": "Add N25e-04 (mission.transport --coupling-source paired-runs, M8: a paired-run address in either controller's lineage) to 843's raisers; VERBS-mission lists 843 on mission.transport."
+  },
+  {
+   "bead": "N19-REF",
+   "what": "Add N25c-29 (mission.new --from-scene, M8: a relative-only or under-scaled scene for a metric task) to 304's raisers; VERBS-mission lists 304 on mission.new."
+  },
+  {
+   "bead": "N12-REF",
+   "what": "Line 76 says 263 is passed through by 'mission.synthesize's continuation lane (BD-362)'; BD-362 is the `refine` lane (`--strategy refine`); the continuation lane is N25d-23."
+  },
+  {
+   "bead": "N25c-09",
+   "what": "The synopsis `--placement <auto | one card | two shards | host>` uses spaces; the script uses `--placement two-shards`. VERBS-mission registers `auto|one-card|two-shards|host`; please spell the synopsis so."
+  },
+  {
+   "bead": "N25e-24",
+   "what": "'`--split-cap 0` is outside the flag's range (1 to 6) and is refused as 802' together with '856 remains for --split-cap above 6' cannot both hold if the schema range is 1 to 6 (7 would then be 802). VERBS-mission states a schema minimum of 1 only, with 7 and above refused as 856 by the handler; please say so."
+  },
+  {
+   "bead": "N25c-22",
+   "what": "Step 3 calls `frob mission show <answer> --set inner --page-size 50`: the paging option is the generated `--limit`, and the row takes the mission positional with `--answer a:…`. Also the synthesize calls in steps 2 to 4 carry no `--key` (a run verb; drift 5)."
+  },
+  {
+   "bead": "N24b-26",
+   "what": "Line 59 uses `--idempotency-key`; the CLI spelling is `--key`. Step 6's `frob mission check <id> --budget-wall-s 5` cannot run: mission.check is a read verb with no budget property and `--budget-wall-s` is no option (802). To show that a budget given as a call argument leaves MissionId unchanged, use a run verb with `--budget wall_s=5` (for example `frob mission synthesize <id> --estimate --budget wall_s=5 --key …`) or drop the call."
+  },
+  {
+   "bead": "BD-126",
+   "what": "Line 275 uses `--idempotency-key`; the CLI spelling is `--key`. The template form of mission.new has no spelling here; VERBS-mission registers N25ax-01's: `frob mission new <name> --template <template>[@<version>] [--set key=value …]` (templates stance-family, docking, pusher at M1). Please state it."
+  },
+  {
+   "bead": "N28b-32",
+   "what": "Line 128's next_actions command `frob mission synthesize … --idempotency-key …` should use `--key`."
+  },
+  {
+   "bead": "N25d-27",
+   "what": "`frob mission new docking.fmission --template docking@1` gives both a document and a template; mission.new takes a document or a template with a name (`frob mission new docking --template docking@1`), as NS-22 and N25ax-01 call it. Choose one form."
+  },
+  {
+   "bead": "N25e-33",
+   "what": "The synthesize calls of steps 2 and 3 (`--enclosure 1e-9 --json`, `--reuse …`) carry no `--key`; mission.synthesize is a run verb (drift 5), and two runs compared need distinct keys."
+  },
+  {
+   "bead": "N14-REF",
+   "what": "Add module.characterize (N14b-28, M3) to the verbs of FROB-REF-113 (under --strict-data, an assumed torque-envelope field) and FROB-REF-114 (digest or port signature mismatch on the reference given), and module.show (N15b-02: a hash that does not match the file's bytes) to 114's; VERBS-module lists them on those rows."
+  },
+  {
+   "bead": "BD-278",
+   "what": "nemesis.cover is governed by DC-10 (BD-309) and N28-REF's 871 row names it; VERBS-nemesis registers `--require-rule table` on it (N28c-02's surface rule: with it a missing or stale DC-10 table is refused with 871, exit 3; without it the verb completes on the core's fallback with 871 in warnings and the decision record). Please implement the option and both behaviours, with a test, in the verb's handler."
+  },
+  {
+   "bead": "BD-280",
+   "what": "The next_actions command `frob nemesis shrink <run> --world <w>` uses an option no row and no grammar defines (BD-274: `frob nemesis shrink <failure> [--out DIR] [--max-tests 400] [--no-pair-check] [--tier T] --budget … --key …`, the failure being a run identity or a failing world). Use `frob nemesis shrink <w> --key <k>` (or the run identity) and carry `--key`, since nemesis.shrink is a run verb."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All eight beads reviewed and changed; every round-2 request in the slice applied, six in corrected form, none rejected: S84/S87's 724 on foundry rows applied as text (724 is appended to every verb); S91's --budget paired-runs registered as --coupling-source paired-runs (DESIGN: budget is the generated compute budget of every run verb); S91's --derive-sets 802 changed to 724 not-in-build (DESIGN: a registered option stays in the schema of every build); BD-288's --transport-unchecked registered as a test-switches-only option absent from the release schema (DESIGN); N25e-24's --split-cap range given as a schema minimum only, so that 7 stays 856; N25c-09's spaced placement values hyphenated. Beyond the requests, a drift-8 sweep of every call of the eight clusters' verbs across all beads added the options and foreign codes their mechanism beads define (enumerated per bead above), corrected two tier cells on VERBS-module, replaced two epics named as implementers (BD-423, BD-436) by their working children, and synced the stale scope-names sentence to BD-258's decided rule. No number was invented: interims follow N31b-45, N25e-45 and the N35x-02 ledger; codes of other chapters are named with their registries. Requests go to mechanism and registry beads for the spellings and raiser entries that must change (35). The slice looks settled on the registry side; what remains is in the requested beads. Many scripts outside the slice still call run verbs without --key (drift 5); only those met while checking rows are requested."
+}

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "atelier", "marrow", "frob-analyze", "frob-lie", "solid", "frontier", "moonshot", "spine", "spec", "test"]
 parent: "WP-11"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§28.4: the bead that creates crate frob-analyze (the law suite lands in crates/frob-analyze/tests/)", "§33 INT-FSYM-02: admission of FrankenSymPy's polynomial solvers used at build time for elimination (decided with BD-105)", "§10 C-34: linkage synthesis, with which the Study-quadric part [M] is piloted (SPEC-C-34, another unit)"]
-related: ["BD-105", "BD-116", "BD-361", "BD-437", "N10a-18", "SPEC-C-01", "N10-KA1", "BD-010"]
+deps: ["BD-025", "N10a-01", "N28a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-010", "BD-105", "N10a-18", "N10ax-01", "SPEC-C-34"]
 gates: ["GATE-ATEL-02"]
 plan_refs: ["§10 C-11", "§12.1", "§28.4 A-05 A-06", "Appendix C.1.3", "Appendix C.1.4", "Appendix D.1", "Appendix M KA-074"]
 ---
@@ -53,7 +53,11 @@ law in `crates/frob-lie/tests/laws_c11_poe.rs`; the three-joint positioning fixt
 and its singular locus; the register row; the tolerance and control of KA-074.
 
 Out: the workspace and singularity analyses and the derived leg kernel (BD-105); the certified-solver pilot
-(N10a-18); linkage synthesis lanes (BD-361, BD-437; construction C-34); admission of the symbolic tools.
+(N10a-18); the certified solver itself (N10ax-01, M4, funded by that pilot), whose acceptance binds the
+production solver to this suite's subject trait and runs S3 and S6 unchanged, so the certified-solver criteria
+below are met here on the exact reference with its planted solvers and logged `pending` for the production
+solver until then; linkage synthesis lanes (BD-361, BD-437; construction C-34); admission of the symbolic
+tools.
 
 Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
 N10a-01). This bead is written before the code it specifies and does not depend on BD-010 (creates `frob-lie`):
@@ -170,12 +174,15 @@ interval and polynomial certificates.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c11.sh`. Sources the STD-E2E helper. Steps: both law suites; both per control; the G1 row
-KA-074; when the verbs exist, `frob --json analyze singularities --design fixtures/kin/leg3r.fbot` asserting
-the two components of the locus, and `frob --json analyze workspace` asserting the solution count reported for
-a target file; the evidence block must be `Certified` with certificate hashes for the certified solver and
-`Tested` with the label `incomplete` for a multistart answer. Log `target/e2e-logs/spec_c11/<utc>.ndjson` with
-transcript: commands, exit codes, solution counts against four, box widths, residuals with units, and on
-failure the target and the first missing or spurious solution. Final `summary` line.
+KA-074; when the verbs exist, `frob --json analyze singularities fixtures/kin/leg3r.fbot` (the design is the
+positional argument of every `analyze` verb, N28a-05; there is no `--design` flag) asserting the two
+components of the locus, and `frob --json analyze workspace fixtures/kin/leg3r.fbot --target-step-height <h>`
+(the row's task-level height input) at a reachable height, asserting the solution count reported for it (the
+surviving branches); the evidence block must be `Certified` with certificate
+hashes for the certified solver and `Tested` with the label `incomplete` for a multistart answer. Log
+`target/e2e-logs/spec_c11/<utc>.ndjson` with transcript: commands, exit codes, solution counts against four,
+box widths, residuals with units, and on failure the target and the first missing or spurious solution. Final
+`summary` line.
 
 ### Known answers and negative controls
 

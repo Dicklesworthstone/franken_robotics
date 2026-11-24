@@ -4,11 +4,11 @@ title: "spec C-24 (frob-learn): geometric-algebra tree policy: multivector token
 type: "task"
 priority: 4
 milestone: "M8"
-labels: ["m8", "lemma", "spine", "spec", "moonshot", "frob-learn", "test"]
+labels: ["m8", "lemma", "spine", "spec", "moonshot", "frob-learn", "test", "review-notes-open"]
 parent: "WP-79"
-deps: ["BD-025", "SPEC-C-23", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-24", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load row KA-131 and CX-061; this bead binds them to tests and sets the round-off bound the appendix leaves `to set`", "§10 C-04: the order of the tree recursions (outward kinematics, inward forces) from the specification bead SPEC-C-04 (unit U10a), which fixes the order of message passing"]
-related: ["N10b-16", "BD-439", "BD-320", "BD-325", "BD-326", "SPEC-C-04", "SPEC-C-09", "SPEC-C-02", "BD-192", "N10a-02"]
+deps: ["BD-022", "BD-025", "N10-CX", "N10-KA2", "N10a-01", "SPEC-C-04", "SPEC-C-23", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-192", "BD-439", "N23b-01"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-24", "§9 D-6", "§9 D-10", "§11.4", "§23.14", "§23.23", "Appendix C", "Appendix M.9 KA-131", "Appendix N.7 CX-061"]
 ---
@@ -26,7 +26,7 @@ kind exists for multi-embodiment locomotion; a pure geometric-algebra network in
 very slowly; such layers ran 1.4 to 7.5 times slower per epoch, so equal parameters is not equal compute;
 fixed tree message passing has lost to plain transformers; heading normalization with augmentation recovers
 most of the benefit. The expected gain is between none and 1.3×. That is why the construction is admitted only
-with a ceiling stated first, a three-arm pilot (N10b-16) and a kill gate (KILL-GATREE), and why at most four
+with a ceiling stated first, a three-arm pilot (N23b-01) and a kill gate (KILL-GATREE), and why at most four
 Moonshot items are active at once and none is on a critical path. Crate: `frob-learn`. Milestone: M8.
 
 Terms. *Projective geometric algebra*: the algebra in which points, lines, planes and rigid motions are
@@ -45,7 +45,7 @@ In: `docs/math/C-24.md` (statements S1 to S5); the law suite `crates/frob-learn/
 reference layers and mutants, compiled only under the cargo feature `moonshot-ga-policy` (off by default);
 registry row KA-131; controls from CX-061; row C-24 of the construction register.
 
-Out: the three-arm experiment (N10b-16); the epic that scales it if the pilot passes (BD-439); the family
+Out: the three-arm experiment (N23b-01); the epic that scales it if the pilot passes (BD-439); the family
 policy and its tokens (SPEC-C-23, BD-320); equivariant linear maps by irreducible blocks for finite groups
 (BD-325), which is a different mechanism for a different group.
 
@@ -55,7 +55,7 @@ environment of `frob-learn`): that bead is listed in `related` and is not a prer
 over its subject trait and closes on the exact reference model and the mutants in its own test support. If
 `frob-learn` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -99,7 +99,7 @@ polar vector leaves the yaw rate unchanged, which is the classical mix-up this p
 3. Aggregation over children by a permutation-invariant sum in a canonical order.
 4. No positional encoding by token index; tree structure enters only through parent–child relations.
 
-### 4. Pilot, kill rule, cost, ceiling and fallback (carried in full; run by N10b-16)
+### 4. Pilot, kill rule, cost, ceiling and fallback (carried in full; run by N23b-01)
 
 Three arms on one embodiment set at equal wall-clock budget with three seeds each. Arm A, the control: a plain
 link-token transformer with heading normalization and convention augmentation. Arm B: A with a
@@ -118,8 +118,8 @@ envelope). Ceiling: 1.3× on an amortized pretraining run. Fallback: arm A.
   fn act(&self, tokens, tree) -> Vec<Action> }`. `tests/support/c24_ref.rs`: a reference equivariant layer
   stack built from the allowed operations with fixed rational weights (a real, small network; labelled
   `synthetic` data); generators of group elements (yaw angles with rational sine and cosine such as (3/5, 4/5),
-  rational translations, reflections through vertical planes). `tests/support/c24_mutants.rs`: mutants under
-  the cargo feature `controls`.
+  rational translations, reflections through vertical planes). `tests/support/c24_mutants.rs`: mutants under the crate's cargo feature
+  `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
 - Register row C-24: `rust_type` = the multivector token type of `frob-learn` (filled if the epic is funded),
   `verb = "train.family"` with the architecture option, `failing_test` =
   `frob-learn::laws_c24::s3_horizontal_rotation_not_a_symmetry`, `payoff.gate = "GATE-CORTEX-17"`,
@@ -135,7 +135,7 @@ envelope). Ceiling: 1.3× on an amortized pretraining run. Fallback: arm A.
 
 - [ ] `docs/math/C-24.md` has the ten sections, statements C-24.S1 to S5 with classes, the transformation
       table, the evidence figures tagged FACT and the pilot statement.
-- [ ] `cargo test -p frob-learn --features moonshot-ga-policy --test laws_c24` passes; with `controls` added
+- [ ] `cargo test -p frob-learn --features moonshot-ga-policy --test laws_c24` passes; with `conformance` added
       every mutant fails. A default build compiles none of it.
 - [ ] KA-131: for every layer of the reference stack and 100 seeded group elements of each kind (yaw,
       translation, vertical-plane reflection, relabeling), applying the element before the layer equals
@@ -168,7 +168,7 @@ envelope). Ceiling: 1.3× on an amortized pretraining run. Fallback: arm A.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c24.sh` (idempotent; seed 2400 printed): `frob --json doctor`; the law suite with the
-feature flags; `cargo test -p frob-conformance --test g3 -- KA-131` on the host site; a check that a default
+feature flags; `FROB_TEST_SEED=2400 cargo test -p frob-conformance --test g3_metamorphic -- KA-131` on the host site (the row's tier is G3), then the same with `--features gauntlet-mutations`, under which the control CX-061 (the all-rotations mutant) must fail; a check that a default
 build does not contain the suite. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c24/<utc>.ndjson`
 and a transcript; each line has `ts`, `script`, `bead` (`SPEC-C-24`), `step`, `event` (`start`, `cmd`, `assert`,
 `metric`, `refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class

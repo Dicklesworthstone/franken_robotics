@@ -1,14 +1,14 @@
 ---
 key: "ART-L5"
-title: "golden fixture L.5: the `.fenergy` budget for the stop at the pass counter, its integer arithmetic and CLI script"
+title: "golden fixture L.5: the `.fenergy` budget for the stop at the pass counter, integer arithmetic, CLI script"
 type: "task"
 priority: 2
 milestone: "M4"
-labels: ["m4", "reflex", "frob-shield", "frob-conformance", "frontier", "test", "e2e"]
+labels: ["m4", "reflex", "frob-shield", "frob-conformance", "frontier", "test", "e2e", "review-notes-open"]
 parent: "WP-65"
-deps: ["BD-337", "BD-338", "ART-L1", "NJL-07", "STD-E2E"]
+deps: ["ART-L1", "BD-337", "BD-338", "NJL-07", "NJLx-02", "STD-E2E"]
 needs: []
-related: ["N22b-18", "BD-092", "BD-132", "BD-410", "ART-L9"]
+related: ["ART-L9", "BD-092", "BD-132", "BD-410", "GB-26", "N22b-18", "NEG-13"]
 gates: []
 plan_refs: ["Appendix L.5", "§22.11", "§12.4", "§8.2"]
 ---
@@ -139,10 +139,17 @@ pushing); and it is no regulatory assessment. The artifact carries the three no-
 false.
 
 **A spelling to settle.** The specimen writes the last field of `claim` as `flags`, with a prose placeholder;
-the owner chapter's sketch of the same format writes `authorization`. DESIGN default for the resolved layer:
-the key `authorization`, holding the object `{"execution_authorized": false, "hardware_safety_signoff": false,
-"sim_to_real_certified": false}`; the specimen layer stays as printed. If the format's owner bead (BD-337)
-chooses otherwise, the resolved layer follows it.
+the owner chapter's sketch of the same format writes `authorization`. The format's bead (N22b-10, a component
+of BD-337) settles it: `claim` holds `class` and `reality` only, and the flags are a top-level key
+`authorization` holding the object `{"execution_authorized": false, "hardware_safety_signoff": false,
+"sim_to_real_certified": false}`. The resolved layer is written that way; the specimen layer stays as printed.
+If the format bead changes the placement, the resolved layer follows it by a blessed change.
+
+**Labels of the terms.** The specimen files gravity under `external` and the leg series compliance under
+`stored`, with the reserve as a separate 0.10 J: these are the governing labels of the resolved inconsistency
+on energy-budget labels (NEG-13 keeps the regression for the drop-stop cart and scans this specimen; the
+checker rule that a source must be covered by a term of the right kind, and never by the reserve, is
+N22b-12's walk).
 
 ## Acceptance criteria
 
@@ -176,8 +183,10 @@ mocks):
 - `l5_margin_506400`.
 - `l5_cutoff_max_42660_us`: the closed form in integers; 42,660 µs → margin 0; 42,661 µs → margin −40.
 - `l5_reading_boundary_pair`: 0.55 m/s → +15,900; 0.56 m/s → −87,600.
-- `l5_gravity_bound`: 0.105948 ≤ 0.11; a declared bound of 0.10 J fails the basis check (the work computed from
-  the stated slope and stroke exceeds it).
+- `l5_gravity_bound`: the builder derives 18·9.81·0.030·0.02 = 105,948 µJ from the scene's slope and the stroke
+  (N22b-11; the specimen's `basis` string is documentation and is not parsed); the declared 0.11 J is above
+  it, so 110,000 enters with no finding; a declared 0.10 J is below it, so the finding `declared-below-derived`
+  is raised (exit code 2) and 105,948 enters the predicate.
 - `l5_class_estimated_from_assumed`: with absorber provenance `assumed` the class is Estimated; with
   `measured` (a fixture card) the class rises to Certified for the arithmetic.
 - `l5_unlisted_source_refuses_451`; `l5_class_request_refuses_451`; `l5_flag_true_refuses_833`.
@@ -192,11 +201,17 @@ verb:shield.budget,verb:shield.check seed=1 needs=cpu plants=payload-only,sum-of
 `quad-tray` from artifact L.1's fixture; (2) `frob shield budget quad-tray --boundary pass_counter_stop
 --absorber bumper-150N-30mm --cutoff-delay 0.030s --reserve 0.10J --key l5-bud --json`, compare the written
 file with the resolved fixture (`e2e_assert_digest_eq`) and assert class Estimated; (3) evaluate the predicate
-at the readings 0.50, 0.55 and 0.56 m/s through the verb's `--at-speed` option and assert the integer terms
-and margins with `e2e_assert_num` (exact); (4) the cutoff pair 42,660 and 42,661 µs; (5) `frob prove bundle`
-for the budget and the offline `frob-verify` on it, `accept`, class Estimated; (6) the three refusals through
-`e2e_expect_refusal`; (7) a referee run of a stop at the bumper, then `frob shield check <run> --budget …
---json`, assert no exceedance; (8) `frob-golden check --artifact L5`. Plants: `payload-only` sets the mass cap
+at the readings 0.50, 0.55 and 0.56 m/s through the verb's reading-domain input
+`--reading-max` (BD-337's "reading domain"; the spelling of the shield chapter's script N22b-18) and assert the integer terms
+and margins with `e2e_assert_num` (exact); (4) the cutoff pair 42,660 and 42,661 µs
+(`--reading-max 0.50 --cutoff-delay 0.042660s`, then `0.042661s`: exit 0 with margin 0, then exit 2 with margin
+−40, "this boundary cannot be claimed at this speed" being a result and not a refusal; each evaluation with its
+own key, `l5-r050`, `l5-r055`, `l5-r056`, `l5-c42660`, `l5-c42661`); (5) `frob prove bundle <budget> --key
+l5-prove --json` and the offline `frob-verify` on it, `accept`, class Estimated; (6) the three refusals through
+`e2e_expect_refusal`, each with its own key; (7) a referee run of a stop at the bumper with the budget attached
+(`frob sim run quad-tray --tier referee --shield-budget <id> --key l5-ref --json`, the option BD-337 defines),
+then `frob shield check <run> --energy-budget <id> --key l5-chk --json` (the registry row's spelling: `--budget`
+is the generated compute budget of every run verb), assert no exceedance; (8) `frob-golden check --artifact L5`. Plants: `payload-only` sets the mass cap
 to the tray alone and must show an exceedance in step (7); `sum-off-by-one` must be rejected by the auditor.
 The log (`target/e2e-logs/art_l5_fenergy/<utc>.ndjson`) records every command with exit code and wall time,
 the evidence block, each integer term as a metric with its unit (µJ, µs) and expected value, digests, refusals
@@ -230,8 +245,12 @@ with code and first repair, and the `summary`.
 - The names in `load_path` (`leg_fl` and the like) are the specimen's; the compiled design derives instance
   identifiers of its own. The resolved layer uses the derived identifiers, and the story-consistency check
   requires each to resolve.
-- The `--at-speed` option of step (3) is a proposal for evaluating the predicate at a stated reading without a
-  run; if the owner bead exposes it otherwise, the script follows.
+- Step (3) evaluates the predicate at a stated reading without a run through BD-337's reading-domain input,
+  spelled `--reading-max` as in the shield chapter's own script (N22b-18, which asserts the same pass-counter
+  integers at 0.50 m/s). An earlier draft proposed a second spelling, `--at-speed`; one input has one name. The
+  `--cutoff-delay` and `--absorber` options of step (2) are inputs of the `shield.budget` row (VERBS-shield,
+  BD-337): an absorber card in place of the boundary's own, and a declared cutoff delay in place of the derived
+  chain, entered with provenance `declared`.
 
 ## References
 

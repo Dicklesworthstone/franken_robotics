@@ -1,0 +1,774 @@
+{
+ "group": "GEG",
+ "needs": [
+  {
+   "bead": "NEG-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-50"
+   ],
+   "note": "N38b-50 creates the reconciliation register that holds the eleven M.38 values; this register points at its rows. The rows that repeat E.7 items are N38b-50 (value 1 = E7-3), N38b-51 (value 2 = E7-2), N38b-55 (value 6 = E7-6) and N38b-56 (value 7 = E7-1): the last two are M1, later than this M0 bead, so they are recorded as related edges"
+  },
+  {
+   "bead": "NEG-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N37-17",
+    "N37-18"
+   ],
+   "note": "the licence join over lineage and the export door are M3, later than this M1 bead; the manifest feeds them and is finished without them"
+  },
+  {
+   "bead": "NEG-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-46"
+   ],
+   "note": "the M3 asset lane of scene.import (decode, compile, loss report, licence entry); a whole generated interior enters through the same lane, and populating proxies with it is BD-399 (already related)"
+  },
+  {
+   "bead": "NEG-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-46"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "NEG-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-46"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "NEG-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-46"
+   ],
+   "note": "the asset lane takes user-supplied files of research collections with the scale declaration record; scale labels by authority are N19c-02 (M5, later)"
+  },
+  {
+   "bead": "NEG-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-46"
+   ],
+   "note": "the M3 lane gives the scale declaration, unknown regions from explicit repair and the loss report; the three-valued occupancy mask per consumer (N19c-03) and scale labels by authority (N19c-02) are M5, recorded as related edges"
+  },
+  {
+   "bead": "NEG-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-46"
+   ],
+   "note": "behaviour `articulated` with articulation supplied per jointed part, and the loss report, are in the asset lane"
+  },
+  {
+   "bead": "NEG-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-13",
+    "NAB-12",
+    "NAB-14"
+   ],
+   "note": "NAB-13 holds the two retail generators (abstracts only), NAB-12 the Isaac Sim Warehouse Creator page, NAB-14 the not-verified row NV-07 for their licences; all are M0 data entry"
+  },
+  {
+   "bead": "NEG-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-23"
+   ],
+   "note": "the registry of thirteen task families, each shipping its requirement; the M3 families (BD-253) and the requirement language (BD-121) are already dependencies"
+  },
+  {
+   "bead": "NEG-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-338",
+    "BD-337"
+   ],
+   "note": "runtime shields (stopping distance, geofence) and the energy-budget tier are M4, later than this M3 bead; until they land an S cover is `pending(M4)` and does not count, as the bead already specifies"
+  },
+  {
+   "bead": "ROBOT-cassie",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "FD-FSIM-04"
+   ],
+   "note": "the upstream item is holonomic loop constraints in fs-mbd; not blocking: the bead ships under the interim posture (loops lowered as compliant equality rows, no dynamic parity claimed)"
+  },
+  {
+   "bead": "ROBOT-fsim-g1",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "NF-07"
+   ],
+   "note": "the upstream item has no FD- number; its bead is NF-07. Not blocking: the declared profile g1-reduced-30 is the interim posture and the switch-over is an event recorded when NF-07 lands"
+  },
+  {
+   "bead": "ZOO-balancer-2w",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-47"
+   ],
+   "note": "N38b-47 writes the derivation file for KA-269; same formula as this bead's candidate, but its illustrative fixture differs (see cross_group_duplicates)"
+  },
+  {
+   "bead": "ZOO-tri-wheel-stair",
+   "n": 1,
+   "as": "gap",
+   "keys": [],
+   "note": "§33.3: no bead admits fs-mbd::tri_wheel_cluster as an oracle; N33a-07 is only the admission-record mechanism and BD-033 (INT-FSIM-05) covers planar_drive and the catalog builders. The oracle row stays `blocked: admission`"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "ZOO-ackermann",
+   "dep": "FD-FSIM-04",
+   "as": "related",
+   "why": "coverage (d) of UEG: waits on the same upstream loop-constraint item as ROBOT-cassie; not blocking (interim: loop lowered as a compliant row)"
+  },
+  {
+   "bead": "ZOO-rocker-bogie",
+   "dep": "FD-FSIM-04",
+   "as": "related",
+   "why": "coverage (d) of UEG: waits on the same upstream loop-constraint item as ROBOT-cassie; not blocking (interim posture)"
+  },
+  {
+   "bead": "NEG-03",
+   "dep": "N38b-51",
+   "as": "related",
+   "why": "M.38 value 2 is item E7-2; the register points at the row"
+  },
+  {
+   "bead": "NEG-03",
+   "dep": "N38b-55",
+   "as": "related",
+   "why": "M.38 value 6 is item E7-6; carrier is M1, later than this M0 bead"
+  },
+  {
+   "bead": "NEG-03",
+   "dep": "N38b-56",
+   "as": "related",
+   "why": "M.38 value 7 is item E7-1; carrier is M1, later than this M0 bead"
+  },
+  {
+   "bead": "NEG-05",
+   "dep": "N38b-51",
+   "as": "related",
+   "why": "the same correction (7.7 against 7.8) pinned in the reconciliation register"
+  },
+  {
+   "bead": "NEG-06",
+   "dep": "N38b-50",
+   "as": "related",
+   "why": "the same correction (842.8 ÷ 575.7 = 1.46) pinned as reconciliation value 1"
+  },
+  {
+   "bead": "NEG-09",
+   "dep": "N38b-55",
+   "as": "related",
+   "why": "the same correction (616 decision instants) pinned as reconciliation value 6"
+  },
+  {
+   "bead": "NEG-04",
+   "dep": "N38b-56",
+   "as": "related",
+   "why": "the same correction (76,959) pinned as reconciliation value 7"
+  },
+  {
+   "bead": "NEG-04",
+   "dep": "N38b-57",
+   "as": "related",
+   "why": "M.38 value 8 is the control that errs on the safe side; NEG-04 implements the control that undercounts (coverage (e) 4 of UEG)"
+  },
+  {
+   "bead": "NEG-23",
+   "dep": "N19c-03",
+   "as": "related",
+   "why": "three-valued occupancy and the unknown mask per consumer are M5, later than this M3 bead"
+  },
+  {
+   "bead": "NEG-23",
+   "dep": "N19c-02",
+   "as": "related",
+   "why": "scale labels by authority are M5, later than this M3 bead"
+  },
+  {
+   "bead": "NEG-22",
+   "dep": "N19c-02",
+   "as": "related",
+   "why": "scale labels by authority are M5, later than this M3 bead"
+  },
+  {
+   "bead": "GB-07",
+   "dep": "N19c-16",
+   "as": "dep",
+   "why": "rule 4: lane B calls frob-scene's size estimator, which is the scene byte model of N19c-16"
+  },
+  {
+   "bead": "GB-24",
+   "dep": "N20b-13",
+   "as": "dep",
+   "why": "rule 4: the analytic layer of the docking fixture (evaluator, 561 labels) that the card's surface and NEG-02 run"
+  },
+  {
+   "bead": "GB-24",
+   "dep": "N20b-14",
+   "as": "related",
+   "why": "the third-gain row and the single-precision screen are the same fixture rows; lane B takes them from BD-129"
+  },
+  {
+   "bead": "GB-30",
+   "dep": "N24b-06",
+   "as": "dep",
+   "why": "rule 4: lane B compares with the exact enumerator of reachable verdicts of eval.preanalyze"
+  },
+  {
+   "bead": "GB-37",
+   "dep": "N31a-21",
+   "as": "dep",
+   "why": "rule 4: lane B calls rainflow counting with carried residues and the linear damage sum"
+  },
+  {
+   "bead": "GB-37",
+   "dep": "N31a-32",
+   "as": "dep",
+   "why": "rule 4: lane B calls the cube-root tolerance allocation of foundry.tolerance"
+  },
+  {
+   "bead": "GB-38",
+   "dep": "N31a-24",
+   "as": "dep",
+   "why": "rule 4: lane B calls the loads–mass convergence test (contraction estimate, bound, FROB-REF-260, 2-cycle)"
+  },
+  {
+   "bead": "GB-09",
+   "dep": "N36-04",
+   "as": "related",
+   "why": "the same ceiling arithmetic (KA-818); lane B calls the calculators of N00-17"
+  },
+  {
+   "bead": "NEG-01",
+   "dep": "NAB-09",
+   "as": "dep",
+   "why": "format rule 4: a FACT input carries its source-register row and reading mark; the schema and marks are NAB-09's"
+  },
+  {
+   "bead": "NEG-15",
+   "dep": "NAB-13",
+   "as": "dep",
+   "why": "the manifest takes the collection's repository URL and reading mark from the source-register row for MuJoCo Menagerie"
+  },
+  {
+   "bead": "NEG-18",
+   "dep": "NAB-13",
+   "as": "dep",
+   "why": "the admission reading starts from the source-register row for Infinigen"
+  },
+  {
+   "bead": "NEG-20",
+   "dep": "NAB-13",
+   "as": "dep",
+   "why": "the admission reading starts from the source-register row for RoboCasa"
+  },
+  {
+   "bead": "NEG-22",
+   "dep": "NAB-13",
+   "as": "dep",
+   "why": "the admission reading starts from the source-register row for HSSD"
+  },
+  {
+   "bead": "NEG-23",
+   "dep": "NAB-13",
+   "as": "dep",
+   "why": "the admission reading starts from the source-register row for HM3D"
+  },
+  {
+   "bead": "NEG-21",
+   "dep": "NAB-14",
+   "as": "dep",
+   "why": "the ProcTHOR dataset licence is row NV-07 of the not-verified list"
+  },
+  {
+   "bead": "ROBOT-fsim-g1",
+   "dep": "N33c-41",
+   "as": "dep",
+   "why": "the admission probe of the G1 catalog roll-up (31.96314202 kg, GATE-WS-09) whose record this asset stores"
+  },
+  {
+   "bead": "ZOO-tri-wheel-stair",
+   "dep": "BD-049",
+   "as": "dep",
+   "why": "the nested group inside each cluster is checked with the wreath products of algebra.orbits (named in Scope)"
+  },
+  {
+   "bead": "NEG-30",
+   "dep": "N14b-02",
+   "as": "related",
+   "why": "template bead of four M3 archetypes; later than this M1 bead"
+  },
+  {
+   "bead": "NEG-30",
+   "dep": "N14b-03",
+   "as": "related",
+   "why": "template bead of five M3 archetypes; later than this M1 bead"
+  },
+  {
+   "bead": "NEG-30",
+   "dep": "N14b-04",
+   "as": "related",
+   "why": "template bead of five M3 archetypes; later than this M1 bead"
+  },
+  {
+   "bead": "NEG-30",
+   "dep": "N14b-05",
+   "as": "related",
+   "why": "coverage (d) of UEG: the six variants outside the eighteen are carried there"
+  },
+  {
+   "bead": "NEG-30",
+   "dep": "N34-01",
+   "as": "related",
+   "why": "coverage (d) of UEG: the layout tree of N34-01 has no `zoo/` directory (gap reported)"
+  },
+  {
+   "bead": "NEG-15",
+   "dep": "N24a-22",
+   "as": "related",
+   "why": "coverage (d) of UEG: the baseline-is-the-template rule for the twelve archetypes with no reference robot"
+  },
+  {
+   "bead": "NEG-15",
+   "dep": "N24c-16",
+   "as": "related",
+   "why": "coverage (d) of UEG: OPEN-ARENA-2, the hexapod reference model"
+  },
+  {
+   "bead": "ZOO-hexapod-radial",
+   "dep": "N24c-16",
+   "as": "related",
+   "why": "coverage (d) of UEG: OPEN-ARENA-2 is decided there"
+  },
+  {
+   "bead": "NEG-28",
+   "dep": "N14a-32",
+   "as": "dep",
+   "why": "this bead adds a step to scripts/e2e/scene_hazards.sh, which that bead writes (as NEG-12 does with its two scripts)"
+  },
+  {
+   "bead": "NEG-28",
+   "dep": "N19c-30",
+   "as": "related",
+   "why": "coverage (d) of UEG: OPEN-HAB-1 (cited norms for hazard dimensions) is decided there"
+  },
+  {
+   "bead": "NEG-28",
+   "dep": "N19b-43",
+   "as": "related",
+   "why": "coverage (d) of UEG: OPEN-HAB-4 is decided there; M4, later than this M3 bead"
+  },
+  {
+   "bead": "GB-14",
+   "dep": "N28c-26",
+   "as": "related",
+   "why": "coverage (b) of UEG: OPEN-ATEL-1 (loss constants of DC-01) is decided there"
+  },
+  {
+   "bead": "GB-32",
+   "dep": "N26b-21",
+   "as": "related",
+   "why": "coverage (b) of UEG: OPEN-NEMESIS-3 (compute envelope for 10⁻⁶) is decided there"
+  },
+  {
+   "bead": "GB-21",
+   "dep": "N18b-36",
+   "as": "related",
+   "why": "coverage (b) of UEG: OPEN-TRAC-3 is decided there"
+  },
+  {
+   "bead": "NEG-12",
+   "dep": "N40-08",
+   "as": "related",
+   "why": "the gate register's shared-fixture table already has the row `film squeeze times, 2% in both gates`"
+  },
+  {
+   "bead": "NEG-13",
+   "dep": "ART-L5",
+   "as": "related",
+   "why": "the worked `.fenergy` budget of the artifacts appendix is the same fixture"
+  },
+  {
+   "bead": "NEG-10",
+   "dep": "N38a-11",
+   "as": "related",
+   "why": "the plan-time pilot re-run reproduces the same wheel-loop row"
+  },
+  {
+   "bead": "GB-26",
+   "dep": "ART-L5",
+   "as": "related",
+   "why": "the same worked budget (1.49 J against 2.00 J; 50.5 ms, 45.5 ms with reserve)"
+  },
+  {
+   "bead": "GB-30",
+   "dep": "ART-L8",
+   "as": "related",
+   "why": "the same pre-analysis at n = 64 (521, 521, 1,103; 2,145 outcomes)"
+  },
+  {
+   "bead": "GB-31",
+   "dep": "ART-L4",
+   "as": "related",
+   "why": "the same stance family with boundary 3/14 m"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "NEG-03",
+   "other": "N38b-50",
+   "note": "two registers of corrected values with a withdrawn-value scan. Mine: registries/cards/discrepancies.toml, twelve E.7 items, scan with scope filter and labelled-control allow-list. Other: crates/frob-conformance/registry/reconciliations.toml, eleven M.38 values REC-01…, document scan. Four items are in both (E7-1, E7-2, E7-3, E7-6)"
+  },
+  {
+   "mine": "NEG-03",
+   "other": "NAB-41",
+   "note": "a third register of the same kind: crates/frob-conformance/registry/discrepancies.toml (frob.discrepancy/1), seventeen records DX-01…; DX-02 is E7-2 and DX-03 is E7-3; the file name collides with mine"
+  },
+  {
+   "mine": "NEG-04",
+   "other": "N38b-56",
+   "note": "both pin 76,959 against 76,963 for the tenth request; N38b-57 holds the companion control row"
+  },
+  {
+   "mine": "NEG-05",
+   "other": "N38b-51",
+   "note": "both pin the engine-speed ceiling 7.7 from 0.87 (7.8 only from 82/94)"
+  },
+  {
+   "mine": "NEG-05",
+   "other": "NAB-41",
+   "note": "pin DX-02 is the same correction as E7-2"
+  },
+  {
+   "mine": "NEG-06",
+   "other": "N38b-50",
+   "note": "both pin 842.8 ÷ 575.7 = 1.46 and withdraw the 94% share"
+  },
+  {
+   "mine": "NEG-06",
+   "other": "NAB-41",
+   "note": "pin DX-03 is the same correction as E7-3"
+  },
+  {
+   "mine": "NEG-09",
+   "other": "N38b-55",
+   "note": "both pin 616 decision instants in 20 s against 600 for every-thirteenth-step scheduling"
+  },
+  {
+   "mine": "NEG-10",
+   "other": "N38a-11",
+   "note": "same wheel-loop row. Mine requires one plant: 2.6917 with the fixture's shaft damping (as BD-108 and N16c-42 state), 2.7075 only without. Other reproduces row 17 as 2.7075, 1.4820, 0.9207 (two plant models): its 2.7075 would trip the stale-value scan unless labelled"
+  },
+  {
+   "mine": "NEG-11",
+   "other": "N21b-18",
+   "note": "both fix the default capacities C = 32, R = 160 and C = 64, R = 320; N21b-18 is the decision OPEN-SPARK-3 that freezes the table, mine pins the single table and the stale 24/128 and 40/224"
+  },
+  {
+   "mine": "NEG-12",
+   "other": "N40-08",
+   "note": "both make GATE-TRAC-05 and GATE-HAB-06 hold the squeeze times to one 2% bound; N40-08 has the gate register's shared-fixture table and check, mine the single registration in the known-answer rows, the lint and the E7-B scan"
+  },
+  {
+   "mine": "NEG-13",
+   "other": "N22b-12",
+   "note": "both state that every energy port must be covered by a budget term; N22b-12 has the four premises and the port-graph walk (FROB-REF-451), mine the six term kinds, the governing labels and the superseded-label fixture"
+  },
+  {
+   "mine": "NEG-13",
+   "other": "ART-L5",
+   "note": "the worked energy budget as a fixture: mine with governing labels, other as golden fixture L.5"
+  },
+  {
+   "mine": "GB-07",
+   "other": "N19c-16",
+   "note": "same scene memory arithmetic (10 × 10 × 3 m at 2 cm: 37,500,000 samples, 75 MB; the 600 MB figure belongs to 4 cm, CX-198). Other holds it as checked tests of the byte model; mine is the card file with two lanes and controls (edge GB-07 → N19c-16)"
+  },
+  {
+   "mine": "GB-09",
+   "other": "N36-04",
+   "note": "same single-phase ceilings (7.7 from the 0.87 step share and the others, KA-818). Other is the Amdahl limits calculator of the performance chapter (seven limits); mine is the three-ceiling card on N00-17's calculators"
+  },
+  {
+   "mine": "GB-11",
+   "other": "N15a-26",
+   "note": "the end-to-end script sinew_static_sizing runs actuator.thermal on this worked card (fixture thermal_worked.fcard: R₀ = 0.20 Ω, rise 164.7 K, i_crit 31.9 A) and checks every published number; NEG-02 runs the same card through the same verb"
+  },
+  {
+   "mine": "GB-12",
+   "other": "N15a-26",
+   "note": "the same script runs actuator.envelope on this worked card (fixture envelope_worked.fcard); NEG-02 does too"
+  },
+  {
+   "mine": "GB-19",
+   "other": "N10b-12",
+   "note": "same ballast fixture (735,471 placements, 24,546 classes): other specifies it for C-22 at M3 with pilot N10b-13, mine holds the count as a card golden at M1"
+  },
+  {
+   "mine": "GB-22",
+   "other": "N18b-27",
+   "note": "same refuting calculation for half precision (κ·u₁₆ = 2.34, refinement cost 9k/n): other carries it as known answers with refusal FROB-REF-245 (a dependency of mine), mine as the card; DX-01 of NAB-41 pins 9k/n = 3.0"
+  },
+  {
+   "mine": "GB-24",
+   "other": "N20b-13",
+   "note": "same docking fixture: 561 cells, 344 admitted, 217 excluded, 9 on the boundary, worked commands, the non-strict mutant (353). Other has the exact evaluator, label digest and derivation file; mine the card file, lane B through the frob-mission family solver. N20b-14 has the third gain and single-precision controls; BD-041 the plan-time re-run"
+  },
+  {
+   "mine": "GB-26",
+   "other": "N22b-09",
+   "note": "the pilot recomputes this worked card in exact arithmetic (1.49 J against 2.00 J, 50.5 ms) before the mechanism is funded; mine is the standing golden with lane B on shield.budget"
+  },
+  {
+   "mine": "GB-30",
+   "other": "N24b-06",
+   "note": "same enumeration for the fixed-n rule at n = 64 (521, 521, 1,103, first tie at 86): other is the enumerator inside eval.preanalyze, mine the card; also ART-L8 (plan fixture) and N38a-11 row 13 (plan-time re-run)"
+  },
+  {
+   "mine": "GB-31",
+   "other": "BD-042",
+   "note": "same static stance family (boundary 3/14 m; 2,254, 114 and 1,596 grid counts): other re-runs the plan-time pilot from the archive, mine is the card; ART-L4 is the `.fmission` golden of the same query"
+  },
+  {
+   "mine": "GB-39",
+   "other": "N32a-20",
+   "note": "same queueing figures (2,000 s, 621 s, 0.17 s; KA-758): other is the dispatcher queueing model with event simulator in frob-conformance (it also registers CX-351), mine the card whose lane B reaches it through BD-296"
+  },
+  {
+   "mine": "NEG-15",
+   "other": "BD-067",
+   "note": "two records of source, commit and licence for the same reference robots of table G.1: other has tools/oracle/models.toml beside the oracle fixtures, mine assets/robots/<name>/ manifests frob.robot.asset/1 with the licence check and validation"
+  },
+  {
+   "mine": "NEG-16",
+   "other": "N14b-24",
+   "note": "two end-to-end scripts walk every reference robot through import: other measures GATE-SKEL-01 parity (skel_import_export.sh, with N14a-31 for MJCF), mine checks licences, manifests and validation (assets_licences.sh)"
+  },
+  {
+   "mine": "ROBOT-fsim-g1",
+   "other": "N14b-34",
+   "note": "both define profile g1-reduced-30 (30 links, 31.96314202 kg): other the reduced-model mechanism and assets/profiles/g1-reduced-30.toml, mine the asset directory, manifest and validation golden (dependency exists)"
+  },
+  {
+   "mine": "ROBOT-fsim-g1",
+   "other": "N33c-41",
+   "note": "both record the admission roll-up of the G1 catalog builder (31.96314202 kg, GATE-WS-09); NF-07 repeats the test upstream"
+  },
+  {
+   "mine": "ROBOT-g1",
+   "other": "N14b-33",
+   "note": "the 38-link humanoid source is imported with fixed joints folded by the GATE-SKEL-11 battery in the other, and is the asset with the humanoid mass row (33.34014202 kg) in mine"
+  },
+  {
+   "mine": "NEG-17",
+   "other": "N19b-02",
+   "note": "the asset-source register assets/licences/sources.toml and the starter-pack check are in N19b-02 with all rows of G.2; NEG-17 to NEG-27 each own one row with its admission reading, import profile and tests (this pair: row `frob-scene` and the starter pack)"
+  },
+  {
+   "mine": "NEG-18",
+   "other": "BD-399",
+   "note": "BD-399 restates the G.2 source table and admits assets through scene.import; NEG-18, NEG-19 and NEG-20 are the three default-pipeline sources with their admission readings and import profiles"
+  },
+  {
+   "mine": "NEG-28",
+   "other": "BD-227",
+   "note": "the same 59 hazards: other has the seven registry files, loader and scene.hazards (N19a-31 to -37 write the rows), mine the consolidated INDEX.toml, the agreement check and the `Covered by` column"
+  },
+  {
+   "mine": "NEG-29",
+   "other": "N19a-38",
+   "note": "both report uncovered hazards for a battery: other from incidence (which hazards a battery's packs drew), mine from the cover map (which drawn hazards have a requirement, shield or refusal that can fire)"
+  },
+  {
+   "mine": "NEG-30",
+   "other": "BD-246",
+   "note": "both hold per-archetype expectations for all eighteen (group on file, mass rows) behind GATE-SKEL-03: other in the catalog and its gate record, mine as zoo/ with frob.zoo.expect/1 and the conformance test"
+  },
+  {
+   "mine": "NEG-31",
+   "other": "N14b-06",
+   "note": "two end-to-end scripts instantiate and preflight every archetype (zoo_goldens.sh from expectation files, skel_archetypes.sh from the catalog); one gate record, BD-246's"
+  },
+  {
+   "mine": "ZOO-quad-mammal",
+   "other": "BD-109",
+   "note": "same rows (C₂ × C₂, 27 contact strata, the trusted-declaration control KA-276, CX-133) in the template's tests and in the zoo expectation file; each side has the template with presets or the pinned instance with its DesignId"
+  },
+  {
+   "mine": "ZOO-humanoid",
+   "other": "BD-109",
+   "note": "same rows (the ±15% mass window of preset `@g1`, 28.339 to 38.341 kg around 33.34014202 kg; the reduced 31.96314202 kg) in the template's tests and in the zoo expectation file"
+  },
+  {
+   "mine": "ZOO-diff-drive",
+   "other": "BD-109",
+   "note": "same closed forms (near-straight chord translation (0.8342, 0.5514) m; raised-threshold lever arms 36.0 and 40.7 mm, KA-265) in the template's tests and the expectation file"
+  },
+  {
+   "mine": "ZOO-mecanum",
+   "other": "BD-109",
+   "note": "same roller-rank and FROB-REF-118 rows in the template's tests and the expectation file"
+  },
+  {
+   "mine": "ZOO-quad-sprawl",
+   "other": "N14b-02",
+   "note": "same `@hot` thermal refusal FROB-REF-132 and thermal formula row (0.156; 72.4 °C) in both"
+  },
+  {
+   "mine": "ZOO-hexapod-radial",
+   "other": "N14b-02",
+   "note": "same orbit counts 86,185, 166,870 and 500,500, D₆ and C₆ handed, in both"
+  },
+  {
+   "mine": "ZOO-octopod",
+   "other": "N14b-02",
+   "note": "same D₈ and C₂ spider groups, over-capacity refusal at 24 contacts and bucket 36 in both"
+  },
+  {
+   "mine": "ZOO-biped-point",
+   "other": "N14b-02",
+   "note": "same `no static stability: reported, not refused` row and C₂ group in both"
+  },
+  {
+   "mine": "ZOO-ackermann",
+   "other": "N14b-03",
+   "note": "same inner and outer wheel angles (23.07°, 17.63°) and FROB-REF-110 control in both"
+  },
+  {
+   "mine": "ZOO-omni-3",
+   "other": "N14b-03",
+   "note": "same 3 × 3 wheel map at 90°, 210°, 330° in both"
+  },
+  {
+   "mine": "ZOO-swerve-4",
+   "other": "N14b-03",
+   "note": "same D₄ group, scrub torque and singular pose rows in both"
+  },
+  {
+   "mine": "ZOO-rocker-bogie",
+   "other": "N14b-03",
+   "note": "same differential closure between the rockers and C₂ group rows in both"
+  },
+  {
+   "mine": "ZOO-balancer-2w",
+   "other": "N14b-03",
+   "note": "same candidate pole formula and example 8.496 rad/s (control 9.17) in both, each naming docs/derivations/balancer-2w-pole.md"
+  },
+  {
+   "mine": "ZOO-balancer-2w",
+   "other": "N38b-47",
+   "note": "same pole formula for KA-269, different fixture: mine and N14b-03 use I_b + m_b·l² = 1.1 kg·m² (8.49628 rad/s, control 9.1698); N38b-47's illustrative fixture uses 1.2 kg·m² (7.614 s⁻¹, control 8.087). One fixture should govern"
+  },
+  {
+   "mine": "ZOO-tracked-flipper",
+   "other": "N14b-04",
+   "note": "same belt-law and scrub-work rows (KA-282, KA-418) in both"
+  },
+  {
+   "mine": "ZOO-wheel-leg",
+   "other": "N14b-04",
+   "note": "same two-contact-laws-per-foot row (KA-283, FROB-REF-121) in both"
+  },
+  {
+   "mine": "ZOO-tri-wheel-stair",
+   "other": "N14b-04",
+   "note": "same cluster relation (riser 0.175 m, tread 0.260 m, ρ = 0.181 m) and the same unmet admission of fs-mbd::tri_wheel_cluster in both"
+  },
+  {
+   "mine": "ZOO-mobile-manipulator",
+   "other": "N14b-04",
+   "note": "same off-centre arm, trivial group and iiwa7 presets in both"
+  },
+  {
+   "mine": "ZOO-snake-crawler",
+   "other": "N14b-04",
+   "note": "same holonomy rows (KA-254) on the curvature analysis BD-243 in both"
+  },
+  {
+   "mine": "ZOO-quad-mammal",
+   "other": "N13-21",
+   "note": "Γ_mech and Γ_obs of the first four archetypes with the forward-lidar case are asserted by the symmetry end-to-end bead and by the four M1 zoo expectation files (N13-22 does the same for all eighteen at M3)"
+  }
+ ],
+ "new_beads": [
+  "NEG-32"
+ ],
+ "gaps": [
+  {
+   "section": "§33.3",
+   "what": "no bead admits fs-mbd::tri_wheel_cluster as an oracle (first use at M3); the tri-wheel-stair oracle row stays `blocked: admission` (the same gap G14 reports for N14b-04)",
+   "needed_by": [
+    "ZOO-tri-wheel-stair"
+   ]
+  },
+  {
+   "section": "§34.1",
+   "what": "the repository layout tree carried by N34-01 lists `registries/ … cards/` and `assets/` and has no top-level `zoo/`; NEG-30 adds that directory (pinned archetype instances beside the templates of `assets/archetypes/`), so the tree needs the row",
+   "needed_by": [
+    "NEG-30"
+   ]
+  },
+  {
+   "section": "Appendix J",
+   "what": "the registry row of design.import (VERBS-design) lists URDF and MJCF inputs only; the new bead NEG-32 adds the format `fsim-catalog` with `--builder` (sibling catalog builders lowered to a design term), so the row and its schema snapshot need that value",
+   "needed_by": [
+    "NEG-32"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "GB-26",
+   "what": "dependency N22c-10 (superseded) replaced by N22b-09 in deps and in the Background"
+  },
+  {
+   "bead": "GB-36",
+   "what": "Frontier card: dependency on its pilot N10c-11 (PILOT-C-39) added, and named in the Background"
+  },
+  {
+   "bead": "ROBOT-fsim-g1",
+   "what": "the lowering of the catalog builder had no carrier: depends on the new NEG-32; Scope and the source record name the import command"
+  },
+  {
+   "bead": "ROBOT-iiwa7",
+   "what": "depends on NEG-32 and on the builder's admission BD-033; `fixed base, n_v = 7` contradicted the design format (BD-061: every root is free, a fixed base is anchored by task or scene): counts and test corrected"
+  },
+  {
+   "bead": "NEG-16",
+   "what": "assumed verb form `design new --from-sibling` replaced by `design import --format fsim-catalog` (NEG-32); dependency added"
+  },
+  {
+   "bead": "NEG-32",
+   "what": "new bead: a sibling catalog builder lowered through the airlock to a design term"
+  }
+ ]
+}

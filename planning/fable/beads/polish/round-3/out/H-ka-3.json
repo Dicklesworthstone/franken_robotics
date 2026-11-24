@@ -1,0 +1,135 @@
+{
+ "round": 3,
+ "slice": "H-ka-3",
+ "reviewed": 6,
+ "changed": [
+  {
+   "bead": "N36-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S12: rows go to the one file crates/frob-conformance/registry/known_answers.toml in N38a-12's schema (perf.toml and private fields dropped), with the columns mapped to fields and each tolerance reason naming its N38b-27 rule. Added section (Where stated), fixtures, derivation files, labels (FACT: KA-812, KA-818 to 820) and due (M0 11, M1 1, M2 9, by the whole-truth-bound rule, DESIGN). Six rows that restate an earlier chapter's printed constants now share that row's fixture through same_as (KA-809 to KA-014, 812 to 001, 818 to 010, 819 to 013, 820 to 011, 821 to KA-361, the last completed by N16-KA), DESIGN under the Appendix M legend 'the registry holds the complete map'. Fixes: KA-810's control (26.6 and 3.56 on the rounded inputs, printed 27 and 3.6), KA-812 at 8428/5757 ± 0.005 (REC-01), KA-818 at 100/13 ± 0.05 (REC-02), KA-815's control as a mutation, KA-817 as exact 3,255 printed rounded down, KA-819's threshold note, KA-823 with N36-20's control first, and KA-824 exact 35/2 and 43 with 17 whole designs. Added carriers N38a-08, N17a-04, BD-171, N17a-07 and N36-33. Deps gained N00-KA, N38b-50 and N38b-51. New unit tests; ka_perf.sh now runs FROB_TEST_SEED/FROB_MILESTONE cargo test --test g1_known_answers -- ch:36 with gauntlet-mutations, KA-813 through g5_determinism (logged skipped when there is no CUDA device), and the printout."
+  },
+  {
+   "bead": "N37-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S12: safe.toml and its private fields were replaced by the one file and N38a-12's schema, with the Where-stated column mapped to plan sections and owner set to the gate. The bead-level rows get a 15-number block from N38a-40, mapped in table order with tags kept as slug. Two earlier local rows duplicate plan rows and take no number: SAFE-L17 is KA-760 and SAFE-L11 is KA-027. Each bead-level row gained a tier, a control from its bead and a due (M1 5, M2 3, M3 7); the appendix rows got fixtures and due. KA-828, SAFE-L10 and SAFE-L15 share KA-030's fixture (same_as). KA-832's supplied controls gained N37-17's two. The nonexistent 'frob-conformance known-answers report' was replaced by its own scripts/e2e/ka_safe.sh (loader tests plus the tier targets with ch:37 and FROB_TEST_SEED). The runner link is now the ka:<id>@<site> binding. Deps gained N00-KA, N38a-40 and STD-E2E. New tests."
+  },
+  {
+   "bead": "N38-KA",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S14 and S78 in corrected form. KA-837's truth now gives p = 5.0165 kPa (5,016.48 Pa); the bead's 5.017 was a double rounding and the plan does not print p. The n = 0.7 control carries 0.091646, 0.190127 and 0.117076 m (9.16, 19.01 and 11.71 cm), checked at 10^-5 m. §38.17's 9.17 cm is kept in printed, as rule 5 of N38a-12 and the standing rule of N38b-61 require, rather than edited in place. The row reads flagged: unreconciled until N38b-50 settles a new record, which blocks nothing because the row is due at M4. Acceptance and tests were updated, including ka_837_printed_kept. Added its own scripts/e2e/ka_adopted_registry.sh (host test, printout, per-row eligibility logging) ahead of N38b-46's verb script. All other values were recomputed and found correct."
+  },
+  {
+   "bead": "N39-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Records now use N38a-12's schema, with a 30-number block requested from N38a-40 and mapped in table order (labels kept as slug). Owners: GATE-TENFOLD-03 for TF-01 to 16, -10 for 17 to 20, -13 for 21 and 22. Added sections, fixtures, labels (FACT: TF-20, 26, 28), due (all M3) and tolerance reasons, including TF-14's outward rounding (DESIGN). TF-05 got a DESIGN control (8,640/1,368 = 6.316). TF-23 to 30 got a control table taken from their mechanism beads, plus DESIGN controls for TF-29 and TF-30. TF-24 is now the large-p* limit ln a_i/ln 0.05 at printed-digit tolerance, with same_as KA-621; the integer sizes give 2.56, 4.07 and 5.13 and would fail the printed values. TF-15 has same_as KA-009. TF-18 and K41-10 share rare-tail-1pct, and whichever row gets the higher number names the lower. TF-23 to 30's derivations are restated here, because their mechanism beads do not precede this bead (convention 7). Deps gained N00-KA, N24-KA, N38a-40 and STD-E2E. New tests and its own ka_tenfold_registry.sh."
+  },
+  {
+   "bead": "N40-KA",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Tags are now kept in each row's slug field, as N38a-12 provides, and fail provisional-tag-past-due only when cited elsewhere, replacing 'no tag remains in the file' (DESIGN, as N16-KA does). The tolerance reason names rule 1. The e2e script now gives real commands: FROB_TEST_SEED=0 cargo test register_known_answers, then FROB_MILESTONE=<Mn> --features gauntlet-mutations --test g0_laws. All sums were recomputed and found correct."
+  },
+  {
+   "bead": "N41-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S05 and S12: delivery.toml, pinned_by/bead and pending were replaced by the one file, N38a-12's schema and ka:<id>@host bindings, with a 40-number block from N38a-40 mapped in table order and tags kept as slug. Added sections, owners (GATE-WS-07 and GATE-WS-08), fixtures grouped by register, labels and tolerance reasons. Due follows the last pinning bead (corrected form of S05, so multi-part rows are not counted early): M0 27, M1 8, M2 2, M3 2, M5 1, where the earlier counts were 30/8/1/1. K41-04 and K41-23 got DESIGN controls. Shared fixtures: K41-31 to KA-024 and K41-32 to KA-023 (docking-fixture); K41-33 on cart-sill-dock, with its link completed by N24-KA; K41-10 shares a fixture with TF-18. Added its own ka_delivery_registry.sh. Deps gained N00-KA and STD-E2E. All arithmetic was verified."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38a-40",
+   "what": "(a) Rule 5's 'no tag remains' scan must skip the slug field of [[ka]] rows, which N38a-12 keeps after the number is issued (N36-KA, N37-KA, N39-KA, N40-KA and N41-KA rely on this), and N38b-05's catalogue slug likewise. (b) Add three [[block]] requests to the ledger: N37-KA count 15 (section §37), N39-KA count 30 (§39.16, §39.17, §39.20, §39.22) and N41-KA count 40 (§41, §42, §45.10, §45.11, §46, §47). N40-KA's 30 is already filed."
+  },
+  {
+   "bead": "N38a-12",
+   "what": "The registry's shared-fixture map now goes beyond the 14 printed marks, under the Appendix M legend 'the registry holds the complete map'. Plan-time rows that gain same_as: KA-809 to KA-014, KA-812 to KA-001, KA-818 to KA-010, KA-819 to KA-013, KA-820 to KA-011, KA-821 to KA-361 (N36-KA) and KA-828 to KA-030 (N37-KA). Keep the assertion of 14 for the printed marks and report the same_as total separately, row by row. The printout prints the added marks. Also confirm that a same_as between two rows above KA-835 may name whichever row is numbered lower (TF-18 and K41-10)."
+  },
+  {
+   "bead": "N38b-50",
+   "what": "Under the standing rule of N38b-61, append the next reconciliation record for KA-837: rows ['KA-837']; printed '9.17, 19.01 and 11.71 cm' (§38.17, n = 0.7 control); recomputed 0.091646, 0.190127 and 0.117076 m from the unrounded p = 5,016.48 Pa (9.17 follows only from p rounded to 5.017 kPa); status open, to be settled as corrected. The row reads flagged: unreconciled until then and is due at M4."
+  },
+  {
+   "bead": "N38b-34",
+   "what": "Add to the owners' table the controls the chapter registries register first. From N36-KA: KA-808, -812, -815, -817, -818, -823, -825 and -826 as second records, and KA-810 and -821 as linked records. From N37-KA: KA-830 and -832 linked, KA-835 second. Update the counts: owners' rows 21 to 34, linked 12 to 16, second 9 to 18, proposal-first 24 to 11."
+  },
+  {
+   "bead": "N41-CX",
+   "what": "Add two planted cases after X41-51 and assign their tags: (1) for K41-04, a severity tally over the printed risk rows only, giving 25 High, 28 Medium, 2 Low and dropping the four late rows; (2) for K41-23, the widest beads computed on the reversed edge direction (dependents instead of dependencies). The planted-case count goes from 51 to 53."
+  },
+  {
+   "bead": "N16-KA",
+   "what": "Give KA-361 the fixture name referee-coverage and add KA-361 to docs/derivations/referee-coverage.md, the file N36-KA writes at M0 for KA-821, which has the same constants (1.7 M x 2 ms = 3,400; 24 cores at 0.2 to 1.0). In the same commit that adds KA-361, set KA-821's same_as = 'KA-361', so that the loader's earlier-row rule holds at every commit."
+  },
+  {
+   "bead": "N24-KA",
+   "what": "In the commit that adds KA-602, set K41-33's same_as = 'KA-602'. K41-33, the first-session row with fixture 1's masses, tread caps, lip levers and friction demands, carries fixture cart-sill-dock from M0. Accept K41-33's derivation file in docs/derivations/fixture-cart-sill-dock/ beside N24b-04's per-row files. TF-24 (N39-KA) also takes KA-621's fixture with same_as KA-621, so list it in that row's derivation file."
+  },
+  {
+   "bead": "N00-KA",
+   "what": "List BD-308 and N37-27 among KA-027's carriers. Their worked case (Certified kernel identity, Estimated card field, Tested D2 fast-tier study, giving Estimated, provisional, no-claim, weakest the card field) is KA-027 input for input, and N37-KA's former SAFE-L11 is retired in its favour. KA-030's derivation file gains KA-828, SAFE-L10 and SAFE-L15 (appended by N37-KA). thesis-ceilings gains KA-809, KA-819, KA-820 (N36-KA) and TF-15 (N39-KA)."
+  },
+  {
+   "bead": "N32-KA",
+   "what": "Add N37-16 as a carrier of KA-760. N37-16's level-series known answer, the sum over i = 1..n of a/[i(i+1)] = a n/(n+1) < a, is KA-760, and N37-KA's former SAFE-L17 is retired in its favour."
+  },
+  {
+   "bead": "N37-16",
+   "what": "Cite the level-series known answer as KA-760 (§32.20, N32-KA) in the test plan."
+  },
+  {
+   "bead": "BD-308",
+   "what": "Cite the worked claim-product case as KA-027 (N00-KA) in the acceptance and known-answer sections."
+  },
+  {
+   "bead": "N37-27",
+   "what": "Cite the worked claim-product case as KA-027 (N00-KA)."
+  },
+  {
+   "bead": "N38b-46",
+   "what": "Run scripts/e2e/ka_adopted_registry.sh (N38-KA) as the first stage of adopted_known_answers.sh, and add the table-agreement tests to the adopted_rows_host.rs file that N38-KA creates, rather than creating that file."
+  },
+  {
+   "bead": "N39b-22",
+   "what": "Run scripts/e2e/ka_tenfold_registry.sh (N39-KA) as the first stage of tenfold_known_answers.sh. Log each row by its block number with the TF label as slug, replacing the --ka local label once the N38a-40 block is mapped."
+  },
+  {
+   "bead": "N39a-06",
+   "what": "Change size_ratio_to_single_test to printed-digit tolerance (0.005, rule 2 of N38b-27), replacing 0.01, and cite the row (TF-24, same_as KA-621). The values 1.2314, 2.5691, 4.0778 and 5.1499 pass; the integer-size ratios 2.56, 4.07 and 5.13 do not."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Requests addressed to the slice: S12 for N36-KA, N37-KA and N41-KA was applied. S05 for N41-KA was applied in corrected form: due is the last pinning bead's milestone, so rows with later parts are not counted early. S14 and S78 for N38-KA were applied in corrected form: the recomputed values are in the control, the plan's 9.17 is kept in printed (N38a-12 rule 5, N38b-61), and a reconciliation record is requested of N38b-50. None was rejected. DESIGN choices: due means every clause is bound (as N40-KA's R-23). same_as covers every cross-chapter row that restates printed constants, reversing my own first-pass decision to leave it empty, after reading the Appendix M legend and N38a-12's 'second fixture name for equal constants' control. Where the earlier row lands later, the bead that lands second completes the link. Between two rows above KA-835, the higher number names the lower. SAFE-L11 (= KA-027) and SAFE-L17 (= KA-760) are retired and take no number. All values in the six beads were recomputed; the only arithmetic defects were KA-810's control, KA-837's p and control, TF-24's definition, and the rounding notes of KA-817 and KA-824. No new numbers were invented: all blocks come from N38a-40 and new controls carry no CX number. No cycles in the graph; all six files parse."
+}

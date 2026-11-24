@@ -4,11 +4,11 @@ title: "M5 exit: sweep of the decision records after proofs, reality and manufac
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "delivery", "gauntlet", "solid", "registry", "decision-record"]
+labels: ["m5", "delivery", "gauntlet", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M5"
-deps: ["NAB-22", "NAB-27", "BD-412"]
-needs: ["§40.6: the M5 exit report with its kill decisions (N40-04, N40-30)", "§30.2: the Reality lane's first record or its recorded `no-claim` (BD-397)", "§12.4: the reflection pilot's measurements and the kill decision on kernel reflection (BD-382, N12-32)"]
-related: ["NAB-17", "NAB-14", "NAB-21", "NAB-32", "NAB-29", "N12-32", "BD-380", "BD-382", "BD-397", "BD-399"]
+deps: ["N12-31", "N12-32", "N14a-24", "N16a-22", "N16a-23", "N18a-23", "N19a-41", "N30b-17", "N30b-18", "N31b-15", "N31b-16", "N31b-18", "N31b-19", "N40-04", "NAB-22", "NAB-27", "NAB-50", "STD-E2E"]
+needs: []
+related: ["BD-412", "NAB-32", "NAB-38"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2", "Appendix H.6", "§43 (M5)", "§0.8"]
 ---
@@ -34,9 +34,24 @@ in the ten-fold thesis.
 In: the M5 sweep record and report; history entries; proposals; the move of kernel reflection if its kill gate
 fired. Out: deciding gates; the exit review (BD-412); the procedure (NAB-22).
 
+Order of work (DESIGN, as at M2 to M4 in NAB-25, NAB-26 and NAB-27). The sweep is made at the exit candidate
+commit, before the exit record is written, and the exit review depends on it: the review's runner executes
+`decision-sweep check --exit M5` as the attached check of NAB-22 and copies the sweep's section into the exit
+record, so the record must exist first. What the sweep reads is produced before the review, not by it: the gate
+report at that commit (N40-04), which carries the rows of the Reality lane (GATE-GROUND-01, GATE-GROUND-10,
+GATE-HAB-03) that KI-57 and KI-63 read; and the kill-decision ADRs `docs/adr/ADR-<gate>-M5.md` written by their
+decision beads: N12-31 (KILL-LEMMA), N12-32 (KILL-REFLECT, with the reflection pilot KI-51 reads), N30b-18
+(KILL-BAND), N30b-17 (KILL-GROUND), N16a-22 (KILL-VARIATIONAL, read also by KI-19), N31b-16 (KILL-LOADS),
+N31b-19 (KILL-PACKET), N31b-18 (KILL-TOLERANCE), N31b-15 (KILL-TOPOPT, read also by KI-58), N18a-23
+(KILL-HARDCONTACT), N16a-23 (KILL-TREEOP) and N14a-24 (KILL-SKEL-PORT, which with N16a-23 carries the limb-port
+and tree-operator results KI-07 reads), and N19a-41 (KILL-DRESSING, read by KI-63). The dependency list names
+those beads for that reason. This is the order of NAB-22's design decision 1, which every sweep follows; what the
+sweep shares with the review is its independence rule (a session that implemented none of the cited beads).
+
 ## Technical approach
 
-`decision-sweep skeleton --exit M5`, fill, `check --exit M5`, by a session that implemented none of the cited
+`cargo run -p frob-conformance --bin decision-sweep -- skeleton --exit M5` (the tool of NAB-22; below shortened
+to `decision-sweep …`), fill, `decision-sweep check --exit M5`, by a session that implemented none of the cited
 beads.
 
 **1. Families due by a kill gate decided at M5.**
@@ -71,7 +86,7 @@ history entry `move = "frontier-moonshot → parked"` citing the decision ADR; t
 | KI-07 a megakernel with a lossless limb summary | The limb port interface's proof obligation (the port inertia is positive semidefinite, exact only without base-coupled contact) and the tree-operator pilot (whole-step gain of at least 1.15 at 64 degrees of freedom on the M2 profile) | Limb port packets stay as an intermediate tier |
 | KI-57 conformal reality bands for designs never built | Bands per calibrated cell reach their coverage gates on held-out data of the same cell; on the synthetic rehearsal only, unless real data was admitted | Bands per cell; a refusal elsewhere; nothing for an unbuilt design |
 | KI-58 generative structure as a decision-time lever | Topology optimization saves at least 7% of link mass, converges and stays in budget; the phase ledger shows whether structure shortened any decision | Foundry stays an output-quality subsystem outside the thesis |
-| KI-63 posture and process (gates that need hardware a simulator lacks; scripted humans as dressing) | The Reality lane's record: `no-claim`, or a first calibrated cell from admitted data; the scene-dressing kill gate (a dressing item that breaks the fixed launch shape or the determinism class, or adds more than 25% to step cost, is removed) | Import lanes stay import lanes |
+| KI-63 posture and process (gates that need hardware a simulator lacks; scripted humans as dressing) | The Reality lane's record: `no-claim`, or a first calibrated cell from admitted data; the scene-dressing kill gate KILL-DRESSING (a dressing item that breaks the fixed launch shape or the determinism class of a batch, adds more than 25% to step cost, or exposes no failure class beyond the proxies on the M5 battery is removed; structural proxies and static clutter remain) | Import lanes stay import lanes |
 
 **3. Source register and the not-verified list.** This exit settles, or explicitly carries forward: NV-12 (any
 Lean result: after the checker's admission and the first sealed capsules), NV-13 (any statement about a
@@ -90,7 +105,9 @@ reflection; correlated tolerance stacks; calibration against reality.
 
 ## Acceptance criteria
 
-- [ ] `docs/delivery/exits/M5/decision-records.json` exists and `decision-sweep check --exit M5` passes.
+- [ ] `docs/delivery/exits/M5/decision-records.json` exists at the exit candidate commit before the M5 exit
+      record is written, `decision-sweep check --exit M5` passes, and the exit runner's attached check reads it;
+      the sweep's session implemented none of the beads it cites.
 - [ ] Each of the 11 family-and-kill-gate pairs of step 1 has an outcome citing its decision ADR.
 - [ ] If KILL-REFLECT fired, kernel reflection's row is in the parked table with a move entry and `reopen_on`.
 - [ ] Each row of step 2 has measured values and `condition_met`; any entry that rests on synthetic data says
@@ -110,8 +127,18 @@ is a `synthetic` dataset may not raise Confidence of the reality family).
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M5` (NAB-50): due list, `check`, 11 pairs, the six conditions of step
-2. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh --exit M5` (NAB-50): prints the due list, runs `decision-sweep check --exit M5`,
+and asserts the 11 pairs and the six conditions of step 2; then replays the three negative controls below (fixtures under
+`tests/fixtures/sweep/M5/controls/` written by this bead, the hook of NAB-50) on
+scratch copies of the sweep record and asserts that `check` fails on each with its reason. Logged through the
+shared helper of STD-E2E to `target/e2e-logs/decision_records/<utc>.ndjson` with a transcript, every line with
+`ts`, `script`, `bead` (`NAB-28`), `step`, `event`: `cmd` lines with the exact command line, exit code and wall
+time; one `assert` per pair with the kill gate, the ADR path and the outcome; one `metric` per condition of
+step 2 with the measured number, its unit, the threshold, `condition_met` and `synthetic: true|false`; the
+digests of the gate report and of the sweep record; `assert` lines of kind `negative-control` with `caught`; on
+failure the first due item without an outcome, or the first condition whose number does not resolve to a
+receipt, with the path of the sweep record; a `summary` with assertions passed and failed and the kill gates
+read.
 
 ### Known answers and negative controls
 

@@ -1,14 +1,14 @@
 ---
 key: "FDEF-05"
-title: "convention-hazard report, frankensim `fs-mbd::Wrench`: `force_world` with `torque_body`, two frames in one value"
+title: "hazard report, frankensim `fs-mbd::Wrench`: `force_world` with `torque_body`, two frames in one value"
 type: "task"
-priority: 2
+priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "marrow", "upstream", "frankensim", "frob-fsim", "solid", "test"]
 parent: "WP-37"
-deps: ["BD-007", "BD-037", "STD-E2E"]
-needs: ["§33.17: the mixed-wrench probe of GATE-WS-06 and the type `MixedWrench` in `frob-fsim`, whose record this report copies"]
-related: ["FD-FSIM-33", "FD-FSIM-06", "BD-047", "BD-032"]
+deps: ["BD-007", "BD-037", "N33c-36", "N33c-40", "STD-E2E"]
+needs: []
+related: []
 gates: ["GATE-WS-06"]
 plan_refs: ["Appendix F.2 row 5", "§33.17", "§11.1", "§11.3", "Appendix F.3"]
 ---
@@ -36,7 +36,8 @@ Read in source on 2026-11-21 at `483d09c682f2`: confirmed by reading
 
 In: the report (`tests/upstream/FD-FSIM-33/REPORT.md`, also the body of the mirrored bead in FrankenSim's
 tracker); the standalone reproduction; the probe's recorded values; the statement of the guard. Out: the type
-`MixedWrench` and the probe themselves (owned with GATE-WS-06 in the suite chapter's beads); the upstream change
+`MixedWrench`, its tests and the probe themselves (N33c-36) and the record of GATE-WS-06 at the pin (N33c-40),
+which this bead re-runs and copies but does not define; the upstream change
 (FD-FSIM-33); one vector vocabulary across `fs-mbd` and `fs-ga` (FD-FSIM-06).
 
 ## Technical approach
@@ -52,7 +53,12 @@ orientation R = R_z(90°) receives, through the airlock, a pure world force f_wo
 change ΔL_world = R·τ_body·Δt; both to 10⁻¹² relative. The unconverted mutant (a body-frame force written into
 `force_world`, or a world torque written into `torque_body`) fails. Worked numbers for the reproduction:
 m = 2 kg, Δt = 1/480 s, f_world = (0, 3, 0) N, τ_body = (0.5, 0, 0) N·m: Δp = (0, 0.00625, 0) kg·m/s and
-ΔL_world = R_z(90°)·(0.5, 0, 0)/480 = (0, 0.00104166…, 0) kg·m²/s.
+ΔL_world = R_z(90°)·(0.5, 0, 0)/480 = (0, 0.00104166…, 0) kg·m²/s. Two conditions make the 10⁻¹² tolerance
+honest whatever orientation within the step R̄ denotes (start, midpoint or end): the body starts at rest, and
+its inertia is diagonal in the body axes (DESIGN: I = diag(0.1, 0.2, 0.3) kg·m²), so a torque about body x spins
+it about body x only, no gyroscopic term appears, and R̄·τ_body = R·τ_body exactly. A probe with a
+non-principal torque or an initial spin would mix in an O(Δt²) orientation change of about 10⁻⁶ relative and
+must not be used at this tolerance.
 
 **The reproduction (standalone).** One Rust test depending only on `fs-mbd` (and `fs-ga` for the rotation) at
 the pinned commit. It steps the free body once with the correctly converted wrench and once with the
@@ -80,17 +86,16 @@ request for documentation or constructors; store the identifier in the registry 
 - [ ] `tests/upstream/FD-FSIM-33/REPORT.md` has the sections Hazard, Evidence (file, lines, commit), the hand case, the probe with expected and observed values, Proposed change, Interim posture, and `observed_at`.
 - [ ] The reproduction compiles against `fs-mbd` and `fs-ga` alone at the pin; the converted wrench gives Δp and ΔL within 10⁻¹² relative of the expected values; the unconverted one differs in direction by 90° with equal magnitude.
 - [ ] The report is filed in FrankenSim's tracker; its identifier is the `mirror` of FD-FSIM-33's registry row.
-- [ ] `MixedWrench` has exactly two public constructors and no public field setters; `cargo xtask check-deps` (or the airlock's own lint) fails a scratch crate outside `frob-fsim` that names `MixedWrench` or `fs_mbd::Wrench`.
+- [ ] The guard holds at the pin: N33c-36's tests pass when re-run here (two constructors plus the point helper, the compile-fail tests for a struct literal and `Default`, the public-API test showing `MixedWrench` in no public signature), and `cargo xtask check-deps` fails a planted scratch crate outside `frob-fsim` that depends on `fs-mbd` and so could name `fs_mbd::Wrench` (INV-SUITE-01, N33c-29).
 
 ## Test plan
 
 ### Unit tests
 - `repro_converted_wrench_momentum`: the worked numbers; expected Δp = (0, 0.00625, 0) and ΔL_world = (0, 0.5/480, 0), each to 10⁻¹² relative.
 - `repro_unconverted_force_is_rotated_90_degrees`: body-frame (3, 0, 0) written into `force_world`; expected observed Δp along world x, of magnitude 0.00625, where world y is correct.
-- `mixed_wrench_from_body`: f_body = (1, 0, 0), R = R_z(90°); expected `force_world` = (0, 1, 0), torque unchanged.
-- `mixed_wrench_from_world`: τ_world = (0, 1, 0), R = R_z(90°); expected `torque_body` = Rᵀ·τ_world = (1, 0, 0), force unchanged.
-- `off_centre_wrench_is_moved_first`: a world force (0, 0, 1) N applied at an offset (1, 0, 0) m from the centre of mass; expected an added world torque r × f = (0, −1, 0) N·m before conversion.
-- Property test: for 10⁴ random rotations and wrenches, power ⟨wrench, twist⟩ computed in the body frame equals power computed from the `MixedWrench` fields to 10⁻¹² relative.
+- `repro_hand_case_rotations` (in the reproduction, on `fs-ga`'s rotation alone): f_body = (1, 0, 0) at R = R_z(90°) gives f_world = (0, 1, 0); τ_world = (0, 1, 0) gives τ_body = Rᵀ·τ_world = (1, 0, 0); these are the conversions the report proposes as named constructors.
+- `report_values_match_gate_record` (in `frob-conformance`): the expected and observed momentum changes and the commit written in `REPORT.md` equal those of GATE-WS-06's row 5 record (N33c-40); a report edited by hand to differ fails.
+- The guard's tests are N33c-36's and are re-run here, not written again: `from_body_rotates_force_only`, `from_world_rotates_torque_only`, `pushforward_hand_case` (a world force (0, 0, 1) N at an offset (1, 0, 0) m adds the torque r × f = (0, −1, 0) N·m before conversion), `constructors_agree_on_same_physical_wrench`, `power_is_frame_invariant` (10⁴ seeded rotations and wrenches, 10⁻¹² relative), and the two compile-fail tests.
 
 ### End-to-end script and logging
 `scripts/e2e/defect_fdef_05.sh`: runs the reproduction in `target/upstream-scratch/frankensim@<rev>`; runs the
@@ -108,7 +113,7 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - Known answer: the hand case (body x is world y under R_z(90°)); the probe's momentum changes to 10⁻¹².
-- Negative control (required by GATE-WS-06): the unconverted mutant fails the probe. A second mutant, which transposes R in the torque constructor, must fail `mixed_wrench_from_world`.
+- Negative control (required by GATE-WS-06): the unconverted mutant fails the probe. A second mutant, which uses R in place of Rᵀ in the torque constructor, must fail the reproduction's `repro_hand_case_rotations` (it gives (−1, 0, 0) where (1, 0, 0) is right); the same mutant of the guard (N33c-36's second registered control) must fail `from_world_rotates_torque_only` (it gives (0, 1, 0) where (0, −1, 0) is right), and the e2e script logs both outcomes.
 - Metamorphic relation: rotating the whole scene (body orientation, force and expected momenta) by any rotation leaves the probe's residual unchanged.
 - Determinism lanes: twice on one machine; debug and release; same-platform class.
 

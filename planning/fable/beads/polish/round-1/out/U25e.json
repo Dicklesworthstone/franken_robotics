@@ -1,0 +1,412 @@
+{
+ "round": 1,
+ "slice": "U25e",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "BD-294",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "conic-farkas was listed as enabled by M3, but its checker is N12-16 at M4 (BD-251 checks conic certificates in process until then); moved it and the other M4 kinds out of the M3 list with their checker beads, corrected the mutant count to 15 kinds x 200; moved N25e-12 (a parallel e2e) from deps to related"
+  },
+  {
+   "bead": "BD-302",
+   "kinds": [
+    "deps",
+    "scope",
+    "self-contained",
+    "tests",
+    "optimal"
+   ],
+   "what": "graph bottleneck: dropped deps BD-227 (the realism-check wiring is N19a-39's, which depends on both) and N28c-42 (the reuse section is N28c-44's) to related; added N28a-03 (phase attribution, which report.campaign prints); scope names N39b-46 as owner of --arms/--ablate (was specified twice), N19a-39, N28c-19, N26b-03/-05; FROB-REF-845 call made explicit; M4 sections print 'not yet available'; three unit tests added"
+  },
+  {
+   "bead": "BD-358",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "named N12-16 for the taylor-box checker (was 'U12's bead') and N25e-24 as the bead that extends --split-cap"
+  },
+  {
+   "bead": "N25-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request from U12-2: entries go to the suite's one catalogue crates/frob-conformance/registry/counterexamples.toml with N38b-05's schema (same_as, control_kind, plant, slug); dep N38b-05 added; late tags get a block of 11 from N38a-40's allocator; entries whose catching bead is later than M1 are 'obligation' until it closes (the M1 registry no longer waits on M3-M8 mechanisms), with the milestone of every row's catcher; tests and e2e summary follow; dep STD-E2E added for its own e2e script; N38b-05 removed from related (it is a dependency)"
+  },
+  {
+   "bead": "N25-REF",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "856 row names its M1 admission trigger (N25a-02, N25a-23 a12, N25d-32) beside the M4 region trigger; 'five' uncoded refusals corrected to six; its e2e script augur_refusals.sh duplicated N25d-32's and its frob-mission trigger tests duplicated N25d-31's: replaced by a registry-level e2e augur_refusal_registry.sh and registry unit tests, keeping every fixture as the binding for the raising beads; dep STD-E2E added for its own e2e script"
+  },
+  {
+   "bead": "N25e-45",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "six rows, not five: numbers come from the allocation ledger (N35x-02 filed the six; five 8xx rows held under N35x-01, the sixth in 1xx), not chosen by hand; ADR and acceptance restated; unit test for loaded-or-held; e2e is milestone-gated (rows due when their emitting bead lands, the rest logged pending); related names the emitters; dep STD-E2E added for its own e2e script"
+  },
+  {
+   "bead": "N25e-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "the mean-instead-of-max control fixture was described as 'rarely visited', which would not produce a violation; restated as a concrete T = 1 fixture (exact P_A = 1, P_B = 1/2; max bound 1/2 holds, mean bound 3/4 violates); dep STD-E2E added for its e2e script"
+  },
+  {
+   "bead": "N25e-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "users",
+    "scope",
+    "title"
+   ],
+   "what": "verb spelling unified with N25c-02 and N25e-05 (--from/--to with d:... or *.fkernel.json finite models, --relation, --claims); out-of-scope relation now N25c-03 (was the epic BD-436); dep N25e-45 added (it emits that bead's interim refusal), refusal pointer stated; title shortened to 109 characters"
+  },
+  {
+   "bead": "N25e-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "request from U12-2: 'registry unchanged' read as 'no row added': the block is shape 2A of N12x-07 with a kind-version revision (slug transport-block) in N12x-08's ledger; OPEN line cites N12x-07, related added; deps N12x-08 (ledger) and N25e-02 (the writer maps its proof objects); scope names N25c-03, N12-02/-03; BD-294 timing corrected; test for a block under a non-admitting kind"
+  },
+  {
+   "bead": "N25e-04",
+   "kinds": [
+    "deps",
+    "scope",
+    "users"
+   ],
+   "what": "deps N25c-03 (the relation the monitor evaluates) and N25ex-01 (the tray work exists only if the first clause did not fire at M4); out-of-scope names N25c-02/-01/-04 instead of the epic; e2e command uses the unified spelling"
+  },
+  {
+   "bead": "N25e-05",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "fixture files and the transport command use the spelling of N25e-02; the refusal assertion names the interim code and detail"
+  },
+  {
+   "bead": "N25e-06",
+   "kinds": [
+    "scope",
+    "tests",
+    "deps"
+   ],
+   "what": "the M4 reading is N25ex-01's (it was re-specified here); this bead reads that record, closes on it if fired, and decides the M8 clause; unit tests for the M8 reading rule; the negative control is now an M8 planted reading; dep STD-E2E added"
+  },
+  {
+   "bead": "N25ex-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the planted understated-budget fixture is now concrete: exact target success (997/1000)^10 x 99/100 = 0.96073, true bound 0.96, understated bound 0.98, so the violation is certain"
+  },
+  {
+   "bead": "N25e-07",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dep BD-184 (a latency benchmark) replaced by N17b-04 (the verb phylum.sweep this bead changes); creep-rig numbers made checkable (wheel A r = 60 mm: x = 36 mm over 48 mm; 24/23 at delta = 0; KA-606/607)"
+  },
+  {
+   "bead": "N25e-09",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "band-edge margin was 583 N/m; the computed margin is 582.6 N/m (382 N/m after jitter); wheel radii stated; BD-123 named for the creep rigs"
+  },
+  {
+   "bead": "N25e-10",
+   "kinds": [
+    "deps",
+    "scope",
+    "sense"
+   ],
+   "what": "dep N25b-30 (the monomial-product bundle writer, needed for its frob-verify acceptance); an acceptance criterion that only N25e-11 could satisfy restated as this bead's entry point, which N25e-11 wires"
+  },
+  {
+   "bead": "N25e-11",
+   "kinds": [
+    "users",
+    "tests"
+   ],
+   "what": "the --screen monomial and --weights options the gate corpus uses were nowhere defined: specified here with the outcome field; bad weights refused with FROB-REF-802; two unit tests and an acceptance criterion"
+  },
+  {
+   "bead": "N25e-12",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "title"
+   ],
+   "what": "corpus layout stored systems as .json while the script calls refute on .fmission: systems are now .fmission queries with a separate truth file the product never reads; title shortened to the 110-character limit"
+  },
+  {
+   "bead": "N25e-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "force-cap condition of the complete relaxation stated as a formula (work F_max x 2h); force_cap_binds given concrete numbers (m_b 12 kg, E 300 J, F_max 60 N: p <= 0.97 kg against 4.22 kg from energy); dep STD-E2E"
+  },
+  {
+   "bead": "N25e-15",
+   "kinds": [
+    "users",
+    "self-contained",
+    "tests",
+    "title"
+   ],
+   "what": "eval.compare --bracket options used by the gate script (--task, --level of BD-262, --scenario, --relaxation) specified, with the enclosure check still applied to a named relaxation; out-of-scope names N28c-35/-37 and BD-329/BD-345; unit test named_relaxation_still_checked; title shortened to the 110-character limit"
+  },
+  {
+   "bead": "N25e-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "commands use BD-262 spelling (--task, --level not --alpha); Part A now also exercises mission.refute --utility (0.622, energy row binding, encloses list)"
+  },
+  {
+   "bead": "N25e-17",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep STD-E2E for its fallback e2e script"
+  },
+  {
+   "bead": "N25e-18",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep STD-E2E for its pilot e2e script"
+  },
+  {
+   "bead": "N25e-19",
+   "kinds": [
+    "scope",
+    "users",
+    "tests"
+   ],
+   "what": "NJLx-51 names this bead as implementer of analyze.regressor-identity but the bead never specified the verb: inputs, output schema, exit 0/2, MCP name added, with acceptance and two unit tests"
+  },
+  {
+   "bead": "N25e-20",
+   "kinds": [
+    "users",
+    "self-contained",
+    "sense"
+   ],
+   "what": "--objective first-moment and --ratios continuous used by the gate script were undefined: specified, with routing of energy+continuous to enumeration; out-of-scope names N25d-08 and BD-348; the screening-signal rejection made testable"
+  },
+  {
+   "bead": "N25e-21",
+   "kinds": [
+    "users"
+   ],
+   "what": "cart boundary step uses the defined --objective first-moment:battery spelling"
+  },
+  {
+   "bead": "N25e-22",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dep N25d-08 (the static mass-placement fallback its e2e asserts) and STD-E2E; BD-348 named for A-24"
+  },
+  {
+   "bead": "N25e-23",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep STD-E2E for its pilot e2e script"
+  },
+  {
+   "bead": "N25e-24",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "self-contained"
+   ],
+   "what": "--split-cap 0 was refused with 856 (whose text is more parameters than the limit): k above 6 now gets 856, k = 0 gets 802; refute gains the --region/--boxes spellings the gate script uses and reports driver counters the script reads; checkers named (BD-132, N12-16); unit test split_cap_range"
+  },
+  {
+   "bead": "N25e-25",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "morphology generator named (BD-287, phylum generate)"
+  },
+  {
+   "bead": "N25e-26",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep STD-E2E for its fallback e2e script"
+  },
+  {
+   "bead": "N25e-27",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "body said the tool is not a verb and no verb is added, but its dependency NJLx-51 registers analyze.constraint-graph and names this bead as implementer: the verb is now specified to that row (outputs, exit 0, 868), the example driver keeps the experiment-only outputs, e2e drives the verb and checks agreement; two unit tests"
+  },
+  {
+   "bead": "N25e-28",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "N25e-45 moved from related to deps (N25e-45 says its emitters depend on it for the rows and the interim mapping); interim refusal emitted through frob_core::refusal::augur_late"
+  },
+  {
+   "bead": "N25e-30",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "its Considerations promised a passive-equal-spring consistency check no step ran: fixture passive.fmission and the assertion (1/2 m) added; the no-law refusal step asserts code (interim 868 + detail, or the assigned row), pointer and the three repairs"
+  },
+  {
+   "bead": "N25e-32",
+   "kinds": [
+    "users",
+    "self-contained",
+    "tests"
+   ],
+   "what": "the --reuse option the gate script uses was defined nowhere: specified as caller-supplied evidence under BD-133 with the eligibility comparison and pointer, N25a-16 named for the verb-wide form; the docking-interval-exhaustive harness and its options specified; eligible-reuse acceptance test added"
+  },
+  {
+   "bead": "N25e-34",
+   "kinds": [
+    "deps",
+    "users",
+    "tests"
+   ],
+   "what": "N25e-45 moved to deps; --card, --reads and --claim-redundancy (used by the gate script) specified, with when the refusal fires; unit test claim_flag_gates_refusal"
+  },
+  {
+   "bead": "N25e-35",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "certificates named no proof kind in the closed registry: inclusion is now a finite-game (decoder table, channel actions as error vertices) with the channel scenarios added as a recorded revision (dep N12x-08); exclusion a discrete partition of the 105 canonical codes with alias pairs (dep N25e-43, which adds that form); the counting bound is the explanation, not a proof; frob-cert unit tests; unneeded dep N25e-45 moved to related"
+  },
+  {
+   "bead": "N25e-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "four-bit flips(1) exclusion asserted as the partition-with-alias-pairs proof of N25e-35, with the counting argument as explanation"
+  },
+  {
+   "bead": "N25e-38",
+   "kinds": [
+    "deps",
+    "users",
+    "self-contained",
+    "tests"
+   ],
+   "what": "N25e-45 moved to deps; --scope ignore and --witness independent-extremes (used by the gate script) specified; BD-291 and N25c-16 named; two unit tests"
+  },
+  {
+   "bead": "N25e-39",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dep N25e-38 (the separation test evaluates through its scoped evaluation); BD-291, N25c-17, BD-351 named"
+  },
+  {
+   "bead": "N25e-40",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "base three-law re-run named (BD-043)"
+  },
+  {
+   "bead": "N25e-41",
+   "kinds": [
+    "deps",
+    "scope",
+    "self-contained"
+   ],
+   "what": "case harness pad-probe-cases placed in scope; clause C reading appended to N25c-16 ADR as that bead requires (dep N25c-16); option owners named"
+  },
+  {
+   "bead": "N25e-42",
+   "kinds": [
+    "deps",
+    "users",
+    "tests",
+    "self-contained"
+   ],
+   "what": "N25e-45 moved to deps; --tolerance and --candidate (used by the gate script) specified; BD-360 named; three unit tests"
+  },
+  {
+   "bead": "N25e-43",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "placement"
+   ],
+   "what": "partition checker of BD-132 covers boxes only: the discrete-set form is specified as a recorded revision implemented here (dep N12x-08, label frob-cert), with frob-cert tests and an acceptance criterion; title shortened"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N25b-08",
+   "unit": "U25b",
+   "what": "step 5 and its acceptance say the constraint-graph driver is not a registry verb; NJLx-51 later registered analyze.constraint-graph, implemented by N25e-27 on N25b-08's artifact. Reword: the example driver stays as the crate's tool; the verb of NJLx-51 is N25e-27's and wraps this artifact."
+  },
+  {
+   "bead": "N12x-08",
+   "unit": "U12",
+   "what": "record two kind revisions proposed by U25e: finite-game gains channel scenarios erasures and flips (N25e-35), and partition gains a discrete-set form whose cells are the listed members of a finite set (N25e-43, also used by N25e-35 over a canonical code space). The Lemma lead may prefer to own the checker code; U25e also notes that no row of frob.cert.kinds/1 carries a bare counting bound, so counting arguments are explanations only."
+  },
+  {
+   "bead": "N25c-43",
+   "unit": "U25c",
+   "what": "no change needed: already depends on N25e-45 like the five in-slice emitters now do (noted for consistency)."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "All 51 beads reviewed. Unchanged: N25e-08, N25e-14, N25e-29, N25e-31, N25e-33, N25e-36, N25e-44. Main themes: options and verbs that gate scripts call but no bead defined (now specified in the owning mechanism bead); STD-E2E on every bead with its own script; N25e-45 as dependency of its emitters; proof kinds named from the closed registry. graph_check cycles: 0."
+}

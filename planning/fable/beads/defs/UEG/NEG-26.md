@@ -6,11 +6,11 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "habitat", "safety", "frob-scene", "solid", "test", "asset", "registry"]
 parent: "WP-23"
-deps: ["N19b-02", "BD-305", "BD-307"]
+deps: ["BD-305", "BD-307", "N19a-46", "N19b-02", "N37-18"]
 needs: []
-related: ["NEG-19", "NEG-25", "NEG-16"]
+related: ["NEGp1-51"]
 gates: []
-plan_refs: ["Appendix G.2 (row 10)", "§19.9", "§37", "FROB-REF-310"]
+plan_refs: ["Appendix G.2 (row 10)", "§19.9", "§37", "FROB-REF-310", "FROB-REF-731", "FROB-REF-733"]
 ---
 ## Background
 
@@ -35,8 +35,10 @@ importer limits and fuzzing (BD-307).
 import; never used as a class of a pack), `default_pipeline = false`, `redistribute = "per-object"`,
 `kind = "object-index"`, `use = "not used by default"`.
 
-**Per-object import.** `frob scene import --source objaverse-xl --user-supplied --object-licence <SPDX or
-"unknown"> --object-origin <URL> <file> --json`. The user states the object's licence and origin; the import
+**Per-object import.** `frob scene import --kind asset <file> --source objaverse-xl --user-supplied
+--object-licence <SPDX or "unknown"> --object-origin <URL> [--attribution <text>] --profile asset-default
+--behaviour <b> --key <k> --json` (the verb and its inputs are N19a-46's; the three per-object inputs are
+admitted only for a row whose class is `per-object`). The user states the object's licence and origin; the import
 records both, with the date, in the licence entry. Resolution of the class from the stated licence:
 
 | Stated licence | Class | Redistribution |
@@ -52,7 +54,12 @@ redistributed, hence `research-only`. The project does not verify the user's sta
 the entry's `verified` flag is false and exports that rely on it carry the standard no-authorization flags.
 
 **Mixed packs.** A pack's class is the join of its entries, so one `unknown` object makes the whole pack
-unexportable (FROB-REF-310 names the object). `frob scene show --json` lists the entries sorted by class so
+unexportable: the pack export check refuses with FROB-REF-310 naming the object (exit 3). Anything else whose
+lineage reaches that object (a still, a report, a run bundle) is refused at the export door of N37-18, exit 5,
+naming the lineage path to it. An object of class `unknown`, `research-only` or `proprietary` is imported only into
+the private root (N19a-46, step 1), so the door, which checks the private mark before the licence set, answers
+FROB-REF-731 by default and FROB-REF-733 (the licence set) only in a session holding `private:export` and the
+flag; one code per request, as N19b-02 divides them. `frob scene show --json` lists the entries sorted by class so
 that the user sees which object blocks an export and can remove it.
 
 **Safety of uncurated meshes.** Objects from an open index are hostile input until proven otherwise: the
@@ -68,8 +75,10 @@ explicit act with its own stated licence. No selection list of this source is sh
 - [ ] The register row exists with `default_pipeline = false` and per-object resolution.
 - [ ] Each row of the resolution table is exercised by a `synthetic` object and yields the stated class and
       redistribution.
-- [ ] A pack with one `unknown` object is refused for export with the object named; removing it allows the
-      export of the rest with their notices.
+- [ ] A pack with one `unknown` object is refused for export with FROB-REF-310 and the object named, and a
+      still of a scene containing it with FROB-REF-731 at the door (FROB-REF-733 in a session holding
+      `private:export` and the flag), exit 5; removing it allows the export of the rest
+      with their notices.
 - [ ] An import without a stated licence defaults to `unknown`; an attribution licence without attribution
       text is refused.
 - [ ] Oversized and reference-following fixtures are refused by the importer limits; embedded text is marked
@@ -81,16 +90,23 @@ explicit act with its own stated licence. No selection list of this source is sh
 
 - `asset_source_objaverse_row_valid`.
 - `objaverse_class_resolution_table`: five cases.
-- `objaverse_mixed_pack_blocked_by_unknown`, `objaverse_mixed_pack_exports_after_removal`.
+- `objaverse_mixed_pack_blocked_by_unknown` (310, exit 3), `objaverse_still_blocked_at_door` (731, exit 5; 733
+  with `private:export` and the flag; the `unknown` object's entry lies under the private root),
+  `objaverse_mixed_pack_exports_after_removal`.
 - `objaverse_attribution_text_required`.
 - `objaverse_no_bulk_import_command`: the verb registry has no query or list form for this source.
 - `objaverse_importer_limits_and_untrusted_text`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/assets_licences.sh` (NEG-16), scene-asset loop at M3: five `synthetic` objects with the five
-stated licences, a mixed pack, its refused export, removal of the blocker and a successful export; log lines
-carry object hashes, stated licence, class, `verified = false`, refusal codes.
+`scripts/e2e/assets_licences.sh` (the M3 scene-asset loop, owned and run by NEGp1-51, which depends on this
+bead; this bead lists the steps of its row), every `run` verb call with its own `--key`: five `synthetic`
+objects imported with the five stated licences (the attribution one once without `--attribution`, refused, and
+once with it), a mixed pack, its refused export (`FROB-REF-310`, exit 3, the `unknown` object named), a still
+of a run in the mixed scene (`FROB-REF-731` at the door, exit 5, the `unknown` object lying under the private
+root; `FROB-REF-733` in a session holding `private:export` and the flag), removal of the blocker and a successful export with the notices. Log lines carry `ts`, `script`,
+`bead: "NEG-26"`, `step`, `event`, the exact command, exit code, wall time, the `evidence` block, object
+hashes, stated licence, class, `verified = false`, each refusal code with its exit code and raising site.
 
 ### Known answers and negative controls
 
@@ -107,4 +123,4 @@ mark. Determinism: resolution is a pure function of the stated licence.
 
 ## References
 
-Appendix G.2 (row 10); §19.9; §37; FROB-REF-310.
+Appendix G.2 (row 10); §19.9; §37; FROB-REF-310, FROB-REF-731, FROB-REF-733.

@@ -1,0 +1,765 @@
+{
+"BET-20": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ad's acceptance is the M3 reading and never waits on M4    (requested of N25b-11).  ## Acceptance criteria  - [ ] Pre-registered with budget…\""
+],
+"N00p1-11": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"NS-05": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e tying group is not yet in       the `train.start` row and is requested of VERBS-train, so until it is registered this check is logged       `not …\""
+],
+"N10a-05": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…reads \"Kernel rewrites,    INV-SPARK-09\"; adding C-14 to it is requested of N38a-18); for any other statement the link is a record whose    `so…\""
+],
+"BD-381": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…is bead to the verb's full M5    input; the row's extension is requested of VERBS-prove): `frob prove bundle --card T-<nn> --capsule    target/lean…\""
+],
+"N12-38": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ectors) and the hook for phase 2 (a step list that is empty until N12-28 adds to it); the gate record. Phase 2 (the other two reflectors …\""
+],
+"N12p2-02": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ched      through such steps; their emission into the trace is requested of N21a-18 and N21a-19.    No step moves an operation across a loop bo…\""
+],
+"BD-011": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N13-18": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…t BD-047's `planar_2r_lower_rows_shortcut_is_wrong` builds (requested of N13-CX and N13-KA). Each mutation has one control, reused by every…\""
+],
+"N13-36": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…rd of the M1 part.* GATE-MARROW-06 closes in parts (DESIGN, requested of N40-10, whose row still reads \"M1: whole\" although the device tier…\""
+],
+"N13-37": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…rt, the referee rows, recorded by N13-36; the M2 part here; requested of N40-10), and the M2 part is `pass` only when the referee rows of N…\""
+],
+"N13-KA": [
+"[C13-pending] 4 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… plus BD-010's own control (ii) (Ad_g replaced by Ad_{g⁻¹}) once BD-010 registers it; none of the eight lists a group-axiom law among its fix…\""
+],
+"N14-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``ka-second-file` on any other; an earlier draft of this bead named `registries/known_answers/skeleton.toml`). One`"
+],
+"N14a-20": [
+"[C4-adr] puts a decision record under `docs/delivery/adr/`; every decision record lives in `docs/adr/` (convention 4)"
+],
+"N14b-11": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…on` (expected `undecided`, reason `analysis not available`, until BD-243 registers A-09). Log lines carry the stage status, the base kind, the…\""
+],
+"N14b-14": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N14b-15": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N14bp1-03": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…design.import`'s block names this bead under \"Extended by\" (requested of VERBS-design with N14b-22's `sdf`). The pilot covers one vendor extensio…\""
+],
+"N15a-09": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e card's `backlash` to zero also removes the rows; it is    requested of N18-REF as a second ranked repair, and is printed only once the row…\""
+],
+"N15a-12": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N15a-18": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…asserted there once `actuator.check` at binding reports it (requested of VERBS-actuator; until then a logged skip in that script, and asserted by `…\""
+],
+"N15a-23": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N15a-25": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ce `actuator.check` at binding reports `reflected_inertia` (requested of VERBS-actuator; no row prints it yet): until then that assertion is an `e2…\""
+],
+"N15ap3-01": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…, and the layer tag of the command is   `open-loop` (a value requested of N22a-01's tag list). - Security: the loader reads only files under …\""
+],
+"N15b-30": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…N15b-04's rule) and   the two designs cannot be told apart; requested of N15b-04, which commits the three.  **Script `scripts/e2e/sinew_powe…\""
+],
+"N15b-37": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…) must be declared in their manifests, else `FROB-REF-530` (requested of N15a-12). Plus (`synthetic`, registered here): - `quad-12-backlash`…\""
+],
+"N16-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``registry/known_answers/kinesis.toml` (`ka-second-file`).`"
+],
+"N16b-28": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…in_07::digest_before_after_variant` is   reported `not run` until N16b-13 adds it. - `register_completeness`: removing one of the eight mo…\""
+],
+"N16b-30": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…nergy-per-metre` is `FROB-REF-802`. (The    input `--cases` is requested of VERBS-fidelity by N16bp1-01; until the row lists it, this half is logged  …\""
+],
+"N16bp1-01": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s` is an additive change of the verb's row and help schema, requested of VERBS-fidelity.  **Layering.** Records and the freeze transaction in `frob…\""
+],
+"BD-083": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…inputs that reach the seam, which the VERBS-sim row lists as requested of BD-081 (requested of VERBS-sim to name this bead their owner; `--c…\""
+],
+"N16c-15": [
+"[C13-pending] 3 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…it does not make a new stratum, and the receipt records it (requested of VERBS-eval). (2) The invariance harness of `spark.check --invariance` …\""
+],
+"N16c-16": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s` axis of the invariance harness (both added by N16c-15 and requested of VERBS-eval and VERBS-spark). Every other spelling the script uses is i…\""
+],
+"N16c-20": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…this bead adds it, with the one value `tile-ledger`, and it is requested of VERBS-telemetry): one row per tile: start, end, ending clause (control tick…\""
+],
+"N16c-34": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…re than one exit, which needs `reread = [\"M3\"]` on the row, requested of N40-29); the M2 entry is never edited. 4. Failures of the other cl…\""
+],
+"N16cp3-02": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ilot-before-funding`, as the other pilot-triggered rows do (requested of N40-29, which then counts ten such rows, not nine; the amendment i…\""
+],
+"N17a-11": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N17a-17": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N17a-25": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"BD-165": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…try for `grid` becomes `artifact-input<frob.scene.grid/1>`, requested of VERBS-scene, and is `foreign-file` until then), `--workers <n>` (operat…\""
+],
+"N18a-26": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…>` (`counterfactual`, `adjoint`,    `stencil`), a scope kind requested of N40-03, whose closed table has none for this gate yet; until that …\""
+],
+"N18a-34": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…d:<tier>`, which needs `scope_kind = \"backend\"` on the row (requested of N40-24); until then the decision is one entry for all lockstep tie…\""
+],
+"N18a-35": [
+"[C1-command] uses a Gauntlet command that does not exist (convention 1), e.g. ``frob conformance` command), logging the hash of the receipt it writes; and from the user's side each row's`"
+],
+"N18a-37": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…lects it (N16c-02 spells one `--chaos-plan`), so the option is requested of VERBS-sim and, until the row    lists it, the step is logged with `e2…\""
+],
+"N18b-22": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…m.run`; in the study manifest the per-arm `capacity` field, requested of N33b-19). Expected: the tracked arm overflows in nearly every world…\""
+],
+"N18b-29": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…nch (BD-230, M3); tyre laws, which the law branch evaluates once N18b-04 registers them, including their validity refusal `FROB-REF-243` (as t…\""
+],
+"N18b-39": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…he same family, `response-anchor-unconverged` (DESIGN slug, requested of N35x-02 and N18-REF in the same way, so that `contact.response` can…\""
+],
+"N18b-43": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…at registry names `N18b-45:trac-arc`; the plant's ownership is requested of N18-CX as `N18b-43:trac-arc`, and until it moves the control recor…\""
+],
+"N18b-45": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ot wait on this bead (convention 7); the plant's identifier is requested of N18-CX as `N18b-43:trac-arc`, and this bead adds no second copy of…\""
+],
+"N19ax-05": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… an actor declaration to a    generated scene yet; the form is requested of N38a-33, which defines the declaration, and,    if it is a verb opt…\""
+],
+"N19b-03": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…m is read from the decision entry (a field `fallback_form`, requested of N40-03); a    `fired` decision without it is read as the form \"not…\""
+],
+"N19b-06": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…m_thickness --json` (the per-contact thickness; the channel is requested of BD-230, which stores the state); then the three limits at the fixt…\""
+],
+"N19b-19": [
+"[C13-pending] 3 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ches; the decision entry names the form   (`fallback_form`, requested of N40-03), which N19b-03's admission reads (its step 2): a chain cor…\""
+],
+"N19b-21": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…un purpose is the `sim.run` and `sim.estimate` input N19b-03 requested of VERBS-sim; every run has its own key, so none returns another's store…\""
+],
+"N19b-36": [
+"[C4-adr] puts a decision record under `docs/delivery/adr/`; every decision record lives in `docs/adr/` (convention 4)"
+],
+"N19b-44": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…sal/late.rs` and cited by slug, never by a typed number: it is requested of N19-REF as a refusal implied and not numbered, of N19c-42 for its r…\""
+],
+"N19-CX": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `(`registry/counterexamples/habitat.toml`) with fields of its own (`mutant`, `caught_by`, `gate`, `bead`): a`"
+],
+"N19c-11": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ss), and BD-235's acceptance requires them to run and pass (requested of BD-235, which also exposes this bead's deep check as the `--deep` …\""
+],
+"N19c-15": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…r family declares that parameter yet, and its addition is   requested of BD-225, whose role is entered in N19c-11's table), and an **indepe…\""
+],
+"N19c-19": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…w's `reread = [\"M3\"]` is what makes the M3 exit due for it (requested of N40-24,    which enters the row). If the verdict differs from the …\""
+],
+"N19c-23": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s field blobs answer 618 from the bundle writer    (step 3; requested of N21c-08 to state);    (b) an object derived from the scan whose tra…\""
+],
+"N19c-25": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…it and job handles; the training form of N19c-22's schedule is requested of N19c-22 and VERBS-train, which list `--scenes` and `--schedule` on …\""
+],
+"N19c-31": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…t build; its `scene.gen` row does not, and the option is    requested of VERBS-scene there (convention 8), because the terrain workloads of item…\""
+],
+"N19c-37": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…h`). (Round 3: an earlier text called the name a DESIGN name requested of N40-03,    which now states it, and gave the entry no `reading`.) …\""
+],
+"N19cx-01": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…pass), and BD-241's acceptance requires it to run and pass (requested of BD-241). Each step writes NDJSON to `target/e2e-logs/scene_family_…\""
+],
+"N20a-18": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…as that row the record cannot fund N20a-19, N38a-09 rule 3; requested of N38a-37, which registers KILL-TACTILE), `cost`, `tool` = { name, pi…\""
+],
+"N20a-34": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…cing without a flag and has no λ_warn input: both spellings are requested of VERBS-sense.  **3. Computation** (numbered steps). 1. Resolve the route…\""
+],
+"N20-REF": [
+"[C1-target] names a tier target by its short name (`--test g1`); the targets are g0_laws, g1_known_answers, g2_parity, g3_metamorphic, g4_chaos, g5_determinism (convention 1), e.g. `(`cargo test -p frob-core refusals`, `cargo test -p frob-conformance --test g1 -- refusal_sens`)`"
+],
+"N20b-06": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…run`'s row spells `@t=<instant>` and no impact trigger yet (requested of N20a-31 and VERBS-sim; the step is added when the spelling exists);…\""
+],
+"N20b-45": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… verb row spells the option that asserts a peak-load claim, requested of N20b-29, and is logged as skipped with its reason until then) and `…\""
+],
+"BD-175": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ich have no command-line spelling in the `sim.run` row yet (requested of N21b-23); until the row lists one, `nan_world` and `overflow` run t…\""
+],
+"N21-KA": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… KA-550 stay `none stated` and are    `obligation: control` until N38b-32 registers the controls its table proposes. When the seeding tool of N…\""
+],
+"N21b-23": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… fails;   or the device reports a context loss at chunk k), requested of VERBS-sim. - An over-budget request needs no hook from the command li…\""
+],
+"N21b-39": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… asserts that it changes no result; DESIGN, defined here and requested of VERBS-sim); `--cache-dir <path>` (a path outside the session's roots …\""
+],
+"N21c-08": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…rejected as a mislabelled trace (`FROB-REF-618`, the trigger requested of N21-REF for the code's row).  ## References  Plan §21.17, §21.21 (`…\""
+],
+"N21c-17": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ecorded in the receipt and in the disclosure block; DESIGN, requested of VERBS-sim and VERBS-spark so that the rows list it with that restrict…\""
+],
+"N21c-30": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…for the Spark plants that live in annex workspaces (DESIGN, requested of N38b-04, whose runner otherwise builds a plant only as a feature of…\""
+],
+"BD-114": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N22a-11": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N22ap2-03": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e: which bead the register names for a later class's re-run is requested of N29b-06, which holds the gate's M2 row). Logging through the shared…\""
+],
+"N22b-34": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…cript and logging  None of its own: the builder has no verb until N22b-35 adds `--table` to `shield.fit`. Its end-to-end evidence is the f…\""
+],
+"N22c-01": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… N22a-11's script and its legged case under the same entry (requested of N22a-11: its case is registered under the GATE-REFLEX-01 entry of `…\""
+],
+"N22c-23": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…w is numbered the refusal is raised by slug, and the number is requested of N35x-02 so that VERBS-control can list it on `control.lift` and on …\""
+],
+"N22c-29": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…heir domains    is not `FROB-REF-530` (interim DESIGN rule, requested of N24b-03, whose pre-run record states it); a changed    domain or de…\""
+],
+"N23a-25": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…a-24; the row shows the flag without a value, and the value is requested of VERBS-policy), budget, profile.  **Admission, in order (each failure a r…\""
+],
+"N23a-31": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…3; repair: use `--tying augmentation` or none; DESIGN slug, requested of N23-REF's worded rows, no number); requesting a group that is not a…\""
+],
+"N23a-32": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…rivial` (exit 3, the slug N23a-31 uses for a trivial Γ_obs, requested of N23-REF) and the repair `--tying none`. - The symmetry loss does no…\""
+],
+"N23a-35": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…job` example (no verb accepts `--determinism fast-training` until N35-06 adds it at M3; after that the step uses `frob train start … --de…\""
+],
+"N23a-36": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e value `select|discard` is N23a-24's and N23a-25's DESIGN, requested of VERBS-policy). 5. `fine-tune-rung`: `frob policy apply class:quadruped -…\""
+],
+"BD-324": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N23b-01": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N23b-11": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N23b-19": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N23b-20": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N23b-21": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N23b-22": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N23b-36": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N24-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `(DESIGN correction: an earlier draft kept `registry/known_answers/arena.toml` with its own fields `where`,`"
+],
+"N24a-13": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… artifact-input stage. The row of `registries/formats.toml` is requested of BD-002, and the `task.check`   parameter entry `overlay = \"artifac…\""
+],
+"N24a-21": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…; the forwarding of `sim.run`'s `--telemetry` by `eval.run` is requested of VERBS-eval); then `frob eval scorecard <run> --json`; asserts w, L_pre…\""
+],
+"N24a-38": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… M2 row is N29b-06's; which bead records a wave's extension is requested of N29b-06, as N22ap2-03 asks for wave 2). Asserts the class counts, t…\""
+],
+"BD-123": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `- `f1_control_euler_caught`, `f1_control_rear_lip_removed_caught` (feature `mutants`): each asserts that the named row fails.`"
+],
+"N24b-03": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `Mutants compile only under the cargo feature `mutants`; a release binary refuses `control` with FROB-REF-724`"
+],
+"N24b-12": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `- `f2_rig_control_pyramidal_caught`, `f2_rig_control_single_point_caught` (feature `mutants`).`"
+],
+"N24b-14": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… leaves its content to this check; its shape is fixed here (requested of BD-124 to declare it so). A `Resources` is an ordered list of name…\""
+],
+"N24b-16": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…d is a world the lane did not draw; `observed` names which; requested of N24-REF) | Re-evaluate under D2; remove the world list | 3 | | The …\""
+],
+"N24c-32": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ison <id> --json` (the row's comparison input; its spelling is requested of VERBS-eval) | q, w and draw counts per item; Σ q = 1; w = p/q; every w…\""
+],
+"N24c-40": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ming a study's run seed; `eval.run`'s spelling `--run-seed` is requested of VERBS-eval for it). `gate_record`: the script writes only the receipt;…\""
+],
+"N24cp3-02": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…nvalid` (unnumbered until the allocation ledger numbers it; requested of N24-REF), pointer the file, slug and field, repairs \"1. correct the…\""
+],
+"BD-140": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"BD-288": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…rove bundle` exports them for the standalone `frob-verify` (requested of BD-133). The    gate script of N25a-25 is the only caller of the s…\""
+],
+"N25a-17": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s this bead (the campaign) rather than the engine   BD-292 (requested of N25d-40).  ## References  §25.8, §25.23, §25.27, §28.13, §40.3, §0.…\""
+],
+"N25c-06": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…; N25c-07 names KILL-AUGUR-TIE as the subsystem-level stop; requested of N40-03), `tool` = the frob binary with its build hash. The appende…\""
+],
+"N25c-39": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e N25d-40 gives the row (DESIGN proposal `PILOT-LABELS-01`, requested of N25d-40). Before execution this bead, its carrier (`bead = \"N25c-39…\""
+],
+"N25c-42": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… proposal in the register's grammar; carrier and identifiers requested of N25d-40, whose carrier column names the epic). Before execution it …\""
+],
+"N25c-43": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…amed interim; its number and the no-interim rule of N25e-45 are requested of VERBS-analyze. Evidence: `Certified` for Pfaffian connections on exact ki…\""
+],
+"N25c-44": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…code on both verbs' rows and this bead as their M6 extender are requested of VERBS-mission.  **Algorithm.**  1. For each design in the family (best-fi…\""
+],
+"N25d-22": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… script and logging None of its own: the engine has no verb until N25d-23 adds the strategy. It exposes the hand families of the tests abo…\""
+],
+"N25d-40": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…an_time_records` is an extension of the register's schema   requested from N38a-09, in the same way the ledger added its own fields. - **To ru…\""
+],
+"N25e-03": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…erim `FROB-REF-852` with `detail: coupling-budget-missing`, until N25e-45 allocates a number); rules 4 to 6 and 9 map to `FROB-REF-849`/`-850` …\""
+],
+"N25e-09": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ce/registry/known_answers.toml`, inside N25-KA's block of 18 requested of N38a-40; this bead cites the tag until the block is issued and its …\""
+],
+"N25e-11": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ir addition, and this bead among the row's implementers, is requested of VERBS-mission.  ## Acceptance criteria  - [ ] The two-term case (0.6, 0.6…\""
+],
+"N25e-20": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ESIGN, `design_domain.placement` of the `.fmission` schema, requested of BD-126, whose `mass_placement` block targets a pseudo-inertia and …\""
+],
+"N25e-22": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…    the artifact graph. The ledger row's per-clause reading is requested of N40-29. This bead also writes the    gate's owner declaration, the…\""
+],
+"BD-273": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ammar`, `splitting`, `given`,    and `exploration` (DESIGN, requested of VERBS-nemesis: the exploration lane as one search arm, the arm that    GA…\""
+],
+"N26-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `chapter's own (a chapter file such as `registry/known_answers/nemesis.toml`, which an earlier form of this bead`"
+],
+"N26a-06": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N26a-19": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…rst run)`, exit       0, never as `Bitwise` (an output label requested of VERBS-sim's `sim.replay` row).    3. *Neither.* An identity found in …\""
+],
+"N26a-28": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N26b-15": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N26b-16": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N26b-18": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… gate whose controls       are all pending (GATE-NEMESIS-02 until BD-273 registers its potency control) is reported ineligible to       pass, …\"",
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"BD-283": [
+"[C5-key] 1 complete command(s) of a run verb in a code block carry no `--key` (convention 5), e.g. `frob autopsy rerun <run> ( --edit '<typed design edit>' | --do '<factor> := <value>' )`"
+],
+"N27-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `other chapter's rows; a file of this chapter's own, such as `registry/known_answers/autopsy.toml`, is what the`"
+],
+"N27b-10": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N27b-21": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N27b-22": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N28a-03": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…), which this bead extends with the option `phases` (M1;    requested of VERBS-session for its row). DESIGN: the question is about a session, and …\""
+],
+"N28b-20": [
+"[C4-adr] puts a decision record under `docs/delivery/adr/`; every decision record lives in `docs/adr/` (convention 4)"
+],
+"N28b-36": [
+"[C4-adr] puts a decision record under `docs/delivery/adr/`; every decision record lives in `docs/adr/` (convention 4)"
+],
+"N28c-06": [
+"[C1-command] uses a Gauntlet command that does not exist (convention 1), e.g. `self-certification), so a command `frob-conformance run …` cannot exist; what the crate allows beside its`"
+],
+"N29a-06": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… `g1` is not; a world count above 1 on    the referee at M1 is requested of BD-090 and VERBS-sim, whose row gives the count 1 until N16b-25), …\""
+],
+"N29a-08": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… `g1` is not; a    world count above 1 on the referee at M1 is requested of BD-090 and VERBS-sim, whose row gives 1 until    N16b-25). Assert …\""
+],
+"N29b-07": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…eld, returned by this store's import to the verb's handler; requested of N16bp2-01, which owns the block, and of VERBS-eval). The row's bytes …\""
+],
+"N30-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``crates/frob-conformance/registry/known_answers/ground.toml` with fields of its own (`ka`, `section`, `case`,`"
+],
+"N30a-04": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…f those readers (here `report.design`) do not yet list 895; requested of NJL-01 as a field-driven   append, so that the refusal list rule h…\""
+],
+"N30a-10": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…t before calling `band` (the trial count per day    of R-04 is requested of BD-388, which registers the fixture; with fewer, the expected outc…\""
+],
+"N30a-34": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ry    is the authority, KNOWN_DRIFTS 12: the `--then` input is requested of VERBS-ground with this bead as its    implementer. Until the row lists i…\""
+],
+"N30a-44": [
+"[C1-command] uses a Gauntlet command that does not exist (convention 1), e.g. `ground_obligations` (the form that crate has; an earlier text called a `frob-conformance run` binary,`"
+],
+"N30a-48": [
+"[C1-command] uses a Gauntlet command that does not exist (convention 1), e.g. `one form that crate has; an earlier text called a `frob-conformance run` binary, which the`",
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… a script calls    only registered options, KNOWN_DRIFTS 8: requested of VERBS-ground). Until then steps 5 and 6, which    need the variant's ide…\""
+],
+"BD-397": [
+"[C1-command] uses a Gauntlet command that does not exist (convention 1), e.g. ``frob-conformance record …` command, so the record is written by the lane's own code and the row is`",
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… tier runner and the recorder admit it for a `reality` gate is requested of N38a-02 and N38b-19.    - **Form A, a real cell.** Fields: dataset …\""
+],
+"N30b-22": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N30b-23": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N30b-24": [
+"[C1-command] uses a Gauntlet command that does not exist (convention 1), e.g. `bead wrote `frob-conformance run ground.obligations`, which means the command above. A test target of its`"
+],
+"N31-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `earlier draft kept a chapter file `registry/known_answers/foundry.toml` with record kinds of its own, which`"
+],
+"N31a-01": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N31a-51": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ncoded and exit 5 (N31a-44; held behind its named constant, requested of N31b-45 as an eleventh row)); `exports = true`, so the row also car…\""
+],
+"N31a-52": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…rs the mechanism beads name (marked \"then\" in the    table; requested of N31-REF so that the row and the rendering list the same repairs). A…\""
+],
+"BD-407": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…tribution` licence set the notices go into the sidecar), is requested of N37-18, and until it exists the writer uses `packet`. Evidence: cl…\""
+],
+"N31b-06": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N31b-07": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N31b-08": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N31b-09": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N31b-10": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N31b-11": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N31b-43": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"BD-313": [
+"[C5-key] 1 complete command(s) of a run verb in a code block carry no `--key` (convention 5), e.g. `$ frob sim run quad-a --scene terrain:stairs@0.4 --worlds 2048 --seconds 20 --tier gpu-cuda --json`"
+],
+"N32a-22": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…he KILL-TUI fallback need, waits for its row to carry them (requested of VERBS-job); the script does not call `job.list` for them.  ### Known …\""
+],
+"N32a-26": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…de (BD-313) depends on this bead; the option's row entry is requested of VERBS-operator. The parity harness gains a prompt extractor for this. A st…\""
+],
+"N32a-35": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…the pilot record's `fallback.kill_gate` to `KILL-PEERLINK` (requested of N41-12); this bead checks the row before the first forwarded job a…\""
+],
+"N32ax-01": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… its test, as NJL-01 requires of a field a later bead adds (requested of NJL-01: a row for this arm in its variation table, which is the on…\""
+],
+"N32ax-02": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…fusal allocation ledger under the slug below (DESIGN slugs; requested of N35x-02, which has no row for them yet) and raised, until numbered,…\""
+],
+"N32b-09": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N32b-14": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N32b-31": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N33-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``crates/frob-conformance/registry/known_answers/suite.toml` with keys of its own: `control` as an `NC-``"
+],
+"BD-401": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…. The   row on file lists 163 only, so the two reader codes are requested of VERBS-analyze, as VERBS-foundry added   them to `foundry.size`.  ## Accep…\""
+],
+"N33b-21": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"BD-001": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N33-REF": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…tudy.compare`, `eval.promote` and `eval.scorecard` from M1 (requested of VERBS-sim, VERBS-fidelity, VERBS-eval and VERBS-study, whose rows lis…\""
+],
+"N33c-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N33c-02": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N33c-07": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N33c-30": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…commits it as    `receipts/gates/<hash>.json` (DESIGN here, requested of N40-01). Findings carry the identifier    `stack.gate-receipt` wit…\""
+],
+"BD-005": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N34-02": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N34-11": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N34-17": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…hese plants yet, and their records, attached to GATE-WS-05, are requested of N34-CX.  ## Acceptance criteria  - [ ] `{\"wheel_radius_mm\": 60, \"w…\""
+],
+"N34-CX": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…plants relies on the catalogue admitting a list in `plant` (requested of N38b-05);   fail-closed default until then: the registry test fails…\""
+],
+"N35-05": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…tion `--conformance-lag <ℓ>` (DESIGN, defined by this bead; requested of VERBS-train's `train.start` row).** Conformance build only: absent from…\""
+],
+"N36-20": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s decision, in which a fit check is registered; it is empty until BD-219 registers its test there, this bead tests the order with a `synthetic…\""
+],
+"N36-CX": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``registry/counterexamples/perf.toml` with fields `test`, `owner`, `tier` and `due`: the registries named in the`"
+],
+"N36-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `DESIGN, correcting an earlier draft of this bead that kept `registry/known_answers/perf.toml` with private`"
+],
+"N36p1-02": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…hen it closes; if it closes before this bead (the dependency requested of N21a-27 and BD-214 missing), the lint reports `hyp.registered-after…\""
+],
+"BD-307": [
+"[C9-recorder] appears to write a gate record itself; a script produces a receipt and the gate is recorded with `record_gate` by the one measuring bead (convention 9)"
+],
+"N37-06": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `8. `planted_defects` (a build with the feature `mutants`): (a) a planted `unwrap()` on a malformed attribute:`"
+],
+"N37-10": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `10. `planted` (a build with feature `mutants`): four runs, one per planted defect (a label copied into`"
+],
+"N37-12": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `10. `planted` (a build with feature `mutants`): the variant that checks a canonical string and then opens by`"
+],
+"N37-15": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `with feature `mutants`, each must make the script fail at the named step): scopes checked after argument`"
+],
+"N37-18": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… M2 handlers adopt so that the    switch changes no answer (requested of N24a-41 and N29a-02, whose text lists privacy and licence before   …\""
+],
+"N37-21": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `16. `planted` (builds with feature `mutants`; each must make the named step fail): a still writer that drops`"
+],
+"N37-24": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `9. `planted` (builds with feature `mutants`; each must fail the named step): an exporter that omits the`"
+],
+"N37-27": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `10. `planted` (builds with feature `mutants`; each must fail the named step): `combine` takes the maximum`"
+],
+"N37-29": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `9. `planted` (builds with feature `mutants`; each must fail the named step): unrecorded determinism read as`"
+],
+"N37-CX": [
+"[C1-feature] builds planted defects with a feature called `mutants`; the feature is `gauntlet-mutations` (convention 1), e.g. `feature `mutants` and logs, per STD-E2E, one `assert` line per control with the control identifier, the seed`"
+],
+"N37-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``registry/known_answers/safe.toml` with private fields (`where`, `gate`, `measured_by`, `test`). The columns`"
+],
+"N37-REF": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…odes that report a missing scope or   capability (840 → 5), requested of N35-33. Until it exists, `exit_family_rule_safe` checks the eight …\""
+],
+"N38a-01": [
+"[C1-command] uses a Gauntlet command that does not exist (convention 1), e.g. `would call them. Rejected: a `frob gauntlet …` verb family; a seventh `xtask` check.`"
+],
+"N38a-25": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ord is the one this gate names, and merging the two records is requested of BD-096.) Determinism lanes: a schedule replays to the same ledger …\""
+],
+"N38-KA": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… this bead creates; it runs this script as its first stage (requested of N38b-46), so a registry defect fails before any verb runs.  ### Kno…\""
+],
+"N39a-39": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s `reason` (the funding record has no per-class field; that is requested of N00-09). A package with no funding record is not funded.  **Fail-c…\""
+],
+"N39-CX": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…-03 must catch both, so their entries' `rule_ids` carry it (requested of N00-CX); until then the registry check reports the two as `gate-mi…\""
+],
+"N39-KA": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… number (and slug) and runs this script as its first stage (requested of N39b-22).  ### Known answers and negative controls  The tables. Neg…\""
+],
+"N40-01": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…. Two further plants are caught by the unit tests above and are requested of N40-CX as rows of their own (numbered there): a kill row carrying …\""
+],
+"N40-03": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…Three further plants are caught by the unit tests above and are requested of N40-CX as rows of their own (numbered there): a decision scope of …\""
+],
+"N40-30": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…he register when this bead lands, the other three from M4), requested of N40-KA as a row beside R-26. Negative controls: N40-CX RC-10, RC-1…\""
+],
+"N40-36": [
+"[C1-target] names a tier target by its short name (`--test g1`); the targets are g0_laws, g1_known_answers, g2_parity, g3_metamorphic, g4_chaos, g5_determinism (convention 1), e.g. `target named by the gate record's `tier` field; the six targets carry their long names, and `--test g1` is`"
+],
+"N40-CX": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `bead that kept the rows in a private file `registry/counterexamples/register.toml` with fields `mutant`,`"
+],
+"N41-17": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…oaded by the lifecycle check; the row's \"five\" becomes six, requested of N41-KA); X41-26 (`status_table_not_from_bead_states`); X41-27 (`cl…\""
+],
+"N41-18": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N41-20": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N41-21": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N41-22": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N41-23": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N41-24": [
+"[C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)"
+],
+"N41-CX": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. ``registry/counterexamples/delivery.toml` with fields `mutant`, `caught_by`, `gate`, `bead` and `due` and wrote`"
+],
+"N41-KA": [
+"[C2-file] keeps registry rows in a private or per-chapter file (convention 2), e.g. `own (a `known_answers/delivery.toml`, or any other `known_answers*.toml`, fails the loader with`",
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ves 25 High, 28 Medium, 2 Low and drops the four late rows; requested of N41-CX as a planted case | N41-01, N41-RISK1 to N41-RISK4 | | K41-…\""
+],
+"N41-OPEN2": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… a field for such a hash nor a write-once rule for it; both are requested of N41-03, the schema's owner (proposed: an optional `decision_digest…\""
+],
+"N44-03": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"NAB-14": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ty `record` is refused. - `nv06_anchor_figures_are_mark_r` (once BD-311 registers them). - `public_register_has_no_r_or_m_reading` (the findi…\""
+],
+"NEG-22": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…37-18), and    this bead adds no aggregate path of its own (a request to N37-18 asks whether one is wanted). 3. Logs and telemetry never contain…\""
+],
+"NEG-25": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… for and the plan does not state; it is not built here, and a request to N37-18 asks the owner whether such an override is wanted (if it is, it …\""
+],
+"ROBOT-apollo": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… no-shape-class refusal FROB-REF-160 by name) is   M2 work, requested of N17a-08's script; this M1 bead does not wait on it. - `robot_apollo…\""
+],
+"ROBOT-talos": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…(`frob phylum plan` choosing that bucket) is M2 work and is requested of N17a-08's script; this M1 bead does not wait on it. (2) Coupled gri…\""
+],
+"FD-FSS-01": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e registry row's `status` to `not-needed` (DESIGN: the value requested of BD-037's schema `frob.upstream/1`, admitted only on a conditional …\""
+],
+"NJL-01": [
+"[C13-pending] 3 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ive`, `reference`, `external`; default `[\"native\"]`; a field requested of N32a-02's table by N32ax-02) | `engine` (string, a name in `registr…\""
+],
+"VERBS-analyze": [
+"[C13-pending] 3 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ions), without which the generator cannot emit this row; it is requested of BD-332, the M4 bead   that owns A-04's mathematics.  **`analyze.wo…\""
+],
+"VERBS-artifact": [
+"[C13-pending] 3 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…t in   `artifact.read` (BD-097 names no code for the fault; requested of N21c-08). The appended codes 734 and 828   come from the field rule…\""
+],
+"VERBS-contact": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…aded` step, N18b-39) has   neither a code nor a ledger row; requested of N18b-39. - Implemented by: BD-367 (the verb), on N18b-39 (the ancho…\""
+],
+"VERBS-foundry": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e` on `foundry.export`   (N31a-44) is held the same way and is requested of N31b-45 as an eleventh row. - Options. Every option a mechanism bea…\""
+],
+"VERBS-ground": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… `ds:sill-day-3`, `c:9f2c41`, `sill-12mm`, `sill-crossing`; requested of N30b-31). Two examples were corrected in round 3: `ground.ingest` n…\""
+],
+"VERBS-mission": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… ties   in canonical order: DESIGN, the form N32b-16 calls, requested of BD-135); the generated `--limit`, `--cursor`   and `--follow` (the…\""
+],
+"VERBS-operator": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…terim list), `--verbs`, `--path-args` and `--exports` are   requested of BD-022, whose M0 handler already loads the registries they read an…\""
+],
+"VERBS-opt": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…od mf-bo`, N28b-07's   rule). One difference stays open and is requested of N28-REF: BD-341 raises 543 for a race on a metric with no   declare…\""
+],
+"VERBS-policy": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"… and   `opt.start` and not yet `policy.apply`; the addition is requested of N28-REF, whose cross-check fails until it   is made.  ## Acceptance…\""
+],
+"VERBS-scene": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…t `--user-supplied`, and that refusal has no code yet;   it is requested of N19b-02 and enters this list when it has one. - Implemented by: BD-…\""
+],
+"VERBS-sense": [
+"[C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…ing, and this is the form `sense.calibrate`   already uses; requested of BD-078). Paginated (`paginated = true`): `events[]` is returned wi…\""
+],
+"VERBS-sim": [
+"[C13-pending] 4 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…lves the identity to run, world and   episode; DESIGN form, requested of N26a-19); the window `[--from <tick> | --from-snapshot <hash>] [--t…\""
+],
+"VERBS-spark": [
+"[C13-pending] 5 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…or`, `limit` and `follow` and appends 806 and 807 to it, is requested of N32a-02, whose action table today has only `name`, `kind` and `capa…\""
+],
+"VERBS-study": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e manifest has no registered   format for a `params` entry; requested of N33b-19). The worded refusal \"refinement study that changes a clock…\""
+],
+"VERBS-task": [
+"[C13-pending] 3 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…e 734 and 828 the row already    carries, and their routing is requested of N24a-13 and N24ax-02. The action `coupling` of `task.check` gets th…\""
+],
+"VERBS-telemetry": [
+"[C13-pending] 2 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s milestone). 5. Options (DESIGN, round 3; the general rule is requested of NJL-01). An option or option value a row lists whose    implementi…\""
+],
+"VERBS-train": [
+"[C13-pending] 3 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…s milestone). 5. Options (DESIGN, round 3; the general rule is requested of NJL-01). An option or option value a row lists whose    implementi…\""
+]
+}

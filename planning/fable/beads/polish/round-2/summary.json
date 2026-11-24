@@ -1,0 +1,767 @@
+{
+ "round": 2,
+ "slices": 91,
+ "slices_without_result": [],
+ "live_beads": 3620,
+ "superseded_total": 119,
+ "totals": {
+  "reviewed": 3614,
+  "changed": 2772,
+  "new": 28,
+  "superseded": 0,
+  "requests": 884
+ },
+ "kinds": {
+  "correct": 1957,
+  "e2e-logging": 1407,
+  "tests": 1216,
+  "deps": 1004,
+  "complete": 534,
+  "self-contained": 300,
+  "scope": 168,
+  "users": 120,
+  "sense": 74,
+  "placement": 50,
+  "risks": 48,
+  "title": 28,
+  "split": 15,
+  "conventions": 11,
+  "related": 8,
+  "request": 7,
+  "optimal": 2,
+  "priority": 2,
+  "duplicate": 1
+ },
+ "definition_problems": 0,
+ "validation_failures": [],
+ "per_slice": [
+  {
+   "slice": "S01",
+   "beads": 37,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 23
+  },
+  {
+   "slice": "S02",
+   "beads": 37,
+   "changed": 11,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "S03",
+   "beads": 9,
+   "changed": 7,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S04",
+   "beads": 47,
+   "changed": 40,
+   "new": 1,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S05",
+   "beads": 46,
+   "changed": 35,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S06",
+   "beads": 24,
+   "changed": 15,
+   "new": 1,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "S07",
+   "beads": 43,
+   "changed": 11,
+   "new": 0,
+   "superseded": 0,
+   "requests": 1
+  },
+  {
+   "slice": "S08",
+   "beads": 45,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "S09",
+   "beads": 33,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "S10",
+   "beads": 32,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 40
+  },
+  {
+   "slice": "S11",
+   "beads": 45,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "S12",
+   "beads": 45,
+   "changed": 41,
+   "new": 0,
+   "superseded": 0,
+   "requests": 21
+  },
+  {
+   "slice": "S13",
+   "beads": 45,
+   "changed": 23,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "S14",
+   "beads": 42,
+   "changed": 12,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "S15",
+   "beads": 51,
+   "changed": 27,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "S16",
+   "beads": 40,
+   "changed": 29,
+   "new": 1,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S17",
+   "beads": 50,
+   "changed": 34,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S18",
+   "beads": 38,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S19",
+   "beads": 49,
+   "changed": 26,
+   "new": 3,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S20",
+   "beads": 31,
+   "changed": 30,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "S21",
+   "beads": 53,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "S22",
+   "beads": 40,
+   "changed": 33,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "S23",
+   "beads": 36,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "S24",
+   "beads": 46,
+   "changed": 31,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "S25",
+   "beads": 19,
+   "changed": 13,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "S26",
+   "beads": 38,
+   "changed": 33,
+   "new": 1,
+   "superseded": 0,
+   "requests": 18
+  },
+  {
+   "slice": "S27",
+   "beads": 39,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "S28",
+   "beads": 29,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "S29",
+   "beads": 36,
+   "changed": 27,
+   "new": 0,
+   "superseded": 0,
+   "requests": 1
+  },
+  {
+   "slice": "S30",
+   "beads": 40,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "S31",
+   "beads": 39,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S32",
+   "beads": 46,
+   "changed": 16,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S33",
+   "beads": 45,
+   "changed": 34,
+   "new": 1,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "S34",
+   "beads": 55,
+   "changed": 50,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "S35",
+   "beads": 47,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S36",
+   "beads": 32,
+   "changed": 18,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S37",
+   "beads": 54,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 18
+  },
+  {
+   "slice": "S38",
+   "beads": 46,
+   "changed": 24,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S39",
+   "beads": 39,
+   "changed": 21,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "S40",
+   "beads": 38,
+   "changed": 22,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S41",
+   "beads": 44,
+   "changed": 20,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S42",
+   "beads": 43,
+   "changed": 38,
+   "new": 1,
+   "superseded": 0,
+   "requests": 26
+  },
+  {
+   "slice": "S43",
+   "beads": 55,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S44",
+   "beads": 51,
+   "changed": 35,
+   "new": 1,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "S45",
+   "beads": 50,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "S46",
+   "beads": 33,
+   "changed": 25,
+   "new": 1,
+   "superseded": 0,
+   "requests": 21
+  },
+  {
+   "slice": "S47",
+   "beads": 33,
+   "changed": 18,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "S48",
+   "beads": 33,
+   "changed": 26,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "S49",
+   "beads": 15,
+   "changed": 15,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "S50",
+   "beads": 49,
+   "changed": 47,
+   "new": 0,
+   "superseded": 0,
+   "requests": 21
+  },
+  {
+   "slice": "S51",
+   "beads": 46,
+   "changed": 42,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "S52",
+   "beads": 22,
+   "changed": 20,
+   "new": 3,
+   "superseded": 0,
+   "requests": 19
+  },
+  {
+   "slice": "S53",
+   "beads": 48,
+   "changed": 48,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "S54",
+   "beads": 48,
+   "changed": 46,
+   "new": 1,
+   "superseded": 0,
+   "requests": 19
+  },
+  {
+   "slice": "S55",
+   "beads": 25,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "S56",
+   "beads": 42,
+   "changed": 38,
+   "new": 0,
+   "superseded": 0,
+   "requests": 20
+  },
+  {
+   "slice": "S57",
+   "beads": 41,
+   "changed": 41,
+   "new": 0,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "S58",
+   "beads": 40,
+   "changed": 38,
+   "new": 0,
+   "superseded": 0,
+   "requests": 16
+  },
+  {
+   "slice": "S59",
+   "beads": 48,
+   "changed": 39,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "S60",
+   "beads": 57,
+   "changed": 41,
+   "new": 1,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "S61",
+   "beads": 20,
+   "changed": 18,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S62",
+   "beads": 44,
+   "changed": 33,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "S63",
+   "beads": 44,
+   "changed": 37,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "S64",
+   "beads": 53,
+   "changed": 47,
+   "new": 1,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "S65",
+   "beads": 32,
+   "changed": 23,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "S66",
+   "beads": 33,
+   "changed": 33,
+   "new": 0,
+   "superseded": 0,
+   "requests": 21
+  },
+  {
+   "slice": "S67",
+   "beads": 28,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "S68",
+   "beads": 45,
+   "changed": 45,
+   "new": 0,
+   "superseded": 0,
+   "requests": 20
+  },
+  {
+   "slice": "S69",
+   "beads": 22,
+   "changed": 22,
+   "new": 2,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "S70",
+   "beads": 43,
+   "changed": 38,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "S71",
+   "beads": 42,
+   "changed": 42,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "S72",
+   "beads": 51,
+   "changed": 51,
+   "new": 1,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "S73",
+   "beads": 36,
+   "changed": 36,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S74",
+   "beads": 41,
+   "changed": 39,
+   "new": 2,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S75",
+   "beads": 45,
+   "changed": 32,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "S76",
+   "beads": 24,
+   "changed": 23,
+   "new": 0,
+   "superseded": 0,
+   "requests": 16
+  },
+  {
+   "slice": "S77",
+   "beads": 35,
+   "changed": 34,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S78",
+   "beads": 30,
+   "changed": 29,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S79",
+   "beads": 28,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "S80",
+   "beads": 35,
+   "changed": 35,
+   "new": 1,
+   "superseded": 0,
+   "requests": 15
+  },
+  {
+   "slice": "S81",
+   "beads": 34,
+   "changed": 30,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S82",
+   "beads": 28,
+   "changed": 26,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "S83",
+   "beads": 34,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "S84",
+   "beads": 31,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "S85",
+   "beads": 52,
+   "changed": 43,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "S86",
+   "beads": 57,
+   "changed": 54,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "S87",
+   "beads": 38,
+   "changed": 36,
+   "new": 3,
+   "superseded": 0,
+   "requests": 14
+  },
+  {
+   "slice": "S88",
+   "beads": 41,
+   "changed": 41,
+   "new": 0,
+   "superseded": 0,
+   "requests": 19
+  },
+  {
+   "slice": "S89",
+   "beads": 49,
+   "changed": 46,
+   "new": 1,
+   "superseded": 0,
+   "requests": 15
+  },
+  {
+   "slice": "S90",
+   "beads": 51,
+   "changed": 42,
+   "new": 0,
+   "superseded": 0,
+   "requests": 13
+  },
+  {
+   "slice": "S91",
+   "beads": 38,
+   "changed": 31,
+   "new": 1,
+   "superseded": 0,
+   "requests": 8
+  }
+ ]
+}

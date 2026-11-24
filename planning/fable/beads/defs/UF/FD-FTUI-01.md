@@ -4,11 +4,11 @@ title: "upstream frankentui: the exact asupersync 0.5.0 pin on its optional exec
 type: "task"
 priority: 3
 milestone: "M3"
-labels: ["m3", "suite", "tether", "upstream", "frankentui", "frontier"]
+labels: ["m3", "suite", "tether", "upstream", "frankentui", "frontier", "review-notes-open"]
 parent: "WP-52"
-deps: ["BD-037", "NF-01", "STD-E2E"]
+deps: ["BD-037", "N33b-04", "N33c-23", "STD-E2E"]
 needs: []
-related: ["BD-300", "BD-003", "FD-ASUP-01", "BD-306"]
+related: ["N33b-08", "N33c-09"]
 gates: ["INT-FTUI-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.15", "§33.13", "§33.4", "§34.6", "§42"]
 ---
@@ -75,6 +75,11 @@ and passes once the change is adopted; a fixture that passes at the pin no longe
 itself a failure of the registry check. It resolves a probe crate that depends on `ftui-runtime` with
 `asupersync-executor` enabled inside a workspace that also depends on the graph's asupersync, and asserts that
 `cargo metadata` shows exactly one asupersync package; at the pin it shows two (0.5.0 and the graph's).
+frankentui has no row in `franken-stack.lock` at M0, so under BD-037's fixture timing rule the fixture was written
+against frankentui's head as read on the day, `observed_at` names that commit and the row carries `pin_state =
+"unpinned"`. frankentui is first admitted by the pilot N33c-23 (a dependency); this bead then re-runs the fixture
+at the admitted pin, records that commit in `observed_at` with the signature observed there, and clears
+`pin_state`.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -127,9 +132,12 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_ftui_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also starts `frobd`, replays a recorded job event stream into `frob-tui`
-under the headless harness, compares the pane with its snapshot, and measures idle processor use over 60 s
-against 2% of one core.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also replays the recorded job event stream into the job pane of the admission probe
+(`tools/pilots/ftui-probe`, the pilot N33c-23's, a dependency: the form in which INT-FTUI-01 is measured
+before any dashboard exists) under the headless harness, compares the pane with its snapshot, and measures
+idle processor use over 60 s against 2% of one core. This bead does not wait for the dashboard: where
+`frob-tui` has been built (BD-300), that capstone's script repeats the same phase on the real binary against
+`frobd` at its own pin, and this script logs that step `not run: frob-tui not in this build` otherwise.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_ftui_01/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

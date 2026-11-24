@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-21", "N12-22", "N12-20", "N12-06", "SPEC-C-09"]
-needs: ["§13.4: the signed-permutation representations ρ on configuration, velocity, action and observation spaces computed from the parity rule (BD-048, BD-102)"]
-related: ["CARD-T-16", "CARD-T-18", "CARD-T-09", "BD-241", "BD-379", "BD-102"]
+deps: ["N12-06", "N12-20", "N12-21", "N12-22", "SPEC-C-09"]
+needs: []
+related: ["CARD-T-16", "N12-07", "N12-45", "N13-16", "N22a-32", "N22b-39"]
 gates: []
 plan_refs: ["§12.3 (T-10)", "§10 C-09", "§11.4", "§13.4", "Appendix D.5 (equivariance of the dynamics)"]
 ---
@@ -51,8 +51,10 @@ card's law tests). What the card does depend on is in `deps`: the card registry,
 where the route is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry
 row, its specimens and mutants, and every acceptance line that its own fixtures decide. An acceptance line that
 can only be observed on live output (the per-generator certificates or test records for a reference model's step
-kernels) is run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the
-receipt produced there is what moves the registry row for that output.
+kernels) cannot be run inside the implementing bead here, because that bead lands four milestones earlier (BD-102
+at M1) and is not reopened: the certificates and test records on the step kernels as built are issued at M5 by
+this card through the instance-certificate pipeline (N12-20) and the randomized identity test (N12-21), both
+dependencies; the receipt of that run moves the registry row, and the coverage run (N12-36) observes it again.
 
 ## Technical approach
 
@@ -63,7 +65,12 @@ receipt produced there is what moves the registry row for that output.
    identity per select branch, restricted to inputs satisfying the guard and whose image under ρ satisfies the
    image guard (the guard itself must be invariant: its invariance is a sub-identity).
 3. Decide by route (a) through the producer pipeline; fall to (b) per piece on `budget-exceeded`; record (c) for
-   kernels that cannot be split, with the residual test's identifier.
+   kernels that cannot be split, with the residual test's identifier. Route (b) uses the Schwartz–Zippel lemma: a
+   nonzero polynomial of total degree at most d, evaluated at a point drawn uniformly from Sⁿ for a finite set
+   S ⊂ ℚ, vanishes with probability at most d/|S|; k independent draws that all vanish leave an error bound of
+   (d/|S|)ᵏ. The record (`.idtest`) holds d (a bound computed from the straight-line program, products adding
+   degrees and the cleared denominators included), S, k, the seed of the addressed random draws, every sample
+   point and the bound; the implementation of the test itself is N12-21's.
 4. Class: `Certified` for pieces decided by (a), with a `poly-identity` bundle per generator; `Tested` for (b)
    and (c), stated as such. The card's printed class for a model is the minimum over its pieces. Not `Proved`.
    The simulator's equivariance in floating point is not claimed: round-off breaks exact equivariance, which is
@@ -94,12 +101,19 @@ joint axis a is −P·a, so a pitch axis along y keeps its sign and roll and yaw
 `wrong_table_flip_all_fails`; `wrong_table_flip_none_fails`; `gravity_not_transformed_fails`;
 `one_sided_payload_breaks_identity`; `free_body_step_equivariant_exact` (the single-body Cayley step under the
 mirror, in exact rationals); `mass_matrix_equivariance` (ρ(g)·M(q)·ρ(g)ᵀ = M(ρ(g)·q) on a planar two-link
-mirrored pair); `class_is_minimum_over_pieces`.
+mirrored pair); `class_is_minimum_over_pieces`; `randomized_piece_records_bound` (a piece forced to route (b)
+with d = 12, |S| = 2³² and k = 4: the record carries all four sample points and the bound (12/2³²)⁴, and the
+piece prints class `Tested`).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_coverage.sh` (bead N12-36) runs the per-generator identities for the reference models and logs
-route, degree bound, sample set and verdict per piece.
+route, degree bound, sample set and verdict per piece. For this card its NDJSON lines (STD-E2E helper) carry `ts`,
+`script`, `bead` ("CARD-T-10"), `step` (`T-10/<model>/<generator>/<kernel>/<piece>`), `event`, the exact command
+line, exit code, wall time, peak memory, the route (a, b or c), the envelope's `evidence` block (claim, class,
+`KernelId`, certificate hash or `.idtest` digest, checker identity), d, |S|, k and the error bound for route (b),
+and on a failure the first failing output component and the path to reproduce; the `summary` gives the printed
+class per model and the negative controls caught.
 
 ### Known answers and negative controls
 

@@ -1,0 +1,145 @@
+{
+ "round": 2,
+ "slice": "S14",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "N38b-43",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "KA-837's n = 0.7 control recomputed from its constants gives 0.091646 m (9.16 cm), not the printed 9.17 (which comes from p rounded to 5.017 kPa before the power); body, acceptance, unit test and log now state 0.091646, 0.190127, 0.117076 m to 10^-5 m with the correction labelled. The residual-bound property test now states its class (SPD H with a rational lambda_lo, componentwise rho = gamma_{n+1}(|H||x^|+|b|), 2-norms, upward rounding), without which the bound is not a theorem."
+  },
+  {
+   "bead": "N38b-44",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The front-exponent test measured 'the front' with no definition; the outermost wet cell of an explicit update is not a front. Now X_rms = sqrt(sum h x^2 / sum h) as in N19b-10, fitted over a window fixed before the run (512 s to 16,384 s); a planning computation of the fixture gives 0.199 in [0.196, 0.204]; added a resolution test (halved cells change X_rms by under 1%) and the window values in the log."
+  },
+  {
+   "bead": "N38b-46",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KA-837 row of the script table: the exponent-0.7 shortcut value is 9.16 cm (0.091646 m), with the plan's 9.17 explained, matching N38b-43."
+  },
+  {
+   "bead": "N38b-55",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Applied round-1 request: NEG-09 moved from related to deps (its count_firings is what the row checks call; both M1; no cycle)."
+  },
+  {
+   "bead": "N40-31",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied round-1 request, checked against N00-28: the verdict GateFailedShort (gate missed, falsifier not crossed) maps to exit state open (blocking) until the bet's decision record is on file, then to a new non-blocking state failed-short printed with the measured value, both thresholds and the record path; scope list now names GateFailedShort; seven exit states; added status_failed_short (BET-18 at 0.62 against 0.70 and 0.5, then 0.48 -> falsified), an acceptance line and the e2e case."
+  },
+  {
+   "bead": "N41-26",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "The checker runs the wording lints (clause 14's gate-conditioned ten-fold rules, clause 15's 'verified' ban) but did not depend on them: added N00-15 and N00-01 (both M0, no cycle) and named them where they are read."
+  },
+  {
+   "bead": "N41-27",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied round-1 request: added dep N41-05 (M0, no cycle); the checker now runs scripts/release/visibility-guard.sh before the nine rules (mismatch or unverified refuses a release with reason=release-visibility), with an acceptance line, two unit tests and the plan reference to OPEN-PROG-1."
+  },
+  {
+   "bead": "N41-33",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Graph request checked: all 21 deps are detectors, fixtures or the layer the plants call; none dropped. RISK-38's fixture and stale-key mutant are N25a-13's (KA-699), not the memo graph's: added N25a-13 (M1, no cycle) and corrected the row and the consideration."
+  },
+  {
+   "bead": "NJL-07",
+   "kinds": [
+    "tests",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Its acceptance required the M1 artifact scripts (ART-L4, L1, L2) and real files, but every ART-L bead depends on it, so it could never close. Now its tests run on a synthetic test tree of the fact fields, a fact whose artifacts are absent is not-due (never pass; new test), and the story runner is added to step 4 of the exit runner (dep N40-05), so the M1 pass of L.4, L.1, L.2 with facts 1 and 2 is enforced at every exit from M1."
+  },
+  {
+   "bead": "NJLx-02",
+   "kinds": [
+    "tests",
+    "self-contained"
+   ],
+   "what": "Every owner bead depends on it, so at its close all eighteen rows are pending; acceptance now says so: truths recomputed from the derivations at close, comparison, caught control, citing test and script step 2 required from each owner's landing, an error after the owner's milestone. Arithmetic re-checked (JL-14 boundary pairs, JL-17 Bonferroni interval, JL-18 bounds)."
+  },
+  {
+   "bead": "STD-E2E",
+   "kinds": [
+    "scope",
+    "correct"
+   ],
+   "what": "Graph request checked; scope otherwise minimal. The gate report read registries/gates.toml, but the tool is std-only with a JSON reader and the register has one loader (N40-01); the report now reads headers and logs only, and the register-side join stays with the exit report (N40-04)."
+  },
+  {
+   "bead": "STD-TEST",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Graph request checked; scope kept. The registry parsers live behind test-support yet frob-conformance's commands need them while acceptance demanded the feature off in every binary: now off in every binary outside frob-conformance, a normal dependency there only. The D3 zero-discordance count is exact: 299 worlds give a bound under 1% (300 is the plan's rounded 3/n)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38-KA",
+   "what": "KA-837's n = 0.7 control prints 9.17 cm; computed from the stated constants (unrounded p = 5.01648 kPa) it is 0.091646 m = 9.16 cm; 9.17 follows from p rounded to 5.017 kPa before the power 1/n. Align to 9.16 (0.091646, 0.190127, 0.117076 m), as N38b-43 and N38b-46 now state. Its acceptance asks the test to reproduce the control's printed values, which fails at 10^-5 m. Optionally record the slip under the reconciliation register's standing rule (status open, then corrected)."
+  },
+  {
+   "bead": "N38-CX",
+   "what": "CX-386: KA-837's n = 0.7 control prints 9.17 cm; computed from the stated constants (unrounded p = 5.01648 kPa) it is 0.091646 m = 9.16 cm; 9.17 follows from p rounded to 5.017 kPa before the power 1/n. Align to 9.16 (0.091646, 0.190127, 0.117076 m), as N38b-43 and N38b-46 now state."
+  },
+  {
+   "bead": "N18b-11",
+   "what": "KA-837's n = 0.7 control prints 9.17 cm; computed from the stated constants (unrounded p = 5.01648 kPa) it is 0.091646 m = 9.16 cm; 9.17 follows from p rounded to 5.017 kPa before the power 1/n. Align to 9.16 (0.091646, 0.190127, 0.117076 m), as N38b-43 and N38b-46 now state."
+  },
+  {
+   "bead": "N18b-12",
+   "what": "KA-837's n = 0.7 control prints 9.17 cm; computed from the stated constants (unrounded p = 5.01648 kPa) it is 0.091646 m = 9.16 cm; 9.17 follows from p rounded to 5.017 kPa before the power 1/n. Align to 9.16 (0.091646, 0.190127, 0.117076 m), as N38b-43 and N38b-46 now state."
+  },
+  {
+   "bead": "BD-366",
+   "what": "KA-837's n = 0.7 control prints 9.17 cm; computed from the stated constants (unrounded p = 5.01648 kPa) it is 0.091646 m = 9.16 cm; 9.17 follows from p rounded to 5.017 kPa before the power 1/n. Align to 9.16 (0.091646, 0.190127, 0.117076 m), as N38b-43 and N38b-46 now state."
+  },
+  {
+   "bead": "BD-417",
+   "what": "KA-837's n = 0.7 control prints 9.17 cm; computed from the stated constants (unrounded p = 5.01648 kPa) it is 0.091646 m = 9.16 cm; 9.17 follows from p rounded to 5.017 kPa before the power 1/n. Align to 9.16 (0.091646, 0.190127, 0.117076 m), as N38b-43 and N38b-46 now state."
+  },
+  {
+   "bead": "N41-REF",
+   "what": "Register the harness reason release-visibility (owner: release checker N41-27): the visibility guard of N41-05 reports a public remote under a private decision, a licence file that differs from the decision, or unverified (no network) at a release; repair: align the remote or LICENSE with ADR-PROG-01, or run with network."
+  },
+  {
+   "bead": "N41-30",
+   "what": "release_check.sh: add a planted variant for N41-27's new visibility-guard refusal (a scratch public remote under the default private decision, or a mismatching LICENSE) expecting reason=release-visibility."
+  },
+  {
+   "bead": "N00-28",
+   "what": "N40-31 now has a seventh exit state, failed-short: GateFailedShort is open (blocking) until the bet's decision record is on file, then failed-short (non-blocking, printed with the gate's measured value, both thresholds and the record path). Add it to the mapping paragraph of section 3 and to the README column of section 5."
+  }
+ ],
+ "unchanged": 30,
+ "notes": "All 42 reviewed in build order. The KA-837 digit slip and two beads that could never close because their dependents own their test material (NJL-07, NJLx-02) were the substantive finds; the rest are missing direct deps and two harness-scope contradictions. The slice looks settled once the nine requests land."
+}

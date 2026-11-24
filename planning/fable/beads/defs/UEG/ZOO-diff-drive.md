@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "BD-109", "BD-054", "BD-055", "BD-056", "BD-106", "N14b-11", "BD-033", "BD-102"]
+deps: ["BD-033", "BD-054", "BD-055", "BD-056", "BD-102", "BD-106", "BD-109", "N14b-11", "NEG-30"]
 needs: []
-related: ["ROBOT-stretch3", "GB-05", "BD-117", "BD-086", "SPEC-C-07", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 7", "§14.10", "C-07", "§28.4 A-07", "Appendix F.2 row 2", "Appendix M KA-265, KA-267, KA-270", "Appendix N CX-134"]
 ---
@@ -55,11 +55,11 @@ envelope; bus feasible.
 | Near-straight case | θ = 32 rad, wheel speeds 1 and 1 + 6 × 10⁻¹³ m/s, track 0.5 m, 400 steps of 1/400 s → translation (0.8342, 0.5514) m, never zero | abs 10⁻⁴ (cos 32 = 0.834223, sin 32 = 0.551427) |
 | Sideways cost, half-track 0.20 m | shift 0.01 m: 0.178512 m exact (0.178885 small-angle); shift 0.10 m: 0.553669 m exact at α = 0.722734 rad (0.565685 small-angle) | rel 10⁻⁶ |
 | Raised threshold, lip h = 0.012 m | lever arm √(2·r·h − h²): 36.0 mm at r = 0.060 m, 40.69 mm at r = 0.075 m | rel 10⁻⁹ |
-| Push over axle load | lever arm/(r − h): 0.750 and 0.6459 | rel 10⁻⁴ |
+| Push over axle load | lever arm/(r − h): 0.750 and 0.645936 (printed 0.646) | rel 10⁻⁹ against the closed form (the tolerance BD-109 files in `docs/derivations/raised-threshold.md`) |
 | Γ_mech | C₂ | exact |
 
 Exact values of the threshold rows: √(2·0.060·0.012 − 0.012²) = √0.001296 = 0.036 m and 0.036/0.048 = 0.75;
-√(2·0.075·0.012 − 0.000144) = √0.001656 = 0.0406940 m and 0.0406940/0.063 = 0.645937.
+√(2·0.075·0.012 − 0.000144) = √0.001656 = 0.0406940 m (0.040693980) and 0.040693980/0.063 = 0.645936.
 
 **Control variants.** (a) the sibling planar-drive routine used as the oracle for the near-straight case: it
 returns zero translation, and the test asserts the closed form does not (the control of the chord known
@@ -81,7 +81,7 @@ the ground (torque per unit force grows with r); the test asserts both numbers a
 - `zoo_diff_drive` (generated): identity, morphology, symmetry, stages, known answers, controls.
 - `zoo_diff_drive_chord_half_turn`, `zoo_diff_drive_near_straight_not_zero`.
 - `zoo_diff_drive_chord_composes`: two half steps equal one full step to 10⁻¹² (constant twist).
-- `zoo_diff_drive_threshold_rows`: 0.036 m, 0.75; 0.0406940 m, 0.645937.
+- `zoo_diff_drive_threshold_rows`: 0.036 m, 0.75; 0.0406940 m, 0.645936.
 - `zoo_diff_drive_sideways_costs`.
 
 ### End-to-end script and logging

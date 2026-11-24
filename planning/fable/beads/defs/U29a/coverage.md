@@ -119,7 +119,8 @@ Prerequisites named in `needs` for which this unit could not name a seed key (th
 11. **§37.6 the path jail as a shared facility at M1** (BD-258 is M3; GATE-SAFE-10 is M1): needed by BD-097,
     N29a-02.
 12. **§38.9 the conformance-only fault hook of the step** (one unit in the last place on a named stage
-    output): U27a's N27a-09 defines one; needed by BD-204, N29a-21. One shared hook should exist.
+    output): U27a's N27a-09 defines one; needed by BD-204, N29a-21. One shared hook should exist. (Integration
+    pass: the shared hook is now bead N29a-25, on which BD-204, BD-206, N29a-21 and N27a-09 depend.)
 13. **§32.7 / §32.8 surface rules** (atomic idempotency binding, authenticated cursors, `u64str`): BD-211
     depends on BD-210; BD-210 defines the job row and the unique index that BD-211 completes.
 14. **§20, §22, §23, §15, §19 snapshot sections**: each owner writes its section into the container of

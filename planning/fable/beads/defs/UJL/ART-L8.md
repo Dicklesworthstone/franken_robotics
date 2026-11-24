@@ -1,14 +1,14 @@
 ---
 key: "ART-L8"
-title: "golden fixture L.8: the fixed-n study plan `frob.plan/1`, its exact pre-analysis, a consistent result and CLI script"
+title: "golden fixture L.8: the fixed-n study plan `frob.plan/1`, exact pre-analysis, a consistent result, CLI script"
 type: "task"
 priority: 2
 milestone: "M3"
 labels: ["m3", "arena", "atelier", "frob-arena", "frob-opt", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-25"
-deps: ["BD-124", "BD-262", "ART-L1", "ART-L3", "NJL-07", "STD-E2E"]
-needs: ["§24.10, §24.12: the rule `paired-clopper-pearson/1` and the exact enumerator of reachable verdicts behind `eval.preanalyze` (drafted by unit U24b as N24b-06)", "§28.6: `study.compare` and the comparison record with five dispositions (drafted by unit U28a as N28a-21)"]
-related: ["N28a-21", "N24b-06", "N33b-19", "N24b-14", "N24b-21", "BD-219", "BD-263", "BD-211", "ART-L9", "NJL-09"]
+deps: ["ART-L1", "ART-L3", "BD-124", "BD-262", "N24b-06", "N28a-21", "N32a-13", "NJL-07", "NJLx-02", "STD-E2E"]
+needs: []
+related: ["ART-L9", "BD-211", "BD-219", "BD-263", "GB-30", "N24b-14", "N24b-21", "N33b-19", "NJL-09"]
 gates: []
 plan_refs: ["Appendix L.8", "§32.6.1", "§24.12", "§24.10", "§28.6", "§32.9", "§35"]
 ---
@@ -42,7 +42,8 @@ In: the specimen and resolved plan; the rule `paired-clopper-pearson/1`; the pre
 is read; the estimate against the budget; a result consistent with the plan, with its interval and verdict;
 refusals on planted mutations; the script. Out: the two study types and the plan verb (BD-124), the rule's
 enumerator (N24b-06), paired comparison on devices and the comparison record (BD-262, N28a-21), promotion to
-the referee (BD-263); the layers and the identity map (NJL-07).
+the referee (BD-263); the submission checks (`FROB-REF-809`) and the pair-accounting constructor (N32a-13); the
+layers and the identity map (NJL-07).
 
 ## Technical approach
 
@@ -135,8 +136,10 @@ development result. It is not a qualification.
       interval [−0.0662, +0.0662]; first tie at n = 86; least b at a = 0 equal to 15.
 - [ ] A manifest that names "tie" among its verdicts is refused with `FROB-REF-532`, exit 3; one that declares
       both study types with `FROB-REF-552`; one whose arms have different determinism classes, or an
-      uncontrolled class, is refused for paired statistics; a submit of a superseded plan with `FROB-REF-809`,
-      exit 7; a submit without a key with `FROB-REF-805`.
+      uncontrolled class, with `FROB-REF-533` (the paired-study refusal of `study.plan`: by the layer rule of
+      N24-REF and N28-REF the Arena study verbs answer 552, 532 and 533 and never their Atelier twins 553, 555 and
+      542); a submit of an unknown plan address, or of a plan bound to a scene pack retired after planning, with
+      `FROB-REF-809`, exit 7, nothing charged; a submit without a key with `FROB-REF-805`.
 - [ ] Under a budget of 100 GPU-seconds an estimate with upper end 121 is refused with `FROB-REF-701`, exit 4,
       the estimate attached; under 150 it is admitted. (The check uses the fixture's interval injected through
       the calibration fixture; real estimates are `illustrative`.)
@@ -163,11 +166,13 @@ enumerator and rule; exact integer counts; interval endpoints rounded outward):
 - `l8_result_19_2`: [L_b, U_b] = [0.1764, 0.4418], [L_a, U_a] = [0.0026, 0.1210]; difference
   [0.0554, 0.4392]; verdict promote.
 - `l8_pair_accounting`: 19 + 2 + 40 + 3 + 0 = 64; a comparison record whose five counts do not sum to the
-  planned pairs is rejected.
+  planned pairs is rejected by the `PairCounts` constructor of N32a-13 as an integrity fault (`FROB-REF-990`,
+  exit 9), never printed.
 - `l8_admission_uses_upper_end`: interval [78, 121] against budgets 150 (admit) and 100 (refuse, code 701).
 - `l8_plan_address_is_content_address`: reordering manifest keys keeps the address; changing n to 96 changes
   it.
-- `l8_refusal_<code>` for 532, 552, 805, 809.
+- `l8_refusal_<code>` for 532, 533, 552, 805, 809; `l8_no_atelier_twin`: none of the planted plan requests is
+  answered 542, 553 or 555 (the codes of the comparison layer).
 - `l8_no_early_stop_on_evalue`: a fixed-n study offered an e-process stop is refused; it stops early only when
   every completion of the unresolved pairs gives the same verdict (for example b = 60, a = 0 after 60 pairs:
   the worst completion, four A-only pairs, still promotes).
@@ -177,13 +182,17 @@ enumerator and rule; exact integer counts; interval endpoints rounded outward):
 `scripts/e2e/art_l8_plan.sh` (header: `bead=ART-L8 milestone=M3 labels=golden,appendix-l,arena,
 verb:study.plan,verb:study.submit,verb:study.status,verb:study.compare,verb:eval.preanalyze seed=1
 needs=cpu,cuda,frobd plants=tie-requested,counts-off`). Steps: (1) create design A from artifact L.1's fixture
-and design B by `frob design edit … set-param /limbs/of/of/chain/3/foot/region/sphere 0.030m`; create the task
+and design B by `frob design edit quad-tray set-param /limbs/of/of/chain/3/foot/region/sphere 0.030m
+--expected-parent <A's DesignId> --key l8-edit --json` (a `mutate` verb: key and expected parent; the pointer is
+the foot-radius lever of artifact L.1, and 0.030 m lies in its budget [0.018, 0.032] m); create the task
 from artifact L.3's fixture; (2) `frob eval preanalyze --rule paired-clopper-pearson/1 --n 64 --margin 0.05
 --level 0.05 --json`, assert the table with `e2e_assert_num` (exact); (3) `frob study plan manifest.json --key
 l8-plan --json`, compare with the resolved fixture field by field and assert that no run was created;
 (4) repeat step (3) and assert `idempotent_replay` or an identical address; (5) the refusals through
-`e2e_expect_refusal` (532 for the tie request, 552, 805, 809); (6) `frob study submit <plan> --key l8-sub
---sync-wait-ms 5000 --json`, follow the job with `frob job wait`; (7) `frob study compare <study> --json`,
+`e2e_expect_refusal` (532 for the tie request, 533 for arms in different determinism classes, 552 for both
+study types, 805 for a keyless submit, 809 for a submit of an unknown plan address); (6) `frob study submit <plan> --key l8-sub
+--sync-wait-ms 5000 --json`, follow the job with `frob job wait`, then `frob study status <study> --json` (assert complete, with the
+planned pair count); (7) `frob study compare <study> --json`,
 assert the pair accounting, that the verdict equals the rule applied to the reported counts (recomputed by the
 script's helper), and the label `provisional`; (8) `frob-golden check --artifact L8`. Plants: `tie-requested`
 must be refused; `counts-off` alters one count in the comparison record and must fail the accounting
@@ -202,10 +211,10 @@ pre-analysis and plan assertions are unchanged, and the log says that nothing is
   accounting: a_only + b_only + both + neither + unscored = planned).
 - Known answer of this bead (recomputed for it): the interval [0.0554, 0.4392] at (a, b) = (2, 19). It has no
   number in the known-answer suite; the unit's coverage file lists it.
-- Counterexample kept alive: stopping a fixed-n study when its running test first looks good. An exact
+- Counterexample kept alive (CX-266, BD-124): stopping a fixed-n study when its running test first looks good. An exact
   one-sided sign test at nominal level 5%, looked at after every pair, falsely rejects with probability
   13/256 = 5.08% after 8 looks, 8.76% after 16, 12.9% after 32 and 17.4% after 64.
-- Negative controls: the two plants; the four refusals; a planner that omits the pre-analysis must be refused.
+- Negative controls: the two plants; the five refusals; a planner that omits the pre-analysis must be refused.
 - Metamorphic relation: swapping the labels A and B swaps promote and inferior counts and negates the
   interval.
 - Determinism lanes: the plan and the pre-analysis twice on one machine, in debug and release, on Linux and
@@ -215,8 +224,10 @@ pre-analysis and plan assertions are unchanged, and the log says that nothing is
 
 - Two refusal codes describe an unreachable verdict: `FROB-REF-532` (a fixed-n study has no pre-analysis, or
   names a verdict it cannot reach) in the evaluation chapter and `FROB-REF-555` (a declared verdict set that
-  contains an unreachable verdict) in the studio chapter. The artifact names 532, and the script asserts 532;
-  which layer raises which is recorded for the lead in the unit's coverage file.
+  contains an unreachable verdict) in the studio chapter. The layer rule of N24-REF and N28-REF settles which
+  verb answers which: `study.plan`, `study.submit` and `eval.preanalyze` admit through `study::admit` and answer
+  532 (and 552, 533); `eval.compare` and `study.compare` admit through `pairing::admit` and answer 555 (and 553,
+  542). The artifact names 532, and the script asserts 532 and 533 on `study.plan`.
 - The field spellings of `frob.plan/1` are proposals; when the plan bead fixes others, the specimen is
   re-entered once from the amended artifact bead.
 - The study itself costs GPU time (about 96 GPU-seconds in the story) and needs the kitchen scene family and

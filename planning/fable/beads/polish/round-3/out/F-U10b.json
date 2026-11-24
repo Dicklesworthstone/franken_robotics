@@ -1,0 +1,259 @@
+{
+ "round": 3,
+ "slice": "F-U10b",
+ "reviewed": 28,
+ "changed": [
+  {
+   "bead": "N10b-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "BD-025 defines no cargo feature `controls`: the mutants of laws_c16_labels are under frob-dyn's `conformance` feature (enabled by the umbrella gauntlet-mutations), the acceptance and script read `--features conformance`, and the order-of-work fallback says the frob-conformance form uses `--features gauntlet-mutations`. FROB-REF-263's five ranked repairs and payload kept (N10a-04 and N16b-24 state the same; a request goes to N12-REF)."
+  },
+  {
+   "bead": "N10b-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "The unnumbered '45/324 adopted row' is KA-838 of N38-KA (a dependency): named it, kept its check inside the law suite (s17_strata_obs_subgroup) and noted that its verb binding is N38b-40's, so the script does not wait on a non-dependency. KA-096's first registered control (mechanical group in place of the observation subgroup) cannot fail KA-096, whose truth 27 is the count under C2 x C2; replaced it with an orbit sum that omits the diagonal exchange's fixed points, (81 + 2*9)/4 = 24.75 (N10-KA2's suggestion), beside 81/4 = 20.25 (counts re-enumerated: 27, 45, 648). Added dep BD-027 (doctor and prove list). `controls` feature replaced by frob-gait's `conformance`."
+  },
+  {
+   "bead": "N10b-04",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied: `--test g1`/`--test g0` replaced by g1_known_answers/g0_laws with FROB_TEST_SEED=1704 (convention 1). Added dep BD-022 (doctor). Mutants under gauntlet-mutations, not the non-existent `controls` feature."
+  },
+  {
+   "bead": "N10b-06",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "KA-107's control number is allocated by N38b-05's seeding tool from the row's control cell, not 'at registration by N38b-04' (the runner). Added dep BD-022 (doctor)."
+  },
+  {
+   "bead": "N10b-07",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request applied: the grade-3 reuse pilot is cited as PILOT-REUSE-01 (N38a-09's grammar rejects PILOT-REUSE-GRADE3; a request asks N28a-23 to adopt exactly this id). The script called `mission revalidate` 'when the verb exists', but the verb answers only from M3 (N25a-16), after this M1 pilot (convention 7): it now reads the table through the harness's reference reader. `mission synthesize` (a run verb) now carries one distinct --key per amendment, with -r2 keys for the determinism run (convention 5)."
+  },
+  {
+   "bead": "N10b-08",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied: `--test g1` -> g1_known_answers with FROB_TEST_SEED=1908. Added dep BD-022 (doctor). Mutants under gauntlet-mutations. Grid counts 344/217/9, the 17 cells kept under the third gain and 1/65 m recomputed."
+  },
+  {
+   "bead": "N10b-09",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied: `--test g1` -> g1_known_answers with FROB_TEST_SEED=1909. Added dep BD-022 (doctor). Mutants under gauntlet-mutations. Counts 720, 8, 90 recomputed."
+  },
+  {
+   "bead": "N10b-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Both requests applied. S37: the race step was already N20a-09's cargo command; it now carries FROB_TEST_SEED=1910 (convention 1), and the script states that pilots.toml and gates.toml are read read-only. H-owners-1: the record check `--test g0 -- pilots` (not a target) is N38a-09's `cargo test -p frob-conformance --test pilot_register`, as N10b-03 uses. Evidence class `Tested` -> `Estimated`: arm B and the evaluator are a standalone program in tools/pilots/c19, which N00-26's creation rule does not let create Tested (the same wording as N10b-03); the log's evidence block now carries the seed."
+  },
+  {
+   "bead": "N10b-11",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Found: `train.family` lists `--seed` only from M8 (N23bx-01, N23bx-02), yet this M4 pilot trains three seeds per arm, and three calls differing only in key would train one run three times. Added an OPEN item (owner VERBS-train with BD-320; request filed) with a fail-closed default: the pilot checks distinct training seeds in each `trained_on` record and records `underpowered` otherwise. eval.run's policy form (--seeds) and its implementers N23b-09/N24c-04 are reached."
+  },
+  {
+   "bead": "N10b-12",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Added dep BD-022 (doctor). `controls` feature replaced by frob-phylum's `conformance`, with the frob-conformance fallback reading gauntlet-mutations. KA-127 re-enumerated: 735,471 placements, 24,546 classes (largest 214, 3,237 singletons)."
+  },
+  {
+   "bead": "N10b-14",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Added dep BD-022 (doctor). `controls` feature replaced by frob-learn's `conformance`. Its KA-129/KA-130 tolerances and controls close N10-KA2's open obligations for C-23 (request filed)."
+  },
+  {
+   "bead": "N10b-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 8: arms T and R called `train start --init raw:<...>`, which the registry lists as BD-322's extension, and BD-322 depends on this pilot (graph path BD-322 -> N10b-15), so no dependency can fix it. Fail-closed default written: the product form is logged `pending` and all three arms run on the development-oracle host through frob-launch (same learner across arms, step 4 amended); request to VERBS-train to place `--init raw:` with a bead this pilot can depend on."
+  },
+  {
+   "bead": "N10b-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The scene arms named `sim run`, `run fork` and `telemetry failures` with no inputs and no keys. Now concrete: uniform arm `sim run ... --key c27-u-<rep>`; splitting arm `run fork <run> --world <w> --at <tick> --children <plan> --key c27-s-<rep>-l<level>-<w>` with every child in stream mode `rekey-disturbances` (N27a-01; BD-205's default `shared` makes copies), the shared-stream plant with its own key (convention 5); fixture A by `FROB_TEST_SEED=<key> cargo test --test pilot_c27`; the record checked by pilot_register. FROB-REF-569 and FROB-REF-560 are stated as the harness's refusals under the product codes, since nemesis.search (BD-277, which depends on this pilot) and nemesis.bound (BD-276, not a dependency) cannot be called. Walk level probabilities recomputed (0.4, 0.3077, 0.1649, 0.03755, 0.1973)."
+  },
+  {
+   "bead": "N10b-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Check 4 named the non-existent feature `controls`: it now names the suite crate's `conformance` feature, or gauntlet-mutations in frob-conformance. Check 5's per-row Gauntlet runs now use convention 1's form with a fixed printed seed (FROB_TEST_SEED=1019) and run their controls under gauntlet-mutations. Map, totals (50/26/10/6/11; 49/25/10 at M4) and the KA partition (6,5,5,8,3,4,5,3,1,4,2,4) verified against the slice's beads."
+  },
+  {
+   "bead": "N10bx-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`mission synthesize` is a run verb (VERBS-mission): the acceptance command and the script now carry distinct keys per form (sill-base, sill-a, sill-b, sill-unbound, sill-omitted; -r2 for the determinism lane). The margin was called '4.4% of the store': 0.04176 J is 4.4% of the required work and 4.6% of the store. All other numbers recomputed (2943/3125 J, 261/6250 J, 103/12500 J, 5/436 m, 0.8829 J)."
+  },
+  {
+   "bead": "SPEC-C-16",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "H-ka-1 request (set KA-094's tolerance and KA-096's control) applied in the form that fits: both cells are already set by the part bead N10b-02, so the contract records who sets KA-094..KA-097 and the values; a request goes to N10-KA2 to mark them '(set: N10b-02)'. Added dep BD-027 (doctor, prove list). `controls` feature replaced by the owning crates' `conformance`."
+  },
+  {
+   "bead": "SPEC-C-17",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied: `--test g1` -> g1_known_answers with FROB_TEST_SEED=1700. Added dep BD-022 (doctor). Mutants under gauntlet-mutations."
+  },
+  {
+   "bead": "SPEC-C-18",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "Request applied: `--test g1`/`--test g0` -> g1_known_answers/g0_laws with FROB_TEST_SEED=1800. KA-224's control now cites N38b-30's (N12-KA's assignment) and names N12-05 as the auditor-site binder; KA-107's open control is met by N10b-06, now stated. Added dep BD-022. Mutants under gauntlet-mutations. Docking and stance moves recomputed."
+  },
+  {
+   "bead": "SPEC-C-19",
+   "kinds": [
+    "complete",
+    "deps",
+    "correct"
+   ],
+   "what": "KA-115's open control is met by the part bead N10b-09 (one conflicting pair declared independent: 4 classes where 8 are true); the contract names the part beads that bind KA-108..111 and KA-114..115. Added dep BD-027 (doctor, prove list). Mutants under gauntlet-mutations."
+  },
+  {
+   "bead": "SPEC-C-20",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Script's G1 run in convention 1's form (FROB_TEST_SEED=2000). Added dep BD-022 (doctor). `controls` feature replaced by frob-sense's `conformance`."
+  },
+  {
+   "bead": "SPEC-C-21",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied: `--test g1` -> g1_known_answers and `--test g3 -- MR-06` -> g3_metamorphic (with KA-122, the row's G3 tier), both with FROB_TEST_SEED=2100. Added dep BD-027 (prove list T-09). `controls` feature replaced by frob-model's `conformance`."
+  },
+  {
+   "bead": "SPEC-C-22",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied: `--test g1` -> g1_known_answers with FROB_TEST_SEED=2200. Added dep BD-027 (prove list T-24). `controls` feature replaced by frob-algebra's `conformance`. Counts 86,185, 500,500, 92, 430, 130 and (k^2+k)/2 checked."
+  },
+  {
+   "bead": "SPEC-C-23",
+   "kinds": [
+    "complete",
+    "deps",
+    "correct"
+   ],
+   "what": "N10-KA2 lists KA-129/KA-130 as this bead's open obligations; the contract now records that the part bead N10b-14 sets both tolerances and registers both controls (request to N10-KA2 to mark them). Added dep BD-022 (doctor). `controls` feature replaced by frob-learn's `conformance`."
+  },
+  {
+   "bead": "SPEC-C-24",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Added dep BD-022 (doctor). Mutants under frob-learn's `conformance` feature beside moonshot-ga-policy (the acceptance said 'with `controls` added')."
+  },
+  {
+   "bead": "SPEC-C-25",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Added dep BD-022 (doctor). `controls` feature replaced by frob-arena's `conformance`. Saving table, variance ratio 0.198 and the MLMC allocation recomputed."
+  },
+  {
+   "bead": "SPEC-C-26",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Added dep BD-022 (doctor). `controls` feature replaced by frob-opt's `conformance`. Index 38, n >= 19/9, Beta(38,2) 5% point 0.884, ladder costs (40.5 h, 6.1 h, 2.0 h, 57 min), tau and recall cases recomputed."
+  },
+  {
+   "bead": "SPEC-C-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`controls` feature replaced by frob-nemesis's `conformance`. KA-138 counts (29,956; 299,572; 2,995,731; 76,959), the mixture bound, the walk value 1.504e-4, (2/3)^19, the Gaussian tail and CV 7.3% recomputed."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N10-KA2",
+   "what": "(from SPEC-C-16) Mark KA-094's tolerance and KA-096's control '(set: N10b-02)' (KA-094: exact in Q on the host, relative Frobenius residual <= 1e-9 in f64 on the referee; KA-096: 81/4 = 20.25 and the orbit sum without the diagonal exchange's fixed points, 24.75), KA-107's control '(set: N10b-06)' (`up` with 'some loop' for 'every loop'), KA-115's control '(set: N10b-09)' (one conflicting pair declared independent: 4 classes where 8 are true), and KA-129/KA-130 '(set: N10b-14)' (tolerances exact: bit equality of the first action, bit-equal initializations on matched tokens; controls: a transport that re-initializes every token's encoder, transport by index instead of by matched token). Remove them from the open obligations and update the 'Set so far' counts; the owner named for KA-129/KA-130 is N10b-14, not SPEC-C-23."
+  },
+  {
+   "bead": "N10-KA2",
+   "what": "(from SPEC-C-17) List the sites of KA-094, KA-095, KA-097 (host, then referee in BD-334 or the mechanism bead), KA-098, KA-101 (host, then auditor in BD-133) and KA-102 (host, then auditor in BD-136) as both, host first, as the note already does for KA-092 and KA-093: the owning beads run them on the host through the tier targets and the tier column currently names only the later site."
+  },
+  {
+   "bead": "N12-REF",
+   "what": "(from N10b-01) The FROB-REF-263 row should carry the five ranked repairs that N10b-01, N10a-04 and N16b-24 all state (one-sided derivative; finite-difference derivative; smoothed surrogate; move the nominal state or the section; derivative-free search) and the payload fields `cause`, nu/nu_min or min_margin/g, the event keys with their time gap, and `t_scale: \"missing\"`. The plan does not fix the list, three beads agree, and N10b-19's check 12 reads the row."
+  },
+  {
+   "bead": "N28a-23",
+   "what": "(from N10b-07) Adopt exactly the pilot id PILOT-REUSE-01 for the grade-3 reuse pilot (N38a-09's grammar rejects PILOT-REUSE-GRADE3); N10b-07 now cites PILOT-REUSE-01."
+  },
+  {
+   "bead": "N38-KA",
+   "what": "(from N10b-02) Name KA-838's derivation file docs/derivations/contact-strata.md, the file KA-096 uses for the same four-foot fixture, with a `same_as` link to KA-096, so that check 9 of N10b-19 (one fixture identity per physical case) sees one fixture."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "(from N10b-15) `train.start --init raw:<policy>` is listed as BD-322's extension, but N10b-15 (the pilot that gates BD-322, graph edge BD-322 -> N10b-15) runs its arms T and R through it. Place the option with a bead before the pilot (BD-198 or N23a-14 at M2: it is a plain warm start, not the inheritance mechanism), or state that the pilot runs only on the development oracle; until then N10b-15 runs all arms through frob-launch."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "(from N10b-11) State how the training seed of `train.family` is set before M8: the row lists `--seed` only from N23bx-01/N23bx-02 (M8), yet BD-321 and the M4 pilot N10b-11 train three seeds per arm. Either add `--seed` to BD-320's M4 inputs or name the seed source recorded in `trained_on`; N10b-11 fails closed to `underpowered` until then."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "Unchanged: N10b-03. Slice-wide, BD-025 defines no `controls` feature, so 20 beads now name gauntlet-mutations (frob-conformance suites) or the owning crate's `conformance` feature; every doctor and prove-list caller reaches BD-022 and BD-027, graph_check.py reports no cycle, and all 28 files parse."
+}

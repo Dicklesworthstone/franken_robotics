@@ -1,0 +1,75 @@
+{
+ "round": 4,
+ "slice": "F-U12-2",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "N12-29",
+   "kinds": ["request", "deadlock"],
+   "what": "N33bx-01 moved from deps to related. Its out-of-process entry is upstream item FD-FSIM-42 (P3). Through this edge every exit review from M4 on waited on that item, which BD-037's lint upstream_priority_never_blocks and N41-16 check 3(d) report. N33bx-01 also closes when the M4 exit review starts at the latest, while that review waits on N12-29 through it, so without the upstream entry the M4 exit could not start. Step 2 now says the fs-checker arm runs only once the fs-checker row of crates/frob-conformance/registry/oracles.toml has admission.status = \"admitted\". Until then the arm is recorded `not run`, and a later run amends the record only if the arm finds the auditor too permissive (N33bx-01's switch-over)."
+  },
+  {
+   "bead": "N12-30",
+   "kinds": ["broken"],
+   "what": "The acceptance ran `kill_gate_records.sh --live` without `--ids`, which N40-03 requires, so the check could not be run as written. It is now `scripts/e2e/kill_gate_records.sh --live --ids <file>` with KILL-FAMILYCERT's identifier, read-only, after the ADR is written. N12-31 uses the same form."
+  },
+  {
+   "bead": "N12-33",
+   "kinds": ["request", "plan"],
+   "what": "Added CARD-T-01, CARD-T-03 and CARD-T-04 to deps. Steps 3 and 8 assert those cards' registry rows and write lines under their keys, so without the edges the script could be scheduled before the rows exist and fail at step 3. Checked that there is no path back from any of the three cards."
+  },
+  {
+   "bead": "N12-34",
+   "kinds": ["request", "convention", "deadlock"],
+   "what": "Step 2 now runs N12-09's lemma_independence.sh and N12-10's lemma_auditor_oracles.sh as stages, as both owners say it does. It used to re-read their checks, so the independence facts the gate cites could drift from the owners' scripts (convention 11). The metric lines the gate cites are copied from the stage logs. The acceptance line 'the gate is re-recorded at each later milestone' is replaced: the bead closes on the M1 record, and later parts are runs of the unchanged script recorded with `record_gate --part <milestone>`, which are not conditions of its close. As it stood, the bead could not close before the M8 kinds landed, while BD-147 (the M1 exit) waits on it through N38b-11. The Scope line is updated to match."
+  },
+  {
+   "bead": "N12-36",
+   "kinds": ["request", "convention"],
+   "what": "Steps 2 to 4 and 6 re-implemented BD-379's lemma_coverage_measure.sh (certify, check-generated, the coverage listing, the env -i replay, the mutant control). The gate could therefore be measured by code that drifts from the owner's, and recorded from a receipt BD-379 never wrote. Step 2 now runs BD-379's script as a stage, and GATE-LEMMA-01 is recorded from its receipt by this bead; the script writes no gate row (convention 9). This bead keeps its own checks: certify.json statuses, the fraction recomputed from the rows and from the receipt, a replay by an auditor built alone, hash binding, the control's size and family coverage read from the stage, `frob prove verify` on the forged bundles, the relabel not counted, the randomized tests (still step 7, as N12-21 cites), K-cay-step, repeatability, the fallback read-out and the card lines. Step numbers are unchanged."
+  },
+  {
+   "bead": "N12-37",
+   "kinds": ["request", "broken"],
+   "what": "Steps 2 to 4 sealed capsules without N12-24's check-binding. A capsule of a weakened theorem would have counted toward the gate, and the binding controls of step 8 had no step that could reject them. Step 2 now runs BD-381's lemma_lean_seal.sh as a stage: lake build, fln check-olean, fln seal-capsule, check-binding (exit 3 discards the capsule, which is not counted), fln verify-capsule. Further cards and the per-card stage go through the same five commands. Also: `check-binding` is added to the card-line stages, the repeat seal includes the binding check, and the script writes no gate row (convention 9). The empty containers, the bundle check, the twelve controls and the self-tests are kept."
+  },
+  {
+   "bead": "N12-38",
+   "kinds": ["request", "deadlock", "convention"],
+   "what": "Added BD-382's lemma_reflect_pilot.sh as stage 1a. The 60 s assertion made the script fail whenever GATE-LEMMA-05 failed, so this bead could only close on a pass, while the KILL-REFLECT decision (N12-32) depends on it and could never fire (convention 10). Now a soundness theorem that does not seal and a specimen over 60 s are measured values, logged as metrics. The script exits 0 when the measurement is complete, the gate is recorded `pass` or `fail`, and the bead closes when the record is on file. The slow-specimen self-test now expects a completed run whose receipt shows `fail`. The C13 finding is not acted on (see notes)."
+  },
+  {
+   "bead": "N12-52",
+   "kinds": ["broken"],
+   "what": "Step (4) called `frob prove bundle` with a Proof claim on a subject. prove.bundle has no such form, since its claim sources name decidable claims only, and N12-52 does not depend on BD-133, so the step could not be written (convention 8). It now drives the guard through the example of N12-07, a dependency, with the form N12-07's own step uses: `cargo run -p frob-lemma --example not_decidable -- --subject clearance-lipschitz --class proved --json`, and the same with `--subject statistical-error-rate`."
+  },
+  {
+   "bead": "N12p2-02",
+   "kinds": ["convention"],
+   "what": "Three places narrated requests that the owners now carry: N21a-19 defines the `schedule` step, N21a-18 emits one per exchange, and N12-02's checker column names this bead. As written, the implementer would treat scheduled kernels as uncertifiable and N12-02 as still wrong. The text now states what is (convention 13), and keeps the rule that a trace omitting an exchange fails `rewrite.target-hash`."
+  },
+  {
+   "bead": "N12x-04",
+   "kinds": ["request", "broken"],
+   "what": "The pending verb stage cited `frob shield fit fixture:free-slider …` in step 5 of gate_shield_07.sh. That form does not exist: shield.fit takes a design file with --controller and --tasks. The fit lives in N22c-44's shield_sampled_damping.sh, so the stage now names that script and its exact command, with N22c-46 running it as a stage, and logs it as `pending(N22c-44)`."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-382",
+   "what": "Closing rule (acceptance): 'closes when both reflectors are sealed, both specimens are proved and the measurements are on file' can only be met if GATE-LEMMA-05 passes, while N12-38 and the KILL-REFLECT decision N12-32 depend on this bead: under convention 10 the kill can never fire. Make it close when the measurements are on file, whichever way they fall. A soundness theorem that does not seal, a closure that meets a blocked module and a specimen over 60 s are measured values. lemma_reflect_pilot.sh should complete and log them as measurements rather than fail. Also, the e2e text says N12-38 'repeats the run'; N12-38 now runs lemma_reflect_pilot.sh as its stage 1a before its own measurement."
+  },
+  {
+   "bead": "BD-379",
+   "what": "The e2e text says lemma_coverage.sh (N12-36) 'runs the same measurement over the whole library … and records GATE-LEMMA-01 from its receipt'. N12-36 now runs lemma_coverage_measure.sh as its step-2 stage and records GATE-LEMMA-01 from this script's receipt. State that, so the two beads agree on which receipt the gate cites."
+  },
+  {
+   "bead": "BD-381",
+   "what": "The e2e text says lemma_lean_capsule.sh (N12-37) 'repeats the run as the GATE-LEMMA-02 measurement'. N12-37 now runs lemma_lean_seal.sh as its step-2 stage for T-15, T-26 and T-12, and records the gate from its own run's receipt, which cites this one. State that."
+  }
+ ],
+ "unchanged": 14,
+ "notes": "Unchanged: N12-19, N12-20, N12-21, N12-22, N12-23, N12-24, N12-28, N12-32, N12-35, N12p1-01, N12p2-01, N12x-03, N12x-06, N12x-08. N12-32 needs no edit: its deadlock (BD-382 and N12-38 closing only on a pass) is removed by the N12-38 edit and the BD-382 request. Rejected parts of the round-3 request to N12-34: (a) running the scripts of the checker beads N12-13 (lemma_kind_sample_coverage.sh), N12-14 (lemma_kinds_transport.sh), N12-16 (lemma_kinds_enclosure.sh) and N12-17 (lemma_kinds_energy_product.sh) as stages. Those beads are M3/M4 and N12-34 is M1, so it would have to depend on later milestones. N12-13 and N12-17 already reach N12-34 transitively (through CARD-T-20), so the edges would make cycles (convention 7). (b) BD-132's lemma_kinds_m1.sh is not added as a stage. N12-34's per-file run over the pinned directory, with a binary built alone and run under env -i, is the gate's own measurement, and N38b-11 reuses its step functions; BD-132's script checks the same specimens by another path and adds nothing the gate cites. (c) Step 10 already records through record_gate (convention 9), so nothing was needed there. N12-38's C13 finding is a false alarm: 'a step list that is empty until N12-28 adds to it' describes the script's phase-2 hook (convention 7), not a pending request. Larger issues, not edited: (1) N12-13, N12-14, N12-16 and N12-17 say their M3/M4 values of GATE-LEMMA-03 are 'recorded by N12-34's re-run', but N12-34 closes at M1. No bead at M3, M4 or M8 owns running lemma_auditor_mutations.sh and recording the `--part`. The gate register row should name that recorder (convention 9), for example each milestone's exit review or the latest checker bead of the milestone. (2) N12-19, N12p1-01 and N12p2-01 have no end-to-end script of their own (convention 11): their specimens are run by N12-34's directory-driven script, yet their logging sections say lines carry `bead` = their own key, which N12-34's tagging (card keys, otherwise N12-34) does not write. Either give each an own script or have N12-34 tag lines by the checker bead of the kind. (3) N12p2-01's acceptance needs N12-34's script but has N12-34 only in related."
+}

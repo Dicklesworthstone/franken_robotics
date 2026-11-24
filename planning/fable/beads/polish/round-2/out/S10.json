@@ -1,0 +1,434 @@
+{
+ "round": 2,
+ "slice": "S10",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "N35-26",
+   "kinds": [
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "Rule 2 could pass on admission refusals alone without anything having run: each budgeted run verb now needs an admitted-then-stopped case (FROB-REF-702 after a committed chunk, wall ceiling 2 s on a slow fixture) and, if estimable, an admission case (701); '7xx' tightened to '70x' (72x/73x exit 5); unit test admission_only_fails_completeness; dep N32a-08 (the job engine's budget stop), N32a-15 related."
+  },
+  {
+   "bead": "N36-20",
+   "kinds": [
+    "users",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied the round-1 request: pilots on incumbent stacks are shell/Python programs that cannot construct an Admitted token, so the launch function run_admitted and its command frob-launch (frob-conformance) are specified: admit, process-group run under the class's limits with CUDA_VISIBLE_DEVICES restricted, occupancy measurement, settle and meter row; used by N36-29 at M0, the pilots and BD-216; acceptance, three unit tests and the e2e step rewritten to drive it; dep BD-025."
+  },
+  {
+   "bead": "N41-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 5 compared the test suite's counts with the conformance baseline 112 of 115; separated the suite (0 failed) from the 115 named server-mode conformance checks, in the procedure and the e2e metrics."
+  },
+  {
+   "bead": "NJL-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the round-1 request: a verb past first_milestone with no handler fails capability coverage unless it is in NJL-02's closed LATE_ROWS list, whose 724 answer satisfies the check until its bead's milestone. Added FROB-REF-761 to the run kind's appended codes (N36-20's admit_run raises it on every run verb, and RL-06's only-listed-codes check exempts only 990). Found: N37-REF's list rule requires 734 of every verb with a path argument and N37-03 sniffs every file argument (828), yet no verb row listed them for its file inputs; added a field rule: a param of kind artifact-input<F>, artifact-identity<F> or foreign-file appends 734 and 828 (the full list is a set; export-door codes stay in the exporting rows), with field_appended_codes extended. Stale RL-15 remark replaced (N32a-02 now says M2). Deps N32-REF, N35-REF (appended codes must resolve)."
+  },
+  {
+   "bead": "NJL-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Capability-level coverage: closed LATE_ROWS list in the harness (fourteen rows read from the cluster beads' Implemented-by lines: the four session verbs M0->BD-138 M1, ground.ingest, study.cancel, scene.import, scene.retrofit, shield.budget, shield.check, analyze.structure, foundry.size, foundry.loads, ground.excite) whose 724 answer is recorded late-724 until the bead's milestone; self-check of the list; contact.laws/probe and task.settle are not late (M1 handlers N18b-28, N18b-29, N24a-16). Found: about sixty registry examples in 26 clusters name objects by abbreviated identity (r:19e2, b3:61f0, d:7a3e, j:77c0), which no input schema accepts, so 'run the example verbatim' failed with 802; added the example-identities rule (fixtures/verbs/identities.toml with identity, kind, producer and milestone per row; substitution logged as example and resolved; j: handles resolve to a job submitted first; all-zero identity for an absent verb, example-unresolved for an implemented one; rows added by the bead that makes the example run; agreement with NJL-07's IDENTITIES.toml from M1; examples that name files run with fixtures/verbs/<cluster>/ as working directory). Acceptance and unit tests coverage_late_row, late_rows_closed, example_identities_substituted, example_unresolved, example_identities_agree."
+  },
+  {
+   "bead": "NJL-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Considerations: the late rows are NJL-02's closed LATE_ROWS list, the one place 724 past first_milestone is accepted."
+  },
+  {
+   "bead": "NJL-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The static-launch '(not served by this launch)' marks contradicted the byte equality with robot-docs; equality is now asserted on a full launch, and on a static launch after removing the marks (unit test extended)."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 for run (NJL-01's run kind) and names NJL-01's 734 and 828 for a param that accepts a path to a file; convention 3 maps 761 to exit 4; the refusal-table criterion and refusal_lists test now say the codes appended for kind and fields."
+  },
+  {
+   "bead": "VERBS-algebra",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 for run and names the 734/828 field codes; exit 4 covers 761; criterion and refusal_lists test cover codes appended by field."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 for run and names the 734/828 field codes; exit 4 covers 761; the analyze.structure note now says its 724 answer until BD-401 (M5) is accepted as a declared LATE_ROWS row of NJL-02; criterion and test cover codes appended by field."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "artifact.list example used --kind frobcert, which BD-097's seven kinds refuse with 802; now --kind certificate, with a note on the example forms (b3:61f0 is the L.9 certificate bundle root, substituted by NJL-02). Convention 2 appends 761 and names the 734/828 field codes; exit 4 covers 761; criterion and test cover codes appended by field."
+  },
+  {
+   "bead": "VERBS-contact",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 to the run codes (three run verbs) and names the 734/828 field codes; exit 4 covers 761; criterion and test cover codes appended by field."
+  },
+  {
+   "bead": "VERBS-control",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 to the run codes (three run verbs) and names the 734/828 field codes; exit 4 covers 761; criterion and test cover codes appended by field."
+  },
+  {
+   "bead": "VERBS-design",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "design.export lacked FROB-REF-816, the export door's first check (N37-18), now listed with a note on N37-REF's rule; design.import lacked 828 (N37-03's sniff of every file argument), now listed; refusal_lists test updated. Convention 2 appends 761 (design.bisect) and names the 734/828 field codes; exit 4 covers 761. The round-1 design.edit request (BD-058's precondition codes without 109, the symmetry values, the foot.radius selector) was already applied; checked against BD-058."
+  },
+  {
+   "bead": "VERBS-eval",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 to the run codes (six run verbs) and names the 734/828 field codes; exit 4 covers 761; criterion and test cover codes appended by field."
+  },
+  {
+   "bead": "VERBS-evidence",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 for run and names the 734/828 field codes; exit 4 covers 761; criterion and test cover codes appended by field."
+  },
+  {
+   "bead": "VERBS-explain",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 for run and gains the field-driven sentence NJL-01 defines (key_optional, estimable, 790, 891 to 893, 734/828); exit 4 covers 761; criterion and test cover codes appended by field; deps NJL-04 (alias lint the criteria run) and NJL-05 (the staging rule convention 4 cites)."
+  },
+  {
+   "bead": "VERBS-ground",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "ground.ingest lacked 828 and 832 (an importer: N37-03's sniff and the reader's refusal); ground.kit writes a kit outside the store but listed none of the export door's codes: now 816, 731, 733, 734 and exports = true (899 stays the earlier lineage check). The per-verb refusal paragraph said 731 and 733 pass through unlisted, which RL-06's only-listed-codes check forbids; rewritten. ground.ingest and ground.excite now cite NJL-02's LATE_ROWS for their 724 answer until M5. Conventions: 761, the field sentence with 734/828, exit 4; refusal_lists test lists updated; criterion covers field codes; dep NJL-04."
+  },
+  {
+   "bead": "VERBS-mission",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 for run and gains NJL-01's field-driven sentence with 734/828; exit 4 covers 761; criterion and test cover codes appended by field; deps NJL-04, NJL-05."
+  },
+  {
+   "bead": "VERBS-module",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Convention 2 appends 761 for run and gains NJL-01's field-driven sentence with 734/828; exit 4 covers 761; criterion and test cover codes appended by field; deps NJL-04, NJL-05."
+  },
+  {
+   "bead": "VERBS-operator",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Convention 4 said each row's tool is added to its task-cluster tables in the same change, but at M0 no [[task_cluster]] table exists (NJL-05 declares them at M1 and seats M0 rows then); rewritten for M0. Convention 2 appends 761 and gains the field-driven sentence with 734/828; exit 4 covers 761; criterion and test cover codes appended by field; dep NJL-04."
+  },
+  {
+   "bead": "VERBS-prove",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the request from N24b-19 after checking it: prove.bundle gains the receipt form (--receipt, optional --mission, M3), the campaign section of .frobcert and 845, with 'Extended by: N24b-19'; the note says the receipt form answers from M3 and other claim kinds give 724 until M5. prove.bundle writes --out outside the store but listed no export-door codes: now 816, 731, 733, 734 and exports = true, in the block, the TOML entry and refusal_lists. Convention 4 rewritten for M0 staging; Convention 2 gains 761 and the field sentence with 734/828; exit 4 covers 761; dep NJL-04."
+  },
+  {
+   "bead": "VERBS-run",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "run.export outputs now carry the authorization block with the three no-authorization flags (N29a-02) and the row and its TOML entry set exports = true (N32a-02's bool: the envelope carries the flags); refusal_lists says run.export alone has it. Convention 2 gains 761 and the field sentence with 734/828; exit 4 covers 761; criterion covers field codes; deps NJL-04, NJL-05."
+  },
+  {
+   "bead": "VERBS-session",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "The note now says the four session verbs are NJL-02 LATE_ROWS (registered M0, answered from M1 by BD-138; an M1 build without BD-138 fails), and the closing rule names BD-022 at M0 and BD-137 at M1 when the rows leave LATE_ROWS. Convention 4 rewritten for M0 staging; Convention 2 gains 761 and the field sentence with 734/828; exit 4 covers 761; criterion and test cover field codes; dep NJL-04."
+  },
+  {
+   "bead": "VERBS-sim",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the requests from BD-160 and BD-200 after checking both: sim.run gains --task with its randomization plan compiled at admission and the randomization output block; the operator-only workers (1 to 512) and tile_worlds (power of two, 1 to 1,024, default 32), batch-cpu only, else 802, outside every identity, echoed in the receipt; --resolved-out <file> (JSON lines, outside every identity, 734 for a path outside the export root); refusals 103 and 572 at admission with zero worlds, and the worded randomize-no-interval (proposed 571, N23bx-03) entering the row when registered; 'Extended by' BD-160 and BD-200; new unit test operator_inputs and refusal_lists updated. Convention 4 rewritten for M0 staging; Convention 2 gains 761 and the field sentence with 734/828; exit 4 covers 761; dep NJL-04."
+  },
+  {
+   "bead": "VERBS-spark",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "The spark.probe row of the machine-fields table sat below the following paragraph, outside the table (a Markdown table ends at the blank line), so the table showed six of seven rows; moved into the table. Convention 4 rewritten for M0 staging; Convention 2 gains 761 and the field sentence with 734/828; exit 4 covers 761; criterion and test cover field codes; dep NJL-04."
+  },
+  {
+   "bead": "VERBS-task",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the request from BD-200 after checking it (BD-200's e2e runs frob task check <task> --design <d>): task.check gains the optional design input that resolves randomization :from references and reports the compiled plan's summary, the compiler's refusals 103 and 572 and the worded randomize-no-interval (proposed 571), and 'Extended by: BD-200 (M2)'; refusal_lists updated. Convention 2 gains 761 and the field sentence with 734/828; exit 4 covers 761; criterion covers field codes; deps NJL-04, NJL-05."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "telemetry.export-html listed 731, 733 and 816 only and inputs 'run; worlds; overlays'; aligned with its implementing bead N24a-41: the full input form (--world, --episode, --window, --fps, --overlay, --forks, --bodies, --cap, --out, --check), output frob.replay-packet/1 with its size table, and refusals 734 (--out path jail), 836 and 837 (provisional, N32-REF), 562 and 840, with exports = true; refusal_lists updated. Convention 2 gains 761 and the field sentence with 734/828; exit 4 covers 761; criterion covers field codes; deps NJL-04, NJL-05."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-137",
+   "what": "Its line calling contact.laws and task.settle 'later' should defer to NJL-02's closed LATE_ROWS list (neither is late: N18b-28, N18b-29, N24a-16 answer at M1); examples_run should apply NJL-02's example-identity substitution (fixtures/verbs/identities.toml, j: handles resolved to a submitted job); the M1 fixture store must hold every object identities.toml names for an M1 verb. BD-137 also adds the identities rows for examples its handlers make run."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "The examples field says each example 'runs verbatim'; say 'runs verbatim after NJL-02's example-identity substitution' (abbreviated identities such as r:19e2 resolve through fixtures/verbs/identities.toml). N37-REF's rule cites a consumes_evidence field that this schema does not define: define it or have N37-REF drop it."
+  },
+  {
+   "bead": "N32a-11",
+   "what": "Behavioural parity on first examples should run each example through NJL-02's identity substitution and the same fixtures/verbs/identities.toml, or its examples fail 802 on the abbreviated identities."
+  },
+  {
+   "bead": "NJL-07",
+   "what": "Add NJL-02 to related: NJL-02's example_identities_agree test reads fixtures/golden/appendix-l/IDENTITIES.toml from M1, so a row renamed there must be renamed in fixtures/verbs/identities.toml in the same change."
+  },
+  {
+   "bead": "N34-15",
+   "what": "Script lanes above E0 must start through frob or frob-launch (N36-20's run_admitted); its self-test should flag a pilot or training command started outside frob-launch."
+  },
+  {
+   "bead": "N36-29",
+   "what": "Step 4 should run each row through frob-launch (N36-20) and cite the meter rows it records; a direct invocation bypasses admission and the 761 envelope check."
+  },
+  {
+   "bead": "N23b-20",
+   "what": "Launch every arm through frob-launch (N36-20) under its admission row (R13 to R17) and cite the meter rows in the e2e log."
+  },
+  {
+   "bead": "N23b-21",
+   "what": "Launch every arm through frob-launch (N36-20) under its admission row (R13 to R17) and cite the meter rows in the e2e log."
+  },
+  {
+   "bead": "N23b-22",
+   "what": "Launch every arm through frob-launch (N36-20) under its admission row (R13 to R17) and cite the meter rows in the e2e log."
+  },
+  {
+   "bead": "N23b-36",
+   "what": "Launch every arm through frob-launch (N36-20) under its admission row (R13 to R17) and cite the meter rows in the e2e log."
+  },
+  {
+   "bead": "BD-324",
+   "what": "Launch every arm through frob-launch (N36-20) under its admission row (R13 to R17) and cite the meter rows in the e2e log."
+  },
+  {
+   "bead": "BD-216",
+   "what": "Its campaign runner should call run_admitted (N36-20) for every run it starts, so 761 and the meter apply."
+  },
+  {
+   "bead": "N37-REF",
+   "what": "Test (b) should read each verb's full list (all_refusals), since NJL-01 now appends 734 and 828 by param kind and they are not in the chapter list; reconcile its 'importing verb -> 828, 832' rule with N37-03, which sniffs every file or blob argument (828 for any file param, 832 for importers); consumes_evidence is not a field of N32a-02's entry schema."
+  },
+  {
+   "bead": "N37-18",
+   "what": "Its lint speaks of a 'non-empty exports field', but N32a-02 defines exports as a bool: say 'exports = true'. Decide whether diagnostic writers such as sim.run --resolved-out (BD-200, JSON lines with no manifest) need an ExportGrant; if so, say what the 816 flags check does for a file with no manifest, and the row then gains exports = true and 731, 733, 816; if not, name the exception (the path jail's 734 still applies)."
+  },
+  {
+   "bead": "BD-200",
+   "what": "State that --resolved-out writes under the session's export root (a path outside it is FROB-REF-734, now on sim.run's list) and settle with N37-18 whether it takes an ExportGrant; add identities rows for the sim.run and task.check examples it makes run."
+  },
+  {
+   "bead": "BD-133",
+   "what": "State that prove.bundle --out goes through the export door (N37-18) and raises 816, 731, 733 and 734; VERBS-prove now lists them with exports = true."
+  },
+  {
+   "bead": "N24a-41",
+   "what": "Its refusal section names four codes; telemetry.export-html --out also goes through the export door (N37-18): 816, 731, 733, 734, and the row has exports = true. Name them and add a unit test for the private-scene case (731), which section 9 describes."
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "report.design, report.run and report.mission write outside the store but lack 816 (the export door's first check). Also: Convention 2 lacks 761 and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 should read '4 budget (70x and 761)'; the refusal-table criterion and refusal_lists test should say 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "foundry.export lacks 731, 733 and 816 (export door, N37-18) and exports = true. Also: Convention 2 lacks 761 and NJL-01's field-driven sentence (with 734/828); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; foundry.size and foundry.loads should cite NJL-02's LATE_ROWS for their 724 until M5; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.export lacks 731 and 816 (export door, N37-18). Also: Convention 2 lacks 761 and NJL-01's field-driven sentence (with 734/828); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.import lacks 828 (N37-03 sniffs every file argument); scene.import and scene.retrofit should cite NJL-02's LATE_ROWS for their 724 answer. Also: Convention 2 lacks 761 and NJL-01's field-driven sentence (with 734/828); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.shrink takes --out <dir> but lists no 734 (N37-REF rule (b)); decide with N37-18 whether writing the .fmcw there is an export (then 816, 731, 733 and exports = true). Also: Convention 2 lacks 761 and NJL-01's field-driven sentence (with 734/828); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add dep NJL-04."
+  },
+  {
+   "bead": "VERBS-autopsy",
+   "what": "Convention 2 lacks 761 for run (NJL-01; N36-20's admit_run raises it) and should name NJL-01's 734 and 828 for a param that accepts a path to a file after '891 to 893 for artifact params'; Convention 3 should read '4 budget (70x and 761)'; the refusal-table criterion and refusal_lists test should say 'appended for its kind and fields (NJL-01)'."
+  },
+  {
+   "bead": "VERBS-cores",
+   "what": "Convention 2 lacks 761 for run (NJL-01; N36-20's admit_run raises it) and should name NJL-01's 734 and 828 for a param that accepts a path to a file; Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'."
+  },
+  {
+   "bead": "VERBS-experiment",
+   "what": "Convention 2 lacks 761 for run (NJL-01; N36-20's admit_run raises it) and should name NJL-01's 734 and 828 for a param that accepts a path to a file; Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-fleet",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-gait",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-job",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-policy",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-predict",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-result",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add dep NJL-04."
+  },
+  {
+   "bead": "VERBS-shield",
+   "what": "shield.budget and shield.check should cite NJL-02's LATE_ROWS for their 724 answer. Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-skill",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-solve",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-store",
+   "what": "Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "study.cancel should cite NJL-02's LATE_ROWS for its 724 answer. Convention 2 lacks 761 for run and NJL-01's field-driven sentence (key_optional, estimable, 790, 891 to 893, 734 and 828 for a param that accepts a path to a file); Convention 3 '4 budget (70x and 761)'; criterion and refusal_lists 'appended for its kind and fields (NJL-01)'; add deps NJL-04 and NJL-05."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Slice S10 (WP-06-2) read in full, in build order. Systemic finds, fixed in the slice and requested outside it: (1) NJL-01's run kind appends 761 but no VERBS bead's conventions said so; (2) ~60 registry examples use abbreviated identities no schema accepts, so NJL-02 now owns an example-identities substitution (fixtures/verbs/identities.toml); (3) no verb listed 734/828 for file params although N37-REF and N37-03 require them, so NJL-01 appends them by param kind; (4) several exporting verbs lacked the export-door codes (816/731/733/734) or exports = true; (5) M0 clusters claimed task-cluster tables that do not exist until NJL-05 seats them at M1; (6) late 724 answers now cite NJL-02's closed LATE_ROWS. Requests from round 1 to VERBS-sim (BD-160, BD-200), VERBS-task (BD-200) and VERBS-prove (N24b-19) checked and applied; VERBS-design's design.edit request was already in. Unchanged: NF-13, NJL-04, NJL-05, NJL-08. graph_check: no cycles after the dep changes. Open question passed to N37-18 and BD-200: whether diagnostic files such as --resolved-out take an ExportGrant."
+}

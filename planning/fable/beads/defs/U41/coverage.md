@@ -313,3 +313,12 @@ the release check). The lead may want those steps listed in N40-05's own accepta
     loader rule 5, one Scope line, `related`); N41-02 (the register-wide clause and one acceptance line,
     `related`); N41-04, N41-31, N41-RISK1 to N41-RISK4 (`related`); BD-166, BD-341, BD-344, N41-10, N41-12, N41-26
     (a key added to a `needs` entry that had named none).
+
+## Integration pass (group G41)
+
+- N41-38 added: the sampler row of GATE-WS-07 (`m2-sampler`, RISK-58) is due at the M2 exit and was carried by
+  N41-31, an M3 bead. N41-31 keeps the suite row (`m3-suite`, RISK-59) and the closing of the gate from its four
+  rows; N41-38 carries the sampler row, and N41-34 and N41-37 depend on it. Read "N41-31" as "N41-38" wherever the
+  tables above mean the sampler row.
+- Decision beads that the chapter groups marked superseded are named above by their drafting-time keys; the bead
+  files name the kept beads (for example N23b-24 for OPEN-CORTEX-1, N32a-34 for OPEN-TETHER-5).

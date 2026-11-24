@@ -1,0 +1,304 @@
+{
+ "round": 1,
+ "slice": "U37",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BD-258",
+   "kinds": [
+    "correct",
+    "users",
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Decided the scope-naming rule the 30 VERBS-* registry beads left to it: a row cites its own cluster's scope (sense.symmetry -> sense:read, sense.calibrate -> sense:run, never design:read or sim:run), and <cluster>:run and :write imply :read, closed at mint and derivation so checks stay set inclusion. Per U32b's request, <cluster>:write and :admin are cited as N32b-01's generated forms (no second catalogue); the act lint accepts generated write scopes, named write/admin scopes (ground:retire) and per-action kinds. Tests and acceptance for both decisions. Dep N37-12 moved from related; the option --sessions m3 of safe_path_jail.sh (three tokens x two namespaces, private-root arguments, token id and namespace on every log line) is specified here, where the M3 record of GATE-SAFE-10 is taken."
+  },
+  {
+   "bead": "BD-303",
+   "kinds": [
+    "split",
+    "scope",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Graph bottleneck and an M2 gap: the M2 exporters (train.export, telemetry.stills, telemetry.export-html) had locator rows only at M3, so N37-23's registry test and the M2 exit re-run of the recurring GATE-SAFE-01 could not pass. Split the M2 rows, container and image carriers, the banner generator and the later-kind contract rows into N37p1-01; BD-303 keeps the M3 rows (report.campaign added), the report banner and template lint, and the M3 record. Deps: N23a-13, N24a-41, N32b-40 now reached through N37p1-01; added N24b-15 (eval.ledger, an M3 exporter in its table)."
+  },
+  {
+   "bead": "BD-304",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "Defined the MCP data-block nonce key (per-session random key held in memory, never in a result). Over-length corpus strings now hit every cap of the Untrusted type (257, 1,025, 4,097, 65,537 bytes; the log-line cap was untested). Corpus entries must keep 8 bytes after sanitization so liveness is decidable. Added a benign-baseline run so the system's own text (the real --allow-private-export flag, which the corpus uses as a look-alike) is not miscounted as an outside hit; the metamorphic relation now excepts derived identifiers and file digests, which legitimately change. Two unit tests."
+  },
+  {
+   "bead": "BD-305",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Its artifact-kind sweep (the first clause of GATE-SAFE-04) expected trained weights to be private unconditionally; N37-20 requires that row to follow the two inheritance keys so the gate stays meaningful under any owner option. Expectation now read from the keys; test weights_row_expectation_follows_keys."
+  },
+  {
+   "bead": "BD-307",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The weights importer is fuzzed from M2 (N37-06), not added at M3; this bead adds its structure-aware generator. Total stays ten importers."
+  },
+  {
+   "bead": "N37-02",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "The session token variable is FROB_SESSION_TOKEN (N32b-01), not FROB_TOKEN; removed the duplicate key qualification.admin_principals (the holders are qual_admin_holders in config/qualification.toml, N24c-13/BD-261, whose digest enters the daemon configuration digest); the weights.allowlist default now describes both default rows (reference MLP external, GRU trained-here). Its protection failure (FROB-REF-734) now names observed = config-unprotected, registered in N37-REF."
+  },
+  {
+   "bead": "N37-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Unit tests are per limit key: 12 keys (six xml, two mjcf, four mesh), not 11 rows."
+  },
+  {
+   "bead": "N37-06",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "OPEN-SAFE-1 blocks GATE-SAFE-07 and N37-08 says the M2 gate is measured on the allowlist in force, yet the weight reader was excluded from the M2 record: added weights_reader as the seventh target (deps N37-07, N37-08). Fixed the budget arithmetic (60 us per execution was single-core; 10^7 in 7 minutes on 8 cores is about 336 us) and replaced the hard 55-minute failure with disjoint-range splitting, as its own Considerations already required."
+  },
+  {
+   "bead": "N37-07",
+   "kinds": [
+    "correct",
+    "users",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Answers U23a's request: family rows get an `admit` field (external | trained-here); origin is computed from the store's checkpoint record by digest, never declared. The system's own GRU checkpoints reload while outside files stay on the reference-MLP default. The metadata key frob.authorization/1 (written by N37p1-01) is now a registered key, required on trained-here files and checked by the shared flag check; otherwise every exported checkpoint would have been refused as an unknown key. Tests origin_selects_rows and authorization_key_by_origin; dep N37p1-01."
+  },
+  {
+   "bead": "N37-08",
+   "kinds": [
+    "users",
+    "correct",
+    "tests"
+   ],
+   "what": "U23a request: the default now has a second row, gru with admit = trained-here, so M2 recurrent policies can resume and export without widening what agents may bring in; the owner decides only whether rows become external. The known answer and its consideration said the M2 gate trains only the reference policy, which is false; both corrected, and tests added."
+  },
+  {
+   "bead": "N37-09",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Acceptance cites N37-03's actual tests (registry_leaves_are_closed, no_kernel_source_inputs); the e2e now distinguishes wasm bytes inside a .toml task specification (828) from a reward_program JSON member (802)."
+  },
+  {
+   "bead": "N37-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Aligned with BD-304's baseline: make-fixtures --baseline writes an equal-length benign twin set, the scan takes --baseline and reports inside/outside/baseline, so the system's own flag names are not counted as leaks; the metamorphic relation excepts derived identifiers and file digests."
+  },
+  {
+   "bead": "N37-12",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "The refusal-text assertion checked for the word 'outside', which is part of FROB-REF-734's own message; it now checks for the absolute paths of the roots and the sentinel. Consideration names BD-258's --sessions m3 option for the M3 record. Added the opener (cap-std record hash or interim-posture, N37-31) to the start line and the record, with interim-posture handling (write successes logged not run, never pass); added N37-11's third registered control (a plain-string output path), which N37-CX says this script runs."
+  },
+  {
+   "bead": "N37-14",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "The worker token sat inside the manifest, whose bytes are hashed and stored as the job identity: that would store a token (forbidden by N32b-01) and change the identity on resubmission. It now travels in the transport frame. Defined the token as a child session holding only the job's budget scopes and no verb scope, expiry wall limit + 60 s, bound to the job row: another job's frame is FROB-REF-725, any verb call FROB-REF-720, unspent budget returned at close. Test spelled out."
+  },
+  {
+   "bead": "N37-15",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Under BD-258's implied-read rule a token 'lacking exactly <c>:read' would regain it from <c>:run or :write at derivation; the matrix now also drops those, and step 3 asserts the closure (sim:run alone yields sim:read too, not a widening). Its Considerations claimed scope-free verbs fail the registry lint, but session.show and a root session.open are scope-free; now logged and asserted read-only (or root open). Named FROB-REF-703 for the 257th session. Two helper tests. Logs the OPEN-SAFE-4 retention values as a metric line, which N37-30 relies on."
+  },
+  {
+   "bead": "N37-17",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "N37-20 sets two independent keys (private.weights_inherit, licence.weights_inherit) and says the training run is dropped 'for that component only', but put_derived joined whole parent marks with no way to do that. Added typed parent roles and one filtered edge (weights/checkpoint -> TrainingRun) whose `carries` is read from the owner configuration at write time, stored on the edge, used by the audit, never a caller argument; PO-SAFE-01 argument stated componentwise. Added the backfill migration for objects written before M3 (no mark rows). Four tests, random graphs with filters; dep N37-02."
+  },
+  {
+   "bead": "N37-19",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "Its Out section said N29b-14 supplies the claim query, withdrawal and tombstone writer, but N29b-14 depends on this bead; the query is now answered here from the pin table and the functions come from N29b-13 and the store beads. Added the re-affirmation pass (N29bp1-01 runs after every purge) with its report digest in the receipt. The closure follows only privacy-carrying edges, so under the owner's weights rule kept checkpoints are listed (kept_by_weights_rule), as N37-20 requires. Two tests. Also removes job-log and idempotency-key rows of jobs on the scene whatever the retention period (OPEN-SAFE-4's constraint), with the test moved from N37-30."
+  },
+  {
+   "bead": "N37-20",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Its tests exercise the filtered edge (N37-17) and the purge closure (N37-19): both added as deps. The acceptance 'train.export is refused' needs BD-305, which depends on this decision (a cycle in spirit); it is now stated as asserted downstream (BD-305, N37-18's battery, N37-21). Added the option-D purge acceptance and aligned the mechanism wording with N37-17's carries."
+  },
+  {
+   "bead": "N37-21",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "The script calls frob-conformance marks sweep, random-graphs and scan-digests, which no bead provided (only marks audit is N37-17's); they are now in scope here, with tests for the planted-mismatch detection and the weights-key expectation. Its planted step lacked two of GATE-SAFE-05's registered controls (unknown treated as permissive; memo store dropping marks), so the gate could not record them as caught: seven planted builds now."
+  },
+  {
+   "bead": "N37-24",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "Banner step runs from m2 (replay page, human output) and adds report forms at m3; the carrier list no longer names a PNG text chunk (withdrawn); scope names N37p1-01."
+  },
+  {
+   "bead": "N37-25",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "The M1 profile of safe_claim_boundary.sh needs the generator and oracle as CLI helpers, but `claim-sets generate`/`check` were specified only in the M3 bead N37-27, so M1 could not run. They are now created here (with evidence-functions scan) and tested here; N37-27 reuses them."
+  },
+  {
+   "bead": "N37-26",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "EvidenceUse has ten variants but the requirement table had eight rows: Baseline and Revalidation had no requirement. Added both rows (DESIGN defaults), the rule that each use has a default `<use>/1` row and that a consumer's stricter row must dominate it, and the test every_use_has_default_row."
+  },
+  {
+   "bead": "N37-27",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "The generator and checker subcommands belong to N37-25 (M1); this bead adds the `--leaves real` option and tests for the real-leaf catalogue and the choice of aggregating verb, instead of re-testing N37-25's helpers."
+  },
+  {
+   "bead": "N37-28",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its e2e section said num_licences_d4.sh (N35-32) covers both gates and BD-269's row cites both logs; N35-32 covers GATE-SPARK-17 only and both scripts depend on BD-269. Now states BD-269 enters the row from its own outcomes and this bead's tests, and N37-29 appends its log, as BD-269 says."
+  },
+  {
+   "bead": "N37-30",
+   "kinds": [
+    "placement",
+    "tests"
+   ],
+   "what": "Its test purge_removes_log_rows_before_period exercised the purge, which it does not depend on; the property and its test moved to N37-19, where the purge is built, and this bead cites it. N37-15 now writes the `retention` metric line this bead relies on."
+  },
+  {
+   "bead": "N37-KA",
+   "kinds": [
+    "complete"
+   ],
+   "what": "KA-828 now lists N37p1-01 among its measuring beads; three bead-level known answers that were stated in beads but missing from the registry were added: the 92-byte canonical flags string and golden banner (N37p1-01), the worker quota arithmetic (N37-14), and the level-schedule sum (N37-16). Seventeen local rows."
+  },
+  {
+   "bead": "N37-REF",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "N37-02 raises FROB-REF-734 when safety.toml fails its protection checks, which the 734 row did not register; added the observed value config-unprotected with its trigger and repair (N37-02 now names it). The 816 row now lists N37p1-01's carriers and N37-07's required checkpoint key among its raisers."
+  },
+  {
+   "bead": "N37x-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Named GATE-SAFE-10 as the capabilities gate; it is the path-jail gate (capabilities have no safety gate, their script is N37-15). Related N37-07, N37-14, N37-15 added."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N37p1-01",
+   "why": "split from BD-303 (graph bottleneck; M2 gap): locator rows and carriers for the M2 exporters (checkpoint metadata key, still sidecar without a PNG text chunk, which BD-191's encoder forbids, and the replay header), the banner generated from the type, contract rows for the M4 to M8 kinds, and the M2 record of the recurring GATE-SAFE-01"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-241",
+   "what": "capability is sense:read: BD-258 fixed the naming rule (own cluster) and dropped the 'proposal' wording"
+  },
+  {
+   "bead": "BD-242",
+   "what": "capability is sense:run: BD-258 fixed the naming rule (own cluster) and dropped the 'proposal' wording"
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "all 30 VERBS-* beads: scope names are no longer proposals. BD-258 decided the cluster rule; run and write imply read, closed at mint and derivation"
+  },
+  {
+   "bead": "N32b-01",
+   "what": "minting calls BD-258's Scopes::close_implied (run and write imply read) before computing the tag; the subset rule then holds over closed sets"
+  },
+  {
+   "bead": "N32b-02",
+   "what": "derivation closes the child's requested scopes with Scopes::close_implied (BD-258) before the subset test"
+  },
+  {
+   "bead": "N23a-12",
+   "what": "the 'GRU policies at M2 live in memory only' note is withdrawn: N37-08's default has a gru row with admit = trained-here, so the trainer's own GRU checkpoints reload; GRU files from outside stay refused until OPEN-SAFE-1 raises the row"
+  },
+  {
+   "bead": "N22b-01",
+   "what": "depend on N37p1-01 (the later-kind contract rows and banner) instead of BD-303; same for N22b-10, BD-408, N31a-37, N31b-44, BD-396, N39b-18, which need only the contract and not the M3 sweep"
+  },
+  {
+   "bead": "N32b-40",
+   "what": "the replay page's banner shows the line generated by frob_core::auth::banner (N37p1-01) verbatim as its first line, beside its short summary"
+  },
+  {
+   "bead": "N23a-13",
+   "what": "the trainer writes the metadata key frob.authorization/1 into every checkpoint (mid-run and exported); N37-07 requires it on checkpoints of this system (N37p1-01)"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "section 7 says Chronicle 'supplies to the verb' the claim query, withdrawal, pin release and tombstone writer, but this bead depends on N37-19; say they come from the store beads and N29b-13 (N37-19 answers the claim query from the pin table) and that this bead tests the rule on private telemetry"
+  },
+  {
+   "bead": "NEG-22",
+   "what": "N37-18 and N19b-02 divide the codes: FROB-REF-310 only for a scene pack (or kit containing one); a still, run, variant export or report gets FROB-REF-733 (licence) or -731 (private). Also drop 'an aggregate scorecard without geometry exports with the join shown': the plan's join makes such a report research-only and N37-18's battery refuses it (733). Same code fix in NEG-21, NEG-23, NEG-24, NEG-26 ('any export containing it', 'reports containing them')"
+  },
+  {
+   "bead": "NEG-25",
+   "what": "every non-pack export is FROB-REF-733 (or -731), not 310 (N37-18's division); the 'explicit, logged override for aggregates only' has no mechanism in N37-18's export door and contradicts the join (INV-SAFE-04): remove it, or file it as a new owner question rather than a containment rule"
+  }
+ ],
+ "unchanged": 14,
+ "notes": "All 42 slice beads reviewed; 28 changed, 14 unchanged (BD-306, BD-308, N37-01, N37-03, N37-04, N37-11, N37-13, N37-16, N37-18, N37-22, N37-23, N37-29, N37-31, N37-CX). One split: BD-303 -> N37p1-01 (M2). Main themes: the M2 flag carriers and banner (N37p1-01); scope naming and implied read decided in BD-258; origin-based weights admission so the trainer's own GRU checkpoints reload (N37-07/08); the owner's weights-inheritance switch made implementable as one filtered edge role (N37-17) and followed by purge, sweep and tests (N37-19/20/21, BD-305); helper and control ownership aligned between scripts (N37-12, N37-21, N37-25/27); gate-record ownership of GATE-SAFE-09 aligned with BD-269. The slice's coverage.md was updated for the split. Requests: scope names in the VERBS beads and BD-241/242, close_implied in N32b-01/02, the GRU note in N23a-12, deps on N37p1-01 for later-kind beads, the checkpoint key in N23a-13, the banner in N32b-40, N29b-14's supply wording, and FROB-REF-310 vs 733/731 (and the aggregate exceptions) in NEG-21 to NEG-26. The slice looks close to settled; the NEG requests are the one cross-unit disagreement left."
+}

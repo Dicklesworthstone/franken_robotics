@@ -172,3 +172,27 @@ All sixteen rows are entered in the gate registry by N30b-22, with fixtures, con
     N30b-26; a graph lint in N30b-26 keeps them from blocking any exit.
 22. **Bead count** (52) is above the typical range because ten seed beads here carry eight mechanism
     subsections of the other unit in addition to this unit's ten subsections.
+
+## (f) Integration note (group G30)
+
+Added by the integration pass; the tables above are the drafter's and are left as drafted.
+
+- **Capstones.** The seed beads BD-139, BD-389, BD-391, BD-392, BD-393, BD-394 and BD-395 depend on the part
+  beads of U30a (N30a-01, N30a-02; N30a-11 to -13; N30a-20 to -25 and N30a-27 to -30; N30a-31 to -34; N30a-36 to
+  -38; N30a-40 to -43; N30a-45 to -47), and their Scope sections say so. The verb `ground.score` (N30b-06)
+  depends on N30a-28, -29, -32, -33 and -34.
+- **Superseded beads of U30b** (each carries `superseded_by`; content folded into the kept bead or beads):
+  N30b-02 → N30a-23; N30b-03 → N30a-24; N30b-04 → N30a-27 (and N30a-28, -29, -30); N30b-05 → N30a-25;
+  N30b-07 → N30a-38 (and N30a-37); N30b-10 → N30a-43 (and N30a-40); N30b-11 → N30a-47; N30b-32 → N30a-26
+  (clock half: N30a-14); N30b-33 → N30a-35; N30b-34 → N30a-39 (drift half, the DC-07 walk and the planner rows:
+  N30a-44); N30b-35 → N30a-48.
+- **Gate scripts.** GATE-GROUND-02 `ground_clock.sh` (N30a-14); -03 `ground_excite.sh` (N30a-19); -04
+  `ground_identify.sh` (N30a-26); -05 `ground_protocol.sh` (N30a-35); -06 `ground_band.sh` (N30a-39); -07
+  `ground_drift.sh` (N30a-44); -08 `ground_asbuilt.sh` (N30a-48). The kill-gate decisions N30b-17 to N30b-20
+  depend on these.
+- **Design choices settled between the two units.** Rehearsal fixtures are those of BD-388's catalogue (the
+  delay grid is T_c/8). GATE-GROUND-02 asserts coverage at the registered scored instant. An envelope
+  excursion retires the calibration. The across-units statistic defaults to a keyed pick per unit. A combined
+  result with a synthetic part is `synthetic`. The reality line is printed in N30a-02's grammar, the `cards:`
+  line in N30a-03's. A unitless tolerance is refused with FROB-REF-102. First-use admission records of the
+  sibling crates at the M5 pin are written by N30a-05 and N30a-06.

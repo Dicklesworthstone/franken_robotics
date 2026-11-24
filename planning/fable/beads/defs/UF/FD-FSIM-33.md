@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "marrow", "upstream", "frankensim", "frob-fsim", "solid"]
 parent: "WP-02"
-deps: ["FDEF-05", "NF-01", "STD-E2E"]
-needs: ["§33.17: the mixed-wrench probe of GATE-WS-06 and the type `MixedWrench` in `frob-fsim`, which the switch-over re-runs and replaces"]
-related: ["FD-FSIM-06", "BD-007", "BD-047", "BD-037"]
+deps: ["FDEF-05", "N33b-04", "N33c-36", "STD-E2E"]
+needs: []
+related: ["N33c-47"]
 gates: ["GATE-WS-06"]
 plan_refs: ["Appendix F.1", "Appendix F.2 row 5", "Appendix F.3", "§33.17", "§11.1", "§11.3"]
 ---
@@ -118,7 +118,7 @@ train.
 In FrankenSim (added, in `fs-mbd`):
 - `from_body_wrench_rotates_force_only`: R = R_z(90°), f_body = (1, 0, 0) N, τ_body = (0, 0, 2) N·m; expected `force_world` = (0, 1, 0), `torque_body` = (0, 0, 2).
 - `from_world_wrench_rotates_torque_only`: R = R_z(90°), f_world = (0, 3, 0) N, τ_world = (0, 1, 0) N·m; expected `force_world` = (0, 3, 0), `torque_body` = Rᵀ·τ_world = (1, 0, 0).
-- `step_momentum_matches_constructors`: a free body of 2 kg, Δt = 1/480 s, with the wrench of the second case: Δp = (0, 0.00625, 0) kg·m/s and ΔL_world = (0, 1/480, 0) = (0, 0.0020833, 0) kg·m²/s, to 10⁻¹² relative.
+- `step_momentum_matches_constructors`: a free body of 2 kg with inertia diag(0.1, 0.2, 0.3) kg·m² in its body axes, starting at rest, Δt = 1/480 s, with the wrench of the second case: Δp = (0, 0.00625, 0) kg·m/s and ΔL_world = (0, 1/480, 0) = (0, 0.0020833, 0) kg·m²/s, to 10⁻¹² relative (the torque is about the principal body axis x, so the step's mid-step orientation R̄ maps it exactly as R does; a non-principal torque or an initial spin would add an O(Δt²) term near 10⁻⁶ and is not used at this tolerance).
 - `off_centre_force_adds_torque`: f = (0, 0, 1) N at r = (1, 0, 0) m; expected added torque r × f = (0, −1, 0) N·m before conversion.
 Here:
 - `airlock_uses_sibling_constructors`: a source scan and a behaviour test at the new pin.
@@ -131,9 +131,13 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_33 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob sim run --tier referee --json` on a one-body fixture with an
-authored external wrench in the body frame at a non-identity orientation, asserting the momentum change in the
-world frame.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post`
+runs the probe of GATE-WS-06 at the new pin (`cargo test -p frob-fsim mixed_wrench_probe`, and its unconverted
+mutant), which carries the adoption. A verb-level check (a referee run of a one-body fixture with an authored
+external wrench in the body frame at R_z(90°), asserting the world-frame momentum change of the known answer) is
+not part of this script: no row of `sim.run` takes an authored external wrench before the disturbance model of
+N26a-02 (M3), a later bead, so the check belongs to that bead's own script (KNOWN_DRIFTS 7 and 8; requested of
+N26a-02).
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_33/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

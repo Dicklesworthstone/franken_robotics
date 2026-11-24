@@ -1,0 +1,276 @@
+{
+ "round": 2,
+ "slice": "S35",
+ "reviewed": 47,
+ "changed": [
+  {
+   "bead": "BD-144",
+   "kinds": [
+    "deps",
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied both round-1 requests: N12-49 moved from related to deps, with a unit test and acceptance clause checking Ω_p and the bucket caps against the compendium D.9 oracle; Scope now states that omega.rs and buckets.rs are promoted into frob-phylum's arith (N17a-04) and bucket (N17a-05) modules at M2 and the pilot binary re-pointed, so one Ω and one planner exist. KA-370 test listed capacities starting at 12 (nine capacities) while claiming eight buckets; now capacities 12·1.25ᵏ for k = 1…8, kept as exact rationals."
+  },
+  {
+   "bead": "BD-170",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "WorldSlots was attributed to N17a-03; it is defined by BD-169 in frob-dyn (layering), so Scope, the type note and the first acceptance item now say so. The e2e's sim.run calls carried no idempotency key (sim.run refuses FROB-REF-805 without one, and a reused key would make mixed equal solo vacuously); keys and the idempotent_replay:false check added. Its Cohort sketch disagreed with N17a-03's (fields and class type); now restated from N17a-03, which governs."
+  },
+  {
+   "bead": "BD-171",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "The verb's command line lacked flags its own e2e (N17a-08) and card (GB-17) use: added --max-buckets (lowering the cap only; >8 is FROB-REF-802), --tau/--launch/--shares (labelled `given`) and population descriptors for --designs, with a unit test and acceptance item. Exit codes of 740/741 stated as 4 from the registry (was 'assumed'); the KILL-BUCKET finding exits 2. Added --bucket-set <c₁,…,c_k> (registered mode only, labelled `given`, rows marked `candidate`, registers nothing; malformed or with population mode FROB-REF-802), with acceptance and the unit test bucket_set_candidate: the OPEN-SPARK-3 decision (N21b-18) evaluates candidate sets through the verb and had no way to pass one."
+  },
+  {
+   "bead": "BD-183",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the round-1 request: dep N21c-27 (Spark invariant register; BD-183 co-owns INV-SPARK-05), and added the bound test stepplan::one_capture_per_bucket with its two planted violations."
+  },
+  {
+   "bead": "BD-184",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The campaign called design.edit and phylum.sweep without idempotency keys (refused with FROB-REF-805); a reused key would return a stored first commit and fake a latency. Keys per run and edit, the replay check, a unit test and a negative control added."
+  },
+  {
+   "bead": "BD-185",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The correctness rule's 1 s drop-and-stand against the native model had no test; added to the e2e and acceptance, compared within the tier's registered fidelity envelope."
+  },
+  {
+   "bead": "BD-186",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Arm A's phylum.sweep runs carried no idempotency key; a reused key returns the stored envelope at once and would time a lookup. Keys per cell, repetition and arm, the replay rule and a negative control added; KA-371 cited in both readings."
+  },
+  {
+   "bead": "GB-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Lane B's verb call now passes --tau, --launch and --shares explicitly so the goldens do not move when the M2 profile replaces the HYPOTHESIS defaults."
+  },
+  {
+   "bead": "N16a-19",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Dropped dep N17b-04 (phylum.sweep, a Frontier P-B verb the script never calls) to related, so the Solid GATE-KIN-06 CPU rows no longer wait on the mixed-batch chain. Every sim.run call now carries its own idempotency key (FROB-REF-805 otherwise) with the replay check and a planted-reuse control."
+  },
+  {
+   "bead": "N17a-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The skeleton script calls the run verbs phylum.sweep and phylum.gradient expecting FROB-REF-724; without --key they answer FROB-REF-805 first, so the not-implemented path went untested. Calls now carry registered example arguments and fresh keys; 802/805 counted as script defects."
+  },
+  {
+   "bead": "N17a-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Claimed to own the ShapeClass type; BD-148 defines it in frob-model and frob-phylum re-exports it. Scope, type note and the N14a-12 settlement now say so (the latter mis-stated the reason: the type is M2, BD-148, not a frob-phylum type). Out list attributes WorldSlots to BD-169 and ModelTable to BD-148. Row rounding: the bead said 152 → 160 under 'rounded up to a multiple of 8', but roundup8(152) is 152; Q's 160 is the plan's raised value (§16.6, §36.3) read from its row of the capacities registry (N16a-14, frozen by N21b-18). Technical approach, acceptance and the rows_formula_rounding test now say so, with a requirement that keeps 152 for Q caught."
+  },
+  {
+   "bead": "N17a-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied the round-1 request: WorldSlots is BD-169's (frob-dyn) and ModelTable BD-148's; this bead defines Cohort and ResultKey and uses the other two, restated with their owners governing."
+  },
+  {
+   "bead": "N17a-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the round-1 request: the worked card is stated in both readings (Ω rounded to 3.5: 14.8 ms, 1.35 ms, 360; exact Ω = 3.4908: 14.75 ms, 1.344 ms, 361.3), with tests for both; the pilot's moved tests run against arith."
+  },
+  {
+   "bead": "N17a-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "min_buckets claimed the top-down greedy is optimal; it is not (dropping a range's top member lowers its capacity and can raise waste): {15, 27, 30, 42} at 25% gives greedy 3, exact 2; {15, 17, 37, 38, 49, 64} with Ω₃ ≤ 2 gives 3 vs 2. Replaced by an exact O(m²) prefix program; the property test now compares the program with exhaustive search and the greedy is a planted mutant. The 741 acceptance case (30 sizes at 10%) actually plans in eight buckets; now pinned as 30 explicit sizes refusing at 8% with waste-at-eight 2/23, and 10% as a boundary case. Worked-card acceptance now cites the exact figures the planner computes."
+  },
+  {
+   "bead": "N17a-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Timed sim.run and phylum.sweep calls had no idempotency key (FROB-REF-805; a reused key would enter a lookup time into the c_L/τ fit). Keys per cell and repetition, replay check and re-run rule added. KA-371 cited in both readings."
+  },
+  {
+   "bead": "N17a-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The e2e contribution passed shapes as --designs N --bucket B, flags the verb does not have; now synthetic population descriptors."
+  },
+  {
+   "bead": "N17a-08",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied the round-1 request: TALOS and Apollo steps against their recorded manifests (Apollo above 64 DoF is FROB-REF-160, not 741), deps ROBOT-talos and ROBOT-apollo. spread-30-sizes at 10% plans in eight buckets and cannot refuse: moved to 8% with the boundary at 10% asserted and the fixture's sizes pinned. Worked card asserted at the exact values the verb prints (14.75/1.344/0.673 ms, 361.3). Removed calculator flags (--omega, --t) the verb does not take: break-even and mixing ratio now come from populations built to give Ω = 1.3 (split-14-26, mix-14-26-x512); one-bucket rows read from the plan's alternative, --max-buckets 1 with a raised limit as cross-check."
+  },
+  {
+   "bead": "N17a-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The GATE-PHYLUM-02 script's reference sim.run calls, sweeps and 100 co-tenancy submissions had no idempotency key; a replayed envelope would make mixed equal homogeneous vacuously. Keys per pass, back end and index, the replay rule and an acceptance item with a planted key reuse added."
+  },
+  {
+   "bead": "N17-REF",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 2 provoked 740 with a 44.6 GB population and a --device flag the verb lacks; 44.6 GB fits the M5 Ultra, so 740 would not fire. Now the `nowhere` population (about 1.87 TB), with the reason stated."
+  },
+  {
+   "bead": "N17b-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KA-371 cited in the rounded reading only; now both readings, since the arithmetic computes the exact Ω = 3.4908 (14.75 ms, 361.3)."
+  },
+  {
+   "bead": "N17b-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Attributed ModelTable to BD-170 and implied WorldSlots was this layer's; they are BD-148's (frob-model) and BD-169's (frob-dyn), cohort assembly N17a-03's. The five sim.run calls of the e2e had no idempotency key (FROB-REF-805; a replay would make a capacity run equal the solo run vacuously); keys and the replay check added."
+  },
+  {
+   "bead": "N17b-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Acceptance demanded at least 35% rim-sampled designs while the frozen counts give 179/512 = 34.96%; now 179 ± 3. The e2e's design.edit calls had no key (mutate verb: FROB-REF-805; a replay would pass the identity check on a lookup); keys added."
+  },
+  {
+   "bead": "N17b-04",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The e2e sweeps, the sim.run call and both refusal cases carried no key (805 would answer before 741/740), though step 7 relied on one; keys per step, with step 7 alone a deliberate replay. The e2e's 740 case (524,288 worlds, 44.6 GB) fits the M5 Ultra; now the `nowhere` population as in N17-REF, the unit test's restriction to the CUDA cards stated with its arithmetic. The nine-size test now fixes W, states why registered mode falls back to population capacities, names the five buckets and the ~930-worlds-per-size limit beyond which six win (checked by exhaustive search). Illustrative call carries --key as in VERBS-phylum."
+  },
+  {
+   "bead": "N17b-05",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The admission e2e's design.edit and phylum.sweep calls had no keys; a replayed sweep would return a stored admission record and time a lookup. Keys and the replay check added."
+  },
+  {
+   "bead": "N17b-07",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The envelope e2e submits a run job with and without the decision record but named no verb or key; now phylum.sweep with a key per submission, so 805 or a stored replay cannot stand in for the admission decision."
+  },
+  {
+   "bead": "N17b-10",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The e2e's phylum.sweep lacked --key; added, with the check that a replayed pre-switch envelope cannot report the old engine."
+  },
+  {
+   "bead": "N17b-11",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 6 named 'the profile's L and t', symbols this bead never defines; now c_L and τ from N17a-06's cost-model file. The run-length sweeps of the e2e carry keys and the replay check."
+  },
+  {
+   "bead": "N17b-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Clause 4's paired timing ran `frob sim run … [--limb-kernels]`; the option is registered on phylum.sweep only (sim.run answers the schema refusal), so the option-on arm could not run. Now `frob phylum sweep --designs quad-ref --worlds-per-design 8192 --task flat-stand --tier gpu-cuda [--limb-kernels]` through the performance harness, with the reason stated."
+  },
+  {
+   "bead": "N21b-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Background said 'rounded up: 152, raised to 160 for Q, 314 raised to 320 for H'; under the multiple-of-8 rule 152 stays 152 and is raised by the reference-workload decision, while 314 → 320 is rounding (as its own row_capacity_arithmetic test already says). The candidate-set evaluation called `phylum plan --buckets <candidate>`, a value the verb does not accept: now `--buckets registered --bucket-set <set>` (added to BD-171) with the measured L and t passed as given, the optimum through `--buckets population`; procedure step 1 says the same."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N17-KA",
+   "what": "KA-371 states only the rounded reading (Ω = 3.5: 14.8 ms, 1.35 ms, crossover 360). With exact arithmetic Ω = 3.4908 gives 14.75 ms, 1.344 ms, 0.673 ms and a crossover of 361.3; state both readings, as N17a-04, BD-171 and GB-17 now do."
+  },
+  {
+   "bead": "ROBOT-apollo",
+   "what": "It names 'the over-capacity refusal FROB-REF-741' for a robot above 64 DoF; one design that exceeds the largest capacity is FROB-REF-160 (no shape class). 741 is population fragmentation. N17a-08 now asserts 160."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run's input list has worlds and seconds; BD-170 and N17b-02 call it with --worlds-per-design (several designs through --designs) and 13 beads use --steps. Register both (worlds per design when --designs lists several; --steps as an alternative to --seconds) or say which spelling the beads must use."
+  },
+  {
+   "bead": "N36-02",
+   "what": "row_cap rounds to a granule of 32 (DESIGN); §16.6 and N16a-14's default_rows round to a multiple of 8 and register Q's 152 as raised to 160 (hexapod 164 → 168, wheeled base 72, tracked 264 are not multiples of 32; granule 32 would give 192, 96, 288). Either adopt round_up_8 with Q's registered raise, or state that the granule-32 function covers Q and H only and N16a-14's default_rows governs every other workload, so two row rules do not coexist."
+  },
+  {
+   "bead": "N16b-26",
+   "what": "row_capacity_rule says '152, rounded up to 160' while its own rule (line 52) rounds to a multiple of 8, which leaves 152; state 152 → 152 by the rule and 160 as Q's raised value read from the capacities registry (N16a-14), as N17a-02 and N21b-18 do."
+  },
+  {
+   "bead": "N21c-36",
+   "what": "row_capacity_rule asserts 4·32 + 12 + 12 = 152 → 160 as rounding; under the registered rule (multiple of 8, N16a-14) 152 stays 152 and Q's 160 is the plan's raised value; restate the test so it does not encode a rounding that the rule does not do. Its e2e also calls `frob phylum plan … --buckets <candidate>`; the verb takes `--buckets registered|population`, and a candidate set is evaluated with `--buckets registered --bucket-set <set>` (BD-171), as N21b-18 now does."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "FROB-REF-611 lists raising sites BD-183 and BD-172; the admission controller N17b-05 also raises it, before anything reaches a device, when a request pinned to a running environment would change its shape (N17a-09 states the same). Add N17b-05 as a raising site."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "The phylum.plan row lists --designs, --worlds-per-design, --tier, --buckets, --waste-limit, --training and --assume only; BD-171 also specifies --max-buckets (lowering the cap of eight; above 8 is FROB-REF-802), --tau, --launch, --shares (inputs labelled `given`), --bucket-set (a candidate set in registered mode, rows marked `candidate`) and population descriptors for --designs. Register them, with inputs_by_row rows, so the schema does not refuse what N17a-08, GB-17 and N21b-18 call."
+  }
+ ],
+ "unchanged": 18,
+ "notes": "Slice complete. Earlier session: 27 beads changed (mostly missing idempotency keys in e2e scripts, owner attributions of WorldSlots/ModelTable/ShapeClass, the planner's greedy claim and the worked-card readings); this session finished N17a-02's row rounding (152 stays 152 under roundup8; Q's 160 is the registered raise) and fixed N17b-27 (limb-kernel timing through phylum.sweep) and N21b-18 (rounding wording; candidate sets through the new --bucket-set of BD-171). Unchanged: BD-169, BET-18, N17-CX, N17a-09, N17b-08, N17b-09, N17b-23, N17b-24, N17b-25, N17b-26, N17b-28, N17bp1-01, N21b-15, N21b-16, N21b-19, N21b-41, NS-14, SPEC-C-21. The limb-archetype and bucket-decision chain reads as settled; open items are the requests (row-rounding granule in N36-02, N16b-26, N21c-36; phylum.plan inputs in VERBS-phylum)."
+}

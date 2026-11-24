@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "habitat", "frob-scene", "frontier", "test", "asset", "registry"]
 parent: "WP-32"
-deps: ["N19b-02", "N19a-40", "BD-307", "N19a-05"]
-needs: ["§19.13: scene.import for single assets and whole generated interiors at M3 (decode, compile, loss report, licence manifest entry)"]
-related: ["BD-399", "N19a-41", "NEG-17", "NEG-19", "NEG-20", "NEG-16"]
+deps: ["BD-307", "N19a-05", "N19a-40", "N19a-46", "N19b-02", "N37-18", "NAB-13"]
+needs: []
+related: ["NEG-19", "NEG-20", "NEG-27", "NEGp1-54"]
 gates: []
 plan_refs: ["Appendix G.2 (row 2)", "§19.7", "§19.9", "KILL-DRESSING", "Appendix H.3"]
 ---
@@ -30,17 +30,32 @@ proxies on the M5 battery.
 
 ## Scope
 
-In: the register row; the admission reading of the licence (code and, separately, any bundled or generated
-asset content); the offline-run recipe and its pin; the import profile; validation of imported interiors;
-`assets/scenes/infinigen-indoors/` with its manifest. Out: the licence manifest, register mechanics and
-pack-time refusal (N19b-02); populated interiors inside the proxies' launch shape (BD-399); the pilot and the
-kill decision (N19a-40, N19a-41); importer limits and fuzzing (BD-307).
+In: the values of the register row; the admission reading of the licence (code and, separately, any bundled or
+generated asset content); the offline-run recipe and its pin; the import profile for a whole generated
+interior; validation of imported interiors; `assets/scenes/infinigen-indoors/` with its per-source manifest
+(the list of admitted output sets with their records and hashes; the generated files themselves are not in
+the repository: like every asset they live under the configured asset root).
+
+Out, with the bead that has it: the licence manifest type, the register schema and loader and the pack-time
+refusal (N19b-02); the population of a grammar proxy's slots with single assets drawn from the per-asset
+catalogue `registries/assets.toml`, the constraints that keep such a scene inside its proxy's launch shape
+and determinism class, and the paired measurements KILL-DRESSING reads (BD-399; its catalogue rows for
+objects of this source are created from this bead's manifest and take their class and notice from this row,
+and its source table restates this row without redefining it); the pilot and the kill decision (N19a-40,
+N19a-41); importer limits and fuzzing (BD-307). The two beads meet at one limit: a populated scene must stay
+inside the proxies' launch shape. BD-399 keeps it for a slot asset by substituting the proxy box; this bead
+keeps it for a whole interior, which has no proxy box behind it, by refusing the import for the batched
+tiers.
 
 ## Technical approach
 
 **Register row.** `key = "infinigen-indoors"`, `licence = "BSD-3-Clause"`, `class = "attribution"` (notice
 required), `default_pipeline = true` only after the admission reading, `redistribute = "with-notice"`,
-`kind = "external-offline-generator"`, `use = "offline external generator for populated interiors"`.
+`kind = "external-offline-generator"`, `use = "offline external generator for populated interiors"`. The
+class matters downstream: a caller of the populate step who permits only `redistributable` assets
+(`scene gen --populated --assets redistributable`, BD-399) draws nothing from this source; `--assets
+attribution` is needed, and the resulting pack has the licence set `attribution` and exports with the BSD-3
+notice.
 
 **Admission reading (the first task).** Read the licence text at a pinned release from the primary
 repository and record its hash and date. Answer in writing, in the admission record: (1) does BSD-3 cover the
@@ -55,8 +70,13 @@ workspace's build; its outputs are files. Each output set is stored with a recor
 configuration hash, command, date, output hashes. Nothing under `crates/`, `surface/`, `spark/` or `apps/`
 may reference the tool (a dependency lint enforces it).
 
-**Import profile.** `frob scene import --source infinigen-indoors --profile populated-interior <dir> --json`:
-decode meshes; assign each object a collision representation (fitted primitives or a convex decomposition
+**Import profile.** `frob --json scene import --kind asset <dir> --source infinigen-indoors --profile
+populated-interior --key <k>` (the verb and its inputs are N19a-46's: `kind` is required and a `run` verb takes an
+idempotency key; this bead adds the import profile `populated-interior`, which admits a directory holding one
+generated interior with its object files and its output record, raises the decode limits of `asset-default` to
+the profile's own, and takes each object's behaviour from the generator's metadata (movable → `free`, jointed →
+`articulated`, otherwise `static`; an object the metadata leaves open is `FROB-REF-315`), recorded in
+`registries/import-profiles.toml`; an output set without its record is refused). The import: decode meshes; assign each object a collision representation (fitted primitives or a convex decomposition
 with recorded error) and a material from the project's interface and optical maps (the generator's shading
 materials do not determine friction; friction class is `assumed` per object category); mark movable against
 fixed objects from the generator's metadata; write the licence manifest entry per asset with this source key;
@@ -66,7 +86,14 @@ emit a loss report (dropped shaders, lights mapped to a lighting level, unsuppor
 registry's ranges, else flagged); every movable object has positive mass and a consistent inertia from a
 declared density (`assumed`); no object interpenetrates the structure at rest (settling test on the referee);
 the scene passes scene acceptance; the pack's launch shape (contact capacity, brick count) stays inside the
-proxies' declared shape or the import is refused for the batched tiers with the reason.
+proxies' declared shape or the import is refused for the batched tiers with the reason (the limit is the one
+BD-399 enforces in its populate step; there an offending asset is replaced by its proxy box, which a whole
+interior does not have).
+
+**Manifest and catalogue.** `assets/scenes/infinigen-indoors/manifest.toml` (DESIGN name) has one entry per
+admitted output set: the record above, the hashes of its files, the object list with per-object hashes, and
+the notice text. It holds identifiers, records and digests, no generated bytes. An object of an admitted set
+that the populate step may place gets a row in `registries/assets.toml` (BD-399) pointing at its entry here.
 
 ## Acceptance criteria
 
@@ -90,9 +117,17 @@ proxies' declared shape or the import is refused for the batched tiers with the 
 
 ### End-to-end script and logging
 
-`scripts/e2e/assets_licences.sh` (NEG-16), scene-asset loop at M5: import of the recorded output set, licence
-manifest read-back, export with notice, the exclusion check with `read = false`; log lines carry the source
-key, release, seed, asset count, class, notice presence and refusal codes.
+`scripts/e2e/assets_licences.sh` (the M5 scene-asset loop, owned and run by NEGp1-54, which depends on this
+bead; this bead lists the steps of its row), on the `synthetic` recorded output set, every `run` verb call with
+its own `--key`: with `read = false`, the import as written above (`--key al-infi-1`; refused by the
+default-pipeline filter, which names the reason); after the admission reading, the same import (`--key
+al-infi-2`; a pack with a loss report, one licence entry per asset with source `infinigen-indoors`, class
+`attribution` and the BSD-3 notice); the licence manifest read back with `frob --json scene show <pack>`; an
+output set without its record (`--key al-infi-3`, refused); an imported set whose launch shape exceeds the
+proxies' (`--key al-infi-4`, refused for the batched tiers with the reason); `frob --json artifact export <pack>
+--out exports/ --key al-infi-5` (the export embeds the notice). Log lines carry `ts`, `script`, `bead:
+"NEG-18"`, `step`, `event`, the exact command, exit code, wall time, the `evidence` block, the source key,
+release, seed, asset count, class, notice presence, each refusal code with its exit code, and no geometry.
 
 ### Known answers and negative controls
 

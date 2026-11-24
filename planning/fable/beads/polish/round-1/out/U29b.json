@@ -1,0 +1,319 @@
+{
+ "round": 1,
+ "slice": "U29b",
+ "reviewed": 27,
+ "changed": [
+  {
+   "bead": "N29-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Aligned with the catalogue/seeding division of N38b-05 (this bead writes counterexamples.toml entries in the catalogue schema; controls.toml is written only by the seeding tool) and with the N38a-40 allocation ledger for the six appended entries (block request, tags in slug, provisional-tag-past-due); added control_kind and plant per entry (kinds: mutation, planted-input, planted-world, a-a); C2/C4 got their gate; C5 same_as CX-150; listed the controls other beads register for GATE-CHRON-01, -11, -13 so the linkage test can pass; deps + N38a-40, N38b-05; acceptance, unit tests (schema, tag mapping, cited CX arithmetic) and the e2e (re-seed, plant off/on, full NDJSON fields) rewritten."
+  },
+  {
+   "bead": "N29-REF",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The uncoded refusal is now taken from the refusal allocation ledger as slug non-physical-energy-bound in family 1xx (N35x-02's decision, a dep), not 'next free 8xx'; acceptance, a unit test with a planted hand-typed 8xx row, and an e2e trigger for it added. The FROB-REF-811 row gains its write-side triggers (N29b-08) and the note that a re-sent round with different content is 803."
+  },
+  {
+   "bead": "N29b-01",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Per-task energy per completion now counts every attempt (numerical, budget, protocol included, with a mandatory non_physical block, else 865) as the plan's 'all attempts' and N24a-18's invalid_attempt_counted state; c = 0 and COT wording aligned to N24a-18/N24a-37 (undefined; JSON null with reasons no-completions, distance-below-floor) and the COT distance floor (0.10 m) is N24a-18's, not d = 0; partition law covers the algorithmic-exchange line; dep N24a-18 added; e2e notes the verb steps run once N24a-37 exists."
+  },
+  {
+   "bead": "N29b-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "small_denominator test was wrong in f64 (5 quanta exceed the 1-quantum f64 floor); now states both floors and the equality case."
+  },
+  {
+   "bead": "N29b-03",
+   "kinds": [
+    "complete",
+    "scope"
+   ],
+   "what": "Out now states what the kernel of N29a-22 must accumulate per contact slot (N_f and G_f in relative velocity, two double-float accumulators) for the passivity bound and the differential; request filed to N29a-22."
+  },
+  {
+   "bead": "N29b-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "audit_state gains 'inconsistent' (written by N29b-03's differential, which already used it) with counts and refusal handling; fidelity.energy owner corrected to N29a-22."
+  },
+  {
+   "bead": "N29b-05",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Cost of the monitor kernel measured and recorded as a line of the T0/T1 budget held by GATE-CHRON-13 (N29a-17); latch-memory note made exact (13 classes at M2); related N29a-17, N29b-06; an ungrounded threshold removed. Takes over the second-milestone re-read of OPEN-CHRON-2's provisional ring half (new item 9, criterion, test ring_share_rule), which N29b-18 (M1) had left to no M2 bead."
+  },
+  {
+   "bead": "N29b-06",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "dep N38b-19 (the gate recorder writes the one gate record); related N16b-33, N24a-39; considerations name the script-name split with N16b-33 and that the record goes through the recorder with a fresh session."
+  },
+  {
+   "bead": "N29b-07",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "dep BD-095 (rows are artifact-graph nodes); the adjudicator rule's version joins the stratum key; e2e adds the pair import and a reversed-order byte-identity check, with NDJSON fields."
+  },
+  {
+   "bead": "N29b-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "States which refusal each write-side violation gets (811 read guard and write triggers, 803 for a re-sent round with different content, 865 for a summary that omits exclusions) and tests them by code; e2e notes that N16b-31's rounds steps and BD-263 come after this bead. Now turns on module 13 of N29b-15's invariant suite (dep N29b-15) and moves PO-CHRON-02's obligations row to derivation-on-file; dep STD-E2E for its e2e steps."
+  },
+  {
+   "bead": "N29b-09",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "deps now BD-003, BD-005, BD-008, N33c-27 (the round-trip oracle the decision rule reads), N34-11, N34-25; related FD-FKER-01, N33a-20, N41-OPEN6; scope and criterion 4 cite N33c-27 instead of restating its oracle."
+  },
+  {
+   "bead": "N29b-10",
+   "kinds": [
+    "split",
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Re-affirmation (a recorder command in frob-conformance with its own inputs and tests) split out to new bead N29bp1-01, which also fixes its demotion to the per-[[gate.part]] status record of N38b-18 (not-run with the former record under detail) instead of rewriting a 'row'; this bead now owns wiring cite into the gate recorder and the bead-log append (new criterion and tests recorder_cites, beadlog_cites); dep BD-138 for the frob-mcp surface the surface test runs on; e2e NDJSON fields and summary line."
+  },
+  {
+   "bead": "N29b-11",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Family L is parameterized by the lease manager; this bead runs the implemented per-run design and N29b-19 plugs in its design-B prototype (the prototype was owned by no bead); device rows and device dual runs attributed to N29a-24 (mechanism BD-210), matching its own Out paragraph."
+  },
+  {
+   "bead": "N29b-12",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep N29a-11 (a failure capture is the flushed device ring, whose bytes the first measurement sizes); measurement sources named."
+  },
+  {
+   "bead": "N29b-13",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Withdrawal surface aligned with the registry's admin kind (no idempotency key; idempotent by construction; scope store:admin, FROB-REF-720, exit 5, also for the owner-scope case); re-affirmation pointer moved to N29bp1-01 (now a dep) with per-part demotion; deps STD-E2E, STD-TEST; new test withdraw_twice_is_noop; e2e summary lines."
+  },
+  {
+   "bead": "N29b-19",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Scope now owns the design-B prototype lease manager (test-only) that plugs into N29b-11's family L; adopting B creates a follow-up bead (no owner was named); related N29a-24, N29b-18; e2e failure fields."
+  },
+  {
+   "bead": "N29b-14",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "After a purge with withdrawals, gate parts and closing lines that rested on the withdrawn claims are demoted by N29bp1-01 (the purge receipt lists them); related N29b-10, N29bp1-01; e2e failure fields by identifier only."
+  },
+  {
+   "bead": "N29b-15",
+   "kinds": [
+    "correct",
+    "deps",
+    "placement",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Staging fixed for an M2 bead (it declared modules mandatory at M1 and closed on an M3 outcome): 01-12 at its close, module 13 registered not-exercised and turned on by N29b-08; summary mark aligned to N35-28's x-frob-summary annotation instead of an invented verb field; control rows no longer duplicate the controls the N38b-05 seeding tool writes from N29-CX/KA (04, 05, 06, 10, 12a, 13 reuse their NC ids), new rows only for plants without one, with a no-duplicate join; deps N29-CX, N35-28, N38b-05, N29bx-01 (module 14 exists from M1; this suite adds 01-13, their invariants.toml rows and the fourteen-module summary)."
+  },
+  {
+   "bead": "N29b-16",
+   "kinds": [
+    "correct",
+    "placement",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "PO-CHRON-02 no longer makes an M2 bead wait for M3: the record and row are created open/due M3 with parts owned by N29b-08 (derivation, exact cases) and BD-264 (simulation); the obligations ledger is crates/frob-conformance/registry/obligations.toml (DESIGN: plan names none, three units disagree) with a union row schema and the check obligations_chronicle plus its planted failures."
+  },
+  {
+   "bead": "N29b-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e failure fields (stream, chunk, block, seed, replay command); related N29a-17, N29b-12."
+  },
+  {
+   "bead": "N29b-18",
+   "kinds": [
+    "correct",
+    "placement",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Rule (a) arithmetic fixed (512 ticks at 50 Hz is 10.24 s, not within '10 s'); the M1 bead no longer needs M2 mechanisms: the divergence-time condition is computed from measured ledger lookups and digest comparisons (digest chain BD-203 and verb BD-206 are M2) and re-measured by N29a-21; the ring re-read is assigned to N29b-05; the cross-L alignment test became a request to BD-206; the divergence e2e step is not-run until BD-206 exists."
+  },
+  {
+   "bead": "N29b-20",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Per-row energies are read from the energetics stream at T2 (N29b-22 item 7), not the contact stream; the RowEnergy type is defined by N29b-21 (which this bead depends on) and X must equal the step's (new test row_x_matches_step); deps STD-E2E, STD-TEST."
+  },
+  {
+   "bead": "N29b-21",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Dependency order made sound: this bead (first) defines PredictorEnergy and RowEnergy in frob_core::energy and computes X for every impulse-level row, so check_exchange does not need the later contact bead; the identity's scale is defined (its floor gives the criterion's 1e-15 J); e2e notes it reads N29b-22's lines; deps STD-E2E, STD-TEST."
+  },
+  {
+   "bead": "N29b-23",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Per-row values queried from the energetics stream (T2 per-row records of N29b-22), not the contact stream; the gate row and its two parts are N40-10's, this bead records the M1 part through the recorder (dep N38b-19) and leaves M2 not-run; the plan's mutant uses N29-CX C1's feature mutant-chron-exchange-heat (seeded control, no second row; it had another name here), the two other plants become new control rows; step group inv-14-suite runs N29bx-01's script (dep N29bx-01); the 'all parameters exact' claim corrected for h = 1/2,000."
+  },
+  {
+   "bead": "N29b-22",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The refusal's slug and family aligned with N29-REF/N35x-02 (non-physical-energy-bound, 1xx, exit 3, from the allocation ledger; the 8xx pending name withdrawn); item 7 now specifies the per-row T2 record on the energetics stream that N29b-20/N29b-23 read; the verb telemetry.energy (N24a-37) comes after this bead, so criteria and e2e read the lines through the ledger view and telemetry.query until it exists; bracket test sign fixed; deps STD-E2E, STD-TEST; new test row_detail_published_t2."
+  },
+  {
+   "bead": "N29b-24",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The strict-tier mutant reuses C1's feature and control; the record writes the M2 part through the recorder per N38b-18; this bead turns on the batch-tier rows of INV-CHRON-14's module (they had no owner); related N29a-17, N29-CX, N38b-18."
+  },
+  {
+   "bead": "N29bx-01",
+   "kinds": [
+    "correct",
+    "deps",
+    "placement",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "As an M1 bead it can no longer rely on the M2 suite: it creates the inv_chron target with module 14 and the staging rule, and N29b-15 (now depending on it) adds 01-13 and the summary; N29b-23 depends on it and runs its new script chronicle_inv14.sh as a step group (the graph finding: users of INV-CHRON-14 now depend on its registration); the gate mutant keeps C1's one control and three new plants get control rows; refusal reference aligned to the allocation ledger; deps BD-025, N29-CX, STD-E2E."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N29bp1-01",
+   "title": "frob-conformance: re-affirmation of recorded PASS parts and bead closing lines against the live artifact graph",
+   "why": "split from N29b-10: the over-time half of ADR-CHRON-07, in another crate with its own inputs (gates.toml parts, bead logs); demotion per [[gate.part]] (not-run, former record under detail) and an appended fail line in the bead log, idempotent, report with denominators; M1, parent WP-43, deps N29a-09, N29b-10, N38b-18, N38b-19, STD-E2E, STD-TEST."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N29a-04",
+   "what": "its e2e replays an old cursor with a changed --stream through `frob telemetry query` and expects FROB-REF-896; under N29-REF/N32-REF the envelope's refusal through a verb is FROB-REF-806 with 896 as cause (896 only from the store's paging interface)."
+  },
+  {
+   "bead": "N29a-22",
+   "what": "item 2 (contact-active) must compute the contact's net work in relative velocity (prescribed surface velocity removed; boundary work of a moving surface goes to the external-work line), and the kernel needs two double-float accumulators per contact slot (N_f and G_f), not one, because the passivity bound is a fraction of G_f; N29b-03's oracle and differential assume both."
+  },
+  {
+   "bead": "N24a-37",
+   "what": "cites N29b-01's aggregate rule (residual of an aggregate, signed parts, non_physical block) and should depend on N29b-01 (both M1)."
+  },
+  {
+   "bead": "N29a-17",
+   "what": "GATE-CHRON-13's T0/T1 measurement must run with the failure-monitor kernel K-x-monitor in the step and should depend on N29b-05 (both M2), which records the kernel's own cost as a budget line."
+  },
+  {
+   "bead": "N33c-27",
+   "what": "write the claim and evidence text forms as `clm:` and `ev:` (N34-11's fixed prefixes; `claim:`/`evidence:` are wrong); its round-trip tests overlap N34-11's franken_kernel_text_forms_agree: reference it instead of duplicating."
+  },
+  {
+   "bead": "N38b-19",
+   "what": "the recorder's pass path must call N29b-10's cite (FROB-REF-869 on an unresolved claim) and take the registry lock that N29bp1-01's reaffirm also takes; consider listing N29bp1-01 as related."
+  },
+  {
+   "bead": "N38b-20",
+   "what": "the generated status table should print a part demoted by N29bp1-01 as 'not run (evidence unavailable since <date>)' from detail.cause and detail.demoted, never as passed."
+  },
+  {
+   "bead": "BD-206",
+   "what": "telemetry.divergence must compare two runs recorded with different chunk_len (align on ticks; chain comparison at the coarser partition's boundaries, which are also finer boundaries for power-of-two L), with the test divergence_across_different_len (L = 128 against 256: no divergence; planted at tick 300: both report 300); requested by N29b-18."
+  },
+  {
+   "bead": "N29a-21",
+   "what": "re-measure the end-to-end first-divergence query time on a 1,000-chunk episode at the decided L (bound 1 s) and append it to ADR-CHRON-13, re-affirming condition (d) of N29b-18, which was computed from measured parts at M1."
+  },
+  {
+   "bead": "BD-264",
+   "what": "run PO-CHRON-02's simulation on the real estimator (10^4 rounds with the prediction replaced by a constant, its negation and noise; mean of theta-hat unchanged within three standard errors) and set its row in crates/frob-conformance/registry/obligations.toml to discharged with the claim id (N29b-16 creates the row; N29b-08 adds the derivation)."
+  },
+  {
+   "bead": "N28c-23",
+   "what": "its obligations ledger is registries/obligations.toml; N29b-16, N31b-02 and N23b-17 use crates/frob-conformance/registry/obligations.toml. Align on one file and the union row schema (id, statement, mechanism, derivation, discharge, due, status open|derivation-on-file|discharged|failed, record, claim_ids, gate, recorded_by)."
+  },
+  {
+   "bead": "N31b-02",
+   "what": "obligations ledger row schema differs from N28c-23 and N29b-16 (discharged_by, bound, measured, commit; status not-applicable); align on one union schema for crates/frob-conformance/registry/obligations.toml."
+  },
+  {
+   "bead": "N23b-17",
+   "what": "write the obligations ledger path in full as crates/frob-conformance/registry/obligations.toml and use the shared row schema (see N29b-16)."
+  },
+  {
+   "bead": "BD-025",
+   "what": "N29b-15 registers invariant plants with seed = \"INV-CHRON-nn\" (other units use RISK-nn); the loader should state which seed identifiers it admits beyond CX and KA."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Complete: all 27 beads reviewed, one new bead (N29bp1-01, split from N29b-10). Main themes: milestone direction (beads of M1/M2 that required later-milestone outcomes now hand those parts to later beads, recorded in both); registry ownership (controls seeded from CX/KA are not re-registered; gate rows are N40-10's and parts are recorded through the recorder); dependency order in the GATE-CHRON-14 cluster (record types, stream names, INV-CHRON-14 registration). graph_check cycles: 0; no dependency on a later milestone. Likely settled after round 2 confirms the requests (BD-206, N29a-21, BD-264, obligations ledger path)."
+}

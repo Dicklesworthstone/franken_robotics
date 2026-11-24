@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-03", "BD-054", "BD-055", "BD-056", "BD-101", "BD-106", "N14b-11"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-101", "BD-106", "N14b-03", "N14b-11", "NEG-30", "NEG-31"]
 needs: []
-related: ["SPEC-C-07", "N14b-07", "BD-246", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 8", "§14.10", "C-07", "§28.4 A-01, A-07", "Appendix M KA-266, KA-270"]
 ---
@@ -24,8 +24,14 @@ radius has a closed form. No reference robot is on file; its scorecard is its ow
 
 ## Scope
 
-In: `zoo/ackermann.fbot`, its expectation file and controls. Out: the template (N14b-03); mobility by exact
-rank (BD-101); the growth vector and maneuverability (BD-106, N14b-11); the steered-base controller (N14b-07).
+In: `zoo/ackermann.fbot` (the template instantiated at its defaults), its expectation file with the full
+known-answer table below, the two variant files of the controls, and the generated golden tests
+(`zoo_ackermann…`). Out: the template itself with its manifest, levers, presets and default parameter values,
+and the template-level unit tests of the same closed forms (`ackermann_radius`, `ackermann_inner_outer`,
+`ackermann_linkage_mobility_one`, `ackermann_double_tie_rod_refused_110`, `ackermann_growth_vector_2_3_4`), all
+in N14b-03: the fixture L = 0.50 m, w = 0.40 m, δ = 20° is the template's default, defined there and repeated
+here, and it changes only with the template. Also out: mobility by exact rank (BD-101); the growth vector and
+maneuverability (BD-106, N14b-11); the steered-base controller (N14b-07).
 
 ## Technical approach
 

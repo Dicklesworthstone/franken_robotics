@@ -1,0 +1,381 @@
+{
+ "round": 2,
+ "slice": "S80",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "BD-354",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "It re-implemented the bound, the order rule and the FROB-REF-866 refusal that N00-17 and N36-05 declare single-home, and filed nothing GATE-TENFOLD-09 reads. Now: ceiling via perf::bound::ceiling, composition via thesis::compose, refusal raised through admit_experiment with N39-REF reason names; admission also files the frob.perf.ceiling/1 record and the augur-tagged ceiling attachment (same tag as the M3 reading N25ax-02); the record references its N38a-07 experiment entry instead of restating five parts; added the registered-after-first-run refusal N25a-27 step 5 tests, cache flags, f-from-baseline-arm, the speedcmp register/audit entry points with options and exit codes, the audit's pattern list; fixed u's mixed units (u = untouched time + h·total). Seven new named unit tests; dep N36-05 added."
+  },
+  {
+   "bead": "N25a-27",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "correct"
+   ],
+   "what": "Calls BD-354's now-defined entry points with --ledger/--tree and exit codes; fixture experiment register; new fixture no-experiment-entry (fifteen); asserts each admitted record filed its ceiling record and augur-tagged attachment; gate recorded with record_gate (N38b-19) instead of an unnamed gate runner."
+  },
+  {
+   "bead": "BD-355",
+   "kinds": [
+    "tests",
+    "correct",
+    "self-contained"
+   ],
+   "what": "All counts, the digest, the guarded fallback counts (0/65,536 and 58,254/7,282) and the batch counts (616/368/40; 648 points, 8 ties) recomputed and correct. Added the refusal code FROB-REF-252 (BD-053's select lint) for the unguarded class and the undersized guard; defined the family-screens reference and unguarded-comparison entry points and the publish_from_device_labels mutant that N25a-28 calls; added the missing cancellation unit test for the acceptance criterion."
+  },
+  {
+   "bead": "N25a-28",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Every compared mission.synthesize run now carries a distinct --key (drift 5); comparison switch and mutant named by BD-355's entry points with FROB-REF-252; cancellation step uses the job verbs (--sync-wait-ms 0, frob job cancel/status); gate row entered with record_gate (N38b-19) instead of an unnamed gate runner."
+  },
+  {
+   "bead": "BD-357",
+   "kinds": [
+    "users",
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "No option selected cuts, quotient or scheduler, so the four configurations could not be run from the CLI: defined --cuts on|off and --quotient on|off (defaults from the decision in force; on for a fired clause refused FROB-REF-724 naming the ADR), uses N25b-12's --scheduler. The final kill-gate reading is appended to the one ADR docs/adr/ADR-KILL-AUGUR-CUTS-M4.md (drift 4) with receipts and N40-03 propagation, by a non-implementing session. It now owns the leaf enumeration of the exhaustive path, so the fallback exists when N25b-13 closes with reason fallback. E2E runs carry distinct keys; prove bundle and frob-verify commands written out; two unit tests added."
+  },
+  {
+   "bead": "N25b-12",
+   "kinds": [
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S33's request (checked against N25a-32 and INV-AUGUR-10): LargestUnresolved scheduler as the stats-off fallback, the answer-identity check in two cargo lanes against the stance and pusher known answers, and the sign-flipping, cell-dropping OpportunityLoss mutant. Added the --scheduler/--hints surface (default by build feature; the envelope names the scheduler that ran). Its e2e was BD-357's script, which depends on it (drift 7): it now has its own scripts/e2e/mission_worklist.sh with distinct keys, budget-stop and cancellation steps; dep STD-E2E."
+  },
+  {
+   "bead": "N25b-13",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E section restated for drift 7: the mechanism is reachable only through BD-357, so acceptance rests on its unit tests; it exposes the cut records and audit-hook record the script logs."
+  },
+  {
+   "bead": "N25b-14",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Same drift-7 restatement: acceptance on its unit tests (ballast 24,546 classes recomputed and correct); exposes the report and replay record that BD-357's script logs."
+  },
+  {
+   "bead": "N25b-15",
+   "kinds": [
+    "users",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Added --family-order ranked|fixed|reversed (the fallback order is a real code path; reversed is the independence diagnostic); the falsifier protocol is frozen with its digest in the ledger before the first run; its own script now carries the independence stage with distinct keys (it leaned on BD-357's script, drift 7). Closure and continuous-iteration numbers checked."
+  },
+  {
+   "bead": "N25b-16",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "eval.run takes --battery, not --task; each call now carries a key from leaf identity and seed (drift 5), which also makes the script's no-repeat idempotence real."
+  },
+  {
+   "bead": "N25b-17",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Names the ADR docs/adr/ADR-KILL-AUGUR-CUTS-M4.md with N40-03's required fields and a non-implementing recording session; the product-path reading of BD-357 is appended to the same file; on a kill the mechanism bead closes with reason fallback (not superseded) and dependents per N41-17."
+  },
+  {
+   "bead": "N25b-09",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Worked values rechecked (interval [-0.3, 0.7], affine [-0.3, 0.2], order-2 Taylor [-0.3, -0.05]; decided share 1 - 2^-10). E2E restated for drift 7 (reachable only through BD-358; acceptance on its unit tests; exposes the paving report); Out list now names the taylor-box checker N12-16 and the weak-variable bead N25e-24."
+  },
+  {
+   "bead": "N25b-10",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Midpoint 841/800 N, corner values 3/16 and cylinder points rechecked. E2E restated for drift 7; the --at selector of mission.show written in the verb's real form and requested of VERBS-mission."
+  },
+  {
+   "bead": "N25b-11",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Run-verb calls carried no --key although the Considerations rely on job recovery by key (drift 5): keys added, recovery via frob job find, distinct keys for the compared budget-stop runs; mission show in its real form (--answer, --at); joint-paving refusal written as BD-358's --region joint; gate entered with record_gate (N38b-19); the second kill reading goes to docs/adr/ADR-KILL-AUGUR-REGION-M4.md with N40-03's fields and a non-implementing session (drift 4)."
+  },
+  {
+   "bead": "BD-359",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Default surface had no --key (drift 5): added, options --baseline/--baseline-policy/--paired-plan requested of VERBS-mission. Gate line restated for drift 7 (measured by N25c-26 and decided by N25c-27, both dependents). Bundle acceptance needed BD-364's M4 writer, which depends on this bead: restated as the proof object accepted by N12-17's checker in process. Test file path and a cancellation test added; scalar fixture (gain 1/5) rechecked."
+  },
+  {
+   "bead": "BD-363",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Requests S16/S30 applied after checking N12p2-01: dep N12p2-01; the checker covers sum_{j<=k-1} S(n,j) maps, not S(16,k-1); work limit 2e8 complete maps, admits k-1<=4 at n=16 (178,973,355), 1,275,163,905 at k-1=5 refused before search; fail-closed interval stated for beyond-limit and missing-kind cases (sums recomputed). --key on the surface; gate line restated for drift 7; bundle acceptance restated (colouring-bound bundle is BD-364's). New tests work_limit_edges (K5 plus 11 free variants: 5 labels attained; K6: [2,6] unattained) and cancel_mid_colouring; test file path."
+  },
+  {
+   "bead": "BD-364",
+   "kinds": [
+    "scope",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "No bead wrote colouring-bound bundles at M4 (N12p2-01 points to BD-133, the M1 writer): added the kind to the M4 writer with deps BD-363 and N12p2-01, payload as N12p2-01 defines it. Tests colouring_bound_tree_roundtrip (triangle, 4 maps) and product_unreachable_roundtrip. E2E calls carry --key; M4 gate record entered with record_gate (drift 1). Worked cell rechecked (160 N, 8.8 <= 8.8)."
+  },
+  {
+   "bead": "N12-16",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Rows went to enabled with no ledger change, which N12x-08's check-generated test fails: enable changes with slugs and the six admission items, dep N12x-08. Krawczyk images, Taylor range [-3/10,-1/20], conic witness and the 841/800 N midpoint recomputed: correct."
+  },
+  {
+   "bead": "N12-17",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Request U22b applied after checking N22b-14 and N22bx-01: payload member absorber_card {hash, bytes}, step 3a energy.absorber-mismatch implemented by N22b-14 (W_abs recomputed from the card's lower envelope; catches mutant 16); behaviour without the step stated; identifier count 13 -> 14; new test. Ledger enable changes and dep N12x-08 as for N12-16; related N22bx-01."
+  },
+  {
+   "bead": "N12-18",
+   "kinds": [
+    "correct",
+    "deps",
+    "split",
+    "tests",
+    "title"
+   ],
+   "what": "Request U33c applied: rewrite-trace split out to new N12p2-02 at M2 (N33c-22 had depended on this M4 bead from M2 work). Narrowed to orbit-count and group-enumeration (title, scope, tests, refs). The wreath claim 'k^c(g) gives a different number' was false with types as colours (also 6): restated (21 with the six per-slot states) and a mutant test added. Ledger enable changes, dep N12x-08. Orbit counts 86,185/500,500/92/6 recomputed. Title narrowed to the two kinds it keeps."
+  },
+  {
+   "bead": "N12x-07",
+   "kinds": [
+    "self-contained",
+    "placement"
+   ],
+   "what": "Its refinement specimen was 'the smallest relation N25c-03's fixtures define', an M8 bead it cannot depend on: the two-gain specimen and the branch-selection negative control are now stated here, with a test. Record path docs/adr/ADR-LEMMA-<n>.md (drift 4). Budget arithmetic (1/50, 95/100, 0.945) rechecked."
+  },
+  {
+   "bead": "CARD-T-24",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Statement said the same formula k^c(g) applies to the wreath action; corrected to the orbit-counting lemma with the product-form fixed count (as N12-18 checks). related BD-049 and BD-285, which its Order-of-work names but the list lacked."
+  },
+  {
+   "bead": "CARD-T-27",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Third rule-table vocabulary (cse, dce, scale-pow2, add-negative-zero...) and no select-same, against N21a-19's E1-E11: aligned to the engine's names plus schedule; fold-exact defined as N21a-19's E10. Dep N12-18 -> N12p2-02, added N21a-19; test table_equals_engine_table."
+  },
+  {
+   "bead": "CARD-T-32",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related BD-359 (named in its Order of work but missing) and BD-364 (writer of the bundles). Fixture and the z^2-1/4 enclosure [11/100, 3/4] rechecked."
+  },
+  {
+   "bead": "BD-358",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Was counted unchanged earlier; revisited for drift 7: decided boxes are accepted by the in-process checkers (BD-132, N12-16); the standalone frob-verify run over the written taylor-box bundles belongs to N25b-11 and BD-364, the M4 writer that depends on this bead."
+  },
+  {
+   "bead": "N12-29",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The experiment reads taylor-box, sos-gram and conic-farkas, whose checker N12-16 was not a dep: deps N12-16, BD-027 and STD-E2E added. Entry point `second_opinion` example defined. E2E given its NDJSON path, fields, commands and the check-deps step (drift 8). ADR placed in docs/adr/ (drift 4)."
+  },
+  {
+   "bead": "BET-19",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "GATE-AUGUR-15 is entered by its gate script N25a-28, which was not a dep: added. Script calls carry --key, write bundles with prove bundle, read bets status (N00-28) and check the ADR, like BET-01. Test file path. related BD-354 (speed-claim admission)."
+  },
+  {
+   "bead": "N25a-30",
+   "kinds": [
+    "deps",
+    "placement",
+    "e2e-logging"
+   ],
+   "what": "Request U00-1 applied after checking N00-05 and N38a-09: registration and result go to pilots.toml (row PILOT-SOS-01 with N38a-09's fields; result appended under the protocol hash); dep N00-05 dropped. No kill gate names the mechanism: kill_gate to-register with proposed wording (requested of N40-03). Entry point and pilots fundable check in the script. All twelve minima, hand certificates, Bernstein and interval values recomputed: correct."
+  },
+  {
+   "bead": "N25a-31",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "placement"
+   ],
+   "what": "Script had no --key and verified sos-gram bundles that only the M4 writer BD-364 writes: dep BD-364 (no cycle), prove bundle step and keys added. The stop rule wrote to the review log; it is now the kill-gate decision ADR-KILL-AUGUR-SOS-M4.md with N40-03's fields (drift 4)."
+  },
+  {
+   "bead": "N25ax-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script commands given their real forms with keys for every run and mutate verb (refute twice with distinct keys, design new --from-cell, prove bundle), as the VERBS rows require. Every number of the carrier instance recomputed: correct."
+  },
+  {
+   "bead": "N25b-24",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Refutation runs had no --key and the retrofit was applied with an option the scene.retrofit row lacks: written as N19b-40's `--apply <entry>:<param>=<value> --at --scene` with keys, re-run with its own key. Unit tests added for FROB-REF-859, stored restoring edit, class and scope, and the two negative-control builds of the acceptance list."
+  },
+  {
+   "bead": "N25c-01",
+   "kinds": [
+    "placement",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Result went to the review log: pilot register row PILOT-TRANSPORT-01 (kill gate KILL-AUGUR-TRANSPORT), dep N38a-09 (drift 3). sim run (with --profile referee) and train start carry per-arm keys; NDJSON path and fields; test file path. Two-link case (25/3 N, joint 2) recomputed."
+  },
+  {
+   "bead": "N25c-02",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Surface and script had no --key; script verified bundles it never wrote: prove bundle step, keys per call (distinct for the facets lowering); --lowering requested of VERBS-mission. Test file path and tests for refusals 847/850/851/444, exit 5 and cancellation (acceptance demanded them). Pilot precondition tied to PILOT-TRANSPORT-01."
+  },
+  {
+   "bead": "N25c-06",
+   "kinds": [
+    "correct",
+    "deps",
+    "placement",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its own copy of the ceiling formula replaced by N36-05's ceiling, N38a-08's ceiling_from_phases and N00-17's residual_ceiling (the single implementation); ceiling record frob.perf.ceiling/1 filed before any kernel; ledger closure within 2%; claimed-ratio refusal is FROB-REF-866. Pilot row PILOT-FAMILYKERNEL-01 (kill gate to-register). Keys per arm, amendment and repetition; NDJSON path; test file path. Ceilings 6.67, 13.47, 1.464 recomputed."
+  },
+  {
+   "bead": "N25c-07",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "synthesize and solo sim runs carry keys; run show in its real form. Test file path; tests for rounding-profile sharing, composition invariance and cancellation, which the acceptance list demanded. Staggered ticks 8i rechecked."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N12p2-02",
+   "why": "split from N12-18 (request U33c): the rewrite-trace checker at M2, where N21a-19 emits traces and N33c-21/22 need independent replay; rule table aligned with N21a-19 (E1-E11 plus schedule), exact checks for E10 and E11, own e2e script and library replay example"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize row: add --region <per-constraint|joint> and --boxes (BD-358), --scheduler <fifo|opportunity-loss|largest-unresolved|hinted> and --hints <order.json> (N25b-12), --cuts <on|off> and --quotient <on|off> (BD-357), --family-order <ranked|fixed|reversed> (N25b-15); mission.refute: --baseline, --baseline-policy, --paired-plan (BD-359; overlaps S81's request); mission.transport: --lowering <vertex|facets> (N25c-02). (mission.show --at is already in the row.)"
+  },
+  {
+   "bead": "N33c-22",
+   "what": "depend on N12p2-02 (the rewrite-trace checker, now M2) instead of N12-18 (now orbit-count and group-enumeration only); the text citing 'N12-18, M4' can name N12p2-02, M2."
+  },
+  {
+   "bead": "N33c-21",
+   "what": "the independent checker is N12p2-02 (M2), split from N12-18; the reference-replayer fallback is needed only if N12p2-02 has not landed."
+  },
+  {
+   "bead": "N12-28",
+   "what": "its rewrite-trace dependency is now N12p2-02 (split from N12-18); replace or add the dep."
+  },
+  {
+   "bead": "N28a-28",
+   "what": "DC-11 kernel rewrite acceptance uses the rewrite-trace checker, now N12p2-02 (split from N12-18): depend on N12p2-02."
+  },
+  {
+   "bead": "N28c-11",
+   "what": "certified kernel rewrites use the rewrite-trace checker, now N12p2-02 (split from N12-18): depend on N12p2-02."
+  },
+  {
+   "bead": "N12-02",
+   "what": "the baseline table's checker column for rewrite-trace names N12-18; it is now N12p2-02."
+  },
+  {
+   "bead": "N21a-19",
+   "what": "Out names 'the independent trace checker ... (its own bead)': that is N12p2-02. And frob.kir.trace/1 has no step for N21a-18's scheduling, though the canonical hash covers the order: record each reordering as a step of rule schedule (two adjacent independent operations), so a scheduled target can be certified."
+  },
+  {
+   "bead": "N21a-18",
+   "what": "emit each live-range reordering as a schedule step of N21a-19's trace, so the independent checker N12p2-02 can replay a scheduled kernel to its hash."
+  },
+  {
+   "bead": "N12-13",
+   "what": "enabling the row is a ledger enable change with the six admission items (N12x-08, also M3); without it xtask check-generated fails. Add the change and the dep N12x-08."
+  },
+  {
+   "bead": "N12-14",
+   "what": "as N12-13: the four rows go to enabled through ledger enable changes (N12x-08), dep N12x-08."
+  },
+  {
+   "bead": "N22b-14",
+   "what": "its list of the kind's rule identifiers omits energy.absorber-mismatch, which N12-17 now defines (fourteen identifiers: eleven static, three of yours)."
+  },
+  {
+   "bead": "N25c-26",
+   "what": "it verifies dominance bundles, whose M4 writer is BD-364 (BD-359 now asserts only the proof objects): add dep BD-364."
+  },
+  {
+   "bead": "N25c-38",
+   "what": "it verifies the label answers' bundles; the colouring-bound bundle is written by BD-364 (added there): add dep BD-364."
+  },
+  {
+   "bead": "N40-03",
+   "what": "register two kill gates proposed by pilots in this slice (both now kill_gate = to-register in pilots.toml, which blocks funding): KILL-AUGUR-SOS (trigger F1, F2 or F3 of PILOT-SOS-01, or N25a-31's stop rule; fallback: no proposer, polynomial cells to per-constraint paving) and KILL-AUGUR-FAMILYKERNEL (the one-tenth rule of §25.12 fails on the registered workflow of PILOT-FAMILYKERNEL-01; fallback: no specialized family solver for that workflow)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 35 beads read in full against plan_refs, the brief and KNOWN_DRIFTS. Numbers recomputed by script (BD-355 screen, Stirling sums, SOS fixtures, carrier instance, Krawczyk, orbit counts, ceilings): all printed values correct except the wreath k^c(g) claim in N12-18. Main finds: missing --key on run verbs (drift 5) across nine beads; bundle checks that needed the later M4 writer BD-364 (drift 7); a kind (colouring-bound) with no M4 writer; three rule-table vocabularies for rewrite-trace; checker rows enabled with no ledger change (N12x-08); pilots registered in the review log instead of pilots.toml (drift 3). Slice looks settled apart from the requests made."
+}

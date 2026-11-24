@@ -8,7 +8,7 @@ labels: ["m2", "delivery", "solid", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-224", "N40-33", "N40-24", "N40-08", "N40-04", "N40-05", "EPIC-M1", "EPIC-M3"]
+related: ["EPIC-M3", "EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-08", "N40-24", "N40-28", "N40-33"]
 gates: ["GATE-KIN-03", "GATE-FID-01", "GATE-FID-03", "GATE-SPARK-02", "GATE-SPARK-03", "GATE-SPARK-04", "GATE-PHYLUM-03", "GATE-CORTEX-01", "GATE-CORTEX-05", "GATE-CHRON-01", "GATE-GAUNT-01", "KILL-KIR", "KILL-CONTACT", "KILL-METAL", "KILL-PHYLUM", "KILL-BUCKET", "KILL-D1", "KILL-PARITY", "KILL-SHARD", "KILL-LEARNKERN", "KILL-MARROW-GUARD", "KILL-SINEW-ROWS", "KILL-POOL", "KILL-EXPOSURE", "KILL-SCHED", "KILL-TENFOLD-LEVER"]
 plan_refs: ["§43.5", "§43.1", "§43.2", "§40.6", "§40.3", "§40.4", "§43.12"]
 ---
@@ -166,6 +166,7 @@ referee or CPU part at M1 close their `strict`, batched or every-tier part here.
 | GATE-WS-06 | the sampler row | Known answer. The mixed-wrench probe passes and its unconverted mutant fails; the planted sampler is rejected by rule P-12; `xtask check-deps` reports exactly one `serde_json` version per binary and fails a graph that adds `ftx-drape` to the core workspace; the Metal language version and the 64-bit atomic probe are recorded in the fingerprint. M0; the sampler row at M2. | §33.17 |
 | GATE-WS-07 | the sampler row | Known answer. Each of the four planted instances raises its named signal in 100 of 100 runs; `xtask check-deps` resolves the graph with every feature group enabled and fails on the planted second pin; no row of the register lacks a planted instance. M0 for the two build rows, M2 for the sampler row, M3 for the suite row. | §41.5 |
 | GATE-WS-09 | rows 12 and 14 | Known answer. Each of the six admission tests is recorded at the pin with its result: the roll-up of 31.96314202 kg; the refusal at 33 m and the agreement at 1 m to 10⁻¹², with the closed form returning ∓16.5 m; the signed motion witness for both transformer entry points; the arc fixture; the two `fs-sos` probes compared with exact evaluation; the two-plane ray fixture. A probe that now passes upstream is recorded as fixed and its interim posture is reviewed. M0, with rows 12 and 14 at M2. | §33.18 |
+| GATE-MARROW-06 | the device, teleport, fork and reset-cache rows | Known answer. The spring fixture is exact to 10⁻¹² in double precision on the referee and within 10⁻⁵ relative on device tiers; snapshot, restore and teleport preserve k on 10⁴ random states; the mutant that omits k from the snapshot is caught by an energy jump of π² J; `sense.alias` returns the witness for a single-turn encoder and none for a multi-turn encoder. M1 for the referee rows; the rows that need the device tiers, teleport, forks and the reset cache here (N40-10). | §13.11 |
 | GATE-TRAC-12 | on the transactional batch profile | Known answer. The arc fixture is detected on 1,000 of 1,000 seeded variants (radius 0.2 to 2 m, angle up to π, sphere radius 1 to 10 cm, an obstacle on the arc and outside the padded chord); the chord-only mutant fails the gate. On 10⁴ random two- and three-joint sweeps the bound of the second item contains 1,000 sampled path points per sweep with no exception. In the tunnelling audit (`contact.audit`) no missed contact is attributed to a broad-phase rejection. M1 on the referee, M2 on the transactional batch profile. | §18.20 |
 | GATE-CHRON-14 | on the batch tiers | Known answer. The three fixtures at 32, 64 and 2,000 Hz on `referee` and `strict`: constitutive dissipation of the resting block is exactly 0; sliding heat is within 0.1% of 4 W; impact loss is within 10⁻⁹ J of 2 J; a mutant that feeds algorithmic exchange into the film temperature is caught, because its temperature rise differs between 32 and 64 Hz by a factor of 2. M1 on the referee; M2 on the batch tiers. | §29.22 |
 | GATE-KIN-08 | whole | Performance; known answer (determinism) ¦ Digests identical to the masked path on 1,000 episodes per backend under 100 random co-tenancies and queue capacities; overflow to the general lane at most 1% of world-steps on the standard battery; a mixed cohort with queues reaches at least 0.70 of its weighted homogeneous throughput; the 95% lower bound of the paired whole-step ratio against the masked path is at least 1.15 at the batch size named in the receipt. ¦ M2 on CUDA; Metal when its dispatch cost is measured | §16.19 |
@@ -187,8 +188,10 @@ referee or CPU part at M1 close their `strict`, batched or every-tier part here.
 | GATE-GAUNT-07 | whole | Known answer ¦ Determinism: every kernel and every verb meets its declared class twice on one machine, across worker counts, in debug and release, across platforms and across backends; MR-01 holds on 10⁴ worlds per device family ¦ M2 | §38.15 |
 
 **4. Program-level items.** KILL-TENFOLD-LEVER is re-read on our own profile: a mechanism whose removable cost is
-under 10% of the measured loop is not funded as a speed lever. GATE-TENFOLD-09 recurs. GATE-GROUND-01, GATE-SAFE-01
-and GATE-GAUNT-01 recur; GATE-GAUNT-03 (metamorphic relations) first runs here.
+under 10% of the measured loop is not funded as a speed lever. GATE-TENFOLD-09 recurs. GATE-GROUND-01, GATE-SAFE-01,
+GATE-GAUNT-01, -02, -05 and -10 recur; GATE-GAUNT-03 (metamorphic relations) first runs here and recurs at every
+later exit. GATE-GAUNT-08 at each funding decision: the Frontier parts of WP-44, WP-46 and WP-50 are funded only on
+a pilot record with a falsifier, a computed ceiling, a fallback and a result.
 
 **5. Kill gates decided here, each recorded as an ADR.** In brief: KILL-KIR → hand-written arithmetic in Rust and
 the dialect, bound by differential tests. KILL-CONTACT → CL-2 as the default at a published lower throughput; then
@@ -236,8 +239,10 @@ KILL-PHYLUM is then decided on the pilot alone). OPEN-PROG-2 (the adjudicating s
 default: a pinned incumbent CPU engine that neither arm trains in, run by a fresh-context session; every ratio
 labelled `self-adjudicated`) and OPEN-ARENA-3 (who holds `qual:admin`, and the sealed families; default: the owner
 alone opens and closes campaigns; one sealed family per task family, sized for 20 requests at 256 clusters).
-OPEN-CHRON-4 (retention; default: logs and keys 30 days, failure captures 30 days in 64 GB, retired confirmation
-clusters sealed indefinitely).
+OPEN-CHRON-4 (retention windows for failure captures and the default store budget on each machine; default: 30 days
+and 64 GB; the retention of job logs, idempotency keys and retired confirmation clusters is OPEN-SAFE-4, due at M3).
+OPEN-TENFOLD-4, asked one milestone ahead because its default blocks the M3 exit (the compute envelope of the partial
+ten-fold gate, a campaign class per run; default: nothing above the default class runs; decision bead N39b-29).
 
 **9. Stop or re-plan.** Stop feature work on the device tier, and redo the thesis arithmetic with measured rates,
 if a physics row is below 0.33 of the incumbent after one optimization pass (KILL-PARITY). Re-plan the legged
@@ -282,7 +287,8 @@ covers too little) → the `strict` profile as named adjudicator, with results t
 - [ ] Every part in the gate tables has a recorded value and a caught negative control, or is recorded `not run`
       under the no-GPU variant with its reason.
 - [ ] The fourteen kill gates of the compiled table and the four late ones each have an ADR with an outcome; the
-      five named in the exit line are among them.
+      five named in the exit line are among them; the M2 re-read of KILL-TENFOLD-LEVER on our own profile has its
+      ADR (N40-28).
 - [ ] NS-02, NS-10 and NS-14 run from a clean checkout through `frob --json` and `frob-mcp`, or are recorded as not
       demonstrated under the variant.
 - [ ] Every throughput and training-time figure carries its disclosure block and the incumbent figure measured on
@@ -294,7 +300,7 @@ covers too little) → the `strict` profile as named adjudicator, with results t
 
 ### Unit tests
 
-Carried by member beads. Epic check: due counts for M2 are 2 admission, 80 convergence, 14 kill decisions, plus 22
+Carried by member beads. Epic check: due counts for M2 are 2 admission, 80 convergence, 14 kill decisions, plus 23
 late parts and 4 late kill decisions.
 
 ### End-to-end script and logging

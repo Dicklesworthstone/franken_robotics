@@ -1,0 +1,217 @@
+{
+ "round": 3,
+ "slice": "H-verbs-7",
+ "reviewed": 6,
+ "changed": [
+  {
+   "bead": "VERBS-spark",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "Applied S48, S56, S57, S59, S89: spark.check lists BD-176/177/181 options (--worlds, --decisions --pair/--ensemble with the solve-path pairs dense,ancestor and dense,tree, --battery standard, --invariance --axes --episodes --cotenancies --report), N21b-33 sweeps, --exhaustive, --footprint-audit, --conditions, --specialized (724 while absent), --emit-receipts (734); spark.precompile --target-fingerprint (params artifact-input<frob.fingerprint/1>), --unit, --specialize, conformance-only --kernel-set; spark.place conformance-only --withhold-kernel/--chunk-intervals; probe suites by milestone. Corrected form: N21a-04's keyless --list becomes the read action `list` (RL-21 forbids key_optional on a run entry, DESIGN). Found: paginated on cache and place; refusal lists fixed (check 601/603/605/606/613/734, precompile 251/601/603/606/612/616, probe adds 734); new convention 5 (724 for an absent bead's option; conformance-only options absent from release schemas, 802); BD-258 scope text; tests and e2e for the two two-kind verbs."
+  },
+  {
+   "bead": "VERBS-store",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "No slice requests. Review against implementing beads: store.status gains N33c-19 per-policy memo statistics, N29b-13 unpinned_closure_objects, holder-gone orphan count, hold pins with age, the N29b-14/BD-305 private line; store.collect gains the orphan release and the pre-mark audit pins_cover_live_claims (aborts, removes nothing; code requested of N29b-13); Extended-by lists updated."
+  },
+  {
+   "bead": "VERBS-study",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S31 (layer rule: plan 532/533/543/552/556, submit drops 542), S48 (per-arm solve_path, interim 561), S52 (--kind step-refinement --base --steps, Extended by N16c-38, N16c-43). S67 applied in corrected form: 840 added to study.compare with exit 5 (N24-REF), 809 REJECTED (an unknown study is 802 pointer study, exit 3, per N32a-13 and VERBS-job; 809 is plan-specific). Found: study.plan full inputs (manifest, seed_protocol, planning_effect, fixed-n flags) and outputs, 734/828 for the manifest file, the worded clock-changing refinement refusal; study.submit implemented also by N32a-13; layer_rule and plan_inputs tests."
+  },
+  {
+   "bead": "VERBS-task",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "Applied S30 (--overlay, --element and the symmetry block, task.show --section symmetry and --design --section reads with 103 no-declared-source-set, bare fixture names), S31 (136, 222; task.list kind=fixture), S51 (--cohort, 802 with --model), S53 (--online, --tier, --list-bodies, --choose/--arms/--pilot-worlds), S58 (554). Corrected form: S53's kind question resolved as a two-kind task.check whose action `coupling` is kind run (scope task:run; covers --coupling itself, which runs worlds, and --choose, which also locks), not mutate and not a new verb (DESIGN; plan §24.22 keeps the verb name); S31's `task fixture --list` sugar dropped as a CLI-only alias (NJL-04, INV-TETHER-01), listing is `task list --kind fixture`. Found: task.new carries BD-122's static-admission codes; 442 (N20a-01/N20b-15) on task.new and task.check; 572 at admission (N23b-03); 891 on task.check; task.list paginated; params entries (artifact-input<task|design|run>) so 734/828 reach path rows; task.verdict requirement/worlds/--re-evaluate; N24-REF worded refusals on the rows that raise them; convention 5; BD-258 scope text; tests and e2e."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S51/S91 (summary --digests, --table tile-ledger), S60 (histogram --channel/--scope/--world/--quantile/--bins/--against/--method/--at-frontier/--resolution, paginated, 840 and 888; stills BD-191 options and N24ap2-60 --fork/--band and overlays ghost/world-diff/reality-band, 840 and 562; inspect-pixel still-id form, --overlay, --grid, 731 and 840), S87 (--quality, --spp, tracer group). Corrected form: BD-187 under Extended by, not Implemented by; S87's 790/802 are appended codes; tracer need written in N33c-32's predicate form. Found: telemetry.energy 865 and 888 (N24a-37), telemetry.query 898 (N24a-36 --aggregate), full inputs of energy, failures, query, summary (N24a-35 budget floor, encoding); stills job case in cost_model; convention 5; BD-258 scope text; tests."
+  },
+  {
+   "bead": "VERBS-train",
+   "kinds": [
+    "complete",
+    "correct",
+    "sense",
+    "tests"
+   ],
+   "what": "Restored the missing train.status header (S51) with its N23a-14 outputs and extender fields. Applied S51, S54, S57, S58, S73, S75, S76, S88, S90: train.start lists every N23a-14 input (--trainer device|frankentorch|cpu-readback|frankentorch-device, --shards, --determinism in place of 'profile', --knob, --action-law, --resume, --eval-cadence, --target) plus --reset-mode, --zero-copy, --actor-channels, --rung/--rho, --warm-start, residual:<inner>/--base-controller, --randomization/--adapt-*, sac/td3/es arguments, --shield, --lag-bound, short-horizon-ac options with window_store_bytes; codes 522, 529, 554, 558 and worded term-contract-unmet; train.export --at/--to store; train.family --features, --arch and smoke options; train.inherit --force-inherit/--reset-depth/--audit-rate/--dry-run; train.distill full inputs, 524, 531. Found: 103/572 (BD-200), 247 (N35-04/06), 442, 457 (BD-338), 601/602 (N36-08, N23b-38) on train.start; optimize-group needs_groups for --optimizer airlock:cma-es (N23a-39); option_capabilities for --force-inherit; train.stop --now; distilled-student-on-teacher-states; convention 5; determinism spelling note; tests."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N32a-02",
+   "what": "Add an action-level `paginated` member (read actions only, with a lint) and list spark.check (action `list`, read) and task.check (action `coupling`, run, scope task:run) among the two-kind rows."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "Define how an entry marks conformance-build-only input properties (absent from a release build's schema, answered 802; help snapshots are of the release build), as VERBS-spark's convention 5 now assumes."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "Derive 806/807 for a paginated read action; state the general rule that a declared option (or option value) whose implementing bead is not in the build answers 724 naming it, never 802, as VERBS-spark, -task, -telemetry and -train conventions 5 now state."
+  },
+  {
+   "bead": "N21a-04",
+   "what": "`--list` is now the read action `list` of spark.check (scope spark:read, paged, no key); replace the text asking the row to mark the verb key_optional (RL-21 forbids it on a run entry)."
+  },
+  {
+   "bead": "BD-017",
+   "what": "Drop `--kernel K-seg-reduce --op add2 --pairs N` as a spark.probe form (N21c-41 runs the reduce through the annex harness and spark.check); note 734 for `--emit-receipts`."
+  },
+  {
+   "bead": "N21a-02",
+   "what": "State that `--emit-receipts <dir>` is resolved by the path jail (734), as the spark.check and spark.probe rows now list."
+  },
+  {
+   "bead": "N21b-22",
+   "what": "Define the conformance-only `--chunk-intervals N` on sim.run and spark.place (asked by N21c-39), with the length in force as a receipt field."
+  },
+  {
+   "bead": "N21c-05",
+   "what": "Repair 2 of 606 writes `frob spark check --device <id>`; the verb's spelling is `--backend <b> --key <k>`."
+  },
+  {
+   "bead": "N21b-29",
+   "what": "The spark.place row is now paginated = true (BD-178); define paging of the residency map."
+  },
+  {
+   "bead": "N21b-13",
+   "what": "spark.cache is paginated = true (BD-173); define paging of `--list`."
+  },
+  {
+   "bead": "N29b-13",
+   "what": "Name a code (an integrity 9xx through N35-33's ledger) for the store.collect pre-mark audit abort (audit::pins_cover_live_claims), so the row can list it."
+  },
+  {
+   "bead": "N28a-21",
+   "what": "An unknown study is 802 with pointer study, exit 3 (N32a-13), not 809; 840 exits 5 (N24-REF), not 3."
+  },
+  {
+   "bead": "N32a-13",
+   "what": "study.compare's chapter list is now 553 and 840; update its '(553; none)' acceptance."
+  },
+  {
+   "bead": "N33b-19",
+   "what": "Register the study manifest's format in formats.toml so a params entry replaces 734/828 in study.plan's chapter list; its script uses `--idempotency-key k1` where the CLI spelling is `--key` (KNOWN_DRIFTS 5)."
+  },
+  {
+   "bead": "N35-REF",
+   "what": "Its 561 reading names study.plan, but the layer rule and N33b-19 give study.plan 533 for a D4 arm; plan §35.11 names eval.compare for 561 while N28-REF gives eval.compare 542. Reconcile with N28-REF and VERBS-eval."
+  },
+  {
+   "bead": "N24c-37",
+   "what": "State that `task.check --coupling` is the action `coupling` of kind run (scope task:run; idempotency key, budget, bounded wait, job handle exit 8; N32a-02's two-kind form) and list its inputs (arms, tier, --worlds) and the frob.task.coupling/1 record as the action's output."
+  },
+  {
+   "bead": "N24c-38",
+   "what": "Its `frob task check … --coupling` calls must carry `--key` (the coupling action is kind run; without a key 805)."
+  },
+  {
+   "bead": "N24c-40",
+   "what": "`--choose`/`--pilot-worlds` are options of task.check's run action `coupling` (answers the 'question of kind': run with a key, not mutate, not a new verb); its calls carry `--key`; name the refusal for more than 16 candidates (the DESIGN cap has no code)."
+  },
+  {
+   "bead": "N24c-41",
+   "what": "Its `frob task check … --coupling --choose` call must carry `--key` (run action)."
+  },
+  {
+   "bead": "N24cp1-02",
+   "what": "Its `choose_refused` call must carry `--key` (run action); `coupling-choice-not-built` is listed worded on the task.check row."
+  },
+  {
+   "bead": "N24bx-01",
+   "what": "Drop `frob task fixture --list` as command-line sugar: a CLI spelling MCP lacks is the CLI-only alias NJL-04 rejects (surface-alias) and INV-TETHER-01 forbids. The listing is `frob task list --kind fixture --json`; update the Listing paragraph, the acceptance criterion and e2e step 1."
+  },
+  {
+   "bead": "N16c-41",
+   "what": "Its acceptance says the fixture is listed by `frob task fixture --list`; the listing is `frob task list --kind fixture`."
+  },
+  {
+   "bead": "N24a-13",
+   "what": "Name the format of the `--overlay` file (a schema member, or a formats.toml row) so the artifact-input stage can route it; today it is a file of no registered format."
+  },
+  {
+   "bead": "N24ax-02",
+   "what": "Name the format of the `--element` permutation file (a schema member or a formats.toml row) so the input stage can route it."
+  },
+  {
+   "bead": "N23a-34",
+   "what": "Step 14 expects `term-contract-unmet` from `frob task check` as well as `frob train start`; the task.check row does not raise it (N23a-05's admit pass runs at train.start). Assert it at train.start only, or have N23a-05 state that task.check runs admit (then VERBS-task lists it)."
+  },
+  {
+   "bead": "BD-191",
+   "what": "Name the codes of the untraced-world refusal ('the sampling rule'; N29-REF's 888 lists an untraced world among its triggers) and of an overlay whose channel the scene lacks; `later_overlay_ids_refused_until_built` answers 724 naming the overlay (convention 5)."
+  },
+  {
+   "bead": "N24a-40",
+   "what": "Name the code of the refusal for a still_id whose artifacts were collected (the tombstone case)."
+  },
+  {
+   "bead": "N20ap2-01",
+   "what": "Register the predicate `stills-quality-hero` in frob_verbs::admission::predicates so telemetry.stills can carry `needs_groups = [{ groups = [\"tracer\"], when = \"stills-quality-hero\" }]` (N33c-32's form)."
+  },
+  {
+   "bead": "N33c-32",
+   "what": "Its lint `needs-groups-known` accepts 'one of the ten groups'; N33bx-02 adds `tracer` as the eleventh, which telemetry.stills now names. Add the group to the table or the lint fails the row."
+  },
+  {
+   "bead": "N24a-35",
+   "what": "It names the output schema `frob.telemetry.summary/1`; the row of record is `frob.telemetry.summary.out/1`."
+  },
+  {
+   "bead": "N16c-02",
+   "what": "Step 2 calls `frob telemetry summary --run <id>`; the run is positional (`--run` is an unknown parameter, 802)."
+  },
+  {
+   "bead": "N23a-14",
+   "what": "Name the code for starting a pilot-pending or killed algorithm (exit 5; 724 is the convention-5 answer); its list of train.start refusals should match the row (103, 247, 442, 445, 457, 522, 524, 527, 529, 547, 554, 558, 572, 601, 602)."
+  },
+  {
+   "bead": "N23a-13",
+   "what": "Name the code for exporting a run with no completed update (an unknown run is the appended 802 with pointer)."
+  },
+  {
+   "bead": "BD-320",
+   "what": "Spell the determinism profile `--determinism` (N35-06: `--profile` names a step profile), as the train.family row now does."
+  },
+  {
+   "bead": "BD-322",
+   "what": "Spell the determinism profile `--determinism` (N35-06), as the train.inherit row now does."
+  },
+  {
+   "bead": "BD-323",
+   "what": "Spell the determinism profile `--determinism` (N35-06), as the train.distill row now does."
+  },
+  {
+   "bead": "N23a-39",
+   "what": "Register the predicate `train-es-airlock-optimizer` so train.start can carry `needs_groups = [{ groups = [\"optimize\"], when = \"train-es-airlock-optimizer\" }]` and list 790 for `--optimizer airlock:cma-es`."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All six registry beads now carry the options, codes and extenders their mechanism beads define. One request rejected (809 on study.compare); four applied in corrected form (spark.check --list as a read action; task.check --coupling as a run action covering --choose; no task.fixture --list alias; BD-187 under Extended by). Settled apart from the 37 requests to mechanism beads, mostly naming codes and adding --key to coupling calls."
+}

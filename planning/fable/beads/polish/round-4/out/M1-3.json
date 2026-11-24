@@ -1,0 +1,127 @@
+{
+ "round": 4,
+ "slice": "M1-3",
+ "reviewed": 12,
+ "answered": {
+  "added": 14,
+  "holds": 5,
+  "declined": 0
+ },
+ "changed": [
+  {
+   "bead": "N40-03",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-ka-3 (C13): the narration was already gone (H-owners-2 wrote 'The table of scope kinds is N40-KA's R-32, beside R-10'); added the remaining fact as asked: R-32 is due M0, bound by `scope_kinds_closed`, its control stated in the row (`scope = \"family:cuda\"` accepted on a `backend` row with the kind check removed). No claim of a link to RC-68 (different plant: RC-68 is a planted input)."
+  },
+  {
+   "bead": "N40-KA",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "H-owners-2: R-32 grows from eight to the eleven scope kinds of N40-03's closed table (adds `family` with counterfactual/adjoint/stencil for KILL-RESPONSE, `mechanism` chain-cord/hinged-rug for KILL-PROXY, `proofkind:<kind>` for KILL-AUGUR-FALSECERT; `half` values cuts/quotient; `clause` screening/comparison for KILL-SYNTH-REGRESSOR; KILL-SHADOW and KILL-HARDCONTACT under `backend`); pinning test `scope_kinds_eight` renamed `scope_kinds_eleven` (no other bead uses the name). H-owners-2's slug ANSWER adopted: the parenthetical that called the slug exemption this bead's DESIGN reconciliation now cites rule 5 of N38a-40, which exempts only a numbered row's own `slug`; tags stay in `slug` only."
+  },
+  {
+   "bead": "N41-16",
+   "kinds": [
+    "request",
+    "tests"
+   ],
+   "what": "H-cx-3: the seventeenth plant is cited as the fifteenth and sixteenth are (N41-CX row X41-58, plant `N41-CX:post-exit-bead-not-held`, due M0); the mutant of X41-53 is declared: feature `widest-by-dependents` in tracker/graph.rs, reachable only under `gauntlet-mutations`, computing width over dependents, under which `seed_widest_24` fails naming beads other than BD-312 and BD-376 (plant `N41-16:widest-by-dependents`, the control of K41-23)."
+  },
+  {
+   "bead": "N41-KA",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "H-cx-3: the control cells of K41-04 and K41-23 name their plants (`N41-01:severity-tally-printed-rows-only`, `N41-16:widest-by-dependents`) so N38b-05's step 3 appends the NC seeded from X41-52/X41-53 instead of allocating a second; the acceptance criterion says the mutants are built by N41-01 and N41-16 and registered by N41-CX, not 'planted by N41-CX'. H-owners-2's slug ANSWER holds with no change (tags already in `slug` only)."
+  },
+  {
+   "bead": "NJL-01",
+   "kinds": [
+    "request",
+    "users",
+    "tests"
+   ],
+   "what": "H-owners-1 (MACHINE_NOT_LOCAL): variation 12 now says the number is read from `docs/generated/refusal_round2.md`, the ledger run's output (N35x-02); 8xx/exit 3 and the 'not yet issued' narration were already gone. H-verbs-7: (1) envelope_scope was already the sixth `run` property; (2) the session.show case is now a planted negative control in `shadow_lint_catches` (a `read` row with its own `session` fails naming the process option). H-verbs-10: the present 724/802 rule holds and is stated as one rule for every cluster, keyed on whether the row declares the option, never on its milestone; when a row declares a later option (at registration, preferred, answering 724; or in the implementing bead's change, 802 before) is the cluster bead's stated choice, and no build accepts a declared option and ignores it; 'from the row's registration' became 'from the change that declares it' so the paragraph does not contradict the second form. H-verbs-3 and H-verbs-9 hold (variation 14 and envelope_scope/the 724 rule were already there)."
+  },
+  {
+   "bead": "STD-TEST",
+   "kinds": [
+    "request",
+    "registry",
+    "tests"
+   ],
+   "what": "H-owners-1: GateLine gains the fourth form `NoClaim(reason)`, printed `no-claim: <reason>` (N38a-02): only for a `claim = \"reality\"` gate, from an entry returning NoClaim{reason} (BD-397), via `.no_claim(reason)` with no measurement or control, never a pass; any other gate fails the run `no-claim-on-non-reality`; N38b-19 records status `no-claim`. The evidence stream's status set gains `no-claim` (with its reason), an acceptance item and the unit test `gate_report_no_claim`. H-owners-1's Row ANSWER: no Row field added; the list of N38a-12's computed states now also names `conditional (<decision>)`, the new state the ANSWER reports."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-owners-3's request added: 'its variations 10 to 13, which later beads land' now reads 10 to 16 (14 memo/no_memo, 15 reality-guard codes, 16 admission checks are read in NJL-01's table, not copied). The `run` common properties already listed `envelope_scope` (six); nothing else touched."
+  },
+  {
+   "bead": "VERBS-algebra",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-owners-3's request added: 'its variations 10 to 13, which later beads land' now reads 10 to 16 (14 memo/no_memo, 15 reality-guard codes, 16 admission checks are read in NJL-01's table, not copied). The `run` common properties already listed `envelope_scope` (six); nothing else touched."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-owners-3's request added: 'its variations 10 to 13, which later beads land' now reads 10 to 16 (14 memo/no_memo, 15 reality-guard codes, 16 admission checks are read in NJL-01's table, not copied). The `run` common properties already listed `envelope_scope` (six); nothing else touched."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-owners-3's request added: 'its variations 10 to 13, which later beads land' now reads 10 to 16 (14 memo/no_memo, 15 reality-guard codes, 16 admission checks are read in NJL-01's table, not copied). The `run` common properties already listed `envelope_scope` (six); nothing else touched."
+  },
+  {
+   "bead": "VERBS-autopsy",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-owners-3's request added: 'its variations 10 to 13, which later beads land' now reads 10 to 16 (14 memo/no_memo, 15 reality-guard codes, 16 admission checks are read in NJL-01's table, not copied). The `run` common properties already listed `envelope_scope` (six); nothing else touched."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N41-KA",
+   "what": "ANSWER: (H-ka-3's request to N41-17, convention 13) Holds with no change: N41-17 no longer says 'requested of N41-KA'; it states the fact, K41-26 (the closed set of six: pass, recorded, fallback, superseded, duplicate, withdrawn, and the burst rule), pinned by `close_audit_findings_merged` and the six types loaded by the lifecycle check."
+  },
+  {
+   "bead": "N38a-40",
+   "what": "ANSWER: (H-owners-2's slug ANSWER to N41-KA) Holds with no change: N41-KA keeps each K41 tag in its row's `slug` only, and a tag in any other field, test name or derivation file fails `provisional-tag-past-due` (its test `tags_mapped_in_table_order`). N40-KA now cites your rule 5 for the exemption instead of calling it its own DESIGN."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "ANSWER: (H-verbs-10, one rule for options) NJL-01's present rule holds and is now stated as one rule for every cluster: an option or option value a row declares is in the input schema from the change that declares it and, while its implementing bead is not in the build, answers one envelope FROB-REF-724 (`reason: feature-not-built`, naming the option and its bead, exit 5, `retry: never`), never 802; an option the row does not declare yet is 802; a `conformance_only` input is 802 in a build without `conformance`. When a row declares a later option is the cluster bead's choice, stated once in its notes: at registration (preferred; your item 5) or in the change that lands the implementing bead (VERBS-sim's 'How an input enters a row', 802 before it). Your item 5 stands as written, as your cluster's rule, not an interim one. Not adopted: making every cluster declare at registration, which would rewrite the reviewed option notes and tests of VERBS-sim, -actuator, -algebra, -analyze, -artifact, -contact, -control, -design and -operator with no plan basis."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "ANSWER: (H-verbs-3, --no-memo) Already in NJL-01: variation 14, `memo = true` (an N32a-02 later field that BD-111 adds and sets at M1 on the entries its wrapper fronts) generates `no_memo` (boolean, default false, CLI `--no-memo`, no code). A row that declares `no_memo` itself drops it in the change that sets `memo = true`, or `common-property-shadowed` fails the build; H-owners-3 has already asked VERBS-eval, VERBS-train, VERBS-sim and BD-111 for exactly this. A script may call `--no-memo` on any verb whose entry has `memo = true`."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "ANSWER: (H-verbs-9) Both are already in NJL-01: the kinds table lists `envelope_scope` (CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; 761 with `pointer: /envelope_scope` on a citation contradicting the launcher's token) as the sixth `run` common property, and the 724 rule for a declared option whose implementing bead is not in the build. That rule is now stated as the one rule for every cluster; when a row declares a later option is the cluster's stated choice (VERBS-spark's convention 5 declares at registration, the preferred form). No change for your beads."
+  },
+  {
+   "bead": "N34x-02",
+   "what": "N40-03's closed table of decision scope kinds now has eleven kinds, not eight: `cell`, `algorithm`, `half`, `clause`, `backend`, `item`, `resolution`, `kind`, `family` (`family:counterfactual|adjoint|stencil`, KILL-RESPONSE), `mechanism` (`mechanism:chain-cord|hinged-rug`, KILL-PROXY) and `proofkind` (`proofkind:<kind>`, KILL-AUGUR-FALSECERT); N40-KA's R-32 states the same. Your `scope` field text ('eight at the time of writing'), the reader's refusal list ('the eight above'), the test `scope_form_checked` ('one value of each of the eight kinds') and the known answer 'eight scope kinds' should say eleven and accept one value of each of the three new kinds; `region:x` stays refused."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "Mop-up of 19 requests on 12 beads: 14 added as asked, 5 hold with ANSWERs, none declined; N41-17 is unchanged (its C13 fix was already in). Several requests had been half-done by the earlier reviewer this round; only the missing part was added. One defect outside the slice: N34x-02 still enumerates eight scope kinds (request recorded). The registries in this slice look settled for the second half of the round."
+}

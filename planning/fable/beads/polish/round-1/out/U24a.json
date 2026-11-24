@@ -1,0 +1,463 @@
+{
+ "round": 1,
+ "slice": "U24a",
+ "reviewed": 59,
+ "changed": [
+  {
+   "bead": "BD-094",
+   "kinds": [
+    "deps",
+    "sense",
+    "correct"
+   ],
+   "what": "dependency direction was inverted: telemetry.summary prints BD-094's classes and kinds, yet BD-094 waited on summary and energy. Removed N24a-35/-37 (kept N24a-36 for drill-down handles); the joint four-verb check is N24a-39's. timeout monitor no longer reads a verdict record (would tie it to N24a-11)."
+  },
+  {
+   "bead": "BD-121",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "request of U12-2: N12-47 moved from related to deps, with test agrees_with_compendium_d7 against the D.7 oracle cases; named the three-way smoke test."
+  },
+  {
+   "bead": "BD-191",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "it depended on inspect-pixel (N24a-40), which reads what this verb stores (still, tile table, buffers): order inverted; N24a-41 also comes after (it embeds the page bundle that uses pixel inspection, a cycle otherwise). This bead keeps stills-* groups and a buffer-level link check (stills-buffers); the joint check moved to N24a-41."
+  },
+  {
+   "bead": "BD-195",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "loads states into device VecEnv slots on CUDA and Metal without depending on the device views (dep BD-193 added); tests device_load_equals_cpu_rounded and cancel_cohort_settle_clean for two acceptance criteria that had none."
+  },
+  {
+   "bead": "BD-201",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "request of U24c: dep N24c-16, the `source` record (task, version, licence) in `terms`, the no-parity sentence on every report, and tests mirrored_task_has_source_record, mirrored_report_has_no_parity_sentence, score_ratio_without_parity_record_refused; requirement clock named `req`."
+  },
+  {
+   "bead": "BD-253",
+   "kinds": [
+    "deps"
+   ],
+   "what": "acceptance asserts N24a-31's split check: N24a-31 moved from related to deps."
+  },
+  {
+   "bead": "BD-256",
+   "kinds": [
+    "tests"
+   ],
+   "what": "negative control 'mutation check disabled must give e > 0' is not guaranteed to fire (label comparison catches most planted formulas): now the label-comparison-disabled build must fail the potency control; the mutation-disabled build is reported per stage."
+  },
+  {
+   "bead": "BD-257",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "request of U23a: device online margins are N23ap1-01's (dep added); BD-255 kept, because evaluation verdicts on the batched tier are its and the plan's seed names it."
+  },
+  {
+   "bead": "BD-260",
+   "kinds": [
+    "correct"
+   ],
+   "what": "invariants claimed over 4,000 real-lane campaigns; arm A twice plus arm B is 6,000; cost note clarified."
+  },
+  {
+   "bead": "BD-368",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "conveyor-cross had no meaning for `base_s`/`belt_end_s` (defined along the belt): now the route axis and exit edge per task; stages through N24a-11's `stages` list; test cross_uses_route_axis."
+  },
+  {
+   "bead": "N24-KA",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "unit test arena_registry_loads asserted 30 records although the loader also holds the eight late KA-ARENA rows (38 in all); the e2e summary line now lists the late rows' gates GATE-ARENA-10, -11, -12, -14, -15."
+  },
+  {
+   "bead": "N24a-02",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "the worked task 'kitchen-tray' was cited but never given: added the Appendix L.3 text as the golden pair kitchen-tray.ftask.sexp/.json with placeholder notes; SignalDecl gains source (truth by default); structural validation requires a clock named req; `stages` added to the optional-field list."
+  },
+  {
+   "bead": "N24a-03",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "added the fixture 1 requirement text as a golden file and pointed at N24a-02's kitchen-tray golden; added the lexical rule that binds a number to its unit and refuses signal names that parse as units (`(- 5 deg tilt)` was ambiguous), with test unit_then_signal."
+  },
+  {
+   "bead": "N24a-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "`:exact` was admitted only on count kinds, which refused fixture 1's own `(= drive_saturated 1) :exact` on a 0/1 state flag; now admitted on any integer-quantized channel; test exact_on_integer_flag_admitted."
+  },
+  {
+   "bead": "N24a-06",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "users",
+    "tests"
+   ],
+   "what": "no rule said how a requirement names its clock (grammar has no slot): DESIGN reserved clock `req`, as in L.3. Before-first-sample of a held signal was 'uncovered' here but pre-origin (false, -inf) in N24a-04: aligned to N24a-04, with a task.check warning for universal windows over late first samples. 'Refuse a signal with no source' would refuse the plan's own L.3 and fixture 1: unsourced signals now default to truth. Tests added."
+  },
+  {
+   "bead": "N24a-07",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "request of U23a: device emission is now N23ap1-01 (split from BD-255). capacity was stated three inconsistent ways (far bound b > 4,096; a '4,097-tick window'; 32 KiB = 2*4,096 values): fixed on the far bound b/T <= 4,096 as N24a-06 counts ticks, per node (DESIGN), with the memory example recomputed (408 B for dwell; 32,776 B at capacity)."
+  },
+  {
+   "bead": "N24a-08",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "acceptance and a test compared with the block kernel of N24a-07, which is not a dependency; moved the bitwise block-kernel comparison to BD-121 so the two fast evaluators proceed in parallel; the first-valid tick stays asserted here."
+  },
+  {
+   "bead": "N24a-09",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N24a-05: pass 1 reads normalized atom values, which the unit checker produces."
+  },
+  {
+   "bead": "N24a-10",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "request of U23a: the guarded-atom kernel on devices is N23ap1-01's, not BD-255's."
+  },
+  {
+   "bead": "N24a-11",
+   "kinds": [
+    "deps",
+    "correct",
+    "sense",
+    "tests"
+   ],
+   "what": "added dep BD-094 (reason is its FailureClass and the acceptance needs `stuck`); margin and binding fields are Option (absent for undetermined/invalid); stage annotations would have changed the fixed requirement grammar: now an optional `stages` list in the study section naming atom/online identifiers, refused if absent from the verdict; tests updated."
+  },
+  {
+   "bead": "N24a-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "rule 5 contradicted its own tests: an always-true hard limit (`cool`) has its reversal killed, so it was 'redundant', not vacuous, and passed. Vacuity now has two forms: neither mutant killed, or truth constant over all examples (DESIGN reading of 'no example can distinguish'); kill_matrix_small corrected; fixture 1 acceptance now names an example set that can pass (a 2+2 set leaves tilt-ok with no near-boundary example)."
+  },
+  {
+   "bead": "N24a-14",
+   "kinds": [
+    "deps"
+   ],
+   "what": "request of U23a: BD-255 replaced by N23ap1-01 (only online margins on devices are needed); Out text updated."
+  },
+  {
+   "bead": "N24a-17",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "'the other ten metrics' are eleven (14 minus 3 implemented here); the Clopper-Pearson test printed [0, 0.0560] for 0 of 64 while requiring outward rounding (0.056009 rounds out to 0.0561); added 6 of 10. E2e step now in N24ap1-01."
+  },
+  {
+   "bead": "N24a-18",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "its e2e step group pointed at a script owned by an M2 bead; now N24ap1-01 at M1."
+  },
+  {
+   "bead": "N24a-19",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "tracking error summed over 'ticks' with the command on the control clock and truth on the physics clock: fixed to physics ticks with the command held (rate-invariant); test tracking_over_physics_ticks; dep N24ap1-01 (adds its group to that script)."
+  },
+  {
+   "bead": "N24a-20",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "acceptance said the unweighted-sum control 'doubles' under one point's duplication (its own unit case gives 0.40 to 0.50); dep N24ap1-01."
+  },
+  {
+   "bead": "N24a-21",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "maneuver stage start and completion ticks now defined through the `stages` list of N24a-11; dep N24ap1-01."
+  },
+  {
+   "bead": "N24a-22",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the e2e's planted infeasible doorway needs a witness, but the solvability oracle is M3 (BD-271): a synthetic fixture witness with a checked condition until then, cross-checked with nemesis.oracle from M3; a bare label must be rejected. Script owner now N24ap1-01."
+  },
+  {
+   "bead": "N24a-23",
+   "kinds": [
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "task.list (BD-122) lands before this registry: this bead now wires the registry into task.list/show; its M1 e2e step was in an M2 script, now families-* of N24ap1-01."
+  },
+  {
+   "bead": "N24a-24",
+   "kinds": [
+    "split",
+    "scope",
+    "deps"
+   ],
+   "what": "carried two scripts, one of which (arena_scorecards.sh) the M1 metric and scorecard beads needed at M1: split into N24ap1-01; this bead keeps the GATE-ARENA-01 script and re-runs the scorecard script on batch-cpu against the referee; deps add N24a-19, N24a-20, N24ap1-01."
+  },
+  {
+   "bead": "N24a-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "its labelled examples left `on-course` never false (vacuous under N24a-12's rule) and had no near-boundary case for `upright`, `on-course` or `settled`, so admission would refuse every task; listed the missing examples."
+  },
+  {
+   "bead": "N24a-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "`T_limit` from the actuator card was used as a literal in an atom, which the grammar cannot express (only signals and literal quantities): now a declared constant state signal; labelled examples gained a dropped tote and a tipped design, without which `load-held` and `upright` were vacuous."
+  },
+  {
+   "bead": "N24a-27",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance needed the film-slip monitor of N24a-38, which depends on this bead (cycle): reworded to the mechanical classes, and N24a-38 now runs its monitor on this task; dep BD-191 for the stills its e2e takes; added a shelf-strike example (`clear`, `no-strike` were vacuous)."
+  },
+  {
+   "bead": "N24a-28",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "stage naming tied to N24a-11's `stages` list; added a tip-over example so `upright` is not vacuous."
+  },
+  {
+   "bead": "N24a-29",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "`current-ok` used `I_limit` in the expression and `:scale I_scale`, neither expressible (a scale is an identity-bearing literal): now a dimensionless ratio channel `i_ratio` with scale 0.10; an over-rating example so `current-ok` is not vacuous; test current_ratio_atom."
+  },
+  {
+   "bead": "N24a-30",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "request of U15a: step group attachment-cards (10 kg tote at seed 0 holds under N15ax-02's dry card, detaches under the dusty card 90 N/12 N m, read back through telemetry query), with its known answers and control; stages via N24a-11; a tote-tilt example so `level` is not vacuous."
+  },
+  {
+   "bead": "N24a-31",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "case (e) asserted exit 2 although an admitted in-sample run may exit 0; aligned with case (d)."
+  },
+  {
+   "bead": "N24a-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "required two statements in each of 49 coverage cells (98) from 50 statements: now at most 25 required cells with two each and every axis value in at least four; signal kind written as N24a-44 names it."
+  },
+  {
+   "bead": "N24a-35",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added deps BD-094, N24a-36, N24a-37: the summary prints failure classes and kinds and its handles must resolve to all three verbs."
+  },
+  {
+   "bead": "N24a-36",
+   "kinds": [
+    "complete"
+   ],
+   "what": "the downsampling table lacked the sixth kind interval-extremum of N24a-44; the query applies the kind table and returns sense and coverage in the column header."
+  },
+  {
+   "bead": "N24a-38",
+   "kinds": [
+    "tests",
+    "complete"
+   ],
+   "what": "(second pass) acceptance: film-slip fires on N24a-27's oil-patch example and is absent in its dry variant. waves 2 and 3 said 'switched on by the bead that lands the feature' without naming it: named N19b-13 (slosh-tip), N22a-29 (gait-instability), BD-394 (model-drift); the e2e admission-refusal step must see the admission refusal naming the class, so a schema refusal (also exit 3) cannot pass it."
+  },
+  {
+   "bead": "N24a-39",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "BD-094's 'four read verbs exist' check moved here (the joint check); added step group extremum-* for N24a-44's interval-extremum kind with control extremum-as-last, and sub-group failures-brownout-* of N24ax-01; deps add N24a-44, N24ax-01, N24b-05 (fixture 1 nominal case)."
+  },
+  {
+   "bead": "N24a-40",
+   "kinds": [
+    "deps"
+   ],
+   "what": "now depends on BD-191 (still_id, tile tables, overlay value buffers are that verb's); adds its pixel-* group to BD-191's script; keeps the seed done-condition."
+  },
+  {
+   "bead": "N24a-41",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "deps BD-191 and N24a-40; as the last of seed BD-191's three verbs it carries the joint check (all three answer; telemetry_stills.sh passes with stills-*, pixel-*, replay-*)."
+  },
+  {
+   "bead": "N24a-42",
+   "kinds": [
+    "correct"
+   ],
+   "what": "planted 528 file said `(H (0 s 41 s))` is 4,101 ticks; N24a-07 counts the far bound b/T = 4,100 (still above 4,096); stated, with the admitted 40.96 s window."
+  },
+  {
+   "bead": "N24a-43",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request of U19a: dep N19a-35; acceptance requires hazards_plant.sh's exposure (a) leg to run (skip removed) and pass, and N19a-07's carried block on its conveyor instance; placement-error known answer s*delta (+ slip 1/2 s^2/(mu g) when released at rest); tests placement_error_on_belt, fixture_conveyor_carries_block; rig is N19a-07's conveyor."
+  },
+  {
+   "bead": "N24a-44",
+   "kinds": [
+    "deps"
+   ],
+   "what": "its acceptance and e2e read columns through telemetry.query: added dep N24a-36."
+  },
+  {
+   "bead": "N24ax-01",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "its e2e ran N15b-30's `empty-battery` fixture without depending on it: the two fixtures are now its own (`fail/brownout-exhausted`, `fail/brownout-ceiling` with E, R and demand stated) beside N24a-39's per-class fixtures."
+  },
+  {
+   "bead": "N24ax-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "'fourteen kinds' -> fifteen (twist and wrench share a row); combinations the inference rules do not name are a mismatch; answers_form_subgroup was vacuous with three breakers ({e}): now generated tasks must give one of C2xC2's five subgroups, with a known answer {e, b}; test untyped_product_is_mismatch."
+  },
+  {
+   "bead": "N24ax-03",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained"
+   ],
+   "what": "deps BD-123 (cart task and designs) and N17a-25 (fixture:ballast-24-8) used by its tests; mutation test claimed 18 archetypes at M2 where four exist (BD-109): now the catalog on file, the fourteen of BD-246 entering at M3; tasks of the test named."
+  },
+  {
+   "bead": "N24ax-04",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "three records it introduces (episode-energy, actuator-load-mean, friction-utilization-max) had no owner or definition: now section 3a with definitions, channels from N24a-18/19/20 (new deps), acceptance and known answers."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N24ap1-01",
+   "why": "split from N24a-24: scripts/e2e/arena_scorecards.sh (families, core metric, energy and scorecard groups) is needed at M1 by N24a-17, -18, -22, -23, while N24a-24 is M2; later metric beads (N24a-19, -20, -21) add their groups and depend on it"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-246",
+   "what": "N24ax-03's mutation test (`reads_superset_mutation`, a task binding's tracked read set is a superset of what it reads) iterates the archetype catalog; list it among BD-246's acceptance so the fourteen M3 archetypes are covered when they land."
+  },
+  {
+   "bead": "NS-04",
+   "what": "add dep N24a-40: its step f calls telemetry.inspect-pixel, which it reached through BD-191; BD-191 no longer depends on N24a-40 (inspect-pixel now follows the stills verb it reads)."
+  },
+  {
+   "bead": "BD-222",
+   "what": "add deps N24a-40 and N24a-41: it registers telemetry.inspect-pixel and telemetry.export-html among the M2 verbs and reached both only through BD-191, which no longer depends on them."
+  },
+  {
+   "bead": "BD-215",
+   "what": "add dep N24a-40 (checked: no cycle): its presentation case calls telemetry.inspect-pixel during the run, which it reached through BD-191."
+  },
+  {
+   "bead": "N22a-29",
+   "what": "add dep N24a-38 and switch the `gait-instability` failure-class row to available when stride events of a declared periodic gait land: its monitor (stride deviation growing by a factor above 1 for 4 strides and exceeding 3 times its first value), the trot-above-stable-speed fixture and nominal-speed control, and the extension of GATE-CHRON-08's fixture list (N24a-38 wave 2)."
+  },
+  {
+   "bead": "BD-394",
+   "what": "add dep N24a-38 and switch the `model-drift` failure-class row to available: monitor (a drift monitor of the cited cell fired inside the run's interval of validity, or the cell is retired when cited), the planted-drift fixture and pre-event control, and the extension of GATE-CHRON-08's fixture list (N24a-38 wave 3)."
+  },
+  {
+   "bead": "N35-28",
+   "what": "add N24a-35 to deps: it constrains telemetry.summary's output; it reached N24a-35 only through BD-094, which no longer depends on it (round 1, U24a)."
+  },
+  {
+   "bead": "N24b-05",
+   "what": "fixture 1's eight labelled examples have no trace near or past the 35 deg tilt-ok limit, so N24a-12 refuses the task (tilt-ok has no near-boundary example and is a vacuous hard limit, form (ii)); add a rollover example (tilt passes 35 deg, violated) and a near-35 deg satisfying one. Also name the requirement clock `req` (N24a-06 DESIGN)."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "All 59 beads read in full. Main themes: labelled-example sets that left hard-limit atoms vacuous under N24a-12 (families N24a-25 to -30, BD-201); limits written as literals the requirement grammar cannot express (T_limit, I_limit/I_scale); device monitor emission now N23ap1-01 (U23a); dependency order of seed BD-191's three verbs inverted (stills first, then inspect-pixel, then export-html carrying the joint check); the M1 scorecard script split out as N24ap1-01. Requests from U12-2, U15a, U15b, U19a, U23a and U24c applied. coverage.md updated for the split and the BD-191 order. No dependency cycle. Slice looks close to settled; out-of-slice requests (NS-04, BD-222, BD-215, BD-246, N35-28, N24b-05, N22a-29, BD-394) await their owners."
+}

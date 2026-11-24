@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "lemma", "marrow", "frob-lie", "solid", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-011", "BD-047", "BD-021", "CARD-T-04", "CARD-T-05", "CARD-T-16", "SPEC-C-04", "N10-KA1", "BD-010"]
+related: ["BD-010", "BD-047", "N13-18", "SPEC-C-12", "SPEC-C-24"]
 gates: ["GATE-MARROW-01", "GATE-LEMMA-00", "GATE-MARROW-04"]
 plan_refs: ["§10 C-02", "§11.1", "§11.2", "§11.3", "§11.4", "§13.2", "§13.3", "§13.8", "§13.10", "§12.3 T-04 T-05 T-16", "Appendix D.1", "Appendix I.1", "Appendix M KA-040 to KA-042", "Appendix N CX-020"]
 ---
@@ -186,6 +186,11 @@ single-transpose mutations caught by at least three fixtures; M4).
 - [ ] S1 to S4 hold exactly on 10³ rational samples; on `f64` within 64 ulp and on `f32` within 16 ulp over
       10⁶ cases including the boundary set.
 - [ ] The mutant "one reversed adjoint" fails S1, S2 and the two-link fixture; the run records all three.
+- [ ] Each of the five §13.8 mutations of this construction listed under the controls below is registered and
+      fails at least three of this suite's fixtures in this run, and the log names them (for example, reversed
+      ad*: S3, the free-body hand check and S5's generator sign). The count across all eight mutations and all
+      constructions, which GATE-MARROW-04 reads, is the mutation harness N13-18; this suite registers its
+      fixtures there.
 - [ ] Five compile-fail tests exist: composing mismatched frames; adding twists of different frames; passing a
       `TwistMap` where a `WrenchPushforward` is required; passing a pullback where a pushforward is required;
       constructing a `Transform` from a reflection.

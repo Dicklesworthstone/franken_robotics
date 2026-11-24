@@ -1,0 +1,247 @@
+{
+ "round": 3,
+ "slice": "F-U14b-1",
+ "reviewed": 26,
+ "changed": [
+  {
+   "bead": "BD-063",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "GATE-SKEL-02 criterion now names the tier run (g3_metamorphic, gauntlet-mutations for the three planted defects caught in the same run) and records only through record_gate from a session that did not implement the memo graph (conventions 1 and 9); it said only 'recorded in registries/gates.toml'."
+  },
+  {
+   "bead": "BD-065",
+   "kinds": [
+    "users",
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S88: the format dispatch answers --format sdf and --format usd (and an sdf root) with FROB-REF-724, reason feature-not-built, exit 5, naming N14b-22's consumer condition and N14bp1-03's pilot-plus-consumer condition, before reading the document; unit test and acceptance line. Brought into line with its VERBS-design row: 125 now has a trigger (robot@version other than 1.0, as URDF parsers check). The reader's refusals had no surface codes: constructs map to 122 at any time, limits to 832 (DESIGN). Added the bead's own script scripts/e2e/skel_import_urdf.sh calling only design.import (convention 11: the shared script of N14b-24 needs design.check and artifact.read, later beads); dep STD-E2E."
+  },
+  {
+   "bead": "BD-109",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "users"
+   ],
+   "what": "The sensor option '--with forward-lidar' is in no design.new registry row (convention 8): now the template choice parameter sensor_option set with the existing --set (DESIGN, listed by design.templates; unknown choice 111). CX-134's plant BD-109:cx-134 named with what it plants. Added its own script scripts/e2e/skel_templates.sh on design.templates, design.new and design.show only (the shared N14b-06 script needs BD-110, BD-118); dep STD-E2E."
+  },
+  {
+   "bead": "N14b-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S54: task traverse-5m -> traverse-5m-flat; BD-247 enters GATE-SKEL-03's M3 part from its own run of this script. Run-verb calls (control synth, sim run, the zero-gain control) carry --key and the positional design (convention 5); step 9's second pass uses distinct names and keys so it does not return the first pass's receipts; control (a) uses BD-109's sensor_option parameter and an assert-symmetry edit instead of the unregistered --with."
+  },
+  {
+   "bead": "BD-117",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S46 and S54. Scope now crate-level measurement on the real referee step; binary-level GATE-REFLEX-01 rows and the script belong to N22c-01 (control.synth, BD-118, depends on this bead, so this bead cannot run its own control synth); batch-cpu is N22ap2-01's; state sources N22a-03's. g is the gravity vector's magnitude 9.80665, so traction_clip is 3.92266 m/s^2 (0.648 at 1.62). New tests referee_stand_traverse and wheel_current_saturates_at_limit. The script content fixed here uses distinct --key per call, positional designs, traverse-5m-flat, and no --state on control synth (it has no state input). Related N22ap2-01, N22c-01."
+  },
+  {
+   "bead": "BD-144",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The pilot record PILOT-PHYLUM-01 now goes to crates/frob-conformance/registry/pilots.toml in schema frob.gauntlet.pilot/1 with N38a-09's fields (protocol table, fallback {ships: per-family templates BD-185, kill_gate KILL-PHYLUM}, [[pilot.result]] with verdict, receipt and synthetic) (conventions 2, 3; the retired frob.pilot/1 removed). design new calls carry --key (convention 5). Omega values and bucket examples re-verified by hand."
+  },
+  {
+   "bead": "BD-185",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "sim run calls now use registered forms: --designs <file> --tier batch-cpu --steps 1000 --seed 1 --key, and the positional design with --seconds for drop-and-stand, each with its own key (conventions 5 and 8). Dep N16b-25 (owner of --steps and the batch tiers) added; no cycle."
+  },
+  {
+   "bead": "BD-225",
+   "kinds": [
+    "users",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S71: a boolean `mirror` family parameter for warehouse and kitchen-commercial/galley: applied after expansion (same draws and derivation), reflection about x = W/2 with W a multiple of S = 0.16 m so lattice-aligned modules stay aligned, handed declarations (hinge, swing, ramp approach) flipped; role `mirror` in N19c-11's table, outside the structural key (one GroupId, two SceneIds); constraint measurements and unique-brick count invariant. Unit test mirror_param_reflects_layout with a planted hinge-skipping reflection; e2e step 5a with a distinct key. Related N19c-11, N19c-15."
+  },
+  {
+   "bead": "BD-226",
+   "kinds": [
+    "users",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S71 to the five families: each declares BD-225's `mirror` parameter with the same semantics (handed fixtures here: door hinge and swing, lift-car door side, conveyor direction, checkout side); a layout that is itself mirror-symmetric gives one SceneId. Unit test mirror_param_five_families; e2e step 4a with distinct keys. Related N19c-11."
+  },
+  {
+   "bead": "N14b-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S21 after checking N15b-12, N15b-13 and N14a-09: stage 1's row lists 108 as a raise at binding (a power-port sign that disagrees with its motion witness; an actuator on no bus or on two), as it does 107; stage 5 keeps 108 for the power balance; the union is unchanged. stage_table_pinned names both rows; new test stage_one_raises_108_in_row."
+  },
+  {
+   "bead": "BD-244",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "GATE-SKEL-04's M3 part: the g1_known_answers run with gauntlet-mutations (the three controls caught in one run) and record_gate --part M3 from a session that did not implement stages 7 or 8 (conventions 1, 9). The script got its header, lib.sh, the log path, keys on run verbs, a positional design on sim run, the binding matrix, budget and cancellation steps, N14b-12's and N14b-13's rows, N19b-34's two steps and the gate run. The hand-built-policy check needs to run one world of the task's declared family, which no sim.run row offers: requested; interim crate test hand_policy_check. Control (b) named as CX-132's plant N14b-13:cx-132. Duplicate N19b-34 removed from related (it is a dep)."
+  },
+  {
+   "bead": "BD-246",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The 24-variant step now gives design new its name, --file source and a key per variant and pass (a mutate verb, convention 5), and analyze symmetry its positional design; it had neither."
+  },
+  {
+   "bead": "BD-247",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "reflex_baselines_all.sh got its header (plants zero-gain, reversed-motor, roller-misaligned through e2e_expect_caught), lib.sh, the log path, and full call forms: design new with name, template and key; control synth and sim run with the positional design, task, tier, seed and distinct keys per tier and state; telemetry summary on each run."
+  },
+  {
+   "bead": "N14b-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "skel_generator.sh got its STD-E2E header (plant clock-seeded), lib.sh and the NDJSON path with the standard fields; the content of the steps is unchanged."
+  },
+  {
+   "bead": "N14b-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The balancer's 8.49628 rad/s is the closed form at g = 9.81; the compiled model runs at standard gravity 9.80665 (N13-07), where the pole is 8.49483 rad/s, 1.7e-4 relative away, so the compiled-model comparison now evaluates the closed form at the model's gravity magnitude, with ZOO-balancer-2w's 10^-6 tolerance in place of the conflicting 10^-9 (the formula keeps 10^-9). New test balancer_linearized_pole_uses_model_gravity with a literal-9.81 plant. All other numbers (Ackermann, omni-3 map, scrub, tip angle, cosh) re-verified."
+  },
+  {
+   "bead": "N14b-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The request for --include-variants was stale: VERBS-design's design.templates row already lists include_variants as this bead's M6 extension, so the text now cites it. The dual-arm welded instance gets its own name and key (a repeated name is 804, a repeated key returns the first receipt)."
+  },
+  {
+   "bead": "N14b-07",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "reflex_wheeled_evidence.sh keys did not carry the tier, so N14bp2-03's TIER=batch-cpu pass would return the referee pass's stored receipts (convention 5): every key now includes $TIER. Added the header with its three declared plants, lib.sh and the log path."
+  },
+  {
+   "bead": "N14b-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "reflex_multileg_evidence.sh got its header, lib.sh, the log path and full call forms (positional design, task, --state estimated for traverse, one key per push trial seed). Phase tables (target phases, K subgroups, generator shifts), duty factors, swing order and the stance certificate re-verified."
+  },
+  {
+   "bead": "N14b-09",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "reflex_frontier_evidence.sh got its header with the four plants, lib.sh, the log path and full call forms (positional design, --state estimated, one key per task and seed, the 20 push trials as seeds 1 to 20; telemetry reads on each run)."
+  },
+  {
+   "bead": "N14b-11",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "CX-131's registered plant N14b-11:cx-131 (stage 4 with its branches swapped) is now named, built under gauntlet-mutations and caught in the tier run; the script's branch-swap plant is the same mutation. New test cx131_branch_swap_caught. Mecanum rank and missing direction re-verified."
+  },
+  {
+   "bead": "N14b-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its rows in BD-244's script: scene gen and scene fit are run verbs and now carry BD-244's derived keys; design check takes the positional design. Clearance error terms, doorway margins, corridor limit and lip friction re-verified."
+  },
+  {
+   "bead": "N14b-13",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "CX-132's registered plant N14b-13:cx-132 named, with test cx132_local_rank_plant_caught; its rows in BD-244's script take the positional design and run the hand-built policies in BD-244's step-7 form (interim crate test until VERBS-sim has the family-world option). TV bounds 3/4, 27/32, 459/512, 3807/4096 re-verified."
+  },
+  {
+   "bead": "N14b-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The ADR path docs/delivery/adr/ is retired (convention 4; N40-03 refuses it with decision-adr-path): now docs/adr/ADR-KILL-SKEL-ALIAS-M3.md. The decision script got its header with two plants (the negative controls), lib.sh, the log path, the positional design on design check, and the statement that it writes no register row or ADR itself."
+  },
+  {
+   "bead": "N14b-18",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Follows N14b-10's S21 change: code 108 now has two owning stages. Its four defects are labelled stage 1 (N15b-12's transmission whose sign disagrees with its motion witness; N14a-09's actuator on two buses, the copied power port) and stage 5 (a reversed sign in the port power balance; an algebraic loop); the former 'power port joined to two junctions' is the same defect as the actuator on two buses and is merged into it, the count stays 4 and the total 100. New test two_owner_codes_split."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-design",
+   "what": "design.import's `format` enumeration lacks sdf and usd. BD-065 now answers `--format sdf|usd` (and an sdf root) with FROB-REF-724 (reason feature-not-built, mechanism import.sdf|import.usd, exit 5) until N14b-22 or N14bp1-03 lands; without the values in the row a caller gets 802 and never learns the mechanism exists behind a condition. Add them, with 724 among design.import's refusals."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check's per-stage code list: stage 1 should list FROB-REF-108 (N14b-10's row 1 now raises it at binding: N15b-12's motion-witness sign, N14a-09's actuator on no bus or on two), and design.export's stage-1 code list the same. The union is unchanged."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check lists FROB-REF-308 at stage 7 'from the bound A-18' and a 31-code union. N14b-10's stage 7 refuses only 119 (plan §14.11), N14bx-01's amendment grows the union to 30 codes (448, 551) without 308, and N14b-12 deliberately maps the route query's 308 to stage status `undecided` with 308's repairs as next_actions because it is not a code of stage 7's row. Against the plan the row is wrong: remove 308 from stage 7 and restore the 30-code union, or have N14bx-01 add it to STAGES[6].refuses and N14b-12 pass it on."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "The `--task` row names only N16b-25 at M2, but M1 scripts run `frob sim run <design> --task stand-10s|traverse-5m-flat` on the referee (N14b-06's skel_archetypes.sh, BD-117's reflex_wheeled_baseline.sh run by N22c-01, N22a-11). The row needs an M1 owner for the registered tasks on the referee tier."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "No sim.run option runs one world of a task's declared alias family (N14b-17's Task::alias_family(), worlds in index order with names and values): --world-addr addresses a world of the run's seed, --param (M4) sets fixture or controller parameters. BD-244 (and N14b-13's rows) must run each hand-built policy in both worlds of a stage-8 witness on the referee for KILL-SKEL-ALIAS. Requested `--family-world <i>` (with --task; M3; input manifest; an index outside the family 802; a task whose family is not finite 802 naming the parameters); owner N14b-17 (task side) or N16b-25, users BD-244, N14b-13."
+  },
+  {
+   "bead": "N22c-01",
+   "what": "(1) It records GATE-REFLEX-01 rows through `frob gate record`, which does not exist: use the gauntlet run form and `cargo run -p frob-conformance --example record_gate -- --gate GATE-REFLEX-01 --receipt <hash>` from a non-implementing session (conventions 1, 9). (2) It passes `--state` to control synth, which has no state input (VERBS-control). (3) BD-117 fixes the content of scripts/e2e/reflex_wheeled_baseline.sh (stand-10s and traverse-5m-flat on diff-drive and mecanum, every call with a distinct --key) but cannot run control.synth (BD-118 depends on BD-117): N22c-01 should own, write and run that script and enter the binary-level rows from it."
+  },
+  {
+   "bead": "ZOO-balancer-2w",
+   "what": "Its row 'the linearized compiled model within 10^-6' compares with 8.49628 rad/s, the closed form at g = 9.81. The compiled model runs at standard gravity 9.80665 (N13-07), where the pole is 8.49483 rad/s (lambda^2 = 72.16214 s^-2), 1.7e-4 relative away, so the row fails for the wrong reason. Evaluate the closed form at the magnitude of the model's gravity vector for that comparison (N14b-03 now says so); the formula's 8.49628 at 9.81 and the cosh row (2.826 at 0.2 s for either value) stand."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 26 reviewed; N14b-02 and N14b-04 left as they are (every number re-verified). Requests S21, S46, S54, S71, S88 applied after checking them against the owning beads. The remaining open points are registry rows and two beads outside the slice: VERBS-design (sdf/usd format values; 108 in stage 1's list; 308 at stage 7 against the 30-code union), VERBS-sim (an M1 owner for --task; a family-world option for running one world of a stage-8 witness), N22c-01 (record_gate, no --state on control synth, owning BD-117's script) and ZOO-balancer-2w (gravity in the compiled-model comparison). No new beads, nothing superseded, no br writes. Apart from those requests the slice looks settled."
+}

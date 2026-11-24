@@ -1,0 +1,344 @@
+{
+ "round": 1,
+ "slice": "U15b",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "BD-071",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "The iron-loss law was named but not stated (N15b-27 claimed BD-071 implements it). Added P_fe = k_h·|ω_e| + k_e·ω_e² with units, heat into the winding node, and the mechanical drag split so it is never computed as P_fe/ω (singular at rest, sign-discontinuous): eddy share as implicit viscous damping N²·k_e·p², hysteresis share exported as iron_coulomb = |N|·k_h·p for the stiction row bound; unit test iron_loss_law_and_split with numbers."
+  },
+  {
+   "bead": "BD-075",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "polarization_moves_ceiling had no battery parameters: now names the worked battery (R₀ 0.05 Ω, pairs 0.02 Ω/500 F and 0.03 Ω/4,000 F, harness 0.03 Ω). brownout_100_of_100 asserted exactly one event although cutoff-and-recover repeats it: each trial now stops at its first event. The FROB-REF-133 harness repair returned the bound itself, where V = E/2 is a double root with no margin: now strictly below the bound, battery edit only when the bound is not positive; static_refusal_133 gets its numbers (0.022 Ω)."
+  },
+  {
+   "bead": "BD-084",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Stiction bound gains τ_iron (the hysteresis share of iron loss exported by an L2 actuator), with the row dissipation split between friction and iron lines; test iron_share_in_bound; BD-071 in related."
+  },
+  {
+   "bead": "BD-103",
+   "kinds": [
+    "correct"
+   ],
+   "what": "A-11 thermal check said 'total conductance G'; for the two-node network the runaway condition uses the series conductance G_wh·G_ha/(G_wh + G_ha) (KA-311): stated."
+  },
+  {
+   "bead": "BD-151",
+   "kinds": [
+    "complete",
+    "tests",
+    "sense"
+   ],
+   "what": "K-act-l2 carried no iron loss although the referee L2 does (GATE-SINEW-03 would fail on cards with coefficients): added the same law, its damping and iron_coulomb outputs, the iron-loss-not-modelled condition, and test l2_iron_loss_matches_reference. Removed the drafting-history aside on the battery classes while keeping its reason."
+  },
+  {
+   "bead": "BD-155",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Refused the Gaussian Stribeck shape on every lockstep tier, contradicting OPEN-SINEW-2 ('card-overridable'), the capability table of N15a-04 and N15b-26: now card-selectable on batch-cpu through the kernel library's deterministic exponential and refused (FROB-REF-136) only on device classes without it; tests replaced accordingly with numbers. Bound gains τ_iron, same as the referee row."
+  },
+  {
+   "bead": "N15-CX",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Owning tests of four rows corrected: CX-138's mutant is caught by N15a-15 (the duty history), not BD-071, which only consumes the initial temperatures; CX-136/137 name the static thermal library N15a-14, CX-139 the envelope library N15a-16."
+  },
+  {
+   "bead": "N15-REF",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "FROB-REF-136 repairs disagreed with N15a-04 and offered 'raise the card level', which cannot clear a tier capability refusal: aligned to the capability table (run on a listed tier; accept the regularized form with its flag; change the option), and the trigger now covers six-step modulation on batched tiers as BD-151 and N15a-02 raise it."
+  },
+  {
+   "bead": "N15b-01",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Step 6 added the signal latency requirement but no refusal for it or for unmet rate/type: all three now refuse with FROB-REF-101 (DESIGN: a signal port's type is message, rate and latency), with test signal_latency_requirement."
+  },
+  {
+   "bead": "N15b-02",
+   "kinds": [
+    "complete",
+    "tests",
+    "users"
+   ],
+   "what": "Handlers used --in-design/--at but the input table did not list it (the only path to join refusals); added with a joins[] output and test. Scope promised the measured cost-model figure but nothing measured it: acceptance and test for the 100 ms p95. Dropped the drafting-history remark about design:read."
+  },
+  {
+   "bead": "N15b-03",
+   "kinds": [
+    "deps",
+    "scope",
+    "correct"
+   ],
+   "what": "Replaced dep BD-070 (L0/L1, not needed by the battery) with N15a-05 (the port-Hamiltonian element framework), so the battery proceeds in parallel with L1; BD-070, BD-082, FD-FSIM-21, N15b-28 in related. Stated the seam with BD-082: this bead supplies the guard z − z_min and the exact constant-current crossing, event location is BD-082's. The stale criterion 'FD-FSIM-21 is opened' (it exists) became the pending switch-over test sibling_two_rc_parity."
+  },
+  {
+   "bead": "N15b-04",
+   "kinds": [
+    "tests"
+   ],
+   "what": "clip_reduces_torque asserted only 'below 2 N·m': now the exact known answer s = 0.5056 from 200·s − 20·s² = 96, braking torque 1.011 N·m, and the clipped line value."
+  },
+  {
+   "bead": "N15b-05",
+   "kinds": [
+    "tests"
+   ],
+   "what": "mutant-account-fold-residual was to be caught by 'a test that compares attribution with the friction law' that did not exist: added friction_attribution_matches_law with numbers."
+  },
+  {
+   "bead": "N15b-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The strict-data-by-influence criterion used c_winding, which the thermal steady state never reads (contradicting the bead's own read-set test): now g_housing_ambient against the bus check; read-set test adds t_max_magnet, iron-loss coefficients, and the time-to-limit fields."
+  },
+  {
+   "bead": "N15b-07",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "bus_ceiling_conditional_on_harness gave a ±15% band on the total R while naming harness_resistance: now R₀ exact and harness 0.03 Ω ± 40%, with both band-end ceilings."
+  },
+  {
+   "bead": "N15b-08",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "For a rotor behind a coupling the pivot d_k was undefined and the diagonal-case formula (g/N²) would be wrong: stated a = (−C_kᵀ, e_k) and d_k = J_r,k + h·b_k + g_k + s_k."
+  },
+  {
+   "bead": "N15b-09",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Added the iron-loss element to the structure table (k_e, k_h ≥ 0; monotone hysteresis share) with test negative_iron_coefficient_refused; added dep BD-075 (the bus element whose descriptor and the full-leg composite need it)."
+  },
+  {
+   "bead": "N15b-12",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Scope said the admission record of the two entry points was 'listed under needs' (needs is empty); it is dep N33c-43, now named."
+  },
+  {
+   "bead": "N15b-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "actuator.check --bind test-joint disagreed with N15b-12's --bind <design>:<joint>; aligned and added the witness-rig fixture."
+  },
+  {
+   "bead": "N15b-27",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Drag torque P_fe/ω replaced by the regularized split of BD-071; e2e script's '--speed …' placeholder replaced by concrete synthetic cards (fe10, fe30 at 300 rad/s) and commands."
+  },
+  {
+   "bead": "N15b-15",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The negative control perturbed 'the dominant coefficient' without saying the perturbation must be able to break the 10% bound: now the term carrying at least half of the end-of-curve fade, perturbed 30%, moving the end point by at least 15% of the fade."
+  },
+  {
+   "bead": "N15b-17",
+   "kinds": [
+    "sense",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Dropped the drafting-history aside on a_cal/a_cyc while keeping the rule (one coefficient group, no second naming). The e2e ran frob sim run with no scenario and 'frob actuator bus …': now discharge-40a on bus-48v with the declared duty multiplier and idle time, the bus check at the recorded age, the closed form checked per month, the flip month derived from the threshold f_R > 0.1723 (48 V, 6,500 W, harness 0.03 Ω), and an NDJSON path."
+  },
+  {
+   "bead": "N15b-18",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The e2e named a two-mass-resonance fixture defined nowhere and covered only the soft case: fixtures defined (soft, stiff k=500, assumed-stiffness), the stiff case and the assumed-stiffness refusal added to the script, NDJSON path and fields."
+  },
+  {
+   "bead": "N15b-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Case C predicted ratio corrected 0.9040 to 0.9037 ((2/h)·atan(ω·h/2) at ω = 589.0); the survival rule required a remedy only for B and C although D and E also fail at 2 ms: now B, C, D and E."
+  },
+  {
+   "bead": "N15b-20",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The scope said what the level builds on is listed under related (BD-071, BD-076, N15a-04, N15a-05, N15a-06, N15a-08) but related held only N15b-21: added."
+  },
+  {
+   "bead": "N15b-21",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "The first registered set had no mass, dead volume or β for the stepped model, and the stepped model used β = 1.5 GPa against 1.4 GPa in the second set: β = 1.4 GPa, m = 20 kg, x₀ = 0.1 m stated for both sets (V₀ 10⁻⁴ and 5 × 10⁻⁵ m³; chamber frequencies 837 and 592 rad/s)."
+  },
+  {
+   "bead": "N15b-22",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "Acceptance checked shaft power against P_i/FM with no FM registered: FM = 0.70 registered with its hand values (55.9 W shaft and 16.8 W profile loss per rotor, 223.8 W total, reaction torque 0.0543 N·m)."
+  },
+  {
+   "bead": "N15b-23",
+   "kinds": [
+    "sense"
+   ],
+   "what": "Said 'one step more urgent than its milestone's default' while carrying priority 3 (M6 default 3): reworded to the Moonshot default 4, which is what priority 3 is."
+  },
+  {
+   "bead": "N15b-26",
+   "kinds": [
+    "complete",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Bound now includes τ_iron as in BD-084/BD-155; the six fixtures named and the standing quadruped defined as an owned fixture (quadruped-slope-hold); e2e names fixture and tier, asserts the Gaussian arm's FROB-REF-136 refusal on device tiers, NDJSON path and per-grid-point fields."
+  },
+  {
+   "bead": "N15b-28",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Owner decision with a dependant (FD-FSIM-21 depends on it): the charter makes it one step more urgent than its milestone, M1 default 1, so priority 0."
+  },
+  {
+   "bead": "N15b-30",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Step 5 asserted exactly one brownout per world although cutoff re-enables the drivers and repeats it: now every world records a brownout, the first within 0.1 s of a 1 s run; brownout-trials gains its bus capacitor, threshold and recovery level with the bound that guarantees the event. Step 6 asked the bus verb about a full battery: now --soc 0."
+  },
+  {
+   "bead": "N15b-32",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "N15b-09 sends its four planted defects to this script but the negative-conductance defect had no fixture and the negated braking loss was only run as a task: fixture added, all four through actuator.check with FROB-REF-130 and the element named, the run-time rejection kept."
+  },
+  {
+   "bead": "N15b-33",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "N15b-01 sends its e2e here, but the copied power port, the algebraic loop and the signal latency refusal (FROB-REF-101) were never exercised and the weak-sink refusal had no code: fixtures and assertions added (FROB-REF-108 twice, -101, -114), joins[] read, mutant-join-allow-copy added."
+  },
+  {
+   "bead": "N15b-34",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Least mass 14.58 kg 'within 10⁻⁶' and 14.585 kg disagreed with 6/(1 − 0.5886) = 14.5843 kg: corrected. quad-bus-undersized was redefined under another directory although the fixture registry is keyed by name: read from N15b-30, dependency added."
+  },
+  {
+   "bead": "N15b-35",
+   "kinds": [
+    "complete",
+    "deps",
+    "correct"
+   ],
+   "what": "Read bus-48v, brownout-trials and empty-battery from N15b-30 without depending on it: dependency added and fixtures named as read; L2 compared quantities now include iron loss and its drag split (K-act-l2 carries it); brownout run bounded to 1 s as in N15b-30."
+  },
+  {
+   "bead": "N15b-36",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The hybrid-hover fixture was not defined, the reaction-torque floor had no value, and the 'same-direction pair yaws' criterion had no test: fixture defined from the pilot's numbers, Ω_floor stated, test same_direction_pair_yaws added, e2e asserts shaft power and net torque with an NDJSON path."
+  },
+  {
+   "bead": "N15b-38",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Six of its fourteen fixtures were redefined under a second directory with the same names as N15b-30/32/34's (registry keyed by name): read by name from their owners, dependencies added. The Gaussian-shape remark now matches BD-155 (refused only on device tiers without an exponential)."
+  },
+  {
+   "bead": "N15b-39",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "'The same run with the mutant below exceeds a limit' named no mutant and nothing guaranteed it: the fixture's slope and payload are set so the stance needs a torque inside the bounding box and outside the diamond, mutant-control-bounding-box named; fixture ownership and NDJSON path stated."
+  },
+  {
+   "bead": "N15b-40",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The e2e used N15b-39's quad-differential-ankle without defining or depending on it: own fixtures defined (nominal and heavy). The unit test put both stances at 0.05 m lever arms, which cannot give (2, 0) N·m: arms stated per stance. NDJSON path added."
+  },
+  {
+   "bead": "N15b-41",
+   "kinds": [
+    "tests",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The negative control relied on 'one fixture' with the interval [−1, 1/2] that no fixture had: third differential fixture added (boundary 10 N, 20 N with the flipped generator) with its test, lifted rows take the interval, random couplings include asymmetric ones; stance-differential.fmission defined; NDJSON path."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N15a-07",
+   "what": "The host reference program of K-act-l2 that BD-151 lowers unchanged must carry the iron-loss law of BD-071 (P_fe = k_h·|ω_e| + k_e·ω_e²; eddy share N²·k_e·p² as implicit damping; hysteresis share |N|·k_h·p written as iron_coulomb), else GATE-SINEW-03 fails on cards with coefficients; and the GATE-SINEW-03 battery's compared L2 quantities should include the iron loss and its two drag shares on cards with coefficients (N15b-35 restates the battery with them)."
+  },
+  {
+   "bead": "N24ax-01",
+   "what": "Its e2e reads the fixture empty-battery (36,000 C at 40 A), which N15b-30 defines; the fixture registry is keyed by name, so name N15b-30 as the owner and add it as a dependency (or use a fixture name of its own)."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "Main cross-cutting fixes: the iron-loss law, stated in BD-071, is now carried consistently through BD-084, BD-151, BD-155, N15b-09, N15b-26, N15b-27 and N15b-35, and every shared e2e fixture name now has one owning bead (N15b-30 power, N15b-32 passivity, N15b-34 stage 6), with no cycles after the new dependencies. The 11 unchanged beads are BD-060, BD-070, BD-074, BD-419, N15b-10, N15b-11, N15b-14, N15b-16, N15b-24, N15b-25 and N15b-37."
+}

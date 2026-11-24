@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "BD-109", "BD-054", "BD-055", "BD-056", "BD-062", "BD-074", "BD-104", "BD-102"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-062", "BD-074", "BD-102", "BD-104", "BD-109", "NEG-30"]
 needs: []
-related: ["ROBOT-g1", "ROBOT-fsim-g1", "ROBOT-h1", "ROBOT-booster-t1", "ROBOT-apollo", "ROBOT-fourier-n1", "ROBOT-op3", "ROBOT-talos", "N14b-34", "GB-10", "GB-41", "BD-007", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 6", "§14.10", "§15.9", "§14.15 GATE-SKEL-07", "§14.17", "Appendix M KA-270", "Appendix F.2 (G1 catalogue)"]
 ---
@@ -41,7 +41,8 @@ transmissions; feet with law `foot-patch` and a finite patch (spin row active). 
 n_v = 35; bodies 30; end effectors 2 feet (hands are plain links at M1).
 
 **Symmetry.** Γ_mech as built: C₂ (sagittal mirror). Default Γ_obs: C₂. Breakers: a payload in one hand →
-trivial; a head camera on the mirror plane leaves C₂ intact (a sensor on the plane and aligned with it breaks
+Γ_obs trivial with the payload as breaker, Γ_mech still C₂ (a payload is filtered at the reduction from Γ_mech
+to Γ_obs and never enters the mechanical tree's colours; the same rule as ZOO-quad-mammal and N13-21); a head camera on the mirror plane leaves C₂ intact (a sensor on the plane and aligned with it breaks
 nothing), which is itself a row.
 
 **What preflight must report (stages 1 to 6 at defaults; no refusal).**
@@ -51,7 +52,7 @@ nothing), which is itself a row.
 | 1 Form | 30 fills, of which the torso and covers are `{shell: t}`; 2 foot laws; 29 actuators; coupling transmissions with their matrices |
 | 2 Mass | Total mass and per-limb roll-up; mirrored limbs bit-identical; every pseudo-inertia positive definite |
 | 3 Mechanism | 29 actuated revolute joints; tree mobility 35; coupled transmissions are not kinematic loops and add no closure; self-collision pairs over declared ranges listed with their minimum clearance, none negative at the reference pose |
-| 4 Motion | not-applicable |
+| 4 Motion | Status `passed` with the note `not-applicable` (a legged base: neither growth vector nor curvature applies, N14b-11); every other stage's status is `passed`, the words of NEG-30's `[[preflight]]` rows |
 | 5 Structure | Γ_mech = Γ_obs = C₂; port power balance closed through the coupling matrices |
 | 6 Statics and sizing | Positive support margin on two flat feet; actuator-space torque limits mapped to joint space as a zonotope per coupled pair; standing, crouching and stepping-up points inside the envelope; thermal and bus rows pass |
 

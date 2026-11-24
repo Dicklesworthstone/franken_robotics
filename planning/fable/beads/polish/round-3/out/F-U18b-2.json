@@ -1,0 +1,273 @@
+{
+  "round": 3,
+  "slice": "F-U18b-2",
+  "reviewed": 26,
+  "changed": [
+    {
+      "bead": "N18b-22",
+      "kinds": [
+        "deps",
+        "correct",
+        "self-contained",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The label and the citation refusal ran through N16b-04's ClaimProduct (CapacityBiased condition, union on combine, blocking to Provisional) and cite_as_established (822 not 820), which the bead used in label_propagates and cite_refused without depending on it: dep N16b-04 added and both named. The fixture's cap of 8 had no spelling: N16a-14's step-plan override (--capacity contacts=8), dep N16a-14, the study-manifest field requested of N33b-19. 'Default capacity of 64' for both arms corrected to each arm's registered C (64 tracked, 32 quadruped), flippers raised so the default-capacity rerun cannot overflow. The script's `frob eval compare` had no --key and no backend: key cb-4 on N33b-19's referee form (cap 21, which the tracked arm exceeds, so 721 is exercised), the batch-cpu placement of BD-262 from M3 skipped with a logged reason before."
+    },
+    {
+      "bead": "N18b-23",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "The script ran the controls margin-base-only and endpoint-only-thin as 'test-only plan flags'; they are build features (N18a-12, BD-166, N18a-36), and sim.run has no such option: now the test-only build. The forced-overflow run is named (tracked-flipper with flippers down, 80 stations against C = 64, continue-flagged)."
+    },
+    {
+      "bead": "N18b-24",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Step 4 stated that sim.run has no option that lowers a capacity; VERBS-sim now lists N16a-14's --capacity override (convention 12): reworded so the step forces overflow at the registered capacity on purpose. The 'fixture state with both flippers down' had no command-line form: --init flippers-down (sim.run's --init, N16b-25, a dep)."
+    },
+    {
+      "bead": "N18b-26",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The negative control required the default humanoid card set to tell the unscaled estimator from the scaled one, but default raw kappa*u is 0.0018 to 0.006, under the 0.05 bound either way: the near-rigid set (raw 0.12-0.18 refused, scaled 0.01-0.03 admitted) is the discriminating case. Script step (3) read the figure with `frob contact laws --json` 'on a plan admitted by step (1)', a host cargo test that leaves nothing the binary reads, and contact.laws takes no plan: now `--design <d> --tier gpu-cuda --profile lockstep`, the figure computed on the host for the tier's default plan (the per-design output field of VERBS-contact), with matching acceptance text."
+    },
+    {
+      "bead": "N18b-27",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "The bead said the FACT shares (37-64%, 9-18%) are re-run 'here', while N38a-11 (rows 19 and 20, M0) is the re-run of record and N18-CX says N18b-27 replaces CX-176's figures after it: dep N38a-11, its criterion for 'fails outright' adopted for the emulated cross-check, and the replacement of the message, derivation and CX-176 row (rerun = true) by N38a-11's shares stated. CX-176's registry plant N18b-27:cx-176 (planted-input, removed_check) is now carried and must fail the refusal test."
+    },
+    {
+      "bead": "N18b-28",
+      "kinds": [
+        "complete",
+        "tests",
+        "correct"
+      ],
+      "what": "Applied the S49 request: status not-certified added as step 1a of the derivation, for lockstep cells of convex-potential laws, evaluated before the gate-derived steps; the receipt lookup is N12-51's (M2; N12-51 already depends on this bead through N18a-16 and N18b-29), taken as an input, skipped in the M1 build (no lockstep cell can pass before GATE-TRAC-01's M2 part) and fail-closed once linked; the 246 payload adds the definition hash and N18-REF's three ranked repairs; new acceptance item and unit test not_certified_before_gate_status with synthetic lookups; N12-51 in Out and related."
+    },
+    {
+      "bead": "N18b-29",
+      "kinds": [
+        "complete",
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Applied the H-verbs-1 request: the branch selector is now in the schema sketch (ProbeBranch; --cone, --film, --design mutually exclusive, none = law, never inferred from fields), with the spellings of GB-20 and GB-21, a test branch_selector_exclusive and the script's 724 call spelled. The note that the model branch is 'not yet in the registry row' was stale (VERBS-contact now carries it). The chapter refusal list now matches the row (102, 103, 121, 246 raised through it by extending beads). The registry example `--law foot-patch` names a design-language binding, not a law-table row (802 under the spelling rule): the script runs it as --law CL-1 and the correction is requested of VERBS-contact. Later in the round, against VERBS-contact's row: the selector rule had made every branch explicit, but the row selects the pulse (impulse with m_eff, N18bx-01) and attachment (force with moment, N15ax-02) branches by their own inputs; ProbeBranch gains Pulse and Attachment (724 until wired), the explicit-selector rule is confined to the overlapping state branches, the pair rules (802) follow the row (attachment ignores law, tier and state; DESIGN: a state field beside the pulse pair is 802), and branch_not_wired and branch_selector_exclusive cover them. `cl-1r` respelled CL-1R as the law table and VERBS-sim spell it."
+    },
+    {
+      "bead": "N18b-30",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Step 11 (film probe 'from M3') waited on BD-230, which this M2 bead does not depend on (convention 7), and duplicated N18a-37's traction_film.sh (squeeze times, dry limit bits, 242 under --strict-data, extrapolated): replaced by a pointer to N18a-37, acceptance and references without 242 and KA-404/406. Step 5 (missing pair) had no command: sim.run on an ice-patch scene with a key. Steps 9 and 11 name N18b-29's --cone and --film selectors."
+    },
+    {
+      "bead": "N18b-31",
+      "kinds": [
+        "deps",
+        "correct"
+      ],
+      "what": "INV-TRAC-03 (the enclosure predicate answers clear, penetrates or unknown) is tested here, but its mechanism is N18a-03 (M3, the per-slab enclosure predicate that carries CX-167's plant N18a-03:cx-167), which the bead neither depended on nor named (the owner column credited BD-232 alone, which builds the mesh path and enclosure sets): dep N18a-03 added (no cycle) and the owner row names both."
+    },
+    {
+      "bead": "N18b-32",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Every row's test target was g1_known_answers, but N18-KA registers row 23 (KA-414, the duplicated-point relation) at G3 and row 28 (KA-419, rut isolation over resets) at G4: the target is now the row's verification tier (g3_metamorphic, g4_chaos for those two), and the host script also runs g3_metamorphic for row 23."
+    },
+    {
+      "bead": "N18b-33",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Applied the S49 request: the pilots.toml path was already crates/frob-conformance/registry/pilots.toml; the pilot input now lists N18b-34's three verdicts (falsifier-rejected, falsifier-holds, inconclusive) and treats inconclusive exactly as negative (CL-2 stays the fallback, N18a-18 not funded, recorded as the prior); step 4 says only falsifier-rejected names N18a-18's law; trigger_logic covers all three verdicts and rejects an unknown verdict string."
+    },
+    {
+      "bead": "N18b-34",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "The H-verbs-6 request (spell --law as N18b-28's table) was already met: the bead writes CL-1 and CL-2 throughout. Its script ran 'the same with --law CL-2 for form A and for form B' with no way to select form B (convention 8): the test-only feature pilot-cl2 now binds form A, and a second test-only build pilot-cl2-form-b binds form B (DESIGN: a build, so no form selector enters the release schema), with results marked by form."
+    },
+    {
+      "bead": "N18b-35",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Applied the S89 request: the record writes fallback.kill_gate = \"KILL-TACTILE\" when that row of N38a-37 exists at registration and to-register otherwise (N38a-09 admits only an identifier in the gate register or to-register; N38a-37's step 3 later sets it), with an acceptance clause. The determinacy re-run 'with perturbed regularization' had no command form and sim.run has no tolerance input: --warm-start off and --newton-iterations at ten times the profile default (N16a-03, N16a-04, reached), the residuals logged and the perturbed one required at most a tenth of the default's. The rigid-layer and shared-normal controls had keys but no subject: fixture designs pinch-C-rigid.fbot and pinch-C-shared.fbot."
+    },
+    {
+      "bead": "N18b-36",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "The script's 'realism-claim request over such a result' named no verb: a probe leaves no stored result, so a sim.run on a scene binding the generic interface card is followed by `frob report run <run> --claims-realism` (BD-302, N19a-39, both M3, now deps, no cycle), asserting exit 3, the refusal block and the weakest-input pointer; VERBS-report lists only 312 (assumed scene dimensions) under --claims-realism, so the code for an assumed card field is requested of that row. The probe calls are spelled with --card and N18b-29's --film selector."
+    },
+    {
+      "bead": "N18b-37",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "The pilot record was 'registered' in pilots.toml with only the question, rule and scene identities, but N38a-09 rejects a record without its four mandatory parts: now PILOT-TRAC-<nn>, tier F, mechanism, falsifier (the negation of clause (b) with its numbers), ceiling (per-variant bytes outside the shared band bricks, the directory alone 0.3 MB, 2.4 MB, 70 MB from the Background's arithmetic, checked), fallback dense bricks with kill_gate to-register, site batch-cpu, and how the verdicts and clause (a) combine in the decision; acceptance requires schema validation. The script's unnamed 'measurement binary' is now a spelled cargo example (DESIGN name)."
+    },
+    {
+      "bead": "N18b-38",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "The fixture-only rule for --migration said 'usage error (exit 3)' where VERBS-sim's row for this bead's option says 802 (convention 12): FROB-REF-802 named in the approach, test and acceptance; script step 3 had no command and is now spelled (g1 on the referee without --fixture, 802 naming /migration, no job submitted)."
+    },
+    {
+      "bead": "N18b-39",
+      "kinds": [
+        "complete",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Applied the H-verbs-1 request: no existing code covers anchoring an unconverged or Degraded step, so the capture refusal is raised under a DESIGN ledger slug response-anchor-unconverged (2xx), filed and entered as the stale-anchor row is (requests to N35x-02, N18-REF and VERBS-contact), with observed (gradient norm against tolerance, or the Degraded cause), required, retry after-change and two ranked repairs; Scope, acceptance, capture_requires_convergence and the script assert it. The planted non-converging step is spelled --newton-iterations 1."
+    },
+    {
+      "bead": "N18b-40",
+      "kinds": [
+        "tests",
+        "e2e-logging",
+        "complete"
+      ],
+      "what": "Applied the H-cx-1 request: N18-CX's late entries trac-resid, trac-lambda and trac-mode are cited with their plants N18b-40:trac-resid (bound without rho), N18b-40:trac-lambda (lambda = 3) and N18b-40:trac-mode (mode guard off: test 2 removed), each built behind gauntlet-mutations and failing a named unit test; the script runs the target once per plant with the registry's feature and fails if a plant build passes; N18-KA's late rows trac-ka-bound, -mode and -flops cited. The script's sim.run calls had no subject: --fixture resting-block, quad-mammal stance and the humanoid walking baseline, the states of N18b-41."
+    },
+    {
+      "bead": "N18b-41",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "Applied the F-U18a request: lambda_lo.sh's sim.run calls name their designs, quad-mammal (ROBOT-go1's baseline, the stance BD-367's anchor stage uses) for ll-quad and humanoid (ROBOT-h1's baseline) on humanoid-flat-velocity with the baseline controller for ll-humanoid, anchored at the first converged step with one sole in contact."
+    },
+    {
+      "bead": "N18b-42",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "The sweep stage ran `frob sim run ... on the battery states` with no subject; a battery is eval.run's population input: now eval.run per robot class with --battery, --profile lockstep, --precision f32 and --run-seed (its one seed spelling). Stage 7 named bead-local mutants for the three response-batch controls that N18-CX registers as plants: now N18b-40:trac-lambda, trac-mode and trac-resid on the registry's feature builds (plus N18b-39's anchor-by-world-step), with the same names in acceptance."
+    },
+    {
+      "bead": "N18b-43",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "Its containment row's receipt must carry the chord-only control caught in the same run, but the control was the build that N18b-45 (which depends on this bead) defines, a wait on a later bead (convention 7): the build chord-only-swept-bound (D forced to 0 in swept::bound) is now made here, as the mutation of N18-CX's late entry trac-arc, whose plant id is requested of N18-CX as N18b-43:trac-arc; trac-arc and trac-ka-arc are cited."
+    },
+    {
+      "bead": "N18b-44",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "The clause's planted control bp-box-base-only was a 'test-only plan flag', which sim.run does not have (convention 8, as N18b-23): now a frob-contact build feature behind gauntlet-mutations built here, run on its nc build against the production build; its free-plate fixture had no registered name and is now assets/fixtures/free-plate (DESIGN). The chord-only mutant is named as N18-CX's trac-arc plant (the registry says N18b-44 runs it on the batch profile); the strict stage runs the hand instance by N18b-45's design and scene files instead of placeholders."
+    },
+    {
+      "bead": "N18b-45",
+      "kinds": [
+        "e2e-logging",
+        "correct",
+        "tests"
+      ],
+      "what": "Applied the S49 request: the hand instance is written as design and scene files (crates/frob-conformance/fixtures/traction/arc-arm.fbot, arc-hand.fscene, and arc-arm-unlimited.fbot for the admission stage) and the hand, mutant and admission stages run them with --seconds 0.01. Applied the H-cx-1 request except its 'build': trac-arc and trac-ka-arc are cited and the plant is run on the arc fixture, but the chord-only branch is built by N18b-43, whose containment row records it first (convention 7); the re-ownership is requested of N18-CX. The second mutant endpoint-only-narrow is identified as CX-169's plant N18a-13:cx-169 (a dep)."
+    },
+    {
+      "bead": "N18bx-01",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "The script compared a pulse run and a pulse-free run of '<drop-2kg>' 'with the pulse-free card', but a design binds its cards and sim.run has no card override: two fixture designs, drop-2kg-pulse.fbot (fixture-halfsine-10ms) and drop-2kg.fbot (the same card without its pulse group), and the telemetry query is spelled with its stream and the expected m_eff."
+    },
+    {
+      "bead": "N18bx-03",
+      "kinds": [
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "N29a-25 admits a new plant kind only by its registration in registries/plant-kinds.toml (kind, owning bead and crates, admission function, hook), which the bead did not do: new item 4a registers the kind stiffness and adopts the file's common rules. The script's sim.run had no subject and its seed and world count were prose: --fixture stiffness-impact (registered here, DESIGN name) with --seed 0 --worlds 16; the release binary's refusal of --conformance-plant is asserted as 802; the referee replay uses sim.replay's --from-snapshot window."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N33b-19",
+      "what": "The study manifest (study.plan) has no field for a step-plan capacity, but N18b-22's fixture `fixture:capacity-bias` runs both arms at an artificially low cap of 8 (plan §18.11). Add a per-arm (or shared) `capacity = { contacts, rows }` taking N16a-14's override (sim.run --capacity contacts=<C>[,rows=<R>]), entering each arm's StepPlanId; refused on a referee arm as on sim.run. The same field is requested of VERBS-study's study.plan row."
+    },
+    {
+      "bead": "VERBS-study",
+      "what": "study.plan's inputs: add the per-arm `capacity` field (N16a-14's override) that N18b-22's capacity-bias fixture needs; requested of N33b-19 as its implementer."
+    },
+    {
+      "bead": "VERBS-contact",
+      "what": "contact.probe's example `frob contact probe --law foot-patch --interface rubber-60a/tile --normal 80N --slip 0.02m/s --json` names a design-language end-effector binding (`foot-patch`, §14) where `law` takes a row of the law table (CL-1, CL-2, CL-M, CL-H; VERBS-sim: any other spelling is 802): use `--law CL-1`. N18b-29 runs it in that form."
+    },
+    {
+      "bead": "N18b-20",
+      "what": "N18b-23 and N18b-24 call the tracked reference workload of N16a-14 (tracked skid-steer with two flippers, 80 samples tested, C = 64) `tracked-flipper` at M2, and N18b-24 starts it from a `flippers-down` initial condition (sim.run --init); ZOO-tracked-flipper (M3, four flippers) uses the same name. Name the M2 design file of the tracked workload your script runs, declare its `flippers-down` initial condition, and say whether it is the zoo archetype or a distinct fixture."
+    },
+    {
+      "bead": "VERBS-report",
+      "what": "Under `--claims-realism` (report.run, report.design, report.campaign; N19a-39) the only listed refusal is FROB-REF-312 (a scene with `assumed` dimensions). A realism claim over a result whose weakest input is an `assumed` interface, film or soil card field (VERBS-contact: refused by the claim guard, not by the verb; OPEN-TRAC-3's fail-closed default) has no listed code: name it (312 widened to card fields, or a new slug with N35x-02). N18b-36's script asserts it through `frob report run <run> --claims-realism`."
+    },
+    {
+      "bead": "N35x-02",
+      "what": "File a ledger row for the response-anchor capture refusal: slug `response-anchor-unconverged`, Contact §18.19, 'a response anchor requested at a step that did not converge or is flagged Degraded', family `2xx`, exit 3, retry after-change, repairs (1) anchor the last converged non-degraded step of that world, (2) re-run the step to convergence under a larger iteration budget. N18b-39 raises it as it raises `response-batch-stale-anchor`."
+    },
+    {
+      "bead": "N18-REF",
+      "what": "Enter the ledger row `response-anchor-unconverged` (requested of N35x-02; N18b-39's capture refusal: anchoring an unconverged or Degraded step) beside `response-batch-stale-anchor`, with its code once numbered by N35-33's rule."
+    },
+    {
+      "bead": "VERBS-contact",
+      "what": "contact.response's refusal paragraph says the capture refusal 'has neither a code nor a ledger row; requested of N18b-39'. N18b-39 now raises it under the slug `response-anchor-unconverged` (2xx; filed by N35x-02, entered by N18-REF, both requested): name the slug beside the stale-anchor one, with the same 'joins this list in the change that assigns it' rule."
+    },
+    {
+      "bead": "N18-CX",
+      "what": "The late entry trac-arc names its plant `N18b-45:trac-arc`, but N18b-43 records GATE-TRAC-12's containment row first and its receipt must carry the chord-only control caught in the same run; N18b-45 depends on N18b-43, so a plant built by N18b-45 is a wait on a later bead (convention 7). N18b-43 now builds the branch (`chord-only-swept-bound`, D = 0 in swept::bound): rename the plant `N18b-43:trac-arc`; N18b-45 and N18b-44 run it, as the row's note says of N18b-44."
+    },
+    {
+      "bead": "N33c-44",
+      "what": "Your script runs `frob sim run <arc design> --scene <arc scene>`: N18b-45 now names the hand instance's files, crates/frob-conformance/fixtures/traction/arc-arm.fbot and arc-hand.fscene (R = 1 m, θ₀ = −60°, Δθ = 120° in one 10 ms interval, tip and obstacle 5 cm, obstacle at (1, 0) m); run those so the three beads read one fixture identity."
+    },
+    {
+      "bead": "VERBS-contact",
+      "what": "contact.probe: N18b-29 now adds, as DESIGN, that a contact-state field (gap, normal or tangential velocity, spin, normal load) beside the pulse pair (impulse with m_eff) is FROB-REF-802, so that no state question silently becomes a pulse question; the row states the attachment rule (state fields ignored) but is silent for pulse. State the pulse rule in the row, or say it is ignored there too and N18b-29 will follow."
+    }
+  ],
+  "unchanged": 1,
+  "notes": "All 26 beads reviewed (N18b-22 to N18b-45, N18bx-01, N18bx-03); 25 changed, 1 unchanged (N18b-25: its exponent-rule numbers, guards and mutant check out). Requests applied: S49 to N18b-28, N18b-33 and N18b-45; H-verbs-1 to N18b-29 and N18b-39; H-cx-1 to N18b-40 and, except the build, N18b-45 (the build sits in N18b-43, re-ownership requested of N18-CX); S89 to N18b-35 (conditionally, as N38a-09 and N38a-37 require); F-U18a to N18b-41 (and the same gap fixed in N18b-40). H-verbs-6 to N18b-34 was already met (CL-1, CL-2 throughout); N18b-34 changed for another defect. Dependencies added this round (N16a-14, N16b-04, N38a-11, N18a-03, BD-302, N19a-39) were each checked with graph_check: no cycle, no later milestone. Settled except for the 11 requests out of the slice, of which the N18-CX plant ownership and the VERBS-report refusal code touch beads here."
+}

@@ -8,7 +8,7 @@ labels: ["m8", "delivery", "moonshot", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-442", "N40-24", "N40-26", "N40-27", "N40-29", "N40-35", "N40-04", "N40-05", "EPIC-M6", "EPIC-M7"]
+related: ["EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-24", "N40-26", "N40-27", "N40-29", "N40-35"]
 gates: ["GATE-AUGUR-22", "GATE-AUGUR-23", "GATE-AUGUR-24", "GATE-REFLEX-09", "GATE-CORTEX-17", "GATE-SHIELD-05", "GATE-FOUNDRY-11", "KILL-MEGA", "KILL-SKILL", "KILL-TUBE", "KILL-GATREE", "KILL-AUGUR-FACILITY", "KILL-AUGUR-TRANSPORT", "KILL-SYNTH-CONT", "KILL-FIRMWARE", "KILL-INTERACT", "KILL-COUPLING"]
 plan_refs: ["§43.11", "§43.1", "§43.2", "§40.6", "§40.3", "§40.4", "§9 (D-6)"]
 ---

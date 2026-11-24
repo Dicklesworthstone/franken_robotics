@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "tether", "spark", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-62"
-deps: ["BD-022", "NJL-01", "NJL-02", "STD-E2E"]
+deps: ["BD-022", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []
-related: ["N21c-15", "BD-370", "BD-376", "NJL-03", "NJL-04", "NJL-05"]
+related: []
 gates: ["GATE-TETHER-02"]
 plan_refs: ["Appendix J (J.1, J.2, J.3, J.5)", "§21.17", "§32.6", "§32.12.3", "§32.21 (GATE-TETHER-02)"]
 ---
@@ -18,8 +18,9 @@ FrankenRobotics (a robotics simulation and design system) is reached through the
 `frobd` and the MCP server `frob-mcp` (the Model Context Protocol, by which an agent harness lists and calls tools).
 Every capability is a verb, `cluster.verb`, declared once in `registries/verbs.toml` (crate `frob-verbs`, tier
 Solid). The CLI, the daemon protocol, the MCP tools, the schemas, the refusal table and the agent guide are
-generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 243 verbs
-in 44 clusters (namespaces).
+generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 244 verbs
+in 44 clusters (namespaces): the 243 of the specification and `artifact.import` (VERBS-artifact); the
+count of record is NJL-03's.
 
 This bead is the registry of record for the cluster `fleet`. The cluster covers the two machines: their roles and
 queues, and the assignment of work by role affinity and estimated work. It has two verbs (2 `read`); the handlers
@@ -36,7 +37,7 @@ gate), M Moonshot; `S/F` is a Solid core with Frontier extensions.
 DESIGN: a registry bead per cluster exists beside the implementing beads because a row missing from the registry,
 spelled twice, or served with different refusal lists on the CLI and over MCP is a surface defect that no mechanism
 test catches. Rejected: rows left to the implementing beads alone (nothing checks their union against the
-inventory); one bead for all 243 rows (too large to review).
+inventory); one bead for all the rows (too large to review).
 
 ## Scope
 
@@ -51,7 +52,7 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
 
 | Verb | Kind | First milestone | Tier | Purpose | Defined in |
 |---|---|---|---|---|---|
-| `fleet.status` | read | M4 | F | Roles and queues of the two machines | §21.17 |
+| `fleet.status` | read | M4 | S | Roles and queues of the two machines | §21.17 |
 | `fleet.plan` | read | M4 | F | The assignment of work to the two machines by role affinity and estimated work | §21.17 |
 
 **Contract of each verb.** Evidence labels used below (the `evidence` block of the envelope):
@@ -59,15 +60,36 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
   is empty.
 
 **`fleet.status`** (MCP tool `fleet_status`; owner `frob-cli`)
-- Inputs: none.
-- Outputs: roles and queues of the two machines, waiting reasons, the transfer meter. Evidence: *operational*.
+- Inputs: optional `--machine` (`mac` or `trj`); optional `--campaign` (restricts the transfer block to one
+  campaign).
+- Outputs: `machines[]` (link `up`, `down` with seconds since the last heartbeat, or `standalone`; device
+  fingerprint digests; configuration digest), `roles` (the seven role rows with each machine's affinity, the registry
+  digest, the by-hand rule), `scheduler` (`funded`, `by-hand` or `undecided`, with the kill gate's recorded state),
+  `queues[]` per device lane, `waiting[]` with reasons, the `transfer` meter (bytes and items per transfer class and
+  direction against 1 GB per campaign-hour, refused attempts by class), `scene_identity` (regenerations checked
+  across machines). Exit 2 with one warning per flag (a machine down, a job waiting on `machine-down`, over target,
+  an identity mismatch). It never refuses because a machine is unreachable: the peer's blocks read `unavailable`
+  with the reason. Evidence: *operational*.
 - Chapter refusals: none of its own.
-- Implemented by: N21c-15, BD-370.
+- Implemented by: N21c-15. BD-370 consumes it in the fleet gate.
+- Tier S (DESIGN, from the chapter's mechanism register: "roles and seeds-only transfer" is Solid with no kill
+  gate): the verb keeps working, with `scheduler: by-hand`, when KILL-FLEET fires; only `fleet.plan` belongs to the
+  Frontier scheduler.
 
 **`fleet.plan`** (MCP tool `fleet_plan`; owner `frob-cli`)
-- Inputs: a set of jobs or a campaign.
-- Outputs: the assignment by role affinity and estimated work. Evidence: *operational*.
-- Chapter refusals: `FROB-REF-618` (a transfer class that may not cross machines).
+- Inputs: nothing (the plan for the current queues); `--job`, repeatable (a job specification or a registered
+  fixture, placed hypothetically and never submitted); a campaign handle, positional, such as `camp:12` (BD-370's
+  input `campaign`, spelled as its example and this row's spell it: every job of the campaign placed
+  hypothetically); `--explain` (every candidate placement with `fits` or its typed reason).
+- Outputs: configuration and inputs digests; `assignments[]` (job, device, affinity, estimated start and finish as
+  intervals, the deciding rule); `waiting[]` with reasons; `refused[]` with codes and first repairs; `mode`
+  (`scheduled`, or `by-hand` when KILL-FLEET fired or no link is built: then each job gets the role table's first
+  machine and nothing is forwarded). Exit 0, or 2 when any job waits or is refused. Evidence: *operational*.
+- Chapter refusals: `FROB-REF-618` (a transfer class that may not cross machines). For a plan (DESIGN, BD-370): a
+  job whose every admissible placement would make a forbidden class cross (its specification embeds a compiled
+  scene field, world state or a rollout buffer, or needs a private pack held by the other machine) is listed in
+  `refused[]` with the code and the repair "send the seed or recipe"; when it is the only job asked about, the verb
+  refuses with 618 (exit 6).
 - Implemented by: BD-370.
 
 **Machine fields of each row.**
@@ -90,13 +112,13 @@ One entry in full (the others follow field for field):
 name = "fleet.status"
 cluster = "fleet"
 kind = "read"
-tier = "F"
+tier = "S"
 capabilities = ["fleet:read"]
 input_schema = "frob.fleet.status.in/1"
 output_schema = "frob.fleet.status.out/1"
 refusals = []
 idempotent = true
-cost_model = "static: answered from the store or by a small CPU computation; no job"
+cost_model = "static: under 1 s; one round trip on the peer link if configured"
 first_milestone = "M4"
 task_clusters = ["fleet"]
 examples = ["frob fleet status --json"]
@@ -109,22 +131,42 @@ purpose = "Roles and queues of the two machines"
 1. The MCP tool name is the verb name with `.` and `-` replaced by `_`. The output on the wire is one envelope
    `frob.envelope/1` with `result` specialized to the output schema; its `evidence` block is a claim product (the
    weakest class, tier and determinism class among the inputs).
-2. The generator adds the common input properties of the kind (`run`: `sync_wait_ms` from 0 to 30,000 with MCP
-   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel`; `mutate`: `idempotency_key`,
-   `expected_parent`) and appends the surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid),
-   724 (not implemented in this build) and 802 (schema failure, including an unknown parameter) for every verb; 701
-   to 704 (budget and admission), 803 (key reused with different content) and 805 (missing key) for `run`; 725, 803,
-   804 (stale parent) and 805 for `mutate`; 806 and 807 for paginated reads; 808 for an out-of-range integer.
+2. The generator (NJL-01) adds the common input properties of the kind. `run`: `sync_wait_ms` (0 to the row's
+   `wait.mcp_max_ms`, at most 30,000; MCP default 5,000; the CLI waits to completion), `idempotency_key` (CLI
+   `--key`), `budget`, `estimate_only` (CLI `--estimate`), `on_cancel` (`leave`, the default, or `cancel_job`;
+   `leave_running` is 802) and `envelope_scope` (CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`: the
+   approved compute-envelope scope the run belongs to; a launcher's token comes first and a citation that
+   contradicts it is refused; with neither, nor a scope the verb derives from its own inputs, the run is `adhoc`,
+   class E0; N36-20). `mutate`: `idempotency_key` and `expected_parent`. `idempotency_key` is in no JSON-schema
+   `required` array: the annotation `x-frob-key: "required"` (`"optional"` on a `key_optional` entry) carries the
+   rule, and the admission transaction refuses a missing key with 805 on both surfaces. The generator appends the
+   surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid), 724 (not implemented in this build)
+   and 802 (schema failure, including an unknown parameter) for every verb; 701 to 704 (budget and admission), 761
+   (above the compute envelope in force), 803 (key reused with different content) and 805 (missing key) for `run`;
+   725, 803, 804 (stale parent) and 805 for `mutate`. The rest is NJL-01's table of variations driven by fields
+   and tables, cited here and not copied: among them 806 and 807 (with `cursor`, `limit`, `follow`) for a
+   paginated read; 808 (an integer outside ±(2⁵³ − 1)) for every entry whose input has an `int53` field, whatever
+   its kind (every `run` entry has one, `sync_wait_ms`); no 805 for a `key_optional` entry; `estimate_only` on a
+   non-`run` entry with `estimable = true`; the property `action` for an entry with `actions`; 790 for a non-empty
+   `needs_groups`; 891 to 893 for artifact `params`; 734 and 828 for a parameter that accepts a path to a file
+   (`artifact-input<F>`, `artifact-identity<F>`, `foreign-file`); and the later variations 10 to 16 (`override`
+   with `override_reason`, `from_proposal`, `machine`, `engine`, `no_memo` for `memo = true`, the reality guard's
+   refusals for `reports = true` or an artifact reader, `diagnostic_override` with the codes of the
+   `[[admission_check]]` rows), each landing with the bead NJL-01's table names.
 3. Exit codes: 0 done; 2 done with findings; 3 refused input (1xx to 5xx, and 8xx other than conflicts); 4 budget
-   (70x); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
+   (70x and 761); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
    indeterminate; never 1 on purpose.
-4. Rows are entered when the cluster is first registered (M4). Until its own milestone a verb answers one envelope
-   with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json` lists it as absent.
+4. Rows are entered when the cluster is first registered (M4); each row's tool is added to the task-cluster
+   tables its `task_clusters` names in the same change (NJL-05's staging rule). A verb whose handler is not in
+   the build answers one envelope with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json`
+   lists it as absent; a reduced form that lands before the row's `first_milestone` answers and is listed as
+   implemented with its form named (NJL-01, NJL-03: the field keeps the appendix's milestone).
 
 **Notes for this cluster.**
 
 - Both verbs are `read`: the fleet scheduler decides when and where work runs and never what is computed (no
-  wall-clock quantity enters a result).
+  wall-clock quantity enters a result). `fleet.plan`'s cost model is "static: under 1 s".
+- Redaction: jobs of other principals appear with role, size class and estimate only.
 
 ## Acceptance criteria
 
@@ -143,7 +185,7 @@ purpose = "Roles and queues of the two machines"
       verb runs its registry example with the result its implementing bead specifies; a misspelt parameter is
       `FROB-REF-802`, exit 3.
 - [ ] The generated refusal table lists for each verb exactly its chapter codes plus the codes appended for its
-      kind, and every code exists in `registries/refusals.toml`.
+      kind and fields (NJL-01), and every code exists in `registries/refusals.toml`.
 - [ ] The gate row is recorded with the measured counts by a session that did not write the rows.
 
 ## Test plan
@@ -155,11 +197,11 @@ strings labelled `synthetic`):
 - `rows_present`: exactly 2 rows in the cluster, with the names of the rows table; a planted extra row or a removed
   row fails.
 - `kinds_milestones_tiers`: each row's kind, first milestone and tier equal the rows table (for example `fleet.plan`
-  is `read` at M4).
+  is `read` at M4, tier F; `fleet.status` is `read` at M4, tier S; a planted `F` on `fleet.status` fails).
 - `schemas_and_scopes`: input schemas are `frob.<name>.in/1`; output schemas and capabilities equal the
   machine-fields table.
 - `refusal_lists`: each row's chapter codes equal its block (`fleet.status`: none; `fleet.plan`: 618); the appended
-  codes equal the rule for its kind.
+  codes equal the rule for its kind and fields.
 - `mcp_names_one_to_one`: the tool names are the mapped names (`fleet_status`, `fleet_plan`), with no collision
   against any other cluster.
 - `task_clusters_and_examples`: every row sits in a task cluster of at most seven tools or is a base tool; each
@@ -204,12 +246,18 @@ and field; the `summary` line gives assertions passed and failed and the gate to
 ## Considerations
 
 - Kill gate KILL-FLEET and OPEN-TETHER-5 (owner: project owner; decided at M4): whether the peer link between the
-  two machines earns its upkeep. Fail-closed default: standalone machines; the rows then answer for one machine.
+  two machines earns its upkeep. Fail-closed default: standalone machines; the rows then answer for one machine:
+  `fleet.status` (Solid) stays with `scheduler: by-hand`, and `fleet.plan` answers in mode `by-hand`.
 - Closing rule: the bead closes at M4, when the rows are registered, the surfaces match and every verb passes its
   example or answers the not-implemented refusal. The per-milestone surface beads (BD-376) re-run this script as
   verbs land; that is how GATE-TETHER-02 is re-measured.
-- Scope names are proposals (`<cluster>:<read|run|write|admin>` plus the named scopes of the surface) until the
-  capability bead BD-258 fixes the scope registry; a `run` or `write` scope of a cluster implies its `read` scope.
+- Scope names follow the naming rule decided in BD-258 (no longer proposals): a row cites scopes of its own
+  cluster by kind (`read` → `<cluster>:read`; `run` → `<cluster>:run` or a named spending scope; `mutate` →
+  `<cluster>:write` or a named write scope; `admin` → `<cluster>:admin`, `job:cancel` or a named admin scope),
+  plus `export:*` when the row exports and `private:*` where privacy applies, never a scope named after the
+  object read or the engine spent on; N32b-01's catalogue generates the forms. `<cluster>:run` and
+  `<cluster>:write` imply `<cluster>:read`, closed when a set is stored (at minting and at derivation,
+  `Scopes::close_implied`), so checks stay plain set inclusion.
   Inputs and outputs above name contents, not flag spellings, except where a flag is quoted; the implementing bead
   fixes the spellings and the snapshot then pins them (additive changes keep the schema's major version; anything
   else raises it).

@@ -1,0 +1,508 @@
+{
+ "round": 2,
+ "slice": "S72",
+ "reviewed": 52,
+ "changed": [
+  {
+   "bead": "BD-288",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests"
+   ],
+   "what": "auditor codes split as the mapping says (frob-verify FROB-REF-829, mission verb 852); --transport-pairs 0 accepted only with --transport-unchecked so the auditor can be tested alone; call order proposal, pre-check, harness, check-before-answer stated; withheld entries kept for export; mutants registered as nc-<nnnn> mutation controls"
+  },
+  {
+   "bead": "N25a-25",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "step 4 rewritten: harness off with 0 pairs, in-process withholding asserted, export by prove.bundle with key, standalone frob-verify reports 829 not 852; release-build refusals named (868, 802); distinct keys for feature-off and mutant runs; mutants as registered controls; frob-conformance entry points are example targets, not binaries (BD-025)"
+  },
+  {
+   "bead": "N25a-15",
+   "kinds": [
+    "complete",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "K8 ends are algebraic too (roots of 81λ²−81λ+10), stored like K2's; K9 given an exact DESIGN construction (pair measure 1/2, side condition iv); unit tests for K4, K5, K9, algebraic ends and a rarity-rule negative control; log fields completed; frob-conformance entry points are example targets, not binaries (BD-025)"
+  },
+  {
+   "bead": "N12-14",
+   "kinds": [
+    "tests"
+   ],
+   "what": "monotone rejection tests given their corpus inputs and codes (K3 side.missing 829, K1 enclosure crossing zero, K7 crossing g·u = 1/4); the product-equal-to-one test given an exact input: 2θ ≤ 1 and (1/2)θ⁻¹ ≤ 1 with λ = (1, 1), product exactly 1, feasible at θ = 1/2"
+  },
+  {
+   "bead": "N25b-30",
+   "kinds": [
+    "sense",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "script no longer needs a mission answer carrying M3 kinds (none exists before BD-288): writes specimens with a writer example and audits by path with prove.verify/prove.list/frob-verify; mission-verb code 852 checked by a mapping unit test, end to end in N25a-25; long line rewrapped"
+  },
+  {
+   "bead": "N25a-16",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "request of U25b applied: the passive-jaw equal-stiffness amendment is a polarity example (both inner cells withdrawn with the changed world named, exclusion rechecked and kept, successor equals fresh: all of [0,1] excluded), with acceptance, unit test and the campaign script"
+  },
+  {
+   "bead": "N25a-17",
+   "kinds": [
+    "split",
+    "scope",
+    "deps"
+   ],
+   "what": "the incumbent implementation split out to N25ap2-01 (one bead cannot be two non-overlapping sessions; the bead was over five days); the post-gate-run pilot result moved to N25a-26, which depends on this bead (drift 7); notes row 6 of N25d-40 should name this bead as carrier; frob-conformance entry points are example targets, not binaries (BD-025)"
+  },
+  {
+   "bead": "N25a-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete"
+   ],
+   "what": "dep N25ap2-01 (arm D's entry point named) and N38a-09; stripped implication record rejected by frob-verify under 826, not 835 (835 is the engine's code); appends the revalidation pilot's [[pilot.result]]; passive-jaw equal-k amendment added to the public fixtures; frob-conformance entry points are example targets, not binaries (BD-025)"
+  },
+  {
+   "bead": "N25a-19",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the drill's mission.revalidate call written out with distinct keys (drift 5)"
+  },
+  {
+   "bead": "N25d-28",
+   "kinds": [
+    "deps",
+    "placement",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "dep N25a-16 (the script calls mission.revalidate); priority 1 to 2 (M3 default, not a decision); keys on every run call; amendment 2's full recomputed answer stated (f₊₊ = 145 + 7.5v: inner only at v = 2)"
+  },
+  {
+   "bead": "N25d-29",
+   "kinds": [
+    "deps",
+    "placement",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "deps N25a-16 and N25ap2-01 (arm C starts from the incremental incumbent rather than a second unspecified rival) and N38a-09; priority 1 to 2; keys; the register entries named (method-experiment register, pilots.toml result)"
+  },
+  {
+   "bead": "BD-293",
+   "kinds": [
+    "e2e-logging",
+    "complete",
+    "tests",
+    "correct"
+   ],
+   "what": "request of U26a applied: the answer gains `pair` (gap g, reversal score, kind, both verdicts, oracle class, guard outcomes) and `search` (flip-probability rank per evaluated world) blocks and the script logs them; gate recorded through record_gate against the sealed population and pinned engine; keys on every run call; unit tests no longer read the eight sealed cases (seal of N25bp1-01); control (a) registered as an nc mutation, control (b) a public fixture; five controls, not three; early-forms note updated"
+  },
+  {
+   "bead": "N10b-06",
+   "kinds": [
+    "conventions"
+   ],
+   "what": "KA-107 run as `--test g0_laws` with FROB_TEST_SEED; mutants under `gauntlet-mutations` (BD-025 defines no `controls` feature); registry files named"
+  },
+  {
+   "bead": "N25b-23",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "result carries the reversal record and per-evaluated-world ranking from N26a-10 (needed by BD-293's script); own script through an example target on the public fixtures; controls registered as nc mutations; deps BD-202, STD-E2E, STD-TEST made explicit"
+  },
+  {
+   "bead": "N25b-22",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "own script through an example target over every admission case; the two uncoded admission refusals (no declared scale, reward decision) left for N35x-02 to number; deps STD-E2E, STD-TEST"
+  },
+  {
+   "bead": "N25b-25",
+   "kinds": [
+    "conventions",
+    "e2e-logging"
+   ],
+   "what": "keys on every run call (eval.run with its battery, nemesis.search, nemesis.shrink, sim.replay); protocol and result in pilots.toml (frob.gauntlet.pilot/1)"
+  },
+  {
+   "bead": "N25b-26",
+   "kinds": [
+    "conventions",
+    "e2e-logging"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-AUGUR-SEPARATE-M3.md with N40-03 fields; keys on the comparator's scene.gen, eval.run and sim.replay calls; the runner is an example target (frob-conformance has no binary, BD-025)"
+  },
+  {
+   "bead": "N25bp1-01",
+   "kinds": [
+    "conventions"
+   ],
+   "what": "keys and full option forms on the validation script's eval.run and nemesis.oracle calls"
+  },
+  {
+   "bead": "N25b-28",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "complete",
+    "deps"
+   ],
+   "what": "equal-stiffness unit test uses the fixture's k = 1 (was 2); misaligned-contact family given exact values (e = 1/2: c in [1/28, 15/28]; e = 6/5: the point c = 7/20, x = 27/5; empty beyond) with a test; own script over the verbs it depends on, with keys; dep STD-E2E"
+  },
+  {
+   "bead": "BD-289",
+   "kinds": [
+    "conventions",
+    "sense"
+   ],
+   "what": "pilot record named (row 3 of N25d-40 in pilots.toml, protocol digest then [[pilot.result]], no second record); ADR path docs/adr/ADR-KILL-AUGUR-REGION-M3.md with N40-03 fields; the M4 reading left to N25b-11 and the BET-20 verdict to BET-20 (drift 7)"
+  },
+  {
+   "bead": "BET-20",
+   "kinds": [
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "script no longer replays pilot boxes with frob-verify (they are not bundles): mutations of clause (c) run through frob-verify, pilot soundness rests on BD-289's point check; M4 addendum moved to N25b-11 (drift 7); log path and fields"
+  },
+  {
+   "bead": "BD-290",
+   "kinds": [
+    "conventions",
+    "e2e-logging"
+   ],
+   "what": "keys and full forms on every run call (refute, synthesize, prove bundle, design edit, re-query); gate recorded through record_gate; controls registered as nc mutations; revalidation note points at N25a-16 and N25a-26"
+  },
+  {
+   "bead": "BD-291",
+   "kinds": [
+    "sense",
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "acceptance no longer waits on N25c-13 (which depends on it): the mechanism is checked here, the pilot counts there; own script with keys over every case, refusal and auditor check; milestone note updated to the registry's early-forms table (no 724); refusal 854 on distinguish made concrete and requested of VERBS-mission and N25-REF; deps BD-133, STD-E2E"
+  },
+  {
+   "bead": "BD-294",
+   "kinds": [
+    "complete",
+    "tests",
+    "conventions"
+   ],
+   "what": "M3 operators and second-opinion rules added to BD-136's one generator and re-check rather than an unnamed second implementation; record_gate with --part M3; tests for the one-generator rule and the monomial multiplier mutant"
+  },
+  {
+   "bead": "N10c-04",
+   "kinds": [
+    "conventions",
+    "e2e-logging"
+   ],
+   "what": "rows run as g1_known_answers with FROB_TEST_SEED; mutants run as subjects; registry files named"
+  },
+  {
+   "bead": "N10c-09",
+   "kinds": [
+    "correct",
+    "conventions"
+   ],
+   "what": "out-of-scope owners corrected (grammar N25c-17, probe-request N19c-05, pilot rows N25c-13, kill decision N25c-16, gate at M4 with BD-351); g1_known_answers with seed"
+  },
+  {
+   "bead": "N10c-11",
+   "kinds": [
+    "conventions"
+   ],
+   "what": "keys on the thirty run-verb calls; pilots.toml path and schema"
+  },
+  {
+   "bead": "SPEC-C-39",
+   "kinds": [
+    "conventions"
+   ],
+   "what": "KA-187 run as g1_known_answers with seed; doctrine check in the script"
+  },
+  {
+   "bead": "N25b-27",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "own e2e scripts/e2e/mission_alias_witness.sh over the verbs it already depends on (was delegated to a later bead's script, drift 7); run-verb keys aw-<run>-...; STD-E2E dep"
+  },
+  {
+   "bead": "N25b-29",
+   "kinds": [
+    "correct",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "population no longer includes the blind payload task of BD-290, which waits on this decision (its witnesses enter the standing re-audit); ADR path docs/adr/ADR-KILL-AUGUR-ALIAS-M3.md with N40-03 fields; nemesis/sense/replay calls with distinct keys kaa-<run>-..."
+  },
+  {
+   "bead": "N25b-08",
+   "kinds": [
+    "correct",
+    "request"
+   ],
+   "what": "request applied: the example driver stays the crate's own tool and adds no verb; the registry verb analyze.constraint-graph (NJLx-51) is N25e-27's and wraps this artifact; step 5 and acceptance reworded (they called the tool 'outside the registry')"
+  },
+  {
+   "bead": "N25e-27",
+   "kinds": [
+    "correct",
+    "deps",
+    "placement"
+   ],
+   "what": "registration in the method-experiment register (crates/frob-conformance/registry/experiments.toml, N38a-07, six parts; dep added); machine-readable report moved to docs/experiments/open-augur-3.json (it is a report, not a registry); ADR path docs/adr/ADR-OPEN-AUGUR-3.md; note on N25b-08 updated"
+  },
+  {
+   "bead": "N25c-13",
+   "kinds": [
+    "request",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied: row-10 truth evaluator truth_10 and shortcut mutant shortcut_10 of N25a-08's frob_conformance::fixtures::shortcuts against the four-law fixture, control activated, row10_probe_counts unskipped (675/675, 0/225), new test and acceptance; script self-check via g1_known_answers and shortcuts tests instead of an undefined fixture verb, distinct keys pp-<run>-..., the four-law admitted set run, explicit prove bundle/verify"
+  },
+  {
+   "bead": "N25c-14",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "reuse outside eligibility made concrete (--from a:<nominal>, 854 exit 3) with a request for 854 on mission.synthesize's row; script with keys pf-<run>-..., eccentric sweep at e/s 0.05/0.10/0.15, refute call, bundle + standalone frob-verify on no-margin mutants, log path; eccentric test values at 0.05 and 0.10 added (39.375 N admitted, 41.25 N unresolved)"
+  },
+  {
+   "bead": "N25c-15",
+   "kinds": [
+    "correct",
+    "placement",
+    "e2e-logging"
+   ],
+   "what": "the pilot record is row 9 of the Augur pilot records in pilots.toml (protocol hash before the first arm, result appended), N25c-16 decides from it; false_bound_detector truth corrected from 40.15 N to 41.15 N (40.15 is the per-pad lower bound; N25c-48 gives 41.152 N); script keys pcl-<run>-..., family program call, hidden model binary and queries named, log path"
+  },
+  {
+   "bead": "N25c-16",
+   "kinds": [
+    "placement"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-AUGUR-PROBE-M3.md with N40-03 fields, M4 clause-C firing appended to it; protocol hash cited from row 9 of pilots.toml"
+  },
+  {
+   "bead": "N25c-23",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "script calls with keys ig-<run>-... (synthesize, refute, sense.alias are run verbs), docking recovery and strict/non-strict variants and contact-rich run added, explicit prove bundle/verify, log path and fields"
+  },
+  {
+   "bead": "N25c-48",
+   "kinds": [
+    "sense",
+    "tests"
+   ],
+   "what": "subprocess interface spelled (pad_assembly <reading|direct|truth> --input <request.json>, one JSON response) so N25c-15 can call it; tests run with --manifest-path since the crate is outside the workspace; malformed-request test"
+  },
+  {
+   "bead": "N25cx-02",
+   "kinds": [
+    "request",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request applied: dropped first_milestone M3 with forms; the row is VERBS-experiment's (registered at M3, first_milestone M4, form expert-grid), dep VERBS-experiment added; ranked form answers 724 (acceptance); grid commands of run verbs carry a caller-filled {key}; script keys es-<run>-... and capabilities check"
+  },
+  {
+   "bead": "N25cp2-01",
+   "kinds": [
+    "sense"
+   ],
+   "what": "new bead modified in the last hours: read whole, parses, coherent, all worked values re-derived (null spaces, dual 145 + 7.5v, vertex forces); only an over-long inserted line rewrapped"
+  },
+  {
+   "bead": "N25d-45",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "census encodings and certificate reconstruction located (tools/oracle/qe_census, writes .frobcert bundles) with its invocation; open-question register row registries/open.toml (N41-03) set with the ADR; script keys oa4-<run>-..., cargo xtask check-deps --json, planted failures, log path and fields"
+  },
+  {
+   "bead": "N25e-07",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "own e2e scripts/e2e/mission_point_status.sh (was N25e-09's script; acceptance waited on N25e-09, drift 7) with keys ps-<run>-..., refusal, creep fill with bundle + frob-verify, stratum stop, mutant as registered nc control; --fill licensed and 852 on nemesis.search/phylum.sweep requested of the verb rows; STD-E2E, STD-TEST deps"
+  },
+  {
+   "bead": "N25e-08",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "acceptance no longer waits on N25e-09 (100 seeded synthetic planted bands instead; the gate clause stays N25e-09's); own e2e scripts/e2e/analyze_sweep_monotone.sh with keys sm-<run>-...; exit codes of NJLx-51's row (0, 0, 2) stated and tested; STD-E2E, STD-TEST deps"
+  },
+  {
+   "bead": "N25e-09",
+   "kinds": [
+    "request",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request applied: dep BD-146 replaced with N38b-04 (mutation control) and N38b-19 (gate recorder); mutant as registered nc control, gate row through record_gate; seed passed by --set seed=<s> (mission.synthesize has no --seed); keys nf-<run>-...; band KA number requested of N38a-40; creep KA-606/607 cited"
+  },
+  {
+   "bead": "N25e-10",
+   "kinds": [
+    "request",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request applied: ProofKind::MonomialProduct and its exact payload added in frob-core, monomial-product removed from N25b-01's pending list (dep N25b-01); example driver monomial_screen; own e2e scripts/e2e/mission_monomial_screen.sh (leg object equals N12-14's specimen, N25b-30 writer, frob-verify, nc mutants); STD-E2E, STD-TEST deps"
+  },
+  {
+   "bead": "N25e-11",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "own e2e scripts/e2e/mission_monomial_refute.sh with keys mr-<run>-..., bundle + frob-verify, 802 refusal, nc mutant; --screen, --weights and the whole-family form requested of VERBS-mission's mission.refute row; STD-E2E, STD-TEST deps"
+  },
+  {
+   "bead": "N25e-12",
+   "kinds": [
+    "request",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request applied: dep BD-146 replaced with N38b-04 and N38b-19; disabled-exponent-check build as registered nc control run in the script; gate row through record_gate; refute calls keyed ms-<run>-<id>; explicit prove bundle and frob-verify"
+  },
+  {
+   "bead": "N12-30",
+   "kinds": [
+    "placement",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-FAMILYCERT-M3.md with N40-03 fields and the registries/gates.toml row; comparators pinned in registry/comparators.toml (N38a-04); script spelled: specialized side through synthesize/bundle/frob-verify with keys kfc-<run>-..., measurement as --example kill_familycert (BD-025), log path and fields; deps N38a-04, N40-03, STD-E2E"
+  },
+  {
+   "bead": "N12x-06",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the e2e step that waited on mission.refute (BD-290, which depends on this bead) removed: emitted bundles are audited by the scripts of N25b-27 and BD-290; seeded-fault campaign given its own test (200 mutants, zero false accepts) and run by the script; prove verify spelled over bundle paths; all binary-sensor fractions re-derived"
+  },
+  {
+   "bead": "N12x-08",
+   "kinds": [
+    "request",
+    "correct",
+    "tests"
+   ],
+   "what": "requests applied: ledger rows finite-game-v2 (channel scenarios erasures and flips, N25e-35), partition-v2 (discrete-set form, N25e-43) and colouring-bound-v1 (cap Certified, limit 'n <= 16 variants, at most 2*10^8 complete maps covered', checker N12p2-01) in the first revision and in the Background's request list; note that no row carries a bare counting bound; independence of the mission-side checker changes (the Lemma lead may own them); kind count 28 -> 29 throughout; tests and e2e extended; prove list over a path; cargo xtask"
+  },
+  {
+   "bead": "N25ax-02",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "gate row written through record_gate --gate GATE-AUGUR-14 --part M3 (N38b-19, dep added), which checks the planted controls in the same run; all ceilings re-derived"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N25ap2-01",
+   "why": "split from N25a-17: the incremental incumbent (field-keyed graph with LP ranging) must be written by a session other than the campaign author's, so it cannot share a bead with the campaign"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize row: add the options --transport-pairs <n> (default 10000; 0 refused with 802 unless --transport-unchecked) and --transport-unchecked (test-switches builds only; unknown parameter 802 in release), whose spellings BD-288 step 8 fixes"
+  },
+  {
+   "bead": "BD-133",
+   "what": "for an answer marked unchecked-transports (test builds, BD-288 step 8), prove.bundle exports the entries the check before the answer returns withheld, marked withheld with their first failing rule, so that N25a-25 step 4 can run the standalone frob-verify on them"
+  },
+  {
+   "bead": "N25d-40",
+   "what": "(1) N25a-15 enters pilot record PILOT-MONO-01 (monotone verdict transport, tier F, carrier N25a-15, kill gate KILL-AUGUR-FALSECERT, integrated GATE-AUGUR-08): add it as an Augur row or let the linkage test count it, since its 22-rows/24-records test would otherwise fail; (2) row 6 (revalidation by implication): the carrier of the part still to run is the campaign pilot N25a-17 (with the incumbent N25ap2-01), not the engine BD-292"
+  },
+  {
+   "bead": "N35x-02",
+   "what": "allocate refusal codes for two admission refusals of the separation contract (N25b-22, surfaced by mission.separate, BD-293), both exit 3 with the field as pointer: (1) a world edit on a field with no declared scale; (2) a decision that names a shaping reward instead of a requirement monitor or metric"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.distinguish row: add FROB-REF-854 to its chapter refusals (BD-291: a query whose archive applies a stored probe's measurement contract to a target whose mechanism set is not the certificate's condition; first repair mission.revalidate)"
+  },
+  {
+   "bead": "N25-REF",
+   "what": "FROB-REF-854: add BD-291 among the beads that raise it (mission.distinguish, a stored probe rule reused outside its mechanism set)"
+  },
+  {
+   "bead": "N25b-11",
+   "what": "write the M4 parts that BET-20 and BD-289 can no longer wait for: docs/adr/bet-20-m4.md citing bet-20-m3.md, and, if KILL-AUGUR-REGION is read again at M4 after one repair cycle, docs/adr/ADR-KILL-AUGUR-REGION-M4.md"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize row: add FROB-REF-854 (a certificate reused outside its eligibility, e.g. a nominal answer offered with --from for another reading set) to the chapter refusals, with N25c-14 among the raisers"
+  },
+  {
+   "bead": "N25-REF",
+   "what": "list N25c-14 among the raisers of FROB-REF-854 (mission.synthesize with --from outside the reading set)"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize row: add the option --fill licensed (default off; licensed monotone fills appear as proved points; unlicensed fill refused 852), with N25e-07 among the implementers"
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.search row: add the option --fill licensed and the appended code FROB-REF-852 (an unlicensed fill of a rollout sweep), with N25e-07 among the implementers"
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "phylum.sweep row: add the option --fill licensed and the appended code FROB-REF-852 (an unlicensed fill of a rollout sweep), with N25e-07 among the implementers"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.refute row: add the whole-family form (mission with neither --cell nor --design), the options --screen monomial and --weights equal|centre-share|<w,...> (bad weights 802), and N25e-11 among the implementers"
+  },
+  {
+   "bead": "N38a-40",
+   "what": "allocate a KA number for the sill-mount band of N25e-09 (fail iff (k - 10^4)^2 < 2.1e7, band (5417.4, 14582.6) N/m, amplitudes 1.58 mm and 5.00 mm), which no appendix numbers"
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 52 files read in full (51 slice beads and the split N25ap2-01 made in this review); all parse (front matter, JSON lists, seven sections; deps all exist). Every addressed request was checked against the plan and applied. Main themes found: beads whose e2e or acceptance waited on a later bead's script (drift 7) now have their own scripts; run-verb calls carry distinct keys; gate rows go through record_gate; mutants are registered nc controls; ADR paths named; options and codes missing from verb rows requested of VERBS-mission, -nemesis, -phylum. Corrections of substance: N25c-15's truth value (41.15 N, not 40.15 N), BD-293's unsupported reversal kind, N25a-16's witness. The slice looks settled once the 14 requests to other beads land; no open contradiction remains inside it."
+}

@@ -1,0 +1,2136 @@
+{
+ "group": "G29",
+ "needs": [
+  {
+   "bead": "BD-024",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-038"
+   ],
+   "note": "BD-038 exercises the worker against this verb and is the higher-numbered seed (seed order); not a prerequisite of sim.run"
+  },
+  {
+   "bead": "BD-024",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16b-25"
+   ],
+   "note": "the later forms extend the schema registered here and already depend on this bead"
+  },
+  {
+   "bead": "BD-091",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N29b-18"
+   ],
+   "note": "the decision measures this transaction (rule 7) and depends on it; this bead builds on the default L = 256; the gate bead N29a-06 depends on the decision"
+  },
+  {
+   "bead": "BD-091",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N29b-19"
+   ],
+   "note": "later milestone, and the decision depends on this bead; default one lease generation per run; the device gate bead N29a-24 depends on the decision"
+  },
+  {
+   "bead": "BD-091",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28b-38"
+   ],
+   "note": "this bead only writes the quarantine row; N28b-38 owns the per-kind stop latch that the row sets and tests it with a chunk conflict, so the dependency runs from N28b-38 to this bead (recorded under edges)"
+  },
+  {
+   "bead": "BD-091",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N29-REF"
+   ],
+   "note": "registry rows for 875, 878, 885 with exit codes; the exit of 875 in this bead was aligned to the registry (7)"
+  },
+  {
+   "bead": "BD-092",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-076, the capstone of the port account, which depends on N15b-05"
+  },
+  {
+   "bead": "BD-092",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N29b-22",
+    "N29b-20",
+    "N29b-21"
+   ],
+   "note": "this bead only reserves the line; N29b-22 fills it and depends on this bead"
+  },
+  {
+   "bead": "BD-092",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N24a-37"
+   ],
+   "note": "the verb depends on this bead; the script steps that call it run once N24a-37 lands; a dependency would close a cycle"
+  },
+  {
+   "bead": "BD-092",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-081",
+    "BD-080"
+   ],
+   "note": "the transactional referee step (its restore set holds the ledger accumulators) and the contact step whose solved impulses and velocities are integrated; made direct"
+  },
+  {
+   "bead": "BD-095",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N29b-09"
+   ],
+   "note": "the graph proceeds on the fail-closed default (types local in frob-core, delivered by N34-11); the gate bead N29a-10 depends on the decision"
+  },
+  {
+   "bead": "BD-095",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-209"
+   ],
+   "note": "later milestone and a higher-numbered seed that depends on this bead; at M1 the tombstone table exists and is empty"
+  },
+  {
+   "bead": "BD-095",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005 (the claim product in frob-core)"
+  },
+  {
+   "bead": "BD-097",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N37-11"
+   ],
+   "note": "the M1 path jail; BD-258 (M3, higher seed) carries the full capability model and stays related"
+  },
+  {
+   "bead": "BD-097",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "the confirmation firewall that owns FROB-REF-840 is M3; these verbs gain the refusal when it lands"
+  },
+  {
+   "bead": "BD-097",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N24a-35"
+   ],
+   "note": "run.show embeds the summary builder"
+  },
+  {
+   "bead": "BD-097",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N29a-04"
+   ],
+   "note": "the store-level cursor at M1; the authenticated surface cursor is N32a-10 at M1 and BD-211 at M2 (related)"
+  },
+  {
+   "bead": "BD-148",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N17a-02",
+    "N17a-03"
+   ],
+   "note": "consumers of the counts and of ShapeClassId; both depend on this bead"
+  },
+  {
+   "bead": "BD-148",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16a-12"
+   ],
+   "note": "the padding rule binds the kernels that read these tables; N16a-12 depends on this bead"
+  },
+  {
+   "bead": "BD-148",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N14b-33"
+   ],
+   "note": "the fold of fixed joints runs before lowering and fixes the link count"
+  },
+  {
+   "bead": "BD-148",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N13-37"
+   ],
+   "note": "N13-37 adds the turn slab to the packed layout and depends on this bead; the declaration of which joints carry turn state is M1 (N13-34)"
+  },
+  {
+   "bead": "BD-203",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-23"
+   ],
+   "note": "the K-x-digest mixing contract"
+  },
+  {
+   "bead": "BD-203",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-07",
+    "N21b-11"
+   ],
+   "note": "this bead extends K-commit and reads slabs under leases; made direct (also reached through BD-174)"
+  },
+  {
+   "bead": "BD-203",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N24a-16"
+   ],
+   "note": "the content-addressed settled-pose cache and its key (M1) from which tick zero is rebuilt; BD-195, which loads it on the batched tiers inside VecEnv reset, is recorded as related: replay does not wait for the learning environment"
+  },
+  {
+   "bead": "BD-203",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N26a-19"
+   ],
+   "note": "later milestone; the .fmcw reader depends on this bead"
+  },
+  {
+   "bead": "BD-203",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "the confirmation firewall is M3"
+  },
+  {
+   "bead": "BD-203",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N35-07"
+   ],
+   "note": "sim.replay calls the licence check when both exist and the two can be built in parallel; the gate bead N29a-19, which claims bitwise replay, carries the dependency (edge recorded)"
+  },
+  {
+   "bead": "BD-204",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-176 is already a direct dependency; it builds on the divergence ledger of N21b-32"
+  },
+  {
+   "bead": "BD-204",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-177"
+   ],
+   "note": "BD-177 and its components N35-09 and N35-10 already depend on this bead (through BD-212 and N16b-02)"
+  },
+  {
+   "bead": "BD-204",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N29a-25"
+   ],
+   "note": "new bead: the shared conformance-only divergence-planting hook"
+  },
+  {
+   "bead": "BD-204",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N16a-02"
+   ],
+   "note": "the profile-by-tier admission matrix and FROB-REF-222; made direct"
+  },
+  {
+   "bead": "BD-206",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N27a-09"
+   ],
+   "note": "the other subsystem's battery over this implementation; it depends on this bead"
+  },
+  {
+   "bead": "BD-206",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-11"
+   ],
+   "note": "the verdict record with atoms and decisions written on the Task stream (component of BD-121); the batched-tier monitors BD-255 are M3"
+  },
+  {
+   "bead": "BD-206",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-113"
+   ],
+   "note": "the lineage graph that says two runs are designs of one lineage"
+  },
+  {
+   "bead": "BD-206",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "the confirmation firewall is M3"
+  },
+  {
+   "bead": "BD-207",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-10",
+    "N21b-11"
+   ],
+   "note": "the statistics ring as a slab of the arena layout and the epoch-fenced leases; the two parts of the capstone BD-173 this bead needs"
+  },
+  {
+   "bead": "BD-207",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-39",
+    "N21c-40"
+   ],
+   "note": "both depend on this bead; it needs their rule, not their code"
+  },
+  {
+   "bead": "BD-207",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-28"
+   ],
+   "note": "the placement record with requested and actual backend per stage"
+  },
+  {
+   "bead": "BD-207",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N29b-05",
+    "BD-094"
+   ],
+   "note": "N29b-05 depends on this bead and raises the failing bit this bead's mask reads; the event kinds come from BD-094"
+  },
+  {
+   "bead": "BD-208",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-21",
+    "N21b-36"
+   ],
+   "note": "the f32dd pair in the IR and the double-float accumulators with their start-up canary"
+  },
+  {
+   "bead": "BD-208",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-151"
+   ],
+   "note": "made direct (also reached through BD-159)"
+  },
+  {
+   "bead": "BD-208",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N16b-14"
+   ],
+   "note": "the step-side accumulator is drafted against this bead and depends on it"
+  },
+  {
+   "bead": "BD-208",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N29b-22"
+   ],
+   "note": "the line kinds and the algorithmic-exchange line of the referee ledger (M1) that K-ledger-step must carry; N29b-24 then adds the row quantities to the kernel and depends on this bead"
+  },
+  {
+   "bead": "BD-208",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N16b-33"
+   ],
+   "note": "the gate script of the dynamics unit depends on this bead"
+  },
+  {
+   "bead": "BD-209",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N29b-12"
+   ],
+   "note": "the decision measures with store.status and extends this bead's script, so it depends on this bead (edge recorded); this bead builds on 30 days and 64 GB, and the gate is re-run under the decided policy by N29b-12"
+  },
+  {
+   "bead": "BD-209",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28b-38"
+   ],
+   "note": "the M1 memo policy with the budget and byte accounting that store.status reports; BD-220 is a higher-numbered seed and stays related"
+  },
+  {
+   "bead": "BD-209",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-305"
+   ],
+   "note": "later milestone; BD-305 depends on this bead"
+  },
+  {
+   "bead": "BD-209",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-113"
+   ],
+   "note": "lineage heads; the comparison, bisect and autopsy holders are M3 and M4 and register through N29b-13"
+  },
+  {
+   "bead": "BD-209",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-344"
+   ],
+   "note": "M4; the prediction writer pins through this bead"
+  },
+  {
+   "bead": "BD-209",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "BD-259"
+   ],
+   "note": "M3; the qualification receipt writer pins through this bead"
+  },
+  {
+   "bead": "BD-209",
+   "n": 7,
+   "as": "related",
+   "keys": [
+    "N32b-01",
+    "BD-258"
+   ],
+   "note": "the verb declares store:admin in the registry; enforcement arrives with the token beads; a dependency would close a cycle through BD-211, which depends on this bead for cursor pins (G32)"
+  },
+  {
+   "bead": "BD-210",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-211"
+   ],
+   "note": "BD-211 completes the binding on top of this bead and depends on it; the M1 job ledger this bead extends is N32a-08 (edge recorded)"
+  },
+  {
+   "bead": "BD-210",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-15"
+   ],
+   "note": "budget reservations and the budget stop depend on this bead (through BD-219)"
+  },
+  {
+   "bead": "BD-210",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-14"
+   ],
+   "note": "the daemon frobd v1 (state root, socket, per-job dispatch); slot dispatch and preemption BD-295, BD-296 are M3"
+  },
+  {
+   "bead": "BD-210",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-175, the capstone over N21b-07, N21b-22, N21b-23 and N21b-24"
+  },
+  {
+   "bead": "BD-210",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N29b-18"
+   ],
+   "note": "the chunk length L decided at M1; the lease decision N29b-19 depends on this bead and is recorded as related, with the gate bead N29a-24 depending on it"
+  },
+  {
+   "bead": "N29-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N29-KA"
+   ],
+   "note": "the three rows of the late subsection were appended to N29-KA in this pass (K1 to K3)"
+  },
+  {
+   "bead": "N29-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the known-answer registry skeleton (row schema, rules, printout); BD-146 and BD-223 wire the rows and are consumers"
+  },
+  {
+   "bead": "N29-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": "the exit-code table and the refusal block; the uniqueness test at its gate is BD-299 (M3)"
+  },
+  {
+   "bead": "N29-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": "two registries; both state the same split (878 and 896 in the store, 810 and 806 at the surface); the owner's ruling is still owed"
+  },
+  {
+   "bead": "N29-REF",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N27-REF"
+   ],
+   "note": "later milestone; the code is cross-referenced, not re-registered"
+  },
+  {
+   "bead": "N29a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-003"
+   ],
+   "note": "check-layers; made direct"
+  },
+  {
+   "bead": "N29a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N37-11"
+   ],
+   "note": "the M1 path jail; the private mark and its export flag (BD-305) are M3 and related"
+  },
+  {
+   "bead": "N29a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-036",
+    "N34-24"
+   ],
+   "note": "array files through the admitted array library, and the rule that a view is never an identity (FROB-REF-892)"
+  },
+  {
+   "bead": "N29a-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N37-18",
+    "N37-17"
+   ],
+   "note": "the licence join and the export door are M3"
+  },
+  {
+   "bead": "N29a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-09"
+   ],
+   "note": "the single-parser search; it has no exemption class for an independent auditor reader yet (reported under gaps)"
+  },
+  {
+   "bead": "N29a-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-10",
+    "BD-211"
+   ],
+   "note": "the surface cursor wraps the store-level cursor of this bead; BD-211 is a later milestone"
+  },
+  {
+   "bead": "N29a-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N24a-35"
+   ],
+   "note": "a consumer of the pin"
+  },
+  {
+   "bead": "N29a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-094"
+   ],
+   "note": "the outcome kinds that classify a trial"
+  },
+  {
+   "bead": "N29a-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-08",
+    "BD-210"
+   ],
+   "note": "this bead defines the store-level stop and receipt types; the job state machine (N32a-08 at M1, BD-210 on devices, which depends on this bead) issues the stop and stores the receipt"
+  },
+  {
+   "bead": "N29a-05",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": "the registry row of FROB-REF-702; the budget accounting that triggers the stop is N32a-15 (M2)"
+  },
+  {
+   "bead": "N29a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-09"
+   ],
+   "note": "the M1 admission transaction"
+  },
+  {
+   "bead": "N29a-06",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-096 is already a direct dependency"
+  },
+  {
+   "bead": "N29a-06",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N29b-18"
+   ],
+   "note": "the decision blocks the gate rows"
+  },
+  {
+   "bead": "N29a-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-41",
+    "N21a-07"
+   ],
+   "note": "later milestone; device form of wide integer sums"
+  },
+  {
+   "bead": "N29a-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21a-10",
+    "N35-18"
+   ],
+   "note": "later milestone; the lint binds the device kernels of N29a-14"
+  },
+  {
+   "bead": "N29a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-36"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N38b-18"
+   ],
+   "note": "the gate recorder and the gate record it updates"
+  },
+  {
+   "bead": "N29a-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the recorder stamps the session and enforces no self-certification"
+  },
+  {
+   "bead": "N29a-09",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-004 is already a direct dependency"
+  },
+  {
+   "bead": "N29a-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-18",
+    "N38b-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29b-09"
+   ],
+   "note": "the decision blocks the gate"
+  },
+  {
+   "bead": "N29a-10",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N34-09"
+   ],
+   "note": "the demo-file check of check-contracts; the script that runs every demo is N34-12"
+  },
+  {
+   "bead": "N29a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29b-18"
+   ],
+   "note": "ring_seconds as a manifest field and the decided depth"
+  },
+  {
+   "bead": "N29a-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N27a-03",
+    "N27b-13"
+   ],
+   "note": "OPEN-AUTOPSY-4 blocks nothing; its default (sized by the budget estimator) is built here; N27a-03 depends on this bead"
+  },
+  {
+   "bead": "N29a-11",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N29b-05"
+   ],
+   "note": "N29b-05 raises the failing bit, triggers and tests the flush and depends on this bead; this bead tests its flush with a planted bit"
+  },
+  {
+   "bead": "N29a-11",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-255",
+    "N24a-07"
+   ],
+   "note": "device-side requirement monitors are M3; the trigger interface is this bead's"
+  },
+  {
+   "bead": "N29a-11",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "the ring states its bytes per world and tests admission against a stated budget; the estimator capstone sums that term with the others and sits behind the performance harness; wiring the ring's admission to it does not block the ring"
+  },
+  {
+   "bead": "N29a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "the stream registry file"
+  },
+  {
+   "bead": "N29a-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-094"
+   ],
+   "note": "the failure taxonomy that defines the failing mark; the batched monitors N29b-05 depend on this bead"
+  },
+  {
+   "bead": "N29a-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N35-21"
+   ],
+   "note": "the same histogram described from the f32 bit pattern in frob-core; reported as a cross-group overlap"
+  },
+  {
+   "bead": "N29a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-39",
+    "N21c-40"
+   ],
+   "note": "both depend on this bead through BD-207; it needs their rule, not their code"
+  },
+  {
+   "bead": "N29a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21a-17",
+    "N21a-22"
+   ],
+   "note": "the exact-integer math mode and the exact kernel class"
+  },
+  {
+   "bead": "N29a-14",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21a-10"
+   ],
+   "note": "the dialect lint on atomics; the feature gating N21c-42 is related"
+  },
+  {
+   "bead": "N29a-14",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-176"
+   ],
+   "note": "spark.check tests this kernel; a mechanism does not depend on its test"
+  },
+  {
+   "bead": "N29a-14",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-017"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29a-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "the confirmation firewall is M3"
+  },
+  {
+   "bead": "N29a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-07"
+   ],
+   "note": "the M1 number types int53 and u64str; BD-211 re-measures them on the daemon surface"
+  },
+  {
+   "bead": "N29a-15",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-40"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-295"
+   ],
+   "note": "later milestone; until then the co-tenancy lane uses the batch-composition harness of its dependency BD-181"
+  },
+  {
+   "bead": "N29a-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the gate runs under the fail-closed default envelope (one device, one hour); the decision changes the envelope, not whether the bead can start"
+  },
+  {
+   "bead": "N29a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "runs under the fail-closed default envelope"
+  },
+  {
+   "bead": "N29a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-18",
+    "N36-02"
+   ],
+   "note": "the frozen capacities of workload Q and its pinned record"
+  },
+  {
+   "bead": "N29a-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "made direct"
+  },
+  {
+   "bead": "N29a-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-189"
+   ],
+   "note": "writes its section into this container; a consumer"
+  },
+  {
+   "bead": "N29a-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N22a-01"
+   ],
+   "note": "controllers, filters and state sources write their own sections; consumers"
+  },
+  {
+   "bead": "N29a-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N23a-04"
+   ],
+   "note": "the learning subsystem's snapshot and restore writes its section; a consumer"
+  },
+  {
+   "bead": "N29a-18",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-151"
+   ],
+   "note": "the actuator kernels' owner writes its section; a consumer"
+  },
+  {
+   "bead": "N29a-18",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N19a-09"
+   ],
+   "note": "later milestone; depends on this bead"
+  },
+  {
+   "bead": "N29a-18",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "N16a-03"
+   ],
+   "note": "StepPlanId, the content hash of everything numerical that shaped a step; the precision profiles of N35-04 depend on this bead and are related"
+  },
+  {
+   "bead": "N29a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "runs under the fail-closed default envelope"
+  },
+  {
+   "bead": "N29a-19",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-181 is already a direct dependency"
+  },
+  {
+   "bead": "N29a-19",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-204, which depends on BD-176"
+  },
+  {
+   "bead": "N29a-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "the scale of a variable class is read from the fidelity ledger when one is frozen for the stratum and otherwise comes from the declared channel scales; not blocking"
+  },
+  {
+   "bead": "N29a-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-177"
+   ],
+   "note": "the label refers to its margins; not blocking"
+  },
+  {
+   "bead": "N29a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-25"
+   ],
+   "note": "new bead: the shared conformance-only divergence-planting hook"
+  },
+  {
+   "bead": "N29a-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N27a-09"
+   ],
+   "note": "a sibling battery over the same implementation"
+  },
+  {
+   "bead": "N29a-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16b-14"
+   ],
+   "note": "N16b-14 depends on this bead (G16); the per-step positive part reaches the monitors through the window buffer of BD-208"
+  },
+  {
+   "bead": "N29a-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-346",
+    "BD-266"
+   ],
+   "note": "later milestones; consumers of the flags"
+  },
+  {
+   "bead": "N29a-22",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-267"
+   ],
+   "note": "later milestone; a consumer of the flags"
+  },
+  {
+   "bead": "N29a-22",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N29b-06",
+    "N29b-05",
+    "BD-094"
+   ],
+   "note": "the other half of the same gate; N29b-06 assembles the one gate record, calls this bead's script and depends on it"
+  },
+  {
+   "bead": "N29a-22",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N16b-15"
+   ],
+   "note": "the labelled pyramid cone and the diagonal-push fixture; utilization is computed by this bead's monitor (the scorecard metric N24a-20 is related)"
+  },
+  {
+   "bead": "N29a-22",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "BD-212"
+   ],
+   "note": "the thresholds are TARGETs until the one re-baseline; the verb prints their provenance"
+  },
+  {
+   "bead": "N29a-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-16"
+   ],
+   "note": "a shared convention (sync_wait_ms, its default and maximum, the 40 s server timeout); job.wait semantics appear in both beads (reported); N32a-16 names the job verbs as its own prerequisite"
+  },
+  {
+   "bead": "N29a-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-17"
+   ],
+   "note": "MCP progress and cancelled-wait semantics are out of this bead's scope"
+  },
+  {
+   "bead": "N29a-23",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N32b-01",
+    "BD-258"
+   ],
+   "note": "the verb declares its scope in the registry; enforcement arrives with the token beads"
+  },
+  {
+   "bead": "N29a-23",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-297"
+   ],
+   "note": "later milestone; eta_s is marked uncalibrated until then"
+  },
+  {
+   "bead": "N29a-23",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N32a-09"
+   ],
+   "note": "the M1 binding table and lookup by key; the daemon-path completion BD-211 is related"
+  },
+  {
+   "bead": "N29a-24",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-096 is already a direct dependency"
+  },
+  {
+   "bead": "N29a-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-17"
+   ],
+   "note": "the integration gate of the lab runtime over the job protocol"
+  },
+  {
+   "bead": "N29a-24",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-175 (the gateway seam and CUDA hook of N21b-07, the hooks of N21b-23 and N21b-24)"
+  },
+  {
+   "bead": "N29a-24",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "runs under the fail-closed default envelope"
+  },
+  {
+   "bead": "N29a-24",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N29b-19"
+   ],
+   "note": "the decision blocks the two-device row"
+  },
+  {
+   "bead": "N29b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-12"
+   ],
+   "note": "the limb views of the compiled model (lowerings 3 and 4)"
+  },
+  {
+   "bead": "N29b-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N24a-18",
+    "N24a-22"
+   ],
+   "note": "shared definitions of d and m; the metric and the scorecard consume the ledger"
+  },
+  {
+   "bead": "N29b-01",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered through its dependency BD-092, which carries the braking-mode lines from the actuator account"
+  },
+  {
+   "bead": "N29b-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16b-14"
+   ],
+   "note": "later milestone, and it depends on this bead; at M1 the input comes from its dependency BD-092"
+  },
+  {
+   "bead": "N29b-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N29a-22"
+   ],
+   "note": "later milestone; N29a-22 applies the rule fixed here and depends on this bead"
+  },
+  {
+   "bead": "N29b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-22"
+   ],
+   "note": "the in-kernel counters and flags that the differential compares with the oracles"
+  },
+  {
+   "bead": "N29b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-15"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29b-03",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N18a-14"
+   ],
+   "note": "witness pairs and their migration"
+  },
+  {
+   "bead": "N29b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29b-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-346",
+    "BD-267"
+   ],
+   "note": "later milestones; consumers"
+  },
+  {
+   "bead": "N29b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21a-04"
+   ],
+   "note": "the kernel library index in which the monitor kernel is named and registered; the step is its dependency BD-159"
+  },
+  {
+   "bead": "N29b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-11"
+   ],
+   "note": "BD-207 is already a dependency; the ring itself is N29a-11, whose flush this bead triggers and tests"
+  },
+  {
+   "bead": "N29b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-22"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N16b-15"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29b-06",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "the control registry and the no-control rule are its dependency BD-025; BD-223 wires the M2 rows and is a consumer"
+  },
+  {
+   "bead": "N29b-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-263",
+    "BD-264"
+   ],
+   "note": "later milestone; consumers of the store"
+  },
+  {
+   "bead": "N29b-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-214"
+   ],
+   "note": "a writer of rows into this store; a consumer"
+  },
+  {
+   "bead": "N29b-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-264",
+    "BD-263"
+   ],
+   "note": "BD-264 depends on this bead; they open rounds and read them"
+  },
+  {
+   "bead": "N29b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-263"
+   ],
+   "note": "the promotion label reads the same frozen round; a consumer"
+  },
+  {
+   "bead": "N29b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-003",
+    "N34-25"
+   ],
+   "note": "check-layers and check-deps, and the independent-auditor rules"
+  },
+  {
+   "bead": "N29b-09",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-008 is already a direct dependency"
+  },
+  {
+   "bead": "N29b-10",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005 (ClaimProduct and combine); the boundary bead BD-308 is M3"
+  },
+  {
+   "bead": "N29b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-19",
+    "N38b-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29b-10",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N29a-09"
+   ],
+   "note": "the re-affirmation pass appends lines to the bead log"
+  },
+  {
+   "bead": "N29b-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-296"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N29b-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-223"
+   ],
+   "note": "a sibling harness on real devices; neither blocks the other"
+  },
+  {
+   "bead": "N29b-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N41-OPEN6",
+    "N40-35"
+   ],
+   "note": "the owner's judgement is recorded by this bead; the register row and the owner-input calendar hold the question"
+  },
+  {
+   "bead": "N29b-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N37-30"
+   ],
+   "note": "later milestone; decided beside this one"
+  },
+  {
+   "bead": "N29b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-124",
+    "N38b-19"
+   ],
+   "note": "the writers that exist by M2 (study verdicts, the gate recorder) are audited and moved to the pinning transaction; predictions (BD-344) and qualification receipts (BD-259) are later and related"
+  },
+  {
+   "bead": "N29b-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28a-21",
+    "BD-279",
+    "BD-343"
+   ],
+   "note": "later milestones; holders that register through this bead"
+  },
+  {
+   "bead": "N29b-13",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "VERBS-store"
+   ],
+   "note": "this bead carries the withdrawal transaction and proposes store.collect --withdraw-claim; the registry row has no such option (reported under gaps)"
+  },
+  {
+   "bead": "N29b-14",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-305 is already a direct dependency"
+  },
+  {
+   "bead": "N29b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29b-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N29b-08"
+   ],
+   "note": "later milestone; the slot reports not exercised until then"
+  },
+  {
+   "bead": "N29b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N29b-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-264",
+    "N29b-08"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N29b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-026",
+    "N29a-03"
+   ],
+   "note": "the auditor crate and its std-only .frun check"
+  },
+  {
+   "bead": "N29b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-141",
+    "N34-22"
+   ],
+   "note": "the format-version rule is a cost the experiment prices; not blocking"
+  },
+  {
+   "bead": "N29b-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-091"
+   ],
+   "note": "the decision measures the publishing transaction"
+  },
+  {
+   "bead": "N29b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-207"
+   ],
+   "note": "later milestone; the ring half is re-read there"
+  },
+  {
+   "bead": "N29b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-210"
+   ],
+   "note": "measured on two real devices; made direct (also reached through N29b-11)"
+  },
+  {
+   "bead": "N29b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-178"
+   ],
+   "note": "the placement planner that puts the two shards of one job on the two devices; both backends are reached through BD-210; the two-card learning runtime N36-08 is a different mechanism"
+  },
+  {
+   "bead": "N29b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N18a-15"
+   ],
+   "note": "the ContactLaw trait and law registry; the referee's law is its dependency BD-080; CL-1 (N18a-16, M2) is handled by N29b-24"
+  },
+  {
+   "bead": "N29b-21",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-084 (with N15a-08 and N18a-32 behind it)"
+  },
+  {
+   "bead": "N29b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-072"
+   ],
+   "note": "BD-071 is already a dependency"
+  },
+  {
+   "bead": "N29b-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N31a-48"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N29b-22",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N29-REF"
+   ],
+   "note": "the registry bead records the code before this bead closes; no code is assigned yet (reported under gaps)"
+  },
+  {
+   "bead": "N29b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-10"
+   ],
+   "note": "the late gates folded into the register, GATE-CHRON-14 among them"
+  },
+  {
+   "bead": "N29b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29-KA"
+   ],
+   "note": "rows K1 to K3 appended in this pass"
+  },
+  {
+   "bead": "N29b-24",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-386"
+   ],
+   "note": "later milestone"
+  },
+  {
+   "bead": "N29b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-176"
+   ],
+   "note": ""
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-095",
+   "dep": "N29b-09",
+   "as": "related",
+   "why": "coverage (d) of U29b: the mechanism proceeds on the fail-closed default; N29a-10 carries the dependency"
+  },
+  {
+   "bead": "N29a-10",
+   "dep": "N29b-09",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "BD-091",
+   "dep": "N29b-18",
+   "as": "related",
+   "why": "coverage (d) of U29b: would close a cycle, the decision measures BD-091"
+  },
+  {
+   "bead": "N29a-06",
+   "dep": "N29b-18",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "BD-210",
+   "dep": "N29b-19",
+   "as": "related",
+   "why": "coverage (d) of U29b: would close a cycle, the decision measures BD-210 through N29b-11"
+  },
+  {
+   "bead": "N29a-24",
+   "dep": "N29b-19",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "BD-209",
+   "dep": "N29b-12",
+   "as": "related",
+   "why": "coverage (d) of U29b: would close a cycle, the decision measures with store.status"
+  },
+  {
+   "bead": "N29b-12",
+   "dep": "BD-209",
+   "as": "dep",
+   "why": "the decision measures with `frob store status`, demonstrates the over-budget behaviour of the collector and adds a step group to its script"
+  },
+  {
+   "bead": "BD-264",
+   "dep": "N29b-07",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "BD-264",
+   "dep": "N29b-08",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "N29a-11",
+   "dep": "N29b-05",
+   "as": "related",
+   "why": "coverage (d) of U29b: N29b-05 tests the ring's flush and depends on N29a-11"
+  },
+  {
+   "bead": "BD-207",
+   "dep": "N29b-05",
+   "as": "related",
+   "why": "coverage (d) of U29b: would close a cycle, N29b-05 depends on BD-207"
+  },
+  {
+   "bead": "N24a-37",
+   "dep": "N29b-22",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "BD-208",
+   "dep": "N29b-22",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "N29a-22",
+   "dep": "N29b-02",
+   "as": "dep",
+   "why": "coverage (d) of U29b"
+  },
+  {
+   "bead": "N29a-22",
+   "dep": "N29b-03",
+   "as": "related",
+   "why": "coverage (d) of U29b: would close a cycle, N29b-03 depends on N29a-22"
+  },
+  {
+   "bead": "N27a-09",
+   "dep": "N29a-25",
+   "as": "dep",
+   "why": "coverage (d) 12 of U29a: one shared fault hook; N27a-09 describes its own"
+  },
+  {
+   "bead": "BD-206",
+   "dep": "N29a-25",
+   "as": "dep",
+   "why": "its unit tests plant divergences through the shared hook"
+  },
+  {
+   "bead": "N28b-38",
+   "dep": "BD-091",
+   "as": "dep",
+   "why": "found resolving BD-091 need 3: the stop latch is set by the publisher's quarantine row and its test latch_set_by_chunk_conflict needs the publisher"
+  },
+  {
+   "bead": "BD-095",
+   "dep": "N34-11",
+   "as": "dep",
+   "why": "the four identifier types and their text forms are delivered by N34-11 at M0 (cross-group overlap reported)"
+  },
+  {
+   "bead": "N29b-09",
+   "dep": "N34-11",
+   "as": "dep",
+   "why": "the compatibility test compares the local types of N34-11 with the sibling's"
+  },
+  {
+   "bead": "BD-210",
+   "dep": "N32a-08",
+   "as": "dep",
+   "why": "the M1 job ledger and state machine that the device protocol extends (cross-group overlap reported)"
+  },
+  {
+   "bead": "BD-097",
+   "dep": "BD-211",
+   "as": "related",
+   "why": "authenticated cursors at M2"
+  },
+  {
+   "bead": "BD-203",
+   "dep": "BD-195",
+   "as": "related",
+   "why": "BD-203 need 3: the batched-tier load path of the reset cache"
+  },
+  {
+   "bead": "BD-209",
+   "dep": "BD-220",
+   "as": "related",
+   "why": "BD-209 need 2: seed order"
+  },
+  {
+   "bead": "N29a-02",
+   "dep": "BD-305",
+   "as": "related",
+   "why": "N29a-02 need 1: the private mark is M3"
+  },
+  {
+   "bead": "N29a-02",
+   "dep": "N24a-35",
+   "as": "dep",
+   "why": "--view summary writes the token-budgeted summary"
+  },
+  {
+   "bead": "N29a-04",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "N29a-07",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "N29a-18",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "BD-095",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "N29a-09",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "BD-209",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "N29b-08",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "N29b-10",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "N29b-13",
+   "dep": "N29-REF",
+   "as": "dep",
+   "why": "raises a Chronicle refusal code registered by N29-REF (rule 5)"
+  },
+  {
+   "bead": "N29a-19",
+   "dep": "N35-07",
+   "as": "dep",
+   "why": "BD-203 need 6: citing bitwise replay needs the determinism licence check"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "BD-095",
+   "other": "N34-11",
+   "note": "both define ClaimId, EvidenceId, DecisionPolicyId and TraceId in frob-core (ids/graph.rs against graph_id); N34-11 (M0) should own the types and BD-095 consume them; dependency BD-095 -> N34-11 recorded"
+  },
+  {
+   "mine": "N29b-09",
+   "other": "N34-11",
+   "note": "text forms: N34-11 fixes clm:, ev: and name@vN; N29b-09 proposed clm: and evd:; N29b-09 and N29a-09 were aligned to N34-11 in this pass"
+  },
+  {
+   "mine": "BD-210",
+   "other": "N32a-08",
+   "note": "job row, state machine, lease generations and restart recovery are in both (N32a-08 at M1 in frob-verbs, BD-210 on devices at M2); dependency BD-210 -> N32a-08 recorded"
+  },
+  {
+   "mine": "N29a-05",
+   "other": "N32a-08",
+   "note": "terminal receipts and trial accounting are in both (store-level types here, the job ledger there); one must state that it uses the other's types"
+  },
+  {
+   "mine": "N29a-04",
+   "other": "N32a-10",
+   "note": "frontier-pinned keyset pagination and a cursor at M1 in both (store level in frob-chronicle, authenticated frob.cursor/1 in frob-verbs); 896 against 806 follows the same split"
+  },
+  {
+   "mine": "N29a-23",
+   "other": "N32a-16",
+   "note": "job.wait semantics and the bounded wait are in both; job.find is in N29a-23, N32a-09 and BD-211; job.cancel semantics also in N32a-17. N32a-08 names BD-210 as the owner of the job verbs' registry entries, which are N29a-23"
+  },
+  {
+   "mine": "N29-REF",
+   "other": "N32-REF",
+   "note": "one event, two codes, twice (878 and 810; 896 and 806); both registries state the same layer split; the registry owner's ruling is still owed"
+  },
+  {
+   "mine": "N29a-22",
+   "other": "N16b-14",
+   "note": "the created-energy audit (windowed rule, flags, consequences) is in both; N29a-22 owns the monitors and fidelity.energy, N16b-14 the step-side split and depends on N29a-22"
+  },
+  {
+   "mine": "N29a-22",
+   "other": "N16b-33",
+   "note": "both own a script named scripts/e2e/energy_audit.sh; one needs another name"
+  },
+  {
+   "mine": "N29a-13",
+   "other": "N35-21",
+   "note": "deterministic integer histograms with interval quantiles in frob-chronicle (quantized integer, 3.1%) and in frob-core (f32 bit pattern, 3.2%); one binning must govern the evidence path"
+  },
+  {
+   "mine": "BD-207",
+   "other": "N21c-40",
+   "note": "the drain of device histogram bins at the commit fence appears in both"
+  },
+  {
+   "mine": "BD-203",
+   "other": "N21a-23",
+   "note": "K-x-digest: the mixing contract is N21a-23's, a component of this seed; dependency recorded"
+  },
+  {
+   "mine": "BD-148",
+   "other": "BD-170",
+   "note": "lowering to a padded model table and the ShapeClass type appear in both; BD-148 owns the plain-data type and ShapeClassId"
+  },
+  {
+   "mine": "N29a-11",
+   "other": "N27a-03",
+   "note": "per-world rings and the snapshot reservoir appear in both; N27a-03 depends on N29a-11"
+  },
+  {
+   "mine": "N29a-24",
+   "other": "N33c-17",
+   "note": "the job protocol under the lab runtime at M2 is measured by both (GATE-CHRON-11 device row and INT-ASUP-02); dependency N29a-24 -> N33c-17 recorded"
+  },
+  {
+   "mine": "BD-092",
+   "other": "N24a-37",
+   "note": "BD-092's script reads the ledger through telemetry.energy, which is N24a-37 and depends on BD-092; those script steps can run only after N24a-37"
+  },
+  {
+   "mine": "N29b-07",
+   "other": "BD-264",
+   "note": "the tier-correction ledger: store and audit rounds here (N29b-07, N29b-08), estimator and gate there; overlap by design, dependencies recorded"
+  },
+  {
+   "mine": "N29b-14",
+   "other": "N37-19",
+   "note": "purge against pinned evidence: N29b-14 (with BD-209) refuses with FROB-REF-813 unless --withdraw-claims is passed; N37-19 withdraws inside the purge and never raises 813; one rule must govern"
+  },
+  {
+   "mine": "N29b-14",
+   "other": "BD-305",
+   "note": "the private mark applied to Chronicle's stored objects (listing filter, read check, sweep) is in both; N29b-14 depends on BD-305"
+  }
+ ],
+ "new_beads": [
+  "N29a-25"
+ ],
+ "gaps": [
+  {
+   "section": "§34.9",
+   "what": "the single-parser search of check-contracts (N34-09) has no exemption class for the std-only auditor's independent .frun reader in frob-cert; it must list that reader as the one sanctioned second implementation",
+   "needed_by": [
+    "N29a-03"
+   ]
+  },
+  {
+   "section": "Appendix J",
+   "what": "no verb or option withdraws a claim, although the repair of FROB-REF-813 is `withdraw the claim first`; N29b-13 proposes `store.collect --withdraw-claim`, which the store.collect row of VERBS-store does not carry",
+   "needed_by": [
+    "N29b-13",
+    "N37-19"
+   ]
+  },
+  {
+   "section": "Appendix O",
+   "what": "the refusal `non-physical energy bound to a physical state` of §29.22 has no FROB-REF code; N29-REF records it with a proposal for the 8xx block and the registry owner must assign one before N29b-22 can close",
+   "needed_by": [
+    "N29b-22",
+    "N29-REF"
+   ]
+  },
+  {
+   "section": "Appendix M",
+   "what": "the three known answers of §29.22 have no KA numbers; N29-KA carries them as K1 to K3 until the catalogue assigns numbers",
+   "needed_by": [
+    "N29-KA",
+    "N29b-23"
+   ]
+  },
+  {
+   "section": "§29.18",
+   "what": "the invariant of §29.22 (thermal and wear states take input only from constitutive dissipation and electrical loss) has no number; N29b-22 carries it as INV-CHRON-14 (proposed)",
+   "needed_by": [
+    "N29b-22"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-091",
+   "what": "exit code of FROB-REF-875 aligned with the refusal registry N29-REF (exit 7 to a direct caller; recovered inside a job); Scope names the decision beads N29b-18, N29b-19 and the registry; title shortened"
+  },
+  {
+   "bead": "BD-092",
+   "what": "Scope rewritten against N29b-01, N29b-02 and N29b-22 (overlap with distinct scope); title shortened"
+  },
+  {
+   "bead": "BD-095",
+   "what": "Scope rewritten against N29b-10 and N29b-09; the identifier types are named as N34-11's and the layout points to frob_core::graph_id"
+  },
+  {
+   "bead": "BD-209",
+   "what": "Scope rewritten against N29b-12, N29b-13 and N29b-14 (overlap with distinct scope)"
+  },
+  {
+   "bead": "N29a-22",
+   "what": "Scope rewritten against N29b-02, N29b-03, N29b-04, N29b-06 and N16b-14 (overlap with distinct scope)"
+  },
+  {
+   "bead": "BD-207",
+   "what": "Scope names N29b-05, N21c-39, N21c-40 and N24a-44 for the parts it leaves out; title shortened"
+  },
+  {
+   "bead": "BD-208",
+   "what": "Scope names N29b-22, N29b-24 and N16b-14 in place of `another unit`"
+  },
+  {
+   "bead": "BD-210",
+   "what": "Scope states that the device protocol extends the M1 job ledger N32a-08 and runs in the daemon N32a-14, and how it stands to the decisions N29b-18 and N29b-19"
+  },
+  {
+   "bead": "N29a-11",
+   "what": "Scope names N29b-05 (failing bit, flush trigger), N29b-18 (ring depth) and N27a-03; title shortened"
+  },
+  {
+   "bead": "N29a-24",
+   "what": "Scope split against N29b-11 (real devices here, second-wave simulated scenarios there)"
+  },
+  {
+   "bead": "N29b-11",
+   "what": "Scope names N29a-24 as the bead that measures the device rows (it named the mechanism BD-210)"
+  },
+  {
+   "bead": "N29a-09",
+   "what": "claim identifiers printed as clm:<64 hex>, the form fixed by N34-11 and N29b-09 (was c:<hex>)"
+  },
+  {
+   "bead": "N29b-09",
+   "what": "evidence text form ev: as in N34-11 (was evd:); Scope names N34-11 as the implementer of the local types"
+  },
+  {
+   "bead": "N29-CX",
+   "what": "the teleport control aligned with the one KA-718 and BD-204 carry; filing of the three late known answers marked done; STD-E2E added to deps (owns chronicle_controls.sh)"
+  },
+  {
+   "bead": "N29-KA",
+   "what": "three known answers of §29.22 appended as rows K1 to K3 with fixtures, truths, tolerances, tiers, controls and carriers; counts, tests and derivation list updated"
+  },
+  {
+   "bead": "N29b-12",
+   "what": "capture arithmetic aligned with the ring default of N29a-11 (20 snapshots per 2 s ring: 120 kB per capture, 64 GB in 11 hours)"
+  },
+  {
+   "bead": "N29b-07",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-11",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-15",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-16",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-17",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-18",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-19",
+   "what": "STD-E2E added to deps: the bead owns an end-to-end script"
+  },
+  {
+   "bead": "N29b-05",
+   "what": "Scope states the order with N29a-11: this bead depends on the ring and checks its flush end to end"
+  }
+ ]
+}

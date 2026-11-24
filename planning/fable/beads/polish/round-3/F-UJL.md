@@ -1,0 +1,37 @@
+# Polishing round 3, slice F-UJL
+
+17 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| ART-L2 | M1 | task | WP-38 | yes | golden fixture L.2: the `.fmodule` leg `leg-3r-qdd`, its port contract read against quad-tray, and CLI script | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L2.md` |
+| ART-L3 | M3 | task | WP-24 | yes | golden fixture L.3: the `.ftask` kitchen tray delivery, eleven labelled traces, task.check table, CLI script | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L3.md` |
+| ART-L4 | M1 | task | WP-42 | yes | golden fixture L.4: the `.fmission` query on stance and knee ratio, hand-derived answer, paving, CLI script | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L4.md` |
+| ART-L5 | M4 | task | WP-65 | yes | golden fixture L.5: the `.fenergy` budget for the stop at the pass counter, integer arithmetic, CLI script | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L5.md` |
+| ART-L6 | M3 | task | WP-55 | yes | golden fixture L.6: the `.fmcw` minimal counterexample world of three edits, its invariants and CLI script | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L6.md` |
+| ART-L7 | M3 | task | WP-54 | yes | golden fixture L.7: the `.frobcert` bundle listing of six entries, entry e2 in full, mutations, CLI script | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L7.md` |
+| ART-L8 | M3 | task | WP-25 | yes | golden fixture L.8: the fixed-n study plan `frob.plan/1`, exact pre-analysis, a consistent result, CLI script | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L8.md` |
+| ART-L9 | M3 | task | WP-26 | yes | golden fixture L.9: the scripted agent session over MCP, run on frob-mcp in process and through frobd --mcp | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/ART-L9.md` |
+| NJL-02 | M0 | task | WP-06 | yes | frob-conformance: verb registry conformance harness: surface parity, e2e coverage lint, help-schema snapshots | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-02.md` |
+| NJL-03 | M1 | task | WP-06 | yes | frob-verbs registry: the 80 verbs the mechanical inventory missed; the 243-row reconciliation, count checks | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-03.md` |
+| NJL-05 | M1 | task | WP-06 | no (here for a request) | frob-verbs registry: task clusters of at most seven tools: 45-cluster assignment, lints, the 12 kB list budget | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-05.md` |
+| NJL-06 | M1 | feature | WP-06 | yes | frob-mcp: the resource frob://docs/clusters, the task-cluster directory generated from the registry, its test | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-06.md` |
+| NJL-07 | M1 | task | WP-14 | yes | fixtures/golden/appendix-l: layout, three layers, identity map, story-consistency check, the blessing rule | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-07.md` |
+| NJL-08 | M1 | task | WP-06 | no (here for a request) | golden fixture L.9, part A: the MCP session driver, the exact half of the transcript (orient, mission, author) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-08.md` |
+| NJL-09 | M3 | task | WP-26 | yes | golden fixture L.9, part B: the simulated half of the MCP transcript (attack, diagnose, edit, qualify, bundle) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJL-09.md` |
+| NJLx-02 | M1 | task | WP-14 | yes | frob-conformance: known-answer rows for the verb registry and the nine worked artifacts (Appendices J and L) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJLx-02.md` |
+| NJLx-51 | M3 | task | WP-26 | yes | frob-verbs registry: three late analysis verbs (sweep-monotone, constraint-graph, regressor-identity); 246 rows | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UJL/NJLx-51.md` |
+
+## Addressed to your beads
+
+- `ART-L5`: request from round 2, slice S68: frob shield check <run> --budget <id> becomes --energy-budget <id> (VERBS-shield row; --budget is the generated compute budget of every run verb)
+- `NJL-02`: request from round 2, slice S34: LATE_ROWS lists scene.import (M3; BD-398, M5), but N19a-46 (M3) ships its asset form, so from M3 the build lists the row implemented (reduced form) and your ordinary rule applies; the entry never takes effect. VERBS-scene now uses N19a-46's asset import as the row's example and its script expects 724 for --kind place until BD-398. Consider removing scene.import from LATE_ROWS or noting that it covers only the place form's call, not the row.
+- `NJL-02`: request from round 3, slice H-owners-1: Declare `frob-surface-diff` as a `[[bin]]` (explicit name/path) with a CONTRACT.md row (BD-025).
+- `NJL-02`: request from round 3, slice H-owners-3: Run NJL-01's scripts/e2e/verbs_registry_schema.sh stages 1-3, 5 and 6 as a stage of its registry-wide script. Check A step 5: compare against common_properties() and the full variation table (13 arms) rather than a hand list of 'three field-driven variations'; expect x-frob-key (never idempotency_key in required) and 808 by int53 field. Check A step 6 and verbs_lib.sh step 5: the missing-key 805 spot check needs N32a-09 (M1); before it, log a skip. Schema snapshots: a property added by a later variation (10 to 13) is classified additive.
+- `NJL-03`: request from round 3, slice H-verbs-1: count artifact.import (VERBS-artifact DESIGN): 244 verbs, 84 run, M2 42, cluster artifact 4. Restate 'exactly the 243 verbs the specification defines and no others' as the 243 plus rows registered by DESIGN in a VERBS bead with their owning bead. Keep the fidelity.rank decision independent (it would make 245)
+- `NJL-05`: request from round 3, slice H-verbs-1: seat artifact_import in operate in place of spark_devices (which keeps its seats in devices and fleet); the note 'three artifact verbs' becomes four
+- `NJL-07`: request from round 2, slice S10: Add NJL-02 to related: NJL-02's example_identities_agree test reads fixtures/golden/appendix-l/IDENTITIES.toml from M1, so a row renamed there must be renamed in fixtures/verbs/identities.toml in the same change.
+- `NJL-07`: request from round 3, slice H-owners-1: Declare `frob-golden` as a `[[bin]]` (explicit name/path) with a CONTRACT.md row (BD-025).
+- `NJL-08`: request from round 2, slice S32: Row A9 sends mission_synthesize {strategy: "refine", from: <answer 1>}, which N25a-12 refuses at M1 with FROB-REF-724 (`refine` is BD-362's trajectory-optimization lane); send {from: <answer 1>} and assert the first answer's next_actions command as a registered path reproducing A9, not the specimen's `--strategy refine --from` string, until the registry freeze settles the spelling (ART-L4 made the same change).
+- `NJL-08`: request from round 3, slice H-owners-1: Declare `frob-mcp-drive` as a `[[bin]]` (explicit name/path) with a CONTRACT.md row (BD-025).
+- `NJLx-02`: request from round 3, slice H-owners-1: BD-025/ADR-GAUNT-01: tier targets are g0_laws, g1_known_answers, g2_parity, g3_metamorphic, g4_chaos, g5_determinism; replace `--test g0`..`--test g5` with the long name (the lint refuses the short form).

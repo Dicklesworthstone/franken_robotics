@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "lemma", "upstream", "franken_lean", "frontier"]
 parent: "WP-31"
-deps: ["BD-037", "BD-380", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-380", "BD-381", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-381", "FD-FLN-01", "BD-026"]
+related: ["N12-23"]
 gates: ["INT-FLN-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§12.4", "§33.4", "§33.13", "§33.6", "§33.8"]
 ---
@@ -31,7 +31,7 @@ nothing about the native build).
 ## Scope
 
 In: in FrankenLean, macOS aarch64 added to the platforms its suite lock certifies, by running its own
-conformance receipts there; here, INT-FLN-01 runnable on the Mac. Out: unblocking Mathlib modules (FD-FLN-01);
+conformance receipts there; here, the platform guard of the Lean pipeline and INT-FLN-01 runnable on the Mac. Out: unblocking Mathlib modules (FD-FLN-01);
 the Lean project and capsule kind (BD-380, BD-381); the standalone auditor, which is a separate program with
 no dependencies and already builds everywhere.
 
@@ -75,13 +75,27 @@ Additive: the Linux certification is unchanged.
 **Interim posture here.** Lean work on a Linux host: compilation by stock Lean, re-check and sealing by `fln`,
 and capsule verification all run there; the Mac runs only this project's own dependency-free auditor.
 
+**The platform guard (here, DESIGN; added by this bead to the `lean/scripts/` pipeline of BD-381).** Before the
+pipeline invokes `fln check-olean`, `fln seal-capsule` or `fln verify-capsule`, it reads the certified platforms
+of FrankenLean's `SUITE.lock` at the stack-lock pin and the host triple (`rustc -vV`, line `host:`). If the host
+is not listed, the script exits non-zero before running `fln`, with the finding `lean.platform-uncertified`
+naming both the host triple and the certified list; the record of a run therefore never carries a verdict from
+an uncertified platform. The guard holds at every pin: it is what keeps the Mac out today, and what lets it in,
+with no code change, once the lock lists `aarch64-apple-darwin`.
+
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FLN-02/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-FLN-02`, compiled as the `frob-conformance` integration test `upstream_fd_fln_02` and
 marked `#[ignore]` so that the default suite stays green, with `expected.toml` beside it holding the signature
 recorded at the pinned commit (`observed_at`, the failing assertion and the observed value). It fails at the pin
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
 itself a failure of the registry check. It reads FrankenLean's `SUITE.lock` at the pinned commit and asserts that
-`aarch64-apple-darwin` is among the certified platforms (false at the pin).
+`aarch64-apple-darwin` is among the certified platforms (false at the pin). franken_lean has no pin in
+`franken-stack.lock` when BD-037 writes the row at M0 (it is first admitted at M5, by BD-380), so BD-037's fixture
+timing rule applies: the fixture is written against the sibling's head as read on the day, `observed_at` names
+that commit, and the row carries `pin_state = "unpinned"`. This bead starts after BD-380, whose admission sets the
+first pin: its phase `pre` re-runs the fixture at that pin, re-records `observed_at` and the signature in
+`expected.toml` there, and this bead then clears `pin_state` in the row (the duty BD-037 gives the item's own
+bead).
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -109,8 +123,8 @@ single-kernel check, remains the fallback of the foundation itself.
 - [ ] In FrankenLean: `SUITE.lock` lists `aarch64-apple-darwin` with its conformance receipts; the per-module verdicts on macOS equal those on Linux, with 0 failed on both.
 - [ ] In FrankenLean: a capsule sealed on either platform verifies on the other, and the two capsules sealed from the same inputs are byte-identical (or the differing field is documented as platform metadata outside the hashed content).
 - [ ] Here: INT-FLN-01 has a passing record on the Mac beside the Linux record, each citing its machine fingerprint and the stack receipt.
-- [ ] Here: a capsule re-check requested on a platform the pinned `SUITE.lock` does not certify is refused by name, at every pin.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] Here: a capsule re-check, seal or verification requested on a platform the pinned `SUITE.lock` does not certify is refused by the platform guard with `lean.platform-uncertified`, before `fln` runs, at every pin.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet; its `pin_state` field, `unpinned` as BD-037 wrote it, is cleared once the fixture has been re-run at the sibling's first pin.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
 
@@ -124,7 +138,7 @@ In FrankenLean (added to its conformance procedure):
 Here (`tests/upstream/FD-FLN-02/`):
 - `suite_lock_lists_macos_aarch64`: the fixture.
 - `int_fln_01_on_mac`: build, re-check, seal, verify from an empty environment, on the Mac.
-- `uncertified_platform_is_refused`: with a scratch copy of the lock from which the platform is removed, the capsule re-check verb refuses.
+- `uncertified_platform_is_refused`: with a scratch copy of the lock from which the host's platform is removed, the platform guard exits non-zero with `lean.platform-uncertified`, names the host triple, and no `fln` process is started (checked from the process log). At the starting pin, run on the Mac against the real lock, the same refusal is the interim posture's own test.
 - `sign_mutated_twin_rejected_on_mac`: the INT-FLN-02 pattern, run on the Mac.
 
 ### End-to-end script and logging
@@ -134,7 +148,9 @@ section shows this item with its status); `cargo test -p frob-conformance --test
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Run once on each machine; the second run compares capsule hashes with the first run's
-log. Phase `post` also runs `frob prove verify --json` on one sealed capsule on the Mac.
+log. Phase `post` also runs `frob prove verify <lean-capsule bundle> <capsule file> --json` on the Mac for one
+card sealed there (the bundle written by `frob prove bundle --card T-<nn> --capsule <capsule file> --out <dir>
+--key <k>`, BD-381), asserting `accept` and a capsule hash equal to the Linux host's.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fln_02/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

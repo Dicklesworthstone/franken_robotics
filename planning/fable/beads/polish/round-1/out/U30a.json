@@ -1,0 +1,369 @@
+{
+ "round": 1,
+ "slice": "U30a",
+ "reviewed": 52,
+ "changed": [
+  {
+   "bead": "BD-311",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "A band for the anchored reference robot is refused with FROB-REF-895 (no admitted real dataset names a unit of the design; first check of the band authorization order in N30a-37 and of BD-139's guard), not 889; at M3 the refusal comes from the reality guard since ground.band is an M5 verb. Acceptance, test name and references updated."
+  },
+  {
+   "bead": "BD-390",
+   "kinds": [
+    "deps",
+    "complete",
+    "sense",
+    "tests"
+   ],
+   "what": "The fit guard (excite::guard, refusal 879 with ranked repairs, --combination, no bypass, recorded not planned excitation) moved here from N30a-15: as drafted N30a-15's guard ran this bead's analysis while this bead depended on N30a-15, a content cycle. Tests in tests/fit_guard.rs and the guard's negative controls moved with it; title, scope and acceptance updated. Scope names the ninth alias (N30b-29, GATE-GROUND-11); step 8 states why 879 is listed under ground.excite while the verb reports unidentifiability as a finding (exit 2)."
+  },
+  {
+   "bead": "N30-KA",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete"
+   ],
+   "what": "Completeness test given the pending-row mechanism so the registry can close before its mechanisms (direction rule 5), zero pending at the M5 exit, with a map of which gate script clears which rows; the stale sentence saying GATE-GROUND-11 was in `needs` replaced by its carriers (N30b-29, N30b-30) and an auxiliary row ground.aux.alias9 (40/80/20 mm). The seven gate scripts now depend on this registry (graph finding: it had no dependents)."
+  },
+  {
+   "bead": "N30a-01",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The M1 crate bead had only an M5 e2e (ground_ingest.sh); added scripts/e2e/ground_firewall.sh at M1 (check-deps, an independent cargo-tree count, check-contracts, check-layers, three planted mutants) with NDJSON logging; dep STD-E2E."
+  },
+  {
+   "bead": "N30a-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "`candidate` now carries and prints `cell dataset`, agreeing with BD-139; the transition table gained the entries into `synthetic` and the published-anchor label (key state stays no-claim), so the table is total as its acceptance claims; three tests added."
+  },
+  {
+   "bead": "N30a-03",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "A field identified on synthetic data counts as guessed (as N30a-27 and BD-139 require) in its own `synthetic=` column so the bracket partitions the total; acceptance case 14/20 with synthetic=3; a self-contradictory test renamed; a negative control added."
+  },
+  {
+   "bead": "N30a-04",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Step 5 asserts FROB-REF-895 (not 889) and gains an M3 assertion through the reality guard, with the verb call from M5; log lines updated."
+  },
+  {
+   "bead": "N30a-05",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "fs-assimilate::groups::stream::design, which excitation selection uses under shared calibration error, was missing from the admitted functions and jobs; StreamDesignJob and a closed-form test added."
+  },
+  {
+   "bead": "N30a-08",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "`bias_sigma` (N30ax-01) was only in Considerations; now a field of Instrument with the σ_c rule (bias_sigma when declared, else bias_bound/√3) and a test."
+  },
+  {
+   "bead": "N30a-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`identify` before `ingest` had no code while the acceptance asserts a code for all seven out-of-order calls; FROB-REF-873 named."
+  },
+  {
+   "bead": "N30a-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The ordering rule compared overlapping intervals, which is blind at 6σ against the correct 3·√2·σ; ordering now by the difference Δ = t_b − t_a with σ_Δ² = σ_a² + σ_b² − 2·cov."
+  },
+  {
+   "bead": "N30a-13",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Clock-graph edges that make a `Delay` count only hardware-pulse and sync-edge marks (the plan's shared hardware mark), agreeing with N30ax-01; protocol-sync marks may align clocks but never turn a lag into a Delay; test added."
+  },
+  {
+   "bead": "N30a-14",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The 'why 99%' paragraph recomputed (skew and coverage clauses correlated at −0.16: honest pass probability 0.9946, expected count 994.6, P(count < 990) = 0.022; a 1.3× under-reported variance passes 0.983). Depends on N30-KA and its acceptance clears the `pending` marks of its KA rows, as the registry's pending mechanism requires."
+  },
+  {
+   "bead": "N30a-15",
+   "kinds": [
+    "split",
+    "tests",
+    "sense"
+   ],
+   "what": "Narrowed to the eight alias fixtures (closed-form reading maps, null directions, separators, referee twins, registration of controls ground.alias.1-8); the fit guard and its tests moved to BD-390 to break the content cycle. Closed-form verification step, twin-agreement and separator-rank tests, and fixture-level negative controls added so nothing is lost."
+  },
+  {
+   "bead": "N30a-16",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Acceptance asked for a Jacobian 'through BD-390', which depends on this bead; the bead now tests readings under one-sided perturbations, and BD-390 differentiates. 'first milestone' made M0."
+  },
+  {
+   "bead": "N30a-17",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "The selector's stop and separator tests use identification and alias checks that BD-390 (which depends on this bead) defines; they are now passed in by the caller, with the threshold rules written out for the bead's own tests; dep N30a-15 added for the alias table it names."
+  },
+  {
+   "bead": "N30a-19",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "Added the airlock lane (in process and worker, equal digests) that N30a-06 says this script asserts. Depends on N30-KA and its acceptance clears the `pending` marks of its KA rows, as the registry's pending mechanism requires."
+  },
+  {
+   "bead": "N30a-20",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Dep on the guard moved from N30a-15 to BD-390; the stage-order refusal named (879, pointer `stage`, repairs), which N30a-25 and N30a-26 assert."
+  },
+  {
+   "bead": "N30a-21",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Uses N30a-13's lag diagnostic for its starting delay; dep added."
+  },
+  {
+   "bead": "N30a-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The 8 ms acceptance case lay outside the default grid (0 to 5 ms); the delay prior of the fixture is stated (5 ± 2 ms, grid 0 to 13 ms) and the grid rule made a union of the two ranges."
+  },
+  {
+   "bead": "N30a-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Bias bounds are propagated per channel through r_E (a current bias enters E_el and copper loss with opposite signs); the two hand cases contradicted any complete reading and are recomputed (0.04 J, 1.6 J). Admission tests, which need N30a-28 (a dependent), replaced by an `admission_blockers()` predicate that admission consumes."
+  },
+  {
+   "bead": "N30a-26",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Step 1 described population A with ranges contradicting the catalogue (BD-388 R-04) that step 9 says is generated; aligned. Stage-order refusal code named. Depends on N30-KA and its acceptance clears the `pending` marks of its KA rows, as the registry's pending mechanism requires."
+  },
+  {
+   "bead": "N30a-27",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "Owns correlated sampling and the independent-sampling lint in BD-200's randomization compiler (as N15ax-03 assigns) but did not depend on BD-200 or say so; dep and scope added."
+  },
+  {
+   "bead": "N30a-28",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Admission condition (d) reads N30a-24's admission_blockers; the floor read from the record's current view, with the not-estimated case pointing to N30a-29."
+  },
+  {
+   "bead": "N30a-29",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "An admitted field whose floor is not-estimated had no rule (it would have narrowed to the posterior); now returns the prior width, fail closed. The MoM test tolerance 0.02 was 1.1 standard errors; set to 0.06 with the arithmetic. effective() given its cell argument; fixture wording made exact."
+  },
+  {
+   "bead": "N30a-30",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Uses the floored variance per unit; dep on N30a-29 and the read path stated; a unit with no floor yet contributes nothing."
+  },
+  {
+   "bead": "N30a-31",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "All registration failures were sent to FROB-REF-102 (a unit code); schema failures now use the consumed schema refusal 802, units 102, as the Considerations already said."
+  },
+  {
+   "bead": "N30a-32",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Uses the study verdict of N30a-33 without depending on it; dep added. The null-rate test bound (1%) sat near the expected 0.77% and would fail on many seeds; set to 1.7% with the arithmetic."
+  },
+  {
+   "bead": "N30a-33",
+   "kinds": [
+    "sense"
+   ],
+   "what": "States that through ground.predict the pre-analysis runs at the attempt's level α/[i(i+1)] (α/2 first), so KA-732's fixture must declare α = 0.10 to reproduce 59 and 13.9%."
+  },
+  {
+   "bead": "N30a-35",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Version 2 on holdout-2 is the third scored attempt (α/12 = 0.008333), not the second; the reachability case declares α = 0.10. Depends on N30-KA and its acceptance clears the `pending` marks of its KA rows, as the registry's pending mechanism requires."
+  },
+  {
+   "bead": "N30a-36",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The minimum count is a parameter (19 within units, ⌈(1−α)/α⌉ = 9 across units): with 19 fixed, N30a-37's nine-unit band could never issue. The negative control for k > n named a case outside the tested set; (19, 0.01) added."
+  },
+  {
+   "bead": "N30a-37",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Check 1 (895) made origin-aware so the rehearsal's synthetic in-cell bands are not refused; across-units calls the quantile with its own minimum count."
+  },
+  {
+   "bead": "N30a-38",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "Flags need the miss monitor's e-values (N30a-42) and 'a flag retires the band' needed N30a-43, which needs this bead's correlation: now N30a-42 → N30a-38 → N30a-43, the flag written as a ledger event that N30a-43 acts on."
+  },
+  {
+   "bead": "N30a-39",
+   "kinds": [
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "Added the airlock lane N30a-06 says this script asserts; the coverage sentence's ±0.063 aligned with N30a-38's ±6.3 points. Depends on N30-KA and its acceptance clears the `pending` marks of its KA rows, as the registry's pending mechanism requires."
+  },
+  {
+   "bead": "N30ax-01",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "A Delay needs as many hardware marks as the clock model needs (two for affine), shared or through a linked chain, agreeing with N30a-13. The fiducial-id-in-packet check read the build packet (BD-408, late M5) without depending on it; it moved to registration (N30a-45, which depends on BD-408), and this validator checks only the shape (unique ids, packet hash named), so the clock and drift beads do not wait on the manufacturing chain."
+  },
+  {
+   "bead": "N30a-40",
+   "kinds": [
+    "sense",
+    "tests"
+   ],
+   "what": "The required maintenance key for a calibrated cell's later datasets was stated only in Considerations; now attributed to N30ax-01's requirement-by-use rule (873) with this bead's own behaviour (an explicit empty list fires nothing) tested."
+  },
+  {
+   "bead": "N30a-41",
+   "kinds": [
+    "correct"
+   ],
+   "what": "'needs about 12 episodes' was a lower bound at the largest bet; stated as such, with the 15-episode acceptance tied to the sibling's actual rule."
+  },
+  {
+   "bead": "N30a-42",
+   "kinds": [
+    "tests"
+   ],
+   "what": "'at least 90% of 10³ runs at miss rate 0.6' sat two standard errors from the exact value; the exact first-passage probability (0.918; 0.702 at 0.5, 0.990 at 0.7) is now asserted and the seeded fraction compared with it."
+  },
+  {
+   "bead": "N30a-43",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "Acts on the false-coverage flag event of N30a-38 (reason `coverage-flag`) and prints N30a-38's correlation; dep N30a-38 added (the chain N30a-42 → N30a-38 → N30a-43), with two tests."
+  },
+  {
+   "bead": "N30a-44",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "A scope change seen at ingest exits 2 (completed with findings, §32.4), not 0 with a warning; the miss-monitor value at 0.5 is 0.70, not 0.71; airlock lane added (N30a-06 says this script asserts it). Depends on N30-KA and its acceptance clears the `pending` marks of its KA rows, as the registry's pending mechanism requires."
+  },
+  {
+   "bead": "N30a-45",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Now owns the check that each fiducial id exists in the packet (refused 812), moved from N30ax-01."
+  },
+  {
+   "bead": "N30a-48",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The 'fixture packet until the export exists' fallback could not happen (BD-408 precedes the script through N30a-45 and N30a-47); the script uses the real export and asserts its fiducial-list hash. Depends on N30-KA and its acceptance clears the `pending` marks of its KA rows, as the registry's pending mechanism requires."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-139",
+   "what": "Its guess-share line should use N30a-03's grammar, which now has a `synthetic=<f>` column (g = generic + assumed + synthetic), and N should count every card kind of the closed list (actuator, transmission, battery, interface, material, soil, optical, sensor, payload), not six kinds."
+  },
+  {
+   "bead": "N30-REF",
+   "what": "List the stage-order case (a later identification stage requested before the earlier one is done or kept) among the triggers of FROB-REF-879 (pointer `stage`), as N30a-20, N30a-25 and N30a-26 now raise it; and list the consumed schema refusal FROB-REF-802 under ground.predict, which N30a-31 raises for a missing cell, unknown card, lo > hi or a level outside (0, 1)."
+  },
+  {
+   "bead": "BD-200",
+   "what": "Its Considerations name 'correlation inside one card' as a point of revisit; N30a-27 (which now depends on BD-200) adds the covariance-block sampler call and the independent-sampling lint to this compiler. A pointer to N30a-27 would keep the two consistent."
+  },
+  {
+   "bead": "WP-68",
+   "what": "Its child list carries N30a-15's old title; the new title is 'frob-ground: the eight structural-alias fixtures: closed-form reading maps, null directions, separators, controls' and BD-390's now ends 'the fit guard 879'."
+  }
+ ],
+ "unchanged": 10,
+ "notes": "All 52 beads read in full against §30 and the brief. Main structural fixes: a content cycle (N30a-15's fit guard ran BD-390's analysis while BD-390 depended on N30a-15) broken by moving the guard into BD-390 with all its tests; the flag/monitor/retirement chain ordered N30a-42 → N30a-38 → N30a-43; the KA registry made a dependency of all seven gate scripts with a clearing map; the packet fiducial check moved to where the packet is read. Many arithmetic checks redone (recomputed: GATE-GROUND-02 pass probability, energy bias bound, floor MoM tolerance, null-rate bounds, first-passage probabilities, attempt levels). Coverage file updated for the guard move. Settled except that a second round should re-read BD-390 and N30a-15 after the move and the N30a-38/N30a-43 flag chain."
+}

@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
 deps: ["BD-027", "N12-06", "SPEC-C-12"]
 needs: []
-related: ["BD-381", "BD-076", "CARD-T-29", "CARD-T-05", "N12-37", "BD-074"]
+related: ["N12-37", "N12-44", "N12-52", "N12x-01", "N15b-01", "N15b-09", "N15b-12"]
 gates: []
 plan_refs: ["§12.3 (T-15)", "§10 C-12", "§10 C-38", "§15.9", "Appendix D.4 (rational gear law, four-quadrant transmission)"]
 ---
@@ -75,8 +75,10 @@ registry row for that output.
 - [ ] `frob-verify` accepts the T-15 bundles for the transmission kernels' ideal parts and rejects: the same-sign
       law e₁ = r·e₂ (power 2·r·e₂·f₁ ≠ 0); a ratio applied to flow and not to effort; one changed coefficient.
 - [ ] The composition identity for two gears in series certifies with ratio r·s.
-- [ ] Registry row: instance route `checked`, class `Certified`; Lean route `checked`, class `Proved`, once
-      BD-381 has sealed it, with capsule hash and both checker identities.
+- [ ] Registry row at this card's close (M1): instance route `checked`, class `Certified`; Lean route
+      `hypothesis`, with the registered statement `lean/Frob/Statements/T15.lean` present. BD-381, which depends on
+      this card, seals the proof at M5, and its receipt moves the Lean route to `checked`, class `Proved`, with
+      capsule hash and both checker identities.
 - [ ] The statement document states that lossy and back-driven behaviour is outside the identity and names the
       four-quadrant counterexample.
 
@@ -85,7 +87,8 @@ registry row for that output.
 ### Unit tests
 
 `crates/frob-lemma/tests/cards/t15.rs`: `gear_identity_expands_to_zero`; `coupling_matrix_identity`;
-`series_gears_compose` (r = 3, s = 5/2 give 15/2); `same_sign_law_rejects`; `specimen_accepts`;
+`series_gears_compose` (r = 3, s = 5/2 give 15/2); `same_sign_law_rejects`; `flow_only_ratio_rejects` (f₂ = r·f₁
+with e₁ = −e₂: power (r − 1)·e₂·f₁ ≠ 0 for r ≠ 1); `changed_coefficient_rejects`; `specimen_accepts`;
 `exact_numbers` (r = 4, f₁ = 10 rad/s, e₂ = 2 N·m: f₂ = 40 rad/s, e₁ = −8 N·m, e₁·f₁ + e₂·f₂ = −80 + 80 = 0 W);
 `one_multiplier_all_quadrants_creates_energy` (a transmission with efficiency η = 0.8 applied as
 τ_joint = η·N·τ_motor in both directions returns more power back-driven than was put in; a documented related
@@ -93,8 +96,14 @@ control, asserted on the loss model's tests, not on this identity).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_coverage.sh` (bead N12-36) lists the transmission kernels' certificates;
-`scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals the Lean form.
+At M1, when the card closes, its `poly-identity` specimen and mutants join the specimen set that
+`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) replays offline with `frob-verify`; at M5
+`scripts/e2e/lemma_coverage.sh` (bead N12-36) lists the transmission kernels' certificates and
+`scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals the Lean form. For this card their NDJSON lines (STD-E2E
+helper) carry `ts`, `script`, `bead` ("CARD-T-15"), `step`, `event`, the exact command line, exit code, wall time,
+the envelope's `evidence` block (claim Proof, class, kernel identity or capsule hash, checker identity), the
+expected and observed verdict per specimen and mutant, and on a mismatch the first failing rule and the bundle
+path to reproduce.
 
 ### Known answers and negative controls
 

@@ -1,0 +1,32 @@
+{
+  "round": 2,
+  "slice": "S32",
+  "reviewed": 46,
+  "changed": [
+    {"bead": "N25-REF", "kinds": ["correct", "complete"], "what": "Request applied: rows 848 to 851 named the auditor BD-132 as raising site; now BD-133 (check-before-answer mapping) and BD-135 (supplied evidence), with a note on how the mission verbs raise them."},
+    {"bead": "N25-CX", "kinds": ["correct", "tests"], "what": "Provisional slugs late-01..late-11 collided in the shared catalogue with N27-CX's late-01/late-02; now augur-late-nn as N25-KA does, with a uniqueness test."},
+    {"bead": "CARD-T-30", "kinds": ["correct"], "what": "CX-105 was stated inverted ('may not use any packet whose timestamp is earlier'); now quoted as the shortcut, with arrival governing."},
+    {"bead": "BD-127", "kinds": ["title"], "what": "Title said fs-ivl is behind the airlock; it is bedrock-direct and a proposer, only fs-sos is behind frob-fsim."},
+    {"bead": "BD-126", "kinds": ["deps", "tests"], "what": "Dropped the unused direct dep BD-115 (the conflict solve is N25b-07's, which has it); admission-incomplete test now names position 2's semantic rule as well as 4 to 15."},
+    {"bead": "N24b-26", "kinds": ["deps"], "what": "Step 2 asserts no admission-incomplete warning, which needs positions 14 and 15: added N25a-11 and N25b-07."},
+    {"bead": "BD-133", "kinds": ["complete", "deps", "tests"], "what": "Request applied: prove.bundle --out is an export: path jail N37-11 at M1 (734, exit 5), export door N37-18 from M3 (816, 731, 733); dep N37-11 (M1); test bundle_out_outside_roots_refused_734."},
+    {"bead": "BD-135", "kinds": ["complete", "correct", "scope", "tests"], "what": "Request applied: synthesize/refute list BD-133's mapped codes 848-852, 854, 833, 834 and 826/829; check-before-answer ownership left to BD-133 (was claimed by both); step 6 aligned with BD-133 (Tested downgrade, mapped code, supplied evidence exit 3); new test."},
+    {"bead": "BD-134", "kinds": ["tests", "correct"], "what": "Request applied: on-time docking tests and criteria assert the separating policy and no witness, not the literal 'none found', since N20a-41 reports 'none exists' from M3."},
+    {"bead": "N20a-48", "kinds": ["correct"], "what": "Stage 3 used a nonexistent 'frob sense alias check'; now frob-verify on a hand-written alias-pair bundle, rejected at the history-identity step before the packet at 1 s."},
+    {"bead": "BD-129", "kinds": ["deps", "tests", "e2e-logging"], "what": "Request applied: N20b-13 moved from related to deps; test grid_labels_equal_committed_vector; e2e compares labels with N20b-13's committed vector and logs the digest."},
+    {"bead": "ART-L4", "kinds": ["correct", "deps"], "what": "Refinement step used --strategy refine, which N25a-12 refuses with 724 at M1 (BD-362's lane); now --from, with the specimen spelling noted; dep N25b-07 added for the 877 mutation."},
+    {"bead": "N12-35", "kinds": ["e2e-logging", "tests"], "what": "Request applied: per-card tagging (CARD-T-21, -22, -23, -30; T-32 under m4) with recomputed fields and each bundle's BLAKE3 on both machines; docking grid counts; card-tag self-test and criterion."},
+    {"bead": "N25-KA", "kinds": ["complete"], "what": "KA-632 is realized also by N10bx-01 (the sill exclusion as a mission certificate)."},
+    {"bead": "N10bx-01", "kinds": ["deps"], "what": "Acceptance and e2e run frob mission synthesize: added BD-135."},
+    {"bead": "N15b-41", "kinds": ["deps"], "what": "Its e2e runs frob mission check/synthesize and frob-verify on the bundle: added BD-135 (which brings BD-133)."}
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {"bead": "VERBS-mission", "what": "Add to the chapter refusals of mission.synthesize and mission.refute the codes of BD-133's rule-to-refusal mapping raised for caller-supplied evidence (exit 3): FROB-REF-848, -849, -850, -851, -852, -854, -833, -834, and the auditor's -826 and -829 for the two rule areas with no mission row; update the refusal_lists test (BD-135 now lists them)."},
+    {"bead": "N25c-22", "what": "Add the step that compares the labels of `frob mission synthesize docking.fmission --json` with N20b-13's committed 561-label vector (BLAKE3 digest; first differing cell (i, j) on mismatch) and logs the digest: N20b-13's script skips that leg as 'needs BD-129', and BD-129 now names this script for it."},
+    {"bead": "NJL-08", "what": "Row A9 sends mission_synthesize {strategy: \"refine\", from: <answer 1>}, which N25a-12 refuses at M1 with FROB-REF-724 (`refine` is BD-362's trajectory-optimization lane); send {from: <answer 1>} and assert the first answer's next_actions command as a registered path reproducing A9, not the specimen's `--strategy refine --from` string, until the registry freeze settles the spelling (ART-L4 made the same change)."}
+  ],
+  "unchanged": 30,
+  "notes": "All seven requests addressed to S32 beads were checked against the plan and applied (BD-126's had already been applied in round 1 and was verified against N25d-08). Fixture arithmetic re-verified in exact rationals on the read beads (stance, tray/knee paving and 515 of 2,511 grid points, docking 561 grid and A1 cell counts, sill margins 261/6250 and 103/12500, coupled-ankle boundaries, zero-failure bounds). Graph findings: BD-133 and BD-135 kept whole (coherent seed beads); BD-135's scope narrowed by leaving the check-before-answer step to BD-133 alone. No cycles after the new edges. The slice looks settled apart from the three requests."
+}

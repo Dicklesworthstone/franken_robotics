@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "arena", "frob-arena", "solid", "spine", "spec", "test"]
 parent: "WP-41"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§24.12: the bead that creates crate frob-arena (BD-124 implements the two study types; the law suite is created with the crate skeleton if it has not landed)", "§33 INT-FSIM-14: admission of FrankenSim's fs-race and fs-eproc and of the counter-based random streams of fs-rand", "§10 C-40: shared inputs compiled at physical coordinates for paired designs (SPEC-C-40, another unit)"]
-related: ["BD-124", "BD-259", "BD-262", "BD-263", "BD-344", "CARD-T-26", "N10-KA1"]
+deps: ["BD-025", "N10a-01", "N24a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["SPEC-C-26", "SPEC-C-40"]
 gates: ["GATE-ARENA-05", "GATE-ATEL-06", "GATE-QUAL-01"]
 plan_refs: ["§10 C-15", "§16.8", "§24.10", "§24.12", "§24.13", "§28.6", "§35", "§12.3 T-26", "§38.7", "Appendix D.8", "Appendix E GB-06 GB-14", "Appendix I.9", "Appendix M KA-088 to KA-091", "Appendix N CX-040"]
 ---
@@ -118,7 +118,7 @@ admission.
 
 - *Promotion table.* p₀ = 1/20, p₁ = 3/10, α⁺ = 1/100. A clean pair multiplies E⁺ by 0.95/0.70 = 19/14 ≈ 1.357
   and an exceedance multiplies it by (1/20)/(3/10) = 1/6. Promotion needs (19/14)ⁿ ≥ 100: n = 16
-  ((19/14)¹⁵ ≈ 97.6 < 100 ≤ (19/14)¹⁶ ≈ 132.5). With one exceedance, (19/14)ⁿ⁻¹/6 ≥ 100 needs n − 1 = 21, so
+  ((19/14)¹⁵ ≈ 97.6 < 100 ≤ (19/14)¹⁶ ≈ 132.4). With one exceedance, (19/14)ⁿ⁻¹/6 ≥ 100 needs n − 1 = 21, so
   22 pairs. With two exceedances, 29 pairs.
 - *Rejection.* α⁻ = 1/20: two exceedances in the first three pairs give 6²·(14/19) = 26.5 ≥ 20: reject.
 - *Fallback rule arithmetic.* A fixed rule of 30 pairs promoting on at most two exceedances promotes wrongly
@@ -147,7 +147,12 @@ or re-reads fixed-n data as a sequential study. FROB-REF-555: a fixed-n study wh
 contains an unreachable verdict (repair: raise n to the first size at which the verdict is reachable, which
 the pre-analysis reports, or drop the verdict from the declared set). FROB-REF-542: a paired study under an
 uncontrolled determinism class, or with arms in different classes. FROB-REF-543: an anytime study on a metric
-with no declared span. FROB-REF-556: a pairing keyed by event order or by a training counter.
+with no declared span. FROB-REF-556: a pairing keyed by event order or by a training counter. These are the
+codes of the comparison path (`pairing::admit`, reached through `eval.compare`), which GATE-ATEL-06 counts. The
+first three defects also have a code on the study path (`study::admit`, reached through `study.plan`): 552 for
+mixed types, 532 for an unreachable verdict or a missing pre-analysis, 533 for an uncontrolled class. Both codes
+of each pair stay in the registry, and one request gets one code on one verb (the layer rule of the refusal
+registries N24-REF and N28-REF); a test of S5 to S7 asserts the code of the path it drives.
 
 **What it does not claim.** That an e-process or a fixed-n rule delivers its error rate in the running system
 without the sampling assumptions: that is checked by null calibration over 10⁴ simulated studies and guarded
@@ -195,18 +200,26 @@ their planted violation, 100 of 100); GATE-QUAL-01 (level spending under adaptiv
 - `s3_perfect_concordance`: upper bounds 1 − 0.0125^(1/n) for n = 64, 85, 86.
 - `s4_level_series`: exact rationals; strict inequality.
 - `s5_mixed_types_refused`, `s6_unreachable_verdict_refused`, `s7_uncontrolled_class_refused`: planted
-  studies.
+  studies, each driven through both admission paths once they exist: the study path answers 552, 532 (with
+  first reachable n = 86 in the repair) and 533; the comparison path answers 553, 555 (same repair) and 542;
+  never both codes for one request on one path. Before BD-124 lands the tests assert refusal on the exact
+  reference and are marked `path-pending` for the codes.
 - `s8_proper_scores`: quadratic and logarithmic rules on a grid of true probabilities and reports.
 - `pair_accounting_identity`: random studies; the five counts sum to the planned count.
 
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c15.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G0 and G1 rows
-KA-088 to KA-091; `frob --json eval preanalyze --rule paired-cp975 --n 64 --band 0.05` asserting counts 2,145,
-521, 521, 0, 1,103 and that `PracticalTie` is absent from `reachable`; the same at n = 86 asserting one tie;
-`frob --json study plan` with a fixed-n study that declares a tie verdict at n = 64, asserting refusal
-FROB-REF-555 with the repair "first reachable at n = 86"; a study declaring both types, asserting
-FROB-REF-553. Log `target/e2e-logs/spec_c15/<utc>.ndjson` with transcript: commands, exit codes, counts
+KA-088 to KA-091; `frob eval preanalyze --rule paired-clopper-pearson/1 --n 64 --level 0.05 --margin 0.05
+--json` (the rule identifier, flags and verdict tokens of N24b-06) asserting counts 2,145, 521, 521, 0, 1,103
+and that `practical-tie` is absent from `reachable`; the same at n = 86 asserting one tie; `frob study plan
+--json` with a fixed-n study that declares `practical-tie` at n = 64, asserting refusal FROB-REF-532 with the
+repair "first reachable at n = 86" (study path), and the same declaration through `frob eval compare … --key
+spec-c15-unreachable --json` asserting FROB-REF-555 with the same repair (comparison path); a study declaring
+both types, asserting FROB-REF-552 through `study plan` and FROB-REF-553 through `eval compare … --key
+spec-c15-mixed --json` (`eval.compare` is a run verb: each call carries its own idempotency key). Each refusal
+line logs the verb, the
+path and the code expected for that path. Log `target/e2e-logs/spec_c15/<utc>.ndjson` with transcript: commands, exit codes, counts
 against expected, refusal codes and repairs, the pre-analysis hash, the evidence block, and on failure the
 first count pair classified differently. Final `summary` line.
 

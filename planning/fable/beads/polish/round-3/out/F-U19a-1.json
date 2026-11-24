@@ -1,0 +1,195 @@
+{
+ "round": 3,
+ "slice": "F-U19a-1",
+ "reviewed": 28,
+ "changed": [
+  {
+   "bead": "BD-104",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps",
+    "correct"
+   ],
+   "what": "Request S26 applied: step 12 now says the corpus N14b-18 stays independent of A-13 (labels frozen first), its four 123 defects carry the two primitives (or primitive and ground) and a witness for the in-range defect, and reach A-13 through BD-110's gate run and N14b-19's script; N14b-19 added to related. E2E script passed .fbot paths to analyze self-collision, whose design argument is a name or DesignId (N28a-05), and called design edit (mutate) without key or expected parent: each fixture is now stored with design new --file --key (dep N14a-21 added), every edit carries --expected-parent and --key; the determinism re-run was a memo hit, now said so, with the uncached comparison moved to the new unit test twice_uncached_identical."
+  },
+  {
+   "bead": "BD-228",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The reflected room was fixtures/scenes/reflected-room.src here while N19a-21 (its owner), N19-KA and N19a-43 name a GLB with a landmark sidecar; the script now uses N19a-21's fixtures/imports/asym-room-mirrored.glb (the name N19-KA and N19a-43 use; N19a-21 renamed to match) for both the compile refusal and the preview."
+  },
+  {
+   "bead": "BD-229",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Request H-cx-1 applied: new step 8 builds plant BD-229:cx-199 (Cargo feature cx-199-friction-from-r0 under gauntlet-mutations, friction scaled from the optical r0 in the real interface resolution) and records the case in CX-199's catalogue entry (case_supplied_by, numeric = true, plant), re-running N38b-05's seeding so the control turns runnable; dep N19-CX added; acceptance and e2e steps for the seeding and join. The four-state tile fixture is now committed by this bead (fixtures/scenes/tile4/, five sources) because its own unit tests run on it and the CX entry must name it; N19a-44 is asked to reuse it. A fixture surface outside every region now has a code (FROB-REF-316, observed no-region; DESIGN, 303 stays for a dangling region name)."
+  },
+  {
+   "bead": "BD-234",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps",
+    "complete",
+    "correct"
+   ],
+   "what": "The bead had no end-to-end script of its own (convention 11: it pointed at N19a-45's gate script): added scripts/e2e/scene_feasibility_tags.sh on its own committed fixtures (open room, narrow door, near fit, corridor 1.30/1.40, riser) and five seeds of each of the seven families, with an identity re-run; dep STD-E2E. The 309 acceptance line had no mechanism: DESIGN, a checked route cut of an impossible tag is entered in N19b-32's standing-cut index once the freeze stage has the SceneId, with unit test tag_cut_stands; deps N19b-32 and N19a-20 (freeze, which tag_in_identity already needed) added, removed from related. Also states how a goal recorded goal_admissible: unknown by N19a-19 (adjacency to unknown space only) is tagged: no cut, so unresolved, never impossible (unknown space is free for cuts); new unit test goal_unknown_is_unresolved."
+  },
+  {
+   "bead": "BD-399",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script accepted the packs with plain scene accept calls before sim run, which fails BD-228's lint scene-ready-before-run: now e2e_scene_ready, asserting complete and the door-gauge verdicts on its envelope. The stale note that VERBS-scene is asked to list --populated and --assets is replaced by the fact that the row lists them (and the KILL-DRESSING 724 case)."
+  },
+  {
+   "bead": "N19a-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said twelve verbs meet in the crate; VERBS-scene has thirteen with owner frob-scene (scene.purge included). Corrected."
+  },
+  {
+   "bead": "N19a-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "scene.purge was attributed to BD-305; the registry row's implementing bead is N37-19 (extended by BD-305). scene.fit's handler map row now also names BD-398, as the registry row does."
+  },
+  {
+   "bead": "N19a-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Request S70 was already satisfied (item 3 and inventory row 3 say BD-229 extends the same rows at M3). The spawn/goal adjacency rule here was 'within one footprint radius', the reading N19c-03 (owner of the unknown-space treatment table) rejects: now the region dilated by the footprint radius and one coarse cell S must not touch unknown; test distances updated (0.50 m refused, 0.60 m accepted), N19c-03 related."
+  },
+  {
+   "bead": "N19a-05",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Request S66 applied: the resolved-value table also holds excluded and not-represented records (no value), the recount counts only drawn or used entries, and the hazard:<row> region label is written by N19a-31..37; new unit test records_not_counted. The e2e step ran scene show on a manifest path, which the scene.show row does not take: now the stored manifest is edited inside the run's own state root and scene show <id> is expected to exit 9."
+  },
+  {
+   "bead": "N19a-08",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The e2e script runs sim.run with --scene, an option N16b-25 owns, which the bead did not reach through its deps (convention 8): N16b-25 added (no cycle)."
+  },
+  {
+   "bead": "N19a-09",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The e2e script ran telemetry divergence 'restricted to worlds other than 17', a form the row does not have (its --world names one world): now one exact-mode call per world w != 17, asserting no divergence in each. N19a-18 was in both deps and related; removed from related. Dep N16b-25 added: the script uses its sim.run options --scene, --task and --worlds (convention 8)."
+  },
+  {
+   "bead": "N19a-10",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Request S69 applied: registries/import-profiles.toml is stated to be the one registry of import profiles, N37-05's importer rows under the same three names, and every profile later beads add is listed with its owner (asset-default N19a-46; scene-collection NEG-22, articulated-object NEG-24, generic NEG-25 at M3; populated-interior NEG-18, small-rigid NEG-19, kitchen-fixture and kitchen-layout NEG-20, hm3d-scan NEGp1-52 at M5); new unit test added_profile_is_read (an added row is enforced; an unknown profile name is refused, never replaced by default)."
+  },
+  {
+   "bead": "N19a-13",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The script probed 'the sphere pack' at the origin but compiled no sphere: it now compiles fixtures/scenes/sphere-r05.src (the case of sdf_sphere_closed_form) under its own key before the probe."
+  },
+  {
+   "bead": "N19a-15",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The negative control could not fail its target: averaging two-bit selectors cannot give region 8, and the probes at x = +/-0.03 m lie in cells whose corners are all one region. The mutant now interpolates region identifiers, and two_region_floor adds a 101-point sweep across the boundary asserting every lookup is 7 or 9, which the mutant fails."
+  },
+  {
+   "bead": "N19a-17",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Item 6 gave 306 to a thin part with no route while Considerations gave it Traction's 320, and BD-232 requires one code per feature: now 306 covers sharp non-thin parts with no primitive, thin ones only while no thin route is registered, and index capacity; once BD-232's stage is in the build a thin part goes to it through a hook and 320 is its code. The e2e no-route fixture (a 3 mm plate, whose answer would change when BD-232 lands) is replaced by a sharp cone that stays 306; new unit tests thin_part_one_code and sharp_cone_306; BD-232 related."
+  },
+  {
+   "bead": "N19a-18",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The script passed --seconds <10*dt> on the claim that sim.run counts only seconds; the row has --steps (N16b-25), so it now runs --steps 10, and N16b-25 (owner of --scene and --steps) is added to deps."
+  },
+  {
+   "bead": "N19a-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Request S69 applied: adjacency to unknown space is the footprint inflated by one coarse cell touching a flagged cell (N19c-03's rule), not 'within one footprint radius'; unit test with numbers (0.15 m invalid, 0.20 m valid along the long axis) and the radius-reading mutant as negative control. A goal whose every cell fails, some only for unknown, now records goal_admissible: unknown, since unknown space is free for cuts and must not yield impossible (BD-234 updated to match)."
+  },
+  {
+   "bead": "N19a-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The tamper step ran scene show on a copied pack directory; scene.show takes a scene_id. Now one byte of a brick blob of the stored pack is flipped inside the run's own FROB_STATE store, last (the pool is content addressed), and scene show <id> must exit 9 with scene-pack-identity-mismatch."
+  },
+  {
+   "bead": "N19a-21",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Request F-U12-2 applied: the acceptance line about N12x-03's script steps is replaced by this bead's own scene_registration.sh steps reg-mirror-3pt and reg-mirror (302 in both, det L = -1 and the 2 m residual of KA-429). Fixtures renamed mirrored-room.glb and mirrored-room-3pt.glb to asym-room-mirrored.glb and asym-room-mirrored-3pt.glb, the name N19-KA, N19a-43 and BD-228 use."
+  },
+  {
+   "bead": "N19a-22",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Request H-cx-1 applied: new item 9 commits CX-187's two planted worlds, fixtures/enclosures/cx-187/ (sweep-pair.json: two 0.20 m boxes on one segment at t in [0,1] and [2,3] s; door-modes.json: a 0.80 m gauge in a 0.90 m doorway, leaf open or closed), records case_supplied_by, numeric = true and plant N19a-22:cx-187 in CX-187's entry and re-runs N38b-05's seeding; acceptance lines, the two trap tests bound to the files, cx_187_entry_recorded, and an e2e step for the tests, the seeding and the join; dep N19-CX added."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N19a-44",
+   "what": "BD-229 now commits the four-state tile fixture fixtures/scenes/tile4/ (md.src, gd.src, mw.src, gw.src, latent.src) and records it in CX-199's case_supplied_by, because its own unit tests run on it; reuse it rather than creating it (drop 'the tile fixture and its four variants plus the latent variant' from In; keep push-block.fbot, scan-rig.fbot and the tasks). Run the plant BD-229:cx-199 (feature cx-199-friction-from-r0) as the gate's negative control."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.purge's owner is frob-scene, but its implementing bead N37-19 builds the handler in frob-verbs and frob-chronicle (its tests: -p frob-chronicle --test purge, -p frob-verbs --test scene_purge) and N19a-02's dispatch table of frob-scene holds the other twelve handlers; the owner field and N37-19 should agree."
+  },
+  {
+   "bead": "N19a-42",
+   "what": "Two fixtures exist for one mirrored room: fixtures/scenes/mirrored-room.glb here (lines of the fixture list and step 9) and N19a-21's fixtures/imports/asym-room-mirrored.glb with its four-landmark sidecar (the name N19-KA, N19a-43 and BD-228 also use). Use N19a-21's file in the compile step (still exit 3, FROB-REF-302) and drop the second fixture."
+  },
+  {
+   "bead": "N19c-03",
+   "what": "Considerations still says the spawn check N19a-19 reads adjacency as 'within one footprint radius' and is asked to inflate the footprint by one coarse cell. N19a-19 now applies this bead's rule pose by pose at stage 9 (footprint inflated by S touching a flagged cell, reason unknown) and N19a-04 at region level; the note can say so. N19a-19 also records goal_admissible: unknown for a goal blocked only by unknown adjacency, so that no impossibility relies on unknown space."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "Left unchanged: N19a-03, N19a-06, N19a-07, N19a-11, N19a-12, N19a-14, N19a-16, N19a-23. Of the eight requests addressed to the slice, seven were applied (S26 to BD-104; H-cx-1 to BD-229 and N19a-22; S66 to N19a-05; S69 to N19a-10 and N19a-19; F-U12-2 to N19a-21) and S70 to N19a-04 was already satisfied. Every added dep was checked with graph_check path for cycles (N16b-25, N19-CX, N14a-21, N19b-32, N19a-20)."
+}

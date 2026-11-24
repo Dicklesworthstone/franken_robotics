@@ -1,0 +1,231 @@
+{
+ "round": 2,
+ "slice": "S38",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "BD-258",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "the act lint spoke of `exports = […]`; N32a-02 defines `exports` as a bool. The export-scope rule now also accepts the scope in an option's `option_capabilities` (sim.run --resolved-out), so a call without the option needs no publish scope; acceptance and test `option_export_scope_lint` added."
+  },
+  {
+   "bead": "BD-269",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "named KA-834 (the D4 gate's known answer) with its value and tier, and restated KA-803's arithmetic. `study compare` takes a stored study and `study plan` refuses a D4 arm with 561, so the stored-study case is written through `frob-conformance plant-study` (as N37-29)."
+  },
+  {
+   "bead": "BD-303",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "'non-empty exports field' -> `exports = true` (bool); the stray-file rule now names the diagnostic-file row (carrier `header`, N37p1-01); the 'scene pack export' row names its verb (`artifact.export`, kind `pack`; no scene.export verb exists)."
+  },
+  {
+   "bead": "BD-304",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the over-length category listed four strings for a minimum of five; now five length boundaries (257, 1,025, 4,097, 65,537, and exactly 256 surviving uncut), so the category minimums still sum to 200. The real-robot log-line entry kind needs `ground.ingest`, which answers 724 until M5 (BD-387): listed `pending (M5)` in the M3 record, out of liveness, re-recorded at M5."
+  },
+  {
+   "bead": "N37-18",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "request S10: lint says `exports = true`; decided (DESIGN) that diagnostic writers such as sim.run --resolved-out take an ExportGrant (new export kind `diagnostic`, header-line carrier `frob.diag-header/1`, 816 on the submitted header, notices in the header, scope in `option_capabilities`); decision table 45 cells; acceptance and test `diagnostic_writer_needs_grant`; dep BD-200. Request UEG-2: stated there is no aggregate exception and where an owner override would go. The door's scope check now names where the scope is listed. The battery's 'train, export the policy' row hard-coded 733 although its expectation depends on the OPEN-SAFE-2 option; now read from the keys in force, acceptance aligned, dep N37-20 (the option is recorded before GATE-SAFE-05 is measured)."
+  },
+  {
+   "bead": "N37-REF",
+   "kinds": [
+    "correct",
+    "placement",
+    "tests"
+   ],
+   "what": "request S10: list test reads `all_refusals`; 828 for every file or blob argument, 832 only for importers (importers.toml); `consumes_evidence` named as N37-26's declaration. Request S16: moved to M0 (priority 0) so N00-25, which raises 819 at M0, can depend on it; N00-25 added to 819's raisers. The reach test was unsatisfiable at M1 (825 is raised from M3): made milestone-aware (`pending` before the raising bead's milestone)."
+  },
+  {
+   "bead": "N35-07",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Scope spoke of `min_determinism` declarations while the approach defines `uses` entries with `min`; aligned. Promotion of a D4 or unrecorded result raises 825: added dep N37-REF (its row)."
+  },
+  {
+   "bead": "N29b-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "request U37: section 7 no longer says Chronicle supplies the claim query, withdrawal, pin release and tombstone writer; they come from the store beads and N29b-13, the query is N37-19's from the pin table, and this bead tests the rule on private telemetry (test `purge_meets_pins_on_private_telemetry` replaces a test of N37-19's query)."
+  },
+  {
+   "bead": "N35-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "knob defaults named values (`arrival`, `device`) that are admitted only by pilots; defaults now follow admission (fallbacks `fixed-tree`, `dialect`, `address-keyed`), a profile with no admitted knob needs another registered D4 reason or is refused 724; test `knob_defaults_follow_admission`."
+  },
+  {
+   "bead": "N37-01",
+   "kinds": [
+    "complete",
+    "users"
+   ],
+   "what": "the touch rule required a `threats` list on every row but gave no rule for filling it; added the starting rule (run, mutate, admin, file/blob args and importers, `exports = true`, `consumes_evidence`, qualification) and that this bead fills the rows registered when it lands; the field is flagged as a DESIGN addition for N32a-02."
+  },
+  {
+   "bead": "N37-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "the environment lint allowed one module in one crate, but frobd reads FROB_STATE and frob-mcp the stdio token; now one env module per binary crate, with a test that the union of their name arrays equals the reviewed list. BD-258 mints root tokens 'from the principal's grant in the owner-held configuration' but no key held it (and unknown keys are start-up errors): added DESIGN `principal.<id>` tables (scopes, namespace, trace_bytes, max_lifetime_s), fail-closed default none (723), test `principal_table_checked` (from M2)."
+  },
+  {
+   "bead": "N37-06",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "the scope promises the full step list in one place but the `weights` step (created by N37-07) was missing; listed with its specimens and origin cases."
+  },
+  {
+   "bead": "N37-07",
+   "kinds": [
+    "deps"
+   ],
+   "what": "depended on the decision N37-08 although it ships the fail-closed default rows and N37-08 records rows in the registry this bead creates; dep moved to related and the direction stated."
+  },
+  {
+   "bead": "N37-08",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "now depends on N37-07 (its tests read policy-families.toml and the trainer layout through it); the deadline is before N37-06 measures GATE-SAFE-07 at M2 (the gate fuzzes the allowlist in force), not only 'before the M2 exit review'; acceptance aligned."
+  },
+  {
+   "bead": "N37-09",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The e2e said 'none of its own' and described two `task new` calls in step `code_payloads` that no bead adds; this bead now adds them."
+  },
+  {
+   "bead": "N37-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Imported a robot log via `ground ingest` at M3, but that verb answers 724 until M5: the log fixture and import run from M5; the M3 record marks the kind pending."
+  },
+  {
+   "bead": "N37-12",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Step 9 drives the M1 MCP tools; added dep BD-138 (no path to it before)."
+  },
+  {
+   "bead": "N37-13",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Preflight order put the envelope (761) before the device fit (602), contradicting BD-219's DESIGN rule and N36-REF's `fit_precedes_envelope`; fit now precedes envelope, and `preflight_order` expects 602, then 761, then 701."
+  },
+  {
+   "bead": "N37-14",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Nothing said who sets `quota_bytes`: DESIGN, the daemon writes it from the job's trace_bytes reservation plus the result estimate; the e2e names the remote-airlock build and submits the 1 MiB quota case to the real worker through `frob-conformance worker submit`."
+  },
+  {
+   "bead": "N37-15",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Step 7 aligned with N37-14 (remote build; the quota case through `frob-conformance worker submit`)."
+  },
+  {
+   "bead": "N37-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The licence battery's trained-policy row and the `battery_refused` metric assumed option A; now follow `licence.weights_inherit` as step 4 already did."
+  },
+  {
+   "bead": "N37-29",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "`study compare --arm-a --arm-b` does not exist (the verb takes a stored study, and `study plan` refuses D4 arms): the study is planted through `frob-conformance plant-study`; test `plant_study_holds_given_arms`."
+  },
+  {
+   "bead": "N37p1-01",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Added the M2 locator row for `sim.run --resolved-out` (kind `diagnostic`, carrier `header`, `frob.diag-header/1` first line), required by BD-303's stray-file rule and N37-18's decision; acceptance, test `diagnostic_header_flags`, negative control; dep BD-200."
+  },
+  {
+   "bead": "N41-11",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "The cross-check reads `custom_reward_terms` from `frob capabilities --json`, but no bead added the member; this bead now owns it (constant `not-admitted`), with test `capabilities_reports_custom_reward_terms`."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N32a-02",
+   "what": "add to the verb entry schema's table of fields the DESIGN additions other beads already read: `uses` (N35-07, entries with `min` class), `consumes`, `claim_kinds`, `listing`, `consumes_evidence` (N37-26), `threats` (N37-01)."
+  },
+  {
+   "bead": "N37-23",
+   "what": "'non-empty `exports` field' (approach, and the wording near line 72) should read `exports = true`: N32a-02 defines `exports` as a bool."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "`sim.run --resolved-out` is a diagnostic writer and now takes an ExportGrant (N37-18 DESIGN): row gains `exports = true`, refusals 731, 733, 816, `option_capabilities = {resolved_out = [\"export:report\"]}`, and the file's first line is a `frob.diag-header/1` header."
+  },
+  {
+   "bead": "BD-200",
+   "what": "same as VERBS-sim for `--resolved-out` (N37-18 now depends on BD-200): write the `frob.diag-header/1` first line and route the write through `frob_verbs::export::admit` with kind `diagnostic`."
+  },
+  {
+   "bead": "N00-25",
+   "what": "add dep N37-REF (moved to M0 in this round) since N00-25 raises FROB-REF-819 at M0 and is now listed among 819's raisers."
+  },
+  {
+   "bead": "N32b-01",
+   "what": "minting reads a root token's grant from the owner-held configuration but defines no form for it: read N37-02's new DESIGN `principal.<id>` tables (scopes incl. budget scopes, namespace, trace_bytes, max_lifetime_s) and refuse `session.open` for an unlisted principal with FROB-REF-723."
+  }
+ ],
+ "unchanged": 22,
+ "notes": "All 46 beads read in full in work-package order. Main finds: preflight order contradicted BD-219 (fit before envelope); `exports` used as a list; the N37-07/N37-08 dependency ran the wrong way; options/verbs used before they exist (`ground.ingest` at M3, `study compare --arm-a`); expectations hard-coded to the OPEN-SAFE-2 default; missing owners for `quota_bytes`, principal grants, `custom_reward_terms` and the --resolved-out locator row. No new beads, no merges. Graph checked: no cycles, no dep on a later milestone. The slice looks settled apart from the requests."
+}

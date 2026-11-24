@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "spine", "spec", "frontier", "augur", "frob-mission", "frob-cert", "test"]
 parent: "WP-66"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-027", "N10-CX", "N10-KA3", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-132", "BD-161", "BD-262", "BD-359", "SPEC-C-32", "N10-CX", "N10c-10", "CARD-T-32", "BD-128", "BD-026", "N10a-02"]
+related: ["BD-128", "BD-026", "BD-132", "BD-161", "BD-262", "N25c-24"]
 gates: ["GATE-AUGUR-16"]
 plan_refs: ["§10 C-40", "§25.16", "§12.3 T-32", "§12.4", "Appendix D.6", "Appendix M.9", "Appendix N.7"]
 ---
@@ -51,18 +51,22 @@ In: `docs/math/C-40.md`; law tests in `crates/frob-mission/tests/laws_c40.rs`, w
 `crates/frob-cert/tests/`; registry entries for KA-189, KA-190, the statement of theorem card T-32, and the
 controls seeded from CX-094 to CX-097.
 
-Out: product-system dominance as a mechanism, its pilot and KILL-AUGUR-DOMINANCE (BD-359); the auditor's
-`product-unreachable` checker (BD-132 and BD-359); the strict CPU profile used for per-case replay (BD-161); the
+Out: product-system dominance as a mechanism and KILL-AUGUR-DOMINANCE (BD-359); its pilot, run by N25c-24 at M4
+before BD-359 is funded (BD-359 depends on it), which writes the record `PILOT-C-40`; the auditor's
+`product-unreachable` checker (N12-17, on the proof-kind registry of BD-132; it depends on this bead, and BD-359
+uses it); the strict CPU profile used for per-case replay (BD-161); the
 paired statistical comparison that is the fallback (BD-262); recording GATE-AUGUR-16.
 
 Register row (the shared rule of N10a-01). The construction register
 `frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
 are empty; this bead fills row C-40: `rust_type` (the subject trait of the law suite below, replaced by the
-production type when the implementing bead binds it), `verb` (the paired-dominance verb of the mission surface),
-`failing_test` (a test of `frob-mission::laws_c40` with its registered control), `payoff.gate` (GATE-AUGUR-16),
-`statements`, `known_answers` (KA-189, KA-190), `cards` (T-32), `gates`, `pilot` (the record `PILOT-C-40` of the
-pilot register, required because the tier is Frontier) and `generic_comparator` (the off-the-shelf method named in
-the pilot paragraph of this bead). Doctrine D-2 (no ornamental mathematics) is checked on these fields: a
+production type when the implementing bead binds it), `verb` (`mission.refute` with `--baseline`,
+`--baseline-policy` and `--paired-plan`, which VERBS-mission registers on that row from M4 for BD-359's
+product-system dominance; the plan names no separate verb for this query), `failing_test` (a test of
+`frob-mission::laws_c40` with its registered control), `payoff.gate` (GATE-AUGUR-16), `statements`,
+`known_answers` (KA-189, KA-190), `cards` (T-32), `gates`, `pilot` (the record `PILOT-C-40` of the pilot register,
+required because the tier is Frontier, written by N25c-24) and `generic_comparator` (a conventional hybrid
+reachability tool on exactly the same product model, FACT from the literature register: Flow*, to be re-read). Doctrine D-2 (no ornamental mathematics) is checked on these fields: a
 construction with no verb or no failing test is moved to the parked register by a decision record. The contract
 `docs/math/C-40.md` has the ten sections of the template `docs/math/TEMPLATE.md` of the same bead, in the
 template's order (object and definitions; what it replaces and the payoff; conventions; statements; formulas;
@@ -185,10 +189,14 @@ by replay, with the product lowering kept only as the rule for space-indexed sha
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c40.sh`: `frob --json doctor`; `cargo test -p frob-mission --test laws_c40`; `cargo test -p
-frob-conformance --test g1 -- KA-189`; `cargo test -p frob-conformance --test g0 -- KA-190`; `frob --json prove
-list` filtered to card T-32; when bundles exist, `frob-verify` on the specimen bundle and on the wrongly tied
-product, expecting accept and reject. Log to `target/e2e-logs/spec_c40/<utc>.ndjson` with a transcript; each line
+`scripts/e2e/spec_c40.sh`: `frob --json doctor`; `cargo test -p frob-mission --test laws_c40`;
+`FROB_TEST_SEED=1 cargo test -p frob-conformance --test g1_known_answers -- KA-189`; `FROB_TEST_SEED=1 cargo test
+-p frob-conformance --test g0_laws -- KA-190` (the Gauntlet's tier targets; `g1` and `g0` are not target names);
+both again with `--features gauntlet-mutations`, in which the controls of the two rows and of CX-094 to CX-097
+must be caught; `frob --json prove list` filtered to card T-32; `frob-verify` on the specimen bundle and on the
+wrongly tied product, expecting accept and reject (logged `pending` until the `product-unreachable` checker of
+N12-17 and the bundles of BD-359 exist; `ka_190_joint_coverage` and `mislabelled_cell_rejected` cover the
+checker's rules on the reference model meanwhile). Log to `target/e2e-logs/spec_c40/<utc>.ndjson` with a transcript; each line
 has `ts`, `script`, `bead`, `step`, `event`, command line, exit code, wall time, the evidence block (claim Known
 answer, class, tier G1 auditor or host, determinism D0, seed), cell boundaries as rationals with their joint
 outcomes against expected, and on failure the first cell or path pair that differs. The `summary` line counts

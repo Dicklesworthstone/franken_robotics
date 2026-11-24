@@ -1,14 +1,14 @@
 ---
 key: "NJL-08"
-title: "golden fixture L.9, part A: the MCP session driver and the exact half of the transcript (orient, mission, author)"
+title: "golden fixture L.9, part A: the MCP session driver, the exact half of the transcript (orient, mission, author)"
 type: "task"
 priority: 1
 milestone: "M1"
 labels: ["m1", "tether", "augur", "frob-mcp", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-06"
-deps: ["BD-138", "BD-126", "BD-135", "BD-118", "BD-110", "NJL-02", "NJL-05", "NJL-07", "ART-L1", "ART-L4", "STD-E2E"]
-needs: ["§14, §32.6: the verbs `design.new` (from a file, a template or a mission cell) and `design.show` (drafted by unit U14a as N14a-21)"]
-related: ["N14a-21", "BD-023", "BD-140", "BD-298", "BD-313", "BD-258", "NJL-06", "NJL-09", "ART-L9"]
+deps: ["ART-L1", "ART-L4", "BD-110", "BD-118", "BD-126", "BD-135", "BD-138", "N14a-21", "N25a-12", "NJL-02", "NJL-05", "NJL-07", "STD-E2E"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix L.9 (orient, mission, author; rules 1 to 3)", "§32.4", "§32.12.3", "§32.12.4", "§32.12.5", "§32.12.9", "§32.16", "§25.3.3"]
 ---
@@ -51,7 +51,12 @@ BD-298, NJL-05); the mission and design mechanisms (their beads).
 ## Technical approach
 
 **Driver.** `crates/frob-conformance/src/bin/frob-mcp-drive.rs`, using the MCP client module of the verb
-conformance harness. `frob-mcp-drive --steps <file> --transport stdio|http --server <command or url> --out
+conformance harness. It is an operator binary of the verification crate under BD-025's rule: a `[[bin]]` entry
+of the crate's manifest with `name = "frob-mcp-drive"` and `path = "src/bin/frob-mcp-drive.rs"` (the manifest
+sets `autobins = false`, so a binary exists only by declaration), with a row in the binary table of
+`crates/frob-conformance/CONTRACT.md`: owning bead NJL-08; reads a step file and the responses of the MCP server
+it is pointed at; writes the NDJSON recording under `--out`; it asserts nothing, runs no tier and writes no gate
+row. `frob-mcp-drive --steps <file> --transport stdio|http --server <command or url> --out
 <dir>` performs the steps in order, substitutes captured values into later arguments, and writes one NDJSON
 record per request and response (`request`, `structuredContent`, `isError`, wall time, JSON-RPC error if
 any). It asserts nothing itself; assertions are made by the script with the shared helper on the recorded
@@ -61,13 +66,24 @@ responses, so that the log shows observed and expected values.
 
 ```json
 { "id": "A7", "tool": "mission_synthesize",
-  "arguments": { "mission": "${mission_id}", "idempotency_key": "syn-1",
+  "arguments": { "mission": "${mission_id}", "idempotency_key": "syn-1", "paving": "v:4,r:3:lu",
                  "budget": { "cpu_core_s": 60, "checker_s": 10 }, "sync_wait_ms": 2000 },
   "capture": { "answer_1": "/result/answer", "bundle_1": "/result/certificate/bundle" },
   "expect_exit": [0, 2], "expect": "expect/A7.json" }
 ```
 
-`${name}` refers to a value captured by an earlier step. A step may be `tools/list` (`"tool": null`,
+`${name}` refers to a value captured by an earlier step. Step A7 passes `paving: "v:4,r:3:lu"`, which the
+transcript's abridged request omits: it is N25a-12's explicit grid (four cells in v, three in r, the second r
+cut owned by the upper cell), and without it the driver's default on this linear-static fragment is `exact`
+paving, which splits at the boundary and returns a different first answer than the twelve cells asserted
+below (artifact L.4's script passes the same option). Its CLI twin passes `--paving v:4,r:3:lu`. Two more steps
+differ from the transcript's text, which stays as printed in the specimen. Step A9 sends `{"mission":
+"${mission_id}", "from": "${answer_1}", "idempotency_key": "syn-2", "sync_wait_ms": 2000}` without the
+transcript's `"strategy": "refine"`: N25a-12 refines with `from` alone, and `refine` is a value of `strategy`
+that names the trajectory-optimization lane of BD-362, which an M1 build answers with `FROB-REF-724`
+(VERBS-mission); artifact L.4's script makes the same call (`--from <a1>`). Step A10 adds `"idempotency_key":
+"ref-1"`, which the transcript abridges: `mission.refute` is a `run` verb, and a keyless call is refused with
+`FROB-REF-805`. A step may be `tools/list` (`"tool": null`,
 `"method": "tools/list"`). Expectation files list assertions by JSON pointer, each with a field class of the
 golden-fixture layout: `exact`, `identity`, `structural` or `illustrative`.
 
@@ -211,10 +227,10 @@ golden-fixture layout: `exact`, `identity`, `structural` or `illustrative`.
 | A4 | `mission_new` with the query of artifact L.4, key `mis-1` | identity | `result.mission_id` equals the identity of the query; `bound.family` names the template with its content hash |
 | A5 | `mission_check` | exact | domain `nonempty`; topologies 1; free `["v", "r"]`; quantifiers "∃ policy per nominal design, ∀ worlds, ∀ executions"; fragment "linear static: exact answer available"; horizon `static` |
 | A6 | `mission_synthesize {estimate_only: true}` | structural | An `estimate` with admission, lowering, proposing and checker seconds, a 90% interval and `gpu_s: 0`; nothing is charged (the budget of A2 is unchanged) |
-| A7 | `mission_synthesize`, key `syn-1`, `sync_wait_ms` 2,000 | exact | The first answer: inner c:03 = [4, 6] × [2, 5/2]; excluded c:01, c:04 (binding knee-hold at foot.pp), c:07 to c:12 (binding rating at foot.pp); unresolved c:02, c:05, c:06; witness forces (76, 44, 40, 0) N at v = 6, r = 2; cost bounds 1/6, 1/8, gap 1/24, not attained; next test "split c:06 at r = 11/5"; certificate kinds `lp-primal`, `lp-farkas`, `partition`; evidence class Certified, tier `static`, determinism `exact`, claims [Proof], `reality: no-claim`; the warning that the minimum is not established; the three flags false; a `next_actions` command that is a registered CLI path. Cost and budget are structural: budget left = budget before − cost |
+| A7 | `mission_synthesize`, key `syn-1`, `paving` `v:4,r:3:lu`, `sync_wait_ms` 2,000 | exact | The first answer: inner c:03 = [4, 6] × [2, 5/2]; excluded c:01, c:04 (binding knee-hold at foot.pp), c:07 to c:12 (binding rating at foot.pp); unresolved c:02, c:05, c:06; witness forces (76, 44, 40, 0) N at v = 6, r = 2; cost bounds 1/6, 1/8, gap 1/24, not attained; next test "split c:06 at r = 11/5"; certificate kinds `lp-primal`, `lp-farkas`, `partition`; evidence class Certified, tier `static`, determinism `exact`, claims [Proof], `reality: no-claim`; the warning that the minimum is not established; the three flags false; a `next_actions` command that is a registered CLI path and, run as a CLI twin, reproduces the answer of A9 (it is not compared with the specimen's string `--strategy refine --from`, until the registry freeze settles that spelling). Cost and budget are structural: budget left = budget before − cost |
 | A8 | `mission_show {set: "outer"}` | exact | Cells c:02, c:03, c:05, c:06; area fraction 1/3; inner within c:03; unresolved within c:02, c:05, c:06 |
-| A9 | `mission_synthesize {strategy: "refine", from: <answer 1>}`, key `syn-2` | exact | Inner c:03 and c:06a = (6, 8] × [11/5, 5/2]; unresolved c:02, c:05, c:06b; witness (88, 32, 40, 0) N at v = 8, r = 11/5; cost bounds 1/8 and 1/8, gap 0, attained; `next_test: null`; the zero-reserve warning; a `next_actions` command that creates a design from cell c:06a |
-| A10 | `mission_refute {design: {v: "9", r: "5/2"}}` | exact | Excluded for every allocation; `lp-farkas`; "rating at foot.pp: 94 N required, 88 N rated"; relaxing changes: rating to 94 N, P_y envelope to 32/3 N·m |
+| A9 | `mission_synthesize {from: <answer 1>}`, key `syn-2` (the step file omits the transcript's `strategy: "refine"`) | exact | Inner c:03 and c:06a = (6, 8] × [11/5, 5/2]; unresolved c:02, c:05, c:06b; witness (88, 32, 40, 0) N at v = 8, r = 11/5; cost bounds 1/8 and 1/8, gap 0, attained; `next_test: null`; the zero-reserve warning; a `next_actions` command that creates a design from cell c:06a |
+| A10 | `mission_refute {design: {v: "9", r: "5/2"}}`, key `ref-1` (added by the step file) | exact | Excluded for every allocation; `lp-farkas`; "rating at foot.pp: 94 N required, 88 N rated"; relaxing changes: rating to 94 N, P_y envelope to 32/3 N·m |
 | A11 | `session_focus {cluster: "author"}` | exact | The seven tools of `author` |
 | A12 | `design_new {name: "quad-tray", from_cell: <mission>/c:06a}`, key `des-1` | exact, identity | `at: {v: "7", r: "47/20"}`; `half_width: "1/7 m"`; symmetry mech `C2xC2`, obs `C2`; the design identity |
 | A13 | `design_check` | exact | `closure: "closed"`; `symmetry: "C2xC2"`; no finding of severity high; evidence class Tested, tier `static`, determinism `exact`; `bound.design` is the identity of A12 |

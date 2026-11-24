@@ -8,7 +8,7 @@ labels: ["m0", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
 deps: ["BD-027", "N12-06", "SPEC-C-02"]
 needs: []
-related: ["N12-33", "BD-010", "BD-011", "BD-021", "CARD-T-05", "CARD-T-16"]
+related: ["CARD-T-33", "N12-33", "N12-41"]
 gates: ["GATE-LEMMA-00"]
 plan_refs: ["§12.3 (T-04)", "§12.6", "§11.2", "§11.3", "§10 C-02", "Appendix D.1 (adjoint, group coadjoint)"]
 ---
@@ -74,12 +74,18 @@ algebra-level convention ad*_ξ = ad_ξᵀ (CARD-T-16); pairing invariance (CARD
 `crates/frob-lemma/tests/cards/t04.rs`: `t04_composition_blocks_expand`; `t04_coadjoint_inverse_transpose`;
 `t04_cross_product_equivariance_needs_det_one` (with a reflection in place of R the sub-identity fails by a
 sign); `t04_specimen_accepts`; `t04_reversed_adjoint_rejects`; `t04_transpose_without_inverse_rejects`;
+`t04_changed_coefficient_rejects` (the factor 2 of 2·q₀·q̂ᵥ written as 3); `t04_missing_rotation_relation_rejects`
+(the entry-form bundle without det R = 1: FROB-REF-829);
 `t04_wrench_pushforward_spot_check` (R = I, p = (1, 0, 0) m, wrench (0, (0, 0, 1) N): the pushforward gives
 torque p × f = (0, −1, 0) N·m and the same force; moving it with the twist map gives zero torque).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) certifies, replays offline and logs verdicts and hashes.
+`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) certifies, replays offline and logs verdicts and hashes. Its
+NDJSON lines for this card (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-04"), `step`
+(`T-04/<specimen-or-mutant>`), `event`, the exact command line, exit code, wall time, the envelope's `evidence`
+block (claim Proof, class `Certified`, `KernelId` of the adjoint kernel, certificate hash, checker identity), the
+expected and observed verdict, and on a mismatch the first failing rule and the bundle path to reproduce.
 
 ### Known answers and negative controls
 

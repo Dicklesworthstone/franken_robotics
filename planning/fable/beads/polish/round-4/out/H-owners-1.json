@@ -1,0 +1,207 @@
+{
+ "round": 4,
+ "slice": "H-owners-1",
+ "reviewed": 6,
+ "changed": [
+  {
+   "bead": "BD-025",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Resumed: the interrupted reviewer's edits (file modified 19:13, after the cutoff) were read whole against the round-3 text in the tracker; the file parses and every edit is complete. Added as asked: g0_doctrine listed among the crate's check targets (not a seventh tier; lint rule 5 admits it; F-U10a); atelier_harness 'first created by N28c-27 or N28c-28 at M1; the studio beads add subcommands' in both places (F-U28c); one statement 'Who writes a record': CX/KA seeds only by N38b-05's tool, every other seed form by the bead that owns what it names, reuse first (F-U32b; consistent with N38b-05, which writes only CX and KA records, with N41-32 and N35-15 as they stand); test-support verbs live in cluster testprobe, never under conformance (F-U37); decision-sweep (NAB-22, src/bin/decision_sweep.rs) in the binary list (F-UAB); the example feature is cx-262 named by its plant, and the umbrella check refuses every feature a control's `feature` names, not only nc-* (F-U38b (1), H-cx-2); rule 1 admits one replacement of a placeholder target on a record with no last_seen (F-U38b (2)) with acceptance line and test placeholder_target_replaced_once. Convention 13: 'requested there' and 'each owner converts its own bead (requests recorded)' replaced by statements of fact."
+  },
+  {
+   "bead": "N35-33",
+   "kinds": [
+    "request",
+    "contradiction",
+    "deadlock",
+    "convention"
+   ],
+   "what": "Resumed: the interrupted reviewer's rule-7 edit (interim_detail, multi-code interim, detail member, unique (code, detail) pairs; F-U28c) was complete in rule 7 but the field list still allowed only one interim code and no test covered it: field list now admits a list of codes per raising site, test interim_detail_and_pairs added. Exit rule: three exception lists that override the range whatever the family, conflict -> 7 (803, 804, 809 and 112, a stale patch parent in 1xx; H-ref-1), integrity -> 9 (810), capability -> 5 (840; H-ref-2, H-ref-3), a code in at most one list, a listed code must exist; acceptance line, test exit_rule_exception_lists, known answers and negative control added. Without the 112 entry check 3 would have given 112 exit 3 against N14-REF and the plan's exit table (exit 7 for a stale parent). Kinesis row: adjoint-store-over-budget merged into 602 by rule 1 (the plan's 'sim.estimate prints the figure and the job is refused when it does not fit' is 602's condition), so three merged and five requests (H-ref-1). Performance row names its slug rates-violate-unit-ordering with detail and pointer (H-ref-3). F-U32a-1: the acceptance line that needed `frob --json schema` now asks only for the interim list the ledger check produces; serving it is BD-022's, which runs stages (2) and (4); script stages (2) to (4) run only when e2e_init resolves a frob binary and are otherwise logged e2e_skip 'binary absent' (convention 7)."
+  },
+  {
+   "bead": "N35x-02",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Eleven ledger rows added as the requesting beads state them: module-assumption-unmet (1xx, interim 114 pointer contract.assumes.<name>), response-anchor-unconverged (2xx), scene-edit-invalid, asset-source-not-default-pipeline (interim 802 with detail) and import-articulation-interpenetrates (3xx; DESIGN slug for NEG-20/NEG-24), unpinned-claim-closure (9xx, exit 9, retry never), fixture-reference-unresolved (8xx, held, interim 802), engine-environment-mismatch and engine-model-unrepresentable (6xx, interims 601 and 604) and engine-not-serving (72x, interim 724), suite-too-small-for-population-claim (5xx); travel rows corrected to §14.4 (rule 3 orders by subsection); 'registered by N19-REF' on the hazard and scan rows; interface-pair-missing names its raisers BD-167 and N18b-10 and the Considerations state that N18-REF keeps it apart from 121 (the old text left open a merge N18-REF rules out). Counts 61 -> 72 (49 assigned, 1 merged, 22 held), seventeen chapters, title, background, run outcome, acceptance, tests (row count, foundry slugs against N31b-45's eleven names, engine rows by exit, both 9xx rows, articulation row not merged into 123) and known answers updated; plan_refs gain the new subsections. Rows not filed here now also list N31b-45's row 11 (firmware-controller-not-exportable, filed by N31b-45 itself) and N28cx-01's two studio requests. Background said the first round had seven registries; N35-33's table has eight (the surface): corrected. F-U32a-1: the dep on BD-022 would close a cycle (BD-022 -> NJL-01 -> N32-REF -> N35x-02), so the served interim check is restated as the ledger-level list plus BD-022's stage, and script stages (2) and (3) are logged e2e_skip 'binary absent' without a binary."
+  },
+  {
+   "bead": "N38a-02",
+   "kinds": [
+    "request"
+   ],
+   "what": "Receipt frob.gauntlet.receipt/1 gains stack_receipt (the sr: identity of BUILT_UNDER.receipt, N33a-06), stack_dev and build_identity (BUILD_IDENTITY_MODE dev-salt | depgraph-receipt, N33a-08), so N33a-07 cites the receipt as harness_receipt and N38b-19 can refuse dev-built parity records (F-U33a, H-owners-2 r3); deps gain N33a-06 and N33a-08 (no cycle). A fourth gate line `no-claim: <reason>` (outcome NoClaim{reason}) only for a gate with claim = \"reality\", read from BD-397's entry, carrying no control or measured value; on any other gate the run fails with no-claim-on-non-reality, and N38b-19 records it as status no-claim (H-owners-2 r4). The run prints `receipt: <path>` as the last stdout line (H-owners-3 r3). Three acceptance lines, tests receipt_carries_stack_identity, no_claim_only_for_reality and receipt_path_last_line, e2e logging of the stack fields; references add INV-SUITE-03."
+  },
+  {
+   "bead": "N38a-09",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Rule 2a: each [[pilot.result]]'s receipt is committed byte-identical at receipts/pilots/<hash>.json in the commit that appends the result, refused as pilot-receipt-uncommitted otherwise; KILL-FLEET, KILL-SPECIALIZE and KILL-MEGA decisions cite it and N40-03 resolves it (H-owners-2 r4; N40-03 already reads it there). A pilot's own bead is never gated: fundable_bead answers Fundable with the note pilot-bead for a record's bead, ignoring that record and the package answer, unless another mechanism's record gates it; a self-listing in gated_beads is ignored (F-U33c, the N33c-25 case). complete warns, without failing, on a record without gated_beads in a package that holds several upper-tier mechanisms (F-U15b-2; warn rather than require, since a package with one mechanism needs none and a pilot bead fills the list when it registers). Confirmed identifiers PILOT-FLEET-01, PILOT-SPECIALIZE-01, PILOT-MEGA-01 (F-U21c) and PILOT-SHARD-01 listed; the seed list rows of KILL-FLEET, KILL-SPECIALIZE and KILL-MEGA name their pilots and a KILL-SHARD row is added with the plan's trigger (paired lower bound of strong scaling below 1.6 after one pass) kept apart from the pilot's falsifier S_max < 1.6, which decides N36-12's funding and not the kill gate (F-U36); pilots_expected.toml gains an optional `pilot` field. Defect fixed: the acceptance line requiring every load rejection to be a reason of registry/reasons.toml named no load reasons and N38-REF registers none, so N38-REF's scan would have failed on pilot-id-form, which N28a-23 already cites; twelve load reasons are now listed (pilot-id-form, the registry-diff reused and removed, and nine more, pilot-receipt-uncommitted among them) and N38-REF is asked to register the ten new ones. The plan-time-records clause no longer narrates the request. Acceptance lines, tests result_receipt_committed, pilot_bead_not_self_gated, ungated_multi_mechanism_warned, load_reasons_registered and seed_list_rows, a third e2e plant and negative control added."
+  },
+  {
+   "bead": "N38a-12",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Rule 1 admits two derivation layouts, resolved from the row's `derivation` alone: one file per fixture (docs/derivations/<fixture>.md) or one file per row (docs/derivations/<fixture directory>/<row>.md, N24b-03's layout, written by N24b-04 for KA-602 to KA-611); the front matter lists the served rows with their tests (crate, test, owning bead, or `pending: <bead>`), carrier and owing beads, FACT source and conditional_on; a derivation hash (N24b-03's FixtureId input) covers only the body below the front matter (F-U24b). Rule 1 called a missing derivation `ineligible: no derivation`, a state the eligibility list does not have: now `obligation: derivation`. Conditional rows: `conditional_on = \"<decision bead>: <condition>\"` in the derivation front matter gives the computed state `conditional (<decision>)`, neither eligible nor an obligation, parsed by the loader and returned to the G1 runner for N38a-13's `not-run: conditional` (F-U38a a); the specimen's derivation is docs/derivations/docking-fixture.md, N10b-08's file (F-U38a b). Shared fixtures (H-ka-3): the 14 is the count of printed marks, each of the appendix's fourteen pairs asserted by name; the rows with a same_as are reported separately, row by row, printed or registry-only, with no fixed total (the KA beads link more rows than the seven H-ka-3 lists: N09-KA, N12-KA, N30-KA and others); the printout prints the mark from same_as on every linked row; same_as names an existing lower-numbered row, so between two rows above KA-835 the higher names the lower whichever landed first (TF-18 and K41-10; confirmed), and KA-821's link is set in N16-KA's commit. Background, acceptance (three lines), tests same_as_names_lower_row, same_as_total_reported, per_row_derivation_files, conditional_on_exposed and the printed pairs in plan_time_counts, e2e metrics and negative controls updated. The rerun state (H-ka-1) and STD-TEST's Row (H-owners-3) were already consistent."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-022",
+   "what": "ANSWER: (F-U32a-1) N35-33 no longer needs `frob --json schema`: its acceptance asks only for the interim list its ledger check produces, and serving that list as the `interims` member of the refusal table is your acceptance; scripts/e2e/refusal_registry.sh stages (2) to (4) run only when e2e_init resolves FROB_BIN and otherwise log e2e_skip \"binary absent\". The dep of N35x-01 and N35x-02 on BD-022 is declined: it closes a cycle (BD-022 -> NJL-01 -> N32-REF -> N35x-02 -> N35x-01). N35x-02 states its check at ledger level, served by your stage, and its script stages (2) and (3) log \"binary absent\" without a binary; N35x-01 is asked to do the same."
+  },
+  {
+   "bead": "N35x-01",
+   "what": "Restate the acceptance line 'The interim list served by `frob --json schema` shows every held request...' and stage (3) of scripts/e2e/refusal_family_capacity.sh at ledger level: the interim list that N35-33's ledger check produces equals the ledger's `held` rows, with interim code, `detail` and raising bead; serving it through `frob --json schema` is BD-022's acceptance. Stages (3) and (4) run only when e2e_init resolves FROB_BIN and otherwise log e2e_skip \"binary absent\" (convention 7). Do not add a dep on BD-022: BD-022 -> NJL-01 -> N32-REF -> N35x-02 -> N35x-01 would close a cycle."
+  },
+  {
+   "bead": "N41-12",
+   "what": "ANSWER: (F-U41-1) The present form holds: MACHINE_NOT_LOCAL holds the number of N35x-02's ledger row `machine-not-local`, family 6xx, exit 6, assigned by the ledger run of N35-33 (docs/generated/refusal_round2.md); no protocol-family code with exit 3 is allocated. Your text already reads it that way; nothing to change."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "ANSWER: (H-owners-3, MACHINE_NOT_LOCAL) Declined as a protocol-family 8xx code with exit 3: the refusal is N35x-02's ledger row `machine-not-local`, family 6xx, exit 6 (by what is refused; N41-12 accepts that family). Variation 12's row must read: the refusal `MACHINE_NOT_LOCAL` (execution-site family 6xx, exit 6), its number read from docs/generated/refusal_round2.md, the ledger run's output; N41-12 appends it in one change with the number. Drop 'protocol family 8xx, exit 3' and 'whose number the allocation ledger N35-33 has not yet issued' (convention 13)."
+  },
+  {
+   "bead": "N16-REF",
+   "what": "ANSWER: (H-ref-1, Kinesis) N35-33's first-round Kinesis row carries your eight slugs, with interim 802 for `ancestor-path-after-kill`. `adjoint-store-over-budget` is merged into FROB-REF-602 by rule 1 (a step-buffer store over the device budget at admission is 602's condition): its row in your table becomes 'existing FROB-REF-602 (merged; `pointer` the slab class `adjoint`, N21-REF), raised by N16c-26', like `adjoint-metric-not-smooth` into 540, and your introduction's 'four assigned rows' becomes three (`loop-elimination-inadmissible`, `solve-path-mixed-study`, `refinement-study-changes-clock`). The row now reads three merged and five requests."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "ANSWER: (H-ref-1, Spark) The present form holds: N35-33's first-round Spark row files `device-count-wrap` (6xx, proposed 619, N21c-39) and `device-receipt-incomplete` (9xx, exit 9, N21a-02 and N21c-28 through DEVICE_RECEIPT_INCOMPLETE) under your slugs; nothing to change."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "Row FROB-REF-602 gains a fifth case, merged into it by N35-33 rule 1 (Kinesis row): the adjoint step-buffer store of K control intervals (K·d world-steps × bytes per world × worlds) exceeds the device budget at admission, raised by N16c-26. Add the slab class `adjoint` (DESIGN pointer name) to `pointer`, with its repairs 1. Fewer worlds. 2. A shorter horizon K. 3. The paired stencil (N16-REF's repairs), and N16c-26 to the row's raisers."
+  },
+  {
+   "bead": "N16c-26",
+   "what": "FROB-REF-602 is a 6xx code and exits 6 (N35-33's exit rule; N21-REF's row), not 3: correct 'refused at admission with FROB-REF-602, exit 3', the acceptance line and `e2e_expect_refusal FROB-REF-602 3` (to 6). Raise it with `pointer` the slab class `adjoint` (the fifth case of N21-REF's row 602), `observed` the store's bytes and `required` the budget; the adjoint-store request is merged into 602 (N35-33 Kinesis row), so no slug or `detail` is raised."
+  },
+  {
+   "bead": "N22-REF",
+   "what": "ANSWER: (H-ref-1) The present form holds: N35x-02 already carries `insufficient-calibration` (Control, §22.12.4) and `mpc-episode-cap` (Control, §22.8) as 4xx rows, numbered by the ledger run; its 4xx count is eight. Nothing to change."
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "ANSWER: (H-verbs-1) The present form holds: `mpc-episode-cap` and `insufficient-calibration` are N35x-02 4xx rows; cite them by slug, their numbers read from docs/generated/refusal_round2.md, as your Notes already do."
+  },
+  {
+   "bead": "N32-REF",
+   "what": "ANSWER: (H-ref-2) The present form holds: `mechanism-not-admitted` (72x, proposed 726), `packet-over-byte-cap` and `packet-frames-not-retained` (8xx, proposed 836 and 837, under rule 8) and `internal-fault` (9xx, proposed 990) are first-round rows of N35-33 (its Surface row); only `resource-read-over-cap` (838) is a second-round row of N35x-02. Nothing is refiled."
+  },
+  {
+   "bead": "N31-REF",
+   "what": "ANSWER: (H-ref-2) The present form holds: `firmware-controller-not-exportable` (§31.13, 72x, exit 5, raised by N31a-44) is row 11 of N31b-45's table and is filed by N31b-45 itself as one `[[request]]` row; N35x-02 files rows 1 to 10 and its test counts eleven Foundry slugs."
+  },
+  {
+   "bead": "N09-KA",
+   "what": "ANSWER: (H-ka-1) The present form holds: N38a-12 computes `obligation: rerun` from the derivation front matter's `pilot` through pilots::rerun_status (and from `reread` with a receipt), with no row field, and refuses `rerun`/`rerun_receipt` on a row; KA-033 to KA-036 work as your text states."
+  },
+  {
+   "bead": "STD-TEST",
+   "what": "ANSWER: (H-owners-3) Verified: Row carries N38a-12's specimen field for field (`owner` included), and the tolerance kinds agree; N38a-12 keeps derivation, rerun, unreconciled and the new `conditional (<decision>)` (from the derivation front matter's `conditional_on`) as its computed eligibility, with no Row field. Nothing to change."
+  },
+  {
+   "bead": "STD-TEST",
+   "what": "GateLine gains a fourth form `NoClaim(reason)`, printed `no-claim: <reason>` (N38a-02): produced only for a gate whose record has `claim = \"reality\"`, from an entry that returns NoClaim{reason} (BD-397, e.g. `no-claim: no-dataset-admitted`), with no control outcome and no measured value, never a pass; GateReport never prints it for any other gate, and the run fails with `no-claim-on-non-reality` otherwise. N38b-19 records it as status `no-claim`."
+  },
+  {
+   "bead": "N38-REF",
+   "what": "Register the pilot register's load reasons that N38a-09 now names (tool: pilot register loader, N38a-09; exit 101 from its Cargo tests): `pilot-id-form`, `pilot-part-missing`, `pilot-cannot-fail`, `result-protocol-mismatch`, `result-before-registration`, `pilot-receipt-uncommitted` (a result whose receipt is not committed byte-identical at receipts/pilots/<hash>.json), `fallback-tier-not-lower`, `fallback-also-unknown`, `tier-s-without-required-by`, `plan-time-record-unknown` (`reused` and `removed` are your registry-diff rows). Also add N38a-02's tier runner to the tool of `no-claim-on-non-reality` (the run fails when a non-reality gate's entry returns NoClaim)."
+  },
+  {
+   "bead": "BD-005",
+   "what": "Add `detail` (optional string) to `Refusal`, as N35-33 rule 7 states: absent on every raise of a code under its own meaning, present on every interim raise, equal to the ledger row's slug or its `interim_detail` (e.g. 883 with `detail = \"registration-after-outcome\"`), beside `pointer`, `observed` and `required`."
+  },
+  {
+   "bead": "N32a-03",
+   "what": "Serialize `detail` (optional string, BD-005's Refusal) in the envelope's `refusal` object, absent when unset (N35-33 rule 7: present only on interim raises, equal to the ledger slug or `interim_detail`)."
+  },
+  {
+   "bead": "N38b-04",
+   "what": "In the `mutation` row of the kinds table, the branch is `cfg(feature = \"<feature>\")` and the build `--features gauntlet-mutations,<crate>/<feature>`, `<feature>` being exactly the control record's `feature`: named by its plant for a control seeded by N38b-05 (`cx-262` for the plant `BD-123:cx-262`), and `nc-<nnnn>` only for a control its bead registers directly (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "N28b-32",
+   "what": "Build CX-316's plant as `frob-verbs/optimum-kept-on-feasibility` (`cfg(feature = \"optimum-kept-on-feasibility\")`, `--features gauntlet-mutations,frob-verbs/optimum-kept-on-feasibility`), not `frob-verbs/nc-<nnnn>`: a control seeded by N38b-05 has its feature named by its plant (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "N28b-34",
+   "what": "Build CX-314's plant as `frob-verbs/support-enlarged-hash-match` (`--features gauntlet-mutations,frob-verbs/support-enlarged-hash-match`), not `frob-verbs/nc-<nnnn>`: a control seeded by N38b-05 has its feature named by its plant (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "N28b-37",
+   "what": "Build CX-315's plant as `frob-core/memo-key-no-delivery` (`--features gauntlet-mutations,frob-core/memo-key-no-delivery`), not `frob-core/nc-<nnnn>`: a control seeded by N38b-05 has its feature named by its plant (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "N34-17",
+   "what": "Name each mutant's feature by its plant (`frob-core/dup-first-wins`, `frob-core/dup-last-wins`, `frob-core/skip-escape-decode` and the others), not `nc-<nnnn>`: a control seeded by N38b-05 from N34-CX's plants must carry its plant name as `feature`, and a control registered directly may (BD-025, H-cx-2), so the plant name serves either route."
+  },
+  {
+   "bead": "N34-18",
+   "what": "Name each mutant's feature by N34-CX's plant identifier (`frob-core/writer-no-key-sort` and the others), not `nc-<nnnn>`: a control seeded by N38b-05 has its feature named by its plant (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "N34-21",
+   "what": "The five mutation controls (CX-358's plants and N34-17's `dup-first-wins`, `dup-last-wins`, `skip-escape-decode`) are `frob-core` features named by their plants, not `nc-<nnnn>` (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "N38a-26",
+   "what": "Build each plant with the control record's registered feature exactly as the record writes it (`--features gauntlet-mutations,<crate>/<feature>`): `frob-core/dup-last-wins` for N34-17's mutant; BD-261's leak under the feature its record names. `nc-<nnnn>` applies only to a control registered directly by its bead (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "BD-400",
+   "what": "Build N31-CX's two plants under features named by their plant ids (`cfg(feature = \"<plant name>\")`), not `nc-<nnnn>`: N38b-05's seeding writes a seeded control's feature as its plant name (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "BD-402",
+   "what": "Build N31-CX's plants under features named by their plant ids (`finish-per-window` for CX-338, and the other's plant name), not `cfg(feature = \"nc-<nnnn>\")`: N38b-05's seeding writes a seeded control's feature as its plant name (BD-025, H-cx-2)."
+  },
+  {
+   "bead": "NEG-20",
+   "what": "Raise the articulated-import interpenetration refusal as N35x-02's ledger row `import-articulation-interpenetrates` (Scenes §19.9, 3xx, exit 3, retry after-change, registered by N19-REF; interim none), through one constant IMPORT_ARTICULATION_INTERPENETRATES holding the number the ledger run assigns (docs/generated/refusal_round2.md), with `pointer` the part, `observed` the joint value and the penetration depth, `required` the recorded fitting error; nothing is imported. It is not FROB-REF-123."
+  },
+  {
+   "bead": "NEG-24",
+   "what": "Raise the joint-sweep interpenetration refusal as N35x-02's ledger row `import-articulation-interpenetrates` (Scenes §19.9, 3xx, exit 3, retry after-change, registered by N19-REF; interim none), through one constant IMPORT_ARTICULATION_INTERPENETRATES holding the number the ledger run assigns (docs/generated/refusal_round2.md), with `pointer` the part, `observed` the joint value and the penetration depth, `required` the recorded collision error; nothing is imported."
+  },
+  {
+   "bead": "N19-REF",
+   "what": "Enter N35x-02's row `import-articulation-interpenetrates` (Scenes §19.9, 3xx, exit 3, retry after-change; interim none; raised by NEG-24 and NEG-20): an articulated import whose kinematic sweep of a joint finds a part penetrating its own fixture, frame or another part deeper than the recorded fitting error, the part and joint value named. Its repairs are those the raising beads state."
+  },
+  {
+   "bead": "N15b-01",
+   "what": "Step 10: raise the unmet contract assumption with FROB-REF-114 and `detail = \"module-assumption-unmet\"` beside `pointer` `contract.assumes.<name>` (N35-33 rule 7: an interim raise carries the ledger slug); it is N35x-02's 1xx row `module-assumption-unmet`, registered by N14-REF and numbered by the ledger run, after which the constant changes. Restate the 'OPEN: the refusal registry assigns no code' as that fact (convention 13)."
+  },
+  {
+   "bead": "N32ax-02",
+   "what": "Convention 13: 'requested of N35x-02, which has no row for them yet' is no longer true. State: the three conditions are N35x-02's 6xx and 72x rows `engine-environment-mismatch` (interim 601), `engine-model-unrepresentable` (interim 604) and `engine-not-serving` (interim 724), raised with `detail` the slug until the ledger run numbers them."
+  },
+  {
+   "bead": "N18b-39",
+   "what": "Convention 13: 'requested of N35x-02 and N18-REF' is now fact: `response-anchor-unconverged` is N35x-02's 2xx row (Contact §18.19, exit 3, retry after-change, no interim), registered by N18-REF; state it so."
+  }
+ ],
+ "unchanged": 0,
+ "answered": {
+  "added": 37,
+  "holds": 14,
+  "declined": 1
+ },
+ "notes": "All six beads changed; none unchanged, none superseded, no new beads. Resumed slice: the cut-off reviewer's edits to BD-025 (complete) and N35-33 (rule 7 complete but its field list and tests were not; finished) were checked against round-3 text. 52 items: 37 added as asked; 14 hold (6 of them ANSWER notes addressed to these beads, acknowledged with nothing to change: four to BD-025, one each to N35x-02 and N38a-12; 8 rulings already in place, each answered); 1 declined (MACHINE_NOT_LOCAL as an 8xx exit-3 code: it is N35x-02's 6xx exit-6 row). F-U32a-1 is counted added for N35-33; its dep of N35x-01/N35x-02 on BD-022 would close a cycle and is replaced by ledger-level checks (answered to BD-022, asked of N35x-01). Defects found outside the requests: 112 would have taken exit 3 under check 3; N16c-26 raises 602 with exit 3; N38a-09 named no load reasons for an acceptance line requiring them registered; N38a-12 named a state `ineligible: no derivation` its eligibility list lacks. No refusal, KA or CX number was invented."
+}

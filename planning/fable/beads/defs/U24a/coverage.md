@@ -16,7 +16,7 @@ beads (`N24-KA`, `N24a-01` to `N24a-43`).
 | §24.5 | The requirement language [S] | BD-121 (core assembled, differential campaign); N24a-04 (signals, atoms, margin table, laws); N24a-05 (units, scales, exact atoms, the composition counterexample); N24a-06 (clocks, three rules, `sampled` and `interval` labels); N24a-44 (the channel kind interval-extremum and its producers, added at integration); N24a-07 (online block kernels, capacity 4,096); N24a-08 (referee deque monitor); N24a-09 (offline evaluation, reach, `undetermined`, decided-early); N24a-10 (boundary guard 2⁻²¹ and exact re-evaluation); N24a-11 (verdict `frob.verdict/1`, four values, purity; stages and joint accounting); N24a-12 (labelled examples, mutation check, vacuous atoms); N24a-33 (paper pilot); N24a-32 and BD-256 (requirement writing, GATE-ARENA-09); N24a-42 (end to end) |
 | §24.6 | Requirements and rewards | N24a-13 (the eight uses, hard limits frozen, the curriculum rule); N24a-14 (the optional added reward term [F]); BD-257 (its pilot under three arms); N24a-15 (KILL-SPEC-REWARD decision) |
 | §24.7 | The settled-pose reset cache [S] | N24a-16 (contents, settling criterion, selection, failure, `task.settle` on the CPU, FROB-REF-529); BD-195 (batched tiers, `VecEnv` reset, GATE-ARENA-08) |
-| §24.8 | Metrics and scorecards [S] | N24a-17 (metric registry; success, fall and collision rates; requirement margin; time to verdict; the quantile sample-count rule); N24a-18 (cost of transport; energy per completed task; the two-figure example); N24a-19 (tracking error, Froude number, actuator utilization, tail robustness); N24a-20 (friction utilization, slip distance and its quadrature invariance, clearance); N24a-21 (maneuver cost, fallback count); N24a-22 (scorecard, seven outcome columns, two denominators, battery identity); N24a-24 (`arena_scorecards.sh`); N24a-37 (the energy view the metrics read) |
+| §24.8 | Metrics and scorecards [S] | N24a-17 (metric registry; success, fall and collision rates; requirement margin; time to verdict; the quantile sample-count rule); N24a-18 (cost of transport; energy per completed task; the two-figure example); N24a-19 (tracking error, Froude number, actuator utilization, tail robustness); N24a-20 (friction utilization, slip distance and its quadrature invariance, clearance); N24a-21 (maneuver cost, fallback count); N24a-22 (scorecard, seven outcome columns, two denominators, battery identity); N24a-24 (reproducibility of the families, GATE-ARENA-01, M2); N24ap1-01 (`arena_scorecards.sh`, M1; split from N24a-24 in polishing round 1); N24a-37 (the energy view the metrics read) |
 
 Material outside §24.1 to §24.8 that the unit's seed beads draw on, and where it landed:
 
@@ -133,7 +133,9 @@ Prerequisites for which no seed key could be named (also in each bead's `needs` 
 3. **Seed beads that bundle several families or verbs.** BD-201, BD-253 and BD-368 each name several task
    families; each seed bead carries one family and the gate for its milestone, and depends on new beads for the
    others. BD-094 bundles the taxonomy with four verbs and BD-191 bundles three verbs; both were split the same
-   way (N24a-35, N24a-36, N24a-37; N24a-40, N24a-41).
+   way (N24a-35, N24a-36, N24a-37; N24a-40, N24a-41). For BD-191 the order runs from the seed outward (polishing
+   round 1): N24a-40 reads what `telemetry.stills` stores and depends on BD-191, N24a-41 depends on both and
+   carries the joint check of the three verbs.
 4. **Failure monitors have no predicates in the plan.** §29.10 names 23 classes and the gating rule and defines no
    anomaly predicate or threshold. BD-094 and N24a-38 propose them, labelled DESIGN, recorded per run and
    versioned in the registry.

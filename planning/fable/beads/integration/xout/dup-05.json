@@ -1,0 +1,685 @@
+{
+ "group": "dup-05",
+ "decisions": [
+  {
+   "a": "N00-01",
+   "b": "N12-08",
+   "action": "rescope",
+   "note": "N00-01 owns the one static banned-word lint (L-VERIFIED, one pattern, all product strings); N12-08 keeps the Proof-wording formatter, INV-LEMMA-01 export check, non-claims block and the dynamic scan over Lemma end-to-end output, using N00-01's matcher"
+  },
+  {
+   "a": "N00-01",
+   "b": "NAB-10",
+   "action": "rescope",
+   "note": "L-SOURCE of N00-01 only detects FACT sites and a missing citation token and exports them; NAB-10 is the one place that resolves and grades citations (unknown source, reread_before_gate against gate rows)"
+  },
+  {
+   "a": "N00-06",
+   "b": "N38a-10",
+   "action": "merge",
+   "keep": "N38a-10",
+   "note": "one ledger of plan-time checks in pilots.toml; N00-06's review groups, supports, bundle receipts, reproduction rule, the two unretained-script records, consequences of a differing re-run and controls folded in"
+  },
+  {
+   "a": "N00-06",
+   "b": "NAB-10",
+   "action": "rescope",
+   "note": "N00-06 is merged into N38a-10; its citation rule (and N38a-10's own clause) is NAB-10's finding cite.plan-check-not-reproduced, now also recognising the plan-time phrase and ledger ids; the ledger only supplies rerun_status"
+  },
+  {
+   "a": "N00-06",
+   "b": "NAB-15",
+   "action": "rescope",
+   "note": "N00-06 is merged into N38a-10, which depends on NAB-15; NAB-15 holds citable ids, figures of record, archive revisions, arithmetic identities and the stored limits text; the ledger holds status, owners, bands"
+  },
+  {
+   "a": "N38a-10",
+   "b": "NAB-15",
+   "action": "rescope",
+   "note": "joined by a covers field (PILOT-PT row to SRC-CHK ids); arithmetic identities asserted only in NAB-15; a cross-check test in N38a-10 keeps figures held by both equal; re-run owners named only by the ledger"
+  },
+  {
+   "a": "N23b-30",
+   "b": "N33c-37",
+   "action": "rescope",
+   "note": "N33c-37 owns the one planted linear-phase sampler (recurrence, lag table, direct-count tests, registry entry); N23b-30 owns the battery, runs it on that fixture, records GATE-CORTEX-18 and completes row 6 of GATE-WS-06 at M2; no second copy of the plant"
+  },
+  {
+   "a": "N33c-37",
+   "b": "N41-31",
+   "action": "link",
+   "note": "the sampler row of GATE-WS-07 was split out of N41-31 into N41-38, which already depends on N33c-37 and N23b-30; N41-31 only closes the gate from the four rows, so the connection is non-blocking"
+  },
+  {
+   "a": "N39b-36",
+   "b": "N40-19",
+   "action": "rescope",
+   "note": "N39b-36 is the one measurement of GATE-TENFOLD-10 (script, plans, 2,000-campaign simulation, plants, receipt); N40-19 is the program-gate record (expected-value table, evaluator of the receipt, register row, consequence); N40-19's second script and simulation withdrawn, its extra checks moved to N39b-36"
+  },
+  {
+   "a": "N40-19",
+   "b": "N41-31",
+   "action": "link",
+   "note": "N41-31 fires undersized plans 100 times for GATE-WS-07 and owns neither the pre-analysis checks nor the gate record; values agree after the positive-control fix"
+  },
+  {
+   "a": "BD-398",
+   "b": "N19c-04",
+   "action": "rescope",
+   "note": "seed and component: BD-398 is the capstone (verb registration of the real-place lane, scene.fit on an ingested place, per-consumer checks on the assembled lane, M5 half of INT-FDGR-01, assembly script on the synthetic place); N19c-04 builds adapters, pipeline, assumed cards, articulation, loss-report rows, private-pack rule and the shared synthetic fixture"
+  },
+  {
+   "a": "BD-398",
+   "b": "N19c-08",
+   "action": "rescope",
+   "note": "BD-398 no longer decides KILL-INGEST or records GATE-HAB-03 on a real capture; it supplies the lane and the values the decision reads; N19c-08 is the only decider and writer of the ADR; order is BD-398, gate script N19c-07, N19c-08"
+  },
+  {
+   "a": "N19c-04",
+   "b": "N33c-25",
+   "action": "rescope",
+   "note": "N33c-25 owns the drone record's types, validation order, non-metric refusal and vendored fixtures (M3); N19c-04's DroneGeometryAdapter only converts the validated record into the ingest intermediate form and re-runs the fixtures through the pipeline (M5)"
+  },
+  {
+   "a": "BD-063",
+   "b": "N10a-19",
+   "action": "rescope",
+   "note": "N10a-19 is the C-12 pilot (prototype, frozen 64-edit protocol, record PILOT-C-12, funding decision); BD-063 only replays that registered sequence on the production memo graph in its test and no longer reads as running the pilot"
+  },
+  {
+   "a": "N10a-19",
+   "b": "N14a-15",
+   "action": "rescope",
+   "note": "two different pilots: N10a-19 the 64-edit sequence on a prototype with memoization; N14a-15 the hand worksheet against two cold compiles of the real compiler per archetype; N14a-15 attaches PILOT-C-12 instead of waiting for BD-063's test"
+  },
+  {
+   "a": "BD-160",
+   "b": "N35-13",
+   "action": "rescope",
+   "note": "N35-13 defines the tree, the neutral table, the lemma, the host reference and KA-786; BD-160 (which depends on it) only shows that fixed slots folded over tile indices compose to that tree, calls the reference functions and reuses the control pad-plus-zero"
+  },
+  {
+   "a": "N21a-07",
+   "b": "N35-13",
+   "action": "rescope",
+   "note": "N21a-07 implements K-reduce and K-seg-reduce (Rust and dialect, operator slots, two-limb add, kernel tests) and is built first; N35-13 is the contract over every reduction (one normative neutral table, lemma, compensated arithmetic, host reference, padding_audit) and checks those kernels against its reference"
+  },
+  {
+   "a": "BET-22",
+   "b": "N26a-12",
+   "action": "link",
+   "note": "the kill-gate bead applies the trigger of KILL-NEMESIS and writes its ADR; the bet bead reads that record and writes the bet verdict; BET-22's Scope now names the deciding bead; thresholds agree"
+  },
+  {
+   "a": "BET-22",
+   "b": "N26a-35",
+   "action": "link",
+   "note": "the kill-gate bead applies the trigger of KILL-MCW and writes its ADR; the bet bead reads that record; thresholds (half at most three edits, 90% replay) agree"
+  },
+  {
+   "a": "BET-15",
+   "b": "N23a-26",
+   "action": "link",
+   "note": "N23a-26 decides KILL-FAMILY and writes ADR-CORTEX-13; BET-15 reads that record and writes the bet verdict; BET-15's Scope now names the deciding bead; trigger values agree"
+  },
+  {
+   "a": "N10a-14",
+   "b": "N18a-22",
+   "action": "rescope",
+   "note": "two pilots from two plan statements: N10a-14 (C-06) measures the residual per island at eight passes on the known answers and the 21-contact stack (falsifier 1% of islands); N18a-22 (§18.5) counts passes on 10⁴ sampled states (falsifier 10% over eight) and now reads N10a-14's record instead of running the stack again"
+  },
+  {
+   "a": "N10a-14",
+   "b": "N18a-25",
+   "action": "rescope",
+   "note": "N18a-25 builds the guard prototype and measures the rerouted share on 10⁴ states × 64 columns (the share KILL-RESPONSE reads); N10a-14's reuse arm checks bound soundness, the ceiling f and timing on twelve columns per state with that same guard"
+  },
+  {
+   "a": "N21a-01",
+   "b": "N34-01",
+   "action": "rescope",
+   "note": "N34-01 is the one statement of the layout, the forbidden-package list, lockfile and toolchain rules, the apps binaries and their plants; N21a-01 (now after it) keeps ADR-SPARK-01, INV-SPARK-01 on the resolved graph, the Metal block-patch rule, the exploratory default and the claim wording. The exploratory-flag overlap of N21a-01 with N21a-02 and N21c-34 (two file names, two envelope spellings) is outside this packet and still open"
+  },
+  {
+   "a": "N21a-01",
+   "b": "N34-07",
+   "action": "rescope",
+   "note": "N34-07 is the one definition of the capsule row, the SAFETY.md sections and template and the check-unsafe plants; N21a-01 cites them"
+  },
+  {
+   "a": "BD-042",
+   "b": "GB-31",
+   "action": "link",
+   "note": "BD-042 re-runs the plan-time stance pilot from the archive with an independent exact re-derivation (M0); GB-31 is the standing golden card that also runs frob-mission (M1); all figures agree"
+  },
+  {
+   "a": "BD-154",
+   "b": "CARD-T-07",
+   "action": "rescope",
+   "note": "the poly-identity certificates of T-07 and PO-TRAC-01 are issued once, by CARD-T-07 at M5 on the kernels as built; BD-154 (M2) carries PO-TRAC-01 at class Tested (property tests and exact-rational case checks) and issues no bundle"
+  },
+  {
+   "a": "BD-299",
+   "b": "N35-26",
+   "action": "rescope",
+   "note": "N35-26 sweeps the three standing rules of refusal (§35.11) per verb and parameter at M1; BD-299 classifies failures as domain, protocol or transport on both surfaces for GATE-TETHER-04 at M3 and takes its misspelt-parameter stimulus from N35-26's generator instead of a second one; values (802/3, 701/4, exit 2 for a fall) agree"
+  },
+  {
+   "a": "GB-26",
+   "b": "N22b-09",
+   "action": "link",
+   "note": "N22b-09 is the pre-funding pilot (paper arithmetic and a referee sweep with its falsifier); GB-26 is the standing golden card that also runs frob-shield; the card already depends on the pilot; card figures reconciled into named readings"
+  },
+  {
+   "a": "N10a-12",
+   "b": "N13-27",
+   "action": "merge",
+   "keep": "N13-27",
+   "note": "one pilot named twice by the plan (C-01 and the Frontier table of §13.10); kept in the chapter that owns the mechanism and that N13-28 depends on; N10a-12's registered coordinates, general lattice rule, program, register entry PILOT-C-01, planted implementations, gates and dependencies folded in"
+  },
+  {
+   "a": "N12-17",
+   "b": "N22b-14",
+   "action": "rescope",
+   "note": "N12-17 is the one definition of the energy-budget payload, the static checker steps, their rule identifiers and the specimens; N22b-14 keeps the writer in frob-lemma, the run-replay step (PO-SHIELD-01), the 15-mutant corpus for BET-25 and fixture registration, and depends on N12-17; CARD-T-28 stays a dependency of N22b-14 only"
+  },
+  {
+   "a": "N16b-15",
+   "b": "N26a-15",
+   "action": "link",
+   "note": "N16b-15 builds the two solver mutations (pyramid4, penetration-recovery) with a hopper and a diagonal push and registers them as controls; N26a-15 builds the artifact guard's corpus of 100 artifact failures, 20 false witnesses and 100 genuine failures on those options; reference values (0.125 J, 0.05 J, √2·μ) agree"
+  },
+  {
+   "a": "N18b-35",
+   "b": "N38a-30",
+   "action": "merge",
+   "keep": "N18b-35",
+   "note": "one pilot row of §18.17 drafted twice; kept in the Traction chapter that owns the mechanism; N38a-30's hand-derived levers, 75-case grid, count reading of the falsifier, cost stop condition, plant, controls, gate, parent epic and dependencies folded in"
+  },
+  {
+   "a": "N23a-15",
+   "b": "N33a-22",
+   "action": "rescope",
+   "note": "N33a-22 keeps the feature, the dependency rules, the M2 admission test on the sibling's own API (five items, four hand cases, convention records, two controls, the host-tensor fact) and the admission record; N23a-15 keeps the one bridge module frob_learn::torch (conversion, module twin, CPU learner, oracle, safetensors, no-sibling fallback) and depends on the admission"
+  },
+  {
+   "a": "N26a-06",
+   "b": "SPEC-C-28",
+   "action": "rescope",
+   "note": "one pilot for one mechanism: N26a-06 runs it at M2 and writes the single record PILOT-C-28 with both the chapter's and the construction's falsifiers; SPEC-C-28 keeps the contract, law tests and registry row, whose pilot field resolves to that record, and no longer has the mechanism beads BD-273 and BD-274 running a second pilot"
+  },
+  {
+   "a": "N30b-27",
+   "b": "N41-OPEN6",
+   "action": "link",
+   "note": "N41-OPEN6 is the register row of OPEN-GROUND-3 (default 90 days or 200 hours, Ground lead, GATE-GROUND-10, M5, decided in N30b-27); N30b-27 is the decision and updates that row; the values agree"
+  },
+  {
+   "a": "N38b-55",
+   "b": "NEG-09",
+   "action": "rescope",
+   "note": "the same slip corrected in two registers: N38b-55 settles record REC-06 and the control text of the known-answer rows (Appendix M.38); NEG-09 builds the one counting function count_firings, the report lint and scan item E7-6 (Appendix E.7); figures agree (600, 616, 601 on the closed window, 2.564%, 2.667%)"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N00-06",
+   "keep": "N38a-10",
+   "note": "the plan-time check ledger and the plan-time pilot ledger are one ledger; everything of N00-06 folded into N38a-10"
+  },
+  {
+   "drop": "N10a-12",
+   "keep": "N13-27",
+   "note": "the C-01 lattice-mobility pilot and the Marrow chapter's pilot of the same mechanism are one pilot with one record (PILOT-C-01)"
+  },
+  {
+   "drop": "N38a-30",
+   "keep": "N18b-35",
+   "note": "the tactile micro-patch pilot exists once; its dependents (N38a-31, N38a-39, N20a-19, BD-427) now depend on N18b-35"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "N12-08",
+   "dep": "N00-01",
+   "as": "dep",
+   "why": "the dynamic banned-word scan uses the matcher of the static lint; the static scan is N00-01's"
+  },
+  {
+   "bead": "NAB-10",
+   "dep": "N00-01",
+   "as": "dep",
+   "why": "the citation lint grades the FACT sites that L-SOURCE exports"
+  },
+  {
+   "bead": "NAB-10",
+   "dep": "N38a-10",
+   "as": "dep",
+   "why": "cite.plan-check-not-reproduced reads the ledger's rerun_status; a registry comes before the lint that reads it"
+  },
+  {
+   "bead": "N38a-10",
+   "dep": "NAB-15",
+   "as": "dep",
+   "why": "ledger records name the SRC-CHK ids they cover, read the stored limits text and are cross-checked against the source figures"
+  },
+  {
+   "bead": "BD-041",
+   "dep": "N38a-10",
+   "as": "dep",
+   "why": "the docking re-run appends its results to seed records PILOT-PT-06 and -07 (replaces the drafted direction N00-06 depends on BD-041: the ledger is seeded first)"
+  },
+  {
+   "bead": "BD-043",
+   "dep": "N38a-10",
+   "as": "dep",
+   "why": "the nine re-run groups append results to the seed records (replaces the drafted direction N00-06 depends on BD-043)"
+  },
+  {
+   "bead": "N23b-30",
+   "dep": "N33c-37",
+   "as": "dep",
+   "why": "the battery's gate needs its negative control; the fixture is finished first and needs no battery"
+  },
+  {
+   "bead": "N41-31",
+   "dep": "N33c-37",
+   "as": "related",
+   "why": "the plant is fired for GATE-WS-07 by N41-38, on which N41-31 already depends"
+  },
+  {
+   "bead": "N40-19",
+   "dep": "N39b-36",
+   "as": "dep",
+   "why": "the gate record evaluates the receipt of the measurement"
+  },
+  {
+   "bead": "N41-31",
+   "dep": "N40-19",
+   "as": "related",
+   "why": "same rare-tail case and counts; neither blocks the other"
+  },
+  {
+   "bead": "BD-398",
+   "dep": "N19c-04",
+   "as": "dep",
+   "why": "the capstone depends on its component"
+  },
+  {
+   "bead": "N19c-08",
+   "dep": "BD-398",
+   "as": "dep",
+   "why": "the decision reads the gate row measured on the capstone's lane (already ordered through N19c-07); the mechanism never depends on the decision"
+  },
+  {
+   "bead": "N19c-04",
+   "dep": "N33c-25",
+   "as": "dep",
+   "why": "the M5 adapter extends the M3 schema module and re-runs its fixtures"
+  },
+  {
+   "bead": "BD-063",
+   "dep": "N10a-19",
+   "as": "dep",
+   "why": "the mechanism follows its pilot and replays the pilot's registered edit sequence"
+  },
+  {
+   "bead": "N14a-15",
+   "dep": "N10a-19",
+   "as": "dep",
+   "why": "the substitution pilot's verdict reads the companion pilot's record"
+  },
+  {
+   "bead": "BD-160",
+   "dep": "N35-13",
+   "as": "dep",
+   "why": "the tile reductions call the host reference and are tested against it"
+  },
+  {
+   "bead": "N35-13",
+   "dep": "N21a-07",
+   "as": "dep",
+   "why": "the contract's law tests and audit compare the kernels with the reference (already ordered through BD-152); the kernels can be finished without the audit"
+  },
+  {
+   "bead": "BET-22",
+   "dep": "N26a-12",
+   "as": "dep",
+   "why": "the bet's verdict reads the kill-gate record"
+  },
+  {
+   "bead": "BET-22",
+   "dep": "N26a-35",
+   "as": "dep",
+   "why": "the bet's verdict reads the kill-gate record"
+  },
+  {
+   "bead": "BET-15",
+   "dep": "N23a-26",
+   "as": "dep",
+   "why": "the bet's verdict reads the kill-gate record"
+  },
+  {
+   "bead": "N18a-22",
+   "dep": "N10a-14",
+   "as": "dep",
+   "why": "falsifier (b) is read from the construction pilot's record PILOT-C-06-law"
+  },
+  {
+   "bead": "N10a-14",
+   "dep": "N18a-25",
+   "as": "dep",
+   "why": "the reuse arm runs the guard prototype built by N18a-25; no second guard"
+  },
+  {
+   "bead": "N21a-01",
+   "dep": "N34-01",
+   "as": "dep",
+   "why": "the Spark policy reads the workspace table and the registration entry point; the layout can be finished without it"
+  },
+  {
+   "bead": "N21a-01",
+   "dep": "N34-07",
+   "as": "dep",
+   "why": "the policy cites the capsule schema enforced by check-unsafe (already ordered through BD-004)"
+  },
+  {
+   "bead": "GB-31",
+   "dep": "BD-042",
+   "as": "dep",
+   "why": "the card's goldens are the figures the re-run puts on record (already ordered through BD-130)"
+  },
+  {
+   "bead": "CARD-T-07",
+   "dep": "BD-154",
+   "as": "related",
+   "why": "the card certifies the kernels BD-154 builds; the order already holds through N12-20; a card never depends directly on its implementer"
+  },
+  {
+   "bead": "BD-299",
+   "dep": "N35-26",
+   "as": "dep",
+   "why": "the failure-class gate reuses the stimulus generator of the standing-rules sweep"
+  },
+  {
+   "bead": "GB-26",
+   "dep": "N22b-09",
+   "as": "dep",
+   "why": "the mechanism the card tests is funded by the pilot"
+  },
+  {
+   "bead": "N22b-14",
+   "dep": "N12-17",
+   "as": "dep",
+   "why": "the writer, the run-replay step and the corpus are built on the static checker (already ordered through CARD-T-28)"
+  },
+  {
+   "bead": "N13-27",
+   "dep": "SPEC-C-01",
+   "as": "dep",
+   "why": "folded from the merged N10a-12: the pilot reuses the specification's fixtures"
+  },
+  {
+   "bead": "N13-27",
+   "dep": "BD-025",
+   "as": "dep",
+   "why": "folded from the merged N10a-12: the pilot register lives in the conformance crate"
+  },
+  {
+   "bead": "N13-27",
+   "dep": "STD-TEST",
+   "as": "dep",
+   "why": "folded from the merged N10a-12"
+  },
+  {
+   "bead": "N13-27",
+   "dep": "STD-E2E",
+   "as": "dep",
+   "why": "folded from the merged N10a-12: the pilot script uses the shared helper"
+  },
+  {
+   "bead": "N26a-15",
+   "dep": "N16b-15",
+   "as": "dep",
+   "why": "the planted artifact failures select the mutation options that N16b-15 builds"
+  },
+  {
+   "bead": "N18b-35",
+   "dep": "BD-187",
+   "as": "dep",
+   "why": "folded from the merged N38a-30: the sensor models the pads feed"
+  },
+  {
+   "bead": "N18b-35",
+   "dep": "STD-E2E",
+   "as": "dep",
+   "why": "folded from the merged N38a-30: the pilot script uses the shared helper"
+  },
+  {
+   "bead": "N23a-15",
+   "dep": "N33a-22",
+   "as": "dep",
+   "why": "the bridge is built on the admitted dependency and reads its convention records; the admission runs on the sibling's API and needs no bridge"
+  },
+  {
+   "bead": "SPEC-C-28",
+   "dep": "N26a-06",
+   "as": "dep",
+   "why": "the specification's registry row must resolve to the pilot record that N26a-06 writes"
+  },
+  {
+   "bead": "N30b-27",
+   "dep": "N41-OPEN6",
+   "as": "dep",
+   "why": "the decision updates the register row; a registry comes before the bead that writes to it"
+  },
+  {
+   "bead": "N38b-55",
+   "dep": "NEG-09",
+   "as": "related",
+   "why": "same correction and window convention; neither blocks the other"
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N38a-10",
+   "what": "timing band of a plan-time ratio: N00-06 said ±15% of the recorded median, N38a-10 and BD-043 said minimum to maximum of the per-trial ratios in the original receipt; the plan records no band. DESIGN: the receipt's min–max band is kept (it is the convention of the seed re-run bead BD-043), the ±15% band is withdrawn and recorded as rejected"
+  },
+  {
+   "bead": "N38a-10",
+   "what": "ledger file and identifiers: N00-06's crates/frob-conformance/registry/plan_time_checks.toml with ids PTC-nn (fourteen grouped records) and script plan_time_checks.sh are withdrawn; the one ledger is the plan-time block of pilots.toml with PILOT-PT-01..20 plus PILOT-PT-S1, -S2, script plan_time_pilots.sh, as BD-043 already writes"
+  },
+  {
+   "bead": "N38a-10",
+   "what": "status vocabulary: the record status follows N38a-09 (registered, reproduced, differs); a derived rerun_status maps registered or running to not-run so that NAB-10, NAB-16 and N00-35, which say not-run, agree with it"
+  },
+  {
+   "bead": "NAB-10",
+   "what": "cite.plan-check-not-reproduced now reads pilots::rerun_status of N38a-10 (was the rerun field of N00-06's ledger) and recognises the phrase FACT, plan-time and PILOT-PT ids as citations"
+  },
+  {
+   "bead": "NAB-15",
+   "what": "re-run owners: the acceptance line limited owners to BD-030, BD-041, BD-042, BD-043, N00-35, against N38a-10 and N38a-11 which give six rows to N38a-11; owners are now named only by the ledger record, and reread_before_gate of a plan-check source is derived from the ledger, not typed"
+  },
+  {
+   "bead": "NAB-15",
+   "what": "the power of the draft ten-fold rule is printed 'about 18%' (H.5) and 'at most 18%' (§38.5) by the plan; DESIGN in both NAB-15 and N38a-10: the typed figure is the bound, confirmation rate ≤ 0.18 at the grid maximum"
+  },
+  {
+   "bead": "NAB-15",
+   "what": "the limits text was stored twice (ledger and archive record) in two wordings; DESIGN: stored once on SRC-REC-05 in the three-entry wording, copied by the ledger into results"
+  },
+  {
+   "bead": "N00-01",
+   "what": "banned-word scan specified twice with different patterns and test files (N00-01: stem verif of a result in doc_lints.rs; N12-08: whole word verified in banned_word.rs, no allow-list). DESIGN: one pattern (the stem, which also catches 'verification passed'), one static test in doc_lints.rs, with N12-08's strictness kept for product strings (no permitted occurrence, no allow-list entry); N12-08 now cites it"
+  },
+  {
+   "bead": "N00-01",
+   "what": "Scope said five lints while the body and acceptance list six; corrected to six. L-SOURCE no longer refuses gate rows on reread_before_gate (that rule lives only in NAB-10)"
+  },
+  {
+   "bead": "N23b-30",
+   "what": "planted sampler location: N23b-30 had its own copy under fixtures/cortex/planted_sampler/, N33c-37 the module frob_conformance::plants::linear_phase_sampler; the plan names no path. DESIGN in both: one fixture at crates/frob-conformance/src/plants/linear_phase_sampler.rs, selected as @fixture:planted-linear-phase; the second copy withdrawn"
+  },
+  {
+   "bead": "N23b-30",
+   "what": "marginal-check bounds were unstated in N23b-30 and given as mean 0 ± 0.01, variance 1 ± 0.02 in N33c-37 as 'the battery's'; the bounds are now stated in the battery bead"
+  },
+  {
+   "bead": "N33c-37",
+   "what": "acceptance lines that needed the battery (battery rejection, train.start refusal, the GATE-WS-06 sampler row) moved to N23b-30, which gains GATE-WS-06 in gates; N33c-37 keeps a direct-count 100-of-100 check so that neither bead waits for the other"
+  },
+  {
+   "bead": "N40-19",
+   "what": "two end-to-end scripts and two simulations specified GATE-TENFOLD-10 (scripts/e2e/tenfold_10.sh with its own seedless simulation and test target `--test tenfold -- preanalysis`, against tenfold_preanalysis.sh, seed 392010, `--test tenfold_estimation`); the measurement is now N39b-36's only, tenfold_10.sh is the record script that evaluates its receipt; the count band is written [1,512, 1,632] in both"
+  },
+  {
+   "bead": "N40-19",
+   "what": "n = 32 population plan at α = 0.05: N40-19 said accepted, the verb bead N39b-34 and §39.20 (a population result has at least the count its registered bound requires, and never fewer than ln(1/α)/ln(1.1)) refuse it under the registered Hoeffding bound (182); N40-19 corrected: refused at 31 and 32, admitted at 182; the same boundary added to N39b-36's script"
+  },
+  {
+   "bead": "N41-31",
+   "what": "positive control of the suite row had the n = 32 population plan accepted; corrected to n = 182 admitted and n = 32 refused for the bound's 182, to agree with N39b-34 and §39.20"
+  },
+  {
+   "bead": "N39b-36",
+   "what": "when the gate row is entered: N39b-36 said before the suite hash is committed, N40-19 and §40.5 (consequence: the suite is not opened) before the suite is opened, and N40-14 keys each pass to the committed suite hash; N39b-36 corrected to before the opening, and the row is N40-19's"
+  },
+  {
+   "bead": "BD-398",
+   "what": "KILL-INGEST was 'decided here' in BD-398 and decided by N19c-08; §19.19 puts the decision at M5 with GATE-HAB-03 and the gate script depends on BD-398, so BD-398 now supplies the measured values only and N19c-08 alone decides and writes docs/delivery/adr/ADR-KILL-INGEST-M5.md"
+  },
+  {
+   "bead": "BD-398",
+   "what": "the run on the owner's real capture was specified in BD-398's script scene_import_real_place.sh and in the gate script gate_hab_03_real_place.sh of N19c-07 (which depends on BD-398); BD-398's script now runs only on the synthetic fixture fixtures/ingest/synthetic-twin/ (one fixture, defined in N19c-04) and never records GATE-HAB-03"
+  },
+  {
+   "bead": "N33c-25",
+   "what": "drone schema adapter module: frob_scene::import::fdgr in N33c-25 and BD-398 against crates/frob-scene/src/ingest/drone_schema.rs in N19c-04; the plan names no path. DESIGN in all three: frob_scene::ingest::drone_schema (the scene crate's ingest code is all under ingest/, N19a-46), built at M3 by N33c-25 and extended at M5 by N19c-04; test filter changed to ingest::drone_schema"
+  },
+  {
+   "bead": "N33c-25",
+   "what": "command line of the drone lane: `frob scene import --from fdgr` (N33c-25) against the verb's required `--kind place ... --private-root` (N19a-46, N19c-04, N19c-07). DESIGN: `--from twin|fdgr|mesh` (default twin) is defined in N19c-04 and the drone lane is `frob --json scene import --kind place --from fdgr <generation> --private-root <root>` in N33c-25, N19c-04 and BD-398; also a control's test name corrected to scale_relative_only_refused_304"
+  },
+  {
+   "bead": "N14a-15",
+   "what": "source of the attached 64-edit result: N14a-15 said the sequence 'is run as a test of the memo graph (BD-063)', which would make a pilot wait for the production mechanism; the plan's C-12 names it as a pilot, which is N10a-19; N14a-15 now attaches PILOT-C-12 and BD-063's replay only if it exists"
+  },
+  {
+   "bead": "N14a-15",
+   "what": "pilot record location: N10a-19 enters its record in the pilot register crates/frob-conformance/registry/pilots.toml (§38.5), N14a-15 wrote only docs/pilots/… and registries/pilots/…; N14a-15 now also enters a register row that points to those two files"
+  },
+  {
+   "bead": "BD-063",
+   "what": "the 64 edits of `sixty_four_edit_sequence` were unspecified beside N10a-19's fixed six-class protocol; the test now replays the registered sequence and checks the protocol hash, so one sequence exists"
+  },
+  {
+   "bead": "N21a-07",
+   "what": "neutrality for NaN: N21a-07 claimed x ∘ neutral = x bit for bit for every x including NaN, N35-13 for non-NaN inputs only; §35.7 says any NaN marks the world Faulted and claims no bits. N21a-07 corrected to non-NaN"
+  },
+  {
+   "bead": "N35-13",
+   "what": "two neutral tables with different rows: N35-13 lacked u32 maximum (0), u32 minimum (0xFFFFFFFF) and the two-limb add ((0, 0)) of N21a-07; they are added, N35-13's table is the one statement and a test `neutral_table_agrees` binds the kernel manifests to it; the signed-zero rule of det_min/det_max (min(−0,+0) = −0, max(−0,+0) = +0) is now stated in both"
+  },
+  {
+   "bead": "N35-13",
+   "what": "compensated reduction specified twice (N21a-07: operator sum_dd carrying a double-float pair; N35-13: pair (s, e) with two-sum and a final select). DESIGN in both: one operator, named sum_dd in the kernels, with N35-13's node arithmetic and select, result one f32, neutral (−0.0, 0); the plan (§35.7) gives no formula"
+  },
+  {
+   "bead": "N35-13",
+   "what": "'the batch-cpu kernels call these [reference functions]' contradicted the order N35-13 after BD-152 after N21a-07; now K-reduce and K-seg-reduce are compared with the reference and only later batch-cpu code (BD-160, reductions inside other kernels) calls it"
+  },
+  {
+   "bead": "BD-160",
+   "what": "the +0.0 padding mutant was to be registered again as positive_zero_padding; it is now bound to N35-13's registered control pad-plus-zero"
+  },
+  {
+   "bead": "N10a-14",
+   "what": "residual of the hard-contact pilot: N10a-14 called it the complementarity residual without a formula, N18a-22 and §18.5 use the natural-map residual ‖λ − Π_𝒦(λ − û)‖; N10a-14 now states the natural-map residual and the same outer fixed-point iteration"
+  },
+  {
+   "bead": "N18a-22",
+   "what": "the 21-contact stack and the 1%-of-islands falsifier were measured by both pilots; the measurement is now N10a-14's only (the C-06 statement names it) and N18a-22 reads the record"
+  },
+  {
+   "bead": "N10a-14",
+   "what": "mode guard defined loosely in N10a-14 (classification by full solve) and by rule in N18a-25; N10a-14 now uses N18a-25's rule and prototype, and its rerouted share is for the record only (KILL-RESPONSE reads N18a-25's)"
+  },
+  {
+   "bead": "N21a-01",
+   "what": "device binaries: N21a-01 had apps/frob-cuda and apps/frob-metal, N34-01 apps/frob and apps/frobd with features cuda and metal; §34.1 says apps/ links core and annexes 'into frob, frobd'. N21a-01 corrected to N34-01's two binaries"
+  },
+  {
+   "bead": "N34-01",
+   "what": "two lists of packages the core may never resolve (N21a-01: cudarc, metal, objc2-metal, ft-kernel-metal, wgpu; N34-01: cudarc, metal, block, pyo3-class, fsym-*); the union is now the one list in N34-01's workspace table and N21a-01's test reads it"
+  },
+  {
+   "bead": "N34-07",
+   "what": "capsule registry row and SAFETY.md contents specified twice (N21a-01: name, path, lines, purpose, safety_doc and three items; N34-07: id, workspace, path, safe_api, lines, unsafe_blocks, safety_doc, reason and four sections); §34.6 fixes neither. DESIGN: N34-07's schema and four sections, with N21a-01's 'what the foreign side may do' folded into the first section; N21a-01 cites it"
+  },
+  {
+   "bead": "N34-01",
+   "what": "the Metal block patch: N21a-01 required it at the Metal annex root only; apps/ resolves the same gateway, so the entry is required (and tested, in N21a-01) at both roots; the build of the device binaries without a CUDA toolkit moved from N21a-01 to N34-01's acceptance"
+  },
+  {
+   "bead": "BD-042",
+   "what": "known-answer numbering: BD-042 listed KA-624 with KA-625 as the grid counts; Appendix M has KA-624 as the boundary b ≥ 3/14 m with the corner forces and the 165 N exclusion (as GB-31 cites it) and KA-625 as the counts; BD-042 corrected"
+  },
+  {
+   "bead": "BD-154",
+   "what": "projection onto the isotropic four-dimensional cone: BD-154 defined it as T⁻¹·P_SOC(T·λ) with T = diag(μ, 1, 1, 1/r_eff) and stated T-07 in self-dual SOC coordinates; CARD-T-07, the specification SPEC-C-37, the trait bead BD-050 and §12.3 (P(x) − x ∈ 𝒦*) state the Euclidean projection in spin-scaled coordinates, (t, μ·t·x̄/‖x̄‖) with t = (x₀ + μ·‖x̄‖)/(1 + μ²). BD-154 corrected (its own bit-for-bit acceptance against the three-row kernels needs it); the conjugate is now a registered mutant; the anisotropic path is kept in T coordinates as DESIGN, flagged for the Traction lead"
+  },
+  {
+   "bead": "BD-154",
+   "what": "BD-154's acceptance required poly-identity bundles accepted by frob-verify at M2, a proof kind that arrives with the M5 certificate pipeline and that CARD-T-07 also issues; BD-154 now records PO-TRAC-01 as Tested and names the card as certifier"
+  },
+  {
+   "bead": "GB-26",
+   "what": "card A's gravity term and what follows from it: GB-26 gave the product 0.251136 J (1.491136 J; 50.4432 ms; 45.4432 ms) as what shield.budget returns, N22b-09 the plan's printed 0.25 J (1,490,000; 50.5 ms; 45.5 ms) with an outward 0.2512 J for sweeps; the plan prints 0.25 J for a product that is 0.251136 J. DESIGN in both: three named readings (printed, product, outward) with fixed values; the product governs, KA-153 and KA-568 are asserted on the printed reading to the printed digits; each bead now asserts both"
+  },
+  {
+   "bead": "N13-27",
+   "what": "the two drafts of the pilot differed in conventions, settled in the kept bead as DESIGN: sample configurations per linkage five (N10a-12) not three; program at pilots/c01-lattice-mobility/ not tools/pilots/marrow_lattice/; script scripts/e2e/pilot_c01.sh not pilot_marrow_lattice.sh; the record is the register entry PILOT-C-01 whose protocol document is docs/delivery/pilots/marrow-lattice-mobility.md; the third linkage is the planar parallelogram leg with Pythagorean link lengths"
+  },
+  {
+   "bead": "N12-17",
+   "what": "two payloads for proof kind energy-budget: N12-17 described a load_path of typed elements and terms with formula tags (kinetic, electrical, stored, gravity, other, reserve), N22b-14 embedded the .fenergy document with a sources list and a port-graph digest; §12.4 fixes only 'the inequality with its error bounds and its list of sources' and §22.11 gives the .fenergy document. DESIGN in both: the document is embedded; N12-17's recomputation of gravity from parameters and its level declaration are kept as the optional basis member of a source and the level member"
+  },
+  {
+   "bead": "N12-17",
+   "what": "rule names of the energy-budget checker: N12-17 `energy.source-missing`, N22b-14 prose names ('Source without a term', 'Class above weakest input', …); one vocabulary of thirteen identifiers is now defined in N12-17 and N22b-14's corpus table maps each mutant to it"
+  },
+  {
+   "bead": "N22b-14",
+   "what": "test file of the static checker: crates/frob-cert/tests/kinds_energy_product.rs (N12-17) against kind_energy_budget.rs (N22b-14); the first is kept, N22b-14's tests move to the writer, run-replay and corpus files"
+  },
+  {
+   "bead": "N12-17",
+   "what": "accepted drop-stop specimen: N12-17 carried gravity as 0.26 J (total at most 1.50 J), N22b-14 the printed 0.25 J (1,490,000); with the three named readings both are specimens, the product reading (1,491,136) is added, and 0.25 J offered with its basis is rejected as below basis"
+  },
+  {
+   "bead": "N26a-15",
+   "what": "two names for each planted mutation (N16b-15: step-plan options pyramid4 and penetration-recovery; N26a-15: artifact values box-cone and penetration-pump with no stated relation); N26a-15 now states the one-to-one mapping, its step plans carry N16b-15's option names, and its Out names N16b-15 as the builder"
+  },
+  {
+   "bead": "N18b-35",
+   "what": "the two drafts of the tactile pilot differed and the plan (§18.17) fixes only the pilot, falsifier, ceiling and fallback; settled as DESIGN in the kept bead: pad side 20 mm (not 12 mm); arrays with torsional capacity matched to the single patch are the arms and the unmatched point-load grids (7.6% and 2.1% low) only check the derivation; the falsifier is read both by differing cases on the 75-case grid and by paired intervals on 256 trials, and a positive verdict needs both; centred pull-out tolerance 0.5% (not 1%); tests in crates/frob-conformance/tests/pilot_tactile.rs and script scripts/e2e/pilot_tactile.sh (not frob-contact/tests/pad_micro_patches.rs and pilot_pad_micro_patches.sh); parent BD-418"
+  },
+  {
+   "bead": "N33a-22",
+   "what": "the bridge module was specified twice: frob_learn::torch with to_ft, from_ft, CpuLearner, reference_gradients, write_safetensors, read_safetensors (N23a-15) against frob_learn::ft_bridge with oracle_grad, cpu_train_step, export_safetensors, import_safetensors (N33a-22). DESIGN: N23a-15's module and names; N33a-22's are withdrawn; the admission test file crates/frob-learn/tests/admit_frankentorch.rs is N33a-22's only"
+  },
+  {
+   "bead": "N33a-22",
+   "what": "refusal for a view that cannot cross under a zero-copy contract: FROB-REF-547 (N23a-15) against FROB-REF-617 (N33a-22); the plan has both rows (§23.4 for a tensor view the receiver cannot represent; §21.21 for the stride-converter boundary). DESIGN in both beads: the bridge takes the learning chapter's TensorView and raises FROB-REF-547; 617 stays with the array-file boundary of BD-036"
+  },
+  {
+   "bead": "N23a-15",
+   "what": "feature-off behaviour of gradient parity: N23a-15 recorded the gate against the finite-difference oracle, N33a-22 reported `not run: oracle absent`; GATE-CORTEX-02 names FrankenTorch autograd. DESIGN in both: the gate reads `not run: oracle absent`, the finite-difference tests run and their receipts are labelled as the weaker oracle; the in-house safetensors-layout writer is the 'native checkpoint format' of the plan's fallback"
+  },
+  {
+   "bead": "SPEC-C-28",
+   "what": "who runs the C-28 pilot and on what: SPEC-C-28 said planted traps in three scenes run by BD-274 with BD-273 (the mechanism it funds), N26a-06 ten traps in two interiors at M2; the plan states both (§10 C-28: three scenes; §26.15: two interiors). DESIGN in both: run once by N26a-06, recorded as PILOT-C-28; the third scene is the narrow-doorway scene of the planted unsolvable trap; the construction's fallback (the failing world unshrunk with its edit list) is added to that record"
+  }
+ ]
+}

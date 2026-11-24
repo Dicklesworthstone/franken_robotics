@@ -6,9 +6,9 @@ priority: 4
 milestone: "M8"
 labels: ["m8", "lemma", "frob-lemma", "moonshot"]
 parent: "EPIC-M8"
-deps: ["BD-381", "CARD-T-06", "FD-FLN-01", "N12-06", "N12-23"]
+deps: ["BD-381", "CARD-T-06", "N12-06", "N12-23"]
 needs: []
-related: ["BD-384", "CARD-T-01"]
+related: ["FD-FLN-01", "SPEC-C-05", "SPEC-C-36"]
 gates: []
 plan_refs: ["§12.3 (T-13)", "§12.1", "§12.5", "§10 C-05", "§10 C-36", "Appendix C (deferred: general Lean theorems on Lie groups)", "Appendix F (FD-FLN-01)"]
 ---
@@ -86,7 +86,11 @@ re-run when the upstream item lands. Out: any proof; the instance (CARD-T-06); t
 ### End-to-end script and logging
 
 `scripts/e2e/pilot_lean_closure.sh` (shared with N12-23) runs the probe as a step `t13-probe` and logs the
-blocked intersection; no assertion on its emptiness until FD-FLN-01 lands.
+blocked intersection; no assertion on its emptiness until FD-FLN-01 lands. Its NDJSON lines for this step (STD-E2E
+helper) carry `ts`, `script`, `bead` ("CARD-T-13"), `step` ("t13-probe"), `event`, the exact command line, exit
+code, wall time, peak memory, the FrankenLean pin and Mathlib commit, the closure's module count and the list of
+blocked modules met (asserted non-empty at the current pin), and the `frob prove list` row printed for T-13
+(asserted `parked`, with no class).
 
 ### Known answers and negative controls
 
@@ -98,8 +102,10 @@ asymmetric body). Negative control: the hand-edited registry row. Determinism: n
 
 - Moonshot items live behind a feature flag and never sit on the critical path; this one has no schedule.
 - Reopening needs both the upstream change and a measured closure (OPEN-LEMMA-1 style) on the Linux host.
-- Kill rule named in advance: if FD-FLN-01 is declined upstream, the card stays parked permanently and the
-  instance card remains the project's statement.
+- Kill rule named in advance: FD-FLN-01 is upstream work this program does in franken_lean's repository, under
+  that repository's rules, at priority P3 and with no milestone. If it is not scheduled, or it lands and the probe
+  still meets a blocked module, the card stays parked and the instance card T-06 remains the project's statement;
+  the interim posture (no general claim) never depends on the upstream change landing.
 
 ## References
 

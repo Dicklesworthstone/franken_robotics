@@ -1,14 +1,14 @@
 ---
 key: "ART-L4"
-title: "golden fixture L.4: the `.fmission` query on stance and knee ratio, its hand-derived answer, paving and CLI script"
+title: "golden fixture L.4: the `.fmission` query on stance and knee ratio, hand-derived answer, paving, CLI script"
 type: "task"
 priority: 1
 milestone: "M1"
 labels: ["m1", "augur", "frob-mission", "frob-spec", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-42"
-deps: ["BD-126", "BD-128", "BD-130", "BD-132", "BD-133", "BD-135", "NJL-07", "STD-E2E"]
+deps: ["BD-126", "BD-128", "BD-130", "BD-132", "BD-133", "BD-135", "N25a-12", "N25b-07", "NJL-07", "NJLx-02", "STD-E2E"]
 needs: []
-related: ["BD-042", "BD-136", "BD-140", "N24b-26", "BD-141", "ART-L1", "ART-L7", "ART-L9", "NJL-08"]
+related: ["ART-L9", "BD-042", "BD-136", "BD-140", "BD-141", "GB-31", "N24b-26"]
 gates: []
 plan_refs: ["Appendix L.4", "§25.3.2", "§25.3.3", "§25.5.2", "§25.13", "§25.3.6", "Appendix H.5"]
 ---
@@ -198,7 +198,7 @@ points are feasible (FACT: recomputed for this bead).
 | `mission.check` | domain `nonempty`; one topology; free parameters v and r; quantifiers echoed as "∃ policy per nominal design, ∀ worlds, ∀ executions"; fragment "linear static: exact answer available"; horizon `static` |
 | `mission.synthesize`, first pass | Inner: c:03 = [4, 6] × [2, 5/2], proof p0. Excluded: c:01 and c:04 (proof p1, binding "knee-hold at foot.pp under P = (16, 12) N·m"); c:07 to c:12 (proof p2, binding "rating at foot.pp"). Unresolved: c:02, c:05, c:06, each `straddles-threshold`. Witness p0: `lp-primal`, vertex (16, 12), forces (76, 44, 40, 0) N at v = 6, r = 2. Cost bounds: incumbent 1/6 m, lower bound 1/8 m, gap 1/24 m, `attained: false`. Next test: split c:06 at r = 11/5. Certificate kinds `lp-primal`, `lp-farkas`, `partition`. Warning: the claimed minimum is not established; reported as a feasible candidate with gap 1/24 m |
 | `mission.show --set outer` | Cells c:02, c:03, c:05, c:06; area fraction 1/3; inner within: c:03; unresolved within: c:02, c:05, c:06 |
-| `mission.synthesize --strategy refine` from the first answer | Inner: c:03 and c:06a = (6, 8] × [11/5, 5/2] (lower end in v open), proof p4. Unresolved: c:02, c:05, c:06b = (6, 8] × [2, 11/5). Witness p4: forces (88, 32, 40, 0) N at v = 8, r = 11/5. Cost bounds: incumbent 1/8 m, lower bound 1/8 m, gap 0, `attained: true`. Next test: none. Warning: the boundary design has zero reserve at foot.pp (rating, knee-hold) and at foot.mm (unilateral). Thirteen cells in all |
+| `mission.synthesize --from` the first answer (the refinement) | Inner: c:03 and c:06a = (6, 8] × [11/5, 5/2] (lower end in v open), proof p4. Unresolved: c:02, c:05, c:06b = (6, 8] × [2, 11/5). Witness p4: forces (88, 32, 40, 0) N at v = 8, r = 11/5. Cost bounds: incumbent 1/8 m, lower bound 1/8 m, gap 0, `attained: true`. Next test: none. Warning: the boundary design has zero reserve at foot.pp (rating, knee-hold) and at foot.mm (unilateral). Thirteen cells in all |
 | `mission.refute` at v = 9, r = 5/2 | Excluded for every allocation; `lp-farkas`, proof p2; binding "rating at foot.pp: 94 N required, 88 N rated"; smallest relaxing changes: the rating to 94 N, or the P_y envelope to 32/3 N·m |
 | Evidence on every answer | class Certified, tier `static`, determinism `exact`, claims [Proof], `reality: no-claim`; the three no-authorization flags, all false |
 
@@ -215,7 +215,7 @@ transfer. It says nothing about walking, slipping or the door.
 **Refusals on planted mutations of the query.** An unknown field, a missing unit or a number that is not an
 exact string: `FROB-REF-868`. An empty world family (W with no value): `FROB-REF-874`. Predicates that
 conflict with the world family for every design (a rating of 30 N per foot against a 160 N load):
-`FROB-REF-877`. No quantifier prefix: `FROB-REF-884`. An observation with no arrival instant:
+`FROB-REF-877` (the check at admission position 15, N25b-07, a dependency for that reason). No quantifier prefix: `FROB-REF-884`. An observation with no arrival instant:
 `FROB-REF-847`. Objective claim `minimum-with-matching-lower-bound` reported as attained on the first answer:
 `FROB-REF-853` (a minimum without a matching lower bound). Each is exit 3 with one envelope.
 
@@ -271,12 +271,12 @@ checker and readers; exact rational arithmetic; no mocks):
 verb:mission.new,verb:mission.check,verb:mission.synthesize,verb:mission.show,verb:mission.refute seed=1
 needs=cpu plants=cap-80,torque-as-moment`). Steps: (1) `frob mission new …resolved.fmission.json --key l4-new
 --json`, capture the `MissionId`; (2) `frob mission check`; (3) `frob mission synthesize <id> --estimate
---json` (nothing runs; an estimate with an interval); (4) `frob mission synthesize <id> --budget
-cpu_core_s=60,checker_s=10 --key l4-syn-1 --sync-wait-ms 2000 --json`, compare the result with
+--json` (nothing runs; an estimate with an interval); (4) `frob mission synthesize <id> --paving
+v:4,r:3:lu --budget cpu_core_s=60,checker_s=10 --key l4-syn-1 --sync-wait-ms 2000 --json`, compare the result with
 `answer.first.expect.json` field by field (`e2e_assert_rational` for every bound and force); (5) `frob mission
-show <id> --answer <a1> --set outer --json`; (6) `frob mission synthesize <id> --strategy refine --from <a1>
+show <id> --answer <a1> --set outer --json`; (6) `frob mission synthesize <id> --from <a1>
 --key l4-syn-2 --json`, compare with `answer.refined.expect.json`; (7) `frob mission refute <id> --design
-v=9,r=5/2 --json`; (8) `frob prove verify` on the bundle of the refined answer, then the offline `frob-verify`
+v=9,r=5/2 --key l4-ref --json` (`mission.refute` is a `run` verb, so the call carries a key); (8) `frob prove verify` on the bundle of the refined answer, then the offline `frob-verify`
 on the same file, both `accept`; (9) the six mutations through `e2e_expect_refusal <code> 3`; (10)
 `frob-golden check --artifact L4`. Plants: `cap-80` lowers the rating to 80 N and must change the boundary to
 v ≤ 20/3 (the comparison with the expected answer fails); `torque-as-moment` must make the auditor reject. The
@@ -311,11 +311,21 @@ an exact rational with its expectation, the bundle digests, each refusal with co
 - The cell labels (`c:01` … `c:12`, `c:06a`, `c:06b`) and proof labels (`p0` … `p4`) are the specimen's;
   the engine may number cells otherwise. The comparison is by box, not by label, and the expected files map
   the specimen's labels to boxes.
+- The specimen session writes the refinement as `--strategy refine --from a:…`, and its first answer's
+  `next_actions` carries that command. N25a-12 refines with `--from` alone and refuses `--strategy refine` at M1
+  with `FROB-REF-724`, because `refine` names the trajectory-optimization lane (BD-362); step (6) therefore uses
+  `--from`, and the `next_actions` command is asserted to be a registered command path that reproduces step (6),
+  not compared with the specimen's string, until the registry freeze settles the spelling (NJL-08, the MCP
+  transcript of the same session, is asked to make the same change).
 - Kill gate KILL-AUGUR-FALSECERT: one accepted false certificate fails the mission gates. The plants of this
   fixture are part of the seeded-defect suite that must yield zero false accepts.
-- The paving the engine chooses may be finer than four by three; a finer paving is acceptable when its inner
-  set contains c:03, its excluded set contains the eight excluded cells and its unresolved area is at most 1/4.
-  The exact-equality comparison is made with `--paving 4x3`, a fixture-only option that fixes the first split.
+- The paving the engine chooses may differ from four by three: on this linear-static fragment its default is
+  `exact` (one split at the boundary), and `adaptive` elsewhere (N25a-12). A finer paving is acceptable when its
+  inner set contains c:03, its excluded set contains the eight excluded cells and its unresolved area is at most
+  1/4. The exact-equality comparison of step (4) is made with the registered option `--paving v:4,r:3:lu`
+  (N25a-12's explicit grid: four cells in v, three in r, the second r cut owned by the upper cell), which gives
+  the specimen's cells with their open and closed ends; N25a-12 is a dependency for that reason. An earlier
+  draft named a fixture-only `--paving 4x3`, which no bead defines.
 
 ## References
 

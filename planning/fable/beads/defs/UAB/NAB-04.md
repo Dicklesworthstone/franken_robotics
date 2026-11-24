@@ -8,7 +8,7 @@ labels: ["m0", "workspace", "delivery", "solid", "registry"]
 parent: "WP-01"
 deps: ["NAB-01"]
 needs: []
-related: ["NAB-02", "NAB-03", "NAB-05", "NAB-06", "NAB-07", "NAB-08"]
+related: ["NAB-05", "NAB-06", "NAB-07"]
 gates: []
 plan_refs: ["Appendix A"]
 ---
@@ -47,7 +47,9 @@ lower-cased term with hyphens, plus `-<sense>`.
   to E3) is a separate term in the A to C range.
 - Multi-name rows: `Degraded`, `Faulted` (two world states; alias `Faulted`); the row of five binaries `frob`,
   `frobd`, `frob-mcp`, `frob-verify`, `frob-tui` (one record of kind `binary`, the other four names as aliases).
-- Code literals (`code = true`, kind `label`): `Degraded`, `Faulted`, `energy-created`.
+- Code literals (`code = true`, kind `label`): `Degraded`, `Faulted`, `energy-created`. The binaries row is also
+  `code = true` (kind `binary`), so this range holds three of the eleven code-literal records of NAB-01's
+  known answers.
 - Classes: `D0 to D4` (the five determinism classes: exact; bitwise across backends; bitwise per backend and
   independent of the batch; tolerance with decision agreement; unspecified), `Evidence class` (Proved,
   Certified, Tested, Estimated, strongest to weakest), `Determinism profile` (`reference-replay`,

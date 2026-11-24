@@ -1,0 +1,438 @@
+{
+ "round": 1,
+ "slice": "U28a",
+ "reviewed": 47,
+ "changed": [
+  {
+   "bead": "BD-100",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "A-02 steps 2, 3, 5 now call N14a-13's declared::consistency, support::check (every enclosing set of the Region, not the smallest ball) and massless::check; the massless chain refuses with FROB-REF-104 at stage 2 instead of a High finding; nearest consistent matrix per N14a-13 (eigenvalues below 1e-6*tr raised). A-08 witness allocation fixed by rule (midpoint of the binding contact's feasible range): at b = 1/4 m the ++ force ranges over [150, 160] N, witness (155, 135, 105, 5) N, min-max worst foot 150 N (the old line implied a solver returns 155 N, which a min-max solve does not). Added box-slab and massless tests and two mutants."
+  },
+  {
+   "bead": "BD-101",
+   "kinds": [
+    "scope",
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Lattice cross-check removed from M1 scope: it is N13-28 (M3), which depends on this bead and owns the agreement rule (BD-101's 'return rank and switch off' contradicted N13-28's fail-closed rule). BD-101 now defines the lattice field (not-run at M1) and ships the rank method; N13-27 and BD-049 (finite-group lattices, not needed) moved to related; frontier label dropped; lattice acceptance line replaced; added the single-sample-point mutant."
+  },
+  {
+   "bead": "BD-106",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Added dep N12-43 (compendium D.3 oracles) and test growth_and_shift_match_compendium_d3, as requested by U12-2. Recomputed the sideways-shift numbers (0.1785 m, 0.5537 m at alpha 0.7227 rad): correct."
+  },
+  {
+   "bead": "BD-107",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Added dep N12-45 (compendium D.5 oracles) and test blocks_match_compendium_d5, as requested by U12-2."
+  },
+  {
+   "bead": "BD-108",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "Stage placement, order and binding now taken from N14bx-01's CHECK_ANALYSES and plan_check/stop_after/exit_for instead of a local DESIGN default (request from U14b); finding kinds renamed to N14bx-01's policy rows (A-20.source-unbound, A-21.late, A-22.unstable); revised stage-6 budget 755/875 ms added to acceptance; test that every emitted finding kind has a policy row. Later in the round: policy rows added for A-21.stale (Low), A-22.slow (Low) and A-23.tight (Info), which the executors N28a-08 to N28a-10 emit and N14bx-01 lacks (request recorded)."
+  },
+  {
+   "bead": "BD-110",
+   "kinds": [
+    "split",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "Split (graph bottleneck, 19 deps): the runner, policy file, aggregation, repair ranking, budgets, stage records and verb surface moved to new N28ap1-01 (which takes N14bx-01's plan_check/stop_after/exit_for, the U14b request); BD-110 stays the capstone with every seed dep, assembles the real analyses, measures GATE-ATEL-02 (M1) and GATE-SKEL-04, and now carries the A-13 hip-adduction leg (FROB-REF-123, request from U19a) and the A-03 assert_obs C2xC2 leg (FROB-REF-109) with stage 5 within 150 ms (request from U20b). Corpus reference corrected from superseded N28a-12 to N14b-18."
+  },
+  {
+   "bead": "BD-113",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its only e2e lived in M4 bead N28b-06; BD-113 now writes the M1 section of scripts/e2e/lineage_queries.sh (steps m1_edits, diff with patch round trip and branch diff, blame incl. rename, stale-parent and idempotent replay) with full STD-E2E logging, and depends on STD-E2E; acceptance line for the script added."
+  },
+  {
+   "bead": "BD-250",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Added dep BD-244 (stages 7 and 8), since the check score reads stages 7 and 8 where the corpus task binds a scene."
+  },
+  {
+   "bead": "BD-262",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Added the shared study-admission check of N24c-37 (exposure-table-untested refusal) to the plan step, acceptance and test study_refused_untested_on_device; N24c-37 moved from related to deps (request from U24c)."
+  },
+  {
+   "bead": "BD-310",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Mode rule completed to the ledger's full selective condition (calibration valid: n >= 19, martingale below 20); audited miss rate recorded not-measured in the pilot so a pilot selective is only an M4 default; mode_rule test extended."
+  },
+  {
+   "bead": "BD-329",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Added dep N12-48 (compendium D.8 oracles) and test conformal_index_matches_compendium_d8 (request from U12-2); graph finding: N28b-12, N28b-22, N28c-01, N33b-12, N33b-13 were reached through other deps and moved to related, with a paragraph saying so."
+  },
+  {
+   "bead": "BD-347",
+   "kinds": [
+    "correct"
+   ],
+   "what": "OPEN-ATEL-4 owner corrected to the Tether lead and its blocking point (verb registry freeze at M3) stated, per §28.24."
+  },
+  {
+   "bead": "BD-348",
+   "kinds": [
+    "split",
+    "deps",
+    "title",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "A-24 (cone program, separating dual witness, FROB-REF-448, analyze.wrench) moved to new N28ap1-02 so the cascade and the M4 verbs need not wait on A-25, A-26 and the KILL-ATLAS pilot; BD-348 is now the GATE-ATEL-05 (M4) capstone with an owner-bead column, a not-yet-due rule, the KILL-ATLAS branch recorded on the A-26 row, the stage-6 875 ms budget, its own unit tests and full NDJSON logging; deps BD-115 and N15b-40 moved to related, N28ap1-02 and STD-E2E added."
+  },
+  {
+   "bead": "BD-349",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Adoption rule aligned with the kill decisions N28b-20 and N28c-17: shadow to canary needs the read shadow comparison and (Frontier) the kill gate not fired; canary to default needs the GATE-ATEL-13 row; fallback-only also on a calibration failing after one repair cycle; DC-05 keeps its stop rule under KILL-VOI. EVSI test value corrected 0.00547 to 0.00550 (recomputed 0.0054965). Acceptance added for complete core records (replay scenario, calibration report, demonstration manifest under 60 s with claim_ids)."
+  },
+  {
+   "bead": "BD-351",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "EVSI test value corrected 0.00547 to 0.00550; atelier_suggest.sh given the NDJSON path and the standard fields."
+  },
+  {
+   "bead": "BD-352",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Graph finding (25 deps, bottleneck): 16 transitive deps moved to related (each verified reachable through BD-335, BD-345, BD-351 or N28b-27) with a paragraph; BD-348 replaced by N28ap1-02 (A-24 only) and BD-346, so the cascade no longer waits on A-25, A-26 and the KILL-ATLAS pilot. NS-06 acceptance turned into a citation of the NS-06 scenario bead (which owns ns_06.sh and does not use the cascade), so dependents of the cascade no longer wait on the one-hour demonstration. Standard log fields added to the e2e description."
+  },
+  {
+   "bead": "N28-KA",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KA-690 owner pointed to N28ap1-02 (A-24 split); e2e log fields completed. All arithmetic rows recomputed (0.04573, index 38, 86,185, 500,500, 92, 2,000.6 s, 620.9 s, 86/98, f32 regrouping, 0.0950/0.0495): correct."
+  },
+  {
+   "bead": "N28a-01",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "ADR-ATEL-05 given the plan's sentence that reuse needs a dependency or implication argument, recorded and checkable (enforced by BD-292, BD-347); unit-test file paths and verb_has_one_owner test added; e2e log fields completed."
+  },
+  {
+   "bead": "N28a-02",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Depends on the design.check runner N28ap1-01 (which writes the stage records) instead of the assembled BD-110, so the loop-order rule proceeds in parallel with the analyses; stage record schema aligned with N28ap1-01; rule for reading the loop stage check from preflight stage records (DESIGN) and test check_verdict_aggregation; CLI acceptance on planted records, real refusals in N28a-29; log fields completed."
+  },
+  {
+   "bead": "N28a-03",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Unit-test file path added; the phases step of atelier_check.sh given the STD-E2E fields, the 2% closure values and failure output."
+  },
+  {
+   "bead": "N28a-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Stance numbers aligned with BD-100's witness rule (155 N is the midpoint witness; the least worst-foot load is 150 N); e2e step given full log fields and pointed at N28a-07's 551 leg."
+  },
+  {
+   "bead": "N28a-05",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance and tests required the M1 analyses, but A-13 (BD-104) and other analysis beads depend on this bead: an ordering deadlock. Acceptance and unit tests now run on toy analyses and on whatever is registered when it lands; the real verbs are checked by each analysis bead and by N28a-29. Test file path and log fields added."
+  },
+  {
+   "bead": "N28a-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Recomputed the battery exactly (2,254 feasible, 114 covering, 1,596 screen errors, the first counterexample, the [150, 160] N range): correct; witness rule of BD-100 cited; NDJSON path and fields added."
+  },
+  {
+   "bead": "N28a-07",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Mass taken from the compiled model (the number A-02 reports) instead of 'mass by A-02', which named a missing dependency; the unbound-source refusal tied to the policy row A-20.source-unbound; numbers recomputed (0.94176 J, 0.471 J, 0.378 J, 9.4176 W, 0.36 J): correct; log fields added."
+  },
+  {
+   "bead": "N28a-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Finding codes tied to the policy rows A-21.late and A-21.stale (the latter was missing from N14bx-01 and BD-108); clock and latency arithmetic recomputed (Q = 1/1,200 s, ages 0/4/8, worst age 20 units with latency 9): correct; log fields added."
+  },
+  {
+   "bead": "N28a-09",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Recomputed every number (1.4820, 0.9207, 2.6917, 2.7075, explicit-Euler 1.854/1.497, slider radii and the 64/1/15/64 case counts): correct. Finding kinds tied to policy rows (A-22.slow was missing); log fields added."
+  },
+  {
+   "bead": "N28a-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "A-23.tight tied to a policy row (missing from N14bx-01 and BD-108); counts checked (2, 0, 6, 6); log fields added."
+  },
+  {
+   "bead": "N28a-11",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Majority and drawbar arithmetic recomputed (3807/4096, 27/32, 459/512; 3.33, 6.67, 4, 8 N): correct; log fields added."
+  },
+  {
+   "bead": "N28a-13",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "E2E steps placed in the M4 section of atelier_check.sh with full log fields and a decision-partition leg; arithmetic checked."
+  },
+  {
+   "bead": "N28a-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Training count corrected: 24 perturbed designs on two tasks is 48 specialist trainings, not 24; skill arithmetic checked (0.82, 0.34, 0.48; 0.3); NDJSON path and fields added."
+  },
+  {
+   "bead": "N28a-15",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance no longer requires running the analysis that depends on this decision (checks the registered schema instead); test file path and a decision-before-pilot test added; log fields added."
+  },
+  {
+   "bead": "N28a-16",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Regime key unified with N28a-17's canonical contact signature (the two beads defined it differently); dep N28a-17 added (M3 before M4, no cycle); --estimate added to the verb signature; e2e placed in the M4 section with full log fields."
+  },
+  {
+   "bead": "N28a-17",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Defines the canonical regime::contact_signature that A-26 reuses; test file path and log fields (with private-scene redaction) added."
+  },
+  {
+   "bead": "N28a-18",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Pairing rules and refusals checked against §28.13; NDJSON path and standard fields added to its e2e step."
+  },
+  {
+   "bead": "N28a-19",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Fixed-n enumeration recomputed (n=64: 521/521/0/1103; n=86: 1031/1031/1/1765; least b 15, 17, 19, 21, 23; first reachable ties at n = 86, 99, 178, 328; [0.0554, 0.4392]): correct; log fields added."
+  },
+  {
+   "bead": "N28a-20",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Binomial(512, 0.05) 0.99 quantile 38 and the e-BH examples (k* = 1, k* = 3) recomputed: correct; log fields added."
+  },
+  {
+   "bead": "N28a-21",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Disposition arithmetic recomputed: correct; NDJSON path and fields added."
+  },
+  {
+   "bead": "N28a-22",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Unit-test files named (kill_static.rs, policy_switch.rs); kill_static_record.sh given its NDJSON path and the standard fields with the five inputs against thresholds."
+  },
+  {
+   "bead": "N28a-23",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Added dep N25ap1-01 (request from U25a): the dry run takes purity from the polarity-rule registry's pure-change check wherever a registered rule covers the row (one definition of purity), by hand only for uncovered rows, marked by-hand; reuse_pilot.sh given NDJSON path and fields."
+  },
+  {
+   "bead": "N28a-27",
+   "kinds": [
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The bead claimed to produce the GATE-ATEL-13 rows for DC-04 and DC-06, which N28c-10 measures and writes (N28c-10 reaches it through BD-349): scope and acceptance now say this bead builds the regeneration job, calibration runs and forced-trigger commands, and N28c-10 writes the rows; related gains BD-349 and N28c-10; e2e log fields completed. The gate run named as phases of scripts/e2e/decision_cores_m4.sh (the M4 row beads' script), not atelier_cores.sh."
+  },
+  {
+   "bead": "N28a-28",
+   "kinds": [
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Same double ownership as N28a-27: the rows of DC-07, DC-08 and DC-11 are measured by N28c-09 and N28c-11; this bead now builds what they measure with; related gains BD-349, N28a-27, N28c-09, N28c-11; e2e log fields completed (DC-08 bounds 0.025/0.0445/0.1225 rechecked). The gate run named as phases of scripts/e2e/decision_cores_m4.sh (the M4 row beads' script), not atelier_cores.sh."
+  },
+  {
+   "bead": "N28a-29",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Script given --section m1|m3|m4 (used by N28ap1-02, N28a-13, N28a-16 and BD-348) with not-yet-due logging; carries the A-13 (FROB-REF-123) and A-03 (FROB-REF-109) legs BD-110 assembles and N28ap1-01's runner-option steps; step 1 uses frob capabilities (there is no analyze --list); GATE-SKEL-04 corpus named as N14b-18 and GATE-ATEL-02 thresholds stated; two self-test regressions and a section acceptance line added."
+  },
+  {
+   "bead": "N28a-33",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Re-opening under `uninformative` stated as this layer does it (designs marked reopened in the bracket ledger and offered to the audit lane N26b-01, which depends on this bead); replay_from_ledger test added; its e2e step named (fixed_table of N28b-28's script, the sibling ladder beads' convention, since the ladder has no verb before opt.cascade) with full log fields. Halving and cost arithmetic (27/9/3; 40.5 h; 6.1 h) rechecked: correct."
+  },
+  {
+   "bead": "N28a-34",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Last acceptance line pointed at a dependent (the gate row); now checks that every DC-08 trigger can be forced from the CLI and writes its record, the row being N28c-11's; e2e uses a scratch three-profile registry (the shipped one may hold the default alone) and an unregistered-name refusal; gate script named (decision_cores_m4.sh, phase dc-08); related gains N28a-28 and N28c-11."
+  },
+  {
+   "bead": "N28ax-01",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "Stance acceptance said the worst foot needs 155 N; per BD-100's witness rule the least worst-foot load is 150 N and 155 N is the midpoint witness: corrected, with a stance_dual_and_witness test; the envelope kernel's thermal fixed-point margin (not compared by N25b-08) given its second route and a test; STD-E2E added (the bead has an e2e script). Energy, mass and reach box arithmetic rechecked: correct."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N28ap1-01",
+   "why": "split from BD-110: the design.check stage runner and verb (policy file, aggregation, repair ranking, budgets with undecided, stage records, envelope, cancellation) need no analysis to exist and can proceed in parallel with the seven analysis beads; BD-110 keeps the gate measurements and depends on it"
+  },
+  {
+   "bead": "N28ap1-02",
+   "why": "split from BD-348: A-24 task-wrench attainability (cone program over the shared solver, exact dual certificate, FROB-REF-448 at stage 6, analyze.wrench) is needed by the cascade's stage 3 and the M4 verbs but not the regime atlas; BD-348 keeps the GATE-ATEL-05 capstone and depends on it"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14bx-01",
+   "what": "add policy rows A-21.stale (Low, reported), A-22.slow (Low, reported) and A-23.tight (Info, reported): the executors N28a-08 to N28a-10 emit these kinds and BD-108 now lists them, but the policy table lacks them"
+  },
+  {
+   "bead": "N14b-10",
+   "what": "say that the design.check stage runner is N28ap1-01 (split from BD-110 in round 1), not BD-110"
+  },
+  {
+   "bead": "N13-28",
+   "what": "BD-101 now defines the lattice cross-check field (not-run at M1) and leaves the agreement rule to N13-28; cite BD-101's field name and fill it rather than adding a second field"
+  },
+  {
+   "bead": "BD-137",
+   "what": "the design.check verb surface (schema, refusal list, envelope) is now N28ap1-01, split from BD-110 in round 1: cite N28ap1-01 as the owner of the check row; the dep on BD-110 can stay for the assembled refusal list"
+  },
+  {
+   "bead": "BD-376",
+   "what": "its row cites BD-348 for the verbs of A-24, A-25 and A-26; their owners are now N28ap1-02 (A-24, analyze.wrench), N28a-13 (A-25) and N28a-16 (A-26), all reached through BD-348: cite them in the row; the dep on BD-348 stays"
+  },
+  {
+   "bead": "N25e-14",
+   "what": "uses A-24 (with A-20) for the certified upper end: depend on N28ap1-02 (A-24, split from BD-348) instead of BD-348, so the bracket does not wait on A-25, A-26 and the KILL-ATLAS pilot"
+  },
+  {
+   "bead": "N24a-30",
+   "what": "depends on BD-348 but the body uses none of A-24 to A-26: if the dep is for the task-wrench check, depend on N28ap1-02 (A-24, split from BD-348) instead; otherwise move BD-348 to related"
+  },
+  {
+   "bead": "N28c-13",
+   "what": "its A-25 gate cites 'A-25 (BD-348)', but A-25 is N28a-13: depend on N28a-13 instead of BD-348 (BD-348 is now the GATE-ATEL-05 capstone and waits on the KILL-ATLAS pilot)"
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 47 beads reviewed (BD-343 and N28a-30 unchanged). Two splits (N28ap1-01 runner from BD-110; N28ap1-02 A-24 from BD-348) relieve the graph bottlenecks; three ordering deadlocks removed (N28a-05, N28a-15, BD-352/NS-06). For the lead: some beads' done-conditions still name a gate whose row a dependent measures (BD-352/GATE-ATEL-16 via N28b-28; BD-349/GATE-ATEL-13 via N28c-08 to N28c-11; the core beads N28a-27/28/34 now say so explicitly); the ladder beads (N28a-33, N28b-12/22/23) have their e2e only as steps of N28b-28's script, which runs after opt.cascade lands."
+}

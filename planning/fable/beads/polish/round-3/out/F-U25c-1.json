@@ -1,0 +1,235 @@
+{
+ "round": 3,
+ "slice": "F-U25c-1",
+ "reviewed": 26,
+ "changed": [
+  {
+   "bead": "BD-129",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "Own script `scripts/e2e/mission_docking_game.sh` (drift 7/11: the e2e section named N25c-22's script, which depends on this bead; `mission.synthesize` is BD-135's and BD-135 depends on this bead, so the script uses `frob mission check` (BD-126, a dependency) plus the cargo test target `docking_family` and a new example `docking_family` (--grid, --point) that prints counts, proof kinds and the 561-label BLAKE3 digest compared with N20b-13's committed vector). Dep STD-E2E. The mission files docking.fmission and docking-late.fmission are written and admitted here (the scope already held 'the docking mission as an admitted .fmission'). The gate acceptance line now says GATE-AUGUR-03 is measured and recorded by N25c-22 and this bead closes on its own tests and script."
+  },
+  {
+   "bead": "BD-291",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Stale sentence that 854 is 'not yet in the verb's row, requested' replaced (VERBS-mission lists 854 from M3 for BD-291; N25-REF names it). Surface carries `--key` (run verb, drift 5). The smallest-radius tie-break that the unit test and script assert could not be selected through the verb: added the query field `candidates.tie_break` = largest-gap (default) | smallest:<parameter> (DESIGN; a field of the document, so no new option of the row; it changes the MissionId and the answer records the rule)."
+  },
+  {
+   "bead": "BD-359",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Request F-U12-1 applied in part: dep CARD-T-32 (moved from related; no cycle), acceptance runs `cargo test -p frob-lemma --test cards -- t32`, new unit test `card_t32_live_cells` checks this bead's per-cell product-unreachable proof objects against the card's checks (a)-(d) through N12-17 in process and (e) on the answer; that receipt moves the card's live-output row. The frob-verify re-check of written per-cell bundles is not applied here: the writer is BD-364, which depends on BD-359 (drift 7); requested of BD-364. Own script `scripts/e2e/mission_dominance_core.sh` (drift 11; the e2e section named N25c-26's script) with keys, both directions, --paired-plan and the retuned-controller refusal; dep STD-E2E. The retuned-controller refusal had no code: now FROB-REF-881 (the comparison binds no policy; a per-body controller is an existential, a different prefix), with unit test. Stale 'requested of VERBS-mission' wording for --baseline/--baseline-policy/--paired-plan and the 'routing to be confirmed' consideration updated to the registered row."
+  },
+  {
+   "bead": "BD-363",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Own script `scripts/e2e/mission_labels_core.sh` (drift 11; the e2e section named N25c-38's script, which depends on this bead): cargo tests, keyed synthesize on the three-variant, triangle (capability-dependent branch), empty-variant, inner/outer and both work-limit instances, bundle and verify of the lp-only answer. Deps BD-133 (explicit, for prove verbs) and STD-E2E."
+  },
+  {
+   "bead": "N25c-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "'one of the six verbs' corrected to nine (VERBS-mission). Stale 'requested' wording for --lowering removed (registered). Dynamic-relation request spelled `--relation compute`, FROB-REF-724 exit 5, as the row registers. Bundle mutations re-checked by `frob prove verify` now expect the Lemma column of BD-133's mapping (829 for port-order and omitted cone rows; rule-named rejection for the flipped dual and screw-Jacobian rows), while the verb's admission keeps 847/850/851 through e2e_expect_refusal. `frob sim replay` uses the row's --run/--world/--episode/--from form; prove verify names the bundle file."
+  },
+  {
+   "bead": "N25c-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Stale paragraph saying `--relation compute` and `--relation <file>` are requested of VERBS-mission replaced: the mission.transport row registers both (724 until this bead enables it at M8)."
+  },
+  {
+   "bead": "N25c-04",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Request H-owners-2 applied: step 0 files N44-01's reserved row R22 before the first run above E0 (arms 1 and 2, class covering the registered budget, gate:GATE-AUGUR-23); declined or unanswered means arms 1 and 2 `not run` with the envelope reason, gate `not-run`, never pass, interface map not claimed; acceptance line and unit test `r22_declined_is_not_run` added; consideration updated. Drift 9: the script no longer runs record_gate; the gauntlet test writes the receipt and the recording session enters the row with record_gate (dep N38b-19)."
+  },
+  {
+   "bead": "N25c-05",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Missing handling of a declined R22 added: clause A not evaluated, clause B still evaluated on arm 3's static query, outcome `fired` (B) or `not-reached`, never `not-fired`; gate stays `not-run`; a later approval is a new entry. Decision entry now carries `receipts` (N40-03 required field). Two unit tests and an acceptance line added. Stale 'spelled as requested of VERBS-mission' replaced; the parked refusal checked with e2e_expect_refusal, exit 5."
+  },
+  {
+   "bead": "N25c-06",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its script calls `frob mission revalidate`, whose verb is N25a-16 (M3): dep added (drift 8; no cycle)."
+  },
+  {
+   "bead": "N25c-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request H-verbs-3 applied: synopsis `--placement <auto | one-card | two-shards | host>` as VERBS-mission registers."
+  },
+  {
+   "bead": "N25c-10",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Script called `frob mission synthesize` without --key and `frob prove verify` with no bundle step, and the bead did not depend on BD-135 (the verb) or BD-133 (prove verbs): deps added (no cycle); distinct keys for the compared answers; `frob prove bundle` then verify, and the hull certificate rejected with 829 on verify."
+  },
+  {
+   "bead": "N25c-11",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script's synthesize calls carry distinct keys (the answers are compared); `frob mission show` uses the row's form (mission positional, --answer, --set); `frob prove bundle` added before verify."
+  },
+  {
+   "bead": "N25c-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob task fixture stance-grid` now carries --layer analytic and --key (run verb); the envelope class is Tested (VERBS-task: known-answer evidence is Tested; Certified belongs to the grid's proof objects). Drift 9: the bead no longer 'has a recorded value' of GATE-AUGUR-02 itself; its test receipt is what N25a-21, the gate's one recorder, records from; the script runs the stance_grid test target first."
+  },
+  {
+   "bead": "N25c-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The two tie-break runs of pad-vpc shared one key and had no way to select the tie-break: now pad-vpc.fmission (default largest-gap, r = 3) and pad-vpc-smallest.fmission (`candidates.tie_break = \"smallest:radius\"`, BD-291's field, r = 2) with distinct keys."
+  },
+  {
+   "bead": "N25c-14",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Stale 'code not yet in mission.synthesize's row, requested' replaced (the row and N25-REF list N25c-14 among 854's raisers). Surface synthesize and refute calls carry --key."
+  },
+  {
+   "bead": "N25c-16",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Kill decision brought to N40-03's form: entry `decision = { outcome, adr, date, session, receipts }` with not-fired | fired | not-reached (an un-run experiment is not-reached, never not-fired), propagation detail on fired, in place of 'pass' / 'killed: fallback adopted'. The M4 clause-C firing re-opens by a new ADR `docs/adr/ADR-KILL-AUGUR-PROBE-M4.md` and a new entry (N40-26's note on this gate; N40-03: entries never edited), not an append to the M3 ADR. Unit tests renamed/added (`not_run_is_not_reached`, `clause_c_stays_armed`, `outcome_vocabulary`) with their file; the script validates the entry."
+  },
+  {
+   "bead": "N25c-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script ran `frob prove verify` with no bundle: `frob prove bundle a:… --out … --key …` added before verify on the named bundle file."
+  },
+  {
+   "bead": "N25c-18",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests"
+   ],
+   "what": "Request S77 (gpu_s) was already applied in the bead (`--budget gpu_s=600`); nothing to change for it. Own script `scripts/e2e/experiment_suggest_augur.sh` (drift 7/11: its e2e was a phase of N28c-16's script, which depends on this bead), keyed run verbs, digests before/after; N28c-16 asked to run it as its `augur` stage. Tie-break selection spelled as BD-291's query field. Consideration corrected: this bead depends on BD-351 (through N28c-13), not the reverse. Unit-test file named."
+  },
+  {
+   "bead": "N25c-20",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "The bead implements `--lowering scenario-tree` on BD-135's verb but did not depend on BD-135: dep added (no cycle), with STD-E2E. Own script `scripts/e2e/mission_docking_lowerings.sh` (drift 11) with distinct keys for cold and warm runs of both lowerings, the late mission, bundles and verify (its e2e section named N25c-22's script, and its synthesize call had no key). Acceptance names the option and the script."
+  },
+  {
+   "bead": "N25c-21",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Own script `scripts/e2e/mission_docking_amendment.sh` (drift 11): keyed calls, the amended answer and 1/65 m, revalidate and re-solve withdrawals, the 854 refusal with pointer and repair order, running the first repair, the matching-record control, the three single-field mutations, bundles and verify. Dep STD-E2E. Surface synthesize call carries --key."
+  },
+  {
+   "bead": "N25c-22",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "Request S32 applied: step 2 compares the 561 labels with N20b-13's committed vector (e2e_assert_digest_eq, both BLAKE3 digests logged, first differing (i, j) on mismatch); dep N20b-13 explicit. Request H-verbs-3 applied: step 3 is `frob mission show docking.fmission --answer a:… --set inner --limit 50` following --cursor; every run-verb call carries a distinct key (idempotency-keys paragraph for steps 2 to 10). Drift 9: step 12 no longer writes the gate row from the script; the receipt is recorded by the recording session with record_gate (dep N38b-19). Step 0 runs the new own scripts of N25c-20 and N25c-21 as stages. Fixture list marks docking.fmission and docking-late.fmission as BD-129's."
+  },
+  {
+   "bead": "N25c-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Script used `frob mission refute … --design <cell>` (the row's cell scope is --cell) and `frob sense alias <design> --task <task>` for missions on declared abstractions (the row's form is `--mission <file>` with no positional): both corrected (drift 8)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-result",
+   "what": "`result.revalidate`'s row (and its inputs_by_row test) admits only --after-edit, --since, --between, --amendment, but N25a-13 (the M1 engine's call form), N25-REF's FROB-REF-854 row (the ready command of the first repair before M3), N25d-31, N25d-32, N25c-21 and N25c-22 all use `frob result revalidate a:… --against q:…`, and VERBS-mission gives `mission.revalidate` `--against q:…` over the same engine. Please add `--against q:…` (an amended query, for a mission-answer target) as a fifth change form; otherwise the 854 repair rendered in an M1 build is refused with 802. If the row is to stay, N25-REF's 854 row and N25a-13 must change the ready command, and N25c-21/N25c-22 will follow."
+  },
+  {
+   "bead": "BD-364",
+   "what": "CARD-T-32's order of work says per-cell product-unreachable certificates of a product system BD-359 builds are checked with the card's law tests inside the implementing bead. BD-359 now does the in-process half (card_t32_live_cells, `cargo test -p frob-lemma --test cards -- t32`), but it cannot check written bundles: you are the writer and depend on BD-359. Please add dep CARD-T-32 and an acceptance line: the per-cell `product-unreachable` bundles of one product system built by BD-359 (the scalar z fixture) pass `frob-verify` against the card's checks (a)-(e), with that receipt cited for the card's live-output row."
+  },
+  {
+   "bead": "N25-REF",
+   "what": "BD-359 now refuses a controller retuned or trained per body, offered to the fixed-controller comparison of `mission.refute --baseline`, with FROB-REF-881 (the comparison's prefix binds no policy; a per-body controller is an existential over policies). Please list BD-359 (M4) among 881's raisers."
+  },
+  {
+   "bead": "N25d-41",
+   "what": "Gate register carriers: name the recorder as for GATE-AUGUR-03: GATE-AUGUR-16 'BD-359; recorded by N25c-26'; GATE-AUGUR-19 'BD-363; recorded by N25c-38'; GATE-AUGUR-23 'N25c-02; recorded by N25c-04' (BD-436 is an epic and records nothing; N25c-04 runs the measurement and now files R22)."
+  },
+  {
+   "bead": "N25e-41",
+   "what": "Step 10 has the recording session append the clause C reading to N25c-16's KILL-AUGUR-PROBE ADR. Per N40-03 (entries and ADRs never edited) and N40-26's note on this gate, an accepted bundle re-opens the decision by a new ADR `docs/adr/ADR-KILL-AUGUR-PROBE-M4.md` and a new decision entry (exit M4, outcome fired) written by a session that did not run the measurement; N25c-16 now states that rule. Please replace 'appends … to N25c-16's ADR' accordingly (a clean battery adds nothing to the M3 entry)."
+  },
+  {
+   "bead": "N28c-16",
+   "what": "N25c-18 now owns `scripts/e2e/experiment_suggest_augur.sh` (drift 7/11: it could not close on a phase of your script, which depends on it). Please run that script as your `augur` stage instead of holding the phase's steps."
+  },
+  {
+   "bead": "N25c-26",
+   "what": "BD-359 now owns `scripts/e2e/mission_dominance_core.sh` (z fixture both ways, --paired-plan, 881 refusal, the CARD-T-32 receipt); you may run it as a stage. Also step 9 has the script write the gate row 'through record_gate': per drift 9 the script writes the receipt and the recording session runs `cargo run -p frob-conformance --example record_gate -- --gate GATE-AUGUR-16 --receipt <hash>`."
+  },
+  {
+   "bead": "N25c-38",
+   "what": "BD-363 now owns `scripts/e2e/mission_labels_core.sh`; you may run it as a stage. If your step that runs record_gate sits inside the script, move it to the recording session (drift 9), as N25c-22 and N25c-04 now do."
+  },
+  {
+   "bead": "N25a-21",
+   "what": "Step 11 'Write the gate record for GATE-AUGUR-02' is done by the script; per drift 9 the script writes its receipt and the recording session enters the row with record_gate (N38b-19). N25c-12 now states that its stance_grid receipt is what you record the grid clause from."
+  },
+  {
+   "bead": "N20b-13",
+   "what": "Your script's guarded leg says the label comparison through `frob mission synthesize docking.fmission --key … --json` 'is the one BD-129's script uses' and 'is asserted by BD-129's own script'. BD-129 cannot call that verb (BD-135 depends on BD-129): BD-129's own script now compares the digest through its example `docking_family`, and the public-verb comparison is step 2 of N25c-22's gate script. Please name N25c-22 for the verb leg."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Unchanged: N25c-01, N25c-07, N25c-08, N25c-15. Requests addressed to the slice: BD-359 (F-U12-1) applied in part, the frob-verify-on-written-bundles half moved to BD-364 because the writer depends on BD-359; N25c-04 (H-owners-2) applied; N25c-09 (H-verbs-3) applied; N25c-18 (S77, gpu_s) found already applied; N25c-22 (S32 and H-verbs-3) applied. Main pattern fixed: mechanism beads whose e2e section pointed at a later bead's script (drift 7/11) now own scripts built on their own deps (BD-129 through cargo and mission.check because of seed order; BD-359, BD-363, N25c-18, N25c-20, N25c-21 through the verbs), and the later gate scripts run them as stages. Open cross-registry conflict: result.revalidate --against (request to VERBS-result); N25c-21/N25c-22 keep N25-REF's registered repair form until it is settled. Graph after edits: 0 cycles; all edited front matter parses."
+}

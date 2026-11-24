@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-02", "BD-054", "BD-055", "BD-056", "BD-100", "BD-082", "BD-102"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-082", "BD-100", "BD-102", "N14b-02", "NEG-30", "NEG-31"]
 needs: []
-related: ["ROBOT-cassie", "N14b-09", "GB-27", "BD-246", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 5", "§14.10", "§28.4 A-08", "§16 (impact events)", "Appendix M KA-270"]
 ---
@@ -43,19 +43,19 @@ one-sided payload → trivial group.
 
 | Stage | Status | Must report |
 |---|---|---|
-| 1 Form | pass | 7 fills; 2 point feet whose torsion radius is zero and not above the foot's own contact radius |
-| 2 Mass | pass | Two equal leg subtrees |
-| 3 Mechanism | pass | 6 revolute joints, no loops, tree mobility 12 |
-| 4 Motion | not-applicable | Legged |
-| 5 Structure | pass | Γ_mech = Γ_obs = C₂ |
-| 6 Statics and sizing | finding, not refused | "no static stability": the support set is a segment; the margin is reported as the distance from the projected centre of mass to the segment and is zero or negative in area terms; double-support degrees of underactuation = 1; envelope, thermal and bus rows at the standing point pass |
+| 1 Form | `passed` | 7 fills; 2 point feet whose torsion radius is zero and not above the foot's own contact radius |
+| 2 Mass | `passed` | Two equal leg subtrees |
+| 3 Mechanism | `passed` | 6 revolute joints, no loops, tree mobility 12 |
+| 4 Motion | `passed` with the note `not-applicable` | Legged (the stage-4 rule for a legged base, N14b-11) |
+| 5 Structure | `passed` | Γ_mech = Γ_obs = C₂ |
+| 6 Statics and sizing | `passed` with `findings = ["A-08.no-static-stability"]` (severity Info, exit 2; not refused) | "no static stability": the support set is a segment; the margin is reported as the distance from the projected centre of mass to the segment and is zero or negative in area terms; double-support degrees of underactuation = 1; envelope, thermal and bus rows at the standing point pass |
 
 **Known answers.**
 
 | Name | Value | Tolerance |
 |---|---|---|
 | Γ_mech | C₂ | exact |
-| Stage-6 outcome with no task | status `finding` with code-free text "no static stability"; no refusal | exact (verdict) |
+| Stage-6 outcome with no task | status `passed` with the finding `A-08.no-static-stability` (BD-100's identifier, severity Info, exit 2, never 3); no refusal | exact (verdict) |
 | Stage-6 outcome with a task that requires a static margin | refused with FROB-REF-124 (a static margin the task requires is not met) | exact (verdict) |
 | Support set | a segment of length equal to the foot separation; area 0 | exact |
 | Contact strata, two feet × {open, stick, slip} under C₂ | (3² + 3)/2 = 6 | count |
@@ -70,8 +70,8 @@ impact resolution leaves a normal velocity at the stance foot: caught by the pos
 ## Acceptance criteria
 
 - [ ] The zoo instance equals the template default; `DesignId` pinned and platform-independent.
-- [ ] Stage 6 returns a finding and no refusal at defaults, and FROB-REF-124 when a task requires a static
-      margin.
+- [ ] Stage 6 returns `passed` with the finding `A-08.no-static-stability` and no refusal at defaults (exit
+      2), and FROB-REF-124 when a task requires a static margin.
 - [ ] Every known-answer row passes; the three controls behave as stated.
 
 ## Test plan
@@ -88,7 +88,7 @@ impact resolution leaves a normal velocity at the stance foot: caught by the pos
 
 `scripts/e2e/zoo_goldens.sh` (NEG-31) at M3: stages 1 to 6 with and without a `synthetic` task that requires a
 static margin; the torsion-foot variant; a 2 s referee run from a tilted start to count impact events; log
-lines carry the stage-6 finding text, the refusal code in the task case and the event count.
+lines carry the stage-6 status and finding identifier, the refusal code in the task case and the event count.
 
 ### Known answers and negative controls
 

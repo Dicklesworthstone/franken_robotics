@@ -6,9 +6,9 @@ priority: 4
 milestone: "M6"
 labels: ["m6", "suite", "habitat", "upstream", "frankensim", "moonshot"]
 parent: "WP-73"
-deps: ["BD-037", "BD-231", "NF-01", "STD-E2E"]
-needs: ["§19.10.7: the proxy-adequacy pilot and its gate GATE-HAB-09, and the decision KILL-LIVING, which must not have fired for this item to be worked"]
-related: ["BD-415", "BD-416", "BD-413", "FD-FTX-01"]
+deps: ["BD-037", "BD-231", "N19b-20", "N33b-04", "STD-E2E"]
+needs: []
+related: ["FD-FTX-01", "N14b-05", "N33b-16"]
 gates: ["GATE-HAB-09"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§19.10.6", "§19.10.7", "§19.10.5", "§33.9", "§33.15"]
 ---
@@ -106,12 +106,15 @@ decides).
 **Fallback if the change cannot land, and the kill gate.** KILL-LIVING: trigger: the proxies reproduce 90% or
 more of the full-model failures, or an island costs more than 181 rigid worlds at 5% activity with no route to
 less. Fallback, named in advance: the Solid tier and the Frontier proxies are the product; coupled islands are
-not built beyond the oracle fixtures that already exist in the siblings. If KILL-LIVING fires, this item is
-closed as not needed.
+not built beyond the oracle fixtures that already exist in the siblings. KILL-LIVING is decided per island kind
+(N19b-20: one `decision` entry per kind, outcomes in N40-03's four names, ADR `docs/adr/ADR-KILL-LIVING-M6.md`).
+The rod half of this item needs `not-fired` for `kind:rod`, the cloth half `not-fired` for `kind:cloth`; a half
+whose kind is `fired` or `not-reached` is not started, and if both are, this item is closed `superseded` citing
+that ADR (the row in `registries/upstream.toml` keeps its number, as every withdrawn upstream item does).
 
 ## Acceptance criteria
 
-- [ ] KILL-LIVING has been decided and did not fire, and its record is cited, before any work starts in FrankenSim.
+- [ ] KILL-LIVING has been decided with the outcome `not-fired` for the island kind of each half started (`kind:rod`, `kind:cloth`), and `docs/adr/ADR-KILL-LIVING-M6.md` is cited, before any work starts in FrankenSim.
 - [ ] In FrankenSim: the dynamic rod passes the known answers below and closes its energy ledger to its stated residual over 10⁵ steps; the static rod's tests are unchanged.
 - [ ] In FrankenSim: the cloth's batched entry gives, for each instance, results bit-identical to the same instance advanced alone.
 - [ ] Here: the airlock exposes both as evaluation-tier owners; a result that used them is labelled evaluation tier and is refused in a throughput claim (INV-SUITE-05).
@@ -139,7 +142,11 @@ section shows this item with its status); `cargo test -p frob-conformance --test
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also drives the pilot's cord and rug scenes with the island attached
-(`frob sim run --tier referee` on the finalist fixture) and logs the reproduced-failure share against 0.90.
+(`frob sim run <robot design> --scene <cord or rug scene> --tier referee --worlds 1 --seconds <episode length>
+--seed <s> --key fdfsim22-<scene>-<robot>-<s> --json`: the pilot's wheeled or legged robot as the positional
+design, which is the one spelling that admits `--scene`, a registered fixture being `--fixture <name>` with its
+own scene; one distinct key per scene, robot and seed) and logs the
+reproduced-failure share against 0.90, beside the incumbent-instrument share.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_22/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

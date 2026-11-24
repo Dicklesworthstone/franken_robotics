@@ -1,0 +1,130 @@
+{
+ "round": 4,
+ "slice": "F-U13",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "BD-011",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Mechanical finding C9 confirmed: the script 'then writes the gate row'. If it stayed, the M0 part would be written by the script, which the recorder's rules forbid (one writer, no self-certification), or the part would never get a receipt. Now the script runs the gate as the g0_laws tier run with gauntlet-mutations, prints the receipt hash and writes no row; the M0 part is recorded with record_gate --gate GATE-MARROW-01 --part M0 by a non-implementing session (N40-02 names BD-011 as the M0 part's recorder). The acceptance line now says the record cites the T-01/T-03/T-04 certificates only when BD-021 has issued them, as Order of work already states. Before, it demanded them unconditionally, so the bead could not close before BD-021, which it cannot depend on (seed order). Added dep N38b-19 (the record_gate recorder, M0, no cycle): without it the recorder the acceptance needs is not among the bead's prerequisites."
+  },
+  {
+   "bead": "BD-047",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request of H-cx-1 applied after checking N13-CX and N11-CX. The lower-rows shortcut is now named as plant BD-047:cx-117 (Cargo feature cx-117 of frob-lie, only under gauntlet-mutations), caught by planar_2r_lower_rows_shortcut_is_wrong with (0, 0) in place of (-3, -3). The twist-map mutant is named as plant BD-047:cx-099. Both unit tests now say they fail under their feature. Without the names, the controls seeded from CX-117, CX-099 and KA-228 would point at features nobody declares and stay stale."
+  },
+  {
+   "bead": "BD-182",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Took over two clauses from N13-31's acceptance that waited on this bead's measurement. The GATE-MARROW-05 receipt and record now name the limb width measured and cite docs/adr/ADR-OPEN-MARROW-3.md. After the battery run, BD-182 annotates that ADR with the measured rate and reopens the question by a dated amendment if the rate contradicts the decision's premise. Without this, nobody could do these after N13-31 closes, and N13-31 could not close at all."
+  },
+  {
+   "bead": "N13-04",
+   "kinds": [
+    "request",
+    "deadlock",
+    "convention"
+   ],
+   "what": "Request of F-U28a applied after checking BD-100 and BD-110. BD-100 (A-02) wraps this verdict as A-02.<body>.solid-fill and depends on this bead, so `frob design check` cannot raise 168 before BD-100 exists, and the old acceptance and script could never pass. The design-check leg (torso 22.68 kg against 3.5 kg, 168 at stage 2, exit 3) is now stated as BD-110's, which carries it. The acceptance now checks the frob-model verdict. design_solid_plausibility.sh is now verb-free: it runs the inertia_conventions and plausibility tests and keeps the same STD-E2E logging. The technical approach says how the verdict reaches stage 2. Also convention 13: 'requested of the corpus (N14b-18)' is replaced by the fact that N14b-18 holds both 168 defects at stage 2 (checked). Deps unchanged: dropping N28ap1-01 would cut BD-100's only path to it."
+  },
+  {
+   "bead": "N13-14",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request of H-ref-1 applied: FROB-REF-214's repairs are now ranked per trigger as N13-REF's row ranks them. A quaternionic constituent keeps 'report defective' first. A group outside the supported families gets construction (mirror or radial), then the tolerance route, then a supported subgroup, then augmentation. Before, an agent hitting the closure cap was told first to report its group as defective. Added unit test over_cap_refused_214 (S6 generators, closure past 256) asserting the second list, which no test of this bead covered."
+  },
+  {
+   "bead": "N13-15",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request of H-ref-1 applied: the 214 refusal now prints N13-REF's four repairs for the outside-the-families trigger in its order, not two. The 13-fold radial acceptance line asserts the four in order, the same case N13-REF's ref_214_payload_unsupported runs. With two repairs, that registry test would fail against this raiser."
+  },
+  {
+   "bead": "N13-17",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request of F-U22a applied after checking BD-049, which owns scripts/e2e/algebra_orbits_verb.sh. algebra_orbits.sh now runs that script as stage `verb`, adds stage `battery` (cargo test --test orbits_conformance) and keeps only the design-bound step (stage `design`, which needs design.new, N14a-21). Every removed command (86,185; 500,500; 27; 45; 92; the 214 and 215 refusals; the registry example) is restated as what the stage verifies, so nothing is lost. Acceptance, Scope and Background updated. Otherwise two beads would own and drift two copies of the same commands (convention 11)."
+  },
+  {
+   "bead": "N13-18",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Mechanical finding C13 confirmed and H-cx-1's request applied after checking N13-CX and N13-KA. '(requested of N13-CX and N13-KA)' is dropped. The text now states that CX-117 has plant BD-047:cx-117 (kind mutation, gate GATE-MARROW-01 only, also KA-228's control) and is not one of the eight records, and that CX-116's plant is N13-18:M1. Also convention 9: the acceptance line 'stored as a provisional row for the mutation clause of GATE-MARROW-04' asked for a gate row that the register cannot hold (it has no provisional status, and BD-325 is the one recorder). It now keeps the matrix artifact and log hashes, and BD-325 records at M4."
+  },
+  {
+   "bead": "N13-20",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request (round 3, F-U13; convention 9) applied: step 8 no longer writes the GATE-MARROW-02 row. The script now runs the gate's tier entry (g1_known_answers --features gauntlet-mutations -- GATE-MARROW-02), logs and prints the receipt, and a non-implementing session records it with record_gate --gate GATE-MARROW-02 --receipt <hash>. This matches BD-048's acceptance, which names N13-20 as recorder from its run's receipt. Step 9's uncaught control now fails the script and is refused by the recorder (control-not-caught) instead of 'turning the gate to fail'. Acceptance, Scope and Background updated."
+  },
+  {
+   "bead": "N13-31",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Two acceptance criteria waited on BD-182, which depends on this decision bead: the ADR annotated after GATE-MARROW-05, and the gate record naming the limb width. N13-31 could never close and BD-182 could never start. The acceptance now requires the ADR to name the limb width the gate will measure. Technical approach step 4 now states that the citation and annotation are BD-182's, and BD-182 carries them."
+  },
+  {
+   "bead": "N13-34",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request of H-ref-1 applied after checking N13-REF and N35-33. The refusal's code is the number N35-33's first-round ledger row lifted-law-without-turn-state receives at M0 (proposed 128), raised from the start through one named constant. It is not 127 because 127 is the proposal of import-mass-dropped (N14-REF). The interim-code clause and the 'already proposed by N14-REF' aside are removed (convention 13). The acceptance line states the same. An interim code would have shipped a code that no registry row holds."
+  },
+  {
+   "bead": "N13-35",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Convention 5: the `state` stage called `frob sim run turn-spring --tier referee --json` with no --key, which the run verb refuses with FROB-REF-805, so the stage could never pass. It also used a bare name where N13-36 passes the fixture path. Now `frob sim run tests/fixtures/turn/turn-spring.fbot --tier referee --seconds 0.1 --seed 1 --key tc-state-<run-id> --json`."
+  },
+  {
+   "bead": "N13-36",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Mechanical finding C13 confirmed: '(DESIGN, requested of N40-10, whose row still reads M1: whole …)' is replaced by the register's row as it stands (N40-10: M1 the referee rows, recorded here; M2 the device, teleport, fork and reset-cache rows, N13-37). Request of H-verbs-8 applied: added dep N16ap4-01, the owner of `--init` on the referee at M1 (VERBS-sim's row; no cycle). Without it the stage-2 runs call an option no prerequisite delivers. Worlds A and B are now stated as declared in turn-spring.fbot's top-level block `init` (N14a-03; H-verbs-8 already filed that request of N14a-03)."
+  },
+  {
+   "bead": "N13-37",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Mechanical finding C13 confirmed: '; requested of N40-10' is dropped. The register's row is now stated as fact (N40-10: the M1 referee part recorded by N13-36, the M2 device, teleport, fork and reset-cache part recorded here). Nothing else changed: the record already goes through record_gate --part M2."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-325",
+   "what": "Its script marrow_blocks.sh 'writes the GATE-MARROW-04 row' (convention 9). It should run the gate's tier entry (FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- GATE-MARROW-04, with N13-18's eight mutation controls in the same run), print the receipt, and the row should be recorded with `cargo run -p frob-conformance --example record_gate -- --gate GATE-MARROW-04 --receipt <hash>` by a non-implementing session. As written, the script writes a row the recorder must write, or the M4 part has no receipt with the controls caught in the same run. N13-18 now states that BD-325 records it with record_gate."
+  },
+  {
+   "bead": "BD-049",
+   "what": "Its own script scripts/e2e/algebra_orbits_verb.sh logs under target/e2e-logs/algebra_orbits/<utc>.ndjson, the directory of N13-17's algebra_orbits.sh, which now runs it as a stage. Charter section 6 puts a script's log at target/e2e-logs/<script>/. Log under target/e2e-logs/algebra_orbits_verb/<utc>.ndjson. Otherwise the stage run and the outer script, started within the same second, write the same file name and one log overwrites or interleaves with the other."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "Reviewed 25; changed 14, unchanged 11 (BD-046, BD-048, N13-06, N13-07, N13-19, N13-21, N13-22, N13-23, N13-28, N13-32, N13-33), all checked against the plan, registries and conventions. Every addressed request was applied after checking its owner; the three mechanical findings (C9 on BD-011, C13 on N13-18, N13-36, N13-37) were real. Beyond the requests: a deadlock between N13-31 and BD-182 (moved to BD-182), a run verb without --key (N13-35), a 'provisional' gate row in N13-18 and a narrated request in N13-04. Graph has 0 cycles after adding BD-011 -> N38b-19 and N13-36 -> N16ap4-01. Observation for the lead, not fixed (registry design, outside this slice): GATE-MARROW-01's M0 part (BD-011) needs a registered control caught in its M0 receipt (N38b-19 step 4), but the controls seeded for its reversed-coadjoint convention name the plant N13-18:M1, built by an M1 bead. Unless some M0 control (for example BD-010's control (ii) through KA-256) is bound to the gate at M0, the M0 part would be refused pass-without-control or control-missing-from-receipt; N13-CX, N13-KA and N13-18 should confirm which control the M0 part cites. Also noted: N13-34 ships turn_count.sh --stage declarations before N13-36, the script's named owner, exists; harmless. The slice looks close to settled."
+}

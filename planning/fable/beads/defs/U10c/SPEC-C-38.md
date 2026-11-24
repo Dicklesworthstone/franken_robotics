@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "solid", "sinew", "frob-actuate", "test"]
 parent: "WP-09"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["N10-CX", "N10-KA3", "N10a-01", "STD-E2E", "STD-TEST", "VERBS-operator"]
 needs: []
-related: ["BD-068", "BD-070", "BD-071", "BD-072", "BD-074", "BD-076", "BD-092", "SPEC-C-31", "N10-CX", "N10c-10", "BD-069", "N10a-02"]
+related: ["BD-069", "BD-068", "BD-074", "BD-092"]
 gates: ["GATE-SINEW-02", "GATE-SINEW-05", "GATE-SINEW-08"]
 plan_refs: ["§10 C-38", "§10 C-12", "§15.4", "§15.5", "§15.7", "§29.9", "Appendix D.4", "Appendix E GB-11", "Appendix M.9", "Appendix N.7"]
 ---
@@ -172,8 +172,9 @@ construction has no pilot and no kill gate.
   G_th·(T_w − T_amb) at every step.
 - `ka_185_runaway`: I_crit = 35.806 A; at 10, 30 and 40 A the simulated temperature follows the closed forms and
   reaches the values of the worked card (21.69 K and 216.9 s; 162.7 s to the limit; 77.4 s to the limit) to 0.5%.
-- `illustrative_card`: the eight numbers of the second card to the printed digits; the constant-resistance model
-  admits 20 A (125 °C) and the corrected model refuses it (190 °C).
+- `illustrative_card`: every number of the second card to its printed digits (80 W; 164.7 K and 100 K; 247 s
+  and 150 s; 385 s; 18.6 A and 22.8 A; 31.9 A; 61 s and 83 s); the constant-resistance model admits 20 A
+  (125 °C) and the corrected model refuses it (190 °C).
 - `ka_186_entropy_identity_and_sign`: 10⁴ seeded points with P_loss ≥ 0: σ equals node plus ambient entropy rates
   exactly and is nonnegative.
 - `negated_copper_loss_rejected`: a regenerative mode with P_loss = −i²·R at T_w = T_amb gives σ < 0 and is
@@ -182,9 +183,11 @@ construction has no pilot and no kill gate.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c38.sh`: `frob --json doctor`; `cargo test -p frob-actuate --test laws_c38`; `cargo test -p
-frob-conformance --test g0 -- KA-186`; `cargo test -p frob-conformance --test g1 -- KA-183 KA-184 KA-185`; file
-and registry checks. Log to `target/e2e-logs/spec_c38/<utc>.ndjson` with a transcript; each line has `ts`,
+`scripts/e2e/spec_c38.sh`: `frob --json doctor`; `cargo test -p frob-actuate --test laws_c38`;
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-186` and `FROB_TEST_SEED=<seed> cargo
+test -p frob-conformance --test g1_known_answers -- KA-183 KA-184 KA-185` (the tier targets of ADR-GAUNT-01,
+BD-025; the seed is logged); both again with `--features gauntlet-mutations`, in which the controls of the four
+rows and of CX-090 and CX-091 must be caught; file and registry checks. Log to `target/e2e-logs/spec_c38/<utc>.ndjson` with a transcript; each line has `ts`,
 `script`, `bead`, `step`, `event`, command line, exit code, wall time, the evidence block (claim Known answer,
 class Tested, tier, determinism D0 for rational rows and the host class for `f64` rows, seed), measured currents,
 temperatures, times and ledger residuals with units against expected and thresholds, and on failure the first

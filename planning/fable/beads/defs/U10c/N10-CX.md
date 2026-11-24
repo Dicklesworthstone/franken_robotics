@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "registry", "gauntlet", "solid", "frob-conformance", "test"]
 parent: "WP-14"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-146", "N10c-10", "SPEC-C-28", "SPEC-C-29", "SPEC-C-30", "SPEC-C-31", "SPEC-C-32", "SPEC-C-33", "SPEC-C-34", "SPEC-C-35", "SPEC-C-36", "SPEC-C-37", "SPEC-C-38", "SPEC-C-39", "SPEC-C-40", "N09-CX"]
+related: ["N10c-01", "N10c-02", "N10c-03", "N10c-04", "N10c-05", "N10c-06", "N10c-07", "N10c-08", "N10c-09", "N13-18", "SPEC-C-28", "SPEC-C-29", "SPEC-C-30", "SPEC-C-31", "SPEC-C-32", "SPEC-C-33", "SPEC-C-34", "SPEC-C-35", "SPEC-C-36", "SPEC-C-37", "SPEC-C-38", "SPEC-C-39", "SPEC-C-40"]
 gates: ["GATE-GAUNT-01"]
 plan_refs: ["Appendix N.1", "Appendix N.7", "Appendix N.35", "§38.1", "§38.11", "§10"]
 ---
@@ -23,10 +23,11 @@ with no control in the registry cannot record a pass.
 
 This bead is the registry of the 79 counterexamples stated by the forty constructions of the mathematical spine
 (chapter 10): CX-019 to CX-097. It carries every entry in full (the shortcut, the case with its numbers, the rule
-it protects) so that no reader needs the plan, and it seeds one control record per entry in
-`frob-conformance/registry/controls.toml`. The planted defect itself (the mutant code or the planted input) is
-written by the specification bead of the construction the entry belongs to; this bead creates the record, names
-the planting bead, and checks that nothing is lost.
+it protects) so that no reader needs the plan, and enters each in the counterexample catalogue
+`frob-conformance/registry/counterexamples.toml` with its kind of control and its plant, from which the seeding
+tool of N38b-05 derives one control per entry in `frob-conformance/registry/controls.toml`. The planted defect
+itself (the mutant code or the planted input) is written by the bead named in the "Planted by" column; this bead
+writes the entry, names the planting bead and the plant, and checks that nothing is lost.
 
 Terms. *Control*: a defect, not a boundary: "the request is refused at the limit" tests the limit, and the control
 is the build or input in which the limit was removed. *Control kinds*: `mutation` (a test build in which the
@@ -38,32 +39,42 @@ tests.
 
 ## Scope
 
-In: the 79 entries below as data; one seeded record per entry in the control registry; the consistency checks of
-the test plan; the map from each entry to the bead that plants it.
+In: the 79 entries below as data in the catalogue, in N38b-05's record schema; the consistency checks of the
+test plan; the map from each entry to the bead that plants it and to its plant identifier.
 
-Out: the mutant code and planted inputs themselves (the specification beads of C-01 to C-40 and their part
-beads); the known-answer registry of chapter 10 (a sibling registry bead of this chapter); the harness, the tier
-runners and the registry loader (BD-025); wiring of controls into the M1 batteries (BD-146); entries of other
+Out: the catalogue's record schema and loader, and the seeding tool that turns entries into controls, allocates
+their `NC-` identifiers, keeps the seed map, resolves rules that name no gate and proves completeness by the
+join (N38b-05; this bead writes no row of `controls.toml` by hand); the mutant code and planted inputs themselves
+(the specification beads of C-01 to C-40, their part beads, and N13-18 for CX-020); the known-answer registry of
+chapter 10 (N10-KA1 to N10-KA3); the harness, the tier runners, the control record format and the registry
+check (BD-025); running controls (N38b-04); wiring of controls into the M1 batteries (BD-146); entries of other
 chapters that reuse a fixture of chapter 10 (they keep their own entries, because the registry holds one control
 per protected rule).
 
 ## Technical approach
 
-### 1. Record format (DESIGN, fixed by the verification subsystem)
+### 1. Catalogue record (the schema of N38b-05, shared with every chapter's registry bead)
 
-One record per control in `frob-conformance/registry/controls.toml`:
+Each row of the table in section 4 is one entry of `frob-conformance/registry/counterexamples.toml` with the
+fields of N38b-05, filled from the columns: `id` (the CX number, append-only); `shortcut`, `case` and `rule` (the
+second to fourth columns, verbatim; the expected observation stays in `case`, from which the seeding tool writes
+the control's `expect`); `defined_in` (the "Stated in" column); `same_as` (CX-010 for CX-044, else empty);
+`numeric` and `plan_case` (true and `numbers` for every entry; CX-034's case is supplied in its row from the gait
+fixture of §22.9.2, recorded in `case_supplied_by`); `label` (DESIGN, or FACT with its source for the five
+entries named in the notes, which carry `rerun = false` until re-run here); `control_kind` (the "Control kind"
+column); `plant`; and `rule_ids` (the construction C-nn, the identifiers in the rule cell such as T-nn, D-nn,
+GB-nn, BET-nn and FROB-REF-nnn, and the gates of the last column).
 
-```toml
-[[control]]
-id        = "NC-0412"            # stable, never reused
-seed      = "CX-072"             # the catalogue entry it came from
-gate      = ["GATE-ARENA-03"]    # every gate that must catch it
-kind      = "mutation"           # mutation | planted-input | planted-design | planted-world | a-a
-target    = "frob-spec::laws_c30::raw_minimum"
-defect    = "conjunction evaluated as the minimum of raw margins"
-expect    = "binding atom changes between (m, K) and (mm, K); the unit-invariance law fails"
-last_seen = { caught = true, session = "…", date = "…" }
-```
+`plant` (DESIGN, so that every runnable entry has one): for the rows that name mutant or input identifiers
+(CX-067 to CX-097, CX-020), those identifiers, prefixed by the planting bead (for example
+`SPEC-C-30:raw_minimum`, `N13-18:M2`); for the other rows, `<planting bead>:cx-<nnn>` (for example
+`SPEC-C-01:cx-019`), the name under which the planting bead must build the plant (a Cargo feature `cx-nnn` for a
+mutation, a fixture `cx-nnn` for the other kinds) and may refine, keeping the CX number in it.
+
+The seeding tool writes one control per entry in BD-025's record format (`id`, `seed` = the CX number, `gate`,
+`kind`, `target`, `defect`, `expect`, `state`, `last_seen`). DESIGN, correcting an earlier draft of this bead
+that wrote control records straight into `controls.toml`: that file is written only by the tool, so control
+identifiers are allocated once and never rewritten.
 
 ### 2. Rules of the registry that this bead must respect
 
@@ -77,28 +88,32 @@ last_seen = { caught = true, session = "…", date = "…" }
    counterexample that exposed it.
 6. An entry whose rule has no gate is a finding about the plan, reported at the next milestone exit: either the
    rule gains a gate or the entry is withdrawn with a recorded reason.
-7. A case that is FACT from a planning pilot or from a sibling's source is re-run in this repository before it is
-   registered as an active control.
+7. A case that is FACT from a planning pilot or from a sibling's source is re-run in this repository before its
+   control is runnable: until then the entry has `rerun = false` and the seeding writes its control with
+   `state = "obligation"`.
 8. An entry with no numeric case is an obligation on its chapter: a control needs a concrete planted defect or
    input.
 
 ### 3. Procedure
 
-1. Load the table below into the registry as 79 seeded records with `seed`, `kind`, a `defect` sentence taken
-   from the shortcut column, an `expect` sentence taken from the case column, and `target` left for the planting
-   bead to fill.
-2. Attach the gates named in the last column; where the column says pending, leave the list empty and mark the
-   record `seeded: gates pending`.
-3. As each specification bead lands, it fills `target`, attaches gates and flips the record to active; a record
-   still pending at the milestone of its construction's first gate is reported at that milestone's exit.
-4. Entries marked "≡" share a fixture with an entry of another chapter (CX-044 ≡ CX-010); both records are kept.
+1. Enter the 79 entries of section 4 in `registry/counterexamples.toml` with the fields of section 1.
+2. Run N38b-05's seeding tool: one control per entry, gates resolved from `rule_ids` (directly for the gates of
+   the last column; through `registry/rule_gates.toml` for the construction and rule identifiers). An entry whose
+   last column says pending resolves to no gate until its planting bead maps the construction to its gates in
+   `rule_gates.toml`; the tool writes it to `registry/seed_findings.toml` with `gate-added` requested.
+3. As each planting bead lands, it completes the entry's `plant` with the code path and feature or fixture it
+   built and maps C-nn to its gates; the next seeding gives the control its `target`, gates and runnable state
+   with the same NC number. A control still an obligation, or a finding still open, at the milestone of its
+   construction's first gate is reported at that milestone's exit.
+4. Entries marked "≡" share a fixture with an entry of another chapter (CX-044 ≡ CX-010, `same_as`); both
+   entries and both controls are kept.
 
 ### 4. The entries
 
 | CX | The tempting shortcut | The smallest case that breaks it | The rule it protects | Stated in | Control kind | Planted by | Gates |
 |---|---|---|---|---|---|---|---|
 | CX-019 | Compute mobility from the Grübler–Kutzbach count | Sarrus linkage: the count gives 0 and the mobility is 1. Bennett linkage: the count gives −2 and the mobility is 1 | Mobility comes from intersections and products in the subgroup lattice, cross-checked by the rank of the constraint Jacobian at exact rational sample points (A-01) | C-01 | mutation | SPEC-C-01 | pending: attached by the planting bead |
-| CX-020 | Move every spatial quantity with one adjoint, so that a wrench is moved by the twist map | A twist moves by Ad_g; a wrench is a covector and moves by Ad_g⁻ᵀ (pushforward) or Ad_gᵀ (pullback). A single reversed adjoint must fail three independent fixtures: Ad(g·h) = Ad(g)·Ad(h), frame invariance of the power pairing, and the planar 2R fixture of C-04 (torques −3 N·m, power −0.3 W) | Three separately typed maps; a wrench cannot be moved by the twist map (T-04, T-05; §11.3) | C-02 (numeric statement of the maps in §11.3) | mutation | SPEC-C-02 | pending: attached by the planting bead |
+| CX-020 | Move every spatial quantity with one adjoint, so that a wrench is moved by the twist map | A twist moves by Ad_g; a wrench is a covector and moves by Ad_g⁻ᵀ (pushforward) or Ad_gᵀ (pullback). A single reversed adjoint must fail three independent fixtures: Ad(g·h) = Ad(g)·Ad(h), frame invariance of the power pairing, and the planar 2R fixture of C-04 (torques −3 N·m, power −0.3 W) | Three separately typed maps; a wrench cannot be moved by the twist map (T-04, T-05; §11.3) | C-02 (numeric statement of the maps in §11.3) | mutation | N13-18: `M2` (the group coadjoint defined as (Ad_g)ᵀ, Marrow's mutation matrix; SPEC-C-02 states the law) | GATE-MARROW-01, GATE-MARROW-04 |
 | CX-021 | Accept an inertia because it passes the positivity and triangle tests | A centred 1 kg part with three principal moments of 0.008 kg·m² passes both, yet tr(I_C)/(2m) = 0.012 m² where a ball of radius 0.10 m allows 0.010 m². An isotropic thin shell of that radius, with moments 1/150 kg·m², is the equality case | The mass-support bound ‖c − o‖² + tr(I_C)/(2m) ≤ ρ² for a declared envelope | C-03 | planted-design | SPEC-C-03 | pending: attached by the planting bead |
 | CX-022 | Derive inertia from geometry by filling every enclosure solid | An aluminium box of 0.4 × 0.3 × 0.2 m at 2,700 kg/m³ is 64.8 kg as a solid and 3.45 kg with a 2.5 mm wall, a ratio of 18.8 | A declared wall thickness makes a body a shell by the difference rule; a solid fill of a large enclosure raises a density warning (§11.5, FROB-REF-168) | C-03 | planted-design | SPEC-C-03 | pending: attached by the planting bead |
 | CX-023 | Take the lower three rows of the space Jacobian as the point Jacobian | Planar 2R chain, links 0.4 m and 0.3 m, angles 0 and π/2, tool point (0.4, 0.3) m: the point Jacobian is [[−0.3, −0.3], [0.4, 0.0]] m/rad, a tool force (10, 0) N gives torques (−3, −3) N·m, and both power computations give −0.3 W. For a space column (ωᵢ, vᵢ) the point column is vᵢ + ωᵢ × p; the lower rows alone drop ωᵢ × p and fail the fixture | The space Jacobian pairs with the wrench (p × F, F) about the origin and the point Jacobian pairs with F (D-9) | C-04 | mutation | SPEC-C-04 | pending: attached by the planting bead |
@@ -112,32 +127,32 @@ last_seen = { caught = true, session = "…", date = "…" }
 | CX-031 | Reduce by the mechanical symmetry group Γ_mech where the observation-preserving group Γ_obs is required | A quadruped with a front-only lidar has Γ_mech = C₂ × C₂ and Γ_obs = C₂. Adding a one-sided payload removes the reflection from Γ_obs. A quadruped crossing a one-sided slippery patch must be allowed asymmetric actions | Exact reduction uses only Γ_obs intersected with the stabilizers of payload, boundary conditions and contact mode (D-14) | C-09 | planted-design | SPEC-C-09 | pending: attached by the planting bead |
 | CX-032 | Treat angular velocity and torque as polar vectors under a mirror | Under the sagittal mirror P = diag(1, −1, 1) the axial image of a joint axis a is −P·a: a pitch axis along y keeps its sign, and roll and yaw axes change theirs. A table that flips all three, or none, fails the step-equivariance test | Polar vectors map by P and axial vectors by det(P)·P (§11.4; T-10) | C-09 | mutation | SPEC-C-09 | pending: attached by the planting bead |
 | CX-033 | Conclude that a task is infeasible because the search over symmetry-tied deterministic policies failed | Two identical latches, exactly one must close. At a reflection-fixed observation a tied deterministic policy issues equal commands and both fail; either asymmetric choice succeeds, and a policy that draws one of the two uniformly is equivariant in law | A failure of tied-policy search excludes only the tied policy class, and the report says so and nothing more | C-09 | planted-input | SPEC-C-09 | pending: attached by the planting bead |
-| CX-034 | Find a gait orbit inside Fix(K) and judge its stability there | An orbit computed inside Fix(K) can hide unstable multipliers transverse to it (C-10 states the rule; the smallest numeric case is given with the gait analysis of §22) | The monodromy is always computed on the full space | C-10 | mutation | SPEC-C-10 | pending: attached by the planting bead |
+| CX-034 | Find a gait orbit inside Fix(K) and judge its stability there | An orbit computed inside Fix(K) can hide unstable multipliers transverse to it (C-10 states the rule; the smallest numeric case is given with the gait analysis of §22.9.2: ẋ = −x, ẏ = +y with the symmetry y ↦ −y and period T; on Fix(K) = {y = 0} the multiplier is e^(−T), the full-space multiplier of the antisymmetric block is e^(+T) > 1, so the restricted answer says stable for an orbit that is unstable) | The monodromy is always computed on the full space | C-10 | mutation | SPEC-C-10 | pending: attached by the planting bead |
 | CX-035 | Refuse simultaneous impacts, or impose an order on them | Trot, bound and pronk have simultaneous touchdowns by construction; forcing an order can change the outgoing velocity and a gait's basin | Simultaneous events are resolved by one coupled solve and are never a reason to refuse a gait | C-10; C-16 | mutation | SPEC-C-10, SPEC-C-16 | pending: attached by the planting bead |
-| CX-036 | Summarize a port by its peak demand and add the peaks | Two fingers on one unit-current bus have identical local summaries. A rule that adds their peak demands rejects a task that a two-tick schedule completes: no one-tick schedule is feasible and two two-tick schedules are | A port contract carries time correlation; the two-finger bus fixture must not be pruned, and two modules with identical local summaries on one current-limited bus are not merged (BET-31) | C-12 | planted-design | SPEC-C-12 | pending: attached by the planting bead |
+| CX-036 | Summarize a port by its peak demand and add the peaks | Two fingers on one unit-current bus have identical local summaries. A rule that adds their peak demands rejects a task that a two-tick schedule completes: no one-tick schedule is feasible and two two-tick schedules are | A port contract carries time correlation; the two-finger bus fixture must not be pruned, and two modules with identical local summaries on one current-limited bus are not merged (BET-31) | C-12 | planted-design | N10a-11 (the C-12 budget-and-reuse part of SPEC-C-12): `cx-036` | pending: attached by the planting bead |
 | CX-037 | Reuse a result after an edit because the sub-term's hash still matches | Swapping a leaf keeps its siblings' local results, but an edit that touches a shared battery bus, a shared thermal sink, a cross-branch kinematic loop or base-coupled contact invalidates every global result, because a shared moving base couples all limbs through the contact operator. Controls: a mirror swap of a leaf reuses its siblings' results; an edit to the shared bus must invalidate | A hash identifies; only a recorded implication licenses skipping a recheck (D-11; FROB-REF-835) | C-12; D-11 | mutation | SPEC-C-12 | pending: attached by the planting bead |
 | CX-038 | Score an estimator after fitting a scale | A 2 m estimate of a 1 m motion has zero residual after a factor of ½ | A metric gravity-referenced estimate is aligned with one translation and one yaw per trajectory and never with a fitted scale | C-13 | planted-input | SPEC-C-13 | pending: attached by the planting bead |
 | CX-039 | File a reassociation as a bit-exact rewrite | In `f32` with a = 10⁸, b = −10⁸, c = 1: (a + b) + c is 1 and a + (b + c) is 0 | Rewrite classes: class E changes no bit and ships a replayable trace; class R (reassociation, distribution, fused multiply-add) makes a different kernel with a new identity; the trace checker rejects the misfiled rewrite (T-27) | C-14 | mutation | SPEC-C-14 | pending: attached by the planting bead |
 | CX-040 | Freeze a fixed-n decision rule without listing the verdicts it can return | Two-sided exact Clopper–Pearson rule at n = 64 with a ±5 point indifference band: perfect concordance gives [−0.0662, +0.0662], so no outcome can return a tie. The recorded rule with 64 pairs could return three of its four verdicts; the fourth was first reachable at 86 pairs | A fixed-n study ships a pre-analysis of reachable verdicts (T-26); a study that needs an unreachable verdict is refused at admission | C-15; §0.7 | planted-input | SPEC-C-15 | pending: attached by the planting bead |
 | CX-041 | Use the reset Jacobian as the derivative across an event | Bouncing ball, state (y, v), reset (y, −r·v), impact speed v⁻ < 0: the saltation matrix is [[−r, 0], [−(1 + r)·g/v⁻, −r]] with determinant r². The reset Jacobian diag(1, −r) has the wrong sign in the first entry, omits the coupling in the second row, and for r = 1 has determinant −1 where the elastic bounce preserves area with determinant +1 | Event derivatives use the saltation matrix and carry the label `saltation` (D-15) | C-16 | mutation | SPEC-C-16 | pending: attached by the planting bead |
-| CX-042 | Transport a derivative across an event by a symmetry without checking that the relabeling commutes with the event | Two bouncing balls and the swap of their labels satisfy D h(x⁺)·Ξ_e(x⁻) = Ξ_{h·e}(h·x⁻)·D h(x⁻) when the restitutions are equal and violate it by terms proportional to r_L − r_R when they differ | A symmetry is used across an event only where the commuting identity holds | C-16 | planted-world | SPEC-C-16 | pending: attached by the planting bead |
-| CX-043 | Return a derivative at a grazing event | A ball whose apex touches a ceiling: the guard is not crossed transversally, and the query returns `refused`, not a matrix | Refusal near grazing, at an ambiguous event order, across an active-set change or at frictional degeneracy (FROB-REF-263) | C-16 | planted-input | SPEC-C-16 | pending: attached by the planting bead |
-| CX-044 | Certify the convex hull of two feasible designs | Feet at (±1 − e, ±1) m, each capped at 0.5 N, carry a load W at the origin; the positive-x pair must supply W·(1 + e)/2. The designs (e, W) = (0, 1.9) and (0.9, 1) each need 0.95 N and are feasible; their midpoint (0.45, 1.45) needs 841/800 N from a pair capped at 1 N | An inner cell needs a witness for the whole cell; only a union of proved inner cells is inner; the midpoint must be excluded from every inner set (BET-20) | C-17 ≡ CX-010 | planted-design | SPEC-C-17 | pending: attached by the planting bead |
+| CX-042 | Transport a derivative across an event by a symmetry without checking that the relabeling commutes with the event | Two bouncing balls and the swap of their labels satisfy D h(x⁺)·Ξ_e(x⁻) = Ξ_{h·e}(h·x⁻)·D h(x⁻) when the restitutions are equal and violate it by terms proportional to r_L − r_R when they differ | A symmetry is used across an event only where the commuting identity holds | C-16 | planted-world | N10b-02 (the C-16 commuting-identity part of SPEC-C-16): `cx-042` | pending: attached by the planting bead |
+| CX-043 | Return a derivative at a grazing event | A ball whose apex touches a ceiling: the guard is not crossed transversally, and the query returns `refused`, not a matrix | Refusal near grazing, at an ambiguous event order, across an active-set change or at frictional degeneracy (FROB-REF-263) | C-16 | planted-input | N10b-01 (the C-16 derivative-label part of SPEC-C-16): `cx-043` | pending: attached by the planting bead |
+| CX-044 | Certify the convex hull of two feasible designs | Feet at (±1 − e, ±1) m, each capped at 0.5 N, carry a load W at the origin; the positive-x pair must supply W·(1 + e)/2. The designs (e, W) = (0, 1.9) and (0.9, 1) each need 0.95 N and are feasible; their midpoint (0.45, 1.45) needs 841/800 N from a pair capped at 1 N | An inner cell needs a witness for the whole cell; only a union of proved inner cells is inner; the midpoint must be excluded from every inner set (BET-20) | C-17 ≡ CX-010 | planted-design | N10b-04 (the C-17 proof-rule part of SPEC-C-17): `cx-044` | pending: attached by the planting bead |
 | CX-045 | Accept one policy per world as evidence that one policy works for all worlds (∀w ∃π offered for ∃π ∀w) | Docking fixture with the packet arriving late, gains g ∈ {1, 2}: with first command p the remaining commands must be (1/g − 2p, p − 1/g), which differ by ½ between the gains. Each world alone has a successful open-loop command and no single command succeeds in both | Quantifiers are part of the claim; evidence for an easier quantifier order is rejected by type and by the auditor (D-12; §8.3 rule 8; FROB-REF-826) | C-17; C-19 | planted-input | SPEC-C-17 | pending: attached by the planting bead |
 | CX-046 | Evaluate a strict requirement with a non-strict comparator, or by an infimum | At U = ¾ and ε = 5/16 the docking residual is exactly zero and the strict predicate fails: with p = 5/8 both worlds can report 15/16 while needing −¼ and −¾. On 0 < w ≤ 1 every realization has w > 0 although the infimum is 0 | Strict, non-strict and equality atoms are evaluated with their declared comparators; a uniform positive margin is a separate, stronger request; strict decisions are computed exactly (D-18) | C-17; C-19 | mutation | SPEC-C-17 | pending: attached by the planting bead |
 | CX-047 | Multiply stage pass rates to get the mission pass rate | Among 20 equally likely worlds two stages each pass in 19. The mission passes in 18 worlds if the failing worlds differ and in 19 if they coincide | A chance constraint preserves the joint law across stages or allocates failure budgets that sum to the allowance; a product bound needs conditional success at every reached history | C-17 | mutation | SPEC-C-17 | pending: attached by the planting bead |
 | CX-048 | Intersect per-world answers to obtain the joint answer | F(V) ⊆ ⋂ over w ∈ V of F({w}), and the gap is what the controller cannot observe in time: in the docking fixture with a late packet each of the worlds g = 1 and g = 2 is solvable alone and the joint query has no solution | The joint query is answered as stated; per-world evidence is not combined by intersection (D-9, D-12) | C-18 | mutation | SPEC-C-18 | pending: attached by the planting bead |
 | CX-049 | Keep an inclusion when the world set grows | Docking family: enlarging W by one hidden gain 33/32 keeps every exclusion and forces a recheck of every inclusion. The inclusion at (U, ε) = (¾, 1/64) reverses, because the reading (65/64)·p is possible under gains 1 and 33/32 for every first command p; the least worst-case terminal error becomes 1/65 m | Verdicts have polarity: an inner certificate survives when W shrinks, Π grows or A weakens, and must be rechecked on the opposite moves; an exclusion is the reverse | C-18 | planted-world | SPEC-C-18 | pending: attached by the planting bead |
 | CX-050 | Trust a cache key or a dependency record to mean the verdict still holds | A dependency graph with one edge omitted returns a promotion that fresh replay contradicts | Reuse needs a recorded implication; the stale-verdict control must be caught by the shadow recompute (D-11; BET-33) | C-18 | mutation | SPEC-C-18 | pending: attached by the planting bead |
-| CX-051 | Take pairwise compatibility as joint compatibility | Commands (x, y) ∈ [0, 1]² with three variants requiring x ≥ 2/3, y ≥ 2/3 and x + y ≤ 1: every pair of sets intersects and the triple does not. Pairwise compatibility would have authorized one shared controller; two labels suffice and one is impossible | The label count is a colouring of the hypergraph whose edges are the inclusion-minimal collections with empty intersection | C-19 | planted-design | SPEC-C-19 | pending: attached by the planting bead |
+| CX-051 | Take pairwise compatibility as joint compatibility | Commands (x, y) ∈ [0, 1]² with three variants requiring x ≥ 2/3, y ≥ 2/3 and x + y ≤ 1: every pair of sets intersects and the triple does not. Pairwise compatibility would have authorized one shared controller; two labels suffice and one is impossible | The label count is a colouring of the hypergraph whose edges are the inclusion-minimal collections with empty intersection | C-19 | planted-design | N10b-09 (the C-19 hypergraph-colouring part of SPEC-C-19): `cx-051` | pending: attached by the planting bead |
 | CX-052 | Count repeated sensor reads as independent evidence | A binary probe correct with probability ¾ gives 27/32 with three independent reads, 459/512 with five and 3807/4096 with seven, and stays at ¾ after any number of reads that share one fault bit | Error dependence, not per-read accuracy, sets the value of redundancy | C-19 | mutation | SPEC-C-19 | pending: attached by the planting bead |
 | CX-053 | Expect more training to overcome a sensing limit | Docking fixture: if the only informative packet arrives after the third command is committed, no causal policy docks in both worlds for any U and ε; the two worlds deliver identical packet histories up to the commitment deadline and need disjoint commands | An indistinguishability witness ends a policy search before it is paid for (`mission.refute`) | C-19 | planted-world | SPEC-C-19 | pending: attached by the planting bead |
-| CX-054 | Specify sensor accuracy separately from actuator authority and the probing command | Docking fixture at U = ¾: the probe p = ¼ tolerates ε < 1/8 and the probe p = 5/8 tolerates ε < 5/16 on the same actuator; in general ε < (U + ½)/4 | Sensor, actuator and delivery time appear in one design inequality; the probe and the feedback are chosen together | C-19 | planted-design | SPEC-C-19 | pending: attached by the planting bead |
+| CX-054 | Specify sensor accuracy separately from actuator authority and the probing command | Docking fixture at U = ¾: the probe p = ¼ tolerates ε < 1/8 and the probe p = 5/8 tolerates ε < 5/16 on the same actuator; in general ε < (U + ½)/4 | Sensor, actuator and delivery time appear in one design inequality; the probe and the feedback are chosen together | C-19 | planted-design | N10b-08 (the C-19 docking-fixture part of SPEC-C-19): `cx-054` | pending: attached by the planting bead |
 | CX-055 | Read a full-rank local observability Gramian as distinguishability | Range anchors at (−1, 0) and (1, 0) both read √2 from (0, 1) and from (0, −1). With unit variances the information matrix is the identity at both points, yet a controller that must pick the side fails. A third anchor at (0, 2) reads 1 or 3, and closed reading intervals of half-width ε separate exactly when ε < 1 | Every calibration and placement analysis also runs a global ambiguity search | C-20 | planted-world | SPEC-C-20 | pending: attached by the planting bead |
 | CX-056 | Two designs whose geometric ratios match are dynamically similar, so a verdict moves between them | Scale a body by λ at constant density: mass × λ³, static joint torque × λ⁴. With a motor whose torque scales as λ³ the group τ_max/(m₀·g·ℓ₀) falls as 1/λ, so a design that stands at one size fails at twice the size. A fixed latency has delay group ∝ λ^(−½): it doubles at one quarter of the size | Every dimensionless group must match before a verdict is transported; differing groups are reported by name (C-21, D-11) | C-21 | planted-design | SPEC-C-21 | pending: attached by the planting bead |
 | CX-057 | A physical constant may sit in a kernel as a pure number | Scale lengths × 4, times × 2, masses × 2 with gravity unchanged. A homogeneous kernel reproduces every significand bit and branch; a kernel with a hidden dimensional constant differs on its first step | Dimensional homogeneity of every kernel (T-09); the power-of-two similarity test | C-21 | mutation | SPEC-C-21 | pending: attached by the planting bead |
 | CX-058 | Quotient a campaign by the mechanical symmetry group Γ_mech of the chassis | Ten leg types on a hexapod: dihedral symmetry of order 12 gives 86,185 classes. With a front-only lidar only the sagittal mirror survives and there are 500,500 classes; counting with Γ_mech merges designs that the closed loop distinguishes | The acting group of a campaign is Γ_obs, never Γ_mech alone (C-22, C-09) | C-22 | mutation | SPEC-C-22 | pending: attached by the planting bead |
-| CX-059 | Designs that agree on some mission observables can be merged | Eight ballast slugs enter the dynamics through count, Σx and Σx². Slots {1, 4} and {2, 3} have equal count and equal Σx = 5 but Σx² = 17 and 13: they are different rigid bodies | A projection class requires equality over all active observables, and merged pairs must replay bit-identically (C-22) | C-22 | planted-design | SPEC-C-22 | pending: attached by the planting bead |
+| CX-059 | Designs that agree on some mission observables can be merged | Eight ballast slugs enter the dynamics through count, Σx and Σx². Slots {1, 4} and {2, 3} have equal count and equal Σx = 5 but Σx² = 17 and 13: they are different rigid bodies | A projection class requires equality over all active observables, and merged pairs must replay bit-identically (C-22) | C-22 | planted-design | N10b-12 (the C-22 projection-quotient part of SPEC-C-22): `cx-059` | pending: attached by the planting bead |
 | CX-060 | A design-conditioned policy may read its tokens in file order | Exchange two legs in the description of one robot: the robot is unchanged and the actions change. FACT (source register): a published morphology-conditioned policy lost most of its return when the same robots were re-described in equivalent conventions | A family policy is natural under re-description, σ(d′) = φ·σ(d); permutation-equivariant tokens (C-23) | C-23 | mutation | SPEC-C-23 | pending: attached by the planting bead |
 | CX-061 | More equivariance is better: make the policy equivariant under all rotations | A rotation about a horizontal axis does not preserve gravity. The rigid motions that do are rotations about the vertical, translations and reflections through vertical planes, and the layers are equivariant under those only | The gravity control of C-24: a horizontal-axis rotation must not be a symmetry of the policy | C-24 | mutation | SPEC-C-24 | pending: attached by the planting bead |
 | CX-062 | Audit a small share of worlds on the high tier and correct by inverse weights; the cheap prediction only has to be roughly right | With Y ∈ {0, 1}, a prediction wrong by a constant ½ and audit probability 0.1, the added variance is (1 − p)/p·(Y − m)² = 9 × ¼ = 2.25, worse than auditing everything. The estimate stays unbiased; the cost is variance | Tier correction is funded only where the measured ρ supports it (kill below 0.7); p_min bounds the weights (C-25) | C-25 | planted-input | SPEC-C-25 | pending: attached by the planting bead |
@@ -178,23 +193,38 @@ last_seen = { caught = true, session = "…", date = "…" }
 | CX-097 | "B never loses to A" means B meets the mission | In the same fixture neither design is guaranteed: A fails for z < 3/5 and B for z < 2/5, while the paired verdict of no loss holds on the whole interval | The answer carries the paired verdict and each design's absolute verdict separately (C-40) | C-40 | planted-input | SPEC-C-40: `paired_verdict_only` | GATE-AUGUR-16 |
 
 Notes on the table. Entries CX-019 to CX-066 belong to constructions C-01 to C-27; their mutants are written by
-those constructions' specification beads, which also name the gates. Entries CX-067 to CX-097 belong to C-28 to
+those constructions' specification beads, which also name the gates, or, where a specification was split into
+part beads, by the part bead named in the row that carries the entry (CX-036 N10a-11, CX-042 N10b-02, CX-043
+N10b-01, CX-044 N10b-04, CX-051 N10b-09, CX-054 N10b-08, CX-059 N10b-12; each of them cites its entry, while
+the specification bead does not). Entries CX-067 to CX-097 belong to C-28 to
 C-40; the mutant names in the "Planted by" column are those of the law suites written for those constructions.
 CX-029 is a reported defect of a sibling routine: it is an admission test and an upstream work item, and the
-routine is not used as an oracle until it passes. CX-034 states its rule in words and gives no numeric case in its
-construction; the smallest numeric case is owed by the gait analysis before the record can become active. Cases
-labelled FACT from a planning pilot or a publication (in CX-029, CX-040, CX-060, CX-079, CX-093) are re-run or
-re-read here before activation. Section marks inside the cells (for example a decision number or a refusal code)
+routine is not used as an oracle until it passes. CX-034 states its rule in words in its construction and points
+to the gait analysis for its smallest numeric case; that case (§22.9.2, the same fixture as the Reflex entry
+CX-237, which protects the gait obligation and keeps its own control) is carried in its row, with
+`case_supplied_by = "§22.9.2 transverse-instability fixture (CX-237)"`, so the entry is runnable once SPEC-C-10
+builds its plant; CX-034 is not one of the catalogue's seventeen word-only entries. CX-020 is the catalogue
+entry of Marrow's mutation `M2` (N13-18: Ad* and its inverse exchanged, the group coadjoint defined as (Ad_g)ᵀ),
+so the control seeded from it is the `M2` record that N13-18's runner finds under GATE-MARROW-01 and
+GATE-MARROW-04 (the seeding tool processes catalogue entries first, and a known-answer row that names `M2` reuses
+that control instead of allocating a second one). Cases labelled FACT from a planning
+pilot or a publication (in CX-029, CX-040, CX-060, CX-079, CX-093) carry `rerun = false` and are re-run or re-read
+here before their controls become runnable. Section marks inside the cells (for example a decision number or a refusal code)
 are provenance: the cell itself states the rule.
 
 ## Acceptance criteria
 
-- [ ] `frob-conformance/registry/controls.toml` holds 79 records seeded from CX-019 to CX-097, one per entry, each
-      with `seed`, `kind`, `defect` and `expect`.
-- [ ] No seed number is missing, duplicated or renumbered; the registry check fails on a duplicate `id` or
-      `seed` pair.
-- [ ] Every record names its planting bead in a field the loader preserves.
-- [ ] The 31 records of C-28 to C-40 carry the gates of the last column.
+- [ ] `registry/counterexamples.toml` holds the 79 entries CX-019 to CX-097 with every field of section 1;
+      re-running N38b-05's seeding gives exactly one control per entry (79) and a second run changes no byte; no
+      row of `controls.toml` was written by hand.
+- [ ] No CX number is missing, duplicated or renumbered; the constructions' count in the catalogue loader is 79.
+- [ ] Every entry's `plant` names its planting bead and a plant identifier; no runnable `mutation` entry has an
+      empty plant.
+- [ ] After seeding, the 31 controls of C-28 to C-40 and the control of CX-020 carry the gates of the last
+      column (CX-020: GATE-MARROW-01 and GATE-MARROW-04, with plant `N13-18:M2`); every pending entry is in
+      `seed_findings.toml` with `gate-added` requested until its construction maps to a gate.
+- [ ] The five FACT entries (CX-029, CX-040, CX-060, CX-079, CX-093) carry `rerun = false` and seed as
+      obligations; CX-034 carries its §22.9.2 case with `case_supplied_by` filled.
 - [ ] A printout generated from the registry reproduces the first five columns of this table cell for cell (the
       registries are data and the tables are their printout).
 - [ ] `scripts/e2e/registry_n10_cx.sh` exits 0.
@@ -204,24 +234,46 @@ are provenance: the cell itself states the rule.
 ### Unit tests
 
 In `crates/frob-conformance/tests/`, under the laws-and-self-tests tier:
-- `cx_chapter10_count`: exactly 79 seeds in the range CX-019 to CX-097, none outside it filed under chapter 10.
-- `cx_ids_append_only`: the seed set equals the frozen list; a removed or renumbered seed fails.
-- `cx_record_shape`: every record has a non-empty `defect` and `expect`, a kind from the closed list, and a gate
-  list that is either non-empty or marked pending.
-- `cx_kind_closed_list`: an unknown kind is rejected by the loader.
-- `cx_planted_by_resolves`: every planting bead named exists in the bead graph export.
+- `cx_chapter10_count`: exactly 79 entries in the range CX-019 to CX-097, none outside it with `defined_in` under
+  chapter 10.
+- `cx_ids_append_only`: the id set equals the frozen list; a removed or renumbered entry fails.
+- `cx_entry_shape`: every entry has non-empty `shortcut`, `case`, `rule`, `rule_ids` and `plant`, a
+  `control_kind` from the closed list, `rerun` present on the five FACT entries, and `case_supplied_by` filled
+  on CX-034.
+- `cx_kind_closed_list`: an unknown `control_kind` is rejected by the catalogue loader.
+- `cx_planted_by_resolves`: every planting bead named in a `plant` exists in the bead graph export.
+- `cx_seeded_once`: after seeding, exactly one control per entry with `seed` = its CX number and `kind` = its
+  `control_kind`; a second seeding changes no byte of `controls.toml`.
+- `cx_gates_exist`: every gate id in an entry's `rule_ids` is a row of the gate register `registries/gates.toml`;
+  a misspelled gate (for example `GATE-AUGUR-016`) fails.
+- `cx_gates_match_table`: after seeding, the gate lists of the controls of CX-067 to CX-097 and CX-020 equal the
+  last column of the table above, entry by entry (for example CX-071 → {GATE-AUTOPSY-02, GATE-AUTOPSY-06},
+  CX-072 → {GATE-ARENA-03, GATE-CORTEX-10}, CX-020 → {GATE-MARROW-01, GATE-MARROW-04}); a control that loses a
+  gate, or a runnable control with an empty gate list, fails. This is the test that catches the "one gate
+  removed" negative control below.
+- `cx_kind_matches_table`: the `control_kind` of each of the 79 entries equals the "Control kind" column; an
+  entry whose kind was changed from `mutation` to `planted-input` fails.
+- `cx_fact_entries_are_obligations`: the controls of CX-029, CX-040, CX-060, CX-079 and CX-093 are `obligation`
+  while `rerun = false`.
 - `cx_printout_round_trip`: the generated table equals the stored table byte for byte.
-- `cx_pending_report`: a pending record whose construction's milestone has passed is listed in the exit report.
+- `cx_pending_report`: a pending entry (an open finding or an obligation) whose construction's milestone has
+  passed is listed in the exit report.
 
 ### End-to-end script and logging
 
-`scripts/e2e/registry_n10_cx.sh`: runs `frob --json doctor`; `cargo test -p frob-conformance --test g0 --
-cx_chapter10`; regenerates the printout and compares it; lists pending records. It sources the STD-E2E helper and
-writes `target/e2e-logs/registry_n10_cx/<utc>.ndjson` with a transcript; each line has `ts`, `script`, `bead`
-(`N10-CX`), `step`, `event` (`start`, `cmd`, `assert`, `metric`, `refusal`, `end`), the command line, exit code,
-wall time, the evidence block (claim Known answer, class Tested, tier G0 host, determinism D0), the counts of
-records, active and pending against 79, and on failure the first missing or duplicated seed with the registry
-path. The `summary` line counts assertions and names GATE-GAUNT-01.
+`scripts/e2e/registry_n10_cx.sh` (it calls only cargo targets of its dependencies, so no `frob` command): runs
+`cargo test -p frob-conformance --test g0_laws -- cx_`; N38b-05's seeding tool, `cargo test -p frob-conformance
+--test seed_controls -- --ignored seed`, twice (the second run must leave the digest of the committed
+`controls.toml` unchanged), then its join, `cargo test -p frob-conformance --test seed_join`, for this chapter's
+entries; regenerates the printout and compares it; lists obligations and open findings; then,
+on five scratch copies of the catalogue under `target/e2e-scratch/registry_n10_cx/` (never the committed file),
+plants the five negative controls below one at a time and asserts that each copy is rejected with the named
+test. It sources the STD-E2E helper and writes `target/e2e-logs/registry_n10_cx/<utc>.ndjson` with a
+transcript; each line has `ts`, `script`, `bead` (`N10-CX`), `step`, `event` (`start`, `cmd`, `assert`,
+`metric`, `refusal`, `end`), the command line, exit code, wall time, the evidence block (claim Known answer,
+class Tested, tier G0 host, determinism D0), the counts of entries and seeded controls against 79, of runnable
+controls, obligations and open findings, the digest of `controls.toml` before and after the second seeding, and
+on failure the first missing or duplicated entry with the registry path. The `summary` line counts assertions and names GATE-GAUNT-01.
 
 ### Known answers and negative controls
 
@@ -229,13 +281,16 @@ Known answers: the count 79; the range CX-019 to CX-097; the per-construction co
 C-04: 2, C-05: 1, C-06: 1, C-07: 3, C-08: 1, C-09: 3, C-10: 2, C-12: 2, C-13: 1, C-14: 1, C-15: 1, C-16: 3,
 C-17: 4, C-18: 3, C-19: 4, C-20: 1, C-21: 2, C-22: 2, C-23: 1, C-24: 1, C-25: 1, C-26: 2, C-27: 2, C-28: 2,
 C-29: 3, C-30: 2, C-31: 3, C-32: 4, C-33: 1, C-34: 2, C-35: 2, C-36: 3, C-37: 1, C-38: 2, C-39: 2, C-40: 4. C-11
-has none. CX-035 is counted under C-10 and also names C-16. Negative controls for this bead: a registry with one
-seed deleted, with one seed duplicated, with one kind misspelled, and with one gate removed from an active
-record; each must fail its test.
+has none. CX-035 is counted under C-10 and also names C-16. Negative controls for this bead: a catalogue with one
+entry deleted (caught by `cx_chapter10_count` and `cx_ids_append_only`), with one entry duplicated (caught by the
+catalogue loader's duplicate check and `cx_chapter10_count`), with one `control_kind` misspelled (caught by
+`cx_kind_closed_list`), with one gate removed from the `rule_ids` of CX-072 (caught by `cx_gates_match_table`
+after seeding), and with one gate id misspelled (caught by `cx_gates_exist`); each must fail its named test, and
+the e2e script logs each planted copy, the test that failed and its first differing value.
 
 ## Considerations
 
-- The registry is the authority and this table is its first printout; after loading, the table is regenerated,
+- The catalogue is the authority and this table is its first printout; after loading, the table is regenerated,
   never edited by hand.
 - A control that cannot be planted as described is a finding, not a pass; rule 4 reviews it at milestone exits.
 - The pre-slip aliasing fixture (CX-012) belongs to the bets, not to chapter 10, and has no numbers anywhere in

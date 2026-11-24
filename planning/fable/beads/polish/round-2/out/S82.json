@@ -1,0 +1,331 @@
+{
+  "round": 2,
+  "slice": "S82",
+  "reviewed": [
+    "BD-360",
+    "BD-361",
+    "BD-362",
+    "FD-FSYM-05",
+    "N25d-06",
+    "N25d-07",
+    "N25d-08",
+    "N25d-09",
+    "N25d-10",
+    "N25d-11",
+    "N25d-12",
+    "N25d-13",
+    "N25d-14",
+    "N25d-15",
+    "N25d-16",
+    "N25d-17",
+    "N25d-18",
+    "N25d-19",
+    "N25d-20",
+    "N25e-18",
+    "N25e-19",
+    "N25e-20",
+    "N25e-21",
+    "N25e-22",
+    "N25e-42",
+    "N25e-43",
+    "N25e-44",
+    "SPEC-C-34"
+  ],
+  "changed": [
+    {
+      "bead": "BD-362",
+      "kinds": [
+        "deps",
+        "correct",
+        "users",
+        "self-contained",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Applied S33's request: dep N25e-45 (M1; no cycle), whose row 7 fixes the content of the synthesis-out-of-scope refusal this bead emits; the refusal now carries retry after-change, the three repairs in N25e-45's order and the emit constant in frob_core::refusal::augur_late, with test out_of_scope_matches_row_seven. The invented envelope tier 'static-plan' is now 'static' (BD-005's tier order). Surface: --key (drift 5); --threads, --knots and --seed <n> (one start, initial theta drawn in the boxes; used by N25d-14's script but undefined) specified and requested of the verb registry with the FROB-REF-263 pass-through (drift 8); input block design_domain.refine specified and requested of BD-126. e2e was a bare pointer: now names the lane-contract steps N25d-14 runs (gear-ratio from 1 and 4, active bound, 18-parameter and free-schedule refusals, budget stop, cancellation) with logged fields; tests seed_start_inside_boxes, threads_recorded, tier_is_static."
+    },
+    {
+      "bead": "N25d-14",
+      "kinds": [
+        "correct",
+        "users",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Run-verb calls had no --key (drift 5): keys per start, controller synthesis, evaluation and study, distinct where compared. 'frob eval run --seed' is not an eval.run option (drift 8): the held-out terrain is now a frozen battery fixture. 'frob eval compare' is the anytime-valid study, yet the bead requires the fixed-n exact study: now study.plan / study.submit --key / study.compare (dep BD-124). Gate recorded with record_gate (dep N38b-19). Added the lane-contract steps BD-362 points here, assembly time and problem size in the log, tests keys_distinct_across_compared_calls and held_out_battery_frozen, and the pilot-branch close (withdrawn, citing PILOT-TRAJOPT-01)."
+    },
+    {
+      "bead": "N25d-15",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Readiness deadlock: in the fired-on-the-pilot branch N25d-14 is never started, so this bead (which depends on it) could never become ready; now the funding review closes N25d-14 'withdrawn' citing the pilot record, this bead's ADR re-reads it as superseded, and the same reading is requested of N41-17 program-wide. Rule 1 tied to N38a-09's funding rule without restating the trigger. ADR path docs/adr/ADR-KILL-SYNTH-TRAJOPT-M4.md with N40-03's fields and the kill row's decision entry (drift 4); close reasons were the untyped 'decided: kept': now pass / fallback (N41-17). Deps N40-03, STD-E2E. e2e: --key on the fallback call, evidence trace reads, full STD-E2E fields; tests rule_matches_ledger_trigger, pilot_branch_needs_withdrawn_gate_bead, adr_fields_complete."
+    },
+    {
+      "bead": "N25d-12",
+      "kinds": [
+        "complete",
+        "users",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The 'pilot-register row' had no identifier, path or schema (drift 3): now record PILOT-TRAJOPT-01 (N25d-40 row 19; DESIGN id, confirmation requested) in crates/frob-conformance/registry/pilots.toml, frob.gauntlet.pilot/1, all fields, protocol docs/pilots/PILOT-TRAJOPT-01.md hashed before the first solve, result appended as [[pilot.result]]. e2e: --key on design import, control synth, eval run and eval compare; the unregistered --seed replaced by the frozen held-out battery; registration check first; full STD-E2E fields. Deps BD-065 (design.import), BD-262 (eval.compare), N38a-09, STD-E2E. Tests falsifier_counts, record_fields_complete."
+    },
+    {
+      "bead": "N25d-13",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Its e2e claim said N25d-14's script logs assembly time and the derivative-check residuals; the script logged neither. Now N25d-14 logs problem size and assembly time, and the derivative check is stated as the unit test it is. Transcription closed forms re-derived (ratio 2, cost 192; 300 at ratios 1 and 4; 12 m^2)."
+    },
+    {
+      "bead": "N25d-06",
+      "kinds": [
+        "users",
+        "tests"
+      ],
+      "what": "Dispatch surface lacked --key (drift 5): added, with the rule that the key covers proposing (a repeated key returns the same candidates). Tests reserved_placement_refused (724, not 802, until N25e-20) and repeated_key_same_candidates."
+    },
+    {
+      "bead": "BD-360",
+      "kinds": [
+        "users",
+        "self-contained",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Surface lacked --key (drift 5); --catalog was used but undefined and unregistered (drift 8): specified (substitutes a registered catalog set, digest recorded) and requested of the verb registry. The .fmission schema (BD-126) has no co-design block: design_domain.codesign specified (components, relations, wires, shared, bound, request) and requested. e2e was a bare pointer: now states what N25d-10 drives and logs. Tests codesign_block_parses, catalog_override_recorded. GB-03 and catalogue step-function arithmetic re-checked."
+    },
+    {
+      "bead": "N25d-09",
+      "kinds": [
+        "complete",
+        "correct",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Pilot record had no id, path or schema (drift 3): PILOT-CODESIGN-01 (N25d-40 row 18) with every frob.gauntlet.pilot/1 field and the protocol hashed before either arm. The 20-variant fraction was unspecified (no gearbox level count): DESIGN five ratios and the regular half fraction r+p+g even of 4x2x5 (radius 5x, payload 10x, ratio 4x, checked). e2e: --key on each referee sim run, registration check, full STD-E2E fields. Deps N38a-09, STD-E2E. Tests fraction_balanced, falsifier_counts, additive_peak_arm_prunes_bus_variant."
+    },
+    {
+      "bead": "BD-361",
+      "kinds": [
+        "users",
+        "self-contained",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Strategy surface lacked --key (drift 5). The .fmission schema has no linkage block: design_domain.linkage specified (template, poses, lugs, keep_in, reach, clearance, tolerance, drive) and requested of BD-126; a pose that is not exactly a rotation is FROB-REF-868 with pointer, observed and required. e2e pointer expanded to what N25d-19 drives and logs. Test linkage_block_parses. Crank-rocker values re-derived (B = (11/3, sqrt80/3), (11/5, 12/5))."
+    },
+    {
+      "bead": "N25d-17",
+      "kinds": [
+        "correct",
+        "users",
+        "tests"
+      ],
+      "what": "Three outcomes had no code or exit. Non-rotation pose: FROB-REF-868 with pointer /design_domain/linkage/poses/<i>, observed c^2+s^2 (18/25 for (3/5, 3/5)). Collinear lug: the plan says 'reported as degenerate', so a query left with only that lug is answered, not refused: exit 2, zero candidates, explanation with the exact witness, never an exclusion (no number invented). Size beyond the exact type: FROB-REF-857 naming the 4,096-bit cap. Tests collinear_only_lug_answers_exit_2, size_beyond_exact_type_refused."
+    },
+    {
+      "bead": "N25d-19",
+      "kinds": [
+        "correct",
+        "users",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "Keys on every synthesize and referee sim run call (drift 5); dyad-collinear expectation aligned with N25d-17 (exit 2, explanation) and a pose-not-rotation fixture (868) added. The bead records GATE-AUGUR-17 'once both scripts have run' but did not depend on N25d-10: dep added, and the gate is recorded once from run-all.sh --gate GATE-AUGUR-17 over both scripts through record_gate (dep N38b-19). Pilot-branch note made consistent with N25d-20 (withdrawn, not a partial run of an unbuilt lane)."
+    },
+    {
+      "bead": "N25d-20",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Same readiness deadlock as N25d-15 (if the pilot fires, BD-361 is unfunded and N25d-19 never runs): withdrawn close of N25d-19 citing PILOT-C-34 specified. ADR path docs/adr/ADR-KILL-SYNTH-LINKAGE-M4.md with N40-03's fields and decision entry (drift 4); 'deferred' now names the later exit and reason N40-03 requires; untyped close reasons replaced by pass / fallback, with the bead kept open while deferred. Deps N40-03, STD-E2E. Tests rule_matches_ledger_trigger, deferred_names_later_exit, pilot_branch_needs_withdrawn_gate_bead; full STD-E2E log."
+    },
+    {
+      "bead": "N25d-11",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "ADR path docs/adr/ADR-KILL-SYNTH-CODESIGN-M4.md with N40-03's fields and the kill row's decision entry (drift 4); close reasons 'decided: kept / decided: deferred' are not in N41-17's typed set: now pass / fallback, open while deferred. Deps N40-03, STD-E2E. Tests deferred_names_later_exit, adr_fields_complete; full STD-E2E log with evidence trace reads."
+    },
+    {
+      "bead": "N25d-10",
+      "kinds": [
+        "correct",
+        "users",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "No --key on any synthesize call (drift 5), so the determinism lane's second run would have returned the first answer: keys per fixture, mutant, dispatch check and run. The bead claimed to record 'the gate's co-design rows' while N25d-19 records the one gate row: now it feeds the gate report and N25d-19 records once via record_gate. Added the Pareto antichain fixture BD-360's tests name, the key-generator test and full STD-E2E fields."
+    },
+    {
+      "bead": "N25d-07",
+      "kinds": [
+        "complete",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Pilot record had no id, path or schema (drift 3): PILOT-PLACEMENT-01 (N25d-40 row 22; kill_gate KILL-SYNTH-PLACEMENT to-register, no integrated_gate) with every frob.gauntlet.pilot/1 field and the protocol hashed before the first fixture; acceptance criterion added. Tests fixture_c_dual (y^T W = (1, 0), y^T w = 180), falsifier_counts (6 of 40 unrecovered holds, 5 does not), planted_status_reproducible. e2e checks registration first and logs to target/e2e-logs/pilot_exact_constructions/<utc>.ndjson with full STD-E2E fields. Deps N38a-09, STD-E2E."
+    },
+    {
+      "bead": "N25d-08",
+      "kinds": [
+        "correct",
+        "users",
+        "self-contained",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "BD-126 says a site outside the support region is this bead's refusal, which the bead lacked: FROB-REF-868 at /design_domain/mass_placement/sites/<i> with observed squared distance, required bound and the repairs in order (move the site, enlarge the support, drop the site); boundary closed. The surface still said the schema fields were to be asked of BD-126, which now has mass_placement and actuator_loss: it names them, and both verbs carry --key (drift 5). Mass-support test extended (121/10000 against 1/100); e2e fixture site-outside.fmission, keys ex-<fixture>-<run>, full log fields."
+    },
+    {
+      "bead": "N25d-16",
+      "kinds": [
+        "complete",
+        "users",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Pilot record (drift 3): PILOT-C-34 (N25d-40 row 20) with both falsifier statements, the chapter's on 240 instances and the construction's on 24 templates; acceptance criterion. Tests falsifier_counts (60 of 240 keeps, 61 fires) and instances_reproducible; a garbled planted-quarter text fixed (20 of each stratum's 80, 60 in all). e2e registers first, uses design check (read, no key) and sim run --key pl-ref-<i>-<c>-<run>, full STD-E2E fields. Deps N38a-09, STD-E2E."
+    },
+    {
+      "bead": "N25d-18",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "The cap of six bisected parameters had no refusal: more than six is FROB-REF-856 (exit 3, pointer, observed 7, required at most 6, first repair) before any enclosure; test seven_bisected_parameters_refused and the e2e assertion. Region math re-derived (Delta^2 = 16(4+cos s)(2-cos s), sqrt(4655)/8, non-Grashof at cos s = 3/8)."
+    },
+    {
+      "bead": "SPEC-C-34",
+      "kinds": [
+        "scope",
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Scope Out now names who measures and records GATE-AUGUR-17's linkage rows (N25d-19) and who decides KILL-SYNTH-LINKAGE (N25d-20). The fallback paragraph conflated the lanes: lane 1 with multistart recovery labelled Partial is lane 2's fallback (KILL-SYNTH-CONT), and lane 1's fallback is KILL-SYNTH-LINKAGE's. e2e used a non-canonical gauntlet command (drift 1): now FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-164 KA-165, and with --features gauntlet-mutations catching collinear_returns_pivot and closure_only."
+    },
+    {
+      "bead": "N25e-18",
+      "kinds": [
+        "complete",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Frontier pilot with no register record, though N38a-09 refuses funding without one and N25d-40's rows stop before section 25.33: the bead now writes PILOT-REGRESSOR-01 itself, as N25e-23 does (DESIGN id, confirmation requested), with every frob.gauntlet.pilot/1 field: the falsifier with its numbers, ceiling 'none on speed', fallback.ships of a lower tier (class templates with A-24, plus the section 25.21 program only where its own pilot funded it, else FROB-REF-106), kill_gate KILL-SYNTH-REGRESSOR, integrated_gate GATE-AUGUR-29; protocol hashed before the first run; result appended. Acceptance criterion; tests falsifier_counts, record_fields_complete; e2e checks registration and hash first. Dep N38a-09. Cart arithmetic re-checked (981/320 m/s^2, 122.625 N)."
+    },
+    {
+      "bead": "N25e-20",
+      "kinds": [
+        "users",
+        "self-contained",
+        "complete",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Surface lacked --key (drift 5); --motions, --ratios and --objective are unregistered (drift 8): marked lane options and requested of the verb registry. No input block existed, and BD-126's mass_placement targets a pseudo-inertia with no motion or movable component: design_domain.placement specified (components with mass, splittable and sites; free_bodies with support; motions as library or prescribed, only a prescribed motion turning an exclusion into a cell exclusion; catalog), entering MissionId, malformed is 868, requested of BD-126. Acceptance names frob-mcp and the block; tests placement_block_parses, prescribed_motion_only_excludes_cell; the e2e pointer now states the calls, keys and logged fields of N25e-21's script."
+    },
+    {
+      "bead": "N25e-21",
+      "kinds": [
+        "correct",
+        "users",
+        "complete",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "No run-verb call carried --key (drift 5), so the determinism lane would return stored receipts: keys per fixture and objective in Part A and per design, mission and arm in Part B. Part B named arms and statistics but no commands: now mission synthesize (P), opt start for F (DESIGN reading of 'forward co-design': BD-341's lever-only optimization over the same levers from the template), control synth, eval run --battery, eval compare (anytime) or study plan / submit (fixed n, declared in advance), and phylum generate for the frozen draw. The gate is recorded only from a full run by a non-implementing session through record_gate; smoke runs are small-only and never record. Deps BD-124, N38b-19. Tests smoke_run_never_records, keys_distinct_per_arm; key in every log line."
+    },
+    {
+      "bead": "N25e-22",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "tests",
+        "e2e-logging",
+        "risks"
+      ],
+      "what": "ADR path lacked the milestone and N40-03's fields (drift 4): docs/adr/ADR-KILL-SYNTH-REGRESSOR-M4.md with every field. Its statuses pass / signal withdrawn / killed are not N40-03 outcomes, and one 'fired' would put the fallback in force when only the signal is withdrawn: now two per-clause decision entries (clause:screening, clause:comparison, each fired or not-fired, N40-03's KILL-COUPLING form) with the display words mapped onto them. The owner declaration N40-30's kill_ledger check requires from the M4 exit was missing: added, copying the ledger's text. Risk stated: the fallback's mass-placement program (N25d-08) is itself Frontier and unfunded until KILL-SYNTH-PLACEMENT registers, and what the ADR names meanwhile. e2e: --key, evidence trace read, per-clause metric lines, full STD-E2E fields. Dep N40-03. Tests rule_matches_ledger_trigger, two_step_entries, known_answer_failure_blocks."
+    },
+    {
+      "bead": "N25e-42",
+      "kinds": [
+        "correct",
+        "users",
+        "tests"
+      ],
+      "what": "The sizing refusal lacked retry after-change (N25e-45's row 5, which it depends on); --tolerance and --candidate are unregistered (drift 8): requested of the verb registry, and --key stated for every call. Test refusal_matches_row_five. Pack and two-resource arithmetic re-checked ((70/23, 120/23); F(4, 6) = (3.6, 5.8))."
+    },
+    {
+      "bead": "N25e-44",
+      "kinds": [
+        "correct",
+        "users",
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "No run-verb call carried --key (drift 5), so the withheld-exclusion re-run and the determinism lane's second run would return stored receipts: keys per call, distinct where compared. The mutant refusal named with its interim code as N25e-42 emits it (853, detail sizing-witness-missing). Gate recorded through record_gate by a session that did not implement the mechanisms (dep N38b-19). Key in every log line; test keys_distinct."
+    },
+    {
+      "bead": "FD-FSYM-05",
+      "kinds": [
+        "users",
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "The post phase ran mission synthesize --strategy linkage with no fixture and no --key (drift 5); a same-key run on the new pin would return the old pin's stored receipt. Now one key per fixture and pin on N25d-19's linkage fixtures, asserting the identical results the bead requires, with wall time and memory logged."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-mission",
+      "what": "Register these lane options on mission.synthesize (drift 8; scripts in WP-67 call them): --catalog <set> (BD-360: substitutes a registered catalog set, digest recorded); --threads <n>, --knots <N>, --seed <n> (BD-362: solver threads default 8, transcription knots default 50, one start drawn in the declared boxes); --motions <library>, --ratios catalog|continuous, --objective energy|first-moment:<component> (N25e-20); --tolerance <width>, --candidate <resource>=<value> (N25e-42). Also list FROB-REF-263 as a pass-through of mission.synthesize (BD-362, the labelled-derivative refusal near grazing)."
+    },
+    {
+      "bead": "BD-126",
+      "what": "Add four design_domain blocks to frob.mission/1, each semantic (enters MissionId), numbers as exact strings, a malformed block FROB-REF-868 with its pointer: codesign (BD-360: components, relations, wires, shared, bound, request); linkage (BD-361: template, poses, lugs, keep_in, reach, clearance, tolerance, drive; a pose not exactly a rotation is 868); refine (BD-362: base, task with motion and contact_schedule both bound, theta[] at most 17 with unit, chart and box, objective, optional regularizer); placement (N25e-20: components with mass, splittable and sites; optional free_bodies with a support in mass_placement's form; motions as library:<id> or prescribed:[...]; catalog by card reference). The existing mass_placement block targets a pseudo-inertia and does not serve the motion lane."
+    },
+    {
+      "bead": "N25d-40",
+      "what": "Confirm the pilot record ids the slice's pilot beads now write: row 18 PILOT-CODESIGN-01 (N25d-09), row 19 PILOT-TRAJOPT-01 (N25d-12), row 20 PILOT-C-34 (N25d-16), row 22 PILOT-PLACEMENT-01 (N25d-07, kill_gate KILL-SYNTH-PLACEMENT to-register). Section 25.33's pilot (N25e-18, PILOT-REGRESSOR-01) has no row; state that it registers itself, as N25e-23 does."
+    },
+    {
+      "bead": "N38a-09",
+      "what": "Confirm the ids PILOT-CODESIGN-01, PILOT-TRAJOPT-01, PILOT-C-34, PILOT-PLACEMENT-01 and PILOT-REGRESSOR-01 (kill_gate KILL-SYNTH-REGRESSOR, integrated_gate GATE-AUGUR-29; its fallback.ships is class templates with A-24, plus section 25.21's program only where its own pilot funded it, else FROB-REF-106, so the lower-tier rule holds)."
+    },
+    {
+      "bead": "N41-17",
+      "what": "State the program-wide pilot-fired readiness rule: when a pilot's falsifier holds, the mechanism is not funded and its gate e2e bead never runs, so the kill-decision bead that depends on it can never become ready. The funding review closes the gate bead 'withdrawn' citing the [[pilot.result]], and the kill ADR re-reads it as superseded. N25d-15 and N25d-20 now say this locally; other pilot-gated kill beads (for example N22b-16, N17a-14) share the pattern."
+    },
+    {
+      "bead": "N40-29",
+      "what": "KILL-SYNTH-REGRESSOR is two-step (the screening clause withdraws a signal, only the comparison clause removes the lane): give its row the per-clause scopes clause:screening and clause:comparison, both at M4, as the row does for KILL-COUPLING, so that N25e-22's two decision entries match. Its fallback names section 25.21's mass-placement program, which is itself [F] and unfunded until KILL-SYNTH-PLACEMENT is registered; consider an amendment saying A-24 and the mass-support predicate FROB-REF-106 ship while it is unfunded."
+    }
+  ],
+  "unchanged": [
+    "N25e-19",
+    "N25e-43"
+  ],
+  "notes": "All 28 beads read in full against their plan sections; S33's request to BD-362 applied. Round 1 left the beads coherent in substance; what it missed was mostly cross-cutting: run-verb calls without --key in nearly every script (drift 5), lane options and four .fmission input blocks used but never registered (requested of VERBS-mission and BD-126), pilot records with no id, path or schema (drift 3, five records now specified), kill ADRs without the milestone, N40-03's fields, typed close reasons or decision entries (drift 4), gates recorded without record_gate, and a readiness deadlock in the pilot-fired branch of N25d-15 and N25d-20 (requested of N41-17 program-wide). All plan arithmetic re-derived and correct. No new, merged or superseded beads. graph_check cycles: 0. Every touched file parses: front matter, all twelve fields, one-line JSON lists, seven sections and the three test subsections."
+}

@@ -1,0 +1,3038 @@
+{
+ "group": "G39",
+ "needs": [
+  {
+   "bead": "BD-039",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-32"
+   ],
+   "note": "the licence decision reads this harness's comparator registry and already depends on BD-039; it blocks the gate bead N39b-08, not the harness"
+  },
+  {
+   "bead": "BD-039",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N36-25",
+    "N21c-35"
+   ],
+   "note": "OPEN-PERF-2 and OPEN-SPARK-2 supply pin values and envelope classes; the harness is built on the registered defaults and is the same on either outcome; the measurement BD-040 depends on N36-25"
+  },
+  {
+   "bead": "BD-039",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-13",
+    "N00-14"
+   ],
+   "note": "consumers of the harness: both already depend on BD-039"
+  },
+  {
+   "bead": "BD-039",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block's schema and completeness check exist at M0 in N36-13, which is what the minimal writer for incumbent runs fills; the named carrier BD-216 (the full harness writer) is M2 and a higher seed, so it is related (under edges)"
+  },
+  {
+   "bead": "BD-143",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the ledger record, its tables and the 2% closure check (M0); N39a-23 comes with it"
+  },
+  {
+   "bead": "BD-143",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-25"
+   ],
+   "note": "the wrapper and tag map (M0) are what the M1 runs need; arm B per stratum (N39a-20) is M3 and is recorded as related under edges"
+  },
+  {
+   "bead": "BD-143",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39a-05"
+   ],
+   "note": "the card schema is M3 (later milestone); BD-143 authors its own public development cards at M1, which join the pool"
+  },
+  {
+   "bead": "BD-143",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N39a-37"
+   ],
+   "note": "the six ceiling calculators (M1); the registration record and GATE-TENFOLD-09 (N39a-38) depend on BD-143 and stay related"
+  },
+  {
+   "bead": "BD-147",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-05",
+    "N40-04"
+   ],
+   "note": "shared exit procedure, record and runner; the exit as a register query with its load table"
+  },
+  {
+   "bead": "BD-147",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-11",
+    "N40-13",
+    "N40-18"
+   ],
+   "note": "the three program-gate records the review reads; the named carrier BET-12 already depends on BD-147, so it is not a dependency of the review"
+  },
+  {
+   "bead": "BD-147",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N14a-20",
+    "N14a-16",
+    "N25b-04",
+    "N32a-05",
+    "N38b-24",
+    "N40-23",
+    "N40-26",
+    "N40-27",
+    "N40-29"
+   ],
+   "note": "the five kill decisions due by the M1 exit and the four fallback ledgers that hold their rows"
+  },
+  {
+   "bead": "BD-147",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N13-36",
+    "N14b-24",
+    "N14b-33",
+    "N14b-34",
+    "N15b-13",
+    "N18b-45",
+    "N25e-30",
+    "N25e-33",
+    "N29b-23",
+    "N41-30",
+    "N38b-46",
+    "N38b-10",
+    "N38b-11",
+    "N38a-07"
+   ],
+   "note": "the M1 measurement beads of the late gates the exit record dispositions (MARROW-06 on the referee, SKEL-11, SINEW-10, TRAC-12 on the referee, AUGUR-31, AUGUR-32, CHRON-14 on the referee, WS-08, FID-09 and GAUNT-11 first rows, GAUNT-04 for the checker, GAUNT-09)"
+  },
+  {
+   "bead": "BD-314",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-26",
+    "N39b-27",
+    "N39b-28",
+    "N39b-29",
+    "N39b-30",
+    "N39b-31",
+    "N39b-33"
+   ],
+   "note": "the protocol cannot be committed before these owner decisions are recorded (each has a fail-closed default); N41-06 and N41-15 carry the same questions in U41 (reported as cross-group duplicates)"
+  },
+  {
+   "bead": "BD-314",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-36"
+   ],
+   "note": "component of the capstone: GATE-TENFOLD-10 measured"
+  },
+  {
+   "bead": "BD-314",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39b-37"
+   ],
+   "note": "component of the capstone: the rival audit and pack of GATE-TENFOLD-11; the 10% reproduction on the frozen arms is recorded in the flow of BD-315"
+  },
+  {
+   "bead": "BD-314",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N39b-01",
+    "N39b-05"
+   ],
+   "note": "the pre-registration quotes the rules; the engines that apply them are used at close by BD-317"
+  },
+  {
+   "bead": "BD-314",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N39b-22"
+   ],
+   "note": "component of the capstone: GATE-TENFOLD-03 recorded with its negative controls"
+  },
+  {
+   "bead": "BD-314",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N40-14"
+   ],
+   "note": "the register's pre-opening conjunction reads this bead's records and depends on BD-314"
+  },
+  {
+   "bead": "BD-315",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-37"
+   ],
+   "note": "the audit, pack digest and reproduction check that the frozen arms must pass before any sealed run"
+  },
+  {
+   "bead": "BD-315",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-44"
+   ],
+   "note": "the one-receipt pipeline of the composed incumbent (M2) is built before arm C, its first form, is composed"
+  },
+  {
+   "bead": "BD-315",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39b-28",
+    "N39b-29",
+    "N39b-31"
+   ],
+   "note": "advocates and budget, the gate's compute envelope and the common agent must be decided before an arm is tuned and frozen"
+  },
+  {
+   "bead": "BD-315",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-317"
+   ],
+   "note": "BD-317 depends on BD-315 (seed order 317 > 315)"
+  },
+  {
+   "bead": "BD-317",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-27",
+    "N39a-28",
+    "N39a-29",
+    "N39a-30",
+    "N39a-32",
+    "N39a-35"
+   ],
+   "note": "the statistics the scoring step runs"
+  },
+  {
+   "bead": "BD-317",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-06",
+    "N39a-07",
+    "N39a-09"
+   ],
+   "note": "acceptance procedures, receipts and direct evaluation used during the gate and audited at close"
+  },
+  {
+   "bead": "BD-317",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-15",
+    "N39a-13"
+   ],
+   "note": "the sealing ledger and the family registry with rotation and retirement"
+  },
+  {
+   "bead": "BD-317",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N39a-37"
+   ],
+   "note": "the ceilings evaluated on the rival's closed ledger"
+  },
+  {
+   "bead": "BD-428",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-42"
+   ],
+   "note": "epic: no dependencies; GATE-TENFOLD-12 is measured by N39b-42 (program row N40-21)"
+  },
+  {
+   "bead": "BD-428",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-27",
+    "N39b-29",
+    "N39b-30"
+   ],
+   "note": "epic: no dependencies; the decisions it waits on (N41-06 is the U41 copy of OPEN-PROG-2)"
+  },
+  {
+   "bead": "BD-428",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N25c-34"
+   ],
+   "note": "epic; GATE-AUGUR-24 is measured at M8 (later milestone): the facility stratum stays conditional"
+  },
+  {
+   "bead": "BD-429",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-27",
+    "N39a-28",
+    "N39a-29",
+    "N39a-30",
+    "N39a-32",
+    "N39a-35"
+   ],
+   "note": "epic: no dependencies; the implementation it reuses"
+  },
+  {
+   "bead": "BD-429",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-428"
+   ],
+   "note": "epic to epic"
+  },
+  {
+   "bead": "BD-430",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-37"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-430",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-43",
+    "N39b-45",
+    "N39b-47"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-430",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-28",
+    "N39b-31",
+    "N39b-32",
+    "N39b-07"
+   ],
+   "note": "epic: no dependencies; OPEN-TENFOLD-9 is carried in the Considerations of N39b-07"
+  },
+  {
+   "bead": "BD-430",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N33b-03"
+   ],
+   "note": "epic: no dependencies; the tournament pin freeze"
+  },
+  {
+   "bead": "BD-431",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-01",
+    "N39b-02",
+    "N39b-03",
+    "N39b-04"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-431",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33b-03"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-431",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-313",
+    "BD-298"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-431",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-320",
+    "BD-322"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-433",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-05",
+    "N39b-43"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-433",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-18",
+    "N39b-19",
+    "N39b-20",
+    "N39b-21"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-433",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-43",
+    "N39b-45",
+    "N39b-46",
+    "N39b-47"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-433",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N41-05"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-433",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-305",
+    "BD-303"
+   ],
+   "note": "epic: no dependencies"
+  },
+  {
+   "bead": "BD-434",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-05",
+    "N40-04"
+   ],
+   "note": "shared exit procedure, record and runner; the register query"
+  },
+  {
+   "bead": "BD-434",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-14",
+    "N40-16",
+    "N40-17",
+    "N40-20",
+    "N40-21",
+    "N40-22",
+    "N40-28"
+   ],
+   "note": "the program-gate records and the fallback ledger the review reads"
+  },
+  {
+   "bead": "BD-434",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39b-13",
+    "N39b-21",
+    "N39b-42",
+    "N39b-47",
+    "N39b-22",
+    "N39b-36",
+    "N39b-37",
+    "N39b-03",
+    "N39b-04",
+    "N39b-06",
+    "N39b-07"
+   ],
+   "note": "the tournament's record and the gate and kill-decision beads of the second half; the epics it lists cannot block, so the review depends on these tasks directly"
+  },
+  {
+   "bead": "BD-434",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N41-05",
+    "N41-06",
+    "N39b-26",
+    "N39b-27"
+   ],
+   "note": "the decisions whose record the review checks"
+  },
+  {
+   "bead": "N39-CX",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the control runner and the five rules of controls.toml (registry skeleton, M0); BD-025 already creates the registry"
+  },
+  {
+   "bead": "N39-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the known-answer row schema, loader and derivation-file rule (registry skeleton, M0)"
+  },
+  {
+   "bead": "N39-REF",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N24-REF"
+   ],
+   "note": "BD-005 (already a dependency) delivers refusals.toml and its loader; allocating the new study-block code is this bead's own acceptance criterion; N24-REF holds the neighbouring rows of that block"
+  },
+  {
+   "bead": "N39-REF",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-01"
+   ],
+   "note": "the harness skeleton that emits the harness's refusal records"
+  },
+  {
+   "bead": "N39a-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-18"
+   ],
+   "note": "later milestone (M7); the kit consumes these records"
+  },
+  {
+   "bead": "N39a-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-27",
+    "N39b-28"
+   ],
+   "note": "the role registry is the same whoever is named; the decisions fill it"
+  },
+  {
+   "bead": "N39a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-20"
+   ],
+   "note": "later milestone (M7); the external re-run lifts the lock"
+  },
+  {
+   "bead": "N39a-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-30"
+   ],
+   "note": "later milestone (M3); the clock is parameterized by H"
+  },
+  {
+   "bead": "N39a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block and its completeness rule at M0 (N36-13); the named carrier BD-216 is M2 (later milestone) and is related (under edges)"
+  },
+  {
+   "bead": "N39a-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-35",
+    "N39b-29"
+   ],
+   "note": "the envelope classes are vocabulary filled by the owner decisions; the default class holds until then"
+  },
+  {
+   "bead": "N39a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-02"
+   ],
+   "note": "the canary and leak audit consume the card's sealed part and will depend on this bead"
+  },
+  {
+   "bead": "N39a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-19",
+    "BD-270"
+   ],
+   "note": "the .fmcw file with its validation and replay (N26a-19, the specific carrier inside the named seed's subsystem) and the legality profile (BD-270); the shrink verb BD-274 produces such answers for arm A and is not needed to accept one (related, under edges)"
+  },
+  {
+   "bead": "N39a-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-01",
+    "N39b-03"
+   ],
+   "note": "the disqualification engine and the decision consume this bead's false-certificate signal"
+  },
+  {
+   "bead": "N39a-07",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the tool is an external program pinned and wrapped out of process inside this bead; OPEN-AUGUR-4 governs product use only (N25d-45)"
+  },
+  {
+   "bead": "N39a-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-26"
+   ],
+   "note": "the adapter is written for the candidate engines the decision names (default first)"
+  },
+  {
+   "bead": "N39a-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-301"
+   ],
+   "note": "the observation and action interface the controller process speaks"
+  },
+  {
+   "bead": "N39a-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-18"
+   ],
+   "note": "later milestone (M7); the kit releases the paired results"
+  },
+  {
+   "bead": "N39a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-14"
+   ],
+   "note": "the register row reads this bead's record and depends on it through BD-314"
+  },
+  {
+   "bead": "N39a-10",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-146, which carries the known-answer registry with derivation files (N38a-12)"
+  },
+  {
+   "bead": "N39a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-28",
+    "N40-03"
+   ],
+   "note": "the kill row of the ten-fold ledger and the decision ADR template"
+  },
+  {
+   "bead": "N39a-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-26"
+   ],
+   "note": "the decision supplies the candidate list per stratum in preference order"
+  },
+  {
+   "bead": "N39a-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-225",
+    "BD-227"
+   ],
+   "note": "the strata registry names world types as data; it is not blocked by the grammar"
+  },
+  {
+   "bead": "N39a-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-109",
+    "BD-246"
+   ],
+   "note": "names robot archetypes as data"
+  },
+  {
+   "bead": "N39a-12",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-125",
+    "BD-201",
+    "BD-253",
+    "BD-368"
+   ],
+   "note": "names task families as data; BD-368 is M4"
+  },
+  {
+   "bead": "N39a-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-35",
+    "N39b-34"
+   ],
+   "note": "the result types and the population bound are consumers of the family registry (N39b-35 depends on N39a-13); the counts 32 and 46 are stated inline"
+  },
+  {
+   "bead": "N39a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-02",
+    "N39b-04"
+   ],
+   "note": "the leak audit and its decision trigger the retirement transition this bead provides"
+  },
+  {
+   "bead": "N39a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-42"
+   ],
+   "note": "later milestone (M7); the gate script measures these controls"
+  },
+  {
+   "bead": "N39a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-131"
+   ],
+   "note": "the quantifier-order fixture that must be present in the envelope stratum"
+  },
+  {
+   "bead": "N39a-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-14"
+   ],
+   "note": "the register conjunction reads the sealing ledger; it depends on BD-314, which depends on this bead"
+  },
+  {
+   "bead": "N39a-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-33"
+   ],
+   "note": "the ledger refuses step 2 without a ratified block whatever its values; BD-314 depends on both"
+  },
+  {
+   "bead": "N39a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-292"
+   ],
+   "note": "used by arm A inside a warm campaign; the harness mechanism does not need it"
+  },
+  {
+   "bead": "N39a-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-320"
+   ],
+   "note": "later milestone (M4); a standing asset arm A may declare"
+  },
+  {
+   "bead": "N39a-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-31"
+   ],
+   "note": "the manifest's agent block is the same on any outcome; the arm beads that freeze depend on the decision"
+  },
+  {
+   "bead": "N39a-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-37"
+   ],
+   "note": "the audit consumes the manifest and depends on N39a-18"
+  },
+  {
+   "bead": "N39a-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-01"
+   ],
+   "note": "the disqualification engine consumes the manifest and depends on N39a-18"
+  },
+  {
+   "bead": "N39a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-31",
+    "N39b-29"
+   ],
+   "note": "parameters of the equal-terms record; the arm beads depend on the decisions"
+  },
+  {
+   "bead": "N39a-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-313"
+   ],
+   "note": "the documentation budget is measured from robot-docs when an arm is frozen; the mechanism is parameterized"
+  },
+  {
+   "bead": "N39a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39b-32"
+   ],
+   "note": "the licence reading decides which incumbents may be named per stratum (M0); who the advocates are (N39b-28) is recorded as related under edges"
+  },
+  {
+   "bead": "N39a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-13"
+   ],
+   "note": "the capability checklist is derived from the incumbent capability register"
+  },
+  {
+   "bead": "N39a-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39b-08"
+   ],
+   "note": "arm B is composed from the pinned incumbents and frozen warm configurations of the M0 audit"
+  },
+  {
+   "bead": "N39a-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-07",
+    "N39b-43"
+   ],
+   "note": "the tie test and its decision consume arm C's record"
+  },
+  {
+   "bead": "N39a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-44"
+   ],
+   "note": "arm C is the first form of the composed incumbent W and is built on the one-receipt pipeline (M2)"
+  },
+  {
+   "bead": "N39a-21",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-07"
+   ],
+   "note": "OPEN-TENFOLD-9 blocks nothing; it is carried in the Considerations of N39b-07"
+  },
+  {
+   "bead": "N39a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-14"
+   ],
+   "note": "the first reading of KILL-GYMADAPT decides whether the swap runs through the adapter or through whole rollouts"
+  },
+  {
+   "bead": "N39a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-198"
+   ],
+   "note": "the product's own PPO, the ours-with-ours combination"
+  },
+  {
+   "bead": "N39a-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "later milestone (M4); the product's phase names are mapped onto the thirteen phases, not required by them"
+  },
+  {
+   "bead": "N39a-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-216"
+   ],
+   "note": "later milestone (M2); a naming correspondence only"
+  },
+  {
+   "bead": "N39a-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block a ledger must reference exists at M0 in N36-13; the named carrier BD-216 (the full writer) is M2 and is related (under edges); BD-039 fills the block for incumbent runs"
+  },
+  {
+   "bead": "N39a-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-316"
+   ],
+   "note": "later milestone (M3); BD-316 delivers arm A's tag map and consumes this bead's proxy and record form"
+  },
+  {
+   "bead": "N39a-25",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the timers are the incumbent software's own logging; reading them is part of this bead's wrapper"
+  },
+  {
+   "bead": "N39a-26",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N36-27",
+    "N23b-14",
+    "N16b-12",
+    "BD-328"
+   ],
+   "note": "the kill decisions are later (M2, M3, M4) and write their lost factors into this record; they are its consumers"
+  },
+  {
+   "bead": "N39a-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-01"
+   ],
+   "note": "the 22 target rows as data (M0), from which rows 20 to 22 are read; GATE-SPARK-10 itself (BD-184, M2) is later"
+  },
+  {
+   "bead": "N39a-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-35"
+   ],
+   "note": "the rate ratio is defined beside this bead's estimand in N39b-35, which depends on N39a-27; never interchanged"
+  },
+  {
+   "bead": "N39a-27",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-43",
+    "N39b-44"
+   ],
+   "note": "the three-arm statistics consume this estimator"
+  },
+  {
+   "bead": "N39a-28",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-35",
+    "N39b-36"
+   ],
+   "note": "the contrast and the rare-tail gate use this bootstrap as their negative control; they depend on the scorer, not the reverse"
+  },
+  {
+   "bead": "N39a-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-33"
+   ],
+   "note": "the guard is parameterized by floor and cell limit; the ratification fills them"
+  },
+  {
+   "bead": "N39a-30",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-35"
+   ],
+   "note": "N39b-35 restates the rule for population results and depends on N39a-30"
+  },
+  {
+   "bead": "N39a-31",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-33"
+   ],
+   "note": "the ratification of OPEN-TENFOLD-8 includes this decision and depends on it (recorded under edges)"
+  },
+  {
+   "bead": "N39a-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-01"
+   ],
+   "note": "the verdict takes a per-arm disqualification input defined in its own record; the engine that produces it depends on the harness records, not the reverse"
+  },
+  {
+   "bead": "N39a-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-43",
+    "N39b-05",
+    "N39b-07"
+   ],
+   "note": "the tie test, the outcome engine and the decision consume the verdict record (N39b-05 depends on N39a-32)"
+  },
+  {
+   "bead": "N39a-32",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-35"
+   ],
+   "note": "population wording is applied by the outcome engine from the contrast result; N39b-35 depends on the scorer's statistics"
+  },
+  {
+   "bead": "N39a-32",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N39b-20"
+   ],
+   "note": "later milestone (M7)"
+  },
+  {
+   "bead": "N39a-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-34"
+   ],
+   "note": "the product verb is a second surface of the same analysis; neither blocks the other (both rest on BD-124)"
+  },
+  {
+   "bead": "N39a-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-30"
+   ],
+   "note": "the pre-analysis applies the default deadline rule itself and is parameterized by H; the decision records the rule"
+  },
+  {
+   "bead": "N39a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-28",
+    "N40-03"
+   ],
+   "note": "the kill row of the ten-fold ledger and the decision ADR template"
+  },
+  {
+   "bead": "N39a-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-05"
+   ],
+   "note": "the outcome engine applies the descriptive rule this decision names; the named BET-13 is only cited (M7)"
+  },
+  {
+   "bead": "N39a-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-02"
+   ],
+   "note": "the leak audit raises the signal and owns the operational leak alarm; it consumes the monitor's alarm channel"
+  },
+  {
+   "bead": "N39a-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-06"
+   ],
+   "note": "the decision reads the monitor's stop; it depends on BD-317"
+  },
+  {
+   "bead": "N39a-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-05",
+    "N39b-15"
+   ],
+   "note": "sentences and wording are produced from this record's types by the outcome engine and the lint, which come after it"
+  },
+  {
+   "bead": "N39a-36",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-18",
+    "N39b-19"
+   ],
+   "note": "the kit (M7) carries the record; the scorer regenerates its rendering"
+  },
+  {
+   "bead": "N39a-36",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-43",
+    "N39b-45"
+   ],
+   "note": "recovery ratios and ablations are filled into the record by the gate report bead N39b-14"
+  },
+  {
+   "bead": "N39a-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-17"
+   ],
+   "note": "the exact thesis calculators (M0) whose formulas are reused where they coincide"
+  },
+  {
+   "bead": "N39a-37",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-040",
+    "BD-143"
+   ],
+   "note": "the calculators are code and do not wait for the measurements; BD-143 depends on N39a-37"
+  },
+  {
+   "bead": "N39a-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "the method-experiment register in which a speed comparison is registered"
+  },
+  {
+   "bead": "N39a-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-09"
+   ],
+   "note": "the funding record per work package that the funding check reads"
+  },
+  {
+   "bead": "N39a-38",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N40-18"
+   ],
+   "note": "the program-gate row reads this bead's record"
+  },
+  {
+   "bead": "N39a-38",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N35-REF"
+   ],
+   "note": "the registry row of FROB-REF-866 (M0)"
+  },
+  {
+   "bead": "N39a-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-28",
+    "N40-03"
+   ],
+   "note": "the kill row of the ten-fold ledger and the decision ADR template"
+  },
+  {
+   "bead": "N39a-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-09"
+   ],
+   "note": "the funding records whose speed justification the decision strikes or keeps"
+  },
+  {
+   "bead": "N39a-39",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-224",
+    "N39b-10"
+   ],
+   "note": "later milestone (M2): the re-read is N39b-10 and is recorded by the M2 exit review"
+  },
+  {
+   "bead": "N39a-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-14"
+   ],
+   "note": "the register row reads this bead's record"
+  },
+  {
+   "bead": "N39a-40",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-37"
+   ],
+   "note": "a sibling pre-opening gate; the checker only tests that its record exists"
+  },
+  {
+   "bead": "N39a-40",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39b-22",
+    "N39a-41"
+   ],
+   "note": "a sibling pre-opening gate; the named N39a-41 exercises the statistics only"
+  },
+  {
+   "bead": "N39a-41",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-22"
+   ],
+   "note": "the recorded gate and the three controls that need disqualification machinery are N39b-22's; the two scripts share the worked cards"
+  },
+  {
+   "bead": "N39a-41",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39b-19",
+    "N39b-18"
+   ],
+   "note": "level 1 of the kit reuses these fixtures; the kit is M7"
+  },
+  {
+   "bead": "N39a-42",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "superseded by N39-REF, whose dependency BD-005 delivers the product registry and its loader"
+  },
+  {
+   "bead": "N39a-42",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the two halves are one registry now: every row of this bead is folded into N39-REF"
+  },
+  {
+   "bead": "N39b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-15"
+   ],
+   "note": "the gate's event log and sealing ledger"
+  },
+  {
+   "bead": "N39b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-18"
+   ],
+   "note": "the freeze manifest and its content address"
+  },
+  {
+   "bead": "N39b-01",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-09"
+   ],
+   "note": "receipts and the submission index"
+  },
+  {
+   "bead": "N39b-01",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N39a-24",
+    "N39a-04"
+   ],
+   "note": "ledger records, and the resource caps whose breach censors a run"
+  },
+  {
+   "bead": "N39b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-05",
+    "N39a-15"
+   ],
+   "note": "the card with its sealed part and canary field; the ledger entry that records when a card is shown"
+  },
+  {
+   "bead": "N39b-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-09"
+   ],
+   "note": "the acceptance service's submissions and receipts; per-arm transcript roots are set by the isolation controls N39b-38 (already related)"
+  },
+  {
+   "bead": "N39b-02",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-261 (the firewall and sealed-field audit), which depends on BD-258"
+  },
+  {
+   "bead": "N39b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25b-03",
+    "N25b-04"
+   ],
+   "note": "the false-certificate procedure and its standing kill decision in the mission subsystem"
+  },
+  {
+   "bead": "N39b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-07"
+   ],
+   "note": "the direct evaluation that produces the false-certificate signal"
+  },
+  {
+   "bead": "N39b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-13"
+   ],
+   "note": "family rotation, retirement and the development pool"
+  },
+  {
+   "bead": "N39b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-32"
+   ],
+   "note": "the typed verdict record"
+  },
+  {
+   "bead": "N39b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-15"
+   ],
+   "note": "the ledger entry that commits the first suite hash, to which the parameter block is bound"
+  },
+  {
+   "bead": "N39b-05",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-37"
+   ],
+   "note": "the binding ceiling named from the rival's closed ledger"
+  },
+  {
+   "bead": "N39b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-20"
+   ],
+   "note": "the lever register and expected ranges that the measured table replaces"
+  },
+  {
+   "bead": "N39b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-15"
+   ],
+   "note": "the claims-wording registry that carries the speed claim per class"
+  },
+  {
+   "bead": "N39b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-14"
+   ],
+   "note": "the re-audit of documented incumbent absences"
+  },
+  {
+   "bead": "N39b-07",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "§32: no bead carries a backend dispatch in the verb registry through which a layer over an incumbent engine could sit behind the same verbs, schemas and checker; it is the fallback branch of KILL-TENFOLD-TIE and is not needed to take the decision"
+  },
+  {
+   "bead": "N39b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the ledger record into which the no-agent phases are read"
+  },
+  {
+   "bead": "N39b-08",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-039, whose scope includes the comparator registry"
+  },
+  {
+   "bead": "N39b-08",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block and FROB-REF-862 (also upstream through BD-040)"
+  },
+  {
+   "bead": "N39b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-37",
+    "N39a-38"
+   ],
+   "note": "bead superseded by N39a-39, which already depends on N39a-38 and through it on N39a-37"
+  },
+  {
+   "bead": "N39b-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-09"
+   ],
+   "note": "the funding record per work package (the kept bead N39a-39 takes the same dependency)"
+  },
+  {
+   "bead": "N39b-09",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N00-20"
+   ],
+   "note": "the lever register with the eight levers and their owning subsystems"
+  },
+  {
+   "bead": "N39b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-27"
+   ],
+   "note": "the KILL-PARITY decision record at the M2 exit"
+  },
+  {
+   "bead": "N39b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-37"
+   ],
+   "note": "the general-bound and horizon-cap calculators"
+  },
+  {
+   "bead": "N39b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-13",
+    "N23b-14"
+   ],
+   "note": "GATE-CORTEX-16 measured and KILL-GYMADAPT read"
+  },
+  {
+   "bead": "N39b-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BET-10",
+    "BD-374"
+   ],
+   "note": "later milestone (M4); the A/B takes its incumbent arm from this record"
+  },
+  {
+   "bead": "N39b-11",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-22"
+   ],
+   "note": "the learner-swap diagnostic"
+  },
+  {
+   "bead": "N39b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-01",
+    "N39a-15",
+    "N39a-18",
+    "N39a-09",
+    "N39a-03"
+   ],
+   "note": "the harness skeleton and the seal, freeze, campaign and receipt commands the script drives"
+  },
+  {
+   "bead": "N39b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-13",
+    "N39a-05"
+   ],
+   "note": "the family registry and the card; the rehearsal suite itself is authored by this bead and labelled synthetic"
+  },
+  {
+   "bead": "N39b-12",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-27",
+    "N39a-28",
+    "N39a-29",
+    "N39a-32",
+    "N39a-35"
+   ],
+   "note": "the scoring statistics and the monitor"
+  },
+  {
+   "bead": "N39b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-03"
+   ],
+   "note": "the tournament freeze of every pin and of the toolchain"
+  },
+  {
+   "bead": "N39b-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-27",
+    "N39a-02",
+    "N39a-11",
+    "N38a-34"
+   ],
+   "note": "the adjudicator decision, the role registry with its labels, the adjudication mode per stratum, and the adjudication dry run"
+  },
+  {
+   "bead": "N39b-13",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-32",
+    "N39a-35"
+   ],
+   "note": "the verdict rule and the monitor in report-only mode"
+  },
+  {
+   "bead": "N39b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-36"
+   ],
+   "note": "the report record, its two ratio types and the descriptive block"
+  },
+  {
+   "bead": "N39b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-37"
+   ],
+   "note": "the six ceilings"
+  },
+  {
+   "bead": "N39b-14",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-04"
+   ],
+   "note": "the cost columns and the two derived units"
+  },
+  {
+   "bead": "N39b-14",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N37-23"
+   ],
+   "note": "the const-false no-authorization flags type (M1)"
+  },
+  {
+   "bead": "N39b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-15"
+   ],
+   "note": "the claims-wording registry and its gate-conditioned lint"
+  },
+  {
+   "bead": "N39b-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "later milestone (M5); only a reality band could replace the no-claim label"
+  },
+  {
+   "bead": "N39b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-32",
+    "N39a-29",
+    "N39a-27"
+   ],
+   "note": "the verdict rule, the guard and the censoring rule as callable code"
+  },
+  {
+   "bead": "N39b-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register and its record form"
+  },
+  {
+   "bead": "N39b-16",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-13"
+   ],
+   "note": "the family registry with the retired families; their measured times come with BD-317 (already a dependency)"
+  },
+  {
+   "bead": "N39b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-01",
+    "N39a-15",
+    "N39a-18"
+   ],
+   "note": "the harness driver's seal and freeze commands (also upstream through N39b-12)"
+  },
+  {
+   "bead": "N39b-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33b-03"
+   ],
+   "note": "the tournament stack lock whose digest the freeze record carries"
+  },
+  {
+   "bead": "N39b-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-34"
+   ],
+   "note": "the adjudication dry run with a planted false acceptance"
+  },
+  {
+   "bead": "N39b-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-01",
+    "N39a-05",
+    "N39a-09",
+    "N39a-18",
+    "N39a-24",
+    "N39a-36"
+   ],
+   "note": "the five harness records the kit packages"
+  },
+  {
+   "bead": "N39b-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-02",
+    "N39a-06",
+    "N39a-07"
+   ],
+   "note": "the referee protocol channel and the acceptance code released at close"
+  },
+  {
+   "bead": "N39b-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N37-17"
+   ],
+   "note": "the computed private mark over lineage (FROB-REF-899 is refused on it)"
+  },
+  {
+   "bead": "N39b-18",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N37-18"
+   ],
+   "note": "the licence join at the export door"
+  },
+  {
+   "bead": "N39b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-27",
+    "N39a-28",
+    "N39a-29",
+    "N39a-30",
+    "N39a-32"
+   ],
+   "note": "the statistics this binary packages; their design governs where the two texts differ"
+  },
+  {
+   "bead": "N39b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24",
+    "N39a-09",
+    "N39a-15"
+   ],
+   "note": "the ledger and receipt records and the event log it reads"
+  },
+  {
+   "bead": "N39b-19",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-026 (the standard-library-only auditor sources)"
+  },
+  {
+   "bead": "N39b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block; the fingerprint BD-029 is already a dependency"
+  },
+  {
+   "bead": "N39b-20",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency N39b-18, which releases the protocol and acceptance code in the kit"
+  },
+  {
+   "bead": "N39b-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-039",
+    "N39a-18"
+   ],
+   "note": "recorded environments and the launcher; the pins in each frozen manifest"
+  },
+  {
+   "bead": "N39b-21",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the second-host lane belongs to the shared harness STD-E2E, already a dependency"
+  },
+  {
+   "bead": "N39b-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N37-21"
+   ],
+   "note": "shares the private scene fixture; the private mark itself arrives through N39b-18 (BD-305, N37-17)"
+  },
+  {
+   "bead": "N39b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-35",
+    "N39a-32"
+   ],
+   "note": "the monitor and the refusal of a fixed-n verdict at its stopping time"
+  },
+  {
+   "bead": "N39b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-15",
+    "N39a-18"
+   ],
+   "note": "the sealing and freeze commands used to plant the two controls"
+  },
+  {
+   "bead": "N39b-22",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the gate recorder and the same-run control rule"
+  },
+  {
+   "bead": "N39b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-15",
+    "N39a-02"
+   ],
+   "note": "the event log and the role registry"
+  },
+  {
+   "bead": "N39b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-18"
+   ],
+   "note": "freeze manifests and their publication entries"
+  },
+  {
+   "bead": "N39b-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "ledger records"
+  },
+  {
+   "bead": "N39b-23",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N39a-27",
+    "N39a-32"
+   ],
+   "note": "cells, pairs and exclusions; the verdict's single invocation record"
+  },
+  {
+   "bead": "N39b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-10"
+   ],
+   "note": "bead superseded by N39a-11, which already depends on N39a-10"
+  },
+  {
+   "bead": "N39b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-08"
+   ],
+   "note": "the adapter's cross-home mode over the product's referee and the rival's CPU reference (upstream of N39a-10)"
+  },
+  {
+   "bead": "N39b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-33"
+   ],
+   "note": "bead superseded by N39a-34, which already depends on N39a-33"
+  },
+  {
+   "bead": "N39b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-143"
+   ],
+   "note": "the public development missions of the two M3 strata exist at M1 through BD-143; the strata registry and class descriptions (N39a-12) are M3 and related (under edges)"
+  },
+  {
+   "bead": "N39b-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39a-08"
+   ],
+   "note": "later milestone (M3); the adapter is written for the engines this decision names and depends on it"
+  },
+  {
+   "bead": "N39b-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-05"
+   ],
+   "note": "the visibility decision bounds what an external adjudicator can be given"
+  },
+  {
+   "bead": "N39b-28",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-20",
+    "N39a-18"
+   ],
+   "note": "the tuning protocol and the manifest are the same whoever is named"
+  },
+  {
+   "bead": "N39b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the envelope classes against which the 40 device-hours are approved"
+  },
+  {
+   "bead": "N39b-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the compute classes E0 to E3"
+  },
+  {
+   "bead": "N39b-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39a-13"
+   ],
+   "note": "the default cell sizes are stated inline; the family registry does not block the decision"
+  },
+  {
+   "bead": "N39b-30",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-18",
+    "BD-315"
+   ],
+   "note": "the rule is applied to the frozen manifest's development scores inside the arm bead's flow; the decision records the rule and provisional values from BD-143"
+  },
+  {
+   "bead": "N39b-30",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39a-15",
+    "N39a-13"
+   ],
+   "note": "the deadline is bound to the suite commitment by BD-314, which depends on all three"
+  },
+  {
+   "bead": "N39b-31",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-18"
+   ],
+   "note": "later milestone (M3); the decision fills the manifest's agent block"
+  },
+  {
+   "bead": "N39b-31",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-313",
+    "BD-298"
+   ],
+   "note": "later milestone (M3); their length bounds the advocates' guide"
+  },
+  {
+   "bead": "N39b-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NAB-09",
+    "NAB-12"
+   ],
+   "note": "the source register and its entries for the incumbent engines (M0)"
+  },
+  {
+   "bead": "N39b-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N37-18",
+    "N37-17"
+   ],
+   "note": "later milestone (M3); export paths consult the licence reading"
+  },
+  {
+   "bead": "N39b-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39a-33"
+   ],
+   "note": "the statement quotes the planning table, whose values are stated inline"
+  },
+  {
+   "bead": "N39b-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39a-15"
+   ],
+   "note": "the binding to the commitment entry is made by BD-314, which depends on both"
+  },
+  {
+   "bead": "N39b-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-06"
+   ],
+   "note": "the existing eval.preanalyze with its exact enumerator"
+  },
+  {
+   "bead": "N39b-34",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the allocation is made by its dependency N39-REF"
+  },
+  {
+   "bead": "N39b-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-30"
+   ],
+   "note": "the exact non-inferiority bound into which the paired-difference form plugs"
+  },
+  {
+   "bead": "N39b-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-13"
+   ],
+   "note": "the cluster structure and the splits"
+  },
+  {
+   "bead": "N39b-35",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-09"
+   ],
+   "note": "receipts with per-arm acceptance times and blind scoring"
+  },
+  {
+   "bead": "N39b-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the gate recorder and the same-run control rule"
+  },
+  {
+   "bead": "N39b-37",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-18"
+   ],
+   "note": "the freeze manifest"
+  },
+  {
+   "bead": "N39b-37",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-15"
+   ],
+   "note": "the sealing ledger whose commitment step the audit precedes"
+  },
+  {
+   "bead": "N39b-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-09"
+   ],
+   "note": "submissions and receipts, to which the blind token is passed"
+  },
+  {
+   "bead": "N39b-38",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-19",
+    "N39a-18"
+   ],
+   "note": "the equal-terms record with its pair schedule, and the freeze manifests"
+  },
+  {
+   "bead": "N39b-38",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-27"
+   ],
+   "note": "the definition of a pair"
+  },
+  {
+   "bead": "N39b-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-128"
+   ],
+   "note": "inner and outer sets, witnesses and the unresolved band"
+  },
+  {
+   "bead": "N39b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-026"
+   ],
+   "note": "the offline auditor and its public schema"
+  },
+  {
+   "bead": "N39b-39",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-07"
+   ],
+   "note": "direct evaluation at sealed probe points and the family-answer row"
+  },
+  {
+   "bead": "N39b-39",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-289"
+   ],
+   "note": "confirmed: the paper-scale pilot of region evidence, already a dependency"
+  },
+  {
+   "bead": "N39b-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-05",
+    "N39a-13"
+   ],
+   "note": "the mission card and the family registry"
+  },
+  {
+   "bead": "N39b-40",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependencies BD-130 (stance), BD-202 (split-grip landing) and BD-291 (probe to choose)"
+  },
+  {
+   "bead": "N39b-41",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-292"
+  },
+  {
+   "bead": "N39b-41",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N25c-34"
+   ],
+   "note": "later milestone (M8); the facility stratum stays conditional on that gate"
+  },
+  {
+   "bead": "N39b-41",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-186 (the mixed-batch head-to-head)"
+  },
+  {
+   "bead": "N39b-41",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N39a-17"
+   ],
+   "note": "standing assets, the warm ratio and the crossover reuse count"
+  },
+  {
+   "bead": "N39b-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-13",
+    "N39a-14",
+    "N39a-05"
+   ],
+   "note": "the registration with families, the six controls and the control flags on each card"
+  },
+  {
+   "bead": "N39b-42",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-06",
+    "N39a-07"
+   ],
+   "note": "the acceptance procedures run on mutants and amendment verdicts"
+  },
+  {
+   "bead": "N39b-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "ledgers with the resource table"
+  },
+  {
+   "bead": "N39b-43",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N39a-21",
+    "N39b-44"
+   ],
+   "note": "the statistics are parameterized by arm; arm C and the pipeline supply the data"
+  },
+  {
+   "bead": "N39b-43",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-09",
+    "N39a-05"
+   ],
+   "note": "receipts with the obligations discharged; answer kinds on the card"
+  },
+  {
+   "bead": "N39b-44",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-13",
+    "N00-14"
+   ],
+   "note": "the capability register and the documented absences"
+  },
+  {
+   "bead": "N39b-44",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24",
+    "N39a-25"
+   ],
+   "note": "the ledger record and the process wrapper that times a rival pipeline by phase"
+  },
+  {
+   "bead": "N39b-44",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-09"
+   ],
+   "note": "the funding record reads this bead's record; it is its consumer"
+  },
+  {
+   "bead": "N39b-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-24",
+    "N39a-25"
+   ],
+   "note": "the ledger of a traced baseline run and its closure check"
+  },
+  {
+   "bead": "N39b-45",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-322",
+    "BD-320"
+   ],
+   "note": "later milestone (M4); the sampling controller BD-252 is already a dependency"
+  },
+  {
+   "bead": "N39b-45",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-20",
+    "N39a-18"
+   ],
+   "note": "arm B per stratum and its frozen manifest; the frozen instance comes from BD-315 (related)"
+  },
+  {
+   "bead": "N39b-46",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-302"
+  },
+  {
+   "bead": "N39b-46",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24",
+    "N28a-03"
+   ],
+   "note": "the harness ledger record for foreign arms; the product's phase attribution"
+  },
+  {
+   "bead": "N39b-46",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-304"
+   ],
+   "note": "imported text as data on every echoing verb"
+  },
+  {
+   "bead": "N39b-47",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the gate recorder and the same-run control rule"
+  },
+  {
+   "bead": "N39b-47",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-20",
+    "N39a-21"
+   ],
+   "note": "arm B and arm C as specified; the frozen instances come from BD-315 inside BD-317's flow"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-316",
+   "dep": "N39a-40",
+   "as": "dep",
+   "why": "coverage (d) of U39a: arm A cannot start a sealed campaign before the freeze-and-seal checker's pre-open record passes"
+  },
+  {
+   "bead": "BD-317",
+   "dep": "N39a-40",
+   "as": "dep",
+   "why": "coverage (d) of U39a: the gate record cites the freeze-and-seal record of GATE-TENFOLD-04"
+  },
+  {
+   "bead": "BD-317",
+   "dep": "N39a-34",
+   "as": "dep",
+   "why": "coverage (d) of U39a: the reachability decisions and the pre-run notice must exist before the suite is opened and scored"
+  },
+  {
+   "bead": "BD-317",
+   "dep": "N39a-11",
+   "as": "dep",
+   "why": "coverage (d) of U39a: the adjudication mode per stratum is part of the commitment the gate is scored under"
+  },
+  {
+   "bead": "BD-040",
+   "dep": "N39a-24",
+   "as": "dep",
+   "why": "coverage (d) of U39a: the no-agent phases are read into the ledger record frob.tenfold.ledger/1 (M0)"
+  },
+  {
+   "bead": "BD-040",
+   "dep": "N39a-25",
+   "as": "dep",
+   "why": "coverage (d) of U39a: the rival process wrapper and tag map time the incumbent runs by phase (M0)"
+  },
+  {
+   "bead": "BD-429",
+   "dep": "N39a-32",
+   "as": "related",
+   "why": "coverage (d) of U39a; BD-429 is an epic and carries no dependencies"
+  },
+  {
+   "bead": "BD-429",
+   "dep": "N39a-33",
+   "as": "related",
+   "why": "coverage (d) of U39a; BD-429 is an epic and carries no dependencies"
+  },
+  {
+   "bead": "N39b-33",
+   "dep": "N39a-31",
+   "as": "dep",
+   "why": "coverage (e)1 of U39a: the ratification of OPEN-TENFOLD-8 includes the choice of the non-inferiority rule, which N39a-31 prepares"
+  },
+  {
+   "bead": "BD-314",
+   "dep": "N39a-40",
+   "as": "dep",
+   "why": "capstone and component: the seed's done-condition names GATE-TENFOLD-04, which N39a-40 measures; the drafted dependency of N39a-40 on BD-314 was moved to related in the file"
+  },
+  {
+   "bead": "BD-314",
+   "dep": "N39b-40",
+   "as": "dep",
+   "why": "the sealed suite of the envelope and sensing strata, whose hash BD-314 commits, is authored from these templates"
+  },
+  {
+   "bead": "N39b-35",
+   "dep": "N39a-27",
+   "as": "dep",
+   "why": "the restricted-time ratio of N39b-35 is the estimator of N39a-27; N39b-35 adds the rate ratio beside it"
+  },
+  {
+   "bead": "N39a-41",
+   "dep": "N39-KA",
+   "as": "dep",
+   "why": "the rehearsal runs the worked-card fixtures that the known-answer registry holds"
+  },
+  {
+   "bead": "N39a-41",
+   "dep": "N39-CX",
+   "as": "dep",
+   "why": "the planted wrong scorers are entries and files of the negative-control registry"
+  },
+  {
+   "bead": "N39b-13",
+   "dep": "N39b-16",
+   "as": "dep",
+   "why": "the tournament follows the pilot of its decision rule; it reached the pilot only through the epic BD-429, which cannot carry a dependency"
+  },
+  {
+   "bead": "N39b-16",
+   "dep": "N39a-33",
+   "as": "dep",
+   "why": "the pilot runs the pre-analysis machinery of N39a-33 on the tournament's planned cells"
+  },
+  {
+   "bead": "N39b-14",
+   "dep": "N39b-23",
+   "as": "related",
+   "why": "the auditor checks INV-TENFOLD-08 over the generated report"
+  },
+  {
+   "bead": "BD-143",
+   "dep": "N39a-20",
+   "as": "related",
+   "why": "worksheet need 2 of BD-143: arm B per stratum is M3; the M1 baseline configuration becomes its starting point"
+  },
+  {
+   "bead": "N39a-20",
+   "dep": "N39b-28",
+   "as": "related",
+   "why": "worksheet need 1 of N39a-20: the tuning protocol is the same whoever the advocates are"
+  },
+  {
+   "bead": "N39a-24",
+   "dep": "BD-216",
+   "as": "related",
+   "why": "worksheet need 1 of N39a-24: the named carrier, the full disclosure writer, is M2"
+  },
+  {
+   "bead": "BD-039",
+   "dep": "BD-216",
+   "as": "related",
+   "why": "worksheet need 4 of BD-039: the named carrier is M2 and a higher seed"
+  },
+  {
+   "bead": "N39a-04",
+   "dep": "BD-216",
+   "as": "related",
+   "why": "worksheet need 1 of N39a-04: the named carrier is M2"
+  },
+  {
+   "bead": "N39a-06",
+   "dep": "BD-274",
+   "as": "related",
+   "why": "worksheet need 1 of N39a-06: the shrink verb produces counterexample answers; acceptance needs only the file format and the legality profile"
+  },
+  {
+   "bead": "N39b-26",
+   "dep": "N39a-12",
+   "as": "related",
+   "why": "worksheet need 1 of N39b-26: the strata registry and class descriptions are M3"
+  },
+  {
+   "bead": "N39b-45",
+   "dep": "BD-315",
+   "as": "related",
+   "why": "worksheet need 3 of N39b-45: the frozen instance of arm B is produced by BD-315"
+  },
+  {
+   "bead": "N40-12",
+   "dep": "N39b-08",
+   "as": "dep",
+   "why": "the program-gate row reads the measurement and record of GATE-TENFOLD-01 (coverage (b) of U39b)"
+  },
+  {
+   "bead": "N40-14",
+   "dep": "N39b-22",
+   "as": "dep",
+   "why": "the pre-opening verdict reads the record of GATE-TENFOLD-03 (worksheet needs of N39a-40 and N39a-41)"
+  },
+  {
+   "bead": "N40-14",
+   "dep": "N39a-40",
+   "as": "dep",
+   "why": "the pre-opening verdict reads the record of GATE-TENFOLD-04 (worksheet need 1 of N39a-40)"
+  },
+  {
+   "bead": "N40-14",
+   "dep": "N39a-10",
+   "as": "dep",
+   "why": "the pre-opening verdict reads the record of GATE-TENFOLD-05 (worksheet need 1 of N39a-10)"
+  },
+  {
+   "bead": "N40-16",
+   "dep": "N39b-13",
+   "as": "dep",
+   "why": "the program-gate row reads the tournament's record of GATE-TENFOLD-07 (coverage (b) of U39b)"
+  },
+  {
+   "bead": "N40-17",
+   "dep": "N39b-21",
+   "as": "dep",
+   "why": "the program-gate row reads the kit gate's record (coverage (b) of U39b)"
+  },
+  {
+   "bead": "N40-18",
+   "dep": "N39a-38",
+   "as": "dep",
+   "why": "the program-gate row reads this bead's record (worksheet need 3 of N39a-38)"
+  },
+  {
+   "bead": "N40-19",
+   "dep": "N39b-36",
+   "as": "dep",
+   "why": "the program-gate row reads the measurement of GATE-TENFOLD-10 (coverage (b) of U39b)"
+  },
+  {
+   "bead": "N40-20",
+   "dep": "N39b-37",
+   "as": "dep",
+   "why": "the program-gate row reads the audit record of GATE-TENFOLD-11 (coverage (b) of U39b)"
+  },
+  {
+   "bead": "N40-21",
+   "dep": "N39b-42",
+   "as": "dep",
+   "why": "the program-gate row reads the measurement of GATE-TENFOLD-12 (coverage (b) of U39b)"
+  },
+  {
+   "bead": "N40-22",
+   "dep": "N39b-47",
+   "as": "dep",
+   "why": "the program-gate row reads the measurement of GATE-TENFOLD-13 (coverage (b) of U39b)"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N39b-24",
+   "keep": "N39a-11",
+   "note": "both decide KILL-TENFOLD-ADJ; folded into N39a-11: the four conditions and the representability check per candidate, the planted-answer test of both home referees (20 of 20) beside the can-run test, the adjudication condition for the word, the bias note, the fail-closed posture, the M7 reading and its e2e step, the dependencies on the simulator and adjudicator decisions"
+  },
+  {
+   "drop": "N39b-25",
+   "keep": "N39a-34",
+   "note": "both decide KILL-TENFOLD-REACH; folded into N39a-34: the guard's critical counts (17 of 24 at 0.05, 18 of 24 at 0.0125, none at four families), levels fixed once before sealing, the other ways a cell is descriptive, the fail-closed posture, FROB-REF-532, the horizon-cap readings, the e2e steps, the dependencies on the deadline and threshold decisions"
+  },
+  {
+   "drop": "N39b-09",
+   "keep": "N39a-39",
+   "note": "both decide KILL-TENFOLD-LEVER at M1; folded into N39a-39: the funding_reason field, the order rule with the overlapping shares, the point reading at exactly 10%, the regimes, the ADR's contents, the pilot ceiling 842.8/575.7, the downstream effects, the fail-closed posture; the M2 re-read stays in N39b-10"
+  },
+  {
+   "drop": "N39a-42",
+   "keep": "N39-REF",
+   "note": "U39a wrote the chapter's refusal registry under an ordinary key; N39-REF is now the one registry: the 49 first-half rows (85 reasons), the file and loader, the two-way consistency test and the exit codes were folded in, with one naming rule and an alias table for the five conditions the two halves named differently"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N39b-26",
+   "other": "N41-06",
+   "note": "both decide OPEN-TENFOLD-1, the adjudicating simulator per stratum (N41-06 decides it together with OPEN-PROG-2)"
+  },
+  {
+   "mine": "N39b-27",
+   "other": "N41-06",
+   "note": "both decide OPEN-TENFOLD-2, who the adjudicator is, with the self-adjudicated default"
+  },
+  {
+   "mine": "N39b-28",
+   "other": "N41-15",
+   "note": "both decide OPEN-TENFOLD-3, the rival advocates and their budget"
+  },
+  {
+   "mine": "N39b-29",
+   "other": "N41-15",
+   "note": "both decide OPEN-TENFOLD-4, the compute envelope of the gate and the tournament"
+  },
+  {
+   "mine": "N39b-31",
+   "other": "N41-15",
+   "note": "both decide OPEN-TENFOLD-6, the common agent and its caps"
+  },
+  {
+   "mine": "N39b-33",
+   "other": "N41-15",
+   "note": "both ratify the thresholds of OPEN-TENFOLD-8"
+  },
+  {
+   "mine": "N39b-08",
+   "other": "N40-12",
+   "note": "both write the record of GATE-TENFOLD-01: measured here, a program-gate row with its own completeness check there"
+  },
+  {
+   "mine": "BD-143",
+   "other": "N40-13",
+   "note": "both record GATE-TENFOLD-02 and the removable share per lever; N40-13 also restates the strike rule decided in N39a-39"
+  },
+  {
+   "mine": "N39a-38",
+   "other": "N40-18",
+   "note": "both record GATE-TENFOLD-09 and check registered speed comparisons and funding justifications"
+  },
+  {
+   "mine": "N39a-38",
+   "other": "N00-09",
+   "note": "the funding-rule check over work packages is specified in both (N00-09 also names GATE-TENFOLD-09)"
+  },
+  {
+   "mine": "N39a-40",
+   "other": "N40-14",
+   "note": "N40-14 states the checks of GATE-TENFOLD-03, -04 and -05 as one pre-opening verdict; the measurements are N39b-22, N39a-40 and N39a-10"
+  },
+  {
+   "mine": "N39b-36",
+   "other": "N40-19",
+   "note": "both record GATE-TENFOLD-10"
+  },
+  {
+   "mine": "N39b-37",
+   "other": "N40-20",
+   "note": "both record GATE-TENFOLD-11"
+  },
+  {
+   "mine": "N39b-42",
+   "other": "N40-21",
+   "note": "both record GATE-TENFOLD-12"
+  },
+  {
+   "mine": "N39b-47",
+   "other": "N40-22",
+   "note": "both record GATE-TENFOLD-13"
+  },
+  {
+   "mine": "N39b-13",
+   "other": "N40-16",
+   "note": "both record GATE-TENFOLD-07"
+  },
+  {
+   "mine": "N39b-21",
+   "other": "N40-17",
+   "note": "both record GATE-TENFOLD-08"
+  },
+  {
+   "mine": "BD-317",
+   "other": "N40-15",
+   "note": "both apply the outcome rules per cell and record GATE-TENFOLD-06 with its ADRs"
+  },
+  {
+   "mine": "BD-039",
+   "other": "N38a-04",
+   "note": "both claim the comparator registry frob-conformance/registry/comparators.toml"
+  },
+  {
+   "mine": "BD-039",
+   "other": "N36-13",
+   "note": "BD-039 carries a field list and a minimal writer of the disclosure block that N36-13 defines at M0"
+  },
+  {
+   "mine": "N39a-37",
+   "other": "N36-04",
+   "note": "ceiling calculators from the measured incumbent ledger in two modules (six ceilings here, seven Amdahl limit functions there)"
+  },
+  {
+   "mine": "N39a-37",
+   "other": "N00-17",
+   "note": "the exact thesis calculators overlap the ceilings; N39a-37 reuses them where they coincide"
+  },
+  {
+   "mine": "N39a-36",
+   "other": "N00-19",
+   "note": "N00-19 specifies a typed stratum-report record and a conformance test that every stated ratio carries its fields, which is INV-TENFOLD-08 and the ReportedRatio type of N39a-36"
+  },
+  {
+   "mine": "N39a-26",
+   "other": "N00-20",
+   "note": "lever attribution with a single-counting check is specified in both"
+  },
+  {
+   "mine": "N39b-16",
+   "other": "N38a-11",
+   "note": "both re-run the planning simulation of the draft decision rule's power"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [
+  {
+   "section": "§32",
+   "what": "a backend dispatch in the verb registry through which a layer over an incumbent engine could sit behind the same verbs, schemas and checker: the fallback branch of KILL-TENFOLD-TIE (§39.10); no bead carries it",
+   "needed_by": [
+    "N39b-07"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-314",
+   "what": "Scope rewritten as the capstone of GATE-TENFOLD-03, -04, -05, -10, -11 with a table of its component beads; dependencies added on N39b-22, N39b-36, N39b-37, N39a-40, N39b-40 and the seven owner decisions; N39a-42 replaced by N39-REF"
+  },
+  {
+   "bead": "N39a-40",
+   "what": "component must not depend on its capstone: BD-314 moved from deps to related, order of work restated; title shortened"
+  },
+  {
+   "bead": "N39b-22",
+   "what": "BD-314 moved from deps to related (component of the capstone); Scope now separates it from N39a-41 and N39b-12"
+  },
+  {
+   "bead": "N39b-01",
+   "what": "BD-314 stood for the first-half harness: moved from deps to related; the components it needs are dependencies now"
+  },
+  {
+   "bead": "N39b-02",
+   "what": "BD-314 moved from deps to related (same reason)"
+  },
+  {
+   "bead": "N39b-05",
+   "what": "BD-314 moved from deps to related (same reason)"
+  },
+  {
+   "bead": "N39b-14",
+   "what": "BD-314 moved from deps to related; overlap with N39a-36 re-scoped: this bead is the generator and depends on N39a-36, which owns the record layout, the ratio types and the descriptive block; one command name"
+  },
+  {
+   "bead": "N39a-36",
+   "what": "overlap with N39b-14 re-scoped; one layout of frob.tenfold.report/1 with the naming rule where the two sketches differed; title shortened"
+  },
+  {
+   "bead": "N39b-19",
+   "what": "BD-314 moved from deps to related; scorer reconciled with the statistics beads: milliseconds, the bootstrap of N39a-28 (generator, seed, p0, index rule), outward rounding of bounds, exit codes, one program under two build recipes"
+  },
+  {
+   "bead": "N39a-28",
+   "what": "near-integer guard on the bootstrap index added so that it agrees with N39b-19; title shortened"
+  },
+  {
+   "bead": "N39a-01",
+   "what": "the standard-library-only reading settled with N39b-19: bare-compiler kit build, package build in the workspace, equal bytes"
+  },
+  {
+   "bead": "N39b-23",
+   "what": "BD-314 moved from deps to related; title shortened"
+  },
+  {
+   "bead": "N39b-35",
+   "what": "BD-314 moved from deps to related; Scope rewritten against N39a-27, N39a-30 and N39a-13, on which it now depends; two printed zero-count bounds corrected to the outward rounding rule (0.2210, 0.0631)"
+  },
+  {
+   "bead": "N39b-38",
+   "what": "BD-314 moved from deps to related; overlap with N39a-19 and N39a-09 re-scoped: one schedule generator (N39a-19), this bead keeps the recorded run plan, isolation, the token key and the execution check; depends on both"
+  },
+  {
+   "bead": "N39a-19",
+   "what": "Scope names N39b-38 for the run plan record, isolation and tokens; title shortened"
+  },
+  {
+   "bead": "N39a-09",
+   "what": "the arm token's derivation made to agree with N39b-38; title shortened"
+  },
+  {
+   "bead": "N39b-39",
+   "what": "BD-314 moved from deps to related (it stood for the first-half harness)"
+  },
+  {
+   "bead": "N39b-40",
+   "what": "BD-314 moved from deps to related: BD-314 commits the suite authored from these templates and depends on this bead"
+  },
+  {
+   "bead": "N39b-43",
+   "what": "BD-314 moved from deps to related (it stood for the first-half harness)"
+  },
+  {
+   "bead": "N39a-11",
+   "what": "kept bead of KILL-TENFOLD-ADJ: content of N39b-24 folded in, the two feasibility tests reconciled (can run; classifies 20 planted answers); title shortened"
+  },
+  {
+   "bead": "N39a-34",
+   "what": "kept bead of KILL-TENFOLD-REACH: content and dependencies of N39b-25 folded in"
+  },
+  {
+   "bead": "N39a-39",
+   "what": "kept bead of KILL-TENFOLD-LEVER at M1: content of N39b-09 folded in; title shortened"
+  },
+  {
+   "bead": "N39-REF",
+   "what": "now the chapter's one refusal registry: N39a-42 folded in; reason naming, aliases and exit codes reconciled (1 only for the scorer's check mode; 9 for integrity faults)"
+  },
+  {
+   "bead": "N39a-15",
+   "what": "the sealing ledger is stated to be the gate's event log that second-half beads write to after opening, with a registry of entry kinds; acceptance criterion added; title shortened"
+  },
+  {
+   "bead": "N39a-41",
+   "what": "Scope separates the three scripts (N39a-41, N39b-22, N39b-12); fixtures and planted scorers come from N39-KA and N39-CX, now dependencies; title shortened; each plant mapped to its registry entry"
+  },
+  {
+   "bead": "N39b-12",
+   "what": "Scope names N39a-41"
+  },
+  {
+   "bead": "N39a-27",
+   "what": "Scope names N39b-35, N39b-43 and N39b-19 for what is out"
+  },
+  {
+   "bead": "N39a-30",
+   "what": "Scope names N39b-35; title shortened"
+  },
+  {
+   "bead": "N39a-33",
+   "what": "Scope names N39b-34 and N39b-16; title shortened"
+  },
+  {
+   "bead": "N39b-34",
+   "what": "Scope names N39a-33 and N39a-29"
+  },
+  {
+   "bead": "N39b-16",
+   "what": "Scope names N39a-33, now a dependency; superseded key replaced"
+  },
+  {
+   "bead": "N39a-31",
+   "what": "Scope names N39b-33, which depends on it"
+  },
+  {
+   "bead": "N39b-33",
+   "what": "Scope states the non-inferiority choice of N39a-31, now a dependency; title shortened"
+  },
+  {
+   "bead": "N39b-41",
+   "what": "Scope names N39a-16, N39a-17 and N39a-14; dependency on the epic BD-428 moved to related"
+  },
+  {
+   "bead": "N39b-42",
+   "what": "dependency on the epic BD-428 moved to related"
+  },
+  {
+   "bead": "N39b-13",
+   "what": "dependencies on the epics BD-428 to BD-432 moved to related; direct dependency on the pilot N39b-16 added"
+  },
+  {
+   "bead": "N39b-17",
+   "what": "dependencies on the epics BD-428, BD-430, BD-431 moved to related"
+  },
+  {
+   "bead": "N39b-20",
+   "what": "dependencies on the epics BD-430, BD-431 moved to related"
+  },
+  {
+   "bead": "BD-434",
+   "what": "dependencies on the epics BD-433, BD-428, BD-430, BD-431 moved to related; the review depends on their task beads through the worksheet needs"
+  },
+  {
+   "bead": "BD-315",
+   "what": "title shortened; N39a-40 was in both deps and related"
+  },
+  {
+   "bead": "BD-430",
+   "what": "title shortened; BD-428 was in both deps and related"
+  },
+  {
+   "bead": "BD-431",
+   "what": "BD-428 was in both deps and related"
+  },
+  {
+   "bead": "BD-317",
+   "what": "superseded keys N39b-24, N39b-25 replaced by N39a-11, N39a-34 in the text"
+  },
+  {
+   "bead": "BD-143",
+   "what": "superseded key N39b-09 replaced by N39a-39"
+  },
+  {
+   "bead": "BD-429",
+   "what": "superseded key N39b-25 replaced by N39a-34"
+  },
+  {
+   "bead": "N39b-06",
+   "what": "superseded key N39b-09 replaced by N39a-39"
+  },
+  {
+   "bead": "N39b-10",
+   "what": "superseded key N39b-09 replaced by N39a-39"
+  },
+  {
+   "bead": "N39b-11",
+   "what": "superseded key N39b-09 replaced by N39a-39"
+  },
+  {
+   "bead": "N39b-26",
+   "what": "superseded key N39b-24 replaced by N39a-11"
+  },
+  {
+   "bead": "N39b-30",
+   "what": "superseded key N39b-25 replaced by N39a-34"
+  },
+  {
+   "bead": "N39b-36",
+   "what": "superseded key N39b-25 replaced by N39a-34"
+  },
+  {
+   "bead": "N39-KA",
+   "what": "eight known answers of the first half (battery sizes, retry cost, level series, bootstrap reference, non-inferiority attainability, planning table, Holm levels, per-phase ratios) registered as TF-23 to TF-30, so the chapter has one known-answer list; two printed zero-count bounds corrected to the outward rounding rule"
+  },
+  {
+   "bead": "N39-CX",
+   "what": "related links to N39a-41 and N39a-27, whose six planted wrong scorers are its entries TF-CX-01 to -06 and -09"
+  }
+ ]
+}

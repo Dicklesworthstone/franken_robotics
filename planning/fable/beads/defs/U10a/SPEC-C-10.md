@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "reflex", "frob-gait", "frob-algebra", "frontier", "spine", "spec", "test"]
 parent: "WP-64"
-deps: ["BD-025", "N10a-01", "SPEC-C-09", "STD-TEST", "STD-E2E"]
-needs: ["§10 C-16: hybrid orbits, saltation and the coupled solve for simultaneous touchdowns (SPEC-C-16, another unit)", "§33: the airlock entry for fs-tropical (max_cycle_mean, critical_circuit) and fs-spectral::floquet", "§22.9: the bead that creates crate frob-gait (BD-332 or BD-333 lands first; the law suite is created with the crate skeleton if neither has)"]
-related: ["BD-332", "BD-333", "BD-335", "N10a-17", "CARD-T-25", "N10-KA1", "BD-049"]
+deps: ["BD-025", "N10a-01", "SPEC-C-09", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-049", "BD-332", "BD-333", "N10a-17", "SPEC-C-16"]
 gates: ["GATE-ATEL-02", "GATE-GAIT-01", "GATE-GAIT-03"]
 plan_refs: ["§10 C-10", "§13.4", "§13.6", "§22.9", "§28.4 A-04", "§12.3 T-25", "Appendix D.2", "Appendix D.5", "Appendix M KA-072 KA-073", "Appendix N CX-034 CX-035"]
 ---
@@ -183,7 +183,10 @@ that concern its consumers: KILL-ATLAS, KILL-GAIT.
 - `s3_body_group_classes`: trot, pace and walk map to (C₂, 1); bound and pronk to (C₂, C₂).
 - `s4_trot_eigen`: A = [[1/2, 1/4], [3/4, 1/2]] → λ = 1/2, x = (0, 1/4), verified by A ⊗ x = λ ⊗ x in
   rationals; `s4_nonunique_eigenvector`: the variant.
-- `s4_agrees_with_fs_tropical`: the airlock's `max_cycle_mean` returns the same λ on both matrices.
+- `s4_agrees_with_fs_tropical`: the airlock's `max_cycle_mean` returns the same λ on both matrices. The airlock
+  entry is admitted by N33bx-03, which is not a dependency of this bead: the suite exposes the two matrices as
+  fixtures and this test is owed at BD-332's acceptance (its `cross_check_states`, BD-332 depending on N33bx-03),
+  logged `pending` here until then.
 - `s5_twisted_shooting`: a planar oscillator pair with exchange symmetry; half-period shooting with the swap
   as h reproduces the full orbit within 10⁻⁹.
 - `s6_hidden_transverse_instability`: two identical unstable-in-antiphase oscillators; the restricted
@@ -192,17 +195,23 @@ that concern its consumers: KILL-ATLAS, KILL-GAIT.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c10.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G1 rows KA-072
-and KA-073; `frob --json gait atlas --design templates/quad-mammal --network z4xz2` asserting six primary
-gaits with their phase vectors, and the same without a declared network asserting three pairs and the merged
-classes; evidence block class `Certified`, determinism D0. Log `target/e2e-logs/spec_c10/<utc>.ndjson` with
+`scripts/e2e/spec_c10.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; the G1 rows
+by the Gauntlet's cargo form, `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers --
+KA-072` and the same for KA-073 (KNOWN_DRIFTS 1), and with `--features gauntlet-mutations` for their controls;
+then the verb stage, owed by BD-332 (which depends on this bead) and logged `pending` until it lands: `frob gait
+atlas templates/quad-mammal --network quadruped-8cell --json` (BD-332's spelling; the network is the eight-cell
+ℤ₄ × ℤ₂ network) asserting six primary gaits with their phase vectors, and `frob gait atlas templates/quad-mammal
+--json` without a declared network asserting three pairs and the merged classes; evidence block class
+`Certified`, determinism D0. Log `target/e2e-logs/spec_c10/<utc>.ndjson` with
 transcript: commands, exit codes, pair counts against expected, λ with unit against 1/2 s, and on failure the
 first pair missing or extra. Final `summary` line.
 
 ### Known answers and negative controls
 
 - KA-072 quadruped gait atlas: exact; G1 · host. Control (set here): the cyclic-quotient test replaced by an
-  abelian-quotient test, which admits (whole group, ⟨ω²⟩) and reports seven pairs with H the whole group.
+  abelian-quotient test. Every quotient of the abelian group ℤ₄ × ℤ₂ is abelian, so the mutant admits the
+  three pairs whose quotient is not cyclic: (whole group, ⟨ω²⟩), (whole group, {e}) and (⟨ω², κ⟩, {e}). It
+  reports 8 pairs with H the whole group instead of 6, and 26 pairs in all instead of 23.
 - KA-073 max-plus timing: exact; G1 · host. Control (set here): the eigenvalue computed as the largest entry
   of A, which gives 3/4 s instead of 1/2 s.
 - CX-034 (stability judged inside Fix(K)); CX-035 (refusing or ordering simultaneous impacts).

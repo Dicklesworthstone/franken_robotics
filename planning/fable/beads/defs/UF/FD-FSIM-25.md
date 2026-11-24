@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "ground", "foundry", "upstream", "frankensim", "frontier"]
 parent: "WP-68"
-deps: ["BD-037", "BD-395", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-395", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-407", "BD-408", "BD-401", "FD-FSIM-23"]
+related: ["N30a-05", "N30a-45", "N30b-20", "N31a-04", "N31a-40", "N33b-14"]
 gates: ["GATE-GROUND-08"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§30.4", "§30.14", "§30.21", "§31.12", "§33.9"]
 ---
@@ -27,8 +27,10 @@ FACT (read 2026-11-21): correspondences are supplied, never discovered: **there 
 Upstream register priority: **P3**.
 
 So this project makes the correspondences known by construction: datums and fiducials are placed at design time
-and travel in the build packet, which is what makes registration well-posed. That is good practice and it
-excludes any part that was not designed here or was scanned without its fiducials visible. Rejected: an
+and travel in the build packet, which is what makes registration well-posed. That is good practice and,
+short of a registration made by an identified external tool (the second route as-built ingestion admits,
+with the tool's identity recorded as provenance), it excludes any part that was not designed here or was
+scanned without its fiducials visible. Rejected: an
 iterative-closest-point routine in this repository feeding `fs-asbuilt` (it would be the step that decides the
 pose, sitting outside the crate that states the pose's uncertainty).
 
@@ -81,7 +83,8 @@ current head before it is edited.
 Additive: the supplied-correspondence entries are unchanged.
 
 **Interim posture here.** Datums and fiducials are placed at design time so correspondences are known; a scan
-without them is not admitted for registration.
+without them is admitted only when it was registered by an identified external tool whose identity (name,
+version, hash of its output) is recorded as provenance, and is otherwise refused with FROB-REF-812 (BD-395).
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FSIM-25/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-FSIM-25`, compiled as the `frob-conformance` integration test `upstream_fd_fsim_25` and
@@ -109,7 +112,8 @@ alone; the two refusals of the fiducial route keep their analogues (too little g
 refused; a scale of 25.4 raises unit suspicion). Fiducial registration stays the preferred route where
 fiducials exist, and the two routes are compared on the fixtures that have both.
 
-**Fallback if the change cannot land.** Fiducials and datums by design; scans without them are refused.
+**Fallback if the change cannot land.** Fiducials and datums by design, or registration by an identified
+external tool; a scan with neither is refused (FROB-REF-812).
 
 ## Acceptance criteria
 
@@ -126,7 +130,7 @@ fiducials exist, and the two routes are compared on the fixtures that have both.
 ### Unit tests
 In FrankenSim (added, in `fs-asbuilt`):
 - `recovers_planted_pose`: an L-shaped bracket sampled at 5,000 points with 0.05 mm noise, planted rotation 3° about (1, 1, 0)/√2 and translation (1.0, −0.5, 0.2) mm, initial pose identity; expected the planted pose inside the reported 95% region.
-- `recovers_wall_deviation`: one wall offset by 0.3 mm; expected the deviation field's mean on that wall within 0.02 mm of 0.3 mm, and near zero elsewhere.
+- `recovers_wall_deviation`: the same bracket, noise and planted pose, with the outer face of one plate offset outward by 0.3 mm (a thicker wall; at most 20% of the points; the inner face still fixes the pose along that normal), trimming fraction 0.25; expected the pose still inside its 95% region, the deviation field's mean on the offset face within 0.02 mm of 0.3 mm, and its mean on every other face within 0.02 mm of zero.
 - `cylinder_is_refused_with_free_rotation`: a plain cylinder; expected the named refusal listing rotation about the axis as undetermined.
 - `out_of_basin_start_is_refused`: initial rotation of 90°; expected the named refusal, not a wrong pose.
 - `unit_suspicion_at_25_4`: a scan in inches against a design in millimetres under the similarity fit; expected the diagnostic.
@@ -141,7 +145,11 @@ section shows this item with its status); `cargo test -p frob-conformance --test
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs the as-built ingestion verb on the planted-pose cloud with and
-without fiducials (the verb BD-395 defines, on a dataset whose manifest declares `origin = "synthetic"`), asserting the recovered values.
+without fiducials: `frob ground ingest <scan bundle> --design <the link's design> --task-family tf:none --key
+fd25-<with|without>-fiducials --json` (the scan form of `ground.ingest`, BD-395; the two bundles' manifests
+declare `origin = "synthetic"`, and each call carries its own key), asserting the recovered rotation,
+translation and wall deviation, and in the as-built record the route (`correspondence-search` for the bundle
+without fiducials) with its trimmed share and initial pose.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_25/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -154,7 +162,7 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - Known answers: the planted rotation, translation and the 0.3 mm wall deviation, recovered inside stated uncertainty; with the fiducial route, two fiducials are refused and a scale of 25.4 raises unit suspicion.
-- Negative controls: a matcher without trimming must be pulled off by the planted wall deviation and report a biased pose (caught by the planted-pose test); a lane that returns a pose for the cylinder must be caught by the refusal test.
+- Negative controls: a matcher without trimming must be pulled off by the planted wall deviation and report a biased pose, which shows as a shortfall on the offset face and a non-zero mean on the others (caught by `recovers_wall_deviation`; the planted-pose fixture alone has no outlier face and cannot catch it); a lane that returns a pose for the cylinder must be caught by the refusal test.
 - Determinism lanes: closest-point ties are broken by index, so results are identical twice on one machine and across worker counts.
 
 ## Considerations

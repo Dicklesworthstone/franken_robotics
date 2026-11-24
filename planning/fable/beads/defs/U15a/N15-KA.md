@@ -6,11 +6,11 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "sinew", "frob-actuate", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-09"
-deps: ["STD-TEST"]
-needs: ["§15.10: the bead that implements the bus and battery (rows KA-324 to KA-328) and its gate GATE-SINEW-07", "§15.15: the coupled-transmission known answer and GATE-SINEW-10, whose rows are indexed with the late subsections and not in this block"]
-related: ["BD-025", "BD-146", "BD-069", "BD-072", "BD-073", "BD-076", "BD-070", "BD-071", "BD-074", "BD-075", "BD-084", "BD-419", "N15a-12", "N15a-14", "N15a-16", "N15a-18", "N15a-23", "N15a-24", "N15b-03", "N15b-30", "N15b-10", "N15b-11", "N15b-12", "N15b-13", "N15-CX", "N15b-08", "N15b-15", "N15b-21", "N15b-22", "N15b-36", "N15b-32", "N15b-35", "N15b-37"]
-gates: ["GATE-SINEW-01", "GATE-SINEW-02", "GATE-SINEW-03", "GATE-SINEW-04", "GATE-SINEW-05", "GATE-SINEW-06", "GATE-SINEW-07", "GATE-SINEW-08", "GATE-SINEW-09"]
-plan_refs: ["Appendix M M.14", "§15.5", "§15.6", "§15.7", "§15.8", "§15.9", "§15.10", "§15.13", "§15.14", "§38.6"]
+deps: ["BD-025", "N38a-12", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["N15a-12", "N15a-14", "N15a-16", "N15a-18", "N15a-23", "N15a-24", "N15b-03", "N15b-08", "N15b-10", "N15b-11", "N15b-12", "N15b-13", "N15b-15", "N15b-21", "N15b-22", "N15b-30", "N15b-32", "N15b-35", "N15b-36", "N15b-37", "N38-KA", "N38a-13", "N38b-27", "N38b-31"]
+gates: ["GATE-SINEW-01", "GATE-SINEW-02", "GATE-SINEW-03", "GATE-SINEW-04", "GATE-SINEW-05", "GATE-SINEW-06", "GATE-SINEW-07", "GATE-SINEW-08", "GATE-SINEW-09", "GATE-SINEW-10"]
+plan_refs: ["Appendix M M.14", "§15.5", "§15.6", "§15.7", "§15.8", "§15.9", "§15.10", "§15.13", "§15.14", "§15.15", "§38.6"]
 ---
 ## Background
 
@@ -35,8 +35,11 @@ is a measurement: no row has been run on FrankenRobotics code.
 
 ## Scope
 
-In: the 45 registry records; one derivation file per hand-derived truth; the map from row to owning bead; the
-seeding of each stated negative control into the negative-control registry. Out: the tests themselves (owned by
+In: the 45 registry records; one derivation file per fixture, with every hand-derived truth; the map from row to
+owning bead; the `control.text` of every row whose source or owning bead states a negative control, from which
+the seeding tool of N38b-05 writes the records of `crates/frob-conformance/registry/controls.toml` with the row's
+number as `seed` and fills `control.nc` (this bead writes no row of `controls.toml`); the block request and the
+two tagged rows of the late subsection §15.15 (item 6). Out: the tests themselves (owned by
 the beads in the last column); the counterexample catalogue and the refusal-code registry of the chapter (written
 by the other Sinew drafting unit as registries of their own); rows of other chapters that reuse a Sinew fixture
 (KA-181 to KA-186 of constructions C-37 and C-38, KA-279, KA-280 and KA-285 of the design chapter's rejection
@@ -44,9 +47,23 @@ fixtures), which are cited by Sinew beads and registered by their own chapters.
 
 ## Technical approach
 
-1. **Record format.** One record per row in the registry's own format: `id`, `where`, `case`, `truth`,
-   `tolerance`, `tier`, `site`, `negative_control`, `gate`, `owner_bead`, `derivation` (path), `status`
-   (`not run` until a test records it). Values are carried as printed and are not improved in transit.
+1. **Record format.** One `[[ka]]` record per row in the suite's one registry file
+   `crates/frob-conformance/registry/known_answers.toml`, in the row schema N38a-12 owns, field for field: `id`;
+   `section` (the subsection of §15 that states the row), with `owner` = the gate named in the tolerance cell
+   (GATE-SINEW-nn), or the `PO-SINEW-nn` or `INV-SINEW-nn` the case names; `fixture` (`sinew-<case>`; rows on one
+   worked card share it) and `same_as` (the earlier row of the same fixture where the case restates one, else
+   empty); `case`; `truth`; `tolerance` (`exact`, `abs`, `rel`, `printed-digits`, `gate` or `to-set`); `tier` and
+   `sites` (the "Tier · site" column; "all tiers" is written as the full list); `control` (`text` as printed, or
+   the owning bead's text marked "(set: <bead>)", empty for `none stated`; its `nc` list is filled by N38b-05's
+   seeding); `derivation` (`docs/derivations/<fixture>.md`, whose front matter lists the KA ids it serves and, for
+   each, the beads of the "Owner" column with their tests); `label` (DESIGN arithmetic, or FACT for KA-337, whose
+   source is its pilot record); `due` (the milestone of the row's gate); `printed` (empty unless a recomputation
+   disagrees with a printed value); `slug` (empty, except the tags of item 6). The "Owner" column is not a field.
+   No record stores a status: N38a-12's loader computes eligibility (`obligation: tolerance` for `to-set`,
+   `obligation: control` for an empty control) and the runner (N38a-13) reports each row per site. Values are
+   carried as printed and are not improved in transit. DESIGN, correcting an earlier draft that used a format of
+   its own (`where`, `site`, `negative_control`, `gate`, `owner_bead`, a stored `status`), which N38a-12's parser
+   refuses as unknown fields.
 2. **The rows.**
 
 | KA | Case | Truth | Tolerance | Tier · site | Negative control | Owner |
@@ -95,28 +112,55 @@ fixtures), which are cited by Sinew beads and registered by their own chapters.
 | 334 | Hover of the rotor port (Moonshot) | Thrust equals weight; ideal induced power T^(3/2)/√(2·ρ·A); the energy ledger closes for the hovering body | to set (KILL-SINEW-ROTOR fires if the answer or the port balance fails) | G1 · referee | none stated | N15b-22, N15b-36 |
 | 335 | Two-mass resonance of a series-elastic drive (Frontier) | Frequency √(k·(J₁ + J₂)/(J₁·J₂)) | within 1% at the referee step (pilot falsifier) | G1 · referee | none stated | N15b-19, N15b-18 |
 | 336 | A single hydraulic cylinder through an orifice (Moonshot) | Steady speed equals its closed form (not written in the chapter; the pilot's derivation file records v = (C_d·A_o/A_p)·√(2·(p_s − F/A_p)/ρ)); the port balance closes | to set (set by the pilot) | G1 · referee | none stated | N15b-21 |
-| 337 | Battery ageing law (Frontier) against one published capacity-fade curve, from that publication's own coefficients | The curve is reproduced | error at most 10% of the fade (pilot falsifier) | G2 · host | none stated | N15b-15 |
+| 337 | Battery ageing law (Frontier) against one published capacity-fade curve, from that publication's own coefficients | The curve is reproduced | error at most 10% of the fade (pilot falsifier) | G2 · host | (set: N15b-15) The same procedure run with the coefficient of the dominant term (the one carrying at least half of the end-of-curve fade) perturbed by 30% in the direction that increases the end-point error (plant `dominant-coefficient-30pct`), which moves the end point by at least 15% of the fade: the pilot must report falsified | N15b-15 |
 
 3. **Controls for rows that state none.** For each `none stated` row the owning bead's test plan names a mutant
    (for example: KA-297, a breakaway level equal to the Coulomb level; KA-315 to KA-318, the circumscribed circle
    or the ellipse dropped; KA-329 to KA-333, an ideal torque source or dropped winding dynamics). This bead
-   collects those into the negative-control registry with the row's gate, so that no Sinew gate can record a pass
-   without a control.
+   writes each as the row's `control.text`, marked "(set: <bead>)" with the owning bead named in the derivation
+   file, as KA-337's is (set by N15b-15); N38b-05's seeding then writes the record with the row's number as
+   `seed` and the row's gate, so that no Sinew gate can record a pass without a control. N38b-31 checks every
+   such control against the binding rule and registers its own proposal as a second record where it is a
+   different defect; a row whose owner names none is `obligation: control` until N38b-31's record exists.
 4. **Two fixtures for one formula.** The chapter's backlash closure (0.577 rad/s, 0.0115 J) and the contact
    chapter's (17.5 ms, 0.083 rad/s), and the chapter's critical current (31.9 A) and construction C-38's (35.8 A,
    G = 0.5 W/K), are each internally consistent; the registry keeps both fixtures under separate identities and
    neither replaces the other.
-5. **Derivation files.** `docs/derivations/sinew/*.md`: the thermal worked card (every figure of rows 304 to 313),
-   the field-weakening card (rows 314 to 318), the inelastic closure (row 302), the Schur complement of rotor
-   elimination (row 303), the screw efficiencies (row 321), the differential's reflected inertia (row 322), and
-   the two pilot derivations (rows 335, 336).
+5. **Derivation files.** One `docs/derivations/<fixture>.md` per fixture (N38a-12's rule 1: a row whose file is
+   missing or does not list it is `ineligible: no derivation`). The hand derivations are in: the thermal worked
+   card (every figure of rows 304 to 313), the field-weakening card (rows 314 to 318), the inelastic closure (row
+   302), the Schur complement of rotor elimination (row 303), the screw efficiencies (row 321), the
+   differential's reflected inertia (row 322), the two pilot derivations (rows 335, 336) and the one-rotor table
+   (item 6); every other fixture's file states its model, its truth and the error budget of its test.
+6. **The late known answer of §15.15** (GATE-SINEW-10, M1). The coupled-transmission subsection, added after the
+   catalogue was numbered, states one known answer, the one-rotor table, which Appendix M does not list. This
+   bead commits a request `[[block]] registry = "ka", count = 2, owner = "N15-KA", section = "§15.15"` in
+   `crates/frob-conformance/registry/allocations.toml` (N38a-40; the allocator fills `first` and `last`, and no
+   number is typed here), cites the rows by the tags below until the block is issued, then enters them with the
+   issued numbers in table order in one commit, each keeping its tag in its row's `slug` field; a tag still cited
+   elsewhere at the M1 exit fails (`provisional-tag-past-due`). DESIGN: two rows on one fixture
+   (`one-rotor-coupled`, the fixture of N15b-13, `same_as` empty on both), because the table's torque set and its
+   inertia and energies are realized by two mechanism beads and caught by two different controls. Fixture: one
+   base-mounted rotor with θ = 10·(q₁ + q₂), torque limit 0.1 N·m and inertia 0.01 kg·m², driving two revolute
+   joints.
+
+| Tag | Case | Truth | Tolerance | Tier · site | Negative control | Owner |
+|---|---|---|---|---|---|---|
+| `sinew-late-01` | Feasible joint-torque set of the one-rotor fixture | Deliverable joint torques (t, t) with abs(t) ≤ 1 N·m: one generator (1, 1) N·m; the command (1, −1) N·m is refused as outside the image (FROB-REF-131, with a separator) | exact (GATE-SINEW-10) | G1 · host | Per-joint limits of 1 N·m in place of the image, which admit (1, −1) N·m, a torque no motor torque produces | N15b-10, N15b-13 |
+| `sinew-late-02` | Reflected inertia and rotor energy of the one-rotor fixture | Reflected inertia [[1, 1], [1, 1]] kg·m²; rotor energy 0 J at joint rates (1, −1) rad/s (the rotor does not turn) and 2 J at (1, 1) rad/s | exact (GATE-SINEW-10) | G1 · host | The diagonal mutant: reflected inertia diag(1, 1) kg·m², which reports 1 J at both rates | N15b-11, N15b-13 |
 
 ## Acceptance criteria
 
-- [ ] All 45 rows are present in the known-answer registry with every field filled; `status` is `not run` until a
-      test records a measured value.
-- [ ] Every row names at least one owning bead whose test plan cites it, and every `none stated` row has a control
-      registered against its gate.
+- [ ] All 45 rows are present in `known_answers.toml` with every field of N38a-12's schema, and N38a-12's loader
+      accepts them; no record carries a field outside that schema (no stored status: eligibility is computed by
+      the loader, outcomes are reported per site by the runner).
+- [ ] Every row's derivation file lists it and names at least one owning bead whose test plan cites it; after
+      N38b-05's seeding every row with a control text has a non-empty `control.nc` (this bead wrote no record of
+      `controls.toml`), and every row whose owning bead names a mutant carries it marked "(set: <bead>)", KA-337's
+      by N15b-15.
+- [ ] The block request of item 6 is committed with this bead; the two §15.15 rows are cited by their tags until
+      the block is issued and by the issued numbers after, each tag surviving only in its row's `slug`; no tag
+      remains elsewhere at the M1 exit.
 - [ ] Every hand-derived value recomputes from its derivation file to the printed digits (a host test evaluates
       each formula with the printed inputs).
 - [ ] Rows 334, 336 and 337, whose truths or tolerances the chapter leaves open, are marked `to set` with the bead
@@ -126,20 +170,44 @@ fixtures), which are cited by Sinew beads and registered by their own chapters.
 ## Test plan
 
 ### Unit tests
+`crates/frob-conformance/tests/ka_sinew.rs` (host; the real registry through N38a-12's loader; planted registries
+are scratch copies):
 - `ka_rows_recompute`: a host test recomputes each printed value from the printed inputs: 80/(0.80 − 0.3144) =
   164.7; 120/0.4856 = 247.1; −247.1·ln(1 − 130/164.74) = 384.6; √(520/1.5109) = 18.55; √(0.80/0.000786) = 31.90;
   (0.96285 − 0.80)/120 = 0.001357; 33.941/0.0107703 = 3,151.3; 33.941/0.010 = 3,394.1; i_d = −32.22, i_q = 23.70;
   33.941/0.006 = 5,656.9; 0.0081·2/0.0281 = 0.5765; ½·(0.0081·0.02/0.0281)·4 = 0.01153; 48²/(4·0.08) = 7,200;
-  [48 + √(2,304 − 576)]/2 = 44.78 and 1,800/44.78 = 40.2.
-- `registry_schema_and_append_only`: the records load; numbers are contiguous 293 to 337; a duplicate fails.
-- `owner_beads_exist`: every `owner_bead` resolves to a bead key.
+  [48 + √(2,304 − 576)]/2 = 44.78 and 1,800/44.78 = 40.2; the one-rotor table with C = [10, 10]: generator
+  10·0.1 = 1 N·m on each joint, reflected inertia Cᵀ·0.01·C = 0.01·[[100, 100], [100, 100]] = [[1, 1], [1, 1]], energies
+  ½·(1, −1)·M·(1, −1)ᵀ = 0 and ½·(1, 1)·M·(1, 1)ᵀ = 2, and the diagonal mutant's 1 and 1.
+- `registry_schema_and_append_only`: the records load; numbers are contiguous 293 to 337; a duplicate fails; a
+  scratch record carrying `status` or `owner_bead` is refused as an unknown field.
+- `owner_beads_exist`: every owning bead named in a derivation file's front matter resolves to a bead key.
+- `ka337_control_set_by_pilot`: KA-337's `control.text` names the plant `dominant-coefficient-30pct` and its
+  derivation file names N15b-15.
+- `sinew_late_rows_tagged`: the two §15.15 rows resolve by tag before the block is issued and to numbers inside
+  this bead's block after; in milestone-exit mode a tag cited outside a `slug` fails.
 - `every_gate_has_control`: for GATE-SINEW-01 to -09 at least one control record exists.
 
 ### End-to-end script and logging
-None of its own. The scripts `sinew_cards.sh`, `sinew_static_sizing.sh`, `sinew_referee_dynamics.sh` and
-`sinew_joint_rows.sh` write, for each assertion that measures a row, a `metric` line carrying the `KA` number, the
-measured value with unit, the truth, the tolerance and the tier and site, so that the registry's `status` can be
-updated from logs alone.
+`scripts/e2e/sinew_registry.sh` (header: `bead=N15-KA milestone=M1 labels=sinew,registry gates=GATE-GAUNT-02
+plants=wrong-equilibrium,unknown-field,tag-past-due`; sources the STD-E2E helper; logs to
+`target/e2e-logs/sinew_registry/<utc>.ndjson` with a transcript beside it): runs `cargo test -p frob-conformance
+--test ka_sinew`, N38a-12's loader test and N38a-40's allocation test, then the rows selected through their tier
+targets (`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier> -- <row>`, `<tier>` = `g0_laws`,
+`g1_known_answers`, `g2_parity` or `g4_chaos`), logging each row's per-site outcome as the runner reports it (a
+row whose owning bead has not landed is `unbound` once due, never passed); it then reads the registry records for
+KA-293 to KA-337 and the two §15.15 rows and writes one `assert` line per row (KA number or tag, owner beads,
+tolerance or `to set`, tier and site, eligibility, control present yes or no), `metric` lines for the counts (rows 45, required 45; rows
+with an owner 45; `to set` rows; controls per gate GATE-SINEW-01 to -09, each required ≥ 1; recomputed values
+that match their printed digits, required all), and a final `summary` line. It then plants, on scratch copies under
+`target/e2e-scratch/sinew_registry/`, the wrong record of the negative control below, a record carrying a stored
+`status`, and a §15.15 tag left in a derivation file in milestone-exit mode, and asserts that each is caught (the
+recompute step with the row number and the first differing value logged; the loader's unknown-field refusal;
+N38a-40's `provisional-tag-past-due`); exit non-zero on any failed assertion. The rows themselves are
+measured by `sinew_cards.sh`, `sinew_static_sizing.sh`, `sinew_referee_dynamics.sh` and `sinew_joint_rows.sh`,
+which write, for each assertion that measures a row, a `metric` line carrying the `KA` number, the measured value
+with unit, the truth, the tolerance and the tier and site, so that each row's per-site outcome in the runner's
+receipt can be traced to the measurement from the logs alone.
 
 ### Known answers and negative controls
 This bead is the list. Its own negative control is a deliberately wrong record (the worked card's equilibrium
@@ -152,9 +220,11 @@ entered as 100 K, the constant-resistance value): `ka_rows_recompute` must rejec
 - Rows 324 to 328 and 337 are registered here because the chapter's registry is one bead; their owners are the
   bus (BD-075), the battery element (N15b-03), the power-path script (N15b-30) and the ageing pilot (N15b-15).
 - The coupled-transmission known answer of the late subsection (the one-rotor table of GATE-SINEW-10) is not in
-  this numbered block; it has no KA number yet and is carried, with its values, by N15b-10, N15b-11 and
-  N15b-12 and measured by N15b-13. When the catalogue owner assigns numbers, the rows are added here.
+  the numbered block KA-293 to KA-337; it is this bead's two tagged rows of item 6, carried by N15b-10 and
+  N15b-11 and measured by N15b-13. N15b-12's signed motion witness, the gate's third clause, is a check over the
+  card catalog rather than a known answer and has no row.
 
 ## References
 
-Plan Appendix M, block M.14 (KA-293 to KA-337); §15.5 to §15.10, §15.13, §15.14; §38.6. GATE-SINEW-01 to -09.
+Plan Appendix M, block M.14 (KA-293 to KA-337); §15.5 to §15.10, §15.13, §15.14, §15.15 (the one-rotor table);
+§38.6. GATE-SINEW-01 to -10.

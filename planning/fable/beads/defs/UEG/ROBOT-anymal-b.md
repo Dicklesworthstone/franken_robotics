@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "BD-102", "BD-109", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-quad-mammal", "BD-109", "N14b-24", "BD-089", "ROBOT-anymal-c"]
+related: ["ROBOT-anymal-c", "ZOO-quad-mammal"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -38,8 +38,9 @@ notice, licence text and the no-endorsement clause.
 hip flexion, knee per leg); 13 bodies; n_v = 18; total mass on the order of 30 kg; legs in an X configuration
 (front knees bend backwards, rear knees forwards), unlike the Unitree layout.
 
-**Import path.** `frob design import --format mjcf assets/robots/anymal-b/source/<entry> --out
-assets/robots/anymal-b/import.fbot --json`. Expected loss-report entries (HYPOTHESIS until read): visual
+**Import path.** `frob design import assets/robots/anymal-b/source/<entry> --format mjcf --name anymal-b --key
+asset-anymal-b-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual
 meshes; fitted collision primitives with recorded error; unmapped solver and contact parameters; joint
 `armature`, `damping` and `frictionloss` to an `assumed` card. The source models a rigid transmission: the
 series elasticity of the real actuator is absent from the public model, so the import has no compliant

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-cert", "frob-sense", "frontier", "test"]
 parent: "WP-42"
-deps: ["BD-132", "N12-06", "SPEC-C-19"]
-needs: ["§0.7: the paper-scale pilot of the information construction (the docking family against an independently written scenario-tree linear program, and one planted stale-read race), owned by the mission and sensing work (BD-041, BD-129)"]
-related: ["CARD-T-23", "BD-240", "BD-290", "BD-098", "BD-134"]
+deps: ["BD-041", "BD-132", "N12-06", "SPEC-C-19"]
+needs: []
+related: ["N10b-08", "N10b-10", "N12-46", "N12-52", "N25b-27", "N25d-36"]
 gates: []
 plan_refs: ["§12.3 (T-30)", "§10 C-19", "§20.12", "§25.10", "§25.5.2 (alias-pair)"]
 ---
@@ -37,7 +37,11 @@ belief that more training can overcome any sensing limit.
 In: statement document, registry row, the `alias-pair` certificates bound to this card, the class rule (exact
 kernel class versus floating point), fixtures and mutants. Out: the checker (BD-132); searching for witnesses
 (the alias-witness search); the packet model and clock contract; label counts and schedule classes (other
-objects of the same construction).
+objects of the same construction); the witness object `frob.alias-witness/1` in `frob-sense`, its in-studio
+checker by replay on the referee and its T-junction fixture (N20a-37, which depends on this card); the general
+statements behind the witness (no causal policy succeeds in both worlds, for every policy and every private
+randomization; the bound (1 + TV(P, Q))/2 on finite outcome spaces), which are proof documents of N20a-37 and
+candidate cards decided by N12-52. This card is the instance statement only: a supplied witness is valid.
 
 Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
 the late-packet alias witness of `frob-sense` (BD-134) is `related`, not a dependency (a card that waited for its
@@ -103,13 +107,19 @@ exactly when ε < 1).
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_second_machine.sh` (bead N12-35) ships the late-packet exclusions as bundles and re-checks
-them; `lemma_auditor_mutations.sh` (bead N12-34) runs the mutants.
+them; `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the mutants. For this card their NDJSON lines
+(STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-30"), `step` (`T-30/<witness-or-mutant>`), `event`, the
+exact command line, exit code, wall time, the two worlds, the commitment deadline, the scope, the kernel class of
+each replay (exact or floating point) and the class claimed and printed, the number of packets visible by arrival
+before the deadline in each world, whether the success sets intersect, the bundle's BLAKE3 on each machine, the
+expected and observed verdict, and on a mismatch the first differing packet (index, arrival instant, value in each
+world) or the common continuation, with the path to reproduce.
 
 ### Known answers and negative controls
 
-KA-210 (docking, packet late: `accept` for the exclusion at every U and ε). CX-105 (a decision may not use any
-packet whose timestamp is earlier than the decision: the timestamp is a label written on the sensor's own clock;
-arrival governs). Repeated readings as a related known answer: a binary probe correct with probability ¾ gives
+KA-210 (docking, packet late: `accept` for the exclusion at every U and ε). CX-105 (the shortcut "a decision may use
+any packet whose timestamp is earlier than the decision": the timestamp is a label written on the sensor's own
+clock; arrival governs). Repeated readings as a related known answer: a binary probe correct with probability ¾ gives
 27/32 with three independent reads, 459/512 with five and 3807/4096 with seven, and stays at ¾ after any number
 of reads that share one fault bit. Determinism: exact for certified witnesses.
 

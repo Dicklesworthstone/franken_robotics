@@ -4,11 +4,11 @@ title: "M2 exit: sweep of the decision records against the first device profile 
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "delivery", "gauntlet", "solid", "registry", "decision-record"]
+labels: ["m2", "delivery", "gauntlet", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M2"
-deps: ["NAB-22", "NAB-24", "BD-224"]
-needs: ["§40.6: the M2 exit report with the engine's kill decisions as ADRs (N40-04, N40-30)", "§36: the M2 profile of the batched step by stage, and the throughput parity rows (BD-216, BD-217)", "§21.18: the measured specializable share of the step (N21c-16)", "§43: the M2 variant with no GPU, which records gates as not run (N40-33)"]
-related: ["NAB-17", "NAB-21", "NAB-32", "NAB-49", "NAB-26", "N21c-16", "N40-33", "BD-186", "BD-217", "BD-221"]
+deps: ["BD-179", "BD-181", "BD-186", "BD-205", "BD-214", "BD-218", "BD-221", "N13-32", "N15b-24", "N16c-17", "N16c-34", "N17b-10", "N17b-28", "N18b-33", "N19c-18", "N20a-11", "N21a-27", "N21b-19", "N21b-34", "N21c-16", "N21c-43", "N36-27", "N40-04", "N40-33", "NAB-22", "NAB-24", "STD-E2E"]
+needs: []
+related: ["BD-224", "N41-09", "NAB-32", "NAB-33", "NAB-34", "NAB-49", "NAB-50"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2", "Appendix C.1.4", "Appendix B.8", "§43 (M2)", "§0.8"]
 ---
@@ -30,6 +30,15 @@ the evidence that could reverse them. This sweep is where the reversal condition
 
 In: the M2 sweep record and report; history entries on due rows; proposals; the first Moonshot-queue decision.
 Out: deciding gates; the exit review (BD-224); the procedure (NAB-22).
+
+Order of work (DESIGN). The sweep is made at the exit candidate commit, before the exit record is written, and
+the exit review depends on it: the review's runner executes `decision-sweep check --exit M2` as the attached
+check of NAB-22 and copies the sweep's section into the exit record, so the record must exist first. What the
+sweep reads is produced before the review, not by it: the gate report at that commit (N40-04), the kill-decision
+ADRs written by their decision beads, the M2 profile, and the variant record if one is in force. The dependency
+list names those beads for that reason. This is the order of NAB-22's design decision 1, which every sweep
+follows; what the sweep shares with the review is its independence rule (a session that implemented none of the
+cited beads).
 
 ## Technical approach
 
@@ -81,8 +90,13 @@ rows in the matrix by ADR if they are adopted; until then the sweep lists them a
 
 **3. Moonshot queue.** The first item, the fused per-world step kernel (MQ-01), becomes eligible "after the M2
 profile". The sweep evaluates its precondition: if the profile shows the step is not bound by what fusion
-removes, the item is removed from the queue with outcome `falsified-before-pilot` and its slot is never taken;
-otherwise it stays queued for its one-week pilot at M8 (paired lower bound of 2.0 on the whole step at 8,192
+removes, the sweep writes the ADR that proposes MQ-01's `state` as `falsified` (a word of the queue's closed
+vocabulary, NAB-21; the record is never deleted) and lists the item under the sweep record's queue `freed` with
+the reason `falsified-before-pilot`, so that its slot is never taken. The queue record's `state` field is
+written only by the `release` transition of N41-09, whose command lands at M5: until that transition is applied
+with this ADR the record still reads `queued`, and the sweep record is what the exits of M2 to M4 read for
+MQ-01 (an item in that state is never activated, because every activation is itself a transition). Otherwise it stays
+queued for its one-week pilot at M8 (paired lower bound of 2.0 on the whole step at 8,192
 worlds with digests unchanged). The proxy-adequacy pilot of MQ-02 needs no new solver and may be scheduled from
 M3; the sweep notes it.
 
@@ -97,9 +111,10 @@ cards as one pipeline.
 **6. Source register.** Reading tasks for M2 gates closed; `[[unverified]]` items NV-03 (Metal rounding and
 subnormals) and NV-05 (an incumbent on Apple silicon) settled or carried forward.
 
-**7. The no-GPU variant.** If M2 exited in its no-GPU form, every due item whose evidence is a device
-measurement is `carried_forward` to M3 with the reason "gate recorded not run"; nothing is re-scored on absent
-evidence.
+**7. The no-GPU variant.** If the variant record of the M2 no-GPU exit is in force (N40-33), every due item
+whose evidence is a device measurement is `carried_forward` to M3 with the reason "gate recorded not run", and a
+family whose kill gate that record defers to M3 is `carried_forward` with the deferral's ADR; nothing is
+re-scored on absent evidence.
 
 ## Acceptance criteria
 
@@ -107,7 +122,11 @@ evidence.
 - [ ] Each of the eight family-and-kill-gate pairs of step 1 has an outcome citing the decision ADR; a fired
       gate's family names its fallback.
 - [ ] Each row of step 2 has the measured number beside the condition, and `condition_met` true or false.
-- [ ] MQ-01 has an outcome (`queued` with the profile evidence, or `falsified-before-pilot`).
+- [ ] MQ-01 has an outcome: `queued` with the profile evidence, or an ADR proposing `falsified` with the
+      reason `falsified-before-pilot` in the sweep record's queue `freed` list (the state change itself waits
+      for the transition of N41-09).
+- [ ] The sweep record exists at the exit candidate commit before the M2 exit record is written, and the exit
+      runner's attached check reads it; the sweep's session implemented none of the beads it cites.
 - [ ] The two triggers of step 4 are evaluated.
 - [ ] In the no-GPU variant every device-dependent item is carried forward with its reason and none is
       marked unchanged.
@@ -123,8 +142,18 @@ with 0.34 it is true); `no_gpu_variant_carries_forward`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M2` (NAB-50): due list, `check`, eight pairs, the eleven conditions of
-step 2 each logged as a `metric` with its threshold. Logged per STD-E2E with the profile's receipt id.
+`scripts/e2e/decision_records.sh --exit M2` (NAB-50): prints the due list, runs `decision-sweep check --exit
+M2`, and asserts the eight pairs, the eleven conditions of step 2, the MQ-01 outcome and the two triggers of
+step 4; then replays the three negative controls below (fixtures under
+`tests/fixtures/sweep/M2/controls/` written by this bead, the hook of NAB-50) on scratch copies of the sweep record and asserts that
+`check` fails on each with its reason. Logged through the shared helper of STD-E2E to
+`target/e2e-logs/decision_records/<utc>.ndjson` with a transcript, every line with `ts`, `script`, `bead`
+(`NAB-25`), `step`, `event`: `cmd` lines with the exact command line, exit code and wall time; one `assert`
+per pair with the kill gate, the ADR identifier and the outcome; one `metric` per condition of step 2 with the
+measured number, its unit, the threshold and `condition_met`; the profile's receipt identifier and the digests
+of the gate report and of the sweep record; `assert` lines of kind `negative-control` with `caught`; on failure
+the first due item without an outcome, or the first condition whose number does not resolve to a receipt, with
+the path of the sweep record; a `summary` with assertions passed and failed and the kill gates read.
 
 ### Known answers and negative controls
 

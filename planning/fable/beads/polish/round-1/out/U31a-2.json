@@ -1,0 +1,315 @@
+{
+ "round": 1,
+ "slice": "U31a-2",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "N31a-32",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Result schema named as the verb registry names it (frob.foundry.tolerance.out/1, not frob.foundry.tolerance/1). Added the worst-case method's closed form t_i = T·(c_i/|s_i|)^½/Σ(|s_j|c_j)^½ (the verb offered --method worst-case with no formula) and its acceptance case 3.333/1.667 µm. --method now auto|statistical|worst-case with auto the default, matching N31a-33's default boxing path. Defined the process card's optional tolerance_floor_m table (the bead used a field nobody defines), its absence behaviour and the no-remaining-budget case; added dep N31a-26 (the process card)."
+  },
+  {
+   "bead": "N31a-33",
+   "kinds": [
+    "correct",
+    "complete",
+    "users",
+    "tests",
+    "risks"
+   ],
+   "what": "The whole-allocation rule failed any statistical allocation (its linearly worst corner always exceeds the margin: 41.4 µm vs 30 µm in the worked case); the check is now of the linearization, per corner discrepancy with an attribution rule, and all 2^n corners for n ≤ 12. The worst-case box evaluated the box with statistical features varying, so no mixed box could ever fit; replaced by an explicit margin split φ (T_R = φT boxed, √B_S = (1−φ)T/k statistical) chosen by golden section, with scale never above the start. Added the held-out Monte Carlo option --verify monte-carlo that N31a-56 calls and nobody specified (threshold 0.99692 at 10^5 draws, as the pilot). Report schema frob.foundry.tolerances/1, carried under result.report; split action (loosen/keep/tighten) from path (allocated/grouped/worst-case-box/refused) to reconcile with BD-406. New tests and two planted defects."
+  },
+  {
+   "bead": "N31a-34",
+   "kinds": [
+    "deps",
+    "users",
+    "complete",
+    "tests"
+   ],
+   "what": "Dep N31a-37 (the sidecar serializes the packet flag type) moved from related. Loose-export mode renamed --geometry-only [--part] [--format] to match BD-407 and N31b-05. Chiral link classes export their mirrored hand as its own geometry (exact reflection), so a shop never mirrors a file by hand; test added."
+  },
+  {
+   "bead": "N31a-35",
+   "kinds": [
+    "deps",
+    "users"
+   ],
+   "what": "Deps N31a-19 and N31a-23 added: the decimation path re-runs the independent check and the mass feedback edit, which this bead calls. e2e command form aligned to --geometry-only."
+  },
+  {
+   "bead": "N31a-39",
+   "kinds": [
+    "complete",
+    "users",
+    "deps",
+    "tests"
+   ],
+   "what": "quantity_by_hand was named but absent from the schema; added it, mirror_plane and mirrored_geometry (the packet listed both hands of a chiral class against one geometry). Dep N31a-34 (the geometry it names). Acceptance and test for chiral and symmetric classes."
+  },
+  {
+   "bead": "N31a-40",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Claimed fiducial dimples are below 10^-6 of a link's volume; a 60° dimple 1.5 mm across is 0.77 mm³, 2×10^-5 of the KA-744 tube. Restated why the identity holds (dimples are added before the check and the feedback edit). Tube fixture faceting fixed at 256 segments (area ratio 0.99990) so the 0.1% criterion is reproducible; mirrored entries compared with the reflected tensor."
+  },
+  {
+   "bead": "N31a-41",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Net identifier naming rule stated (shared verbatim with N31a-42) so the schedule can reference nets without reading the harness; test added."
+  },
+  {
+   "bead": "N31a-42",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "Its completeness rules compared against parts.json and harness.json, which it does not depend on; those two comparisons moved to the assembler's consistency rows (which already exist), the schedule emits the consistency outputs and names cables by the stated rule, so the three section beads stay parallel. Tests rewritten accordingly."
+  },
+  {
+   "bead": "N31a-43",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Preconditions now name every code: provisional case (refusal provisional-load-case-in-packet, interim FROB-REF-820), the selection precondition of N31ax-01 (830, 819), and a typed refusal packet-inconsistent for blocked cross-consistency and identity failures (none existed; a blocked export had no code). Consistency rows cover mirrored geometry and read the schedule's consistency outputs; three more plants. The reachable list adds -169 (the class-coverage rule every consumer applies). Dep N31ax-01 (its refusal is asserted here)."
+  },
+  {
+   "bead": "N31a-44",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "The denylist lint (Vec, unwrap, panic!, alloc...) would have hit the std vector harness N31a-46 generates; the lint's scope is now Cargo.toml and src/, and the harness lives in a scratch build directory, never in the crate or packet. Defined the emitter's input, an obligation table with certified/refuted/undecided rows, so emission can be built and tested before N31a-45 produces the table."
+  },
+  {
+   "bead": "N31a-45",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The widened-range control said the re-run 'refutes or re-certifies as appropriate'; with u in [-800, 800] the 16-bit sum s + u reaches 32,800, so the step query with formats held is refuted (witness s = 32,000, u = 800) and a full re-analysis assigns the sum a 32-bit word and re-certifies with a new digest. Acceptance and test made exact."
+  },
+  {
+   "bead": "N31a-46",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Harness placement stated (outside the crate and packet, so the lint does not apply); this bead now closes the export order of N31a-44 step 7 (bounds and vectors after emission, manifest last with their hashes), which no bead owned; acceptance and tests export_order_end_to_end, harness_outside_crate_and_packet."
+  },
+  {
+   "bead": "N31a-47",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Step-doubling criterion made exact: e = |z2 - zE| (eps^2 H^2 z/4) tracks the local error of the two-half-step value, and over-estimates that of the accepted midpoint value (eps^3 H^3 z/6), the conservative side. Cargo feature name moonshot-lifecycle (rule L-12) stated beside the user-surface name."
+  },
+  {
+   "bead": "N31a-48",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The strict-data refusal named: FROB-REF-113 (a card field 'assumed' under --strict-data), with card and field."
+  },
+  {
+   "bead": "N31a-50",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Refusal list named FROB-REF-113 for strict data (it was 'the card refusal'); the KILL-LIFECYCLE time-axis request had no outcome: now exit 5 (not available) with reason KILL-LIFECYCLE and repair --mode hand-specified. Acceptance and tests added."
+  },
+  {
+   "bead": "N31a-51",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Refusal rows completed under the bead's own rule that a verb never returns an unlisted refusal: foundry.export adds 820, 830, 819 and the uncoded packet-inconsistent; foundry.size, check and export add -169 (N31a-11's coverage rule; the loads script asserts it through size); foundry.check adds firmware-receipt-mismatch by name; foundry.lifecycle adds -113; pass-through codes stated. The cluster preamble now supplies the idempotency key every run-verb call needs (the scripts' commands carried none and would be refused with FROB-REF-805)."
+  },
+  {
+   "bead": "N31a-52",
+   "kinds": [
+    "split",
+    "deps",
+    "scope",
+    "title",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "The battery ran through verbs built by BD-400..BD-408, which depend on this bead for the payload types: it could never close. Split: this bead keeps types, rendering, MustRefuse, affected_claims, the shared assert_refusal helper, the coverage checker (now feature-aware: 12 codes in a default M5 build, 14 with both Moonshot features, since 827 and 831 cannot be raised at M5) and an example renderer, with its own self-test script; the battery, binding tests and repair replay moved to N31ap1-51. 165's payload covers the no-box reason; pass-through list adds 820, 830, 819 and the uncoded names."
+  },
+  {
+   "bead": "N31a-53",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Steps 6, 7 and 10 call frob foundry size; dep BD-401 (the size verb) added."
+  },
+  {
+   "bead": "N31a-54",
+   "kinds": [
+    "correct",
+    "complete",
+    "users"
+   ],
+   "what": "Commands aligned with the verb: --links (not --class, per BD-403 and the registry example), --loop on the loop steps (BD-404), the export as <design> --packet <dir> with its 166 refusal stated, and the key from the preamble. Added step 10b, the loop on the beam rung (asked for, and as the KILL-TOPOPT fallback), moved from N31a-61, which could not run it."
+  },
+  {
+   "bead": "N31a-56",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Step 5 asserted the other two features against the full budget; with a boxed feature sharing the margin they get (1 - phi) T / k (full budget only for a truly inert feature, now its own fixture). action worst-case-box became path worst-case-box (action is loosen/keep/tighten). Step 10 relied on a --out flag no verb has; it now reads result.report. Added the corner-interaction case (x1 and x3 fail, worked case fails none), the third 165 reason (no box above the process floor, 22.5 um vs 10 um) and the two mutants of N31a-33."
+  },
+  {
+   "bead": "N31a-57",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "users"
+   ],
+   "what": "Dep N31ax-01 (moved from related): its selection steps were promised to this script but absent; added step 12b (830 refused before and after settling for the exploit winner, honest winner exported model-robust, 819, frob-verify on selection.status, MCP parity). Added the provisional-case refusal (interim 820), packet-inconsistent with the three parallel-section plants, mirrored-hand identity, --geometry-only command form, three mutants."
+  },
+  {
+   "bead": "N31a-58",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "The widened-range step said 'refutes or re-certifies'; now both outcomes are asserted (refuted with formats held, re-certified at a 32-bit sum). Carries the 827 binding for N31-REF in the feature lane: ref_827_fixed_point_obligation, the repair replay (wider format certifies) and the coverage check with the feature."
+  },
+  {
+   "bead": "N31a-59",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "The 831 variant 'cited above Estimated' had no trigger; added, with the first repair replayed against a higher-class card in the fixture catalogue, FROB-REF-113 named for strict data, the kill-switch answer (exit 5) asserted, and the 831 binding ref_831_lifecycle_law_domain plus the coverage check for the feature lane."
+  },
+  {
+   "bead": "N31a-60",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The script's log was 'per the shared helper' with no path or line fields; now the NDJSON path, per-line fields, metrics with units and thresholds, the diagram hash and the failure paths."
+  },
+  {
+   "bead": "N31a-61",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging",
+    "placement"
+   ],
+   "what": "Its acceptance and e2e step 1 ran foundry.optimize on the beam rung, but the loop (N31a-05) and the verb (BD-403, BD-404) depend on this bead; it now asserts BeamRung as an implementation of the Rung trait and the stock choice and baseline through foundry.size (a dep), and the loop on this rung moved to N31a-54 step 10b. E2E adds the 0.3 m tube's stock and continuous walls and full NDJSON logging."
+  },
+  {
+   "bead": "N31a-62",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2E exported without --packet and then checked '<packet>'; command fixed. firmware-receipt-mismatch identified as row 9 of N31b-45 and asserted through the shared helper; NDJSON path and fields stated."
+  },
+  {
+   "bead": "N31ax-01",
+   "kinds": [
+    "deps",
+    "scope",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its acceptance ran through frob foundry export, but the export verb (N31a-43, BD-408) depends on this bead; acceptance now runs through the admission hook and the binary-level steps are carried by N31a-57. The frob-verify rule on selection.status had no owner: in scope here with specimens, dep N31b-44 made explicit. Own e2e script for the checker half; e2e command corrected to <design> --packet <dir>; mislabelled 'test' removed, frob-cert added."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N31ap1-51",
+   "why": "split from N31a-52: the refusal trigger battery, N31-REF's binding tests ref_<code>_<name> and the repair-replay script run through verbs whose capstones depend on N31a-52's payload types; 27 fixtures for the 12 default-build codes (165 gains the no-box variant), near-misses, pass-through and uncoded refusals on export and loads, MCP parity. Keyed 51 to avoid colliding with slice U31a-1's new beads."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N31a-26",
+   "what": "Add the optional process-card table tolerance_floor_m (keyed by feature kind, each value with provenance) to the card schema; N31a-32 step 8 reads it and treats its absence as 'process floor: not declared'."
+  },
+  {
+   "bead": "BD-406",
+   "what": "Align with components: e2e fixture is worked-case (N31a-56), not worked-two-feature; the per-feature field listing allocated/grouped/worst-case box/refused is `path` (hyphenated worst-case-box), `action` being loosen/keep/tighten (N31a-33); 129 correlated terms fall back to the worst-case stack (N31a-32 step 6), not a refusal; result schema frob.foundry.tolerance.out/1 with report frob.foundry.tolerances/1."
+  },
+  {
+   "bead": "N31b-08",
+   "what": "The pilot's band-extreme failure rule (a corner at a feature's extreme leaves the specification while the corner with it at nominal does not) fires on a perfectly linear linkage, because a statistical allocation's corners exceed the margin by design; count failures as N31a-33 step 2 does (discrepancy of the true quantity from its linearization above 10% of the margin, with the corner attribution rule), or KILL-TOLERANCE's second clause can fire spuriously."
+  },
+  {
+   "bead": "N31b-18",
+   "what": "Assert path `worst-case-box` (hyphenated, field `path`) rather than action `worst-case box`, per N31a-33's report."
+  },
+  {
+   "bead": "BD-407",
+   "what": "A flipped triangle is refused here, but the plan says the surface passes 'repair and validity checks' and N31a-34 canonicalizes orientation as an allowed, counted repair; refuse only holes, self-intersections and non-manifold edges."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "foundry.export example uses --out build/; the export beads and the reconciliation pass use --packet <dir> (and --geometry-only for loose geometry). Its refusal row also needs 820, 830 and 819 (and packet-inconsistent once N31b-45 codes it), as N31a-51 now lists. Also add -169 to the refusal rows of foundry.size, foundry.check and foundry.export (the class-coverage rule of N31a-11 step 6), -113 to foundry.lifecycle (strict data), and firmware-receipt-mismatch (by name until N31b-45 codes it) to foundry.check under --firmware-receipt, as N31a-51 now lists."
+  },
+  {
+   "bead": "N31b-45",
+   "what": "Add a tenth uncoded refusal, packet-inconsistent: a packet export blocked by a failed cross-consistency row or cross-export identity (N31a-43), exit 3, repairs: re-run the producing verb for the named section; re-export the named part's geometry."
+  },
+  {
+   "bead": "N31-REF",
+   "what": "Table 2's foundry.export row and Table 4 should carry 819 (tier-sensitive selection, N31ax-01) beside 820 and 830, and note packet-inconsistent as an uncoded refusal of N31a-43. The binding tests ref_<code>_<name> and scripts/e2e/foundry_refusals.sh are now implemented by N31ap1-51 (split from N31a-52): the binding check's 'pending: N31a-52' should read N31ap1-51. ref_827 and ref_831 can only run with moonshot-firmware-export (M8) and moonshot-lifecycle (M6): the M5-exit check should report them pending on their feature lanes (N31a-58, N31a-59) rather than fail. Table 2's foundry.lifecycle row should carry 113 (strict data). Table 2 should likewise carry -169 on foundry.size, check and export."
+  },
+  {
+   "bead": "BD-409",
+   "what": "Export command uses --out; the export verb's flag is --packet <dir> (N31a-43). Add dep N31ap1-51 (the refusal battery through the real M5 verbs), so the M5 verb-set completeness includes proof that every listed refusal is reachable; no cycle (checked)."
+  },
+  {
+   "bead": "N31b-25",
+   "what": "Uses `frob foundry export --prices`; the flag is --priced (N31a-39, N31a-52, N31a-57)."
+  },
+  {
+   "bead": "N31b-44",
+   "what": "The packet-manifest checker gains a rule: selection.status present and one of model-robust or none-recorded (added by N31ax-01 with specimens); list it among the checker's rules."
+  },
+  {
+   "bead": "BD-401",
+   "what": "Its registry refusal list (163, 167, 790) lacks FROB-REF-169: the load-set reader of foundry.size refuses a class load set that does not cover every instance (N31a-11 step 6; asserted by N31a-53 step 7)."
+  },
+  {
+   "bead": "BD-403",
+   "what": "The verb's inputs lack --rung beam|topology, which N31a-15, N31a-18, N31a-54 and N31a-61 use (beam selects the KILL-TOPOPT fallback rung explicitly; topology the default when available); add it. Fixture name: the unit's beads say twobar, BD-403's script two-bar; one name."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 32 reviewed; 27 changed, 1 new (N31ap1-51, split from N31a-52), 5 unchanged. Main fixes: two logic errors in tolerance robustness, beads whose tests ran through verbs built after them (refusal battery, selection precondition, beam-rung fallback), and incomplete verb refusal lists; the 23 and 21 deps of N31a-54 and N31a-59 were checked and are real prerequisites (mostly also implied through capstones), so kept."
+}

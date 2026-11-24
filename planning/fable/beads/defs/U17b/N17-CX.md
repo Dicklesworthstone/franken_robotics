@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "phylum", "frob-phylum", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-44"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§38.11: assignment of catalogue numbers to the two counterexamples of the limb-archetype kernels that the chapter states and the catalogue does not yet list (the catalogue is append-only and its owner assigns numbers)"]
-related: ["BD-170", "BD-171", "BD-186", "BD-285", "BD-286", "BD-287", "BD-353", "BD-356", "BD-371", "N17b-13", "N17b-22", "N17b-27"]
+deps: ["BD-025", "N38b-05", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["N17-KA", "N17a-04", "N17a-08", "N17a-10", "N17a-11", "N17a-12", "N17a-13", "N17a-16", "N17a-17", "N17a-19", "N17a-21", "N17a-23", "N17a-24", "N17a-25", "N17a-26", "N17a-27", "N17a-28", "N17a-30", "N17b-13", "N17b-22", "N21c-16", "N21c-17"]
 gates: []
 plan_refs: ["Appendix N (N.14)", "§17.5", "§17.6", "§17.9", "§17.10", "§17.11", "§17.13", "§17.21", "§38.11"]
 ---
@@ -107,6 +107,9 @@ of CX-153 and CX-154. CX-222 and CX-224 restate CX-160 and CX-164 from the devic
 - `cx162_mixing_ratio`: 40.6, 11.3, 3.46, 1.44, 1.11 for W = 16, 64, 256, 1,024, 2,048.
 - `cx163_speedup_bound`: 6.67, 13.5 and the 20-not-50 case.
 - `cx164_specialization_ceiling`: 262/209 = 1.2536; 262/(209 + 26.5) = 1.1125; 1/(1 − 0.16) = 1.19.
+- `cx165_variance_scalings` (synthetic, exact from the normal distribution function Φ): for the binary metric J = 1[θ + ξ > 0] at θ = 0 with ξ ~ N(0, 1) shared by the two worlds of a pair, D = (J₊ − J₋)/(2δ) equals 1/(2δ) with probability p = 2Φ(δ) − 1 and 0 otherwise, so Var D = p(1 − p)/(4δ²); δ·Var D is 0.1833 at δ = 0.1, 0.1979 at 0.01 and 0.1993 at 0.001, tending to φ(0)/2 = 0.1995 (the variance grows as 1/δ). After divergence, two independent worlds of variance σ² = 1 give Var D = σ²/(2δ²) = 50 at δ = 0.1.
+- `limb_packet_standing_accel`: m = 2 kg, g = 9.81 m/s²: the base equation closed from the packet alone gives an acceleration of −9.81 m/s²; with the contact row the normal force is 19.62 N and the acceleration 0.
+- `limb_packet_singular_psd`: I − I·s·(sᵀI·s)⁻¹·sᵀI with I the 6 × 6 identity and s = e₁ equals diag(0, 1, 1, 1, 1, 1); its eigenvalues are {0, 1, 1, 1, 1, 1} (accepted as positive semidefinite) and a Cholesky factorization meets a zero pivot at index 0 (refused as invertible).
 - `controls_registry_complete`: every row of this bead has a record, and every record names a test target that exists.
 
 ### End-to-end script and logging

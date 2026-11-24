@@ -1,0 +1,452 @@
+{
+ "round": 1,
+ "slice": "U33c",
+ "reviewed": 53,
+ "changed": [
+  {
+   "bead": "BD-001",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "The bootstrap receipt must equal N33a-04's writer byte for byte, but its field list lacked repo_dirty, repo_tree_hash and the drift sub-reason, and its tree hash (git ls-files | b3sum) differed from N33a-04's stream; the receipt fields and the tree-hash stream are now N33a-04's. Fixed the unit test that claimed `schema` sorts first; added tree-hash and drift-reason tests. The bv orphan finding is tracker lag: 40+ staged beads depend on BD-001, and as the first bead it rightly depends on nothing."
+  },
+  {
+   "bead": "BD-031",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Two of its controls (the lock and the toolchain file naming different channels; a second toolchain file in an annex) are check-stack conditions owned by N33c-08, which depended on BD-031. Flipped the edge so the gate depends on the component N33c-08. Corrected 'later trains (N33c-08)' to NF-02. The log lines now carry per-cell fields, the chosen T and its rule branch, and the receipt hash."
+  },
+  {
+   "bead": "N33c-08",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "Removed dep BD-031 and moved it to related, since the four conditions need no chosen T. The Scope now says BD-031 depends on this bead."
+  },
+  {
+   "bead": "N33-REF",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The registry bead (M0) provoked all codes end to end, including 890, whose mechanism N33c-31 is M1, and it never provoked the fourth row 792. Steps now run once their raising bead lands and are `not-run` before that, following the convention of the other REF beads. Added the 792 step, its unit tests and its negative control; corrected the exit list to 5, 5, 5, 3 and the summary to 4 of 4; named N33a-13 as the raiser of 792."
+  },
+  {
+   "bead": "N33-CX",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Owns scripts/e2e/suite_controls.sh but did not depend on STD-E2E. Added the dep, the e2e label and charter-grade logging (cmd lines, the not-run rows marked due, failure reproduction paths, counts by kind)."
+  },
+  {
+   "bead": "N33c-01",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "Probe workspaces under tests/admission/ needed their own [workspace] table and the three repeated root settings, or Cargo would attach them to the core workspace and fs-la would panic. Added --sets/--channels/--test-channel so N41-20's fs-qty cells are harness records BD-031 can resume, a rule that no cell runs cargo inside a sibling, and three tests."
+  },
+  {
+   "bead": "N33c-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "cargo metadata on an exported copy of FrankenSim cannot resolve its ../ path dependencies. Specified the export beside read-only sibling symlinks, with failure on an unresolved path."
+  },
+  {
+   "bead": "N33c-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "The starter alias set has a fifth equal-dimension group the bead missed, AngularMomentum/AngularDamping (kg·m²/s). The compile-fail list covered only 4 of the 9 equal-dimension pairs. Listed all 9, added a test that derives the pairs from the registry and a planted 37th alias as its control."
+  },
+  {
+   "bead": "N33c-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its known answer listed four equal-dimension groups; there are five (9 pairs). Added the control that a new same-dimension alias without its compile-fail files must fail."
+  },
+  {
+   "bead": "N33c-05",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "The planted Deref<Target=f64> cannot make the compile-fail tests compile, because operators do not auto-deref, so the control was unsound. It is replaced by a planted cross-alias Add impl, plus a deref_to_f64 compile-fail test. Trains are NF-02, not N33c-08. Added dep STD-E2E (it owns suite_units_hatch.sh)."
+  },
+  {
+   "bead": "N33c-06",
+   "kinds": [
+    "scope"
+   ],
+   "what": "The hatch decision is BD-031 and NF-02 per train, not N33c-08."
+  },
+  {
+   "bead": "N33c-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "registries/siblings.toml was specified with different columns here and in N33c-09. It now has one schema (frob.siblings/1): this bead owns the survey columns and N33c-09 the policy columns. Exit 3 is now keyed to consumption as recorded in franken-stack.lock. Added two tests."
+  },
+  {
+   "bead": "N33c-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The same register reconciliation: postures use N33a-01's text forms, and the stack lock governs a foundation that has a row. Added deps N33c-07 and STD-E2E, full NDJSON logging for suite_deps_rules.sh, and two schema tests."
+  },
+  {
+   "bead": "BD-038",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "The gate runs `frob sim run --tier referee` but did not depend on BD-024, the M0 verb that provides it. Added the dep, the exact build commands for the two frob modes (N33c-11's referee-remote switch), and a ledger check: worker start, death, restart, stop and refusal events must be recorded with pid and receipt. That acceptance moved here from N33c-13, whose layer-0 crate cannot write the ledger."
+  },
+  {
+   "bead": "N33c-10",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Its acceptance compiled the module with the `remote` feature, which no prerequisite declared, so it now depends on N33a-11, the skeleton that declares the mode pair, and uses that skeleton's names, mode-inproc and mode-remote. Added dep N34-18 for the canonical writer. Added `receipt_class` (read by N33c-13) and the meaning of `features` to the hello frame. The wire `last_step` and the in-memory `steps` are now related by a stated rule, with a test."
+  },
+  {
+   "bead": "N33c-11",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The client obtained its connections from the supervisor N33c-13 and tested against the real worker N33c-12, yet N33c-13 depended on it. Inverted the chain: the client now depends on N33c-12 and N33c-13. Feature names now match N33a-11. Added the missing switch that makes a remote `frob` (apps feature referee-remote; default-features=false on every frob-fsim edge, since Cargo unifies features), the global --referee-worker option, a dep on BD-022, and a test for a stray default-feature edge. Later in the review: the global option --referee-worker and the ledger sink for the supervisor's WorkerEvents had no owner (BD-024 mentions neither, and BD-038 checks both). They are now item 7 of this bead, with dep BD-009 and three tests."
+  },
+  {
+   "bead": "N33c-12",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Feature names now match N33a-11. Added dep N33a-05, since scripts/build/worker.sh verifies the receipt with check-stack. Added receipt_class to hello. Its tests now speak to the worker with raw frames, since the client and supervisor come later."
+  },
+  {
+   "bead": "N33c-13",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Dropped dep N33c-11 to break the cycle with the client, which is built on the supervisor. Its tests drive the worker with raw frames from N33c-10. Added dep N33-REF, whose row it checks. frob-fsim sits at layer 0 and cannot write the ledger, so the supervisor now emits typed WorkerEvents to an event sink; BD-024's path records them in the ledger and BD-038 checks that. Added events_reach_sink and set the watchdog test interval. The ledger recording of WorkerEvents is now attributed to N33c-11's sink, not to BD-024."
+  },
+  {
+   "bead": "N33c-14",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its acceptance requires a same-stack refusal (FROB-REF-890), so N33c-31 (M1) moved from related to deps."
+  },
+  {
+   "bead": "N33c-18",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Hand trace recomputed and correct. frob.memo-trace/1 was defined differently here (keys and kind tags) and in N33c-20 (key, size and cost records). It is now one format owned here, with a header and 64-byte records carrying key, kind, size and cost, plus a round-trip test."
+  },
+  {
+   "bead": "N33c-19",
+   "kinds": [
+    "users"
+   ],
+   "what": "memo.policy lived in the daemon's configuration, but the daemon arrives at M3 and this bead is M1. Stated where the setting lives at M1 (the [memo] table of the frob configuration and --memo-policy) and from M3, with shadow as the default until INT-FSQL-02 passes."
+  },
+  {
+   "bead": "N33c-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The trace format now points to N33c-18's single definition. The LRU hand case was recomputed and is correct."
+  },
+  {
+   "bead": "N33c-21",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Ceiling wording corrected: a < 0.20 gives c < 2% of step time, a speed ratio below 1.0204, not 'below 1.02'. Named the independent trace checker (frob-cert's rewrite-trace kind, N12-18, which is M4) and what the pilot records when only N21a-19's reference replayer exists. Arithmetic of the unit tests rechecked."
+  },
+  {
+   "bead": "N33c-22",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Added deps BD-176 (the M2 spark.check its acceptance runs on every backend) and N21a-18 (resource metadata its register-overflow rule reads). The certificate checker it cites, N12-18, is M4, so until that bead lands the pass runs report-only and checked-in kernel sources are not regenerated, with an acceptance line for that."
+  },
+  {
+   "bead": "N33c-23",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The probe links frob-core, which reaches FrankenSim's fs-qty and fs-blake3 by path, so its own workspace repeats the three root settings and commits its lockfile (as N33c-01's probes do). Made the fallback acceptance precise and testable (probe --ndjson; `frob job list --json` compared on a real stream), adding dep N29a-23."
+  },
+  {
+   "bead": "N33c-24",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "It specified a second route script (viewer/build/route_f3d.sh) beside the hook N32b-13 already builds (pack.mjs --route f3d). It now uses that hook. Placed the comparison helper in frob-conformance, matching where its unit tests run. Added dep N32b-11, whose overlays the overlay page needs, and unit tests for alpha comparison and the 921/922 boundary. Pixel arithmetic rechecked."
+  },
+  {
+   "bead": "N33c-25",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Verdict vocabulary aligned with BD-233 (`unresolved`, not 'unknown'). The duplicate-member test and the mutant used scale values outside the four. The e2e ran five fixtures, but there are eight. Validation step 2 named a 'metric' status that does not exist. Added dep BD-191 for the still export. Voxel (160 of 320) and tetrahedron arithmetic rechecked."
+  },
+  {
+   "bead": "N33c-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The probe under tests/admission needs its own [workspace] table, patch entry, lockfile and target directory, or Cargo attaches it to the core workspace. Added deps N33a-02 (the FD-FMCP git_rev) and STD-E2E (it owns an e2e script), with the e2e label. Logging now records the helper, the log path, the rev and the record hash. Sibling unmodified is checked as before-and-after equality, since the checkout may already be dirty."
+  },
+  {
+   "bead": "N33c-27",
+   "kinds": [
+    "correct",
+    "tests",
+    "scope"
+   ],
+   "what": "It proposed `claim:`/`evidence:` text forms while N34-11 (a dependency) fixes `clm:`/`ev:`. It also asked for round trips the sibling cannot do: franken-kernel has no PolicyId parser, and there is no local DecisionId. Reconciled with N34-11: TraceId both ways, the decision-policy print one way, DecisionId recorded only. N34-11's oracle test now lives in this bead's file. Added the boundary-value test the acceptance required and the oracle-hygiene control."
+  },
+  {
+   "bead": "N33c-28",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The pinned oracle capture is now registered in the oracle register (dep N38a-04), whose hygiene check refuses a capture made from the candidate. The e2e logs the comparison `not-run` while no candidate tier exists (the usual case) and adds the invariants, refusal, cost and STD-E2E log contract. The distance hand cases were rechecked."
+  },
+  {
+   "bead": "N33c-29",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "The bead tests plants C, D and E against rules owned by N34-03, but had it only as related, so N34-03 is now a dep (the dup-08 split), along with STD-E2E. INV-SUITE-01 ranged over 'every workspace', which would flag the admission probes, pilots and oracle workers that must name FrankenSim packages. Those standalone workspaces are now printed as skipped, and an edge from the seven into one of them is a finding (plant F, with tests)."
+  },
+  {
+   "bead": "N33c-30",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "It claimed GATE-WS-01's stale-stack-lock plant, which none of its plants is; that plant belongs to N33a-05 and N34-14. Added dep STD-E2E (it owns suite_stack_invariants.sh), the e2e label and the log contract, with failure details and the tracer used."
+  },
+  {
+   "bead": "N33c-31",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Under the same-stack predicate, a result with no referee contribution compared on the receipt alone, so it could pool with a result from a foreign worker, which INV-SUITE-05 forbids. Referee fields are now classed native/foreign/none. The 'nine pairs' table was ill-defined; it is now all 36 pairs, written out. The e2e's 'eval run-style pooling or the M1 study verb' is now eval.run plus eval.scorecard over two receipts (dep N24c-04). Added deps BD-111 (memo case, now tested in frob-verbs) and N33-REF (its registry row)."
+  },
+  {
+   "bead": "N33c-32",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "The remote-mode test uses the real worker through the client, so N33c-11 is now a dep (no cycle). The provoking verb conformance.probe had no owner; this bead now registers it as a kind-`read` verb on both surfaces, which keeps GATE-TETHER-02 parity, with a registry test."
+  },
+  {
+   "bead": "N33c-33",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Its tooling default (`check-stack --development`, failing without the flag) contradicted N33a-05's guard: dirty-unchanged exits 0 with may_record_pass false, and dirty-changed fails until a new receipt is written. Option A is now stated as that guard. The tests and e2e step were rewritten to match, and option B or C opens a follow-up bead. Added deps N33a-05 and N33c-30 (its script). Corrected the Out (the receipt writer is N33a-04)."
+  },
+  {
+   "bead": "N33c-34",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The recommendation rule left a gap, between 50% and 80% use of the envelope, with no option, so the rule now covers every range (with the larger of the time and memory fractions). The headroom test was extended to all branches. Added deps N33c-01 (the matrix harness and its script) and N33c-12 (worker.sh), the recipes it wires to build-budget.toml."
+  },
+  {
+   "bead": "N33c-35",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "The rule test read a `registries/decisions.toml` that nothing defines; it now reads OPEN-SUITE-6 from the open-question register (dep N41-OPEN7) and tests both branches. The chunk-boundary cancel test now names its mechanism, BD-007's referee and N33c-12's shared chunking (both deps; N33c-11 is not, because it depends on this bead). Added dep N33c-09 for its script step. The tick-999 arithmetic was rechecked."
+  },
+  {
+   "bead": "N33c-36",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "All four probe vectors, the mutant vectors and the pushforward case were recomputed and are correct. It claimed that the airlock traits take the frame-typed wrench, but that wrench is BD-047 at M1. It now names the M0 crate-private adapter entry the probe drives, and says how BD-047 plugs into it. Added dep N33c-29, whose public_api.rs test it relies on. Added dep BD-025 (its tests run in frob-conformance)."
+  },
+  {
+   "bead": "N33c-37",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The lag table and the K = 2, 12, 29 values were recomputed and are correct. As an M2 bead it claimed a step in suite_ws06.sh's M0 mode, which now logs `not-run: N33c-37` until the bead lands. Added dep N23b-29, which owns the sampler interface and manifest the plant implements."
+  },
+  {
+   "bead": "N33c-38",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Plant 2 (a dummy `=1.0.151` pin) expected 'two versions', but Cargo cannot hold two 1.x versions from one source, so it is a resolution conflict. It now expects json.exact-pin-conflict naming both requirements, with the test renamed. The probe's script test needed a registry while running offline; it now uses a scratch local directory registry."
+  },
+  {
+   "bead": "N33c-40",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Row 6 at M0 attached 'the plant's own unit tests' as preliminary evidence, but the plant (N33c-37) is M2. At M0 the row is now due with its steps logged `not-run`; the unit tests are attached once they exist, and only the battery (N23b-30) passes the row."
+  },
+  {
+   "bead": "N33c-41",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The import-parity refusal it promised is N14b-34's code at M1. At M0 the model record now lists admitted_uses (smoke, digest, referee-rollout), and the airlock returns a typed error for import-parity-reference or load-verdict, with a test for both sides. The '38-link fixture' was not buildable from reported data. It is now a synthetic stand-in: the 30 links plus the four reported masses (34 bodies, 33.34014202 kg). Added deps BD-024 and BD-025 (its tests run in frob-conformance)."
+  },
+  {
+   "bead": "N33c-42",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The `unsupported` mapping named no carrier. It is now LieError::Unsupported in frob-lie, and across the airlock it is N33a-13's conversion to FROB-REF-792 with kind owner-limit (no new code), never FROB-REF-248, and the test asserts both. The untested large-rotation case 'θ = 3 rad with 20 m' could not trip a 32 bound, so it is now 3 rad with 30 m (row sum 33). Added deps BD-025 and N33a-13. The hand math (∓16.5 m) was rechecked."
+  },
+  {
+   "bead": "N33c-43",
+   "kinds": [
+    "complete",
+    "deps"
+   ],
+   "what": "The adapter with a typed Direction had no owner (N33a-19's PortHamiltonian is M1), so this bead now writes the one adapter function, frob_fsim::actuation::coupling::transformer, under the actuation feature of N33a-11. Scope now names N33a-19 as its caller, and INT-FSIM-09 as N33b-10 at M0 and BD-068 at M1. Added deps BD-025, N33a-11 and N33b-10. The rates (12, -8) / (-12, 8) and the power balance were rechecked."
+  },
+  {
+   "bead": "N33c-44",
+   "kinds": [
+    "deps"
+   ],
+   "what": "An acceptance line runs the tunnelling audit, but its verb contact.audit (N18b-23, M2) was not a dep. It is now a dep, and the acceptance names it. The geometry was rechecked: chord 0.55 m, sagitta bound 1.05 m, path-length dilation 0.5887467 m."
+  },
+  {
+   "bead": "N33c-45",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The recompute path in frob-fsim took exact arithmetic from frob-cert, which made the proposer depend on the auditor, and it claimed degree-1 exactness it cannot have in f64. It is now an outward-rounded f64 interval enclosure that rejects the overstated value 1 with enclosure_lower 1 - 2^-22 and 1 - 2^-53. Exact rationals decide verdicts only in frob-conformance's test code, and acceptance asserts that frob-fsim does not depend on frob-cert. Added deps BD-025 and N33a-11 (the optimize group); related BD-127."
+  },
+  {
+   "bead": "N33c-46",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Its e2e ran `frob-conformance probe ray-scale`, but the core driver cannot link f3d-math, which lives only in the standalone probe workspace. The step now runs that workspace's tests and its runner f3d-ray-probe --json."
+  },
+  {
+   "bead": "N33c-47",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Probe links were to be written into the probes' tests by this bead, which depended on none of them, and nothing owned the links of the M2 probes. There is now one link table, crates/frob-conformance/src/upstream/probe_links.toml, with entries for INT-TOOLCHAIN-01 (BD-031) and rows 1-14. Any probe not yet landed is reported `probe pending`, and the M0 rows are closed by GATE-WS-06/09. The consistency test read a 'negative-control registry' that does not hold the rows; it now reads the link table. 'No sibling file edited' now allows for the mirrored tracker bead. Added dep BD-025. Counts (53 -> 59; 38/2; 2/8/16/33) rechecked."
+  },
+  {
+   "bead": "N33c-48",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Its e2e step 4 and the fixed-upstream review use N33c-47's register and links, so N33c-47 is now a dep. This M0 bead claimed the recording of the M2 rows. The `--m2-rows` steps now log `not-run: N33c-44/N33c-46` until those beads land, and they record their rows themselves. Row 14 now runs f3d-ray-probe in the probe workspace. A new acceptance line requires rows 9, 10, 11 and 13 linked, none pending, at M0."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N33a-04",
+   "what": "Name the drift sub-reason field in the receipt schema. BD-001 and N41-18 use own_lock.reason (dirty | retreated | diverged | unknown-pin, null unless class is drift), and N33a-05 reads `reason`. The schema example lists only file, hash, agrees, class."
+  },
+  {
+   "bead": "N41-20",
+   "what": "Run the four fs-qty cells as `scripts/admission/toolchain_matrix.sh --sets 1` (N33c-01) instead of `cargo +<nightly> check -p fs-qty` inside FrankenSim's checkout. That cargo call would run in a sibling (with a risk of writing its Cargo.lock or target directory, INV-SUITE-04) and would produce records BD-031 cannot resume."
+  },
+  {
+   "bead": "N33a-11",
+   "what": "Its mode-feature pair is filled by N33c-11, not BD-038. Each group feature (referee, geometry, ledger, ...) must also enable mode-inproc, and mode-remote compiles no group. Otherwise `--features mode-remote,referee` is not the both-modes error N33c-11 specifies."
+  },
+  {
+   "bead": "N12-18",
+   "what": "Deliver the rewrite-trace checker at M2, split from orbit-count and group-enumeration if needed; its prerequisites BD-132, N12-02 and N12-03 are M0/M1. N21a-19 (M2) produces the traces, and the M2 beads N33c-21/N33c-22 require independent replay. N33c-22 now runs report-only until N12-18 lands."
+  },
+  {
+   "bead": "N34-11",
+   "what": "Its test plan builds `franken_kernel_text_forms_agree` in frob-conformance, which links franken-kernel, but it depends on neither BD-025 (the crate) nor N33c-09 (the check-deps allow row). Either cite that test as N33c-27's (crates/frob-conformance/tests/ids_oracle.rs, where it now lives) or add those deps. Point its switch-over rule's 'oracle test below' to N33c-27."
+  },
+  {
+   "bead": "N23b-30",
+   "what": "Add dep N33c-40. N23b-30 completes row 6 of GATE-WS-06 by running the `--sampler-row` mode of scripts/e2e/suite_ws06.sh, which N33c-40 creates."
+  },
+  {
+   "bead": "N33a-19",
+   "what": "Add dep N33c-43 (M0). PortHamiltonian must call N33c-43's adapter function frob_fsim::actuation::coupling::transformer (typed Direction, positive ratio, interconnect_mapped only) and add no entry that takes a signed coefficient. Today it is only related, so it could write a second transformer entry."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "All 53 reviewed: 49 changed, 4 unchanged (N33c-15, N33c-16, N33c-17, N33c-39), no new or merged beads. Main themes: duplicate definitions resolved to one owner (trace format, route script, probe links), M0 beads no longer claim M2 steps (logged not-run: <bead>), refusal and check-stack semantics aligned with N33-REF/N33a-05, same-stack predicate closed, missing deps added (frob-conformance BD-025 for probes). cycles = 0 after all edits. The slice looks settled apart from the 7 requests."
+}

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M5"
 labels: ["m5", "ground", "frob-ground", "frontier", "bet", "gate"]
 parent: "WP-68"
-deps: ["N00-28", "N00-07", "BD-388", "BD-393", "BD-394", "STD-E2E"]
-needs: ["§42 (OPEN-GAUNT-1): which real-robot dataset, if any, is admitted to the Reality lane first; without one the Reality gate rests at `no-claim`", "§30.4: the exchangeability alarm and the omitted-law fixture of the synthetic rehearsal"]
-related: ["BD-387", "BD-392", "BD-397", "BD-139", "NS-21", "N00-12", "N00-KA", "N00-CX"]
+deps: ["BD-388", "BD-393", "BD-394", "BD-397", "N00-28", "N30a-18", "N30b-18", "N38a-09", "N38b-26", "N41-10", "STD-E2E"]
+needs: []
+related: ["GB-35", "N00-12", "N00-CX", "N00-KA", "N40-31", "N40-32", "NS-21"]
 gates: ["GATE-GROUND-06", "GATE-GROUND-07", "GATE-GROUND-10", "KILL-BAND"]
 plan_refs: ["§4 (BET-28)", "§40.5", "§0.8 (H-14)", "§30.22", "§8.1 (Reality)", "§43.12"]
 ---
@@ -33,8 +33,18 @@ state is `no-claim`, which is recorded as the state and not as a pass.
 ## Scope
 
 In: pre-registration, the M5 reading on the synthetic rehearsal, the reading on real data whenever a dataset is
-admitted, verdict and decision record. Out: ingestion, identification, frozen predictions, the band
-computation, drift detection.
+admitted, the bet's verdict on its three falsifier clauses, its record `docs/adr/bet-28-m5.md` and its row in
+the bet ledger. Out: ingestion, identification and frozen predictions (their Ground beads); the synthetic
+rehearsal (BD-388); the band computation `ground.band` and GATE-GROUND-06 (BD-393); drift detection and
+GATE-GROUND-07 (BD-394); the omitted-law control (N30a-18); which real dataset is admitted first, if any (N38b-26,
+with the owner packet N41-10);
+applying the trigger of KILL-BAND to the rows of GATE-GROUND-06 and GATE-GROUND-07, the pre-declared
+half-level adjustment of the monitors, the posture until decided, the downstream changes of a fired gate and
+the kill record `docs/adr/ADR-KILL-BAND-M5.md` (N30b-18; the kill-gate record form of N40-03). This bead reads that decision and depends on that bead:
+"the KILL-BAND decision recorded" in this bead's records means on record by N30b-18, cited by ADR identifier,
+never re-decided here. The two records answer different questions: the kill record says whether bands ship,
+from the rehearsal alone; the bet record says which of the clauses (a), (b) and (c) are falsified, untested or
+standing, and is read again at each admitted dataset.
 
 ## Technical approach
 
@@ -71,8 +81,13 @@ computation, drift detection.
 - [ ] Rehearsal: mean coverage against 19/21 ± 0.01; low-coverage fraction against 0.069 ± 0.03; zero bands in
       the three refusal cases; drift retirement and false-retirement rates.
 - [ ] The omitted-law fixture triggered the alarm or a refusal (no band issued on those cases).
-- [ ] Real data, if admitted: empirical coverage with the allowance; otherwise the recorded `no-claim`.
-- [ ] Verdict and the KILL-BAND decision recorded as an ADR.
+- [ ] Real data, if admitted: empirical coverage with the allowance, read from form A of the Reality lane's
+      record (`docs/delivery/reality-lane.toml`, BD-397); otherwise that record's form B, the recorded
+      `no-claim` with its reason, and clause (a) reads `Untested: no data`.
+- [ ] The bet's verdict is recorded as the ADR `docs/adr/bet-28-m5.md` and in the bet ledger, and it cites the
+      KILL-BAND decision by the identifier and hash of its ADR (`docs/adr/ADR-KILL-BAND-M5.md`, written by
+      N30b-18); if the
+      kill gate fired, the verdict records the bet as decided against at the rehearsal stage.
 
 ## Test plan
 
@@ -83,9 +98,15 @@ computation, drift detection.
 `bet28_no_data_is_untested_no_data_not_pass`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_28_decide.sh` runs the synthetic rehearsal through `frob ground ingest`, `predict`, `score` and
-`band`, requests a band for an unbuilt design (expects a refusal naming the missing calibrated family), runs
-the omitted-law fixture, and recomputes the verdict. Logged per STD-E2E: cell, n, nominal and empirical
+`scripts/e2e/bet_28_decide.sh` runs the synthetic rehearsal of BD-388 through the Ground verbs, each run or
+mutate call with its own key: `frob ground ingest <rehearsal dataset>/ --design <d> --task-family <tf> --key
+b28-ingest --json`, `frob ground predict --dataset <ds> --part validation --cell <c> … --key b28-pred-<n> --json`
+(the prediction's digest logged before its data is opened), `frob ground score <pred> --key b28-score-<n>
+--json` and `frob ground band --cell <c> --metric <m> --level 0.90 --json`; requests a band for an unbuilt design
+(expects a refusal naming the missing calibrated family, and no band), runs the omitted-law fixture (expects the
+alarm or a refusal), reads the verdict of BET-28 from the bet register's report (`cargo run -p frob-conformance
+--example bets -- status --json`, example `bets` of N00-28, the one verdict rule) and checks
+`docs/adr/bet-28-m5.md` against it. Logged per STD-E2E: cell, n, nominal and empirical
 coverage, alarm state, refusal codes, prediction digest and data-opening times; `summary` naming
 GATE-GROUND-06, -07, -10 and KILL-BAND. Logs carry no private measurement data: only digests and aggregates.
 

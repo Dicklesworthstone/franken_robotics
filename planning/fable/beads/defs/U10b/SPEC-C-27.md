@@ -4,13 +4,13 @@ title: "spec C-27 (frob-nemesis): rare failures in two lanes: bounded-weight bou
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "lemma", "spine", "spec", "solid", "frontier", "frob-nemesis", "test"]
+labels: ["m3", "lemma", "spine", "spec", "solid", "frontier", "frob-nemesis", "test", "review-notes-open"]
 parent: "WP-55"
-deps: ["BD-025", "SPEC-C-15", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-27", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-138 to KA-141 and CX-065, CX-066; this bead binds them to tests, sets the tolerance the appendix leaves `to set` and registers the controls it leaves unstated", "§38.7: the metamorphic-relation registry row MR-08 (fork and replay: a child with its own address has fresh streams) in `frob-conformance/registry/relations.toml` (Gauntlet beads)"]
-related: ["N10b-18", "BD-276", "BD-277", "BD-273", "BD-205", "BD-180", "BD-259", "SPEC-C-28", "SPEC-C-30", "BD-270", "N10a-02"]
+deps: ["BD-025", "N10-CX", "N10-KA2", "N10a-01", "N38a-14", "SPEC-C-15", "STD-E2E", "STD-TEST", "VERBS-operator"]
+needs: []
+related: ["BD-270", "BD-276", "BD-277", "N10b-18", "N26a-28", "SPEC-C-28", "SPEC-C-30"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
-plan_refs: ["§10 C-27", "§9 D-16", "§11.1", "§26.9", "§26.12", "§26.14", "§38.7 MR-08", "§38.12", "Appendix D.8", "Appendix E GB-32", "Appendix M.9 KA-138 to KA-141", "Appendix N.7 CX-065 CX-066", "Appendix N CX-292"]
+plan_refs: ["§10 C-27", "§9 D-16", "§11.1", "§26.9", "§26.12", "§26.14", "§26.15", "§38.7 MR-08", "§38.12", "Appendix D.8", "Appendix E GB-32", "Appendix M.9 KA-138 to KA-141", "Appendix N.7 CX-065 CX-066", "Appendix N CX-292"]
 ---
 ## Background
 
@@ -55,7 +55,7 @@ legality profile of `frob-nemesis`): that bead is listed in `related` and is not
 generic over its subject trait and closes on the exact reference model and the mutants in its own test support. If
 `frob-nemesis` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -129,22 +129,32 @@ and is logged `pending` here until then.
   Result<SplitEstimate, Refusal>; fn unseen_mass(&self, mode_counts: &[u64]) -> f64 }`.
   `tests/support/c27_ref.rs`: exact integer search for the smallest n with (1 − p*)ⁿ ≤ δ in high-precision
   arithmetic; the biased walk with keyed streams; a discrete nominal law and proposal for exact enumeration of
-  the weighted estimator. `tests/support/c27_mutants.rs`: mutants under the cargo feature `controls`.
+  the weighted estimator. `tests/support/c27_mutants.rs`: mutants under the crate's cargo feature `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
 - Register row C-27: `verb = "nemesis.bound"`, `failing_test` =
   `frob-nemesis::laws_c27::s7_fork_without_fresh_randomness_refused`, `payoff.gate = "GATE-NEMESIS-04"`,
   `known_answers = KA-138 … KA-141`, `pilot = "PILOT-C-27"` (for splitting), `generic_comparator = "crude
   nominal sampling with the zero-failure rule at the same budget"`.
-- Gates that measure the construction (recorded by BD-276 and BD-277): GATE-NEMESIS-04 at M3 (over 10⁴
-  synthetic studies with known p the 95% upper bound covers p in at least 95%; the defensive mixture covers
-  under a mis-centred proposal; non-nominal episodes are refused); GATE-NEMESIS-05 at M3 (on planted failures of
-  probability 10⁻⁴ and 10⁻⁵, at least 10 times fewer episodes than crude sampling at 10⁻⁵, both modes found in
-  at least 80% of repetitions). Kill gate KILL-RARE (N10b-18 states it).
+- Gates that measure the construction (measured on BD-276 and BD-277 by the scripts of N26a-30 and N26a-31, and
+  recorded from their receipts by a session that did not implement the capability, N38b-19): GATE-NEMESIS-04 at M3
+  (over 10⁴ synthetic studies with known p the 95% upper bound covers p in at least 95%; the defensive mixture
+  covers under a mis-centred proposal; non-nominal episodes are refused); GATE-NEMESIS-05 at M3 (on planted failures
+  of probability 10⁻⁴ and 10⁻⁵, at least 10 times fewer episodes than crude sampling at 10⁻⁵, both modes found in at
+  least 80% of repetitions).
+- Pilot (carried in full; run by N10b-18, record `PILOT-C-27`, with the subsystem-scale exploration pilot
+  N26a-28 as the second record of the same family): the random-walk fixture and one planted trap of probability
+  at most 3·10⁻⁵ in a scene. Falsifier (TARGET): the trap is not found at least three times sooner than by
+  uniform sampling, or fewer than 1% of forks reach the next level. Ceiling: discovery speed only; the
+  certification price is unchanged. Fallback: crude sampling alone.
+- Kill gate KILL-RARE (decided at M3, §26.15): in the exploration pilot the gain is below 10 times at 10⁻⁵, or
+  the coverage of any interval offered as a bound is below 85%, or a planted mode is missed in more than 20% of
+  repetitions. Fallback: crude nominal sampling with the binomial bound alone; splitting is removed, and tilting
+  is kept only inside `nemesis.search`.
 
 ## Acceptance criteria
 
 - [ ] `docs/math/C-27.md` has the ten sections, statements C-27.S1 to S9 with classes, the derivations and the
       worked numbers.
-- [ ] `cargo test -p frob-nemesis --test laws_c27` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-nemesis --test laws_c27` passes; with `--features conformance` every mutant fails.
 - [ ] KA-138: `episodes_needed` returns exactly 29,956, 299,572 and 2,995,731 at δ = 0.05, and 76,959 at
       δ = 0.05/110 for 10⁻⁴.
 - [ ] KA-139: with β = 1/10 and 29,956 clean episodes the certified bound is at most 1.0001 × 10⁻³ and not
@@ -152,7 +162,12 @@ and is logged `pending` here until then.
 - [ ] KA-140: the formula gives 0.0054; on the walk fixture the empirical squared coefficient of variation
       over 2,000 seeded splitting runs is within a factor of 2 of the formula (the tolerance set here).
 - [ ] KA-141: over 10⁴ seeded repetitions on the walk, the upper bound and the truncated-weight lower bound
-      bracket 1.504 × 10⁻⁴ in at least 95% of repetitions (δ = 0.05).
+      bracket 1.504 × 10⁻⁴ in at least 95% of repetitions (δ = 0.05). DESIGN for the fixture: the upper bound
+      is the exact binomial upper bound from crude nominal episodes; the lower bound is the truncated-weight
+      bound from the exchanged walk (up-probability 0.6, under which every failing path has weight exactly
+      (2/3)¹⁹ ≈ 4.51 × 10⁻⁴, so w_max is known in closed form); each is one-sided at δ/2, so that by the union
+      bound the pair brackets with probability at least 1 − δ; the episode counts per repetition are fixed in
+      the test and logged.
 - [ ] A fork whose children share the parent's streams is detected (identical digests) and refused; a bound
       offered a tilted episode without recorded weights is refused.
 - [ ] `scripts/e2e/spec_c27.sh` exits 0.
@@ -180,14 +195,17 @@ and is logged `pending` here until then.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c27.sh` (idempotent; seed 2700 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-138 KA-139 KA-140`;
-`cargo test -p frob-conformance --test g0 -- KA-141`; `cargo test -p frob-conformance --test g3 -- MR-08` on
-the host site. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c27/<utc>.ndjson` and a transcript;
-each line has `ts`, `script`, `bead` (`SPEC-C-27`), `step`, `event` (`start`, `cmd`, `assert`, `metric`,
-`refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class, tier G0 or
-G1 host, determinism class, seed), each count or coverage against its expected value and threshold, `refusal`
-lines for the expected FROB-REF-560 and FROB-REF-569, and on failure the first repetition whose bounds miss
-the truth with both bounds. Final `summary`: assertion counts, GATE-GAUNT-02 and GATE-GAUNT-03.
+`--features conformance`; the registry rows in the Gauntlet's tier targets (BD-025: there is no `g0`, `g1` or `g3`
+target), `FROB_TEST_SEED=2700 cargo test -p frob-conformance --test g1_known_answers -- KA-138 KA-139 KA-140`,
+`FROB_TEST_SEED=2700 cargo test -p frob-conformance --test g0_laws -- KA-141` and `FROB_TEST_SEED=2700 cargo test -p
+frob-conformance --test g3_metamorphic -- MR-08` on the host site, each also with `--features gauntlet-mutations`
+for its registered controls, the receipt hash logged. Sources the STD-E2E helper; writes
+`target/e2e-logs/spec_c27/<utc>.ndjson` and a transcript; each line has `ts`, `script`, `bead` (`SPEC-C-27`),
+`step`, `event` (`start`, `cmd`, `assert`, `metric`, `refusal`, `end`), command line, exit code, wall time, evidence
+block (claim Known answer, class, tier G0 or G1 host, determinism class, seed), each count or coverage against its
+expected value and threshold, `refusal` lines for the expected FROB-REF-560 and FROB-REF-569, and on failure the
+first repetition whose bounds miss the truth with both bounds. Final `summary`: assertion counts, GATE-GAUNT-02 and
+GATE-GAUNT-03.
 
 ### Known answers and negative controls
 
@@ -220,5 +238,5 @@ debug and release with identical tables.
 
 Plan §10 C-27; §9 D-16; §11.1 (world address); §26.9, §26.12, §26.14; §38.7 (MR-08); §38.12; Appendix D.8
 (zero-failure bound, bounded-weight importance sampling, splitting variance, unseen-mode mass); Appendix E
-GB-32; KA-138 to KA-141; CX-065, CX-066, CX-292; BET-32; GATE-NEMESIS-04, -05; KILL-RARE; FROB-REF-560,
+GB-32; KA-138 to KA-141; CX-065, CX-066, CX-292; BET-32; GATE-NEMESIS-04, -05; KILL-RARE (§26.15); PILOT-C-27; FROB-REF-560,
 FROB-REF-569.

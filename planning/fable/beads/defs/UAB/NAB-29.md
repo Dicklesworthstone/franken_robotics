@@ -4,11 +4,11 @@ title: "M6 exit: sweep of the decision records after the frontier-physics epics;
 type: "task"
 priority: 3
 milestone: "M6"
-labels: ["m6", "delivery", "gauntlet", "solid", "registry", "decision-record"]
+labels: ["m6", "delivery", "gauntlet", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M6"
-deps: ["NAB-22", "NAB-28", "NAB-21", "BD-427"]
-needs: ["§40.6: the M6 exit report with each epic's plan, pilot and kill decision (N40-04, N40-30)", "§0.7, §38.5: the pilot ledger with the state of every Moonshot pilot (N00-07)", "§19.10.7: the proxy-adequacy pilot (GATE-HAB-09), which decides whether a coupled island is ever funded (BD-415, BD-416, N19b-20)"]
-related: ["NAB-17", "NAB-32", "NAB-49", "NAB-30", "N00-07", "N19b-20", "BD-413", "BD-414", "BD-416", "BD-419", "BD-422", "BD-423", "BD-425", "BD-426"]
+deps: ["N15b-16", "N15b-23", "N16c-28", "N19b-11", "N19b-15", "N19b-19", "N19b-20", "N19c-37", "N22c-26", "N23b-37", "N25c-46", "N25d-05", "N31b-23", "N38a-09", "N38a-38", "N38a-39", "N40-04", "NAB-21", "NAB-22", "NAB-28", "NAB-50", "STD-E2E"]
+needs: []
+related: ["BD-427", "NAB-32", "NAB-35", "NAB-49"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.1.4", "Appendix C.2", "Appendix B.8", "§43 (M6)", "§0.8"]
 ---
@@ -24,20 +24,34 @@ islands, soft soil at scale, tactile sensing, the rotor port, RGB and splat scen
 through contact, lifecycle compression, the hard-contact law on GPU tiers, geometric phase for locomotion,
 symmetry at the instant of contact).
 
-Two things make this sweep different. First, it is the Moonshot queue's first real turnover: nine of the 21
-queued items have M6 as their earliest milestone, and the cap is four active at once, so the order of entry
-matters. Second, M6 is where the deferred question of *gradients through contact* is revisited, which several
+Two things make this sweep different. First, it is the Moonshot queue's first real turnover: seven of the 21
+queued items have M6 as their earliest milestone and two more are decided or land with it (coupled islands,
+after M6 on its proxy pilot; lifecycle compression, whose work lands with M6), and the cap is four active at
+once, so the order of entry matters. Second, M6 is where the deferred question of *gradients through contact* is revisited, which several
 parked and killed ideas wait on.
 
 ## Scope
 
 In: the M6 sweep record and report; history entries; queue turnover; proposals. Out: deciding gates; the exit
-review (BD-427); the procedure (NAB-22).
+review (BD-427), which comes after this sweep, runs its `check` as an attached check and copies its section into
+the exit record; the procedure (NAB-22).
+
+Order of work (DESIGN, as at M2 to M5 in NAB-25 to NAB-28). The sweep is made at the exit candidate commit,
+before the exit record is written (NAB-22 design decision 1). What it reads is produced before the review, not
+by it: the gate report at that commit (N40-04), which carries GATE-HAB-07 to -09, GATE-AUGUR-20 and -21 and
+GATE-FOUNDRY-12; the kill-decision ADRs written by their decision beads: N19b-15 (KILL-SLOSH), N19b-19
+(KILL-PROXY), N19b-11 (KILL-ADVECT), N15b-23 (KILL-SINEW-ROTOR), N25d-05 (KILL-AUGUR-SYMEVENT), N31b-23
+(KILL-LIFECYCLE), N25c-46 (KILL-AUGUR-PHASE) and N19b-20 (KILL-LIVING, with the proxy-adequacy pilot KI-17 and
+MQ-02 read); the decisions of the row-less gates of step 1's last paragraph (N15b-16, N16c-28, N19c-37,
+N22c-26, N23b-37, N38a-38, N38a-39); the pilot register (N38a-09) and the queue register (NAB-21). The
+dependency list names those beads for that reason. The session that performs the sweep implemented none of the
+cited beads.
 
 ## Technical approach
 
-`decision-sweep skeleton --exit M6`, fill, `check --exit M6`, by a session that implemented none of the cited
-beads.
+`cargo run -p frob-conformance --bin decision-sweep -- skeleton --exit M6` (the tool of NAB-22; below shortened
+to `decision-sweep …`), fill, `decision-sweep check --exit M6`; the exit runner of BD-427 runs the same `check`
+as the attached check `decision-sweep`.
 
 **1. Families due by a kill gate decided at M6.**
 
@@ -53,6 +67,14 @@ beads.
 | EV-F58 Coupled multiphysics islands: free-surface fluid, implicit cloth, Cosserat rod, on the CPU referee for finalists | 0.8 | KILL-LIVING | M6, before the island work package | The proxies reproduce at least 90% of the full-model failures (GATE-HAB-09), or an island costs more than 181 rigid worlds at 5% activity with no route to less | The Solid tier and the Frontier proxies are the product; coupled islands are not built; reports say deformable matter is represented by proxy |
 
 Family and kill-gate pairs due at this exit: 8.
+
+Kill gates decided at M6 that have no family row in the matrix are outside the pair count and are read where a
+record names them: KILL-STEPADJOINT (N16c-28) by KI-23, KILL-FARFIELD (N19c-37, stage A N19cp1-02) by KI-16,
+KILL-SOILLIFT (N22c-26) by KI-22 and KI-65, KILL-TACTILE and KILL-RUT (N38a-39, N38a-38, entered by dated
+amendment) by the queue outcomes of MQ-04 and MQ-05. KILL-SINEW-AGE (battery ageing, N15b-16; fallback: ageing
+factors are user-set constants) and KILL-SHORTGRAD (first reading N23b-37; the final reading comes with
+GATE-CORTEX-22 in the gate report) are named by no record: a fired gate changes nothing in the decision records,
+and a mechanism that passes gets a proposal for a row by ADR, scored with this exit's evidence.
 
 **2. Killed-idea records whose reversal condition names an M6 gate.**
 
@@ -81,7 +103,7 @@ active)`.
   own gate.
 - With more than four eligible, entry follows the order rule: earlier consumers first; within a milestone the
   cheaper pilot first; a dependent item after its dependency. The sweep records which four entered, which wait,
-  and which were removed (`passed`, `killed`, `falsified`).
+  and which were removed (`passed`, `killed`, `falsified`, `expired`: NAB-21's four events that free a slot).
 
 **4. Parked and not-yet-placed ideas that wait on M6.** *Saddle-point robust co-design* (parked until the
 non-goal on gradients through contact is revisited): the sweep records the outcome of that review and whether
@@ -104,6 +126,10 @@ the pinned commit.
 - [ ] MQ-08 is `killed` if MQ-02 was killed, and never `active` while MQ-02 is not `passed`.
 - [ ] Each row of step 2 has measured values and `condition_met`.
 - [ ] The three ideas of step 4 have a recorded state.
+- [ ] The entries of KI-16, KI-22, KI-23 and KI-65 and the queue outcomes of MQ-04 and MQ-05 cite the decision
+      ADRs of the row-less gates of step 1's last paragraph that they name.
+- [ ] The sweep record exists at the exit candidate commit before the M6 exit record is written, and the exit
+      runner's attached check reads it; the sweep's session implemented none of the beads it cites.
 
 ## Test plan
 
@@ -115,8 +141,19 @@ the pinned commit.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M6` (NAB-50): due list, `check`, eight pairs, the queue before and
-after with `active_after` as a `metric` (threshold `<= 4`). Logged per STD-E2E.
+`scripts/e2e/decision_records.sh --exit M6` (NAB-50): prints the due list, runs `decision-sweep check --exit M6`,
+and asserts the eight pairs, the conditions of step 2, the queue before and after and the three ideas of step 4;
+then replays the three negative controls below (fixtures under
+`tests/fixtures/sweep/M6/controls/` written by this bead, the hook of NAB-50) on scratch copies of the sweep record and asserts that `check`
+fails on each with its reason. Logged through the shared helper of STD-E2E to
+`target/e2e-logs/decision_records/<utc>.ndjson` with a transcript, every line with `ts`, `script`, `bead`
+(`NAB-29`), `step`, `event`: `cmd` lines with the exact command line, exit code and wall time; one `assert` per
+pair with the kill gate, the ADR identifier and the outcome; one `metric` per condition of step 2 with the
+measured number, its unit, the threshold and `condition_met`; the queue's `active_after` as a `metric`
+(threshold `<= 4`) with the items entered, waiting and freed; the digests of the gate report and of the sweep
+record; `assert` lines of kind `negative-control` with `caught`; on failure the first due item without an
+outcome, or the first queue item out of order, with the path of the sweep record; a `summary` with assertions
+passed and failed and the kill gates read.
 
 ### Known answers and negative controls
 

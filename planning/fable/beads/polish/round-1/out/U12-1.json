@@ -1,0 +1,489 @@
+{
+ "round": 1,
+ "slice": "U12-1",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "BD-132",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Scope lists N12p1-01 among the remaining-kind checkers (U12-2 request); defined the stance chart (u = 1/a = 3 m⁻¹, v = 1/b) and the rows of A so the lp-farkas cell test (yᵀw − β = 15v − 70, open end 14/3) is self-contained; named the missing mutants so every kind has at least three (lp-farkas capacity, finite-game terminal/bound/non-function, alias-pair on-time/overlap/scope, interval-box false-holds/digest/widened box, trace-witness digest/address) plus rational-form and size-limit tests; full NDJSON fields for the auditor script"
+  },
+  {
+   "bead": "BD-364",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep BD-359 (it serializes product-unreachable proofs and Scope already named it as the producer); fixed the stale 'recorded as its two needs' sentence; logging fields per charter §6 with false-accept, memory and re-check metrics"
+  },
+  {
+   "bead": "BD-379",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "made the mutated-kernel control executable (producer must end not-certified or emit a rejected cert; the original cert re-bound to the mutant must be rejected; seeded sample, one per family); N12-12 moved from related to deps (the record includes the decision-effect count); logging fields"
+  },
+  {
+   "bead": "BD-381",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the lean-capsule checker compared axioms with a whitelist embedded by the producer; now the whitelist is pinned by the kind's version inside frob-verify and a widened bundle copy is rejected (new test); added the < α half of T-26 to the Lean sketch; logging fields"
+  },
+  {
+   "bead": "BD-382",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "stated the exact box-form to standard-form map between the auditor's lp-farkas and the Lean farkas (y_std = (−y, max(0, Aᵀy))), which the instance generator and the differential test need; CLI reflector values mapped to Lean names (DESIGN); deps VERBS-prove, CARD-T-21 and CARD-T-35 (registered statements and the enabling rule come first); prove.reflect now applies the T-35 three-hash enabling rule and passes that card's law tests; new converter test; logging fields"
+  },
+  {
+   "bead": "CARD-T-01",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit test for the mutated statement det N = −D³ named in acceptance; logging fields"
+  },
+  {
+   "bead": "CARD-T-02",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the determinant half of T-02 had no certified identity; added det(R·N) − D³ = (det R − 1)·det N + (det N − D³) and tests; the card closes at M1, so its specimens now join lemma_kernel_cert.sh at M1 (the only script named was M5)"
+  },
+  {
+   "bead": "CARD-T-03",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit test for the sum-statement mutant listed in acceptance; logging fields"
+  },
+  {
+   "bead": "CARD-T-04",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the changed-coefficient and missing-rotation-relation mutants listed in acceptance; logging fields"
+  },
+  {
+   "bead": "CARD-T-05",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for two acceptance mutants; M1 card now replayed by lemma_kernel_cert.sh at M1 as well as by the M5 coverage script; logging fields"
+  },
+  {
+   "bead": "CARD-T-06",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the dropped-adjoint-term and missing-relation mutants and for the fallback row; logging fields"
+  },
+  {
+   "bead": "CARD-T-07",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for three acceptance mutants (1 − μ², missing witness, conjugated projection with exact values); logging fields"
+  },
+  {
+   "bead": "CARD-T-08",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the three acceptance controls (lemma without hypothesis, Gram entry changed, weakened statement) and for a stale N12-51 receipt; logging fields"
+  },
+  {
+   "bead": "CARD-T-09",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "negative fixture for the shared unitless epsilon the Considerations say is rejected; logging fields with the second-opinion agreement"
+  },
+  {
+   "bead": "CARD-T-10",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "route (b) stated with the Schwartz–Zippel bound (d/|S| per draw, (d/|S|)^k for k draws) and what the .idtest record holds; test of the recorded bound; logging fields"
+  },
+  {
+   "bead": "CARD-T-11",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the two acceptance mutants not covered (universal joint with phantom structure constants; spherical basis offered as not closed); logging fields"
+  },
+  {
+   "bead": "CARD-T-12",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "ordering contradiction fixed: the card depended on BD-381, yet BD-381 binds its proof to this card's registered statement (N12-24); now the card writes the statement and controls, BD-381 depends on it and seals; BD-381 moved to related; acceptance split accordingly"
+  },
+  {
+   "bead": "CARD-T-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "kill rule said FD-FLN-01 might be 'declined upstream', contrary to REV-1 (upstream items are this program's work); restated as unscheduled P3 work or a probe that still meets a blocked module; logging fields"
+  },
+  {
+   "bead": "CARD-T-14",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "named the firmware e2e script (scripts/e2e/foundry_firmware.sh, N31a-58) in place of 'the epic's export script', with logging fields; unit tests for two acceptance controls and the parked row"
+  },
+  {
+   "bead": "CARD-T-15",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "registry acceptance at the card's close (M1) now reads Lean route hypothesis with the registered statement; BD-381 (M5, depends on the card) moves it to Proved; unit tests for the flow-only-ratio and changed-coefficient mutants; M1 replay through lemma_kernel_cert.sh; logging fields"
+  },
+  {
+   "bead": "CARD-T-16",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the −adᵀ coadjoint and changed-coefficient mutants with values; logging fields"
+  },
+  {
+   "bead": "CARD-T-17",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the changed-coefficient mutant and the grazing refusal (FROB-REF-263); logging fields"
+  },
+  {
+   "bead": "CARD-T-18",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the substituted-event and forged-certificate controls; logging fields"
+  },
+  {
+   "bead": "CARD-T-19",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the negative-mass and collision-proxy controls; logging fields with pivots and margin"
+  },
+  {
+   "bead": "CARD-T-20",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "acceptance required a budget arm run before work but the body never said how; added step 0 (arm E of N12-22 run by the card itself, since N12-22 is M4: operation count vs 8,192, time, memory, failing control, fallback to Tested); tests for two acceptance mutants; logging fields"
+  },
+  {
+   "bead": "CARD-T-21",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit test for the negative-entry standard-form mutant with values; logging fields; (BD-382 now depends on this card for the registered Farkas statement)"
+  },
+  {
+   "bead": "CARD-T-22",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the affine-class bound b >= 1/2 was argued only for the symmetric law; added the general argument (null vector n = (1,-1,-1,1) of A, pair sums 290 + 15/b +- 60 s_y, total 580 + 30/b <= 640 for every affine law); unit tests for force floor, passive authority, moment-as-torque, affine label and the closed end 14/3; logging fields"
+  },
+  {
+   "bead": "CARD-T-23",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "grid stated exactly (U = 1/2 + i/32, eps = j/64, admitted iff 2j < 32 + i: 180 + 164 = 344, nine boundary cells); dep BD-041 (the plan-time pilot re-run whose grid the card reproduces; BD-041 already lists the card as related); tests for the non-function table and differing-history alias mutants; logging fields"
+  },
+  {
+   "bead": "CARD-T-24",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit test for the non-least-representative mutant named in acceptance; logging fields"
+  },
+  {
+   "bead": "CARD-T-25",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the non-normal pair (D4, <s>) and an extra non-cyclic pair, both acceptance mutants; logging fields"
+  },
+  {
+   "bead": "CARD-T-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance said the Lean route is checked/Proved after BD-381 seals it, but BD-381 (M5) depends on this M1 card; row at close is now hypothesis with the registered statement, BD-381's receipt moves it; named arena_study_preanalysis.sh (N24b-21) steps in place of 'the study scripts'; logging fields"
+  },
+  {
+   "bead": "CARD-T-27",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit test for the scale-pow2-without-range mutant named in acceptance; logging fields"
+  },
+  {
+   "bead": "CARD-T-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the 50.5 ms cutoff test used the 0.25 J rounding while the certificate uses the exact 0.251136 J upper end; the test now asserts both (50.5 and 50.4432 ms; 45.5 and 45.4432 ms with reserve); named shield_energy_budget.sh (N22b-18); logging fields"
+  },
+  {
+   "bead": "CARD-T-29",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "fixed the garbled Order-of-work sentence and added the port-junction implementer N15b-01 and BD-060 to related; unit tests for a backward edge in a claimed order and for edges recomputed from declared causality; named module_verbs.sh (N15b-33); logging fields"
+  },
+  {
+   "bead": "CARD-T-30",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "logging fields (worlds, deadline, kernel class per replay, packets visible by arrival, first differing packet)"
+  },
+  {
+   "bead": "CARD-T-31",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the acceptance mutants (non-adjacent step, path outside inner complex, false cut) and for heading wrap and traversal-order independence; named contact_clearance_gate.sh (N19b-33); logging fields"
+  },
+  {
+   "bead": "CARD-T-32",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "unit tests for the progress/nonempty declarations (auditor rule d) and an undeclared shared input; logging fields"
+  },
+  {
+   "bead": "CARD-T-33",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "dep N12-21 (the exact-rational randomized identity test is the card's Tested fallback and its unit test uses it); BD-150 and N12-36 to related; unit test for the changed-coefficient mutant and the budget-exceeded routing; named pilot_lemma_budget.sh (N12-22); logging fields"
+  },
+  {
+   "bead": "CARD-T-34",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "applied U12-2's request: checker dep N12-19 -> N12p1-01 (alpha-root split out); dep N10c-05 (the lane-2 spec it certifies; was only related); added the Order-of-work paragraph (implementer N25d-23 depends on the card); tests for gamma underestimate, non-reality by conjugate ball, a far-from-axis reality claim and the unsupported parked kind; named augur_synth_continuation.sh (N25d-24); logging fields"
+  },
+  {
+   "bead": "CARD-T-35",
+   "kinds": [
+    "deps",
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the card depended on its implementer BD-382, the same loop fixed for T-12; now it registers the specifications and a SoundFor template (lean/Frob/Statements/T35.lean, in the forms N12-26 found clean; N12-26 moved to deps), the enabling rule as data and its law tests; BD-382 depends on it and runs them; acceptance split into card-close lines and live-output lines; binding fixtures for converse and restricted statements; logging fields"
+  },
+  {
+   "bead": "N12-01",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "acceptance read 'frob prove list shows the route' but N12-06 (which serves the rows) depends on this bead; now the route is exposed for N12-06 and observed there, and the 35-card route check runs on a card_shapes.toml fixture transcribed from §12.3; tests for the card table, the twelve not-decidable obligations, refusal before any tool process spawns, receipts carrying route and revision, purity; audit-script logging fields"
+  },
+  {
+   "bead": "N12-02",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "applied U12-2's request (alpha-root checker N12p1-01 in the table and Out line); the scope column the acceptance demands had no values: initial scopes from Appendix I.4 (energy-budget also mission, monomial-product mission), widened only by a versioned edit, with a specimens_in_scope test; tests for class-above-cap, newer registry name, generated document, help and report version; logging fields"
+  },
+  {
+   "bead": "N12-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the Merkle rule did not say what happens at an odd level (the six-entry listing has one) and had no leaf/inner domain separation; now 0x01-prefixed inner nodes, odd node carried up, duplicates rejected, set class = weakest; the writer round trip moved to BD-027/BD-133 (they depend on this bead) with golden files committed here; tests for every generic rule R2-R5, domain change, rule order, Merkle cases; logging fields"
+  },
+  {
+   "bead": "N12-04",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "dep BD-027 (the prove.verify the agreement test compares against; M0, no cycle); the whole-corpus agreement now covers kernel bundles here and is extended by BD-133 for mission bundles; tests for JSON report fields, help contract, receipts, exit 3 on unreadable input, report determinism; logging fields"
+  },
+  {
+   "bead": "N12-05",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "stated the fresh outcomes of the exclusion's recheck moves (eps = 1/4 admitted; U = 1 at equality still excluded, re-issued by fresh solve); tests for wrong-direction polarity, class not settable, receipt refusal, validator and auditor pass, amendment-order metamorphic relation, per-world intersection refused (CX-045); logging fields for N12-35's amendment step"
+  },
+  {
+   "bead": "N12-06",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the schema had no place for the route chosen by N12-01, the Lean Statement module and hash that N12-24 binds, or T-35's per-reflector sub-entries; added them; prove.list acceptance lines rephrased (BD-027 serves the verb and N12-33 observes GATE-LEMMA-00, both depend on this bead; here list_rows is tested on fixture receipts); T-13, T-14, T-34 parked at creation; tests; logging fields"
+  },
+  {
+   "bead": "N12-07",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "each substitute's owner is now named with its plan reference (C-22, T-14, C-31, C-36, C-21, GATE-SPARK-01, §35, C-15, T-10, C-28, §30); substitutes owned by later milestones may be pending with owner and milestone (a pending row past its milestone fails), else the M1 check could not pass; deps N12-11 and BD-133 (its e2e step extends N12-11's script through prove.bundle); tests incl. the symplectic-bundle mutation fixture; logging fields"
+  },
+  {
+   "bead": "N12-08",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "dep N12-11 (it adds steps to that M0 script); tests for the sole-producer source scan, non-Proof claims capped, the six not_claimed strings, Estimated uncertainty; logging fields"
+  },
+  {
+   "bead": "N12-09",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the canonicalization counterexample is now a unit test (producer drops a field before hashing; the auditor's own hash rejects); test of the after-search ordering rule; logging fields"
+  },
+  {
+   "bead": "N12-10",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "tests for the two planted builds that had none (BLAKE3 constant, sign normalization), canonical re-parse, absent keyed modes, pinned corpus digest, FrankenSymPy-unavailable recorded as not run; logging fields"
+  },
+  {
+   "bead": "N12-11",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "export-sweep negative controls had no tests (missing object, true, string false, field count, build packet, unknown file kind, receipt rule, planted From impl); full NDJSON fields; states that N12-07 and N12-08 add M1 steps to this M0 script (they claimed the script already had them)"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-027",
+   "what": "prove.list serves N12-06's list_rows, which now carries per-route `route` (from N12-01's choose_route), the Lean `statement`/`statement_hash`, T-35's sub-entries and `prooftools_revision`; its writer must reproduce N12-03's golden bundles (crates/frob-cert/tests/golden/) byte for byte (PO-LEMMA-01 writer half)"
+  },
+  {
+   "bead": "BD-133",
+   "what": "its mission-bundle writer must reproduce N12-03's golden bundles byte for byte, and it runs N12-04's binary-vs-verb agreement test on the mission bundles it adds (N12-04 covers the kernel corpus)"
+  },
+  {
+   "bead": "N12-24",
+   "what": "support reflector soundness statements of the form `SoundFor <check> <Spec>` from CARD-T-35's lean/Frob/Statements/T35.lean, bound together with the check function's definition hash recorded in the T-35 sub-entry"
+  },
+  {
+   "bead": "N12-33",
+   "what": "lemma_kernel_cert.sh: for steps that exercise a theorem card's specimens, tag lines with the card's key (bead CARD-T-nn, or a `card` field beside `bead`) and step `T-nn/<case>`, and log the per-card measured fields that each card's e2e section lists (cards T-01 to T-05, T-09, T-15)"
+  },
+  {
+   "bead": "N12-34",
+   "what": "lemma_auditor_mutations.sh: same per-card tagging (CARD-T-nn, step `T-nn/<specimen-or-mutant>`) and the per-card fields listed in the cards that name it; the new mutants named in the cards (e.g. T-22 force floor, passive authority, moment-as-torque, affine label, closed end; T-24 non-least representative; T-25 non-normal pair; T-27 scale-pow2 without range; T-31 non-adjacent step, false cut; T-32 missing progress declaration; T-34 gamma underestimate) join its corpus"
+  },
+  {
+   "bead": "N12-35",
+   "what": "lemma_second_machine.sh: same per-card tagging and the BLAKE3 of each bundle on both machines for cards T-21, T-22, T-23, T-30, T-32"
+  },
+  {
+   "bead": "N12-28",
+   "what": "register the polyEq and replay specifications as SoundFor instances in CARD-T-35's lean/Frob/Statements/T35.lean (forms recorded by N12-26) before proving, and pass CARD-T-35's law tests for the two new sub-entries"
+  },
+  {
+   "bead": "N24b-21",
+   "what": "arena_study_preanalysis.sh: CARD-T-26 relies on its consequences and refuse_unreachable steps; log the table digest from both implementations (the conformance re-implementation must agree count for count)"
+  },
+  {
+   "bead": "VERBS-prove",
+   "what": "prove.reflect: the reflector values should be kebab-case `farkas`, `ldlt-pos`, `poly-eq`, `replay` (as BD-382, N12-28, N12-38 and CARD-T-35 use; they map to the Lean names ldltPos, polyEq); add FROB-REF-701 (over budget, exit 4) and FROB-REF-724 (verb not implemented after KILL-REFLECT, exit 5) to its refusal list; its example uses `--key` while N12-38 uses `--idempotency-key`: one spelling"
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 51 beads changed: every card lacked the per-card logging fields and most lacked unit tests for mutants named in their acceptance. Structural fixes: cards T-12, T-15, T-26 and T-35 no longer wait for (or claim closure through) the Lean implementers BD-381/BD-382, which now depend on them; N12-01/N12-06/N12-03/N12-04 acceptance lines that needed later beads moved to those beads. Settled apart from the requests."
+}

@@ -8,7 +8,7 @@ labels: ["m0", "lemma", "frob-kir", "solid", "test"]
 parent: "WP-05"
 deps: ["N12-06", "SPEC-C-14"]
 needs: []
-related: ["BD-021", "N12-20", "CARD-T-10", "BD-018", "SPEC-C-21"]
+related: ["CARD-T-10", "CARD-T-14", "CARD-T-27", "N12-20", "N12-45", "N17a-22", "N21a-16", "N35-REF", "SPEC-C-21"]
 gates: []
 plan_refs: ["§12.3 (T-09)", "§10 C-14", "§10 C-21", "§21.7", "§21.14 (PO-SPARK-01)", "Appendix D.5 (similarity rescaling)"]
 ---
@@ -90,7 +90,9 @@ is what moves the registry row for that output.
 
 `crates/frob-kir/tests/dimension.rs` (owned with the IR): `sum_of_length_and_time_rejected`;
 `sqrt_of_length_rejected`; `sqrt_of_area_is_length`; `product_and_quotient_vectors`;
-`select_branch_mismatch_rejected`; `loop_carried_dimension_stable`; `buffer_schema_mismatch_rejected`.
+`select_branch_mismatch_rejected`; `loop_carried_dimension_stable`; `buffer_schema_mismatch_rejected`;
+`shared_epsilon_across_dimensions_rejected` (one tolerance literal compared against an angle residual and an
+impulse residual: the second comparison fails with both vectors named).
 `crates/frob-conformance/tests/dimension_second_opinion.rs`: `agrees_on_all_kernels`;
 `agrees_on_negative_fixtures`.
 `crates/frob-lemma/tests/cards/t09.rs`: `registry_counts_checked_kernels`.
@@ -98,7 +100,11 @@ is what moves the registry row for that output.
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) prints, for the M0 kernels, the dimension check's verdict and
-checker identity alongside the certificates.
+checker identity alongside the certificates. For this card its NDJSON lines (STD-E2E helper) carry `ts`, `script`,
+`bead` ("CARD-T-09"), `step` (`T-09/<kernel>` or `T-09/negative/<fixture>`), `event`, the exact command line,
+exit code, wall time, the kernel's `KernelId`, the verdict of the checker and of the conformance second opinion
+(which must agree), the checker build, and on a failure the operation and both exponent vectors named by the
+checker; the `summary` gives kernels checked n of n and the four negative fixtures rejected.
 
 ### Known answers and negative controls
 

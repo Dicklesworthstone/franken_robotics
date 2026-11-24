@@ -1,0 +1,355 @@
+{
+ "round": 1,
+ "slice": "U22a",
+ "reviewed": 53,
+ "changed": [
+  {
+   "bead": "BD-049",
+   "kinds": [
+    "deps",
+    "users",
+    "correct",
+    "tests"
+   ],
+   "what": "Accepted both requests: N12-45 (D.5 oracle) moved from related to deps with an oracle cross-check test; the verb now accepts the registry's published form (positional family, --set feet:4 with k defaulting to 3 for feet) and both forms give byte-identical results. Added FROB-REF-215 (declared 65,536-bit size of the exact count, checked up front), which VERBS-algebra lists for algebra.orbits and the bead never raised."
+  },
+  {
+   "bead": "BD-050",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Accepted request: N12-43 (D.3 oracle) added to deps with a cross-check test (projection (14/5, (21/25, 28/25)), duality, spin-factor product; recomputed). SPEC-C-06, the C-06 specification this bead implements, moved from related to deps (direction rule 6; BD-115 already depends on it)."
+  },
+  {
+   "bead": "BD-052",
+   "kinds": [
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "Accepted request: N12-45 moved to deps with a Kleene cross-check (stationary within the sum of chain heights; the oscillating map returns NotAscending). Added dep N10a-11, the specification of the budget fixed point this bead implements (was missing). KA-262 (20.8 kg fill error costs 50.56 kg) was cited in References but untested; now a unit test."
+  },
+  {
+   "bead": "BD-114",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "Accepted request: N12-47 (D.7 oracle) moved to deps with an invariant-error cross-check on SO(3) (left and right errors constant; additive error not). The '43 of 50 seeds' consistency rule is now labelled DESIGN with its reason (false-fail probability 0.0032, binomial)."
+  },
+  {
+   "bead": "BD-116",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "Graph bottleneck: parts are already separate beads, and its dependents need a walking quadruped. It asserted a walk on estimated state without the estimated state source (N22a-03) as a prerequisite. Narrowed to a checkable property (reads state only through StateSource); the estimated-state walk stays asserted by N22a-11 step 6, which has N22a-03 as a dep. Adding the dep instead would have deepened the bottleneck."
+  },
+  {
+   "bead": "BD-249",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Class-rule test had an impossible case (n_c, k_c) = (5, 6); now (6, 5), plus the boundary cases (10, 8) and (9, 9). The BET-06 comparison arm needs control.mpc (BD-252, higher seed, so related only): added the not-run rule and an --arm-only mode so the gate never waits on the arm. All Clopper-Pearson values recomputed and correct."
+  },
+  {
+   "bead": "BD-251",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "Acceptance said 100% of certificates pass the offline auditor while Considerations (correctly) said conic certificates cannot until conic-farkas lands in N12-16 at M4. Acceptance now covers lp-farkas offline, conic certificates checked in process and labelled pending N12-16, and a re-audit of stored bundles at M4. At least one planted case is purely linear. Scope names the owners instead of an empty needs list."
+  },
+  {
+   "bead": "BD-252",
+   "kinds": [
+    "self-contained",
+    "scope",
+    "users",
+    "complete"
+   ],
+   "what": "Out of scope pointed to an empty needs list; now names N22c-31 (--freeze and the planner record), N22c-32 (the lane) and N22c-24 (lifted planner, M6), with exit 5 naming the owner until they land. Added the plan's defaults (T_h 0.4 to 0.9 s, 50 Hz) and listed the --latency option the acceptance already used. Added the diagnostic input --diag-replay <run> --forks <n> (output labelled 'diagnostic: fork-invariance', no verdict) that N22a-26's fork-invariance step needs, with test diag_replay_applies_recorded_commands."
+  },
+  {
+   "bead": "BD-330",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Defined the specialists' class budget B (read from the reference recipe's manifest, recorded in the protocol); arithmetic of the ratio and median tests recomputed and correct."
+  },
+  {
+   "bead": "BD-334",
+   "kinds": [
+    "scope",
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "Out of scope pointed at an empty needs list for autonomous loops; now names N22c-36 (section form, dependency) and N22c-37 (bordered form), and states that on a clock-less loop the adjoint uses (I - D P_Sigma)^T lambda = grad_Sigma J and the fold test is never applied to the full monodromy. Registry row aligned with VERBS-gait (gait:run, not idempotent, the --estimate cost model, owner, purpose, wait). FROB-REF-263, which VERBS-gait lists and the bead never raised, is now answered for ambiguous event order and frictional degeneracy (431 is defined for grazing or a fold, section 22.14), with an acceptance line and tests. VERBS-gait is asked to adopt the bead's example."
+  },
+  {
+   "bead": "BD-335",
+   "kinds": [
+    "correct",
+    "scope",
+    "users",
+    "tests"
+   ],
+   "what": "The fixed-period-shooting refusal is scoped to fixed-period continuation of event-reset or clock-less loops, with the section or bordered route as its first repair (it fired on any clock-less loop before). Names the cascade owner BD-352 and N22c-37 instead of an empty needs list; unit test renamed to match. Registry row aligned with VERBS-gait (gait:run, not idempotent, the --estimate cost model, owner, purpose, wait). Added the --form input: without it, the explicit fixed-period request that its own refusal answers could not be made. VERBS-gait is asked to adopt the examples and the outcome list of section 22.9.5. Added a registry-row test."
+  },
+  {
+   "bead": "N22a-01",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Accepted the U16a request: Controller, ActionFilter and StateSource are L-10 inversions (declared in frob-dyn, layer 3; implemented in layer 4 and 5). Added their marker lines, three register rows in crates/xtask/src/inversions.rs (implementors frob-control, frob-learn, frob-shield) citing ADR-WS-05, the row-count change, and the planted unlisted-implementor and missing-marker controls."
+  },
+  {
+   "bead": "N22a-03",
+   "kinds": [
+    "scope"
+   ],
+   "what": "States that PrivilegedState replaces N22a-01's minimal smoke-test privileged source (same kind tag and save format), so the project has one privileged source and N22a-01's tests are re-pointed."
+  },
+  {
+   "bead": "N22a-04",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The registry entry disagreed with VERBS-control (capability run:read and cluster debug against control:read and control); it now matches the cluster row, owner and purpose included. The unnamed 'missing-stream refusal' is FROB-REF-888 (BD-090, a dependency), and it also covers a window over a recorded telemetry gap. Added tests for both cases and a registry-row check."
+  },
+  {
+   "bead": "N22a-05",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Requiring mean NIS inside the 95% bounds on all five seeds would fail a correct filter 22.6% of the time; now at least 4 of 5 (false-fail rate 2.26%, binomial), the same reading as BD-114's 43 of 50. Added BD-118 (control.synth, which the script calls) to deps. The sim run now names the trot and checks that the run's ControllerId is the synthesized one."
+  },
+  {
+   "bead": "N22a-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The tests for doubling the mass and for similarity scaling could fail on a correct build once the authority check binds. They now state their premises: rotor inertias scale with the masses, and peak torques either scale or leave the authority check slack. All gain values recompute."
+  },
+  {
+   "bead": "N22a-07",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its end-to-end script ran control.synth (BD-118, which depends on this bead) with a --latency flag the verb does not take. The script now validates fixture records against the registered schema and checks identities across builds and variants. The user-level identity steps are requested of N22c-01."
+  },
+  {
+   "bead": "N22a-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The fixture values contradicted their own 1e-6 and 1e-3 tolerances: 36.79/22.07 are now 36.7875/22.0725 N, and 103.00/14.72 are now 103.005/14.715 N. The pyramid control said the pyramid 'returns 83.2 N'. That is its diagonal capacity: against the 72 N demand it delivers all 72 N, where the cone delivers 58.86 N."
+  },
+  {
+   "bead": "N22a-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The phase table wrote symmetries as permutations of the four legs. That is impossible under the declared Z4 x Z2 network group: no abelian group of order 8 acts faithfully on 4 legs with the walk's four-cycle, and trot's diagonal swap is not in the group. The table is rewritten on the eight-cell network (omega, kappa), with hidden-cell phases and K for walk, trot, pace, bound and pronk. All rows were recomputed by script and the leg phases are unchanged."
+  },
+  {
+   "bead": "N22a-11",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The starved-solver control used 'control synth --override stance.iterations=1 --as ...', which no verb accepts (and the controller record is the only input). It now runs on a mutation build and also asserts that the ControllerId differs. The three-leg reason text is aligned with N22a-10."
+  },
+  {
+   "bead": "N22a-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Iterations are now masked per world, so a converged world is not stepped again. The mixed-end-states acceptance builds its record in the test. The e2e plants weak-knee slots and compares two eval runs through N22a-03's paired report."
+  },
+  {
+   "bead": "N22a-17",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The refusal for a rung used without a record is named: FROB-REF-537, exit 3, with its repairs."
+  },
+  {
+   "bead": "N22a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Registry entry aligned with VERBS-control: control:read, clusters gaits and control, the stairs example, owner and purpose. States that this verb never raises FROB-REF-537, which the consumer raises. Reconciliation of the block is requested."
+  },
+  {
+   "bead": "N22a-19",
+   "kinds": [
+    "users",
+    "complete"
+   ],
+   "what": "Says how a user reaches R1: the additive input rung on control.synth, a schema-version addition requested of VERBS-control. Also covers the behaviour on a design refusal (forcing is library-level only) and answers 802 for R2 and above."
+  },
+  {
+   "bead": "N22a-21",
+   "kinds": [
+    "users",
+    "self-contained"
+   ],
+   "what": "Added the surface: --class legged-predictive on control.synth. It is admissible for the detected class legged. Any other pairing is refused with FROB-REF-421. Before this bead lands, the input answers not-synthesizable."
+  },
+  {
+   "bead": "N22a-24",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Cost arithmetic corrected: the demonstration costs exactly 4,050 s (67.5 GPU-minutes), and the battery counterexample costs 5,184 s (86.4 minutes)."
+  },
+  {
+   "bead": "N22a-25",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Out of scope named an empty needs list. It now names N22c-31 and N22c-32, which installs the lane.admits hook."
+  },
+  {
+   "bead": "N22a-26",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "The script used inputs that no verb takes. Step 1 now uses --estimate. Step 6 uses control mpc --diag-replay <run> --forks 0|30|2048, which BD-252 now owns. Step 11 answers FROB-REF-724 with exit 5 and names N22c-31 and N22c-24."
+  },
+  {
+   "bead": "N22a-29",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "Added N22-REF, which registers the fixed-period slug that this bead raises. Out of scope names N22c-36 and N22c-37."
+  },
+  {
+   "bead": "N22a-30",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Out of scope now names its owners: N10b-01 (the label type, nine labels, FROB-REF-263), N16ax-01 (ContactSetSig) and N21a-20 (derivative programs)."
+  },
+  {
+   "bead": "N22a-32",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Two empty needs pointers now name the beads they meant: the spectral admission N33b-11 (a dependency), the orbit seed BD-333 (which closes GATE-GAIT-01 and INT-FSIM-13), and the forms N22c-36 and N22c-37. Trace, growth gains and factor multipliers recomputed."
+  },
+  {
+   "bead": "N22a-33",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "Out of scope named an empty needs list. It now names BD-333, CARD-T-17 and N22c-36, with central differences of the reset as the interim source. Every refusal had been FROB-REF-431, which section 22.14 defines for grazing or a fold. Grazing is still 431 wrapping 263; ambiguous order and frictional degeneracy are now 263 (C-16). Ball and wheel numbers recomputed."
+  },
+  {
+   "bead": "N22a-34",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Owners are named in place of an empty needs list: N16a-07 for the coupled solve (through BD-161's strict step), N22c-41 for stride sequences, N22c-54 for the OPEN-GAIT-2 decision. Bar arithmetic recomputed."
+  },
+  {
+   "bead": "N22a-35",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "The bisection tried only interior points of [rho_max, 1), so the acceptance 'P = I at gamma = 1/2' on the commuting pair could never be met, since that pair is feasible only at rho_max. The lower end is now tried first. OPEN-GAIT-2 names N22c-54 and the gate record N22a-39. Counterexample and Clopper-Pearson (250 of 256: 0.954) recomputed."
+  },
+  {
+   "bead": "N22a-36",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The invariant suite's conformance case is named: N22c-03."
+  },
+  {
+   "bead": "N22a-37",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The bordered form for autonomous loops is named: N22c-37. All seven fixture closed forms recomputed."
+  },
+  {
+   "bead": "N22a-38",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "self-contained"
+   ],
+   "what": "scripts/e2e/gait_orbit.sh is first written by BD-333, so this bead now extends it and keeps BD-333's steps, including exit 5 with FROB-REF-790. The two fixtures without a clock now pass --section, the N22c-36 path; without it they would be solved stroboscopically. --stroboscopic, which no verb takes, is replaced by --form stroboscopic. The restricted run is named --spectrum-scope restricted, requested of BD-333. Out names N33b-11 and N22c-36/37/38. A stale consideration ('if the section path is unavailable') is corrected, since N22c-36 is a dependency."
+  },
+  {
+   "bead": "N22a-39",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Out named an empty needs list. It now names N22c-54 (OPEN-GAIT-2, already a dependency), BD-333, N22c-36 and N22c-37. The precondition reads N22c-54's record. --impact-report is requested of BD-333. A regular case that cannot run is a miss, and the threshold is never rescaled. Closed-form gradients and cosines recomputed."
+  },
+  {
+   "bead": "N22a-40",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Its commands used inputs that no verb takes. design edit --set ... --as becomes BD-058's --op set-param. evidence trace --kind --design becomes artifact.list and artifact.read. --at becomes --set lambda=. The unnamed through option becomes --through. Step 12 now asserts the fixed-period refusal for both the orbit and the continuation. --seed-orbit is requested of BD-333. Out names BD-328 and N28b-22."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-control",
+   "what": "Three reconciliations. (1) control.estimate raises FROB-REF-888 (a metric over missing samples: no packet stream, or a window over a recorded telemetry gap; BD-090), as N22a-04 now specifies. Add it to the block's chapter refusals and to the refusal_lists test. (2) control.ladder lists FROB-REF-537, but the verb selects and discards nothing; 537 fires where a baseline score is consumed (N22a-17's permits check). Remove it from the block, or name the trigger. (3) control.synth gains two additive inputs, keeping the major schema version: rung (R0 default, or R1 with task; N22a-19) and class (an explicit row of the class table such as legged-predictive; N22a-21). Add both to the block with 'Extended by: N22a-19, N22a-21'."
+  },
+  {
+   "bead": "N22c-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "N22a-07 (ControllerId) cannot call control.synth, which comes after it. Add to the control.synth script a typed edit that doubles one link mass of quad-mammal, then assert that synth returns a different controller_id and that control show lists the changed gains with their derivation inputs (synthesizing twice for one identity is already step 11)."
+  },
+  {
+   "bead": "BD-118",
+   "what": "Exit code of an ok outcome: BD-118 says ok exits 0, while N22a-12 (the report type BD-118 serves, a dependency) says an ok carrying a saturation or footstep-clamp flag exits 2 (completed with findings). Adopt N22a-12's rule in BD-118's exit-code sentence and its exit_codes test, or say which one governs."
+  },
+  {
+   "bead": "VERBS-gait",
+   "what": "(1) gait.continue: the outputs 'continued, fold, grazing, lost' are not the plan's. Use section 22.9.5's typed outcomes as BD-335 registers them: arrived, fold, period-doubling, torus, symmetry-breaking, mode-change, diverged, budget, not-continuable: discrete-edit. Replace the example '--param thigh --to 0.25m', which collides with BD-335's '--to <design>', with BD-335's examples. (2) gait.gradient: replace the example '--param thigh' (a single parameter, where the gate's cosine needs at least three) with BD-334's '--params thigh_len,shank_len,body_mass --metrics cot,torque_margin'. BD-334 now raises both of the block's refusals, 263 and 431. (3) gait.orbit: the block lists FROB-REF-224, while BD-333 registers FROB-REF-431 and FROB-REF-790. Reconcile with BD-333."
+  },
+  {
+   "bead": "BD-333",
+   "what": "(1) N22a-38 extends scripts/e2e/gait_orbit.sh, which you write; it keeps your five steps and adds the four GATE-GAIT-01 clauses and the gate row. (2) Fix one fixture-parameter spelling for gait.orbit. Your script uses '--fixture rimless-wheel --spokes 8 --slope 0.1'. N22a-38, N22a-39 and N22a-40 use the registry example's positional design with 'fixture:<name> --set k=v,...'. N22c-38 uses '--param k=v'. (3) List the inputs that the gate scripts call: --check-direct (also compute the full stride's direct Jacobian and report po_gait_01_rel_diff; PO-GAIT-01); --spectrum-scope restricted (diagnostic; result incomplete with no verdict; clause 3); --impact-report (N22a-34's group report with per-ordering impulses, for the bar); --seed-orbit (an initial guess from a seed offered by gait.continue); --seed; and N22c-36/37's --section and --form."
+  },
+  {
+   "bead": "N22-REF",
+   "what": "Add gait.continue to 'Raised by' for fixed-period-shooting-on-free-period. BD-335 raises it for an explicit fixed-period continuation (--form stroboscopic) of a loop whose phase source is event-reset or none."
+  },
+  {
+   "bead": "N22c-38",
+   "what": "Follow the single fixture-parameter spelling that BD-333 fixes for gait.orbit. Your script uses '--param k=v'; the GATE-GAIT-01/02 scripts N22a-38 and N22a-39 use '--set k=v,...'."
+  }
+ ],
+ "unchanged": 14,
+ "notes": "All 53 beads reviewed against their plan_refs. Unchanged: BD-051, BD-331, N22-KA, N22a-02, N22a-08, N22a-12, N22a-14, N22a-15, N22a-16, N22a-22, N22a-23, N22a-27, N22a-28, N22a-31 (numbers recomputed in each). Common defects fixed: Out-of-scope lines that pointed at an empty needs list; e2e commands with inputs no verb takes; registry rows that disagreed with the VERBS-* tables. Numbers were recomputed throughout (Clopper-Pearson, gait group, saltation, return maps, continuation closed forms, gradients); the errors found are listed per bead. The open items are cross-slice registry spellings (VERBS-control, VERBS-gait, BD-333), which are sent as requests."
+}

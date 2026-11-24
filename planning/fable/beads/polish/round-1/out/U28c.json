@@ -1,0 +1,496 @@
+{
+ "round": 1,
+ "slice": "U28c",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "BD-309",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "acceptance said six forced triggers; the record has eight (three DC-01, two DC-09, three DC-10), as its steps and unit test say; added the exact wrong-rejection acceptance bound (569 of 10^4 at level 0.001); the dependency on the owner decision N28c-26 was inverted: the decision's inputs are pair costs from promotion records and the shadow decisions this record makes under the illustrative constants, so N28c-26 now depends on BD-309; the generator reads registries/cores/constants.toml when present and labels the illustrative set open otherwise (new acceptance line and test dc01_constants_file_or_open_labels)"
+  },
+  {
+   "bead": "BD-350",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "IT-6: a direct nemesis.bound call raises the adversarial chapter's FROB-REF-560 and a call through the studio raises 549 (the split N26-REF, VERBS-nemesis, BD-276 and N28a-27 use); the test now asserts both paths and the log carries both codes; decision-plane replays through frob-conformance run cores.replay; dep BD-352 added (IT-6's 549 path is the cascade's stage-5 bound request), removed from related"
+  },
+  {
+   "bead": "N28-CX",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "had no end-to-end script; added scripts/e2e/registry_n28_cx.sh (doctor, catalogue test, controls report with pending/caught states, four planted catalogue defects on scratch copies, full NDJSON logging)"
+  },
+  {
+   "bead": "N28-REF",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "answered the U16b request: one code per request, 830 for a model-conditional input to a build packet (N16b-04's precedence), 557 narrowed to presentation without the condition, DESIGN with reason, foundry.export lists 830; answered the U23b request: unknown_code_is_load_error now deletes this chapter's own 550 row on a scratch copy instead of citing 558; 549 is raised by the studio's bound request and surfaced by nemesis.bound only when called by the cascade (direct calls are 560); added a registry-level e2e script and a precedence test; 872 verbs column now names the registry rule (every parameter marked accepts = \"verdict\") and evidence.trace, with result.revalidate (M4) and foundry.export (M5) inheriting it"
+  },
+  {
+   "bead": "N28c-01",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "policy and at least one artifact (with version and hash) were not mandatory although the plan's contract requires them; now fifteen mandatory fields, plane derived from family; added scripts/e2e/core_contract.sh phase contract that passes at the bead's own close; dep STD-E2E"
+  },
+  {
+   "bead": "N28c-02",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "its e2e lived only in N28c-05, which closes after it; added phase compile of core_contract.sh on the toy and fixture generators with full logging"
+  },
+  {
+   "bead": "N28c-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "forcing null-self-test-failed with a hand-edited row cannot work (the hash check refuses it as stale first, and a one-row change keeps the exact error rate under alpha); now a consistent-hash table generated at alpha+ = 1/2 under a 1/100 header (0.7^3 = 0.343); added phase records of core_contract.sh"
+  },
+  {
+   "bead": "N28c-04",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "added dep N28c-07 (the --rejected view reads its register; graph finding); its own capability script scripts/e2e/cores_show.sh on a fixture registry with CLI/MCP agreement; rejected[] fields aligned with the register"
+  },
+  {
+   "bead": "N28c-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "forced six triggers; DC-10 has three, so eight in all (added no-incidence and certificate-check-failed); null-self-test-failed forcing corrected as in N28c-03; the load-time refusal is now exercised through eval.promote with and without --require-rule table; 569 bound stated"
+  },
+  {
+   "bead": "N28c-06",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "composition registry declared DC-08 a reader of throughput and DC-04 the owner over DC-10's scenes, which contradicts the rules; added forbidden_readers and a battery-scenes quantity so the static check catches the forbidden read (new planted defect); this bead now writes the fixture phase of decision_core_interference.sh, runnable at its close; part B path named; dep STD-E2E; the replay driver is exposed as frob-conformance run cores.replay; the scripts of the slice called an opt.cascade --replay/--schedule/--force-trigger option that no bead defines, on beads that do not depend on the cascade; (the replay command is the conformance runner's, not a product-verb option)"
+  },
+  {
+   "bead": "N28c-07",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "the contract-check rule matched rejected methods on family, but the contract already refuses a ninth family, so the acceptance test could never pass after reopening; now method_key plus generator-name patterns; defensive-mixture test used n = 29,956 (bound 1.00004e-4, above 1e-4), corrected to 29,958; the --rejected view moved to N28c-04's scope; added phase rejected of core_contract.sh"
+  },
+  {
+   "bead": "N28c-08",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "forced triggers and shadow replay run on N28c-06's replayed-campaign fixture: dep added; the shared decision_cores_m4.sh now has per-bead phases with no ordering between the four row beads, and full NDJSON logging; forced-trigger replays go through frob-conformance run cores.replay (no replay option exists on opt.cascade, and this bead does not depend on it)"
+  },
+  {
+   "bead": "N28c-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "two EVSI known answers were off by more than the 1% tolerance (1.0e-5 is 1.02e-5; 0.0035 is 0.00345); dep BD-351 added (the shadow clause drives experiment.suggest); full logging"
+  },
+  {
+   "bead": "N28c-10",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "triggers aligned with the owners' records (DC-04 null-self-test-failed; DC-06 double-precision failure with FROB-REF-583/584 deliveries), six forced triggers; 549 through the studio and 560 at the bound; dep N28c-06; scope names N26a-26, N27b-12 and N28a-27 for the records; dep BD-352 for the cascade's bound request that raises 549"
+  },
+  {
+   "bead": "N28c-11",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "DC-08 trigger names aligned with the selector N28a-34 (identity-change, plus no-row and the stale-table 871 warning); five forced triggers; full logging"
+  },
+  {
+   "bead": "N28c-12",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "the 872 guard was to be wired into eval.promote, eval.qualify, the report verbs and evidence.trace with none of them as a dependency; added BD-259, BD-263, BD-302 and one guard function plus an xtask registry rule (accepts = \"verdict\" requires 872) so result.revalidate (M4) and foundry.export (M5) inherit it; its only e2e lived in two M3/M4 beads that close later: added scripts/e2e/advisory_wall.sh on a seeded synthetic advisory id, 100 of 100 per verb form, clean twins, full logging"
+  },
+  {
+   "bead": "N28c-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance asserted the friction-law probe 'through the verb', but the probe is generated by N25c-18, which depends on this bead; acceptance now on committed proposal records here and through the verb in N28c-16; added phase admit of experiment_suggest.sh (admission check, A-25 replacement, pad replay scores) runnable at close"
+  },
+  {
+   "bead": "N28c-14",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "its hooks were exercised only by N28c-16 and N28c-18, which depend on it; added phase hooks of predict_calibration.sh (estimate before first chunk on 100 jobs, --from-proposal registration and exit-7 conflict, race saving via BD-341's --race syntax, refit versions, accounting identity, planted late hook) with full logging"
+  },
+  {
+   "bead": "N28c-15",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "same: added phase monitor of predict_calibration.sh (hint at 17/30, none at 24/30 or 29 scored, under-confident at 29/30, ten-call suppression, no hint in refusals, DC-05 fixed-order fallback and its decision record, refit 29 then 30, 100 shuffled scoring schedules); band numbers verified exactly (L=19, U=28; 0.0256/0.0442; false flag 0.0698; detection 0.951/0.709/0.812/0.940/0.997)"
+  },
+  {
+   "bead": "N28c-16",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "steps 5-6 need the measurement proposals N25c-18 generates and step 9 the DC-05 coverage trigger of N28c-15: both added as deps; ownership of the shared script stated (phases admit from N28c-13 and augur from N25c-18), answering the open experiment_suggest.sh ownership question"
+  },
+  {
+   "bead": "N28c-18",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "owns predict_calibration.sh; states the hooks and monitor phases its dependencies contribute"
+  },
+  {
+   "bead": "N28c-19",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the predictions section prints N28c-14's studio predictions and the finalists section the controller-limited flag N28c-37 computes at stage 3: both added as deps; added phase sections of report_campaign_atelier.sh on a committed 9-design campaign (ten sections, modes rows, fallbacks equal cores show --decisions, phase-ledger closure, not-run control, lint R1-R6 on planted templates with clean twins, resolution, byte identity)"
+  },
+  {
+   "bead": "N28c-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "a consideration said the cascade might land after this bead and offered an opt.cascade --replay mode; the cascade is a prerequisite through N28c-19 and no such mode exists; step 11 regenerates reports from the same graph"
+  },
+  {
+   "bead": "N28c-21",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the 549 case was a direct nemesis.bound call, which raises 560 under the split; now through the cascade (549) with the direct call asserted as 560; several cases used flags no owner defines (--select-at, --acknowledge-unreachable, --reuse-rule, --ignore approach-energy, --type fixed-n --n): each case now names its owner bead and uses its form (--finalists-from R1, --fixed-n/--declared-verdicts, acknowledge_unreachable, licence naming an unknown rule, CX-306 fixture); 553 through eval.compare (study.plan gives the study layer's 552); the build-packet half of 557 is 830 under the N28-REF precedence, so the 'need' note was wrong; (phase ownership stated: N28cx-01 creates atelier_refusals.sh at M1 with phase predict-refusals)"
+  },
+  {
+   "bead": "N28c-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "INV-ATEL-01: N28a-02 already settles the code (the earliest refusing stage's original code is re-issued), so the 'recorded as a need' note was stale and needs was empty; the e2e called frob opt archive merge, which no bead defines: now the store absorption of BD-342/N28b-04 in both orders compared through frob opt archive and the exported lineages; override spelled as N28a-02 defines it"
+  },
+  {
+   "bead": "N28c-23",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "PO-ATEL-03 and -10 are discharged by the GATE-ATEL-13 row runs of N28c-08 and N28c-11: added as deps (and STD-E2E); the PO-ATEL-01 wrong-rejection bound is now stated (569 of 10^4); promotion threshold b = 15 at n = 64 verified and added; the plan's 0.885 reconciled with Beta(38,2) = 0.8840; dues before M4 are checked retroactively from the discharging runs' milestone tags, stated; e2e completed (registry form of preanalyze, planted ledger defects on scratch copies, full NDJSON fields)"
+  },
+  {
+   "bead": "N28c-24",
+   "kinds": [
+    "placement",
+    "split",
+    "deps",
+    "e2e-logging",
+    "title",
+    "correct"
+   ],
+   "what": "the battery was an M4 bead with 21 deps whose acceptance required the M1 and M3 forms to pass at M1 and M3, which it could not do before landing at M4; split into three stages: N28cp1-01 (M1: suite, staging, report, nine M1 rows, KA-694 control), N28cp1-02 (M3: ten rows, KA-703 control), and this bead narrowed to the nine M4 rows and the whole-table check, with deps trimmed to the M4 owners plus N28b-26 (KA-697) and N28b-29 (KA-706), which were missing; the e2e called frob analyze shared-bus, which is analyze.bus-schedule; the bisect call lacked --task"
+  },
+  {
+   "bead": "N28c-25",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e lacked the standard NDJSON fields and never exercised the two checks; it now runs them on scratch copies with six planted defects and clean twins, with full logging"
+  },
+  {
+   "bead": "N28c-26",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the decision was ordered before BD-309 and BD-263 although its inputs (pair cost from promotion records, DC-01 shadow data under the illustrative constants) come from them: now depends on BD-263 and BD-309 (BD-309 no longer depends on it); its acceptance and e2e asserted experiment.suggest behaviour, an M4 verb, from an M3 bead: the DC-05 half is now checked for form here and asserted by N28c-09 at M4; DC-05's policy version is set when BD-349 first builds its table; e2e now runs the option table, the default, regeneration on a scratch registry and two planted defects, with full logging; arithmetic verified (8, 16, 22, 29, 36 pairs; 1/9; flip at 4.2)"
+  },
+  {
+   "bead": "N28c-27",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "an M1 decision whose acceptance and e2e needed the M3/M4 ledger, rank-agreement verb and cascade; narrowed to what it owns at M1 (option arithmetic, the strata.toml schema and loader check with three planted invalid files, the ADR), with the behaviour asserted by N28b-22 and the pre-registration by BD-145; 'seven generations' to reach 19 audit designs corrected to the eighth (19/2.7 = 7.04); deps STD-E2E and STD-TEST so it is no longer an orphan"
+  },
+  {
+   "bead": "N28c-28",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "decided fs-voi at M1 although fs-voi is first used at M3 and admitted then by N33b-13 (not a dep), against the first-use admission rule the bead itself quotes; the fs-voi row is now deferred with the local closed form in force and its value known answers move to BD-351; the M1 e2e no longer calls opt.start and experiment.suggest (M4 verbs): it runs the two admissions, the memo on design check and the camera fixture, and the null race through the Race trait, with full logging"
+  },
+  {
+   "bead": "N28c-29",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "stated result.revalidate's first milestone as M1, but the verb registry (Appendix J, VERBS-result) has both verbs at M4 with the engine at M3; CLI used --after-edit where the registry input is --since; e2e completed (registry fields, guard on a planted copy, 870 from both, full logging)"
+  },
+  {
+   "bead": "N28c-30",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "deps were only the corpus although the default it must make visible is implemented by BD-345 (fail-closed rule), N28b-29 (sealed planted winner) and BD-352 (cascade, report); those added with STD-E2E and named in Out; e2e completed (545 through the registered --finalists-from form, the sealed-hash and pre-close identity checks, a registry with the identifier in clear refused, full NDJSON fields)"
+  },
+  {
+   "bead": "N28c-31",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "e2e used the invented `frob opt cascade --replay`; the two-rung check now runs the ladder schedule through a conformance runner on a scratch rungs.toml, with the ledger reset and the 548 pooling refusal; the ladder (N28a-33) and rank-agreement ledger (N28b-22) that must read rungs.toml are now deps; full NDJSON fields"
+  },
+  {
+   "bead": "N28c-32",
+   "kinds": [
+    "correct",
+    "placement",
+    "deps"
+   ],
+   "what": "the optional repeat on the learned-policy ladder is now conditional on OPEN-ATEL-6 assigning a positive base effort (the law divides by it; that ladder is registered fit: unavailable); the first reading of KILL-BUDGETCURVE is this bead's at M3, so it now writes the M3 decision ADR per N40-03 (dep added), with an acceptance line; the void-and-repeat rule for a missed potency pair stated"
+  },
+  {
+   "bead": "N28c-33",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; phase `ladder` (registry defects, family and controller identities, efforts, per-level address refusal)"
+  },
+  {
+   "bead": "N28c-34",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; the e2e read rows through eval.compare --budget-curve, which lands later with N28c-38: phase `rows` reads them through a conformance runner, with the missing-cell and invalid-row fixture; fixture increments and standard errors verified"
+  },
+  {
+   "bead": "N28c-35",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; phase `fit` runs the fit library on the worked, threshold, accelerating, decreasing, saturated and clip fixtures instead of the later verb; all worked values verified (0.725714, 0.950617, 0.888, 0.621302, γ 1.085 and 0.350, clip 1.04)"
+  },
+  {
+   "bead": "N28c-36",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the coverage acceptance and test required >= 0.92 on single calibration draws of 100, whose coverage is Beta(96,5) (5th percentile 0.911): a correct tree failed about one draw in ten and ten draws together about 63% of the time; the check is now the mean over ten calibration draws (false failure about 1e-3); the n = 39 spread test's tolerance 0.005 passed only 76% of the time against its own sampling error (sd 0.004) and is now 0.013; the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; phase `coverage` (harness, interval sources, 546, 548, drift alarm)"
+  },
+  {
+   "bead": "N28c-37",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e used `--spec` (not an opt.cascade input; the registry has --task --space --budget --key) and an undefined 'conformance flag' to make the shadow rule act; now the shadow pass runs the product verb on a recorded store, the acting pass and the four forced triggers go through cores.replay with a fixture-local core table; full NDJSON fields; STD-E2E dep; arithmetic verified (3.8, 4.2, 4.1, 0.888)"
+  },
+  {
+   "bead": "N28c-38",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; phase `verb` (worked, threshold and calibrated stores via FROB_HOME, verdict digests, real sweep, 872, explanation, refusals, cancellation)"
+  },
+  {
+   "bead": "N28c-39",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "GATE-ATEL-17's coverage clause was checked as >= 0.92 on each of three seeds with single calibration draws of 100, which fails a correct tree about one run in four; now the mean over ten calibration draws per seed (about 1e-3 per seed); the invented `--fixture` and `--addresses` options of eval.compare replaced by FROB_HOME on a scratch copy of the recorded store and the registry's scenes input, with --key; the script is now assembled from phases owned by N28c-33, -34, -35, -36 and -38 (added as deps) plus this bead's gate phase"
+  },
+  {
+   "bead": "N28c-40",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the oracle and arm B need more sampling-controller episodes than control.mpc's three-episode screening allowance; they now run as jobs of the registered protocol; arm M could not act because the escalation rule ships in shadow: every design now runs all three levels (clause 2 needs full curves anyway) and arms M and F are replayed through cores.replay with acting and fixed tables, relying on decision purity; the contradiction that arm B used 'the same 32 addresses' fixed; `frob control mpc --level oracle` (no such level) removed; full NDJSON fields"
+  },
+  {
+   "bead": "N28c-41",
+   "kinds": [
+    "placement",
+    "correct",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "an M4 bead whose acceptance recorded the M3 first reading, which it cannot do before landing; the first reading is now N28c-32's (with its M3 ADR) and this bead recomputes and cites it, makes the M4 reading, and handles the branch where the M3 reading fired; title updated; e2e replaced `frob opt cascade --replay` with cores.replay, adds the three planted-record negative controls and full NDJSON fields"
+  },
+  {
+   "bead": "N28c-42",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; phase `ledger` builds three edits of the frozen lineage through real verbs and reads the ledger through a conformance reader, with the identity on planted records; arithmetic verified (28.6%, 0.37%, 72%)"
+  },
+  {
+   "bead": "N28c-43",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; phase `controls` (both regimes of the decision control, the synthetic matched-return learner 1,700/500/1,200, censoring, negative transfer, keyed selection order, cancellation); the consideration claiming policy-weight warm starts at M3 corrected: the only registered parent-policy start is train.inherit at M4"
+  },
+  {
+   "bead": "N28c-44",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the e2e named a shared script owned by a bead that lands later; it now contributes its own phase (first bead to land creates the script from the STD-E2E template; each phase runs alone with --phase) with full NDJSON logging, and STD-E2E is a dep; phase `verbs` (design.diff --reuse in both regimes, --run-control with --estimate and cancellation, report.campaign twice, the three refusal routes, the token budget)"
+  },
+  {
+   "bead": "N28c-45",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "step 2 used `--idempotency-key` (the registry spelling is --key), task `quad-flat` and an unregistered `frob train start --warm-start`; at M3 no registered verb starts a policy from a parent's weights, so the third column comes from solver warm starts and the M4 re-run uses train.inherit; Scope now lists the phases contributed by N28c-42, -43, -44"
+  },
+  {
+   "bead": "N28cx-01",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "its steps went into atelier_refusals.sh, which N28c-21 creates at M4, and ran an unnamed 'payload builder binary'; this M1 bead now creates the script with phase predict-refusals, runs the payload builder through a named conformance runner and the schema listing until BD-344 lands, with full NDJSON fields; STD-E2E dep"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N28cp1-01",
+   "what": "split from N28c-24: the known-answer battery's M1 stage (suite, row record, staging rule, report, generated-artifact check, nine M1 rows with controls, the KA-694 control, atelier_known_answers.sh phase m1)"
+  },
+  {
+   "bead": "N28cp1-02",
+   "what": "split from N28c-24: the battery's M3 stage (ten rows for DC-01, DC-09, DC-10, revalidation, A-09, A-17, A-18 and deduplication, the KA-703 control, phase m3)"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N28a-27",
+   "what": "it also measures and records the GATE-ATEL-13 rows for DC-04 and DC-06 (null calibration, forced triggers, shadow check, scripts/e2e/atelier_cores.sh), which BD-349 assigns to N28c-10; narrow it to completing the two records on the shared compiler, as N28a-28 does for DC-07, DC-08 and DC-11"
+  },
+  {
+   "bead": "BD-346",
+   "what": "a build-packet request with a model-conditional input is FROB-REF-830 under the one-code-per-request precedence (N16b-04, N28-REF); 557 is only for a ranking presented without its condition; rename conditional_blocks_build_packet_557"
+  },
+  {
+   "bead": "BD-352",
+   "what": "stage 5: a build-packet request with a model-conditional finalist raises FROB-REF-830, not 557 (precedence in N16b-04 and N28-REF); model_conditional_blocks_build_packet_557 should expect 830"
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.rank-robustness's description of FROB-REF-557 still says 'or as input to a build packet'; that half is FROB-REF-830"
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "report.design and report.campaign must list FROB-REF-557 and the report verbs FROB-REF-872, as N28-REF's verbs column and N28c-12 require (the registry cross-check is bidirectional)"
+  },
+  {
+   "bead": "BD-145",
+   "what": "the rank-agreement pre-registration fixes strata before data, so it should depend on N28c-27 (the OPEN-ATEL-2 decision, M1, no prerequisites) and cite registries/strata.toml with its date and hash"
+  },
+  {
+   "bead": "N33b-13",
+   "what": "at the fs-voi admission (first use, M3), complete the fs-voi row of docs/adr/OPEN-ATEL-3.md with the branch and its reason; N28c-28 now records that row as deferred under the first-use rule"
+  },
+  {
+   "bead": "BD-351",
+   "what": "run the ValueModel known answers (0.00131 and 0.00550 within 1%; exact zero on the no-change fixture) against the selected fs-voi/local branch, and branch agreement within 1e-12 where both exist; N28c-28 no longer runs them at M1"
+  },
+  {
+   "bead": "N28b-32",
+   "what": "the result.revalidate CLI input in the verb registry is --since; this bead's script uses --between <v1> <v2> and --after-edit, and N28c-29 now uses --since: align the spelling or add the forms to VERBS-result"
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "control.mpc: add 'Extended by: N28c-33 (--ladder <id>, --level <i> | --levels all)'; control.show: its outputs gain family and budget {ladder, level, effort} for controllers with a budget coordinate (N28c-33)"
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.start: add 'Extended by: N28c-43 (--from-scratch, --match-return <run>)', the matched-return from-scratch control of the reuse ledger"
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.diff: list --run-control as a sub-mode of kind run with an idempotency key, as N28c-44 specifies (the entry names only --reuse)"
+  },
+  {
+   "bead": "BD-252",
+   "what": "state whether the three-episode screening allowance of control.mpc is per request or per design, and admit the episode count of a registered method-experiment protocol (N38a-07) for its own jobs, still labelled screening: N28c-32's pilot runs 24 episodes per design (8 addresses x 3 budgets) and N28c-40's oracle 32 per design at N_s = 8,192"
+  }
+ ],
+ "unchanged": 1,
+ "notes": "all 50 reviewed (N28c-17 unchanged). Two new beads from the N28c-24 split. Recurring fixes: shared e2e scripts owned by a later bead now take one phase per contributing bead (experiment_suggest, budget_curve, reuse_ledger, atelier_refusals, atelier_known_answers); invented product-verb options (--replay, --fixture, --spec, --addresses, --warm-start, --idempotency-key) replaced by registry spellings, FROB_HOME on recorded stores, or conformance runners; M4 beads that recorded M3 results re-placed (N28c-24 split, N28c-41 first reading moved to N28c-32); two flaky coverage checks (N28c-36, N28c-39) corrected with exact Beta arithmetic."
+}

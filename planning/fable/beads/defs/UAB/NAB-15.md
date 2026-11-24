@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "gauntlet", "delivery", "solid", "registry", "pilot"]
 parent: "WP-37"
 deps: ["NAB-09"]
-needs: ["§0.6, §38.5, Appendix K.3: the plan-time check ledger with its re-run status per check, which decides whether a check may be cited by a gate (N00-06)", "Appendix K.3: the re-run of the three checks whose scripts were not retained: CPU reference rates, contact-Hessian conditioning, the Metal limits (N00-35)"]
-related: ["NAB-10", "NAB-11", "NAB-16", "N00-05", "N00-06", "N00-07", "N00-35", "BD-030", "BD-041", "BD-042", "BD-043"]
+needs: []
+related: ["NAB-33", "NAB-37", "NAB-38", "NAB-48"]
 gates: ["GATE-GAUNT-08"]
 plan_refs: ["Appendix H.5", "Appendix K.3", "§0.6", "§25.22", "§38.5"]
 ---
@@ -27,8 +27,9 @@ This bead enters the 25 checks into the source register (`registries/sources.tom
 NAB-09) as sources of kind `plan-check`, and pins the archive that holds their programs and outputs. A
 plan-time check may be cited by a gate only after it has been re-run here and reproduced (GATE-GAUNT-08: the
 plan-time pilots re-run at M0 reproduce every count exactly and every timing ratio inside its recorded band);
-the re-runs are owned by the plan-time check ledger and the pilot re-run beads, and this bead gives them stable
-ids and exact recorded values to reproduce.
+the re-runs are owned by the pilot re-run beads and their status is held by the plan-time pilot ledger
+(N38a-10, records in the pilot register `pilots.toml`); this bead gives the checks stable citable ids and the
+recorded figures of record.
 
 What the checks do **not** establish is recorded with the same weight as what they do. Every strong baseline
 tied or won: a lifted linear program tied the projection, a scenario-tree program tied the docking family, a
@@ -39,9 +40,22 @@ speed advantage and no claim about a robot. Tier: Solid (registration); the chec
 ## Scope
 
 In: 25 `[[source]]` records of kind `plan-check` (`SRC-CHK-01` to `SRC-CHK-25`, the ids `PC-01` to `PC-25` of
-the table); the archive record with its revisions; the consistency assertions on recorded values; the statement
-of limits. Out: re-running the checks (BD-041 docking, BD-042 stance, BD-043 the remaining pilots, BD-030 the
-boundary screen, N00-35 the three unretained scripts); the ledger of re-run status (N00-06); the lint (NAB-10).
+the table), which are the citable identity and the figures of record of each check; the archive record with its
+revisions and digests; the arithmetic identities over the recorded figures (asserted here and nowhere else); the
+stored text of the limits.
+
+Out, and where it is:
+- the re-run status of each check, its re-run owner, the expected values a re-run is compared with, the timing
+  bands and the reproduction rule: the plan-time pilot ledger N38a-10 (twenty records `PILOT-PT-01` to `-20`
+  and four supplementary ones, `PILOT-PT-S1` to `-S4`, in `pilots.toml`, each listing in `covers` the
+  `SRC-CHK` ids it governs; S4 lists none, below). That bead depends on this one and carries the test that every
+  figure held by both registers is equal;
+- the held-command device pilot of the dynamics chapter (ledger record `PILOT-PT-S4`, re-run by N16c-45 at M2
+  with GATE-KIN-13): it has no source record here, by the rule of step 2a;
+- re-running the checks: BD-041 docking, BD-042 stance, BD-043 the nine mission-query groups and the admission
+  fixtures, BD-030 the boundary screen, N38a-11 the fixed-n enumeration, the draft-rule power, the wheel loop
+  and the conditioning rows (PC-20, PC-21), N00-35 the CPU rate and the Metal query (PC-22, PC-23);
+- the scan that refuses a citation of a check that is not `reproduced`: the citation lint NAB-10.
 
 ## Technical approach
 
@@ -71,16 +85,35 @@ boundary screen, N00-35 the three unretained scripts); the ledger of re-run stat
   revisions give different outputs for one check, that check is `differs` in the ledger until explained. The
   archive is never edited here; its top level holds `README.md`, `SHA256SUMS`, `verify.py`,
   `verify_negative.py` and `check_additions.py`, with the checks in the directories `mor/`, `pusher/`, `sill/`,
-  `study/`, `information/`, `native/` and `followups/` (FACT: listing of the working-tree revision). The first
+  `study/`, `information/`, `native/` and `followups/`, and two earlier packagings kept beside them,
+`native-edition/` and `original-package/`, each with its own `README.md`, `SHA256SUMS` and `verify.py` (FACT:
+listing of the working-tree revision, 179 entries). The first
   step of every re-run is the runner's own inventory and SHA-256 check inside the extracted revision.
 
 **2. One record per check.** `kind = "plan-check"`, `locator = "SRC-REC-05:<inner path>"`, one `reading` with
-`mark = "P"` (the output was produced by a program, not read from a page) and `how = "executed"`, the recorded
-`figures` typed exactly (counts as integers, fractions as rationals, timings in microseconds), `cited_in` (the
+`mark = "P"` (the output was produced by a program, not read from a page), the recorded `figures`, each with
+`how = "executed"` (NAB-09's figure field), typed exactly (counts as integers, fractions as rationals, timings in microseconds), `cited_in` (the
 chapters that cite it), and `scripts_retained` (false for the rows whose scripts were not kept: PC-20 and PC-21
 on conditioning, PC-22 the CPU incumbent rate and PC-23 the Metal device query, which the review log counts as
 three checks and which are re-run from scratch).
-`reread_before_gate` is true until the check ledger records `reproduced`.
+`reread_before_gate` is not typed by hand for these records: the loader derives it from the plan-time pilot
+ledger, as true unless `pilots::status_of_source(id)` (N38a-10) returns `reproduced`. A check that no ledger
+record covers therefore stays uncitable by a gate (fail closed).
+
+**2a. A plan-time result with no recorded source (one case).** The dynamics chapter states as "FACT (a recorded
+pilot, Appendix K; to be re-run before a gate cites it)" that a rational referee and a native single-precision
+kernel on the Metal device and on each RTX 4090 agreed on all 192 decisions of the first three rows of the
+held-command fixture, with device read-backs equal byte for byte to independently reconstructed single-precision
+terminal states. FACT (read at polishing): that pilot is in none of the places that record plan-time checks: not
+in the 25-row table below, not in the nine-row review table, and not in the archive `SRC-REC-05`. DESIGN: no
+`SRC-CHK` id is allocated for it, because a source record asserts a place where the result was recorded and none
+exists; the claim is recorded as having no source. Its one citable identity is the ledger record `PILOT-PT-S4`
+(N38a-10, `covers = []`, `bundle_receipt = "none: not in the plan-time record"`). A citation of it, by that
+identifier or by the plan-time phrase beside it, is resolved by the citation lint (NAB-10, citation form 5) to that
+record, whose status is `not-run` until N16c-45 appends a reproduced result, so every gate, contract or close
+record that cites it fails `cite.plan-check-not-reproduced` until then. Rejected: a 26th record `SRC-CHK-26` with
+an empty locator, which would make an unrecorded result look like a registered reading and shift the count of
+the plan-time table this register follows row by row.
 
 **The 25 checks as recorded.**
 
@@ -140,7 +173,9 @@ bead and catch transcription errors before any re-run):
 - PC-18: 521 + 521 + 1,103 + 0 = 2,145, which is the number of count pairs (a, b) with a + b ≤ 64, namely
   66·65/2; a practical tie is first reachable at n = 86.
 - PC-19: about 18% power against a true ratio of 10: the draft decision rule could not have confirmed the claim
-  it was written to test.
+  it was written to test. The pilot table of the planning record prints the same figure as "at most 18% of
+  campaigns"; the typed figure is the bound, confirmation rate ≤ 0.18 at the maximum over the simulated grid
+  (DESIGN, the same choice as ledger row 14 of N38a-10: a bound is what a re-run can be compared with).
 - PC-21: κ₂ of 3·10⁴ to 1·10⁵ raw and 2·10³ to 9·10³ scaled, over 201 poses.
 - PC-22: about 410,000 steps/s for a reference quadruped at 2 ms in double precision on 36 threads under
   background load. The review log describes the same unretained check as CPU rates "for a humanoid"; the two
@@ -149,9 +184,21 @@ bead and catch transcription errors before any re-run):
 - PC-25: 1 + 3 + 8 = 12 cells in the paving; the binomial bounds 0.0432, 0.0504, 0.0425 and 0.0505.
 
 **4. Limits, stored on the archive record as `limits = [...]` and printed in the header of every report that
-cites a plan-time check:** no FrankenSim dynamics, contact or sensor pipeline was used; the native runs executed
-one scalar decision kernel; every strong baseline tied or won (the four ties above; quantifier elimination
-answered 8 of 12 queries directly); no physical claim follows from any row.
+cites a plan-time check.** This is the one stored text (DESIGN): the plan-time pilot ledger (N38a-10) reads it
+from this record and copies it into every re-run result, and tests there assert the copy equals it. Three
+entries:
+
+1. None used FrankenSim dynamics, FrankenSim contact or a real sensor pipeline. The analytic pilots used small
+   CPU programs and conventional solvers; the native runs executed one scalar decision kernel; the planar sill
+   pilots used their own law and scorer. No hypothesis of the program was tested by running FrankenRobotics
+   code, because none existed.
+2. Every pilot's strong baseline tied or won. A lifted linear program tied the projection; a programmed expert
+   tied the probe generator and direct measurement beat both on the withheld law; exact Bayes tied the sensor
+   calculation; a scenario tree tied the docking family; a dependency graph tied the receipt; quantifier
+   elimination produced the pusher answers (8 of 12 queries directly). What survives is an interface and a
+   discipline, not a speed claim.
+3. No physical claim follows. The material laws are artificial, the loads stipulated, the plants scalar or
+   planar.
 
 ## Acceptance criteria
 
@@ -163,8 +210,10 @@ answered 8 of 12 queries directly); no physical claim follows from any row.
 - [ ] A gate record citing a `plan-check` source whose ledger status is not `reproduced` is refused by the
       citation lint (NAB-10).
 - [ ] The limits text is attached to the archive record and appears in the generated summary of the register.
-- [ ] GATE-GAUNT-08's re-run clause can be evaluated from these records and the check ledger together: each of
-      the 25 has exactly one re-run owner (BD-030, BD-041, BD-042, BD-043 or N00-35).
+- [ ] GATE-GAUNT-08's re-run clause can be evaluated from these records and the plan-time pilot ledger
+      (N38a-10) together. The re-run owner of a check is named by the ledger record that covers it (BD-030,
+      BD-041, BD-042, BD-043, N38a-11 or N00-35), not by this register; the ledger's completeness check lists
+      any `SRC-CHK` id that no record covers.
 
 ## Test plan
 
@@ -180,17 +229,19 @@ answered 8 of 12 queries directly); no physical claim follows from any row.
   `pc08_pc09_residual_and_ceiling` (asserts 575.7 and 1.4640 to four figures and asserts **inequality** of
   1.345 and 842.8 ÷ 610.1), `pc10_label_frontier_step`, `pc15_sill_counts`, `pc17_share_15_4_percent`,
   `pc18_reachable_verdicts_2145`, `pc25_paving_cells`.
-- `each_check_has_one_rerun_owner`.
-- `limits_present_on_archive_record`.
+- `limits_present_on_archive_record` (three entries).
+- (The test that each check is covered by at most one ledger record with a re-run owner is in N38a-10, which
+  reads both registers.)
 
 ### End-to-end script and logging
 
-`scripts/e2e/sources.sh` (NAB-16) extracts the archive revision found in the working tree into a scratch
-directory and runs `python3 -I -B verify.py` there (inventory, digests and the standard-library checks; `--all` is
-left to the re-run beads because it needs native builds), and compares the printed counts with the recorded
-values of the records. Logged per STD-E2E: the archive digest and revision, per check a `metric` line with
-recorded value, re-run value and verdict, and the limits header. The script never claims a gate; GATE-GAUNT-08
-is recorded by the ledger bead.
+`scripts/e2e/sources.sh` (NAB-16) extracts the cited revision (`git show a635b91:planning/<archive name>`)
+and the revision found in the working tree, each into its own new scratch directory, and runs
+`python3 -I -B verify.py` in each (inventory, digests and the standard-library checks; `--all` is left to the
+re-run beads because it needs native builds); it compares the cited revision's printed counts with the recorded
+values of the records, and the working-tree revision's with the cited one's (by the rule of step 1). Logged per STD-E2E: the archive digest and revision, per check a `metric` line with
+recorded value, re-run value and verdict, and the limits header. The script never claims a gate and writes no
+re-run status; GATE-GAUNT-08's re-run clause is evaluated from the plan-time pilot ledger (N38a-10).
 
 ### Known answers and negative controls
 
@@ -207,9 +258,13 @@ archive's own `verify_negative.py` is run by the end-to-end script, and its plan
 - The discrepancy between the cited digest and the working-tree file is recorded, not repaired. Whoever owns
   the archive decides whether the citation moves to the newer revision; until then figures are compared with
   the cited one.
-- The ledger of re-run status (N00-06) counts fourteen records by grouping; this register counts 25 rows because
-  it follows the planning table row by row. The two are joined by id: each ledger record lists the `PC-` ids
-  it covers.
+- The ledger of re-run status (N38a-10) holds twenty pilot records and four supplementary ones, and groups
+  them under the nine checks of the review record; this register counts 25 rows because it follows the source
+  table row by row. The two are joined by id: each ledger record lists in `covers` the `SRC-CHK` ids it governs
+  (ledger row 17 covers PC-16 and PC-17; ledger row 18, the rotor and cadence sweep, has no row here; PC-13 is
+  covered by the supplementary record S3, re-run by BD-043; PC-22 and PC-23 by S1 and S2; S4, the held-command
+  device pilot, covers no row (step 2a); PC-24 and PC-25 have no ledger record until their re-run owner adds
+  one, and are uncitable by a gate until then).
 - These checks are the main evidence behind several refuted ideas (half precision, a fixed-n rule with an
   unreachable verdict, a speed test with no power). The killed-idea register cites them by `PC-` id.
 

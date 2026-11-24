@@ -1,7 +1,9 @@
 # Coverage: drafting unit U37 (§37 Safety, security, privacy)
 
-40 bead files: 7 seed beads (BD-258, BD-303, BD-304, BD-305, BD-306, BD-307, BD-308) and 33 new beads
-(N37-01 to N37-30, N37-KA, N37-CX, N37-REF).
+43 bead files: 7 seed beads (BD-258, BD-303, BD-304, BD-305, BD-306, BD-307, BD-308) and 36 new beads
+(N37-01 to N37-31, N37-KA, N37-CX, N37-REF, N37x-01, N37p1-01). N37-31 was added in the integration pass;
+N37p1-01 was split from BD-303 in polishing round 1 (the M2 exporters' carriers, the generated banner, the
+later-kind contract rows and the M2 record of GATE-SAFE-01).
 
 ## (a) Subsections and the beads that carry them
 
@@ -13,10 +15,10 @@
 | §37.3 | Agents supply data, not code | N37-03 (expressions are data; patches; kernels; what bounds an MCP client; code payloads), N37-07 and N37-08 (weights are hostile data), N37-05, N37-06, BD-307 (imports are hostile input: limits, fuzz targets, loss report), N37-04, BD-304, N37-10 (text from imports is data), N37-09 (sandboxed custom reward terms, Frontier, not admitted) |
 | §37.4 | Resource governance | BD-258 (the three acts; scopes; tokens), N37-13 (sizes before device work, ceilings, budgets in every unit, MCP rate and listener bounds, trace bytes, admission guard, preflight), N37-14 (the remote worker's manifest), N37-15 (script), N37-02 (configuration keys) |
 | §37.5 | Capabilities, and why discovery cannot read confirmation worlds | BD-258 (the capability layer), N37-16 (three independent layers, audit scope, commit before draw, CX-384); built by BD-261 of unit U24b |
-| §37.6 | Private places stay private | N37-17 (inheritance is computed), BD-305 (private root, views, scopes and flag, seeds not voxels), N37-11 and N37-12 (path jail), N37-19 (purge), N37-20 (weights inherit), N37-21 (script), N37-14 (what crosses to a worker) |
+| §37.6 | Private places stay private | N37-17 (inheritance is computed), BD-305 (private root, views, scopes and flag, seeds not voxels), N37-11 and N37-12 (path jail), N37-31 (admission of the handle-relative filesystem library the jail needs), N37-19 (purge), N37-20 (weights inherit), N37-21 (script), N37-14 (what crosses to a worker) |
 | §37.7 | Licences | N37-17 (the join), N37-18 (classes, export refusal, notices, dependencies as assets), BD-305 (gate record), N37-21 (script) |
 | §37.8 | Supply chain | N37-22 (GATE-SAFE-06 at M2: one runtime package, lockfiles, cache flip, std-only auditor), BD-306 (exact pins, `--locked`, admission records, verified kernel loads, kernel provenance, vendored viewer, no local patches), N37-18 (third-party notices) |
-| §37.9 | No safety certification, and the no-authorization flags | N37-23 (schemas, locator registry, reader refusal, PO-SAFE-03, M1), BD-303 (full surface, banner, table of where the flags sit, later kinds), N37-24 (script, recurring gate) |
+| §37.9 | No safety certification, and the no-authorization flags | N37-23 (schemas, locator registry, reader refusal, PO-SAFE-03, M1), N37p1-01 (M2 exporters' carriers, generated banner, later-kind contract rows, M2 record), BD-303 (M3 full surface, report banner, table of where the flags sit), N37-24 (script, recurring gate) |
 | §37.10 | The claim product at the boundary | N37-25 (M1 gate: serializer, random sets, API scan), BD-308 (full surface: propagation, claims and non-claims, bundles), N37-26 (citation above the product, FROB-REF-819), N37-27 (script) |
 | §37.11 | The labeled nondeterministic training profile | N37-28 (labels, five paths, weights as data, bans hold), N37-29 (script); the profile itself is BD-269 of unit U35 |
 | §37.12 | Refusals | N37-REF (eight rows with triggers and repairs; 840 and the retired 730); raised by N37-03, N37-05, N37-07, N37-11, N37-18, N37-23, N37-26, N37-28, BD-305 |
@@ -32,7 +34,7 @@ Invariants, proof obligations, decisions and open questions:
 | INV-SAFE-02 | An imported string reaches only fields marked untrusted | N37-04 (type; compile-fail), BD-304 and N37-10 (sweep) |
 | INV-SAFE-03 | No discovery session can obtain any per-world datum of a confirmation run | N37-16 (random verb sequences with the sealed-value dictionary) |
 | INV-SAFE-04 | Privacy mark and licence set are joins over lineage; neither decreases | N37-17 (random derivation graphs), BD-305 (kind sweep) |
-| INV-SAFE-05 | Every exported artifact carries the three flags, each false | N37-23 (property over exports), BD-303, N37-24 |
+| INV-SAFE-05 | Every exported artifact carries the three flags, each false | N37-23 (property over exports), N37p1-01, BD-303, N37-24 |
 | INV-SAFE-06 | The evidence in an envelope equals the claim product of its inputs | N37-25 (random sets), BD-308 (taint lint) |
 | INV-SAFE-07 | No D4 result is consumed by the five consumers | N37-28 (property over random D4 products), N37-29 |
 | INV-SAFE-08 | One `asupersync` package per workspace; no kernel loads without a matching content hash | N37-22, BD-306 (verified-kernel type) |
@@ -52,7 +54,7 @@ The chapter defines ten gates and no kill gate and no admission gate.
 
 | Gate | Earliest (§40) | Measured by | Notes |
 |---|---|---|---|
-| GATE-SAFE-01 | M1, then every exit | N37-23 (M1 mechanism and record), N37-24 (script, recurring), BD-303 (M3 full surface) | Also touched at M0 and M1 by beads of U12 and U00 (flag sweep, claim-rules battery) |
+| GATE-SAFE-01 | M1, then every exit | N37-23 (M1 mechanism and record), N37p1-01 (M2 rows and record), N37-24 (script, recurring), BD-303 (M3 full surface) | Also touched at M0 and M1 by beads of U12 and U00 (flag sweep, claim-rules battery) |
 | GATE-SAFE-02 | M3 | BD-304 (mechanism and scanner), N37-10 (script and record) | Partial M1 profile in N37-04 records no gate |
 | GATE-SAFE-03 | M3 | N37-16 (layer independence, PO-SAFE-02, INV-SAFE-03) | Firewall and enumerated paths are BD-261 and its script, unit U24b |
 | GATE-SAFE-04 | M3 | BD-305 (record), N37-19 (purge clause), N37-21 (script) | |
@@ -111,8 +113,9 @@ flags contract of BD-303; the M3 conformance bead (BD-318) consumes the corpora 
 2. **Handle-relative path resolution against dependency rule L-5.** ADR-SAFE-04 requires opening beneath
    retained directory handles; the standard library cannot open relative to a handle, and L-5 admits only the
    standard library and suite foundations in the core. N37-11 names `cap-std` at the exact pin the MCP library
-   already uses, to be admitted for `frob-verbs` by ADR, with a fail-closed interim posture; recorded as a
-   need.
+   already uses, to be admitted for `frob-verbs` by ADR, with a fail-closed interim posture. The decision,
+   the admission test and the exception row are bead N37-31 (written in the integration pass), on which
+   N37-11 depends.
 3. **Overlapping refusal codes.** 819 against 820 and 834; 825 against 561 and 861; 733 against 310; 832
    against 303; 816 against 833 and 860. Each pair has two owners. N37-26, N37-28 and N37-REF state one
    precedence so that every request gets exactly one code (819: requirement side; 820: assertion side; 825: a

@@ -1,14 +1,14 @@
 ---
 key: "FD-F3D-01"
-title: "upstream franken_threed: the exact pin `serde_json = \"=1.0.151\"` relaxed (the same change as in franken_textiles)"
+title: "upstream franken_threed: exact pin `serde_json = \"=1.0.151\"` relaxed (the same change as in franken_textiles)"
 type: "task"
 priority: 3
 milestone: "M3"
-labels: ["m3", "suite", "tether", "upstream", "franken_threed", "frontier"]
+labels: ["m3", "suite", "tether", "upstream", "franken_threed", "frontier", "review-notes-open"]
 parent: "WP-52"
-deps: ["BD-037", "NF-01", "STD-E2E"]
+deps: ["BD-037", "N33b-04", "N33c-24", "STD-E2E"]
 needs: []
-related: ["BD-300", "BD-191", "FD-FTX-01", "NF-12", "BD-003"]
+related: ["FD-FTX-01", "N19c-39", "N33c-09", "N33c-38", "N33c-46", "N33c-47", "N41-02", "NF-12"]
 gates: ["INT-F3D-01", "GATE-WS-06"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.17", "§33.15", "§33.13", "§33.4", "§34.14"]
 ---
@@ -66,7 +66,12 @@ its golden outputs must be identical under 1.0.154, or the item stops with the f
 
 **Interim posture here.** `f3d-*` crates are used with their `serde` feature off, and only those that bring no
 asupersync (the mathematics crates; HYPOTHESIS, recorded per crate at INT-F3D-01); the renderer route is a
-subprocess; `check-deps` reports one `serde_json` version per binary.
+subprocess; `check-deps` reports one `serde_json` version per binary. Where they are used: never in a workspace
+that builds a `frob` binary (franken_threed is a never-dependency sibling there, and `check-deps` refuses an
+`f3d-*` package in a core crate with `suite.forbidden-package`, N33c-09); only an admission-probe workspace under
+`tests/admission/` may path-depend on an `f3d-*` crate (the ray-transform probe of N33c-46 is one). This item
+does not change that rule: after adoption the probe workspace may turn `serde` on, and the core still links no
+`f3d-*` crate.
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-F3D-01/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-F3D-01`, compiled as the `frob-conformance` integration test `upstream_fd_f3d_01` and
@@ -90,9 +95,9 @@ against the new pin.
 
 **What the switch-over re-runs.** INT-F3D-01: ten reference frames of the replay page built through
 franken_threed's route match the plain bundle within 1/255 per channel on at least 99.9% of pixels, and an
-unadmitted feature fails explicitly. With the pin relaxed, the `f3d-*` crates that this project uses may enable
-their `serde` feature; the unified feature set of `serde_json` in production binaries must stay as the stack
-lock records it. The renderer route remains a subprocess, because `f3d-runtime`'s asupersync 0.5.0 pin still
+unadmitted feature fails explicitly. With the pin relaxed, the `f3d-*` crates that the admission-probe workspace
+uses may enable their `serde` feature; the unified feature set of `serde_json` in production binaries (which
+link no `f3d-*` crate) must stay as the stack lock records it. The renderer route remains a subprocess, because `f3d-runtime`'s asupersync 0.5.0 pin still
 keeps it out of the graph; this item does not change that.
 
 **Fallback if the change cannot land.** `serde` off on the `f3d-*` crates; the plain Three.js bundle is the
@@ -112,7 +117,7 @@ viewer in every case.
 
 ### Unit tests
 In franken_threed (added):
-- `goldens_identical_under_both_serde_json_versions`.
+- `goldens_identical_under_both_serde_json_versions`: regenerates the repository's golden admission records and scene files twice, once with its lockfile at `serde_json` 1.0.151 and once at 1.0.154 (`cargo update -p serde_json --precise`), and compares them byte for byte; expected: identical. A difference stops the item with the finding recorded.
 Here (`tests/upstream/FD-F3D-01/`):
 - `resolution_with_f3d_math_serde_on`: the fixture.
 - `one_serde_json_per_binary` and `feature_set_unchanged`: from `check-deps`, against the stack lock.
@@ -141,7 +146,7 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - Known answers: a frame compared with itself agrees on 100% of pixels; one `serde_json` version per binary.
-- Negative controls: a frame with a 2/255 offset on one channel across the image must fail the 1/255 test; the old exact pin in a scratch graph must fail resolution; the planted `ftx-drape`-in-core graph of GATE-WS-06 must still fail.
+- Negative controls: a frame with a 2/255 offset on one channel across the image must fail the 1/255 test; the old exact pin in a scratch graph must fail resolution; the planted `ftx-drape`-in-core graph of GATE-WS-06 must still fail; an `f3d-math` dependency added to a core crate must still fail `check-deps` with `suite.forbidden-package` after adoption.
 - Determinism lanes: headless frames are rendered on the software rasterizer so that comparisons are repeatable.
 
 ## Considerations

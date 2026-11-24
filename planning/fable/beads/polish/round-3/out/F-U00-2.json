@@ -1,0 +1,283 @@
+{
+ "round": 3,
+ "slice": "F-U00-2",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "N00-16",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "The wrapper script called 'the runner' (a library function) with no command a shell can run; declared the example examples/sibling_facts.rs (report [--sheet] [--lock]) over N33a-09's probe_all, BD-025 form, with an acceptance line."
+  },
+  {
+   "bead": "N00-17",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied S40 request: calculators use frob_cert's exact rationals (no Ratio<i128>), calc.rs imports only std and frob_cert so N39b-19's bare-rustc kit can include it by path; dep BD-026; tests calc_imports_std_and_frob_cert_only and calc_builds_with_bare_rustc. Applied H-owners-1 request: report is the example `thesis` (`cargo run -p frob-conformance --example thesis -- ceilings ...`), in approach, scope, acceptance and e2e."
+  },
+  {
+   "bead": "N00-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-owners-1 request: check-report is a subcommand this bead adds to N39a-01's declared binary frob-tenfold, `cargo run -p frob-conformance --bin frob-tenfold -- check-report --report <file> --campaign <dir> --json`, with its output object and exit codes; e2e uses it."
+  },
+  {
+   "bead": "N00-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-owners-1 request: meta-check is the declared example `principles` (`cargo run -p frob-conformance --example principles -- check --exit <Mn>`); the exit-runner record now carries that command and states N40-05's check contract (prints the object, exits 0 whenever it ran, unproven is a block)."
+  },
+  {
+   "bead": "N00-24",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Rows 5/18 used registries/deny_deps.toml, the file N00-23 retired and BD-003 forbids as a second name list: now per-crate transitive deny data in antigoals.toml rows. Row 4 and the e2e said design.import refuses with FROB-REF-104, but VERBS-design/NS-07 have import exit 2 with the loss report and design.check stage 2 raising 104; the flag plant used an M2 verb that does not raise 816. The two real-binary plants now run NS-07's and N37-24's owning scripts as stages; deps NS-07, N37-24 (NS-07 moved out of related)."
+  },
+  {
+   "bead": "N00-25",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Applied S38 request: dep N37-REF (FROB-REF-819 raised here at M0). Added deps BD-024 and BD-027, the owners of sim.run and prove.kernel that its e2e script drives (convention 8)."
+  },
+  {
+   "bead": "N00-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "FROB-REF-447 is only for sensor or optical card fields (N20-REF row); the Reality admission row applied it to any assumed card field. Narrowed, other assumed fields refused under 819 with the field named; tests renamed/added."
+  },
+  {
+   "bead": "N00-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e step 5 used `result revalidate --against`, an option VERBS-result does not have: now `--between <query> <amended query>`. Step 5 called mission.revalidate (N25a-16, M3, not a dep): removed, the agreement check belongs to N25a-16. Step 4 used `artifact read` for a bundle (that row raises no 816): now `prove verify` (833, per VERBS-prove) and frob-verify. Acceptance names the beads carrying the not-yet rows (N12-14, N25a-16)."
+  },
+  {
+   "bead": "N00-28",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Applied S14 request: seventh exit state failed-short (GateFailedShort open until the decision record is on file, then failed-short, non-blocking, printed with measured value, both thresholds and record path) in the scope list, the verdict bullet, the mapping paragraph and the README column. Applied S50/H-owners-1 requests: report is the declared example `bets` (`--example bets -- status --json`), the form the BET beads already cite."
+  },
+  {
+   "bead": "N00-33",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The seven thesis controls used a private `mutants` feature and a symbol scan; BD-025/N38b-04 make a code mutation a `cfg(feature=\"nc-<nnnn>\")` branch of the owning crate run by the control runner one per build with `--features gauntlet-mutations,frob-conformance/nc-<nnnn>` on g1_known_answers. Records carry `feature`; acceptance is the compile-error guard and `cargo tree -e features`; tests go through the runner, plus seven_records_validate; e2e runs seven builds."
+  },
+  {
+   "bead": "N00-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-owners-1 request: the ceilings re-run is `cargo run -p frob-conformance --example thesis -- ceilings --ledger <published-figure ledger> --json`, the example N00-17 declares."
+  },
+  {
+   "bead": "N00-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 4 and the e2e reached the pilot register with no runnable command; now `cargo run -p frob-conformance --example pilots -- append-result <record> --result <file.json>` and `... -- rerun-status <record> --json` (DESIGN; subcommands requested of N38a-10, which owns the example)."
+  },
+  {
+   "bead": "N00-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said the crate has no binary (it has declared bins, N39a-01); entry restated per BD-025 as the example target examples/bet24_acceptance.rs this bead declares. Rechecked eval.run/task.verdict options against the VERBS rows, Clopper-Pearson 0.816/0.775, intervals [0.016,0.204]/[0.108,0.385], Fisher 101/7429 and 2477/7429, 1/20 and 1/70."
+  },
+  {
+   "bead": "N00-CX",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-cx-2 request: CX-003 and CX-008 carry GATE-TENFOLD-03 in rule_ids and their controls' gate list (N39-CX reuses and does not restate them); catalogue records named as N38b-05's schema; test cx003_cx008_carry_tenfold_03 so N39-CX's reused_entries_reported finds no gate-missing."
+  },
+  {
+   "bead": "N00p1-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied request: `cargo run -p frob-conformance --example bets -- status --json` (was the default-binary form BD-025 refuses) in acceptance and e2e. The step-count source said a request to N23bx-02 was pending; N23bx-02 now records steps at the attainment look, so S is read directly and `derived` is kept only for a receipt without that field. Bounds 1.3947/1.4635, 1.091/1.132, 0.953/1.598 rechecked."
+  },
+  {
+   "bead": "N00p1-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied request: `cargo run -p frob-conformance --example bets -- status --json` in acceptance and e2e. Shares 0.933/0.840/0.950/pooled 0.910 and the 181-world island bound rechecked."
+  },
+  {
+   "bead": "N00p1-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Code mutants used a private `mutants` feature and a release symbol scan: now `frob-mission/nc-<nnnn>` branches run by N38b-04's control runner one per build with `--features gauntlet-mutations,...`, guarded at compile time and checked by `cargo tree -e features`. The two mutated bundles were labelled `mutation`; they are fixtures, so `planted-input` (as N38b-28's KA-020 row). Records carry feature or fixture; test kinds_name_feature_or_fixture replaces the symbol test; e2e updated."
+  },
+  {
+   "bead": "NS-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The plant file was `demos/ns-02/plant.toml`; N29a-25's `frob.conformance-plant/1` is a canonical JSON document with per-kind sections, so `plant.json` with its `ulp` section; step (a)'s command now carries the `--conformance-plant` option the text says it is started with."
+  },
+  {
+   "bead": "NS-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Step (g)'s constant-coefficient control had no command and no owner: named as N18a-33's arm B (constant patch at mu_b, film law disabled, same cards and addresses) run at seed 4 under its own key with the arm selector requested of N18a-33; dep N18a-33 (M3); the changed share and its interval are logged."
+  },
+  {
+   "bead": "NS-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "'A request that names a group outside Gamma_obs is refused with FROB-REF-161' had no verb or option: N23a-31 raises 161 at train.start, but the train.start row registers neither a tying-group option nor 161; stated on the payload variant, with the option requested of VERBS-train and the check logged `not yet` until registered."
+  },
+  {
+   "bead": "NS-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The bisect form was attributed to N28b-02; the design.bisect row has BD-343's spellings, used under N28b-02's honesty rules."
+  },
+  {
+   "bead": "NS-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step (h) ran `scene purge <pack>` expecting removal, but the scene.purge row defaults to a dry run: now the dry run, then `--dry-run=false --confirm <closure digest>` (admin form, no key, N37-19). Step (g)'s unnamed private-export flag is BD-305's `--allow-private-export` (731 observed missing-flag); the claim 'there is no --private flag' contradicted the scene.import row (it exists and only raises a mark); the scratch safety config sets private.export_allowed so the flag is what is tested."
+  },
+  {
+   "bead": "NS-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Revalidation used `result revalidate --against <q'>`, which the result.revalidate row does not have: now `--between <q> <q'>` over N28b-32's M1 surface; the fresh `mission synthesize <q'>` lacked the key a run verb requires (805): key ns13-syn-3. Stance arithmetic (3/14, 165 N, (155,135,105,5), (175,115,85,25), passive boundary 1/2) rechecked."
+  },
+  {
+   "bead": "NS-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`nemesis hardset add trap.fmcw --class <class>` leaves the set undetermined (one set per class and task version; the row makes that 802): `--task <t>` added."
+  },
+  {
+   "bead": "NS-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step (d)'s mid-episode regear had no command or code: `autopsy intervene <fork> --do 'regear ...' --key ns16-aut-2` lists it under `refused` with FROB-REF-581, the earliest valid tick and forcing field, and the next_actions rerun the script then runs. Fork counts 7,865 and 689 rechecked."
+  },
+  {
+   "bead": "NS-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-verbs-3 request: `foundry loads ... --variants all` (the option takes all|nominal-only; all runs nominal, stiffness x0.5 and x2 and the alternative law together), not `stiffness,law`."
+  },
+  {
+   "bead": "NS-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`ground ingest <dataset> --key` omitted `--design` and `--task-family`, without which the cell is undetermined and the call is refused under 873 (BD-387, ground.ingest row): added; step (h)'s out-of-envelope episodes now have their ingest command and key."
+  },
+  {
+   "bead": "NS-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`result revalidate --against <q3>` is not in the row: now `--between <q> <q3>`; `sense alias --mission docking --link late` used a fixture shorthand the sense.alias row says is not an option: now `--mission docking-late.fmission` (BD-134's M1 enumerated-worlds form)."
+  },
+  {
+   "bead": "NS-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S68 request: `shield check <kerb run> --energy-budget <.fenergy>` (the shield.check row's spelling; `--budget` is the generated compute budget). Budget arithmetic 41.2 + 6.3 = 47.5 J against 60 J rechecked."
+  },
+  {
+   "bead": "NS-24",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-owners-1 request: the conformance check is `cargo run -p frob-conformance --bin frob-tenfold -- check-report --report <report> --campaign <campaign dir> --json`, the subcommand N00-19 adds to N39a-01's declared binary, with its output and exit codes, not the default-binary form BD-025 refuses."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N33a-09",
+   "what": "N00-16 now declares the example `sibling_facts` (`cargo run -p frob-conformance --example sibling_facts -- report [--sheet <name>] [--lock <path>]`) over probe_all; N33a-28's admission_m0.sh step `sibling_facts` needs a command and does not depend on N00-16, so N33a-09 may own and declare that example instead (N00-16 would then use it)."
+  },
+  {
+   "bead": "BD-143",
+   "what": "Write the ceilings report as `cargo run -p frob-conformance --example thesis -- ceilings --ledger <ledger> --json` (N00-17's declared example), not a default-binary form."
+  },
+  {
+   "bead": "N00-18",
+   "what": "Write the ceilings report as `cargo run -p frob-conformance --example thesis -- ceilings --ledger <ledger> --json` (N00-17's declared example)."
+  },
+  {
+   "bead": "NEG-06",
+   "what": "Write the ceilings report as `cargo run -p frob-conformance --example thesis -- ceilings --ledger <ledger> --json` (N00-17's declared example)."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "what": "N37-23 names artifact.read's bundle import path as raising FROB-REF-816, but the artifact.read row lists only 731, 840 and 869: add 816 to that row, or N37-23 drops it."
+  },
+  {
+   "bead": "N25a-16",
+   "what": "Assert that mission.revalidate agrees with result.revalidate (one engine), running N00-27's claim_rules.sh step 5 (`frob result revalidate <answer> --between <query> <amended query> --key cr-4 --json`) as a stage; N00-27 no longer calls mission.revalidate."
+  },
+  {
+   "bead": "N12-14",
+   "what": "Run N00-27's rule_12.rs fixture through the composition checker and record the rule-12 row, which N00-27 lists as carried by N12-14."
+  },
+  {
+   "bead": "N38a-10",
+   "what": "Declare the `append-result <record> --result <file.json>` and `rerun-status <record> --json` subcommands of the `pilots` example, which N00-35 and N38a-11 call."
+  },
+  {
+   "bead": "N18a-33",
+   "what": "Declare the selector of arm B (the film law disabled, a constant-coefficient patch at mu_b, same cards) as a registered option of the verb that runs the arms, so NS-04 step (g) can run the constant-patch control at its own seed; neither N18a-33 nor the sim/eval rows name it."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.start: register the option that names the tying group under `--tying equivariant` (N23a-31's 'requesting a group that is not a subgroup of Gamma_obs', and its e2e 'forced mechanical group'), and add FROB-REF-161 to the chapter refusals, which N23a-31 raises at the verb; NS-05 step (g) logs that check `not yet` until then."
+  },
+  {
+   "bead": "N25a-13",
+   "what": "Write the mission-answer call form as `frob result revalidate a:... --between <q> <q'>` (the result.revalidate row's change forms are --after-edit, --since, --between, --amendment); `--against q:...` is not registered. NS-13, NS-22 and N00-27 now use --between."
+  }
+ ],
+ "unchanged": 12,
+ "notes": "Unchanged (12): N00-23, N00-36, NS-01, NS-03, NS-07, NS-08, NS-09, NS-10, NS-11, NS-17, NS-18, NS-19. All requests addressed to the slice were applied; none rejected. Every NS command was checked against its VERBS row (existence, kind, --key on run and mutate verbs, options in the row) and every dep against INDEX milestones."
+}

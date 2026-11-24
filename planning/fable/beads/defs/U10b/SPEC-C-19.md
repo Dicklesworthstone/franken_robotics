@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "solid", "frob-sense", "frob-mission", "frob-conformance", "test"]
 parent: "WP-40"
-deps: ["BD-025", "N10b-08", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-19", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-112, KA-113 and CX-052, CX-053; this bead binds them to tests", "§20.4 and §25.4: the crates `frob-sense` and `frob-mission` are created by beads that implement this construction (BD-078, BD-128) and are expected to depend on this bead; they are deliberately not in `deps`, and those beads bind their real types to the law suite"]
-related: ["N10b-09", "N10b-10", "BD-078", "BD-098", "BD-119", "BD-134", "BD-215", "BD-240", "BD-290", "CARD-T-30", "CARD-T-23", "SPEC-C-17", "SPEC-C-20", "N10a-02"]
+deps: ["BD-025", "BD-027", "N10-CX", "N10-KA2", "N10a-01", "N10b-08", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["N20a-06", "N20a-49", "SPEC-C-20"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-19", "§11.7", "§11.8", "§12.3 T-30", "§20.12", "§20.15", "§25.10", "Appendix D.6", "Appendix I.6", "Appendix M.9 KA-112 KA-113", "Appendix N.7 CX-052 CX-053", "Appendix N.8 CX-105"]
 ---
@@ -29,8 +29,14 @@ witness search, the label count and schedule exploration (N10b-09, N10b-10). Own
 `frob-sense`) and Augur (crate `frob-mission`). C-19 defines the observation channel Y and the policy class Π_Y
 that the mission query of construction C-17 quantifies over.
 
-Terms. *Packet*: one delivered sensor datum. *Exposure window*: the half-open interval (a, b] over which a
-sensor integrates; an event at instant b belongs to the window ending at b. *Commitment deadline*: the last
+Terms. *Packet*: one delivered sensor datum. *Exposure window*: the half-open interval over which a sensor
+integrates, with membership decided by one function, `window_contains(open, close, t)` (N20a-06). Which end is
+open is the owner decision N20a-49: the conventions chapter writes (a, b] (an event at instant b belongs to the
+window ending at b), the Sensorium chapter writes [open, close) (an event at the closing instant belongs to the
+next window); until the ruling the rule in force is the fail-closed default [open, close) (`OpensAt`). No
+statement or law of this contract depends on which end is open (none places an event exactly on a window's
+end), so each holds under either ruling; implementations decide membership through `window_contains` only.
+*Commitment deadline*: the last
 instant at which a decision can still change. *Total variation* TV(P, Q): half the sum of |P − Q| over
 outcomes. *Admitted world*: a member of the declared world set.
 
@@ -77,9 +83,11 @@ Same-instant order (statement C-19.S2; class `Tested`). When several of these co
 are processed in this fixed order: (1) commit the physical state at t; (2) close the exposures that end at t;
 (3) enqueue the samples taken at t; (4) deliver the packets whose arrival is at or before t; (5) evaluate
 estimators and controllers; (6) latch commands; a zero-delay command takes effect on the open interval that
-follows t.
+follows t; (7) open the exposures that start at t, then advance physics. Steps 1 to 6 are the conventions
+chapter's statement; step 7 completes it with the Sensorium chapter's boundary rule, whose seven stages N20a-06
+implements (`Commit`, `CloseExposures`, `StampEnqueue`, `Deliver`, `Decide`, `Latch`, `OpenAdvance`).
 
-Rules that follow. A sensor's reading is a functional of the physical history over its window (a, b]. An
+Rules that follow. A sensor's reading is a functional of the physical history over its exposure window. An
 out-of-order arrival may change a buffered estimator's future outputs; it never changes a past decision or the
 observation that was delivered at that decision. Truth, measurements, belief and policy observations live in
 separate namespaces with declared access. A packet is never visible before its arrival, and private truth
@@ -155,23 +163,27 @@ enumerated. FrankenSim (at `483d09c682f2`) has no packet model. Neither is admit
   Vec<Packet>; fn decide(&self, history: &[Packet], t: Quanta) -> Cmd; fn check_witness(&self, w) -> Verdict }`.
 - `tests/support/c19_ref.rs`: a discrete-time packet model in integers (worlds, packets with arrival ticks,
   policies as functions of arrived history); the late-packet docking worlds come from `docking_ref.rs`
-  (N10b-08). `tests/support/c19_mutants.rs`: mutants under the cargo feature `controls`.
+  (N10b-08). `tests/support/c19_mutants.rs`: mutants under the umbrella feature `gauntlet-mutations` (BD-025; no feature is named `controls`).
 - Register row C-19: `verb = "sense.causal-test"` (and `sense.alias`, `mission.refute`), `failing_test` =
   `frob-conformance::laws_c19::s3_timestamp_leak_caught`, `payoff.gate = "GATE-SENS-09"`, `cards = ["T-23",
   "T-30"]`, `known_answers = KA-108 … KA-115`, `pilot = "PILOT-C-19"` (for the Frontier parts),
   `generic_comparator = "a scenario-tree linear program; a satisfiability solver for label counts"`.
+- KA-108 to KA-111 are bound by the part bead N10b-08, and KA-114 and KA-115 by N10b-09; each registers the
+  controls the appendix printed as none (KA-115's: one conflicting pair, a delivery and the read that may see
+  it, declared independent, so that the mutant reports 2² = 4 classes where 8 are true and two orderings of one
+  class differ in digest). Each row's derivation file names the setting bead.
 - Gates that measure the construction (recorded by mechanism beads): GATE-SENS-04 (clock contract, exact
   schedules, zero drift over 10⁹ ticks), GATE-SENS-05 (checkpoint restore at adversarial instants),
   GATE-SENS-12 (causal-policy test: every baseline passes, each of five planted leaks fails), GATE-SENS-09
   (alias witnesses found and checked; no false witness on 64 planted layouts), GATE-AUGUR-03 and GATE-AUGUR-10;
   kill gates KILL-ALIAS (one false witness from the searched lane; fallback: structural, enumerated and
-  declared witnesses only), KILL-AUGUR-ALIAS, KILL-SKEL-ALIAS.
+  declared witnesses only), KILL-AUGUR-ALIAS, KILL-SKEL-ALIAS (triggers and fallbacks in Considerations).
 
 ## Acceptance criteria
 
 - [ ] `docs/math/C-19.md` has the ten sections, statements C-19.S1 to S7 with classes, the instants table, the
       same-instant order and the witness argument.
-- [ ] `cargo test -p frob-conformance --test laws_c19` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-conformance --test laws_c19` passes; with `--features gauntlet-mutations` every mutant fails.
 - [ ] KA-113: 27/32, 459/512, 3807/4096 exactly; the shared-fault-bit model returns ¾ for n = 3, 5, 7, 101.
 - [ ] KA-112: for ten seeded pairs of finite distributions the enumerated Bayes success equals (1 + TV)/2 in ℚ.
 - [ ] The late-packet docking pair is accepted as a witness; a pair whose packet histories differ at one tick
@@ -187,9 +199,9 @@ enumerated. FrankenSim (at `483d09c682f2`) has no packet model. Neither is admit
 - `s1_ordering_constraints`: 1,000 seeded packets and commands from the reference scheduler satisfy
   sample ≤ exposure ≤ arrival and decision ≤ command ≤ actuation; timestamps are unconstrained (some precede
   the sample, by construction).
-- `s2_same_instant_order`: one instant with a state commit, an exposure end, a sample, an arrival, a decision
-  and a command: the trace lists them in the fixed order; swapping two independent same-instant events leaves
-  the delivered observations unchanged.
+- `s2_same_instant_order`: one instant with a state commit, an exposure end, a sample, an arrival, a decision,
+  a command and an exposure start: the trace lists them in the fixed order of the seven steps; swapping two
+  independent same-instant events leaves the delivered observations unchanged.
 - `s3_noninterference`: changing a packet that arrives after decision k leaves command k unchanged, for every
   k; `s3_timestamp_leak_caught`: the leaking policy changes command k.
 - `s3_out_of_order_arrival`: a late out-of-order packet changes later outputs and no past decision.
@@ -202,12 +214,14 @@ enumerated. FrankenSim (at `483d09c682f2`) has no packet model. Neither is admit
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c19.sh` (idempotent; seed 1900 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-112 KA-113`; `frob --json prove list` and
+`--features gauntlet-mutations`; the two registry rows in the targets their tier fields name (BD-025; the Gauntlet has no
+`frob` verb), `FROB_TEST_SEED=1900 cargo test -p frob-conformance --test g0_laws -- KA-112` and
+`FROB_TEST_SEED=1900 cargo test -p frob-conformance --test g1_known_answers -- KA-113`; `frob --json prove list` and
 assert cards T-23 and T-30 are listed with classes no stronger than their routes support; existence of
 `docs/math/C-19.md`. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c19/<utc>.ndjson` and a
 transcript; each line has `ts`, `script`, `bead` (`SPEC-C-19`), `step`, `event` (`start`, `cmd`, `assert`,
 `metric`, `refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class,
-tier G1 host, determinism D0, seed), measured and expected rationals, and on failure the first decision whose
+tier of the row, G0 host for KA-112 and G1 host for KA-113, determinism D0, seed), measured and expected rationals, and on failure the first decision whose
 command changed or the first tick at which two histories differ. Final `summary`: assertion counts and
 GATE-GAUNT-02.
 
@@ -228,9 +242,14 @@ decision. Determinism: integer arithmetic, class D0; twice on one machine, debug
 
 - The witness is a statement about the declared interface. Its strength is exactly its scope: world set,
   channel, deadline. An amendment to any of them re-opens it (construction C-18).
-- Kill gates named in advance: KILL-ALIAS and KILL-AUGUR-ALIAS (a generated witness contradicted by a
-  permitted probe in more than 5% of audited cases; fallback: witnesses are labelled experiment-specific only
-  and universal observability claims are refused).
+- Kill gates named in advance, each with its own trigger: KILL-ALIAS (M3; one false witness from the searched
+  lane; fallback: structural, enumerated and declared witnesses only); KILL-AUGUR-ALIAS (M3; generated witnesses
+  contradicted by a permitted probe in more than 5% of audited cases; fallback: witnesses are labelled
+  experiment-specific only and universal observability claims are refused); KILL-SKEL-ALIAS (M3; the
+  morphology screen's alias stage returns a witness that a hand-built policy defeats, or decides fewer than
+  half of the planted cases within budget; fallback: that stage becomes an advisory report built on the
+  coverage analysis A-14 and refuses nothing). None of them withdraws witness *checking* of this bead, which
+  is Solid.
 - Privacy: packet payloads of private scenes never appear in logs; the law suite uses synthetic worlds only.
 - Open point carried from the source: the class of the soundness argument of S4 is an argument on file, not a
   Lean card; if a card is added it joins the theorem-card list and this contract's table is updated.

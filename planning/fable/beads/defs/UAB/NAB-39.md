@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "tenfold", "ground", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-32"]
-needs: ["§1.3, §1.6: the claims-wording registry with thirteen differentiators and sixteen withdrawn claims, which owns the permitted wordings that KI-61 summarizes (N00-15)", "§2, §36.3, §39: the thesis arithmetic and parity targets as ratios to the incumbent re-measured on the same hardware (N00-17, BD-040, BD-217, BD-218)", "§0.8: hypothesis rows H-12, H-14, H-18 and H-19 (N00-11, N00-12)"]
-related: ["NAB-38", "NAB-40", "NAB-41", "NAB-20", "NAB-23", "NAB-30", "N00-13", "N00-14", "N00-15", "N00-17", "N40-22", "BD-006", "BD-037", "BD-038", "BD-143", "BD-354", "BD-393", "BD-403"]
+deps: ["N00-15", "NAB-32"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix C.2.7", "Appendix C.2.8", "§0.1 (rule 3)", "§0.8 (H-12, H-14, H-18, H-19)", "§1.3", "§2", "§36.3"]
 ---
@@ -223,7 +223,8 @@ each case is FACT: incumbent documentation at pinned versions (§1.1, §1.2).
 - `ki62_units`: 400,000 × 10 = 4,000,000.
 - `ki63_rederivation`: 33.5 − 21.1 = 12.4; 12.4/21.1 = 0.588.
 - `ki61_has_nine_rows`; `ki63_has_eleven_rows`.
-- `ki61_wordings_match_claims_registry` (skipped with a recorded `skip` until that registry exists).
+- `ki61_wordings_match_claims_registry` (the registry is N00-15's, a dependency of this bead, so the test runs
+  from the start and never records a `skip`).
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g7.md`.
 
 ### End-to-end script and logging

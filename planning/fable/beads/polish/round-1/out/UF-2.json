@@ -1,0 +1,211 @@
+{
+ "round": 1,
+ "slice": "UF-2",
+ "reviewed": 36,
+ "changed": [
+  {
+   "bead": "FD-FSIM-30",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "interim posture now names the plan's OPEN-FOUNDRY-1 default (decided by N31b-24): a surface that fails the conformity measurement takes the second cut-cell solve labelled `check: same-family`, and GATE-FOUNDRY-04 reads `blocked: OPEN-FOUNDRY-1` until decided; negative control for the label; §31.20 added to plan_refs"
+  },
+  {
+   "bead": "FD-FSIM-32",
+   "kinds": [
+    "correct",
+    "tests",
+    "risks"
+   ],
+   "what": "covariance bound was 0.01 (fails a correct 12-channel sampler on about one seed in ten); set to GATE-CORTEX-18's 4/√N = 0.01265; switch-over now states the gate's terms (dimensions 2, 12, 29; N = 10⁵; 64 worlds; family-wise rate recorded); risk named RISK-58 (was RISK-24 only)"
+  },
+  {
+   "bead": "FD-FSIM-33",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "momentum test at 10⁻¹² now fixes the body at rest with diagonal inertia so the mid-step orientation cannot add an O(Δt²) error"
+  },
+  {
+   "bead": "FD-FSQL-01",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "added dep N33c-20 (INT-FSQL-02 oracle and its ten recorded traces, which the switch-over re-runs); Scope names N33c-18 (local copy retired) and N33c-19 (byte accounting, admission)"
+  },
+  {
+   "bead": "FD-FSS-01",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "GATE-HAB-03's last clause (at least one probe request emitted) added to acceptance and to the post phase of the e2e script"
+  },
+  {
+   "bead": "FD-FSYM-05",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "reduced Gröbner basis known answer was {x − y, 2y² − 1}; a reduced basis is monic: {x − y, y² − ½}; KILL-SYNTH-LINKAGE trigger (25% of 240 instances over the caps) and fallback stated, with the rule that a share change from the new engine is reported to N25d-20, never used silently; related N25d-16, N25d-20"
+  },
+  {
+   "bead": "FD-FT-01",
+   "kinds": [
+    "split",
+    "scope",
+    "title",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "self-declared larger than five days (five stages); narrowed to stages 1 and 2 plus the item's one register row and fixture; stages 3-4 split to NFp1-51 and stage 5 with the row's move to `adopted` to NFp1-52; expected.toml holds one signature per assertion tagged by stage so partial adoption stays checkable ('one probe per stage' was wrong: stage 5 had none); added typed-buffer and misaligned/overlapping-offset tests for stage 2"
+  },
+  {
+   "bead": "FD-FT-02",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Adam first-step test had unstated g and ε (ε/|g| can exceed the 10⁻⁶ tolerance); inputs fixed; KILL-LEARNKERN's training-time gate named GATE-CORTEX-05 with its threshold"
+  },
+  {
+   "bead": "FD-FT-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "boilerplate said new unsafe stays inside `ft-kernel-metal`, contradicting the new `ft-kernel-cuda` crate; now a second sanctioned boundary under FrankenTorch's rules, with the stop condition if they refuse one"
+  },
+  {
+   "bead": "FD-FTX-01",
+   "kinds": [
+    "risks"
+   ],
+   "what": "unnumbered program risks named RISK-57 and RISK-56 (numbers assigned by N41-RISK1); planted instance (N41-02) and the all-features resolution rule stated"
+  },
+  {
+   "bead": "FDEF-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "CX-357 was called identical to CX-252; CX-252 is only the sequence case; both stated with their values"
+  },
+  {
+   "bead": "FDEF-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KA-778 negative control read 'over capacity (21 contacts)'; clarified as over a capacity of 21 (the case of 22), 21 solves"
+  },
+  {
+   "bead": "FDEF-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "probe at 10⁻¹² now requires a body at rest with diagonal inertia and a torque about a principal axis, so R̄ (whatever instant it denotes) maps the torque exactly"
+  },
+  {
+   "bead": "FDEF-06",
+   "kinds": [
+    "self-contained",
+    "risks"
+   ],
+   "what": "admission test now states GATE-CORTEX-18's full terms (dims 2/12/29, N = 10⁵, 64 worlds, ½ ± 0.005, covariance below 4/√N = 0.01265, planted sampler rejected at 0.6655 ± 0.005); program risk named RISK-58 with planted instance N41-38"
+  },
+  {
+   "bead": "NF-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "fixture asserted FrankenSim's channel equals T, which passes at the starting pin if T is candidate (b) though the leg is undone; now asserts candidate (a); G1 digest test split into the INT-FSIM-01 condition per channel (must hold) and a recorded cross-channel comparison (D2 promises bits per compiler only); deps NFx-01 (its register row FD-FSIM-40, as every other late upstream bead has) and BD-007 (the G1 digest test it re-runs); row id named"
+  },
+  {
+   "bead": "NF-04",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "deps added: NFx-01 (its register row FD-FSYM-06), BD-019 (frob-derive and K-cay-step, which its regeneration test derives), BD-027 (the T-01/T-03/T-04 bundles and `frob prove verify` its tests replay); row id named"
+  },
+  {
+   "bead": "NF-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance and `single_toolchain_file` required exactly one toolchain file outside lean/, contradicting N33c-08's two allowed exceptions (frob-cert on a stable release, worker/ with worker_rev); now states them and calls check-stack's condition"
+  },
+  {
+   "bead": "NF-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "background said 53 registered upstream items; the register holds 64 at M0 (BD-037 53, N33c-47 6, NFx-01 5), and toolchain-train legs are adopted by the toolchain train"
+  },
+  {
+   "bead": "NF-08",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the referee e2e assertion (no owner-limit label at 40 m) was vacuous if FrankenSim's step never calls the Jacobians; phase pre now logs the label count and the airlock's call count and a never-called case is logged `not exercised`; the cross-platform bit-identity claim for `fs-ga` marked FACT to recheck, with the fallback comparison"
+  },
+  {
+   "bead": "NF-11",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "`bounds_bracket_exact_minimum` asked for exact rational minima of degree-4 polynomials, whose critical points are in general irrational; polynomials are now generated with rational critical points; the lowered-threshold negative control is tied to the threshold under test, so a smaller threshold cannot evade it"
+  },
+  {
+   "bead": "NF-13",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "'set the registry row to a closed state' contradicted the register (no closed status; an unopened item has no row): not needed now moves the FD-FMCP-02 reservation to the series file's tombstones; when opened, the row is written and the reservation marked `opened = true`, matching NFx-01's test"
+  },
+  {
+   "bead": "NFx-01",
+   "kinds": [
+    "complete",
+    "tests",
+    "correct"
+   ],
+   "what": "fixtures of the two train legs: NFx-01 now writes all five fixture directories (the legs depend on it), with NF-03's channel assertion against candidate (a), not T; rule 1 states how `<repository>` is matched so the register writers (N33c-47, NFx-01, BD-037) are not items, and that stage beads NFp1-51/52 are not rows; reservations carry `opened` and tombstones `{id, bead, reason}` so a reservation closed as not needed (NF-13) passes rules 1 and 3 and an opened one is counted once; test `closed_reservation_as_tombstone` added"
+  },
+  {
+   "bead": "NFx-02",
+   "kinds": [
+    "tests"
+   ],
+   "what": "negative control for a stage placed after the projection used the uniform field, which cannot detect it (any uniform density is fixed by the overhang filter, and a monotone projection nearly commutes with it); replaced by a recording stage whose input must equal F·ρ bit for bit"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "NFp1-51",
+   "why": "split from FD-FT-01: stages 3 and 4 (function constants, binary archive with a full key, private storage with snapshot blits, per-kernel timing) and the backend's move onto them; depends on FD-FT-01"
+  },
+  {
+   "bead": "NFp1-52",
+   "why": "split from FD-FT-01: stage 5 (objc2-metal migration behind the unchanged API with a byte comparison, Metal 4 command allocators), N33c-39's binding-fact tests re-pointed, a sixth fixture assertion, and the row's move to `adopted`; depends on NFp1-51"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N33c-39",
+   "what": "its binding-fact tests pin `metal` 0.33.0 and the 3.1 enumeration end; when stage 5 of FD-FT-01 (the objc2-metal migration, now bead NFp1-52) is adopted they report 'fact changed' and NFp1-52 re-points them; name NFp1-52 there as the bead that does so and keeps the 3.1 dialect hold"
+  }
+ ],
+ "unchanged": 13,
+ "notes": "All 36 reviewed: 23 changed, 13 unchanged, FD-FT-01 split into three (NFp1-51, NFp1-52). Main themes: register bookkeeping between NFx-01, NF-03/04 and NF-13 made consistent; several tests whose known answers or controls could not discriminate were fixed. The slice looks close to settled."
+}

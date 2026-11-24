@@ -1,0 +1,149 @@
+{
+ "round": 4,
+ "slice": "F-U10a",
+ "reviewed": 14,
+ "changed": [
+  {
+   "bead": "N10a-01",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Section 6 compiled every law-suite mutant under a cargo feature `controls` that no bead declares (KNOWN_DRIFTS 1: one name for the planted-defect build; BD-025 defines the umbrella `gauntlet-mutations` and per-control mutation features). Now each mutant is under its own feature named by the control record (`cx-<nnn>` for the catalogue plant SPEC-C-nn:cx-<nnn> of N10-CX/N38b-05, `nc-<nnnn>` otherwise), never in the umbrella, one control per build (N38b-04's runner form); point 2 gives the staged form `--features gauntlet-mutations,<feature>`. What went wrong otherwise: the forty specification beads would build mutants under a feature the control runner never enables, and BD-025's loader would report the seeded controls' `cx-` features missing (feature-missing, then stale), so no construction's gate could pass. This settles, on N10a-01's side, round 3's request to N38b-04 about the two mechanisms."
+  },
+  {
+   "bead": "N10a-02",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Request applied: d10 reads the register's `pilot` field as a list, non-empty when the tier contains F or M, every entry an `id` in pilots.toml (C-06 lists two); new unit test d10_pilot_list and an acceptance plant (an id absent from pilots.toml). d10's field list follows N38a-09's schema: `fallback.kill_gate` is a gate id or `to-register` (the bead's 'none with a reason' is not a register value, so the two checks would disagree), and 'the ceiling's recorded time' named a field the register does not have: the ceiling is now checked as unchanged since a previous commit that already held a result (test d10_ceiling_before_timing rewritten; acceptance plant 'ceiling changed after its first timing result'). 'Pilot ledger' and the superseded N00-07 replaced by the pilot register N38a-09 (KNOWN_DRIFTS 3), so pilot_id is not resolved against N38a-10's plan-time ledger. E2E: the `frob --json doctor` step could not pass (no dependency on BD-022/N32ax-03, and doctor reports no digest for constructions.toml or pilots.toml); replaced, as in N10a-01, by receipt-hash, repeat-run and content-dependence checks; scratch copies via FROB_LINT_ROOT; plants seven -> eight."
+  },
+  {
+   "bead": "N10a-05",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request applied: `generated_from` is stated as a field of N38a-14's relation record (form and source checked by its loader); check C resolves the statement in the contract, counts records generated from statements and those written by hand, and fails a `generated_from` that names no statement; it is pending only before the registry holds records (M2). New unit test d4_generated_from_resolves; acceptance line restated. Mechanical finding C13-pending confirmed (not a false alarm): the narration 'adding C-14 to it is requested of N38a-18' is replaced by the fact that MR-38's source lists C-14, and the pinned-row check now also fails a pinned row whose source omits its construction (all eleven list theirs; d4_relation_grace updated). Without it the check would have stayed pending forever and an implementer would wait on a request already answered."
+  },
+  {
+   "bead": "N10a-09",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Both `nemesis bound` calls of doctrine_lanes.sh ran on a planted-failure fixture that is no finalist of a recorded campaign and carried no `--finalist`; N26a-26's finalists-only admission (M3, the same milestone) refuses that with rare-bound-not-finalist before the lane firewall, so the BoundedWeight assertion and the FROB-REF-560 assertion could never pass. Added `--finalist` (on VERBS-nemesis's row) to both calls with the reason, dep N26a-26 (no cycle; graph_check), and N26a-26 in Out."
+  },
+  {
+   "bead": "N10a-20",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e ran each trial as `frob sim run <robot> --tier referee`, but sim.run's `--controller` takes a control.synth record, a registered name or a controller file, and the pilot's prototype controller is code outside the workspace: the referee trials and the A/A digest pair would have stepped the design's default controller and measured nothing about the pilot. 'Where it runs' now says the pilot binary runs every trial with the prototype in the loop, on the referee's public stepping interface (as N10a-14 links its tiers) or on the development oracle, each trial record carrying the simulator, the referee's identities and the trial digest; the e2e drives the pilot binary per robot, trial and seed, and the A/A control runs synthesis and trial twice into separate output directories. Logging fields unchanged."
+  },
+  {
+   "bead": "N10a-22",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Step 3c ran the controls with `--features controls` (no such feature): now one build per registered control with the record's mutation feature, owning-crate and staged forms, exactly as the sibling audit N10c-10 step 3c writes it (N10a-01 section 6). Map row C-06 gains `frob-contact: laws_c06_model`, SPEC-C-06's second suite (model-form statements); without it the audit reported C-06 complete without ever running that suite or its controls."
+  },
+  {
+   "bead": "SPEC-C-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "spec_c01.sh step (2) used `--features controls`; it now builds once per registered control with the record's feature (`cx-019` for CX-019's plant, the `nc-` feature of each other control), N10a-01 section 6. The two requests on step (3) (g1/g0 short targets; KA-039 under g0_laws) were already applied in round 3 and the text already reads g1_known_answers -- KA-037/KA-038 and g0_laws -- KA-039: no further change for them."
+  },
+  {
+   "bead": "SPEC-C-04",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request applied: `telemetry query <run> --stream kinematics --ticks 0:10000 --page-size 500` used a retired option and one that does not exist (VERBS-telemetry: `--ticks` is retired, there is no `--page-size`); it now reads `--from 0 --to 10000 --limit 500`, following `next_cursor` with `--cursor`. As written the call would be refused with 802 and the momentum and centre-of-mass assertions could not run."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N10-KA1",
+   "what": "KA-081's tolerance reads [7.82, 10.18] (the normal approximation of chi2(450)/50, also in ka1_hand_values_recompute), while SPEC-C-13 (round 2) fixed the exact two-sided 95% quantiles [chi2_0.025(450), chi2_0.975(450)]/50 = [7.862, 10.213], the run-averaged NEES per checked instant, at least 90 of 100 instants inside, and a second control (reported covariance scaled by 0.8, expected 11.25). The plan's cell is 'the chi2 bounds (level to set)', which the exact quantiles are and the approximation is not. Bring the row and its recompute test to SPEC-C-13's form; otherwise the G1 row and the law suite assert two different intervals for one known answer."
+  },
+  {
+   "bead": "N38b-04",
+   "what": "Answer to round 3's F-U10a request, now settled on N10a-01's side: law-suite controls follow BD-025's per-control features (N10a-01 section 6: `cargo test -p <crate> --features <feature> --test laws_c<nn>`, one control per build; `--features gauntlet-mutations,<feature>` while staged in frob-conformance). The mutation guard as written ('a build with any nc-* feature and without gauntlet-mutations is a compile error') makes every such owning-crate run a compile error, since gauntlet-mutations is a feature of frob-conformance only and is not in a `-p <crate>` build. Restate the guard so it holds in both builds (for example keyed on the crate's own declaration: each mutation feature implies the crate's `conformance` feature, and a release build or a product binary with either is refused), and state that a `mutation` control whose target is a law suite is run by building that suite with its feature."
+  },
+  {
+   "bead": "SPEC-C-16",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature, which BD-025 puts in the umbrella; the seeded controls' `cx-` features would then be undeclared (BD-025 loader: feature-missing, runner: stale) and the construction's gate could not pass. Adopt the per-control form."
+  },
+  {
+   "bead": "SPEC-C-20",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature and runs `--features conformance`; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "SPEC-C-21",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "SPEC-C-22",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "SPEC-C-23",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature and runs `--features conformance`; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "SPEC-C-24",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "SPEC-C-25",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "SPEC-C-26",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "SPEC-C-27",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form (otherwise seeded `cx-` controls are feature-missing/stale)."
+  },
+  {
+   "bead": "N10b-01",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This part bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form."
+  },
+  {
+   "bead": "N10b-02",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This part bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form."
+  },
+  {
+   "bead": "N10b-12",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This part bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form."
+  },
+  {
+   "bead": "N10b-14",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. This part bead compiles its mutants under the crate's `conformance` feature; adopt the per-control form."
+  },
+  {
+   "bead": "N10b-19",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. Check 4 runs each suite once with `--features conformance` and `controls_are_caught`; make it one build per registered control with the record's feature, as N10a-22 and N10c-10 step 3c now read, so the three spine audits run controls the same way."
+  },
+  {
+   "bead": "BD-239",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. Its acceptance runs `cargo test -p frob-sense --test laws_c20` 'with `--features controls`', a feature no bead declares; use one build per control with the record's feature."
+  },
+  {
+   "bead": "N22ap2-02",
+   "what": "N10a-01 section 6 (the law-suite convention binding all forty specification beads) now states BD-025's form: each law-suite mutant is compiled under its own Cargo feature, declared by the crate that holds the suite and named in the control record's `feature` field (`cx-<nnn>` for the plant `SPEC-C-nn:cx-<nnn>` that N10-CX names and N38b-05 seeds, `nc-<nnnn>` for a control the bead registers directly), never in the umbrella; the suite runs once per control, one control per build: `cargo test -p <crate> --features <feature> --test laws_c<nn>` (in `frob-conformance` while staged: `--features gauntlet-mutations,<feature>`), as N10c-10 step 3c already writes it. Its saltation-kernel tests put 'mutants under the crate feature `controls`', a feature no bead declares; use per-control mutation features named by the control records."
+  }
+ ],
+ "unchanged": 6,
+ "notes": "Unchanged after a full read against plan sections, registry rows and conventions: N10a-06, N10a-14, SPEC-C-11, SPEC-C-12, SPEC-C-13, SPEC-C-15. Recomputed and correct: C-15 (19/14 powers 97.6/132.4, 16/22/29 pairs, 26.5, 0.0021, 0.81, 565, 3/80, eight pairs), D-16 (29,958; 29,956; 0.0054; 7.3%), the single-precision bound example and ceiling 1.754 of N10a-14, C-12 gear fixture, D-9 examples, chi2(450) quantiles 7.862/10.213 (SPEC-C-13 is right; KA-081 in N10-KA1 is not, request filed). The main finding is program-wide: N10a-01's law-suite convention named a nonexistent `controls` feature; it now follows BD-025's per-control features, matching N10c-10, and requests go to the F-U10b beads that used the crate's `conformance` feature, to BD-239, N22ap2-02 and to N38b-04 for its guard. Residual, not edited: N10a-09's third bound call (`--mode certify --episodes`, target 1e-4) might meet N26a-26's budget admission (760) or an E0 envelope (761) before the lane firewall's 560, depending on the default budget; N10a-14 lists GATE-TRAC-09 (M5) in `gates` although it only shares that gate's residual. graph_check reports no cycle after adding N10a-09 -> N26a-26; all touched files parse."
+}

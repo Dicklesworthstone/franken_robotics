@@ -4,11 +4,11 @@ title: "spec C-21 (frob-model, frob-phylum): the similarity group, canonical for
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "lemma", "spine", "spec", "solid", "frob-model", "frob-phylum", "test"]
+labels: ["m2", "lemma", "spine", "spec", "solid", "frob-model", "frob-phylum", "test", "review-notes-open"]
 parent: "WP-44"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-21", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-119 to KA-122 and CX-056, CX-057; this bead binds them to tests and registers the controls the appendix leaves unstated", "§38.7: the metamorphic-relation registry row MR-06 (similarity rescaling) in `frob-conformance/registry/relations.toml` (Gauntlet beads); this bead supplies its statement and control"]
-related: ["N10b-11", "BD-018", "BD-285", "BD-320", "BD-179", "BD-223", "SPEC-C-14", "SPEC-C-22", "SPEC-C-23", "CARD-T-09", "BD-061", "N10a-02"]
+deps: ["BD-025", "BD-027", "N10-CX", "N10-KA2", "N10a-01", "N38a-14", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-061", "SPEC-C-22"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-03", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-21", "§9 D-11", "§12.3 T-09", "§12.5", "§17.11", "§35.8", "§38.7 MR-06", "Appendix A", "Appendix D.4", "Appendix D.5", "Appendix M.9 KA-119 to KA-122", "Appendix N.7 CX-056 CX-057"]
 ---
@@ -57,7 +57,7 @@ the first seed in `frob-model`): that bead is listed in `related` and is not a p
 generic over its subject trait and closes on the exact reference model and the mutants in its own test support. If
 `frob-model` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -144,7 +144,7 @@ pub fn differing_groups(a: &CanonicalForm, b: &CanonicalForm, tol: f64) -> Vec<G
   CanonicalForm; fn scale(&self, d: &DesignData, s: Similarity) -> DesignData; fn step(&self, state, inputs) ->
   State }`. `tests/support/c21_ref.rs`: dimension vectors and exact rank over ℚ; point-mass designs with
   rational data; a small homogeneous reference kernel (free fall with a ground-contact branch and one square
-  root) in `f32` and `f64`. `tests/support/c21_mutants.rs`: mutants under the cargo feature `controls`.
+  root) in `f32` and `f64`. `tests/support/c21_mutants.rs`: mutants under the crate's cargo feature `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
 - Register row C-21: `verb = "phylum.quotient"`, `failing_test` =
   `frob-model::laws_c21::s8_hidden_dimensional_constant`, `payoff.gate = "GATE-PHYLUM-01"`, `cards = ["T-09"]`,
   `known_answers = KA-119 … KA-122`, `pilot = "PILOT-C-21"` (for the Frontier part), `generic_comparator = "SI
@@ -158,7 +158,7 @@ pub fn differing_groups(a: &CanonicalForm, b: &CanonicalForm, tol: f64) -> Vec<G
 
 - [ ] `docs/math/C-21.md` has the ten sections, statements C-21.S1 to S8 with classes, the scale and group
       tables and the four fixtures.
-- [ ] `cargo test -p frob-model --test laws_c21` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-model --test laws_c21` passes; with `--features conformance` every mutant fails.
 - [ ] KA-119: exponent matrix of (T, ℓ, g, m) has rank 3 over ℚ; the single group is T·ℓ^(−½)·g^(½).
 - [ ] KA-120 and KA-121: exponents −1 and −½ computed symbolically; a similarity verdict issued from geometric
       ratios alone is refused with the differing group named (`actuator torque group`).
@@ -188,8 +188,10 @@ pub fn differing_groups(a: &CanonicalForm, b: &CanonicalForm, tol: f64) -> Vec<G
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c21.sh` (idempotent; seed 2100 printed): `frob --json doctor`; the law suite with and without
-`--features controls`, in debug and in release; `cargo test -p frob-conformance --test g1 -- KA-119 KA-120
-KA-121`; `cargo test -p frob-conformance --test g3 -- MR-06` on the host site; `frob --json prove list` and
+`--features conformance`, in debug and in release; `FROB_TEST_SEED=2100 cargo test -p frob-conformance --test
+g1_known_answers -- KA-119 KA-120 KA-121`; `FROB_TEST_SEED=2100 cargo test -p frob-conformance --test
+g3_metamorphic -- KA-122 MR-06` on the host site (the tier targets of the rows' G1 and G3 tiers; `g1` and `g3`
+are not target names); `frob --json prove list` and
 assert card T-09 is listed. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c21/<utc>.ndjson` and a
 transcript; each line has `ts`, `script`, `bead` (`SPEC-C-21`), `step`, `event` (`start`, `cmd`, `assert`,
 `metric`, `refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class

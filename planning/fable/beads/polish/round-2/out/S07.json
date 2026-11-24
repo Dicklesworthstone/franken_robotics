@@ -1,0 +1,104 @@
+{
+ "round": 2,
+ "slice": "S07",
+ "reviewed": 43,
+ "changed": [
+  {
+   "bead": "BD-046",
+   "kinds": [
+    "complete",
+    "tests",
+    "correct"
+   ],
+   "what": "Added the acceptance line that SPEC-C-01's law suite laws_c01 (S1-S4, S7, t11_certificate_roundtrip) runs unchanged against the production classifier with KA-039 and its registered control (bracket with the linear part dropped) caught; S5/S6 mobility stay with BD-101 and N13-27. Known answers now cite KA-039. The non-closure witness test said pair (1, 2) for a usize pair: made it 0-based (0, 1), as the crate's other reported indices."
+  },
+  {
+   "bead": "BD-048",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the U12-2 request: N12-45 moved from related to deps, with a new unit test compendium_d5_cross_check and an acceptance line: projectors, Reynolds images (C2 swap on R2), order-6 dihedral orthogonality and the C3 complex-type commutant {a·I + b·M} in the lattice basis checked exactly against the D.5 oracles, and the two D.5 controls (rho_in for its inverse; projector without d_chi) run against the production code."
+  },
+  {
+   "bead": "BD-049",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Applied the UJL-1 request: VERBS-algebra moved from related to deps (the registry row of algebra.orbits and its published example --set feet:4, which this bead's acceptance runs)."
+  },
+  {
+   "bead": "FD-FSYM-03",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Added dep N13-14: the post phase of its e2e script runs frob algebra irreps for every gate group; N13-14 (M1) owns that verb and nothing links back."
+  },
+  {
+   "bead": "GB-02",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Its Considerations promise a C3 one-copy test guarding the complex-type count, but no test carried it: added gb_02_complex_type_c3 (count 3 = 1 + 2, Reynolds rank 3; the all-real miscount 2 must fail)."
+  },
+  {
+   "bead": "GB-19",
+   "kinds": [
+    "placement",
+    "tests"
+   ],
+   "what": "Lane B's mission-digest assertion on the ballast family needs frob-phylum's digest, which arrives with BD-285 at M3, while the card is M1: that one assertion is now #[ignore]d with its reason and logged pending until BD-285's acceptance; at M1 lane A's (count, Σx, Σx²) classes carry the {1,4}/{2,3} separation. Verified 24,546 classes by enumeration."
+  },
+  {
+   "bead": "N13-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "The registry paragraph still said FROB-REF-215 was 'requested of VERBS-algebra' and that refusal_lists fails until then; VERBS-algebra's row now carries 214 and 215, so the sentence states the settled row. related listed N13-16 and VERBS-algebra, both already deps: removed. The family source said positional only, while the registry row and N13-20's gate loop use --family too: both forms accepted, with a new test family_forms_agree. oversize_refused_215 now stores its request as tests/fixtures/irreps/oversize.json, the file N13-20's script reuses (N13-20 assumed it; nobody wrote it)."
+  },
+  {
+   "bead": "N13-17",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the UJL-1 request: VERBS-algebra added to deps (the registry row of algebra.orbits, whose published example the script runs). The design-bound call used --slots feet, but --slots takes a count; now --set feet:4, the registry's named-slot form. The e2e observed only FROB-REF-214 although the row lists 214 and 215: added BD-049's oversize count (C2, n = 20,000, k = 10, over 65,536 bits) as a second refusal with its own refusal line and acceptance. Lattice item 6 gained D6's 41 (H, K) pairs, recomputed by brute force (16 subgroups, 10 classes, 41 pairs; C2xC2 11 and Z4xZ2 23 confirmed)."
+  },
+  {
+   "bead": "N13-18",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Mutation M5 requires the 31 W pairing fixture of the conventions battery N13-01, which was not a dependency: added N13-01 (no cycle)."
+  },
+  {
+   "bead": "N13-19",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The gate verifies the T-01, T-03 and T-04 certificates and requires the cards certified, but depended on neither CARD-T-01 nor CARD-T-03 (CARD-T-04 only transitively): added CARD-T-01, CARD-T-03, CARD-T-04 (all M0, no cycle)."
+  },
+  {
+   "bead": "N13-REF",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The verb algebra.orbits (BD-049) raises FROB-REF-214 (group outside the supported families) and FROB-REF-215 (orbit-count numerator over its declared 65,536 bits), and the verb registry lists both, but the registry bead named only algebra.irreps as a raiser: BD-049 added to the raised_by of 214 and 215, to the owed acceptance line (observed by N13-17's script) and to related."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-285",
+   "what": "GB-19 compiles gb_19_mechanism_ballast_digest #[ignore] at M1 because it needs frob-phylum's mission-observable digest; BD-285's acceptance should un-ignore it and require it to pass (cargo test -p frob-conformance --test cards gb_19 -- --include-ignored gb_19_mechanism_ballast_digest: 24,546 digest classes and distinct digests for {1, 4} and {2, 3}), so the card's lane B closes with KA-367."
+  }
+ ],
+ "unchanged": 32,
+ "notes": "Slice looks settled: round 1 left WP-03 coherent and its numbers check out (lattices, Burnside counts, minimal polynomials, Cayley and shell fixtures, Sarrus rank 5 all recomputed). The changes this round are mostly cross-bead seams: registry rows and verb flags that drifted after round 1, refusals one raiser did not list, and missing edges to cards and fixtures. The three requests addressed to the slice were applied."
+}

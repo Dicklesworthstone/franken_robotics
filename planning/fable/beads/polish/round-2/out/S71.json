@@ -1,0 +1,415 @@
+{
+ "round": 2,
+ "slice": "S71",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "N19b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "self-contained",
+    "scope"
+   ],
+   "what": "Scope named the wet-floor battery N18a-33 and the KILL-FILM decision N18a-34 (was BD-230). Pad fixture registered as fixture:film-pad in N24b-03's registry (constants hashed before the first run), drag speed 0.10 m/s stated, the thick-film ratio computed (7.54e-5 against mu_b 0.25, cap not binding). Script: --key on scene compile and sim run, distinct keys for the determinism repeat; planted defects built with gauntlet-mutations through e2e_expect_caught; gate recorded with record_gate."
+  },
+  {
+   "bead": "N19b-25",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Added dep N38a-09 (the pilot register it writes into); registration names crates/frob-conformance/registry/pilots.toml and schema frob.gauntlet.pilot/1."
+  },
+  {
+   "bead": "N19b-26",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied request: dep N19c-27 (Habitat invariant ledger). SPEC-C-33 moved from related to deps (specification first). Script: --key on scene compile and scene fit; footprint spelling rect:0.50x0.70 (scene.fit's form, was rect-0.50x0.70)."
+  },
+  {
+   "bead": "N19b-27",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied both requests: integrity fault is N19c-42 row 4 scene-pack-identity-mismatch (9xx, exit 9, artifact=fclear, constant IDENTITY_MISMATCH), cited by slug, dep N19c-42 added; frob conformance run replaced by the bead's own fclear_format tests run by name, GATE-WS-02 lane left to N34p1-02. Added unit tests duplicate_member_refused and key_order_one_identity and their acceptance line. scene fit calls carry --scene, --emit fclear and distinct keys."
+  },
+  {
+   "bead": "N19b-28",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied requests: deps N12-43 (D.3 oracles; corridor_closed_form reads the corner limit from it; new test sandwich_against_oracle) and N19c-27. SPEC-C-33 moved to deps. Script runs the unit tests by name, scene fit carries --key, asserts the verb's w_in_m/w_out_m fields (was _mm)."
+  },
+  {
+   "bead": "N19b-29",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The bead's e2e lived only in the later gate script (drift 7): added its own section in clearance_cells_smoke.sh (unit tests by name; cancellation case with --key rf-cancel-1 and a distinct rf-full-1 rerun; verb steps skipped until N19b-32)."
+  },
+  {
+   "bead": "N19b-30",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Added its own stage in clearance_cells_smoke.sh running clearance_route tests by name; verb cases stay in the gate script and are skipped until N19b-32 (drift 7)."
+  },
+  {
+   "bead": "N19b-32",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "Request (dep VERBS-scene) was already met. Restated row corrected: idempotent = false for a run verb; the row now lists 304, 305, 308, 891 (text said 304 was missing); mentions N19b-36's fallback input and the integrity row joining via N19c-42. Defined the CLI spelling of emit (--emit fclear|bundle). Acceptance names N19b-29's cancellation section among the skipped steps it enables."
+  },
+  {
+   "bead": "SPEC-C-33",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Out list named the actual component beads (N19b-26 to -33, N12-15 checker, N19b-35 gate, N19b-36 KILL-FCLEAR) instead of BD-233/BD-132 for everything. Script used --test g1 and --test g3: now g1_known_answers and g3_metamorphic in the ADR-GAUNT-01 form."
+  },
+  {
+   "bead": "N34p1-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The .fclear number rule contradicted the owner N19b-27 (said bounds are shortest decimals; they are outward-rounded i16 millimetres in a blob, lengths exact decimal strings). Re-derivation inputs listed in full (slab, modes, movables, lattice, producer settings, refinement request, not only scene and footprint). Gate records written with record_gate --part M3."
+  },
+  {
+   "bead": "N19b-31",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script: scene fit with --emit fclear,bundle carries keys cert-w-1 / cert-c-1 (0.60x1.30 witnessed, 0.60x1.40 cut), prove bundle keyed cert-b-1 (run verbs carry --key)."
+  },
+  {
+   "bead": "N19b-33",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Applied the UJL-1 request: Scope and a new acceptance line deliver fixtures/verbs/contact/sweep.json for VERBS-contact's registry example (--key cc-1; 805 on a missing key). Script keys cc-6mm/cc-10mm/cc-slab; battery in the ADR-GAUNT-01 form (g1_known_answers -- GATE-TRAC-07), controls under gauntlet-mutations, recorded with record_gate."
+  },
+  {
+   "bead": "N19b-34",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "design edit call carries --expected-parent and --key a18-ed-1 (mutate verb); analyze.route inputs --margin and --budget-ms noted as requested of VERBS-analyze; the deferred steps are now required by BD-244's acceptance (drift 7)."
+  },
+  {
+   "bead": "N19b-35",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Added dep N19c-27 (ledger rows; round-1 request). Recording via record_gate GATE-HAB-10 and the g1_known_answers form. The script called `scene gen --family fixture/l-corridor`, a family no generator defines: the 100 corridor sources are now written by the bead's fixture writer as committed fixtures/hab/clearance/corridors/pair-<nn>.src and compiled with keyed scene compile; corridor_scene_generator also checks the committed bytes. Every gen/fit/prove call keyed, determinism repeat on a second key family."
+  },
+  {
+   "bead": "N19b-36",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "ADR moved to docs/adr/ADR-KILL-FCLEAR-M3.md with the N40-03 kill-gate fields. Script: the heuristic fit is `frob scene fit --scene <corridor> --footprint rect:0.60x1.30 --from west --to north --fallback heuristic --key kf-heur-1`; planted decision records run through e2e_expect_caught."
+  },
+  {
+   "bead": "N19b-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Registration names the pilot register of N38a-09 by its path crates/frob-conformance/registry/pilots.toml and schema frob.gauntlet.pilot/1 (was frob-conformance/registry/pilots.toml). Counts 59 = 10+5+7+10+8+8+11 checked against plan 19.8."
+  },
+  {
+   "bead": "N19b-38",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S50's request: --strict-data's refusal is the row retrofit-cost-on-assumed-prices of N19c-42 (3xx, exit 3, assumed_prices[] and comparison, constant RETROFIT_COST_ASSUMED_PRICES; dep N19c-42 added); this bead supplies Kit::assumed_prices, N19b-40 raises it; new test assumed_prices_listed. Script: `frob artifact read frob://catalog/retrofits` is not a verb form (artifact.read takes digests); the catalog is read as an MCP resource through frob-mcp, skipped until N32a-25 serves the kind; the catalog tests run by name; scene compile and scene retrofit calls keyed."
+  },
+  {
+   "bead": "N19b-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The four --plan-only calls of scene.retrofit (a run verb) carry keys rp-cut/rp-mcw/rp-alias/rp-nokit. Kit counts (10,700; 41) and ramp runs (228/240 mm) checked."
+  },
+  {
+   "bead": "N19b-40",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Deps N19c-27 (round-1 request) and N19c-42. The row restatement now says first_milestone stays M3 and the verb is one of NJL-02's LATE_ROWS (724, exit 5, before M4), as VERBS-scene states. Applied S50's request: the strict-data cost refusal is retrofit-cost-on-assumed-prices with its block and repairs, raised in step 5 with flip verdicts still in the detail; inputs gained the CLI spellings used by N19b-38/N19b-41 (--apply --at --scene, --strict-data, ...). Verb-surface section: every call keyed, a --strict-data case, idempotent replay by repeated key."
+  },
+  {
+   "bead": "N19b-41",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Added dep N19c-27 (round-1 request). Gate run in the ADR-GAUNT-01 form (g1_known_answers -- GATE-HAB-11; KA-455 is G1), controls as rows of registry/controls.toml under gauntlet-mutations, recorded with record_gate --part M4. Script: planted scenes compiled from fixtures/hab/retrofit/<f>.src (no `fixture/<name>` generator family exists); fit, eval run, nemesis shrink, scene retrofit and eval promote (--tier referee) all keyed; --strict-data case added. Torque 14 + 3x1.4 = 18.2 and 0.626 m/s checked."
+  },
+  {
+   "bead": "N19b-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "ADR moved from docs/delivery/adr/ to docs/adr/ADR-KILL-RETROFIT-M4.md with the N40-03 kill-gate fields. Script: `nemesis hardset --battery home` used an option the row lacks; the population is read with --set <hs:...> per registered set and evidence trace for cuts; scene retrofit and eval promote carry per-failure keys. Interval 12/40 -> [0.166, 0.465] verified."
+  },
+  {
+   "bead": "N19b-43",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S50's request: both refusals (strict-data cost verdict; published report with assumed prices) are the row retrofit-cost-on-assumed-prices of N19c-42 (dep added), the publish path being the second emit site N19c-42 names; publishing counts as strict for cost claims (DESIGN, from OPEN-HAB-4). ADR at docs/adr/ADR-OPEN-HAB-4.md. New test publish_refuses_assumed_cost; script calls keyed and assert the slug."
+  },
+  {
+   "bead": "N19b-44",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script: `scene compile ... --seed 3` used an option BD-163 rules out (a compile takes no seed); every compile keyed, the repeated derived compile uses a distinct key so it recompiles instead of replaying the stored receipt. The derived source form (--base/--edits, exclusive with a source path, 802) is stated as requested of VERBS-scene."
+  },
+  {
+   "bead": "N19c-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "fp_exact hashed the multiset of per-brick canonical hashes plus extents, which drops brick positions: an interior wall moved within the same extents gave the same fingerprint (failing the bead's own test) and distinct layouts would be merged. Now each symmetry transforms brick coordinates and contents, normalizes the origin and hashes the sorted (position, hash) list; min over the eight. Test and negative control added. Considerations no longer contradict the role-table completeness criterion. Script: gen/compile keyed; split create/add/check steps skipped `needs BD-235` (BD-235 depends on this bead; drift 7), --deep requested of BD-235."
+  },
+  {
+   "bead": "N19c-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied S50's request: FROB-REF-326 withdrawn; the recount and no-drop refusals are row 7 scene-split-count-mismatch of N19c-42 (9xx, exit 9, retry never, block split_id/part/class/stored/recounted/first_member, constant SPLIT_COUNT_MISMATCH), emit sites in check and audit owned here. sim run calls keyed; check names --split."
+  },
+  {
+   "bead": "N19c-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The script drove the sealed side through `frob conformance run --case sealed-scene-surface`, a command that does not exist; replaced by this bead's test-support example `cargo run -p frob-scene --features sealed-test-scorer --example sealed_case -- <generate|collide|reveal|regenerate>` writing sealed identities only to an admin-scoped file; layout names the feature and example."
+  },
+  {
+   "bead": "N19c-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied S50's request: step 6 refusal is scene-split-count-mismatch (slug and SPLIT_COUNT_MISMATCH; 326 withdrawn). Fixture generation spelled (`--family warehouse` / `kitchen-commercial/galley`, keyed), the mirror via a `mirror`-role parameter (requested of BD-225, none is declared), the retrofit variant via N19b-44's derived compile. scene.split calls carry --key and --expected-parent (mutate); check names --split; train/eval keyed. Gate recorded with record_gate, KA-456/457 in g1_known_answers, controls in controls.toml under gauntlet-mutations."
+  },
+  {
+   "bead": "N19c-19",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied S50's request: marginal variant bytes use N19c-16's pooled_bytes, 1,164 per unique brick; unit test recomputed (2,147,766 bricks, 5% = 107,388, 124,999,632 B, ~153 MB with directory). Edit variants (moved partition, overlay, fixture swap) are N19b-44 typed edits via the derived compile: dep N19b-44 added. Gate row via record_gate --part M3; KILL-POOL amendment names docs/adr/ADR-KILL-POOL-M2.md."
+  },
+  {
+   "bead": "N19c-20",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script: the two sim runs (three segments vs co-located) carry distinct keys; --segments and --co-locate named as this bead's options (requested of VERBS-scene / VERBS-sim)."
+  },
+  {
+   "bead": "N19c-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The trace replay used `frob conformance run --case bank-evict-trace`, which does not exist; now the replayer of item 9 as `cargo run -p frob-conformance --example bank_evict_trace`. sim run chunks keyed. Ageing trace (crossing at request 60) checked."
+  },
+  {
+   "bead": "N19c-22",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script: sim run and sim replay keyed (run verbs); `run show --receipt` (no such option) replaced by run show; --scenes/--schedule/--episodes named as this bead's sim.run inputs, requested of VERBS-sim."
+  },
+  {
+   "bead": "N19c-23",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied U21c's and S50's requests: the recipe is N21c-09's frob.scene.recipe/1 (with generator_pin; 303 on a pin mismatch), N21c-09 the first emit site on the fleet path and this bead the bank-admission site; FROB-REF-323 replaced by scene-pack-identity-mismatch (IDENTITY_MISMATCH, block artifact fscene/stated/recomputed/blob/path_class). Deps N21c-09 and N19b-44 added. Test derived_recipe expected swapped edits to differ, contradicting N19b-44's canonical order: fixed. Script: `fleet send` (no such verb) replaced by keyed artifact export; gen and replay keyed. The test private_pack_not_sent_731 now names the transfer form (artifact export --to-host), not a fleet send."
+  },
+  {
+   "bead": "N19c-24",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "spark fingerprint, scene gen, sim run, sim replay and the cuda batch keyed; Mac scene-change run uses N19c-22's scheduling inputs; gate row via record_gate per lane; planted controls under gauntlet-mutations in controls.toml through e2e_expect_caught. Planning-table arithmetic (2,706 homes; 614 GB; 189 GiB) checked."
+  },
+  {
+   "bead": "N19c-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Evaluation and the script counted 15 policies, while the design trains 20 (the 5 of the placebo arm B16' must be scored for its contrast): both now say 20. Script: study plan, scene gen, split create/add (mutate, with --expected-parent), train start and eval run all keyed."
+  },
+  {
+   "bead": "N19c-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The ADR moved from docs/delivery/adr to docs/adr/ADR-KILL-BANK-BREADTH-M3.md with N40-03's kill-gate fields. `study show` does not exist, so the record is now read with study compare and evidence trace. The helper cases were checked."
+  },
+  {
+   "bead": "N19c-28",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The runner `frob conformance run --battery habitat` was a command that does not exist (drift 1). The battery script now runs each due row as `cargo test -p frob-conformance --test <tier> -- ka:<n>`, with its control under `--features gauntlet-mutations,<crate>/nc-<nnnn>` through e2e_expect_caught. The manifest no longer copies truths and tolerances: it reads them from registry/known_answers.toml (ADR-GAUNT-02), and the controls are rows of controls.toml. HKA-A..H are provisional tags: this bead files an 8-number block in allocations.toml under N38a-40 rule 5. Tests were added for the manifest and the numbering, and the verdict logic is tested in bats. All arithmetic pins were rechecked. The 24 deps are each used, with no cycle."
+  },
+  {
+   "bead": "N19c-32",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The record moved from docs/open/OPEN-HAB-3.md to docs/adr/ADR-OPEN-HAB-3.md. The script called `fidelity ledger --battery --scene-settings`, which is a read verb without those options. It now spells out the gen and compile steps at each candidate's --fine/--coarse/--truncation (as N18b-37 does), keyed scene accept, paired keyed sim runs on batch-cpu and referee, and a ledger read for the frozen envelopes."
+  },
+  {
+   "bead": "N19cx-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The two scene gen calls now carry distinct keys, so the reproducibility check really regenerates. Step 4 (sense symmetry) depends on BD-241, which depends on this bead, so it is now e2e_skip \"needs BD-241\" and the requirement is requested of BD-241's acceptance (drift 7). The group arithmetic (diagonal and heading conjugation, tag counts 2,048 ± 128) was checked."
+  },
+  {
+   "bead": "N19cx-02",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Step 3 generated scenes 'for both addresses' with no verb form. scene.gen now has the world form `--family --address` (exclusive with --seed), keyed and requested of VERBS-scene. Step 5 (phylum reuse) depends on BD-286, which depends on this bead, so it is now e2e_skip \"needs BD-286\" and the requirement is requested of BD-286's acceptance. The left-action and the r·m / m·r examples were checked."
+  },
+  {
+   "bead": "NEG-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Named the registry file. KA-404 holds the 2% tolerance and KA-438 points to it with N38a-12's `same_as` field. The unit tests now have a file and a run command. The windows were recomputed (0.036945–0.038453, 2.216708–2.307186, 0.748139–0.778675 s)."
+  },
+  {
+   "bead": "NS-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applied S66's request: `scene gen --family kitchen-commercial/galley` (BD-227's pairing). The hazard is now the row commercial-kitchen.wet-floor (it was `wet-patch`). No generator parameter forces a hazard, so seed 4 is asserted to draw the row. The dry control is N19a-38's `--param hazards.exclude=commercial-kitchen.wet-floor` with its own keys, and dep N19a-38 was added."
+  },
+  {
+   "bead": "NS-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step e used `--evidence <cut> --apply threshold-ramp`. It now uses N19b-40's --apply form, with the kit instantiated (rise 0.019 m, run 0.228 m, the clear width of door D) plus --at and --scene. The wheel-edge friction √1539/31 = 1.2655 was checked."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.route: add the inputs --margin (clearance margin in metres) and --budget-ms that N19b-34 passes (BD-244's A-18 route check), and name N19b-34 among the beads that implement or extend the row."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.retrofit's Inputs read only 'a failing verdict or a .fmcw; the retrofit catalog'. N19b-40 (handler) and N19b-38/-41/-42/-43 (scripts) use --evidence, --permit, --max-kits, --compare-redesign, --tier, --plan-only, --apply <entry>:<p>=<v>,..., --at <feature>, --scene, --strict-data; list them so the help-schema snapshot matches. scene.compile: add N19b-44's derived source form --base <SceneId> --edits <file> (exclusive with a source path, 802) and name N19b-44 under 'Extended by'."
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "report.mission's 'Pending, uncoded' line: the published-report refusal of a cost comparison built on assumed prices now has a row, retrofit-cost-on-assumed-prices (row 9 of N19c-42, 3xx, exit 3, constant RETROFIT_COST_ASSUMED_PRICES); add it to the chapter refusals of report.mission (raised under --publish by N19b-43)."
+  },
+  {
+   "bead": "N19c-42",
+   "what": "Row 9's trigger says 'a report published under strict data'; N19b-43 makes publishing strict for cost claims (OPEN-HAB-4 blocks any cost claim in a published report, so --publish refuses with or without --strict-data). State that, and give the publish path's second repair as 'report without --publish'."
+  },
+  {
+   "bead": "N19ax-01",
+   "what": "Its script runs `frob scene compile fixtures/hab/self_closing_door.src --seed 5 --json`: BD-163 states scene.compile has no --seed (a compile is a deterministic function of source and settings), and scene.compile is a run verb, so drop --seed and add a --key."
+  },
+  {
+   "bead": "BD-235",
+   "what": "N19c-11's scripts/e2e/scene_groups.sh logs its scene split create/add/check --deep steps as e2e_skip \"needs BD-235\" (BD-235 depends on N19c-11): add to BD-235's acceptance that those steps run and pass, and expose N19c-11's deep check (pairwise fp_coarse under the eight symmetries, Jaccard >= 0.98 -> possible-ungrouped-variant, exit 2) as the --deep option of check. Also still cites FROB-REF-326 (S50 asked)."
+  },
+  {
+   "bead": "BD-225",
+   "what": "N19c-11 and N19c-15 need the generator's mirror flag (role `mirror` in N19c-11's role table): no interior family declares one. Add a `mirror` family parameter (a handedness flip of the layout about its vertical mid-plane, on the coarse lattice, outside the structural key) to warehouse and kitchen-commercial/galley; BD-226 the same for its five families."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run inputs used by N19c-22 and N19c-24: --scenes <set> --schedule fixed|cycle|draw --episodes <n> (the addressed scene schedule of N19c-22), and N19c-20's --co-locate (all of a job's variants in one pool segment); list them and name N19c-22 and N19c-20 under 'Extended by'."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.bank: the row's actions are show/estimate/evict, while BD-236 implements status, estimate, admit (<scene_id|recipe>, --allow-evict), evict (--free), pin and unpin and every bead calls `status`; align the row (S50 asked for admit), and add N19c-20's `status --segments`. scene.split: add the read actions `audit --split S --runs <run-set> [--rule i]` (N19c-13) and `check --deep` (N19c-11)."
+  },
+  {
+   "bead": "BD-241",
+   "what": "N19cx-01's scripts/e2e/scene_family_law.sh step 4 (`frob sense symmetry` on the galley family and the one-sided-film family: the scene clause keeps, respectively removes, the left-right mirror) is logged as e2e_skip \"needs BD-241\", because BD-241 depends on N19cx-01 through N20b-01. Add to BD-241's acceptance that the step runs and passes."
+  },
+  {
+   "bead": "BD-286",
+   "what": "N19cx-02's scripts/e2e/scene_map_address.sh step 5 (`frob phylum reuse` on a mirror-swapped pair: per-address results served only at mapped addresses) is logged as e2e_skip \"needs BD-286\", because BD-286 depends on N19cx-02. Add to BD-286's acceptance that the step runs and passes."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.show: add the family forms of N19cx-01 (`--family <name>`: the descriptor, family_id, declared and effective law groups) and N19cx-02 (`--family <name> --address <seed>:<world>:<episode> [--image <element>]`: the orbit slot, or the mapped address with its certificate, or NoImage as detail with exit 0). scene.gen: add N19cx-02's world form `--family <name> --address <seed>:<world>:<episode>`, exclusive with --seed (802). Name N19cx-01 and N19cx-02 under 'Extended by'."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 42 beads reviewed and every one changed. The main problems round 1 left were drift ones: `frob conformance run` still used in four beads; ADRs under docs/delivery/adr or docs/open; run verbs without keys; invented forms (`fleet send`, `study show`, `scene gen fixture/...`, `compile --seed`); deferred script steps that broke drift 7. There were three design errors: N19c-11's position-free fingerprint, N19c-23's swapped-edit test against N19b-44's canonical order, and N19b-38's resource read. Every addressed request was applied. N19c-28's 24 deps were each checked: all are used by the battery and there is no cycle (graph cycles = 0). The beads look settled apart from the out-of-slice requests."
+}

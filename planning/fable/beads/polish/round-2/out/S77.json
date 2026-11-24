@@ -1,0 +1,333 @@
+{
+ "round": 2,
+ "slice": "S77",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "BD-341",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "request applied: VERBS-opt moved from related to deps. FROB-REF-761 exits 4 (budget, N36-20), not 3: table and script fixed. Acceptance line that made GATE-ATEL-13/16 conditions of this bead (both assembled by BD-349/BD-352, which depend on it) replaced by its own PO-ATEL-04 row recorded with record_gate. Null-race bound stated as a number (42 of 512, the 0.999 quantile, as N28c-28). Script: every opt.start carries --key, distinct per campaign. Also: FROB-REF-545 row (mf-bo with a fidelity rung not selective in the stratum; N28-REF lists opt.start under 545 with no raising site) with its unit test and script fixture."
+  },
+  {
+   "bead": "BD-343",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "requests applied: aligned with N28b-02 (alpha/P with P = ceil(log2 L) + e, scan P = L - 1 + e; labels bracket and no-change with exit 2 instead of inconclusive/refuse-to-start; better-than-good is unchanged; Identical migrations contracted) and --require first-change added to the verb line with --via, --margin, --level, --key. Unit tests and script assertions updated (endpoint probe of v12 makes P = 5). Archive tie order gains EvidenceId as N28b-04 states. VERBS-design moved to deps (the row the verb implements). Background spelling of the predicate aligned (--predicate succeeds --task)."
+  },
+  {
+   "bead": "BD-344",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "request applied: VERBS-predict moved to deps (interim forms of N28cx-01 were already raised). Acceptance line that waited on N28c-18/BD-352 replaced by the counts this bead exposes. no-outcome dispositions carry a reason (next-unbound, target-replanned), so N28c-14's re-planned targets fit the one accounting identity."
+  },
+  {
+   "bead": "BD-351",
+   "kinds": [
+    "correct",
+    "tests",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "requests applied: ValueModel known answers (0.00131, 0.00550 within 1%, exact zero) on the branch N28c-28 selects and branch agreement within 1e-12; frob conformance run replaced by the cargo test / record_gate forms. Acceptance lines and unit tests that needed N28c-13/14/15 and N25c-18 (all depend on this bead) moved to those beads and N28c-16; this bead now tests what it delivers (ranking of measurement records, fallback order). Budget unit gpu_s."
+  },
+  {
+   "bead": "N28b-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "script description uses the verb's spellings (--predicate succeeds --task, --level, --key)."
+  },
+  {
+   "bead": "N28b-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "trial command used --alpha (the verb takes --level) and no key: fixed with --margin 0.1 and a key per trial; probe count is ceil(log2 L) + 1 for fresh lineages (N28b-02); gate recorded with record_gate; mutants built with --features gauntlet-mutations and registered controls."
+  },
+  {
+   "bead": "N28b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "requests applied: frob conformance run --check lineage-merge replaced by an atelier_harness subcommand over N28b-04's absorb; frob gates show replaced by a read-only read of the gates.toml row and receipt plus evidence trace. design.edit spellings (--expected-parent, --key), --level instead of --alpha, predicate and task split, distinct keys per compared bisect run, scratch root per STD-E2E. gate_query reads the receipt read-only."
+  },
+  {
+   "bead": "N28c-13",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "requests applied: A-25 dep is N28a-13 (BD-348 moved to related); frob-conformance run suggest.admit and suggest.pad-replay replaced by the atelier_harness example target."
+  },
+  {
+   "bead": "N28c-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "request applied (predict.refit through atelier_harness). Accounting identity was scored + pending + not-run + voided while BD-344 owns scored + unresolved + pending: aligned, re-planned targets are no-outcome: cancelled with reason target-replanned. Script: --key on every run call, two-finalists fixture through --root instead of a non-existent --fixture option; --from-proposal stated as a common run input requested of NJL-01. Hook 3 for races now reads N28b-08's registered saving prediction (dep N28b-08 added; one registration, not two). Background example carries --key."
+  },
+  {
+   "bead": "N28c-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "requests applied (predict.refit, predict.window-replay through atelier_harness). Band rule had no answer when a cut does not exist (c = 0.95, n = 30: P(X >= 30) = 0.215): stated, with the unit test. Snapshots loaded through --root; experiment suggest called with designs, not --fixture."
+  },
+  {
+   "bead": "N28c-16",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "request applied (suggest.pad-replay through atelier_harness). Took the GATE-AUGUR-11-through-the-verb rows from BD-351 (acceptance line, gate recorded, gates field). Fixtures through --root (no --fixture option exists); KILL-VOI simulated by the scratch registry's DC-05 status fallback-only instead of an invented --core flag; --key on eval compare and eval promote; budget gpu_s."
+  },
+  {
+   "bead": "N28c-17",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request applied (atelier.voi-replay through atelier_harness). ADR at docs/adr/ADR-KILL-VOI-M4.md with N40-03's fields; outcomes named fired/not-fired with GATE-ATEL-15 killed per N40-03. Part two ran frob opt cascade, which this decision does not depend on: replaced by BD-351's finalist loop; the cascade's fallback list is BD-352's check."
+  },
+  {
+   "bead": "N28c-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request applied (predict.refit through atelier_harness). Script used options no row has (sim run --plan-only/--planned, predict register --replace, --idempotency-key, experiment suggest --fixture) and expected frozen: true at registration: rewritten on BD-344's verbs (--for next, --key, freeze set at dispatch, interim 883 refusal, unresolved disposition, identity scored + unresolved + pending). Background example carries --key."
+  },
+  {
+   "bead": "N28b-07",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "mf-bo refusal had no rule or code: a cheaper rung may serve as a fidelity only where it is selective in the campaign's stratum (read through N28b-22's ledger, unmeasured = uninformative, fail-closed), else FROB-REF-545 at admission; acceptance and unit test added; N28b-22 in related. Not-admitted adapters answer FROB-REF-724 as the opt.start row states."
+  },
+  {
+   "bead": "N28b-08",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "stopped_by gains cancelled (used in its own text); saving prediction registered through BD-344 under studio:saving with a first-generation default and interval score; script: opt start with --race, --budget gpu_s=1800, distinct keys for the two seeded runs, opt archive in the registry's spelling."
+  },
+  {
+   "bead": "N28b-09",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request applied: VERBS-opt moved to deps. Design named by --design as in every other opt.start call (row text says positional: requested); script calls carry distinct keys and real sweep/population options."
+  },
+  {
+   "bead": "N28bx-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance waited on scene.retrofit (N19b-40 depends on this bead): replaced by the oracle hook, with N19b-40 asserting its use. Surface gains --key; inputs verdict/max_edits/max_price and FROB-REF-869 requested of VERBS-opt; script variants carry distinct keys."
+  },
+  {
+   "bead": "N28b-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "profiles were applied by session.open --profile, which no row has, and scopes are per registry cluster so cannot narrow arm M to five verbs: harness opens with --scopes/--budget/--key (token refuses with FROB-REF-720) and the N39a-25 agent proxy lists, withholds and filters per profile; acceptance, unit test, script and a negative control (ab-solve given extra budget, moved from BD-372) updated."
+  },
+  {
+   "bead": "N28b-43",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "same --profile fix (withholding by the proxy; scopes stay the full arm's); task clusters overlap, so shared tools are withheld and a verb maps to every cluster it sits in (speed claim if any is effect shown); cluster e-process cited from N28b-11/BD-124 instead of BD-374, which depends on this bead."
+  },
+  {
+   "bead": "BD-374",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "launch order was the plain permutation N28b-11's test rejects as a mutant: now the registered balanced schedule; gate recorded with record_gate; sessions through the proxy with real session.open options; dry run logs arm S's turns and names GATE-TETHER-13 and KILL-SOLVE (moved from BD-372)."
+  },
+  {
+   "bead": "BD-372",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "acceptance waited on the A/B run and the KILL-SOLVE decision (BD-374, N32a-32 depend on it) and claimed the arm's profile (N28b-11's): replaced by the hooks it supplies (single solve:run scope, one child campaign, MCP dry run); solve_arm.sh folded into BD-374's dry run; estimate call carries --key."
+  },
+  {
+   "bead": "BD-373",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance waited on the second arm and closing the gate (N32a-32, not a dependency): first-arm row recorded partial with record_gate, gate closed whole by N32a-32 (dep added there). Unit test's alpha/6 made explicit (0.05/6: bounds 0.0425 at 2, 0.0505 at 3, verified)."
+  },
+  {
+   "bead": "N32a-32",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "ADR moved to docs/adr/ADR-KILL-SOLVE-M4.md with N40-03's fields and outcomes (not-fired/fired/not-reached/deferred); BD-373 added to deps so GATE-TETHER-13 is recorded whole with record_gate, the first arm not marked failed by a firing. Step 1 keeps the clause-1 outcome; the ADR cites N32a-33's measured turn time."
+  },
+  {
+   "bead": "N32a-31",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "kappa of the hand table is 47/63 = 0.746, not 0.75 (an exact assert would fail): fixed in test and known answers; workflow and transcript sources named (N32a-26, N32bx-01, both transitive deps); acceptance that waited on the decision and verb beads replaced by the record written to the pilot register."
+  },
+  {
+   "bead": "N32ap1-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "ADR at docs/adr/ADR-KILL-SOLVE-M4.md with N40-03's fields and outcome; acceptance lines that waited on BD-372 and the A/B registration (both depend on it) restated as what this bead records."
+  },
+  {
+   "bead": "N32a-33",
+   "kinds": [
+    "correct"
+   ],
+   "what": "record moved to docs/adr/ (ADR-OPEN-TETHER-3-M4.md); acceptance that waited on BD-373 and N32a-32 restated as values and findings written where they read them."
+  },
+  {
+   "bead": "N32b-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "script used options no row has or lacked required ones: --mission on nemesis search and eval qualify replaced by the rows' --task/--legality/--claim/--campaign (mission form requested), autopsy intervene given a run fork handle, design edit with unit and --expected-parent, --key on estimate, refute, revalidate and the dry qualify (distinct from the real one), --answer on mission show."
+  },
+  {
+   "bead": "BET-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "effect table is per task cluster (N28b-43), not per registry verb cluster; a verb shows an effect through any of its clusters."
+  },
+  {
+   "bead": "GB-36",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KILL-VOI decision cited as N28a-26, which does not exist: N28c-17. All twelve goldens re-verified."
+  },
+  {
+   "bead": "N20a-36",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "ADR path stated (docs/adr); script commands given keys and row options; --recommend-mount (sense.observability) and --state (eval.compare) requested of their rows."
+  },
+  {
+   "bead": "N20b-36",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "do-not-fund closed the bead as superseded by N20b-38, which depends on it: now closes on the pilot row (inconclusive waits); script opt start with --design, --budget, --key; sense visibility with --motion and --key; the --spec sensing section requested of VERBS-opt."
+  },
+  {
+   "bead": "N20b-37",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "tier target g1 -> g1_known_answers with FROB_TEST_SEED; gate recorded with record_gate; hand-off to N20b-38 stated as what the receipt carries; script calls keyed per arm and state, --state requested."
+  },
+  {
+   "bead": "N20b-38",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "ADR docs/decisions -> docs/adr/ADR-KILL-VISIBILITY-M4.md; N40-30 added to deps (its comparison is an acceptance line; no cycle); GATE-SENS-17 killed by N40-03 propagation on the gate trigger; g0 -> g0_laws; step 1 closes N20b-36/37 citing the pilot row, consistent with its Considerations."
+  },
+  {
+   "bead": "NS-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "bisect in BD-343's form (--good/--bad --predicate succeeds --task --level --key, P = 3, no-change control under its own key); opt start --family with --design and marked optional (N28b-09 related, not a dep)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-opt",
+   "what": "opt.start row: add the refusal foil-as-candidate (N24-REF symbolic, raised by BD-341 through N24c-23's admission function) and the input --override-alias diagnosis (N20a-41's repair of 445, which BD-341 tests). Also: inputs verdict, max_edits, max_price (objective flip-verdict, N28bx-01) and FROB-REF-869; the text 'the design positional' conflicts with --design used by BD-341, N28b-08 and N28b-09. Also: list FROB-REF-545 among opt.start's refusals with its raising site (mf-bo fidelity rung not selective, N28b-07/BD-341); --spec may carry a `sensing` section (N20b-36)."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.bisect row: example uses positional design --from/--to, but the implementing bead BD-343 (and N28b-02/-03/-06) spell --good/--bad; inputs should list --predicate, --task, --margin, --level, --via, --scan-prefix, --assume-monotone, --require first-change, --key."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "add from_proposal (CLI --from-proposal <id>) as a common input of the run kind: N28c-14 freezes a bought proposal's prediction in the admission transaction of whatever run verb the proposal's command names; no row has it."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.promote's refusal list lacks FROB-REF-872, which N28c-12's guard raises on its marked result parameter (and N28c-16 asserts); the generated check of N28c-12 would fail. Also: eval.compare and eval.run lack the plan's evaluation option --state estimated|privileged (§22, used by N20a-35/36, N20b-37); eval.qualify lacks the mission-bound form --mission q:… of the written mission session (§32.16), which N32b-16 replaces with --task/--claim/--campaign."
+  },
+  {
+   "bead": "N25c-18",
+   "what": "budget unit spelled gpu-s; the program and VERBS-opt use gpu_s (also N28c-09)."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.search: the written mission session (§32.16) calls it with --mission q:…; the row has only --task and --legality. Add the mission-bound form or confirm the row (N32b-16 uses the row's spelling)."
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "sense.observability: add the input --recommend-mount <sensor> (the placement score, N20a-36, while its kill rule reads keep) and list N20a-36 among the implementing beads."
+  },
+  {
+   "bead": "N40-03",
+   "what": "step 6 still names the retired docs/delivery/adr/ directory; KNOWN_DRIFTS item 4 and every decision bead use docs/adr/ADR-<gate>-<milestone>.md."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "All 35 beads read in full against the plan, the brief and KNOWN_DRIFTS; all slice requests (rounds 1 and 2) applied. Main finds beyond round 1: acceptance lines waiting on dependents (BD-372, BD-373, N28bx-01, N32ap1-01, N32a-31, N32a-33, N20b-36, N20b-37); the A/B arms applied through a session.open --profile option that does not exist, with scopes too coarse to restrict tools (now token scopes plus the N39a-25 proxy); overlapping task clusters in the ablation table; BD-374's launch order equal to N28b-11's rejected mutant; a nonexistent bead (N28a-26) and kappa 0.75 vs 47/63; ADR paths and tier names; options absent from rows (--mission, --state, --recommend-mount, --profile, --fixture). Deps added: N28c-14 +N28b-08, N32a-32 +BD-373, N20b-38 +N40-30, N28b-09 +VERBS-opt (moved); no cycles. Open items are the requests (option spellings in VERBS rows); otherwise the slice looks settled."
+}

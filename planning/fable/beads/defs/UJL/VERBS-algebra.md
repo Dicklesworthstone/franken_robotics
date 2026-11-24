@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "tether", "marrow", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-06"
-deps: ["BD-022", "NJL-01", "NJL-02", "STD-E2E"]
+deps: ["BD-022", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []
-related: ["BD-048", "N13-14", "BD-049", "BD-137", "NJL-03", "NJL-04", "NJL-05"]
+related: []
 gates: ["GATE-TETHER-02"]
 plan_refs: ["Appendix J (J.1, J.2, J.3, J.5)", "§13.5", "§13.6", "§32.6", "§32.12.3", "§32.21 (GATE-TETHER-02)"]
 ---
@@ -18,8 +18,9 @@ FrankenRobotics (a robotics simulation and design system) is reached through the
 `frobd` and the MCP server `frob-mcp` (the Model Context Protocol, by which an agent harness lists and calls tools).
 Every capability is a verb, `cluster.verb`, declared once in `registries/verbs.toml` (crate `frob-verbs`, tier
 Solid). The CLI, the daemon protocol, the MCP tools, the schemas, the refusal table and the agent guide are
-generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 243 verbs
-in 44 clusters (namespaces).
+generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 244 verbs
+in 44 clusters (namespaces): the 243 of the specification and `artifact.import` (VERBS-artifact); the
+count of record is NJL-03's.
 
 This bead is the registry of record for the cluster `algebra`. The cluster covers finite-group computations used by
 symmetry analysis: isotypic decomposition of a representation, and orbit counts with canonical representatives. It
@@ -36,7 +37,7 @@ gate), M Moonshot; `S/F` is a Solid core with Frontier extensions.
 DESIGN: a registry bead per cluster exists beside the implementing beads because a row missing from the registry,
 spelled twice, or served with different refusal lists on the CLI and over MCP is a surface defect that no mechanism
 test catches. Rejected: rows left to the implementing beads alone (nothing checks their union against the
-inventory); one bead for all 243 rows (too large to review).
+inventory); one bead for all the rows (too large to review).
 
 ## Scope
 
@@ -51,7 +52,7 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
 
 | Verb | Kind | First milestone | Tier | Purpose | Defined in |
 |---|---|---|---|---|---|
-| `algebra.irreps` | read | M1 | S | Isotypic decomposition and block types | §13.5 |
+| `algebra.irreps` | read | M1 | S/F | Isotypic decomposition and block types | §13.5 |
 | `algebra.orbits` | read | M1 | S | Orbit counts and one canonical representative per orbit | §13.6 |
 
 **Contract of each verb.** Evidence labels used below (the `evidence` block of the envelope):
@@ -59,20 +60,47 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
   attached; `reality: no-claim`.
 
 **`algebra.irreps`** (MCP tool `algebra_irreps`; owner `frob-algebra`)
-- Inputs: a finite group (name or generators) and a representation.
-- Outputs: the isotypic decomposition, block types (real, complex), the free-parameter count of equivariant maps.
-  Evidence: *static*.
+- Inputs: a group source, one of: a family positionally or by `--family` (C1 to C12, D1 to D12, each optionally
+  `xC2`, or S4, with its standard action); explicit signed-permutation `generators`; or a design and a task
+  (`--design <id> --task <task>`: the stored Γ_obs; `--group mech` gives Γ_mech, labelled as not licensed for
+  weight tying). Two channel spaces `--in` and `--out` (explicit signed permutations, `natural`, `permutation:n`,
+  `regular`, `regular*k`, or a named channel space of the bound model: joint positions, joint velocities,
+  actions, an observation term), or `--rep` for one space. From M4, under the feature `frontier-wreath` (N13-26,
+  Frontier, pilot N13-25), `--nested` with a design and a task: nested weight tying by the wreath product K ≀ H
+  (each limb's own group K, the hub's group H on the slots X), computed from generators and never enumerated.
+- Outputs: group order, generators, class sizes, the character table as exact strings; per space its constituents
+  (character, degree, type `real` or `complex`, conjugate, multiplicity, real dimension); `free_parameters` of
+  equivariant maps (dim Hom = Σᵢ cᵢ·mᵢ^out·mᵢ^in, cᵢ = 1 for real and 2 for complex type), the unconstrained and
+  bias counts, the Reynolds rank cross-check, `group_kind` (`obs`, `mech`, `declared`, `family`); `next_actions`
+  pointing to `analyze.symmetry` when a design is given without a task. With `--nested`: the flat count, the
+  nested count, their ratio, the nested order by the formula |K|^|X|·|H|, and the two port conditions (every limb
+  automorphism preserves the limb's attachment port; the hub action preserves the decorated ports), each with
+  pass or fail and the field path of a failure; when a condition fails the flat group's count is returned with
+  the failed condition named. Evidence: *static* (`Certified` when the orthogonality certificate is attached); a
+  nested symmetry is `Tested` (N13-26's simulator equivariance test) unless a certificate establishes it.
 - Chapter refusals: `FROB-REF-214` (a representation with a constituent of quaternionic type, or a symmetry group
-  outside the supported families).
-- Implemented by: BD-048, N13-14.
+  outside the supported families: order above 256, or generators that do not close inside the cap);
+  `FROB-REF-215` (an exact host computation over its declared size; returned with the expression, the input sizes
+  and the budget).
+- Implemented by: BD-048, N13-14 (the verb); exercised end to end over the gate set by N13-20; extended by
+  N13-26 (`--nested`, M4, Frontier: if its pilot N13-25 or its own equivariance test falsifies the mechanism, the
+  option is dropped without replacement and flat Γ_obs tying is unaffected).
 
-**`algebra.orbits`** (MCP tool `algebra_orbits`; owner `frob-algebra`)
-- Inputs: a finite group acting on a set.
-- Outputs: orbit counts (Burnside) and one canonical representative per orbit. Evidence: *static*.
-- Chapter refusals: `FROB-REF-214` (a representation with a constituent of quaternionic type, or a symmetry group
-  outside the supported families); `FROB-REF-215` (an exact evaluation whose bit budget exceeds its cap: a guarded
-  predicate over 256 bits at build time).
-- Implemented by: BD-049.
+**`algebra.orbits`** (MCP tool `algebra_orbits`; owner `frob-algebra`; paginated over representatives)
+- Inputs: a group source as for `algebra.irreps` (family positionally or by `--family`, generators, or a design
+  and a task); the slots, by `--slots <n>` with an optional `--action <name>` (`sagittal` for the left-right
+  mirror of paired slots) or by `--set <name>:<n>` (`feet`, `legs`, `wheels`; `feet` defaults to k = 3); `--types
+  k`; optional `--representatives` with `limit` and `cursor`; optional `--lattice` (subgroups up to conjugacy and
+  the (H, K) pairs with H/K cyclic); optional `--transitions`. The positional, `--family`, `--slots` and `--set`
+  forms build the same input document, echoed in `bound`.
+- Outputs: `raw` (kⁿ), `orbits` (Burnside: |Γ|⁻¹·Σ_g k^c(g), c(g) the number of cycles of g on the slots),
+  `factor`, `bound` (|Γ_obs|), `group_order`, `group_kind`, `cycle_index`, a page of canonical representatives with
+  `orbit_size`, and, for a group resolved from a design, a warning giving the count the mechanical group would
+  give. Evidence: *static*.
+- Chapter refusals: `FROB-REF-214` (a symmetry group outside the supported families, or closure beyond 256
+  elements); `FROB-REF-215` (an exact host computation over its declared size: the numerator Σ_g k^c(g) over its
+  declared 65,536 bits, checked before any arithmetic).
+- Implemented by: BD-049; its conformance battery and end-to-end script are N13-17's.
 
 **Machine fields of each row.**
 
@@ -85,7 +113,7 @@ The remaining fields follow by rule: `input_schema` is `frob.<verb name>.in/1`; 
 the verb's block; `idempotent` is `true` for `read` and `admin` and `false` for `run` and `mutate` (which take an
 idempotency key); `cost_model` is `static: …` for `read`, `mutate` and `admin` and the `--estimate` cost model for
 `run`; a `run` row carries `wait = { cli = "to-completion", mcp_ms = 5000, mcp_max_ms = 30000 }`; `owner` is the
-crate of the block; `purpose` is the Purpose column.
+crate of the block; `purpose` is the Purpose column; `paginated = true` where the block says paginated.
 
 One entry in full (the others follow field for field):
 
@@ -98,7 +126,7 @@ tier = "S"
 capabilities = ["algebra:read"]
 input_schema = "frob.algebra.irreps.in/1"
 output_schema = "frob.algebra.irreps.out/1"
-refusals = ["FROB-REF-214"]
+refusals = ["FROB-REF-214", "FROB-REF-215"]
 idempotent = true
 cost_model = "static: answered from the store or by a small CPU computation; no job"
 first_milestone = "M1"
@@ -114,21 +142,45 @@ purpose = "Isotypic decomposition and block types"
    `frob.envelope/1` with `result` specialized to the output schema; its `evidence` block is a claim product (the
    weakest class, tier and determinism class among the inputs).
 2. The generator adds the common input properties of the kind (`run`: `sync_wait_ms` from 0 to 30,000 with MCP
-   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel`; `mutate`: `idempotency_key`,
-   `expected_parent`) and appends the surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid),
-   724 (not implemented in this build) and 802 (schema failure, including an unknown parameter) for every verb; 701
-   to 704 (budget and admission), 803 (key reused with different content) and 805 (missing key) for `run`; 725, 803,
-   804 (stale parent) and 805 for `mutate`; 806 and 807 for paginated reads; 808 for an out-of-range integer.
+   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel` (`leave`, the default, or
+   `cancel_job`) and `envelope_scope` (`--envelope-scope <gate:…|campaign:…|pretrain:…>`: the approved compute
+   envelope scope the job cites; its schema, its place in the scope order and its refusals are NJL-01's);
+   `mutate`: `idempotency_key`, `expected_parent`). `idempotency_key` is in no JSON-schema `required` array: the
+   annotation `x-frob-key` (`"required"`, or `"optional"` on a `key_optional` entry) carries the rule, and a
+   missing key is refused with 805 by the admission transaction on both surfaces. The generator appends the
+   surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid), 724 (not implemented in this
+   build) and 802 (schema failure, including an unknown parameter) for every verb; 701 to 704 (budget and
+   admission), 761 (above the compute envelope in force), 803 (key reused with different content) and 805
+   (missing key) for `run`; 725, 803, 804 (stale parent) and 805 for `mutate`. The other properties and codes are
+   added by field, as the variation table of NJL-01 lists them (that table is the one list; its variations 10
+   to 16, which later beads land, are read there and not copied here): 806 and 807 for paginated reads; 808 (an
+   integer outside ±(2⁵³ − 1)) for an entry whose generated input schema has an `int53` property and for no
+   entry by kind (every `run` entry has one in `sync_wait_ms`, every paginated entry in `limit`); a
+   `key_optional` entry is not given 805; a non-`run` entry with `estimable = true` gets `estimate_only`; 790
+   for a non-empty `needs_groups`; 891 to 893 for artifact `params`; 734 and 828 for a parameter that accepts a
+   path to a file (`artifact-input<F>`, `artifact-identity<F>`, `foreign-file`).
 3. Exit codes: 0 done; 2 done with findings; 3 refused input (1xx to 5xx, and 8xx other than conflicts); 4 budget
-   (70x); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
+   (70x and 761); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
    indeterminate; never 1 on purpose.
-4. Rows are entered when the cluster is first registered (M1). Until its own milestone a verb answers one envelope
-   with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json` lists it as absent.
+4. Rows are entered when the cluster is first registered (M1); each row's tool is added to the task-cluster
+   tables its `task_clusters` names in the same change (NJL-05's staging rule). A verb whose handler is not in
+   the build answers one envelope with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json`
+   lists it as absent; a reduced form that lands before the row's `first_milestone` answers and is listed as
+   implemented with its form named (NJL-01, NJL-03: the field keeps the appendix's milestone).
 
 **Notes for this cluster.**
 
 - A representation with a constituent of quaternionic type, or a group outside the supported families, is refused
-  (`FROB-REF-214`).
+  (`FROB-REF-214`); an exact computation over its declared size is refused (`FROB-REF-215`) on both verbs.
+- `algebra.orbits` is paginated (`paginated = true`: `cursor`, `limit`, `follow`, codes 806 and 807), because its
+  representatives come in pages.
+- `algebra.irreps` is printed `S/F`: a Solid core with one Frontier extension (`--nested`, M4). It is registered
+  with `tier = "S"`, because the field takes one of S, F, M; `frob capabilities` lists the extension with its
+  pilot N13-25 when the feature `frontier-wreath` is in the build. Until N13-26 lands, `--nested` is an unknown
+  parameter (`FROB-REF-802`, exit 3); its arrival is an additive change to the input and output schemas.
+- The two examples parse against the implementing beads' forms: `frob algebra irreps C2xC2 --rep permutation:4`
+  (four real constituents, `free_parameters` 4; N13-14) and `frob algebra orbits C2xC2 --set feet:4` (27 contact
+  strata; BD-049 accepts `--set` beside `--family D6 --slots 6 --types 10`, which N13-17 drives).
 
 ## Acceptance criteria
 
@@ -147,7 +199,7 @@ purpose = "Isotypic decomposition and block types"
       verb runs its registry example with the result its implementing bead specifies; a misspelt parameter is
       `FROB-REF-802`, exit 3.
 - [ ] The generated refusal table lists for each verb exactly its chapter codes plus the codes appended for its
-      kind, and every code exists in `registries/refusals.toml`.
+      kind and fields (NJL-01), and every code exists in `registries/refusals.toml`.
 - [ ] The gate row is recorded with the measured counts by a session that did not write the rows.
 
 ## Test plan
@@ -159,11 +211,14 @@ strings labelled `synthetic`):
 - `rows_present`: exactly 2 rows in the cluster, with the names of the rows table; a planted extra row or a removed
   row fails.
 - `kinds_milestones_tiers`: each row's kind, first milestone and tier equal the rows table (for example
-  `algebra.orbits` is `read` at M1).
+  `algebra.orbits` is `read` at M1), a row printed `S/F` being registered `S` (`algebra.irreps`).
 - `schemas_and_scopes`: input schemas are `frob.<name>.in/1`; output schemas and capabilities equal the
   machine-fields table.
-- `refusal_lists`: each row's chapter codes equal its block (`algebra.irreps`: 214; `algebra.orbits`: 214, 215); the
-  appended codes equal the rule for its kind.
+- `refusal_lists`: each row's chapter codes equal its block (`algebra.irreps`: 214, 215; `algebra.orbits`: 214,
+  215); the appended codes equal the rule for its kind and fields (`algebra.orbits` also 806 and 807, and
+  808 through its `int53` inputs `limit`, `slots` and `types`).
+- `examples_known_answers`: the two registry examples, run through the real binary, return `free_parameters` 4 and
+  `orbits` 27.
 - `mcp_names_one_to_one`: the tool names are the mapped names (`algebra_irreps`, `algebra_orbits`), with no
   collision against any other cluster.
 - `task_clusters_and_examples`: every row sits in a task cluster of at most seven tools or is a base tool; each

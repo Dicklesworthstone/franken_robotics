@@ -1,0 +1,591 @@
+{
+ "round": 4,
+ "slice": "H-owners-3",
+ "reviewed": 4,
+ "changed": [
+  {
+   "bead": "NJL-01",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Added `envelope_scope` (`--envelope-scope`, convention 14) as the sixth `run` common property with schema, scope order, the 761 contradiction with pointer /envelope_scope and its DESIGN reason; 704 and 761 restated by raising site (line 161 said 704 was only the scheduler's code at dispatch, contradicting N32-REF row 704 and convention 14); estimate block gains optional `role` and `preferred_machines` (N21c-07, BD-219); dep N34-REF added (variations 7 and 8 append 891-893, which would not resolve under RL-06 without it). Variation table: row 1 uses N32a-02's action member `paginated` (RL-23) and is read-only, with the reason; row 9 cites N34-24's decision; row 12 is `machine-not-local`, 6xx, exit 6, through N41-12's MACHINE_NOT_LOCAL; row 13 cites N32ax-02's named constants (6xx, exit 6) and N32a-02's later field `engines`; new rows 14 (`memo` -> `no_memo`, BD-111), 15 (reality guard codes 814/816/819/873/889/895/897 for `reports = true` and artifact readers, BD-139), 16 (N32ax-01's admission-check arm, `derive_admission_check_arm`). New staging rule for codes whose registry lands later (H-verbs-4), with 734/828 appended only once N37-REF enters them. The 724 rule extended to declared options (H-verbs-7). Two-kind list now nine rows beyond the plan's three (spark.check, task.check, eval.ledger, scene.split added), with the `[counts]`/NJL-03 rule; action rule 1 states `--action <name>` with no per-action flag or positional word and its reason. `destructive` reads N32a-02's action member; RL-11 wired here with `rl11_description_801_chars_caught`; `common-property-shadowed` also refuses `--help` and reads the schema after `conformance_only` removal. Convention 13: removed 'requested of N32a-02 / until it does', 'as VERBS-spark requests', 'whose number … has not yet issued', 'a field requested of N32a-02's table', 'requested by the shield rows', 'requested of VERBS-session and N32bx-01', '(requested there)'. Counts: LATE_ROWS thirteen; the two '243' counts replaced (NJL-03 holds the count). Tests: six run properties, `envelope_scope_schema`, `paginated_read_action`, `appended_only_when_entered`, `help`/`envelope_scope` shadow cases, `rl11_description_801_chars_caught`; two acceptance criteria."
+  },
+  {
+   "bead": "STD-E2E",
+   "kinds": [
+    "request",
+    "convention",
+    "users"
+   ],
+   "what": "Added helper 17 `e2e_session` (grant: writes `[principal.<id>]` into the run's `safety.toml` before frobd starts, mode 0600, harness error once the daemon is live or the table exists; open: root `session open` with `e2e_key`, no token in its environment, token kept in `state/sessions/<label>.token` and redacted to `<token:…>` through `frob-e2e run --secret /result/token`, exports FROB_SESSION_TOKEN; use: switch agents; skips before tokens or `session.open` exist), redaction rule 5, the token canary control `st_token_leak`, unit tests and an acceptance criterion. Fixture references now name N34p3-01 (M0) as the resolver, with its grammar (optional trailing `/`, 255 bytes), `bound.fixtures` (BLAKE3, never compared with e2e_fixture's SHA-256) and its refusal `fixture-reference-unresolved` (802, exit 3, the six `observed` forms); related adds N34p3-01, N37-02, N32b-01, BD-025. `frob-e2e` declared as `[[bin]]` with explicit name and path (BD-025's `autobins = false`; without it the tool would not build) plus its CONTRACT.md row, in Files, Scope and an acceptance criterion. Convention 13: the 'rounds 1 and 2 … 510 commands' and 'Both are requested of the beads that use them' notes restated as rules."
+  },
+  {
+   "bead": "STD-TEST",
+   "kinds": [
+    "request"
+   ],
+   "what": "RelationRow gains optional `generated_from` (N38a-14); Counterexample gains optional `due` and states `plant` as a list of `Plant { id, kind, target, defect, expect, gates, feature, fixture }` with `id` required and the plain-string one-plant short form (N38b-05). Tests `relation_mutation_table_or_array` and `counterexample_fields` extended. Without this, the loader's unknown-field rule would refuse N38a-14 and N38b-05 records carrying these fields."
+  },
+  {
+   "bead": "NJL-05",
+   "kinds": [
+    "users"
+   ],
+   "what": "No requests. Considerations: the `run` input schemas now carry six common properties (`envelope_scope` added by NJL-01), not five, in the 12 kB budget risk note. Checked: every one of the 244 registered verbs is seated (241 in clusters plus 3 base tools); cluster sizes agree with the table."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "NJL-09",
+   "what": "ANSWER: (request of slice F-UJL to NJL-01, item 2, the action spelling) NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Write `frob eval ledger --open …` as `frob eval ledger --action open …` (and `--action close`, `--action seal`), with the name `--seal` carried as the seal action's own input property in VERBS-eval's row."
+  },
+  {
+   "bead": "ART-L7",
+   "what": "ANSWER: (request of slice F-UJL to NJL-01, item 2, the action spelling) NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Write `frob eval ledger --open …` as `frob eval ledger --action open …` (and `--action close`, `--action seal`), with the name `--seal` carried as the seal action's own input property in VERBS-eval's row."
+  },
+  {
+   "bead": "ART-L9",
+   "what": "ANSWER: (request of slice F-UJL to NJL-01, item 2, the action spelling) NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Write `frob eval ledger --open …` as `frob eval ledger --action open …` (and `--action close`, `--action seal`), with the name `--seal` carried as the seal action's own input property in VERBS-eval's row."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "ANSWER: (request of slice H-verbs-3 to NJL-01, item 1, options of a non-release feature) the present form holds and is the one this bead already writes: `conformance_only = [\"transport_unchecked\"]` (N32a-02's field, lint RL-24). N32a-02's build script removes the property from the embedded input schema of every build of `frob-verbs` without its feature `conformance` before anything is generated, so the release schema, the help snapshot and the bidirectional option check never see it and a release build answers it 802; NJL-01's `common-property-shadowed` reads the schema after that removal. One condition to state with BD-288: the frob-mission feature `test-switches` must be enabled exactly when `frob-verbs/conformance` is (both through `gauntlet-mutations`), so that the schema and the handler agree."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "ANSWER: (request of slice H-verbs-3 to NJL-01, item 2, `same_engine_as`) the field is an entry-schema field and so N32a-02's, not NJL-01's: NJL-01 derives no input property and no code from it. Keep `same_engine_as = \"result.revalidate\"` (and the converse on result.revalidate) as written, landed by N28c-29 at M3 through N32a-02's later-field table; the request for that row has gone to N32a-02."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "From NJL-01 (round 4): add four rows to the later-field table and one top-level table, each with its bead and lint: (1) `memo` (bool, default false; the entry's executor is fronted by the memo graph; added by BD-111 at M1; lint: not on an `admin` entry) drives NJL-01's variation 14, which adds `no_memo` (`--no-memo`); (2) `reports` (bool, default false; a report surface; added by BD-139 at M1, whose `xtask check-generated` already reads it) drives variation 15 with the reality guard's codes 814, 816, 819, 873, 889, 895, 897; (3) `same_engine_as` (string naming a registered verb that names this one back; added by N28c-29 at M3, asked by VERBS-mission for mission.revalidate and result.revalidate; NJL-01 derives nothing from it); (4) the top-level table `[[admission_check]]` (N32ax-01, M2) among the tables the strict reader admits, from N32ax-01's change (variation 16)."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "From NJL-01 (round 4): the paragraph on verbs with two kinds lists seven cluster rows beyond the plan's three; the registry has nine: add `eval.ledger` (default `read`; actions `open`, `close`, `seal`, VERBS-eval) and `scene.split` (default `create`, a `mutate`; actions `add`, `move-group` (mutate, `scene:write`) and `show`, `check`, `part-of`, `audit` (read, `scene:read`), VERBS-scene). NJL-01 now lists all nine."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "From NJL-01 (round 4): variation 1 applies to the `read` kind only (a second call of a run, mutate or admin verb with a cursor would be a second job or change, not the next page). RL-23 refuses `paginated` on a non-read action; extend it (or RL-08) to refuse entry-level `paginated = true` on an entry whose default action is not `read`. Today solve.run (`run`) carries it; VERBS-solve has been asked to drop it."
+  },
+  {
+   "bead": "BD-111",
+   "what": "From NJL-01 (round 4, answering F-U28b, F-U33a, F-U33b): `no_memo` is now NJL-01's variation 14, driven by the entry field `memo = true`, which lands with this bead at M1. In this bead's change: add `memo` to N32a-02's later-field table with its lint; write the arm in `crates/frob-verbs/src/registry/derive.rs` (`no_memo`, boolean, default false, CLI `--no-memo`: nothing served from the memo graph in any store mode, every node computed and still stored, memo disposition `NoMemo`; no code appended) with its test (for example `memo_field_adds_no_memo`: an entry with `memo = true` has `no_memo`, one without has none); and set `memo = true` on every row whose executor the wrapper fronts (at least design.check, design.show, sim.run, eval.run, eval.compare, study.submit, train.start), removing from those rows any `no_memo` of their own, or NJL-01's `common-property-shadowed` fails them."
+  },
+  {
+   "bead": "BD-139",
+   "what": "From NJL-01 (round 4, answering F-U30a): the reality guard's codes are NJL-01's variation 15, driven by `reports = true` or by a `params` parameter of kind `artifact-input<F>`, `artifact-ref<F>` or `artifact-identity<F>`; it appends 814, 816, 819, 873, 889, 895 and 897. It lands with this bead (M1): add `reports` to N32a-02's later-field table with its lint, and write the arm in `derive.rs` with its test (for example `reality_guard_codes_appended`: a `reports = true` entry and an `artifact-input<F>` reader get the seven; a `read` with string inputs only does not). The rows that already list some of the seven keep them; the full list is a set."
+  },
+  {
+   "bead": "N32ax-01",
+   "what": "From NJL-01 (round 4, answering F-U32a-2): the admission-check arm is now row 16 of NJL-01's variation table, landing with this bead (M2) with the test `derive_admission_check_arm`. State it as that row instead of '(requested of NJL-01: a row for this arm in its variation table…)' (convention 13), and 'not one of the five common properties of kind `run`' becomes six (NJL-01 added `envelope_scope`)."
+  },
+  {
+   "bead": "N36-20",
+   "what": "From NJL-01 (round 4, convention 14): every `run` verb now has the common input `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`; `adhoc` and any other form are 802; no citation means `adhoc`). Replace 'A run verb has no scope input: the common inputs … are the idempotency key, the budget, the synchronous wait, `--estimate` and `on_cancel`' with the six inputs and the order token, citation, derived scope, `adhoc`; a citation that contradicts the launcher token's scope is 761 with `pointer: /envelope_scope`, `observed` the cited scope, `required` the token's; drop the OPEN item in Considerations, which the lead settled. `Demand.scope` takes the cited scope in second place."
+  },
+  {
+   "bead": "BD-022",
+   "what": "From NJL-01 (round 4): add two rows to the flag table: `--envelope-scope <gate:…|campaign:…|pretrain:…>` (`run`; the approved envelope scope the job cites, convention 14) and `--no-memo` (an entry with `memo = true`, BD-111 from M1; NJL-01 variation 14). The parser takes both from `entry.common_properties()`; the table is the printed copy."
+  },
+  {
+   "bead": "BD-023",
+   "what": "From NJL-01 (round 4): the `input_schema` row says `run` adds `sync_wait_ms`, `idempotency_key`, `budget`, `estimate_only`, `on_cancel`; add `envelope_scope` (sixth, after `on_cancel`)."
+  },
+  {
+   "bead": "NJL-02",
+   "what": "From NJL-01 (round 4): the variation table now has sixteen arms (14: `memo = true` adds `no_memo`, BD-111, M1; 15: `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897, BD-139, M1; 16: `[[admission_check]]` rows add `admission_checks` and `diagnostic_override` and append the checks' codes, N32ax-01, M2); the `run` common properties are six (`envelope_scope`, `--envelope-scope`, after `on_cancel`); the additive examples of the snapshot classification can add `envelope_scope`, `no_memo` and `diagnostic_override`. LATE_ROWS: NJL-01 now says thirteen, as NJL-02 does."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: eval.ledger: `--open|--close|--seal` becomes `--action open|close|seal`; the seal name a flag carried is the seal action's own input. Also: the three actions are `admin`, which adds no idempotency key, yet the row says each takes its own key: make them `mutate` actions (they create and change named ledger records; they then get `idempotency_key`, `expected_parent` and 725, 803, 804, 805) or drop the key. Users: BD-259, BD-260, BD-261, BD-312, BET-21, N24a-34, N24b-10, N24b-15, N24b-17, N24b-23, N24b-24, N32b-37, NS-17, ART-L7, ART-L9, NJL-09."
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: task.check: `--coupling` becomes `--action coupling` (a `run` action, so it carries `--key`). Users: BD-262, N24c-37, N24c-38, N24c-40, N24c-41, N24cp1-02."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: spark.cache: `--evict <key>|--evict-to <bytes>|--evict-all` becomes `--action evict` with the target as inputs of the evict action (named so that no flag is `--key`); spark.check: `--list` becomes `--action list`. Users: BD-173, N21b-13, N21c-17 (cache); BD-152, BD-158, BD-221, N17b-02, N17b-26, N21a-04, N21a-18, N21a-22 (check)."
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: sense.symmetry: `--test` becomes `--action test` (a `run` action, with `--key`). Users: BD-241, N20b-03, N20b-19."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: design.diff: `--run-control` becomes `--action run-control` (a `run` action, with `--key`). User: N28c-44."
+  },
+  {
+   "bead": "VERBS-ground",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: ground.band: the row already writes `--action retire`; its users N30a-43, N30b-10 and N32bx-02 still write `--retire` and have been asked to change."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: nemesis.hardset: the action words `add`, `retire`, `run`, `carry` become `--action add|retire|run|carry`; the default (show) is the call with no `--action`. Users: N15a-28, N26a-16, N26a-20, N26b-23, N38a-21, NS-15."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "From NJL-01 (round 4, settling F-UJL item 2): NJL-01 action rule 1 holds: the action of an entry with an `actions` list is selected on the command line only with `--action <name>` (the input property `action`, by BD-022's kebab rule; N32a-11 maps it with no exception); absent, the default action runs, and the default has no name of its own to pass. There is no per-action flag (`--open`, `--coupling`, `--retire`, `--evict`, `--list`, `--test`, `--run-control`) and no action word in a positional place (`scene bank admit`, `nemesis hardset add`). A value a per-action flag carried becomes an ordinary input property of that action, named by the row (not `key`, whose flag `--key` is the idempotency key's). Reason: ADR-TETHER-01 forbids per-verb code in `frob-cli`, and BD-022 derives every flag from an input property, so a second spelling would exist on one surface only. Restate the row and its examples: scene.bank: `admit`, `evict`, `pin`, `unpin`, `estimate` become `--action <name>` with the scene ids as positional inputs (`frob scene bank --action admit <scene_id>… --device D`); `scene bank show` is `scene bank` (the default has no name to pass). scene.split: `add`, `move-group`, `show`, `check`, `part-of`, `audit` become `--action <name>`; `scene split create` is `scene split`. Users: BD-235, BD-236, N19c-11, N19c-13, N19c-14, N19c-15, N19c-20, N19c-21, N19c-22, N19c-23, N19c-24, N19c-25, N19c-42, N24a-31, BD-253."
+  },
+  {
+   "bead": "BD-259",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "BD-260",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "BD-261",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "BD-312",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "BET-21",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "N24a-34",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "N24b-10",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "N24b-15",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "N24b-17",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "N24b-23",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "N24b-24",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "N32b-37",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "NS-17",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob eval ledger --open …` (and `--close`, `--seal`) is `frob eval ledger --action open …` (`--action close`, `--action seal`), as VERBS-eval restates it."
+  },
+  {
+   "bead": "BD-262",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob task check <family> --coupling …` is `frob task check <family> --action coupling --key <k> …`."
+  },
+  {
+   "bead": "N24c-37",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob task check <family> --coupling …` is `frob task check <family> --action coupling --key <k> …`."
+  },
+  {
+   "bead": "N24c-38",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob task check <family> --coupling …` is `frob task check <family> --action coupling --key <k> …`."
+  },
+  {
+   "bead": "N24c-40",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob task check <family> --coupling …` is `frob task check <family> --action coupling --key <k> …`."
+  },
+  {
+   "bead": "N24c-41",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob task check <family> --coupling …` is `frob task check <family> --action coupling --key <k> …`."
+  },
+  {
+   "bead": "N24cp1-02",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob task check <family> --coupling …` is `frob task check <family> --action coupling --key <k> …`."
+  },
+  {
+   "bead": "BD-173",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark cache --evict …` (`--evict-to`, `--evict-all`) is `frob spark cache --action evict …` with the evict action's inputs as VERBS-spark names them."
+  },
+  {
+   "bead": "N21b-13",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark cache --evict …` (`--evict-to`, `--evict-all`) is `frob spark cache --action evict …` with the evict action's inputs as VERBS-spark names them."
+  },
+  {
+   "bead": "N21c-17",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark cache --evict …` (`--evict-to`, `--evict-all`) is `frob spark cache --action evict …` with the evict action's inputs as VERBS-spark names them."
+  },
+  {
+   "bead": "BD-152",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "BD-158",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "BD-221",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "N17b-02",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "N17b-26",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "N21a-04",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "N21a-18",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "N21a-22",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob spark check --list` is `frob spark check --action list`."
+  },
+  {
+   "bead": "BD-241",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob sense symmetry … --test` is `frob sense symmetry … --action test --key <k>`."
+  },
+  {
+   "bead": "N20b-03",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob sense symmetry … --test` is `frob sense symmetry … --action test --key <k>`."
+  },
+  {
+   "bead": "N20b-19",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob sense symmetry … --test` is `frob sense symmetry … --action test --key <k>`."
+  },
+  {
+   "bead": "N28c-44",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob design diff A B … --run-control` is `frob design diff A B … --action run-control --key <k>`."
+  },
+  {
+   "bead": "N30a-43",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob ground band … --retire` is `frob ground band … --action retire`, as VERBS-ground writes it."
+  },
+  {
+   "bead": "N30b-10",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob ground band … --retire` is `frob ground band … --action retire`, as VERBS-ground writes it."
+  },
+  {
+   "bead": "N32bx-02",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob ground band … --retire` is `frob ground band … --action retire`, as VERBS-ground writes it."
+  },
+  {
+   "bead": "N15a-28",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob nemesis hardset add|retire|run|carry …` is `frob nemesis hardset --action add|retire|run|carry …` (each a `run` action, with `--key`)."
+  },
+  {
+   "bead": "N26a-16",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob nemesis hardset add|retire|run|carry …` is `frob nemesis hardset --action add|retire|run|carry …` (each a `run` action, with `--key`)."
+  },
+  {
+   "bead": "N26a-20",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob nemesis hardset add|retire|run|carry …` is `frob nemesis hardset --action add|retire|run|carry …` (each a `run` action, with `--key`)."
+  },
+  {
+   "bead": "N26b-23",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob nemesis hardset add|retire|run|carry …` is `frob nemesis hardset --action add|retire|run|carry …` (each a `run` action, with `--key`)."
+  },
+  {
+   "bead": "N38a-21",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob nemesis hardset add|retire|run|carry …` is `frob nemesis hardset --action add|retire|run|carry …` (each a `run` action, with `--key`)."
+  },
+  {
+   "bead": "NS-15",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob nemesis hardset add|retire|run|carry …` is `frob nemesis hardset --action add|retire|run|carry …` (each a `run` action, with `--key`)."
+  },
+  {
+   "bead": "BD-236",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "N19c-14",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "N19c-20",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "N19c-21",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "N19c-22",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "N19c-23",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "N19c-24",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "N19c-25",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene bank admit|evict|pin|unpin|estimate …` is `frob scene bank --action <name> …`, and `frob scene bank show …` is `frob scene bank …`."
+  },
+  {
+   "bead": "BD-235",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene split add|move-group|show|check|part-of|audit …` is `frob scene split --action <name> …`, and `frob scene split create …` is `frob scene split …`."
+  },
+  {
+   "bead": "BD-253",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene split add|move-group|show|check|part-of|audit …` is `frob scene split --action <name> …`, and `frob scene split create …` is `frob scene split …`."
+  },
+  {
+   "bead": "N19c-11",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene split add|move-group|show|check|part-of|audit …` is `frob scene split --action <name> …`, and `frob scene split create …` is `frob scene split …`."
+  },
+  {
+   "bead": "N19c-13",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene split add|move-group|show|check|part-of|audit …` is `frob scene split --action <name> …`, and `frob scene split create …` is `frob scene split …`."
+  },
+  {
+   "bead": "N19c-15",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene split add|move-group|show|check|part-of|audit …` is `frob scene split --action <name> …`, and `frob scene split create …` is `frob scene split …`."
+  },
+  {
+   "bead": "N19c-42",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene split add|move-group|show|check|part-of|audit …` is `frob scene split --action <name> …`, and `frob scene split create …` is `frob scene split …`."
+  },
+  {
+   "bead": "N24a-31",
+   "what": "From NJL-01 (round 4): an action of a verb with two kinds is selected only with `--action <name>` (NJL-01 action rule 1, BD-022, N32a-11), never with a per-action flag or a positional action word: `frob scene split add|move-group|show|check|part-of|audit …` is `frob scene split --action <name> …`, and `frob scene split create …` is `frob scene split …`."
+  },
+  {
+   "bead": "VERBS-solve",
+   "what": "From NJL-01 (round 4, F-U32a-1 item 5): variation 1 (`cursor`, `limit`, `follow`, 806, 807) applies to the `read` kind only, and solve.run is a `run`: drop `paginated = true` and 'so the appended list adds 806 and 807' from its row. Its ranked set is bounded by `top_k` (default 3) and is returned whole in the job's result. N32a-02 has been asked to make the entry-level field a lint failure on a non-read entry."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "From NJL-01 (round 4, F-U28b, F-U33a, F-U33b): `no_memo` (`--no-memo`) is now generated by NJL-01's variation 14 from the entry field `memo = true`, which BD-111 sets in its change (M1). For design.check (and design.show): state `memo = true` and `no_memo` as the generated property (its meaning as written: nothing served from the memo graph, every node computed and still stored, disposition `NoMemo`), and do not declare `no_memo` as the row's own input, or `common-property-shadowed` fails the build."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "From NJL-01 (round 4, F-U28b, F-U33a, F-U33b): `no_memo` (`--no-memo`) is now generated by NJL-01's variation 14 from the entry field `memo = true`, which BD-111 sets in its change (M1). For eval.compare and eval.run: state `memo = true` and `no_memo` as the generated property (its meaning as written: nothing served from the memo graph, every node computed and still stored, disposition `NoMemo`), and do not declare `no_memo` as the row's own input, or `common-property-shadowed` fails the build."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "From NJL-01 (round 4, F-U28b, F-U33a, F-U33b): `no_memo` (`--no-memo`) is now generated by NJL-01's variation 14 from the entry field `memo = true`, which BD-111 sets in its change (M1). For sim.run: state `memo = true` and `no_memo` as the generated property (its meaning as written: nothing served from the memo graph, every node computed and still stored, disposition `NoMemo`), and do not declare `no_memo` as the row's own input, or `common-property-shadowed` fails the build."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "From NJL-01 (round 4, F-U28b, F-U33a, F-U33b): `no_memo` (`--no-memo`) is now generated by NJL-01's variation 14 from the entry field `memo = true`, which BD-111 sets in its change (M1). For train.start (`--no-memo` with N28c-43's no-reuse control): state `memo = true` and `no_memo` as the generated property (its meaning as written: nothing served from the memo graph, every node computed and still stored, disposition `NoMemo`), and do not declare `no_memo` as the row's own input, or `common-property-shadowed` fails the build."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "From NJL-01 (round 4, F-U28b, F-U33a, F-U33b): `no_memo` (`--no-memo`) is now generated by NJL-01's variation 14 from the entry field `memo = true`, which BD-111 sets in its change (M1). For study.submit (BD-220's script calls it with `--no-memo`): state `memo = true` and `no_memo` as the generated property (its meaning as written: nothing served from the memo graph, every node computed and still stored, disposition `NoMemo`), and do not declare `no_memo` as the row's own input, or `common-property-shadowed` fails the build."
+  },
+  {
+   "bead": "BD-135",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "BD-222",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "BD-372",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "N28c-44",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "N32a-12",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "N32b-20",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-algebra",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-autopsy",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "VERBS-evidence",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-experiment",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-explain",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-fleet",
+   "what": "From NJL-01 (round 4): NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-gait",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-ground",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-job",
+   "what": "From NJL-01 (round 4): NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-run",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "VERBS-session",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "VERBS-shield",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-skill",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-solve",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "From NJL-01 (round 4): NJL-01's kinds table gives every `run` entry a sixth common property, `envelope_scope` (string, optional; CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`, after `on_cancel`; convention 14; its codes 704 and 761 are already appended): where this bead lists the `run` common properties, or counts five, add it; and NJL-01's later variations are now 10 to 16: 14 `memo = true` adds `no_memo` (BD-111, M1); 15 `reports = true` or an artifact reader appends 814, 816, 819, 873, 889, 895, 897 (BD-139, M1); 16 the `[[admission_check]]` rows add `diagnostic_override` and their codes (N32ax-01, M2): where this bead says 'variations 10 to 13', say 10 to 16."
+  },
+  {
+   "bead": "N00-29",
+   "what": "From STD-E2E (round 4): `frob` reads no `FROB_HOME` and has no `--root` (STD-E2E's isolation rule). An empty scratch store is the run's own state root `FROB_STATE`, which `e2e_init` exports under `target/e2e-scratch/<script>/<run_id>/state/`; replace 'points `FROB_HOME` at an empty scratch store' (or the empty `FROB_HOME` of an `env -i` environment) with it."
+  },
+  {
+   "bead": "N28b-37",
+   "what": "From STD-E2E (round 4): `frob` reads no `FROB_HOME` and has no `--root` (STD-E2E's isolation rule). An empty scratch store is the run's own state root `FROB_STATE`, which `e2e_init` exports under `target/e2e-scratch/<script>/<run_id>/state/`; replace 'points `FROB_HOME` at an empty scratch store' (or the empty `FROB_HOME` of an `env -i` environment) with it."
+  },
+  {
+   "bead": "N28b-38",
+   "what": "From STD-E2E (round 4): `frob` reads no `FROB_HOME` and has no `--root` (STD-E2E's isolation rule). An empty scratch store is the run's own state root `FROB_STATE`, which `e2e_init` exports under `target/e2e-scratch/<script>/<run_id>/state/`; replace 'points `FROB_HOME` at an empty scratch store' (or the empty `FROB_HOME` of an `env -i` environment) with it."
+  },
+  {
+   "bead": "N28b-40",
+   "what": "From STD-E2E (round 4): `frob` reads no `FROB_HOME` and has no `--root` (STD-E2E's isolation rule). An empty scratch store is the run's own state root `FROB_STATE`, which `e2e_init` exports under `target/e2e-scratch/<script>/<run_id>/state/`; replace 'points `FROB_HOME` at an empty scratch store' (or the empty `FROB_HOME` of an `env -i` environment) with it."
+  },
+  {
+   "bead": "N30b-36",
+   "what": "From STD-E2E (round 4): `frob` reads no `FROB_HOME` and has no `--root` (STD-E2E's isolation rule). An empty scratch store is the run's own state root `FROB_STATE`, which `e2e_init` exports under `target/e2e-scratch/<script>/<run_id>/state/`; replace 'points `FROB_HOME` at an empty scratch store' (or the empty `FROB_HOME` of an `env -i` environment) with it."
+  },
+  {
+   "bead": "N32b-03",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-05",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-09",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-14",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-15",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-16",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-21",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-22",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-24",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-38",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32b-39",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "N32bp2-44",
+   "what": "From STD-E2E (round 4, answering F-U32b): the shared helper now has `e2e_session` (item 17). Before starting `frobd` the script calls `e2e_session grant <principal> --scopes <list> [--namespace <ns>]` (it writes `[principal.<id>]` into `$FROB_STATE/safety.toml`, mode 0600), and after it `e2e_session open <label> --principal <id> [--scopes …] [--budget …] [--namespace …]` (runs `frob --json session open … --key \"$(e2e_key <label>)\"` with no token in its environment, keeps the token in `state/sessions/<label>.token`, logs it only as `<token:…>` and exports `FROB_SESSION_TOKEN`; `e2e_session use <label>` switches between agents). A script writes the table or a token file only through the helper (the exceptions are N37-02's and N32b-01's own scripts)."
+  },
+  {
+   "bead": "BD-025",
+   "what": "From STD-E2E (round 4, answering H-owners-1): STD-E2E (a dependency of this bead) writes the `[[bin]] name = \"frob-e2e\", path = \"src/bin/frob-e2e.rs\"` entry and the binary's row of `CONTRACT.md`'s binary table; when it lands before this bead it creates the manifest with `autobins = false`, no `default-run` and that one entry, and `CONTRACT.md` with that one table. This bead completes both rather than creating them, and `binaries_declared` checks the entry and the row."
+  }
+ ],
+ "answered": {
+  "added": 24,
+  "holds": 3,
+  "declined": 0
+ },
+ "unchanged": 0,
+ "notes": "Resumed slice: the interrupted reviewer had edited no bead (no slice file was modified after the cutoff). All four beads reviewed in full; all four changed. Answered counts are per request part: 24 entries or parts added as asked (all NJL-01, STD-E2E and STD-TEST requests, the lead note and the C13 finding), 3 holds (F-UJL item 2, the action spelling: `--action <name>` holds, being the owner's form shared with BD-022 and N32a-11 and required by ADR-TETHER-01; H-verbs-3 items 1 and 2: `conformance_only` already serves test-only options, and `same_engine_as` is N32a-02's field, forwarded there). None declined. The H-verbs-2 entry in the slice file is empty; it was taken as covered by the `envelope_scope` property in the run row and tests and the `no_memo` shadow note. The C13 mechanical finding was real (three narrations: variation 1, variation 12/13, the annotation and lint paragraphs) and all were rewritten. F-U32a-1 item 5: the arm applies to `read` only; control.estimate, contact.probe and contact.soil are `read` rows and fine; solve.run is a `run` row and VERBS-solve is asked to drop the field. Holding `--action` invalidates the per-action flags and positional action words of about 60 beads; each has a request with its exact new form, and each VERBS owner one restating its row. Adding `envelope_scope` (the lead's convention 14) and variations 14 to 16 makes the 'five run properties' and 'variations 10 to 13' texts of about 30 beads stale; each has a request. Not duplicated: H-ref-3's round-4 requests to N36-20, N32ax-01 and BD-296 (the N36-20 and N32ax-01 entries here give the exact forms). The slice looks settled once N32a-02 adds the later-field rows (`memo`, `reports`, `same_engine_as`), the `[[admission_check]]` table and the two two-kind rows."
+}

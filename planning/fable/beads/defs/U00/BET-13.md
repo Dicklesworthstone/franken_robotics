@@ -6,9 +6,9 @@ priority: 1
 milestone: "M7"
 labels: ["m7", "tenfold", "frob-conformance", "solid", "bet", "gate", "owner-decision"]
 parent: "WP-77"
-deps: ["N00-28", "N00-19", "N00-20", "BD-314", "BD-317", "STD-E2E"]
-needs: ["§39.7 and §39.20: the decision rule on the pooled ratio of restricted mean times, its censoring rule, multiplicity control, power analysis and the pre-analysis known answers (GATE-TENFOLD-10)", "§39.10: the outcome rules written in advance, per range of the ratio", "§39.8: the ceiling computed before the test (GATE-TENFOLD-09)"]
-related: ["BET-14", "BET-17", "BD-143", "BD-428", "BD-430", "BD-431", "NS-24", "N00-17", "N00-18", "BD-429", "BD-432", "BD-433"]
+deps: ["BD-314", "BD-317", "N00-19", "N00-20", "N00-28", "N39a-27", "N39a-29", "N39a-33", "N39a-37", "N39a-38", "N39b-05", "N39b-06", "N39b-13", "N40-15", "N40-16", "N40-19", "STD-E2E"]
+needs: []
+related: ["BET-14", "BET-17", "BET-21", "GB-08", "GB-09", "N00-09", "N00-10", "N00-12", "N00-15", "N00-17", "N00-18", "N39b-45", "N40-31", "N40-32", "N41-06", "N41-15", "N41-23", "N41-28", "N41-PM", "N41-RISK2", "NS-24"]
 gates: ["GATE-TENFOLD-06", "GATE-TENFOLD-07", "KILL-TENFOLD-SPEED"]
 plan_refs: ["§4 (BET-13)", "§40.5", "§2.1", "§2.6", "§39", "§43.6", "§43.10", "§47.1"]
 ---
@@ -83,7 +83,10 @@ Out, and where it is:
      ledger. Under 3 on every class at M3: speed work is no longer funded, and the family-policy spend of M4 is
      decided again.
    - A sealed-suite result is a finite-suite result; a claim about the population of missions needs at least 32
-     independent mission families.
+     independent mission families at α = 0.05, and 46 where four confirmatory cells share the level. A mission
+     family is the independent unit (missions sharing a generator draw, a site, a material batch or a parent
+     design are one family). Each cell declares before sealing which of the two results it seeks; a cell of the
+     default 24 families can only give a finite-suite result.
 6. **Evidence so far.** The ceilings (N00-17), the composed published ledger (N00-18), the expected ranges
    (N00-20). The M0 and M1 incumbent phase ledgers are the first measurements that bear on it.
 7. **Procedure.** Register clauses, strata, the decision rule and the wording table before the M3 suite is
@@ -105,7 +108,8 @@ Out, and where it is:
 `bets.rs`: `bet13_confirmed_on_one_stratum_holds_for_that_stratum`; `bet13_no_stratum_confirmed_falsifies_a`;
 `bet13_class_ratio_2_4_withdraws_speed_claim_at_m3`; `bet13_wording_between_3_and_10_has_no_tenfold_word`;
 `bet13_all_classes_under_3_stops_speed_funding` (the funding check then refuses `speed-lever` records);
-`bet13_population_wording_needs_32_families`.
+`bet13_population_wording_needs_32_families` (24 families → finite-suite wording only; 32 with one confirmatory
+cell → population wording allowed; 40 with four confirmatory cells sharing α → refused, 46 needed).
 
 ### End-to-end script and logging
 `scripts/e2e/bet_13_decide.sh` reads the gate records and the published report, runs the metric-contract

@@ -4,11 +4,11 @@ title: "spec C-26 (frob-opt): rungs trusted by rank agreement (Kendall τ) and s
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "lemma", "spine", "spec", "frontier", "frob-opt", "test"]
+labels: ["m3", "lemma", "spine", "spec", "frontier", "frob-opt", "test", "review-notes-open"]
 parent: "WP-62"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§10 preamble: the construction register `frob-conformance/registry/constructions.toml`, the ten-section contract template and the shared law-suite convention (bead N10a-01 of unit U10a); this bead fills row C-26", "§10 registries, Appendix M.9 and Appendix N.7: the chapter registry beads N10-KA (unit U10a) and N10-CX (unit U10c) that load rows KA-136, KA-137 and CX-063, CX-064; this bead binds them to tests", "§28.10 and §23.11: the forty-design rank-agreement pilot of this construction (shared with construction C-23) is pre-registered by BD-145 and run by BD-310 at M3 and BD-328 at M4; those beads must carry the protocol stated in section 5 of this bead, and BD-145 cites this contract's definitions without waiting for this bead"]
-related: ["BD-145", "BD-310", "BD-328", "BD-329", "BD-265", "BD-345", "BD-124", "SPEC-C-15", "SPEC-C-23", "SPEC-C-25", "SPEC-C-39", "BD-262", "N10a-02"]
+deps: ["BD-022", "BD-025", "N10-CX", "N10-KA2", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-145", "BD-262", "BD-265", "BD-310", "BD-328", "BD-329", "SPEC-C-39"]
 gates: ["GATE-GAUNT-02", "GATE-GAUNT-01"]
 plan_refs: ["§10 C-26", "§9 D-10", "§9 D-17", "§16.9", "§23.11", "§28.9", "§28.10", "§28.12", "§40.7", "Appendix D.8", "Appendix E GB-35", "Appendix I.13", "Appendix M.9 KA-136 KA-137", "Appendix N.7 CX-063 CX-064"]
 ---
@@ -56,7 +56,7 @@ devices, the first seed in `frob-opt`): that bead is listed in `related` and is 
 is generic over its subject trait and closes on the exact reference model and the mutants in its own test support.
 If `frob-opt` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance`; the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -144,8 +144,8 @@ rungs are `Uninformative` and neither select nor discard.
   Option<u32>; fn q_hat(&self, residuals: &[f64], alpha: Ratio) -> Option<f64>; fn survivors(&self, cheap:
   &[f64], k: usize, q_hat: f64) -> Vec<usize>; fn mode(&self, tau_lower: f64, has_record: bool) -> LadderMode }`.
   `tests/support/c26_ref.rs`: exact pair counting, exact index arithmetic in rationals, a seeded generator of
-  exchangeable and drifting score pairs. `tests/support/c26_mutants.rs`: mutants under the cargo feature
-  `controls`.
+  exchangeable and drifting score pairs. `tests/support/c26_mutants.rs`: mutants under the crate's cargo feature
+  `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
 - Register row C-26: `verb = "eval.rank-agreement"` (with `opt.cascade`), `failing_test` =
   `frob-opt::laws_c26::s3_calibration_on_promoted_undercovers`, `payoff.gate = "GATE-ATEL-07"`,
   `known_answers = KA-136, KA-137`, `pilot = "PILOT-C-26"` (the record written by BD-145 and BD-310),
@@ -162,7 +162,7 @@ rungs are `Uninformative` and neither select nor discard.
 
 - [ ] `docs/math/C-26.md` has the ten sections, statements C-26.S1 to S8 with classes, the thresholds tagged
       TARGET, the worked numbers and the pilot protocol.
-- [ ] `cargo test -p frob-opt --test laws_c26` passes; with `--features controls` every mutant fails.
+- [ ] `cargo test -p frob-opt --test laws_c26` passes; with `--features conformance` every mutant fails.
 - [ ] KA-136: index 38 for (39, 0.05); `None` for n ≤ 18 at α = 0.05; 19 for n = 19.
 - [ ] KA-137: on the planted ladder a planted over-scored design is promoted by the cheap rung and caught at
       the next rung; synthetic drift between audit and scored designs trips the exchangeability alarm; a ladder
@@ -194,8 +194,9 @@ rungs are `Uninformative` and neither select nor discard.
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c26.sh` (idempotent; seed 2600 printed): `frob --json doctor`; the law suite with and without
-`--features controls`; `cargo test -p frob-conformance --test g1 -- KA-136`;
-`cargo test -p frob-conformance --test g0 -- KA-137`. Sources the STD-E2E helper; writes
+`--features conformance`; `FROB_TEST_SEED=2600 cargo test -p frob-conformance --test g1_known_answers -- KA-136`;
+`FROB_TEST_SEED=2600 cargo test -p frob-conformance --test g0_laws -- KA-137` (the tier targets by the names
+BD-025 gives them; `g1` and `g0` are not test targets). Sources the STD-E2E helper; writes
 `target/e2e-logs/spec_c26/<utc>.ndjson` and a transcript; each line has `ts`, `script`, `bead` (`SPEC-C-26`),
 `step`, `event` (`start`, `cmd`, `assert`, `metric`, `refusal`, `end`), command line, exit code, wall time,
 evidence block (claim Known answer, class, tier G0 or G1 host, determinism class, seed), the index and the

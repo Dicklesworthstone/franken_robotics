@@ -1,0 +1,87 @@
+{
+  "round": 4,
+  "slice": "H-verbs-9",
+  "reviewed": 5,
+  "changed": [
+    {
+      "bead": "VERBS-spark",
+      "kinds": ["request", "convention", "registry", "contradiction"],
+      "what": "Added as asked: `spark.check --invariance --axes` lists BD-181's axes and `solve-queues` (N16c-15, M2; with `cotenancy` for GATE-KIN-08's digest clause; 724 naming it while N16c-15 is absent, convention 5); `spark.probe --library conformance:folded-sum|folded-prod` (N21b-36, conformance build, 802 in release; the fast-math, contraction-on and reassociate variants are annex mutant features, not inputs); conformance-build `--cache-dir <path>` on `spark.cache` and `spark.precompile` (N21b-13, sim.run semantics, 734; 734 added to spark.cache's chapter list as N37-REF's path-argument rule requires); `spark.devices` task clusters `devices`, `fleet`; item 2 rewritten from NJL-01's kinds and variation tables (six run inputs with `envelope_scope`, `x-frob-key`, `on_cancel leave|cancel_job`, 808 by int53 field, 891/892/893 by param kind, variations 10 to 13 by reference); count sentence 244 with NJL-03 as count of record. C13 (5 places, true positives): the action `paginated` member and `conformance_only` are stated as N32a-02's fields (RL-23, RL-24), with each row's `conformance_only` list in the machine fields and the TOML; convention 5 and the N21a-04 and BD-017 notes state facts. Defects fixed: `spark.place` listed 619, which is only the proposal of N21-REF's ledger row `device-count-wrap` (a typed proposed number fails RL-06 if the ledger assigns another); now listed by slug with the number joining on assignment, as VERBS-sim does; convention 5 named N21c-39 as owner of `--chunk-intervals`, whose owner is N21b-22. Tests: refusal_lists, inputs_by_row, conformance_options, kind_behaviour (six common properties) follow."
+    },
+    {
+      "bead": "VERBS-store",
+      "kinds": ["request", "convention", "registry"],
+      "what": "Added as asked: `store.collect`'s pre-mark audit runs before any orphan pin is released (an aborted cycle changes nothing) and aborts with `unpinned-claim-closure` (N29-REF's ledger row, raised by N29b-13; 9xx, exit 9, retry never; payload and two ranked repairs from N29-REF), listed by slug with no number, joining `refusals` when the ledger assigns it; the C13 narration 'the code of that abort is requested of N29b-13' is gone; Extended by and refusal_lists follow. Item 2 from NJL-01's tables with `envelope_scope`; count sentence 244."
+    },
+    {
+      "bead": "VERBS-study",
+      "kinds": ["request", "convention", "registry", "contradiction"],
+      "what": "Added as asked: study.compare lists 825 (N37-28, M3: a stored study with a D4 or unrecorded arm result, the evidence boundary), 870 (BD-347, M4) and 890 (`stack-mismatch`, N33c-31, from M1, as N33-REF's acceptance states), each in Extended by; study.plan declares `params = { manifest = \"artifact-input<FMT-FSTUDY>\" }` (frob.study.manifest/1, `.fstudy`, frob-arena; N33b-19) and drops 734 and 828 from its chapter list (appended with 891); the manifest gains `arms`, parallel to `designs`, with `capacity = { contacts, rows }` (N16a-14's override, in the arm's StepPlanId, 802 at /arms/<i>/capacity on a referee arm, so always refused at M1; N18b-22's fixture from M2) and N16c-38's `solve_path` as a member, unknown members 802; no per-arm lever, card-field or task-parameter settings (N33b-19's decision); the optional `registration` member (BD-145); study.submit lists 726 (N32-REF, M3, N19b-03's living-world admission; TOML updated). C13 (2 places, true positives) and a defect: study.plan listed 561 as an interim for `solve-path-mixed-study` and narrated `refinement-study-changes-clock` as having 'no number yet; its request is among...'; N16-REF says both are numbered by N35-33's first round at M0 and the interim lapses then, so the row would have kept 561 for a situation that has its own code (and 561 is the numerics licence check's code); both are now stated by slug with family, exit and repairs, joining `refusals` under their assigned numbers. Stale note fixed: Considerations said N28a-21 asks for 809 and states 840 with exit 3; N28a-21 now gives 802 for an unknown study and 840 with exit 5. Layer note, item 2 (six run inputs, the manifest as a params entry), refusal_lists, plan_inputs, kind_behaviour follow; count sentence 244."
+    },
+    {
+      "bead": "VERBS-task",
+      "kinds": ["request", "convention", "registry"],
+      "what": "Added as asked: task.check `params` gains `overlay = \"artifact-input<task-overlay>\"` (FMT-FOVERLAY, N24a-13) and `element = \"artifact-input<group-element>\"` (N24ax-02), so 891, 734 and 828 apply and the 'routing is requested' narration is gone; task.settle `--refresh` (N24a-16); task.verdict `task` optional (default the recorded TaskId, required for a trace that records none, 802 at /task; N24c-02) and `requirement` spelled `--requirement <id>` (N24a-42); task.list Extended by N24a-23 (grouping by family with computed status); coupling action `--tier <tier>` (N24c-37) and worded `coupling-family-too-large` (N24c-40); worded `stream-adapter-missing` (N24cp1-02) and `disturbance-registry-invalid` (N24cp3-02) on task.new and task.check; task.fixture 726 `card-provenance` (N15b-18, M6) in block, TOML and test. C13 (3 places, true positives): convention 5 heading, the fixture-listing note (N24bx-01 and N16c-41 now spell `frob task list --kind fixture`) and the N23a-34 note (N23a-34 now asserts `term-contract-unmet` at train.start) state facts. Defect fixed: the `control` input named the cargo feature `mutants`; convention 1 gives the planted-defect feature one name, `gauntlet-mutations`, so a build following the row would have had two feature names for one thing. Item 2 (six run inputs, 808 by int53 field), two_kind_check, kind_behaviour, option_rows and refusal_lists follow; count sentence 244."
+    },
+    {
+      "bead": "VERBS-telemetry",
+      "kinds": ["request", "convention", "registry", "contradiction"],
+      "what": "Added as asked: telemetry.stills lists 888 (untraced world; declared overlay channel not retained; BD-191) and states the appended 802 (an overlay channel the run does not declare: /overlay with `available`) and 724 (`not-linked`, `mechanism` naming the overlay) in place of 'BD-191 names neither code (requested)'; telemetry.query quotes N24a-36's one spelling (`--ticks` and page size dropped; `--limit`, `--cursor`, `--follow` generated), states 802 `detail: reduction-not-admitted`, keeps `--aggregate` and 898, drops 896 from its list as the cause of the appended 806 (N29-REF `surfaces_as`, as telemetry.histogram already does) and lists 883 (BD-387's read guard, M5); telemetry.energy quotes N24a-37's spellings; telemetry.inspect-pixel lists 888 `detail: still-collected` naming the tombstone (N24a-40); telemetry.export-html replaces 836 and 837 (proposed numbers held under N35x-01, which RL-06 forbids a row to list) with the held slugs `packet-over-byte-cap` and `packet-frames-not-retained`, no number. Item 2 from NJL-01's tables with `envelope_scope`; convention 5 heading without 'requested of NJL-01' (C13, true positive); count sentence 244. Defect fixed: the stills overlay list put `film` and `clearance` at M2 and the registry example used `--overlay contact-cones,film`, but BD-191 builds only five overlays at M2 and answers `film` with 724 until N24ap2-60 (M3), so step (4) of the cluster script would have failed on an implemented verb at M2; the list now puts both at M3 with N24ap2-60 and the example uses `--overlay contact-cones`. refusal_lists and option_rows follow."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N28-REF",
+      "what": "ANSWER (H-ref-2's layer-rule request to VERBS-study): the present rows hold and match your layer rule. study.plan lists 532, 533, 543, 552, 556 and none of 553, 555, 542; study.submit lists none of the six (its chapter codes are 809 and now 726): a backend whose class record changed after planning is a superseded identity, 809, so study.submit does not take 533 in place of 542, as N33b-19 and your own text ('study.submit lists none of the six') state; the 'both codes of each pair stay registered, one situation raises one code on one verb' note already says what you asked. The 726 part was added."
+    },
+    {
+      "bead": "N33b-19",
+      "what": "ANSWER (F-U33b): added as asked (`params = { manifest = \"artifact-input<FMT-FSTUDY>\" }`, 734 and 828 out of the chapter list, `arms` with `capacity` and `solve_path`, no per-arm settings). One correction to your text: an `artifact-input<F>` parameter appends 891, 734 and 828, not 893; 893 is the code of a `foreign-file` parameter, and a file of another registered format given to an artifact-input is 802 naming both formats (N34-24; NJL-01's variation 7). Write 'the generator then appends 891, 734 and 828' (and the same in your acceptance line that names 893 for study.plan)."
+    },
+    {
+      "bead": "BD-191",
+      "what": "ANSWER (F-U24a-1, stills refusals): 888 is now a chapter code of telemetry.stills (untraced world; declared overlay channel not retained). 802 (/overlay with `available`) and 724 (`not-linked`, mechanism naming the overlay) are surface-wide codes the generator appends to every verb (NJL-01), so the row states both in its block and does not repeat them in its chapter list. The row's example is now `frob telemetry stills r:19e2 --world 311 --at failure --overlay contact-cones --json`, since `film` answers 724 at M2."
+    },
+    {
+      "bead": "BD-181",
+      "what": "VERBS-spark lists `solve-queues` as a value of `spark.check --invariance --axes` (N16c-15's request). Under the VERBS beads' convention 5 an option value a row lists whose bead is absent answers 724 naming it, never 802. Your axis-hook paragraph ('until N16c-15 is in the build ... `--axes solve-queues` is 802') and the test `axis_hook_registers_axis` should expect FROB-REF-724 naming the axis for `solve-queues` in a build without N16c-15 (still absent from `all`); a misspelt axis stays 802."
+    },
+    {
+      "bead": "N21c-39",
+      "what": "VERBS-spark's spark.place row lists your refusal as N21-REF's ledger row `device-count-wrap` (6xx, exit 6), whose number the ledger assigns (619 is only the proposal) and which no bead types. Your section 5 says 'VERBS-spark lists 619 on it' and 'VERBS-spark's spark.place row lists 619': state that both rows (spark.place and sim.run) list `device-count-wrap` and receive its assigned number."
+    },
+    {
+      "bead": "N24b-03",
+      "what": "Convention 1: the cargo feature that builds planted defects is named `gauntlet-mutations` everywhere, never `mutants`. VERBS-task's task.fixture row now says `control` is accepted only in a build with `gauntlet-mutations` (a release build answers 724). Rename the feature in your text (lines on `mutants`), acceptance ('a `mutants` build') and the test `fixture_control_requires_mutants_feature`."
+    },
+    {
+      "bead": "N24a-40",
+      "what": "VERBS-telemetry's telemetry.inspect-pixel row now lists FROB-REF-888 with `detail: still-collected` (your section 7). Replace 'The verb's registry row lists 731 and 840; 888 is requested of it' with the fact: the row lists 731, 840 and 888 (convention 13)."
+    },
+    {
+      "bead": "N24a-36",
+      "what": "VERBS-telemetry's telemetry.query row quotes your one spelling and lists 883 (BD-387, M5), 888 and 898. It does not list 896: through the verb the envelope's refusal is the appended 806 with 896 as its cause (N29-REF `surfaces_as`), as telemetry.histogram does. Your Scope calls 896 one of the verb's chapter refusals; say instead that the verb reaches it only as the cause of 806."
+    },
+    {
+      "bead": "N37-REF",
+      "what": "Your D4-division row (and N35-REF's row for 561/542/533/825) gives study.compare 542 for a D4 arm through `pairing::admit`, while N37-28 says a stored study with a D4 or unrecorded arm given to study.compare is 825, and VERBS-study now lists 825 on study.compare (F-U37's request) and not 542. State study.compare's code for a D4 arm in a stored study as 825 (N37-28), keeping 542 for eval.compare's own admission; if 542 is really raised by study.compare too, say so and the row will add it."
+    },
+    {
+      "bead": "N21b-13",
+      "what": "Your verb-registry paragraph says the `artifact-input<frob.fingerprint/1>` parameter makes the generator append '891 to 893, 734 and 828'. For an artifact-input parameter NJL-01 appends 891, 734 and 828 (892 is artifact-identity's, 893 foreign-file's); VERBS-spark's `refusal_lists` test asserts 891, 734 and 828 for spark.precompile."
+    },
+    {
+      "bead": "NJL-01",
+      "what": "VERBS-spark, -store, -study, -task and -telemetry list `envelope_scope` (CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`; 761 with pointer /envelope_scope on a citation contradicting the launcher's token) among the run kind's common inputs, citing NJL-01, per convention 14; your kinds table does not yet list it (H-owners-3's change). They also state, as convention 5, that an option or option value whose bead is absent answers 724 naming it, never 802 (the general rule H-verbs-7 requested of you)."
+    }
+  ],
+  "answered": {
+    "added": 38,
+    "holds": 1,
+    "declined": 0
+  },
+  "unchanged": 0,
+  "notes": "39 slice items (requests, lead notes and mechanical findings). 38 added as asked; one (H-ref-2's layer rule for VERBS-study) holds: the rows already match N28-REF's rule, study.submit lists none of the six, and its 726 part was added; ANSWER to N28-REF. Two additions carry clarifying ANSWERs: F-U33b's '891 and 893' is 891, 734 and 828 (N33b-19), and F-U24a-1's 802 and 724 on stills are stated as appended codes (BD-191). H-ref-2's telemetry 'adds `aggregate` and 898' was already in the row. All four C13 mechanical findings were true positives, none a false alarm. Pending ledger codes are stated by slug with no number (device-count-wrap, unpinned-claim-closure, solve-path-mixed-study, refinement-study-changes-clock, packet-over-byte-cap, packet-frames-not-retained). 726 is written as a number because N32-REF records it as assigned by N35-33's first round and the sibling VERBS beads list it. For the lead: the F in artifact-input<F> is spelled three ways across beads (a schema name `frob.fingerprint/1`, an identifier `FMT-FSTUDY`, a short name `task-overlay`); each row follows its owner's form, but NJL-01 or N34-24 should fix one. The front matter of all five beads is unchanged and all seven body sections are kept. Settled for this round, subject to the owner beads answering the requests above."
+}

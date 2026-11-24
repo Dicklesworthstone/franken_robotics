@@ -1,0 +1,476 @@
+{
+ "round": 4,
+ "slices": 108,
+ "slices_without_result": [
+  "F-U18b-2",
+  "F-U19a",
+  "F-U19b",
+  "F-U19c",
+  "F-U20a",
+  "F-U20b",
+  "F-U21a",
+  "F-U21b",
+  "F-U21c",
+  "F-U22a",
+  "F-U22b",
+  "F-U22c",
+  "F-U23a",
+  "F-U23b",
+  "F-U24a-1",
+  "F-U24a-2",
+  "F-U24b",
+  "F-U24c",
+  "F-U25a",
+  "F-U25b",
+  "F-U25c-1",
+  "F-U25c-2",
+  "F-U25d",
+  "F-U25e",
+  "F-U26a",
+  "F-U26b",
+  "F-U27a",
+  "F-U27b",
+  "F-U28a",
+  "F-U28b",
+  "F-U28c",
+  "F-U29a",
+  "F-U29b",
+  "F-U30a",
+  "F-U30b",
+  "F-U31a-1",
+  "F-U31a-2",
+  "F-U31b",
+  "F-U32a",
+  "F-U32b",
+  "F-U33a",
+  "F-U33b",
+  "F-U33c",
+  "F-U34",
+  "F-U35",
+  "F-U36",
+  "F-U37",
+  "F-U38a",
+  "F-U38b",
+  "F-U39a",
+  "F-U39b",
+  "F-U40",
+  "F-U41",
+  "F-U44-1",
+  "F-U44-2",
+  "F-UAB",
+  "F-UEG",
+  "F-UF-1",
+  "F-UF-2",
+  "F-UJL"
+ ],
+ "live_beads": 3637,
+ "superseded_total": 119,
+ "totals": {
+  "reviewed": 778,
+  "changed": 487,
+  "new": 3,
+  "superseded": 0,
+  "requests": 638
+ },
+ "kinds": {
+  "request": 329,
+  "convention": 230,
+  "registry": 125,
+  "contradiction": 85,
+  "broken": 82,
+  "deadlock": 37,
+  "users": 17,
+  "plan": 11,
+  "tests": 4,
+  "correct": 3,
+  "deps": 1
+ },
+ "definition_problems": 0,
+ "validation_failures": [],
+ "per_slice": [
+  {
+   "slice": "H-cx-1",
+   "beads": 14,
+   "changed": 10,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "H-cx-2",
+   "beads": 13,
+   "changed": 13,
+   "new": 0,
+   "superseded": 0,
+   "requests": 47
+  },
+  {
+   "slice": "H-cx-3",
+   "beads": 3,
+   "changed": 3,
+   "new": 0,
+   "superseded": 0,
+   "requests": 7
+  },
+  {
+   "slice": "H-ka-1",
+   "beads": 14,
+   "changed": 11,
+   "new": 0,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "H-ka-2",
+   "beads": 14,
+   "changed": 13,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "H-ka-3",
+   "beads": 8,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "H-owners-1",
+   "beads": 6,
+   "changed": 6,
+   "new": 0,
+   "superseded": 0,
+   "requests": 34
+  },
+  {
+   "slice": "H-owners-2",
+   "beads": 8,
+   "changed": 8,
+   "new": 0,
+   "superseded": 0,
+   "requests": 38
+  },
+  {
+   "slice": "H-owners-3",
+   "beads": 4,
+   "changed": 4,
+   "new": 0,
+   "superseded": 0,
+   "requests": 135
+  },
+  {
+   "slice": "H-ref-1",
+   "beads": 10,
+   "changed": 10,
+   "new": 0,
+   "superseded": 0,
+   "requests": 20
+  },
+  {
+   "slice": "H-ref-2",
+   "beads": 9,
+   "changed": 9,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "H-ref-3",
+   "beads": 9,
+   "changed": 9,
+   "new": 0,
+   "superseded": 0,
+   "requests": 22
+  },
+  {
+   "slice": "H-verbs-1",
+   "beads": 5,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "H-verbs-2",
+   "beads": 4,
+   "changed": 4,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "H-verbs-3",
+   "beads": 5,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 23
+  },
+  {
+   "slice": "H-verbs-4",
+   "beads": 5,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 19
+  },
+  {
+   "slice": "H-verbs-5",
+   "beads": 5,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 16
+  },
+  {
+   "slice": "H-verbs-6",
+   "beads": 6,
+   "changed": 6,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "H-verbs-7",
+   "beads": 5,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 8
+  },
+  {
+   "slice": "H-verbs-8",
+   "beads": 3,
+   "changed": 3,
+   "new": 1,
+   "superseded": 0,
+   "requests": 38
+  },
+  {
+   "slice": "H-verbs-9",
+   "beads": 5,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "H-verbs-10",
+   "beads": 1,
+   "changed": 1,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "M1-1",
+   "beads": 12,
+   "changed": 6,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "M1-2",
+   "beads": 12,
+   "changed": 9,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "M1-3",
+   "beads": 12,
+   "changed": 11,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "M1-4",
+   "beads": 12,
+   "changed": 11,
+   "new": 0,
+   "superseded": 0,
+   "requests": 21
+  },
+  {
+   "slice": "M1-5",
+   "beads": 12,
+   "changed": 12,
+   "new": 0,
+   "superseded": 0,
+   "requests": 12
+  },
+  {
+   "slice": "M1-6",
+   "beads": 4,
+   "changed": 4,
+   "new": 0,
+   "superseded": 0,
+   "requests": 9
+  },
+  {
+   "slice": "F-U00-1",
+   "beads": 36,
+   "changed": 8,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "F-U00-2",
+   "beads": 36,
+   "changed": 10,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U10a",
+   "beads": 14,
+   "changed": 8,
+   "new": 0,
+   "superseded": 0,
+   "requests": 18
+  },
+  {
+   "slice": "F-U10b",
+   "beads": 27,
+   "changed": 5,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "F-U10c",
+   "beads": 20,
+   "changed": 4,
+   "new": 0,
+   "superseded": 0,
+   "requests": 0
+  },
+  {
+   "slice": "F-U12-1",
+   "beads": 25,
+   "changed": 9,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U12-2",
+   "beads": 24,
+   "changed": 10,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U13",
+   "beads": 25,
+   "changed": 14,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U14a",
+   "beads": 33,
+   "changed": 28,
+   "new": 0,
+   "superseded": 0,
+   "requests": 5
+  },
+  {
+   "slice": "F-U14b-1",
+   "beads": 24,
+   "changed": 13,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U14b-2",
+   "beads": 24,
+   "changed": 9,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U15a",
+   "beads": 22,
+   "changed": 17,
+   "new": 0,
+   "superseded": 0,
+   "requests": 1
+  },
+  {
+   "slice": "F-U15b",
+   "beads": 43,
+   "changed": 23,
+   "new": 1,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U16a",
+   "beads": 24,
+   "changed": 16,
+   "new": 0,
+   "superseded": 0,
+   "requests": 2
+  },
+  {
+   "slice": "F-U16b",
+   "beads": 36,
+   "changed": 25,
+   "new": 0,
+   "superseded": 0,
+   "requests": 11
+  },
+  {
+   "slice": "F-U16c",
+   "beads": 46,
+   "changed": 26,
+   "new": 1,
+   "superseded": 0,
+   "requests": 4
+  },
+  {
+   "slice": "F-U17a",
+   "beads": 17,
+   "changed": 14,
+   "new": 0,
+   "superseded": 0,
+   "requests": 6
+  },
+  {
+   "slice": "F-U17b",
+   "beads": 22,
+   "changed": 15,
+   "new": 0,
+   "superseded": 0,
+   "requests": 3
+  },
+  {
+   "slice": "F-U18a",
+   "beads": 35,
+   "changed": 19,
+   "new": 0,
+   "superseded": 0,
+   "requests": 10
+  },
+  {
+   "slice": "F-U18b-1",
+   "beads": 25,
+   "changed": 16,
+   "new": 0,
+   "superseded": 0,
+   "requests": 1
+  }
+ ]
+}

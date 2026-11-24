@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record", "owner-decision"]
 parent: "EPIC-M0"
-deps: ["NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39"]
-needs: ["§0.8: the hypothesis verdict register with its states and rows H-01 to H-29, against which the index is checked (N00-10, N00-11, N00-12)", "§21.26: the counts-beyond-2³² rule and its gate GATE-SPARK-23, the surviving form of KI-67 (BD-207)"]
-related: ["NAB-42", "NAB-46", "NAB-47", "NAB-49", "NAB-50", "N00-10", "BD-029", "BD-060", "BD-069", "BD-207", "BD-258"]
+deps: ["N00-10", "N00-11", "N00-12", "N40-10", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39"]
+needs: []
+related: ["NAB-42", "NAB-46", "NAB-47", "NAB-49"]
 gates: []
 plan_refs: ["Appendix C.2.9", "Appendix C.2.10", "Appendix B.7", "§0.8", "§21.26"]
 ---
@@ -195,8 +195,8 @@ and the revive lint treats the record like any other.
 - `strata_counts`: 3⁴ = 81; 3¹² = 531,441.
 - `wrap_time`: 2³² / 4,000,000 = 1,073.74 s = 17.9 min.
 - `index_matches_records`: the 24 table cells above against the records' fields; 29 joined, 38 not.
-- `index_matches_hypothesis_register` (skipped with a recorded `skip` until that registry exists): states
-  equal; every REFUTED or NARROWED row has a record; ACTIVE rows H-19, H-04b, H-12b, H-25 … H-29 have none.
+- `index_matches_hypothesis_register` (the register is N00-10's, a dependency of this bead, so the test runs
+  from the start and never records a `skip`): states equal; every REFUTED or NARROWED row has a record; ACTIVE rows H-19, H-04b, H-12b, H-25 … H-29 have none.
 - `alias_table_has_31_rows_and_resolves`.
 - `declined_records_pending_owner`: three records, `owner_confirmed = false`, non-empty `reason_proposed`.
 - `total_is_67`.

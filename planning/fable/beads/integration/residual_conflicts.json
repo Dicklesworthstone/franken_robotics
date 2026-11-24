@@ -1,0 +1,182 @@
+[
+ {
+  "from": "dup-01",
+  "bead": "NJL-05",
+  "what": "tags of the three base tools: they now carry the task tag of every cluster, and a tag-filtered list returns the cluster plus the base three (the bead said the filter returns the seven tools); DESIGN to agree with the fallback bead N32a-12, which is outside this packet"
+ },
+ {
+  "from": "dup-01",
+  "bead": "N40-02",
+  "what": "interface note for the lead: in all fourteen chapter register beads the chapter-side data (the full criterion, the measuring beads, and per chapter `criteria[]`, `fixture`, `script`, `kill`, `notes`, `form_hash`, `strata_fixture`, `bet`) moved out of invented fields of gates.toml into the owner declaration that N40-09 reads (the `[[gate]]` block of contract.toml; registries/gate_declarations.toml until agreed), as fields the lint does not compare. N40-09 and N34-08, which own that format, are outside this packet and were not edited: the format must admit these fields"
+ },
+ {
+  "from": "dup-01",
+  "bead": "N16b-07",
+  "what": "title changed (the identifier PILOT-C-25 added) and gates gained GATE-GAUNT-08; INDEX.tsv is not edited by this pass and still shows the old title and no gate"
+ },
+ {
+  "from": "dup-01",
+  "bead": "N00-29",
+  "what": "interface note for the lead: the optional keys of demo.yaml that N00-29 and N34-12 now share (`tier`, `expect_exit`, `expect_refusal`, `compare`, `expect`, `title`, `milestone`, `actors`, `lane`, `fresh_agent`, `not_evidence_for`) must be admitted by the schema of BD-002, whose static check in N34-09 refuses unknown keys; both beads are outside this packet"
+ },
+ {
+  "from": "dup-01",
+  "bead": "NJL-05",
+  "what": "interface note for the lead: BD-298 (outside this packet) still lists 'the complete task-cluster assignment' in its Scope and unit tests that repeat NJL-05's lints; its assignment is NJL-05's data, and the edge BD-298 → NJL-05 is recorded"
+ },
+ {
+  "from": "dup-02",
+  "bead": "N41-34",
+  "what": "NOT fixed, outside this packet: N41-34 line 64 states exit status 3 for FROB-REF-761; the refusal registry gives 4"
+ },
+ {
+  "from": "dup-03",
+  "bead": "N13-29",
+  "what": "registration moved from a document alone (docs/delivery/pilots/…) to an entry in the pilot register frob-conformance/registry/pilots.toml of the plan's §38.5, as N10a-13 and N30b-15 have it; the document stays as the protocol whose hash the entry carries. Left for the lead: twelve other beads outside this packet register pilots only under docs/delivery/pilots/"
+ },
+ {
+  "from": "dup-03",
+  "bead": "N23a-03",
+  "what": "442 against 524: both codes covered an actor schema naming a privileged channel (N23-REF had 524 'at schema freeze', the sensing beads 442 at freeze_actor_schema); DESIGN division by raising site written identically in N20a-03, N23a-03 and N23-REF: 524 is the learner's class check before any freeze, 442 is the freeze's for a channel privileged by source or not of actor access. Left for the lead: N20-REF (not in this packet) should carry the same sentence in its row of 442"
+ },
+ {
+  "from": "dup-03",
+  "bead": "N28c-13",
+  "what": "its assembly steps re-implemented the partition of BD-291 inside frob-opt, which may not call frob-mission (crate map, §34); restated as the contract the arriving records must meet. The comparator rule is aligned (N25c-18 said 'when a probe is proposed', N28c-13 'for every measurement proposal'; now every probe or card-field measurement), and dropped_irrelevant is in the output block. Left for the lead: scripts/e2e/experiment_suggest.sh is described by N25c-18 and owned by N28c-16 (not in this packet); N25c-18 now calls its steps a stage of that script"
+ },
+ {
+  "from": "dup-03",
+  "bead": "N23-REF/N35-REF",
+  "what": "861 and 867 divided by raising site, same text in both (and in N37-REF). Left for the lead: N23a-18 (not in this packet) tests a cited training return as 867, while the plan's KA-801 and KA-802 name 861 for it"
+ },
+ {
+  "from": "dup-03",
+  "bead": "N29-REF/N32-REF",
+  "what": "878/810 and 896/806 are one event at two layers; the owed ruling is written as DESIGN in both (surfaces_as on 878 and on 896). Left for the lead: N29a-04's script (not in this packet) expects 896 from the CLI where the envelope's code is 806 with 896 as cause"
+ },
+ {
+  "from": "dup-03",
+  "bead": "N20b-17/VERBS-sense",
+  "what": "one registry bead for the eight rows of cluster `sense`; VERBS-sense kept (the registry's own bead and the fuller); folded in from N20b-17: refusal codes 441, 447, 214 and the admission codes of the run verbs, the five reduced forms that answer at M1, wait behaviour of the run verbs, its controls and tests, the stills-are-not-observations rule, the two uncoded refusals. Left for the lead: BD-241 and BD-242 (not in this packet) name the capabilities design:read and sim:run where the registry rule gives sense:read and sense:run; BD-258 decides"
+ },
+ {
+  "from": "dup-05",
+  "bead": "N21a-01/N34-01",
+  "what": "N34-01 is the one statement of the layout, the forbidden-package list, lockfile and toolchain rules, the apps binaries and their plants; N21a-01 (now after it) keeps ADR-SPARK-01, INV-SPARK-01 on the resolved graph, the Metal block-patch rule, the exploratory default and the claim wording. The exploratory-flag overlap of N21a-01 with N21a-02 and N21c-34 (two file names, two envelope spellings) is outside this packet and still open"
+ },
+ {
+  "from": "dup-06",
+  "bead": "BD-165",
+  "what": "family names: BD-165 used bare names and stepping-stones, N19a-28 and the chapter's other beads terrain/<family> and stones; terrain/<family> and stones govern (DESIGN). N18a-41 and NS-08, outside this packet, still write the bare form"
+ },
+ {
+  "from": "dup-06",
+  "bead": "NEG-04",
+  "what": "the single function for the zero-failure count had three names: zero_failure_episodes(delta, p_star) in N38b-56, clean_episodes_required(p_star, delta) in NEG-04, and rare::zero_failure::required in the Nemesis chapter's own bead N26a-21 (outside this packet); N26a-21's governs as the one product function, N38b-56's is the conformance crate's reference (an oracle, not reachable from product code), NEG-04's name is withdrawn; the exceptions of the stale-value scan for 76,963 are the same list in both beads"
+ },
+ {
+  "from": "dup-07",
+  "bead": "N30b-25",
+  "what": "gate-row wording aligned with §38.13 and N40-01 in N30b-25, N38b-26 and N41-10: GATE-GROUND-10 reads blocked with detail OPEN-GROUND-1 until the dataset question is recorded, then the terminal status no-claim with reason no-dataset-admitted. BD-397 (outside this packet) still writes form B as status 'not run' with state = no-claim; it should use the status no-claim"
+ },
+ {
+  "from": "dup-07",
+  "bead": "BET-07",
+  "what": "end-to-end probe corrected to the trainer's option of the Cortex beads (BD-326, N23a-31, N23a-33): `frob train start --tying equivariant`, refused with exit code 5 naming the kill record; it read `--equivariant`. NS-05 (outside this packet) still writes `--equivariant gobs`"
+ },
+ {
+  "from": "dup-07",
+  "bead": "N12-KA",
+  "what": "registry path corrected to the suite's one file crates/frob-conformance/registry/known_answers.toml (plan §38.11, N38a-12, as N17-KA has it); it named registries/known-answers/lemma.toml. N25-KA and N29-KA (outside this packet) still name files under registries/known-answers/"
+ },
+ {
+  "from": "dup-07",
+  "bead": "BD-309",
+  "what": "DESIGN: DC-10 policy identity is (\"nemesis.dc10.cover\", 1) in both beads (BD-309 wrote arena.dc10.battery); reason: the name follows the crate and verb that take the decision and write its records, as for atelier.dc01.promote and tether.dc09.dispatch, and it is the identity BD-278 (the verb, outside this packet) already writes; the core's owner field stays frob-arena"
+ },
+ {
+  "from": "dup-07",
+  "bead": "NS-20",
+  "what": "command forms corrected to the Foundry chapter's verb beads (positional design, --campaign, frob-verify --packet, export --packet) and the re-optimized link set to the lower-leg link class, the reference link of GATE-FOUNDRY-05 (N31b-13); NS-20 wrote --design, --runs, --out, a bare frob-verify and --link femur. N31b-14 writes `optimize --links lower-leg` where N31a-54 (outside this packet) writes `--class lower-leg`: the flag name is for the verb's owner to settle"
+ },
+ {
+  "from": "dup-08",
+  "bead": "N33c-29/N34-03",
+  "what": "N34-03 defines the INV-SUITE-02 rule and the group enforcement with their single-case unit tests; N33c-29 keeps the INV-SUITE-01 volatile-edge rule, the re-export test and the invariant battery (plants A to E end to end, property tests, registration) and now depends on N34-03 Outside this packet: N33b-09 also computes the group subset rule inside check-deps and N33a-11 holds the feature records; N34-03 now reads those records and points to both."
+ },
+ {
+  "from": "dup-08",
+  "bead": "N00-35/N38a-11",
+  "what": "the conditioning check (rows 19 and 20) is run once, by N38a-11, with the retained program tools/oracle/rerun/contact_conditioning.py; N00-35 keeps CPU rates and Metal limits, copies the conditioning result into the plan-time check ledger and applies the H-15 consequences. Matrix definition, sample, extra precisions, tests and the skipped-scaling control moved to N38a-11 Outside this packet: the plan-time check ledger N00-06 and the plan-time pilot ledger N38a-10 both hold a record of this check; N00-35's record cites N38a-11's result by hash."
+ },
+ {
+  "from": "dup-08",
+  "bead": "BD-317/N40-15",
+  "what": "BD-317 applies the outcome rules (engine N39b-05), writes the outcome ADRs and produces the gate record; N40-15 applies nothing and writes no outcome ADR: it runs the check tenfold06 on that record and its fresh-context session makes the only entry of the GATE-TENFOLD-06 row, plus the program-level consequences Outside this packet: N39b-11 (decisions read on the partial-gate record) overlaps step 4 of N40-15, and N39b-05 is the definition of the outcome-rule table that N40-15 restates for its check."
+ },
+ {
+  "from": "dup-10",
+  "bead": "N19b-02",
+  "what": "DESIGN recorded in N19b-02 and N37-18 (the plan words FROB-REF-310 'a pack or report would export …' in §19.16 and defines FROB-REF-733 and -731 in §37.12 without dividing them): 310 is raised only by ScenePack::export_check when the exported artifact is itself a scene pack (exit 3); a report or any other derived artifact is refused at the export door with 733 (licence) or 731 (private), exit 5. N19b-02 no longer has the report verbs call the pack check. Beads outside this packet that still expect 310 for stills or reports (NEG-21 to NEG-26, N41-35) need the same correction"
+ },
+ {
+  "from": "dup-10",
+  "bead": "N16b-33",
+  "what": "script renamed from scripts/e2e/energy_audit.sh to scripts/e2e/created_energy_gate.sh (title, scratch and log directories follow), because N29a-22 owns a script of the same name that N29b-03 and N29b-06 call; N16b-14 cites the new name. N16b-15 and the listing in WP-50, outside this packet, still cite the old name for N16b-33"
+ },
+ {
+  "from": "dup-10",
+  "bead": "N16a-23",
+  "what": "title and gates field now name KILL-TREEOP only; it writes no ADR and no registry row for KILL-SKEL-PORT. Seed BD-385 (outside this packet) still says both ADRs are written by N16a-23; the KILL-SKEL-PORT record is N14a-24's"
+ },
+ {
+  "from": "dup-10",
+  "bead": "N25d-32",
+  "what": "refusal 856: N25a-23 asserted it at M1 (a query asking for a joint paving is refused at admission by N25a-02), N25d-32 listed the code as pending until M4. Both now state two triggers: the admission trigger asserted at M1 (case a12) and the region-certificate trigger pending until M4; N25d-32's counts corrected from fourteen asserted and six pending to fifteen codes with an asserted trigger and five wholly pending. The registry row of 856 in N25-REF (outside this packet) names only the later raising sites"
+ },
+ {
+  "from": "dup-11",
+  "bead": "N32a-09",
+  "what": "job.find was called as `frob job find --key k1` in N32a-09 and N32a-17 and with `--verb` and `--key` in N29a-23 and in the registry row of VERBS-job; a key is scoped to (principal, verb), so both now use `frob job find --verb <verb> --key <key>` (BD-211, outside this packet, still prints the form without --verb in one acceptance line)"
+ },
+ {
+  "from": "dup-11",
+  "bead": "N16b-27/VERBS-fidelity",
+  "what": "VERBS-fidelity alone writes the five rows of cluster fidelity; N16b-27 writes no row and keeps the owner decision on the rank verb's name (with the note on fidelity.shadow's milestone), the Kinesis option and output-group names, and a check of the rows against the dynamics chapter; retitled accordingly. Left for the owner of VERBS-eval, outside this packet: its row of eval.rank-agreement prints M4 while the tier-pair form (BD-265) is delivered at M3"
+ },
+ {
+  "from": "dup-12",
+  "bead": "BD-227/N19a-31",
+  "what": "the seed keeps the schema, loader, the seven files with the 59 rows as data, draw, claim function and verb (its consumers depend on it for the content); N19a-31 no longer enters the home rows: it verifies them, binds them to the home generator, and keeps the draw-and-represent tests, exposure fixtures and the not-represented record. N19a-32 to N19a-37 (outside this packet) are in the same relation"
+ },
+ {
+  "from": "dup-13",
+  "bead": "N40-18",
+  "what": "refusal reason names differed from N39a-38 and from the ten-fold refusal registry N39-REF: `ceiling-below-claim`, `no-closed-baseline`, `factor-on-removed-work` replaced by the registry's `ceiling-below-goal`, `ceiling-without-baseline`/`ceiling-needs-closed-ledger`, `order-rule-violation` (all FROB-REF-866). N40-13, outside this packet, still says `factor-on-removed-work`: left for the lead"
+ },
+ {
+  "from": "dup-13",
+  "bead": "BD-126",
+  "what": "the echo was rendered `∃ policy (per-nominal-design) ∀ world ∀ execution` and the mission.check result had other field names; the plan's worked session (Appendix L.9, pinned exactly by NJL-08) shows `quantifiers: \"∃ policy per nominal design, ∀ worlds, ∀ executions\"` with domain, topologies, free, fragment, horizon. Corrected in BD-126; N25a-02's separate report struct is that object. N24b-26, outside this packet, still asserts the old line: left for the lead"
+ },
+ {
+  "from": "dup-13",
+  "bead": "BD-126",
+  "what": "its acceptance claimed the refusals 884, 887, 847, 846 and 877, which beads that depend on it implement (N25a-02, N25a-11, N25b-07); it now claims the document-level checks and states that the inconsistent-domain half of the seed condition is shown by N25b-07. Both BD-126 and N25a-02 name scripts/e2e/mission_admission.sh under two different beads (N24b-26, N25a-23): left for the lead"
+ },
+ {
+  "from": "dup-14",
+  "bead": "N23b-01",
+  "what": "note for the lead: SPEC-C-24, N10b-19 and WP-79 still name N10b-16 as the pilot of C-24; they should read N23b-01"
+ },
+ {
+  "from": "dup-14",
+  "bead": "N19a-30",
+  "what": "note for the lead: BD-165 and WP-17 still name N18a-41 as the bead of scene_gen_terrain.sh; they should read N19a-30"
+ },
+ {
+  "from": "dup-14",
+  "bead": "N26b-05/N28b-29",
+  "what": "one verb nemesis.audit, owned by §26.10; N28b-29 superseded. Folded into N26b-05: default action run and the --campaign spelling, schemas frob.nemesis.audit.in/1 and .out/1, the committed-lane-only rule, the envelope scan, the conformance target gate_nemesis_07, rejected alternatives, costs, deps N28b-13/BD-248/BD-095/BD-254. BD-345 and N28b-31 (outside this packet) still use N28b-29's spellings (frob.audit/1, under-sampled, failed, reached-finalists, lost, --campaign): the mapping is written into N26b-04 and N26b-05, and those two beads need the rename"
+ }
+]

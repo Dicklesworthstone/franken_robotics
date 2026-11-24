@@ -1,0 +1,239 @@
+{
+ "round": 1,
+ "slice": "U15a",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-069",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "check 3 calls the thermal and envelope libraries, which depended on BD-069 (a cycle of work order): BD-069 now depends on N15a-14 and N15a-16 and owns the from_card adapters. Check 3 now holds torque (torque-hold loss curve with alpha_flux), since checking a torque rating at constant current admits a rating that runs away (18 A vs 15.9 A on the worked card); added tests and a mutant. Evidence class corrected to Estimated unless every field read is measured (card values are Estimated unless calibrated); determinism named D0 consistently. Check 2 now states how a single-multiplier loss law is read (as the pair (η, 1/η)) and where the power created is evaluated (new `--at τ,ω`, default continuous torque at half no-load speed), so the KA-279/KA-320 payload of 2.5 W is reproducible; test single_multiplier_refused."
+  },
+  {
+   "bead": "BD-072",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "derating-band semantics defined (pair applies from its temperature upward, scale 1 below the first band, monotonic bands, malformed bands refused); evidence class corrected to Estimated unless all fields measured, matching its own Considerations."
+  },
+  {
+   "bead": "BD-073",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "added dep N15a-17 (the four-quadrant efficiency used by --at joint); the stage-6 refusal of KA-280 cannot be met before seeds BD-103/BD-110: the criterion is now the verb-level refusal, with the stage-6 verdict measured by N15b-34; evidence class corrected."
+  },
+  {
+   "bead": "BD-076",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "added dep BD-024 (the legged archetype the referee gate fixture runs); the c^2 metamorphic relation restricted to the linear L1 fixture (it is false at L2 where R depends on heat); single-multiplier control given its values."
+  },
+  {
+   "bead": "BD-112",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "added dep N15a-29 (the soaked(T) start the planted knee fixture needs at tick 0); output schemas aligned with the verb registry (frob.explain.run.out/1, frob.explain.design.out/1); FROB-REF-840 exit code 5 per the surface's refusal table; explain.design ownership by frob-chronicle labelled DESIGN with reason."
+  },
+  {
+   "bead": "BD-275",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "the bead claimed the lane (lower seed BD-259) and nemesis.bound (later seed BD-276) call its predicate, and required a 560 refusal from a verb that comes after it: scope and the acceptance now state what this bead can finish (discovery record and predicate; the 560 refusal asserted end to end by N15a-28); 567 tested at commit and citation."
+  },
+  {
+   "bead": "N15-KA",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "added scripts/e2e/sinew_registry.sh with per-row assert lines, count metrics, controls per gate, a planted wrong record and a summary; dep STD-E2E."
+  },
+  {
+   "bead": "N15a-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the shared PortBalance identity omitted heat_to_ambient (a thermal node could not close); now residual = Σwork_in − d_stored − dissipated − heat_to_ambient with the rule that an element's loss is never also booked as negative thermal port work; added node and composite cases and the double-count test. Contract evidence rule corrected (Estimated unless all fields measured); module map points at N15b-08, not the superseded N15a-10."
+  },
+  {
+   "bead": "N15a-02",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "ActuatorCardView declared as a plain struct of this module, since this bead precedes the card schema (BD-069 fills it)."
+  },
+  {
+   "bead": "N15a-03",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "stage 1 (N14a-08) and design.check (BD-110) come after this bead, so its criteria are restated at the bind API with the CLI path asserted by N15a-25; the strict-data test asserted a refusal that N15b-06 owns: replaced by an influence-record test and matching control."
+  },
+  {
+   "bead": "N15a-04",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "GATE-SINEW-01 row levels corrected (mechanical time constant is an L1 row, KA-332, not L2) and turned into crate data with a test; the measurement belongs to N15a-24 on BD-070/BD-071, which come after this bead."
+  },
+  {
+   "bead": "N15a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "evidence rule aligned with the crate contract; elements fill PortBalance with the one N15a-01 helper."
+  },
+  {
+   "bead": "N15a-06",
+   "kinds": [
+    "tests"
+   ],
+   "what": "metamorphic relation corrected: temperatures are unchanged only if heat capacities scale with powers and conductances."
+  },
+  {
+   "bead": "N15a-07",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "added deps BD-072 and BD-073 (the referee L2 side of the 10⁴ battery uses R(T), k(T) and the exact hexagon); the e2e pointed at an 'M2 section' of the M1 script N15a-24: now points at N15b-35's sinew_kernels_fidelity.sh with the logged fields, plus a host-reference metric run. Added dep N15a-23 and an acceptance criterion and test replaying the sinew-passivity battery through the host reference in f64 and f32 (GATE-SINEW-08 'on all tiers'), which the M1 battery had claimed for M2 arithmetic."
+  },
+  {
+   "bead": "N15a-08",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N15a-04: the gaussian-shape refusal FROB-REF-136 reads its capability table."
+  },
+  {
+   "bead": "N15a-14",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dropped dep BD-069 (BD-069's check 3 calls this library, so the library comes first); ThermalView and Network declared as plain parameter structs here, with BD-069 owning from_card."
+  },
+  {
+   "bead": "N15a-15",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep BD-103: the nominal-gait duty source of steady(task) is A-11's gait RMS current."
+  },
+  {
+   "bead": "N15a-16",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dropped dep BD-069 for the same reason; ElectricalView declared here, BD-069 owns from_card."
+  },
+  {
+   "bead": "N15a-17",
+   "kinds": [
+    "scope"
+   ],
+   "what": "single-multiplier item aligned with BD-069: the card check owns the normalization and refusal; this bead supplies the fixture card and shows the negative coefficient through the row."
+  },
+  {
+   "bead": "N15a-23",
+   "kinds": [
+    "deps",
+    "placement"
+   ],
+   "what": "added dep N15a-09 (tooth damping of backlash rows is a checked loss term); the M1 battery claimed f32 host-reference paths of the M2 bead N15a-07: those now run in N15a-07 (which depends on this bead) and in BD-151."
+  },
+  {
+   "bead": "N15a-24",
+   "kinds": [
+    "placement"
+   ],
+   "what": "the 'M2 section' of an M1 script is now explicit: the f32 port-balance row is written here, exercised by seed BD-208 at M2, reports `not run` at M1; GATE-SINEW-03 is N15b-35's."
+  },
+  {
+   "bead": "N15a-25",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "added deps BD-074, BD-110, N15b-06 (transmission cards, design.check stage runner, --strict-data, all exercised by its steps); added the differential card (reflected inertia off-diagonal, CX-140) promised by N15a-18; single-multiplier checked with --at 10,1; unit tests that each rejection fixture differs from qdd-m by its one mutation."
+  },
+  {
+   "bead": "N15a-26",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "added deps BD-058, BD-103, BD-110 for the preflight step; the script now derives the undersized design itself by a typed edit instead of an unnamed fixture."
+  },
+  {
+   "bead": "N15a-28",
+   "kinds": [
+    "tests"
+   ],
+   "what": "unit tests that each refusing fixture differs from ok_causal by exactly its named property, so each refusal is for the stated reason."
+  },
+  {
+   "bead": "N15a-30",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "ordering against the parallel settled-pose cache BD-195 stated (related), with test thermal_survives_pose_restore."
+  },
+  {
+   "bead": "N15ax-02",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "acceptance and e2e relied on later beads N24a-30/N16bx-02: now a single-definition lint and FROB-REF-121 via design.check here; the dry/dusty carry run handed to N24a-30 (request)."
+  },
+  {
+   "bead": "N15ax-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`actuator list --class measured` misused the actuator-class filter; the e2e now lists the store and asserts provenance shares."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-explain",
+   "what": "the explain.design row names owner frob-opt; BD-112 implements both explain verbs in frob-chronicle (shared token estimator, section assembler and next_actions ranker; only layer 6 reads both analysis findings and telemetry). Align the row's owner to frob-chronicle."
+  },
+  {
+   "bead": "N24a-30",
+   "what": "add to task_family_reach_carry.sh the carry-tote run with the dry and the dusty attachment cards of N15ax-02 (seed 0): the dusty card (90 N, 12 N·m) detaches, asserted with telemetry query of the detach event; moved from N15ax-02, which comes before the family."
+  },
+  {
+   "bead": "BD-151",
+   "what": "replay the sinew-passivity battery of N15a-23 (GATE-SINEW-08 'on all tiers') through K-act-l2 and K-passive on the device tiers, with N15a-23's M1 values as reference (an acceptance criterion and test); the order already holds, since BD-151 reaches N15a-23 through N15a-07."
+  }
+ ],
+ "unchanged": 6,
+ "notes": "All 33 beads reviewed. Unchanged: N15a-09, N15a-11, N15a-12, N15a-18, N15a-27, N15a-29. Main themes: one work-order cycle broken (BD-069 vs the thermal and envelope libraries), acceptance criteria that needed later beads moved to the beads that can finish them, M2 work removed from M1 beads (N15a-23, N15a-24) and placed in N15a-07/BD-208/BD-151, missing prerequisites added. graph_check cycles = 0; all touched files parse."
+}

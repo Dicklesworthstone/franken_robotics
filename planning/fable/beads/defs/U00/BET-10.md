@@ -6,9 +6,9 @@ priority: 1
 milestone: "M4"
 labels: ["m4", "atelier", "tether", "frob-opt", "solid", "bet", "gate"]
 parent: "WP-28"
-deps: ["N00-28", "BD-317", "BD-374", "STD-E2E"]
-needs: ["§24.9: the design benchmark and the planted-defect corpus on which turns to a fix are counted", "§39.5: arm B of the partial ten-fold gate (the same agent on the composed incumbent tool layer)"]
-related: ["BD-248", "BD-372", "BD-373", "BET-13", "BET-14", "BET-23", "N00-19", "N00-15"]
+deps: ["BD-317", "BD-374", "N00-28", "N28b-43", "N39b-11", "STD-E2E"]
+needs: []
+related: ["BET-13", "BET-14", "BET-23", "N00-15", "N00-19", "N40-31", "N40-32", "NS-06", "NS-16"]
 gates: ["GATE-ATEL-03", "GATE-TENFOLD-06"]
 plan_refs: ["§4 (BET-10)", "§40.5", "§28.23", "§1.6 (N9)"]
 ---
@@ -27,7 +27,11 @@ Tier: Solid.
 ## Scope
 
 In: pre-registration, the M3 reading (arm B of the partial ten-fold gate) and the M4 reading (the surface A/B),
-verdict, the per-verb effect table and the decision record. Out: the benchmark, the agent harness, the arms.
+verdict, the per-verb effect table and the decision record. Out, with the beads that have them: the registered
+surface A/B, its anytime-valid verdict and the GATE-ATEL-03 record (BD-374); the ablation arms and the
+per-cluster effect table this bead reads (N28b-43); the partial ten-fold gate and its arm-B record (BD-317) and
+the decisions read on that record, including the BET-10 arm (N39b-11); the benchmark and the agent harness
+(their own beads, reached through those).
 
 ## Technical approach
 
@@ -47,9 +51,11 @@ verdict, the per-verb effect table and the decision record. Out: the benchmark, 
      its phase ledger.
 4. **No kill gate; the consequence is written.** The surface is reduced to the verbs that showed an effect. The
    rest are kept as audit tools and carry no speed claim.
-5. **Per-verb effect table.** To make the consequence executable, the experiment records for each verb cluster
-   whether removing it changes the time to acceptance (ablation arms pre-registered with the main arms); the
-   decision record lists clusters as `effect shown`, `no effect shown`, `not tested`.
+5. **Per-verb effect table.** To make the consequence executable, the experiment records for each task cluster
+   (the unit of at most seven tools the MCP surface shows, not the registry's verb clusters) whether withholding
+   it changes the time to acceptance (ablation arms pre-registered with the main arms, N28b-43); the decision
+   record lists clusters as `effect shown`, `no effect shown`, `not tested`, and a verb counts as having shown an
+   effect when a cluster it sits in is labelled `effect shown`.
 6. **Downstream if falsified.** The MCP surface's default visible clusters shrink to those with an effect;
    documentation stops describing the others as accelerating design; the "explain by intervention" and "decide
    many designs per turn" levers are re-read against the phase ledger, since they rely on the surface being
@@ -83,7 +89,9 @@ ADR. Logged per STD-E2E: per brief and arm the charged time, tokens, compute, ac
 threshold; the effect table; `summary` naming GATE-ATEL-03 and GATE-TENFOLD-06.
 
 ### Known answers and negative controls
-The completion cap: an arm that leaves a fraction q of briefs unresolved cannot show a ratio above 1/q (KA-009).
+The completion cap: an arm that leaves a fraction q of briefs unresolved cannot show a ratio above 1/q (KA-009:
+with 12% unfinished the ratio cannot exceed 25/3 ≈ 8.33; at the 1.5 threshold an arm with more than two thirds
+of its briefs unresolved cannot pass, whatever its speed on the rest).
 Negative controls: the planted-defect corpus; an A/A run of the same surface against itself (must not show an
 effect); sessions that share context (rejected: each session starts fresh).
 

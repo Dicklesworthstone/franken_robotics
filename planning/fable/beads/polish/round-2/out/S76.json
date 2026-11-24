@@ -1,0 +1,282 @@
+{
+ "round": 2,
+ "slice": "S76",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "BD-348",
+   "kinds": [
+    "correct",
+    "deps",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Applied both round-1 requests: A-16's owner is N33b-18 (dep BD-243 replaced, BD-243 to related; no cycle, BD-243 already depends on N33b-18); the undefined `frob conformance run --gate GATE-ATEL-05 --milestone M4` (twice) replaced by the ADR-GAUNT-01 cargo form with the tier from the gate record (N28c-25) and the record_gate example (N38b-19). The e2e now names the seven analyze verbs of VERBS-analyze it drives. Added deps it really reads: N28a-29 (the script frame it extends), N28-KA and N28-CX (the KA rows and the CX-307, CX-309 controls, now cited)."
+  },
+  {
+   "bead": "BD-378",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "S01's request recomputed on the current graph: 87 M4 beads were not ancestors (70 sinks); added the 66 sinks that may block an exit (N33c-22 among them, per S46) so that every M4 bead is an ancestor except FD-FSIM-18/-19/-20, FD-FSYM-05 and the switch-over beads N26b-24, N26bp1-01, which each state that no milestone waits on them (REV-1): those six moved to related with a DESIGN note, listed in the exit record by upstream status. S33's request: `xtask augur-slices --exit M4` (N25d-26, now a dep) is a blocking item of the checklist, with acceptance, unit test and control. NAB-27 now precedes the review. Disposition list lacked N40-05's `no-claim`. References listed BET-20 (an M3 bet) and omitted BET-10, -19, -23, -30: now the fourteen M4 bets of N40-31. Named OPEN-SENS-4, OPEN-TRAC-3. E2E logging gained digests, receipts, the slice-4 disposition and ADR identifiers. All 110 existing deps checked: live, non-epic, at or before M4, each a gate the review reads; kept."
+  },
+  {
+   "bead": "NAB-27",
+   "kinds": [
+    "deps",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "It depended on BD-378, which made it the one M4 bead downstream of the M4 exit review while the review's runner must run its sweep check (NAB-22's attached check). Following NAB-26: BD-378 dropped (to related) and replaced by what the sweep reads: the 23 kill-decision beads of step 1, the six late ones of step 2, N40-04's gate report, NAB-50's script and STD-E2E; order-of-work paragraph and two acceptance lines added. Full tool command named. Unit tests for the three negative controls and the fired-gate rename; the e2e logging stated in full (it said only 'logged per STD-E2E'). All counts and ceilings rechecked (21 families, 24 pairs, 1/(1−ρ²), ceiling 1.10 to 1.32)."
+  },
+  {
+   "bead": "N10b-19",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "users"
+   ],
+   "what": "Both round-1 requests applied. Dep N38b-29 added: check 5 now accepts, for rows the plan printed with no control, the owner's control whose record N38b-29 checked, reads rows through the loader as N38a-12 computes eligibility, and runs each row through its tier target (the siblings do; it did not). Aligned with the sibling audits that claimed to share helpers with it: script spine_c16_c27.sh, map scripts/e2e/spine_c16_c27.toml, flag --milestone, the shared shell helpers of N10a-22 (now a dep) with this map's cases added; its Rust audit target kept for the checks the helpers lack. Row filter written as the bare identifier N38a-02 defines (not `ka:<id>`). Totals and the 6,5,5,8,3,4,5,3,1,4,2,4 partition recomputed: right."
+  },
+  {
+   "bead": "N15b-25",
+   "kinds": [
+    "correct",
+    "placement",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Outcome recording aligned with N41-03: ruling as docs/adr/ADR-OPEN-SINEW-1.md with status `decided` (it said the row is marked `closed`, the status for rows retired by architecture decisions), or the default taken at the exit with `frob-conformance open default OPEN-SINEW-1 --exit M4`. Priority 2 to 1: an owner decision the M4 exit waits on, like its twins OPEN-SENS-4 (N20a-32) and OPEN-TRAC-3 (N18b-36); the M3 ask noted. KILL-SINEW-AGE stated with both triggers and its M6 milestone. E2E: actuator.check and --strict-data per card, the refusing fixtures with codes, the open-question reading, full STD-E2E logging."
+  },
+  {
+   "bead": "N22c-03",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Its content differs by branch of four M4 kill decisions (KILL-RESIDUAL, -MPC, -GAIT, -SHIELD) on which it did not depend: N22c-15, N22c-16, N22c-17, N22b-28 added (none reads this battery; no cycle). E2E: every `frob sim run` carries --key and compared runs carry distinct keys (PO-REFLEX-02 compares wrapped and plain at 1, 4, 16 workers; same keys would return one stored receipt); logging path and fields stated in full. All twelve statements checked against plan 22.15; the projection (1, 1/2) at λ = 1/2, project-then-clip (1, 0.25), and the 300 N·s/m slider (bound 200; 1 to −2 m/s; +1.5 J) recomputed: right; KA and CX rows match N22-KA."
+  },
+  {
+   "bead": "N28a-13",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Round-1 request applied (BD-243 replaced by N33b-18; no cycle). It drew suggestions from 'the registered experiment grammar', which is Ground's 30.8 grammar behind ground.excite (BD-390, M5): the eight aliases now carry their smallest cases and separators from 30.8 and the nine-row experiment list is carried inline (DESIGN). The armature test called (1, −1/N²) a direction in scaled units; it is in physical units, (N²σ_r, −σ_link) when scaled. Tests added for the five seeded aliases that had none. Deps added for the e2e it extends (N28a-29, STD-E2E) and the KA-688 and CX-309 rows; the control runs through the Gauntlet in the e2e. Drawbar arithmetic recomputed: right."
+  },
+  {
+   "bead": "N28a-14",
+   "kinds": [
+    "deps",
+    "correct",
+    "risks",
+    "complete"
+   ],
+   "what": "Round-1 request applied (N33b-18 for BD-243). But N33b-18's smoothed-gradient mode returns FROB-REF-724 until the paired finite-difference work exists, so the estimate depends on KILL-FDGRAD: deps N17b-20 (decision) and BD-353 (the estimator; closes `fallback` if fired, when the stencil report is used) added, no cycle. The record was a private file registries/pilots/regime-atlas.toml: now row PILOT-ATLAS-01 of crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1) with its fields. 48 specialist fine-tunings (about 6 to 9 device-hours) exceed E0 and no envelope request covered them: compute section, E1 for gate:KILL-ATLAS, readiness rule and the not-approved branch added. Skill arithmetic recomputed: right."
+  },
+  {
+   "bead": "N28a-15",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "ADR path was the retired docs/delivery/adr/: now docs/adr/ADR-KILL-ATLAS-M4.md with N40-03's required fields and the register's decision field. Its e2e ran `frob analyze regimes` from N28a-16, which depends on this decision: it now checks the registered schema file only, and the verb-output check moved to N28a-16. Test and negative controls added for the ADR fields and the recording session."
+  },
+  {
+   "bead": "N28a-16",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Output schema was `frob.regime-atlas/1`, while VERBS-analyze registers `frob.analyze.regimes.out/1` and says the name is kept on the fallback branch: aligned. Out of scope named BD-243 for A-16 (it is N33b-18). Deps added for the e2e it extends (N28a-29, STD-E2E) and KA-691 (N28-KA). E2E: the recorded run carries --key, the output is asserted against the KILL-ATLAS branch (taken over from N28a-15), and the two mutants run through the Gauntlet."
+  },
+  {
+   "bead": "N28ap1-02",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Deps added for what it uses: N28a-29 (the script it extends), N28-KA (KA-690) and N13-KA (KA-228). The e2e now runs its four mutants through the Gauntlet's cargo form. Two-link arithmetic recomputed (tool point (0.4, 0.3), J, τ = (−3, −3), support 25/3 N, gap 5/3 N): right; FROB-REF-448's meaning matches N22-REF."
+  },
+  {
+   "bead": "N33bx-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "S04's request applied: `fsim.volatile-edge` is BD-003's rule 1, with the two exceptions N33c-29 adds (Scope, step 4, the fs-mesh test). Its unit test read the real manifests of frob-algebra and frob-gait, but when this bead lands frob-gait does not exist (its first bead at M4 depends on this one through N33bx-03) and frob-algebra has no `airlock-tropical` feature yet (N33bx-03 adds it): now `consumer_request_is_off_by_default` on fixtures (pass and two failing forms), and on the real tree over every listed consumer whose manifest exists. Noted that no check-deps finding owns that rule (request to N34-03). E2E logging: log path and STD-E2E fields stated. Related: BD-003, N33bx-03."
+  },
+  {
+   "bead": "N36-12",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "risks",
+    "complete"
+   ],
+   "what": "The e2e enabled the D4 profile as `--profile fast-training`; N35-06 (a dependency) defines `--determinism fast-training`, and re-evaluation as `frob eval run --policy <id> --determinism device-replay`: corrected. Two-card arms now use N36-08's form (`--backend gpu-cuda:0,1 --shards 2`) with distinct `--key`s per arm and pair (KNOWN_DRIFTS 5). The version-lag bound had no spelling: `--lag-bound <L>` (DESIGN), accepted only with fast-training and two shards, with a test and acceptance line. The citation attempt is named (training return to a scorecard, 861, exit 3). Envelope: the comparison campaign is not the BD-324 pilot (R16) and no N44-01 row admits it; readiness rule and the not-approved branch added. Log path and STD-E2E fields stated. Ceiling and lag arithmetic recomputed: right."
+  },
+  {
+   "bead": "N40-34",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Step 3 said below 0.5 a rung removes outright failures, while its test said `uninformative`; plan 43 (one pair of thresholds) and GATE-ATEL-07 say below 0.5 or with no record a rung neither selects nor discards: reconciled (it is `uninformative`, removes only outright failures, labelled `baseline-only: unranked` per GATE-REFLEX-04), with boundary cases in the test. Condition (a) stated in N41-03's readings (`defaulted`, or `decided` with no envelope) and row R7. E2E: opt.cascade and eval.rank-agreement with their required inputs and distinct keys; the exit report command of N40-04 named. OPEN-CORTEX-1 figures and KILL-FAMILY's conjunction checked against the plan: right."
+  },
+  {
+   "bead": "N41-36",
+   "kinds": [
+    "risks",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The fallback paragraph covered KILL-FAMILY and KILL-INHERIT but not KILL-FDGRAD, on which RISK-47's detector (BD-353) depends: if it fired, the plant runs against phylum.gradient's fallback mode `sensitivity-report`, which keeps FROB-REF-540; stated, and the fallback unit test now covers all three gates. Run-verb calls carry their own keys; log path stated. Counts 57, 2, 10 checked against N41-35 (54, 5) and N41-37; refusal codes and exits 534, 540, 761 checked against their registries and BD-320."
+  },
+  {
+   "bead": "WP-61",
+   "kinds": [
+    "correct",
+    "complete",
+    "related"
+   ],
+   "what": "U44-1's request applied: the envelope bullet cites R7 (with the per-run rows R7.n of N23b-24 used by N23b-19 and train.family), R13 (N23b-20, E2 amended), R14 (N23b-21, E1 for gate:KILL-DISTILL) and R16 (BD-324's six campaign scopes), each with its not-approved branch from N44-01, plus the readiness rule. The variant bullet names its bead N40-34. Related gains the waits-for packages WP-44, WP-48, WP-60 (the epic says the package order is recorded there). Table of contents checked against the index: 36 children, right."
+  },
+  {
+   "bead": "WP-30",
+   "kinds": [
+    "correct",
+    "related"
+   ],
+   "what": "KILL-RESPONSE was given one trigger while a later bullet referred to 'the second trigger': the second (plan 18.19: a bound violation or false mode acceptance surviving one repair cycle) is now stated in both places. Related gains WP-11 and WP-16, the packages it waits for. Table of contents: 29, right."
+  },
+  {
+   "bead": "WP-28",
+   "kinds": [
+    "related"
+   ],
+   "what": "Each epic says the order between packages is recorded in `related`; this one's held only WP-62: WP-25 (Waits for) added. Table of contents (35) and the R8 envelope row checked: right."
+  },
+  {
+   "bead": "WP-29",
+   "kinds": [
+    "related"
+   ],
+   "what": "Related was empty though the epic waits for WP-11 and WP-21 and says the order is recorded there: added. Table of contents (19) and R15 checked: right."
+  },
+  {
+   "bead": "WP-64",
+   "kinds": [
+    "related"
+   ],
+   "what": "Related was empty; WP-27 and WP-39 (Waits for) added. Table of contents (39) checked."
+  },
+  {
+   "bead": "WP-65",
+   "kinds": [
+    "related"
+   ],
+   "what": "WP-13 and WP-27 (Waits for) added to related. Table of contents (45) checked; GATE-SHIELD-01's worked card recomputed (0.64 + 0.50 + 0.25 + 0.10 = 1.49 J against 2.00 J; 50.5 and 45.5 ms; reflected rotor 50 kg): right."
+  },
+  {
+   "bead": "WP-66",
+   "kinds": [
+    "related"
+   ],
+   "what": "WP-44 and WP-59 (Waits for) added to related. Table of contents (69) checked; the z fixture and the f ≥ 0.92 ceiling at h = 0.02 recomputed: right."
+  },
+  {
+   "bead": "WP-67",
+   "kinds": [
+    "related"
+   ],
+   "what": "WP-05 and WP-66 (Waits for) added to related. Table of contents (28) checked; GB-03 (κ = 0.589, m = 2.43·m_f), the dyad (pivot (1, 1), r² = 2) and the crank-rocker point (11/5, ±12/5) recomputed: right."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N41-16",
+   "what": "Check 3(b) (every Mn bead an ancestor of the Mn exit review) has no exception, but FD-FSIM-18, FD-FSIM-19, FD-FSIM-20, FD-FSYM-05 and the switch-over beads N26b-24, N26bp1-01 are labelled M4 and each states that no milestone waits on it (REV-1 rule 3). BD-378 now lists them in related and reports their registries/upstream.toml status instead of waiting. Add the exception: a bead labelled `upstream` whose record says no milestone waits on it, and a bead that depends on such a bead's landing, is exempt from 3(b) and is listed in the exit record with its status."
+  },
+  {
+   "bead": "N33c-22",
+   "what": "Its Background ends 'No milestone waits on this bead', but S46 made it an M4 bead and the M4 exit review BD-378 now depends on it (it closes `superseded` if the pilot was dropped or failed). Reword to say the M2 exit does not wait on it and the M4 exit does, closing it `superseded` on the pilot's failure; and priority 3 on a bead the M4 exit (priority 2) waits on: set 2 or state why not."
+  },
+  {
+   "bead": "N26b-23",
+   "what": "Priority 3 on an M4 bead that the M4 exit review BD-378 (priority 2) now waits on: set 2, or state why it stays 3."
+  },
+  {
+   "bead": "N44-01",
+   "what": "No envelope request row covers the KILL-ATLAS pilot N28a-14 (PILOT-ATLAS-01): 48 specialist fine-tunings plus evaluation, about 6 to 9 device-hours, above E0. Add a row (E1 for gate:KILL-ATLAS, WP of A-26) with its not-approved fallback: the pilot closes `not run: envelope not approved` and N28a-15 takes the fail-closed branch (A-26 as a descriptive report)."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "Implemented-by lines are stale after round-1 splits: analyze.wrench is N28ap1-02, analyze.identifiability is N28a-13, analyze.regimes is N28a-16 (all three say BD-348), analyze.sensitivity is N33b-18 (says BD-243). Add the options N28a-16 defines for analyze.regimes (--compare, --metric, --budget, --estimate). FROB-REF-879 is listed as a refusal of analyze.identifiability, but A-25 never fits and never refuses (exit 2 on an unidentified parameter); 879 is the calibration fit guard that calls it."
+  },
+  {
+   "bead": "N10a-22",
+   "what": "Its check 3d runs a known-answer row as `cargo test … --test <tier target> -- ka:<id>`; N38a-02 defines the row filter as the bare identifier (`KA-501`). Same in N10c-10's step d. N10b-19 now uses the bare form."
+  },
+  {
+   "bead": "N10c-10",
+   "what": "Step d uses the filter `-- ka:<id>`; N38a-02's row filter is the bare identifier (`KA-501`)."
+  },
+  {
+   "bead": "BD-025",
+   "what": "It states that frob-conformance is a library plus test targets with no binary, but N41-03, N41-01 and N40-05 use `frob-conformance open …` and `frob-conformance risks …` commands and NAB-22 uses `cargo run -p frob-conformance --bin decision-sweep`. Either admit named non-Gauntlet binaries in the crate (and say how they are invoked) or ask those owners to use the cargo form; the Gauntlet-run rule itself is unaffected."
+  },
+  {
+   "bead": "N34-03",
+   "what": "N33bx-02 (rule 3 of its section 3) and N33bx-03 rely on 'a consumer requests an optional airlock group only through an off-by-default feature of its own', but no check-deps finding owns it: `fsim.default-set` covers only frob-fsim's own default group set. Consider a finding (or an extension of fsim.default-set) for a consumer whose default feature list, or whose plain dependency declaration on frob-fsim, enables an optional group; N33bx-02 pins it meanwhile with the test consumer_request_is_off_by_default."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.start's inputs do not name the shard layout that N36-08, N36-31 and N36-12 pass as `--shards` (the layout field of N23a-19), nor the version-lag bound N36-12 adds (`--lag-bound <L>`, accepted only with `--determinism fast-training` and two shards); and the row says `profile` where the D4 profile is selected by N35-06's `--determinism fast-training`. Add 'Extended by: N36-12' and the two inputs."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run's inputs list no policy and no determinism profile, but about 34 scripts call `frob eval run … --policy <id>`, and N35-06's admitted re-evaluation of a D4 policy is `frob eval run --policy <id> --determinism device-replay`. Add both inputs."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run's inputs have no controller: N14b-06, N14b-09 and N15bp2-01 (and the sampling and barrier fixtures) run `frob sim run … --controller fixture:<name>`, conformance fixtures absent from release builds. Add the input with that restriction."
+  },
+  {
+   "bead": "N23b-10",
+   "what": "Its arm b enables the D4 profile with `frob train start … --profile fast-training`; N35-06 defines the enabling option as `--determinism fast-training` (`--profile` is sim.run's step profile). Same fix N36-12 received."
+  },
+  {
+   "bead": "N44-01",
+   "what": "Second uncovered campaign: N36-12's comparison of asynchronous against synchronous two-card training (at least ten pairs, each two two-card trainings to threshold) is above E0, is not the BD-324 pilot of R16, and no row admits it. Add a row with its not-approved branch (comparison `not run: envelope not approved`; synchronous sharding remains the two-card mode)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Its decision-ADR section still gives the path `docs/delivery/adr/ADR-<gate-name>-<milestone>.md`, which KNOWN_DRIFTS 4 retires; the beads that follow it (N28a-15, N28a-22) now write `docs/adr/ADR-<gate>-<milestone>.md`. Correct the path."
+  },
+  {
+   "bead": "N44-03",
+   "what": "Every WP epic says 'the order between packages is recorded in `related`', but in 69 of the 80 epics `related` lacks the packages of its own 'Waits for' line (S76 added them for WP-28, -29, -30, -61, -64, -65, -66, -67). Either have the regenerator write the drafted column into `related` (or make `check` fail on the difference), or reword the epic template."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "24 of 24 reviewed; 23 changed, 1 unchanged (N15bp2-01: arithmetic, gate wiring and verbs checked, its one gap is VERBS-sim's missing controller input, requested). All requests addressed to the slice applied after checking (BD-348 x2, BD-378 x3 plus the 110-dep finding, N10b-19 x2, N28a-13, N28a-14, N33bx-02, WP-61). BD-378 keeps six upstream M4 beads out of its deps by REV-1 rule 3, which conflicts with N41-16 check 3(b) as written (request filed). No new, merged or superseded beads. Every touched file parses (front matter, JSON lists, seven sections); graph_check cycles: 0. The slice looks settled apart from the cross-slice requests."
+}

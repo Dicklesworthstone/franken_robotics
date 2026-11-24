@@ -1,0 +1,464 @@
+{
+ "round": 1,
+ "slice": "U18b",
+ "reviewed": 54,
+ "changed": [
+  {
+   "bead": "BD-156",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Its e2e drove `frob sim run`, whose batched step (BD-159) and `--precision` flag (N35-04) both depend on this bead: rewrote it to drive `frob spark check --kernel` per kernel and `frob conformance run --gate GATE-TRAC-10` across worker counts; moved envelope placement of the certificate to BD-159/N35-27 (typed SolveCertificate returned here). tol_g had no number: DESIGN default 1e-4 (f32) / 1e-8 (f64) with reason. scaled_stop_test recomputed with the real power-of-two S = diag(1, 2^13) (scaled residual 8.19e-4, not the 1e-3 of an idealised 10^4 scale). Added cancellation unit test. Deps: + BD-153 (K-cone-eval, called by the Newton loop), + STD-E2E. Later in the review: the command-line gate run is now `FROB_TEST_SEED=7 cargo test -p frob-conformance --test g3 -- GATE-TRAC-10` in both the acceptance and the e2e (ADR-GAUNT-01: the Gauntlet has no agent verb; `frob conformance run` does not exist)."
+  },
+  {
+   "bead": "BD-167",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained"
+   ],
+   "what": "Acceptance needs `strict` and `batch-cpu` runs and K-cone-setup reads its parameter record: added deps BD-153, BD-159, BD-161; + N18-REF (raises 240 and the missing-pair refusal; an unknown code is a load-time error) and STD-E2E. The missing-pair refusal number now comes from the refusal allocation ledger (slug `interface-pair-missing`, N35x-02 / N35-33) instead of this bead appending a number itself; exit, retry and ranked repairs stated. + N16b-25: its e2e drives `frob sim run` with `--tier batch-cpu`, `--profile` or `--on-overflow`, options that N16b-25 (M2) adds; it did not reach that bead (no cycle, no later milestone)."
+  },
+  {
+   "bead": "BD-168",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added STD-E2E (its own script contact_battery_batched.sh sources the helper)."
+  },
+  {
+   "bead": "BD-366",
+   "kinds": [
+    "complete",
+    "correct",
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "The plan's verb answers for 'a wheel or track' but the input had no wheel form: added `wheel { part | radius, width; slip }`. Aligned with the registry row VERBS-contact (capability `contact:read`, not `design:read`; flags `--soil`/`--load`; the registry example parses). The n = 0.5 card's constants (k_c 0.41 kN/m^1.5, k_phi 21.6 kN/m^2.5, tracks 0.55 m, g 9.81) were missing from the acceptance; added with the recomputed pressure. Tests verb_wheel and verb_cli_forms added. Dep + VERBS-contact."
+  },
+  {
+   "bead": "N18-CX",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The four late counterexamples took 'the next free CX number at commit time', which N38a-40 forbids: now a `[[block]]` request (cx, count 4, owner N18-CX) in allocations.toml with tag-to-number mapping and the provisional-tag-past-due check; acceptance added. Deps + N38a-40, + STD-E2E."
+  },
+  {
+   "bead": "N18-REF",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "sense"
+   ],
+   "what": "Uncoded refusals now carry their ledger slugs (N35x-02 rows; numbers by the N35-33 rule) with exit, retry and ranked repairs, instead of 'the raising bead appends a code'. Acceptance demanded planted triggers for all ten codes at M1 although their mechanisms land at M2 to M4 and depend on this registry: restated (registry-level checks at M1; each trigger test written here, enabled by its raising bead, skipped with a logged reason before, never counted as passed). Added message_templates_render and uncoded_slugs_in_ledger tests. Deps + N35x-02, + STD-E2E. Later in the review: added two uncoded rows that contact beads need and no code covers: `patch-reduction-unqualified` (N18b-21; proposed 2xx, exit 3) and `rut-capacity-overflow` (N18b-17, N38a-29; proposed 7xx beside 722, exit 5; 722 is defined for contact or row capacity only); counts and the ledger test updated."
+  },
+  {
+   "bead": "N18b-01",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added STD-E2E; content verified (polygon deficits, sag, lip lever arms 0.900 / 1.017 N·m, chord near-straight case)."
+  },
+  {
+   "bead": "N18b-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e fetched the mecanum archetype through `design.templates` (BD-109) and needed the wheeled controller (BD-117), both of which depend on this bead: now synthetic fixtures with open-loop axle schedules (`--fixture traction/mecanum_sideways` and three variants). ellipse_projection claimed |λ_t2| ≤ 0.02, which the Euclidean projection does not guarantee (normal component may rise): corrected to ≤ μ₂·λₙ′ with the Moreau identities to 1e-12. Deps + N18-REF (raises 240), + STD-E2E."
+  },
+  {
+   "bead": "N18b-03",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the ranking comparison runs through the paired comparison verb: named `frob eval compare` and added dep BD-262 (M3)."
+  },
+  {
+   "bead": "N18b-04",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "risks",
+    "deps"
+   ],
+   "what": "its e2e lived inside N18b-09's script, which depends on this bead through BD-365: now owns scripts/e2e/tyre_laws.sh (N18b-09 runs it as a stage) with probe values 0 / 2,362.5 / 2,700 N. Added the stiction-band failure mode of the lagged-limit coupling (a regularized law transmits less than its limit while slip speed is inside v_s) as test small_slip_inside_stiction_band with a card-load rule v_s ≤ 0.1 x smallest validity slip speed (DESIGN). Dep + STD-E2E."
+  },
+  {
+   "bead": "N18b-05",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "decision rule let lockstep errors 'not decide', which would fund a belt that is wrong on the profile it runs on: lockstep points are now measured, and a lockstep failure with strict passing yields a recorded restriction (no lockstep admission until N18b-06 re-measures within 10%)."
+  },
+  {
+   "bead": "N18b-06",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "complete",
+    "deps"
+   ],
+   "what": "owns scripts/e2e/belt_tracks.sh (was inside N18b-09's later script), with named commands, thresholds and the referee refusal 721; acceptance carries the pilot's lockstep restriction. Dep + STD-E2E."
+  },
+  {
+   "bead": "N18b-09",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "tyre and belt stages now run the mechanism-owned scripts (tyre_laws.sh, belt_tracks.sh) and read their logs instead of re-issuing their commands; self-test uses the STD-E2E expected-value override and fails a stage whose called script logged a failed assert while exiting 0."
+  },
+  {
+   "bead": "N18b-10",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "+ STD-E2E; covering acceptance completed with the bottoming-out numbers (t_cov 25 mm reached at 250 N, total 27.5 mm; 300 N gives 28.0 mm on the floor slope). + N16b-25: its e2e drives `frob sim run` with `--tier batch-cpu`, `--profile` or `--on-overflow`, options that N16b-25 (M2) adds; it did not reach that bead (no cycle, no later milestone)."
+  },
+  {
+   "bead": "N18b-11",
+   "kinds": [
+    "deps"
+   ],
+   "what": "its plate cases run on `--profile strict`, which it did not reach: + BD-161. + N16b-25: its e2e drives `frob sim run` with `--tier batch-cpu`, `--profile` or `--on-overflow`, options that N16b-25 (M2) adds; it did not reach that bead (no cycle, no later milestone)."
+  },
+  {
+   "bead": "N18b-12",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "its e2e lived in N18b-19, which depends on it through BD-366: now owns scripts/e2e/soil_laws.sh on `frob conformance run --gate GATE-TRAC-08 --row soil-laws` (known answers, out-of-range refusals 243 with no clipping, f32-vs-host on 1e6 states). + STD-E2E. Later: the script's gate step is `cargo test -p frob-conformance --test g1 -- GATE-TRAC-08/soil-laws` with FROB_TEST_SEED (ADR-GAUNT-01), not `frob conformance run`."
+  },
+  {
+   "bead": "N18b-13",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "same ordering problem: now owns scripts/e2e/soil_step.sh (plate n=1.1 and n=0.5, drawbar at three slips, lockstep lag, rigid-floor digest equality, out-of-domain refusal through a fixture that sets the refuse policy, no invented flag); N18b-19 runs it. + STD-E2E."
+  },
+  {
+   "bead": "N18b-14",
+   "kinds": [
+    "deps"
+   ],
+   "what": "pilot used nothing of the soil laws: N18b-12 moved from deps to related (the mechanism N18b-15 keeps it; pilots first); + STD-E2E. + N16b-25: its e2e drives `frob sim run` with `--tier batch-cpu`, `--profile` or `--on-overflow`, options that N16b-25 (M2) adds; it did not reach that bead (no cycle, no later milestone)."
+  },
+  {
+   "bead": "N18b-15",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "the companion support row (α_z(β,π/2)·|z|·dA) and the explicit element wrench both applied the vertical intrusion resistance, so a slowly intruding foot would feel twice the force: the explicit wrench now applies only the direction-dependent remainder; test with the planted double count (300 N instead of 150 N). + STD-E2E."
+  },
+  {
+   "bead": "N18b-17",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "the refuse policy on rut-pool exhaustion had no code: now the ledger slug `rut-capacity-overflow` (722 is contact/row capacity only); test capacity_policies for all three policies. Its e2e lived in N18b-19 (later): now owns scripts/e2e/ruts.sh (64 worlds, 1e3 resets, 20 checkpoints, forced retry, two passes, persistence, pool exhaustion). + STD-E2E."
+  },
+  {
+   "bead": "N18b-18",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "listed the rut-leak count as an input although the rut pilot and mechanism depend on this decision (they exist only on its kept branch): DESIGN reading stated that the soil rows of GATE-TRAC-08 decide KILL-SOIL, tyre/belt/rut rows having their own fallbacks and being recorded by BD-366. + STD-E2E."
+  },
+  {
+   "bead": "N18b-19",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "complete"
+   ],
+   "what": "verb stage used `--card`/`--weight`, not the registry's `--soil`/`--load`; added the wheel form and the registry example; stages laws/plate/drawbar/ruts now run the owned scripts of N18b-12, N18b-13, N18b-17 (no second copy)."
+  },
+  {
+   "bead": "N18b-20",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "sense"
+   ],
+   "what": "capability `design:read` contradicted the registry of record (`contact:read`); scope claimed the run-time overflow policy that BD-159 defines (OverflowPolicy) and does not depend on this bead: now a design-level CapacityResponse report type. Exit rule made explicit (exit 2 when any class does not fit any solver), which also fixes N18b-24's quadruped 'exit 0'. Its e2e lived in N18b-24 (later): owns scripts/e2e/contact_capacity.sh. + VERBS-contact, + STD-E2E."
+  },
+  {
+   "bead": "N18b-21",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "hull_shrink example was inconsistent with its own cluster-centroid rule (no 8-sample layout gives centroids (±50,±20) with corner samples): layout stated (4x2 cell centres) and shrink corrected 53.9 to 25 mm. Unqualified-reduction refusal had no code: ledger slug `patch-reduction-unqualified` with repairs; tests unqualified_refused, truncation_detected. Owns scripts/e2e/patch_reduction.sh (was in later N18b-24). + N18-REF, + STD-E2E. + N16b-25: its e2e drives `frob sim run` with `--tier batch-cpu`, `--profile` or `--on-overflow`, options that N16b-25 (M2) adds; it did not reach that bead (no cycle, no later milestone)."
+  },
+  {
+   "bead": "N18b-22",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "owns scripts/e2e/capacity_bias.sh (was in later N18b-24) through study.plan/submit/status and eval.compare (N33b-19, added as dep); citing verbs land at M3 (eval.promote, report.design), so citation steps run from their landing and are skipped with a logged reason before. + N18-REF (raises 822), + STD-E2E."
+  },
+  {
+   "bead": "N18b-23",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "capability `sim:run` contradicted the registry (`contact:run`); 'a run with no snapshots' was an uncoded refusal on a verb whose registry row has none: replaced by replay from the nearest earlier snapshot or episode start (BD-203), cost printed; budget-stop behaviour stated (nothing partial published). Owns scripts/e2e/contact_audit.sh (was in later N18b-24). + VERBS-contact, + STD-E2E. + N16b-25: its e2e drives `frob sim run` with `--tier batch-cpu`, `--profile` or `--on-overflow`, options that N16b-25 (M2) adds; it did not reach that bead (no cycle, no later milestone)."
+  },
+  {
+   "bead": "N18b-24",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "now runs the four owned scripts as stages and keeps its own cross-mechanism steps (lockstep forced overflow 722, battery smoke audit, determinism); quadruped capacity exit corrected to 2 (prone 24 > 21); self-test names the override and the failed-assert-in-log case. + N16b-25: its e2e drives `frob sim run` with `--tier batch-cpu`, `--profile` or `--on-overflow`, options that N16b-25 (M2) adds; it did not reach that bead (no cycle, no later milestone)."
+  },
+  {
+   "bead": "N18b-25",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Exponent guard restated so it is correct: every diagonal exponent and every exponent sum applied to an entry within [-100,100] (f32) / [-1000,1000] (f64), so 2^120 and 2^-120 diagonals are flagged; e2e is `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test g3 -- GATE-TRAC-10/scale` (KA-422 is G3; ADR-GAUNT-01). + BD-025, STD-E2E."
+  },
+  {
+   "bead": "N18b-26",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct",
+    "placement"
+   ],
+   "what": "Its e2e needed the batched step that depends on it: now owns `stiffness_admission.sh` (cargo test g3 GATE-TRAC-10/admission: default cards admitted, 0.06 refused, 0.04 admitted, unscaled mutant; worker counts; `frob contact laws --json` shows the figure); the CLI refusal 244 moved to N18b-30. f32/f64 is the width pin of N35-04, not `--precision` (which takes default|stiff). Admission wired into N16a-02/N16a-03. Deps + BD-150, BD-153, N16a-02, N16a-03, N18-REF, N18b-25, N18b-28, STD-E2E."
+  },
+  {
+   "bead": "N18b-27",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The five half spellings (f16, half, fp16, mixed, mixed-f16) are added to N35-04's parser and give 245; `--precision f31` gives 802, default and stiff parse; KA-423 via `--test g1`. + N35-04, N18-REF, BD-025, STD-E2E, and (later) N16b-25 because its script uses `--tier batch-cpu`."
+  },
+  {
+   "bead": "N18b-28",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Aligned with VERBS-contact (capability contact:read, pass-through evidence, registry example). Owns `contact_laws_m1.sh`, run by N18b-30 as stage 0. Later: `sim.run --law` arrives only with N16b-25 (M2, which depends on this M1 bead), so the M1 CLI assertions of `--law CL-2/CL-H/CL-9` were moved to N18b-30; this bead asserts the admission check (246, status not-built, repairs, law in StepPlanId) through its tests and `frob contact laws --law CL-9` -> 802. Deps + N18-REF, STD-E2E, VERBS-contact."
+  },
+  {
+   "bead": "N18b-29",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "placement"
+   ],
+   "what": "Capability contact:read and static evidence per VERBS-contact; probe branches owned by mechanisms not yet landed answer FROB-REF-724 (exit 5) until wired; 243 added for soil/tyre branches; owns `contact_probe_m1.sh` run by N18b-30. Deps + N18-REF, N18b-28, STD-E2E, VERBS-contact."
+  },
+  {
+   "bead": "N18b-30",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Stage 0 runs the four owned scripts (N18b-26/27/28/29) and fails on a logged failed assert even at exit 0; missing pair cites the ledger slug `interface-pair-missing`; step 12 uses the f32 width pin (not `--precision`) and follows the envelope's next_actions repair, plus `frob sim estimate`; step 7 gains `--law CL-2 --tier referee` (246 not-built) and `--law CL-9` (802) moved from N18b-28. + N16b-25 (its `--law`, `--profile`, `--tier batch-cpu`)."
+  },
+  {
+   "bead": "N18b-33",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Fallback step 1 skipped when the CL-2 pilot was negative, contradicting the pilot table (CL-2 'stays the KILL-CONTACT fallback') and §18.17: step 1 now always re-measures GATE-FID-01 under CL-2 (production law if funded, else the pilot law) and only its failure leads to step 2; trigger test gains that case. e2e reads the pilot record and logs ts/script/bead/step/event, verdict, selected step, first differing value."
+  },
+  {
+   "bead": "N18b-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Negative verdict said CL-2 'cannot serve as the first fallback', contradicting the pilot table ('stays the KILL-CONTACT fallback'): now a negative pilot leaves N18a-18 unfunded and CL-2 the named fallback, re-measured if the kill gate fires."
+  },
+  {
+   "bead": "N18b-35",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "`pressure_shift_linear` statics wrong (used spacing s; the 2x2 rows are s/2 apart): edge totals differ by 4·M_t/s and per element by 2·M_t/s. + N16b-25 (e2e uses `--tier batch-cpu --profile strict`)."
+  },
+  {
+   "bead": "N18b-36",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e called `frob contact soil` (BD-366), which comes after this bead through N18b-18: now lists cards via `frob contact laws` and probes interface and film cards (BD-230), leaving the soil CLI assertion to N18b-19; full NDJSON fields. Deps + BD-230, N18b-12, STD-E2E."
+  },
+  {
+   "bead": "N18b-38",
+   "kinds": [
+    "tests"
+   ],
+   "what": "`sill_convergence` said 'within 1% at h0/4 by construction' (a tautology): now work and impulse at h0 within 1% of the h0/4 values, differences decreasing, order reported."
+  },
+  {
+   "bead": "N18b-39",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Refusal typed its own 2xx number; now raises the ledger row `response-batch-stale-anchor` (number entered by N18-REF, interim form before). Owns `response_anchor.sh` (sim run + cargo test) run by N18b-42 as stage `anchor`, since the verb BD-367 depends on it. Tests: every anchor component incl. world/step/epoch/plan/model/kernel, refusal block, cancel-without-leak, commit-fence capture. + N18-REF, STD-E2E."
+  },
+  {
+   "bead": "N18b-40",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e was only a stage of N18b-42 (after BD-367): now owns `response_acceptance.sh` (three fixtures, 64 f32 columns vs f64 re-solve, the three mutants) run as N18b-42's `columns` stage. Tests added: wider-format u, bound class follows lambda certificate, non-finite -> failed, reroute share per class. Numbers (gamma, rho, flops, crossover 23) verified."
+  },
+  {
+   "bead": "N18b-41",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Shift search said 'halve the distance to zero (delta <- 2 delta)', two different rules, and 6 retries reaching s = 0: now doubles the gap, 6 attempts, last shift lambda_hat/2, no attempt when lambda_hat <= 0. 'n at most 64' contradicted the plan's 96-unknown example: n is not capped, the budget degrades to Estimated. Owns `lambda_lo.sh` (bundles, `frob prove verify`, offline auditor, four tampered copies) run as N18b-42's `lambda` stage. + STD-E2E."
+  },
+  {
+   "bead": "N18b-42",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests"
+   ],
+   "what": "Stages 1-3 now run the owned scripts of N18b-39/40/41 first and fail on a logged failed assert; stale-anchor code is the one N18-REF enters for the ledger row; gate run carries FROB_TEST_SEED for the same-seed repair re-run; harness self-test for stage failure."
+  },
+  {
+   "bead": "N18b-43",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Refusal typed its own 2xx number: now raises ledger row `swept-bound-without-speed-bound` via `swept::admit` at step-plan admission. 'Adds no script of its own' replaced by owned `swept_bounds.sh` (host tests, containment gate at full size, counterexample values) run by N18b-45 as its first stage. Tests for the refusal block and the torque-limit-only admission. + N18-REF, STD-E2E."
+  },
+  {
+   "bead": "N18b-44",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "e2e stages spelled out: strict pass with the referee row's seed, chord mutant, kernel-box containment, audit per tier with `--tier/--profile/--key` per contact.audit's inputs, the shrunken-box planted control, Clopper-Pearson bound, full NDJSON fields. + N16b-25 (`--profile strict`, `--tier batch-cpu`)."
+  },
+  {
+   "bead": "N18b-45",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "Stage 0 runs `swept_bounds.sh` of N18b-43; new `admission` stage asserts the speed-bound refusal at the command line (ledger row, pointer, repairs) once the transactional step exists; acceptance and self-test added. + N18-REF."
+  },
+  {
+   "bead": "N18bx-01",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "e2e fed invalid cards to `contact laws --card`, which has no card input: now through `contact probe --card` (102/103 with pointer); probe input schema gains `impulse` and `m_eff` (one without the other -> 802); telemetry via N24a-36; related + N20b-29 (the consumer), VERBS-contact. Pulse arithmetic verified (157.08 N, 9.935 ms, [9.069, 11.107] ms)."
+  },
+  {
+   "bead": "N18bx-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Claimed the damping ratio is unchanged when k is scaled with tau_d fixed; it grows by sqrt(factor) (zeta = (tau_d/2)·sqrt(k/m)): corrected, test added; fixture card sets tau_d = 0 so the closed form applies; 'the conformance runner' replaced by the conformance build's `--conformance-plant` option of N29a-25 (DESIGN, stiffness section), on each device tier present."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-contact",
+   "what": "contact.soil row: evidence label is `static` (class Tested, D0) but the soil law is semi-empirical and OPEN-TRAC-3's default cards are `assumed`, so BD-366 returns class Estimated, tier label Frontier; and its input list should name the plate, wheel, track and design forms BD-366 now specifies (example flags `--soil`, `--load` kept)."
+  },
+  {
+   "bead": "N38a-40",
+   "what": "add Traction's request to the 'requests known at conversion': cx block of 4 for N18-CX (tags trac-arc, trac-resid, trac-lambda, trac-mode)."
+  },
+  {
+   "bead": "N35x-02",
+   "what": "file two more ledger rows from chapter 18: `patch-reduction-unqualified` (a patch reduction requested for a (sample group, scenario class) pair with no qualification receipt; proposed 2xx, exit 3, after-change; raised by N18b-21) and `rut-capacity-overflow` (a rut write beyond the per-world rut pool capacity under the refuse policy; proposed 7xx beside FROB-REF-722, exit 5, after-change; raised by N18b-17 and N38a-29). Both are registered by N18-REF."
+  },
+  {
+   "bead": "N38a-29",
+   "what": "'the named capacity refusal for rut tiles' has no code: cite the ledger slug `rut-capacity-overflow` (N18-REF row; FROB-REF-722 covers contact or row capacity only) with its repairs and interim form, as N18b-17 now does."
+  },
+  {
+   "bead": "N35-04",
+   "what": "sim.run has `--precision {default|stiff}` (precision profile) while ArithPins carries a width f32|f64 with no CLI option; 16 beads (e.g. NS-16, BD-151, N16a-19, N16c-33, N24a-10, BD-204, BD-208) pass `--precision f32|f64`. Please define the arithmetic-width option (or state that width is a tier property) and, per N18b-27, accept the five half spellings (f16, half, fp16, mixed, mixed-f16) in the parser so they refuse with FROB-REF-245 (never 802), while `--precision f31` stays 802."
+  },
+  {
+   "bead": "VERBS-contact",
+   "what": "contact.probe row: evidence is `static` (Tested, D0, exact), but film and soil branches and any card with an `assumed` field give class Estimated (N18b-29, N18b-36); and its input forms should list the pulse branch of N18bx-01 (`impulse`, `m_eff`)."
+  },
+  {
+   "bead": "BD-025",
+   "what": "ADR-GAUNT-01 says the Gauntlet has no agent verb (conformance runs are `cargo test -p frob-conformance --test <tier> -- <row>` with FROB_TEST_SEED), yet 26 beads call `frob conformance run` (e.g. BD-079, BD-108, BD-162, BD-250, BD-310, BD-329, BD-347, BD-348, BD-349, BD-351, N14b-18, N19b-01/04/27, N22c-04, N28a-11/12/18/27..32, N28b-06/28). Either register a thin wrapper verb or have those beads use the cargo form; U18b now uses the cargo form throughout."
+  },
+  {
+   "bead": "N29a-25",
+   "what": "N18bx-03 passes its stiffness schedule through the conformance-build option `--conformance-plant <file>` (a `stiffness` section admitted by N18bx-03's rules). Please let the plant file carry further plant kinds defined by other beads, or name the option N18bx-03 should use."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "All 54 reviewed. Unchanged: BD-365, N18b-07, N18b-08, N18b-16, N18b-31, N18b-32, N18b-37. Cross-cutting fixes: mechanism beads own their e2e scripts and the integrating e2e beads run them as stages; uncoded refusals go through ledger slugs; `--law`/`--profile`/batched `--tier` users now depend on N16b-25; Gauntlet runs use the cargo form (ADR-GAUNT-01)."
+}

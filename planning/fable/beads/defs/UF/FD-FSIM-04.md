@@ -6,9 +6,9 @@ priority: 2
 milestone: "M2"
 labels: ["m2", "suite", "kinesis", "upstream", "frankensim", "solid"]
 parent: "WP-39"
-deps: ["BD-037", "BD-081", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-081", "BD-110", "N16b-23", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-056", "BD-088", "BD-084", "BD-361", "FD-FSIM-01"]
+related: ["N16a-05", "N16b-22", "N16bx-01", "N16bx-02", "N18b-08", "N19b-18", "NAB-49", "ROBOT-cassie", "ZOO-ackermann", "ZOO-rocker-bogie"]
 gates: ["GATE-KIN-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§16.4", "§16.12", "§18.9", "§33.8", "Appendix C"]
 ---
@@ -22,8 +22,9 @@ priority: **P2**.
 How the tiers treat a closure today (DESIGN). On the lockstep tiers a closure is a compliant equality row in
 the convex solve, with its compliance stated. Under a transactional profile closures are the bilateral rows of
 the transaction. On the referee, **exact closures wait for FrankenSim's constraint lane**: a design with a loop
-gets a compliant closure there too, labelled as such, so the referee adjudicates such a design with a model
-that is not exactly the mechanism.
+is refused there by name (`FROB-REF-721`, cause `kinematic-loop`, exit 5; ADR-KIN-06, the limit register of
+N16a-05, the lowering of N16b-23), and the bilateral rows of the `strict` profile adjudicate it from M2. The
+referee never adjudicates a loop with a model that is not exactly the mechanism.
 
 Rejected: symbolic elimination of each loop into reduced coordinates as the general answer (kept as a Frontier
 option for templates with closed-form closures; it does not scale to arbitrary loops); a local constraint
@@ -34,7 +35,8 @@ fork).
 
 In: in FrankenSim, holonomic constraints g(q) = 0 between two frames of a tree, and nonholonomic (Pfaffian)
 constraints A(q)·v = 0, both additive; here, exact-closure known answers on the referee. Out: compliant
-closures on the fast tiers and the bilateral rows of the transaction (BD-081, BD-084); the `closure`
+closures on the fast tiers and the bilateral rows of the transaction (N16b-23, over the island solve of
+N16a-07); the `closure`
 constructor of the design language (BD-056); bounded exact linkage synthesis (BD-361); the simulator's wheel
 contact, which is a friction law and not a rolling constraint.
 
@@ -79,7 +81,8 @@ current head before it is edited.
 Additive: tree models without constraints run exactly the code they run today.
 
 **Interim posture here.** Compliant equality rows on the fast tiers; bilateral rows under transactional
-profiles; no exact loops on the referee. The nonholonomic model is this project's planning model, static
+profiles; no exact loops on the referee, where a model with a loop is refused (`FROB-REF-721`,
+`kinematic-loop`) and routed to `strict`. The nonholonomic model is this project's planning model, static
 analysis model and known-answer oracle for rolling; it is not what the simulator integrates.
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FSIM-04/`, opened by BD-037 and kept current
@@ -105,10 +108,12 @@ against the new pin.
 battery of the referee gains the rows below, and GATE-KIN-01 (pendulum period within 10⁻⁶ relative at h = 1 ms;
 symmetric-top precession within 10⁻⁴; free-flight momentum conserved to 10⁻¹² relative over 10⁶ steps on the
 variational lane; ballistic invariants) is re-run with them. The model compiler then lowers a `closure` to the
-exact constraint on the referee, and the compliant closure remains the lowering for the fast tiers.
+exact constraint on the referee instead of the `kinematic-loop` refusal, and the compliant closure remains the
+lowering for the fast tiers.
 
-**Fallback if the change cannot land.** Compliant closures on the referee, labelled; exact answers for small
-loops come from the bounded exact linkage lane, outside the simulator.
+**Fallback if the change cannot land.** The interim posture stays: the referee refuses loops by name and the
+`strict` profile's bilateral rows adjudicate them; exact answers for small loops come from the bounded exact
+linkage lane, outside the simulator.
 
 ## Acceptance criteria
 
@@ -132,7 +137,7 @@ In FrankenSim (added):
 - `upright_rolling_disk_traces_a_circle`: forward speed 1 m/s and yaw rate 0.5 rad/s; expected path radius 2 m, with A·v at most 10⁻¹² throughout.
 - `redundant_closure_is_refused`: the same loop cut twice; expected a typed refusal naming the rank deficiency.
 Here:
-- `referee_closure_is_exact_after_adoption`: the parallelogram through `frob-model`; expected residual at most 10⁻¹² and the label `exact` in the envelope; at the pin, the label `compliant` and the stated compliance.
+- `referee_closure_is_exact_after_adoption`: the parallelogram through `frob-model`; expected residual at most 10⁻¹² and the label `exact` in the envelope; at the pin, `FROB-REF-721` with cause `kinematic-loop` (exit 5) and the repair `--profile strict`.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_04.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
@@ -140,8 +145,11 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_04 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob sim run --tier referee --json` on the parallelogram and four-bar
-fixtures and `frob design check`, asserting the closure label and residuals in the envelope.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob sim run --fixture <parallelogram|four-bar> --tier referee --seconds 2 --seed 5
+--key fd04-<fixture> --json` on the two closure fixtures (registered by this bead in the fixture registry of
+N24b-03; a run verb, so each call carries its own key), asserting the label `exact` and the closure residuals in
+the envelope, and `frob design check <the fixture's design> --json` (BD-110), asserting that its mechanism stage
+(stage 3: loop assembly and mobility) is `passed`, with mobility 1 for the four-bar.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_04/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

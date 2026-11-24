@@ -1,0 +1,348 @@
+{
+ "round": 2,
+ "slice": "S73",
+ "reviewed": 36,
+ "changed": [
+  {
+   "bead": "BD-320",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "self-contained",
+    "scope"
+   ],
+   "what": "Adds the --features canonical|si|si-norm input for PILOT-C-21's arms, with its default read from that pilot's record. Takes ownership of the campaign cost model that GB-28's Lane B tests (breakeven_designs, gain, verdict, the f-range rule), with tests carrying values. E2E: train.family calls carry --key and --approval; eval.run uses N23b-09's form (positional design, --task, --stream dev, --key); the policy.apply step, which depends on a later bead, is dropped and left to N23a-25 and N23a-36."
+  },
+  {
+   "bead": "BD-321",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Adds step 0: the real pretraining through train.family under the approved per-run R7 row (E3, ceiling, early-stop floor). No bead ran it before. Adds an acceptance criterion. Unit tests now carry values. E2E: policy.apply is positional with --task and --key; eval.run uses N23b-09's form; fine-tune rungs go through policy.apply --fine-tune steps:/to-target, not train.start --init; specialist curves are read with train status, not the nonexistent run show; a log path is added."
+  },
+  {
+   "bead": "BD-322",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applies request UJL-2: dep VERBS-train added; the stale --design remark is removed. Defines --force-inherit, --reset-depth/--audit-rate (labelled schedule-override, not citable for the gate) and --dry-run (prints the map, the reset values and admission; spends nothing), which other beads' scripts already used. E2E: positional train.start with --key on every arm, design edit with --expected-parent and --key, and a log path. Unit tests carry values. Its dry-run test also takes the verb-level report of the undecided k = 5, m = 8, moved from N23a-29 (KNOWN_DRIFT 7)."
+  },
+  {
+   "bead": "BD-323",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Builds train.start --warm-start bc:<controller>, the named fallback of KILL-DISTILL and KILL-RESIDUAL that no bead built; the registry row bc-warmstart moves to admitted. Defines --control shuffled-labels, --relabel-budget and --dry-run on train.distill. The teacher-state evaluation refusal is left without an invented number. E2E: --design, --key and N23b-09's eval form. Unit tests carry values."
+  },
+  {
+   "bead": "BD-324",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applies U44-1: names R16 (E2, one campaign: scope per algorithm, about 10 device-hours each, about 60 in all) and the not-approved branch (each pilot undetermined, the algorithm not built, PPO stays). Applies S10: every arm runs through frob-launch under R16, with meter rows cited in the log and the record; dep N36-20 added. Names pilots.toml (frob.gauntlet.pilot/1). States the crossing example exactly: 1 - (1 - 0.89^30)^50 = 0.78548."
+  },
+  {
+   "bead": "BD-328",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Aligns 537/545 with N28b-23: 537 for no record, or for discard through a record below 0.5; 545 (the ladder's) for select through a non-selective record. Applies U41-1 through the bead's own entry points: a scratch OPEN-PROG-4 default step (761, uninformative/unranked, 537 via policy.apply --score-for-ladder). The opt.cascade/report.campaign assertions move to BD-352 and N28b-23, which depend on BD-328. E2E calls use the real rows (rank-agreement --designs/--pair/--task/--key; no --fine-tune or --controller on eval.run)."
+  },
+  {
+   "bead": "GB-28",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The three mechanism tests now carry their inputs and expected values: N=500 gives specialists and N=700 gives pretrain; f over [0.05, 0.2] gives 554.6 to 658.5, so N=600 gives no recommendation and N=700 gives pretrain; admission without a token gives 761 with exit 4."
+  },
+  {
+   "bead": "N10b-11",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Defines f, r and h in the D-10 ceiling, noting this f is not the fine-tuning fraction. States that train.family's default feature map follows this record (canonical on adopt, si-norm otherwise). E2E names the train.family call with --features and a --key per arm and seed, and the N23b-09 eval form."
+  },
+  {
+   "bead": "N10b-14",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFT 1: --test g3 becomes FROB_TEST_SEED=2314 cargo test -p frob-conformance --test g3_metamorphic -- KA-129 KA-130 MR-24."
+  },
+  {
+   "bead": "N10b-15",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "E2E arms carry distinct --key values. Arms R and T use train.start --init raw:<checkpoint>, and design edit carries --expected-parent/--key. Out-of-process development-oracle arms run through frob-launch (scope campaign:pilot-c23), with meter rows cited in the log and the record; dep N36-20 added."
+  },
+  {
+   "bead": "N23a-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision record renamed docs/adr/ADR-KILL-DISTILL-M4.md (KNOWN_DRIFT 4). Gate evidence is read from the gates.toml row and its receipt, not the nonexistent evidence trace --gate. The probes use BD-323's --dry-run and bc warm start (built by BD-323). A log path is added."
+  },
+  {
+   "bead": "N23a-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Enforcement codes follow N28b-23: 537 for no record or discard through an uninformative record; 545 for select through a non-selective record. E2E: no --addresses option (uses the registered split); policy.apply and eval.run in their row forms with keys; the score table is written through a named test entry; the reduced mode uses synthetic score tables; the rank-agreement call matches its row; a log path is added. Unit tests carry values."
+  },
+  {
+   "bead": "N23a-25",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Membership goes through policy.envelope.admits (BD-320's wrapper with the generator locate check). The stale remark about N23-REF disagreeing is removed. The ladder guard splits 537/545 per N28b-23. Unit tests carry values. E2E: design edit gets --expected-parent/--key, a 545 probe and a log path. Request UJL-2 (dep VERBS-policy) was already satisfied."
+  },
+  {
+   "bead": "N23a-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Record renamed docs/adr/ADR-KILL-FAMILY-M4.md. Gate evidence is read from the gates.toml row and receipt, and the envelope decision from R7 and docs/adr/OPEN-CORTEX-1.md, not evidence trace --gate. A log path is added."
+  },
+  {
+   "bead": "N23a-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Record renamed docs/adr/ADR-KILL-INHERIT-M4.md. Gate evidence is read from the gates.toml row and its receipt. The probe cites BD-322's --dry-run. A log path is added."
+  },
+  {
+   "bead": "N23a-36",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Branch detection reads the KILL-* rows of gates.toml with the docs/adr records and the R7 envelope rows; evidence trace takes no gate. Design edits carry --expected-parent/--key. The ladder guard expects 545 for select through discard-only. Fine-tune, distill, residual-chain and family-envelope calls are put in their row forms with keys. Gate receipts are recorded via record_gate. The branch-table unit test carries its 162 combinations."
+  },
+  {
+   "bead": "N23a-37",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Battery call carries --backend/--seed/--key per backend; --impl is requested of eval.run. train.export uses the row's --out, not --to store. The second same-seed run gets a distinct key."
+  },
+  {
+   "bead": "N23a-38",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Same e2e fixes as N23a-37 (battery keys, --out on train.export, distinct key on the repeat run), and the shared log path is named."
+  },
+  {
+   "bead": "N23a-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "train.export uses --out. The CMA-ES, gain-vector, oversized and repeat runs carry distinct keys; the oversized network is named against the 10^4 limit."
+  },
+  {
+   "bead": "N23b-04",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Adds the surface: train.start --randomization and its adaptation options (requested of VERBS-train), status fields, and the move of algorithms.toml row adaptive-randomization to admitted. The adaptive-evaluation refusal is left without an invented number. E2E: positional design, --key, and N23b-09 eval forms. Adds an effective-sample-size test with values."
+  },
+  {
+   "bead": "N23b-19",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The out-of-process pilot now launches every job through frob-launch under the R7 per-run row (scope pretrain:family-pretrain/quadruped) so its 100 GPU-hours are metered; meter rows go in the log and the record; dep N36-20 added. Names pilots.toml (frob.gauntlet.pilot/1)."
+  },
+  {
+   "bead": "N23b-20",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applies U44-1: names R13 (E2 amended to the pilot's ceiling, about 70 device-hours). Applies S10: every arm and chain step runs through frob-launch under R13, with meter rows in the log and record; dep N36-20 added. Names pilots.toml."
+  },
+  {
+   "bead": "N23b-21",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applies U44-1: names R14 (E1, gate:KILL-DISTILL). Applies S10: every run goes through frob-launch under R14, with meter rows in the log and record; deps N36-20 and N44-01 added. Names pilots.toml."
+  },
+  {
+   "bead": "N23b-23",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Names the record docs/adr/ADR-KILL-ALTALGO-M4.md (KNOWN_DRIFT 4). The refusal probe uses the positional design, --task and a --key per algorithm."
+  },
+  {
+   "bead": "N23b-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The decision record moves from docs/decisions/ to docs/adr/OPEN-CORTEX-1.md, in the text and in the TOML row (KNOWN_DRIFT 4). The e2e train.family calls carry generator, split, task family, --key and --approval."
+  },
+  {
+   "bead": "N23b-40",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Defines L = l0 (radius of gyration about the centre of mass in the zero configuration) and M = m0 per C-21. Adds the si and si-norm feature maps that PILOT-C-21's arms S and N and its fallback need, which nobody built, with a value test."
+  },
+  {
+   "bead": "N23b-41",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applies UJL-2: dep VERBS-train added. E2E: the short runs carry --key per backend; the re-description step names g3_metamorphic with KA-128 MR-23; the gradient parity step names its test."
+  },
+  {
+   "bead": "NS-19",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "policy.apply uses the row's positional class:quadruped (and --task on the decline step). The long lane uses BD-321's pretrained policy instead of re-pretraining. A log path is added. The shuffled-label control, meaningless for a family policy, is replaced by random and shuffled-token controls. Unit tests carry values."
+  },
+  {
+   "bead": "SPEC-C-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFT 1: --test g3 becomes FROB_TEST_SEED=2300 cargo test -p frob-conformance --test g3_metamorphic -- KA-128 MR-23."
+  },
+  {
+   "bead": "BET-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KILL-FAMILY record path updated to docs/adr/ADR-KILL-FAMILY-M4.md."
+  },
+  {
+   "bead": "BET-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KILL-INHERIT record path updated to docs/adr/ADR-KILL-INHERIT-M4.md."
+  },
+  {
+   "bead": "N23a-20",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Unit tests carry values (bound 0.4·tanh(0.5) = 0.18485 rad, warm-up of 5 iterations, saturation band 0.392). E2E: control synth is positional with --key; residual:<inner> and --base-controller are stated as this bead's inputs and requested of VERBS-train; train.export uses --out; eval.run uses N23b-09's form with the zero:/random: controls of N23b-15; a log path is added."
+  },
+  {
+   "bead": "N23a-23",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Membership predicate signature changed from in_support(design, generator) to in_support(design, envelope), matching Scope and BD-320. Unit tests carry values. E2E: phylum generate gets --count/--seed; study plan takes its positional manifest (no --registration option); a log path is added."
+  },
+  {
+   "bead": "N23a-27",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Unit tests carry values (KA-129 identity, mirror signs, added/removed limb channels). E2E: design edit uses the row's grammar with --expected-parent/--key; the dry run is BD-322's; the log path is named."
+  },
+  {
+   "bead": "N23a-28",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E: chain edits and inherit calls carry keys and BD-322's labelled schedule override; eval.run uses N23b-09's form; the log path is named."
+  },
+  {
+   "bead": "N23a-29",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "KNOWN_DRIFT 7: the bead asserted frob train inherit --dry-run although BD-322 depends on it. The acceptance criterion and both scripts now assert through this bead's schedule-module reader and test entry. The verb-level checks move to BD-322's dry-run test and N23a-36's lineage-resets step, so no check is lost. A log path is added."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-train",
+   "what": "Add inputs that slice-S73 mechanism beads define and scripts use. train.family: features (canonical|si|si-norm; BD-320). train.inherit: --force-inherit, --reset-depth, --audit-rate, --dry-run (BD-322). train.distill: design or design set, the privileged teacher kind, mixing, capacity, seed, profile, --control shuffled-labels, --relabel-budget, --dry-run; refusals 531 and 524 (BD-323). train.start: --warm-start bc:<controller> (BD-323), network residual:<inner> and --base-controller (N23a-20), --randomization fixed|adaptive with --adapt-* (N23b-04), and the algorithm-specific inputs of --algo sac|td3|es (N23a-37/38/39: replay capacity, utd, batch, tau, target entropy, warmup, action law, explore/smooth sigma, smooth clip, policy delay, population, episodes per member, sigma, step, optimizer, params)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run: list FROB-REF-534 when --policy names a family policy and the design is outside its support (BD-320, BD-321). Add --impl <name> for batteries written against a trait (cortex-offpolicy; N23a-37, N23a-38). Add --randomization adaptive with its refusal (N23b-04)."
+  },
+  {
+   "bead": "VERBS-policy",
+   "what": "policy.apply: add FROB-REF-545 (a select request through a record whose mode is not selective), per N28b-23's division, which N23a-24 and N23a-25 now implement."
+  },
+  {
+   "bead": "N23-REF",
+   "what": "Narrow FROB-REF-537's select clause to 'no record' (or discard through an uninformative record) and add the 537/545 neighbour note per N28b-23. Allocate codes (via N35-33/N35x-02) for (a) evaluating a distilled student on teacher-visited states (BD-323) and (b) evaluating under the adaptive randomization law (N23b-04)."
+  },
+  {
+   "bead": "BD-352",
+   "what": "BD-328 can no longer call opt.cascade or report.campaign, which you build and which depend on it (KNOWN_DRIFT 7). Under a scratch default of OPEN-PROG-4 (N41-08: R6 unapproved, no rank-agreement record), please assert in your script: frob opt cascade --plan-only --key ... prints every rung uninformative; --finalists-from <rung> is refused with FROB-REF-537; frob report campaign prints 'unranked' and describes finalists as 'k survivors'."
+  },
+  {
+   "bead": "N28b-23",
+   "what": "With a discard-only record from BD-328, assert in your script that a select request (opt.cascade --finalists-from) is FROB-REF-545 and that the selection_basis wording is 'k survivors'. BD-328 now leaves these assertions to you and BD-352."
+  }
+ ],
+ "unchanged": 0,
+ "notes": [
+  "Kill-gate decision records in this slice were named docs/adr/ADR-CORTEX-12/13/15-kill-*.md; they are renamed to the KNOWN_DRIFT 4 form ADR-KILL-<gate>-M4.md in N23a-21, N23a-26, N23a-30, BET-15, BET-16 and N23a-36. No bead outside the slice cited them. ADR-CORTEX-16-kill-equiv (KILL-EQUIV, N23a-33 and BET-07) is outside the slice and has the same drift.",
+  "BD-328's request U41-1 is applied through BD-328's own entry points: policy.apply --score-for-ladder via BD-321 > N23a-25, and the record's modes and permitted use. opt.cascade and report.campaign are BD-352's, and BD-352 and N28b-23 depend on BD-328, so those assertions are requested of them (KNOWN_DRIFT 7).",
+  "The 537/545 split follows N28b-23 §6 across BD-328, N23a-24, N23a-25 and N23a-36; VERBS-policy and N23-REF are asked to align.",
+  "BD-321's fine-tune metric (steps to the specialist's final return divided by n95) was left unchanged: N23a-23's pre-registration defines it that way.",
+  "Not changed after checking: BD-320's evidence class Tested against the registry's evidence kind screening (two vocabularies, no conflict); N10b-11's dep BD-310 (kept); N23b-40's --test family_tokens entry, a digest-emitting test target and not a Gauntlet tier; '--features controls' in the U10b law suites, a convention shared by 23 beads.",
+  "All arithmetic checked: break-even 585.37, 554.56 to 658.54 and 66.7 to 133.3; gain(600) = 1.0224 and gain(700) = 1.1729; attainment counts 36, 46, 74 and 103; 0.78548; ceilings 1.43, 1.11, 1.053 and 2.78; replay 600 B and 6.3 GB; SAC target 1.787; TD3 target 1.49; Polyak 1.010; γ 0.99 and 0.99499; ES ranks; adaptive-randomization update 0.40196/0.59804 and weight bound 5; transformer about 1.77 M parameters; reset costs 0.333, 0.273, 0.467 and 0.458.",
+  "Helper scripts reach.py, verify.py and result.py were written this session in scratchpad/polish-r2-S73/. No br write command was run and no file was deleted."
+ ]
+}

@@ -1,0 +1,686 @@
+{
+ "group": "dup-10",
+ "decisions": [
+  {
+   "a": "BD-109",
+   "b": "ZOO-diff-drive",
+   "action": "link",
+   "note": "BD-109 is the template with presets and its catalog tests; ZOO-diff-drive is the pinned default instance and its expectation file; the zoo golden follows the template"
+  },
+  {
+   "a": "BD-109",
+   "b": "ZOO-humanoid",
+   "action": "link",
+   "note": "template and @g1 preset mass row in BD-109; pinned instance and expectation file in ZOO-humanoid; values agree"
+  },
+  {
+   "a": "BD-109",
+   "b": "ZOO-mecanum",
+   "action": "link",
+   "note": "template with the mirror parity flip in BD-109; pinned instance, map rows and the FROB-REF-118 variant in ZOO-mecanum; values agree"
+  },
+  {
+   "a": "BD-109",
+   "b": "ZOO-quad-mammal",
+   "action": "link",
+   "note": "template in BD-109; pinned instance, strata rows and control variants in ZOO-quad-mammal; values agree"
+  },
+  {
+   "a": "N13-21",
+   "b": "ZOO-quad-mammal",
+   "action": "link",
+   "note": "symmetry end-to-end run of GATE-MARROW-03 (M1 rows) and the zoo golden assert the same groups from two hand-written files; related, neither blocks the other"
+  },
+  {
+   "a": "BET-14",
+   "b": "N25a-18",
+   "action": "link",
+   "note": "N25a-18 applies the trigger of KILL-AUGUR-TIE per family stratum and writes the kill ADR; BET-14 reads it for the engine question"
+  },
+  {
+   "a": "BET-14",
+   "b": "N39b-07",
+   "action": "link",
+   "note": "N39b-07 applies KILL-TENFOLD-TIE and writes the kill ADR; BET-14 reads that record, evaluates the bet's falsifier clauses and writes the bet verdict"
+  },
+  {
+   "a": "BET-19",
+   "b": "N25a-18",
+   "action": "link",
+   "note": "BET-19 reads the KILL-AUGUR-TIE decision for its consequence on mission queries"
+  },
+  {
+   "a": "BET-19",
+   "b": "N25b-04",
+   "action": "link",
+   "note": "N25b-04 is the standing decision procedure and drill of KILL-AUGUR-FALSECERT; BET-19 reads its record for falsifier clause (b)"
+  },
+  {
+   "a": "BD-132",
+   "b": "N20a-37",
+   "action": "rescope",
+   "note": "BD-132 owns the auditor's alias-pair rule in frob-cert with the docking specimen; N20a-37 owns the witness object in frob-sense, its in-studio checker by referee replay, the T-junction fixture and the emission of the payload, and writes nothing in frob-cert"
+  },
+  {
+   "a": "BD-132",
+   "b": "N25e-29",
+   "action": "rescope",
+   "note": "sequenced: BD-132 lands the base lp-primal rules and the fail-closed first form of the law check (adjustable with multilinear-vertex only); N25e-29 completes the law object (four kinds, rules law.*) under the same rule identifiers"
+  },
+  {
+   "a": "CARD-T-30",
+   "b": "N20a-37",
+   "action": "rescope",
+   "note": "CARD-T-30 is the instance card (a supplied witness is valid); N20a-37 keeps the two general statements of PO-SENS-07 as proof documents and candidate cards decided by N12-52, and no longer calls them cards on file"
+  },
+  {
+   "a": "N19b-02",
+   "b": "N37-18",
+   "action": "rescope",
+   "note": "N19b-02 has the pack licence manifest, the register schema, the starter-pack manifest check and ScenePack::export_check, the only raiser of FROB-REF-310 and only for a scene pack; N37-18 has the one export door, FROB-REF-733 for every other export, the notices and GATE-SAFE-05, and calls the pack check for a scene pack"
+  },
+  {
+   "a": "N19b-02",
+   "b": "NEG-17",
+   "action": "rescope",
+   "note": "N19b-02 owns the register row schema, loader and the licence-manifest check of the starter pack; NEG-17 owns the values and tests of row frob-scene, the provenance purity check and the regeneration of the starter pack; the starter-pack rule is now one rule in both"
+  },
+  {
+   "a": "N37-18",
+   "b": "VERBS-report",
+   "action": "link",
+   "note": "the registry rows of the exporting report verbs now list the door's codes 731 and 733 in place of 310; the door's battery exports through those rows"
+  },
+  {
+   "a": "BD-295",
+   "b": "N17a-09",
+   "action": "rescope",
+   "note": "BD-295 keeps the queue and the selection function assign (which episodes take the freed slots, who waits for the cap or the reserve), lifecycle, modes and the gate; N17a-09 keeps the slot table and is the one owner of lane choice (plan_resets) with the table's own check of the two limits"
+  },
+  {
+   "a": "N17a-09",
+   "b": "N21b-21",
+   "action": "rescope",
+   "note": "N17a-09 is the host-side table and lane planner; N21b-21 is the device-side environment whose refill validates and writes the pairs it is given, moves none, and enforces the two limits as hard limits"
+  },
+  {
+   "a": "GB-11",
+   "b": "N15a-26",
+   "action": "link",
+   "note": "GB-11 is the worked card with its two-lane test; N15a-26 is the end-to-end run of actuator.thermal on the same card that records GATE-SINEW-05; values agree; a fixture-card agreement test added"
+  },
+  {
+   "a": "GB-12",
+   "b": "N15a-26",
+   "action": "link",
+   "note": "GB-12 is the worked card with its two-lane test; N15a-26 runs actuator.envelope on the same card and records GATE-SINEW-06; values agree"
+  },
+  {
+   "a": "N16b-14",
+   "b": "N29a-22",
+   "action": "rescope",
+   "note": "N29a-22 has the three monitors on batched tiers, the verb fidelity.energy with its schema and the energy half of GATE-CHRON-08; N16b-14 has the step side (sign convention, storage rule, the rule that gives a step one of the kernel's five contact modes, label consequences, INV-KIN-06, unit part of GATE-FID-06) and restates the flag rule without redefining it"
+  },
+  {
+   "a": "N16b-33",
+   "b": "N29a-22",
+   "action": "rescope",
+   "note": "two scripts for two gates on one mechanism: N29a-22 keeps scripts/e2e/energy_audit.sh (GATE-CHRON-08, energy half; the monitors' fixtures per device); N16b-33's script is renamed scripts/e2e/created_energy_gate.sh (GATE-FID-06: policy-level exploits, consequences, standard battery)"
+  },
+  {
+   "a": "N29a-24",
+   "b": "N32a-18",
+   "action": "rescope",
+   "note": "N29a-24 writes the one GATE-TETHER-08 row (all lanes) with the device-family battery; N32a-18 keeps the user-side script, the fault hooks and the six assertions, runs the fake and batch-cpu lanes and feeds a lane receipt; its script is called by N29a-24 for the device lanes"
+  },
+  {
+   "a": "N29a-24",
+   "b": "N33c-17",
+   "action": "link",
+   "note": "N33c-17 admits the lab-runtime harness for the device job protocol (INT-ASUP-02); N29a-24 measures with the admitted harness (schedules, await-point coverage, dual runs)"
+  },
+  {
+   "a": "BD-092",
+   "b": "N24a-37",
+   "action": "link",
+   "note": "BD-092 is the ledger on the referee and N24a-37 the verb that prints it; the ledger's script reads through the verb, so BD-092 closes on its unit measurement of the gate row and N24a-37's acceptance runs that script to a pass"
+  },
+  {
+   "a": "BD-231",
+   "b": "N19b-18",
+   "action": "link",
+   "note": "BD-231 builds the rigid proxies and measures the castor case at M3 as its seed condition and the record of KA-440; N19b-18 measures the same fixture again at M6 and alone writes the castor row of GATE-HAB-08"
+  },
+  {
+   "a": "BD-399",
+   "b": "NEG-18",
+   "action": "link",
+   "note": "BD-399 populates a grammar proxy's slots from the per-asset catalogue and supplies the KILL-DRESSING measurements; NEG-18 is one source (Infinigen Indoors): row values, admission reading, offline recipe, whole-interior import profile, per-source manifest; BD-399's source table restates the row"
+  },
+  {
+   "a": "BET-28",
+   "b": "N30b-18",
+   "action": "link",
+   "note": "N30b-18 applies the trigger of KILL-BAND to the rehearsal rows and writes the kill ADR; BET-28 reads it, evaluates the bet's three falsifier clauses, and writes the bet's own ADR and ledger row"
+  },
+  {
+   "a": "N00-15",
+   "b": "N39b-15",
+   "action": "link",
+   "note": "N00-15 is the claims-wording registry (differentiators, withdrawn claims, gate-conditioned renderer and lint); N39b-15 is the ten-fold rule set W1 to W10 with the limits block and the citation syntax, registered in that registry as tenfold-wording"
+  },
+  {
+   "a": "N10b-07",
+   "b": "N28a-23",
+   "action": "rescope",
+   "note": "N10b-07 (M1) owns the C-18 pilot: the twelve scripted amendments, their protocol, falsifier and record PILOT-C-18; N28a-23 (M4) keeps the derivations, the full KA-224 check of twelve polarity moves per fixture on stored verdict records, and the dry run on the 30-amendment campaign; it reuses N10b-07's amendments by number and no longer calls its own moves 'the twelve scripted amendments'"
+  },
+  {
+   "a": "N14a-24",
+   "b": "N16a-23",
+   "action": "rescope",
+   "note": "one decision bead per kill gate, in the chapter that owns it: N16a-23 decides KILL-TREEOP only (early M2 read, measured gain, cap of 64 with FROB-REF-160); N14a-24 decides KILL-SKEL-PORT, reads N16a-23's record for its third trigger, and has the packet removals; the trigger tests and the PO-SKEL-04 inputs moved from N16a-23 to N14a-24, the over-cap chain check folded into N16a-23"
+  },
+  {
+   "a": "N17a-26",
+   "b": "N28b-41",
+   "action": "rescope",
+   "note": "N17a-26 specifies the digest (mission view, canonical order, exact lowering, hash, classes, split report, ExperimentKey, the pair sampler, the tests that the view is what the kernels read); N28b-41 specifies how the store serves by digest (node kind, memo key, key tests, shadow rule, latch with FROB-REF-162, standing replay test, label, factor report); the memo-key tests and shadow rule were removed from N17a-26"
+  },
+  {
+   "a": "N19a-38",
+   "b": "NEG-29",
+   "action": "link",
+   "note": "N19a-38 says which hazards a battery's scenes drew and which it leaves uncovered (never-drawn, not-represented); NEG-29 maps each hazard to a requirement, shield or refusal, checks that the cover can fire, and reports the hazards a battery draws but leaves unguarded; NEG-29 reads N19a-38's incidence export"
+  },
+  {
+   "a": "N25a-23",
+   "b": "N25d-32",
+   "action": "rescope",
+   "note": "one trigger, one script: N25a-23 fires every refusal that is a single-field mutation of a mission query (eleven codes, cases a2 to a20); N25d-32 keeps the completeness table of the twenty codes, runs the triggers that are not query mutations (certificate codes, second triggers, later mechanisms) and the four standing rules, and reads N25a-23's log for the rest; N25d-32's misspelt-parameter and 877 triggers moved to N25a-23"
+  },
+  {
+   "a": "N27a-03",
+   "b": "N29a-11",
+   "action": "rescope",
+   "note": "N29a-11 owns the device ring and the reservoir rule (who holds a ring, its size, its tests); N27a-03 is the fork-point resolver that reads stored snapshots, flushed ring snapshots or replays, and no longer specifies the reservoir; its reservoir and ring-bytes tests were folded into N29a-11's"
+  },
+  {
+   "a": "N32a-11",
+   "b": "NJL-02",
+   "action": "rescope",
+   "note": "one parity implementation: NJL-02 (M0) owns the tool frob-surface-diff, its registry reader, the record schema, the list of accepted differences, and the coverage and snapshot checks; N32a-11 (M1) is the gate-grade extension of its parity check for GATE-TETHER-02 (flag probe, frob schema cross-check, undeclared defaults, example parity, in-memory transport, six negative controls, tether_parity.sh and the per-milestone report)"
+  },
+  {
+   "a": "N39b-42",
+   "b": "N40-21",
+   "action": "rescope",
+   "note": "N39b-42 measures GATE-TENFOLD-12 on the sealed suite (script, two phases, counting rules, two receipts, pre-open registration of descriptive strata); N40-21 judges and records (the gate function over those receipts and the run record, the one register row, the consequence in the report, the synthetic-tournament test)"
+  }
+ ],
+ "superseded": [],
+ "edges": [
+  {
+   "bead": "ZOO-diff-drive",
+   "dep": "BD-109",
+   "as": "dep",
+   "why": "the zoo golden pins the default instance of the template"
+  },
+  {
+   "bead": "ZOO-humanoid",
+   "dep": "BD-109",
+   "as": "dep",
+   "why": "the zoo golden pins the default instance of the template"
+  },
+  {
+   "bead": "ZOO-mecanum",
+   "dep": "BD-109",
+   "as": "dep",
+   "why": "the zoo golden pins the default instance of the template"
+  },
+  {
+   "bead": "ZOO-quad-mammal",
+   "dep": "BD-109",
+   "as": "dep",
+   "why": "the zoo golden pins the default instance of the template"
+  },
+  {
+   "bead": "N13-21",
+   "dep": "ZOO-quad-mammal",
+   "as": "related",
+   "why": "same groups on file for the first four archetypes and the forward-lidar case; shared fixture, no order of work"
+  },
+  {
+   "bead": "BET-14",
+   "dep": "N25a-18",
+   "as": "dep",
+   "why": "the bet verdict reads the kill-gate decision KILL-AUGUR-TIE"
+  },
+  {
+   "bead": "BET-14",
+   "dep": "N39b-07",
+   "as": "dep",
+   "why": "the bet verdict reads the kill-gate decision KILL-TENFOLD-TIE"
+  },
+  {
+   "bead": "BET-19",
+   "dep": "N25a-18",
+   "as": "dep",
+   "why": "the bet verdict reads the kill-gate decision KILL-AUGUR-TIE"
+  },
+  {
+   "bead": "BET-19",
+   "dep": "N25b-04",
+   "as": "dep",
+   "why": "the bet verdict reads the standing kill-gate record KILL-AUGUR-FALSECERT"
+  },
+  {
+   "bead": "N20a-37",
+   "dep": "BD-132",
+   "as": "dep",
+   "why": "the emitted alias-pair bundle must pass the auditor rule BD-132 builds"
+  },
+  {
+   "bead": "N25e-29",
+   "dep": "BD-132",
+   "as": "dep",
+   "why": "the law rules extend the base lp-primal checker"
+  },
+  {
+   "bead": "N20a-37",
+   "dep": "CARD-T-30",
+   "as": "dep",
+   "why": "rule 6: the mechanism follows the instance card it certifies under"
+  },
+  {
+   "bead": "N20a-37",
+   "dep": "N12-52",
+   "as": "related",
+   "why": "the decision that admits and numbers the two general statements as candidate cards; not blocking, the statements stay documents until then"
+  },
+  {
+   "bead": "N37-18",
+   "dep": "N19b-02",
+   "as": "dep",
+   "why": "the door calls ScenePack::export_check for a scene pack and reads the manifest entries and classes that N19b-02 defines; N19b-02 can be finished without the door"
+  },
+  {
+   "bead": "NEG-17",
+   "dep": "N19b-02",
+   "as": "dep",
+   "why": "the row is checked against the register schema and loader, and the purity check runs after the starter-pack manifest check"
+  },
+  {
+   "bead": "N37-18",
+   "dep": "VERBS-report",
+   "as": "dep",
+   "why": "rule 5: the laundering battery exports reports through the registered report rows, whose refusal lists carry the door's codes"
+  },
+  {
+   "bead": "BD-295",
+   "dep": "N17a-09",
+   "as": "dep",
+   "why": "rule 3: the dispatcher's assign calls the Phylum slot table's plan_resets (M3 on M2)"
+  },
+  {
+   "bead": "N21b-21",
+   "dep": "N17a-09",
+   "as": "related",
+   "why": "refill writes the lanes plan_resets chooses; N21b-21 tests them from a fixed list and needs no Phylum code"
+  },
+  {
+   "bead": "N15a-26",
+   "dep": "GB-11",
+   "as": "related",
+   "why": "same worked card in two forms (registry card and .fcard fixture); two tests, no order of work"
+  },
+  {
+   "bead": "N15a-26",
+   "dep": "GB-12",
+   "as": "related",
+   "why": "same worked card in two forms; two tests, no order of work"
+  },
+  {
+   "bead": "N16b-14",
+   "dep": "N29a-22",
+   "as": "dep",
+   "why": "the step side applies the one flag and feeds the verb that N29a-22 builds"
+  },
+  {
+   "bead": "N16b-33",
+   "dep": "N29a-22",
+   "as": "dep",
+   "why": "rule 4: every step of the GATE-FID-06 script reads fidelity.energy, which N29a-22 builds"
+  },
+  {
+   "bead": "N29a-24",
+   "dep": "N32a-18",
+   "as": "dep",
+   "why": "the gate row copies the fake and batch-cpu entries from N32a-18's lane receipt and the device trials call its script and hooks"
+  },
+  {
+   "bead": "N29a-24",
+   "dep": "N33c-17",
+   "as": "dep",
+   "why": "the simulated layer is evidence only once the harness is admitted by INT-ASUP-02"
+  },
+  {
+   "bead": "N24a-37",
+   "dep": "BD-092",
+   "as": "dep",
+   "why": "the verb prints the ledger BD-092 accumulates; BD-092 does not wait for the verb"
+  },
+  {
+   "bead": "N19b-18",
+   "dep": "BD-231",
+   "as": "dep",
+   "why": "rule 4: the gate measurement follows the proxies and uses BD-231's castor fixture"
+  },
+  {
+   "bead": "BD-399",
+   "dep": "NEG-18",
+   "as": "related",
+   "why": "sibling work on populated interiors; the populate mechanism does not need this source in particular (kitchen assets come from NEG-19 and NEG-20) and NEG-18 does not need the populate step"
+  },
+  {
+   "bead": "BET-28",
+   "dep": "N30b-18",
+   "as": "dep",
+   "why": "the bet verdict reads the kill-gate decision KILL-BAND"
+  },
+  {
+   "bead": "N39b-15",
+   "dep": "N00-15",
+   "as": "dep",
+   "why": "rule 5: the rule set registers in, and reads the exported renderings of, the claims-wording registry (M3 on M0)"
+  },
+  {
+   "bead": "N28a-23",
+   "dep": "N10b-07",
+   "as": "dep",
+   "why": "rule 8: the M4 pilot reuses the amendment definitions and record of PILOT-C-18 (already implied through BD-292)"
+  },
+  {
+   "bead": "N14a-24",
+   "dep": "N16a-23",
+   "as": "dep",
+   "why": "rule 7: the trigger of KILL-SKEL-PORT reads the decision of KILL-TREEOP (both M5)"
+  },
+  {
+   "bead": "N16a-24",
+   "dep": "N14a-24",
+   "as": "dep",
+   "why": "rule 7: the tree-operator mechanism uses limb port packets only on the branch where KILL-SKEL-PORT keeps them; it depended on N16a-23 for both decisions and N16a-23 now decides KILL-TREEOP only"
+  },
+  {
+   "bead": "N28b-41",
+   "dep": "N17a-26",
+   "as": "dep",
+   "why": "the store rules use the digest's ExperimentKey and pair sampler (already implied through BD-285)"
+  },
+  {
+   "bead": "NEG-29",
+   "dep": "N19a-38",
+   "as": "dep",
+   "why": "the per-battery report reads the hazard-by-scene incidence export"
+  },
+  {
+   "bead": "N25d-32",
+   "dep": "N25a-23",
+   "as": "dep",
+   "why": "the battery reads the admission script's log for the rows that script asserts (both M1)"
+  },
+  {
+   "bead": "N27a-03",
+   "dep": "N29a-11",
+   "as": "dep",
+   "why": "the resolver's ring source is the capture the ring bead flushes into the record"
+  },
+  {
+   "bead": "N32a-11",
+   "dep": "NJL-02",
+   "as": "dep",
+   "why": "the gate's checks are modules of the tool NJL-02 builds and use its record and reader (M1 on M0)"
+  },
+  {
+   "bead": "N40-21",
+   "dep": "N39b-42",
+   "as": "dep",
+   "why": "the gate function reads the two receipts of the measurement script"
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "ZOO-quad-mammal",
+   "what": "one-sided payload now reduces Γ_obs only (Γ_mech stays C₂ × C₂), to agree with N13-21 and §13.4 step 7 and the nested-groups law; the reading of §14.4's 'enters both symmetry groups' is labelled DESIGN in both beads"
+  },
+  {
+   "bead": "ZOO-humanoid",
+   "what": "payload-in-one-hand breaker stated as Γ_obs trivial with Γ_mech still C₂, same rule"
+  },
+  {
+   "bead": "N13-21",
+   "what": "refusal step now names the field `assert_obs: C2xC2` of the symmetry block (KA-276), as BD-109 and ZOO-quad-mammal do, in place of `symmetry: C2xC2`; DESIGN note on the payload rule and on the two hand-written group files added"
+  },
+  {
+   "bead": "ZOO-diff-drive",
+   "what": "push-over-axle-load value at r = 0.075 m corrected from 0.645937 to 0.645936 (√0.001656/0.063 = 0.6459362) and its tolerance set to 10⁻⁹ relative against the closed form, the tolerance BD-109 files for KA-265"
+  },
+  {
+   "bead": "BD-109",
+   "what": "sideways-cost test now states the exact closed-form values 0.178512 m and 0.553669 m of the zoo expectation file (the 4·√(d·b) estimate is 0.178885 m), and the raised-threshold test its 10⁻⁹ tolerance"
+  },
+  {
+   "bead": "BET-14",
+   "what": "arm names corrected to §39.5 and §39.22 and to N39b-07: W is the composed incumbent (arm C is its first form), the product's own layer over the incumbent engine is the optional arm D (the bead had called that arm W), and arm B's time is listed among the per-stratum values because r_T and r_C need it"
+  },
+  {
+   "bead": "N25e-29",
+   "what": "refusal mapping stated per surface: FROB-REF-829 on prove.verify and frob-verify (as BD-132), FROB-REF-847/-849/-850/-851 on a mission verb through the mapping table of BD-133; the bead had given only the mission codes for 'the verb that runs the checker'"
+  },
+  {
+   "bead": "BD-132",
+   "what": "step (e) of lp-primal now uses N25e-29's rule identifiers (law.class-kind, law.arguments-arrive, law.convexity-named) and names the first failing rule of the relabelled-affine specimen before and after N25e-29 lands; the two beads had left the same rejection without one rule name"
+  },
+  {
+   "bead": "N20a-37",
+   "what": "a witness with total-variation evidence is no longer written as an alias-pair bundle: the kind requires identical packet histories (§12.4 registry row) and CARD-T-30 excludes the bound from its witnesses; the two general proofs are documents and candidate cards (N12-52), not cards on file"
+  },
+  {
+   "bead": "N19b-02",
+   "what": "DESIGN recorded in N19b-02 and N37-18 (the plan words FROB-REF-310 'a pack or report would export …' in §19.16 and defines FROB-REF-733 and -731 in §37.12 without dividing them): 310 is raised only by ScenePack::export_check when the exported artifact is itself a scene pack (exit 3); a report or any other derived artifact is refused at the export door with 733 (licence) or 731 (private), exit 5. N19b-02 no longer has the report verbs call the pack check. Beads outside this packet that still expect 310 for stills or reports (NEG-21 to NEG-26, N41-35) need the same correction"
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "report.design no longer lists FROB-REF-310; the three rows holding export:report (report.design, report.run, report.mission) list FROB-REF-731 and FROB-REF-733, as VERBS-artifact does for artifact.export; the refusal_lists test follows"
+  },
+  {
+   "bead": "N19b-02",
+   "what": "starter-pack rule unified with NEG-17 and labelled DESIGN in both: join class redistributable only, every entry of source frob-scene or a repository file tagged synthetic (N19b-02 had also admitted attribution assets of default-pipeline sources; the plan's §19.9 says 'only synthetic and redistributable fixtures')"
+  },
+  {
+   "bead": "N19b-02",
+   "what": "register row schema now names the fields kind and use and the value set of redistribute (always, with-notice, with-attribution, never, per-object) that the row beads NEG-17 to NEG-27 use, with the mapping to the manifest entry's redistribution; the count of default-pipeline rows corrected from 'four permissive sources and the project generators' to four rows (the project's generators and three third-party sources)"
+  },
+  {
+   "bead": "N19b-02",
+   "what": "an attribution entry with no notice text is refused as unknown by the pack export check too, the rule N37-18 applies at the door; the check returns notice items and N37-18 embeds them"
+  },
+  {
+   "bead": "BD-295",
+   "what": "lane choice had three rules (lowest freed slot in BD-295; lowest eligible lane of the model's runs in N17a-09; mapped by the environment in N21b-21). DESIGN in all three: plan_resets of N17a-09 is the one owner; assign orders episodes and names no lane; refill validates against the layout rules and moves no row. With one model variant the result is the lowest freed slot, as BD-295's test states"
+  },
+  {
+   "bead": "N17a-09",
+   "what": "the 65th job was 'queued with FROB-REF-703' by the slot table; the plan's §32.11.1 says 'beyond that, queue' and gives 703 to the admission guard (§32.18). The table now returns a typed LimitReached with no refusal code and the caller queues; 703 at submission stays with BD-296; N21b-21's hard guard on refill uses 703 with observed job-cap or reserve"
+  },
+  {
+   "bead": "N21b-21",
+   "what": "cap and reserve values have one source (the daemon's SlotConfig, passed to the table and the environment); 'short jobs' of §17.8 and §21.11 defined as the size class interactive of §32.11.2 in all three beads; the KILL-SLOT decision is named as N32a-23; the shared-mode half of its script is run by BD-295, which depends on it, so the component closes on its per-job half and its co-tenancy tests"
+  },
+  {
+   "bead": "GB-11",
+   "what": "FROB-REF-132 is raised only for a required point (--require, or stage 6), as BD-072 and N15a-26 state; without it the 35 A call is a finding with exit 2 (the card had the bare call refuse). The command is written in the verb's form (positional card, --current 20A; the card had --card and a unitless current). Repairs are BD-072's four ranked repairs (the card had three)"
+  },
+  {
+   "bead": "GB-12",
+   "what": "the command is written in the verb's form of BD-073 (positional card, --v-bus, --speeds, --point τ,ω --require; the card had --card, --speed and a result field torque_fraction the schema does not have); the FROB-REF-131 repairs are BD-073's repair search (regear, else swap-actuator, else none), not 'lower speed, higher bus voltage, regear'"
+  },
+  {
+   "bead": "N16b-14",
+   "what": "contact-mode enumeration: N16b-14 had seven tags (flight, touchdown, stick, slip, release, joint-limit, mixed); the ledger kernel of seed BD-208 has five accumulators and N29a-22's verb prints five (none, sticking, sliding, impact, limit). N16b-14 now uses the five, with a DESIGN precedence rule (impact, limit, sliding, sticking, none) that neither bead had; touchdown, release and mixed fold into impact and stay readable on the Contact stream; created_sum is derived from the five, not stored"
+  },
+  {
+   "bead": "N16b-14",
+   "what": "ownership pointers corrected: the windowed rule is N29b-02's and the monitors and the verb fidelity.energy are N29a-22's (the bead had given all of them to BD-208); its own output shape for the verb removed in favour of schema frob.fidelity.energy/1"
+  },
+  {
+   "bead": "N16b-33",
+   "what": "script renamed from scripts/e2e/energy_audit.sh to scripts/e2e/created_energy_gate.sh (title, scratch and log directories follow), because N29a-22 owns a script of the same name that N29b-03 and N29b-06 call; N16b-14 cites the new name. N16b-15 and the listing in WP-50, outside this packet, still cite the old name for N16b-33"
+  },
+  {
+   "bead": "N29a-22",
+   "what": "its script ran 'four planted fixtures' while its fixture list has three (stiff-penalty bounce, position correction, cone excess); corrected to three"
+  },
+  {
+   "bead": "N32a-18",
+   "what": "chunk-conflict code: N29a-24 expected FROB-REF-878 and N32a-18 FROB-REF-810 with a note that the registry owner must decide. Both now state the division the two refusal registries record (N29-REF, N32-REF): 878 is the store's refusal to the worker, 810 is what the job and its caller see, with 878 as cause; both exit 9"
+  },
+  {
+   "bead": "N29a-24",
+   "what": "the leak check counted different resources in the two beads (three resource numbers plus device bytes; device memory, pooled buffers, leases, file handles, waiters). DESIGN in both: one leak set of six numbers for every lane of GATE-TETHER-08; the device-bytes number is recorded not applicable on the fake and batch-cpu lanes"
+  },
+  {
+   "bead": "N29a-24",
+   "what": "fallback when the lab runtime is not admitted: N29a-24 reported await-point coverage as not measured, N33c-17 had it met by enumerated injection points; the plan's §33.15 says only that the fallback keeps fault injection and loses schedule exploration. DESIGN in both: coverage is still measured and gated by enumerated crash injection at each listed await point; the reduced item is the count of explored schedules"
+  },
+  {
+   "bead": "N24a-37",
+   "what": "relative residual: the view defined r_rel = |numerical_residual| / Σ |line totals|, while the ledger (BD-092, also BD-208 and N29b-01) defines the residual share ρ = |Σ r| / W_abs with W_abs the per-step absolute work exchanged, and its script asserts ε and ρ from the verb. The view now prints residual_abs, work_exchanged, residual_share (ρ) and closure_defect (ε) by the ledger's definitions; within_bound requires both below the bound. DESIGN note in N24a-37; BD-092 lists what its script reads from the verb"
+  },
+  {
+   "bead": "N24a-37",
+   "what": "pendulum fixture stated as BD-092's KA-707 fixture (damping 0.5 N·m·s/rad, 60 s; the view had no coefficient or duration); accumulation described per tier (compensated double on the referee, double-float on batched tiers); the monitors and fidelity.energy attributed to N29a-22 instead of BD-208"
+  },
+  {
+   "bead": "BD-092",
+   "what": "order of work made explicit: its end-to-end script needs telemetry.energy (N24a-37, which depends on BD-092), so BD-092 records the referee row of GATE-CHRON-03 from its unit measurement and N24a-37's acceptance includes the script passing end to end"
+  },
+  {
+   "bead": "N19b-18",
+   "what": "pass rule of the castor case (KA-440): BD-231 required axle rise below 1 mm at 50 mm of rug travel, N19b-18 below the edge height 10 mm; the plan fixes only the verdict. DESIGN in both: onset at 1 mm of travel within 10% of 9.8 N, axle rise below 1 mm at 50 mm of travel; ramp 2 N/s in both; N19b-18's fixture:castor-rug is BD-231's scene and task, not a second definition"
+  },
+  {
+   "bead": "BD-231",
+   "what": "no longer records a 'partial' row of GATE-HAB-08 at M3: the gate is M6 and its castor row has one writer, N19b-18; BD-231 files its measurement as the known-answer record of KA-440, which that row cites"
+  },
+  {
+   "bead": "BD-399",
+   "what": "its script populated with `--assets redistributable`, but the three third-party default-pipeline sources are class attribution in their row beads (NEG-18, NEG-19, NEG-20), so nothing third-party would be drawn; the script now passes `--assets attribution` and asserts the attribution licence set and notices. The flag's meaning (most restrictive class the caller permits) is stated in BD-399, labelled DESIGN, and its consequence for this source in NEG-18"
+  },
+  {
+   "bead": "NEG-18",
+   "what": "two per-asset lists and two storage statements reconciled: the per-source manifest under assets/scenes/<source key>/ (NEG-18) holds records and digests only and feeds the project-wide catalogue registries/assets.toml (BD-399); asset bytes live outside the repository under the asset root, as BD-399 states"
+  },
+  {
+   "bead": "NEG-18",
+   "what": "the launch-shape limit had two responses with no cross-reference (BD-399 substitutes the proxy box for a slot asset; NEG-18 refuses a whole interior for the batched tiers); both beads now state the one limit and why the responses differ"
+  },
+  {
+   "bead": "N30b-18",
+   "what": "the bet ledger row of BET-28 had two writers (N30b-18 'closes' it; BET-28 records the verdict); now BET-28 writes the bet's ADR docs/adr/bet-28-m5.md and its ledger row, citing docs/adr/KILL-BAND.md, and N30b-18 writes the kill record and gate rows only; BET-28's acceptance line 'the KILL-BAND decision recorded' is worded as on record by N30b-18"
+  },
+  {
+   "bead": "N00-15",
+   "what": "the two lints would have disagreed over one generated text: N00-15 renders N13 with the bracket '[Hypothesis until the ten-fold report.]' and N39b-15 refuses the term ten-fold in any claim sentence before a report exists. DESIGN in both: a sentence byte-identical to a current registered rendering is registered text, exported by the registry and skipped by the rule set; anything else is judged"
+  },
+  {
+   "bead": "N00-15",
+   "what": "N39b-15 registered its lint as 'a rule set of the claims-wording registry', a table the registry did not have; N00-15 now defines [[rule_set]] (id, owner, command, paths, since) and N39b-15 states its entry (tenfold-wording, since M3)"
+  },
+  {
+   "bead": "N28a-23",
+   "what": "'twelve scripted amendments' named two different lists (twelve amendments in N10b-07, as the plan's C-18 pilot says; twelve moves per fixture, 24 in all, in N28a-23, which is PO-LEMMA-03 and KA-224). N28a-23's step and title now say 'twelve polarity moves per fixture', take N10b-07's amendments 1, 9, 11 (docking), 2, 4, 6, 8, 12 (stance) and 3 (33/32 gain) unchanged, and script only the missing relaxed requirement on the stance family (DESIGN: the inverse of amendment 12)"
+  },
+  {
+   "bead": "N28a-23",
+   "what": "pilot record moved from a file of its own, registries/pilots/reuse-grade3.toml, to the record PILOT-REUSE-GRADE3 in the one pilot register crates/frob-conformance/registry/pilots.toml (N38a-09), where N10b-07 records PILOT-C-18; detailed tables in a results file referenced by digest. N10b-07 writes the register path in full"
+  },
+  {
+   "bead": "N10b-07",
+   "what": "its claim on KA-224 stated exactly: the twelve amendments reach all twelve moves on docking and ten of twelve on stance (no relaxed requirement on the stance family); the remaining two are evaluated by N28a-23"
+  },
+  {
+   "bead": "N16a-23",
+   "what": "title and gates field now name KILL-TREEOP only; it writes no ADR and no registry row for KILL-SKEL-PORT. Seed BD-385 (outside this packet) still says both ADRs are written by N16a-23; the KILL-SKEL-PORT record is N14a-24's"
+  },
+  {
+   "bead": "N14a-24",
+   "what": "decision record path: N14a-24 had docs/adr/ADR-SKEL-PORT-decision.md, N16a-23 docs/adr/ADR-KILL-SKEL-PORT.md for the same record. DESIGN: docs/adr/ADR-KILL-SKEL-PORT.md, the form of ADR-KILL-TREEOP.md"
+  },
+  {
+   "bead": "N14a-24",
+   "what": "the PO-SKEL-04 trigger had 'after one repair cycle' in N14a-24 and none in N16a-23; the register (§14.15, §40) says 'PO-SKEL-04 fails' with no repair cycle, so the repair cycle is removed"
+  },
+  {
+   "bead": "N14a-24",
+   "what": "kill branch when only KILL-SKEL-PORT fires: N14a-24 imposed the cap of 64 and refused larger mechanisms; N16a-23 let the funded tree-operator route run on the whole model without packets. The plan gives the cap to KILL-TREEOP's fallback and 'the whole-model path' to KILL-SKEL-PORT's. DESIGN in both: the cap and FROB-REF-160 follow only from KILL-TREEOP firing; N14a-24's unnamed 'capacity refusal' is FROB-REF-160"
+  },
+  {
+   "bead": "N28b-41",
+   "what": "shadow rule: N17a-26 had 'one hit in 64, chosen by key hash' and N28b-41 'one class in 64' with one second member simulated; the plan (§28.14, §17.11, §28.15) says the digest obeys the store policy, one hit in 64 chosen by key hash. N28b-41 corrected: a hit is a non-representative member's episode and the requesting member's own design is simulated; the shadow work is reported beside the factor (30.0 gross, about 20.6 net on the ballast fixture)"
+  },
+  {
+   "bead": "N28b-41",
+   "what": "memo key: N17a-26's ExperimentKey had seven components plus the world address, N28b-41's declared inputs also had the device family (§28.14 serves episode hits on the same backend only). DESIGN in both: ExperimentKey is the experiment identity of §17.11; the memo key is ExperimentKey plus world address and device family"
+  },
+  {
+   "bead": "N28b-41",
+   "what": "the latch now names the refusal FROB-REF-162 that N17a-26 gave for the same event; the label on a served result carries the class id as N17a-26 stated; the standing replay test draws its pairs with N17a-26's sample_pairs"
+  },
+  {
+   "bead": "NEG-29",
+   "what": "'uncovered hazards of a battery' named two different quantities (N19a-38: hazards no scene of the battery contains, the plan's phrase in §19.8; NEG-29: hazards present with no cover in force). DESIGN in both: 'uncovered by a battery' keeps the plan's meaning; NEG-29's report is unguarded_hazards and its registry statuses are no-cover and no-cover until Mn; a scorecard prints the two counts separately; N19a-38's row state 'covered' is renamed drawn"
+  },
+  {
+   "bead": "N19a-38",
+   "what": "which hazards are not-represented at M3: N19a-38 named the sloshing-payload and strip-curtain rows, NEG-29 (with NEG-28 and the registry beads) the three rows whose only mechanism is Frontier (pets, floor vibration, shoppers). Corrected in N19a-38: those three rows are not-represented; a row drawn through its Solid alternative is drawn, with its Frontier mechanism (slosh model, strip curtain, hinged plates, chain cord, actors) listed not-represented and its failures not counted; NEG-29 spells the status not-represented as the generators do"
+  },
+  {
+   "bead": "N25a-23",
+   "what": "refusal 877: N25a-23 held it as a slot recorded `due` until its mechanism lands, N25d-32 asserted it at M1; the mechanism (N25b-07) is M1 and the refusal registry dates the code M1, so case a20 is now asserted with N25d-32's stance trigger (4 × 50 N < 400 N)"
+  },
+  {
+   "bead": "N25d-32",
+   "what": "refusal 856: N25a-23 asserted it at M1 (a query asking for a joint paving is refused at admission by N25a-02), N25d-32 listed the code as pending until M4. Both now state two triggers: the admission trigger asserted at M1 (case a12) and the region-certificate trigger pending until M4; N25d-32's counts corrected from fourteen asserted and six pending to fifteen codes with an asserted trigger and five wholly pending. The registry row of 856 in N25-REF (outside this packet) names only the later raising sites"
+  },
+  {
+   "bead": "N29a-11",
+   "what": "N29a-11 said a 2 s ring with snapshots every 0.1 s serves all four leads of N27a-03's ladder (0.25, 0.5, 1, 2 s) without replay; by its own window (the capture ends 0.2 s after the terminal event, so it reaches back 1.8 s) only 0.5 s and 1 s land on a ring snapshot, 0.25 s needs at most 0.05 s of replay and 2 s lies before the ring. Both beads now state that arithmetic; a 2.2 s depth is flagged as an input to OPEN-CHRON-2 (N29b-18), not decided"
+  },
+  {
+   "bead": "NJL-02",
+   "what": "exemptions: N32a-11 asserted exactly one (the unknown-verb case), NJL-02 had a closed list of four; the plan's §32.5 says the parity gate lists the unknown-verb case as the only exemption. NJL-02 corrected: one exemption and three declared differences (wait-default, verb-invoke, session-focus-mcp), recorded in separate fields; N32a-11's allowlist of four names explained against them"
+  },
+  {
+   "bead": "N32a-11",
+   "what": "record schema: frob.parity/1 in N32a-11 and frob.verbs.parity/1 in NJL-02 for the same parity record. DESIGN: frob.verbs.parity/1, with the fields the gate report needs (registry digest, transports, configuration, flag_diffs, default_diffs, example_diffs); target/parity/<milestone>.json is that record"
+  },
+  {
+   "bead": "N32a-11",
+   "what": "reference for the diff: N32a-11 read the static table compiled into frob-verbs, NJL-02 the registry file with an independent reader. DESIGN in both: the file, read by the tool's own reader, so a generator defect cannot be its own reference; the script's --through flag is passed to the tool as --milestone"
+  },
+  {
+   "bead": "N39b-42",
+   "what": "the gate row had two writers; N40-21 now writes the one row of GATE-TENFOLD-12 from N39b-42's two receipts, and its function is tenfold12(pre_open, post_close, record) in module tenfold::hygiene::gate beside N39b-42's tenfold::hygiene::measure (both had used tenfold::hygiene with overlapping tests)"
+  },
+  {
+   "bead": "N39b-42",
+   "what": "easy wins after the reveal: N40-21 checked the tags against outcomes as part of the property, N39b-42 only reported an easy win the rival lost; the plan's gate says 'holds at least one routine easy win and one unresolved answer'. DESIGN in both: the stratum must hold one of each as tagged before sealing and as it turned out, else descriptive; tags are never edited; N39b-42 gains the post-close step tag-outcomes and the counts N40-21's properties need (tags before the suite hash, external worlds, amortization rows, failed amendments kept)"
+  },
+  {
+   "bead": "N40-21",
+   "what": "missed withdrawals: N40-21's general consequence made a stratum descriptive for any failed property while both beads forfeit per arm. DESIGN in both: the arm loses its scoped claim and its missions are failed missions; the stratum is descriptive only when that arm is the candidate"
+  }
+ ]
+}

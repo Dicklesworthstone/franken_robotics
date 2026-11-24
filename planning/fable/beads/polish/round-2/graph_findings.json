@@ -1,0 +1,215 @@
+{
+"N33a-13": [
+"its dependency on `N16-REF` was not admitted (later-milestone): either `N16-REF` belongs to an earlier milestone, or a smaller, earlier bead delivers what is needed, or the link is `related`"
+],
+"BD-002": [
+"82 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-005": [
+"215 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-007": [
+"61 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-022": [
+"221 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-025": [
+"446 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-027": [
+"62 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-037": [
+"68 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-039": [
+"60 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-044": [
+"has 29 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-061": [
+"63 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-069": [
+"88 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-080": [
+"60 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-090": [
+"103 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-109": [
+"61 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-110": [
+"61 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-124": [
+"87 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-132": [
+"75 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-133": [
+"76 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-135": [
+"84 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-137": [
+"has 30 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-146": [
+"has 71 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-147": [
+"has 56 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-159": [
+"124 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-172": [
+"67 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-174": [
+"60 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-203": [
+"84 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"BD-222": [
+"has 34 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-224": [
+"has 92 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-246": [
+"has 28 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-299": [
+"has 35 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-312": [
+"has 62 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-314": [
+"has 35 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-317": [
+"has 32 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-318": [
+"has 27 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-319": [
+"has 125 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-366": [
+"priority 2 but it waits on `N18b-17` at priority 4: a prerequisite is at least as urgent as what waits on it"
+],
+"BD-376": [
+"has 41 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-378": [
+"has 110 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-408": [
+"has 22 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-409": [
+"has 25 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-412": [
+"has 57 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-427": [
+"has 66 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-434": [
+"has 35 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"BD-442": [
+"has 42 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N19c-28": [
+"has 24 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N20b-19": [
+"has 26 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N20b-20": [
+"has 21 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N25d-05": [
+"priority 2 but it waits on `N25d-04` at priority 4: a prerequisite is at least as urgent as what waits on it"
+],
+"N26b-17": [
+"has 21 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N31a-54": [
+"has 23 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N31a-59": [
+"has 21 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N32a-19": [
+"has 36 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N33a-07": [
+"62 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"N33b-04": [
+"70 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"N38a-09": [
+"149 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"N38b-19": [
+"70 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"N39b-12": [
+"has 25 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N39b-18": [
+"has 21 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N40-03": [
+"73 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"N40-15": [
+"has 21 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N41-04": [
+"has 21 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N41-32": [
+"has 38 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N41-33": [
+"has 21 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N41-34": [
+"has 25 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"N41-35": [
+"has 34 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"NAB-50": [
+"has 28 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"NEG-16": [
+"has 22 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"NS-20": [
+"has 22 blocking dependencies: check each is a real prerequisite; drop those already implied by another dependency only if the bead truly does not use them directly"
+],
+"STD-E2E": [
+"1852 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+],
+"STD-TEST": [
+"630 beads depend on it directly: check its scope is as small as it can be and its acceptance exact, since it gates so much"
+]
+}

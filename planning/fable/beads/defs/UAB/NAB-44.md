@@ -8,7 +8,7 @@ labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-42"]
 needs: []
-related: ["NAB-43", "NAB-45", "NAB-46", "NAB-47", "NAB-50"]
+related: ["NAB-45", "NAB-46", "NAB-47", "NAB-48"]
 gates: []
 plan_refs: ["Appendix B.3", "Appendix B.2"]
 ---
@@ -37,7 +37,9 @@ to 88 (NAB-46); the contested records these rows point to (NAB-47).
 ## Technical approach
 
 **Transcription rule.** One record per row. `proposals` is the "Passes" count; `mechanism`, `where`,
-`tier_text`, `gates`, `kill_gates`, `bets` from the columns; `carriers` from the last column (keys before a
+`tier_text`, `gates`, `kill_gates`, `bets` from the columns, and `gate_text` the gates column verbatim;
+`ungated` for the three Frontier rows with no kill gate, from the reasons under Acceptance criteria (IP-08,
+IP-10, IP-20; IP-20 also names no gate); `carriers` from the last column (keys before a
 semicolon are the carrying beads; keys after it, with a kill gate in parentheses, are the decision beads);
 `disposition = "placed"`, or `"placed-narrowed"` where the row says so or is marked contested;
 `contested` = the matching record of NAB-47 for the seven rows marked "Contested": IP-03 (sampling-based
@@ -132,6 +134,8 @@ the contact solve), IP-18 (clearance complexes), IP-21 (observation-alias witnes
 - `contested_links_are_seven`; `kill_gates_are_25`.
 - `carriers_resolve`; `gates_resolve`.
 - `tiers`: 11 rows name [S], 17 name [F], 3 name [M] (IP-05, IP-11, IP-13).
+- `ungated_rows`: exactly IP-08, IP-10 and IP-20 carry `ungated`, and removing it from any of them fails
+  `idea.upper-tier-without-kill`.
 - `rows_frozen` against `tests/fixtures/ideas/converged_a.tsv`.
 
 ### End-to-end script and logging

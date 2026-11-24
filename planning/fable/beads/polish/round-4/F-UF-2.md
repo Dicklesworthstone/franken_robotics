@@ -1,0 +1,39 @@
+# Polishing round 4, slice F-UF-2
+
+27 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| FD-FSYM-04 | M5 | task | WP-31 | yes | upstream frankensympy: certificate families for matrix identities and rational-Gram sums of squares | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FD-FSYM-04.md` |
+| FD-FSYM-05 | M4 | task | WP-67 | yes | upstream frankensympy: faster Gröbner bases and multivariate resultants | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FD-FSYM-05.md` |
+| FD-FT-01 | M2 | task | WP-19 | yes | upstream frankentorch: Metal gateway extensions, stages 1 and 2 (async completion, typed buffers, offsets, more arguments) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FD-FT-01.md` |
+| FD-FT-02 | M2 | task | WP-21 | yes | upstream frankentorch: real device execution for tensors and autograd (device tags become devices) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FD-FT-02.md` |
+| FD-FTUI-01 | M3 | task | WP-52 | yes | upstream frankentui: the exact asupersync 0.5.0 pin on its optional executor relaxed | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FD-FTUI-01.md` |
+| FD-FTX-01 | M6 | task | WP-73 | yes | upstream franken_textiles: exact `serde_json` pin `=1.0.151` relaxed to admit the graph's 1.0.154 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FD-FTX-01.md` |
+| FDEF-01 | M0 | task | WP-37 | yes | defect report, frankensim `ppo_update`: reversed clip branch, stale critic gradient, sequences across resets | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FDEF-01.md` |
+| FDEF-02 | M0 | task | WP-37 | yes | defect report, frankensim `fs-mbd::planar_drive`: near-straight motion at large heading gives zero translation | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FDEF-02.md` |
+| FDEF-03 | M0 | task | WP-37 | yes | defect report, franken_numpy and frankentorch: the stride-convention trap at the interchange boundary | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FDEF-03.md` |
+| FDEF-04 | M0 | task | WP-37 | yes | limit report, frankensim sustained contact step: fixed witnesses, fixed frame, capacity of 21 contacts | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FDEF-04.md` |
+| FDEF-05 | M0 | task | WP-37 | yes | hazard report, frankensim `fs-mbd::Wrench`: `force_world` with `torque_body`, two frames in one value | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/FDEF-05.md` |
+| NF-03 | M0 | task | WP-01 | yes | upstream frankensim: toolchain pin advanced from nightly-2026-07-06 to T (candidate (a)) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-03.md` |
+| NF-04 | M0 | task | WP-05 | yes | upstream frankensympy: toolchain pin moved from nightly-2026-08-20 to T, its suite passing there | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-04.md` |
+| NF-05 | M0 | task | WP-01 | yes | suite: the first toolchain train, run and recorded: every consumed sibling's own toolchain file equals T | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-05.md` |
+| NF-06 | M0 | task | WP-01 | yes | e2e: train rehearsal on a scratch stack: pin move, upstream switch-over, toolchain move, every guard | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-06.md` |
+| NF-07 | M1 | task | WP-37 | yes | upstream frankensim: G1 catalog builder folds or declares the fixed attachments it omits (1.377 of 33.34 kg) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-07.md` |
+| NF-08 | M1 | task | WP-37 | yes | upstream frankensim: `fs_ga::Se3` Jacobians in closed form for large translation (no refusal at 33 m) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-08.md` |
+| NF-09 | M1 | task | WP-37 | yes | upstream frankensim: the legacy `fs_phs::transformer` documented or removed (opposite sign convention) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-09.md` |
+| NF-10 | M2 | task | WP-10 | yes | upstream frankensim: an arc-aware swept bound beside `fs_contact::broad_phase::swept_sphere_aabb` | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-10.md` |
+| NF-11 | M1 | task | WP-37 | yes | upstream frankensim: `fs-sos` keeps authored coefficients and rounds its certified bound outward | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-11.md` |
+| NF-12 | M2 | task | WP-17 | yes | upstream franken_threed: a ray transform that returns the scale of its parameter (`Ray::apply_matrix4`) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NF-12.md` |
+| NFp2-01 | M2 | task | WP-22 | yes | switch-over of FD-FSIM-02: the fidelity ledger re-baselined once against FrankenSim's persistent contact stepper | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NFp2-01.md` |
+| NFp2-02 | M5 | task | WP-32 | yes | switch-over of FD-FDGR-01: the drone scan lane run through scene.import, INT-FDGR-01 and GATE-HAB-03 re-run on the published geometry | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NFp2-02.md` |
+| NFp2-03 | M5 | task | WP-32 | yes | switch-over of FD-FSS-01: the extended twin package enters the import contract, GATE-HAB-03 re-run at scale label witnessed | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NFp2-03.md` |
+| NFp3-11 | M2 | task | WP-22 | yes | switch-over of FD-FSIM-12: fidelity ledger re-baselined once for upstream witness migration, coverage re-issued | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NFp3-11.md` |
+| NFp3-12 | M2 | task | WP-16 | yes | switch-over of FD-FSIM-13: capacity fixtures of Traction re-run at the new referee capacity, coverage re-issued | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NFp3-12.md` |
+| NFx-02 | M5 | task | WP-71 | yes | upstream frankensim (conditional): an external differentiable stage in `fs-topopt`'s design map; airlock probe | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/UF/NFx-02.md` |
+
+## Addressed to your beads
+
+- `FD-FTUI-01`: request from round 3, slice F-UF-1: BD-037's fixture timing rule lists this item among the seven with `pin_state = unpinned`, and gives the item's own bead the duty to re-run its fixture at the sibling's first admission and clear the field. The bead does not mention it (FD-FLN-01, FD-FLN-02 and FD-FDGR-01 now do). The same holds for FD-F3D-01, FD-FTX-01 and FD-FSS-01 (the last also `observed_at = pending: inspection pilot`).
+- `FD-FTX-01`: request from round 3, slice F-UF-1: As for FD-FTUI-01: state BD-037's `pin_state = unpinned` rule and that this bead re-runs the fixture at franken_textiles' first pin and clears the field.
+- `NFp2-01`: request from round 3, slice F-UF-1: FD-FSIM-12's fidelity switch-over is now NFp3-11 (cause `upstream:FD-FSIM-12`); the Out list and the consideration that say FD-FSIM-12 'has the same step' should name it. For both items landing in one pin move, NFp3-11 states: measure the battery once (look for stored pairs at the new referee kernel version before running), each item its own document and record in landing order, and freeze once after both records exist (the first to run stops with `freeze waits for <the other cause>`). Please state the same, or NFp2-01 freezes before NFp3-11's record exists.

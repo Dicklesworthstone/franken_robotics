@@ -1,0 +1,491 @@
+{
+ "round": 1,
+ "slice": "UEG-2",
+ "reviewed": [
+  "NEG-15",
+  "NEG-16",
+  "NEG-17",
+  "NEG-18",
+  "NEG-19",
+  "NEG-20",
+  "NEG-21",
+  "NEG-22",
+  "NEG-23",
+  "NEG-24",
+  "NEG-25",
+  "NEG-26",
+  "NEG-27",
+  "NEG-28",
+  "NEG-29",
+  "NEG-30",
+  "NEG-31",
+  "NEG-32",
+  "ROBOT-a1",
+  "ROBOT-anymal-b",
+  "ROBOT-anymal-c",
+  "ROBOT-apollo",
+  "ROBOT-barkour",
+  "ROBOT-booster-t1",
+  "ROBOT-cassie",
+  "ROBOT-fourier-n1",
+  "ROBOT-fsim-g1",
+  "ROBOT-g1",
+  "ROBOT-go1",
+  "ROBOT-go2",
+  "ROBOT-h1",
+  "ROBOT-iiwa7",
+  "ROBOT-op3",
+  "ROBOT-spot",
+  "ROBOT-stretch3",
+  "ROBOT-talos",
+  "ROBOT-tiago",
+  "ZOO-quad-mammal",
+  "ZOO-humanoid",
+  "ZOO-diff-drive",
+  "ZOO-mecanum",
+  "ZOO-ackermann",
+  "ZOO-balancer-2w",
+  "ZOO-biped-point",
+  "ZOO-hexapod-radial",
+  "ZOO-mobile-manipulator",
+  "ZOO-octopod",
+  "ZOO-omni-3",
+  "ZOO-quad-sprawl",
+  "ZOO-rocker-bogie",
+  "ZOO-snake-crawler",
+  "ZOO-swerve-4",
+  "ZOO-tracked-flipper",
+  "ZOO-tri-wheel-stair",
+  "ZOO-wheel-leg"
+ ],
+ "changed": [
+  {
+   "bead": "NEG-31",
+   "kinds": [
+    "placement",
+    "e2e-logging"
+   ],
+   "what": "M1 bead promised the M3 pass of all eighteen: its criterion is now the M1 run, with each M3 zoo bead passing its own rows (they now depend on the script) and NEGp1-53 the M4 rows; summary counts blocked known answers apart by reason"
+  },
+  {
+   "bead": "ZOO-ackermann",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep NEG-31: its e2e rows run in that script"
+  },
+  {
+   "bead": "ZOO-omni-3",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep NEG-31"
+  },
+  {
+   "bead": "ZOO-rocker-bogie",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep NEG-31"
+  },
+  {
+   "bead": "ZOO-swerve-4",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep NEG-31"
+  },
+  {
+   "bead": "ROBOT-a1",
+   "kinds": [
+    "deps",
+    "placement"
+   ],
+   "what": "deps ROBOT-go1, ROBOT-go2 (its skeleton comparison imports both); mass-on-file criterion no longer waits on BD-109's preset row (BD-109 reads the pinned fixture)"
+  },
+  {
+   "bead": "ROBOT-go1",
+   "kinds": [
+    "placement"
+   ],
+   "what": "mass-on-file criterion checks the field; the preset row is BD-109's"
+  },
+  {
+   "bead": "ROBOT-go2",
+   "kinds": [
+    "placement"
+   ],
+   "what": "same; BD-109 owns quad-mammal@go2 and may depend on this bead"
+  },
+  {
+   "bead": "ROBOT-spot",
+   "kinds": [
+    "placement"
+   ],
+   "what": "same as go1"
+  },
+  {
+   "bead": "ROBOT-anymal-b",
+   "kinds": [
+    "deps"
+   ],
+   "what": "tests use the symmetry analysis and the quad-mammal preset: deps BD-102, BD-109 (no cycle; BD-109 reads BD-067 fixtures)"
+  },
+  {
+   "bead": "ROBOT-anymal-c",
+   "kinds": [
+    "deps",
+    "placement"
+   ],
+   "what": "template monotonicity test and anymal-b comparison: deps BD-109, ROBOT-anymal-b; mass-on-file criterion reworded"
+  },
+  {
+   "bead": "ROBOT-h1",
+   "kinds": [
+    "deps",
+    "placement"
+   ],
+   "what": "preset tree-isomorphism test needs the humanoid template: dep BD-109; mass-on-file criterion reworded"
+  },
+  {
+   "bead": "ROBOT-booster-t1",
+   "kinds": [
+    "deps"
+   ],
+   "what": "tree-vs-template comparison needs BD-109"
+  },
+  {
+   "bead": "ROBOT-cassie",
+   "kinds": [
+    "placement"
+   ],
+   "what": "mass-on-file criterion no longer waits on N14b-02's biped-point@cassie preset"
+  },
+  {
+   "bead": "ROBOT-iiwa7",
+   "kinds": [
+    "placement"
+   ],
+   "what": "arm mass criterion no longer waits on N14b-04's presets"
+  },
+  {
+   "bead": "ROBOT-apollo",
+   "kinds": [
+    "placement",
+    "tests"
+   ],
+   "what": "M1 bucket/refusal test needed the M2 planner (FROB-REF-741): now records n_v vs the quoted largest capacity; planner check requested of N17a-08"
+  },
+  {
+   "bead": "ROBOT-talos",
+   "kinds": [
+    "placement",
+    "tests",
+    "deps"
+   ],
+   "what": "bucket assertion needed the M2 planner: now recorded DESIGN data with a planted-n_v test, planner check requested of N17a-08; dep BD-105 for the arm rank/null-space test"
+  },
+  {
+   "bead": "ROBOT-tiago",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "states the mecanum twist-to-wheel map (ω_i = (1/r)(v_x + t_i v_y + (t_i x_i - y_i) ω_z), t_i = tan α_i) and exact rank; dep BD-105 for the arm rank test"
+  },
+  {
+   "bead": "NEG-15",
+   "kinds": [
+    "correct",
+    "placement"
+   ],
+   "what": "rule (5): at M1 the bead writes and checks the licence entry only; the lineage join (N37-17), the export door with 733 (N37-18) and the pack check with 310 (N19b-02) are M3, exercised by NEGp1-51"
+  },
+  {
+   "bead": "NEG-16",
+   "kinds": [
+    "deps",
+    "placement",
+    "scope",
+    "tests"
+   ],
+   "what": "M1 bead promised M3 results: now the M1 run over the 17 robots due at M1 (12 missing robot deps added); M3 run moved to NEGp1-51, M5 to NEGp1-54; mutation (d) logged not run at M1; 310 vs door codes stated; two helper tests"
+  },
+  {
+   "bead": "NEG-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e steps now run by the M3 scene-asset loop NEGp1-51 (was NEG-16, an M1 bead)"
+  },
+  {
+   "bead": "NEG-18",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "dep N37-18 (notices on exported reports); e2e at M5 by NEGp1-54, which depends on it (graph finding: no consumer)"
+  },
+  {
+   "bead": "NEG-19",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "dep N37-18; attribution on a report is added by the door, on a pack by the pack check; e2e by NEGp1-54 (graph finding)"
+  },
+  {
+   "bead": "NEG-20",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "dep N37-18; e2e by NEGp1-54 (graph finding)"
+  },
+  {
+   "bead": "NEG-21",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "requested 310/733/731 division: 310 only for pack exports (exit 3), stills and reports at the door (exit 5); deps N19a-46, N37-18; e2e by NEGp1-51"
+  },
+  {
+   "bead": "NEG-22",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "division applied (pack/variant 310; still, report, scorecard 731, or 733 with private:export); the invented aggregate-scorecard export removed to match N37-18's table (request filed); dep N37-18; e2e by NEGp1-51"
+  },
+  {
+   "bead": "NEG-23",
+   "kinds": [
+    "split",
+    "placement",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "M3 bead needed M5 scan machinery (N19c-02/03/04): keeps register row, acknowledgement, private import and containment, with fail-closed refusal of scan packs by geometric consumers; scan profile split to NEGp1-52; division applied; dep N37-18"
+  },
+  {
+   "bead": "NEG-24",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "division applied; dep N37-18; e2e by NEGp1-51"
+  },
+  {
+   "bead": "NEG-25",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "division applied; the invented aggregate override (no door path, not in the plan) replaced by refusal and a request to N37-18; deps N19a-46, N37-18; e2e by NEGp1-51"
+  },
+  {
+   "bead": "NEG-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "mixed pack 310 at the pack check, derived still 733 at the door; deps N19a-46, N37-18; e2e by NEGp1-51"
+  },
+  {
+   "bead": "NEG-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "unexportable user import now names both raising sites; e2e by NEGp1-51 (graph finding: consumer)"
+  },
+  {
+   "bead": "NEG-29",
+   "kinds": [
+    "correct"
+   ],
+   "what": "hazard id `kitchen.wet-floor` -> `commercial-kitchen.wet-floor` (NEG-28's slug, row 50)"
+  },
+  {
+   "bead": "ZOO-quad-mammal",
+   "kinds": [
+    "correct"
+   ],
+   "what": "preflight statuses in NEG-30's words: `passed`; stage 4 `passed` with the note `not-applicable` (N14b-11's legged rule), not the rejected `pass`/`not-applicable`"
+  },
+  {
+   "bead": "ZOO-quad-sprawl",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "same status-word fix; `@hot` stage 6 marked `refused`; dep NEG-31 (its e2e rows run in that script, as for every M3 zoo bead)"
+  },
+  {
+   "bead": "ZOO-humanoid",
+   "kinds": [
+    "correct"
+   ],
+   "what": "stage 4 `passed` with note `not-applicable`; all stage statuses named as NEG-30's words"
+  },
+  {
+   "bead": "ZOO-biped-point",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "statuses `passed`; stage 6 `passed` with findings = [\"A-08.no-static-stability\"] (BD-100's id, exit 2), replacing the rejected status `finding` in table, known answer, criterion and log"
+  },
+  {
+   "bead": "ZOO-balancer-2w",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "stage 6 as `passed` with the A-08.no-static-stability finding; pole row's `blocked: derivation` tied to NEG-30's new `blocked` field"
+  },
+  {
+   "bead": "NEG-30",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "adds the `blocked = <reason>` field for known-answer rows (closed list: derivation, admission, milestone with `due`), never counted as passed; test zoo_known_answer_blocked_never_passes. Three zoo beads relied on it with no format support"
+  },
+  {
+   "bead": "ZOO-hexapod-radial",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "requested dep N24c-16 (OPEN-ARENA-2 record, M2); reads the register's `reference: none` row; adds the GATE-SKEL-07 mass-clause row `not applicable` and the consumer test hexapod_mass_check_not_applicable that N24c-16 names; stage-4 status word"
+  },
+  {
+   "bead": "ZOO-octopod",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "stage 4 `passed` with note `not-applicable`"
+  },
+  {
+   "bead": "ZOO-mobile-manipulator",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "stage 7 (N14b-12) is M3, so it is now a dep and the stage-7 rows pass at M3; `not run` replaced by `not-run` with reason only for builds without stage 7"
+  },
+  {
+   "bead": "ZOO-snake-crawler",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "requested fix: template term is N14bp1-01 (now a dep; it owns the DESIGN statement); default Γ_obs corrected to trivial (the template's default head IMU breaks reversal), C₂ after the breaker edit; new row and test"
+  },
+  {
+   "bead": "ZOO-tracked-flipper",
+   "kinds": [
+    "split",
+    "placement",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "M4 criterion and test (simulated pivot scrub) moved to NEGp1-53; rows kept in the expectation file as `blocked: milestone`, due M4; dep NEG-31; zero-scrub caught at M3 by the closed-form row"
+  },
+  {
+   "bead": "ZOO-wheel-leg",
+   "kinds": [
+    "split",
+    "placement",
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "M4 slope fixtures moved to NEGp1-53, rows kept as `blocked: milestone`; stage-4 braked-mode wording uses N14b-11's legged rule"
+  },
+  {
+   "bead": "ZOO-tri-wheel-stair",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "oracle row `blocked: admission` tied to NEG-30's field; `never pass` (a rejected word) -> never counted as passed"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "NEGp1-51",
+   "why": "NEG-16 (M1) promised the M3 run; the ten M3 scene-asset rows had no e2e consumer; carries the M3 run and the 310/731/733 division matrix end to end"
+  },
+  {
+   "bead": "NEGp1-52",
+   "why": "split from NEG-23: the HM3D scan import profile needs M5 machinery (N19c-02, N19c-03, N19c-04)"
+  },
+  {
+   "bead": "NEGp1-54",
+   "why": "NEG-18/19/20 (M5) pointed at an M1 script and had no consumer; carries the M5 run and the licence trace through populated interiors (BD-399)"
+  },
+  {
+   "bead": "NEGp1-53",
+   "why": "split: the M4 simulated rows of ZOO-tracked-flipper (pivot scrub on the belt law) and ZOO-wheel-leg (braked hold, free roll, switch instant) needed BD-365/N18b-06 (M4) inside M3 beads"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-109",
+   "what": "name every preset the ROBOT beads cite (quad-mammal@{go1, go2, a1, anymal-b, anymal-c, spot}, humanoid@{g1, h1}) under your DESIGN one-preset-per-reference reading; keep reading masses from the BD-067 fixtures and do not depend on ROBOT-anymal-b, -anymal-c, -h1, -booster-t1, which now depend on you"
+  },
+  {
+   "bead": "N14b-06",
+   "what": "add table entries and mass windows for the presets above, and depend on the ROBOT beads whose mass rows you record"
+  },
+  {
+   "bead": "N17a-08",
+   "what": "add rows for ROBOT-talos (expected bucket 48 and padding overheads) and ROBOT-apollo (bucket or FROB-REF-741 by name); these were M1 tests needing the M2 planner"
+  },
+  {
+   "bead": "N37-18",
+   "what": "NEG-22 and NEG-25 had invented an aggregate-scorecard export for research-only/proprietary lineage; aligned to your table (refused). If the owner wants a logged aggregate override, it belongs at the door"
+  },
+  {
+   "bead": "BD-399",
+   "what": "consider depending on NEG-19 and NEG-20 (and NEG-18) as the sources whose rows the catalogue reads; NEGp1-54 now traces licences through populated interiors"
+  }
+ ],
+ "unchanged": [
+  "NEG-28",
+  "NEG-32",
+  "ROBOT-barkour",
+  "ROBOT-fourier-n1",
+  "ROBOT-fsim-g1",
+  "ROBOT-g1",
+  "ROBOT-op3",
+  "ROBOT-stretch3",
+  "ZOO-diff-drive",
+  "ZOO-mecanum"
+ ],
+ "notes": "All 55 read in full. Main themes: (1) the 310/731/733 division applied across the asset rows (310 only for packs, exit 3; door codes exit 5), and an invented aggregate export removed to match N37-18; (2) milestone leaks fixed by splits and new e2e beads: NEG-16 (M1) had M3 promises, NEG-23 (M3) needed M5 scan machinery, ZOO-tracked-flipper and ZOO-wheel-leg (M3) had M4 criteria, ROBOT-apollo and ROBOT-talos (M1) tested the M2 bucket planner; (3) NEG-30 status words enforced in all zoo tables (stage 4 legged = passed with note not-applicable per N14b-11; findings via findings=[...]), plus a new blocked field for known answers; (4) graph findings: NEG-17..27 now have e2e consumers (NEGp1-51 at M3, NEGp1-54 at M5). No preset owner existed for quad-mammal@{a1, go1, spot, anymal-b, anymal-c} and humanoid@h1 outside BD-109's DESIGN sentence: requested of BD-109."
+}

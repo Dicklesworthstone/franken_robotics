@@ -1,0 +1,95 @@
+{
+ "round": 4,
+ "slice": "F-U14b-2",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "N14b-16",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The register entry was written decision = { outcome, adr, date, session } without `receipts`; N40-03 requires receipts (at least one on not-fired, else the load refuses the entry), so an implementer following the bead would write an entry the register rejects. Added receipts with their source and a truth-table case for the refusal."
+  },
+  {
+   "bead": "N14b-17",
+   "kinds": [
+    "request",
+    "users",
+    "deps",
+    "convention"
+   ],
+   "what": "Request of H-verbs-8 applied: the bead now defines sim.run's `--family-world <i>` exactly as VERBS-sim's row states (only with --task; world i of Task::alias_family() in index order; the family's parameters fixed to its values before the randomization plan compiles, others still drawn by address; manifest/RunId; 802 for no --task, an index outside the family, a not-finite family naming its parameters), with the index order defined (DESIGN: parameters by name, values ascending, last fastest; block lists in list order), three unit tests with values on the 3x3 grid, e2e steps through the binary, and dep N16ap4-01 (sim.run --task on the referee). Without it BD-244's hand-built-policy check and N14b-13 had no owner for the input they call. Also named the ADR path docs/adr/ADR-OPEN-SKEL-3.md (convention 4), so the open-question register and exit review can find it."
+  },
+  {
+   "bead": "N14b-18",
+   "kinds": [
+    "request",
+    "plan"
+   ],
+   "what": "Request of F-U13 applied: FROB-REF-168 (stage 2, N13-04's solid-fill plausibility) had no defect, so GATE-SKEL-04's 'at least two per refusal code' would fail on 168. Added two stage-2 defects (torso box solid under mass_max 14 kg, 22.68 kg against 3.5 kg; enclosure 0.4x0.3x0.2 m solid under mass_max 20 kg, 64.8 kg against 5 kg, CX-101), the stage-2 ownership, the reference classifier's 168 arithmetic, a unit test and classifier examples, KA-261/CX-101 in the known answers, N13-04 in related. Total kept at 100 by the allocation rule (102 5->4, dropping the torque-in-newtons case that repeats the wrong-dimension mechanism; 103 4->3, dropping `materal` that repeats the misspelt-field mechanism); 27 codes, table re-summed to 100."
+  },
+  {
+   "bead": "N14b-22",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "ANSWER of VERBS-design applied: before the importer is linked, `--format sdf` (and an <sdf> root without --format) answers FROB-REF-724 (feature-not-built, mechanism import.sdf, exit 5, retry never) through BD-065's dispatch, not 802 or 122, and landing changes no schema. The bead stated 802/122 and an enumeration change, which contradicts BD-065's dispatch and VERBS-design. Acceptance and Considerations aligned; the narrated 'Request recorded for VERBS-design' removed (convention 13)."
+  },
+  {
+   "bead": "N14b-34",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request of H-ref-1 applied: import-mass-dropped is numbered by N35x-02's M0 run (a transitive dependency through N32-REF), so the refusal is raised under the assigned number from the start through IMPORT_MASS_DROPPED; the bead raised it under the ledger slug first, which is not an admitted interim (N35-33 rule 7). Unit test refusal_raised_through_constant now checks the constant against the ledger's assigned number."
+  },
+  {
+   "bead": "N14bp1-03",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "ANSWER of VERBS-design (via H-verbs-2) applied: until the OpenUSD importer is linked, `--format usd` answers FROB-REF-724 (feature-not-built, mechanism import.usd, exit 5, retry never) through BD-065's dispatch, naming the pilot record and the consumer record, never 802; landing changes no input schema and the block names this bead under 'Extended by'. The bead said 802 and an enumeration change requested of VERBS-design, so an implementer would have built a refusal and a schema change the registry contradicts. Acceptance now asserts 724 is gone and the schema byte-identical once linked; the narrated request removed (convention 13)."
+  },
+  {
+   "bead": "N14bp2-02",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request of F-U15a applied: BD-069 now defines the optional actuator-card group `brake` (holding_torque with side, engagement_delay, engage_speed, dynamic_rated, unpowered; hub-motor carries it), but the bead still said no card defines a brake and kept an OPEN 'assumed: ideal lock' for every switch, so BD-365, the slope fixtures and the hybrid controller would read an assumed lock even on a carded brake. ContactSwitch now records BrakeSource::Card {card, group_digest} when the switch joint's card has the group, AssumedIdealLock otherwise (report line 'assumed: ideal lock', FROB-REF-113 at fields.brake under --strict-data); Scope's out-list, an acceptance criterion, a unit test (hub-motor vs qdd-m), the Considerations item, related BD-069 (already a transitive dependency via N14a-18) and References updated."
+  },
+  {
+   "bead": "N14bx-01",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Request of H-verbs-2 applied: the A-18 row said a posture change without a declared posture 'is FROB-REF-308 from the route code', which read as a stage-7 refusal; VERBS-design's design.check list has no 308 and N14b-12 reports it as stage status undecided with 308's repairs. The row now says so. The union pin said 30 codes {28, 448, 551}, but with BD-110's 168 at stage 2 the union is 31 codes, VERBS-design's list; the amendment text, acceptance and `first_table_pins_amended` now pin 31 with 168, plus a planted 308-in-stage-7 defect and exit_for = 2 on an undecided stage 7. Left as it was, the pinned test would fail against the verb registry."
+  },
+  {
+   "bead": "N14bx-02",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e ran `frob analyze mass` and `frob foundry size` on fixture files, but both verbs take a design (only seven design-chapter verbs accept a path), and `frob design view` without `--as`, which VERBS-design's row requires; a script written as stated would refuse at those steps and never reach the lint and class assertions. Each form is now made a design first with `design new --file ... --key osk4-<form>-<run-id>`, the later steps name the design, and the view step carries `--as sexpr`."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-design",
+   "what": "design.import's block still says the mass-dropped refusal (ledger slug import-mass-dropped) 'until then is raised under its slug'. N35x-02's M0 run assigns 1xx rows (its table: proposal 127, interim none), and a slug is not an admitted interim (N35-33 rule 7); N14b-34 now raises it under the assigned number from the start through IMPORT_MASS_DROPPED. List it in the chapter refusals under its assigned number and drop the slug clause; otherwise an implementer of the generated row would emit a slug-coded refusal the refusal registry cannot load."
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "task.check's outputs list the alias_family block only 'if OPEN-SKEL-3 is decided for its option B'. N14b-17 exposes Task::alias_family() under every option, including the default (source grid), and task.check reports `alias_family: {source, size, digest}` or `{not_finite: [...]}` from M3; BD-244 logs it for the stage-8 cases and N14b-17's e2e asserts it on a gridded task. State the output unconditionally from M3 (source grid or block), else the generated output schema has no field for the default case."
+  }
+ ],
+ "unchanged": 15,
+ "notes": "Unchanged: N14b-19, N14b-20, N14b-21, N14b-24, N14b-25, N14b-26, N14b-27, N14b-28, N14b-29, N14b-30, N14b-31 (its request, one entry with an ADR section per clause, is already the bead's text), N14b-32, N14b-33, N14bp2-01, N14bp2-03."
+}

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "traction", "frob-design", "frontier", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-04", "BD-054", "BD-055", "BD-056", "BD-245", "BD-072", "BD-103", "BD-102"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-072", "BD-102", "BD-103", "BD-245", "N14b-04", "NEG-30", "NEG-31"]
 needs: []
-related: ["BD-365", "N14b-07", "N14a-33", "BD-246", "BD-247", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 12", "§14.10", "§18.9", "§14.13 (rejection fixture, track)", "Appendix M KA-270, KA-282, KA-418"]
 ---
@@ -26,9 +26,12 @@ the gates and not a slip. No reference robot is on file.
 
 ## Scope
 
-In: `zoo/tracked-flipper.fbot`, its expectation file and controls. Out: the template (N14b-04); the laws
-`belt` and `skid` on all tiers (BD-245); tyre, track and hybrid laws at M4 (BD-365); the skid-steer controller
-(N14b-07).
+In: `zoo/tracked-flipper.fbot`, its expectation file with every row below (the dynamic rows written with
+`blocked = "milestone"` and `due = "M4"`, NEG-30's field for a known answer whose mechanism lands later), the static and closed-form rows and the controls (a) and (c).
+Out: the template (N14b-04); the laws `belt` and `skid` on all tiers (BD-245); tyre, track and hybrid laws at
+M4 (BD-365); the skid-steer controller (N14b-07); the M4 evaluation of the dynamic rows (the simulated 90°
+pivot's scrub work and the zero-scrub variant caught in simulation), which NEGp1-53 carries at M4 so that this
+M3 bead closes at M3 and depends on nothing later.
 
 ## Technical approach
 
@@ -74,10 +77,12 @@ point-foot design under that cap returns `capacity-biased` and no winner; (c) fl
 ## Acceptance criteria
 
 - [ ] The zoo instance equals the template default; `DesignId` pinned and platform-independent.
-- [ ] At M3: compile and stages 1 to 6 pass with no refusal; the no-slip row and the closed-form scrub rows
-      hold; dynamic rows are logged `not run: contact law`.
-- [ ] At M4: the simulated pivot's scrub work is positive and within 10% of 47.12 J; the zero-scrub variant is
-      caught.
+- [ ] Compile and stages 1 to 6 pass with no refusal (every stage `passed`); the no-slip row, the closed-form
+      scrub rows and the flipper-angle row hold; the dynamic rows (simulated pivot within 10% of 47.12 J;
+      zero-scrub variant caught in simulation) are present in the expectation file and reported `blocked: milestone`
+      (due M4: the belt law closes on every tier in BD-365), never passed; NEGp1-53 evaluates them at M4.
+- [ ] The zero-scrub variant is caught at M3 by the closed-form scrub-work row (0 J where 47.12 J is required),
+      and the capacity-biased comparison returns `capacity-biased` and no winner.
 
 ## Test plan
 
@@ -87,14 +92,18 @@ point-foot design under that cap returns `capacity-biased` and no winner; (c) fl
 - `zoo_tracked_no_slip_forces_zero_yaw`.
 - `zoo_tracked_scrub_moment_and_work`: 30 N·m; 47.1239 J.
 - `zoo_tracked_flipper_angle`: asin(0.125/0.30) = 24.62°.
-- `zoo_tracked_pivot_scrub_positive` (M4): simulated 90° pivot.
 - `zoo_tracked_capacity_biased_comparison_refused`.
+- `zoo_tracked_dynamic_rows_not_run_before_m4`: the pivot rows load with `blocked = "milestone"`, `due = "M4"`,
+  and the generic test never counts them as passed. (The simulated pivot test `zoo_tracked_pivot_scrub_positive` is
+  NEGp1-53's.)
 
 ### End-to-end script and logging
 
-`scripts/e2e/zoo_goldens.sh` (NEG-31): at M3 instance, symmetry and stages 1 to 6; at M4 a referee run of the
-pivot with `frob telemetry energy --json` read for dissipated scrub work; log lines carry the scrub moment,
-the work in joules against its window, and `not run: contact law` before M4.
+`scripts/e2e/zoo_goldens.sh` (NEG-31) at M3: instance, symmetry (default and the front-flippers-raised
+breaker), stages 1 to 6, the zero-scrub and unequal-flipper variants; log lines carry the stage statuses, the
+scrub moment and closed-form work in joules against their values, the flipper angle in degrees, and one line
+per dynamic row with `blocked: milestone` and its due milestone. The M4 referee pivot with `frob telemetry energy --json` is
+NEGp1-53's step of the same script.
 
 ### Known answers and negative controls
 

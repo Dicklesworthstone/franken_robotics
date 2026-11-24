@@ -1,0 +1,406 @@
+{
+ "group": "gap-F",
+ "filled": [
+  {
+   "gaps": [
+    8
+   ],
+   "bead": "N29ax-01",
+   "note": "M1 re-execution of a recorded referee run by pinned identities (DesignId, version triple, ModelId), valid after a migration: the third clause of GATE-SKEL-08 becomes measurable at M1"
+  },
+  {
+   "gaps": [
+    10
+   ],
+   "bead": "N24ax-01",
+   "note": "battery exhaustion placed in the failure taxonomy: class brownout with cause source-exhausted, kind physical (DESIGN: the plan's 23 classes are kept); by_cause counts in telemetry.failures"
+  },
+  {
+   "gaps": [
+    14
+   ],
+   "bead": "N25cx-01",
+   "note": "the fleet scene document frob.scene.fleet/1 (roster, channels, free props, islands) and its admission by sim.run as one coupled world under strict; four fixtures including the 16-robot sparse warehouse"
+  },
+  {
+   "gaps": [
+    15
+   ],
+   "bead": "N31ax-01",
+   "note": "a packet request is prototype spend: foundry.export applies the prototype-spend admission to the design's selection records and refuses a model-conditional ranking with FROB-REF-830"
+  },
+  {
+   "gaps": [
+    23
+   ],
+   "bead": "N18ax-01",
+   "note": "CL-1R: a relaxing compliant normal law (standard linear solid with a contact-size-dependent rate schedule) as an interface card, admitted on referee and strict; the four synthetic pad laws V, P, C, D"
+  },
+  {
+   "gaps": [
+    27
+   ],
+   "bead": "N28bx-01",
+   "note": "design-search entry point (opt.start --objective flip-verdict): cheapest priced typed design edit that flips a named verdict, controller by the original's route, typed minimality claim"
+  },
+  {
+   "gaps": [
+    53,
+    73
+   ],
+   "bead": "N28ax-01",
+   "note": "margin kernels of A-02, A-05, A-08, A-10, A-11, A-13 and A-20 to A-23 generic over a scalar (number, rational, interval, affine, recording), enclosure battery, and the lowering registry with a second route and invalid fixture per kernel (PO-AUGUR-01)"
+  },
+  {
+   "gaps": [
+    78
+   ],
+   "bead": "N29bx-01",
+   "note": "INV-CHRON-14 assigned to the heat-binding rule of §29.22: register row, the fourteenth property-test module (static binding property, step-rate invariance on the three fixtures), four planted violations, staging M1 referee and M2 batch"
+  },
+  {
+   "gaps": [
+    79
+   ],
+   "bead": "N30ax-01",
+   "note": "frob.ground.dataset/1 minor 1: mark kinds with clocks and sigma, rig.maintenance, rig.operating_hours and rig.trials, the scan block (length unit, fiducials, external registration), instrument resolution and bias_sigma; one validator, requirement by use"
+  },
+  {
+   "gaps": [
+    94
+   ],
+   "bead": "N29ax-02",
+   "note": "peak capture: device-side fold keeping one time-coherent sample per entity per episode at the running maximum of a registered scalar, emitted as a T1 event; first scalar link-bending-proximal with port wrenches and body twist"
+  },
+  {
+   "gaps": [
+    100
+   ],
+   "bead": "N25cx-02",
+   "note": "experiment.suggest at M3: the expert grid, ordered by cost, the direct test always present, a closed cause vocabulary; record is a subset of the M4 proposal record"
+  },
+  {
+   "gaps": [
+    102
+   ],
+   "bead": "N25ax-01",
+   "note": "the mission template delivery-and-placement (a complete frob.mission/1 document with parameters) and the small exact instance carrier-wet-strip: 12 cells, 2 inner, 8 excluded with proofs, 2 unresolved; prices 1,480 and 1,120; second lowering and invalid fixture"
+  },
+  {
+   "gaps": [
+    120
+   ],
+   "bead": "N25ax-02",
+   "note": "the M3 reading of GATE-AUGUR-14 from the program-wide ceiling check restricted to the mission subsystem: inventory, attachments, audit for unregistered ratios, planted controls, gate record for the M3 exit"
+  },
+  {
+   "gaps": [
+    121
+   ],
+   "bead": "N25ex-01",
+   "note": "the M4 decision of KILL-COUPLING's first clause (a violated transported bound on the 200 finite fixtures after one repair cycle), recorded in the same ADR the M8 decision completes; fallback switched at M4 if fired"
+  },
+  {
+   "gaps": [
+    124
+   ],
+   "bead": "N28cx-01",
+   "note": "the two prediction refusals filed in the allocation ledger: changed-after-freeze merges into FROB-REF-883 by the deduplication rule; after-outcome is a new 8xx request, held on an interim form; rows, payloads, repairs, constants and fixtures"
+  }
+ ],
+ "already": [
+  {
+   "gaps": [
+    1
+   ],
+   "bead": "N28b-43",
+   "note": "ablation arms (one task cluster withheld per arm) and the per-cluster effect table BET-10 reads now exist; BET-10 already reaches it through BD-374"
+  },
+  {
+   "gaps": [
+    45
+   ],
+   "bead": "N24a-44",
+   "note": "the channel kind interval-extremum, its downsampling rule and referee producers exist; BD-207 already names it and folds it on devices; BD-090 cannot depend on it (N24a-44 depends on BD-090)"
+  },
+  {
+   "gaps": [
+    103
+   ],
+   "bead": "N24a-41",
+   "note": "the packet writer now defines the header's shapes entry (collision primitives per body and analytic scene elements, digest-covered, counted in the size computation); N32b-40, -41 and -43 already depend on it"
+  }
+ ],
+ "rejected": [],
+ "new_beads": [
+  "N29ax-01",
+  "N24ax-01",
+  "N25cx-01",
+  "N31ax-01",
+  "N18ax-01",
+  "N28bx-01",
+  "N28ax-01",
+  "N29bx-01",
+  "N30ax-01",
+  "N29ax-02",
+  "N25cx-02",
+  "N25ax-01",
+  "N25ax-02",
+  "N25ex-01",
+  "N28cx-01"
+ ],
+ "edges": [
+  {
+   "bead": "N14a-29",
+   "dep": "N29ax-01",
+   "as": "dep",
+   "why": "gap 8: step 11 of the gate script calls the re-execution path"
+  },
+  {
+   "bead": "BD-059",
+   "dep": "N29ax-01",
+   "as": "dep",
+   "why": "gap 8: capstone of GATE-SKEL-08 depends on the component that makes its third clause measurable"
+  },
+  {
+   "bead": "N14a-18",
+   "dep": "N29ax-01",
+   "as": "related",
+   "why": "gap 8: N29ax-01 depends on the migrate edit and its fixtures; the reverse would close a cycle"
+  },
+  {
+   "bead": "BD-075",
+   "dep": "N24ax-01",
+   "as": "related",
+   "why": "gap 10: the taxonomy entry reads the bus's events; a monitor follows its mechanism"
+  },
+  {
+   "bead": "N15b-03",
+   "dep": "N24ax-01",
+   "as": "related",
+   "why": "gap 10: the taxonomy entry reads the battery-exhausted event; a monitor follows its mechanism"
+  },
+  {
+   "bead": "N16c-19",
+   "dep": "N25cx-01",
+   "as": "dep",
+   "why": "gap 14: the tile planner reads the fleet scene's islands, channels and radii"
+  },
+  {
+   "bead": "N16c-20",
+   "dep": "N25cx-01",
+   "as": "dep",
+   "why": "gap 14: sim.run --decouple steps an admitted fleet scene"
+  },
+  {
+   "bead": "N16c-21",
+   "dep": "N25cx-01",
+   "as": "dep",
+   "why": "gap 14: the gate runs on the two-carrier and 16-robot fleet fixtures"
+  },
+  {
+   "bead": "N25c-34",
+   "dep": "N25cx-01",
+   "as": "dep",
+   "why": "gap 14: the two-carrier acceptance fixture is simulated as a fleet scene"
+  },
+  {
+   "bead": "BD-266",
+   "dep": "N31ax-01",
+   "as": "related",
+   "why": "gap 15: the consumer is an M5 bead; BD-266 (M3) supplies the label it reads"
+  },
+  {
+   "bead": "BD-408",
+   "dep": "N31ax-01",
+   "as": "dep",
+   "why": "gap 15: the packet capstone depends on its admission precondition"
+  },
+  {
+   "bead": "N25c-17",
+   "dep": "N18ax-01",
+   "as": "dep",
+   "why": "gap 23: the probe compiler attaches each admitted mechanism as a CL-1R card variant"
+  },
+  {
+   "bead": "N19b-40",
+   "dep": "N28bx-01",
+   "as": "dep",
+   "why": "gap 27: the redesign arm of scene.retrofit calls the flip-verdict search"
+  },
+  {
+   "bead": "N25b-08",
+   "dep": "N28ax-01",
+   "as": "dep",
+   "why": "gaps 53, 73: lowering by recording runs the margin kernels over a recording value"
+  },
+  {
+   "bead": "N25b-09",
+   "dep": "N28ax-01",
+   "as": "dep",
+   "why": "gaps 53, 73: the paving driver encloses lowered margins"
+  },
+  {
+   "bead": "N25b-13",
+   "dep": "N28ax-01",
+   "as": "dep",
+   "why": "gap 53: bounds of a partial design are kernel evaluations over hole ranges"
+  },
+  {
+   "bead": "N25b-16",
+   "dep": "N28ax-01",
+   "as": "dep",
+   "why": "gap 53: the cut pilot forms capability and resource bounds over completions"
+  },
+  {
+   "bead": "BD-358",
+   "dep": "N28ax-01",
+   "as": "dep",
+   "why": "gap 73: region certificates read interval forms of the static analyses"
+  },
+  {
+   "bead": "N25a-32",
+   "dep": "N28ax-01",
+   "as": "related",
+   "why": "gap 53: the M1 probe bead only records what the suite lacks; the carrier is M3"
+  },
+  {
+   "bead": "N24b-05",
+   "dep": "N24a-44",
+   "as": "dep",
+   "why": "gap 45: fixture 1 reads interval-extremum channels"
+  },
+  {
+   "bead": "N24a-06",
+   "dep": "N24a-44",
+   "as": "dep",
+   "why": "gap 45: the admitted reductions read the kind N24a-44 declares"
+  },
+  {
+   "bead": "BD-207",
+   "dep": "N24a-44",
+   "as": "dep",
+   "why": "gap 45: the device fold implements the kind defined on the referee"
+  },
+  {
+   "bead": "BD-090",
+   "dep": "N24a-44",
+   "as": "related",
+   "why": "gap 45: N24a-44 extends BD-090's kind table and depends on it"
+  },
+  {
+   "bead": "N29b-22",
+   "dep": "N29bx-01",
+   "as": "related",
+   "why": "gap 78: the registered property test follows the mechanism it tests"
+  },
+  {
+   "bead": "N29b-23",
+   "dep": "N29bx-01",
+   "as": "related",
+   "why": "gap 78: the gate script gains the inv-14 step; same fixtures"
+  },
+  {
+   "bead": "N30a-13",
+   "dep": "N30ax-01",
+   "as": "dep",
+   "why": "gap 79: the clock guards read mark kinds and shared marks from the manifest"
+  },
+  {
+   "bead": "N30a-40",
+   "dep": "N30ax-01",
+   "as": "dep",
+   "why": "gap 79: retirement triggers read the maintenance log and operating hours"
+  },
+  {
+   "bead": "N30a-45",
+   "dep": "N30ax-01",
+   "as": "dep",
+   "why": "gap 79: scan admission reads the scan block"
+  },
+  {
+   "bead": "N30a-08",
+   "dep": "N30ax-01",
+   "as": "dep",
+   "why": "gap 79: the measurement model reads resolution and bias_sigma"
+  },
+  {
+   "bead": "N31b-40",
+   "dep": "N29ax-02",
+   "as": "dep",
+   "why": "gap 94: the measured sizing check reads peak-sample events"
+  },
+  {
+   "bead": "N32b-37",
+   "dep": "N25cx-02",
+   "as": "dep",
+   "why": "gap 100: the inconclusive tasks are answered with the M3 form of experiment.suggest"
+  },
+  {
+   "bead": "N25c-18",
+   "dep": "N25cx-02",
+   "as": "dep",
+   "why": "gap 100: the M4 proposal record extends the M3 form"
+  },
+  {
+   "bead": "N32b-16",
+   "dep": "N25ax-01",
+   "as": "dep",
+   "why": "gap 102: the session script instantiates the template and reads the golden answer"
+  },
+  {
+   "bead": "BD-373",
+   "dep": "N25ax-01",
+   "as": "dep",
+   "why": "gap 102: the fresh-agent mission session starts from the template"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N25ax-02",
+   "as": "dep",
+   "why": "gap 120: the M3 exit review reads the gate record of GATE-AUGUR-14"
+  },
+  {
+   "bead": "N25a-27",
+   "dep": "N25ax-02",
+   "as": "related",
+   "why": "gap 120: the M4 reading re-records the gate with the subsystem's own admission function"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N25ex-01",
+   "as": "dep",
+   "why": "gap 121: the M4 exit review reads the first-clause decision"
+  },
+  {
+   "bead": "N25e-06",
+   "dep": "N25ex-01",
+   "as": "dep",
+   "why": "gap 121: the M8 decision completes the record the M4 reading opens"
+  },
+  {
+   "bead": "N40-29",
+   "dep": "N25ex-01",
+   "as": "related",
+   "why": "gap 121: the fallback ledger (M1) lists the M4 part; the decision bead is later"
+  },
+  {
+   "bead": "BD-344",
+   "dep": "N28cx-01",
+   "as": "dep",
+   "why": "gap 124: the mechanism raises its two refusals through the registered rows and constants"
+  },
+  {
+   "bead": "N41-REF",
+   "dep": "N28cx-01",
+   "as": "related",
+   "why": "gap 124: both are registry data; the provisional names it lists are resolved here"
+  },
+  {
+   "bead": "N28-REF",
+   "dep": "N28cx-01",
+   "as": "related",
+   "why": "gap 124: addendum to the same chapter's refusal table"
+  }
+ ]
+}

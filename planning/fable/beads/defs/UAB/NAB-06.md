@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "workspace", "delivery", "solid", "registry"]
 parent: "WP-01"
-deps: ["NAB-01"]
-needs: ["§0.5: the subsystem table (23 names with their bounded contexts and crates), from which the missing `Reflex` row is taken (N00-03)"]
-related: ["NAB-02", "NAB-03", "NAB-04", "NAB-05", "NAB-07", "NAB-08", "N00-03"]
+deps: ["N00-03", "NAB-01"]
+needs: []
+related: ["NAB-07"]
 gates: []
 plan_refs: ["Appendix A", "§0.5"]
 ---
@@ -54,6 +54,11 @@ those crates.
 **Special cases in this range.**
 
 - Code literal (kind `label`): `provisional` (a fast-tier result that has not been promoted).
+- `Partial ten-fold gate` has text after its reference parenthetical. Per NAB-03's transcription rule 3 the
+  parenthetical "(GATE-TENFOLD-06; §39.12, BET-13)" is split on ";" and "," into `defined_in = ["§39.12"]` and
+  `constructs = ["GATE-TENFOLD-06", "BET-13"]`, and the trailing sentence stays in `meaning`: "The M3
+  measurement of the ratio on legged and wheeled briefs, recorded whatever its value, with a written rule for
+  each outcome. The tournament at M7 is GATE-TENFOLD-07".
 - Subsystem rows: `Nemesis`, `Phylum`, `Reflex`.
 - Classes and enumerations to keep verbatim: the four no-authorization flags `execution_authorized`,
   `hardware_safety_signoff`, `sim_to_real_certified` and, on build packets, `fabrication_released` (always
@@ -162,8 +167,9 @@ Rows in this range: 65.
 `crates/frob-conformance/tests/glossary_content.rs`, module `n_to_r`:
 
 - `count_is_66`; `order_matches_frozen_list` (with `Reflex` in place).
-- `all_23_subsystems_defined` (whole registry): the 23 names above each resolve to a record of kind
-  `subsystem`, and no other record has that kind.
+- `all_23_subsystems_defined` (whole registry): the names of the subsystem table (`registries/subsystems.toml`,
+  N00-03; 23 at plan time, equal to the 23 names above) each resolve to a record of kind `subsystem`, and no
+  other record has that kind.
 - `pinned_values`: `Qualification lane` contains "α_i = α/[i·(i + 1)]"; `Restricted mean time` contains
   "E[min(T, H)]"; `Robustness` contains "ρ = ψ/s"; `Pseudo-inertia` contains "[[Σ, h], [hᵀ, m]]"; `Paired lower
   bound` contains "95%"; `Reality status` contains the six names; `Reuse grade` contains "1 identity, 2

@@ -1,0 +1,236 @@
+{
+ "round": 2,
+ "slice": "S15",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "BD-039",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "comparator rows cite capability-register ids (IA-nn) and matched/native step settings that two other beads own: added deps N00-13 (the register, which was wrongly made to depend on this mechanism) and N36-02 (the workload registry's [[setting]] records, whose hashes configurations.matched/native now cite, so step settings are stated once). Test pin_move_record_required used a `pin-move` spelling for the [[pin_move]] record; added test capabilities_resolve."
+  },
+  {
+   "bead": "BD-143",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Scope listed the order rule as In while naming N39a-38 (which depends on this bead) as its owner, and a unit test exercised that later mechanism: the record now forms no product, records each lever share with time_base original-loop, and the order-rule tests are N39a-38's. Added the §2.3 design-cycle ceiling (i), missing although §39.11 requires every §2.3 ceiling recomputed, with worked values 3 and 3.5; running N00-17's `thesis ceilings` report on the measured ledger is now this bead's (nine ceilings, labelled measured). Named the eleven phases of the single-pair test column (ambiguous against the thirteen-phase order). The commit of record appends the NF-08 closing record to N00-14's register."
+  },
+  {
+   "bead": "GB-08",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "lane B called 'restricted-mean and ratio functions of the thesis module' that N00-17 did not define (NEG-02 requires lane B to pass at M0): now thesis::restricted_mean (added to N00-17) and completion_cap; a record with T > H counts as a miss; test boundary corrected (R = 10 exactly at RMT 0.134 h, so '< 10' holds only above it)."
+  },
+  {
+   "bead": "GB-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the FACT assembly-share row had tolerance exact with golden 0.1450 (38/262 is 19/131 = 0.145038…) and a non-numeric printed value that NEG-01's validator rejects: golden 19/131, unprinted."
+  },
+  {
+   "bead": "N00-13",
+   "kinds": [
+    "deps"
+   ],
+   "what": "a registry bead depended on the mechanism BD-039 only for an optional e2e join, while BD-039's comparator rows need this register's ids: removed the dep (BD-039 now depends on this bead); the e2e joins re-audit records where N00-14 has written them."
+  },
+  {
+   "bead": "N00-14",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "NF-08 was to be closed by measurement at M0, but its measurement (BD-143) is M1: NF-08 gets a dated second search at M0 and BD-143 appends the closing record; NF-07 links BD-040's edit rows, added as a dependency."
+  },
+  {
+   "bead": "N00-17",
+   "kinds": [
+    "tests",
+    "complete"
+   ],
+   "what": "an M0 acceptance line could only be met when BD-143 (M1) lands: it now runs on a synthetic measured-ledger fixture and leaves the real run to BD-143. Added thesis::restricted_mean (RMT and q over mission records, clamping, false-certificate disqualification) which GB-08 lane B and the KA-009 control of N00-33 need, with test ka009_restricted_mean."
+  },
+  {
+   "bead": "N00-33",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "the KA-009 control mutated 'an estimator' that no M0 bead held: it now names thesis::restricted_mean (N00-17). Its KA-001 tolerance ('exact', printed value a display rounding) disagreed with the value N38b-50 writes for the same row through REC-01 (truth 8428/5757, tolerance 0.005): aligned to rule 2 of N38b-27, with a test that the two records agree."
+  },
+  {
+   "bead": "N00-KA",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Scope required a derivation file per row while acceptance (correctly) lists 26 rows: the six sibling-defect rows KA-003 to KA-008 cite their defect report instead."
+  },
+  {
+   "bead": "N36-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "matched and native comparator settings were specified here and again in BD-039's comparators.toml without saying how they relate: stored here as content-hashed [[setting]] records that BD-039's warm configurations cite."
+  },
+  {
+   "bead": "N36-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope"
+   ],
+   "what": "claimed to be the home of FROB-REF-866 while N35-REF owns its row and forbids a second repair list: now raises the code with the row's repairs; added dep N35-REF; the out-of-scope ten-fold ceiling gate now names its beads (N39a-38, N40-18)."
+  },
+  {
+   "bead": "N36-13",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "claimed to be the only place FROB-REF-862 is stated while N35-REF owns the code's row (and forbids a second repair list): the bead raises the code from its check and quotes the row's repairs in their order; added dep N35-REF."
+  },
+  {
+   "bead": "N36-CX",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the M0 registry check failed whenever a named test did not exist, but the tests of seven rows belong to M1 and M2 beads (N36-08, -09, -16, -18, -19, BD-219, N36p1-02), so the bead could not close at M0: each named test now carries `due`, tests not yet due are listed `not yet` (the N00-CX pattern) and fail from their milestone on; planted variants and guards are required from their owners' milestones; its only e2e was N36-30's M2 script: added scripts/e2e/cx_perf.sh at M0 (dep STD-E2E), which N36-30 runs from M2."
+  },
+  {
+   "bead": "N36-KA",
+   "kinds": [
+    "scope",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "five rows (KA-816, -819, -820, -822, -824) stay `none stated`, which supports no gate and must be closed by M3: Out now names N38b-34 as their owner, and states that the tolerance rule is rule 2 of N38b-27; its only e2e was N36-30's M2 script: added scripts/e2e/ka_perf.sh at M0 (dep STD-E2E)."
+  },
+  {
+   "bead": "N38a-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the development-oracle launcher 'records the disclosure block', a term N36-13 defines as the Performance block; a lane result makes no Performance claim: renamed to the run environment, with the distinction stated."
+  },
+  {
+   "bead": "N38b-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the packet asked for double precision 'for the development oracle's parity role', but the oracle's only role is `pilot` (N38a-06): the reason is now that its pilots stand in for the double-precision CPU referee."
+  },
+  {
+   "bead": "N39-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps"
+   ],
+   "what": "Request applied: six dev-* rows of N39ax-01's development-pool check (exit 3, no product code) and the scope sentence naming their raiser. FROB-REF-866 was attributed to N39a-39, which raises nothing; now N36-05 (admit_experiment) with the harness form from N39a-37/-38. The product-code table restated repair lists that N35-REF owns exclusively (and differed from them): now labelled as how the repairs apply here. The build-time mapping check could not pass at M0 (codes owned by M1 and M5 registries, e.g. 860 by N31-REF): codes of M0 registries are checked, the others listed pending with their owner until that registry lands. Added deps N35-33 (the file it allocates a code in), N35-REF and N32-REF (the M0 codes it maps to)."
+  },
+  {
+   "bead": "N39a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "acceptance required six planted breaches each to produce a `cap_breach` event, but the wall-time cap censors through the `deadline` event (N39a-03): five give cap_breach and censored-cap, the sixth deadline and censored-deadline."
+  },
+  {
+   "bead": "N39a-24",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "request applied: dep N39-REF; its ledger check now names the registry reasons it raises (record-hash-mismatch, exit 9; ledger-disclosure-missing, exit 3, FROB-REF-862)."
+  },
+  {
+   "bead": "N39a-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance had this bead refuse 'a product of lever effects' while its Out gives products and the order rule to N39a-38: a share registered for a set of levers above the union bound is refused here with lever-share-above-ledger, the order rule stays N39a-38's; test added."
+  },
+  {
+   "bead": "N39a-39",
+   "kinds": [
+    "correct"
+   ],
+   "what": "acceptance said overlapping shares are 'flagged by the order rule': now refused by N39a-26's union bound (lever-share-above-ledger), and pruning times speed-up on removed work by N39a-38's order rule (order-rule-violation)."
+  },
+  {
+   "bead": "N39b-08",
+   "kinds": [
+    "correct"
+   ],
+   "what": "its audit record wrote comparators.toml with fields revision, publication_allowed and source_reread that BD-039's schema (the only definition of that file) refuses as unknown: now source_revision, licence.permits_publishing_comparison, and the re-read reached through the capability records."
+  },
+  {
+   "bead": "N39b-32",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "its licence record wrote publication_allowed, redistribution_allowed, clauses and reader into comparators.toml, whose only schema (BD-039) refuses unknown fields and holds licence.permits_publishing_comparison (yes|no|unknown): the full reading (run, publish, redistribute with quoted clauses) now lives in its own licence_readings.toml, which `cleared` reads, and the comparator row gets the projection; projection test and control added."
+  },
+  {
+   "bead": "N40-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "mapped the audit items to comparators.toml fields `revision` and `publication_allowed`, which BD-039's loader refuses: now source_revision and licence.permits_publishing_comparison."
+  },
+  {
+   "bead": "N40-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "request checked: factor-on-removed-work no longer appears (round 1 removed it). Still stale after BD-143's correction: the order rule and its test were attributed to BD-143, now N39a-38's (order_rule_pruning, order_rule_sequence); 'eight ceilings' is now nine, with the design-cycle ceiling listed."
+  },
+  {
+   "bead": "N41-23",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "request applied: dep N41-18 (owner of session_record.rs, to which it adds cases), plus N41-REF, which names this step as a raiser of session-record-invalid. Its disclosure block's comparator group was copied 'from the oracle register', but N36-13 requires the comparators.toml row: corrected. Its test required a written cause at exactly +20% though the rule is 'above 20%' and BD-040's band is the closed [0.8, 1.2]: 493 s now requires one, 492 s does not."
+  },
+  {
+   "bead": "NEG-06",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "its test called `ceiling(ratio, share)`, a function no bead defines (N00-17 holds the only ceiling formulas): the refusal is now N00-17's ceiling report rejecting a planted ratio-and-share input in place of timed totals, the ceiling being residual_ceiling on the timed medians."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N36-30",
+   "what": "its preflight should run scripts/e2e/cx_perf.sh (N36-CX) and scripts/e2e/ka_perf.sh (N36-KA), the M0 scripts now owned by those registries, instead of re-implementing their catalogue and known-answer checks"
+  },
+  {
+   "bead": "N41-24",
+   "what": "N41-REF names it as a raiser of session-record-invalid (the step-7 fixture-identity check) but it does not depend on N41-REF; add the dep (N41-23 now has it)"
+  }
+ ],
+ "unchanged": 24,
+ "notes": "All 51 beads read in full. Round 1 left the slice mostly coherent; most changes are cross-bead agreement (comparators.toml schema, refusal-registry ownership, BD-143's order-rule move) and M0 beads whose checks needed M1/M2 work. The requests to N39a-25 and N40-13 were already satisfied; the slice looks close to settled."
+}

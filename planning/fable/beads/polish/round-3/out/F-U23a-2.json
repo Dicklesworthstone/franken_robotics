@@ -1,0 +1,225 @@
+{
+  "round": 3,
+  "slice": "F-U23a-2",
+  "reviewed": 24,
+  "changed": [
+    {
+      "bead": "N23a-16",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "The 2.5 reading of 'missed by more than two times' was to be 'confirmed by the owner in the decision record', after measurement; N40-03 refuses an amendment dated after the receipt it governs: now a dated amendment before the first GATE-CORTEX-05 receipt. Deferred outcome names deferred_to = M3 and a reason. Added the N40-30 owner declaration in frob-learn contract.toml (acceptance + kill_ledger test in the script). N23a-17's close is N41-17's 'withdrawn: not needed: KILL-LEARNKERN not fired, docs/adr/ADR-KILL-LEARNKERN-M2.md'."
+    },
+    {
+      "bead": "N23a-17",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Typed close reason was 'not-needed: …' (not an N41-17 type): now 'withdrawn: not needed: KILL-LEARNKERN not fired, docs/adr/…M2.md'. 'Exactly one host-read lease per iteration' contradicted its own two-device paragraph (each shard reads): one per shard."
+    },
+    {
+      "bead": "N23a-18",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Had no script of its own (its step lived in N23a-35's cortex_train.sh): now scripts/e2e/learn_placement_profiles.sh with the same commands, log path, transcript and summary; N23a-35 runs it as a stage (convention 11). Added dep N23b-15: the gate_record example wraps N23b-15's training-gate record builder and the eval.run policy form is N23b-09's (reached through N23b-15); no cycle."
+    },
+    {
+      "bead": "N23a-19",
+      "kinds": [
+        "e2e-logging",
+        "correct",
+        "deps"
+      ],
+      "what": "Stale '--shards not on the row yet, requested' removed (the train.start row lists it). Own script scripts/e2e/learn_shard_merge.sh: g1 KA-587, KA-588 and GATE-CORTEX-08 in g2_parity (a parity gate takes G2, N23b-16), gauntlet-mutations controls, receipt hashes; the train.start --shards comparison stays in N23a-35 because N23a-14 depends on this bead (convention 7). Acceptance: record_gate for GATE-CORTEX-08 by a non-implementer, script records nothing (convention 9). Added dep N23-KA (the rows its filter selects; no cycle)."
+    },
+    {
+      "bead": "N23a-20",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "Own script scripts/e2e/learn_residual.sh (N23a-36 runs it as stage 'residual') with its own log. Control forms were zero:/random: of a network spec; N23b-15's forms take the trained policy: zero:<id>, random:<id>:7. Stale 'requested of the train.start row' removed. Pilot-falsifier close is N41-17 rule 7: withdrawn citing N22a-27's [[pilot.result]]."
+    },
+    {
+      "bead": "N23a-21",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "Outcomes mapped to N40-03 words; the 'provisional' baseline-only decision becomes deferred (deferred_to M5) when the baseline row fires and not-fired otherwise, with truth-table cases. The 'every required teacher kind' reading is a dated amendment before the first GATE-CORTEX-14 receipt, not an owner ruling in the record. bc-warmstart is admitted by BD-323 on every branch, so this bead writes only teacher-student. Dry-run probes of train.distill/train.start get keys (805 would mask exit 5). Owner declaration (N40-30) and kill_ledger test; pilot falsifier: fired, BD-323 withdrawn citing N23b-21's pilot result."
+    },
+    {
+      "bead": "N23a-23",
+      "kinds": [
+        "tests"
+      ],
+      "what": "'An attempted threshold edit expecting a refusal' made concrete in BD-145's form: after a synthetic first result, the edited copy (0.70 to 0.60) gets a different study plan identifier, and a result or verdict under the original plan with the edited registration is exit 7, FROB-REF-809."
+    },
+    {
+      "bead": "N23a-24",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Stale '545 requested' removed (the policy.apply row lists 531, 534, 537, 545). The guard divides 537/545 by the requested use, which the row's bare --score-for-ladder flag cannot carry: --score-for-ladder select|discard (DESIGN, requested of VERBS-policy). Probes written in full with keys; eval promote written with its result, tier and key. The score-table entry was 'cargo test … -- --emit-table <dir>', which the test harness refuses (unknown option): now a thin example rung_scores."
+    },
+    {
+      "bead": "N23a-25",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "Own script scripts/e2e/policy_apply.sh with its own log (N23a-36 runs it as stage 'policy-apply'). The 545 probe through a discard-only record needs N23a-24's record lookup, which depends on this bead: removed from this script (kept as unit test with a fixture record; N23a-24's script probes it). Probes written in full with keys; --score-for-ladder select|discard; stale '545 requested' removed."
+    },
+    {
+      "bead": "N23a-26",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "Outcomes mapped to N40-03: fired (conjunction or pilot falsifier), not-reached (envelope declined or undecided), not-fired with the role restriction. Dependents close with N41-17 types: superseded on fired, 'withdrawn: not run: no envelope, R7', or withdrawn citing the pilot result. train.family dry-run probe given --class, --generator, --split and a key. Owner declaration (N40-30) and kill_ledger test."
+    },
+    {
+      "bead": "N23a-27",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "Had no script of its own: now scripts/e2e/learn_inheritance_map.sh (design edits im-ed-0..2 with keys, the map printed by a thin example inheritance_map since train.inherit's BD-322 depends on this bead, the missing-correspondence fixture expecting 531, laws_c23_transport with and without its controls feature), own log and summary; N23a-36 runs it as stage 'inheritance-map' and adds BD-322's verb probes."
+    },
+    {
+      "bead": "N23a-28",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "Own script scripts/e2e/learn_lineage_resets.sh: twelve keyed design edits, the thin example lineage_replay (--reset-depth 5 --audit-rate 2, fixture audits), a replay run twice; the train.inherit chain stays in N23a-36 (BD-322 depends on this bead, convention 7). The criterion that read train.inherit's output now reads the library report that BD-322 prints."
+    },
+    {
+      "bead": "N23a-29",
+      "kinds": [
+        "correct",
+        "tests",
+        "deps"
+      ],
+      "what": "Bound stated two ways (k <= d* and k <= d* - 1): one form, k <= max(1, d* - 1), in the criterion and the k_bounded_by_pilot cases. 'cargo test … -- --emit-decisions <dir>' is refused by libtest: now a thin example lineage_schedule. The criterion on train.inherit reading the values is reworded to values_in_force() (the verb comes later). Added dep BD-058 (design.edit for the chain; no cycle)."
+    },
+    {
+      "bead": "N23a-30",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "A post-measurement repair cycle was allowed though the trigger names none (N40-03 step 5): a re-measurement is now a deferred decision with an ADR. Outcomes in N40-03 words with a 'not measured' deferred (deferred_to M5) case; fired includes the pilot falsifier. Owner declaration (N40-30) and kill_ledger in acceptance and script; dry-run probe keyed (ki-dry); 'provisional' wording replaced."
+    },
+    {
+      "bead": "N23a-31",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "Applied S23's request: analyze symmetry takes the design positionally. Own script learn_equivariant_net.sh written in full (keys, 16,384 and 8,192 weights, C2 on the lidar variant, --group mech expecting 161, trivial-group fixture); BD-326 runs it as a stage. The trivial-group refusal was unnamed: worded refusal tying-group-trivial (requested of N23-REF) with a unit test. --group obs|mech requested of the train.start row. Pilot-falsifier and no-envelope closes now N41-17 typed (withdrawn citing the [[pilot.result]]; 'withdrawn: not run: no envelope, R15')."
+    },
+    {
+      "bead": "N23a-32",
+      "kinds": [
+        "e2e-logging",
+        "correct"
+      ],
+      "what": "Own script learn_symmetry_augmentation.sh (keyed trainings aug-5 and none-5, export, eval.run policy form on the dev stream with zero:/random: controls, keyed dry runs); BD-326 runs it as a stage. The trivial Gamma_aug refusal named as tying-group-trivial, matching N23a-31."
+    },
+    {
+      "bead": "N23a-33",
+      "kinds": [
+        "correct",
+        "complete",
+        "e2e-logging"
+      ],
+      "what": "Applied both requests: record path docs/adr/ADR-KILL-EQUIV-M4.md; evidence trace by the receipt's claim id (clm:<hex>), not --gate. Outcomes in N40-03 words (the fork is the owner's ruling within not-fired; fired includes the pilot falsifier). Owner declaration (N40-30) and kill_ledger. Dry-run probes given design, task and keys (ke-dry-eq, ke-dry-aug); log path named."
+    },
+    {
+      "bead": "N23a-34",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Applied H-verbs-7: step 14 asserts term-contract-unmet and 529 at train.start --dry-run only; task.check asserts 554 (and 520 where the row itself refuses, as N23a-05 states) and logs the rest. Removed the 'skipped' hedges on reset_mode and zero_copy (both are on the train.start row); views step keyed."
+    },
+    {
+      "bead": "N23a-35",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Applied S58 and H-verbs-2: the cortex-ppo battery runs as g1_known_answers rows KA-576, 579, 582 to 588 and GATE-CORTEX-07 (controls under gauntlet-mutations, asserted caught); cortex-grad as GATE-CORTEX-02 in g2_parity (BD-196's tier, a parity gate; not g1 as S58 wrote). eval.run --policy --task --stream dev calls kept. Runs N23b-30's verb stage, N23a-18's and N23a-19's own scripts as stages, then the --shards comparison written in full. Step 17 records nothing (convention 9): prints receipts for the carriers' recording sessions. spark check flag set attributed to N21b-32."
+    },
+    {
+      "bead": "N23a-36",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Runs N23a-25's, N23a-27's, N23a-28's and N23a-20's own scripts as stages (convention 11). Step 14 had the script's session record three gates: now receipts only, each gate recorded by its carrier (BD-321, BD-322, BD-323). Ladder guard probes written with --score-for-ladder select|discard; inheritance dry run keyed (a run verb); lineage step names its donor."
+    },
+    {
+      "bead": "N23a-37",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Applied H-verbs-2: the cortex-offpolicy battery is a g1_known_answers row under provisional tag offpolicy-01, with this bead's [[block]] request (ka, count 1) in allocations.toml (N38a-40; no invented number); planted defects as controls under gauntlet-mutations, asserted caught from the receipt. Evaluations in eval.run's policy form with zero:/random: controls and keys; refusal dry runs keyed. Killed-row close typed per N41-17 rule 7."
+    },
+    {
+      "bead": "N23a-38",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Applied H-verbs-2 as for N23a-37: td3 entries and TD3's planted defects added to the offpolicy-01 row (registering it itself if SAC was killed); script step td3 rewritten with cargo test, keyed eval.run policy forms and keyed refusal dry runs. The 'killed; substrate carried' close of N23a-37 is now N41-17's withdrawn citing the pilot result."
+    },
+    {
+      "bead": "N23a-39",
+      "kinds": [
+        "correct",
+        "tests",
+        "deps"
+      ],
+      "what": "Applied H-verbs-7: registers the predicate train-es-airlock-optimizer in frob_verbs::admission::predicates (N33c-32's form; holds only for algo es with optimizer airlock:cma-es), so the train.start row's needs_groups entry passes needs-groups-known and 790 is generated onto the row; acceptance criterion and unit test es_airlock_predicate_registered added; dep N33c-32 added (no cycle). Control evaluations written in eval.run's policy form with keys."
+    },
+    {
+      "bead": "N23ap1-01",
+      "kinds": [
+        "correct"
+      ],
+      "what": "The mutation step said each planted control is 'selected through the conformance runner'; N38a-02's filters select a gate, row, site or milestone, not a control: the runner executes every control of GATE-CORTEX-10 under gauntlet-mutations and the script asserts this bead's four control lines caught from the receipt."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-policy",
+      "what": "policy.apply's --score-for-ladder is a bare flag, but its 537/545 division (N28b-23, the row's own refusal text) depends on whether the score is asked to select or to discard. N23a-24 and N23a-25 now spell it --score-for-ladder select|discard (DESIGN); please carry the value on the row and in the options test."
+    },
+    {
+      "bead": "VERBS-train",
+      "what": "train.start: add the input --group obs|mech (DESIGN of N23a-31; accepted only with --tying equivariant, otherwise FROB-REF-802) and FROB-REF-161 (tying requested under a group larger than the observation symmetry Gamma_obs; payload names the breaking generator and both group orders) to the row's refusals; N23a-31's script probes --group mech expecting 161."
+    },
+    {
+      "bead": "N23-REF",
+      "what": "Register the worded refusal tying-group-trivial (exit 3): --tying equivariant or augmentation on a design/task whose symmetry group is trivial; raised by N23a-31 and N23a-32, it then enters train.start's refusals."
+    },
+    {
+      "bead": "N23-KA",
+      "what": "N23a-37 now registers the cortex-offpolicy battery as one row of known_answers.toml under provisional tag offpolicy-01 with its own [[block]] request (registry ka, count 1, owner N23a-37); the completeness test known_answers_cortex should not count it among the 18 numbered and 5 late rows (or, if the owner prefers, adopt it as KA-23-L6 with a block of six, and N23a-37 will cite that tag)."
+    }
+  ],
+  "unchanged": 0,
+  "notes": "All 24 beads changed; none left unchanged. Dependency additions STD-E2E and N40-30 were not made where the graph already reaches them transitively (all kill-decision beads reach N40-30; all beads here reach STD-E2E). S58's request put GATE-CORTEX-02 in g1_known_answers; it was applied with g2_parity instead, because GATE-CORTEX-02 is a parity gate and BD-196 (its carrier) collects it in tests/g2_parity.rs (N23b-16 already assigns parity gates to G2, so no request was needed). N23a-34's request applied in its first form (assert at train.start only), since N23a-05 runs its admit pass at train.start. Scripts that mechanism beads now own (learn_placement_profiles, learn_shard_merge, learn_residual, policy_apply, learn_inheritance_map, learn_lineage_resets, learn_equivariant_net, learn_symmetry_augmentation) are run as stages by N23a-35, N23a-36 and BD-326; where the verb a stage needs depends on the mechanism bead, that part stays in the later script (convention 7). Graph checked after edits: no cycles; new references (N21b-32, N38a-40, N23b-15, N33c-32) reachable."
+}

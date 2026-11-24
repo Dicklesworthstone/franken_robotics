@@ -1,0 +1,218 @@
+{
+ "round": 1,
+ "slice": "U20a-1",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "BD-078",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "U12-2 request: N12-42 moved from related to deps; added unit test oracle_d2_rational_clocks (in frob-conformance) comparing the schedule against the compendium's rational-clock oracle (L = 1,200; periods 3, 12, 40; firing count floor((n - phi)/N) + 1; thirteenth-step NC); N20b-24 (OPEN-SENS-2 decision) added to related and named in Considerations"
+  },
+  {
+   "bead": "BD-098",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "referee restore tests continued 2,000 ticks and compared only delivered observations; GATE-SENS-05 and KA-477 require byte-equal delivered observations AND physics digests over the next 10^4 ticks: acceptance and the three adversarial-instant tests now use 10^4 ticks and physics digests, with a fixture that keeps every queue and the command ring non-empty"
+  },
+  {
+   "bead": "N20-KA",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the where_stated column differed from Appendix M.19 on 33 rows (dropped the second section, e.g. KA-471 '§20.4.6' for '§20.4.6, §20.20'); aligned to the appendix as the record form requires; N20b-45 (numbers for the late rows) added to related and named in Considerations"
+  },
+  {
+   "bead": "BD-120",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "U12-2 request: N12-46 added to deps; added test oracle_d6_gramian_and_anchors against the compendium's observability-Gramian oracle (index on the gauge complement in whitened units; two-anchor identity information; third anchor separates iff eps < 1) with its negative control"
+  },
+  {
+   "bead": "BD-134",
+   "kinds": [
+    "complete",
+    "users",
+    "deps",
+    "tests",
+    "title"
+   ],
+   "what": "U13 request (GATE-MARROW-06 alias clause at M1): added the supplied-worlds form of the M1 verb, 'frob sense alias turn-spring --worlds A,B --encoder single-turn|multi-turn --json', with steps (replay both worlds, compare delivered bytes, success sets as hold-torque intervals 0 and +pi N.m at tau_tol = 0.1 N.m decided exactly with a rational enclosure of pi, probe scope 'no probe before t* = 0'), separating changes listed only when a re-run dissolves the witness (multi-turn encoder, homing move, torque reading; for docking: latency 0 s, label before start), five new unit tests incl. the state-comparing mutant, acceptance line, e2e via turn_count.sh stage 7; deps BD-099 and N13-35; title updated"
+  },
+  {
+   "bead": "BD-189",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "the masked episode reset of the Sensorium slabs on device tiers was carried by nobody (BD-159 leaves K-sense-* to this bead; N20a-06 is referee only): added step 5a and kernel K-sense-reset (final observation kept, phases to keyed redraw, rings and command rings emptied, exposures discarded, noise states and latents re-initialized, digests reset, untouched worlds byte-identical), acceptance line, test masked_reset_on_tier with a ring-keeping mutant; BD-192 in related"
+  },
+  {
+   "bead": "BD-190",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "U12-2 request: N12-46 added to deps; the oracle paragraph, acceptance and new test oracle_d6_docking_grid compare the 561 labels with the compendium's docking-boundary oracle (NC: equality admitted differs on the nine boundary cells)"
+  },
+  {
+   "bead": "N20a-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "the e2e paragraph now names the user-side trigger of FROB-REF-442 clause (a) in sense_refusals.sh (fixture 442a, CLI and MCP) and what the identity check logs"
+  },
+  {
+   "bead": "N20a-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "sample_never_numeric iterated reasons 1..=15 of 18; the plan-name/DESIGN-name split was mis-described (nine; it is codes 6 to 18, thirteen); flag registry lacked under-resolved (N20b-30), integration-truncated (N20a-26) and extrinsics-suspect (N20b-06), which a closed registry would reject at load; the flag 'fault: bumped' announced an injected truth-side fault to the robot (contradicts ADR-SENS-09 and N20a-31): replaced by extrinsics-suspect, 'fault: stuck' limited to annunciated faults, no-truth rule and test no_truth_flag added"
+  },
+  {
+   "bead": "N20a-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Out section gave the presentation clause of 442 to BD-215 while N20a-01 raises it: aligned; e2e now names sense_causal_test.sh step 4 (N20b-11) and sense_refusals.sh fixture 442b with what they log"
+  },
+  {
+   "bead": "N20a-04",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "defined WorldAddr = (run_seed, world, episode), which is why sample indices may restart each episode without repeating noise; clarified the bias-walk density unit"
+  },
+  {
+   "bead": "N20a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the 'exactly 10 ms' stamp-point shift holds only for zero rate error and a dividing tick; acceptance now states the fixture and the general (1 + eps)-scaled, tick-floored value"
+  },
+  {
+   "bead": "N20a-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "window membership function was named 'contains' while N20a-49 and N12-42 specify window_contains with WINDOW_RULE (OpensAt/ClosesAt) and a single-definition lint: aligned, fail-closed default stated, lint test added"
+  },
+  {
+   "bead": "N20a-09",
+   "kinds": [
+    "deps"
+   ],
+   "what": "it writes scripts/e2e/pilot_sched_race.sh, which sources the STD-E2E helper: STD-E2E added to deps"
+  },
+  {
+   "bead": "N20a-10",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the class count needed for the coverage fraction was undefined: count = |chi_G(-1)| per component (Stanley) by deletion-contraction, product over components, keyed-permutation sampling past the budget, 'coverage: unknown' past a time cap; greedy construction of the canonical extension; tests class_count_by_chromatic_polynomial (8, 6, 8, 14) and count_timeout_reports_unknown; N20a-44 moved to deps because this bead's acceptance is passing stage 15 of its script unchanged"
+  },
+  {
+   "bead": "N20a-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "the decision read only the six-event fixtures, while the pilot (N20a-09) counts a miss on the one-pair fixture of PILOT-C-19 as falsified: 'not fired' now also requires the one-pair plant found and both clean forms clean; test one_pair_plant_missed_counts; STD-E2E dep for kill_sched_decide.sh"
+  },
+  {
+   "bead": "N20a-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "a stress clock set 'chosen to maximize lateness' contained a 200 Hz IMU on 400 Hz physics, which divides the step and is never late: replaced by a 300 Hz IMU (lateness 0, 2, 1 quanta); the lateness pattern of both stress sets stated (50 Hz on 240 Hz: 0 to 4 quanta of a 5-quantum step)"
+  },
+  {
+   "bead": "N20a-13",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "the period-timing velocity estimator was in scope but never specified: added its form (timer_tick, timeout, edge located on the segmented pose history, timeout zero declared as a measurement, last-edge time checkpointed), an acceptance line and test period_timing_velocity (10.026 rad/s at 10 rad/s with a 1 us timer; 0 below the timeout speed; sign)"
+  },
+  {
+   "bead": "N20a-14",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the Allan acceptance (slopes +-0.05, K within 10% on one 2-hour combined stream) is statistically unattainable: a simulation of the fixture gave walk slopes 0.35 to 0.92 and K 0.74 to 1.85 of the card on one world. Slopes now measured on separated streams; combined card judged by a two-term fit over 64 worlds (N within 2%, K within 10%, minimum within 15% of 86.6 s), tolerances >= 3x the simulated spread; walk test reads sigma_A at 1 s not 100 s; fresh-bias mutant test; drop test lsb = range/2^15 so 'exactly' holds"
+  },
+  {
+   "bead": "N20a-15",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the RL step check sampled at 10 kHz with a 1%-of-V/R tolerance, but the sample-and-hold readout lags the continuous two-lag formula by up to 0.308 A (1.28%; 9.30 A vs 9.59 A at 2 ms): fixture now sampled at 100 kHz (0.13%); new test rl_step_hold_lag_10khz pins the exact recursion and the documented lag"
+  },
+  {
+   "bead": "N20a-16",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "U12-2 request: N12-42 added to deps; test oracle_d2_exposure_average (in frob-conformance) against the compendium's exposure-average oracle with closed-closed and open-open controls; membership call renamed to window_contains to match N20a-06/N20a-49"
+  },
+  {
+   "bead": "N20a-17",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "after a lost encoder packet the increment must be taken against the last delivered count, or one period of travel is lost: stated, unwrapping by N20b-40's predicate with the real gap (ambiguous increments not used silently), acceptance extended, test lost_packet_catches_up with a drop-the-increment mutant; N20b-40 in related"
+  },
+  {
+   "bead": "N20a-18",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "STD-E2E dep for pilot_tactile.sh; the centre-sampling control said 'several percent' but is 0.8% on an edge placement: exact values stated (0.871/0.992/1.031 of P at d = 2 mm) and test centre_sampling_mutant_fails added"
+  },
+  {
+   "bead": "N20a-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "noise was added after the saturation clamp, so a saturated taxel could read above its limit (unlike the IMU and readout chains): noise now precedes the clamp (DESIGN), conservation fixtures use noise_sigma = 0 and lsb = 0 (else 1e-12 cannot hold), test noise_before_clamp with the swapped-order mutant"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N20-REF",
+   "what": "row FROB-REF-442 'Raised by': clause (a) is raised at registration by the observation service N20a-01 (BD-215 measures presentation noninterference); clause (b) is raised by freeze_actor_schema, which N20a-03 owns (N20b-10 uses it); also carry the 442/524 division sentence written in N20a-03, N23a-03 and N23-REF (reconciliation dup-03)"
+  },
+  {
+   "bead": "N13-36",
+   "what": "BD-134 now delivers at M1 'frob sense alias turn-spring --worlds A,B --encoder single-turn|multi-turn --json' (hold-torque tolerance 0.1 N.m, probe scope 'no probe before t* = 0', verified remedies multi-turn encoder, homing move, torque reading); the 'recorded open while the verb lacks the supplied-worlds form' fallback in stage 7 and its acceptance line can be dropped; N13-37 likewise"
+  }
+ ],
+ "unchanged": 7,
+ "notes": "complete: 31 of 31 reviewed; 24 changed, 7 unchanged (BD-188, BD-237, BD-238, BD-239, BD-240, N20a-07, N20a-08). All four requests addressed to the slice applied (BD-078, BD-120, BD-190, N20a-16 from U12-2; BD-134 from U13; N20a-03 dup-03 handled and forwarded to N20-REF). Do not add N20a-49 -> N20a-06: N20a-06 -> BD-078 -> N12-42 -> N20a-49 would close a cycle. Numeric claims in N20a-14 and N20a-15 were checked by a scratch simulation (Allan spread; hold lag)."
+}

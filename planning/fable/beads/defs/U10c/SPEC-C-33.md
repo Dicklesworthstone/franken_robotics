@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "spine", "spec", "frontier", "habitat", "frob-scene", "test"]
 parent: "WP-53"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-027", "N10-CX", "N10-KA3", "N10a-01", "N38a-18", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-104", "BD-132", "BD-233", "BD-234", "BD-369", "SPEC-C-28", "SPEC-C-31", "N10-CX", "N10c-10", "CARD-T-31", "BD-162", "N10a-02"]
+related: ["BD-162", "BD-234", "BD-369", "N19b-25", "N10c-10"]
 gates: ["GATE-HAB-10"]
 plan_refs: ["§10 C-33", "§19.11", "§12.3 T-31", "§12.4", "§38.7 MR-29", "Appendix D.3", "Appendix M.9", "Appendix N.7"]
 ---
@@ -48,9 +48,12 @@ In: `docs/math/C-33.md`; law tests in `crates/frob-scene/tests/laws_c33.rs`; reg
 KA-163, relation MR-29, the statement of theorem card T-31 as a contract clause, and the control seeded from
 CX-081.
 
-Out: the `.fclear` format, the builder with local refinement, the verb `scene.fit` and the enclosure tests
-(BD-233); feasibility tags for generated scenes (BD-234); the auditor's `complex-connectivity` checker (BD-132
-and BD-233); the retrofit search (BD-369); recording GATE-HAB-10 and deciding KILL-FCLEAR (BD-233).
+Out: the mechanism, assembled by the capstone BD-233 from its components: the cells and the bound e (N19b-26),
+the `.fclear` format (N19b-27), witnesses, cuts and the filtration sweep (N19b-28), local refinement (N19b-29),
+slabs, transitions and labels (N19b-30), the certificate objects and their scene recomputation (N19b-31), the verb
+`scene.fit` (N19b-32) and the enclosure verb `contact.clearance` (N19b-33); feasibility tags for generated scenes
+(BD-234); the auditor's `complex-connectivity` checker (N12-15, on the proof-kind registry of BD-132); the retrofit
+search (BD-369); recording GATE-HAB-10 (N19b-35) and deciding KILL-FCLEAR (N19b-36).
 
 Register row (the shared rule of N10a-01). The construction register
 `frob-conformance/registry/constructions.toml` is created by N10a-01 with forty typed rows whose obligation fields
@@ -137,9 +140,12 @@ rectangle to polygon edges, the cell bound e, the two complexes, the filtration 
 grid at four times the resolution is the independent oracle. Generic over a trait `C33Subject`; mutants in
 `tests/support/c33_mutants.rs`. Registry: KA-161 to KA-163 with derivation files; MR-29; the control from CX-081.
 
-Pilot (BD-233): the ladder and doorway fixtures and one home interior at two grid resolutions. Falsifier: one false
-route or one false impossibility. Ceiling: route questions answered without rollouts; the band, not the method,
-limits what is decided. Fallback: the route graph for a nominal footprint. Gate GATE-HAB-10 at M3 (the corridor
+Pilot (run by N19b-25, the Habitat chapter's pilot at M3, before BD-233 is funded; a pilot comes before the
+mechanism it funds; its record is the one row C-33's `pilot` field names, `PILOT-C-33`): the ladder and doorway
+fixtures and one home interior at two grid resolutions. Falsifier: one false route or one false impossibility.
+Ceiling: route questions answered without rollouts; the band, not the method, limits what is decided; an
+application built on an incumbent planning library could build the same index, which is the `generic_comparator`
+of row C-33, and no multiplier is claimed. Fallback: the route graph for a nominal footprint. Gate GATE-HAB-10 at M3 (the corridor
 closed form bracketed by witness and cut on 100 (a, b) pairs; zero false witnesses and zero false cuts on the seven
 archetype fixtures against a brute-force grid at four times the resolution; the checker accepts every certificate
 and rejects six mutated ones). Kill gate KILL-FCLEAR (M3): one false witness or false cut survives a repair cycle,
@@ -174,10 +180,16 @@ route-graph traversability check for a nominal footprint, labelled heuristic.
   rod.
 - `rectangle_corner_closed_form`: a rectangle of width b turns the corner exactly when L ≤ 2√2·a − 2·b; for
   a = 0.90 m and b = 0.60 m the limit is 1.346 m; 1.30 m gets a witness after refinement and 1.40 m a cut.
-- `ka_162_doorway`: opening D = 0.80 m, head-on rectangle of width w with ρ = 0.40 m, generated scene (ε_field
-  and u_reg zero), so 2e = 149 mm. At the default lattice w = 0.60 m gets a
-  witness, w = 0.70 m is `unknown` and gets a witness after refinement, w = 1.00 m gets a cut; the reported band
-  contains D.
+- `ka_162_doorway`: opening D = 0.80 m in a wall of a generated scene (ε_field and u_reg zero). The body is the
+  envelope F(m) = F₀ ⊕ disc(m) of a square base F₀ of side 0.4·√2 = 0.566 m with its reference point at the
+  centre, so ρ = 0.40 m for every m (the cell bound uses the base; a literal rectangle 1.00 m wide would have
+  ρ ≥ 0.50 m), and its width across the opening is w = 0.566 m + 2m, narrowest head-on. The doorway's centre line
+  passes through cell centres and a heading bin is centred on the head-on direction, so a centred cell has
+  c(q₀) = (D − 0.566)/2 = 0.117 m and 2e = 149 mm. At the default lattice w = 0.60 m (m = 0.017 m) gets a
+  witness; w = 0.70 m (m = 0.067 m) is `unknown` and gets a witness after refinement to Δ = 12.5 mm and 128
+  headings (2e = 37 mm); w = 1.00 m (m = 0.217 m) gets a cut. The unknown band in width is (0.651 m, 0.949 m),
+  that is D ∓ 2e, and contains D. A grid offset by Δ/2 from the doorway's centre line is run as well and may only
+  widen the band, never give a false witness or cut.
 - `planted_wall_flips_outer`: closing a gap by one cell changes the outer verdict to a cut.
 - `filtration_equals_per_width_queries`: two doorways of 0.9 m and 0.7 m in series; w_in and w_out from one pass
   equal the thresholds found by 20 separate queries; the bottleneck cell lies in the 0.7 m doorway.
@@ -193,8 +205,13 @@ route-graph traversability check for a nominal footprint, labelled heuristic.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c33.sh`: `frob --json doctor`; `cargo test -p frob-scene --test laws_c33`; `cargo test -p
-frob-conformance --test g1 -- KA-161 KA-162 KA-163`; `cargo test -p frob-conformance --test g3 -- MR-29`;
+`scripts/e2e/spec_c33.sh`: `frob --json doctor`; `cargo test -p frob-scene --test laws_c33`; `FROB_TEST_SEED=1
+cargo test -p frob-conformance --test g1_known_answers -- KA-161 KA-162`; `FROB_TEST_SEED=1 cargo test -p
+frob-conformance --test g3_metamorphic -- MR-29` (the form of ADR-GAUNT-01; there is no `frob conformance`
+command, and `g1` and `g3` are not target names); both again with `--features gauntlet-mutations`, in which the
+registered controls of KA-161, KA-162, MR-29 and CX-081 must be caught; the same `g1_known_answers` run for
+KA-163, logged `pending` until BD-233 binds the reference interiors (`ka_163_synthetic_interiors` covers the
+law on three synthetic interiors meanwhile);
 `frob --json prove list` filtered to card T-31; file and registry checks. Log to
 `target/e2e-logs/spec_c33/<utc>.ndjson` with a transcript; each line has `ts`, `script`, `bead`, `step`, `event`,
 command line, exit code, wall time, the evidence block (claim Known answer, class Tested, tier G1 host,

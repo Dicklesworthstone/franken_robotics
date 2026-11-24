@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "chronicle", "gauntlet", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-13"
-deps: ["BD-025", "STD-TEST"]
-needs: ["Appendix M: the known-answer registry of the chapter (bead N29-KA, written by unit U29a) should append three rows for the late subsection on the solver's kinetic-energy correction, which states known answers that the appendix does not list (given below)"]
-related: ["N29-REF", "N29-KA", "BD-090", "BD-091", "BD-092", "BD-205", "BD-206", "BD-207", "BD-209", "BD-211", "BD-264", "N29a-04", "N29a-06", "N29a-10", "N29a-12", "N29a-13", "N29a-22", "N29b-01", "N29b-03", "N29b-04", "N29b-06", "N29b-08", "N29b-10", "N29b-11", "N29b-13", "N29b-15", "N29b-16", "N29b-23", "BD-223", "N38b-05", "N38b-34"]
+deps: ["BD-025", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["N29-KA", "N29-REF", "N29a-04", "N29a-06", "N29a-10", "N29a-12", "N29a-13", "N29a-17", "N29a-19", "N29a-22", "N29b-01", "N29b-02", "N29b-03", "N29b-04", "N29b-06", "N29b-08", "N29b-10", "N29b-11", "N29b-13", "N29b-15", "N29b-16", "N29b-23", "N38b-04", "N38b-34", "BD-096", "BD-203"]
 gates: []
 plan_refs: ["Appendix N.26", "§29.19", "§29.5", "§29.6", "§29.7", "§29.8", "§29.9", "§29.11", "§29.22", "§38.11"]
 ---
@@ -44,21 +44,40 @@ This bead is the registry of the counterexamples that belong to the record subsy
 evidence). It exists so that no counterexample is lost when the mechanisms are split across beads and units: each
 row names the rule it protects, the gate that must catch its mutant, and the bead whose tests carry it.
 
+Division of labour (the same for every chapter, fixed by N38b-05): this bead writes the chapter's entries of the
+counterexample catalogue `crates/frob-conformance/registry/counterexamples.toml` in the catalogue's record schema,
+and never a row of `controls.toml`; the seeding tool of N38b-05 derives the controls from the catalogue entries
+and from the stated control cells of the known-answer registry, allocates their `NC-` identifiers once and never
+rewrites them. The control record above is therefore what the seeding produces, not what this bead types.
+
 ## Scope
 
-In: registry rows for CX-319 to CX-325 (the seven rows the catalogue numbers for this chapter); the fourteen
-negative controls of the chapter's known-answer table, each attached to a gate and a carrier; the cases stated in
-the chapter's text and in its late subsection that the catalogue has not numbered, entered as appended rows; one
-numeric case supplied where the catalogue says none is given; the linkage test.
+In: catalogue entries for CX-319 to CX-325 (the seven entries the catalogue numbers for this chapter), each with
+its control kind, plant and rule identifiers; the map of the fourteen negative controls of the chapter's
+known-answer table to their gates and carriers (the controls themselves are seeded from N29-KA's control cells);
+the cases stated in the chapter's text and in its late subsection that the catalogue has not numbered, entered as
+appended entries with numbers from an allocated block; one numeric case supplied where the catalogue says none is
+given; the list of controls other beads register for the Chronicle gates no entry here reaches; the linkage test
+and the chapter's control script.
 
-Out: implementing the mutants and fixtures (the carrier beads do that); the known-answer registry (N29-KA of
-unit U29a); counterexamples of other chapters, cited where a Chronicle gate also catches them.
+Out: implementing the mutants and fixtures (the carrier beads do that); the catalogue schema, the seeding tool,
+the seed map and the join (N38b-05); the number allocator (N38a-40); the control runner and the five registry
+rules (N38b-04); the known-answer registry (N29-KA of unit U29a); counterexamples of other chapters, cited where a
+Chronicle gate also catches them.
 
 ## Technical approach
 
-**Row format (DESIGN).** `id`, `shortcut`, `case` (with its numbers), `protects` (invariant, proof obligation,
-refusal or rule), `gates`, `kind` (`mutant`: a planted build defect; `fixture`: an input the system must refuse
-or label; `arithmetic`: a host-computed fact a claim must not contradict), `owner_bead`, `expected_observable`.
+**Entry format (the catalogue record schema of N38b-05).** `id` (CX number), `shortcut`, `case` (with its
+numbers), `numeric` (true, or false for "no numeric case is given"), `rule` (text), `rule_ids` (the gates,
+invariants, proof obligations, decisions and refusal codes of the "Rule it protects" and "Gate" columns; the gates
+among them are the gates the control must fail), `defined_in`, `same_as`, `label` (DESIGN, or FACT with source),
+`control_kind` (`mutation`: a test build in which the shortcut replaces the rule; `planted-input`: a request that
+asks for the unsound conclusion and must be refused; `planted-design`; `planted-world`: a world that separates the
+shortcut from the rule; `a-a`: a scripted wrong procedure), `plant` (for a mutation, the build flag that puts the
+shortcut into the real component, never a mock; for the other kinds, the fixture request or world) and `slug`
+(the provisional tag of an appended entry). The carrier bead (the bead whose tests implement the plant) is kept in
+the entry's `rule` text and in this bead's tables; a mutation flag is test-only and cannot be enabled in a release
+build (compile-time feature, checked by the release rubric).
 
 **The seven numbered rows.**
 
@@ -72,7 +91,23 @@ or label; `arithmetic`: a host-computed fact a claim must not contradict), `owne
 | CX-324 | Choose which fast-tier episodes to audit after seeing them | Audit bits chosen after seeing fast-tier failures, without recorded probabilities, bias the tier correction; with pᵢ recorded before the draw the estimator is unbiased even when the prediction is off by a constant. Numeric case added by the carrier: four addresses with referee outcomes (1, 1, 0, 0), prediction 0.5, claimed p = 0.5; auditing exactly the two failures gives Z = (0.5, 0.5, −0.5, −0.5) and an estimate of 0 against the truth 0.5 | The tier-correction ledger; INV-CHRON-13; PO-CHRON-02; FROB-REF-811 | GATE-CHRON-09; BD-264, N29b-08 |
 | CX-325 | Sample traced worlds by arrival order | Arrival-order reservoir sampling gives different traced sets under different slot assignments and shard counts; sampling keyed by world address (the k smallest address hashes) gives the same set under 100 of each | Reservoir by address; decision ADR-CHRON-04; INV-CHRON-05; PO-CHRON-03 | GATE-CHRON-07; N29a-12, N29a-16, BD-207, N29b-16 |
 
-**The chapter's negative controls (one per known-answer subject), with carriers.**
+Control kind and plant of each numbered entry (DESIGN; the plant names are the carriers' flags, which the carrier
+bead may rename once, in the same commit as this entry):
+
+| CX | `numeric` | `control_kind` | `plant` |
+|---|---|---|---|
+| CX-319 | true | mutation | `mutant-chron-order-sketch`: the run-level quantile computed by the capacity-two compactor instead of the integer histogram |
+| CX-320 | true | mutation | `mutant-chron-midpoint-pointwise`: the divergence localizer bisects on "tick k differs" |
+| CX-321 | true | planted-input | `run.fork` request grafting the 60 mm wheel's contact warm start onto the 75 mm design at the threshold lip; refused with FROB-REF-582 naming the contact memory |
+| CX-322 | true (numeric case supplied below; was false in the catalogue) | mutation | `mutant-chron-impulse-mean`: the impulse channel downsampled by the window mean |
+| CX-323 | true | mutation | `mutant-chron-page-by-time`: pagination ordered by timestamp alone, no pin |
+| CX-324 | true | a-a | scripted auditor that chooses audit bits after seeing fast-tier failures and records no probabilities; must be refused (FROB-REF-811) or caught by the bias check |
+| CX-325 | true | mutation | `mutant-chron-arrival-reservoir`: classic reservoir sampling by arrival order |
+
+**The chapter's negative controls (one per known-answer subject), with carriers.** These are the stated control
+cells of KA-707 to KA-720 (N29-KA). The seeding tool turns each into a control (step 3 of N38b-05: it reuses the
+`NC-` of a CX-seeded control with the same target, else allocates one with `seed = "KA-nnn"`). This table is the
+gate and carrier map the seeding and the linkage test check against; this bead types none of these controls.
 
 | Subject | Negative control that must fail | Gate | Carrier |
 |---|---|---|---|
@@ -87,21 +122,45 @@ or label; `arithmetic`: a host-computed fact a claim must not contradict), `owne
 | Downsampling | The same impulse train averaged | (format tests) | BD-090 |
 | Fork | The 60 mm warm start grafted onto the 75 mm wheel | GATE-CHRON-05 | BD-205 |
 | First divergence | Midpoint search on a pointwise predicate reports tick 5 | GATE-CHRON-06 | BD-206, N29a-21 |
-| Teleport | None stated by the plan; proposed here: a comparison of whole-step digests only, which names the step and not the stage | GATE-CHRON-02 | BD-204 |
+| Teleport | None stated by the plan. The control registered with KA-718 and carried by BD-204: a localizer that compares whole-step digests only and so cannot see the stage; it names the last state-writing stage (stage 9) and must be wrong on every trial planted in another stage | GATE-CHRON-02 | BD-204 |
 | Tier correction | Audit bits chosen after seeing fast-tier failures, without recorded probabilities | GATE-CHRON-09 | BD-264, N29b-08 |
 | Artifact graph | A claim printed after its evidence was collected | GATE-CHRON-10 | BD-095, N29a-10, N29b-10 |
 
-**Rows appended from the chapter's text and its late subsection.** Labels C1 to C6 are provisional; the registry
-assigns the next free CX numbers on append.
+**Entries appended from the chapter's text and its late subsection.** Their numbers come from the allocation
+ledger `crates/frob-conformance/registry/allocations.toml` (schema `frob.gauntlet.alloc/1`, N38a-40), never from
+"the next free number" at commit time: this bead files one `[[block]]` request with `registry = "cx"`,
+`count = 6`, `owner = "N29-CX"`, `section = "§29.9, §29.10, §29.16, §29.22"`; the allocator fills `first` and
+`last`, and the six tags below are mapped to the block's numbers in table order in one commit. Until then the
+tag is the entry's name; afterwards it stays in the entry's `slug`. A tag still used in a registry, a test name or
+a derivation file at this bead's milestone (M1) fails the ledger check `provisional-tag-past-due`. The labels C1
+to C6 are this bead's short names for the tags and are not used outside this unit's beads.
 
-| Label | Tempting shortcut | Smallest case that breaks it | Rule it protects | Gate; carrier |
+| Label (tag) | Tempting shortcut | Smallest case that breaks it | Rule it protects | Gate; carrier |
 |---|---|---|---|---|
-| C1 | The kinetic energy a contact solve removes is contact dissipation | A 1 kg block rests on a frictionless stationary support under g = 8 m/s². A step that applies forces, then contact, then drift gives the block a free velocity g·h and removes it with the support impulse: ½·m·(g·h)² per step, 1 J/s at 32 Hz and 0.5 J/s at 64 Hz, with zero displacement and no heat. Booked as dissipation it warms the tyres of a parked robot at a rate set by the step size | The line `algorithmic exchange`; only constitutive dissipation feeds a thermal or wear state | GATE-CHRON-14; N29b-20 to N29b-24 |
-| C2 | Energy per task is the mean over successful episodes | A design that succeeds once for 10 J and fails once for 20 J reports 10 J; a rival with two 12 J successes reports 12 J; the first figure ranks them wrongly. Total over all attempts divided by completions: 30 J against 12 J | Both figures are always printed | BD-092, N29b-01 |
-| C3 | A stiff penalty contact is fine if the step is under the stability limit | A body bouncing on a stiff penalty contact at a step near the stability limit gains height. One-step arithmetic: with ω = √(k/m) and ω·h = 2 (a 1 kg body, k = 10⁶ N/m, h = 2 ms), a step that starts with penetration v·h at approach speed v ends at −v + (ω·h)²·v = 3·v upward | The flags `energy-created` and `contact-active` | GATE-CHRON-08; N29a-22, N29b-02, N29b-03 |
-| C4 | Net bus energy is enough | +10 W for 0.5 s then −10 W for 0.5 s: draw 5 J, regeneration 5 J, net 0; a split computed from the one-second mean reports 0 and 0 | Bus power integrated with its positive and negative parts separately; regeneration never netted silently | BD-092, N29b-01 |
-| C5 | A numerical fault can be counted as a failed episode, or dropped | A candidate with 2 successes in 2 valid trials and 98 unresolved has a complete-case rate of 100% and a true rate anywhere in [2%, 100%] (case shared with the dynamics chapter's CX-150) | A numerical outcome leaves the verdict unknown; it is not a physical failure and is not dropped from the denominator | GATE-CHRON-08; BD-094, N29b-05 |
-| C6 | Write the verdict, then pin its evidence | A collection cycle that runs between the two steps removes a chunk the verdict was computed from; the verdict cites a tombstone from the moment it exists | Pins are taken in the same transaction that writes the verdict; INV-CHRON-12 | GATE-CHRON-12; BD-209, N29b-13, N29b-11 |
+| C1 (`chron-exchange-heat`) | The kinetic energy a contact solve removes is contact dissipation | A 1 kg block rests on a frictionless stationary support under g = 8 m/s². A step that applies forces, then contact, then drift gives the block a free velocity g·h and removes it with the support impulse: ½·m·(g·h)² per step, 1 J/s at 32 Hz and 0.5 J/s at 64 Hz, with zero displacement and no heat. Booked as dissipation it warms the tyres of a parked robot at a rate set by the step size | The line `algorithmic exchange`; only constitutive dissipation feeds a thermal or wear state | GATE-CHRON-14; N29b-20 to N29b-24 |
+| C2 (`chron-task-energy`) | Energy per task is the mean over successful episodes | A design that succeeds once for 10 J and fails once for 20 J reports 10 J; a rival with two 12 J successes reports 12 J; the first figure ranks them wrongly. Total over all attempts divided by completions: 30 J against 12 J | Both figures are always printed | GATE-CHRON-03 (recorded check); BD-092, N29b-01 |
+| C3 (`chron-penalty-bounce`) | A stiff penalty contact is fine if the step is under the stability limit | A body bouncing on a stiff penalty contact at a step near the stability limit gains height. One-step arithmetic: with ω = √(k/m) and ω·h = 2 (a 1 kg body, k = 10⁶ N/m, h = 2 ms), a step that starts with penetration v·h at approach speed v ends at −v + (ω·h)²·v = 3·v upward | The flags `energy-created` and `contact-active` | GATE-CHRON-08; N29a-22, N29b-02, N29b-03 |
+| C4 (`chron-net-bus`) | Net bus energy is enough | +10 W for 0.5 s then −10 W for 0.5 s: draw 5 J, regeneration 5 J, net 0; a split computed from the one-second mean reports 0 and 0 | Bus power integrated with its positive and negative parts separately; regeneration never netted silently | GATE-CHRON-03 (recorded check); BD-092, N29b-01 |
+| C5 (`chron-numerical-failure`) | A numerical fault can be counted as a failed episode, or dropped | A candidate with 2 successes in 2 valid trials and 98 unresolved has a complete-case rate of 100% and a true rate anywhere in [2%, 100%] (case shared with the dynamics chapter's CX-150) | A numerical outcome leaves the verdict unknown; it is not a physical failure and is not dropped from the denominator | GATE-CHRON-08; BD-094, N29b-05 |
+| C6 (`chron-pin-after-verdict`) | Write the verdict, then pin its evidence | A collection cycle that runs between the two steps removes a chunk the verdict was computed from; the verdict cites a tombstone from the moment it exists | Pins are taken in the same transaction that writes the verdict; INV-CHRON-12 | GATE-CHRON-12; BD-209, N29b-13, N29b-11 |
+
+Control kind and plant of each appended entry (DESIGN): C1 `mutation`, `mutant-chron-exchange-heat` (the
+algorithmic-exchange line bound into the thermal test node standing in for the film temperature; N29b-22,
+N29b-23); C2 `mutation`, `mutant-chron-conditional-mean-only` (the per-task report prints the mean over
+completions alone); C3 `planted-world`, the stiff-penalty bounce world at ω·h = 2 that must raise both flags
+(N29a-22's fixture); C4 `mutation`, `mutant-chron-net-bus` (bus power integrated as one signed sum); C5
+`mutation`, `mutant-chron-numerical-as-failure` (a numerical outcome scored as a physical failure, and a second
+flag that drops it from the denominator), `same_as = "CX-150"` (one shortcut, two rules, two controls);
+C6 `mutation`, `mutant-chron-pin-after-verdict` (the verdict and its pins written in two transactions, with the
+collection cycle scheduled between them by the simulation harness).
+
+**Controls of the Chronicle gates that no entry of this bead reaches** (registered by the bead named; listed
+here so the linkage test can check them, not re-registered): GATE-CHRON-01: a digest that folds padding lanes,
+a chain that omits x_{t−1}, a snapshot copy that omits warm starts or packet queues, an address that includes the
+slot, a batch-wide normalizer (BD-203, N29a-19). GATE-CHRON-11: the planted lost-chunk bug, a two-statement
+idempotency binding, range-keyed chunks, a fake device whose outcome depends on arrival order (BD-096; device rows
+N29a-24). GATE-CHRON-13: a missing disclosure field, the ratio of means, the enqueue-only timer, a "bare"
+configuration that disables the commit fence (N29a-17). GATE-CHRON-12 has C6 here and the controls of BD-209.
 
 Cases of other chapters that Chronicle's gates also catch are cited, not re-registered: CX-147 (position-level
 penetration recovery: 0.5 m/s and 0.125 J per event at m = 1 kg, d = 1 mm, h = 2 ms) and CX-148 (a pyramid
@@ -117,22 +176,34 @@ arriving at 2 m/s: 2 J of impact dissipation, booked once at the located event (
 all three: a mutant that feeds algorithmic exchange into the film temperature, whose temperature rise differs
 between 32 and 64 Hz by a factor of 2. Tier: G1 on the referee and on `strict`.
 
-**Linkage test.** `registry_chronicle_complete`: every row above has at least one control record; every control
-names an existing gate and an owner bead; every Chronicle gate (GATE-CHRON-01 to -14) has at least one control;
-no control's `expect` is empty. A control whose carrier bead is closed and whose `last_seen.caught` is false
-fails the test.
+**Linkage test.** `registry_chronicle_complete` (in `crates/frob-conformance/tests/chronicle_counterexamples.rs`,
+run after the seeding tool): every entry of this bead has exactly one control in `controls.toml` whose `seed`
+names it; every stated control cell of KA-707 to KA-720 has a control whose gates include the gate of the
+subject table above; every control names an existing gate and an owner bead; every Chronicle gate (GATE-CHRON-01
+to -14) has at least one control; no control's `expect` is empty; no entry of this bead appears in the seeding
+tool's findings file (a rule that resolves to no gate). A control whose carrier bead is closed and whose
+`last_seen.caught` is false fails the test.
 
 ## Acceptance criteria
 
-- [ ] Seven numbered rows, fourteen subject controls and six appended rows are present in the control registry
-      with gate and owner; the appended rows have received CX numbers from the registry's owner or carry their
-      provisional labels with a filed request.
-- [ ] `registry_chronicle_complete` passes, and fails when a row is planted without a gate or a gate without a
+- [ ] Seven numbered entries (CX-319 to CX-325) and six appended entries exist in `counterexamples.toml` in the
+      catalogue record schema, each with `control_kind`, `plant` and the gates it must fail among its
+      `rule_ids`; `registry::alloc::validate` passes.
+- [ ] The six appended entries carry numbers from a block issued to N29-CX in `allocations.toml`, in table
+      order, with their tags in `slug`; no tag remains outside `slug` at M1 (`provisional-tag-past-due` clean).
+- [ ] After the seeding tool of N38b-05 is re-run, each of the thirteen entries has exactly one control whose
+      `seed` names it, each of the fourteen stated KA control cells of the chapter has a control on the gate of
+      the subject table, the tool's second run changes no byte, and the join of N38b-05 passes.
+- [ ] `registry_chronicle_complete` passes, and fails when an entry is planted without a gate or a gate without a
       control.
-- [ ] Each of GATE-CHRON-01 to -14 lists at least one control; GATE-CHRON-02 has the proposed control or a
-      recorded reason why none can be planted.
-- [ ] The numeric case for CX-322 is filed as an erratum to the catalogue (which says no numeric case is given).
-- [ ] The three known answers of the late subsection are filed with the known-answer registry's bead.
+- [ ] Each of GATE-CHRON-01 to -14 lists at least one control; GATE-CHRON-02 has the stage-9 localizer control
+      (KA-718, BD-204) or a recorded reason why none can be planted.
+- [ ] CX-322 is entered with `numeric = true` and the numeric case below, so it leaves the seeding tool's list of
+      obligations (it was printed with no numeric case).
+- [ ] The three known answers of the late subsection are filed with the known-answer registry's bead (done:
+      rows K1 to K3 of N29-KA).
+- [ ] For every entry whose carrier exists at the time, the gate run with the plant enabled fails and with it
+      disabled passes; an entry whose carrier does not exist yet is `pending` with the bead and milestone due.
 - [ ] At each milestone exit, the list of Chronicle controls that have never been caught in a recorded run is
       empty or explained.
 
@@ -140,19 +211,31 @@ fails the test.
 
 ### Unit tests
 
-- `registry_chronicle_complete` and its two planted failures.
+- `registry_chronicle_complete` and its two planted failures (an entry without a gate; a gate without a control).
+- `chronicle_entries_schema`: the thirteen entries load with the catalogue schema; `control_kind` is one of the
+  five kinds; `plant` is non-empty; C5's `same_as` is CX-150; a planted entry with `control_kind = "mutant"` (the
+  retired spelling) is rejected.
+- `chronicle_tags_mapped`: with a synthetic block issued to N29-CX the six tags map to its numbers in table order;
+  a tag left in a test name fails `provisional-tag-past-due`.
 - Arithmetic checks, on the host, of every number in the tables: `cx319_compactor` (medians 1 and 2; counts 1,
-  1, 1); `cx320_midpoint_reports_5`; `cx322_sum_5_mean_0_005`; `cx324_chosen_audit_bias` (0 against 0.5);
-  `c1_resting_block_rates` (1 and 0.5 J/s); `c2_two_figures` (10, 30, 12, 12); `c3_one_step_gain` (3);
-  `c4_split` (5, 5, 0); `c5_bounds` ([0.02, 1.00]).
+  1, 1); `cx320_midpoint_reports_5`; `cx322_sum_5_mean_0_005` (5 N·s and 0.005 N·s, ratio 1,000);
+  `cx324_chosen_audit_bias` (Z = (0.5, 0.5, −0.5, −0.5), estimate 0 against 0.5); `c1_resting_block_rates`
+  (½·1·(8/32)²·32 = 1 and ½·1·(8/64)²·64 = 0.5 J/s); `c2_two_figures` (10, 30, 12, 12); `c3_one_step_gain`
+  (ω·h = 1000·0.002 = 2; −1 + 4 = 3); `c4_split` (5, 5, 0); `c5_bounds` ([0.02, 1.00]); `cx147_cited`
+  (0.001/0.002 = 0.5 m/s; ½·1·0.25 = 0.125 J); `cx346_cited` (offset 2 after the late row returns {2, 3}).
 
 ### End-to-end script and logging
 
-`scripts/e2e/chronicle_controls.sh` iterates over the registry's Chronicle controls whose carriers exist at the
-current milestone, runs each control's gate script in its control mode (the carrier's script exposes
-`--control <id>`), and asserts `caught`. NDJSON lines per the shared helper: control identifier, seed row, gate,
-command, exit code, wall time, `caught` as a boolean with the observable that showed it; controls whose carrier
-is not built are `not-run` with the milestone due; a `summary` line with caught of run and the gates covered.
+`scripts/e2e/chronicle_controls.sh` (helper of STD-E2E) first re-runs the seeding tool and the join for this
+chapter's entries (`cargo test -p frob-conformance --test seed_controls -- --ignored seed`, then the join test) and
+asserts a byte-identical second run; then iterates over the Chronicle controls whose carriers exist at the
+current milestone and runs each control's gate script twice, plant off and plant on (the carrier's script exposes
+`--control <NC-id>`), asserting pass then fail. NDJSON lines per the shared helper (`ts`, `script`, `bead`,
+`step`, `event`, the exact command line, exit code, wall time, the envelope's `evidence` block): the CX number or
+KA seed, the control's `NC-` identifier, the plant, the gate, both outcomes, `caught` as a boolean with the
+measured value that crossed the threshold under the plant (value, unit, threshold); controls whose carrier is not
+built are `not-run` with the bead and milestone due; on failure, the first differing value and the paths to
+reproduce. A `summary` line gives controls caught of run, pending, failed and the gates covered.
 
 ### Known answers and negative controls
 
@@ -166,8 +249,11 @@ the linkage test and a control whose mutant was silently removed from the build 
   counterfactual-debugging chapters); this registry is the one place that lists all of them for Chronicle's gates.
 - The plan states no negative control for teleport; a gate without one cannot record PASS, so the proposed
   control (or a better one from the carrier) is required before GATE-CHRON-02 is recorded.
-- Appended rows keep their provisional labels until numbered; nothing may cite a provisional label outside this
-  unit's beads.
+- Appended entries keep their tags until the block is issued; nothing may cite a tag outside this unit's beads,
+  and after mapping a tag lives only in `slug`.
+- Risk: a carrier renames its mutation flag. The flag name is the `plant` field; a rename is one commit that
+  changes the carrier's flag and this entry together, and the seeding tool keeps the `NC-` number (it is keyed
+  by the CX number, not by the plant).
 - A control is a defect, not a boundary: for each refusal code of the chapter the control is the build in which
   the refusal was removed (listed in N29-REF), not the request that triggers the refusal.
 

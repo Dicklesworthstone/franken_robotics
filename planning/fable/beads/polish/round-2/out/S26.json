@@ -1,0 +1,395 @@
+{
+ "round": 2,
+ "slice": "S26",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "ART-L2",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "S19 request applied: +dep N41p2-01 (extract-module) and BD-059 (the patch step); step 2 is now `frob design edit quad-tray extract-module`: as loaded it refuses 103 listing the levers knee_ratio and foot_radius (asserted), then DESIGN: the two levers are removed (declare-lever remove, ModelId unchanged) and the leg is extracted with exactly the specimen's params, ports and contract args; the comparison is field by field (body, ports by id, params, guarantees but mass, assumptions; mass checked as the exact four-corner roll-up), not whole canonical bytes. The global control was a bus edit on quad-tray, whose power_bus is locked (L.1): it now refuses 111 without unlock and is global with unlock first; the leaf-local control targets the front-left image so three sibling legs are reused and checked against a --no-memo recompile. Dropped the 'blocked: BD-058' fallback; removed BD-058 duplicated in related."
+  },
+  {
+   "bead": "BD-060",
+   "kinds": [
+    "correct",
+    "scope",
+    "complete",
+    "tests"
+   ],
+   "what": "S19 request: extraction is N41p2-01's (row 23), not BD-058's. Specimen knee_card default was qdd-m with the quad-tray body (belt 2.35, knee qdd-l): fixed to qdd-l as in Appendix L.2 and ART-L2 (DESIGN note: the chapter's abridged qdd-m belongs to quad-a's leg). Fail-closed parameter path made exact (JSON pointer from the module root, /body/...) and the rule that the value at a param's path equals its default (else 103), with tests. Acceptance 'reachable through frob module check (N15b-02)' could never be met here (N15b-02 depends on this bead): now the typed payload check_module returns; the surface stays N15b-02/N15b-33's."
+  },
+  {
+   "bead": "BD-077",
+   "kinds": [
+    "correct",
+    "users",
+    "deps",
+    "tests"
+   ],
+   "what": "UJL-2 request: --parent renamed --expected-parent (stale = 804 on the lineage CAS; 112 stays design.patch's). +dep BD-058 (it commits through the engine's store and lock check). Added DESIGN 'one edit, three surfaces': module.substitute is the engine's swap-module op, one classifier shared with design.edit and design.patch (inside a patch the conditions are read on the final term, so a swap with a bus edit is global); --at takes the engine's target grammar, so one image of a use under mirrors can be swapped (split first, model bit-identical), which archetypes written with constructors need. Tests and acceptance for each."
+  },
+  {
+   "bead": "BD-109",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "UEG-2 request: the ten presets named (quad-mammal@go2 first, go1, a1, anymal-b, anymal-c, spot; humanoid@g1 first, h1; diff-drive@stretch3; mecanum@tiago), levers-only bindings, one GATE-SKEL-07 mass row per preset read from BD-067's pinned fixtures (never from ROBOT beads, several of which depend on this bead); +dep BD-067 (the mass on file the seed's g1 row needs; no cycle). Tests presets_are_the_ten, presets_use_levers_only, preset_mass_windows."
+  },
+  {
+   "bead": "BD-110",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "U38b-1 request: the undefined `frob conformance run` replaced by the ADR-GAUNT-01 form `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- GATE-ATEL-02` (and GATE-SKEL-04). UJL-1 request (estimate_only, 30-code refusal list) checked: it belongs to the verb surface that round 1 split to N28ap1-01; named there in Out and requested of N28ap1-01."
+  },
+  {
+   "bead": "N14a-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The pilot funded BD-077 if the ceiling reached 20% on at least one archetype, while the decision N14a-16 fires on the median saving below 0.20: the pilot could fund a mechanism whose second trigger was already certain to fire. Verdict rule and ceiling step now use the median reading (with the every-archetype reading recorded)."
+  },
+  {
+   "bead": "N14a-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "--parent renamed --expected-parent (as BD-077); the set-bus step lacked the required --key; log lines named bead BD-077, now the script's own bead N14a-30 with subject BD-077."
+  },
+  {
+   "bead": "N14b-10",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests"
+   ],
+   "what": "U28a request: the runner is N28ap1-01 (split from BD-110), BD-110 the capstone with the stage 2-6 policy rows and gate measurements. Reconciled the stage-level Needs::DesignTaskScene with N14bx-01's row-level bound_when (A-18 bound by --scene alone, A-17 by one sensor): a stage runs its bound rows and is not-run: unbound only when none is bound (N19b-34's script calls design check with --scene only). Said that reported findings leave a stage passed (no fifth status). Conformance test with a synthetic A-18 stub."
+  },
+  {
+   "bead": "N14a-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said a second repair cycle is 'not available (N40-03)'; N40-03 makes it a `deferred` decision with its own ADR. Now: a difference after the one cycle is `fired`; a second cycle only as `deferred` with an ADR naming the later exit; `deferred` added to the outcome list."
+  },
+  {
+   "bead": "BD-244",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Both requests applied: acceptance requires N19b-34's a18_clearance.sh to run its two `design check --scene` steps (refused 119 before the repair, passed after); the script asserts that stages 7 and 8 list A-14 with its timing. The option --budget-stage8 contradicted the verb's --time-budget (N14b-10, VERBS-design): renamed. 'Without both task and scene stages 7 and 8 are not-run' contradicted N14bx-01's row binding (A-18 by --scene alone, A-17 by one sensor) and made N19b-34's call impossible: binding is now per analysis. Scope now lands the late rows A-18 and A-17 that N14bx-01 assigns to this bead at M3; +deps BD-120 (A-17), N14bx-01, N19b-34 (A-18). Tests scene_only_runs_a18, late_rows_landed, a14_listed_with_timing."
+  },
+  {
+   "bead": "N14b-12",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "U33b request: dep BD-243 replaced by N33b-17 (it uses only A-14 coverage; no cycle), BD-243 kept in related. Inputs now say how the stage binds: check C (A-18) runs with --scene alone on the scene pack's declared routes, checks A and B need --task."
+  },
+  {
+   "bead": "N14b-13",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "U33b request: dep BD-243 replaced by N33b-17 (fallback coverage report); BD-243 to related. Step 1 of the search now takes the weak directions of stage 8's first row A-17 (BD-120, placed there by N14bx-01) as the first seeds, with test weak_direction_pairs_first. The e2e adds the stage-8 rows that N14b-17's skel_stage8_family.sh says this bead adds (it said so only there)."
+  },
+  {
+   "bead": "N14b-16",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Outcomes were `pass` / `killed: fallback adopted` and the ADR path docs/adr/ADR-SKEL-KILL-ALIAS.md; the kill-gate record format N40-03 has the closed set not-fired|fired|not-reached|deferred (it rejects 'passed') and the path docs/delivery/adr/ADR-<gate>-<milestone>.md. Aligned (ADR-KILL-SKEL-ALIAS-M3.md, register decision row, propagation marks the stage-8 part of GATE-SKEL-04 killed), second cycle only as deferred, +dep N40-03 as N14a-16 has; truth-table test uses the closed set."
+  },
+  {
+   "bead": "BD-245",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Out said 'the Traction beads named in `needs`', but needs is empty and they are deps: Out now names them (N18b-01, N18b-02, BD-154, BD-153, BD-167, N18a-15, N18b-28 with FROB-REF-246, N18b-21)."
+  },
+  {
+   "bead": "N14a-33",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Log lines carried bead: \"BD-245\"; now the script's own bead N14a-33 with subject BD-245 (STD-E2E)."
+  },
+  {
+   "bead": "N14ax-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Said derived top and step_over are 'written out in the canonical form'. Canonicalization is keyed on the input bytes alone (the compile pipeline's first memo row) and view->canonical->view must be exact (MR-35, KA-288), so a geometric value cannot enter the term: the word `derived` stays in the term and the computed values live in TravelSpec and design show (DESIGN with its reason). Acceptance reworded; test derived_not_in_term (a reshape changes TravelSpec.top, not the block's bytes)."
+  },
+  {
+   "bead": "N14ax-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Covered '22 edits' only: the catalogue has 23 rows and 33 kinds at M1 (N41p2-01's extract-module). Rules added for extract-module/inline, unwrap, fuse and the constructor split before an instance-scoped edit (all Same, bit-identical model), move-payload remove; set-lever was listed as 'none' although it moves frames like set-param (fixed). 'Its digest enters the edit_id' broke BD-058's law that edit_id is a function of (parent, op) and would move every M1 record on upgrade: supplied overrides now travel inside the op, computed entries never touch edit_id, older rows are completed on read and not rewritten. The e2e used a nonexistent `design edit --inverse`: it now applies the returned inverse op. +dep N41p2-01; tests and acceptance for each."
+  },
+  {
+   "bead": "N13-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "design new lacked the required --key; the task binding had no command (`analyze symmetry --task`). The M1 rows were written as 'partial: ...' with the gate 'not run': under the gate record (N38b-18: per-milestone parts, statuses not-run|pass|fail|...) and the recorder (N38b-19), the M1 part is measured by the g1_known_answers tier run (ADR-GAUNT-01, controls in the same run) and entered by record_gate --part M1 by a non-implementing session, pass or fail with counts in measured. (Resumed pass, found from BD-246's side:) the planted payload was 1 kg here and 2 kg in the zoo row and in BD-246's variants of the same cases: now 2 kg."
+  },
+  {
+   "bead": "N13-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Gate recording made the M3 part through the g1_known_answers tier run and record_gate --part M3 (N38b-19), instead of writing gates.toml directly. (Resumed pass:) the 24 planted cases are held twice by hand, as oracle case files here and as BD-246's zoo variants: test planted_cases_agree_with_zoo_variants (same 24 pairs, same DesignId after the edit, same groups and breaker)."
+  },
+  {
+   "bead": "N14b-02",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "U24c request applied: +dep N24c-16 (OPEN-ARENA-2, M2, no cycle); the hexapod-radial mass check is recorded `not applicable` with reference none, never passed (also quad-sprawl and octopod, which have none on file); test hexapod_mass_check_not_applicable."
+  },
+  {
+   "bead": "N14b-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The balancer acceptance fitted the slope of ln(tilt) from rest; the response from rest is theta0*cosh(lambda t), and that slope reads about 28% low over the window, so a correct referee would fail. Now theta(t)/theta(0) = cosh(lambda t) within 1% for t <= 0.2 s, as ZOO-balancer-2w tests; g = 9.81 m/s2 stated (the 8.49628 needs it); test balancer_free_response_cosh."
+  },
+  {
+   "bead": "N14b-06",
+   "kinds": [
+    "complete",
+    "deps",
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "UEG-2 request applied: one table entry and one ±15% mass window per preset of BD-109 (ten at M1), +deps on the ten M1 reference-robot beads whose mass rows it records (no cycle). The mass on file is now named exactly (`mass_on_file.value_kg` in assets/robots/<name>/manifest.toml, the validation's exact sum at the commit BD-067 pins; the earlier wording 'checked against the oracle fixture' had no such field) and the script also fails when the mass `design templates` reports differs from it. Gate recording aligned with the recorder (N38b-19): one record per gate with parts at M1 and M3, the M1 part from the g1_known_answers receipt by `record_gate --part M1`. The acceptance 'at M3 the script passes over eighteen and the M3 parts are recorded' could not be met by an M1 bead: the M3 run and parts are BD-246's and BD-247's; here the fourteen later entries are `not run`, never passed, and the table is shown data-driven (test table_row_added_runs). Step 2's `design new` lacked the name and the required --key."
+  },
+  {
+   "bead": "BD-246",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Two conflicts with the symmetry beads fixed. (1) The planted one-sided payload was said to reduce both groups; the algorithm filters payloads at the Γ_obs step, and ZOO-quad-mammal, N13-16 and N13-21 fix 'Γ_mech unchanged, Γ_obs reduced' (the nested-groups law requires it): row corrected, test payload_reduces_obs_only with a planted colouring defect. (2) The six archetypes of the 24 planted asymmetries had tracked-flipper where N13-21 (which froze the distribution at M1, four of the six existing then) and N13-22 have diff-drive: now the same six, the same edits (5 mm sensor shift, 2 kg payload), file names asym-sensor|payload|sole|gear, test planted_set_is_the_frozen_list. Gate recording: results were 'written as rows of gates.toml' for three gates, and the acceptance wanted GATE-MARROW-03 recorded here although N13-22 (which depends on this bead) records it: now through the recorder (N38b-19, g1_known_answers receipt), GATE-SKEL-07's M3 part here, GATE-SKEL-03's by BD-247 (standing rows are `not run` at this point), GATE-MARROW-03's by N13-22. U24a request applied: reads_superset_mutation over the eighteen in acceptance, +dep N24ax-03 (M2). +deps N14b-06 (the script this bead runs and extends; was related), ROBOT-cassie and ROBOT-iiwa7 (the M3 masses on file, named exactly as assets/robots/<name>/manifest.toml mass_on_file.value_kg); no cycle. E2E logging brought to the STD-E2E field list. The 28 dependencies were checked one by one: each is used directly (four seed deps, the three template beads, the zoo format and the eighteen expectation files it reads). Considerations now carry the snake row's open question (N14bp1-01): that row's three-way equality is `blocked`, never passed on an edited expectation."
+  },
+  {
+   "bead": "N14b-04",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "`wheel-leg` required stage 1 to accept 'a declared pair of laws with a switching rule', but no bead defined how a pair is written and the M1 end-effector schema (N14a-05) holds one law per end effector and admits `pad` on a `foot` only, so the template could not be written: the form now lives in the new bead N14bp2-02 (+dep) and this bead states it and uses it as data (two bindings and one switch per wheel; 121 for a pair without rule or a torsion radius above the contact radius; test wheel_leg_missing_rule_refused_121). `mobile-manipulator` mass reference made exact: the arm's mass on file (ROBOT-iiwa7, +dep: a sibling-catalogue builder that no oracle fixture holds) plus the base-only mass on file of Stretch 3 or TIAGo, not the whole robot (planted test). The plan's two further tests of `tracked-flipper` (stair nosing with flippers, thermal duty on a long climb) had prose and no criterion: acceptance and tests added (φ = asin((0.175 − 0.05)/0.30) = 24.62° inside the lever's bounds; finite climb length), values pinned by ZOO-tracked-flipper. Payload wording: breaker of Γ_obs. E2E section says which table rows this bead adds and what they log. Snake row of the group criterion marked blocked on N14bp1-01's open question. Wheel-leg acceptance also requires stage 4's one report per mode (N14bp2-02)."
+  },
+  {
+   "bead": "N14bp1-01",
+   "kinds": [
+    "correct",
+    "sense",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "The term could not have the group it asserted: the head was a capsule of radius 0.04 m against the links' 0.035 m, which excludes the head-to-tail reversal (defaults fixed: the head is the link's capsule, ports at mid-length). Hand derivation added and pre-registered: a left-right symmetric chain also has the sagittal mirror (so C₂ × C₂, and Γ_obs = C₂ under a centre-line head IMU, not trivial), and the reversal further depends on where actuator mass is carried; the catalog's cell 'C₂ under head-to-tail reversal' is expected to disagree with the computed group. Fail-closed DESIGN: the bead ships the natural term, reports the three elements present or absent with first mismatches, does not gate on the cell (BD-243 only needs the compiled term) and raises an OPEN for the Skeleton lead with two options; group rows are `blocked` until decided. The false-assertion control was `C2xC2` (possibly the true group): now `D4`. FROB-REF-109 is raised by stage 5 of design check, not by `design new`: the negative step is now `design new` then `design check --stages 1-5` (+dep BD-110); `design new` lacked the required --key. The memo-count and false-assertion steps were 'rows' of the data-driven catalog script, which takes rows and no code: now its own script skel_snake_term.sh with the full STD-E2E field list, plus a table entry. Tests snake_sagittal_mirror_present, snake_reversal_iff_palindromic, snake_head_radius_breaks_reversal."
+  },
+  {
+   "bead": "N13-15",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "(Counted unchanged by the interrupted pass; found from N14bp1-01's side.) The algorithm only finds automorphisms that fix the root body, so it could never return the head-to-tail reversal that the catalog lists for `snake-crawler` (the reversal maps the root to the last link). Added the rule for root-moving automorphisms: input field `base: Free | Fixed` (required); a free-base tree is re-rooted at its centre (a body, or a joint whose two bodies may be exchanged); the sign of a joint coordinate is multiplied by −1 when parent and child roles are exchanged; worked case of the nine-body chain (half-turn ε = −1, transverse mirror ε = +1, sagittal mirror ε = −1: C₂ × C₂); output in the author's rooting; centred trees byte-identical. Acceptance, six unit tests (free chain, fixed chain, lengthened root, even chain, identity on centred trees, re-root metamorphic law) and two negative controls (never re-rooting; role-exchange sign omitted)."
+  },
+  {
+   "bead": "N14b-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "scope",
+    "complete"
+   ],
+   "what": "Acceptance asked for (2, 3, 4) on `ackermann` and (3) on `omni-3` 'when their archetypes exist' (M3), which an M1 bead cannot check: now on two minimal `synthetic` bases written here (tests carlike_growth_vector_2_3_4, omni3_growth_vector_3, omni3_two_parallel_refused_118), the archetypes repeating it at M3. Out named BD-110 as the stage runner: it is N28ap1-01 (BD-110 is the capstone); the stage's end-to-end rows are N14b-19's. Classification is stated as a function of the contact bindings in force, and the per-mode report for an end effector with two laws (wheel-leg) is named as N14bp2-02's M3 change of this stage's loop: ZOO-wheel-leg expected two stage-4 reports that no bead produced."
+  },
+  {
+   "bead": "N14b-18",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "U38b-1 request applied: the undefined `frob conformance run --gate GATE-SKEL-04` is gone. It sat in a step of this bead's own script that ran `frob design check` and the gate 'when they exist', although the stages depend on this bead: the script is now the self-test only, with the full STD-E2E field list, and the comparison of the two routes to the gate's counts moved to N14b-19 (ADR-GAUNT-01 form). U19a request (add dep BD-104 for the code-123 rows) not applied, with the reason written into the bead: the corpus and its reference classifier must exist before, and independently of, the analyses they test (registries come first; BD-104 reaches the rows through BD-110's gate run). What the request exposed is fixed instead: the classifier had no rule for 123 and a self-collision inside a range needs a configuration, so labels gain `witness`, and the classifier's 123 rule (signed distance of two labelled primitives at that point) is stated with a test. Labels also gain `strict_data` and an exact `needs_task`, which N14b-19 already relied on ('where the label says so'). Code-109 row: the payload defect must be `assert_obs: C2xC2` (a payload leaves Γ_mech unchanged, so `assert_mech` would be accepted); the task-declared 118 defect is spelt out. Two acceptance lines conditional on later beads ('when the stages exist', 'when the stage runner exists') made checkable here."
+  },
+  {
+   "bead": "N14b-19",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "sense"
+   ],
+   "what": "Claimed to be 'the only script that records' the stages 1 to 6 row of GATE-SKEL-04, while BD-110, which it depends on and whose seed done-condition is that gate, enters the M1 part from the tier-run receipt: it now enters no row and is the second route, with step 10 comparing its three counts with the receipt's and with the recorded part (test routes_compared, control (e)). Step 9 added: the stage-4 rows and the `branch-swap` plant that N14b-11 says run in this script were not in it (mecanum, parallel rollers with the repair applied, the three-link chain `undecided` until A-09 exists). Bases of the corpus are checked for no refusal; flags are built from the labels' `strict_data` and `needs_task` (test flags_follow_labels). Out: the runner is N28ap1-01."
+  },
+  {
+   "bead": "N14b-27",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "The random part inclined the leg's link without giving the slope. A force along the link produces no joint torque and is limited by the friction cone alone, so the attainable set is bounded only while tan α < 1/μ = 2; above 63.4° every case would be an unbounded program. The protocol now fixes 30° (largest vertical force 64.93 N, recomputed) and says why; the two figures join the hand checks. Hand cases rechecked: 39.24 N, 98.1 N against 80 N, 78.48 N, the rational boundary mass, and the certificate 0.4·(f_FL + f_FR) = 39.24 against 32."
+  },
+  {
+   "bead": "N14b-28",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "deps",
+    "tests",
+    "users"
+   ],
+   "what": "Tests named no fixtures ('per module', 'a four-leg assembly') and the hand-case module `leg-1r` was defined only in N14b-32, which depends on this bead: the fixture is now written here, and the multi-joint tests run on `std/leg-3r-qdd` and `quad-tray` of golden fixture L.2 (+dep ART-L2, M1). The gate clause 'per archetype module' cannot be met here (no dependency on the archetypes): this bead shows both clauses on its fixtures and N14b-32 measures them over every archetype module. The verb line lacked `--key` and `--strict-data`; evidence aligned with the registry (Estimated, with the field named, when a card field is `assumed`); the two refusals have repairs and tests; the difference from VERBS-module's block (no refusals listed) is stated as DESIGN and requested there."
+  },
+  {
+   "bead": "N14b-29",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Out now says where its fixtures come from (the table of N14b-28's `leg-1r`, composed with the stance geometry given as data) and that the designs through the binary, the script and the entry of GATE-SKEL-09 are N14b-32's. Numbers rechecked and left: the wrench map and its test value (0, −1, 0) N·m, the Farkas multipliers (0.2, 1), the payload margin 160/156.96 = 1.0194, 8 × 9.81 × 0.012 = 0.94176 J."
+  },
+  {
+   "bead": "N14b-32",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "Gate recording aligned with the recorder, as its sibling gate beads: GATE-SKEL-09 was 'recorded from the script's log'; it is entered by `record_gate` (N38b-19) from the g1_known_answers receipt, with the controls caught in the same run, by a non-implementing session, and the measured values are named. Fixture ownership: `leg-1r` is N14b-28's; this bead writes the two designs and the task `trot-stance` (it had listed 'centred again' as a third design)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N14bp2-02",
+   "why": "carried by nobody: the written form of two contact laws on one end effector (`contact.braked` with `switch` on the wheel's brake), its typing, compatibility bounds, canonical form, symmetry colour, the two contact bindings with the switch and brake channel in the model, and the FROB-REF-121 triggers. The `wheel-leg` archetype (plan §14.10 row 13), its zoo golden, the hybrid controller and the M4 slope fixtures all assume it, and the M1 schema forbids it (`pad` on a `wheel` refuses). M3, WP-38; N14b-04 depends on it."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N41p2-01",
+   "what": "params `path` is 'relative to the module body'; BD-060 now fixes the fail-closed spelling as a JSON pointer from the module document's root, so every target starts with /body/ (thigh: /body/chain/1/body/region/capsule/1), as ART-L2's fixture writes it; state that spelling"
+  },
+  {
+   "bead": "N28ap1-01",
+   "what": "UJL-1's request to BD-110 belongs to the verb surface you now own: implement estimate_only on design.check (VERBS-design estimable = true: --estimate returns plan_check's plan priced by the stage and row budgets and runs nothing), with a test, and carry the 30-code refusal list of VERBS-design's design.check block"
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check output lists per-stage status passed|findings|refused|undecided; the staging contract N14b-10 (and N28ap1-01) fix the wire forms passed|refused|undecided|not-run, a stage with only reported findings being passed with findings[]: align the block"
+  },
+  {
+   "bead": "NEG-30",
+   "what": "Out says the records of GATE-SKEL-03, GATE-SKEL-07 and GATE-MARROW-03 are BD-246's: BD-246 now enters only GATE-SKEL-07's M3 part; GATE-SKEL-03's M3 part is BD-247's and GATE-MARROW-03's is N13-22's. The planted variants are zoo/<name>.variants/asym-sensor|payload|sole|gear.fbot on quad-mammal, hexapod-radial, humanoid, diff-drive, mecanum, swerve-4"
+  },
+  {
+   "bead": "NEG-31",
+   "what": "Out says the M3 record of GATE-SKEL-03 is written 'at M3 by BD-246': BD-246 runs skel_archetypes.sh at M3 and enters GATE-SKEL-07's M3 part; the M3 part of GATE-SKEL-03 is entered by BD-247, when the standing and rolling rows exist"
+  },
+  {
+   "bead": "BD-247",
+   "what": "state that this bead enters the M3 part of GATE-SKEL-03 through the gate recorder (N38b-19; `-- GATE-SKEL-03` tier-run receipt, `record_gate --part M3`), from a run of scripts/e2e/skel_archetypes.sh in which the standing and rolling rows are present; BD-246's M3 run measures the compile, stage and group clauses and logs the fourteen standing rows `not run`, so it cannot enter the part"
+  },
+  {
+   "bead": "ZOO-wheel-leg",
+   "what": "Out attributes the two-law `contact` field to N14a-05, whose schema holds one law and admits `pad` on a `foot` only; the pair is now N14bp2-02 (`braked: {law: pad, interface, patch_radius, torsion_radius}`, `switch: {signal: brake, joint}`; patch radius at most the wheel's contact radius = half the tread width of a cylinder; torsion radius at most the patch radius): name it, add dep N14bp2-02, and write control (a) and the stage-1 row in those terms"
+  },
+  {
+   "bead": "N14-REF",
+   "what": "FROB-REF-121 gains triggers from N14bp2-02 (M3): a second law off a rolling wheel; a pair without a switching rule; a rule without a pair; a braked law the table does not admit; patch_radius above the wheel's contact radius; torsion_radius above patch_radius; a switch joint that is not the wheel's own; repairs: set-contact-law with the completed or the single-law object, the radius set to its bound, reshape"
+  },
+  {
+   "bead": "BD-365",
+   "what": "its sentence 'switching between rolling and stepping is a controller mode, not a law change' and the declared law pair of wheel-leg (N14bp2-02: `braked` law `pad` in force while the wheel's brake channel is engaged) need one statement: the controller commands the brake; the design's switch maps the brake state to the binding in force (`contacts_under`); say how each tier evaluates the rule per contact per step, what an engaged brake does to the wheel's spin, and that telemetry reports the law in force (NEGp1-53 asserts it); relate or depend on N14bp2-02"
+  },
+  {
+   "bead": "NEGp1-53",
+   "what": "the braked-hold and free-roll fixtures assert 'the active law per contact' and 'brakes engaged or released'; the brake channel `brake:<joint>` and the two bindings per wheel are N14bp2-02's product: add it to deps or related and name the channel"
+  },
+  {
+   "bead": "N14b-09",
+   "what": "the hybrid mode graph's 'all wheels are braked' is a command on the boolean channels `brake:<joint>` that N14bp2-02 adds to the binding section for each wheel with a `switch`; name them and relate N14bp2-02"
+  },
+  {
+   "bead": "BD-069",
+   "what": "no actuator card field defines a brake (holding torque, engagement delay), which the plan mentions ('brakes where the card has them') and which wheel-leg's switching rule needs; N14bp2-02 records an OPEN with the fail-closed default 'assumed: ideal lock' (113 under --strict-data): add the optional card block or name the bead that will"
+  },
+  {
+   "bead": "N14a-11",
+   "what": "N13-15's input now has the required field `base: Free | Fixed` (a free-base tree is re-rooted at its centre so that root-moving automorphisms such as a chain reversal are found): pass it from the design's base kind, and note that reported indices and signs stay in the design's own rooting"
+  },
+  {
+   "bead": "N14-KA",
+   "what": "KA-270, row `snake-crawler` ('C₂ under head-to-tail reversal'): N14bp1-01's hand derivation finds the sagittal mirror in every left-right symmetric chain (as for the waist yaw of `humanoid`), so the computed group is C₂ × C₂ if the model is palindromic and C₂ by the sagittal mirror if actuator mass sits on one side of each joint; the row is under an OPEN there for the Skeleton lead (amend the cell, or stagger the wheel pairs); mark the row accordingly"
+  },
+  {
+   "bead": "ZOO-snake-crawler",
+   "what": "same open question: `gamma_mech` and `gamma_obs_default = \"trivial\"` assume the reversal is the only element; a head IMU on the centre line is fixed by the sagittal mirror, so Γ_obs would be C₂; the head must be the link's capsule (N14bp1-01's defaults changed: radius 0.035 m, ports at mid-length) for the reversal to exist at all; record the rows as blocked on the OPEN of N14bp1-01 until it is decided"
+  },
+  {
+   "bead": "BD-104",
+   "what": "U19a asked N14b-18 to depend on this bead for its code-123 rows; the corpus stays independent of the analyses by design (its labels are frozen before the checks). Its four 123 defects now carry the two collision primitives (or primitive and ground) and, for the defect inside a declared range, a `witness` configuration; they reach A-13 through BD-110's gate run and N14b-19's script"
+  },
+  {
+   "bead": "ZOO-wheel-leg",
+   "what": "the two stage-4 reports (wheels free: wheeled with its growth vector; braked: not-applicable) are produced by N14bp2-02, which makes stage 4 report once per mode (`released`, `engaged`); N14b-11 alone classifies once. Name the modes so and depend on N14bp2-02"
+  },
+  {
+   "bead": "VERBS-module",
+   "what": "`module.characterize`: the block lists 'Chapter refusals: none of its own' and no `--strict-data` input; N14b-28 refuses FROB-REF-114 (module digest or port signature mismatch on the reference given) and FROB-REF-113 under `--strict-data` (a card field the torque envelope needs is `assumed`), and the example needs no change. Add the input and the two codes. Also check the tier column: the row says S, the plan marks capability tables [F] and N14b-28 is labelled frontier"
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 38 beads are covered: the interrupted pass did 27, this pass finished N14b-06, reviewed the other ten and reopened N13-15, N13-21 and N13-22 where a later bead exposed a defect; unchanged are BD-243, N13-16, N14b-14, N14b-15 and N14b-17. Not settled: `wheel-leg` needed two contact laws on one end effector that nothing defined (new bead N14bp2-02, with six beads outside the slice to align), and the catalog's group for `snake-crawler` is expected to disagree with the computed one (an OPEN for the Skeleton lead in N14bp1-01); eighteen requests go to round 3."
+}

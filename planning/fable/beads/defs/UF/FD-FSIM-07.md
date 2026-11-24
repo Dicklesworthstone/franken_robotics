@@ -6,9 +6,9 @@ priority: 2
 milestone: "M2"
 labels: ["m2", "suite", "kinesis", "gauntlet", "upstream", "frankensim", "solid"]
 parent: "WP-14"
-deps: ["BD-037", "BD-025", "BD-032", "NF-01", "STD-E2E"]
+deps: ["BD-025", "BD-032", "BD-037", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-024", "BD-038", "BD-223", "BD-269", "FD-FSIM-24"]
+related: ["FD-FSIM-24", "N16a-05", "N35-03"]
 gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§35.1", "§16.4", "§33.3", "§33.8", "§38"]
 ---

@@ -1,0 +1,308 @@
+{
+  "round": 2,
+  "slice": "S22",
+  "reviewed": 40,
+  "changed": [
+    {
+      "bead": "BD-079",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Request applied: the parity run is the ADR-GAUNT-01 cargo form `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity -- GATE-TRAC-02` (KA-425 is G2) in acceptance and e2e; no literal `frob conformance`. Cancellation restated (typed Cancelled, no receipt, no gate row) with a new unit test `parity_run_cancelled_at_batch_boundary`; e2e runs the mutation build. Module paths placed in N18a-01's module tree (geom/prim, detect/referee_sets)."
+    },
+    {
+      "bead": "BD-080",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Request applied: step 5 no longer puts the upstream reason in refusal.observed; it travels in the `upstream` object (crate, variant verbatim, message verbatim bounded 2 KiB, pin) exactly as N33a-13 converts it, with observed/required numeric; acceptance and `referee_refusal_passthrough` assert the object through `frob sim run`. Drop fixture made exact (lowest face at 0.5 m, g, h = 2 ms, step 160). Scope checked against the 60-dependent finding: already minimal (trait, checks and conversion are N33a-13/14's)."
+    },
+    {
+      "bead": "BD-085",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests"
+      ],
+      "what": "`frob eval run --battery` is an M2 verb (VERBS-eval): replaced by the cargo form `--test g1_known_answers -- GATE-TRAC-01/referee` plus `frob sim run --tier referee --fixture traction/<row>`; fixture location aligned with N18b-32 (fixtures/traction/); KA-394 removed from the not-expressible table (N18b-02 runs it on the referee, elliptic friction exists upstream; N18b-32 row 7 says R as an extra M1 check) and recorded as expressible with run_by N18b-02. Request to move N12-43 into deps checked and declined: none of BD-085's rows (KA-387..396) uses a D.3 oracle; its truths come from N18-KA and closed forms in the bead. The user-side sim.run command gains --key."
+    },
+    {
+      "bead": "BD-087",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added dep N16a-01: the bead writes crates/frob-dyn/CONTRACT.md and the frob-dyn mutants feature, which the crate skeleton creates; no cycle."
+    },
+    {
+      "bead": "BD-088",
+      "kinds": [
+        "correct",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "Rows placed in the Gauntlet tier targets (g1_known_answers, g0_laws for KA-048) instead of a private kin_known_answers target (ADR-GAUNT-01); e2e `frob telemetry query --fields` replaced by the registered form (--stream, --ticks, --page-size, cursor, FROB-REF-888 fails the row); `--key` added to the sim.run call; dep N24a-36 (the telemetry.query verb the script needs) added."
+    },
+    {
+      "bead": "BD-089",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "e2e used `cargo run -p frob-conformance --bin frob-parity`, but frob-conformance has no binary (BD-025): replaced by `--test g2_parity -- GATE-KIN-02/<robot>` reading the receipt, with the mutation build; `design.import` call given --name and --key (mutate verb)."
+    },
+    {
+      "bead": "FD-FSIM-03",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Phase post called `frob contact probe` on raw primitive pairs, which no verb takes (BD-079, N18b-29): replaced by the g2_parity cargo form for GATE-TRAC-02 over the enlarged pair set and a user-side `frob sim run --tier referee` on a sphere-on-heightfield fixture. The sim.run command gains --key."
+    },
+    {
+      "bead": "N10c-08",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Skid-steer KA-177: ω⁺ was given as 1.853 with a 10⁻⁹ relative tolerance (rounded value would fail); now 2 − 0.6·0.24525 = 1.85285 with the cone bound 0.24525 N·s; e2e test targets renamed to g0_laws/g1_known_answers with FROB_TEST_SEED and the mutation run."
+    },
+    {
+      "bead": "N13-36",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Request applied: BD-134 now delivers the supplied-worlds form at M1, so the `not run: verb form` fallback is dropped from stage 7 and its acceptance line; τ_tol 0.1 N·m, the two success sets, probe scope and the three verified remedies are asserted."
+    },
+    {
+      "bead": "N16-CX",
+      "kinds": [
+        "correct",
+        "deps",
+        "complete"
+      ],
+      "what": "Rows were written straight into controls.toml, which only N38b-05's seeding tool writes: now entries of registry/counterexamples.toml in N38b-05's schema (plan_case, case_supplied_by for the word-only CX-149/150, control_kind, plant, slug); appended K1-K15 take numbers from N38a-40's block; seeding re-run gives one control each and is idempotent; linkage target g0_laws; deps N38a-40, N38b-05 added. Same convention as N13-CX and N18-CX."
+    },
+    {
+      "bead": "N16-REF",
+      "kinds": [
+        "placement",
+        "correct",
+        "complete",
+        "tests"
+      ],
+      "what": "Requests applied: moved to M0 (priority 0; N33a-13/14 raise 721 and 224 at M0; all deps are M0); 722 restricted to batch-cpu with a cross-reference to FROB-REF-610 (device tiers, exit 6, one raising function in N21b-23), KA-349 CUDA/Metal rows met by 610. UJL-2's 'keep one code' declined: the plan defines both and N21-REF settled the tier split. Raised-by columns corrected (N33a-13/14); 721/224 pointer and payload (capacity vs fixed-witness repairs) stated to match N33a-13; see_also field; two unit tests."
+    },
+    {
+      "bead": "N16a-01",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests"
+      ],
+      "what": "Rate and Decimation were defined a second time in frob-dyn, differently from N36-03's frob_core::perf::units (reduced rational); now reused, and frob-dyn adds only WorldSteps/EnvSteps with a checked conversion and no mixed arithmetic (compile-fail test, grep test for a second Rate type). Feature `mutants` added (holds BD-087's, N16c-03's and N16c-04's mutants); a release build with mutants or chaos is a compile error."
+    },
+    {
+      "bead": "N16a-02",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added dep BD-024 (sim.run at M0, which this bead wires its step into)."
+    },
+    {
+      "bead": "N16a-03",
+      "kinds": [
+        "self-contained",
+        "scope"
+      ],
+      "what": "Request applied: the name clash with frob_kernels::StepPlan (N21ap1-01, launch record frob.stepplan/1) is stated and kept apart (distinct domain tags frob.stepplan.id/1 and frob.stepplan.record/1, the record carries StepPlanId as a supplied digest, logs name the qualified path); Scope Out names N21ap1-01, BD-172, BD-174."
+    },
+    {
+      "bead": "N16c-05",
+      "kinds": [
+        "correct",
+        "tests",
+        "deps"
+      ],
+      "what": "Request applied: Carrier field renamed measured_by (N34x-02's schema refuses carrier_beads). Linkage test and e2e use the ADR-GAUNT-01 form `FROB_TEST_SEED=0 cargo test -p frob-conformance --test g0_laws -- registry::kinesis_gates` (there is no g0 target). Controls are the NC numbers N38b-05 seeds from N16-CX: dep N16-CX added."
+    },
+    {
+      "bead": "N18-REF",
+      "kinds": [
+        "correct"
+      ],
+      "what": "The carried meaning of FROB-REF-722 now states the tier split settled in N16-REF and N21-REF: batch-cpu raises 722 (exit 5), gpu-cuda and gpu-metal raise FROB-REF-610 (exit 6), one function in N21b-23."
+    },
+    {
+      "bead": "N18a-15",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "e2e step `laws` ran `frob sim run --tier batch-cpu --law cl-h` at M1, but sim.run's --law option arrives at M2 (N16b-25) and N18b-28 defers that form to N18b-30; now the admission check runs through N18b-28's cargo test target, and the CLI form is left to N18b-30."
+    },
+    {
+      "bead": "N18a-35",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Step 1 no longer uses sim.run --law (M2); steps 2-3 use contact.probe's new model branch (--design with --gap-budget/--samples/--pairs); every sim.run passes --key; the battery and GATE-TRAC-06 rows run in the ADR-GAUNT-01 cargo form with receipt hashes logged, and gate rows are recorded by record_gate from those receipts (they cited the script's log, which no record field holds); negative controls are nc- feature builds run through the control runner's form, NC numbers read from controls.toml; dep N18-CX (seeds CX-169 and CX-183)."
+    },
+    {
+      "bead": "N18b-29",
+      "kinds": [
+        "complete",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Request applied: a model branch (--design with exactly one of --samples, --pairs, --gap-budget --scene --pose) reads the records N18a-02, N18a-10 and N18a-11 store in the compiled model and promise contact.probe prints (§18.4: excluded pairs stay inspectable), with acceptance, four unit tests and e2e steps; `--design` rather than `--model`, the contact cluster's existing name. Its inputs are requested of VERBS-contact."
+    },
+    {
+      "bead": "N18a-32",
+      "kinds": [
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The dead-zone negative control named an end-to-end step `dead_zone_mutant` that no script has; it is the step `mutants` of N18a-36 (control `dead-zone-backlash`, the build of BD-084's `mutant-backlash-deadzone`), with its GATE-SINEW-04 registration left to N15a-12."
+    },
+    {
+      "bead": "N18b-01",
+      "kinds": [
+        "deps",
+        "tests",
+        "e2e-logging",
+        "risks"
+      ],
+      "what": "Added dep BD-093: every referee fixture here (rolling disc, differential base, lip) moves its contact witnesses, which FrankenSim's sustained step refuses without witness migration between calls; a persisting sibling refusal is logged by name and the row goes to `strict` (BD-161), as BD-085 records for KA-389. The lip row had no tolerance or measurement: a 0.1 N·m/s couple ramp, lift-off where the floor normal impulse vanishes, within 1% of W·a, and no lift-off with μ 5% below a/b. The e2e command names its seven fixtures and passes --key (FROB-REF-805 otherwise)."
+    },
+    {
+      "bead": "N18b-02",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "The strict and lockstep carriers of KA-394 were BD-167/BD-168; now BD-161 and BD-167 as N18-KA names them, and the referee run is recorded as BD-085's expressible entry (a refusal is a refusal event, never a skip). The stale-basis control could not fire: r̂ depends on the axle, not on wheel spin, so the sideways fixture (no yaw) cannot catch a world-frozen basis; new fixture `mecanum_turn_sideways` (yaw 90° in place at |w| = 5.50 rad/s for 2 s, then sideways) and unit test `stale_basis_caught`. sim.run commands pass --key."
+    },
+    {
+      "bead": "N18b-28",
+      "kinds": [
+        "self-contained",
+        "correct",
+        "tests",
+        "deps"
+      ],
+      "what": "Admission status was 'a recorded PASS restricted to that tier and profile', but gate records hold status per milestone part, not per tier: each admission row now names gate and part, and a five-step derivation gives not-built / fallback (fired kill row or killed part, KILL-HARDCONTACT on CL-H's lockstep rows only) / pending / failed / admitted (part pass and that tier's row-by-tier results all pass; a GPU tier unmeasured under a passing part stays pending). The example file no longer holds a status key; a hand-written one is a load error. Law check placed after the matrix (222) and before the build check (724), with dep N16a-02 (its admit). The M1 acceptance no longer cites the M2 `--law` run form. The Hessian property test is N18a-15's (10⁵ samples, ≥ −10⁻¹²) rather than a second one at 10⁴. New tests status_derived_from_gates (rewritten), hand_edited_status_rejected, law_check_order, lockstep_row_needs_invariant."
+    },
+    {
+      "bead": "N33ap1-01",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Every sim.run passes --key (FROB-REF-805 otherwise); the BD-080 note records that request as applied. Step 8 asserted the fixed-witness refusal with 'the profile repair first' and kind `FixedWitness`; the envelope carries payload kind `fixed-witness` and N16-REF's order: shorter interval, then --profile strict. Step 7 asserted a literal observed = 22 although the script reads C: now C + 1, the fixture regenerated as tip<C+1>."
+    },
+    {
+      "bead": "N35-22",
+      "kinds": [
+        "e2e-logging",
+        "complete"
+      ],
+      "what": "Pinned vectors and Random123 vectors recomputed with an independent Philox4x32-10: all agree. The e2e sim.run passes --key (not part of the world address). The helper list now includes N35-24's `by_reset` and `by_engine`."
+    },
+    {
+      "bead": "N35-23",
+      "kinds": [
+        "self-contained",
+        "correct",
+        "complete"
+      ],
+      "what": "The first rows left `component`, `owner`, `since` and `status` unstated; now given, with component's closed vocabulary at version 1 (`field-part` on scene-field: low 29 bits of the field-path hash ·8 + j; `channel`; `part`). The collision check also covers the 29-bit field part (BD-200's rule). reset-pose was keyed by joint index, which shifts when legs are reordered or added (against N35-24's rule that reordering changes no draw); now by the joint or body path hash, with the reserved path `world` for BD-195's whole-world pose index."
+    },
+    {
+      "bead": "N35-24",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "Request applied: `by_cell`/`by_fixture` take the field path and set component = low 29 bits of entity_of_name(\"scene-field\", path)·8 + j (j = 0…7), as BD-200 does, so two fields of one tile read different blocks, with the 29-bit collision refused at admission; `DrawAddr::part(j)` is the one way to change a component. The six helpers had no way to address engine streams (action sampling, bootstrap, nemesis, …) or reset poses: added `by_engine` (engine-domain rows only; StreamDomainMismatch otherwise) and `by_reset` (keyed by joint path), with tests. e2e sim.run passes --key and telemetry.query uses N24a-36's registered form."
+    },
+    {
+      "bead": "NF-10",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "The e2e ran `frob contact audit --json` 'on a scene', but contact.audit takes a run identity (VERBS-contact) and is a run verb: the script now runs the scene with `frob sim run --tier batch-cpu … --key` and audits that run with `--detector strict --key`. Sagitta, chord and path-length numbers rechecked (0.5 m, 0.55/1.05 m, 0.589 m)."
+    },
+    {
+      "bead": "SPEC-C-04",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "The ballistic run used `--robot builtin:g1 --scenario ballistic --steps 10000`, none of which sim.run accepts, and no idempotency key: now the fixture file as the design (BD-088's form), `--seconds 20` (10⁴ steps at h = 2 ms), `--key`, then telemetry.energy and N24a-36's registered telemetry.query for the momentum and centre-of-mass channels. Two-link, free-body, limb-elimination and parabola numbers rechecked."
+    },
+    {
+      "bead": "SPEC-C-36",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "The e2e ran `--test g0` and `--test g1`, which do not exist (ADR-GAUNT-01, BD-025): now `g0_laws` and `g1_known_answers` with FROB_TEST_SEED, the mutation feature for controls and the receipt hash. The Cayley map, the inverse differential's rotation block and the explicit step-2 form were rederived and agree."
+    },
+    {
+      "bead": "SPEC-C-37",
+      "kinds": [
+        "e2e-logging",
+        "self-contained"
+      ],
+      "what": "Same tier-target fix (g0_laws, g1_known_answers, seed, mutation feature, receipt); the backlash refusal is named (FROB-REF-241 with its repairs) instead of 'a code of the Traction chapter'. Worked numbers rechecked (42.43 N, 0.8485 N·m, r = 17.67 mm, 17.45 ms, 0.0833 rad/s)."
+    },
+    {
+      "bead": "N41p2-01",
+      "kinds": [
+        "correct",
+        "self-contained"
+      ],
+      "what": "Request from S26 applied: a parameter's `path` is BD-060's fail-closed spelling, a JSON pointer from the module document's root starting with `/body/` (thigh: /body/chain/1/body/region/capsule/1), with the stated correspondence `/body/<rest>` ↔ design path `<path>/<rest>` that step 2 uses to match lever paths; step 5 refuses a path outside `/body/` at params[i].path; the Considerations note updated."
+    },
+    {
+      "bead": "N41p2-02",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Step 14 asserted 'current 0.022 m', but step 5 leaves the foot at 0.030 m (and must, because step 13 needs the head to have moved off d₀): step 14 now sends expected 0.021 m on the 0.030 m foot and asserts current 0.030 m with the head unchanged; step 5 states that it is deliberately not inverted; the hand values follow."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "STD-E2E",
+      "what": "Every `run` and `mutate` verb takes an idempotency key (N32a-09, FROB-REF-805 exit 3), yet about 510 e2e commands across the beads call `frob sim run … --json` without `--key`. Either the shared helper's frob wrapper must supply a deterministic key (script, step, seed) to run/mutate verbs that lack one and log the command as sent, or every script must pass one; state which, so those scripts do not fail with 805."
+    },
+    {
+      "bead": "VERBS-contact",
+      "what": "N18b-29 adds a model branch to contact.probe at M1, the reader that N18a-02, N18a-10 and N18a-11 name for the records they store in the compiled model (§18.4, excluded pairs stay inspectable; none of them can wire it because contact.probe depends on them). Please add to the contact.probe block: inputs `design`, exactly one of `samples`, `pairs`, `gap_budget`, and with `gap_budget` the required `scene` and `pose` and optional `sample`; outputs: the sample list with provenance and rule and `static_max` against tier capacities; the self-collision filter record (tested and excluded pairs, reasons, smallest clearance, filter digest); per-sample gaps in N18a-02's form {g_m, eps_g_m, terms_m{field, fit_a, fit_b, routine, registration}}; misuse is FROB-REF-802; and extend `probe_and_soil_inputs` to check them."
+    },
+    {
+      "bead": "VERBS-sim",
+      "what": "About 96 e2e commands pass `--seed` and 23 pass `--fixture <dir/name>` to `frob sim run` (BD-085, BD-086, FD-FSIM-03, N18a-35 among them), but neither is an input of your sim.run block (design(s), scene, worlds, seconds, tier, profile, law, …). Either add `seed` (the run's root seed in the world address) and `fixture` (a named conformance fixture holding design and scene, exclusive with them), or state the registered form these scripts must use (for example a fixture file as the design argument, as BD-088 does), so the scripts are not refused with FROB-REF-802."
+    },
+    {
+      "bead": "BD-168",
+      "what": "N18b-28 derives the admission of a contact law per (tier, profile) from GATE-TRAC-01's M2 part and the row-by-tier results stored with it, because a gate part has one status for all its tiers. Store those results machine-readably with the part you assemble: per row and per site column of N18b-32 (strict, lockstep-f64, lockstep-f32, cuda, metal) the outcome pass or fail, cited by the receipt hash; a GPU tier that did not run is absent, never pass. The recorder of GATE-TRAC-09 (M5/M6) needs the same."
+    },
+    {
+      "bead": "BD-195",
+      "what": "The reset pose index is drawn 'under the reset-pose stream keyed by the world address'; N35-23 and N35-24 now key reset-pose by the joint or body path hash, with the reserved path `world` for a whole-world pose choice, built by the helper `by_reset(reset-pose, \"world\", reset_count)`. State that call so two designs at one address keep drawing the same pose index."
+    }
+  ],
+  "unchanged": 7,
+  "notes": "All 40 reviewed (the predecessor's 26, then 14). Unchanged: FD-FSIM-01, N13-35, N18a-01, N18a-02, N18a-10, N18a-11, N18a-21. N18b-28 had no partial edit when the predecessor stopped; it now derives admission from gate parts plus per-tier results. The rest of this half was mostly e2e command forms (keys, registered verb inputs, Gauntlet targets) plus a few real defects: a dead control in N18b-02, a missing dep on witness migration (N18b-01), and entity-keyed streams that had no helper for engine or reset draws (N35-24). The slice is close to settled; what remains is in the requests."
+}

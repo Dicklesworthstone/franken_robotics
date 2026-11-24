@@ -8,7 +8,7 @@ labels: ["m0", "delivery", "solid", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-044", "N40-04", "N40-05", "N40-06", "N40-07", "N40-12", "N40-23", "N40-27", "EPIC-M1"]
+related: ["EPIC-M1", "EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-07", "N40-12", "N40-23", "N40-27"]
 gates: ["INT-TOOLCHAIN-01", "INT-FSIM-01", "INT-FSIM-18", "INT-ASUP-01", "INT-FSQL-01", "INT-FMCP-01", "GATE-MARROW-01", "GATE-SPARK-00", "GATE-SPARK-01", "GATE-LEMMA-00", "GATE-TETHER-03", "GATE-TENFOLD-01", "GATE-GAUNT-01", "KILL-FSIM", "KILL-MCP"]
 plan_refs: ["§43.3", "§43.1", "§43.2", "§40.6", "§40.2", "§40.3", "§40.4", "§40.5", "§43.12"]
 ---
@@ -101,7 +101,7 @@ denominator of BET-13.
 | INT-FNP-02 | Admission | M0 | Foundation: franken_numpy and frankentorch host tensor layouts. The stride conversion at the interchange boundary reads element 3, not element 12, on the 2×2 case (§33.11 row 3) | §33.10 |
 | GATE-LEMMA-00 | Proof | M0 | T-01, T-03 and T-04 certified by FrankenSymPy for the M0 kernels; certificates replay offline. | §12.6 |
 | GATE-LEMMA-06 | Known answer | M0 | Compile-fail tests show no conversion from a claim product to a factor and no constructor of `Proved` evidence outside `frob-lemma`; every artifact exported by the conformance suite carries the three flags, all false. | §12.6 |
-| GATE-MARROW-01 | Known answer | M0 | All laws pass on 10⁶ cases each: at most 64 ulp in `f64`; at most 16 ulp in `f32` for single operations. T-01, T-03, T-04 certified (GATE-LEMMA-00). | §13.10 |
+| GATE-MARROW-01 | Known answer | M0 (SO(3) and SE(3)); M1 (complete: every group and the whole law table) | All laws pass on 10⁶ cases each: at most 64 ulp in `f64`; at most 16 ulp in `f32` for single operations. T-01, T-03, T-04 certified (GATE-LEMMA-00). | §13.10 |
 | GATE-SPARK-00 | Known answer | M0 | One dialect source for `K-cay-step` compiles and runs on CUDA (`trj`) and on Metal (this Mac) and matches the Rust reference inside its class. | §21.24 |
 | GATE-SPARK-01 | Known answer | M0 | IEEE probe per device family: exhaustive bit comparison of `f32` square root and reciprocal over all 2³² inputs; 10⁹ sampled operand pairs for +, −, ×, ÷ with subnormal and overflow edges; the contraction detector; subnormal and NaN behaviour recorded. The outcome sets each device's best attainable determinism class. | §21.24 |
 | GATE-SPARK-07 | Known answer | M0 | Fingerprints of both machines are complete (every field measured, or `unavailable` with a reason), repeatable (two runs agree on every discrete field and within 5% on every rate), and reproduce the starting values of §21.16. | §21.24 |
@@ -143,7 +143,9 @@ local units crate (`frob-units`, built only if forced) follow from the recorded 
 BD-044, procedure N40-05). The exit line is: *the admission records, one kernel on three backends, and the incumbent
 phase ledger on `trj`.* Every gate above has a recorded value (a failing value is a record; a failed admission is
 the result, and its fallback is decided here); every demonstration runs from a clean checkout through `frob --json`
-and `frob-mcp`; GATE-GAUNT-01 holds.
+and `frob-mcp`; GATE-GAUNT-01 holds; the risk register has been read, each risk's earliest signal recorded as fired
+or not; and the open questions due at M0 (§9) have been answered or have taken their fail-closed defaults, each
+default recorded as an ADR (N40-05, steps 9 and 10). The `reality:` line of GATE-GROUND-01 is required from M1 on.
 
 **8. Dependency firewall.** Nothing is relied on. T is chosen. FrankenSim, asupersync, FrankenSQLite, FrankenTorch's
 Metal gateway, `cudarc`, FrankenSymPy, fastmcp_rust and franken_numpy are admitted. The two P0 upstream items are

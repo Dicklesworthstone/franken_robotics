@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "atelier", "traction", "frob-analyze", "frob-contact", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-11"
-deps: ["BD-033", "BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§28.4: the bead that creates crate frob-analyze (the law suite lands in crates/frob-analyze/tests/; if the crate does not exist when this bead starts, the suite is created with the crate's skeleton)", "§10 C-36: the discrete nonholonomic step and the Chaplygin-sleigh equations used as a trajectory oracle (SPEC-C-36, another unit)"]
-related: ["BD-106", "BD-117", "BD-365", "N10a-15", "SPEC-C-08", "N10-KA1"]
+deps: ["BD-025", "BD-033", "N10a-01", "N28a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["SPEC-C-08", "SPEC-C-36", "ZOO-ackermann", "ZOO-diff-drive", "ZOO-mecanum", "ZOO-omni-3"]
 gates: ["GATE-ATEL-02", "GATE-TRAC-01"]
 plan_refs: ["§10 C-07", "§18.9", "§28.4 A-07", "§33 INT-FSIM-05", "Appendix D.1", "Appendix D.3", "Appendix E GB-05", "Appendix M KA-058 to KA-063", "Appendix N CX-027 to CX-029"]
 ---

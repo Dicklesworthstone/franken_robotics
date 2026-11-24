@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "frob-cert", "frob-lemma", "solid", "test"]
 parent: "WP-42"
 deps: ["BD-132", "N12-06", "SPEC-C-32"]
 needs: []
-related: ["BD-382", "BD-130", "BD-115", "N12-16", "CARD-T-22", "CARD-T-35"]
+related: ["CARD-T-35", "GB-31", "N12-16", "N12-39", "N12-46", "N12-52", "N22a-08", "N25d-08", "N25d-36"]
 gates: []
 plan_refs: ["§12.3 (T-21)", "§12.4 (farkas_sound)", "§10 C-32", "§25.5.2 (lp-farkas)", "Appendix D.6 (Farkas witness)"]
 ---
@@ -86,12 +86,18 @@ reflector (`farkas_sound`, BD-382); producing dual vectors (the cone-program sol
 - `nonstrict_rejected`: at half-width 3/14 m the right side is (400, 180, 140) and yᵀw = 160 = β.
 - `perturbed_multiplier_rejected`: y = (0, ½, ⅓) gives yᵀw = 140 < 160.
 - `tiny_infeasible_system`: x₁ + x₂ = −1 with x ≥ 0: y = (1) gives Mᵀy = (1, 1) ≥ 0, rᵀy = −1 < 0.
+- `negative_entry_standard_form_rejected`: y = (0, −½, −⅓, 1, 0, 0, 0) in standard form gives the f₂ entry of
+  Mᵀy = −½ + ⅓ = −1/6 < 0 (and rᵀy = 20 ≥ 0): `reject` naming the first negative entry.
 - `feasible_system_has_no_witness` (property); `box_and_standard_agree` (property).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) and `lemma_second_machine.sh` (bead N12-35) exercise the
-specimens; `lemma_reflect.sh` (bead N12-38) covers the Lean half.
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) and `scripts/e2e/lemma_second_machine.sh` (bead N12-35)
+exercise the specimens; `scripts/e2e/lemma_reflect.sh` (bead N12-38) covers the Lean half. For this card their
+NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-21"), `step` (`T-21/<specimen-or-mutant>`),
+`event`, the exact command line, exit code, wall time, z = Aᵀy (or Mᵀy), β and yᵀw as exact rationals with the
+strict margin yᵀw − β in newtons, the bundle's BLAKE3, the expected and observed verdict, and on a mismatch the
+first failing rule and the path to reproduce.
 
 ### Known answers and negative controls
 

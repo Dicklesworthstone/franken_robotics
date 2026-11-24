@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "frob-cert", "frob-gait", "frontier", "test"]
 parent: "WP-64"
-deps: ["N12-18", "N12-06", "SPEC-C-10"]
-needs: ["§0.7: the paper-scale pilot of the gait construction (trot and bound orbits of one quadruped, continued in one design parameter) owned by the gait work"]
-related: ["CARD-T-24", "BD-048", "BD-333", "BD-332"]
+deps: ["N10a-17", "N12-06", "N12-18", "SPEC-C-10"]
+needs: []
+related: ["N12-45", "N13-17", "N22a-31"]
 gates: []
 plan_refs: ["§12.3 (T-25)", "§10 C-10", "§22.9", "Appendix D.5 (H/K theorem)"]
 ---
@@ -74,11 +74,13 @@ part of that bead's acceptance; the receipt produced there is what moves the reg
 
 ## Acceptance criteria
 
-- [ ] With the body group C₂ alone the enumeration returns exactly (C₂, C₂), (C₂, 1) and (1, 1), and the atlas
-      reports trot, pace and walk as one class; `frob-verify` accepts the certificate.
-- [ ] With the ℤ₄ × ℤ₂ clock-network group declared, the enumeration is accepted and the atlas built from it
-      recovers the primary quadruped gaits reported in the literature (trot, pace, bound, walk, pronk and the
-      jump as distinct (H, K) pairs with prescribed phase lags).
+- [ ] With the body group C₂ alone the enumeration of the card's specimen returns exactly (C₂, C₂), (C₂, 1) and
+      (1, 1), so trot, pace and walk fall in one class (C₂, 1); `frob-verify` accepts the certificate.
+- [ ] With the ℤ₄ × ℤ₂ clock-network group declared, the specimen's enumeration is accepted and contains the
+      primary quadruped gaits reported in the literature (trot, pace, bound, walk, pronk and the jump) as distinct
+      (H, K) pairs whose phase lags the auditor recomputes. The same two facts observed on live atlas output
+      (`frob gait atlas`) are acceptance lines of BD-332, run there with this card's law tests, as the order of
+      work above states.
 - [ ] Rejected: a list with one pair removed; a pair whose K is not normal in H; a pair with non-cyclic
       quotient; a wrong phase lag (a trot with diagonal legs half a period apart instead of in phase).
 - [ ] Registry row `checked`, class `Certified`, with hash and checker identity; the declared-network assumption
@@ -94,12 +96,21 @@ whole group); `z4xz2_pairs_all_normal` (the group is abelian, so every subgroup 
 H/K filters); `noncyclic_quotient_excluded` (with H the whole group, K = 1 is excluded because the quotient
 ℤ₄ × ℤ₂ is not cyclic, and so is K = ⟨(2, 0)⟩, whose quotient is ℤ₂ × ℤ₂; the pair is included exactly for the six
 K with cyclic quotient: ⟨(0, 1)⟩ and ⟨(2, 1)⟩ of order 2, the three subgroups of order 4, and the whole group);
-`missing_pair_rejects`; `phase_lags_recomputed`; `trot_wrong_lag_rejects`.
+`missing_pair_rejects`; `phase_lags_recomputed`; `trot_wrong_lag_rejects`;
+`non_normal_pair_rejects` (synthetic: ambient D₄ acting on the four legs of a square body, the claimed pair
+(D₄, ⟨s⟩) with s a reflection: conjugating s by the quarter turn r gives r·s·r⁻¹ = s·r⁻² ∉ ⟨s⟩, so the auditor
+rejects naming the generator pair); `noncyclic_quotient_claim_rejects` (the list for ℤ₄ × ℤ₂ with the extra pair
+(ℤ₄ × ℤ₂, 1): `reject`, nothing extra is allowed).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants; the gait work's script
-logs the atlas with its certificate hash through `frob gait atlas`.
+logs the atlas with its certificate hash through `frob gait atlas`. For this card their NDJSON lines (STD-E2E
+helper) carry `ts`, `script`, `bead` ("CARD-T-25"), `step` (`T-25/<ambient-group>/<specimen-or-mutant>`), `event`,
+the exact command line, exit code, wall time, the ambient group's order and its subgroup count, the claimed and
+recomputed pair counts, the declared-network assumption where present, the bundle's BLAKE3, the expected and
+observed verdict, and on a mismatch the first missing, extra or wrong pair (or phase lag) and the path to
+reproduce.
 
 ### Known answers and negative controls
 

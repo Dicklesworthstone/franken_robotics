@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "atelier", "frob-opt", "solid", "test", "card"]
 parent: "WP-62"
-deps: ["NEG-03", "GB-35", "BD-329"]
+deps: ["BD-329", "GB-35", "N28b-17", "NEG-03"]
 needs: []
-related: ["BD-352", "N28a-25"]
+related: []
 gates: []
 plan_refs: ["Appendix E.7 row 5", "§28.9 (the ceiling)", "Appendix E.4 GB-35"]
 ---
@@ -26,15 +26,25 @@ reports itemize.
 
 ## Scope
 
-In: the itemized cost model for a ladder plan; the regression test; the scan. Out: the calibrated layer
-(BD-329); the cascade that consumes the plan (BD-352); the card (GB-35).
+In: the itemized cost record of a ladder plan; the regression test; the scan. Out: the ladder's cost model
+itself and its `opt.cascade --estimate` output (N28b-17, a dependency: `crates/frob-opt/src/ladder/cost.rs`,
+exact rational arithmetic on declared rung costs; this bead's record is the itemized form of that model's
+conformal-survivor cost, in the same module, and its tests live beside that model's in `cargo test -p frob-opt
+--test ladder_cost`); the calibrated layer (BD-329); the cascade that consumes the plan (BD-352); the card
+(GB-35).
 
 ## Technical approach
 
 1. **Itemized plan cost (DESIGN).** The ladder planner returns a cost record with one line per component and
    no pre-summed figure that mixes them:
    `rung_costs` (per rung: count × unit time), `audit_lane` (count × rung time, with the rung named),
-   `calibration_overhead` (if any), `total` (the sum, computed, with its formula echoed).
+   `calibration_overhead` (if any), `total` (the sum, computed, with its formula echoed). The `audit_lane`
+   line is the count reading: the audit designs the plan holds × the time of the rung they are scored at
+   (19 × 3 min on the card's inputs). The cost model's planning figure for the same lane is the share reading
+   (N28b-17: a tenth of the ladder's rung spend, 12.15 min on these inputs). Each is printed under its own name
+   and neither as an unqualified "cost with the audit lane": N28b-17's estimate prints both under this record's
+   line names, as `audit_lane.count` and `audit_lane.share`, with a `total` for each reading (178.5 min and
+   133.65 min) and its formula.
 2. **Values (exact minutes).** All trained: 81 × 30 = 2,430 min = 40.5 h. Halving at η = 3:
    13.5 + 81 + 270 = 364.5 min = 6.075 h. Six survivors, three trained: 13.5 + 18 + 90 = 121.5 min = 2.025 h.
    Audit lane, 19 designs at the second rung: 57 min; total 178.5 min = 2.975 h. A tenth added to the ladder:
@@ -64,13 +74,17 @@ In: the itemized cost model for a ladder plan; the regression test; the scan. Ou
 
 ### End-to-end script and logging
 
-`scripts/e2e/worked_cards.sh` (NEG-02) through GB-35 (the cascade planner's `--plan-only` output where
-available): logs each cost line in minutes, the total and its formula, and item E7-5 in the stale-value step.
+`scripts/e2e/worked_cards.sh` (NEG-02) through GB-35's rows (the itemized cost record read from the test
+binary's JSON status line; the verb's `--plan-only` form runs nothing and prints the plan and its modes, and
+its `--estimate` form runs nothing and prints N28b-17's estimate, which carries the same itemized lines under
+this record's names: `rung_costs`, `audit_lane.share` 12.15 min and `audit_lane.count` 57 min with the rung
+named, and a `total` per reading with its formula; from M4 the cascade's own runs are GB-35's surface step):
+logs each cost line in minutes, the total and its formula, and item E7-5 in the stale-value step.
 
 ### Known answers and negative controls
 
-The cost arithmetic above (exact). Control: the unitemized 2.6 h. Determinism: integer arithmetic in tenths
-of a minute, D0.
+The cost arithmetic above (exact). Control: the unitemized 2.6 h. Determinism: integer arithmetic in seconds
+(7,290 s, 3,420 s, 10,710 s; the tenth-added reading 8,019 s, which tenths of a minute cannot hold), D0.
 
 ## Considerations
 

@@ -1,0 +1,395 @@
+{
+ "group": "gap-E",
+ "filled": [
+  {
+   "gaps": [
+    11
+   ],
+   "bead": "N24bx-01",
+   "note": "task.fixture input gains registered run axes (actuator level, precision, seed, profile, variant) and row selectors (measure, report), each a selection of a value the hashed manifest declares"
+  },
+  {
+   "gaps": [
+    32
+   ],
+   "bead": "N19cx-01",
+   "note": "scene-family descriptor frob.scene.family/1 with FamilyId and a declared law group of lattice isometries, each element with a checkable route (orbit tag, symmetric scenes, closed set); world-fixed items remove elements; membership function for the Sensorium scene-law predicate"
+  },
+  {
+   "gaps": [
+    17
+   ],
+   "bead": "N19cx-02",
+   "note": "orbit-blocked world addresses: map_address(γ, w) returns the address whose world is the image of w under γ, with an image certificate, or a NoImage reason"
+  },
+  {
+   "gaps": [
+    31
+   ],
+   "bead": "N24ax-02",
+   "note": "closed vocabulary of transformation kinds for task terms, signals and draws; kind inference for expressions and requirement formulas; invariance in law of draws; the goal declaration; preserves_task(task, element)"
+  },
+  {
+   "gaps": [
+    19
+   ],
+   "bead": "N24ax-03",
+   "note": "the task read set exists as the influence record of the task-to-design binding (TaskBinding.reads, export task_fields); a hand-written reads field in .ftask is rejected on the rule of §17.11 that keys are derived from declared inputs"
+  },
+  {
+   "gaps": [
+    18
+   ],
+   "bead": "N24ax-04",
+   "note": "required smoothness attribute on every metric record (smooth accumulation, margin, binary, count, threshold time, quantile, ratio of totals), the classification of the core metrics and the gradient_admission query"
+  },
+  {
+   "gaps": [
+    22
+   ],
+   "bead": "N22bx-01",
+   "note": "a new .fcard kind absorber: piecewise-linear force–displacement lower envelope, stroke, optional force limit, conditions, per-field provenance; W_abs integrated exactly and rounded down; the .fenergy copy checked against the card"
+  },
+  {
+   "gaps": [
+    46
+   ],
+   "bead": "N19ax-01",
+   "note": "pinch zones derived from fixture geometry and joint state (latch edge, hinge edge, leading edge, front gap, sill shear, nip), closing force from the closer law or declared limits, a pack table, a query and the scene.pinch channel"
+  },
+  {
+   "gaps": [
+    47
+   ],
+   "bead": "N19ax-02",
+   "note": "route selection on the route graph, the corridor of declared half-width, a conservative signed margin from the sampled design footprint, kernel K-route-corridor and the channel corridor_margin"
+  },
+  {
+   "gaps": [
+    49
+   ],
+   "bead": "N19ax-03",
+   "note": "an M2 bead for per-world field exposure samples: exact cell keys from anchored positions, values as a pure function of the key, a fixed-capacity memo excluded from digests; independent of the M3 scene-state pools of N19a-09"
+  },
+  {
+   "gaps": [
+    48
+   ],
+   "bead": "N22bx-02",
+   "note": "an M3 Solid bead split out of N22b-24: the three backup command laws as plain controllers (damping injection at κ = ½, posture hold, widen-lower-freeze) with layer record backup and no domain or passivity claim; N22b-24 keeps the claims at M4"
+  },
+  {
+   "gaps": [
+    58
+   ],
+   "bead": "N19bx-01",
+   "note": "the optional facility table of a retrofit entry (installation time and crew, access conditions, floor availability, calibration, as-installed tolerances with a band-extreme constraint check, upkeep and life) and its export to the mission layer; an entry without it is unpriced, never zero"
+  },
+  {
+   "gaps": [
+    62
+   ],
+   "bead": "N19ax-04",
+   "note": "feature keys for every discrete generator draw, a site record with exact alternative masses (absent alternatives included) in each pack, edit_mass for a typed edit, and exact family marginals by a generating-function recursion checked against frequencies"
+  },
+  {
+   "gaps": [
+    66
+   ],
+   "bead": "N20ax-01",
+   "note": "two frob-sense entry points on the Sensorium checkpoint section: retime_in_flight (same keyed draw under the new link law, clamped packets delivered at the fork in sampling order, capacity refusal 441) and reinit_state with a closed set of sources and a trait for estimators"
+  },
+  {
+   "gaps": [
+    111
+   ],
+   "bead": "N24cx-01",
+   "note": "at M2 decision records of batched and device runs are evaluated on the host from a narrow all-worlds telemetry selection (task-all) by the offline evaluator and stored with the run; at M3 the path becomes the differential oracle for tier-written records"
+  },
+  {
+   "gaps": [
+    115
+   ],
+   "bead": "N19ax-05",
+   "note": "the M6 reading of KILL-DRESSING on the kinematic-actor mechanism: the four clauses of the M5 protocol measured on actors, one repair cycle, an ADR addendum with measured values, and the two branches; its parent is the epic BD-421 (no edge to an epic)"
+  },
+  {
+   "gaps": [
+    118
+   ],
+   "bead": "N23bx-02",
+   "note": "the task that measures GATE-CORTEX-17 on our engine (nine runs, the pilot protocol and reading rule, controls, receipt) and takes the final reading of KILL-GATREE; N23bx-01 builds arms B and C that it compares, since the epic BD-439 held them only as an outline"
+  },
+  {
+   "gaps": [
+    123
+   ],
+   "bead": "N23bx-03",
+   "note": "allocation request and registry row for the no-interval randomization refusal (proposed FROB-REF-571, interim name randomize-no-interval behind one constant), with trigger, block, ranked repairs, exit 3, the neighbour table and the binding test"
+  }
+ ],
+ "already": [
+  {
+   "gaps": [
+    20
+   ],
+   "bead": "N23a-31",
+   "note": "the equivariant-policy bead now raises FROB-REF-161 at the verb for a tie under a group outside Γ_obs (payload: failing generator, requested group, Γ_obs) and already depends on N17-REF through N23a-10"
+  },
+  {
+   "gaps": [
+    67
+   ],
+   "bead": "N36-34",
+   "note": "N36-34 (M2) now defines the reference humanoid flat-ground velocity task, its registered target and recipe, and requires a confirming training on one RTX 4090 that attains the target, which is the trained reference humanoid policy on a device tier; the Autopsy beads did not yet depend on it"
+  },
+  {
+   "gaps": [
+    131
+   ],
+   "bead": "NFx-01",
+   "note": "NFx-01 is a new bead written by the gap-A reconciler for the same report (its gap 40): it writes the register row FD-FSIM-39 for N22c-22 (input-affine EDMD fit in fs-surrogate) and records the edge from N22c-22; the key is in defs/UF and not yet in INDEX.tsv"
+  },
+  {
+   "gaps": [
+    61
+   ],
+   "bead": "N19b-44",
+   "note": "the M3 Solid typed-scene-edit bead now exists, split out of N19b-38 (which depends on it); the edge from N26a-02 is recorded"
+  }
+ ],
+ "rejected": [],
+ "new_beads": [
+  "N24bx-01",
+  "N19cx-01",
+  "N19cx-02",
+  "N24ax-02",
+  "N24ax-03",
+  "N24ax-04",
+  "N22bx-01",
+  "N19ax-01",
+  "N19ax-02",
+  "N19ax-03",
+  "N22bx-02",
+  "N19bx-01",
+  "N19ax-04",
+  "N20ax-01",
+  "N24cx-01",
+  "N19ax-05",
+  "N23bx-01",
+  "N23bx-02",
+  "N23bx-03"
+ ],
+ "edges": [
+  {
+   "bead": "N15a-12",
+   "dep": "N24bx-01",
+   "as": "dep",
+   "why": "gap 11: passes --seed"
+  },
+  {
+   "bead": "N15a-24",
+   "dep": "N24bx-01",
+   "as": "dep",
+   "why": "gap 11: passes --actuator-level, --measure, --precision, --seed"
+  },
+  {
+   "bead": "N15b-13",
+   "dep": "N24bx-01",
+   "as": "dep",
+   "why": "gap 11: passes --report and --seed"
+  },
+  {
+   "bead": "N15b-30",
+   "dep": "N24bx-01",
+   "as": "dep",
+   "why": "gap 11"
+  },
+  {
+   "bead": "N15b-32",
+   "dep": "N24bx-01",
+   "as": "dep",
+   "why": "gap 11: passes --seed"
+  },
+  {
+   "bead": "N15b-35",
+   "dep": "N24bx-01",
+   "as": "dep",
+   "why": "gap 11: passes --precision and --seed"
+  },
+  {
+   "bead": "N15b-37",
+   "dep": "N24bx-01",
+   "as": "dep",
+   "why": "gap 11: passes --profile and --seed"
+  },
+  {
+   "bead": "N20b-01",
+   "dep": "N19cx-01",
+   "as": "dep",
+   "why": "gap 32: the scene-law predicate reads the family law group"
+  },
+  {
+   "bead": "N17a-24",
+   "dep": "N19cx-02",
+   "as": "dep",
+   "why": "gap 17: map_address is supplied by the scene generator"
+  },
+  {
+   "bead": "BD-286",
+   "dep": "N19cx-02",
+   "as": "dep",
+   "why": "gap 17: per-address reuse after address mapping (positive control of GATE-PHYLUM-05)"
+  },
+  {
+   "bead": "N26a-02",
+   "dep": "N19b-44",
+   "as": "dep",
+   "why": "gap 61: Nemesis applies Habitat typed edits at M3"
+  },
+  {
+   "bead": "N20b-01",
+   "dep": "N24ax-02",
+   "as": "dep",
+   "why": "gap 31: the task clause of the Γ_obs predicates reads the declared kinds and calls preserves_task"
+  },
+  {
+   "bead": "N14a-11",
+   "dep": "N24ax-02",
+   "as": "dep",
+   "why": "gap 31: the symmetry functor restricts Γ_obs by the task terms declared kinds (its need named BD-122)"
+  },
+  {
+   "bead": "N17a-26",
+   "dep": "N24ax-03",
+   "as": "dep",
+   "why": "gap 19: the mission view takes task_fields from the binding record"
+  },
+  {
+   "bead": "N17b-22",
+   "dep": "N24ax-04",
+   "as": "dep",
+   "why": "gap 18: the metric admission test reads the registered smoothness"
+  },
+  {
+   "bead": "N22b-11",
+   "dep": "N22bx-01",
+   "as": "dep",
+   "why": "gap 22: the W_abs term integrates the absorber card envelope"
+  },
+  {
+   "bead": "N22b-17",
+   "dep": "N22bx-01",
+   "as": "dep",
+   "why": "gap 22: OPEN-SHIELD-1 decides the provenance of the card fields this bead defines"
+  },
+  {
+   "bead": "N24a-38",
+   "dep": "N19ax-01",
+   "as": "dep",
+   "why": "gap 46: the pinch monitor reads declared pinch zones and closing forces"
+  },
+  {
+   "bead": "N24c-21",
+   "dep": "N19ax-02",
+   "as": "dep",
+   "why": "gap 47: the corridor intent invariant reads corridor_margin"
+  },
+  {
+   "bead": "N24c-36",
+   "dep": "N19ax-03",
+   "as": "dep",
+   "why": "gap 49: field draws are read through the frob-scene sample lookup at M2"
+  },
+  {
+   "bead": "N24c-38",
+   "dep": "N19ax-03",
+   "as": "dep",
+   "why": "gap 49: the M2 fixture half of GATE-ARENA-14 asserts bit-identical tile values"
+  },
+  {
+   "bead": "N24c-27",
+   "dep": "N22bx-02",
+   "as": "dep",
+   "why": "gap 48: the third idle law of GATE-ARENA-15 at M3"
+  },
+  {
+   "bead": "N22b-24",
+   "dep": "N22bx-02",
+   "as": "dep",
+   "why": "gap 48: the M4 backups wrap the M3 laws and add domains, properties and the gain-bound check"
+  },
+  {
+   "bead": "N25c-31",
+   "dep": "N19bx-01",
+   "as": "dep",
+   "why": "gap 58: the priced world-edit grammar reads the facility terms of catalog entries"
+  },
+  {
+   "bead": "N26a-03",
+   "dep": "N19ax-04",
+   "as": "dep",
+   "why": "gap 62: the prior of a discrete edit reads the site mass"
+  },
+  {
+   "bead": "N26a-24",
+   "dep": "N19ax-04",
+   "as": "dep",
+   "why": "gap 62: exact mixture weights need the nominal mass of each discrete alternative"
+  },
+  {
+   "bead": "N27a-05",
+   "dep": "N20ax-01",
+   "as": "dep",
+   "why": "gap 66: information forks re-initialize queues and filter state through the Sensorium entry points"
+  },
+  {
+   "bead": "N35-09",
+   "dep": "N24cx-01",
+   "as": "dep",
+   "why": "gap 111: the per-world comparison reads decision records of both placements at M2"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "N24cx-01",
+   "as": "dep",
+   "why": "gap 111: GATE-SPARK-16 compares task decisions on device placements at M2"
+  },
+  {
+   "bead": "N27b-28",
+   "dep": "N36-34",
+   "as": "dep",
+   "why": "gap 67: G(W) for the reference humanoid policy on a device tier"
+  },
+  {
+   "bead": "N27b-22",
+   "dep": "N36-34",
+   "as": "related",
+   "why": "gap 67: the pilot uses a humanoid policy only if one exists at pilot time; not blocking"
+  },
+  {
+   "bead": "N38a-33",
+   "dep": "N19ax-05",
+   "as": "related",
+   "why": "gap 115: the decision measures this mechanism, so the mechanism does not depend on it (direction rule 7)"
+  },
+  {
+   "bead": "BD-442",
+   "dep": "N23bx-02",
+   "as": "dep",
+   "why": "gap 118: the M8 exit review cites the GATE-CORTEX-17 receipt and the final KILL-GATREE reading"
+  },
+  {
+   "bead": "BD-200",
+   "dep": "N23bx-03",
+   "as": "dep",
+   "why": "gap 123: the raising site compiles against the registered row"
+  },
+  {
+   "bead": "N41-REF",
+   "dep": "N23bx-03",
+   "as": "related",
+   "why": "gap 123: N41-REF is an M0 registry and lists the provisional name; a registry does not depend on a later bead"
+  }
+ ]
+}

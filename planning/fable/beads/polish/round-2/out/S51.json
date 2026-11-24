@@ -1,0 +1,419 @@
+{
+ "round": 2,
+ "slice": "S51",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "BD-174",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Applied the four requests: deps N21ap1-01 (plan step now calls StepPlan::build and attaches the Metal realization block), N21c-27 and N21a-02; dropped `exploratory: true` from the receipt (the label is N21a-02's evidence.device.exploratory with its reason); INV-SPARK-06's Metal compile-fail suite assembled under the register's name lease::host_read_requires_committed_epoch. Fixed waits-on-later-beads: digests defined as host BLAKE3 over committed rows until N29ap1-01; cancellation criterion narrowed to stopping between chunks (N21b-22 owns the protocol); placement record left to N21b-28; e2e no longer uses the undefined --snapshot-every (snapshots are N29ap1-02's) and spells out its chunks/profile/alloc_flat steps. Scope is already the narrow capstone (components N21b-05/06/07); acceptance tightened."
+  },
+  {
+   "bead": "N21b-05",
+   "kinds": [
+    "scope",
+    "deps",
+    "tests"
+   ],
+   "what": "The argument-limit refusal is owned by N21a-18 (emitter) and N21b-01 (registration); this bead now passes and must not bypass it (dep N21a-18; test renamed packing_path_cannot_bypass_argument_limit). Dep N36-33 (sim.run --workload, used only by a later script) replaced by N36-02 (the Q record the layout test needs)."
+  },
+  {
+   "bead": "N21b-06",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "K-snapshot and stored snapshots now N29ap1-02's and digests N29ap1-01's (both build on the Metal backend): this bead builds the dispatch tail and SnapshotSource read path, tested with a synthetic probe copy; KA-544's Metal half measured by N21b-26. --profile-kernels defined as the sim.run option (802 off Metal until N21a-27 extends it). Added its own NDJSON device-integration lane (chunk_e2e) instead of only a later bead's script; removed unused dep N36-33."
+  },
+  {
+   "bead": "N21b-07",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "tests"
+   ],
+   "what": "Out list pointed at BD-203 for digests and K-snapshot; now N29ap1-01/N29ap1-02. Digests in its tests defined (host BLAKE3 over committed rows). The conformance-only sim.run option --inject-faults (seed/count, consecutive, fence=off), used by N21b-26, is now defined here per drift 8, with a parse test. Removed dep N36-33 (only N21b-26's script uses --workload)."
+  },
+  {
+   "bead": "N21b-08",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Dep N21a-03 (request) and N40-03. ADR renamed docs/adr/ADR-KILL-METAL-M2.md in N21a-03's format with N40-03's required fields (beads re-read, capability name, amendments); outcome names mapped onto N40-03's closed set (holds=not-fired, fires=fired, not-run=deferred); Metal row of MECHANISMS.md updated; test kill_metal_outcome_to_register."
+  },
+  {
+   "bead": "N21b-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Request applied: OPEN-SPARK-5 recorded as a row of registries/decisions.toml (no owner_decisions.toml) and closed in registries/open.toml; deps N21a-03, N21c-34, N41-OPEN3. The e2e no longer runs sim.run --tier gpu-metal (BD-174 is not and must not be a dep: under option D it is never built); it reads BD-174's stored receipts when present. Removed dep N36-33."
+  },
+  {
+   "bead": "BET-09",
+   "kinds": [
+    "placement",
+    "correct"
+   ],
+   "what": "Tier label and text were Solid; the Metal rollout tier is Frontier under KILL-METAL (as BET-18/BET-35 label theirs)."
+  },
+  {
+   "bead": "FD-FT-01",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "Phase post asserted the row `adopted`, which only NFp1-52 sets; now `landed` with stages named. Added the rule for a stage adopted before the Metal backend or gates exist (INT-FT-01/-02 and fixture only; moving the backend is a KILL-METAL optimization-pass lever), so the bead can finish without later beads. Run verbs in the script now carry --key and valid arguments (probe --device --suite, fingerprint --device, check --kernel)."
+  },
+  {
+   "bead": "NFp1-51",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "'Built on the new API directly' conflicted with the backend beads' interim posture; aligned with FD-FT-01's rule. Script's run verbs carry --key and valid arguments; gates re-run where they exist."
+  },
+  {
+   "bead": "NFp1-52",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "'If FrankenTorch declines' contradicted REV-1 (the sibling is the owner's); restated as a deferral with reason. Script's run verbs carry --key and valid arguments; gates re-run where they exist."
+  },
+  {
+   "bead": "NS-10",
+   "kinds": [
+    "deps",
+    "placement",
+    "scope",
+    "tests"
+   ],
+   "what": "Dep N21b-08: the scenario's wording depends on the KILL-METAL outcome (not-fired/fired/deferred), now read from the register with a unit test. Tier label frontier. Out list names the beads that own each excluded part."
+  },
+  {
+   "bead": "BD-187",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Request applied: the ramp grazing law with its per-region latent is N20a-24's (M3); the range card fields are introduced under N20a-20's governing names (range_min/range_max, range_kind ray|z, range_lsb, noise sigma0..2, grazing_law cut, detection_threshold) throughout the pipeline and tests. Defined the digest table `telemetry.summary --digests` (per-sensor output and mask digests plus the run's other digest streams, `absent` when not recorded), which N20b-22, N20b-15 and N20b-42 compare with and no bead defined (drift 8); criterion and unit test added."
+  },
+  {
+   "bead": "BD-215",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "Request applied: dep N24a-40 (telemetry.inspect-pixel is called during the presentation case; no cycle). Test targets g3/g5 renamed to g3_metamorphic/g5_determinism with FROB_TEST_SEED and the gauntlet-mutations feature for controls (drift 1); gate values recorded through record_gate by a non-implementing session. N24a-40, now a dependency, removed from related."
+  },
+  {
+   "bead": "N19c-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its script called `frob scene accept --preview-rays` (scene.accept first answers at M3, no such option), `telemetry stills --depth` (no such option) and `frob conformance run --case` (no such command). Rewritten: the conversion over the vectors file and the host ray path run through their cargo test targets with an explicit seed, the compiled side through `frob scene compile ... --key` asserting scales are baked; depth on the compiled pack is left to N20b-43 and the gate script. Logging fields kept."
+  },
+  {
+   "bead": "N20a-14",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Request applied: `frob gauntlet run --ka KA-512` (no such command) replaced by `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-512` (and KA-513), controls with --features gauntlet-mutations, as N20a-46 stage 3 runs it."
+  },
+  {
+   "bead": "N20a-17",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "The odometry unwraps every increment with N20b-40's validity predicate and `ambiguous` flag, but N20b-40 was only `related`: now a dep (no cycle; N20b-40 depends on N20a-13, not on this bead). Out list names N20b-40 and N24b-11 for what they own."
+  },
+  {
+   "bead": "N20b-15",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Compared runs shared one key or had none (drift 5): every run and mutate verb now carries a key, distinct within each pair. inspect-pixel called with the row's run/world/instant/pixel inputs. Gate wrapper `--test g3` renamed g3_metamorphic with FROB_TEST_SEED and the value recorded through record_gate (drift 1). The digest read is BD-187's table."
+  },
+  {
+   "bead": "N20b-16",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Request applied: dep VERBS-sense (moved from related). The example in the approach (`--task carry-tote`) differed from the registry row's (`--task stairs-0.4`); aligned. The optional scene and tier-list inputs are stated as this bead's additions to the row (requested of VERBS-sense)."
+  },
+  {
+   "bead": "N20b-22",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Run verbs without keys (drift 5) now keyed, one distinct key per backend for the cross-backend runs; the lidar run asks T2 itself; `frob spark check --json` had no kernel or step: now `--step --backend <b> --key` (BD-176); D3 first divergence through telemetry.divergence. Gate wrappers `--test g1`/`--test g5` renamed g1_known_answers/g5_determinism with FROB_TEST_SEED; values recorded through record_gate by a non-implementing session."
+  },
+  {
+   "bead": "N20b-44",
+   "kinds": [
+    "correct"
+   ],
+   "what": "K-sense-enc used a count-unit noise and turns-per-second velocity, contradicting N20a-13's governing encoder card (noise_sigma in radians of shaft angle added before the floor; difference velocity in rad/s with nearest-increment unwrapping and an N*T/2 delay) and BD-099's referee model; aligned, and the first form's wrap kind and N20a-13's additions named."
+  },
+  {
+   "bead": "BD-195",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Both requests applied: the pose index is drawn at by_reset(reset-pose, \"world\", reset_count) (N35-24's helper, the reserved whole-world path), so paired designs share it; the load check is N24a-16's load_settled with its LoadOutcome and Degraded: unsettled mark, run with each tier's own first step and not redefined (thresholds not restated; device tiers return support_ratio and penetration in one batched read), with per-design and per-arm counts. task.settle --cohort declared as this bead's option. Script: run verbs keyed, positional design, --seconds instead of the undefined --steps, design edit with --expected-parent and --key, KA-601 in its cargo form and the gate through record_gate. Tests reset_index_by_world_path and cohort_and_model_exclusive."
+  },
+  {
+   "bead": "BD-196",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Script's eval.run and spark.check calls lacked --key (one key per backend now). Gate values recorded through record_gate by a non-implementing session; the Metal argument-limit note points at N21b-05's packed-slab path and its 28-buffer figure."
+  },
+  {
+   "bead": "BD-198",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "train.start was called with --design and --idempotency-key (the row has the design positional and --key): fixed, with distinct keys per backend and seed; export uses the row's --out; eval calls name task, stream, state and keys, controls through N23b-15's zero:/random: forms. KA-590's shuffled-label clause is the distillation gate's (BD-323), stated. The KILL-METAL note now matches the graph (N21b-08 depends on this bead through BD-217, so no decision exists at the first run) and N40-03's outcome names. The live-dependency perturbation (commanded-velocity channel zeroed) was called with no defined input: now N23b-15's masked:<id>:<role> form under its own key."
+  },
+  {
+   "bead": "BD-200",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "All four requests applied within the graph's order (N37p1-01, N37-18, N30a-27/28 and N24c-36 all depend on this bead): --resolved-out is a jailed frob.path/1 under the export root (FROB-REF-734 outside) written by one writer whose first line is the frob.diag-header/1 header (schema, kind diagnostic), into which N37p1-01's flags carrier and N37-18's export::admit (ExportGrant, kind diagnostic; settled there) plug; `:key` added to the keys later beads add (refused by N24c-36 with FROB-REF-556); the compiler reads bands through an injected band reader and names no frob-ground item, N30a-28 giving it the CardWidthSource/CorrelatedDraw form; identities rows for the examples it makes run. Also fixed the withdrawn `target` key in step 1, distinct keys for the 64- and 4,096-world runs, and sim.replay's --run/--world form. Tests resolved_out_jailed_with_header, band_reader_injected."
+  },
+  {
+   "bead": "BD-218",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "train.start in the script used --tier and no design or key: now the positional design, --backend, a key per pair, export with --out, controls through N23b-15's forms; the gate through record_gate. Arithmetic re-checked (bound, 0.78548, 36/46/74/103 episodes)."
+  },
+  {
+   "bead": "FD-FT-02",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Phase post ran `frob train start --json` with no design, task or key and no way to choose the trainer: now keyed with the positional design, the parity battery keyed, and the FrankenTorch device path named as the additive --trainer value frankentorch-device that the switch-over adds (FROB-REF-724 before adoption). The switch ADR placed under docs/adr/ (drift 4)."
+  },
+  {
+   "bead": "N23a-01",
+   "kinds": [
+    "scope",
+    "correct"
+   ],
+   "what": "Both N23a-01 and N33a-22 declared the frankentorch feature with its four path dependencies; this bead now reserves the feature empty and N33a-22 (now depending on it) fills it. `frob schema refusals` corrected to the spelling used elsewhere, `frob schema --refusals`."
+  },
+  {
+   "bead": "N23a-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request applied: the 'GRU policies at M2 live in memory only' note withdrawn; N37-08's default has a gru row with admit = trained-here, so the trainer's own checkpoints reload, and outside GRU files stay refused (FROB-REF-828) until OPEN-SAFE-1 raises the row. to_torch now lowers the spec onto N23a-15's layer-list bridge (N23a-15 cannot know NetworkSpec: this bead depends on it). Script's dry-run and battery calls take the design, task and keys."
+  },
+  {
+   "bead": "N23a-15",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "The bridge built its module twin and oracle from a NetworkSpec and in ParamLayout/mapping-table order, all from beads that depend on it (N23a-12, N23a-13): now an ordered layer list (LayerDesc) interface that N23a-12 lowers onto, gradients in the list's order. Dep BD-193 added (its TensorView, lease and FROB-REF-547 are used; no cycle). Script's train.start keyed with the positional design."
+  },
+  {
+   "bead": "N23b-09",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "eval.run's policy inputs used by BD-198, NS-10, N23b-13 and others were defined nowhere (drift 8): this bead now defines --policy, --task, --split held-out|<id> or --stream dev (N23b-33's development stream; exclusive, FROB-REF-802), --seeds, --state privileged|estimated (default both). Script's train.start and eval.run calls carry design, task and keys, the re-run uses a new key so it recomputes, and the privileged-only and exclusivity cases are asserted. IQM arithmetic verified. --policy with a positional design now binds by role through N23a-13's matcher (mismatch FROB-REF-531, as N23a-13's joints-reordered and regeared cases need) instead of refusing any other design with 802; with no design the policy's design parent is used."
+  },
+  {
+   "bead": "N23b-15",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The control policy forms zero:<spec> and random:<spec>:<seed> that BD-198, N23b-13 and BD-218 call were defined nowhere: this bead, which builds the controls, now adds them to eval.run --policy, with a parse test. Script's train.start and eval calls take the design, task, stream and distinct keys. The live-dependency proof that BD-198, N23a-35 and N36-34 run (evaluate with the command channel zeroed; plan §38) had no mechanism anywhere: added the masked:<spec>:<role> form of eval.run --policy (role channels held at the normalizer mean; not a control, not in the record), with a parse test."
+  },
+  {
+   "bead": "N33a-22",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "It adds a feature to frob-learn's manifest but did not depend on the crate's skeleton: dep N23a-01 (no cycle), which reserves the feature. Bridge function names updated to N23a-15's (module_from_layers, params_from_module)."
+  },
+  {
+   "bead": "N23a-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied: every checkpoint the trainer writes, mid-run or exported, carries frob.authorization/1 with the 92-byte canonical flags string, and the manifest the same object at /authorization (N37-07, N37p1-01), with an acceptance line and test. The GRU note now matches N37-08's default (trained-here row: own GRU checkpoints resume; outside GRU files 828), replacing a test that expected 828 on its own checkpoints. Path-jail refusal named (734); --at and --to store noted as inputs the row lacks. Script step's eval calls take the design positionally, task, stream and keys, and are placed in N23a-35's script after N23b-09."
+  },
+  {
+   "bead": "N23a-14",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Request applied: network accepts morph-transformer:<d>,<layers>,<heads> (N23b-41, which depends on this bead, builds it; FROB-REF-724 before), malformed strings FROB-REF-802, test network_string_forms. Table brought in line with the beads that use it: --trainer also lists cpu-readback (N23a-17) and frankentorch-device (FD-FT-02) with the default read from registries/defaults.toml (N23a-16); `profile` is the --determinism option (--profile is the step profile; fast-training is added by N35-06 at M3); --shards <n> passed through to N23a-19's update (N23a-19 and N36-34 called it); --steps as the shorthand of --budget env_steps."
+  },
+  {
+   "bead": "N23a-16",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Decision record moved to N40-03's form (docs/adr/ADR-KILL-LEARNKERN-M2.md, its required fields, outcome words not-fired|fired|deferred; the 'provisional' case is deferred with a Deferred branch), dep N40-03 added (no cycle). The time clause stated as BD-218's paired bound (fires when L < 0.4; 1,025 s under published-context). Script used `frob evidence trace --gate`, which takes a claim id: now reads the gate rows and verifies each receipt by claim; the dry-run is keyed with the design. Test kill_learnkern_outcome_words."
+  },
+  {
+   "bead": "N23a-17",
+   "kinds": [
+    "scope",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The --trainer cpu-readback value is declared as this bead's addition to train.start; close-as-not-needed tied to the ADR's not-fired outcome (deferred keeps it open); script's eval calls take task and keys and the controls N23b-15's forms."
+  },
+  {
+   "bead": "N23a-18",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its script called `frob train start --determinism fast-training`, an option N35-06 (M3, a dependant) adds; `frob eval scorecard --cite-training`, which no row defines; `frob spark place --job <run>` (the job form is a kernel job); and eval.run --determinism (also N35-06's). Now: the D4 run at M2 through a thin d4_job example over the job API (CLI form once N35-06 lands), citations through the gate_record example (861 for the training return, 867 for the un-re-evaluated policy), re-evaluation under the default device-replay, spark place with --tier/--design/--task/--worlds. Acceptance's re-evaluation case uses a fixture record here (drift 7). Tests for the example and the tag agreement."
+  },
+  {
+   "bead": "N23a-35",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Battery and spark-check calls keyed; reference training and its controls spelled with the positional design, task, keys and N23b-15's zero:/random:/masked: forms; step 14 uses N23a-18's M2 form of the D4 run; gate receipts recorded through record_gate by a non-implementing session; the fired-branch note names --trainer cpu-readback and reads train.trainer from defaults."
+  },
+  {
+   "bead": "N23b-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request applied: the beyond-card example in BD-200's S-expression draw form with :beyond-card (widen \"1.5\"), bare range keys :lo, :hi, :range refused (103), the withdrawn TOML form noted; tests and pointer updated. Script used an undefined --objective option, run.show on an episode (the row takes a run) and no keys or design: now fixture tasks carry the objective, run.export --episodes for the record, sim.replay --run/--world/--episode, keyed train and eval calls. Deps N23a-13 (the manifest it labels) and N23b-09 (the report and split check it uses) added, no cycle."
+  },
+  {
+   "bead": "N23b-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Control registry path given as crates/frob-conformance/registry/controls.toml (drift 2); the kill-gate script reads the ADRs at docs/adr/ADR-<kill gate>-<milestone>.md and checks N40-03's outcome words. Thresholds and kill rows re-checked against N23a-16, BD-218 and N23b-28."
+  },
+  {
+   "bead": "N23b-28",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The decision record had no place: docs/adr/ADR-OPEN-CORTEX-6.md with its state field; enforcement names record_gate; the script also attempts a published-comparator pass on a scratch copy and asserts the refusal. Arithmetic re-checked (513 s, 1,025 s, 0.854, 0.759, 22%)."
+  },
+  {
+   "bead": "N36-34",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "train.start called with --design and --idempotency-key (the row has the design positional and --key); eval calls had no design, task or key. Recipe command and every script step fixed, the smoke twice under distinct keys for the digest comparison, the controls and the command-zeroed proof through N23b-15's forms. Arithmetic re-checked (196,608 samples; 2.7e8 env-steps)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run row lacks options its mechanism beads define or many scripts use: --profile-kernels (N21b-06, Metal from M2; N21a-27 extends), the conformance-only --inject-faults seed=S,count=N|consecutive=K[,fence=off] (N21b-07), --telemetry T0|T1|T2 (used by N20b-15, N20b-22, BD-195 and many others), and `seed` (BD-024). N21b-26 uses --snapshot-every, which no bead defines (snapshots are scheduled by N29ap1-02's T3 schedule/--trace-rate, itself not in the row)."
+  },
+  {
+   "bead": "N21b-26",
+   "what": "the snapshot_reads step uses `frob sim run --snapshot-every 1`, an option no bead defines; and the gate step runs `--test g4`, not a target name (drift 1: g4_chaos)."
+  },
+  {
+   "bead": "BD-173",
+   "what": "N21c-27 binds INV-SPARK-06 to the test name lease::host_read_requires_committed_epoch; BD-173 (CUDA run-time epoch check) should name its test so; BD-174 now names the Metal side so."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "the `train.status` row header is missing (its text is glued to the end of train.start's Extended-by line). train.start Inputs lack --trainer device|frankentorch (N23a-14; FD-FT-02 adds frankentorch-device on adoption), --target and --eval-cadence (N23a-14's input table; used by N23b-33 and BD-218). Also: --trainer gains cpu-readback (N23a-17); add --shards <n> (N23a-14, N23a-19); the row's `profile` is spelled --determinism (N23a-14, N35-06; --profile is a step profile); train.export inputs lack --at <checkpoint|latest|best-on-dev> and --to store (N23a-13)."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "what": "telemetry.summary row lists only run and token budget: add `--digests` (the digest table, defined by BD-187, used by N20b-15, N20b-22, N20b-42) to Inputs and BD-187 to Implemented by; `--table tile-ledger` used by N16c-19/N16c-20/N16c-21 is also not in the row."
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "sense.profile Inputs are design and task; N20b-16 adds optional `--scene` (optical context) and `--tiers` (the tiers on which section 7's force-history grades are reported): list them."
+  },
+  {
+   "bead": "N19c-40",
+   "what": "the gate script calls commands no row defines: `frob conformance run --case ...` (no such command: drift 1, use the cargo test target), `scene accept --preview-rays` (scene.accept first answers at M3 and has no such option), `scene show --source ... --probe` and `telemetry stills --depth --camera --pixel` (not in the scene.show / telemetry.stills rows); run verbs lack --key (drift 5)."
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "task.settle row lists task, --model and key: add `--cohort <cohort>` (BD-195; exclusive with --model, FROB-REF-802)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run row lists design, battery and tier: add the policy inputs N23b-09 defines (--policy <family|checkpoint>, --task, --split held-out|<id> or --stream dev, --seeds, --state privileged|estimated), the control forms zero:<spec> and random:<spec>:<seed> of --policy (N23b-15), and the design-less conformance-battery form with --rules and --backend used by BD-192, BD-196, BD-197, N23a-07, N23a-10, N23a-12, N36-08 (U23a coverage note 12); Implemented by/Extended by should name N23b-09 and N23b-15. Also the masked:<spec>:<role> form of --policy (N23b-15), the live-dependency perturbation used by BD-198, N23a-35 and N36-34."
+  },
+  {
+   "bead": "N23b-33",
+   "what": "its script calls `frob train start --task ... --tier batch-cpu --target ... --eval-cadence ...` with no positional design, --tier instead of the row's --backend, and no --key (drift 5, 8); --target and --eval-cadence are N23a-14's inputs (its table) and are requested of VERBS-train."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "All 46 read in full; every request addressed to the slice applied after checking it against the plan and the graph. Most changes are scripts calling options that rows lack or spell otherwise (drift 8), the training verbs' undefined inputs, and kill-gate records brought to N40-03's form. The beads look settled apart from the requested VERBS-train, VERBS-eval, VERBS-sim, VERBS-task, VERBS-telemetry and VERBS-sense row updates."
+}

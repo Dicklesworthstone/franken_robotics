@@ -1,0 +1,447 @@
+{
+ "round": 1,
+ "slice": "U38b-1",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "BD-025",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "States ADR-GAUNT-01's run and record forms once (no `frob conformance` command; cargo test form with the gate's tier; recorder example); closed seed-form rule with `unknown-seed-form` (U29b request); names the loader reasons; tests `seed_forms_closed` and `no_conformance_command` (U18b/U33b request)."
+  },
+  {
+   "bead": "BD-146",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests",
+    "risks"
+   ],
+   "what": "Battery manifests/identities pointed at N24b-01 and the trigger map at N38a-22 (one map); duplicated unit tests replaced by run-level checks; ordering note (capstone, `not-eligible` until a test is built, no component may depend on it); requests filed to its component rdeps."
+  },
+  {
+   "bead": "BD-318",
+   "kinds": [
+    "scope",
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "Nemesis planted registry rewritten as an index over the case directories of N26a-04, N26a-15 and N26a-34 (biased-screen row due M4 from N26b-06, checked by BD-377); deps added; index tests and acceptance."
+  },
+  {
+   "bead": "BD-377",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The 30-amendment campaign taken from N25a-17's sealed protocol (ten categories with counts, hypothesis support included; freeze record; fresh campaign for M4; authors nothing); runs CERT-10's M4 part and the Nemesis index's M4 row; deps N25a-17, N26b-06, N26b-07, N38b-17."
+  },
+  {
+   "bead": "BD-411",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Rows cite KA-721..734 and the N31-KA rows; 'control owed' replaced by N30-KA/N31-KA DESIGN controls; missing M5 rows KA-740, -744, -746, -747, -754 added; corpus covers every active kind of frob.cert.kinds/1; takes over the rehearsal check, reality_lane.sh step 6 and certifiers.sh M5 (CERT-15 binding); deps added."
+  },
+  {
+   "bead": "N38-CX",
+   "kinds": [
+    "placement",
+    "deps",
+    "correct"
+   ],
+   "what": "Moved to M0 (CX-394 seeds KA-845's control, due at M0 via N38b-39); acceptance names the loader-rule owners (BD-025 boundary-not-control, N38b-28 cannot-fail); dep N38b-28."
+  },
+  {
+   "bead": "N38-KA",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Moved to M0, priority 0: KA-845 is due at M0 through N38b-39 and must be registered first."
+  },
+  {
+   "bead": "N38-REF",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Added BD-025's loader reasons: no-gate, unknown-gate, kind-not-closed, feature-missing, fixture-missing, unknown-seed-form."
+  },
+  {
+   "bead": "N38b-01",
+   "kinds": [
+    "split",
+    "placement",
+    "scope",
+    "tests",
+    "title"
+   ],
+   "what": "Split by milestone: keeps the line, flag, parity type/loader half and anchors.toml format (M0/M1), with later checks registered `not-due`; M3 anchor run and share check to N38bp1-01, M5 rehearsal check to BD-411; stale `needs` replaced by owners."
+  },
+  {
+   "bead": "N38b-02",
+   "kinds": [
+    "split",
+    "correct",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "Keeps the script, its step table and steps 1-3; steps 4-5 to N38bp1-01, step 6 to BD-411; export uses the registry form `frob run export ... --out --key --json`; names the three flags."
+  },
+  {
+   "bead": "N38b-03",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "Stale `needs` replaced by N29a-09 (frob.beadlog/1) and BD-095; the `event` field: only gate-record lines close, implement-line sessions are implementers; test added."
+  },
+  {
+   "bead": "N38b-05",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "U13: multi-plant control cells resolved per plant, one control per mutation, `control.nc` a list, KA-seeded controls gain the cell's gates; U22c: immutable `plan_case` keeps the word-only count at 17 (CX-243 supplied), CX-012 supplied by the same_as reflex-untimely entry; join resolves each seed form; tests."
+  },
+  {
+   "bead": "N38b-10",
+   "kinds": [
+    "scope",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Register `due` may hold two parts (CERT-10 M3/M4, CERT-15 M3/M5); M1 end-to-end via N38bp1-02; CERT-13 owner N38bp1-03."
+  },
+  {
+   "bead": "N38b-11",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Names its register rows CERT-05 (with carried CERT-01) and CERT-06."
+  },
+  {
+   "bead": "N38b-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Planted trap and edit sets owned by N26a-04 (indexed by BD-318), not stored by BD-318."
+  },
+  {
+   "bead": "N38b-13",
+   "kinds": [
+    "placement",
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "CERT-10 split: bound arithmetic at M3; audit part at M4 bound to N26b-07's GATE-NEMESIS-07 record with N26b-06's post-score-draw mutant as broken certifier (own duplicate screens withdrawn), run by BD-377; tests."
+  },
+  {
+   "bead": "N38b-14",
+   "kinds": [
+    "split",
+    "placement",
+    "title",
+    "tests"
+   ],
+   "what": "CERT-13 (rare-event bounds, M3 estimators) moved to N38bp1-03; M1 end-to-end via N38bp1-02; named broken-certifier tests."
+  },
+  {
+   "bead": "N38b-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pointers corrected: BD-318 indexes N27b-08; the M5 band binding is run by BD-411."
+  },
+  {
+   "bead": "N38b-17",
+   "kinds": [
+    "deps",
+    "correct",
+    "scope"
+   ],
+   "what": "CERT-19 due M3 (so M1 has the eight rows the acceptance names); CERT-10 audit part M4; script modes M1/M3/M4/M5 with M4 run by BD-377 and M5 by BD-411; M1 part from N38bp1-02; deps N38bp1-02, N38bp1-03."
+  },
+  {
+   "bead": "N38b-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pass refusal (c) is membership in the implementing set, not equality."
+  },
+  {
+   "bead": "N38b-19",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "U29b requests: step 6 resolves through N29b-10's `cite` (FROB-REF-869); registry lock shared with N29bp1-01 (related added); adds `reduced-not-recordable` from N38-REF; stale `needs` replaced; tests."
+  },
+  {
+   "bead": "N38b-20",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "U29b request: a part demoted by N29bp1-01 prints 'not run (evidence unavailable since <date>)' from detail.cause/detail.demoted; stale `needs` replaced by N40-02/N40-04; test."
+  },
+  {
+   "bead": "N38b-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The README plant edits an 'open' cell, BD-002's printed form of not-run."
+  },
+  {
+   "bead": "N38b-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "INV-GAUNT-05 check is membership in the implementing set; co-implementer plant."
+  },
+  {
+   "bead": "N38b-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "GATE-GAUNT-04 measured-by updated for its M1 part (N38b-11, N38bp1-02) and M3 part (N38b-17)."
+  },
+  {
+   "bead": "N38b-24",
+   "kinds": [
+    "placement"
+   ],
+   "what": "Priority 1 for an M1 bead."
+  },
+  {
+   "bead": "N38b-25",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "No second path map (reads N38a-22's trigger map and controls.toml targets); component no longer depends on capstone BD-146 (N24b-01 instead); dep N38b-19 for the reduced-count refusal; stale `needs` replaced by N40-05."
+  },
+  {
+   "bead": "N38b-26",
+   "kinds": [
+    "placement",
+    "e2e-logging"
+   ],
+   "what": "Priority 3 for M5; end-to-end owners named after the reality_lane split (BD-411 runs the M5 step). The dup-07 rule (blocked with OPEN-GROUND-1, then no-claim/no-dataset-admitted) was already present, and BD-397 already states it."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N38bp1-01",
+   "why": "Split of N38b-01/N38b-02: the M3 Reality-lane duties (published anchors run and recorded as Parity, share of guessed card fields, reality_lane.sh steps 4-5) need BD-311 and N30a-03 (M3), which an M1 bead cannot depend on."
+  },
+  {
+   "bead": "N38bp1-02",
+   "why": "Split of N38b-17 by milestone: GATE-GAUNT-04's M1 part and the M1 certifier rows (CERT-01..06, -11, -12) had no end-to-end script before M3; creates certifiers.sh with its M1 mode."
+  },
+  {
+   "bead": "N38bp1-03",
+   "why": "Split of CERT-13 (rare-event bounds) out of N38b-14 (M1): its estimators BD-276/BD-277 land at M3."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-079",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-108",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-110",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-162",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-250",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-310",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-329",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-347",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-348",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-349",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-351",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N14b-18",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N19b-01",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N19b-04",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N19b-27",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N22b-27",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N22b-32",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N22c-04",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-11",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-12",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-18",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-27",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-28",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-29",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-30",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-31",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28a-32",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "N28b-06",
+   "what": "Replace the undefined `frob conformance run <gate>` with the ADR-GAUNT-01 form stated in BD-025: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier from the gate's `tier` field> -- <gate>` (with `--features gauntlet-mutations` when controls run); BD-025's lint `no_conformance_command` now fails any script that keeps the literal command."
+  },
+  {
+   "bead": "BD-397",
+   "what": "`frob-conformance record ground.lane` is not a defined binary (ADR-GAUNT-01): write `docs/delivery/reality-lane.toml` from the lane's own code and enter GATE-GROUND-10 through the recorder example `cargo run -p frob-conformance --example record_gate -- --gate GATE-GROUND-10 --receipt <hash>` (N38b-19)."
+  },
+  {
+   "bead": "N38b-39",
+   "what": "Add deps N38-KA and N38-CX: they now sit at M0 and register KA-845 and CX-394, whose test this bead runs at M0."
+  },
+  {
+   "bead": "N38a-22",
+   "what": "Two trigger maps exist (this bead's `crates/frob-conformance/registry/triggers.toml` and N24b-01's `registries/batteries/triggers.toml`); read N24b-01's table and keep only the selection logic, so there is one map (BD-146 and N38b-25 now name N38a-22 as the one reader)."
+  },
+  {
+   "bead": "N10a-05",
+   "what": "Replace dep BD-146 (M1 conformance capstone) with N38b-05, which owns PO-GAUNT-03's seed join; a component must not depend on the capstone."
+  },
+  {
+   "bead": "N24c-10",
+   "what": "Replace dep BD-146 with N24-KA and N24b-01 (the rows and the `fixtures` battery manifest); a component must not depend on the M1 capstone."
+  },
+  {
+   "bead": "N21-CX",
+   "what": "Replace dep BD-146 with BD-025 (and N38b-05 for seeding): a registry bead must not depend on a conformance capstone."
+  },
+  {
+   "bead": "N39-CX",
+   "what": "Replace dep BD-146 with BD-025 (and N38b-05 for seeding): a registry bead must not depend on a conformance capstone."
+  },
+  {
+   "bead": "N39-KA",
+   "what": "Replace dep BD-146 with BD-025 and N38a-12 (control and known-answer registries): a registry bead must not depend on a conformance capstone."
+  },
+  {
+   "bead": "N16c-41",
+   "what": "Replace dep BD-146 (71-dep M1 capstone) with the mechanism used: N38a-02 (tiers, receipts), N38b-04 (control runner) or N38a-13 (G1 run)."
+  },
+  {
+   "bead": "N20a-44",
+   "what": "Replace dep BD-146 with the mechanism used: N38a-02 (tiers, receipts), N38b-04 (control runner) or N38a-13 (G1 run)."
+  },
+  {
+   "bead": "N25e-09",
+   "what": "Replace dep BD-146 with the mechanism used: N38a-02, N38b-04 or N38a-13; a component must not wait on the M1 capstone."
+  },
+  {
+   "bead": "N25e-12",
+   "what": "Replace dep BD-146 with the mechanism used: N38a-02, N38b-04 or N38a-13; a component must not wait on the M1 capstone."
+  },
+  {
+   "bead": "N26b-17",
+   "what": "Replace dep BD-146 with the mechanism used: N38a-02, N38b-04 or N38a-13; a component must not wait on the M1 capstone."
+  },
+  {
+   "bead": "N32b-24",
+   "what": "Replace dep BD-146 with the mechanism used: N38a-02, N38b-04 or N38a-13 (and N38b-05 for the CX controls)."
+  },
+  {
+   "bead": "N33b-02",
+   "what": "Replace dep BD-146 with the mechanism used (N38a-02 tiers and receipts); the isolation build must not wait on the M1 capstone."
+  },
+  {
+   "bead": "N39a-10",
+   "what": "Replace dep BD-146 with the mechanism used: N38a-02, N38b-04 or N38a-13."
+  },
+  {
+   "bead": "N38b-36",
+   "what": "Replace dep BD-146 with N38b-25 (the schedule whose budgets this experiment measures) and N24b-01 (the batteries)."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "Unchanged: BD-223, N38b-04, N38b-06, N38b-07, N38b-08, N38b-09, N38b-16. INDEX.tsv still lists N38-KA and N38-CX at M1 (staging files now M0) and lacks N38bp1-01..03; regenerate. No N38b-57 request: it reuses N38b-28's cannot-fail rule. Plan note for the lead: GATE-GAUNT-04 lists screening audits among the M3 lanes, but nemesis.audit lands at M4; CERT-10 is split M3/M4. No dependency cycles (graph_check cycles = 0)."
+}

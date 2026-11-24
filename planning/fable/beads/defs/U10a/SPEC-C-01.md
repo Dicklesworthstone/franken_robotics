@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-lie", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-046", "BD-061", "BD-101", "N10a-12", "CARD-T-11", "N10-KA1", "BD-010"]
+related: ["BD-010", "BD-046", "BD-101", "N13-27", "SPEC-C-11"]
 gates: ["GATE-MARROW-01", "GATE-ATEL-02"]
 plan_refs: ["§10 C-01", "§13.1", "§13.7", "§13.8", "§12.3 T-11", "Appendix D.1", "Appendix M KA-037 to KA-039", "Appendix N CX-019"]
 ---
@@ -30,7 +30,7 @@ delivers is the mathematics as a contract, the law tests that fail when an imple
 wrong, and the registry rows that tie the construction to its known answers, theorem card and gates.
 
 Tier: Solid for the kernel generator and the classification; Frontier for lattice-based mobility, which has a
-pilot (N10a-12) and a named fallback, the numerical rank test alone.
+pilot (N13-27, record `PILOT-C-01`) and a named fallback, the numerical rank test alone.
 
 Foundations today (FACT, observed 2026-11-21 at FrankenSim `483d09c682f2`; existence is not admission):
 `fs-mbd` has `JointKind = Fixed | Revolute | Prismatic | Helical` only, with no spherical, universal or planar
@@ -49,7 +49,7 @@ fixtures for the Sarrus and Bennett linkages; the register row of C-01; toleranc
 answers KA-037 to KA-039; the statement of theorem card T-11 as this construction uses it.
 
 Out: the production classifier and joint maps (BD-046); the kinematic functor and referee lowering (BD-061);
-the mobility analysis and its verb (BD-101); the lattice-mobility pilot (N10a-12); stratified state spaces at
+the mobility analysis and its verb (BD-101); the lattice-mobility pilot (N13-27); stratified state spaces at
 singular poses, unilateral contacts and mode changes (construction C-16, another unit).
 
 Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
@@ -200,8 +200,14 @@ analysis passes its known answers). Card: T-11. Determinism class of the referen
 - `s1_bracket_identities`: 10³ random rational triples of twists; antisymmetry and Jacobi hold exactly.
 - `s2_closure_and_class`: the twelve canonical bases and 36 conjugates; expected class per row of the table.
 - `s3_subgroup_composition`: for each closed class, 10³ pairs of rational-angle parameters; the product lies in
-  the image (solved exactly for revolute, prismatic, cylindrical, planar; by exact membership of the logarithm
-  direction for spherical).
+  the image. Exact for the classes whose maps are rational at rational points of the circle: solved for
+  revolute, prismatic, cylindrical, planar; by exact invariants for the others (the three translation classes:
+  rotation part the identity and translation in the subspace; spherical: the product fixes the common point of
+  the axes; Schönflies: rotation axis parallel to w; SE(3): trivially). The helical and translating-screw
+  classes take the angle both through (cos θ, sin θ) and linearly through the pitch term p·θ, so no nonzero
+  sample is rational: they run in `f64` (exp(θ₁·S)·exp(θ₂·S) = exp((θ₁ + θ₂)·S), and membership by the
+  axis-and-pitch invariant) under the single-operation tolerance of the Subgroups law, 64 ulp, and the log
+  names that lane `f64`, not exact.
 - `s4_universal_is_product`: basis {(e_x, 0), (e_y, 0)} → `closed = false`, closure of dimension 3 (spherical).
 - `s5_sarrus`: the fixture → intersection dimension 1; rank of the 6 × 6 screw matrix 5; count 0.
 - `s6_bennett`: the fixture at five rational samples → rank 3 of the 6 × 4 screw matrix each time; lattice
@@ -213,11 +219,21 @@ analysis passes its known answers). Card: T-11. Determinism class of the referen
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c01.sh`. Sources the shared logging helper of STD-E2E. Steps: (1) `cargo test -p frob-lie
---test laws_c01`; (2) the same with `--features controls` once per control identifier, asserting failure of
-the named test; (3) `cargo test -p frob-conformance --test g1 -- KA-037 KA-038 KA-039`; (4) when the verb
-exists, `frob --json analyze mobility --design fixtures/linkages/sarrus.fbot` and the Bennett fixture,
-asserting mobility 1, the method reported (`lattice` or `rank`), and the envelope's evidence block (class
-`Certified` for exact inputs, determinism D0). Logs NDJSON to `target/e2e-logs/spec_c01/<utc>.ndjson` with a
+--test laws_c01`; (2) the same once per registered control, each in its own build with the mutation feature
+the control's record names (`cargo test -p frob-lie --features <feature> --test laws_c01`: `cx-019` for the
+plant of CX-019, the `nc-` feature of each other control below; N10a-01 section 6), asserting failure of the
+test the record names; (3) the known-answer rows by the Gauntlet's cargo form, through STD-E2E's `e2e_tier`:
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-037` and the same for KA-038
+(rows of tier G1), and `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-039` (a G0
+row), each again with `--features gauntlet-mutations` for its control; (4) when the verb exists (BD-101, logged
+`pending` until then), `frob analyze mobility fixtures/linkages/sarrus.fbot --json` and the same for
+`fixtures/linkages/bennett.fbot` (the design is the verb's positional argument, N28a-05; there is no `--design`
+flag), asserting mobility 1 by the rank of the constraint Jacobian at exact rational samples, the
+Grübler–Kutzbach count reported beside it (0 and −2), the field `lattice` as the row defines it (`not-run` on
+the default build; with the feature `frontier-lattice-mobility` from M3, `decided(1)` for Sarrus and
+`undecided(…)` for Bennett), and the envelope's evidence block (class `Certified` for exact inputs,
+determinism D0). Logs NDJSON to
+`target/e2e-logs/spec_c01/<utc>.ndjson` with a
 transcript: `ts`, `script`, `bead`, `step`, `event`, command, exit code, wall time, evidence block, the
 measured mobility and count against their expected values, and on failure the first differing value and the
 fixture path. Final `summary` line with assertions and gates touched.
@@ -228,7 +244,10 @@ fixture path. Final `summary` line with assertions and gates touched.
 - KA-038 Bennett: mobility 1, count −2; exact; G1 · host. Control: the count alone, which returns −2.
 - KA-039 classification; exact; G0 · host. Control (set by this bead): a bracket with the linear part dropped,
   [ξ₁, ξ₂] ↦ (ω₁ × ω₂, 0). The basis {rotation about e_x, translation along e_y} has true bracket (0, e_z) and
-  is not closed; the mutant reports it closed and cylindrical.
+  is not closed (its closure is the planar-gliding algebra with normal e_x, d = 3); the mutant reports it
+  closed, with (d, r, t) = (2, 1, 1) and a translation not parallel to ω, so it either names it cylindrical
+  (if the further test is skipped) or falls in no row of the table. Either outcome differs from `Product` and
+  is caught.
 - CX-019: mobility from the Grübler–Kutzbach count (both linkages).
 - Further controls: bracket arguments exchanged only in the linear part (breaks Jacobi); pitch test omitted
   (helical reported as revolute); lattice forced to answer on Bennett (must be caught by S6's `undecided`).
@@ -250,4 +269,4 @@ fixture path. Final `summary` line with assertions and gates touched.
 ## References
 
 Plan §10 C-01; §13.1, §13.7, §13.8; §12.3 (T-11); Appendix D.1 (bracket, mobility count); Appendix M KA-037 to
-KA-039; Appendix N CX-019. Analysis A-01. Pilot: N10a-12.
+KA-039; Appendix N CX-019. Analysis A-01. Pilot: N13-27.

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "habitat", "frob-scene", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-23"
-deps: ["BD-227", "N19a-31", "N19a-32", "N19a-33", "N19a-34", "N19a-35", "N19a-36", "N19a-37", "N19a-39"]
+deps: ["BD-227", "N14a-32", "N19a-31", "N19a-32", "N19a-33", "N19a-34", "N19a-35", "N19a-36", "N19a-37", "N19a-39"]
 needs: []
-related: ["NEG-29", "N19a-38", "BD-270", "BD-278", "BD-369", "N14a-32", "GB-33"]
+related: []
 gates: []
 plan_refs: ["Appendix G.3", "§19.8", "§19.10", "§19.12", "§28", "OPEN-HAB-1", "OPEN-HAB-4", "FROB-REF-312", "Appendix H.6"]
 ---
@@ -17,7 +17,8 @@ plan_refs: ["Appendix G.3", "§19.8", "§19.10", "§19.12", "§28", "OPEN-HAB-1"
 A hazard is a feature of a place that causes a specific robot failure. Each of the seven interior archetypes
 has a hazard registry, `registries/hazards/<archetype>.toml`, from which the scene generators draw; a row has
 a name, a dimension range with units, a distribution, the mechanism that represents it, the failure it
-provokes and a provenance field. The per-archetype files are authored by the scene unit. This bead is the
+provokes and a provenance field. The seven per-archetype files are entered by the hazard-registry bead
+(BD-227), and each is bound to its generator and tested by its archetype's bead. This bead is the
 consolidated view across all seven: the single table that says what the registries contain at plan time, the
 check that the seven files agree with it, and the rules that apply to the set as a whole.
 
@@ -36,10 +37,16 @@ evaluation batteries are selected, so a battery can be asked which hazards it le
 ## Scope
 
 In: the consolidated table as data (`registries/hazards/INDEX.toml`); the consolidation check against the
-seven files; the counts; the all-`assumed` invariant at plan time; the Frontier-row fallback rule; the
-coverage column that NEG-29 checks. Out: the seven registry files and their draw-and-represent tests (the
-scene unit's seven beads); the verb `scene.hazards`; provenance promotion (N19a-39); the incidence export
-(N19a-38).
+seven files; the counts; the all-`assumed` invariant at plan time, checked over the whole set; the
+Frontier-row fallback rule, checked over the whole set; the coverage column that NEG-29 checks.
+
+Out, with the bead that has it: the seven registry files as data, their row schema and loader, the row
+identifier `<archetype>.<slug>`, the draw, the realism-claim function behind FROB-REF-312 and the verb
+`scene.hazards` (BD-227; this bead's index is a second, cross-checked statement of the same 59 rows, not a
+second registry: generators and tasks never draw from `INDEX.toml`); per archetype, the binding of rows to
+mechanisms, the draw-and-represent tests, the exposure fixtures and the generator's `not-represented` record
+(N19a-31 to N19a-37); provenance promotion, which must update the index in the same change (N19a-39); the
+incidence export and the uncovered-hazard query (N19a-38).
 
 ## Technical approach
 
@@ -104,27 +111,40 @@ defined in NEG-29 (R = a requirement template, S = a shield, X = a refusal code)
 | 54 | Commercial kitchen | Swing door | Two-way spring, closing torque 5–20 N·m | Swing-door fixture | Door returns onto the robot or its load | S:energy, R:pass, R:hold |
 | 55 | Commercial kitchen | Low shelf | 0.15–0.30 m clearance under counters | Geometry | Strike of a tall chassis; lost line of sight | R:clear, X:119 |
 | 56 | Commercial kitchen | Steam | Plume near dishwasher, kettle, fryer | Optical volume | Range dropout, false returns | R:sense, S:stop |
-| 57 | Commercial kitchen | Hot liquid in a pot or tray | Fill 30–80% | Sloshing payload | Spill; destabilizing oscillation at step frequency | R:hold |
+| 57 | Commercial kitchen | Hot liquid in a pot or tray | Fill 30–80% | Sloshing payload [F]; rigid ballast [S] (DESIGN, below) | Spill; destabilizing oscillation at step frequency | R:hold |
 | 58 | Commercial kitchen | Stainless steel | Mirror-like | Optical class `mirror` | Phantom points | R:sense |
 | 59 | Commercial kitchen | Cold-room threshold and strip curtain | 10–40 mm; hanging strips | Overlay; hinged plates [F] | Stall; occluded sensors | R:progress, R:sense |
 
 **Counts (FACT about this table).** 59 hazards in seven archetypes: Home 10, Apartment 5, Office 7, Warehouse
 10, Manufacturing plant 8, Retail store 8, Commercial kitchen 11. Every one `assumed`.
 
-**Frontier rows.** Eight rows name a Frontier mechanism: rug hinged plates (3), chain cord (4), pets (9),
-stretch-wrap hinged plate (29), forklifts as actors (32), prescribed floor motion (39), shoppers (48) and
-strip-curtain hinged plates (59). Five of them have a Solid alternative beside the Frontier one (3, 4, 29,
-32, 59) and three have only the Frontier mechanism (9, 39, 48). Rule: until the
+**Frontier rows.** The plan's table marks eight rows with a Frontier mechanism: rug hinged plates (3), chain
+cord (4), pets (9), stretch-wrap hinged plate (29), forklifts as actors (32), prescribed floor motion (39),
+shoppers (48) and strip-curtain hinged plates (59). Row 57 is a ninth: the table prints its one mechanism, the
+sloshing payload, with no mark, but the slosh model is Frontier in the living-world tiers and first lands at
+M6, with the kill gate KILL-SLOSH whose named fallback is rigid ballast with a spill metric from payload
+acceleration. DESIGN, stated identically in BD-227 (which owns the registry data), N19a-37 and N19a-38: the
+index and the kitchen file enter row 57 with two mechanisms, the sloshing payload (tier F) and rigid ballast
+(tier S), because the kitchen task of the plan's worked artifacts draws the tray's fill from this row at M3
+and a row with only a Frontier mechanism is not drawn. So nine rows name a Frontier mechanism. Six of them
+have a Solid alternative beside the Frontier one (3, 4, 29, 32, 57, 59) and three have only the Frontier
+mechanism (9, 39, 48). Rule: until the
 Frontier mechanism lands, a generator that draws such a hazard uses the Solid alternative beside it (rows 3,
-4, 29, 32, 59), or, where there is none (rows 9, 39, 48), marks the hazard `not represented` in the pack's
-manifest; a battery that needs it reports it uncovered. A hazard is never silently dropped.
+4, 29, 32, 57, 59), or, where there is none (rows 9, 39, 48), does not draw it and records the hazard as
+`not-represented` in the pack (the spelling the generators and the uncovered-hazard query use; BD-227's
+loader flags the same three rows with `solid_alternative = false`); a battery that needs it reports it
+uncovered. A hazard is never silently dropped.
 
 **Consolidation check (`hazard_index_matches_registries`).** `registries/hazards/INDEX.toml` holds the table
-(number, archetype, name, dimension text, mechanism list with tier marks, failure text, provenance, cover
-codes). The check: the multiset of (archetype, name) in the seven files equals the index's; each file's row
-count equals its archetype's count; dimension ranges, units, mechanisms and failures agree field by field;
-provenance in every file is `assumed` unless the source register holds the cited source, in which case the
-index is updated by the same change.
+(number, archetype, the row identifier `<archetype>.<slug>` of BD-227, whose Slug column is the list of record
+for the 59 slugs and is not derived a second time here, name, dimension text, mechanism list
+with tier marks, failure text, provenance, cover codes). The archetype part of an identifier is the registry
+file's name: `home`, `apartment`, `office`, `warehouse`, `manufacturing-plant`, `retail-store`,
+`commercial-kitchen`. The check: the multiset of (archetype, name) in the seven files equals the index's, and
+so does the set of row identifiers; each file's row count equals its archetype's count; dimension ranges,
+units, mechanisms and failures agree field by field; provenance (one value per row, as in BD-227's schema) in
+every file is `assumed` unless the source register holds the cited source, in which case the index is updated
+by the same change.
 
 ## Acceptance criteria
 
@@ -133,8 +153,8 @@ index is updated by the same change.
       missing row, a changed range, a changed unit, a provenance not backed by the source register).
 - [ ] At plan time `assumed` count is 59 of 59; a pack built from any archetype reports a non-zero
       `dimensions_assumed`, and a realism claim on it is refused with FROB-REF-312.
-- [ ] A Frontier-only hazard drawn before its mechanism exists appears as `not represented` in the pack and
-      as uncovered in the battery query.
+- [ ] A Frontier-only hazard requested before its mechanism exists appears as `not-represented` in the pack
+      and as uncovered in the battery query.
 
 ## Test plan
 
@@ -143,14 +163,18 @@ index is updated by the same change.
 - `hazard_index_has_59_rows`, `hazard_index_counts_per_archetype`.
 - `hazard_index_matches_registries`: with four planted mismatches.
 - `hazard_all_assumed_at_plan_time`; `hazard_provenance_promotion_requires_source_row`.
-- `hazard_frontier_rows_have_solid_alternative_or_not_represented`: rows 3, 4, 29, 32, 59 against 9, 39, 48.
+- `hazard_frontier_rows_have_solid_alternative_or_not_represented`: rows 3, 4, 29, 32, 57, 59 against 9, 39,
+  48; nine rows in all carry a tier-F mechanism, in the index and in the seven files alike.
+- `hazard_index_identifiers_match`: the 59 row identifiers of the index equal those derived from the seven
+  file names and slugs (`home.threshold`, `commercial-kitchen.wet-floor`, …); a file named `kitchen.toml` is
+  reported as an unknown registry.
 - `hazard_dimension_ranges_parse_with_units`: every range has lower ≤ upper and a unit of the right
   dimension (length, torque, speed, viscosity, slope as a ratio, frequency).
 
 ### End-to-end script and logging
 
-`scripts/e2e/scene_hazards.sh` (owned by the scene unit) runs `frob scene hazards --archetype <a> --json` for
-the seven archetypes; this bead adds one step to it: the concatenated output is compared with `INDEX.toml`
+`scripts/e2e/scene_hazards.sh` (N14a-32) runs `frob scene hazards <archetype> --json` (the verb's form in
+BD-227: the archetype is positional) for the seven archetypes; this bead adds one step to it: the concatenated output is compared with `INDEX.toml`
 row by row. Log lines carry the archetype, the row count, the `assumed` count, and on a mismatch the first
 differing field.
 

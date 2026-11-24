@@ -1,0 +1,420 @@
+{
+ "round": 1,
+ "slice": "U44-1",
+ "reviewed": 43,
+ "changed": [
+  {
+   "bead": "N44-01",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Adds row R11 (E1 for gate:GATE-SPARK-07, WP-35, needed at M0; asked by N21c-35 and U21c) and a reservation table R12 to R18 for the needs the drafted beads state beyond the plan's table: R12 fleet gate (BD-370, WP-46; E1 with runs of 13.2 or 16.3 min, or E2; the fleet was previously called R11), R13 inheritance pilot N23b-20 (about 70 GPU-hours, above every class: E2 amended), R14 N23b-21 and R15 N23b-22 (E1), R16 the six BD-324 pilots (E2, one campaign scope per algorithm), R17 N23b-36 and R18 N23b-39 (WP-33); requests of U23b. Each reserved row has its not-approved branch from its bead and is filed by that bead; new rows take R19 on. Procedure: the M0 total shown in three parts (eleven rows, the reserved estimates, the one request no class covers). Acceptance, readers and N44-04's role updated; new unit tests reserved_rows_match_reservation and identifiers_unique_and_ordered; two new planted failures; related lists the reserved-row beads and epics"
+  },
+  {
+   "bead": "N44-02",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "correct",
+    "deps",
+    "complete"
+   ],
+   "what": "Row table extended to R11 to R18 with the admitting path (verbs or the script guard N34-15 for pilots launched outside the verbs; dep N34-15 added, and N44-04 for the envelope fixture); step 2 now asserts FROB-REF-761 and fails on 704 (the N36-20 division) instead of accepting either; new step 7 asserts 704 only at dispatch for an approval that expired while queued, pending until BD-296's scheduler exists; guard steps G1 to G4 (refusal before the probe starts, fallback admitted, scoped approval, class below the ask); logs name row, path and reservation source; new unit tests row_table_matches_register, reserved_row_scratch_from_reservation, scratch_dir_outside_repo; acceptance names R11 and the guard rows at M2; the 'accepts either code' consideration replaced"
+  },
+  {
+   "bead": "N44-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The implicit edges between parts of one package were stated in step 8 but must exist before step 6; moved into step 5 with witness `implicit`, and step 8 says they never reach the package view; new unit test implicit_edges_order_parts"
+  },
+  {
+   "bead": "N44-04",
+   "kinds": [
+    "tests",
+    "correct",
+    "complete"
+   ],
+   "what": "Check 11 rewritten: R1 to R10 name the fourteen packages, R11 names WP-35, a filed reserved row names its reservation's package, every package any row names cites the row id in its epic, and every cited id exists; the expected set is derived from the register plus a new envelope fixture (work-packages.envelope.tsv), and the register is read line by line as the guard N34-15 reads it. Check 11 had no planted defect: four added (sixteen in all, acceptance updated); new unit test envelope_fixture_known_answer"
+  },
+  {
+   "bead": "N44-05",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Step 1 and the evidence block now record the digests of registries/gates.toml, registries/compute_envelope.toml (read by check 11) and the fixtures, so a changed register is visible in the log"
+  },
+  {
+   "bead": "WP-01",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N35x-01, N35x-02 added; N34-13 and NF-01 dropped (parents moved); four titles updated; count 93 (M0 90, M1 3)"
+  },
+  {
+   "bead": "WP-02",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: two titles updated (N33a-29 among them, request of U33a)"
+  },
+  {
+   "bead": "WP-03",
+   "kinds": [
+    "complete",
+    "self-contained",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: one title updated. Added the Upstream-work paragraph for FD-FSYM-03 (frankensym permutation groups: interim is frob-algebra's small-group code, switch-over re-runs GATE-MARROW-02, no milestone waits); the Frontier paragraph now names pilot C-01 (N13-27) and N13-29"
+  },
+  {
+   "bead": "WP-04",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N21c-27 added"
+  },
+  {
+   "bead": "WP-05",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N12x-01 added, N10a-21 dropped; INT-FSYM-02 is stated as first recorded here at M0 (N33a-32) and recorded again at its own pin by BD-105 in WP-11 (M1), replacing a claim that it belonged only here"
+  },
+  {
+   "bead": "WP-06",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated from the staging parents: N32ax-03 added; the Upstream-work paragraph states the conditional upstream item NF-13 with its interim posture"
+  },
+  {
+   "bead": "WP-07",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N14a-11 and N41p1-01 added (49 M1). The Frontier paragraph no longer says the package is simply Solid: construction C-12 is Frontier, kept thin, its two specification beads (SPEC-C-12, N10a-11) are labelled so, the pilot is N10a-19, and the named fallback (whole-model recompilation) is stated"
+  },
+  {
+   "bead": "WP-08",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "M1 scope now includes the reference robots under assets/robots/ (NEG-15 and the ROBOT- beads); out-of-scope names where the others live: BD-067 (WP-14), Cassie and iiwa 7 (WP-38), SDF and OpenUSD importers (WP-33)"
+  },
+  {
+   "bead": "WP-09",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N15ax-03 added"
+  },
+  {
+   "bead": "WP-10",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N33ap1-01 added (request of U33a). The Frontier paragraph said 'None'; it now names SPEC-C-36 (Frontier variational lane; only the free-body step is used here, as a Solid oracle for GATE-KIN-01) and places its pilot N16a-21 and the articulated integrator in later packages"
+  },
+  {
+   "bead": "WP-11",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N10ax-01 added, N10a-12 dropped. The Frontier paragraph lists the three pilots parented here (N10a-15, -16, -18), C-01 in WP-03 (N13-27) and the M4 mechanism N10ax-01 after the C-11 pilot; the INT-FSYM-02 consideration names N33a-32 and BD-105"
+  },
+  {
+   "bead": "WP-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The Frontier paragraph says why SPEC-C-13 carries both tiers (geometric PD and the invariant filter Solid, synthesis across morphologies Frontier) and names the pilot bead N10a-20"
+  },
+  {
+   "bead": "WP-13",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N24ax-01, N29ax-01, N29bx-01 added"
+  },
+  {
+   "bead": "WP-14",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: NJLx-02 added, six titles updated (N38b-29, N41-33 among them). Replaced the stale 'one conformance bead lands at each of M2..M5' with the M0 first beads and the M2 to M8 capstones BD-223, BD-318, BD-377, BD-411 and their components"
+  },
+  {
+   "bead": "WP-15",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N16ax-01 added, N21a-15 dropped, one title updated"
+  },
+  {
+   "bead": "WP-17",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N19ax-03, N19cp1-01, N34p1-01 added; N18a-41 (superseded by N19a-30, which owns scene_gen_terrain.sh) and N33a-30 (moved to WP-39) dropped; requests of U18a, U19a, U33a"
+  },
+  {
+   "bead": "WP-18",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N21ap1-01 added"
+  },
+  {
+   "bead": "WP-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The Frontier paragraph said every mechanism is Solid; the plan's tier register makes the Metal rollout tier Frontier under KILL-METAL (§21.9) and BD-174, N21b-05..08 are labelled frontier. It now names them, requires pilot N21b-04 before any starts, and says what stays on the fallback branch; label `frontier` added"
+  },
+  {
+   "bead": "WP-21",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Envelope bullet names request R2 of registries/compute_envelope.toml (shared with WP-48) and states that the one-card fallback is admitted under E0"
+  },
+  {
+   "bead": "WP-22",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N16bp1-01 (request of U16b via U44-2), N29ap1-01, N29ap1-02 added; superseded N16b-01 dropped; three titles updated"
+  },
+  {
+   "bead": "WP-23",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N19ax-04 added, three titles updated. The Frontier paragraph now names the one Frontier mechanism here, the feasibility tags of BD-234 with GATE-HAB-02, and its branch under KILL-FCLEAR; label `frontier` added"
+  },
+  {
+   "bead": "WP-24",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N23ap1-01, N24c-16, N24cp1-01, N24cp1-02 added; N19c-12 dropped"
+  },
+  {
+   "bead": "WP-26",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N32ax-02, N32bx-01, N32bx-02, NJLx-51 added (M3 41, M4 2, M5 1). The Frontier paragraph said 'None'; it now names the MCP Tasks adapter (N32a-30) behind pilot N32a-28 and KILL-MCPTASKS (N32a-29), and slot refill N21b-21 under KILL-SLOT; the campaign-class bullet states the 761/704 division of N36-20 (761 at estimation and submission, 704 only at dispatch); the engine back end N32ax-02 is stated as the KILL-TENFOLD-TIE branch; label `frontier` added"
+  },
+  {
+   "bead": "WP-27",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N22bx-02 added"
+  },
+  {
+   "bead": "WP-28",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N28bx-01, N32ap1-01 added. Envelope bullet cites request row R8 (shared with WP-62) and says that GATE-ATEL-03 run on the fallback is reported with its smaller brief count, not as the registered-size result; the KILL-SOLVE fallback 'The prompts' now names the three MCP workflow prompts and the decision's two clauses (N32ap1-01 paper ceiling, the GATE-TETHER-13 arm)"
+  },
+  {
+   "bead": "WP-29",
+   "kinds": [
+    "risks",
+    "complete"
+   ],
+   "what": "Envelope bullet: no plan row, but the three-arm pilot N23b-22 (about 10 GPU-hours, M3) has reserved row R15 (E1 for gate:KILL-EQUIV), filed by the pilot before its first run; the not-approved branch (pilot not run, BD-326 and N23a-31 not funded, KILL-EQUIV records its fallback) is stated"
+  },
+  {
+   "bead": "WP-30",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: N15ax-02, N18ax-01 added"
+  },
+  {
+   "bead": "WP-31",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: one title updated"
+  },
+  {
+   "bead": "WP-32",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated from the staging parents: N25c-19 dropped, one title updated. The Frontier paragraph names the pilot beads (N33c-25 schema half of INT-FDGR-01 at M3, N19c-01 for KILL-INGEST, N19a-40 for KILL-DRESSING) and the actor marks N19a-40 records"
+  },
+  {
+   "bead": "WP-33",
+   "kinds": [
+    "complete",
+    "risks"
+   ],
+   "what": "TOC regenerated from the staging parents: N14bp1-02, N14bp1-03, N16bx-01, N16bx-02 added (requests of U14b), two titles updated. The item list adds variant archetypes and the aerial-terrestrial variant on KILL-SINEW-ROTOR's admit branch, the hydraulic child epic, and run-time closures through a grasped payload; the pilot paragraph names each pilot bead; the Envelope bullet reserves R17 (N23b-36, gate:KILL-SHORTGRAD) and R18 (N23b-39, gate:GATE-CORTEX-22) with their not-approved branches"
+  },
+  {
+   "bead": "WP-34",
+   "kinds": [
+    "complete",
+    "correct",
+    "risks"
+   ],
+   "what": "TOC regenerated from the staging parents: N39-REF added. Envelope bullet cites R1 (shared with WP-47), says incumbent arms are admitted by their declared demand, that R1's ruling is part of the M0 exit, and adds an OPEN (owner, with OPEN-SPARK-2) on whether GATE-TENFOLD-01 with two-card rows not run lets M0 exit, fail-closed default stated"
+  },
+  {
+   "bead": "WP-35",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N21-REF added. Envelope bullet: the GATE-SPARK-07 request is row R11 (E1 for gate:GATE-SPARK-07, N21c-03, N21c-06), and the not-approved branch (two one-device jobs merged, peer block `untested`, a complete answer) is stated instead of 'no request'"
+  },
+  {
+   "bead": "WP-36",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging parents: one title updated"
+  },
+  {
+   "bead": "WP-37",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: NFx-01 added; N00-06 and N00-07 dropped; three titles updated. The milestone list gains the M0 items it omitted (first file probes of INT-FSIM-08..10 by N33b-10, FDEF-01..05, GATE-WS-06 and -09 carried by N33c-40 and N33c-48, the upstream register) and an M1 line (the upstream fixes with switch-over rules; KILL-FSIM fallbacks N33b-06 and the child epic N33b-07, only if adopted). Out of scope no longer says INT-FSIM-08..10 are measured only elsewhere"
+  },
+  {
+   "bead": "WP-38",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated from the staging parents: N14ax-01, N14ax-02, N14bp1-01 (request of U14b), N14bx-01, N14bx-03, N28ap1-01, N28ax-01, N34x-01 added; N14a-11 and N28a-12 dropped. The milestone list now covers the zoo files and goldens, template aliases, Γ_mech/Γ_obs, module capability tables and the composed screen (GATE-SKEL-09), member sizing (GATE-FOUNDRY-15), the travel block, OPEN-SKEL-3, the tri_wheel_cluster admission and the reference robots Cassie and iiwa 7; the Frontier paragraph names each pilot bead and the KILL-AUGUR-REGION branch of N28ax-01"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "WP-44",
+   "what": "Envelope bullet: cite row R3 of registries/compute_envelope.toml (N44-01); N44-04 check 11 now fails an epic that does not cite its row id"
+  },
+  {
+   "bead": "WP-46",
+   "what": "Envelope bullet says no request is registered; the fleet gate (BD-370, GATE-SPARK-13) has reserved row R12 (E1 with runs of at most 13.2 or 16.3 minutes, or E2; if not approved the gate is not run, KILL-FLEET stays at its first reading, machines scheduled by hand). Cite R12"
+  },
+  {
+   "bead": "WP-47",
+   "what": "Envelope bullet: cite row R1 (shared with WP-34), as WP-34 now does"
+  },
+  {
+   "bead": "WP-48",
+   "what": "Envelope bullet: cite row R2 (shared with WP-21)"
+  },
+  {
+   "bead": "WP-53",
+   "what": "Envelope bullet: cite row R4"
+  },
+  {
+   "bead": "WP-55",
+   "what": "Envelope bullet: cite row R5"
+  },
+  {
+   "bead": "WP-60",
+   "what": "Envelope bullet: cite row R6"
+  },
+  {
+   "bead": "WP-61",
+   "what": "Envelope bullet: cite R7 (pretraining) and the reserved rows of its pilots: R13 inheritance N23b-20 (about 70 GPU-hours, needs E2 amended), R14 distillation N23b-21 (E1, gate:KILL-DISTILL), R16 the six BD-324 pilots (E2, one campaign scope per algorithm), each with its not-approved branch"
+  },
+  {
+   "bead": "WP-62",
+   "what": "Envelope bullet: cite row R8 (shared with WP-28)"
+  },
+  {
+   "bead": "WP-76",
+   "what": "Envelope bullet: cite row R9"
+  },
+  {
+   "bead": "WP-77",
+   "what": "Envelope bullet: cite row R9"
+  },
+  {
+   "bead": "WP-79",
+   "what": "Envelope bullet: cite row R10"
+  },
+  {
+   "bead": "BD-370",
+   "what": "Name the envelope row it files: R12 (reserved by N44-01), with admits gate:GATE-SPARK-13, E1 at the run length of envelope_run_length or E2, and its not-approved branch"
+  },
+  {
+   "bead": "N23b-20",
+   "what": "Name the reserved row R13 for its request (E2 amended by the owner to the pilot's ceiling, about 70 device-hours)"
+  },
+  {
+   "bead": "N23b-21",
+   "what": "Name the reserved row R14 (E1, gate:KILL-DISTILL)"
+  },
+  {
+   "bead": "N23b-22",
+   "what": "Name the reserved row R15 (E1, gate:KILL-EQUIV)"
+  },
+  {
+   "bead": "BD-324",
+   "what": "Name the reserved row R16 and its six scopes (E2, one campaign: scope per algorithm, about 10 device-hours each; E1 needs a gate: scope per N36-20), and state the not-approved branch: each pilot undetermined, the algorithm not built, KILL-ALTALGO leaves PPO"
+  },
+  {
+   "bead": "N23b-36",
+   "what": "Name the reserved row R17 (class from the protocol's stated budget, gate:KILL-SHORTGRAD for E1)"
+  },
+  {
+   "bead": "N23b-39",
+   "what": "Name the reserved row R18 (gate:GATE-CORTEX-22)"
+  },
+  {
+   "bead": "N21c-03",
+   "what": "Cite row R11 of the envelope register as the approval for gate:GATE-SPARK-07 (written by N44-01 at M0)"
+  },
+  {
+   "bead": "N21c-06",
+   "what": "Cite row R11 in the compute-envelope paragraph"
+  },
+  {
+   "bead": "N21c-35",
+   "what": "Packet text: GATE-SPARK-07 is now row R11, written by N44-01; the fleet gate is reserved row R12 (it was 'R11'); five further reserved rows R13 to R18 (Cortex pilots and GATE-CORTEX-22) are in the M0 total"
+  },
+  {
+   "bead": "BD-296",
+   "what": "Align with N36-20's division: the size-class table and acceptance say a campaign-class request is refused with FROB-REF-704 at request time, but admit_run refuses it with FROB-REF-761 at estimation and submission; 704 should fire only at dispatch, for a queued campaign-class job whose approval expired or was withdrawn while it waited"
+  },
+  {
+   "bead": "N36-20",
+   "what": "State how pilots launched outside the verbs on incumbent stacks (N23b-20, -21, -22, -36, BD-324; envelope rows R13 to R17) are charged to the device-hour meter: N34-15 says the guard has no meter and a lane above E0 starts its runs through frob, but only the conformance runner's admit hook for incumbent arms is specified"
+  }
+ ],
+ "unchanged": 3,
+ "notes": "All 43 beads read in full against §44, §44.1 to §44.3 and the brief. Thirty epic TOCs were stale against the staging parents and were regenerated (relayed requests of U14b, U16b, U18a, U19a, U33a included). Epic edits fix Frontier paragraphs that called packages wholly Solid while children are labelled frontier (WP-07, 10, 12, 19, 23, 26; label `frontier` added to WP-19, 23, 26), milestone lists that omitted children (WP-37, 38, 33), and envelope bullets now cite register row ids. N44-03 and N44-04 numbers re-verified against the plan (139 to 125 edges; 46 names, 157 pairs; counts 10,15,18,14,8,5,4,2,3). Not a bead, so not edited: defs/U44/coverage.md items 12 and 13 are stale (761/704 division is settled by N36-20; registries/envelopes.toml was replaced by compute_envelope.toml). Slice looks settled once the U44-2 epics cite their row ids. Process note: the repository helper tools/graph_check.py (read-only, not written in this session) was run three times to confirm the new deps of N44-02 create no cycle; it reported none."
+}

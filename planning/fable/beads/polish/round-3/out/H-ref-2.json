@@ -1,0 +1,292 @@
+{
+ "round": 3,
+ "slice": "H-ref-2",
+ "reviewed": 12,
+ "changed": [
+  {
+   "bead": "N27-REF",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Applied the S64 request: 584 gains BD-279's admission site (`not_equivalent_refused_584_lane_f64`, under --lane f64 or auto without the lane) and `observed.lane` = not-requested | not-built (N27b-07's wording); 583 gains BD-279 (`null_mismatch_handle_refused_583`, fork-handle admission); 582 now states its three routes (--reuse on run.fork and on autopsy.intervene, a checkpoint under another ModelId, --diagnostic-force on a structural/geometry edit) with raisers BD-205 `reuse_graft_refused_582`, BD-279, N27a-15 `forced_fork_wheel_radius_refused_582`; the 553 neighbour row now names N27bp2-01 (both directions) and BD-280 (pooled mixed-type read). Beyond the request: N27b-14 (autopsy.repair) added as raiser of 583, 584, 586; 880 row states the citation guard's three call sites and names its raising verbs (the four report verbs); neighbour rows 362 and 866 name their raisers (N27b-01, N27b-27); 840 and 761 added to the neighbour table (every Autopsy row lists 840)."
+  },
+  {
+   "bead": "N28-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the S42 request in corrected form: 872 drops eval.qualify, evidence.trace, foundry.export and result.revalidate's '(M4)' (N28c-12 wires all marked parameters at M3) and says why; opt.start added under 543 (BD-341); opt.start KEPT under 545 (the request's removal rejected) because BD-341/N28b-07 now raise it for --method mf-bo; job.cancel added under 546. Beyond the request, every verbs column checked against the VERBS rows and mechanism beads: 545 gains eval.rank-agreement (BD-265, tier pairs, first due M3) and the tr-bo repair; 546 drops eval.rank-agreement (no raising site), gains nemesis.audit (N26b-05) and the cancel-short-of-campaign trigger; 553 gains Autopsy's two forms (autopsy.intervene N27bp2-01, autopsy.attribute BD-280) with their ranked repairs; 556 gains task.check --coupling (N24c-37); 557 states that analyze.rank-robustness, fidelity.modelform and opt.cascade raise neither 557 nor 830; 870 first-due corrected (M1 result.revalidate, M3 mission.revalidate, M4 consumers of BD-347); 871 column made derived from the core records' `governed` lists, with the not-a-refusal-on-a-normal-call rule; acceptance and `verbs_lists_agree` updated for the two derived columns."
+  },
+  {
+   "bead": "N29-REF",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "End-to-end commands now use only options the verb rows define: 894 used a non-existent `frob sim replay --as continuation`; now `--from-snapshot <hash> --tier batch-cpu --precision f64` without and then with `--comparison` (BD-204, N29a-18); 813 now `frob store collect --class <c> --force --key <k>`; 811 and 894 carry `--key`; 888 uses `telemetry query --aggregate sum`; 869 names `report run --cite`."
+  },
+  {
+   "bead": "N30-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "883 row now enumerates its raising verbs (BD-387's read paths artifact.read, run.export, telemetry.query) and records the second raising site merged into 883 by N28cx-01 (predict.register, pointer `prediction`, retry never for that target) and the interim form of `prediction-after-outcome` (detail registration-after-outcome), first due M4; the reality guard is named (BD-139, M1) with its call sites and check order; new acceptance line and unit test `sites_of_883_by_pointer`; per-verb list extended outside the ground cluster."
+  },
+  {
+   "bead": "N31-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the request: foundry.size, foundry.optimize and foundry.check gain 113 under --strict-data (N31a-22, N31b-27); 163's trigger excludes `assumed` under --strict-data and adds --require fatigue; 818 adds --priced and the strict-data `assumed` catalogue (N31a-39). Beyond it: foundry.check gains interim 890 (firmware-receipt-mismatch), foundry.export gains `firmware-controller-not-exportable` under --with-firmware; the uncoded table becomes eleven rows with the new N31a-44 row (exit 5, held behind a named constant, to be filed with N31b-45/N35x-02); interim codes compare like any code; new unit test `strict_data_is_113_not_163`."
+  },
+  {
+   "bead": "N32-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied both requests: 726 has three reasons (`island-in-training`, purpose checked before build so it answers on every build; `tier-not-eligible`; `card-provenance` from N15b-18, M6) with per-reason fields, repairs and raisers; the check order is stated. Beyond: the five unnumbered codes had been entered as rows, but 836, 837 and 838 are in 8xx, whose four free numbers N35x-01 holds (and N35x-01 says 838 stays an interim constant, not a row); now 726 and 990 become rows once assigned, and 836/837/838 are `held` requests raised under interim constants, listed in the interim list (status table with slugs, constants, citing beads); acceptance, row counts (20 rows + 3 interim), the e2e threshold and a new test `held_requests_are_interim_only` follow; 838 is exempt from the verb-list check (raised by MCP resource handlers); dep N35x-02 added (no cycle)."
+  },
+  {
+   "bead": "N33-REF",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Applied the S17 request in corrected form: the envelope has only three retry classes, so 792 owner-limit stays `after-change` on the wire, and the row now records N33a-13's internal `NumericalOnly` class (another numerical plan with the same physical inputs) and its presentation; new test `owner_limit_is_numerical_only_presented_after_change`. Beyond: e2e 791 steps used `--referee-worker`, which is no sim.run option, so they use `FROB_FSIM_WORKER` (N33c-13's resolution order); run steps carry `--key`; the 890 step follows N33c-31 (eval.run under two receipts, then a pooled scorecard, logged not-run until the two-run form exists); 890 raised-by adds eval.scorecard; the verb-list acceptance names which rows must list 791/792/890 (none does today); the `conformance.probe` verb conflicts with the no-`frob conformance` convention and is flagged."
+  },
+  {
+   "bead": "N36-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The 866 matrix claimed every raising site; 14 sites in other chapters (Kinesis, Spark, Augur, Autopsy, Suite, numerics, program funding N00-09) raise 866 too, and only BD-354 and N25c-06 route through N36-05's `admit_experiment`, the code's one home. Added a table of those sites with milestones, checked as each lands and reported `pending` otherwise (not a closing condition); `raising_sites_exist` covers it. The ten-fold ceiling reasons are stated to be harness reasons mapped to 866 in N39-REF, not raising sites. 761 matrix names N36-20's `admit_run` as its one raise point. e2e: `--test g1` is not a target (now `g1_known_answers` with FROB_TEST_SEED), run steps carry `--key` and a tier, the 602 case is concrete (200,000 humanoid worlds). The ordering rejection is stated as N35-33's first-round request, held under N35x-01, interim 862 behind a named constant."
+  },
+  {
+   "bead": "N37-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "The D4-arm neighbour row said 561 for study.plan and eval.compare; N35x-02's pair table and N28-REF's layer rule give 542 at eval.compare (BD-262 raises it), 533 at Arena study admission, 561 at the numerics licence check (N35-07): row, 825 trigger, considerations and a new test `d4_arm_code_by_layer` follow. 840 (8xx, exit 5) fails N35-33's exit rule as written: recorded, `exit_family_rule_safe` reports it pending, exception list requested. Raisers added (N37-18 for 816, N37-19 for 731, N37-31 for 734, N24b-16 for 825). The undefined `frob-conformance refusals report` replaced by an own e2e script `safe_refusal_registry.sh` using `frob schema --refusals/--verbs/--path-args/--exports`. Reach rule now counts the producing script's milestone (828/832 at M2). Deps NJL-01 (whose lists the tests read) and STD-E2E added."
+  },
+  {
+   "bead": "N38-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S11: `defect-or-expect-empty` registered with the control-loader reasons (BD-025 rule 4, exit 101). Applied S13 in corrected form: six of its eight reasons were already rows; added `origin-label-mismatch` and `origin-not-admissible` (N38b-07, recorder step-7 hook, exit 3, nothing written); the request's 'exit 3' is kept only for the five recorder reasons, since the allocation validator's three run as a Cargo test (exit 101 by the registry's rule). Counts now sixteen. Beyond: the crate-wide scan would have failed on unregistered reasons of the gate-register write validator (N40-01: seven ids) and the pilot funding check (N38a-09: eleven ids), now a table with tools and exits; new tests `loader_reasons_cover_bd025_plants`, `recorder_reasons_exit_3`, `gate_validator_and_pilot_reasons_registered`; an own e2e script `gauntlet_reasons.sh` (cargo test target, planted missing record, log scan); dep STD-E2E."
+  },
+  {
+   "bead": "N39-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S39: four freeze-check reasons added (`freeze-home-task-unexplained`, `freeze-selection-not-minimum` from N39a-20; `armc-engine-differs`, `armc-forbidden-use` from N39a-21), exit 3, with a paragraph that the seven arm B/C checks are raised through N39a-18's freeze-check hook (freeze write exits 3, no step-4 entry); `freeze-rival-underbuilt` widened to a sustained objection with no recorded response. Applied S90: `tenfold.protocol-breach` effect now voids by extent (spanned runs with the freeze open, touched cells, the changed arm's later cells; the tournament only for an aborted freeze, an unattributable run or an unbounded leak), per N39b-13. New tests `freeze_hook_reasons_registered`, `protocol_breach_effect_by_extent`; scan found no other unregistered `tenfold.` literal."
+  },
+  {
+   "bead": "N41-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S14: `release-visibility` registered (release checker N41-27 running N41-05's visibility guard before the nine rules: a public remote under a private decision, a differing LICENSE, or `unverified` at a release; repairs align with ADR-PROG-01 or run with network); new test `release_visibility_registered`. Beyond: the three provisional names now carry their ledger status (randomize-no-interval a first-round request of N35-33 proposed 571; prediction-changed-after-freeze merged into 883, pointer `prediction`; prediction-after-outcome held, interim 883 detail registration-after-outcome), and the acceptance check fails when a merged or assigned name is still emitted; own e2e script `delivery_reasons.sh`; dep STD-E2E; related filled."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-report",
+   "what": "report.run, report.design, report.mission and report.campaign list FROB-REF-880 (the citation guard `offer(claim, role)` raises it on --cite; N27-REF)"
+  },
+  {
+   "bead": "BD-205",
+   "what": "order its FROB-REF-580 repairs as N27-REF's row ranks them"
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "layer rule (N28-REF, N24-REF, N35x-02 pair table): study.plan drops 542 and 555; study.submit replaces 542 with 533; correct the 'two codes' note; study.submit adds 726 (M3, N32-REF)"
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare drops 533 and adds 555 (pairing::admit answers 553/555/542); eval.promote adds 871, 872 and 548; eval.run adds 726 (M3); eval.compare, eval.promote and eval.scorecard add 890 from M1 (N33-REF, N33c-31); eval.scorecard gains the form that names runs under two receipts (or N33c-31 names the pooled verb)"
+  },
+  {
+   "bead": "BD-263",
+   "what": "raise FROB-REF-548 on promotion pooling across identities (BD-350 IT-5), as N28-REF's row now states"
+  },
+  {
+   "bead": "VERBS-job",
+   "what": "job.cancel lists FROB-REF-546 (a cancellation short of the committed campaign; N28-REF)"
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "opt.start lists FROB-REF-545 (BD-341/N28b-07 raise it for --method mf-bo) and 543"
+  },
+  {
+   "bead": "VERBS-experiment",
+   "what": "experiment.suggest drops FROB-REF-872 (no marked parameter) and lists the interim 883 `registration-after-outcome`"
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.rank-robustness drops FROB-REF-557 (no raising site; N28-REF)"
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "fidelity.modelform drops 557 and 830; fidelity.shadow lists 791 and 792 (referee form; N33-REF)"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.revalidate lists FROB-REF-870 (M3; N28-REF)"
+  },
+  {
+   "bead": "BD-347",
+   "what": "name the consumer verbs and their tests that raise FROB-REF-870 from M4"
+  },
+  {
+   "bead": "BD-343",
+   "what": "route design.bisect's probes through pairing::admit and have VERBS-design list 542 (and 543), or N28-REF drops design.bisect from those rows"
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.cover lists FROB-REF-871 (core record DC-10 governs it)"
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "what": "telemetry.query adds the `aggregate` option and 898, drops 896 or marks it cause-only, and lists 883 (BD-387 read guard)"
+  },
+  {
+   "bead": "VERBS-ground",
+   "what": "ground.ingest lists FROB-REF-883"
+  },
+  {
+   "bead": "VERBS-artifact",
+   "what": "artifact.read lists FROB-REF-883 (BD-387 read path)"
+  },
+  {
+   "bead": "VERBS-run",
+   "what": "run.export lists FROB-REF-883 (BD-387 read path)"
+  },
+  {
+   "bead": "N31b-45",
+   "what": "file the request `firmware-controller-not-exportable` (N31a-44, exit 5) in the allocation ledger"
+  },
+  {
+   "bead": "N35x-02",
+   "what": "take into its next round N31a-44's `firmware-controller-not-exportable` and N32-REF's `mechanism-not-admitted` (proposed 726), `packet-over-byte-cap` (836), `packet-frames-not-retained` (837), `internal-fault` (990); the two 8xx ones are held under N35x-01 with their interim constants"
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run lists FROB-REF-726 (M3; card-provenance from M6), and sim.run and sim.replay list 791 and 792 for --tier referee (N33-REF)"
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.start lists FROB-REF-726 (M3, island-in-training)"
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "task.fixture lists FROB-REF-726 card-provenance (M6, N15b-18)"
+  },
+  {
+   "bead": "N33c-32",
+   "what": "rename the test-support verb `conformance.probe` out of the `conformance` namespace (convention: no `frob conformance` verb) and give it a VERBS row; N33-REF's 790 step uses it"
+  },
+  {
+   "bead": "N33c-31",
+   "what": "its e2e asks `eval.scorecard` for one scorecard over runs of two binaries, but the verb row takes one run; name the pooled form (and have VERBS-eval add it)"
+  },
+  {
+   "bead": "BD-356",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment` (the code's one home) and file a ceiling record"
+  },
+  {
+   "bead": "N21c-17",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment`"
+  },
+  {
+   "bead": "N21c-11",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment` (with BD-370)"
+  },
+  {
+   "bead": "BD-370",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment`"
+  },
+  {
+   "bead": "N21c-21",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment` (with BD-441)"
+  },
+  {
+   "bead": "N25ax-02",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment`"
+  },
+  {
+   "bead": "N27b-27",
+   "what": "raise FROB-REF-866 for the bulk job's speed experiment through N36-05's `admit_experiment`"
+  },
+  {
+   "bead": "N33c-21",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment`"
+  },
+  {
+   "bead": "N35-05",
+   "what": "raise FROB-REF-866 through N36-05's `admit_experiment`"
+  },
+  {
+   "bead": "N35-REF",
+   "what": "its 561/825 reading names study.plan and eval.compare for 561; N35x-02's pair table gives 542 at eval.compare, 533 at Arena study admission, 561 at the numerics licence check (N35-07); BD-262 raises 542 for a D4 arm. Correct the reading (N37-REF now states the three-layer division)"
+  },
+  {
+   "bead": "N35-33",
+   "what": "FROB-REF-840 is 8xx with exit 5 (plan safety table, N24-REF); the exit rule maps 8xx to 3 except `conflict` and `integrity`, so row 840 fails check 3. Add an exception list for 8xx codes that report a missing scope or capability (840 -> 5)"
+  },
+  {
+   "bead": "N38b-07",
+   "what": "add dep N38-REF: its two recorder reasons `origin-label-mismatch` and `origin-not-admissible` are now rows of reasons.toml there (no cycle)"
+  },
+  {
+   "bead": "N40-01",
+   "what": "add dep N38-REF: the gate-register write validator's reasons (target-as-measurement, claim-not-one-of-seven, no-claim-on-non-reality, blocked-without-question, killed-without-decision, duplicate-id, reused-id) are registered there; the four shared with the recorder are one row each (no cycle)"
+  },
+  {
+   "bead": "N00-09",
+   "what": "raise FROB-REF-866 for `speed-lever` with a ceiling below the claim through N36-05's `admit_experiment` (the code's one home), as N36-REF's matrix now lists"
+  },
+  {
+   "bead": "BD-441",
+   "what": "raise FROB-REF-866 for the fused kernel's ceiling through N36-05's `admit_experiment`"
+  },
+  {
+   "bead": "N25a-27",
+   "what": "state that the speedcmp admission raises FROB-REF-866 through N36-05's `admit_experiment` (as BD-354 does)"
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 12 registries changed. Requests rejected or corrected: N28-REF S42 (opt.start kept under 545, now raised by BD-341/N28b-07); N33-REF S17 (NumericalOnly kept as the internal class, presented as after-change, since the envelope has three retry classes); N38-REF S13 (exit 3 kept only for recorder reasons; the allocation validator exits 101). Main open threads are in requests: verb rows missing codes the registries list (880, 883, 726, 791/792, 890, 545/546/871), the layer rule in VERBS-study/eval, 866 routed through admit_experiment, 840's exit vs N35-33's exit rule, and N35-REF's 561 reading."
+}

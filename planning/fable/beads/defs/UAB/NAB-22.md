@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
 parent: "EPIC-M0"
-deps: ["NAB-17", "NAB-21", "NAB-32", "NAB-42", "NAB-09", "NAB-10", "BD-025", "STD-TEST"]
-needs: ["§40.6: the milestone exit as a query over the gate register, and its report `docs/delivery/exits/M<n>/gate-report.json` (N40-04)", "§40.4: the schedule of kill decisions due at each exit and the decision ADRs (N40-30, N40-03)", "§0.8: the hypothesis register and its append-only change rule (N00-10)", "§0.7, §38.5: the pilot ledger with pilot results and the count of running Moonshots (N00-07)", "§40.5, §45.11: the exit protocol and exit record `docs/delivery/exits/M<n>/EXIT.md`, which should list the sweep record as an input of the next milestone (N40-05)"]
-related: ["NAB-18", "NAB-19", "NAB-20", "NAB-23", "NAB-24", "NAB-25", "NAB-26", "NAB-27", "NAB-28", "NAB-29", "NAB-30", "NAB-31", "NAB-50", "N40-04", "N40-05", "N40-30", "N00-10"]
+deps: ["BD-025", "N00-10", "N38a-09", "N40-03", "N40-04", "N40-05", "NAB-09", "NAB-10", "NAB-17", "NAB-21", "NAB-32", "NAB-42", "STD-TEST"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2 (preamble)", "§0.8", "§0.7", "§40.6", "§43"]
 ---
@@ -31,8 +31,13 @@ dead item. This bead builds the mechanism that prevents it: the re-score rule, t
 looked at, at which exit), the sweep record, and the check that a sweep was complete. The nine sweeps
 themselves are NAB-23 to NAB-31, one per exit, each with its own due list.
 
-Design decisions (DESIGN). (1) The sweep follows the exit review of its milestone and consumes its record; it
-implements nothing and decides no gate. (2) A row with no new evidence is recorded as *looked at and
+Design decisions (DESIGN). (1) The sweep is made at the exit candidate commit, before the exit record: it reads
+the milestone's gate records and kill-gate ADRs through the gate report of N40-04 at that commit, writes its
+sweep record, and its `check` runs as an attached check of the exit runner (N40-05 section 5a), so that the exit
+review reads the sweep record and copies its section into the exit record. It implements nothing and decides no
+gate. Each sweep bead (NAB-23 to NAB-31) therefore depends on the decision beads it reads and on N40-04, and the
+exit review of its milestone depends on the sweep, never the other way round (a sweep that waited for the exit
+review would be the one bead of its milestone that is not an ancestor of the review). (2) A row with no new evidence is recorded as *looked at and
 unchanged*, with the evidence that was looked at, so that "unchanged" and "not swept" differ. (3) A score may
 not change without evidence; an entry with empty evidence is refused. (4) The sweep is done by a session that
 did not implement the mechanisms whose rows it re-scores, the same independence rule as an exit review, because
@@ -43,7 +48,8 @@ the end (the matrix would then describe a program that no longer exists). Tier: 
 ## Scope
 
 In: the re-score rule; the due-list generator; the sweep record format and its generated report; the
-completeness check; the tool. Out: the nine sweeps (NAB-23 to NAB-31); the registries themselves; the exit
+completeness check; the tool, declared as an operator binary of `frob-conformance`; its record in the exit
+runner's table of attached checks. Out: the nine sweeps (NAB-23 to NAB-31); the registries themselves; the exit
 reviews (seed beads) and the exit protocol (N40-05); deciding kill gates (the decision beads of the owning
 units).
 
@@ -58,7 +64,12 @@ units).
    moves only with measured effort against the crate's scope cap (a crate past 115% of its cap is the trigger),
    or with an upstream work item landing or being refused.
 2. *Direction is not prescribed.* A passed gate usually raises confidence and a fired kill gate lowers it, but
-   the sweep writes the judgment and its two-line reason; the lint checks only that evidence is cited.
+   the sweep writes the judgment and its two-line reason; the check verifies that evidence is cited, resolves
+   and is of a kind rule 1 allows for each factor changed, never the direction. Each evidence id is classified
+   by where it resolves: a gate record or kill-gate ADR; a pilot; a hypothesis; a phase-share row (a ten-fold
+   gate's phase ledger, or the share table a sweep stores); an effort record (a scope-cap measurement, or the
+   schedule gate N40-11); an upstream work item. An Impact change needs a phase-share row or the record of a
+   gate that the family's own row names; an Effort change needs an effort record or an upstream item.
 3. *A fired kill gate.* The family's `decision_text` gains "fell back to <fallback>" and the family is described
    by the fallback's name everywhere. If the family was Frontier-only and the rule of the matrix says so (kernel
    reflection), the row moves to the parked table by an entry `move = "frontier-moonshot → parked"`.
@@ -76,6 +87,16 @@ hand:
 
 - *Families:* every family with a kill gate whose deciding milestone in the gate register is `exit`, or a gate
   recorded for the first time at `exit`, or a bet or hypothesis whose state changed since the previous exit.
+  The deciding milestone is the first milestone named in the register's field ("M6, with GATE-HAB-07" is M6;
+  "M4; the pilot runs before funding" is M4). Two register forms add re-reads that are listed under
+  `due_because = ["re-read: <gate>"]` and are **not** counted in the kill-gate family counts below: a gate
+  marked "Standing, from M<a>" (KILL-AUGUR-FALSECERT from M1, KILL-AUGUR-REUSE from M3) is counted at M<a>
+  and re-read at every later exit; a gate marked "M<a>; re-read at M<b>" (KILL-MCP: M0, re-read at M1 with
+  the M1 verbs) is counted at M<a> and re-read at M<b>. A gate marked "M<a>, then rolling" (KILL-FSIM, which
+  has no family row and is recorded against the posture record KI-63) puts KI-63 on the killed-idea list of
+  every exit from M<a>. At M7 every family of the `solid` and `frontier-moonshot` tables (100) is due for an
+  Impact evaluation against the tournament's phase ledgers (`due_because = ["impact: tournament"]`, NAB-30),
+  also outside the kill-gate counts.
 - *Killed ideas:* every `KI` record whose "revive only if" names a gate, kill gate or measurement due at
   `exit`.
 - *Queue:* every Moonshot-queue item whose earliest milestone is `exit`, plus every active item.
@@ -94,25 +115,54 @@ a generated `decision-records.md` beside the exit record:
                     "unchanged" | "fell-back" | "moved" | "proposal-opened", "history_ref": "...", "evidence": [...] } ],
   "killed_ideas": [ { "id": "KI-42", "condition_met": false, "measured": [...], "proposal": null } ],
   "queue":      { "freed": [...], "entered": [...], "active_after": n },
-  "ideas":      [ { "id": "IP-12", "state": "placed" | "fell-back" | "not-placed" | "declined", "note": "" } ],
+  "ideas":      [ { "id": "IP-12", "state": "planned" | "in-progress" | "delivered" | "fell-back" |
+                    "not-delivered", "note": "" } ],              # the state vocabulary of NAB-42
+  "unplaced":   [ { "id": "UP-06", "trigger_met": false, "measured": [...],
+                    "outcome": "trigger-not-met" | "proposal-opened" } ],   # conditional ideas of NAB-49
   "sources":    { "reading_tasks_open": n, "unverified_settled": [...] },
   "carried_forward": [ { "id": "...", "why": "gate recorded not-run", "to_exit": "M3" } ] }
 ```
 
-**4. The completeness check** (`crates/frob-conformance/tests/decision_sweep.rs`): for every exit whose exit
-record exists, (a) a sweep record exists; (b) every item of `due(exit)` appears in it with an outcome or in
-`carried_forward` with a reason; (c) every `changed` outcome has a history entry with non-empty evidence that
-resolves (gate records in the gate register, ADRs on disk, hypothesis ids in the hypothesis register); (d) no
+**4. The completeness check** (a library function, `frob_conformance::sweep::check(exit)`, run by the test
+target `crates/frob-conformance/tests/decision_sweep.rs` for every exit whose exit record exists, and by the
+binary's `check` for the one exit it names, at the candidate commit before the exit record is written): (a) a
+sweep record exists; (b) every item of `due(exit)` appears in it with an outcome or in
+`carried_forward` with a reason; (c) every `changed` outcome has a history entry with a non-empty `reason` (rule
+1.2; an empty one is reported as `sweep.change-without-evidence`) and non-empty evidence that resolves (gate records in the gate register, ADRs on disk, hypothesis ids in the hypothesis register, pilot ids
+in the pilot register) and whose kind fits each factor it changes (rule 1.2), and every killed-idea evaluation
+with `condition_met` set cites `measured` values whose records resolve at this exit; (d) no
 family named by a fired kill gate still reads "adopted" without "fell back"; (e) the Moonshot cap holds after
 `entered`; (f) the sweep's session is not among the implementer sessions of the beads whose gates it cites;
 (g) no reading task is open for a gate recorded at this exit. Findings: `sweep.missing`, `sweep.row-not-swept`,
 `sweep.change-without-evidence`, `sweep.kill-not-reflected`, `sweep.cap-exceeded`, `sweep.self-certified`,
 `sweep.reading-task-open`, `sweep.proposal-applied-without-adr`.
 
-**5. The tool.** `cargo run -p frob-conformance --bin decision-sweep -- due --exit M<n>` prints the due list
-(Markdown and JSON); `… -- skeleton --exit M<n>` writes a sweep record with every due item at outcome `todo`;
-`… -- check --exit M<n>` runs the completeness check. The binary holds no judgment and writes nothing but the
-skeleton. It is not an `xtask` subcommand.
+**5. The tool.** An operator binary of `frob-conformance`, declared by this bead under the crate's rule for
+binaries (BD-025: `autobins = false`, so a binary exists only by declaration): a `[[bin]]` entry with
+`name = "decision-sweep"` and `path = "src/bin/decision_sweep.rs"`, and a row in the binary table of the crate's
+`CONTRACT.md` naming NAB-22 as its owner and stating what it reads (`registries/ev_matrix.toml`,
+`registries/killed_ideas.toml`, `registries/ideas.toml`, `registries/sources.toml`, `registries/gates.toml`, the
+hypothesis and pilot registers, the gate report of N40-04 and `docs/delivery/exits/`) and writes (only the
+skeleton `docs/delivery/exits/M<n>/decision-records.json` when that file does not yet exist; never a row of
+`registries/gates.toml`). Without the declaration the command-form lint of BD-025 refuses every
+`--bin decision-sweep` line as `unknown-target`. Subcommands:
+`cargo run -p frob-conformance --bin decision-sweep -- due --exit M<n>` prints the due list (Markdown, or JSON
+with `--json`); `… -- skeleton --exit M<n>` writes a sweep record with every due item at outcome `todo`;
+`… -- check --exit M<n> [--root <dir>] [--json]` runs the completeness check of step 4. With `--json`, `check`
+follows the exit runner's check contract (N40-05 section 5a): it prints one object `{check: "decision-sweep",
+milestone, section, blocks: [{id, reason}], warnings: [{id, text}]}`, where `section` is the Markdown of the
+generated `decision-records.md` and every finding of step 4 is a block whose `reason` is the finding name; it
+exits 0 whenever it ran and non-zero only when it could not run (an unreadable registry). `--root` names the
+checkout the runner cloned. The binary holds no judgment and writes nothing but the skeleton. It is not an
+`xtask` subcommand, not a `frob` verb and not an MCP tool.
+
+**5a. Attachment to the exit runner.** This bead adds one record to `scripts/exit/checks.toml` (schema
+`frob.exitchecks/1`, N40-05): `id = "decision-sweep"`, `owner = "NAB-22"`, `step = 8`, `since = "M0"`,
+`command = "cargo run -p frob-conformance --bin decision-sweep -- check --exit"`, which the runner calls as
+`<command> <Mn> --root <dir> --json`. Step 8 (DESIGN) is the procedure's step for kill decisions due, the
+evidence most sweep entries rest on; it precedes the Moonshot-cap count of step 11, so an item the sweep entered
+is counted by that check. A missing sweep record is the block `sweep.missing`, so no exit can be recorded without
+its sweep.
 
 **6. Determinism and evidence.** The due list and the check are D0. The sweep record makes no claim about the
 system; it is a decision record, and its changes are DESIGN judgments with FACT evidence attached.
@@ -130,6 +180,11 @@ system; it is a decision record, and its changes are DESIGN judgments with FACT 
       ADR fails `sweep.proposal-applied-without-adr`.
 - [ ] The generated `decision-records.md` lists changed, unchanged, fell-back, moved and carried-forward items
       with their evidence.
+- [ ] `decision-sweep` is a declared `[[bin]]` of `frob-conformance` with its row in the crate's `CONTRACT.md`;
+      BD-025's `binaries_declared` and `no_conformance_command` tests pass with this bead's scripts calling it.
+- [ ] `scripts/exit/checks.toml` holds the record of step 5a; `scripts/exit/review.sh M0` on a scratch clone runs
+      it, copies its section into the exit record under `decision-sweep`, and with the M0 sweep record removed
+      lists `sweep.missing` among the blocking parts.
 
 ## Test plan
 
@@ -138,25 +193,41 @@ system; it is a decision record, and its changes are DESIGN judgments with FACT 
 `crates/frob-conformance/tests/decision_sweep.rs` (fixture registries and fixture gate registers under
 `tests/fixtures/sweep/`, labelled `synthetic`; the real registries for the due-list known answers):
 
-- `due_families_by_exit`: on the plan-time registries and the gate register's deciding milestones, the family
+- `due_families_by_exit` (deciding milestones are read from the gate register; for a kill gate whose ledger
+  group is entered at M1 they are read from the frozen list of NAB-17 step 6 until that group is entered, and
+  the two must then agree): on the plan-time registries and the gate register's deciding milestones, the family
   ids due are: M0 `EV-S29`; M1 `EV-F04`, `EV-F19`; M2 `EV-S15`, `EV-S17`, `EV-S24`, `EV-S27`, `EV-S32`,
   `EV-F23`, `EV-F26`; M3 nineteen (`EV-S14`, `EV-S21`, `EV-S22`, `EV-S23`, `EV-S36`, `EV-S41`, `EV-F01`,
   `EV-F06`, `EV-F07`, `EV-F10`, `EV-F11`, `EV-F14`, `EV-F15`, `EV-F17`, `EV-F18`, `EV-F19`, `EV-F21`, `EV-F24`,
   `EV-F29`); M4 twenty-one; M5 seven; M6 eight; M7 none; M8 seven. (The full lists are in NAB-23 to NAB-31.)
 - `row_due_twice_is_swept_twice`: `EV-F19` (M1 and M3), `EV-S41` (M3 and M4) and `EV-F11` (M3 and M4) appear in
   both due lists; 72 family-exit pairs cover 69 distinct families.
+- `standing_and_reread_gates_are_listed_not_counted`: `EV-S29` is in the M1 due list as `re-read: KILL-MCP`,
+  `EV-F19` is in the M2 to M8 lists as `re-read: KILL-AUGUR-FALSECERT`, and neither changes the counts above;
+  the M7 list holds the 100 `impact: tournament` items and still counts zero kill-gate families.
+- `exit_record_without_sweep_fails_missing` (`sweep.missing`); `due_row_absent_fails_row_not_swept`
+  (`sweep.row-not-swept`); `open_reading_task_fails` (`sweep.reading-task-open`).
 - `unchanged_needs_looked_at`; `change_needs_evidence`; `evidence_must_resolve`.
+- `change_needs_reason`: a confidence raise with resolving evidence of the right kind and an empty `reason`
+  fails `sweep.change-without-evidence`; the same entry with its reason stated passes.
+- `evidence_kind_must_fit_factor`: an Impact raised citing only the schedule gate's record fails
+  `sweep.change-without-evidence`; the same record cited for an Effort change passes.
 - `fired_kill_requires_fallback_text`; `kernel_reflection_moves_to_parked_on_kill`.
 - `reopen_evidence_opens_proposal_not_move`.
 - `below_two_after_rescore_is_proposed_for_parking`: a Frontier family re-scored from (4, 3, 4) = 3.0 to
   (4, 2, 5) = 1.6 with no Moonshot tier produces a parking proposal.
 - `cap_after_entry`: four active plus one entered → `sweep.cap-exceeded`.
 - `self_certified_sweep_is_refused`.
+- `check_json_follows_runner_contract`: `check --exit M0 --root <fixture> --json` on a fixture with no sweep
+  record prints one object with `check = "decision-sweep"`, `milestone = "M0"` and a block `sweep.missing`, and
+  exits 0; on a complete fixture record it prints no block; on an unreadable `ev_matrix.toml` it exits non-zero.
+- `skeleton_never_overwrites`: `skeleton --exit M0` on a fixture whose sweep record already exists leaves its
+  bytes unchanged and says so.
 
 ### End-to-end script and logging
 
 `scripts/e2e/decision_records.sh` (NAB-50) runs `decision-sweep due` for every exit, compares the family
-counts with the known answers, writes a skeleton for a scratch exit, fills it from a fixture exit report and
+counts with the known answers, writes a skeleton for a scratch exit, fills it from a fixture gate report and
 runs `check`; then plants each finding. Logged per STD-E2E: per exit a `metric` with the count of due
 families, killed ideas and queue items; per planted finding an `assert`.
 

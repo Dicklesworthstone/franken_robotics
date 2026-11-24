@@ -1,0 +1,521 @@
+{
+ "round": 1,
+ "slice": "U39a",
+ "reviewed": 56,
+ "changed": [
+  {
+   "bead": "BD-039",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added deps STD-E2E (its script sources lib.sh) and N39a-01 (the `frob-tenfold incumbent` subcommands live in the operator tool whose shell and store that bead builds; was only related); the e2e text now names the NDJSON log path and the first-differing-value line"
+  },
+  {
+   "bead": "BD-147",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "complete"
+   ],
+   "what": "accepted both requests: deps N24c-10 (the fixtures battery report of the eleven Arena known answers, read for GATE-ARENA-04/-05) and N33b-08 (the upstream staleness report and interim-posture checks, the evidence of the schedule gate's cause attribution; an item `posture: untested` cannot count as an interim posture applied). The body pointed at 'the twelve listed in needs' and 'see needs' while needs is empty: the twelve late parts are now listed with their beads, and the shared procedure is named N40-05/N40-04. Two acceptance lines added."
+  },
+  {
+   "bead": "BD-314",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "accepted request from U12-2: N12-49 moved from related to deps, with a new unit test precheck_agrees_with_d9_oracles (completion cap 8 at q = 1/8 and 25/3 at q = 0.12, R_time 10.081 vs R_rate 9.677 under separate names, family counts 32/46/49) and planted pre-checks that fail"
+  },
+  {
+   "bead": "BD-315",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Scope pointed at an empty `needs`: now names the one-receipt pipeline N39b-44 and the three-arm statistics N39b-43"
+  },
+  {
+   "bead": "BD-430",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Scope pointed at an empty `needs`: now names N39b-43/-45/-46/-47 and N40-22 (recovery and ablations), N39b-37/N40-20 (rival audit), N39b-13 (pin freeze), the owner decisions N39b-28/-31/-32 and arm D's default"
+  },
+  {
+   "bead": "BD-431",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Scope pointed at an empty `needs`: now names the disqualification engine N39b-01, leak audit N39b-02, KILL-TENFOLD-CERT/LEAK decisions N39b-03/-04, KILL-AUGUR-FALSECERT N25b-04, the tournament freeze N39b-13, robot-docs BD-313"
+  },
+  {
+   "bead": "BD-433",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Scope pointed at an empty `needs`: now names the outcome-rule engine N39b-05, wording lint N39b-15, recovery N39b-43/-46, kit builder N39b-18, scorer N39b-19, level 2 N39b-20, GATE-TENFOLD-08 N39b-21/N40-17 and OPEN-PROG-1 with its default"
+  },
+  {
+   "bead": "BD-434",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Scope pointed at an empty `needs`: now names N40-05, N40-04 and the register rows it reads (N40-14, -16, -17, -20, -21, -22, -28)"
+  },
+  {
+   "bead": "N39a-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the duration regex allowed trailing zeros ('1.50'), so one time had several spellings and several content addresses; now `^(0|[1-9][0-9]*)(\\.[0-9]{0,2}[1-9])?$` (DESIGN, one spelling), with the seconds_exact test rewritten and a new writer_emits_canonical_seconds round-trip test; dep STD-E2E; NDJSON log path named"
+  },
+  {
+   "bead": "N39a-02",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "deps gain N39-REF (it raises the tenfold.role-* reasons) and STD-E2E; Scope's empty `needs` pointer now names N39b-27/-28 (adjudicator and advocates), N39b-01/-02 (disqualification, leak), N39b-20/-21 (level 2) and N39-REF; e2e logs each role refusal with exit 3 to target/e2e-logs/tenfold_roles/"
+  },
+  {
+   "bead": "N39a-03",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "dep STD-E2E; e2e uses a rehearsal adjudicator session through the real receipt intake instead of a stub; the open deadline H is stated inline (OPEN-TENFOLD-5, N39b-30, with its default: three times the rival's median development time, rounded up to half an hour, raised until H/RMT_A >= 10); NDJSON path named"
+  },
+  {
+   "bead": "N39a-04",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "gpu_h, cpu_h and money were decimals that could not hold values such as 2/45 exactly; now exact reduced rationals with a six-place rendering, tests on 17/200, 2/45 and 30169/4500; deps gain N39a-24, N39a-25 and STD-E2E; Scope names N39a-25 and N39b-35; N39-REF (now M0) added to deps: it raises caps-differ"
+  },
+  {
+   "bead": "N39a-05",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "card had no development/sealed pool field although the family rules depend on it: added `pool`, with development cards tied to the development suite and a pool/family mismatch refused; deps gain BD-121, BD-126, N39-REF, N39a-12, STD-E2E; NDJSON path"
+  },
+  {
+   "bead": "N39a-06",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "all battery sizes and ratios re-verified (36/46/53/74, 368/477/546/766, 299, 29,956, 76,959); dep STD-E2E; e2e logs the decision-record digest and path to target/e2e-logs/tenfold_battery/"
+  },
+  {
+   "bead": "N39a-07",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "dep STD-E2E; Scope names N39b-01, N39b-03, N25b-04 and the out-of-process SMT tool instead of an empty `needs`; NDJSON path"
+  },
+  {
+   "bead": "N39a-08",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "dep STD-E2E; Scope names N39b-26 (OPEN-TENFOLD-1/OPEN-PROG-2) and BD-301; e2e logs digest equality and the first differing tick, skips with 77 under needs=container"
+  },
+  {
+   "bead": "N39a-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "the receipt example wrote levels as expressions ('0.05/6', '0.05*2/3') against the reduced-rational rule; now 1/20, 1/120, 1/30. The e2e used a stub decision procedure: now a registered rehearsal decision kind `synthetic-bernoulli` so the commit/draw/level/receipt path is the real one. Deps N39-REF, STD-E2E; 'the other unit's' now names N39b-02 and N39b-04"
+  },
+  {
+   "bead": "N39a-11",
+   "kinds": [
+    "e2e",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "e2e ran the feasibility check against a 'stand-in rival reference': now the rival's real CPU reference launched out of process by BD-039 through N39a-08, skipping with 77 where not installed; dep STD-E2E; NDJSON path and first differing field"
+  },
+  {
+   "bead": "N39a-12",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "deps N39-REF and STD-E2E; deadline field now points at OPEN-TENFOLD-5/N39b-30; check 2 now states the companion-kind exception that N39a-14 defines (otherwise every unresolved-answer control card in a design stratum would be refused); NDJSON path"
+  },
+  {
+   "bead": "N39a-13",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Scope pointed at an empty `needs`: now names N39b-35 (result types, bounded contrast), N39b-34 (eval.preanalyze), N39b-02/-04 (leak retirement) and N39-REF; deps N39-REF, STD-E2E; NDJSON path with the four refusal reasons"
+  },
+  {
+   "bead": "N39a-14",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "the companion kind for unresolved-answer control cards contradicted check 2 of the strata registry; the exception is now written in both beads with a new test companion_kind_only_for_flagged_controls. Scope's empty `needs` now names N39b-42 / N40-21 (GATE-TENFOLD-12 at M7); deps N39-REF, STD-E2E; NDJSON path"
+  },
+  {
+   "bead": "N39a-15",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Scope's empty `needs` now names N40-14 (may_open over GATE-TENFOLD-03/-04/-05/-10/-11; open reads the five recorded statuses) and OPEN-TENFOLD-8 / N39b-33; deps N39-REF, STD-E2E; e2e logs the four refusal reasons named in N39-REF and seal verify's first broken link"
+  },
+  {
+   "bead": "N39a-16",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "the bead claimed the scorer's regime-mixed refusal and built workspaces from the freeze manifest and charged cache breaches as cap breaches without depending on any of those: deps gain N39a-27 (scorer check 4, now attributed), N39a-18 (freeze manifest), N39a-04 (caps), N39-REF, STD-E2E; e2e now hands the records to frob-tenfold-score; NDJSON path"
+  },
+  {
+   "bead": "N39a-10",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "clause 3 and the acceptance line 'hits are 0 for every frozen arm' read the arms' freeze manifests, which the bead did not depend on: dep N39a-18 added and the search attributed to the adapter N39a-08 over frob.tenfold.freeze/1; NDJSON log path named"
+  },
+  {
+   "bead": "N39a-17",
+   "kinds": [
+    "deps",
+    "tests",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "dep N39a-18 (the standing_assets it reads live in the freeze manifest; was only related), N39-REF, STD-E2E; the warm-without-assets rule attributed to the scorer's record writer with N39a-36 enforcing it again; the audit check 'S below steps/rate is flagged' had no test and no field: now `s_understated` with tests declared_s_below_step_bound_flagged and shared_asset_charged_in_full; all five warm values re-verified"
+  },
+  {
+   "bead": "N39a-18",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Scope's empty `needs` now names N39b-37/N40-20, N39b-01, N39b-31; the agent and hardware checks at step 4 compared against a terms record and schedule that only N39a-19 (which depends on this bead) defines: now a freeze-check hook here, through which N39a-19 registers those checks and this bead registers the wrapper's tool-layer and tag-map checks (dep N39a-25 added); scorer side attributed to N39a-27; tests freeze_hook_refusal_propagates, wrapper_checks_at_freeze; deps N39-REF, STD-E2E; NDJSON path"
+  },
+  {
+   "bead": "N39a-19",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "freeze checks now registered through N39a-18's hook (freeze-agent-differs, freeze-hardware-differs); the `platform-mixed` rule had no field and no owner: campaign records now carry `platform` derived from the fingerprint, the schedule refuses mixed pair-sets and the scorer (N39a-27) refuses mixed cells; tests platform_not_pooled (made concrete), freeze_hook_checks; e2e uses trj's two cards under needs=cuda and labelled CPU core slots elsewhere instead of 'device stand-ins'; deps N39-REF, STD-E2E"
+  },
+  {
+   "bead": "N39a-20",
+   "kinds": [
+    "e2e",
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "e2e candidates are now labelled protocol fixtures, plus a real home-task reproduction step on trj against the 492 s limit (exit 77 elsewhere, never a substituted figure); OPEN-TENFOLD-3 (N39b-28) and OPEN-TENFOLD-7 (N39b-32) named inline; deps N39-REF, STD-E2E; NDJSON path"
+  },
+  {
+   "bead": "N39a-21",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Scope's empty `needs` now names N39b-07, N39b-43, N39b-44, N39b-47 and OPEN-TENFOLD-9 (N41-OPEN8) with its default; the stronger-rival choice was attributed to N39a-32 but is N39a-27 step 6, and the acceptance lines claimed scorer outputs without a dependency: dep N39a-27 added and lines rewritten to what this bead writes; deps N39-REF, STD-E2E; e2e scores through frob-tenfold-score with NDJSON logging"
+  },
+  {
+   "bead": "N39a-22",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "accepted request from U23b: dep N23bp1-01 (the whole-rollout fallback the OT run uses when KILL-GYMADAPT fires; M3, no cycle) named in step 4; compute corrected from 'about 1.5' to about 1.7 device-hours (15 x 410 s = 6,150 s); dep STD-E2E; NDJSON path and OT path logged"
+  },
+  {
+   "bead": "N39a-23",
+   "kinds": [
+    "e2e",
+    "placement",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the e2e captured intervals through the wrapper (N39a-25) and built ledgers with N39a-24, both of which depend on this bead: now runs this bead's own `phase attribute` on the worked fixtures, the single-pair card, a 1e5-interval file timed against the 1 s TARGET and a shuffled copy; the wrapper scenario moved to N39a-25's script, not lost; known-answer table clarified (synthesize and certify 0); dep STD-E2E"
+  },
+  {
+   "bead": "N39a-24",
+   "kinds": [
+    "e2e",
+    "correct",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the unit test and e2e fed ledgers to frob-tenfold-score (M3) and the ceiling report (M1), both later beads: INV-TENFOLD-04 is now enforced by two selectors here, inputs::for_ratio and inputs::for_ceilings (`ledger select`), which the readers call and test in their own beads (N39a-26, N39a-27 updated); dep STD-E2E; NDJSON path"
+  },
+  {
+   "bead": "N39a-25",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "e2e",
+    "e2e-logging"
+   ],
+   "what": "Scope's empty `needs` now names BD-316 (arm A's tag map); the tool-layer check is this bead's `wrap check` (was attributed to `freeze check`, an M3 command), run again at freeze through N39a-18's hook; deps N39a-24 (its script builds the ledger) and STD-E2E; e2e gains the two-turn, two-job, one-submission scenario moved from N39a-23 with 0.3 s comparisons; NDJSON path; N39-REF (now M0) added to deps and named beside tagmap-uncovered-tool and wrapper-escape"
+  },
+  {
+   "bead": "N39a-26",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the bead said it depends on the lever register N00-20 and reads tenfold_phases from it, but N00-20 -> N00-18 -> BD-143 -> N39a-26 (a cycle if added), and BD-143 needs the phase sets at M1: the mapping is now stated once as data in this bead's lever_phases.toml and the register takes it from there (request to N00-20); shares read through inputs::for_ceilings with a new test; dep STD-E2E; NDJSON path; all worked-card figures re-verified; N39-REF (now M0) added to deps; lost-factor-missing and lever-share-above-ledger named as its rows"
+  },
+  {
+   "bead": "N39a-27",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "adds the `platform-mixed` rule and the platform field to the pair check; reads ledgers through inputs::for_ratio so open runs stay in the sums (test open_ledger_counted); its checks read the published freeze hashes, receipts and the seal chain, and it writes the exclusion/supersession entries, without depending on any of those: deps N39a-09, N39a-15, N39a-18, N39a-19, N39-REF added; test freeze_hash_must_be_published; all card values re-verified"
+  },
+  {
+   "bead": "N39a-28",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "title"
+   ],
+   "what": "Scope's `needs` pointer now names N39b-35 (result types, bounded paired contrast) and N39b-36 (rare-tail controls) and the std-only rule of score/; added a near-integer guard for the order-statistic indices ((B+1)·alpha within 1e-6 of an integer takes the conservative index and records index_tie) so the bound cannot depend on the last bits of Phi; all bootstrap reference values re-verified (p0 = 9,569/20,000, indices 398 and 9,380, L = 612/469, U = 126/17); title tightened"
+  },
+  {
+   "bead": "N39a-29",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dep N39-REF; OPEN-TENFOLD-8 now named with its decision bead N39b-33 instead of an empty `needs`; all critical counts re-verified"
+  },
+  {
+   "bead": "N39a-31",
+   "kinds": [
+    "deps",
+    "complete",
+    "self-contained",
+    "tests"
+   ],
+   "what": "had no deps although four beads depend on it: deps N39a-30 (the attainability table it rests on), N39a-15 (the step-2 hook), STD-E2E; the decision now has concrete artifacts: the parameter-set record tenfold/<gate>/noninferiority.json with a loader, and a step-2 precondition that writes the fail-closed default (option A) flagged default-taken; Scope names N39b-33 and the branch beads N39a-32/-33/-34 that test the chosen mode; arithmetic (59, 0.1174, 0.0894, 0.0631, 0.0496) re-verified"
+  },
+  {
+   "bead": "N39a-32",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "correct"
+   ],
+   "what": "Scope's long `needs` replaced by named beads (N39b-01 disqualification, N39b-35 contrast, N39b-43 tie, N39b-05/-15 wording, N39b-20/-21 level 2); deps N39-REF, N39a-35 (the monitor's stop record it combines), N39b-01, N39b-35; three records it reads are written by beads that depend on it, so it now defines input views PreanalysisView, TieView and ReplicationView that those beads satisfy and test (requests to N39b-43 and N39b-20)"
+  },
+  {
+   "bead": "N39a-33",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "deps BD-124, N24b-06, N39-REF, N39a-31, STD-E2E; Scope's `needs` now names N39b-34 and N39b-16; deadline default tied to OPEN-TENFOLD-5 / N39b-30; tests record_satisfies_verdict_view and noninferiority_option_a_at_24; its e2e script shared the name tenfold_preanalysis.sh with N39b-36's GATE-TENFOLD-10 script: renamed tenfold_cell_preanalysis.sh with its own NDJSON path; planning table and Holm k = 4 -> 0.81 re-verified"
+  },
+  {
+   "bead": "N39a-34",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "deps N39-REF, STD-E2E and the decision inputs it reads (N39b-30 deadline, N39b-33 thresholds, N39b-34 population refusal, N40-03/N40-28 ADR and gate register, BD-124); the plan's general discipline (enumerate the reachable verdicts before sampling; at most four confirmatory cells) stated in Background; Scope's `needs` replaced by named beads; the record now carries n = m·c and RMT_A on the development suite, which condition 4 needs"
+  },
+  {
+   "bead": "N39a-35",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "complete",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "the alarm test said 3 open ledgers of 20 give no alarm, but 15% is above the 10% threshold: rewritten with exact boundary cases (2 of 20 none, 3 of 20 alarm, the last-five-runs case, the exclusion-share cases at 24 pairs); after a futility stop, new campaigns were said to be cancelled by an unnamed schedule: now a campaign-start precondition registered with N39a-03 refuses them; the stop is an entry kind registered with the sealing ledger; Scope names N39b-02, N39b-05, N39b-06; deps N39-REF, STD-E2E; E = 2,187/128 and 6,561/256 re-verified"
+  },
+  {
+   "bead": "N39a-36",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dep N39-REF (it raises report-* and ratio-incomplete reasons) and the records its completeness rules check: N39a-14 (control counters), N39a-26 (lost-factor records, rule 4), N39a-34 (pre-run notice, rule 2), N39a-37 (ceilings reference, rule 3); Scope says which rule reads each, and that the learner-swap diagnostic N39a-22 (built later) is an optional hash; known answers re-verified (32.8, 45, 5 of 6, R = 9 against 25/3)"
+  },
+  {
+   "bead": "N39a-37",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "inputs now taken through inputs::for_ceilings and lever_phases.toml; step 1 said a request with an open ledger is refused while the record has ledgers_excluded and the plan (INV-TENFOLD-04) says open runs leave ceiling arithmetic: now a cell-selected request excludes and lists them, an explicit --ledgers request naming one is refused (test inputs_via_selector, acceptance line rewritten); deps N39-REF, STD-E2E; related BD-143, N36-04, N39a-36/-38/-39; NDJSON path, refusal reasons and first differing value logged, measured-ledger step exits 77 off the Linux host; all ceilings re-verified (75/34, 60/7, 25/3, 15/4, 4000/297, 8428/5757)"
+  },
+  {
+   "bead": "N39a-38",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "dep N39-REF (its reasons ceiling-below-goal, lever-share-above-ledger, order-rule-violation are registry rows); dup-13 note checked: reason names already match the registry and no bead still says factor-on-removed-work; NDJSON path and first differing value; worked values (1.4640, 75/34, 1.4286, 3.33, 20 vs 50) re-verified"
+  },
+  {
+   "bead": "N39a-39",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "KA-015 stated 'under 2% fail validation, so pruning cuts trainings by at most 1.19', but 1/(1-0.02) = 1.02; the plan's 1.19 comes from the 16% degenerate share: corrected to 1/(1-0.16); the funding field `funding_reason` did not exist in the funding record: now N00-09's `justification` (with parity) and the per-class restriction written in the decision record (request to N00-09); the lever table is read from lever_phases.toml; dep STD-E2E; NDJSON path"
+  },
+  {
+   "bead": "N39a-40",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "clause 4 reads the reachability decisions and the pre-run notice of N39a-34 without depending on it: dep added, with N39-REF; GATE-TENFOLD-10/-11 now point at N39b-36/N40-19 and N39b-37/N40-20 instead of 'the other unit'; the OPEN questions name OPEN-TENFOLD-3/-5/-6/-8 with their decision beads; e2e labels the synthetic arms, sources lib.sh and logs each planted control's catch to NDJSON"
+  },
+  {
+   "bead": "N39a-41",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "logging named STD-E2E lib.sh and the NDJSON file, with the first differing value on a mismatch; all fixture values re-verified (45/17, 6.23, 7.05, guard table, 2,187/128, 6,561/256, bootstrap indices); the open-ledger exclusion it asserts is now what N39a-37 specifies"
+  },
+  {
+   "bead": "N39ax-01",
+   "kinds": [
+    "correct",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Background said the default deadline is raised until it is ten times the rival's mean restricted time; the plan's rule (OPEN-TENFOLD-5) is the horizon cap H ÷ RMT_A >= 10 with RMT_A this system's time: corrected and N39b-30 named; the six dev-* reasons are now stated as N39-REF rows (dep added; request to N39-REF); the acceptance line on the publish-development entry needed the sealing ledger: dep N39a-15 and a rehearsal-ledger check, with the partial gate's own entry left to BD-314"
+  },
+  {
+   "bead": "N39ax-02",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "the same deadline misstatement corrected; 'at least 6 families, so no two cells may share a site' did not follow: now a stated DESIGN rule with its reason; the package-hash acceptance line now points at N39ax-01's package and INDEX.json; grid allocation (12 + 12) and 36 clusters at level 0.025 re-verified"
+  },
+  {
+   "bead": "N39ax-03",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "the facility stratum's condition named 'the facility co-design gate' without saying which: now GATE-AUGUR-24 as checked by N39a-12, and the facility_conditional test covers both sides; drop order and its reverse re-verified against BD-428"
+  },
+  {
+   "bead": "N39ax-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the recorded arithmetic was 'strata kept × cells × 24 × hours', inconsistent with the epic's 11 × 24 = 264 families: now strata kept × 24 × hours; drop_order_arithmetic now has exact expected lists (6.0 h, 800 h -> five strata kept, 720 vs 864; 4.5 h -> seven kept, 756 vs 864)"
+  },
+  {
+   "bead": "N39ax-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "question 4 called the stronger rival 'the denominator', but R = RMT_rival ÷ RMT_A and the plan names arm A the denominator: the question now asks which rival's time is the numerator"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N00-20",
+   "what": "N39a-26 cannot depend on N00-20 (N00-20 -> N00-18 -> BD-143 -> N39a-26 would be a cycle) and BD-143 needs the lever phase sets at M1; N39a-26 now states the `tenfold_phases` mapping once as data in crates/frob-conformance/registry/lever_phases.toml. Please take the register's tenfold_phases field from that file (by reference, with an equality check in tenfold_phases_of_eight_levers) and drop the Scope sentence saying N39a-26 depends on this bead"
+  },
+  {
+   "bead": "BD-316",
+   "what": "BD-316 scopes arm A's phase tagging but lists N39a-25 only as related; arm A's tag map uses N39a-25's format and validator (frob-tenfold tagmap check) and runs behind its agent proxy, so please move N39a-25 from related to deps and name it where the phase-tag table is described"
+  },
+  {
+   "bead": "N39b-43",
+   "what": "N39a-32 now reads the tie record through its input view TieView {tied: bool, against, hash} (N39b-43 depends on N39a-32, so the verdict bead cannot depend on it). Please state that the tie record satisfies TieView and add a test that the record of a planted tie converts to TieView with tied = true and the same hash"
+  },
+  {
+   "bead": "N39b-20",
+   "what": "N39a-32 now reads the level-2 replication record through its input view ReplicationView {external_rerun_passed: bool, hash}. Please state that the replication record satisfies it and add a test that a passed and a failed re-run convert to the view with the right flag and hash"
+  },
+  {
+   "bead": "N00-09",
+   "what": "N39a-39 strikes a lever for some mission classes only and keeps its speed justification for the others, but the funding record frob.funding/1 has no class field, so the restriction can only live in prose. Please add an optional `classes` list to speed-lever records (default: all classes measured), checked by admit() and read by N39a-38's funding sweep"
+  },
+  {
+   "bead": "N39-REF",
+   "what": "add six rows raised by N39ax-01's `frob-tenfold suite check --development` (exit 3, no product code): dev-count (not exactly 12 development missions in a stratum), dev-families (fewer than 6 families), dev-control-coverage (a control missing from the public pool), dev-reference-missing (no accepted reference answer or rejected mutant), dev-asset-mark (an asset with a private or research-only mark), dev-keys-missing (family keys not recorded); N39ax-01 now depends on N39-REF and states them as its rows"
+  }
+ ],
+ "unchanged": 3,
+ "notes": "Slice reviewed in full: 53 changed, 3 unchanged (BD-428, N39a-30, N39ax-05), no new or superseded beads. Main themes: STD-E2E and NDJSON paths on every bead with its own script; empty `needs` pointers replaced by named beads; backward test dependencies removed (N39a-23/-24 selectors, N39a-18 freeze-check hook, N39a-32 input views); arithmetic errors fixed (N39a-35 alarm 3 of 20, N39a-22 1.7 device-hours, N39a-39 KA-015 1.19, the deadline rule in N39ax-01/-02); N39a-33's e2e script renamed away from N39b-36's tenfold_preanalysis.sh. N39-REF was moved to M0 by its own slice, so my earlier request is withdrawn and the M0/M1 beads that raise its reasons (N39a-04, -25, -26, -37, -38) now depend on it. The request to N39b-12 (dep on N39a-34) is withdrawn: it now holds transitively through BD-314 -> N39a-40 -> N39a-34. defs/U39a/N39a-42.md sits in this staging directory but is in neither the slice list nor INDEX.tsv (an older harness-refusal registry superseded by N39-REF); not edited, left for the lead. Cycle check: 0 after every change. All 56 files validated: front matter complete, lists valid JSON, seven sections."
+}

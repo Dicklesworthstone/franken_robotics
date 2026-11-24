@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-42"]
-needs: ["§45: the seed bead set with its current numbering, from which carriers are named (the planning text's own bead numbers for these ideas belong to an earlier numbering and are not used)"]
-related: ["NAB-44", "NAB-45", "NAB-46", "NAB-41", "NAB-50", "BD-018", "BD-092", "BD-110", "BD-114", "BD-204", "BD-263"]
+needs: []
+related: ["NAB-44", "NAB-45", "NAB-46"]
 gates: []
 plan_refs: ["Appendix B.1", "§0.8", "§1.1"]
 ---
@@ -42,7 +42,11 @@ schema and lint (NAB-42); the later rounds (NAB-44 to NAB-49).
 **Transcription rule.** One record per idea, numbered as in the list of thirty. Extra fields for this pass:
 `rank` (1 to 15 for the ranked ideas; empty for the rest), `why_it_wins`, `confidence`, `since_first_pass`,
 `narrowed` (text), all verbatim from the paragraphs below. `proposals = 1` (one pass). `disposition` is
-`placed` or `placed-narrowed`. The planning text cited bead numbers for these ideas from an earlier numbering
+`placed` or `placed-narrowed`. `tier_text` for ideas 16 to 29 is the State cell; `gates`, `kill_gates` and
+`bets` are those the record's text names plus the `gates` of its carrying beads in the tracker export, since the
+first pass names few gates of its own. Where none results, `ungated` names the test that stands in: for idea 26
+(randomization from card uncertainty, §23.15, which has no gate) the refusal of a card field with no interval
+(BD-200). The planning text cited bead numbers for these ideas from an earlier numbering
 (for example the trust ladder at two numbers that now belong to the self-collision analysis and to
 `explain.run`); those numbers are dropped and carriers are given below by current key.
 
@@ -151,7 +155,7 @@ behaviour-cloning warm start from the baseline controller; (30) a negative-contr
 
 | # in the list | Idea | Where it lives now | State | Carried by |
 |---|---|---|---|---|
-| 16 | Structural margin loop from telemetry loads | A-15 (§28.4); Foundry §31.5 to §31.9 | [F]. It grew into the structure loop of §31, with KILL-LOADS and KILL-TOPOPT | BD-400, BD-401, BD-402, BD-403, BD-404; kill decisions at BD-412 |
+| 16 | Structural margin loop from telemetry loads | A-15 (§28.4); Foundry §31.5 to §31.9 | [F]. It grew into the structure loop of §31, with KILL-LOADS and KILL-TOPOPT | BD-400, BD-401, BD-402, BD-403, BD-404; kill decisions N31b-16 (KILL-LOADS) and N31b-15 (KILL-TOPOPT), recorded at the M5 exit review BD-412 |
 | 17 | Gait atlas from symmetry with max-plus timing | C-10; A-04; Reflex §22.9 | [F]. The atlas supplies clocks and seeds; an orbit ranks designs only if GATE-GAIT-03 passes (KILL-GAIT) | BD-332, SPEC-C-10; orbit ranking decided at BD-335 (GATE-GAIT-03) and N22c-17 (KILL-GAIT) |
 | 18 | Maneuverability index from Lie brackets | C-07; A-07 (§28.4); GB-05 | [S] | BD-106, SPEC-C-07 |
 | 19 | Connection-curvature design oracle | C-08; A-09; Augur §25.19 | [F], kinematic locomotors only. Its inverse use is [F] on kinematic fixtures and [M] as an atlas, under KILL-AUGUR-PHASE. Its use as a roller-misalignment test is withdrawn (the killed-idea register) | BD-243 (A-09), BD-425, SPEC-C-08; N25c-46 (KILL-AUGUR-PHASE) |
@@ -172,8 +176,9 @@ structure-and-manufacture subsystem.
 
 ## Acceptance criteria
 
-- [ ] Records `FP-01` … `FP-30` exist; fifteen have a `rank`; the five best carry `why_it_wins`, `confidence`
-      and `since_first_pass` verbatim.
+- [ ] Records `FP-01` … `FP-30` exist; sixteen have a `rank` (ranks 1 to 15; rank 4 is shared by `FP-04` and
+      `FP-05`, which the best five treat as one idea); the records of the best five carry `why_it_wins`,
+      `confidence` and `since_first_pass` verbatim.
 - [ ] Every record has at least one carrier that exists as a bead; no record cites a bead number of the
       earlier numbering.
 - [ ] The FACT quoted in the reasons (a quadruped policy trains in about 410 s on one RTX 4090 in an
@@ -188,7 +193,8 @@ structure-and-manufacture subsystem.
 
 `crates/frob-conformance/tests/idea_register.rs`, module `first_pass`:
 
-- `thirty_records`; `ranks_are_1_to_15_once_each`; `rank_4_covers_ideas_4_and_5`; `rank_15_is_idea_30`.
+- `thirty_records`; `ranks_are_1_to_15_once_each_except_rank_4` (on `FP-04` and `FP-05`);
+  `rank_4_covers_ideas_4_and_5`; `rank_15_is_idea_30`.
 - `partition`: the ranked records cover ideas 1 to 15 and 30; the table covers 16 to 29; together 30.
 - `carriers_resolve` (against the tracker export).
 - `stale_numbers_absent`: no record's text contains the pairs that the earlier numbering used for the best

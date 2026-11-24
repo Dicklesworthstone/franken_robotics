@@ -6,11 +6,11 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "registry", "card"]
 parent: "WP-34"
-deps: ["NEG-01", "BD-025"]
-needs: ["Appendix M.38: the eleven rows of values that did not reconcile with their own formulas, as registry rows owned by the known-answer suite"]
-related: ["NEG-04", "NEG-05", "NEG-06", "NEG-07", "NEG-08", "NEG-09", "NEG-10", "NEG-11", "NEG-12", "NEG-13", "NEG-14", "NEG-02"]
+deps: ["BD-025", "N38b-50", "NEG-01"]
+needs: []
+related: []
 gates: []
-plan_refs: ["Appendix E.7", "Appendix M.38", "§38"]
+plan_refs: ["Appendix E.7", "Appendix M.38", "§38", "Appendix C.3"]
 ---
 ## Background
 
@@ -26,11 +26,32 @@ schema example carries the stale figure. This bead makes each settlement permane
 scanning the workspace for the withdrawn values. One bead per item (NEG-04 to NEG-14) carries the derivation
 and the regression test; this bead carries the register and the scan they share.
 
+Two other lists of the same kind exist, each made by a different recomputation: the reconciliation register
+of the known-answer suite (`crates/frob-conformance/registry/reconciliations.toml`, eleven records REC-01 to
+REC-11, bead N38b-50) and the discrepancy pins of the killed-idea register
+(`crates/frob-conformance/registry/discrepancy_pins.toml`, seventeen records DX-01 to DX-17, bead NAB-41).
+Four items here are also records there (E7-1 is REC-07; E7-2 is REC-02 and DX-02; E7-3 is REC-01 and DX-03;
+E7-6 is REC-06). The three registers stay separate files, because each records where a value was found and
+who settled it, but the search for a withdrawn value in its context is one engine, built in N38b-50 and run
+by all three (DESIGN: three searches with three matching rules would each flag the other registers' records,
+tests and printouts, which quote the withdrawn values on purpose).
+
 ## Scope
 
-In: the register file and its schema; the scan and its allow-list rule; the report. Out: the per-item
-derivations and tests (NEG-04 to NEG-14); the known-answer suite's own list of unreconciled values, which
-overlaps on four items and is cross-referenced, not duplicated.
+In: the register file `registries/cards/discrepancies.toml` and its schema, with the twelve items and their
+stale entries; the links from the four shared items to the reconciliation register; the test
+`stale_values_absent`, which runs the shared scan over this register's items; the check that every pinning
+test exists and is not ignored; the report.
+
+Out, with the bead that has it:
+- the scan engine itself (entry form, the 200-character window, the walk set, the exemption list with the
+  marker `stale-as-control: <id>`, the hit record, link resolution): N38b-50. This bead registers its register
+  as a source of that engine and specifies none of the engine's rules a second time;
+- the per-item derivations and tests: NEG-04 to NEG-14;
+- the known-answer suite's own list of unreconciled values and the rows that hold the settled values of the
+  four shared items: N38b-50 and its value beads (N38b-51 for REC-02, N38b-55 for REC-06, N38b-56 for REC-07).
+  They are cross-referenced by `same_as`, not duplicated;
+- the discrepancy pins DX-01 to DX-17: NAB-41.
 
 ## Technical approach
 
@@ -44,10 +65,20 @@ first_printed = "76,963"
 settled = "76,959"
 rule = "exact: ceil(ln δ / ln(1 − p*)); the approximation ceil(ln(1/δ)/p*) is not used"
 owner_bead = "NEG-04"
+first_milestone = "M3"           # the owner bead's milestone: from here the converse and link checks apply
 pinned_by = ["gb_32_reference_counts"]          # tests that assert the settled value
-stale = [{ pattern = "76[, ]?963", scope = "nemesis|rare|qualif|episode" }]
+stale = [{ pattern = "76[, ]?963", scope = "nemesis|rare|qualif|episode" }]   # the scan's common entry form
 governs = "the certification chapter's exact rule"
+same_as = ["REC-07"]             # the record of the reconciliation register for the same correction; absent on eight items
+value = "76959"                  # on a linked item: the settled number, exact integer or rational, compared with REC's
 ```
+
+`stale` uses the entry form of the scan engine (N38b-50): `pattern` is a regular expression for the withdrawn
+value, `scope` a regular expression that must match in the window around it, and an optional `all_of` lists
+phrases that must all occur in the window. The links: E7-1 → REC-07 (`value = "76959"`), E7-2 → REC-02
+(`"100/13"`), E7-3 → REC-01 (`"8428/5757"`), E7-6 → REC-06 (`"616"`). Links run from this register to the
+reconciliation register only; the engine reports a hit under every linked identifier, the DX records of
+NAB-41 that name the same REC record included.
 
 The twelve items:
 
@@ -66,17 +97,33 @@ The twelve items:
 | E7-K1 | Worst spacing in an 8 m cell | 0.48 µm | 0.24 µm (centred offset) | NEG-14 |
 | E7-K2 | Sideways cost of a 0.10 m shift | 0.57 m only | 0.57 m small-angle and 0.55 m exact | NEG-14 |
 
-**The scan (`stale_values_absent`).** A test in `frob-conformance` walks `registries/`, `schemas/`,
-`crates/*/CONTRACT.md`, `crates/*/tests/`, `scripts/e2e/`, `demos/`, `assets/` and `docs/` (never `target/`,
-never the specification document itself). For each `stale` entry it reports every line that matches `pattern`
-and whose surrounding 200 characters match `scope` (the scope keeps a bare "7.8" in an unrelated table from
-firing). A hit fails the test with file, line, item id and the settled value. Two allow-list forms: the
-register itself, and a line carrying the marker `stale-as-control: <id>` (a test that uses the stale value as
-its planted wrong golden). The scan also checks the converse: every `pinned_by` test exists and is not
-ignored.
+**The scan (`stale_values_absent`).** A test in `frob-conformance` registers this register as a source of the
+scan engine of N38b-50 and runs the engine over its `stale` entries. The engine's rules are stated once, in
+N38b-50, and are these in outline: it walks `README.md`, `registries/`, `schemas/`, `crates/*/CONTRACT.md`,
+`crates/*/tests/`, `crates/*/registry/`, `scripts/e2e/`, `demos/`, `assets/`, `docs/` and report templates
+(never `target/`, never the specification document itself); for each entry it reports every match of
+`pattern` whose window (200 characters either side, on text with white space collapsed) matches `scope` (the
+scope keeps a bare "7.8" in an unrelated table from firing); it exempts the three register files, their
+declared printouts (this bead declares the report below), the derivation file a record names, and a line
+carrying the marker `stale-as-control: <id>` (a test that uses the stale value as its planted wrong golden).
+A hit fails the test with file, line, the item id with every linked id, and the settled value.
+
+Two checks are this bead's own. The converse: every `pinned_by` test exists and is not ignored. The links:
+`resolve_links` of the engine is called, so that every `same_as` names a record of the reconciliation
+register and every linked `value` equals the figure that record settles.
+
+**Milestones of the items (DESIGN).** This bead closes at M0, but the items' owners land from M0 to M4 (E7-2
+and E7-3 at M0; E7-6, E7-7 at M1; E7-4, E7-A, E7-K1, E7-K2 at M2; E7-1, E7-B at M3; E7-5, E7-C at M4), and two
+linked records arrive at M1 (REC-06 of N38b-55, REC-07 of N38b-56). So this bead writes all twelve items at M0
+with their stale entries, and the scan guards every withdrawn value from M0 on: a stale value does not need its
+mechanism to be wrong. The converse check and the link check apply to an item only from its `first_milestone`
+(and a link only once its record's bead has landed); before that the item is reported `pending (Mn)`, which is
+not a pass and does not fail the build. Each owner bead (NEG-04 to NEG-14) confirms its item's `pinned_by` and
+`same_as` when it lands, and its tests are what make the converse check pass.
 
 **Report.** `cards_discrepancy_report` prints one JSON line per item: id, settled value, pinning tests with
-their last status, scan hits (zero expected), and `first_milestone` of the owning mechanism.
+their last status, scan hits (zero expected), `first_milestone` of the owning bead, and the state of the
+converse and link checks (`pass`, `fail` or `pending (Mn)`).
 
 ## Acceptance criteria
 
@@ -84,7 +131,15 @@ their last status, scan hits (zero expected), and `first_milestone` of the ownin
 - [ ] The scan passes on a clean tree and fails on each of twelve planted reintroductions (one per item),
       naming the item.
 - [ ] A stale value used as a labelled control does not fire; the same value unlabelled does.
-- [ ] Removing or `#[ignore]`-ing a pinning test fails the scan.
+- [ ] Removing or `#[ignore]`-ing a pinning test of an item whose `first_milestone` has arrived fails the
+      scan; at M0 the due items are E7-2 and E7-3, and the other ten are reported `pending` with their
+      milestones while their stale patterns are already scanned.
+- [ ] The scan is the engine of N38b-50: this bead adds a source and no second matching rule, walk set or
+      exemption list.
+- [ ] The four linked items resolve to REC-07, REC-02, REC-01 and REC-06 and their values agree, each from
+      the later of its item's milestone and its record's (E7-2 and E7-3 at M0, E7-6 at M1, E7-1 at M3); a link
+      edited to a record that does not exist, or a `value` edited to the withdrawn figure, fails the test once
+      due.
 
 ## Test plan
 
@@ -93,7 +148,17 @@ their last status, scan hits (zero expected), and `first_milestone` of the ownin
 - `discrepancy_register_schema`, `discrepancy_register_has_twelve`.
 - `stale_scan_detects_planted`: twelve scratch files, each with one stale value in scope.
 - `stale_scan_scope_filters`: "7.8 mm" in a dimension table and "615" as a part count do not fire.
-- `stale_scan_allows_labelled_control`, `stale_scan_requires_pinning_tests`.
+- `stale_scan_allows_labelled_control`, `stale_scan_requires_pinning_tests` (a due item without its test
+  fails; a pending item without it is reported `pending`).
+- `discrepancy_items_milestones`: every item's `first_milestone` equals its owner bead's milestone in the
+  bead index, and at a build of M0 exactly E7-2 and E7-3 are due.
+- `links_resolve_and_agree`: E7-1, E7-2, E7-3 and E7-6 name REC-07, REC-02, REC-01 and REC-06; 76959, 100/13,
+  8428/5757 and 616 equal the figures those records settle (each asserted once due, as above).
+- `linked_hit_names_both`: a planted "1/(1 − 0.87) = 7.8" is reported once, under E7-2 and REC-02 (and DX-02
+  when the pins of NAB-41 are present).
+
+The engine's own tests (the window, reflow invariance, exemptions, de-duplication of linked hits) are in
+N38b-50; the tests above exercise this register's twelve items through it.
 
 ### End-to-end script and logging
 
@@ -111,9 +176,11 @@ visited in sorted order so that the report is byte-identical between runs.
 - The scan is a guard against regression, not a proof of absence in prose: a paraphrased stale claim ("just
   under 77 thousand") escapes it, which is why each item also has a test on the computed value.
 - Four items (E7-1, E7-2, E7-3, E7-6) are also rows of the known-answer suite's unreconciled list; the suite's
-  registry bead owns those rows and this register points at them.
+  registry bead (N38b-50) owns those rows and this register points at them by `same_as`.
+- The discrepancy pins of NAB-41 are a third register with a similar name. Its file is
+  `crates/frob-conformance/registry/discrepancy_pins.toml`; `discrepancies.toml` names this register only.
 - New discrepancies found during implementation are added as items with a new id; an item is never deleted.
 
 ## References
 
-Appendix E.7; Appendix M.38; §38.
+Appendix E.7; Appendix M.38; Appendix C.3; §38.

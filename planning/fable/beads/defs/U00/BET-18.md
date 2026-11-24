@@ -6,9 +6,9 @@ priority: 0
 milestone: "M2"
 labels: ["m2", "phylum", "spark", "frob-phylum", "frontier", "bet", "gate"]
 parent: "WP-44"
-deps: ["N00-28", "N00-07", "BD-183", "BD-184", "BD-185", "BD-186", "STD-E2E"]
-needs: ["§42 (OPEN-PHYLUM-3): the owner's approval of the head-to-head on 512 topologies with four arms (class E1, repeated per arm); without it KILL-PHYLUM is decided on the pilot", "§17.14: the mutation corpus and the four arms A to D of the head-to-head"]
-related: ["BD-144", "BD-170", "BD-171", "N00-14", "N00-15", "N00-11", "NS-14", "BET-02"]
+deps: ["BD-183", "BD-184", "BD-185", "BD-186", "N00-28", "N17b-03", "N17b-07", "N17b-10", "N21b-19", "N38a-09", "STD-E2E"]
+needs: []
+related: ["N00-11", "N00-14", "N00-15", "N39b-44", "N40-31", "N40-32", "NS-06", "NS-14"]
 gates: ["GATE-PHYLUM-02", "GATE-PHYLUM-03", "GATE-SPARK-10", "KILL-PHYLUM", "KILL-BUCKET"]
 plan_refs: ["§4 (BET-18)", "§40.5", "§0.8 (H-03)", "§1.6 (N11)", "§2.4 (lever 1)", "§17.19", "§21.11"]
 ---
@@ -31,8 +31,12 @@ candidate is a property: run-to-run replay and forks inside a mixed batch.
 
 ## Scope
 
-In: pre-registration, the M2 reading, verdict and decision record. Out: variants, buckets, the control arm, the
-head-to-head experiment, the latency measurement.
+In: pre-registration, the M2 reading, verdict and decision record. Out, with the beads that have them: variants on
+devices, the mixed batch and GATE-SPARK-10 (BD-183); edit-to-first-step latency (BD-184); the per-family template
+control arm (BD-185); the head-to-head study with its four arms (BD-186) on the 512-topology workload and frozen
+mutation corpus (N17b-03), under the owner's compute envelope (N17b-07); the kill decisions KILL-PHYLUM (N17b-10)
+and KILL-BUCKET (N21b-19), which this bead reads and cites and never re-decides. KILL-PHYLUM is the one decision
+on the mixed batch; KILL-BUCKET is its device-side statement and defers to it where the two differ.
 
 ## Technical approach
 
@@ -60,8 +64,9 @@ head-to-head experiment, the latency measurement.
      variant changes no other world's digest.
 4. **Kill gates and fallback.** KILL-PHYLUM (M2): GATE-PHYLUM-03 fails (below 0.5 of homogeneous throughput on
    512 designs, more than eight buckets, or the template arm covers at least 95% of the mutation corpus and is
-   faster). KILL-BUCKET (M2): more than eight buckets are needed on the reference family corpus, or the mixed
-   batch of GATE-SPARK-10 runs below 0.5 after one optimization pass. Fallback: per-family templates become the
+   faster). KILL-BUCKET (M2): more than eight buckets are needed to hold the padding overhead Ω₃ ≤ 2 on the
+   reference family corpus, or the mixed batch of GATE-SPARK-10 runs below 0.5 of the harmonic mean of its
+   homogeneous rates after one optimization pass. Fallback: per-family templates become the
    engine (at most nine padded templates, each a homogeneous environment, scheduled in turn), with per-world
    parameter variants, which are Solid and unaffected; then sequential environments. The table-driven path
    remains for admission and preview on `batch-cpu`.
@@ -77,16 +82,20 @@ head-to-head experiment, the latency measurement.
 - [ ] The head-to-head is published with all four arms, each with its disclosure block; both numbers are
       recorded for our arm and for the incumbent.
 - [ ] Digest equality holds for 512 of 512 designs (or the failing design is named).
-- [ ] Verdict and the KILL-PHYLUM and KILL-BUCKET decisions recorded as ADRs.
+- [ ] Verdict recorded in `docs/adr/bet-18-m2.md`, citing the KILL-PHYLUM (N17b-10) and KILL-BUCKET (N21b-19)
+      decisions on record by identifier and hash; with either missing the verdict is not filed.
 
 ## Test plan
 
 ### Unit tests
-`bets.rs`: `bet18_mixed_at_0_78_holds`; `bet18_mixed_at_0_62_falsified_but_no_kill` (between 0.5 and 0.70: the
-cohort does not remain the engine by GATE-PHYLUM-03, the 0.5 kill threshold is not crossed; the verdict lists
-clause context and the gate's failure); `bet18_mixed_at_0_44_falsifies_c_and_fires_kill`;
+`bets.rs`: `bet18_mixed_at_0_78_holds`; `bet18_mixed_at_0_62_gate_fails_short_of_falsifier` (between 0.5 and
+0.70: GATE-PHYLUM-03 fails, so the bet is not `Held`; clause (c) does not fire and the 0.5 kill threshold is not
+crossed, so it is not `Falsified`; the verdict is recorded `open: gate failed short of the falsifier`, which
+blocks the M2 exit until the decision record states the engine in force and why);
+`bet18_mixed_at_0_44_falsifies_c_with_kill_record` (clause (c) true; N17b-10's record: KILL-PHYLUM fired);
 `bet18_templates_cover_96_percent_faster_falsifies_b`; `bet18_one_digest_mismatch_falsifies_d`;
-`bet18_nine_buckets_fires_kill_bucket`.
+`bet18_reads_kill_bucket_nine_buckets` (N21b-19's record: nine buckets needed for Ω₃ ≤ 2 → fired; read, not
+computed here).
 
 ### End-to-end script and logging
 `scripts/e2e/bet_18_decide.sh` recomputes the harmonic-mean ratio from the per-family homogeneous rates and the

@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "habitat", "kinesis", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-32"]
-needs: ["§19.10.7: the proxy-adequacy pilot (GATE-HAB-09), the measurement that decides whether a coupled island is ever funded (BD-415, BD-416)", "§28.4: the growth-vector analysis A-07 at preflight, which owns the parallel-roller mecanum negative control (BD-106)"]
-related: ["NAB-34", "NAB-36", "NAB-41", "NAB-20", "NAB-29", "N19b-20", "N22c-21", "BD-082", "BD-106", "BD-230", "BD-231", "BD-243", "BD-384", "BD-413", "BD-414", "BD-416", "BD-422"]
+needs: []
+related: ["NAB-36"]
 gates: []
 plan_refs: ["Appendix C.2.3", "§0.8 (H-16)", "§16.5", "§16.7", "§19.10"]
 ---

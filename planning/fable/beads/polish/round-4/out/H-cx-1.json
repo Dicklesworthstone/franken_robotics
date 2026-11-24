@@ -1,0 +1,145 @@
+{
+ "round": 4,
+ "slice": "H-cx-1",
+ "reviewed": 14,
+ "answered": {
+  "added": 7,
+  "holds": 1,
+  "declined": 0
+ },
+ "changed": [
+  {
+   "bead": "N09-CX",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request of F-U25d-1 added as asked: CX-018's wheel-loop re-run is N38a-11 (ledger row 17, PILOT-PT-17), not BD-043, which excludes that row. Changed in the label, the rerun cell, the entries table, Scope and Considerations. Left as it was, the entry would wait on a receipt that BD-043 never produces and CX-018's control would stay an obligation for good."
+  },
+  {
+   "bead": "N12-CX",
+   "kinds": [
+    "request",
+    "deadlock",
+    "plan",
+    "registry"
+   ],
+   "what": "Request of F-U12-1 added as asked: CX-106 is realized by N12-02 and N12-03, CX-111 by N12p2-02 (N12-18 is the orbit-count checker and never cited it). Beyond the request: (1) deadlock: planted_shortcut_fails_control and the 'each row fails when planted' criterion needed the control tests of N12p2-02 (M2), N12-13 (M3) and N12-17 (M4), so this M1 registry could not close before M4; both now read the control runner's history and report such rows pending with their bead. (2) The bead had no end-to-end script of its own (it only described N12-34's and N12-11's): scripts/e2e/registry_n12_cx.sh added (seeding twice, join, one planted copy, STD-E2E log), dep STD-E2E added. (3) plan_case = numbers and an empty case_supplied_by stated for all ten (CX-110, -112, -113 have no numbers in their cases; written 'words' they would break the loader's count of 17); plant written in the schema's <bead>:<name> form."
+  },
+  {
+   "bead": "N13-CX",
+   "kinds": [
+    "request",
+    "broken",
+    "registry"
+   ],
+   "what": "Request of F-U13 added as asked: CX-117 has its own plant BD-047:cx-117 (the lower rows taken as the point Jacobian, torques (0, 0)), no longer N13-18's M3, which gives (+3, +3); its gate is GATE-MARROW-01 only (DESIGN: it is not one of the eight mutations GATE-MARROW-04 counts); the acceptance line and cx_entries_have_kind_and_plant no longer name M3. Beyond the request: (1) broken: the script was `marrow_ka_registry.sh --controls`, an option N13-KA's script does not have, on a bead this one does not depend on, running a 'check mode' the seeding tool does not have: replaced by this bead's own scripts/e2e/registry_n13_cx.sh with the concrete seeding and join commands; dep STD-E2E added. (2) Plants written in the schema's form: N13-18:M1 for CX-116 (N10-CX and N11-CX already write N13-18:M2 and N13-18:M1; a bare M1 here gave one switch two spellings), <first owner>:cx-<nnn> for the others; plan_case and case_supplied_by stated."
+  },
+  {
+   "bead": "N18-CX",
+   "kinds": [
+    "request"
+   ],
+   "what": "Two requests added as asked. (1) F-U18b-2: the plant of trac-arc is N18b-43:trac-arc, with the plant record's feature = chord-only-swept-bound, the feature N18b-43 builds; N18b-45 (referee) and N18b-44 (batch) run it. The old name made N18b-43's containment row wait on a plant of N18b-45, which depends on N18b-43. (2) F-U38a: CX-176's label names PILOT-PT-19 and its rerun pair is entered from that record when the row is written (true with the record's receipt where reproduced, else false), so N38b-05's rerun-disagrees-with-pilot check holds it; acceptance, the unit test and a negative control follow. N18b-43 added to related."
+  },
+  {
+   "bead": "N19-CX",
+   "kinds": [
+    "request"
+   ],
+   "what": "Two requests added as asked. (1) F-U19b-2: CX-194's plant is N19b-29:cx-194 (the refinement loop returning after candidate selection, caught by doorway_60mm); N19b-25 is a standalone pilot with no component to plant in; the Carried-by cell now names N19b-29 first, as the bead's own rule ('the first carrier named builds the shortcut') needs. (2) F-U25d-1: CX-195's label names PILOT-PT-16 and its pair is entered from that record when the row is written (BD-043 is M0, this bead M2); written rerun = false after a reproduced re-run it would have been refused by the loader once the label named the record, or left an obligation nobody clears. Mechanical finding C2-file: false alarm, the bead quotes registry/counterexamples/habitat.toml only to say it is withdrawn and its acceptance requires that no such file exists; nothing changed for it."
+  },
+  {
+   "bead": "N20-CX",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: the Considerations narrated the review ('at this review ... do not yet cite L-a to L-d, which is requested of them'). N20b-28, N20b-32, N20b-40 and N20b-41 now cite their slots with plants N20b-28:chain-order-swapped, N20b-32:visibility-scene-only, N20b-40:unwrap-nearest-always and N20b-41:loadcell-contact-sum; the bead states that."
+  },
+  {
+   "bead": "N21-CX",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The registry's own negative control named the test cx_spark_controls_fail, which round 3 replaced by cx_spark_controls_recorded; restated as a synthetic history line `missed` that must fail cx_spark_controls_recorded. 'The three claim- plants' corrected to four (claim-222, -223, -227, -232)."
+  },
+  {
+   "bead": "N22-CX",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Convention 13 and a stale cross-reference: the paragraph on CX-012 said its control carries 'BET-25, GATE-SHIELD-01 and -03 per N00-CX' and that 'the switch from owed is a request filed with N00-CX'. N00-CX gives GATE-SHIELD-06, and the switch is the seeding tool's: once reflex-untimely (same_as CX-012, numeric = true) is in the catalogue the next seeding fills CX-012's case_supplied_by and its control becomes runnable under the same NC number. Stated as that fact."
+  },
+  {
+   "bead": "N00-CX",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "deadlock",
+    "broken"
+   ],
+   "what": "(1) Contradiction with the schema owner: CX-012 was recorded with fields `status = \"owed\"` and `instance` and a loader rule of this bead's own that derives its control at load time. N38b-05's schema has neither field (an unknown field is a load error), and it specifies the same case with its own fields (numeric = false, obligation; case_supplied_by filled by the seeding from the reflex-untimely entry). N00-CX now uses N38b-05's form; CX-012 names its plant N22c-27:list_untimely_assumption_as_monitored at M0, and the old guard 'a different plant on reflex-untimely is an error' is kept as the test cx012_plant_matches_instance. (2) Missing prerequisite: the bead writes into N38b-05's schema and its acceptance loads through N38b-05's loader, but depended only on BD-025 and STD-E2E, so it could be started with no loader or seeding tool to run; dep N38b-05 added (no cycle), and the text now says the seeding tool writes the controls, never this bead. (3) Dead key: N00-06 (superseded by N38a-10) named as the re-run of CX-001, CX-003 and CX-013; now BD-043 (CX-001, CX-013) and N38a-11 (CX-003), recorded in N38a-10's ledger, with rerun = false until then. (4) plan_case = numbers stated for all fifteen, CX-012 included, so the loader's count of 17 word-only entries holds."
+  },
+  {
+   "bead": "N23-CX",
+   "kinds": [
+    "registry"
+   ],
+   "what": "'Mutation points' said each mutation feature is `nc-…`. BD-025 as revised this round and N38b-05 name a catalogue-seeded control's feature by its plant (`cx-<nnn>`); a building bead that declared an nc- feature would leave its control stale, because the runner builds the feature the record names. One clause changed."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38a-11",
+   "what": "N09-CX now names you (ledger row 17, PILOT-PT-17) as the wheel-loop re-run that, together with BD-041's docking re-run, licenses CX-018 (rerun_receipt holds both receipts in re-run order). Your paragraph 'Catalogue entries that rest on these rows' lists only CX-264 and CX-176: add CX-018 (row 17) and log its receipt the same way, or CX-018 stays an obligation with nobody recording its first receipt. Also CX-003 of N00-CX rests on row 14."
+  },
+  {
+   "bead": "N18b-43",
+   "what": "N18-CX's late entry trac-arc now has the plant `N18b-43:trac-arc`, and its plant record carries `feature = \"chord-only-swept-bound\"`. State that as fact and drop 'the plant's ownership is requested of N18-CX ... until it moves'. The control build is `--features gauntlet-mutations,frob-contact/chord-only-swept-bound` (BD-025: the runner adds <crate>/<feature> exactly as the record writes it), not `frob-contact/nc-<nnnn>`."
+  },
+  {
+   "bead": "N18b-45",
+   "what": "N18-CX's late entry trac-arc now has the plant `N18b-43:trac-arc` (feature `chord-only-swept-bound`, built by N18b-43). Replace `N18b-45:trac-arc`, drop 'the plant's identifier is requested of N18-CX', and name the feature as the record does, not `nc-<nnnn>`."
+  },
+  {
+   "bead": "N18b-44",
+   "what": "Replace `N18b-45:trac-arc` by `N18b-43:trac-arc` in step 2 and in the negative controls: N18-CX's trac-arc plant is N18b-43's (feature `chord-only-swept-bound`); you run it on the batch profile."
+  },
+  {
+   "bead": "N18b-27",
+   "what": "CX-176's rerun pair is entered by N18-CX at M1 from the pilot record PILOT-PT-19 and must always equal pilots::rerun_status of that record (N38b-05, rerun-disagrees-with-pilot). Your text 'replaces ... CX-176's catalogue row (rerun = true with the receipt)' should only replace the figures: setting the pair yourself while the record reads `differs` would be a load error."
+  },
+  {
+   "bead": "N19b-29",
+   "what": "N19-CX now names CX-194's plant `N19b-29:cx-194` (carried-by: N19b-29 first). Drop the sentence 'the pilot N19b-25, named as its carrier in N19-CX ...': the registry names you."
+  },
+  {
+   "bead": "N13-18",
+   "what": "N13-CX now gives CX-117 the plant `BD-047:cx-117`, kind mutation, gate GATE-MARROW-01 only (it is not one of your eight records), and writes CX-116's plant as `N13-18:M1` (as N10-CX writes `N13-18:M2`). State that as fact and drop '(requested of N13-CX and N13-KA)'."
+  },
+  {
+   "bead": "BD-047",
+   "what": "Your acceptance says the lower-three-rows shortcut 'is planted as a mutation ... the control is registered'. Name it: it is the plant `BD-047:cx-117` of N13-CX's CX-117 (Cargo feature `cx-117` of frob-lie, built only with gauntlet-mutations), caught by planar_2r_lower_rows_shortcut_is_wrong; the twist-map-for-a-wrench mutant is `BD-047:cx-099` of N11-CX's CX-099. Without the names the seeded controls point at features nobody declares and stay stale."
+  },
+  {
+   "bead": "N13-KA",
+   "what": "KA-228's control cell is CX-117's shortcut. For the seeding tool to reuse CX-117's control instead of allocating a second one for the same plant (N38b-05 step 3 matches by plant), the cell must name the plant `BD-047:cx-117`, as the cells of the eight mutations name their MutationId."
+  },
+  {
+   "bead": "N38b-05",
+   "what": "CX-012 as N00-CX now writes it, in your fields only: numeric = false, plan_case = \"numbers\" (your count of 17 word-only entries excludes it), case_supplied_by empty, and plant already named `N22c-27:list_untimely_assumption_as_monitored`; rule_ids BET-25 and GATE-SHIELD-06. Your obligation (b) says the seeding 'takes its plant' from reflex-untimely: say that the plant is already on CX-012 and must equal that entry's (N00-CX tests it), and state CX-012's plan_case, or an implementer who writes \"words\" gets 18 and cx-count-mismatch. N00-CX now depends on you."
+  },
+  {
+   "bead": "N38a-40",
+   "what": "Rule 5 exempts only a numbered row's own `slug` value from provisional-tag-past-due. The plants of late entries carry the same text: N13-CX `N13-35:turn-count-is-state`, N14-CX `<bead>:stance-set-in-query` and two more, N16-CX `<carrier>:kin-k1` to `kin-k15`, N18-CX `N18b-40:trac-resid` and three more, N23-CX `<bead>:<tag>`; the seeding copies them into each control's target and feature or fixture, which N38b-05 writes once and never rewrites. As rule 5 stands every one of these entries fails the check at its milestone, or its plant must be renamed (a plant-changed finding and a new control). Exempt a numbered entry's plant ids and the control fields derived from them."
+  },
+  {
+   "bead": "N12-02",
+   "what": "N12-CX names the plant of CX-106 `N12-02:shortcut-accept-on-hashes`: it is your negative-control build 'a dispatch that returns a permissive default for a name it does not hold'. Give that build this feature name so the seeded control's feature exists."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Unchanged: N10-CX, N11-CX, N14-CX, N16-CX (read in full against Appendix N.7, N.8, N.11, N.13 and N38b-05; no request, no narration, rows agree with their carriers). All seven requests were added as asked, so there is no ANSWER entry; the one mechanical finding (N19-CX, C2-file) is a false alarm and the present form holds. N00-CX, N12-CX and N13-CX had missed round 3's alignment of the registries with N38b-05, which is why they changed more than their requests asked. Not done, because it means checking fifteen catching beads: N00-CX states each control's kind and catching beads but no plant identifiers in N38b-05's <bead>:<name> form. Late entries keep their tags; no number was invented. The feature-naming question (nc-<nnnn> against the plant's name) was settled by BD-025 during this round in favour of the plant's name; about a hundred mechanism beads still write `<crate>/nc-<nnnn>` for catalogue-seeded controls and will need it in the second half."
+}

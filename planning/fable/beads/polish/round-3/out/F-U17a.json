@@ -1,0 +1,126 @@
+{
+ "round": 3,
+ "slice": "F-U17a",
+ "reviewed": 21,
+ "changed": [
+  {
+   "bead": "BD-356",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Request H-ref-2 applied: step 7 builds the ceiling record frob.perf.ceiling/1 (experiment, goal 1.15, warm baseline with fingerprint, f, r, h, ceiling from N36-05's ceiling), files it before the first run and calls N36-05's admit_experiment, the only raiser of FROB-REF-866 (no private comparison, no repairs list); acceptance and the unit tests fr_h_receipt_order and ceiling_refusal_866 now check the refusal through admit_experiment; dep N36-05 added (it was only transitive). The acceptance item that waited on N17a-14 and N17a-13 (convention 7) now checks what is true at close (fallback reachable by flag, status row names the open gate)."
+  },
+  {
+   "bead": "BD-285",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The acceptance item requiring N17a-28's replay clause and N17a-29's decision before close (convention 7) now says the status row stays partial and names both as owed."
+  },
+  {
+   "bead": "BD-287",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The acceptance item requiring N17a-21 to record GATE-PHYLUM-07 (convention 7) now checks that this bead's script steps and fixtures are in place, with the status row partial until N17a-21 records."
+  },
+  {
+   "bead": "N17a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Scope Out said the general speedup bound is carried by BD-354; it is N00-17's thesis::general_bound entered through N36-05's ceiling (BD-354's own scope says so)."
+  },
+  {
+   "bead": "N17a-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-6 applied: sim.run takes the design positionally; the run commands carry their key; spark.fingerprint (a run verb) gets --device all and a key; the mixed-cell sweep gets --task flat-stand and a key."
+  },
+  {
+   "bead": "N17a-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-6 applied: reference runs pass the design positionally and use the sweep's task (flat-stand) so they are the same experiment; sim.replay uses its registered form --run/--world with a key; telemetry.divergence gets its two run positionals; recording now names this bead as the one recorder of GATE-PHYLUM-02 with the record_gate example (conventions 1 and 9)."
+  },
+  {
+   "bead": "N17a-11",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-6 applied: the design is positional and --rows exact (in no row) becomes --capacity contacts=<C>,rows=<R> with R the mode's exact row count from N17a-06's profile; worlds leaving the mode are flagged under the default overflow policy and excluded from r; the run gets its key."
+  },
+  {
+   "bead": "N17a-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-6 applied: the homogeneous stratum moves from sim.run --design (whose row has no --family-lanes) to phylum.sweep with --designs quad-ref; --steps (not a sweep input) dropped, --task flat-stand added; distinct keys per arm, stratum and repetition; --solve-queues auto with --profile lockstep as the option requires; spark.fingerprint gets --device all and a key; the input-less spark place call replaced by the placement receipt each run's envelope carries; step 1 now routes the 866 registration through BD-356's ceiling record and N36-05's admit_experiment."
+  },
+  {
+   "bead": "N17a-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "This bead is the one recorder of GATE-PHYLUM-07: the record_gate command is stated and the script writes no gate record (conventions 1 and 9)."
+  },
+  {
+   "bead": "N17a-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-6 applied: stage A passes the design positionally with --profile lockstep and a key; stage B's vague 'frob --json sim run' becomes the solo form (positional, task, --seed, --world-addr, key) and the mixed form (--designs with --worlds-per-design 1, its own key); sim.replay uses --run/--world with a key; telemetry.divergence gets its run positionals."
+  },
+  {
+   "bead": "N17a-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The contributed quotient command lacked --task, which the design-set form takes and whose read set enters the digest; now --task ballast-swing, as the owning script N17a-27 runs it."
+  },
+  {
+   "bead": "N17a-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The two compared sweeps of step 10 carry distinct keys (convention 5); the gate is no longer recorded here from two receipts with the replay clause cited from a later bead (conventions 7 and 9): the script writes no gate record and N17a-28 records GATE-PHYLUM-01; BD-285's contributed steps (quotient.plan, quotient.expand, quotient.merge_split) added to the required step list and acceptance."
+  },
+  {
+   "bead": "N17a-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-6 applied: sim.run takes the design positionally, with --task, --profile lockstep and a key per member; telemetry.divergence gets its run positionals; the two sweep arms get distinct keys. This bead is now the one recorder of GATE-PHYLUM-01: its run includes N17a-27's script as a stage (convention 11) so part A's receipt carries all three clauses, recorded with record_gate."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "Add --family-lanes to the sim.run row (owner BD-356, M4; identity StepPlanId; FROB-REF-724 until the lanes land and again if KILL-FAMILYLANE fires), as VERBS-phylum's gated-option table already says '(and sim.run)' and BD-356 step 5 defines it; otherwise VERBS-phylum drops '(and sim.run)' and BD-356 drops that spelling. N17a-13 was moved to phylum.sweep meanwhile."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "phylum.generate's --generator is '<id or file>'; state that a committed fixture reference @fixture:<name> is accepted, as the row already says for --split. N17a-21 calls --generator @fixture:gen-quad and its other fixture generators this way."
+  },
+  {
+   "bead": "N17a-24",
+   "what": "Its contributed step's `frob phylum sweep --designs @fixture:mirror-pair --task flat-mirror-invariant --quotient --json` lacks --key (run verb, KNOWN_DRIFTS 5), and the direct `frob sim run` evaluation of the member needs the positional design and a key of its own, distinct from the sweep's."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "Unchanged: N17a-01, N17a-02, N17a-03, N17a-05, N17a-07, N17a-08, N17a-16, N17a-19. All seven addressed requests applied; for N17a-11 the registered --capacity rows=<R> was chosen over a new pilot-only input. Mechanism beads that contribute named steps to a script owned by a later e2e bead (BD-285, BD-287, BD-356, N17a-19, N17a-26) were left in that form: convention 11 allows a shared script with one owner named in the others, and convention 7 allows the earlier bead to expose a script stage. A convention-10 concern on N17a-14 (it depends on N17a-13, which waits on BD-356) was checked and not filed: on the pilot-fired branch N17a-14 closes BD-356, N17a-12 and N17a-13 as not funded and records the kill on the pilot alone, so it closes either way. registries/gates.toml in N17a-10, N17a-21 and N17a-27 is the record_gate register of N38b-19 and was left as is. No dependency cycles after adding BD-356 -> N36-05 (3,740 beads checked)."
+}

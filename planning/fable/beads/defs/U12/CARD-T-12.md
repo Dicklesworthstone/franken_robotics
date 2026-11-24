@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["BD-381", "N12-06", "SPEC-C-12", "N12-23"]
+deps: ["BD-052", "N12-06", "N12-23", "SPEC-C-12", "STD-E2E"]
 needs: []
-related: ["BD-103", "BD-360", "N12-37", "CARD-T-15", "CARD-T-29", "BD-052"]
+related: ["BD-381", "CARD-T-15", "CARD-T-29", "GB-03", "N10a-11", "N12-37", "N12-45", "N31b-41"]
 gates: []
 plan_refs: ["§12.3 (T-12)", "§10 C-12", "§12.1 (Order.FixedPoints re-checks)", "Appendix D.5 (Kleene iteration)", "Appendix E GB-03"]
 ---
@@ -33,20 +33,23 @@ alternative: a sizing spreadsheet iterated by hand, with no statement that the r
 
 ## Scope
 
-In: the registered statement, the Lean proof and its capsule (written within BD-381's first batch), the registry
-row, the binding of the co-design closure analysis to the card. Out: the poset and Kleene implementation (the
-algebra crate bead); the co-design closure analysis and the co-design synthesis lane; the continuous (ω-complete)
-case, which is not needed and not claimed.
+In: the statement document; the registered statement `lean/Frob/Statements/T12.lean` (`def Statement : Prop`, the
+form the binding rule of N12-24 requires), which must elaborate in stock Lean with a closure inside order theory;
+the negative-control variants (the non-monotone statement, the weakened statement); the registry row; the binding
+of the co-design closure analysis to the card. Out: the Lean proof and its capsule, which BD-381 writes and seals
+in its first batch of three cards and which depends on this card (sealing binds the proof to the registered
+statement, so the statement must exist first); the poset and Kleene implementation (the algebra crate bead); the
+co-design closure analysis and the co-design synthesis lane; the continuous (ω-complete) case, which is not
+needed and not claimed.
 
-Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the poset and Kleene-iteration code of `frob-algebra` (BD-052) is `related`, not a dependency (a card that waited
-for its implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What
-the card does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier,
-and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants,
-and every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live
-output (the closure analysis citing the card only for monotone fragments) is run inside the implementing bead,
-with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
-registry row for that output.
+Order of work. The poset and Kleene-iteration code of `frob-algebra` (BD-052) lands four milestones earlier, at
+M1, and cannot wait on an M5 card, so no loop is possible: it is a dependency, and this card runs its instance-side
+law tests and the check of the closure analysis's citations against that code itself. What the card further
+depends on is the card registry, its specification and Lemma's Lean measurement (N12-23). It closes on its
+statement document, its registered statement, its registry row, its instance tests and every acceptance line
+that its own fixtures decide. The Lean route is the one part observed later: the capsule lines below are observed
+when BD-381, which depends on this card, seals the proof against this card's registered statement and runs this
+card's negative controls, and BD-381's receipt moves the row from `hypothesis` to `checked`.
 
 ## Technical approach
 
@@ -78,12 +81,18 @@ theorem kleene_chain_monotone {A : Type} [PartialOrder A] [OrderBot A] (f : A �
 
 ## Acceptance criteria
 
-- [ ] The theorem is compiled by stock Lean, re-checked by `fln`, bound and sealed; the capsule verifies from an
-      empty environment; `frob-verify` accepts the `lean-capsule` bundle with the capsule file.
-- [ ] Negative controls: the statement without monotonicity (f an arbitrary function) fails to compile; a
-      weakened statement (existence of some fixed point, not the least) fails the binding check; a capsule byte
-      flip is rejected.
-- [ ] Registry row: Lean route `checked`, class `Proved`, capsule hash, both checker identities.
+- [ ] The registered statement `lean/Frob/Statements/T12.lean` elaborates under stock Lean at the pinned
+      Lean and Mathlib versions, and its generated closure list contains no blocked module (checked by this card).
+- [ ] The negative-control variants are written and registered for BD-381, which runs them when it seals the
+      proof: the statement without monotonicity (f an arbitrary function) fails to compile; a weakened statement
+      (existence of some fixed point, not the least) fails the binding check; a capsule byte flip is rejected.
+      This card checks that each variant elaborates or fails to elaborate as stated under stock Lean.
+- [ ] Registry row at this card's close (M5): Lean route `hypothesis`, with the registered statement
+      `lean/Frob/Statements/T12.lean` and its elaborated-type hash present; instance side `Tested` with this card's
+      law-test receipt. BD-381, which depends on this card, seals the proof (compiled by stock Lean, re-checked by
+      `fln`, bound, sealed, verified from an empty environment, its `lean-capsule` bundle accepted by
+      `frob-verify` with the capsule file), and its receipt moves the Lean route to `checked`, class `Proved`, with
+      capsule hash and both checker identities.
 - [ ] The closure analysis cites the card only for monotone fragments and reports non-monotone designs as
       outside it.
 
@@ -91,8 +100,16 @@ theorem kleene_chain_monotone {A : Type} [PartialOrder A] [OrderBot A] (f : A �
 
 ### Unit tests
 
-`lean/tests/cards/t12/`: `kleene_reaches_lfp_seals`; `kleene_chain_monotone_seals`; `non_monotone_variant_fails`;
-`closure_within_order_theory`.
+`lean/tests/cards/t12/`: `statement_elaborates` (the registered `Statement` elaborates under the pinned stock Lean
+and Mathlib; its elaborated-type hash equals the one in the registry row); `closure_within_order_theory` (the
+generated closure list of the statement names no blocked module); `variants_elaborate_as_stated` (the
+non-monotone variant, with `f : A → A`, and the weakened variant, existence of some fixed point, each elaborate as
+Props and are registered with the outcome BD-381 must observe: the proof fails to compile against the first and
+fails the binding check against the second). Sealing the proof and running the variants against it are BD-381's
+tests (`t12_kleene_seals` and its negative controls), not this card's.
+`crates/frob-lemma/tests/cards/t12.rs`: `t12_registry_row` (at this card's close the row has the Lean route
+`hypothesis` with the registered statement and its hash, and the instance side `Tested` with the law-test
+receipt; a row edited to `checked` without a capsule receipt fails the registry check).
 `crates/frob-algebra/tests/kleene.rs` (instance side): `iteration_reaches_lfp_on_product_of_chains` (two chains
 of heights 5 and 7, f monotone by construction, result equals the brute-force least fixed point);
 `non_monotone_map_detected` (a map that decreases somewhere is refused by the monotonicity check);
@@ -100,8 +117,19 @@ of heights 5 and 7, f monotone by construction, result equals the brute-force le
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals this card as one of the three and logs its closure size,
-peak memory and capsule hash.
+This card's own script, `scripts/e2e/card_t12.sh` (header `bead=CARD-T-12 milestone=M5 labels=lemma,frob-lemma
+seed=0 needs=cpu`; sources the STD-E2E helper, idempotent, writes only under `target/`), runs at the card's close:
+`statement`, `lake env lean lean/Frob/Statements/T12.lean`, exit 0, with the closure list checked against the
+blocked modules; `variants`, each negative-control variant elaborated with its registered expected outcome;
+`instance`, `cargo test -p frob-algebra --test kleene`; `row`, `cargo test -p frob-lemma --test cards --
+t12_registry_row`. Its NDJSON lines (`target/e2e-logs/card_t12/<utc>.ndjson`, transcript beside it) carry `ts`,
+`script`, `bead` ("CARD-T-12"), `step` (`T-12/<stage>`), `event`, the exact command line, exit code, wall time,
+peak memory in GiB, the closure's module count, the elaborated-type hash of the registered statement, the row's
+route statuses, and on a failure the Lean diagnostic or failing test and the path to reproduce; the `summary` line
+counts assertions passed and failed. `scripts/e2e/lemma_lean_capsule.sh` (bead N12-37, which comes after BD-381
+and therefore after this card) later seals this card as one of the three and logs, under the same `bead` value,
+its closure size, peak memory, capsule hash, both checker identities and, for each negative control, the refusal
+and its message.
 
 ### Known answers and negative controls
 

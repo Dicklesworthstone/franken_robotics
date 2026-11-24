@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "frob-cert", "frob-shield", "solid", "test"]
 parent: "WP-65"
-deps: ["N12-17", "N12-06", "SPEC-C-31"]
+deps: ["N12-06", "N12-17", "SPEC-C-31"]
 needs: []
-related: ["CARD-T-29", "CARD-T-19", "BD-338", "N12-05", "BD-337"]
+related: ["CARD-T-29", "CARD-T-32", "N12-05", "N12-47"]
 gates: []
 plan_refs: ["§12.3 (T-28)", "§12.7", "§10 C-31 (tier 1)", "§22.11", "Appendix D.7 (energy budget)"]
 ---
@@ -99,15 +99,23 @@ registry row for that output.
 ### Unit tests
 
 `crates/frob-lemma/tests/cards/t28.rs`: `tray_cart_terms` (0.64, 0.50, 0.251136, 0.10 J; sum 1.491136 ≤ 2.00);
-`largest_admissible_cutoff` ((2.00 − 0.64 − 0.25 − 0.10)/20 s = 50.5 ms, or 45.5 ms with a further 0.10 J of
-reserve); `missing_gravity_term_rejects`; `missing_reflected_inertia_rejects`; `sill_exclusion`
+`largest_admissible_cutoff` (with the terms at the two decimals the known answer quotes,
+(2.00 − 0.64 − 0.25 − 0.10)/20 s = 50.5 ms, or 45.5 ms with a further 0.10 J of reserve; the certificate itself uses
+the exact gravity term 0.251136 J, rounded up as an upper end, and the auditor's bound is then
+1.008864/20 s = 50.4432 ms, or 45.4432 ms with the reserve; the test asserts both and that the exact bound is the
+smaller); `missing_gravity_term_rejects`; `missing_reflected_inertia_rejects`; `sill_exclusion`
 (0.94176 > 0.90); `approach_energy_removes_exclusion` (0.95 ≥ 0.94176); `outward_rounding_direction` (term upper
 ends rounded up, absorber work rounded down); `class_capped_by_inputs`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants; the shield work's script
-exercises `frob shield budget` and logs each term, the margin and the certificate hash.
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants;
+`scripts/e2e/shield_energy_budget.sh` (bead N22b-18) exercises `frob shield budget` and logs each term, the margin
+and the certificate hash. For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead`
+("CARD-T-28"), `step` (`T-28/<budget-or-mutant>`), `event`, the exact command line, exit code, wall time, each
+term's interval in joules with its load-path element, the absorber's lower work in joules, the margin in joules,
+the printed class, the bundle's BLAKE3, the expected and observed verdict, and on a rejection the first failing
+rule (the uncovered element, the omitted term or the class above its inputs) and the path to reproduce.
 
 ### Known answers and negative controls
 

@@ -1,0 +1,373 @@
+{
+ "round": 1,
+ "slice": "UAB",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "NAB-01",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "schema sketch gained the `structural` and `see` fields that the rules and NAB-03 use; loader error gloss.see-unresolved with test see_must_resolve; known answers now separate the 14 plan-time parenthetical rows from the 13 sense records (Instants (seven) is a count; unqualified Arena takes sense subsystem), matching NAB-05 and NAB-08"
+  },
+  {
+   "bead": "NAB-02",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "negative controls 6 and 7 had no named unit test: added prose_definition_absent_fails and deleted_registry_term_fails, and stated that a deleted term is caught only in a candidate form (plain-prose uses are invisible to the scanner); the walked tree root can be set by FROB_LINT_ROOT so NAB-08 can lint a scratch copy"
+  },
+  {
+   "bead": "NAB-03",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "transcription rule 3 did not cover rows with text after the reference parenthetical (Annex, Partial ten-fold gate) or with an inline reference only (Alias witness, which would have failed gloss.no-definition); rule now keeps trailing text and sets Alias witness defined_in = [\"§20.12\"]; `see` tied to NAB-01's schema"
+  },
+  {
+   "bead": "NAB-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "stated that the binaries row is also code = true (kind binary), so this range holds three of NAB-01's eleven code-literal records"
+  },
+  {
+   "bead": "NAB-05",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "hypothesis_states_equal_register_states was skipped 'until the registry exists' although N00-10 is a dependency; it now reads crates/frob-conformance/registry/hypotheses.toml (frob.hypothesis/1) and also checks the H-01..H-29 identifiers with the four split rows"
+  },
+  {
+   "bead": "NAB-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "special case for Partial ten-fold gate: parenthetical split on ';' and ',' into defined_in §39.12 and constructs GATE-TENFOLD-06, BET-13, trailing sentence kept in meaning"
+  },
+  {
+   "bead": "NAB-08",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "scratch path aligned with STD-E2E (target/e2e-scratch/glossary/<run_id>/, xtask --root, FROB_LINT_ROOT); header declares its seven plants; a synthetic probe contract keeps contract-dependent defects live at early M0 instead of skipping; deleted-term plant changed to the `provisional` label, because deleting commit-fence would not be caught by the lint's candidate rules"
+  },
+  {
+   "bead": "NAB-09",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "TOML sketch used invalid ';'-separated keys; schema now holds every field the record beads use (local_root, role, locator_derived, group, context_only), the [[unverified]] table NAB-10 and NAB-14 read, [[tombstone]] for retired ids and the [history] digest list behind src.reread-edited; new loader error src.unverified-status-without-record; superseded N00-06 replaced by N38a-10 in Scope"
+  },
+  {
+   "bead": "NAB-10",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "two of the ten findings had no named unit test: added oracles_section_citing_unread_fails (needs-reading as a failure outside not-run gates) and fact_without_citation_from_fact_sites; the walked root can be set by FROB_LINT_ROOT so NAB-16 can lint its scratch tree"
+  },
+  {
+   "bead": "NAB-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`role` now refers to the field of NAB-09's schema instead of an ad-hoc extra field"
+  },
+  {
+   "bead": "NAB-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "mark counts conflated brackets with readings: the split rule makes 61 brackets (24 P, 29 F, 8 S) into 64 readings (25 P, 29 F, 10 S); per-topic reading counts and the record boundary for multi-part documentation phrases stated; test mark_counts rewritten"
+  },
+  {
+   "bead": "NAB-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "same bracket/reading conflation: 102 brackets (15 P, 63 F, 22 S, 2 U) become 110 readings (18 P, 66 F, 24 S, 2 U) through three split brackets, one versioned bracket and four shared brackets; rule stated, per-topic counts 11/28/11/13/8/16/12/4/7, combined register 174 readings (43 P, 95 F, 34 S, 2 U); test shared_bracket_copies added"
+  },
+  {
+   "bead": "NAB-14",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "the fourteen mission-and-synthesis references were not enumerated (Merlet and Neumaier as two records, the three solution counts as one) so 43 was not reproducible; mark note updated to bracket and reading counts"
+  },
+  {
+   "bead": "NAB-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "archive listing omitted the two earlier packagings native-edition/ and original-package/ (each with README, SHA256SUMS, verify.py) that the 179-entry working-tree revision holds"
+  },
+  {
+   "bead": "NAB-16",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "scratch root aligned with STD-E2E and passed by xtask --root and FROB_LINT_ROOT; header declares its ten plants; public counts split into 163 brackets and 174 readings (43 P, 95 F, 34 S, 2 U) to match NAB-12/13; promotion-rule program named exactly (sill/promotion_rule.py, output compared with sill/promotion_rule.out); archive-unknown-revision made a declared plant; superseded N00-06 replaced by N38a-10"
+  },
+  {
+   "bead": "NAB-17",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "[[family.history]] sketch used invalid ';'-separated TOML and lacked the session, unchanged, looked_at and move fields NAB-22 writes; added them with the loader rule and finding ev.history-without-evidence (twelve findings now, with its negative control)"
+  },
+  {
+   "bead": "NAB-21",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "named the pilot ledger N00-07, which is superseded by N38a-09 (pilot register pilots.toml); references and wording updated"
+  },
+  {
+   "bead": "NAB-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "due rule did not say how standing gates (KILL-AUGUR-FALSECERT, KILL-AUGUR-REUSE), re-read gates (KILL-MCP), rolling gates (KILL-FSIM) and the M7 Impact re-read enter the due list, so NAB-24's every-exit test and NAB-30's 100 Impact items contradicted the counts 1,2,7,19,21,7,8,0,7 (verified against the plan: 72 family-exit pairs, 69 families, 13/55/1); added the rule with items listed but not counted; idea states aligned with NAB-42's vocabulary and an unplaced block for NAB-49's UP records; evidence-kind-per-factor rule so 'Impact raised on the schedule gate' is checkable; unit tests for sweep.missing, sweep.row-not-swept, sweep.reading-task-open and the new rules"
+  },
+  {
+   "bead": "NAB-23",
+   "kinds": [
+    "correct",
+    "deps",
+    "placement"
+   ],
+   "what": "primary readings were 43 of 174 (39 of 163 brackets), not '39 of 163 readings'; KILL-FSIM trigger completed (any four-week window, BET-04; decided M0, then rolling); idea state word in-progress; depends on NAB-50 whose script its test plan runs; label registry→exit-review (the sweeps are exit reviews of the records, not registry definitions)"
+  },
+  {
+   "bead": "NAB-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "placement"
+   ],
+   "what": "idea state 'placed, gate recorded' is not in NAB-42's vocabulary (now in-progress, delivered only after every gate passes); both negative controls named a 'due-date check' or a rule no finding enforced, now mapped to sweep.change-without-evidence; label registry→exit-review (the sweeps are exit reviews of the records, not registry definitions)"
+  },
+  {
+   "bead": "NAB-25",
+   "kinds": [
+    "correct",
+    "placement"
+   ],
+   "what": "MQ-01 outcome 'falsified-before-pilot' is not a queue state; now state falsified by the N41-09 transition with an ADR and the reason in the sweep record; label registry→exit-review (the sweeps are exit reviews of the records, not registry definitions)"
+  },
+  {
+   "bead": "NAB-26",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "placement"
+   ],
+   "what": "KI-26 row gave the acceptance break-even (2.0 and 12 GPU-seconds per episode) with no derivation; now stated as training once (under 10 and 60 GPU-minutes) divided by the 299 clean episodes acceptance needs, beside the plan's per-episode cost estimates and the screening break-even counts (30 and 60 episodes at 20 ms, 6 and 12 at 4 ms); label registry→exit-review (the sweeps are exit reviews of the records, not registry definitions)"
+  },
+  {
+   "bead": "NAB-27",
+   "kinds": [
+    "placement"
+   ],
+   "what": "label registry→exit-review; all 24 pairs, titles, scores, triggers and fallbacks verified against the kill-gate register"
+  },
+  {
+   "bead": "NAB-28",
+   "kinds": [
+    "correct",
+    "placement"
+   ],
+   "what": "KILL-DRESSING trigger lacked its third clause (exposes no failure class beyond the proxies on the M5 battery) and its fallback; label registry→exit-review (the sweeps are exit reviews of the records, not registry definitions)"
+  },
+  {
+   "bead": "NAB-29",
+   "kinds": [
+    "correct",
+    "placement"
+   ],
+   "what": "said nine queue items have M6 as earliest milestone; it is seven, plus MQ-02 (after M6) and MQ-12 (lands with M6); label registry→exit-review (the sweeps are exit reviews of the records, not registry definitions)"
+  },
+  {
+   "bead": "NAB-30",
+   "kinds": [
+    "placement"
+   ],
+   "what": "label registry→exit-review; its 100 Impact items are now produced by NAB-22's due rule"
+  },
+  {
+   "bead": "NAB-31",
+   "kinds": [
+    "correct",
+    "tests",
+    "placement"
+   ],
+   "what": "final queue states used 'never-funded', which is not in NAB-21's closed vocabulary, and omitted 'expired'; now five terminal registry states plus never-funded as a sweep-record outcome over a registry state still queued, with matching acceptance and negative controls; label registry→exit-review (the sweeps are exit reviews of the records, not registry definitions)"
+  },
+  {
+   "bead": "NAB-32",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "schema sketch used invalid ';'-separated TOML for keys and calculations; split onto lines; added [[idea.history]] (appended by an accepted revival ADR, which the text required but the schema lacked) and the KI-50 `ornamental` field"
+  },
+  {
+   "bead": "NAB-33",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KI-04 named BD-349 as 'the DC-11 table'; BD-349 holds DC-02, DC-03, DC-05; DC-11's record is N28a-28 and its GATE-ATEL-13 rows N28c-11, now carriers beside BD-349"
+  },
+  {
+   "bead": "NAB-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KI-15 named BD-349 as 'the DC-08 guard table'; DC-08's record is N28a-28 and its GATE-ATEL-13 rows N28c-11, now carriers"
+  },
+  {
+   "bead": "NAB-36",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "KI-26's revival break-even (2.0 and 12 GPU-seconds) had no derivation; added it as a machine-checked row (600 s and 3,600 s over 299 episodes; thirteen rows now) with its unit test"
+  },
+  {
+   "bead": "NAB-37",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "KI-39 carrier N28b-21 is superseded by N28c-17 (KILL-VOI decision); KI-45's drift-test row (DC-07) had no carrier, added N28a-28"
+  },
+  {
+   "bead": "NAB-38",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "KI-50's eight ornamental labels were to be created as [[ornamental]] records here while NAB-02 already seeds them in registries/glossary.toml; now one home (glossary), KI-50 carries the list, and a test asserts the two agree"
+  },
+  {
+   "bead": "NAB-39",
+   "kinds": [
+    "tests"
+   ],
+   "what": "KI-61 wording test was to skip until the claims-wording registry exists, but that registry (N00-15) is a dependency; skip removed"
+  },
+  {
+   "bead": "NAB-40",
+   "kinds": [
+    "tests"
+   ],
+   "what": "hypothesis-register test was to skip until the register exists, but N00-10 is a dependency; skip removed"
+  },
+  {
+   "bead": "NAB-41",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "TOML sketch had several keys on one line (invalid); DX-16 conflated brackets and readings, now 163 brackets (39 P, 92 F, 30 S, 2 U) entered as 174 readings (43 P, 95 F, 34 S, 2 U); DX-15 had no test: dx15 added against SRC-CHK-22"
+  },
+  {
+   "bead": "NAB-42",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "append-only [[history]] and a frozen plan-time copy so idea.tally can detect a raised proposal count; gate_text and ungated fields, with placed-without-gate and upper-tier-without-kill reading ungated, because twelve placed records of NAB-43, NAB-44 and NAB-46 have no gate or no upper-tier kill gate and the lint as written would fail the beads' own acceptance; disposition vocabulary gains conditional and owner-to-decide (NAB-49); the tally join stated (88 IP + UP-03, UP-04 = 90 placed; nine residual UP = 9; refuted 13 carried as FACT); tests not_placed_needs_default, tally_change_needs_history, tally_join, ungated_stands_in"
+  },
+  {
+   "bead": "NAB-43",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "sixteen records carry a rank, not fifteen (rank 4 covers ideas 4 and 5), test renamed; gates of first-pass records come from text plus carriers' gates, with ungated for idea 26 (no gate in §23.15); idea 16's kill decisions named (N31b-16 KILL-LOADS, N31b-15 KILL-TOPOPT) instead of only the M5 exit review"
+  },
+  {
+   "bead": "NAB-44",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "gate_text kept verbatim and ungated filled for IP-08, IP-10, IP-20 so the traceability lint can pass; test ungated_rows"
+  },
+  {
+   "bead": "NAB-45",
+   "kinds": [
+    "correct",
+    "placement"
+   ],
+   "what": "superseded carriers replaced (N28a-24 by N28b-36, N28a-25 by N28b-20, N28a-26 by N28c-17); KILL-PACKET and the four Foundry kill decisions named (N31b-15 to N31b-19) instead of the exit review only; IP-46 'the gates of §39' expanded to GATE-TENFOLD-01 to -13 as the program-rule clause requires"
+  },
+  {
+   "bead": "NAB-46",
+   "kinds": [
+    "correct",
+    "tests",
+    "placement"
+   ],
+   "what": "superseded carriers replaced (N10b-13 dropped for N17a-25, N17a-15 by N21c-17, N38a-30 dropped for N18b-35); the gates column holds 22 kill gates, not 23: KILL-ADVECT (IP-61's [F] advection half, BET-36) added with a note so 23 holds; ungated for eight rows (IP-50 and IP-60 were missing from the acceptance list); test ungated_rows_are_8"
+  },
+  {
+   "bead": "NAB-47",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "decided_by carriers: N28a-24 replaced by N28b-36; Foundry kill decisions N31b-15 to N31b-18 and KILL-PARITY decision N36-27 named; disposition and tally flag of CT records stated (CT-12 declined with KI-16, CT-19 a program rule); the KILL-PARITY and KILL-FDGRAD triggers quoted in the standing disagreements are now compared with the register"
+  },
+  {
+   "bead": "NAB-48",
+   "kinds": [
+    "correct",
+    "deps",
+    "self-contained"
+   ],
+   "what": "superseded N20b-35 replaced by N20a-35 and the KILL-VISIBILITY decision N20b-38 added in BS-27; plan_checks field for the PC joins the test reads, with NAB-15 (the source register) as a dependency"
+  },
+  {
+   "bead": "NAB-49",
+   "kinds": [
+    "correct"
+   ],
+   "what": "UP-16 carriers: N20b-35 was merged into N20a-35, so the range N20b-32 to N20b-38 no longer resolved; counts_toward_tally stated for UP records"
+  },
+  {
+   "bead": "NAB-50",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "idea-pass step asserts the tally join and zero findings with ungated; two plants added for the anti-tampering findings added this round (ev.history-without-evidence, idea.tally on a raised proposal count): 17 plants"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [],
+ "unchanged": 5,
+ "notes": "Complete: NAB-01 to NAB-50 reviewed against the plan. Tables of Appendix B and C verified cell by cell (differences only in cross-references); every cited key now resolves (superseded carriers replaced in NAB-09, 45, 46, 47, 48, 49). Main fixes: bracket/reading count conflations (NAB-12, 13, 41), sweep due rules and states (NAB-22 to 31), killed-idea carriers and break-even derivation (NAB-26, 33 to 37), and in the idea register the ungated field, disposition vocabulary and tally join that let its own lint pass on NAB-43 to 49. No requests outside the slice, no new or merged beads. Mostly settled; NAB-42 to NAB-50 changed most this round and merit one more look."
+}

@@ -1,0 +1,69 @@
+{
+  "round": 4,
+  "slice": "F-U00-1",
+  "reviewed": 36,
+  "changed": [
+    {
+      "bead": "BET-05",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "The decide script recomputed the verdict itself, a second verdict rule beside N00-28's verdict function, so the script and the bet register could disagree (on GateFailedShort or HeldInPart) while the ADR check still passed. It now recomputes the counts and reads the verdict from the bets report (`--example bets -- status --json`), as every other bet bead does."
+    },
+    {
+      "bead": "BET-17",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The negative control required a planted population at τ = 0.75 to be assigned `selective`, but modes are assigned from the lower 95% bound, which is about 0.67 at n = 40, so a correct implementation would fail its own control (and no `discard-only` population was planted). The control now uses N28b-23's three planted populations (τ about 0.85, 0.6 and 0.3, a dependency), assigned `selective`, `discard-only` and `uninformative` from their recorded lower bounds."
+    },
+    {
+      "bead": "BET-20",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Mechanical finding [C13-pending] confirmed: the procedure said '(requested of N25b-11)', narrating the review (convention 13). N25b-11 carries `docs/adr/bet-20-m4.md` (scope, step 12, acceptance), so the words are dropped and the step states the fact."
+    },
+    {
+      "bead": "BET-21",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Both requests applied (H-owners-3 from NJL-01; M1-4 from VERBS-eval), checked against the eval.ledger row: as written the script opened and closed campaigns with `--open`/`--close` flags and a `--key`, which the row refuses (802, since actions are selected only with `--action` and admin actions take no key), so the smoke would have stopped before any campaign ran. Now `frob eval ledger --action open … --json` and `frob eval ledger <campaign> --action close --json`, no key; qualification requests keep their own `--key`."
+    },
+    {
+      "bead": "BET-30",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The script said the weight-tie site of FROB-REF-161 could not be reached because the train.start row had no input naming a tie group; the row now has `--tying equivariant --group obs|mech` (N23a-31, reached through N23a-33), so the false statement would have kept the decide script from checking that weights cannot be tied under Γ_mech on the lidar variant. Added the dry-run probe `frob train start <variant> --task … --tying equivariant --group mech --dry-run --key b30-tie-mech --json` (161, exit 3, observed order 4, required order 2), with the FROB-REF-724 exit 5 branch when KILL-EQUIV fired, as the row states."
+    },
+    {
+      "bead": "N00-03",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "The identifier lint admitted PROG for open questions only and took a gate's number as two digits, but the gate register carries the schedule gate as `GATE-PROG-SCHEDULE` (N40-02 step 6, N40-11, cited by BET-12), so the lint would fail on the committed register as soon as that row entered. The plan names the gate only in words; DESIGN choice: PROG is used for gates and open questions, and that one identifier is admitted by name (step 2e). Tests updated: `GATE-PROG-SCHEDULE` accepted, `GATE-SKEL-SCHEDULE` rejected, 30 gate codes in the registry (29 from the plan plus PROG)."
+    },
+    {
+      "bead": "N00-04",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 7: the acceptance (five M1 walkthroughs producing their artifacts) and the resolution test (each available verb present and not refused with 724) need mission.new/check, mission.synthesize/refute, prove.bundle, control.estimate, explain.run, the reduced sense.schedule and frob-verify, and none of their beads was a dependency, so the bead could become ready and be picked up before they existed, with acceptance that could not be met. Added deps BD-126, BD-135, BD-133, N22a-04, BD-112, BD-078 and N12-04 (all M1; none reaches N00-04, so no cycle) and named them in the scope."
+    },
+    {
+      "bead": "N00-08",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "H-6 required an import-lane gate's parts to rest at `no-claim`, but N40-01 (the register owner, following the dataset question OPEN-GROUND-1) holds GATE-GROUND-10 at `blocked` with `detail = OPEN-GROUND-1` from M0 until the default is decided, so the hygiene test would fail on the clean tree against its own acceptance. H-6 now allows exactly the statuses N40-01 allows such a row (`blocked` with an OPEN detail, then the terminal `no-claim`, `pass` only on a real cell scored on sealed data)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [],
+  "unchanged": 28,
+  "notes": "Unchanged (28): BET-01, BET-03, BET-06, BET-07, BET-08, BET-09, BET-11, BET-12, BET-15, BET-16, BET-19, BET-22, BET-23, BET-24, BET-25, BET-26, BET-27, BET-28, BET-29, BET-31, BET-34, BET-35, BET-37, N00-02, N00-05, N00-09, N00-10, N00-11. Settled: every bead of the slice read in full against its plan sections, its registry rows (VERBS-eval, VERBS-train, VERBS-prove, VERBS-operator, VERBS-session, the reader-map verbs) and the 14 conventions; arithmetic in every bet bead re-checked; no requests needed (BET-20's M4 record is already N25b-11's; the eval.ledger and train.start forms used are the rows' current forms). BET-01 cites the kill record as `ADR-KILL-KIR` by identifier and hash, which is the convention's form; left as is. For the lead (not edited): (1) GATE-PROG-SCHEDULE is the one gate identifier not of the plan's form GATE-<SUBSYS>-NN; N00-03 now admits it by name; renaming it to a numbered form in N40-02, N40-11, BET-12 and N41-RISK2 would remove the exception. (2) N00-03's prefix table (the plan's 28 series of §0.3) has no row for the negative-control series NC-nnnn (STD-TEST, used by the plan as NC-0398, NC-0399, NC-0412) or the decision cores DC-01 to DC-11, although its append-only lint lists controls among the checked series; adding NC- (and DC-) would change its '28 series' count, so it is left for the lead. (3) VERBS-session lists session.open/show/focus/close at M0 while their implementer BD-138 is M1; N00-02 and BD-022 read them as not-in-build on the M0 build, which matches BD-138, so the VERBS-session milestone column may be the outlier."
+}

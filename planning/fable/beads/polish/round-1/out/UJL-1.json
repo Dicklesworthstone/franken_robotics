@@ -1,0 +1,379 @@
+{
+ "round": 1,
+ "slice": "UJL-1",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "NJL-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Reconciled the kinds table with N32a-02's flags: paginated reads add cursor/limit/follow and 806/807; estimate_only on every run and on a non-run entry with estimable=true; key_optional entries (session.focus, study.plan) keep idempotency_key optional and do not get 805. Added the generator-appended codes from later fields (790 for needs_groups, N33c-32; 891/892/893 from artifact params, N34-24). 724 now follows handler presence, not the milestone field (the rule NJL-03 and BD-137 share; early reduced forms answer with form named). Tests field_appended_codes, key_optional and early-form cases; e2e step 7; RL-15 switch-over left to N32a-02."
+  },
+  {
+   "bead": "NJL-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Parity field comparison now applies NJL-01's field-driven variations, two-kind read_only rule and field-appended codes; the 805 spot check exempts key_optional entries; 724 judged by handler presence; e2e-coverage requires the capability level from an early form's first build; registry count 243 then 246 read from the registry. Tests coverage_early_form, spot_checks_follow_fields, answers_by_handler_presence."
+  },
+  {
+   "bead": "NJL-03",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "verb_invoke is a declared difference, not an exemption (as NJL-02); defined the reserved-name check in the inventory record (reserved_names[]) that the planted verb.invoke control needs (no such lint existed); count KAs now cite JL-01..JL-04 of NJLx-02; noted the M3 move to 246 by NJLx-51; NJL-04 moved from related to deps (its retired-name table carries the fidelity.rank control). Owner table: eval loses frob-dyn (eval.promote is frob-opt's, BD-263); experiment is frob-mission's (VERBS-experiment)."
+  },
+  {
+   "bead": "NJL-04",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "Two beads specified the retired-name table differently (separate verbs-retired.toml with [[retired]] here, [[retired_name]] inside verbs.toml in N32a-02's RL-03): settled DESIGN on N32a-02's table in the registry file, rows name/use/reason. same-handler cannot run in the build script (no handler there): moved to a unit test over the dispatch table; tests 1 and 3 are RL-03."
+  },
+  {
+   "bead": "NJL-05",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests",
+    "risks"
+   ],
+   "what": "Added the staging rule (target file fixtures/golden/verbs/task_clusters_target.toml; all 45 tables declared at M1 holding registered rows only; cluster beads add their seats; test assignment_is_target_restricted), since rows land M0..M4 and the M1 lint would otherwise fail on unregistered tools. KILL-SOLVE request decided: solve.run is withdrawn to the retired table and opt_cascade takes the vacated seat in search (DESIGN, reason given); noted NJLx-51's M3 seat changes. Verified the 45-cluster table by script: 240 seated, every cluster at most seven."
+  },
+  {
+   "bead": "NJL-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Directory blocks fill as rows are registered (staging rule); absent/tier mark test uses a synthetic registry (solve.run is not registered at M1); added staged_blocks test."
+  },
+  {
+   "bead": "NJLx-02",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "E2E script header added; pending rows skipped and logged before their owner's milestone; plants listed; JL-01 truth and test account for withdrawals into the retired-name table (committed = baseline + additions - withdrawals)."
+  },
+  {
+   "bead": "NJLx-51",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "unrecorded-addition also checks withdrawals (baseline names absent must be retired rows); seats written into NJL-05's target file; noted that [counts]/[[addition]] need admission by N32a-02's strict reader; added dep NJL-04 (retired table). Rule 4 and the acceptance now cover a row that gains a second kind: N28c-44's run-control action makes design.diff the fourth two-kind row at M3 (138 read, 4 two-kind once both changes are in)."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Inputs and outputs completed from BD-069/072/073/075, N15a-04, N15b-10, N15b-12; evidence label card-static (Estimated unless every field read is measured, D2) replaces Tested D0, as the implementing beads give; actuator.list paginated; actuator.check refusals 102,103,108,113,130,131,132,134 with extensions named; examples fixed to parse (--v-bus 22.2V, --torque 6N*m --hold torque); refusal and MCP-name tests cover all six verbs. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-algebra",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "algebra.irreps gains FROB-REF-215 and full inputs/outputs from N13-14 (N13-20 named); algebra.orbits inputs from BD-049, paginated, 215 description corrected (65,536-bit numerator); TOML refusals updated; examples_known_answers test added (free_parameters 4, orbits 27). Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied the U28c request: FROB-REF-557 on analyze.rank-robustness no longer claims the build-packet half (that is FROB-REF-830, raised where the result is consumed). Evidence label 'static (Tested, exact)' replaced by N28a-05's per-analysis class (Tested for exact computations on exact inputs, weakest input otherwise, screening for A-04 orbits, A-16 sampled estimates, A-17 conditioning; claim product of runs for A-19/A-26). Six examples that needed a binding now name it (scene, budget, wrench, experiment, campaign, run), taken from the implementing beads, so the cluster script runs them verbatim. S/F rows registered tier S (single-valued field). Tests: refusal_lists covers 557-not-830, tiers_single_valued, examples_name_bindings; noted NJLx-51's three M3 rows. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "artifact.read: removed FROB-REF-734 (it takes no path); added 840 (sealed confirmation run) and 869 (tombstoned object), as BD-097 raises them; inputs and outputs from BD-097 (offset/length via --range, range_blake3, next_offset, integrity fault exit 9). artifact.list paginated with run/kind filters; artifact.export inputs/outputs, exports = true, refusal detail; exit codes of the chapter refusals stated; new entry_flags test. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-autopsy",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied the request: autopsy.intervene gains FROB-REF-553 (row, TOML and refusal_lists test), --do optional (null and placebo forks only), --test fixed|sequential, --max-pairs (64), --allow-unreachable, plus BD-279's other inputs (horizon, series-1e-7, replicate-by, lane, diagnostic-force, plan-only) and its full result; Extended by N27b-24. Inputs of attribute (forks, lane, shapley auto|never, budget), repair (max-tests, include-diagnostic), rerun (edit | do, worlds, controller, placebo, replicates, tier) and show (format, compare, cursor; paginated) taken from BD-280, N27b-14, BD-283, BD-284. MCP-name test covers all five; new intervene_inputs test. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-contact",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "contact.soil: evidence Estimated with tier label Frontier, inputs plate|wheel|track|design forms, slip sweep, clearance (BD-366); contact.probe: full contact state, sweep, pulse branch (impulse, m_eff; N18bx-01), evidence Estimated for film, pulse and assumed-field branches (N18b-29, N18b-36). New evidence label 'law evaluation' replaces static/screening where the implementing beads give other classes; contact.response evidence per BD-367; contact.audit lists FROB-REF-222 that its handler raises (N18b-23); full inputs for laws, capacity, audit, clearance, response; contact.clearance example now names its sweep and region (N19b-33's form; the old one lacked a sweep and would not validate). refusal_lists and MCP-name tests cover all seven; new probe_and_soil_inputs test. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-control",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied U22a and U28c requests: control.estimate gains FROB-REF-888 (BD-090/N22a-04), full inputs, paginated, replay evidence (was static); control.ladder drops 537 (no path raises it; N22a-17's permits check does) with inputs/outputs from N22a-18; control.synth gains rung (N22a-19) and class (N22a-21), and its three outcomes are now the plan's ok / synthesized-failed / not-synthesizable (§22.6, BD-118; the draft had other names); control.mpc full inputs, Extended by N22c-24, N22c-31 (--freeze raises 817), N28c-33; 424 removed from mpc (N22-REF names sim.run and control.synth); control.show gains family and budget {ladder, level, effort}; control.lift inputs (regime, mode) and example fixed to include the required --regime; refusal and MCP-name tests cover all seven; new extension_inputs test. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-cores",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "cores.show inputs and outputs completed from N28c-04 (core | all, stratum, rows, decisions, rejected, cursor; artifact states, loss constants, obligations, fallback, exit 2 on a stale table); paginated; Extended by N28c-07 (--rejected); new input_shape test. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-design",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied U14b, U28c, U32a and U41-1 requests. design.check: exit policy per BD-110's policy rows (3 on a stage refusal, 2 for findings/undecided/budget miss); refusal list is the 30 codes the stages and bound rows own (N14b-10, N14bx-01), not the J.1 illustration's four; estimable with an estimated: cost model (N32a-15's estimate-required); full options. design.edit: refusals BD-058's 13 codes (109 moved to design.check), symmetry effect preserved/reported/grows/none with symmetry.split, selector targets. design.diff: Extended by N28c-44 incl. the run-control action (kind run, key, job), a two-kind row from M3 with the count consequence stated. design.export: refusals per N14a-25 (stage-1 codes, 731, 733, 734; not 122), exports = true; examples fixed for design.patch (--file) and design.export (--format). Tests: refusal_lists, MCP names for all twelve, new check_policy. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-eval",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied U16b and U24b requests: eval.run gains --freeze-envelopes (fidelity:admin checked by the handler, N16bp1-01); eval.promote owner frob-opt (BD-263 layer rule), FROB-REF-561 added, inputs from BD-263; eval.rank-agreement keeps first_milestone M4 with the M3 tier-pair form listed as an early form (BD-265), inputs completed (545, 548 were present); eval.scorecard output frob.scorecard/1 (N24a-22, BD-254); eval.qualify adds 532, 533, 552 and also 561 and 845 that BD-259 lists, inputs design/claim/dry and the minimal call. Notes, tests (refusal_lists for all ten, MCP names, owners_and_options) updated. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-evidence",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied U29a request: example claim id now in N34-11's single form clm:<64 hex> (claim:b3:0d4e is rejected by the parser), with the fixture it names; inputs/outputs from BD-095 (verify, depth, budget, exit 0/2/9), paginated; new claim_id_form test. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "VERBS-experiment",
+   "kinds": [
+    "correct",
+    "placement",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied U25c request: the M3 expert-grid form (N25cx-02) is added to Implemented by and answers early with form expert-grid while first_milestone stays M4 (NJL-03's rule; no forms field); the bead moves to M3 (labels m3) because the row must be registered for the M3 form to answer (else an unknown verb at M3); owner reconciled to frob-mission (DESIGN: the handler composes frob-mission's builders and grid and calls frob-opt's ranking, a lower layer); inputs/outputs from BD-351, N25c-18, N25cx-02; closing rule and e2e header at M3; new early_form test. Convention 4 now states NJL-05's staging rule (rows and task-cluster seats land in the same change) and the handler-presence 724 rule with early reduced forms (NJL-01/NJL-03); convention 2 names the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893); deps gain NJL-04 and NJL-05."
+  },
+  {
+   "bead": "ART-L1",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The planted mutations are eight for seven codes (111 twice), not seven; each is now routed to the verb that owns its stage (N14b-10): form-stage codes 103/105/111(lever)/125/126 by design new --file, 107 (stage 3) and 109 (stage 5) by design check, the lock 111 by design edit. Acceptance, e2e step 7 and the negative controls follow."
+  },
+  {
+   "bead": "ART-L2",
+   "kinds": [
+    "deps",
+    "risks",
+    "self-contained"
+   ],
+   "what": "The extraction of the leg 'by a typed edit' is placed with BD-058 by BD-060, but BD-058's catalogue has no such kind: BD-058 added as a dependency, the gap stated, and the fallback while it is missing (load the resolved fixture, assert body equals L1's limb chain, log the extraction as blocked: BD-058, never passed)."
+  },
+  {
+   "bead": "ART-L4",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The exact twelve-cell first answer needs N25a-12's registered explicit grid --paving v:4,r:3:lu (the default on this linear-static fragment is exact paving, which splits at the boundary); the draft named a fixture-only --paving 4x3 that no bead defines and its e2e step 4 passed no paving. Step 4 and the consideration fixed; N25a-12 added as a dependency. Arithmetic re-verified (515 of 2,511 grid points; cells, witnesses, dual, refute 94 N and 32/3)."
+  },
+  {
+   "bead": "ART-L5",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Evaluation at a stated reading now uses BD-337's reading-domain input spelled --reading-max, as the shield chapter's own script N22b-18 does for the same pass-counter integers; the draft proposed a second spelling --at-speed. The cutoff pair is spelled out (exit 0 at margin 0, exit 2 at -40: a result, not a refusal); fallback stated if --cutoff-delay/--absorber are card-only. All integer rows re-verified."
+  },
+  {
+   "bead": "ART-L6",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Step 8 called nemesis oracle with an input shape the registry does not have and no key (a run verb); now the registered form with --task, --world, --legality and --key. Step 9 names the verb that raises each of the six refusals (361 via BD-270's --require-cited on the shrunk world, 567 via eval qualify, 816 via the frob.mcw/1 reader); BD-259 added as a dependency and eval.qualify to the header."
+  },
+  {
+   "bead": "ART-L7",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "scope"
+   ],
+   "what": "prove.bundle's mission-slice form takes the answer positionally (step 2 used --mission); the receipt form (--design, --mission, --receipt) lands at M3 with N24b-19 and the sample-coverage checker with N12-13: both added as dependencies and to Out of scope; step 5 spelled out; a consideration notes VERBS-prove dates that form M5 and is asked to list N24b-19. KA-762 bounds re-verified."
+  },
+  {
+   "bead": "ART-L8",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The determinism-class refusal is named: FROB-REF-542 (study.plan's paired-study refusal), in acceptance, unit tests and e2e step 5. Step 1's design edit now carries key and expected parent (a mutate verb), with the foot-radius pointer from L1; step 6 calls study status, which the header lists. Pre-analysis counts (2,145; 521/521/1,103; n=86 3,828 with one tie), least-b series and the [0.0554, 0.4392] interval recomputed and confirmed."
+  },
+  {
+   "bead": "NJL-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The M1 story-runner criterion listed L.3 among the scripts due at M1, but ART-L3's script uses the M3 task verbs; at M1 the runner runs L.4, L.1, L.2 and L.3's library-level lane (cargo test golden_l3) as a step."
+  },
+  {
+   "bead": "NJL-08",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Step A7 must pass paving v:4,r:3:lu (N25a-12) to obtain the twelve-cell first answer its expectation asserts (and that a7_expectation_matches_l4_fixture ties to L4); the specimen's abridged request omits it. Step file example, step table and CLI twin updated; N25a-12 added as a dependency. BD-126 quantifier echo and N24b-26 left to the lead."
+  },
+  {
+   "bead": "NJL-09",
+   "kinds": [
+    "deps"
+   ],
+   "what": "B13 calls prove.bundle with design, mission and receipt, the form N24b-19 adds at M3 (with the campaign section); N24b-19 added as a dependency with the reason in Considerations. Bounds at 0.05/6 (0.0425, 0.0505), placebo 2/64, budget identities and the 51% retry counterexample re-verified."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N32a-02",
+   "what": "Admit in the strict reader of registries/verbs.toml: (a) the [[retired_name]] rows with a third field reason (NJL-04 now uses N32a-02's table name, in the registry file); (b) the top-level tables [counts] and [[addition]] with lints count-mismatch and unrecorded-addition (NJLx-51). Also RL-15 says unknown-scope is a warning until M2 while its Considerations say M3: pick one."
+  },
+  {
+   "bead": "N34-24",
+   "what": "Acceptance says the M1 verbs' declared refusal lists include 891/892/893 wherever a verb takes an artifact parameter; NJL-01 now has the generator append them from the params field (891 for any artifact parameter, 892 for artifact-identity, 893 for foreign-file), so the row beads need not repeat them: read 'generated refusal lists'."
+  },
+  {
+   "bead": "VERBS-solve",
+   "what": "Considerations say that under KILL-SOLVE the row leaves search and answers 724; a registered row without a seat fails verb-without-task-cluster. NJL-05 now rules: the row is withdrawn (retired-name table, use opt.cascade; BD-376 records it) and opt_cascade takes the seat in search."
+  },
+  {
+   "bead": "BD-376",
+   "what": "NJL-05 decided the KILL-SOLVE seat: opt_cascade takes the vacated seat in search (seven tools); the solve.run withdrawal goes to the retired-name table and lowers [counts] (NJLx-51's rule)."
+  },
+  {
+   "bead": "BD-072",
+   "what": "VERBS-actuator registers the output schema of the verb you implement as frob.actuator.<verb>.out/1 (the registry's naming rule); align the schema name you print with the registry row."
+  },
+  {
+   "bead": "BD-073",
+   "what": "VERBS-actuator registers the output schema of the verb you implement as frob.actuator.<verb>.out/1 (the registry's naming rule); align the schema name you print with the registry row."
+  },
+  {
+   "bead": "BD-049",
+   "what": "Add dep VERBS-algebra: algebra.orbits is registered there (inputs, paginated, FROB-REF-215) and its example (--set feet:4) is now a known-answer test of the row."
+  },
+  {
+   "bead": "N13-17",
+   "what": "Add dep VERBS-algebra (the registry row of the verb this bead serves), as BD-049 does."
+  },
+  {
+   "bead": "N18b-23",
+   "what": "VERBS-contact now lists FROB-REF-222 on contact.audit, since your handler raises it (detector referee/strict on a GPU tier) and the generated refusal table must cover what a call can answer; your 'no chapter refusals of its own' sentence should name 222 as a listed code of another registry."
+  },
+  {
+   "bead": "BD-367",
+   "what": "The registry example of contact.response is `frob contact response r:19e2 --world 311 --key cr-1 --json`, which names neither a step nor a column specification; state the CLI spellings and the defaults (step and columns) that make it run, or give a replacement example for VERBS-contact."
+  },
+  {
+   "bead": "BD-279",
+   "what": "Your surface line spells the key `--idempotency-key <k>`; the generated common flag is `--key` (BD-022's flag table), which the registry example of autopsy.intervene uses. N27b-14 has the same spelling for autopsy.repair."
+  },
+  {
+   "bead": "N22a-18",
+   "what": "Your TOML shows tier \"S\" for control.ladder; the registry of record (VERBS-control) registers tier F (Defined in §22.7, marked [F]). Align the tier, or give the reason for S to VERBS-control. VERBS-control also now carries refusals = [] for the row, as you asked."
+  },
+  {
+   "bead": "N25cx-02",
+   "what": "VERBS-experiment now registers experiment.suggest at M3 with first_milestone kept at M4 (NJL-03's rule: an early form answers and is listed with form \"expert-grid\"; no forms field exists in the entry schema), owner frob-mission. Drop 'first_milestone = \"M3\" with forms = [\"expert-grid\"]' from your surface section, and add dep VERBS-experiment (now M3), which registers the row your handler serves."
+  },
+  {
+   "bead": "N28c-44",
+   "what": "VERBS-design registers your run-control sub-mode as an action of design.diff (actions = [{ name = \"run-control\", kind = \"run\", capabilities = [\"design:run\"] }], N32a-02's two-kind form; NJL-01 serves it through the action property). Add the action with your option, and update [counts] by_kind in the same change (read one lower, two kinds 4; NJLx-51 rule 4); state the CLI spelling under NJL-01's action dispatch."
+  },
+  {
+   "bead": "BD-110",
+   "what": "VERBS-design now gives design.check estimable = true with an estimated: cost model (the planned stages and rows priced by their budgets, N14bx-01's plan_check), answering N32a-15's estimate-required warning; implement estimate_only on design.check (returns the plan and runs nothing) and test it. Its refusal list is now the 30 codes the stages and bound rows own."
+  },
+  {
+   "bead": "N22c-23",
+   "what": "The out-of-regime refusal of control.lift has only a slug (lifted-planner-out-of-regime); a registry row lists codes. Ask N35x-02's numbering for a code so VERBS-control can list it on control.lift (and control.mpc with a lifted planner), and give the regime fixture of the registry example (frob control lift tracked-a --soil sand-dry --regime regime.toml --fit --key lift-1 --json), which the cluster script runs from fixtures/verbs/control/."
+  },
+  {
+   "bead": "N19b-33",
+   "what": "VERBS-contact's registry example of contact.clearance is now your form with a key (frob contact clearance --design carrier-a --sweep sweep.json --scene kitchen-17 --region door-pass --key cc-1 --json); the cluster script runs it from fixtures/verbs/contact/, so provide sweep.json there with your fixtures."
+  },
+  {
+   "bead": "BD-095",
+   "what": "VERBS-evidence's example is now clm:<64 hex> of the fixture claim fixtures/verbs/evidence/claim.json; when you commit that fixture, replace the example's digits with its computed ClaimId."
+  },
+  {
+   "bead": "BD-058",
+   "what": "BD-060 places 'extracting a module from a design by a typed edit (BD-058)' with you, and the format registry (FMT-FMODULE) says a .fmodule is extracted from a design by a typed edit, but your 22-row catalogue has no such kind. Add an extract-module kind (a subterm path to a frob.module/1 with its derived port signature, the subterm replaced by the module reference, model identity unchanged) or name the bead that owns it. ART-L2 step 2 depends on it and now depends on BD-058."
+  },
+  {
+   "bead": "VERBS-prove",
+   "what": "prove.bundle's receipt form (--design, --mission, --receipt, the campaign section) is implemented at M3 by N24b-19 (its acceptance and e2e), not at M5: list N24b-19 under 'Extended by' with M3, so that ART-L7's M3 lane and NJL-09's step B13 call a registered form."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.oracle and nemesis.search list FROB-REF-361 (cited bounds demanded while a touched bound is assumed) but not the option that raises it: BD-270 gives both verbs --require-cited. Add it to their inputs. ART-L6 step 9 raises 361 with nemesis oracle --require-cited on the shrunk world."
+  },
+  {
+   "bead": "VERBS-shield",
+   "what": "shield.budget's inputs read 'design; boundary; absorber card; terms'. The chapter's script N22b-18 and ART-L5 use --boundary, --reserve, --reading-max (BD-337's reading domain) and --class; ART-L5 also passes --absorber and --cutoff-delay. List the option spellings in the row (or say which come from the boundary declaration only) so both scripts call registered options."
+  },
+  {
+   "bead": "VERBS-explain",
+   "what": "For the 32 VERBS beads of slice UJL-2 (VERBS-explain to VERBS-train): the twelve VERBS beads of UJL-1 now state NJL-05's staging rule and NJL-01/NJL-03's handler-presence 724 rule with early reduced forms in Convention 4, name the field-driven variations and field-appended codes (key_optional, estimable, 790, 891-893) in Convention 2, and depend on NJL-04 and NJL-05. Apply the same to the UJL-2 rows so that the 44 registry beads read alike (several already depend on NJL-05; none on NJL-04)."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 32 beads reviewed. Unchanged: ART-L3 (codes and tick arithmetic verified against §24.14), ART-L9 (focus count, budget identity and exit classes verified). Arithmetic of ART-L4, L5, L7, L8 and NJL-09 recomputed by script and confirmed. VERBS changes were checked against the mechanism bead that owns each verb."
+}

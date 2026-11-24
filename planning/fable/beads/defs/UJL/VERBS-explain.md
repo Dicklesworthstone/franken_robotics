@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "tether", "atelier", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-06"
-deps: ["BD-022", "NJL-01", "NJL-02", "STD-E2E"]
+deps: ["BD-022", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []
-related: ["N28a-17", "BD-262", "BD-112", "BD-137", "BD-312", "NJL-03", "NJL-04", "NJL-05"]
+related: []
 gates: ["GATE-TETHER-02"]
 plan_refs: ["Appendix J (J.1, J.2, J.3, J.5)", "§28.5", "§32.6", "§32.12.3", "§32.21 (GATE-TETHER-02)"]
 ---
@@ -18,12 +18,14 @@ FrankenRobotics (a robotics simulation and design system) is reached through the
 `frobd` and the MCP server `frob-mcp` (the Model Context Protocol, by which an agent harness lists and calls tools).
 Every capability is a verb, `cluster.verb`, declared once in `registries/verbs.toml` (crate `frob-verbs`, tier
 Solid). The CLI, the daemon protocol, the MCP tools, the schemas, the refusal table and the agent guide are
-generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 243 verbs
-in 44 clusters (namespaces).
+generated from that file, and gate GATE-TETHER-02 compares the served surfaces with it. The registry holds 244 verbs
+in 44 clusters (namespaces): the 243 of the specification and `artifact.import` (VERBS-artifact); the
+count of record is NJL-03's.
 
 This bead is the registry of record for the cluster `explain`. The cluster covers token-budgeted explanations that
 end in next actions: what limits a design, the first cause of a run's outcome, and why two designs differ on a task.
-It has three verbs (3 `read`); the handlers live in `frob-chronicle`, `frob-opt`. The bead carries every row
+It has three verbs (3 `read`); the handlers live in `frob-chronicle` (`explain.run`, `explain.design`) and
+`frob-opt` (`explain.compare`). The bead carries every row
 completely, with the three checks that keep the rows true: the generated CLI commands and MCP tools match the list;
 every verb has an end-to-end script; the schema printed by `frob <verb> --help --json` is stable.
 
@@ -36,7 +38,7 @@ gate), M Moonshot; `S/F` is a Solid core with Frontier extensions.
 DESIGN: a registry bead per cluster exists beside the implementing beads because a row missing from the registry,
 spelled twice, or served with different refusal lists on the CLI and over MCP is a surface defect that no mechanism
 test catches. Rejected: rows left to the implementing beads alone (nothing checks their union against the
-inventory); one bead for all 243 rows (too large to review).
+inventory); one bead for all the rows (too large to review).
 
 ## Scope
 
@@ -60,29 +62,51 @@ the entry schema and lints (NJL-01); the conformance harness (NJL-02); the alias
   read itself is `exact`.
 
 **`explain.compare`** (MCP tool `explain_compare`; owner `frob-opt`)
-- Inputs: two designs; task or study.
-- Outputs: the first divergent event, the binding atoms, paired differences clustered into regimes. Evidence:
-  *pass-through*.
-- Chapter refusals: `FROB-REF-548` (pooling evidence or calibration across two model identities).
-- Implemented by: N28a-17, BD-262.
+- Inputs: a stored paired comparison (the record written by `eval.compare` or `study.compare`, which fixes the two
+  designs, the task and the world addresses); optional `--metric` (default: the comparison's primary metric);
+  `--budget` (token budget, default 600); `--regimes` (k, the most regimes named, default 3).
+- Outputs: per regime (a contact signature and a scene region at the first divergent task event of a traced pair):
+  pairs, candidate wins, losses and ties, mean paired difference with a seeded bootstrap interval, the losing arm's
+  dominant failure class and binding requirement atom, one representative address with drill-down handles; the
+  counts `traced_pairs`, `untraced_pairs`, `planned`; omitted regimes by name; next actions (the sensitivity
+  analysis on the losing design, the `autopsy.intervene` fork that would test the described mechanism). Evidence:
+  *pass-through*, labelled `Estimated`, `claims: []`; the comparison's standing and `provisional` flag echoed.
+- Chapter refusals: `FROB-REF-840` (sealed confirmation data asked for by a session without the qualification
+  administration scope; every `explain.*` verb refuses a confirmation run or study).
+- Implemented by: N28a-17 (the verb), BD-262 (the comparison it reads).
+- Extended by: N28c-38 (the "Controller budget" section: both budget curves).
+- Correction (DESIGN, round 1): the row formerly listed `FROB-REF-548` (pooling evidence or calibration across two
+  model identities). The verb writes no ledger stratum or calibration set, and the chapter refusal registry
+  (N28-REF) assigns 548 to `eval.promote`, `eval.rank-agreement` and `opt.cascade` only; listing it here would make
+  the bidirectional refusal cross-check fail. The input is a comparison, as the chapter's call
+  `frob explain compare <comparison>` states; the two designs and the task are read from it.
 
-**`explain.design`** (MCP tool `explain_design`; owner `frob-opt`)
-- Inputs: design; token budget.
-- Outputs: what limits the design, analysis by analysis, ending with next actions. Evidence: *pass-through*.
+**`explain.design`** (MCP tool `explain_design`; owner `frob-chronicle`)
+- Inputs: design; optional `--task` (limits evaluated at that task's points); `--budget` (token budget, default 600).
+- Outputs: what limits the design, analysis by analysis (binding constraints by normalized margin, each with its
+  evidence class, the card fields it rests on and their provenance class), ending with next actions (ranked repairs
+  as typed edits with predicted effects). Evidence: *pass-through*.
 - Chapter refusals: none of its own.
-- Implemented by: BD-112.
+- Implemented by: BD-112. DESIGN (BD-112): owned by `frob-chronicle`, not `frob-opt`: both explain verbs of M1 share
+  one token estimator, one section assembler with drill-down handles and one `next_actions` ranker, and only the
+  layer-6 crate reads both the analysis findings (layer 4) and the telemetry and ledger (layer 6).
 
 **`explain.run`** (MCP tool `explain_run`; owner `frob-chronicle`)
-- Inputs: run; token budget.
-- Outputs: the first cause of the outcome with its evidence, ending with next actions. Evidence: *pass-through*.
-- Chapter refusals: `FROB-REF-888` (a metric computed over missing samples).
+- Inputs: run; optional `--world` (one world address); `--budget` (token budget, default 600).
+- Outputs: the first cause of the outcome with its evidence (labelled `Estimated`, a description), ending with next
+  actions. Evidence: *pass-through*.
+- Chapter refusals: `FROB-REF-840` (a run sealed in an open qualification campaign, asked for by a session without
+  the qualification administration scope); `FROB-REF-888` (a metric computed over missing samples, when the caller
+  requires it).
 - Implemented by: BD-112.
+- Extended by: N28a-17 (at M3: next actions ranked from the sensitivity analysis, the first-divergence lead after an
+  edit, the intervention offer).
 
 **Machine fields of each row.**
 
 | Verb | Capabilities | Output schema | Task clusters | Example |
 |---|---|---|---|---|
-| `explain.compare` | `explain:read` | `frob.explain.compare.out/1` | `ladder`, `explain` | `frob explain compare quad-a@prev quad-a --task stairs-0.4 --json` |
+| `explain.compare` | `explain:read` | `frob.explain.compare.out/1` | `ladder`, `explain` | `frob explain compare st:9a1 --budget 600 --json` |
 | `explain.design` | `explain:read` | `frob.explain.design.out/1` | `explain` | `frob explain design quad-a --budget 600 --json` |
 | `explain.run` | `explain:read` | `frob.explain.run.out/1` | `diagnose`, `explain` | `frob explain run r:19e2 --budget 600 --json` |
 
@@ -103,12 +127,12 @@ tier = "S"
 capabilities = ["explain:read"]
 input_schema = "frob.explain.compare.in/1"
 output_schema = "frob.explain.compare.out/1"
-refusals = ["FROB-REF-548"]
+refusals = ["FROB-REF-840"]
 idempotent = true
 cost_model = "static: answered from the store or by a small CPU computation; no job"
 first_milestone = "M3"
 task_clusters = ["ladder", "explain"]
-examples = ["frob explain compare quad-a@prev quad-a --task stairs-0.4 --json"]
+examples = ["frob explain compare st:9a1 --budget 600 --json"]
 owner = "frob-opt"
 purpose = "Why two designs differ on a task: first divergent event and binding atoms"
 ```
@@ -119,16 +143,31 @@ purpose = "Why two designs differ on a task: first divergent event and binding a
    `frob.envelope/1` with `result` specialized to the output schema; its `evidence` block is a claim product (the
    weakest class, tier and determinism class among the inputs).
 2. The generator adds the common input properties of the kind (`run`: `sync_wait_ms` from 0 to 30,000 with MCP
-   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel`; `mutate`: `idempotency_key`,
-   `expected_parent`) and appends the surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid),
-   724 (not implemented in this build) and 802 (schema failure, including an unknown parameter) for every verb; 701
-   to 704 (budget and admission), 803 (key reused with different content) and 805 (missing key) for `run`; 725, 803,
-   804 (stale parent) and 805 for `mutate`; 806 and 807 for paginated reads; 808 for an out-of-range integer.
+   default 5,000, `idempotency_key`, `budget`, `estimate_only`, `on_cancel` (`leave`, the default, or
+   `cancel_job`) and `envelope_scope` (`--envelope-scope <gate:…|campaign:…|pretrain:…>`: the approved compute
+   envelope scope the job cites; its schema, its place in the scope order and its refusals are NJL-01's);
+   `mutate`: `idempotency_key`, `expected_parent`). `idempotency_key` is in no JSON-schema `required` array: the
+   annotation `x-frob-key` (`"required"`, or `"optional"` on a `key_optional` entry) carries the rule, and a
+   missing key is refused with 805 by the admission transaction on both surfaces. The generator appends the
+   surface-wide refusals: `FROB-REF-720` (scope missing), 723 (token invalid), 724 (not implemented in this
+   build) and 802 (schema failure, including an unknown parameter) for every verb; 701 to 704 (budget and
+   admission), 761 (above the compute envelope in force), 803 (key reused with different content) and 805
+   (missing key) for `run`; 725, 803, 804 (stale parent) and 805 for `mutate`. The other properties and codes are
+   added by field, as the variation table of NJL-01 lists them (that table is the one list; its variations 10
+   to 16, which later beads land, are read there and not copied here): 806 and 807 for paginated reads; 808 (an
+   integer outside ±(2⁵³ − 1)) for an entry whose generated input schema has an `int53` property and for no
+   entry by kind (every `run` entry has one in `sync_wait_ms`, every paginated entry in `limit`); a
+   `key_optional` entry is not given 805; a non-`run` entry with `estimable = true` gets `estimate_only`; 790
+   for a non-empty `needs_groups`; 891 to 893 for artifact `params`; 734 and 828 for a parameter that accepts a
+   path to a file (`artifact-input<F>`, `artifact-identity<F>`, `foreign-file`).
 3. Exit codes: 0 done; 2 done with findings; 3 refused input (1xx to 5xx, and 8xx other than conflicts); 4 budget
-   (70x); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
+   (70x and 761); 5 capability (72x, 73x); 6 device (6xx); 7 conflict (803, 804, 809); 8 accepted and still running; 9
    indeterminate; never 1 on purpose.
-4. Rows are entered when the cluster is first registered (M1). Until its own milestone a verb answers one envelope
-   with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json` lists it as absent.
+4. Rows are entered when the cluster is first registered (M1); each row's tool is added to the task-cluster
+   tables its `task_clusters` names in the same change (NJL-05's staging rule). A verb whose handler is not in
+   the build answers one envelope with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json`
+   lists it as absent; a reduced form that lands before the row's `first_milestone` answers and is listed as
+   implemented with its form named (NJL-01, NJL-03: the field keeps the appendix's milestone).
 
 **Notes for this cluster.**
 
@@ -152,7 +191,7 @@ purpose = "Why two designs differ on a task: first divergent event and binding a
       verb runs its registry example with the result its implementing bead specifies; a misspelt parameter is
       `FROB-REF-802`, exit 3.
 - [ ] The generated refusal table lists for each verb exactly its chapter codes plus the codes appended for its
-      kind, and every code exists in `registries/refusals.toml`.
+      kind and fields (NJL-01), and every code exists in `registries/refusals.toml`.
 - [ ] The gate row is recorded with the measured counts by a session that did not write the rows.
 
 ## Test plan
@@ -167,8 +206,10 @@ strings labelled `synthetic`):
   `explain.run` is `read` at M1).
 - `schemas_and_scopes`: input schemas are `frob.<name>.in/1`; output schemas and capabilities equal the
   machine-fields table.
-- `refusal_lists`: each row's chapter codes equal its block (`explain.compare`: 548; `explain.design`: none;
-  `explain.run`: 888); the appended codes equal the rule for its kind.
+- `refusal_lists`: each row's chapter codes equal its block (`explain.compare`: 840; `explain.design`: none;
+  `explain.run`: 840, 888); the appended codes equal the rule for its kind and fields; a planted 548 on `explain.compare`
+  fails against the chapter registry's verbs column.
+- `owners`: `explain.run` and `explain.design` are owned by `frob-chronicle`, `explain.compare` by `frob-opt`.
 - `mcp_names_one_to_one`: the tool names are the mapped names (`explain_compare`, `explain_design`, `explain_run`),
   with no collision against any other cluster.
 - `task_clusters_and_examples`: every row sits in a task cluster of at most seven tools or is a base tool; each
@@ -215,8 +256,13 @@ differing verb and field; the `summary` line gives assertions passed and failed 
 - Closing rule: the bead closes at M1, when the rows are registered, the surfaces match and every verb passes its
   example or answers the not-implemented refusal. Verbs of this cluster first answer at M1, M3. The per-milestone
   surface beads (BD-137, BD-312) re-run this script as verbs land; that is how GATE-TETHER-02 is re-measured.
-- Scope names are proposals (`<cluster>:<read|run|write|admin>` plus the named scopes of the surface) until the
-  capability bead BD-258 fixes the scope registry; a `run` or `write` scope of a cluster implies its `read` scope.
+- Scope names follow the naming rule decided in BD-258 (no longer proposals): a row cites scopes of its own
+  cluster by kind (`read` → `<cluster>:read`; `run` → `<cluster>:run` or a named spending scope; `mutate` →
+  `<cluster>:write` or a named write scope; `admin` → `<cluster>:admin`, `job:cancel` or a named admin scope),
+  plus `export:*` when the row exports and `private:*` where privacy applies, never a scope named after the
+  object read or the engine spent on; N32b-01's catalogue generates the forms. `<cluster>:run` and
+  `<cluster>:write` imply `<cluster>:read`, closed when a set is stored (at minting and at derivation,
+  `Scopes::close_implied`), so checks stay plain set inclusion.
   Inputs and outputs above name contents, not flag spellings, except where a flag is quoted; the implementing bead
   fixes the spellings and the snapshot then pins them (additive changes keep the schema's major version; anything
   else raises it).

@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "foundry", "upstream", "frankensim", "frontier"]
 parent: "WP-71"
-deps: ["BD-037", "BD-407", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-407", "BD-408", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-408", "BD-401", "FD-FSIM-30"]
+related: ["FD-FSIM-29", "FD-FSIM-30", "N31a-04", "N31a-34", "N31a-35", "N31b-19", "N33a-30", "N33b-14"]
 gates: ["GATE-FOUNDRY-09"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§31.4", "§31.12", "§33.9", "§33.8"]
 ---
@@ -34,7 +34,8 @@ the suite's dependency rules).
 
 In: in `fs-io`, an entry point that takes a triangle mesh and emits the same canonical faceted STEP; here,
 replacement of the detour and a hash comparison of the packet fixtures. Out: bounded geometry export on this
-side, with decimation and refusal (BD-407); the build packet (BD-408); curved surfaces, units entities and
+side, with decimation and refusal (BD-407); the build packet and `foundry.export` (BD-408, a dependency,
+because the switch-over re-exports its packet fixtures and compares their hashes); curved surfaces, units entities and
 application-protocol conformance, which the exporter does not claim.
 
 ## Technical approach
@@ -69,12 +70,16 @@ current head before it is edited.
    order (vertices and triangles in the order given, so that the output is a function of the input alone);
 3. emits through the existing exporter, including the mandatory self-parse and bit-exact replay of every
    coordinate bit and triangle index;
-4. refuses by a typed value: an open shell, a non-manifold edge, an orientation conflict, or a mesh over the
-   instance limit, each with the offending element.
+4. refuses by a typed value: an index out of range, a degenerate triangle (a repeated index or zero area), an
+   open shell, a non-manifold edge, an orientation conflict, or a mesh over the instance limit, each with the
+   offending element. The validation of step 1 has no other outcome: every check it makes is one of these six
+   refusals.
 
-Instance arithmetic, for the limit: a closed triangle mesh with F triangles and V points uses three instances
-per triangle and one per point; for a surface without handles V = F/2 + 2, so the count is 3.5·F + 2. The
-default limit of 10⁶ instances therefore admits 285,713 triangles; a tetrahedron (F = 4, V = 4) uses 16.
+Instance arithmetic, for the limit (the plan's count, as N31a-35 restates it): a closed triangle mesh with F
+triangles and V points uses three instances per triangle (loop, face bound, face), one per point, and two more
+(the closed shell and the faceted solid), N = 3·F + V + 2; for a surface without handles V = F/2 + 2, so
+N = 3.5·F + 4. The default limit of 10⁶ instances therefore admits F ≤ 285,713, and F is even for a closed
+triangle mesh, so 285,712 triangles; a tetrahedron (F = 4, V = 4) uses 18 (KA-748).
 
 Additive: the decoder-fed exporter is unchanged.
 
@@ -112,7 +117,7 @@ difference is diagnosed before the detour is removed, because a changed STEP fil
 
 ## Acceptance criteria
 
-- [ ] In FrankenSim: the mesh entry exists, validates, refuses the four cases by typed values, and passes the self-parse and replay check on every accepted mesh.
+- [ ] In FrankenSim: the mesh entry exists, validates, refuses the six cases by typed values, and passes the self-parse and replay check on every accepted mesh.
 - [ ] In FrankenSim: for a solid decoded from a file, exporting from its mesh and re-emitting from the decoded solid give identical bytes.
 - [ ] Here: every packet fixture has identical hashes through both routes, recorded; only then is the detour removed from `frob-foundry`.
 - [ ] Here: GATE-FOUNDRY-09 passes at the new pin; the over-bound refusal still carries `FROB-REF-824` on this side and the upstream reason beneath it.
@@ -124,10 +129,12 @@ difference is diagnosed before the detour is removed, because a changed STEP fil
 
 ### Unit tests
 In FrankenSim (added, in `fs-io`):
-- `tetrahedron_from_mesh_round_trips`: vertices (0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1) with outward-oriented faces; expected a file that decodes to the same four vertices and four triangles bit for bit, with 16 instances.
+- `tetrahedron_from_mesh_round_trips`: vertices (0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1) with outward-oriented faces; expected a file that decodes to the same four vertices and four triangles bit for bit, with 18 instances, and bytes identical to the file the decoder-fed exporter re-emits for the same solid written as a faceted-solid chain and decoded (the comparison with this project's detour is `detour_and_mesh_entry_hash_equal`, here).
 - `open_shell_is_refused`: the tetrahedron with one face removed; expected the typed refusal naming three boundary edges.
 - `non_manifold_edge_is_refused`: two tetrahedra sharing one edge; expected the refusal naming that edge.
 - `flipped_triangle_is_refused`: one face with reversed winding; expected the orientation refusal.
+- `out_of_range_index_is_refused`: the tetrahedron with one index set to 4; expected the typed refusal naming that triangle and index.
+- `degenerate_triangle_is_refused`: one triangle with a repeated index, and separately one whose three points are collinear; expected the typed refusal naming the triangle in each case.
 - `instance_limit_is_enforced`: a closed mesh of 285,714 triangles against the default limit; expected refusal; 285,712 accepted.
 Here:
 - `detour_and_mesh_entry_hash_equal`: for each packet fixture.
@@ -139,8 +146,10 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_26 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry export --json` on the packet fixtures and compares
-each geometry file's hash with the hash stored from the detour.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry export --geometry-only --format step --fixture <part> --key "$(foundry_key post-<part>)" --json`
+on the packet fixtures (a `run` verb, so each call carries a key from the cluster preamble, N31a-51; one key
+per fixture and phase, so the post run is not answered by a stored pre-move envelope) and compares each
+geometry file's hash with the hash stored from the detour.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_26/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -152,7 +161,7 @@ and the artifact paths needed to reproduce. A final `summary` line gives asserti
 gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
-- Known answers: the tetrahedron (16 instances, volume 1/6, centroid (¼, ¼, ¼)); the bound of 285,713 triangles at 10⁶ instances; a mesh written through `fs-io` reads back with the same hash (INT-FSIM-15, KA-770).
+- Known answers: the tetrahedron (18 instances, KA-748; volume 1/6, centroid (¼, ¼, ¼)); the bound of 285,712 triangles (even F with 3.5·F + 4 ≤ 10⁶) at 10⁶ instances; a mesh written through `fs-io` reads back with the same hash (INT-FSIM-15, KA-770).
 - Negative controls: an exporter that reorders vertices by a hash map's iteration order must fail the hash comparison on a second run; a STEP file above the stated bound must be quarantined with a receipt, not parsed (the negative control of INT-FSIM-15).
 - Determinism lanes: byte-identical output twice on one machine and on both platforms (class D0).
 

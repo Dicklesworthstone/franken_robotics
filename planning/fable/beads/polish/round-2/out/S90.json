@@ -1,0 +1,414 @@
+{
+ "round": 2,
+ "slice": "S90",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "BD-433",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "The outcome table departed from its owner N39b-05 and from plan §39.10: restored 'or a futility stop at the partial gate' on withdrawn, the research-budget clause on a tie, 'BET-14 neither met nor failed, re-tested at the next gate' on engine advantage not established, 'the cell is enlarged for the next gate' on descriptive; the limits now carry the §39.15 qualifiers (reality: no-claim unless a reality band covers the mission; quality scored where a mission states an optimality gap) and part 6 the 'parity of speed with a different kind of evidence' sentence."
+  },
+  {
+   "bead": "N39b-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Breach (c), an arm changed after its freeze, was left unstated and read as voiding the tournament; it now follows the disqualification engine N39b-01 (campaign refused with tenfold.frozen-arm-changed, exit 9; that arm's later cells void and re-run at the next gate), and (b) names the leak rule of N39b-02. Added direct deps N39b-01 and N39b-02 (both already reached, no cycle); new unit tests arm_change_voids_that_arms_later_cells and bounded_leak_voids_touched_cells_only, inputs and expected values on three existing tests, and an acceptance line for the arm-change plant."
+  },
+  {
+   "bead": "N39b-17",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Step 10 runs replication level 2 directly; moved N39b-20 from related to deps (already reached through N39b-21, no cycle)."
+  },
+  {
+   "bead": "N39b-20",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Applied the U39a request: the replication record gains party (external or internal) and converts by ReplicationRecord::view() to N39a-32's ReplicationView {external_rerun_passed, hash} (true only for an external 'replicated'; hash = BLAKE3 of the canonical record, equal to the kit manifest's entry); test record_converts_to_replication_view with passed, failed, internal, incomplete and missing-party records; added dep N39a-32. Made this bead the owner of the comparable-hardware function, stated over the frob.fingerprint/1 fields of BD-029 (device name, architecture and count; driver, runtime, compiler major release; the whole arithmetic block; identity digest not compared because it holds host and device UUID; rates description only, DESIGN with reason), with test inputs."
+  },
+  {
+   "bead": "N39b-21",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "Level 2 has two halves and only the time half had a plant: added the outcome-flip plant (a rejected re-run at q = 1.0 must fail the pair); seven plants became eight in header, unit and control text. Stated that the tournament kit's level-2 step needs cuda on the second host (the rehearsal's synthetic arms need only cpu) and is an e2e_skip, never a pass, without it. The scope sentence no longer says N40-17 defines comparable hardware."
+  },
+  {
+   "bead": "N40-16",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The gate's central audit (each cell's verdict equals the written rule's assignment; each outcome an ADR) had no planted defect: added unit tests verdict_mismatch_fails (R-hat 2.647 recorded measured) and outcome_without_adr_fails, and the matching negative control."
+  },
+  {
+   "bead": "N40-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its comparable-hardware rule ('discrete fields equal; rates within the fingerprint's own repeatability band') differed from N39b-20's, could never hold on another machine (the discrete identity holds host and device UUID) and used an undefined band; it now applies N39b-20's function and does not restate it. The sample is drawn by N39b-20's public rule. Fixed 'two RTX 4090 cards' (a campaign uses one) and the status 'unavailable' (the record's status is 'incomplete')."
+  },
+  {
+   "bead": "NS-24",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The actors contradicted the arm names of BET-14, N39b-07 and plan §39.5: arm B (the strongest composed rival, the ratio's numerator) was missing, the composed incumbent was called 'arm C' only, and our own layer was called 'arm W' (W is the composed incumbent; our layer is arm D). Rewrote the actors; the stratum labels now use the verdict vocabulary of N39a-32 (ten-fold, measured, withdrawn, descriptive, disqualified, tie statement, not run) instead of 'confirmed'."
+  },
+  {
+   "bead": "N19bx-01",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Script calls lacked the run key and the --scene that N19b-40's --apply requires (KNOWN_DRIFTS 5, 8); step 4 called the later facility query (KNOWN_DRIFTS 7): it now checks Unpriced through the --facility report on a planted catalogue copy, which it supplies as a fixture to N25c-31, which owns the facility-query check. Added the byte-identical-without---facility assertion. Added direct deps N19b-40 (the verb it extends) and STD-E2E."
+  },
+  {
+   "bead": "N25c-29",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Its only end-to-end evidence was a step in N25c-34's script, which depends on it (KNOWN_DRIFTS 7). It now owns scripts/e2e/mission_site_model.sh (six steps with keys: the unknown gap as a range, unresolved route with residual, probe request, loaded width, FROB-REF-304 on relative-only, determinism), called by N25c-34 as a stage; added an acceptance line. Added direct deps BD-126 (mission.new, which it extends with --from-scene), BD-135 (mission.synthesize) and STD-E2E."
+  },
+  {
+   "bead": "N25c-30",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Same delegation to N25c-34: now owns scripts/e2e/mission_compose.sh (KA-642 on-time and late, KA-643, the four FROB-REF-858 refusals, frob-verify on composition proofs and on a two-traces copy, determinism). The surface example lacked --key on a run verb. Added STD-E2E."
+  },
+  {
+   "bead": "N25c-31",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "It depended on N19bx-01 but never used it: added how each world edit's Price is filled from facility_terms (parts, person-time, floor window, calibration, annualized upkeep, access, tolerance bands), the 'unpriced world edit' disposition (never zero), the rule that a world edit is inner only if its band-extreme variants are, and weakest-provenance evidence; three unit tests (price_from_facility_terms, unpriced_entry_is_omitted_with_disposition, band_extreme_decides). Now owns scripts/e2e/mission_world_edits.sh (eight steps with keys) instead of a step in N25c-34; surface examples carry --key. Added STD-E2E."
+  },
+  {
+   "bead": "N25c-32",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Same delegation: now owns scripts/e2e/mission_operating_state.sh (hot restart at 966 s against 1,200 s, charger-loss replay, pendulum 10 N to about 20 N against 15 N, FROB-REF-854 outside the duty cycle, revalidation after a wear-model version bump, unearned coupling refused). Added direct deps N25a-16 (mission.revalidate) and STD-E2E."
+  },
+  {
+   "bead": "N25c-33",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Same delegation: now owns scripts/e2e/mission_facility_answer.sh (two survivors and obstructions, show per part, pareto-candidates downgrade, tie request, unmet finding, revalidation after the 0.59 m door, report mission). Surface examples given in their registered forms with --key. Added N25a-16 and STD-E2E."
+  },
+  {
+   "bead": "N25c-34",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Every run and mutate call lacked --key (KNOWN_DRIFTS 5); added them in the registered example forms (scene compile, mission new, synthesize, prove bundle, revalidate, nemesis shrink, sim replay). Step 10 now runs the five mechanism scripts as named stages, first, each passing only on a zero-failure summary, so a mechanism failure is reported as that mechanism's."
+  },
+  {
+   "bead": "N25c-35",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "The ADR had no path: it is now docs/adr/ADR-KILL-AUGUR-FACILITY-M8.md (KNOWN_DRIFTS 4) with N40-03's required fields listed, and the stop rule's outcome is a section of it."
+  },
+  {
+   "bead": "N25cp1-02",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Run and mutate calls lacked --key; added the key convention (one distinct key per drop-one re-answer) and the registered command forms. Steps 2 and 6 use the blinded lane eval.qualify directly: added dep BD-259 (already reached, no cycle)."
+  },
+  {
+   "bead": "N25cp1-03",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "synthesize, prove bundle and revalidate calls lacked --key; added them, one distinct key per holdout."
+  },
+  {
+   "bead": "N25cx-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Overflow codes now follow KNOWN_DRIFTS 6 (FROB-REF-722 on batch-cpu; 610 cannot arise because a lockstep request is refused first with 160). FROB-REF-160's repair named --decouple, which N16c-20 adds later and which depends on this bead: the repair is now --tier batch-cpu --profile strict and N16c-20 adds --decouple to it. Validation steps 4 and 6 refused with no code: named the worded refusals fleet-link-undercuts-min-latency and fleet-decision-maker-shared (interim, numbers requested of N35x-02), with tests. sim.run and scene.compile calls carry --key, with distinct keys for the two compared runs. Added STD-E2E."
+  },
+  {
+   "bead": "N22b-06",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The script called the run verbs skill.compile and skill.check without --design or --key (KNOWN_DRIFTS 5, 8); now in their registered forms with one distinct key per body."
+  },
+  {
+   "bead": "N22b-07",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Applied the request: VERBS-skill moved from related to deps (its skill.transport row carries --design, --task, 444 and 448; no cycle). The verb paragraph now states the row (options, refusals, FROB-REF-724 without the Moonshot feature) with its registered example. The script lacked --task, --key and the eval.compare form; it now uses them, asserts outside-training-envelope (exit 2), the zero-residual digest and no residual pass on infeasible bodies, and logs thresholds (-3 points, 0.2 saturation, 18 of 20), n* and the first differing body."
+  },
+  {
+   "bead": "N22b-08",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The decision record had no path: now docs/adr/ADR-KILL-SKILL-M8.md with N40-03's fields (KNOWN_DRIFTS 4). The fallback refusal was described only in words; VERBS-skill and N35 register it as FROB-REF-724 (exit 5), now named in the step, the acceptance line and the script. The script called a run verb with no arguments or key; now the registered form with keys, plus a skill.check call asserting the exact layer still answers. Added STD-E2E."
+  },
+  {
+   "bead": "N25d-22",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Its e2e note named only the later gate script. The engine has no verb of its own; it now exposes its hand families as checked-in family fixtures (sqrt, two-conics, inverse, crossing) that the strategy script of N25d-23 and the gate script of N25d-24 use, and names both as its end-to-end evidence."
+  },
+  {
+   "bead": "N25d-23",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The label rule gave Partial(39, 0) for an artifact with one start removed (ℓ counted only failed and uncertified paths) while its own acceptance, the pilot and GATE-AUGUR-22 require Partial(39, 1): missing starts m = G − starts held now count as lost, and the trace receipt is bound to the artifact's content hash so a doctored artifact is re-tested; new test label_missing_start_is_lost. The bead had no script of its own (it pointed at the later gate script, KNOWN_DRIFTS 7): it now owns scripts/e2e/synth_continuation_strategy.sh (hand families, CLI and MCP digests, Partial never excludes, job cancel leaves no artifact, FROB-REF-724 and 701), called by N25d-24 as its strategy-smoke stage. The surface example lacked --key; --family is stated as added by this bead (requested of VERBS-mission). Added deps BD-210 (job.cancel and job.status for the cancellation test) and STD-E2E."
+  },
+  {
+   "bead": "N25d-24",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Run calls lacked --key and the bundle step was missing before prove verify; added keys ag22-<k>, prove bundle and frob-verify per set, and keys on the two refusal calls. It runs N25d-23's strategy script as a first stage, and the hand families are N25d-22's fixtures rather than copies."
+  },
+  {
+   "bead": "N25d-25",
+   "kinds": [
+    "self-contained",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The ADR had no path: now docs/adr/ADR-KILL-SYNTH-CONT-M8.md with N40-03's fields (KNOWN_DRIFTS 4). The script now logs record hashes, the ADR path and the first differing input on a mismatch. Added STD-E2E."
+  },
+  {
+   "bead": "N31a-44",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The scope refusal had no name or code: it is now the worded refusal firmware-controller-not-exportable (exit 5, behind a named constant until N31b-45 numbers it; requested), with its payload, asserted by the three refusal tests. The e2e paragraph's command lacked --packet and --key and used a fixture name that exists nowhere (knee-pi); it now names the registered form and states that this bead's end-to-end evidence is the scope, emission and packet-independence stages of N31a-58's script, since code is emitted only with N31a-45 and N31a-46 present (KNOWN_DRIFTS 7)."
+  },
+  {
+   "bead": "N31a-45",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The export calls of its e2e paragraph lacked design, --packet and --key; now in the row's form, and the paragraph names steps 3 to 8 of N31a-58 as its stage."
+  },
+  {
+   "bead": "N31a-46",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The export call lacked its form and key; it names steps 10, 11 and 13 of N31a-58 as its stage and says --firmware params-only is this bead's option (requested of VERBS-foundry)."
+  },
+  {
+   "bead": "N31a-58",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "No foundry.export call carried a design, --packet or --key (KNOWN_DRIFTS 5, 8): added the one command form for every step (fixture design quad-ref-final, distinct key fw-<step>-<n>), marked which steps are the stages of N31a-44, N31a-45 and N31a-46, named the scope refusal firmware-controller-not-exportable, and gave the two packet-independence exports distinct keys and directories."
+  },
+  {
+   "bead": "N31a-62",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the request (checked against N31b-45 rule 2 and its row 9): firmware-receipt-mismatch is raised under the interim FROB-REF-890 with detail firmware-receipt-mismatch behind the named constant FIRMWARE_RECEIPT_MISMATCH, with N31b-45's block fields, retry and exit 3; the three receipt tests assert code, detail and failed field, a new test receipt_refusal_uses_named_constant, and the acceptance line and script step 4 assert the interim. foundry.check (a run verb) and the export now carry keys; the controller fixture is knee-pi-clamped and the packet lies under the export root."
+  },
+  {
+   "bead": "N31b-21",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "ADR path docs/adr/KILL-FIRMWARE.md became docs/adr/ADR-KILL-FIRMWARE-M8.md with N40-03's fields (KNOWN_DRIFTS 4). The script and an acceptance line used --fixture and --out, which foundry.export does not have, and the superseded fixture name pi-clamped: now the row's form with --packet, --controller knee-pi-clamped and a key, and frob-verify on the directory. The fallback is tied to N31a-46's parameters-only output; the pre-decision refusal is named FROB-REF-724 (release builds do not link the feature; the gate's build does). Added STD-E2E."
+  },
+  {
+   "bead": "N31b-29",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Two unit tests exercised code that exists only if option B is adopted; they are now stated as conditional, with a test for option C's recorded tier. Added the known verdicts of the scaling probe (unrolled 8 to 64 ticks unsatisfiable, since 400 x 64 = 25,600; 128 satisfiable, first overflow at tick 82), so a wrong probe verdict is caught as a builder defect rather than read as a timing point."
+  },
+  {
+   "bead": "N23bx-01",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "self-contained"
+   ],
+   "what": "The smoke script called train.family with options its row lacks (--task, --worlds, --tier, --updates) and without the row's class, generator, split, approval or --key, and evaluated with eval.run --designs, which does not exist. Now: --arch is stated as this bead's addition, the smoke's --worlds, --backend, --steps and --seed are added with train.start's spellings (all requested of VERBS-train), every call carries a key, a second keyed run per arm checks identical weight digests, and the re-description check uses policy.apply --design --task --seed (row options). Added deps N23a-25 (policy.apply; no cycle) and STD-E2E."
+  },
+  {
+   "bead": "N23bx-02",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained",
+    "deps"
+   ],
+   "what": "Applied the request (checked against BET-30 and N00p1-11's step clause): the GATE-CORTEX-17 receipt records each run's environment-step count at its attainment look (or not-attained), with an acceptance line, a log field, a schema clause and the test steps_at_attainment_look_recorded. Corrected the upper bound of paired_ratio_bounds_three_seeds: exp(0.35674 + 0.02409) = 1.46350, so 1.463, not 1.464 (also in known answers). Commands used --idempotency-key and eval.run --designs: now --key, the row's train.family arguments, and policy.apply then eval.run --policy as BD-321 does. The final reading is the second section of docs/adr/ADR-KILL-GATREE-M8.md that N23b-02 opens, with N40-03's fields and the decision-array entry. Added dep N23a-25."
+  },
+  {
+   "bead": "N22b-33",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The pilot register path lacked crates/ (KNOWN_DRIFTS 2) and the schema was unnamed (KNOWN_DRIFTS 3); now crates/frob-conformance/registry/pilots.toml, schema frob.gauntlet.pilot/1. Arithmetic re-derived (hand points, area 4.7181, erosion cases) and correct."
+  },
+  {
+   "bead": "N22b-34",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its e2e note gave shield.fit without design, controller, --tasks or --key; now the row's form, stated as the first step of N22b-35's script (the builder has no verb until N22b-35 adds --table), with first-differing-cell logging. Hand fixtures re-derived and correct."
+  },
+  {
+   "bead": "N22b-35",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Script calls lacked keys and required arguments (shield.fit --design/--task instead of positional design and --tasks; prove bundle and eval.run with no form; shield report with no id): now the registered forms with keys stb-1 to stb-6, both the referee and strict lanes, and frob-verify on each mutant. --table is stated as this bead's addition to shield.fit (requested of VERBS-shield)."
+  },
+  {
+   "bead": "N22b-36",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The ADR had no path: now docs/adr/ADR-KILL-TUBE-M8.md with N40-03's fields (KNOWN_DRIFTS 4). The fallback refusal was described in words; it is FROB-REF-724 (a mechanism whose kill gate has a killed record), now in the step, acceptance line and test. Script calls now carry the row's arguments and keys and assert 0.7196 m. Added STD-E2E."
+  },
+  {
+   "bead": "N21c-21",
+   "kinds": [
+    "scope",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The script ran sim.run --step-plan fused-pilot while Scope placed the flag in the later mechanism bead (KNOWN_DRIFTS 7, 8): the pilot now owns a development-only hook (the value fused-pilot under the feature pilot-fused-step, never in release, FROB-REF-724 elsewhere) that N21c-23 replaces with the registered flag. Run calls carry distinct keys per arm and pair; the divergence call has its two runs. The humanoid working-set test now states 96,704 bytes with state, the figure N21c-23 uses. Arithmetic (ceilings, 30,556 bytes, t = 1.833) checked."
+  },
+  {
+   "bead": "N21c-22",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "The ADR had no path: now docs/adr/ADR-KILL-MEGA-M8.md with N40-03's fields. On a fired gate the pilot's development hook and kernel are removed too, so no build accepts a fused plan (acceptance line updated)."
+  },
+  {
+   "bead": "N21c-23",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "The flag is stated as this bead's addition to the sim.run row, replacing the pilot's fused-pilot hook (requested of VERBS-sim with FROB-REF-604). The acceptance command and the script lacked keys and command forms; both arms, the refusal case, cancel cycles and timing pairs now have registered forms with distinct keys."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N39-REF",
+   "what": "Row tenfold.protocol-breach says 'The tournament is void and re-run'; N39b-13 (with N33b-03, N39b-01, N39b-02) voids by extent: a pin move with the freeze open voids only the spanned runs and their cells, a bounded leak the touched cells, an arm change that arm's later cells; only an aborted freeze, an unattributable run or an unbounded leak voids the tournament. Please state the effect as 'the runs, cells or tournament the breach's extent covers are void (N39b-13)'."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.retrofit gains the option --facility at M8 (N19bx-01: adds the as-installed band check and annualized facility terms to the --apply report; without it the report is unchanged). Please add it to the row's inputs and 'Extended by: N19bx-01'; N19b-40's spelling list may name it too."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.new gains --from-scene <scene> at M8 (N25c-29: the query's world field is the compiled site model). Please add it to the inputs and 'Extended by: N25c-29'."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run accepts a fleet scene frob.scene.fleet/1 in --scene from M8 (N25cx-01): --design and --policy then conflict (FROB-REF-802), and a lockstep-tier request is refused with FROB-REF-160, which is not in the row's refusal list. Please add 'Extended by: N25cx-01' and FROB-REF-160 to the refusals."
+  },
+  {
+   "bead": "N35x-02",
+   "what": "Two uncoded refusals of N25cx-01 (fleet scene validation, scene chapter): fleet-link-undercuts-min-latency (a channel's link card has a least latency below the declared min_latency, or min_latency is not positive) and fleet-decision-maker-shared (two robots share a decision_maker without a pooled controller). Both exit 3; raised as worded refusals behind named constants until numbered."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Step 6 still gives the decision ADR path docs/delivery/adr/ADR-<gate-name>-<milestone>.md; KNOWN_DRIFTS item 4 retires docs/delivery/adr/ for docs/adr/. Please change the path (the required fields stand)."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize gains --family <id> at M8 with --strategy continuation (N25d-23: names the mechanism family whose generic-solve artifact is used; N25d-24 uses --family stewart-gough-fk). Please add it to the row's inputs and 'Extended by: N25d-23'."
+  },
+  {
+   "bead": "N31b-45",
+   "what": "An eleventh Foundry refusal stated without a code: firmware-controller-not-exportable (N31a-44, step 1): foundry.export --with-firmware on a controller outside the exportable set (a construct other than fixed-size scalar state, add, subtract, multiply, constant shifts, compare, select, clamp, bounded constant tables; a data-dependent loop, a variable divisor, a transcendental). Exit 5 (the not-implemented class), payload: the first construct with IR name and source position, and the three exportable kinds. Raised behind the named constant FIRMWARE_CONTROLLER_NOT_EXPORTABLE until numbered; N31-REF's Table 3 count changes from ten to eleven."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "(1) foundry.export: add --firmware params-only (N31a-46 step 6, the KILL-FIRMWARE fallback output on request) to the inputs, and the pending uncoded firmware-controller-not-exportable (exit 5, with --with-firmware; N31a-44) to the row. (2) foundry.check: the pending entry for firmware-receipt-mismatch says it is emitted under its name with exit 3, but N31b-45 (rule 2, row 9) raises it under the interim FROB-REF-890 with detail firmware-receipt-mismatch; N31a-62 now follows N31b-45. Please state the interim in the row."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.family: add --arch plain|ga-encoder|ga-tree ('Extended by: N23bx-01', Moonshot feature moonshot-ga-policy; without it FROB-REF-724), and --worlds, --backend, --steps and --seed with the spellings of train.start's row (N23bx-01's smoke run with fixed steps and seed; N23bx-02 passes --seed per arm)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run is called with --policy <bound policy>, --task, --split and --seeds by BD-321 (step 77 of its script) and now N23bx-02, but its row lists only design, battery, tier, class and freeze_envelopes. Please add those options (or name the verb that evaluates a bound family policy on held-out designs, and both beads will use it)."
+  },
+  {
+   "bead": "VERBS-shield",
+   "what": "shield.fit gains --table <subsystem description> at M8 (N22b-35: builds the reachable-set table of N22b-34 and attaches it as a payload of the shield record; after KILL-TUBE fires it is refused with FROB-REF-724, N22b-36). Please add it to the inputs and 'Extended by: N22b-35'; shield.report gains the table block."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run gains --step-plan staged|fused at M8 (N21c-23; default staged; FROB-REF-604 when the shape class has no fused kernel, zero worlds stepped). Please add it with 'Extended by: N21c-23' and 604 to the refusals. The pilot N21c-21 uses a development-only value fused-pilot in a non-release build; the row may note it as such."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "Slice complete: 51 beads (WP-77 and BD-435 to BD-441) read in full in work-package order; 42 changed, 9 unchanged; the four requests addressed to the slice were checked against the plan and applied (N39b-20, N22b-07, N31a-62, N23bx-02). Every touched file parses (front matter, JSON lists, seven sections, three test subsections, known deps) and the graph has no cycle. Recurring round-1 misses across the slice: (1) run verbs called without --key or without required arguments (--packet, --design, --task), and options no verb row has (KNOWN_DRIFTS 5, 8); (2) mechanism beads whose only end-to-end evidence sat in a later gate script (KNOWN_DRIFTS 7), fixed by giving each its own script or naming the stage it exposes; (3) kill-gate decisions with no ADR path or with a retired path (KNOWN_DRIFTS 4), now docs/adr/ADR-<gate>-M8.md with N40-03's fields; (4) capability refusals described in words where FROB-REF-724 is the registered code. Substantive correctness fixes: BD-433's outcome table restored to N39b-05; N39b-20 made the one owner of comparable hardware; the continuation label rule (N25d-23) now gives Partial(39, 1) for a removed start, as its pilot and gate require; N23bx-02's bound corrected to 1.463. Requests: 13, mostly to verb-registry beads for options the mechanisms add. The slice looks settled once those registry rows are updated."
+}

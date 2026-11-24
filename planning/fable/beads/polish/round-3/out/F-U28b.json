@@ -1,0 +1,300 @@
+{
+ "round": 3,
+ "slice": "F-U28b",
+ "reviewed": 30,
+ "changed": [
+  {
+   "bead": "BD-090",
+   "kinds": [
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied H-verbs-6's request: BD-090 now owns the sim.run input `--telemetry` at M1 (T0, T1, T2 uppercase; the value is the highest level recorded; DESIGN default T1; in the manifest core and RunId, never in StepPlanId or physics digests, INV-SENS-01/KA-505; channels above the level get `level-not-enabled` gaps so metrics refuse 888; `t2`/`packets` are 802 pointer /telemetry; T3 and task-all 724 until N29ap1-02 and N24cx-01 add them; BD-207 extends to batched tiers). Telemetry level added to RunId's manifest core and the .frun manifest. Three unit tests and its own script `scripts/e2e/chronicle_telemetry_levels.sh` (distinct keys, digests equal, RunIds differ, default = T1). Deps BD-024, VERBS-sim, STD-E2E added."
+  },
+  {
+   "bead": "BD-248",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S64's request: section 4 now states that the removing and both must-not-flip interventions of every planted cause are admissible at a mid-episode fork (disturbance, scene, sensor-link or torque-limit row, never a design edit refused by 581); the torque-cap remover is N27b-01's diagnostic row torque-limit-set, admissible because N27a-02 classifies the limit row exogenous; N27b-08's check (d) named. New unit test corpus_cause_interventions_forkable with a gear-ratio negative control; acceptance extended."
+  },
+  {
+   "bead": "BD-332",
+   "kinds": [
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied H-verbs-1's request: new section 9 registers A-04 as an `Analysis` of frob-analyze (ID, version, Frontier, screening, reads, inputs incl. --controller and --param, network by leg count, output {atlas, orbits, continuation} with orbits/continuation `not-run` until BD-333/BD-335, findings A-04.body-group-unbound and A-04.no-network, declared refusal 431 + generated 551) so N28a-05 emits analyze.gait equal to the row on file. Unit tests a04_*, e2e step group analyze-*. Gate step now runs the g1_known_answers entry and records with record_gate outside the script (conventions 1 and 9). Stale 'owner of the resolution' consideration replaced by the registry's settlement."
+  },
+  {
+   "bead": "BD-345",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied S63's request: gate run is `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- GATE-ATEL-09` (not a per-gate target), recorded from its receipt with record_gate by this bead, never by a script; why the user-side script lives in N28b-31 stated."
+  },
+  {
+   "bead": "BD-346",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied H-verbs-1's request: new section 8 registers A-19 as an `Analysis` of frob-analyze, a read view over the stored stage-5 record (tier S, inputs campaign or --finalists and --variants, output with rule `cascade-strict`, findings A-19.model-conditional with severity Refusing(557) and A-19.unchecked, declared 557 only), so N28a-05 emits analyze.rank-robustness; dep N28a-05 added. GATE-ATEL-10 run moved from the per-crate `--test gate_atel_10` to the g1_known_answers entry with record_gate (convention 1). The 'stage 5 disabled by request' had no option: defined the conformance mutant `skip-stage5` reached as `--mutant skip-stage5` (requested of BD-352 and VERBS-opt); script cascade calls given distinct keys; analyze rank-robustness steps and a19_* unit tests added."
+  },
+  {
+   "bead": "BD-374",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The symbol c meant both the ratio of the e-process and the campaigns per brief; campaigns per brief renamed r (DESIGN default r = 2), and the true ratio in the validity argument of L renamed rho so it does not collide with r."
+  },
+  {
+   "bead": "N28b-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-cx-2's request (via N28b-34): the KA-702 negative control is now N28-CX's plant `bisect-last-edit-first-change`, an nc-<nnnn> branch in frob-opt::lineage::bisect (layout moved to that module, the registry's target), one control per build. Worked case now says the bad endpoint is stored (else P = 4)."
+  },
+  {
+   "bead": "N28b-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Mutants are per-control `frob-opt/nc-<nnnn>` features built one per build (BD-025), not the umbrella; the relabel mutant named as CX-313's plant. Gate run is the g1_known_answers entry for GATE-ATEL-04's bisect row; the script no longer calls record_gate (convention 9); trial commands carry keys."
+  },
+  {
+   "bead": "N28b-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Stale sentence 'sim.replay's row does not yet list FROB-REF-791 ... requested of VERBS-sim' replaced: the row now lists 791 (this bead the producer-resolution owner) and 894 (convention 12)."
+  },
+  {
+   "bead": "N28b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The blame step used `--field legs.lf.knee.gear_ratio`, an option design.blame's row does not have; it now passes the field as the row's positional JSON pointer (convention 8)."
+  },
+  {
+   "bead": "N28b-07",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Its e2e was 'covered by' N28b-08's opt_race_campaign.sh, which depends on it and calls opt.start of BD-341, which also depends on it (conventions 7 and 11). Now owns `scripts/e2e/optimizer_ask_tell.sh` through an example program `ask_tell` on its own dependencies: three cma-es generations on diff-drive, design.show of realized candidates, kill/--resume bit-identical, tell-order invariance, tr-bo unbounded lever refused, mf-bo 545 in an unmeasured stratum, 724 without frob-fsim/optimize; NDJSON log and summary. Dep STD-E2E; acceptance line added."
+  },
+  {
+   "bead": "N28b-09",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Stale 'requested of the opt.start row, whose text says the design positional' replaced: the row now names --design, --family, --sweep. The script's '40-interval horizon' used an input opt.start does not have (horizon is phylum.gradient's); the stencil now runs at the default horizon (min of the task's and the admitted cap 50) with --objective (convention 8)."
+  },
+  {
+   "bead": "N28b-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Same symbol clash as BD-374: c was both the ratio of the statistic (span [-cH, H], c = 1.5) and campaigns per brief; campaigns per brief is now r (registration fields, reachability check, dry run r = 2, fallback r = 1), matching BD-374."
+  },
+  {
+   "bead": "N28b-12",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Its e2e was a step of N28b-28's script calling opt.cascade (BD-352 and N28b-28 both depend on this bead, conventions 7 and 11), and expected FROB-REF-542 from opt.cascade, whose row does not list 542. Now owns `scripts/e2e/scorer_admission.sh` through an example program on its own dependencies (R1 fall-through order with reasons, 817 at R3, the sampling cap arithmetic, 542 for a D4 evaluation profile, worker-count determinism, NDJSON log). Acceptance item that needed the later estimate verb restated as the admission report those verbs print. Deps N22a-24 (the cap rule it passes through) and STD-E2E added."
+  },
+  {
+   "bead": "N28b-17",
+   "kinds": [
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Applied S42's request: Scope now says NEG-08's itemized cost record is the itemized form of this model's conformal cost, same module (ladder/cost.rs) and test target (ladder_cost); the estimate now prints the conformal cost itemized under NEG-08's line names (rung_costs; audit_lane in both readings, share 12.15 min and count 19 x 3 min = 57 min with the rung named; a total per reading with formula), with test estimate_itemizes_audit_lane (729 s, 3,420 s, 8,019 s, 10,710 s). The saving prediction is registered under studio:saving (the name N28c-14 fixes, as N28b-08 does for races) and total spend is left to studio:estimate, so nothing is registered twice; new test saving_prediction_frozen_before_first_score. Its e2e was a step of N28b-28's script calling opt.cascade (BD-352 depends on it: conventions 7, 11); now owns scripts/e2e/ladder_estimate.sh through an example program, sim.estimate and predict.report. Acceptance no longer asserts the verb form. Dep STD-E2E."
+  },
+  {
+   "bead": "N28b-23",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S73's request as far as conventions 7 and 11 allow: its e2e was a step of N28b-28's script calling opt.cascade and report campaign, which depend on it (via BD-345). Now owns scripts/e2e/rung_modes.sh: rows written by BD-328's eval.rank-agreement on three planted populations (the second is BD-328's discard-only record), the automaton through an example program (D,S,S / D,D,D / U,U,U; trigger gives D,S,D), and on the discard-only record a select request refused with FROB-REF-545 and selection_basis 'survivors' rendered '3 survivors'. The verb forms (opt.cascade --finalists-from, report wording) are requested of BD-352. The kill_rank acceptance item no longer asserts N28b-17's estimate (which depends on it)."
+  },
+  {
+   "bead": "N28b-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-verbs-4's request: every `frob opt cascade` call has its own key (csp-run, csp-fixed, csp-replay-*, ...); the replay step would otherwise have received the stored receipt or 803. Sabotage (b) now uses the conformance mutant `--mutant skip-stage5` (BD-346) instead of an undefined flag."
+  },
+  {
+   "bead": "N28b-30",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "Its e2e was a step of N28b-31's script calling opt.cascade (BD-352 and N28b-31 depend on it). Now owns scripts/e2e/prune_audit.sh: design.check in the normal build and with the plant, the audit through an example program, evidence.trace of the prune-unsound record, the 551 at source, the fast-tier artifact control. The planted unsound prune is named as CX-303's plant a23-additive-peak, a frob-analyze/nc-<nnnn> branch built one control per build (BD-025), prune half by this bead. Dep N28b-12 added (the scorer-admission order it runs pruned designs under)."
+  },
+  {
+   "bead": "N28b-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied S63's request: the gates step runs `FROB_TEST_SEED=13 cargo test -p frob-conformance --test g1_known_answers -- GATE-ATEL-09`, logs the receipt hash and writes no gate record. Per-step keys for every cascade and audit call (the missing step re-runs the clean request). Kept the seal, refusals and gates steps that N26b-07 leaves to it. The prune step now names CX-303's plant `a23-additive-peak` and its one-control build (BD-025) and runs N28b-30's own prune_audit.sh first."
+  },
+  {
+   "bead": "N28b-32",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-verbs-3's request: next_actions command uses --key, not --idempotency-key. Applied H-cx-2's request: builds CX-316's plant optimum-kept-on-feasibility as a frob-verbs/nc-<nnnn> branch (executor folds feasibility and optimality into one obligation), caught by split_verdict_doorway; acceptance item added. KA-699 marked as BD-292's row through this surface (the fixture engine cannot check it); CX-315 named as N28b-37's plant."
+  },
+  {
+   "bead": "N28b-34",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied H-cx-2's request: CX-314's plant support-enlarged-hash-match is built with BD-347 under N28-CX's id as a frob-verbs/nc-<nnnn> branch of the grade-3 grader (a hash match taken as the licence), caught by hypothesis_hair_widening; BD-292's world plant cx-282 named. The polarity step's result.revalidate calls (a run verb) now carry keys, with a new key after the rule is disabled (convention 5)."
+  },
+  {
+   "bead": "N28b-37",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Applied S23's request: the Analysis memo key is derived from the declared read set reads() (the plan's 'generated from the declared inputs', N28a-04), lookup by key alone; the tracked view still records the fields actually read and a read outside the declared set fails in debug; the two-step lookup on the actually-read set is withdrawn because it made the declared-input test vacuous; acceptance and tests rewritten (declared_set_keys_analysis, undeclared_read_fails_in_debug, sound data-dependent reads). Applied S43's request: the node record is N33b-15's NodeRecord with every field filled; 'local node record' dropped from In scope; dep N33b-15. Applied H-cx-2's request: CX-315's plant memo-key-no-delivery as a frob-core/nc-<nnnn> branch. Its e2e was a step of N28b-40's script through design.check (BD-111, which depends on it); now owns scripts/e2e/memo_keys.sh via an example on fixture kinds; the per-template run is BD-111's."
+  },
+  {
+   "bead": "N28b-38",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "Its e2e was steps of N28b-40's script through design.check (BD-111 depends on it) and `frob store status`, a verb of BD-209 (M2), which depends on this M1 bead. Now owns scripts/e2e/memo_policy.sh through N28b-37's example and its own memo_counters example (shadow mode counters, refused advance, test-override, latch on the planted nondeterministic kind surviving reopen, --no-memo, cache deletion with evidence.trace, budget NotCached). Out names N33b-15's NodeRecord/Recompute and BD-209's store.status. Dep STD-E2E."
+  },
+  {
+   "bead": "N28b-40",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Gate: the M1 part runs through the tier target named by GATE-ATEL-12's record and is recorded by this bead with record_gate (conventions 1, 9; N28c-25 names it the recorder). Mutants are per-control nc features, one per build (BD-025). The read-set mutant names the declared reads() set. The keys, policy and shadow steps are now spelled out here (they were in N28b-37/38, whose own scripts cannot use BD-111's wiring), with keys on design.edit and counters read by N28b-38's example since store.status is M2."
+  },
+  {
+   "bead": "N28b-41",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The digest step ran 'a campaign's stage 1', the cascade's (N28b-26 and BD-352 depend on this bead); it now requests members' episodes through an example program. Replays carry keys. The planted projection defect is named as CX-154's plant (a digest without the second moment, BD-285's nc branch, one control per build)."
+  },
+  {
+   "bead": "N28b-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The episodes step ran `frob sim run` twice under no key (the second would return the stored receipt, not a memo hit) and with `--horizon 2s` (the row's duration is --seconds): now --seconds 2 and a key per run, keys on the design edits. Gate: tier-target run and record_gate by this bead (recorder of the M2 part). Key mutants and the planted nondeterministic kernel are per-control nc features (BD-025), not N35-15's --mutant loader, whose runs are never memoized; the delivery-instants mutant tied to CX-315."
+  },
+  {
+   "bead": "N28b-43",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The paired lower-bound check used r for a ratio, while the registration this bead adds entries to (N28b-11) now uses r for campaigns per brief; the ratio is now rho."
+  },
+  {
+   "bead": "N28bx-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Stale sentence 'the inputs and FROB-REF-869 are requested of the opt.start row, which lists neither' replaced: the row now lists the objective, --verdict, --max-edits, --max-price and 869 with this bead as owner (convention 12)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-352",
+   "what": "opt.cascade needs the conformance-build-only input `--mutant <name>` (N35-15's loader: receipt and envelope carry `conformance_mutant`, run non-citable, a release build answers FROB-REF-802) so that BD-346's mutant `skip-stage5` (stage 5 skipped) can be run by BD-346's script and N28b-28's sabotage (b); the mutant's controls.toml row comes from N38b-05."
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "Add to the opt.cascade row the input `--mutant <name>` (conformance builds only; 802 in a release build), used with `--mutant skip-stage5` by BD-346 and N28b-28."
+  },
+  {
+   "bead": "BD-333",
+   "what": "BD-332 section 9 registers A-04 (`analyze.gait`) with `orbits` reading `not-run` naming BD-333 and declares FROB-REF-431 for it; fill that part (orbit existence, Floquet multipliers, residual, the `--controller` input), extend A-04's reads() with the fields the orbit solve reads, and raise 431 at grazing or a fold under analyze.gait."
+  },
+  {
+   "bead": "BD-335",
+   "what": "BD-332 section 9 registers A-04 with `continuation` reading `not-run` naming BD-335 and the input `--param <name>=<a>..<b>`; fill that part (continuation in the design parameter, 431 at a fold) without changing the output schema."
+  },
+  {
+   "bead": "BD-352",
+   "what": "N28b-23 (which BD-352 depends on through BD-345) cannot call opt.cascade, so the verb forms of S73's request belong to your script: with BD-328's discard-only record, assert that `frob opt cascade --finalists-from R1` is FROB-REF-545 (exit 3, its two repairs) and that the result's selection_basis is 'survivors', printed as 'k survivors'."
+  },
+  {
+   "bead": "N28c-14",
+   "what": "N28b-17 now registers the ladder campaign's expected saving (C_table / C_conf from its cost model, confidence 0.8) under studio:saving before the first score, as N28b-08 does for a race; please state that the ladder registration is N28b-17's (one prediction per campaign, not two; you supply the predictor identity, versions and report) and add dep N28b-17 (no cycle: N28b-17 does not reach N28c-14)."
+  },
+  {
+   "bead": "NEG-08",
+   "what": "N28b-17's estimate now prints the conformal cost itemized under your record's line names (rung_costs; audit_lane share 12.15 min and count 57 min, rung named; a total per reading with formula); your e2e note that --estimate prints 'the cost model's totals of N28b-17, not this record' can say it prints the same itemized lines."
+  },
+  {
+   "bead": "BD-111",
+   "what": "S23's choice is made in N28b-37: the Analysis key is derived from the declared read set reads() (N28a-04; the plan's 'generated from the declared inputs'), lookup by key alone; the fields actually read are still recorded in NodeRecord.reads and a read outside the set fails in debug. Please restate it: drop the 'restricted identity of the pairs actually read' and the two-step lookup, and make the FieldMask the declared reads(), entering the key. Also call the node record N33b-15's NodeRecord (MemoNode is retired)."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "`--no-memo` (property no_memo) is used on every verb the memo wrapper wraps (N28b-37 section 5, N28b-38 section 6, BD-111) and by the scripts of N28b-40 and N28b-42 on design.check and sim.run, but it is a common property of no kind and appears only in design.show's row. Please add it as a common input of memo-wrapped verbs, or have VERBS-design and VERBS-sim list it on design.check and sim.run (convention 8)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run's row has no `--no-memo`; N28b-42's episodes step and N28b-38's rule ('--no-memo on any verb') need it (see the request to NJL-01)."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check's row has no `--no-memo`; N28b-40's keys step needs it (see the request to NJL-01)."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 30 reviewed; 28 changed, 2 unchanged (N28b-08, N28b-10). Every request addressed to the slice was applied; S73's verb-level assertions went to BD-352 because N28b-23 cannot call opt.cascade (convention 7). The main drift found: eight mechanism beads (N28b-07, -12, -17, -23, -30, -37, -38, and N28b-41's campaign step) ran their e2e checks inside scripts of beads that depend on them; each now owns a script built on its own dependencies (example programs where the verb is later). Not yet settled: the requests to BD-111 (memo key), NJL-01/VERBS-sim/VERBS-design (--no-memo) and BD-352/VERBS-opt (--mutant) must land."
+}

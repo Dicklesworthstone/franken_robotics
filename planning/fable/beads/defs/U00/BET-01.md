@@ -6,9 +6,9 @@ priority: 0
 milestone: "M2"
 labels: ["m2", "spark", "frob-kir", "solid", "bet", "gate"]
 parent: "WP-18"
-deps: ["N00-28", "BD-217", "BD-221", "STD-E2E"]
-needs: ["§21.6: the hand-tuned comparison kernels for the stages named in the falsifier, and the planted frame, sign and unit defects of the dimension checker", "§38: the Gauntlet triage log from which frame and unit bug rates are counted"]
-related: ["BD-018", "BD-019", "BD-149", "BD-150", "BET-02", "BET-11", "N00-11"]
+deps: ["BD-217", "BD-221", "N00-28", "STD-E2E"]
+needs: []
+related: ["BET-02", "BET-11", "N00-11", "N00-15", "N40-31"]
 gates: ["GATE-SPARK-03", "KILL-KIR"]
 plan_refs: ["§4 (BET-01)", "§40.5", "§0.8 (H-04)", "§1.6 (N1)", "§21.6"]
 ---
@@ -30,19 +30,43 @@ three backends with a stored disagreement record" would be bought at the cost of
 
 ## Scope
 
-In: pre-registration of the falsifier, the verdict at M2 from recorded gates, and the decision record. Out:
-the derivation toolchain, the kernels and the performance harness (their own beads).
+In: pre-registration of the falsifier, the bet's verdict at M2 from recorded gates, and its decision record.
+Out: the derivation toolchain, the kernels and the performance harness (their own beads). Also out: the
+kill-gate decision KILL-KIR. The seed BD-221 measures the expressed share and the kernel slowdowns, applies the
+trigger and writes `ADR-KILL-KIR` and the gate-register row. This bead depends on it, reads that record (the
+per-kernel paired ratios are clause (a)'s data), evaluates the bet's two falsifier clauses and writes the bet
+verdict; it applies no kill trigger and writes no kill ADR.
 
 ## Technical approach
 
 1. **Falsifier clauses** (thresholds are TARGETs until measured; either clause falsifies):
    a. On the same backend, after one optimization pass, a derived kernel runs more than 1.3× slower than the
-      hand-tuned equivalent of the same stage (paired lower bound of the time ratio above 1.3).
-   b. Frame, sign and unit bugs still appear in verification triage at the rate of an untyped baseline.
+      hand-tuned equivalent of the same stage. The statistic is the one BD-221 applies for KILL-KIR, so that
+      the bet and its kill gate never read the same timings two ways: whole-kernel time at 8,192 worlds, at
+      least ten paired runs in randomized order back to back; with ℓᵢ = ln(t_derived,i / t_hand,i), the one-sided
+      95% upper bound of the slowdown is exp(ℓ̄ + t·s/√n), where ℓ̄ and s are the mean and standard deviation of
+      the ℓᵢ, n the number of pairs and t the one-sided 95% Student quantile (1.833 for n = 10). The clause
+      fires if that bound exceeds 1.3 for any measured kernel on any backend: the bound has to be shown, not
+      merely not refuted. "One optimization pass" is one pass of the emitter's exact improvements
+      (common-subexpression sharing, the exact rewrite table, live-range scheduling, the derivation-time choice
+      of algebraic form) guided by the profile; no reassociation and no fusion.
+   b. Frame, sign and unit bugs still appear in conformance (Gauntlet) triage at the rate of an untyped
+      baseline. Quantities (DESIGN, because the plan names the comparison and not the statistic): r_typed =
+      frame, sign and unit defects found by triage during M2 in derived kernels, divided by the number of
+      derived kernels; r_untyped = the same tally for the hand-written skeleton bodies and hand-tuned twins,
+      divided by their number (BD-221 records both tallies; the hand-written code is the untyped baseline
+      available in this project). The clause fires if r_untyped > 0 and r_typed ≥ r_untyped. If both tallies
+      are zero the clause is recorded `untested: no defects in either arm` and the planted-defect control
+      below carries the evidence on its own.
 2. **Competing arm.** A hand-tuned kernel for the same stage on the same backend, written by an engineer given
-   the same profile and the same pass budget.
-3. **Potency control.** Planted frame, sign and unit defects that the types and the dimension checker must
-   reject before emission; a planted slowdown in a derived kernel that the paired comparison must detect.
+   the same profile and the same pass budget. It must agree with the derived kernel inside 4 ulp per output, or
+   it is rejected as an arm (they may differ in operation order).
+3. **Potency control.** Planted frame defects (a transform applied in the wrong direction), sign defects (a
+   negated cross product, a reversed coadjoint) and unit defects (a length added to a velocity), each of which
+   the types and the dimension checker (`FROB-REF-250`) or a known answer bound to the kernel must reject before
+   emission; a planted slowdown (a derived kernel whose body is executed twice per call, about 2×) that must
+   make clause (a) fire; and the A/A null (a derived kernel timed against itself), whose bound must not exceed
+   1.02.
 4. **Deciding gate.** GATE-SPARK-03 (Performance, M2): the CUDA rows of the throughput table inside their
    tolerances, with the disclosure block and the paired lower bound. The kernel-level ratio of clause (a) is
    measured by the toolchain bead on the stages of the batched step (forward kinematics, twists, composite
@@ -66,23 +90,36 @@ the derivation toolchain, the kernels and the performance harness (their own bea
       timing is recorded.
 - [ ] Clause (a) has a measured paired ratio per stage and backend, with the hand-tuned arm's source and pass
       budget recorded; clause (b) has the triage counts for typed and untyped baselines.
-- [ ] Both potency controls were caught in the same runs.
-- [ ] The verdict (`Held`, `Falsified` with clauses, or `Untested`) and, if falsified, the KILL-KIR decision are
-      recorded as an ADR at M2 exit by a session that did not implement the toolchain.
+- [ ] Every potency control was caught in the same runs: every planted frame, sign and unit defect rejected
+      before emission, the planted 2× slowdown made clause (a) fire, and the A/A bound was at most 1.02.
+- [ ] The verdict (`Held`, `Falsified` with clauses, or `Untested`) is recorded as an ADR at M2 exit by a
+      session that did not implement the toolchain, and it cites the KILL-KIR decision as recorded by BD-221
+      (`ADR-KILL-KIR`, by identifier and hash), whatever that decision's outcome. If the decision is not on
+      record, the verdict is not filed.
 
 ## Test plan
 
 ### Unit tests
-`crates/frob-conformance/tests/bets.rs`: `bet01_ratio_1_25_holds` (all stage ratios ≤ 1.3 with controls caught →
-`Held`); `bet01_ratio_1_34_falsifies` (one stage with paired lower bound 1.34 → `Falsified{a}`);
-`bet01_emit_share_18_percent_fires_kill_kir` (expressible share below 20% → kill gate);
+`crates/frob-conformance/tests/bets.rs`: `bet01_bound_1_294_holds` (ten pairs, ln-mean 0.2, ln-standard
+deviation 0.1: bound exp(0.2 + 1.833·0.1/√10) = 1.294 ≤ 1.3 on every stage, controls caught → `Held`);
+`bet01_bound_1_320_falsifies` (one stage with ln-mean 0.22, same spread: bound 1.320 → `Falsified{a}`, although
+the point ratio e^0.22 = 1.246 is under 1.3); `bet01_clause_b_rates` (typed 1 defect in 40 kernels against
+untyped 4 in 40 → not fired; typed 3 in 40 against untyped 3 in 40 → `Falsified{b}`; 0 and 0 →
+`untested: no defects in either arm`);
+`bet01_reads_kill_kir_record` (given a KILL-KIR record with deciding share 18%, not more than 20%, and outcome
+`fired`, the bet's record carries that outcome and the record's hash; the trigger itself is tested where it is
+applied, in BD-221's `share_threshold`);
 `bet01_pass_without_planted_slowdown_caught_is_untested`.
 
 ### End-to-end script and logging
 `scripts/e2e/bet_01_decide.sh` reads the recorded gate rows and the toolchain's kernel-ratio records, recomputes
-the verdict with `cargo run -p frob-conformance -- bets status --bet BET-01 --json`, and checks the ADR exists
-and matches. Logged per STD-E2E: per stage and backend the ratio, its paired lower bound and the 1.3 threshold;
-triage counts; controls caught; the verdict; `summary` naming GATE-SPARK-03 and KILL-KIR.
+the verdict with the bet register's report (`cargo run -p frob-conformance --example bets -- status --json`, the
+example target `bets` that the register bead N00-28 declares; the script reads the row of BET-01 from its output, since the report has no
+per-bet option), and checks that the ADR `docs/adr/bet-01-m2.md` exists and matches. Logged per STD-E2E: per stage and backend the point ratio, the number of pairs, its one-sided 95%
+upper bound and the 1.3 threshold; the A/A bound against 1.02; triage counts and the two rates; planted defects
+and how many were rejected; controls caught; the verdict; on a mismatch between the recomputed verdict and the
+ADR, the first differing field and the paths of the gate rows and the ADR; `summary` naming GATE-SPARK-03 and
+KILL-KIR.
 
 ### Known answers and negative controls
 The ceiling 1/(1 − 0.16) = 1.19 to 1/(1 − 0.20) = 1.25 for recursion-only specialization (context, not a

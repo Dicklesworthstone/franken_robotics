@@ -1,0 +1,397 @@
+{
+  "round": 1,
+  "slice": "U20b",
+  "reviewed": 50,
+  "changed": [
+    {
+      "bead": "BD-099",
+      "kinds": [
+        "deps",
+        "users",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "Added STD-E2E; sense.profile v0 now states capability sense:read, the registry's first milestone M2 and the reduced form referee-proprioception named by frob capabilities; evidence aligned to the registry's pass-through; the e2e reads packets with frob telemetry query --stream sensing (no noise flag on sim.run; noise-free fixture cards) and plants the gravity-twice build; unit tests for both controls and the named form."
+    },
+    {
+      "bead": "BD-102",
+      "kinds": [
+        "deps",
+        "placement",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "Acceptance and e2e used quad-mammal (BD-109, a higher seed) and design check --stages 5 (BD-110, which depends on BD-102): moved onto four committed synthetic archetype-shaped fixtures with design edit; the stage-5 exit-3 leg and the archetype timing are logged e2e_skip 'needs BD-110' and requested of BD-110; added STD-E2E; plant mech-as-obs."
+    },
+    {
+      "bead": "BD-119",
+      "kinds": [
+        "correct",
+        "complete",
+        "users",
+        "tests",
+        "risks"
+      ],
+      "what": "Digests now restart at each episode reset and comparison is per (pair, episode), without which the reset-mask leak can never be compared; added the premature-delivery failure kind (delivered digests differing before knowable_from), without which the keyed-noise leak passes vacuously; inputs completed (default controller and --twins all so the registry example runs, --twin-fixtures, --actor-schema, --control only on conformance-leaks builds else 802, --no-record, --key and run wait/exit 8); capability sense:run; registry row stays M2 with form referee; expected failure kind per leak; new unit tests."
+    },
+    {
+      "bead": "BD-187",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Reachability acceptance named frob sense profile, which is N20b-16's (downstream); it now points to N20b-16 and N20b-22."
+    },
+    {
+      "bead": "BD-215",
+      "kinds": [
+        "deps",
+        "correct"
+      ],
+      "what": "Added dep N20b-11 (its script records GATE-SENS-12 on every tier); the presentation clause of 442 is raised by the observation service at registration (N20a-01) and asserted here on every tier, CLI and MCP."
+    },
+    {
+      "bead": "BD-241",
+      "kinds": [
+        "users",
+        "complete",
+        "tests"
+      ],
+      "what": "Capability sense:read; --task optional with obs_scope so the registry example works; --test needs --key and follows run wait behaviour (registry question sent to VERBS-sense); added --license-check <use> --element <id>, a dry run of N20b-02's guard that raises 443, giving the guard a user-side trigger and justifying 443 in the verb's list; tests."
+    },
+    {
+      "bead": "BD-242",
+      "kinds": [
+        "users",
+        "complete",
+        "deps",
+        "tests"
+      ],
+      "what": "Capability sense:run with --key, run wait behaviour and form simulation; added --window t0..t1 so a reference calibration comes from the pre-bump part of the same episode (the gate's 100-seed bump test had no way to make its reference); added the --claim reality input its 447 row presupposes; dep N20b-18 (the Reality guard that raises 447); evidence choice stated; tests."
+    },
+    {
+      "bead": "N20-CX",
+      "kinds": [
+        "self-contained"
+      ],
+      "what": "The pending-slot acceptance now names the route to numbers (N20b-45's block request of four with N38a-40, slots mapped in order)."
+    },
+    {
+      "bead": "N20-REF",
+      "kinds": [
+        "complete",
+        "correct",
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "Carried the 442/524 DESIGN division sentence identical to N20a-03/N23a-03/N23-REF; raisers of 442 corrected (a: N20a-01 at registration, BD-215 measures; b: freeze_actor_schema of N20a-03 with N20b-10's fixtures); noted 448 is another chapter's printed code and that numbers come via N35x-02/N20b-45; unknown-code fixture computed at test time instead of 449; e2e guards each trigger with frob capabilities and e2e_skip 'needs <bead>' (a registry never depends on its raisers), plants truncation; added STD-E2E; test for the division."
+    },
+    {
+      "bead": "N20b-01",
+      "kinds": [
+        "tests"
+      ],
+      "what": "The negative control relied on BD-241's test (downstream): now unit tests timing_clause_removed_mutant_admits_lidar_reflection (KA-494) and gyro_polar_parity_mutant_caught; the lidar mismatch is pinned at 358/3,600 s."
+    },
+    {
+      "bead": "N20b-02",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "The e2e called an unnamed consumer verb (downstream); it now uses frob sense symmetry --license-check (BD-241) inside N20b-03's script."
+    },
+    {
+      "bead": "N20b-03",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "design new uses --template and --key (not --from); removed frob design delete (no such verb; scratch root is discarded); --test with --key; refusal step uses --license-check with member, non-member and moved-mount cases; added the guard-checks-mech-group control under N20-CX's name (CX-209)."
+    },
+    {
+      "bead": "N20b-04",
+      "kinds": [
+        "correct"
+      ],
+      "what": "'Exit 3 through the verb' is BD-242's to assert (downstream); restated as the typed library refusal."
+    },
+    {
+      "bead": "N20b-05",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Same as N20b-04 for the localization refusals."
+    },
+    {
+      "bead": "N20b-06",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "Added insufficient-data to the self-check verdict list (stated in Considerations, missing from step 4) with a unit test; fault syntax aligned with N20b-07."
+    },
+    {
+      "bead": "N20b-07",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Removed GATE-GAUNT-11 from gates and summary (N38b-42 is the one place that row is recorded; the single edge is a KA-849-tagged demonstration); the 100-seed bump now computes its reference with --window 0..3s; frob telemetry events (no such verb) replaced by telemetry query on the sensing stream; added the Reality-claim step, the user-side trigger of 447; keys added."
+    },
+    {
+      "bead": "N20b-08",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added STD-E2E (owns sense_calibrate_logs.sh)."
+    },
+    {
+      "bead": "N20b-09",
+      "kinds": [
+        "deps",
+        "complete",
+        "tests"
+      ],
+      "what": "Added BD-118 (fixtures need the baseline controllers); HiddenChange::Retile exception so the keyed-noise leak is constructible; episode-scoped twins (Only(k)) for the reset leak; knowable_from now feeds the premature-delivery check; eight leak-exposing fixture pairs and causal-<archetype> tasks; tests including sequential_stream_constructor_caught."
+    },
+    {
+      "bead": "N20b-10",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "L1's channel now reads the hidden quantity itself (true friction of the untouched patch, unlimited-range true height map); true base velocity or friction under the foot only differ at knowable_from and would fail the bead's own acceptance; L5 is expected as premature-delivery and L2 via episode-scoped digests; acceptance and tests rewritten per leak; 442 presentation half points to N20a-01."
+    },
+    {
+      "bead": "N20b-11",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Step 1 runs N20b-09's committed fixture tasks and twins (not flat-velocity) plus the registry example form; step 2 asserts failure kind per leak; recorder neutrality uses --no-record; added the release-build 802 check; keys; log fields for failure kind and episode."
+    },
+    {
+      "bead": "N20b-12",
+      "kinds": [
+        "deps",
+        "correct",
+        "tests"
+      ],
+      "what": "Added STD-E2E and N20b-45 (the causal-receipt-missing number); device digest chains restart at each world's masked reset and keep per-packet rows for premature-delivery localization; acceptance and tests for both."
+    },
+    {
+      "bead": "N20b-13",
+      "kinds": [
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "Added STD-E2E; the mission.synthesize leg is an explicit e2e_skip 'needs BD-129' guarded by frob capabilities, asserted by BD-129's script."
+    },
+    {
+      "bead": "N20b-15",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "frob scene edit is M3 and frob viewer attach does not exist: committed fixture scene and design pairs, the N32b-10 viewer attached headless in live mode polling every 100 ms, world address and mixed suites through --worlds/--designs."
+    },
+    {
+      "bead": "N20b-16",
+      "kinds": [
+        "users",
+        "deps",
+        "correct",
+        "complete",
+        "tests"
+      ],
+      "what": "Capability sense:read and the M1 form restriction dropped on landing; deps on N20b-28, N20b-29, N20b-40 whose chain, grades and v_max sections 7 and 8 read; evidence aligned to pass-through; the clocks section prints the lattice limit in force and the headroom (N20b-24's record says the profile prints them); tests."
+    },
+    {
+      "bead": "N20b-18",
+      "kinds": [
+        "e2e-logging",
+        "complete",
+        "tests"
+      ],
+      "what": "The e2e used telemetry summary --claims reality, which has no such input; it now reads the dependency set through evidence trace and triggers 447 through its real callers (sense.calibrate --claim reality, report.run --claim reality) guarded by frob capabilities; the evidence block gains reality_claimable with a test that it matches the guard."
+    },
+    {
+      "bead": "N20b-19",
+      "kinds": [
+        "deps",
+        "self-contained"
+      ],
+      "what": "Added BD-242 (its e2e runs sense.calibrate) and STD-E2E; the 'Carried by' column named beads by description ('the packet-queue bead'), now by key, reconciled with Scope (INV-SENS-05: N20a-02 plus the sweeps of BD-099, BD-187, BD-237)."
+    },
+    {
+      "bead": "N20b-20",
+      "kinds": [
+        "deps",
+        "self-contained",
+        "complete",
+        "tests"
+      ],
+      "what": "Added N20a-10 (owner of KA-478, unreachable before) and N20b-45 (the late slots' numbers; moved from related); resolved every 'other unit' owner to the keys N20-KA lists; the summary now counts N20-CX's twenty controls, which N20-CX's e2e claims the battery does; tests for CX coverage and slot resolution."
+    },
+    {
+      "bead": "N20b-21",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added STD-E2E (owns sensorium_gates_status.sh)."
+    },
+    {
+      "bead": "N20b-22",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "frob telemetry channel does not exist (telemetry query --stream sensing --channels); sim.run has no --steps or --noise flags (seconds, noise-free fixture cards, *-noisy variants for the cross-backend step); keys."
+    },
+    {
+      "bead": "N20b-24",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added N20b-16 (its e2e calls frob sense profile, which prints the limit) and STD-E2E."
+    },
+    {
+      "bead": "N20b-25",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added BD-262 (eval.compare on devices, which its e2e runs) and STD-E2E."
+    },
+    {
+      "bead": "N20b-27",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added STD-E2E."
+    },
+    {
+      "bead": "N20b-29",
+      "kinds": [
+        "deps",
+        "correct"
+      ],
+      "what": "N20b-45 moved from related to deps; refusal uses the allocated code with slot alias; 448 noted as taken; profile acceptance restated so it does not require the downstream verb."
+    },
+    {
+      "bead": "N20b-31",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "Replaced invented sim.run --card/--pulse flags with four committed fixtures, frob telemetry channel with telemetry query, the reversed task verdict form with frob task verdict <task> --run <run>; refusal named via N20b-45."
+    },
+    {
+      "bead": "N20b-33",
+      "kinds": [
+        "deps",
+        "users",
+        "complete",
+        "tests"
+      ],
+      "what": "Added N20b-45 (the stage-7 refusal's number; moved from related) and restated the refusal with it and the slot alias; capability sense:run, --key and run wait behaviour; added the --motion <id> form so the registry example runs, the payload default, and the FROB-REF-441 listing the registry row states; tests."
+    },
+    {
+      "bead": "N20b-34",
+      "kinds": [
+        "correct",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "sense.visibility has no --speed flag: committed motion records via --motion; step 6's repaired lead was wrong (raising a camera with fixed depression angles moves the far edge to 1.62 m, lead 1.42 s, not 0.9 m and 0.7 s); fixtures state the mass, centre of mass and camera rate that the tip-over and interval checks need; refusal code via N20b-45; self-tests for the new helpers."
+    },
+    {
+      "bead": "N20b-36",
+      "kinds": [
+        "deps"
+      ],
+      "what": "Added STD-E2E."
+    },
+    {
+      "bead": "N20b-38",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "The record wrote decided: fired into the kill record, but decided is the ledger's decision point and the record is N40-29's: it now writes KILL-VISIBILITY's owner declaration with the decision block N40-30 compares; the pilot branch's tracker handling (closing N20b-36/37 as superseded first) is stated; added STD-E2E; test owner_declaration_matches_ledger."
+    },
+    {
+      "bead": "N20b-39",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "frob telemetry channel replaced by telemetry query."
+    },
+    {
+      "bead": "N20b-40",
+      "kinds": [
+        "e2e-logging"
+      ],
+      "what": "Invented sim.run --speed flag replaced by committed constant-speed fixtures and the alias call with --mission."
+    },
+    {
+      "bead": "N20b-42",
+      "kinds": [
+        "correct",
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "Invented sim.run flags (--noise, --speed, --card) replaced by committed fixtures; telemetry channel replaced by telemetry query; sense alias --source structural replaced by --mission spin-direction with --key; added dep N20b-45 (the GATE-SENS-18 known-answer numbers)."
+    },
+    {
+      "bead": "N20b-43",
+      "kinds": [
+        "correct"
+      ],
+      "what": "Hit record is 28 bytes per ray (32 if 16-byte aligned), not 20, with the per-image memory stated."
+    },
+    {
+      "bead": "N20b-45",
+      "kinds": [
+        "correct",
+        "deps",
+        "e2e-logging",
+        "tests"
+      ],
+      "what": "Proposed FROB-REF-448, which is another chapter's printed code (N35x-02): numbers now come from the M0 ledger hand-off and from N38a-40 block requests with exact counts; the raising beads and the gate scripts depend on this bead, so its e2e no longer triggers through their verbs (logged e2e_skip 'asserted downstream by <bead>') and asserts the registry rows, aliases, pending counts and a planted reuse; added STD-E2E; tests."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-sense",
+      "what": "Reconcile with the implementing beads: evidence words (causal-test static but runs twin worlds, BD-119 uses Tested; calibrate screening, BD-242 Tested; visibility static, N20b-33 Tested with screening: true; profile pass-through adopted by BD-099/N20b-16). Calibrate example: --data cal-run:3 to --episode <ep> (or --edges <file>) with --key; list its new --window and --claim reality inputs. Record sense.symmetry's budgeted --test form (key, run wait, --estimate) and its --license-check option (BD-241). Causal-test inputs --twin-fixtures, --actor-schema, --no-record and the conformance-only --control (802 elsewhere), and list 440/441 on it as on observability. Visibility: the --motion form and the route form both accepted (N20b-33). The late refusal slots now get numbers through N20b-45."
+    },
+    {
+      "bead": "BD-110",
+      "what": "Carry the legs moved out of BD-102 because they need BD-110 and the templates: frob design check --stages 5 with assert_obs: C2xC2 on the forward-lidar quad-mammal refused with FROB-REF-109, exit 3, with BD-102's report in next_actions; and stage 5 within 150 ms at p95 on the four M1 archetypes, recorded under GATE-ATEL-02."
+    },
+    {
+      "bead": "BD-129",
+      "what": "Its script should assert the comparison of frob mission synthesize docking.fmission labels with N20b-13's committed vector (N20b-13 now skips that leg as 'needs BD-129')."
+    },
+    {
+      "bead": "N38b-42",
+      "what": "N20b-07 no longer records GATE-GAUNT-11; it logs the single-edge demonstration through sense.calibrate with metric lines tagged ka: KA-849, which N38b-42 may cite."
+    },
+    {
+      "bead": "BD-302",
+      "what": "report.run --claim reality must call N20b-18's require_reality_claimable for any result resting on sensing and should depend on N20b-18; N20b-18's e2e runs that leg only when served and otherwise logs e2e_skip 'needs BD-302'."
+    },
+    {
+      "bead": "BD-319",
+      "what": "The M3 exit review should depend on N20b-19 (the Sensorium invariant index, whose completeness check the exit reads with no pending row at M3) and N20b-20 (the known-answer battery, which runs the M3 Sensorium gates' scripts N20b-03, N20b-07, N20b-34); both are terminal and nothing depends on them today."
+    },
+    {
+      "bead": "N40-30",
+      "what": "KILL-VISIBILITY has two triggers at two times: the branch-only beads N20b-36 and N20b-37 cannot depend on the decision bead N20b-38, which reads N20b-37's receipt; they depend on the pilot N20a-35, the first trigger's input. Rule 7 (branch-only beads depend on their decision) should accept a dependency on the pilot for such gates, or name the form it wants."
+    }
+  ],
+  "unchanged": 7,
+  "notes": "All 50 beads read in full. Structural fixes: the causal-policy test (BD-119, N20b-09 to N20b-12) could not catch two of its five planted leaks; episode-scoped digests, the premature-delivery failure kind, Retile and Only(k) twins fix it, and that cluster deserves one more look next round. Recurring defects fixed: e2e steps calling verbs or flags that do not exist (telemetry channel/events, scene edit, viewer attach, design delete, sim.run --noise/--speed/--card/--pulse, visibility --speed, telemetry summary --claims) or verbs of later beads (now e2e_skip with the leg asserted downstream); FROB-REF-448 collided with another chapter's code (numbers now via the N35x-02 ledger and N38a-40 blocks, N20b-45 now has five dependents); STD-E2E added to every bead owning a script. N20b-19 (26 deps) and N20b-20 (21 deps) were checked per the graph findings: every dep owns an indexed identifier or a battery row; many are also reachable through incidental long chains (BD-240 reaches N20b-05), so they are kept direct; their missing consumer is the M3 exit review (request to BD-319). Out of slice and untouched: defs/U20b/N20b-17, -23, -26, -35 carry prose in needs."
+}

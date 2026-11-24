@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-027", "N12-06", "CARD-T-04"]
+deps: ["BD-027", "CARD-T-04", "N12-06"]
 needs: []
-related: ["BD-010", "BD-102", "CARD-T-10", "CARD-T-05", "CARD-T-18", "BD-011"]
+related: ["CARD-T-18", "CARD-T-20", "N12-41", "N13-02", "SPEC-C-02", "SPEC-C-04", "SPEC-C-09"]
 gates: []
 plan_refs: ["§12.3 (T-16)", "§11.2", "§11.4", "§13.3", "§10 C-04", "§10 C-09", "Appendix D.1 (algebra adjoint and coadjoint, reflection parity)"]
 ---
@@ -94,12 +94,17 @@ what moves the registry row for that output.
   either way; the body-frame rate of spatial angular momentum π̇ + ω × π is (0, 0, 0) with the correct sign and
   (0, 0, 2) with the wrong one.
 - `parity_preserves_pairing`; `parity_preserves_bracket`; `axial_as_polar_rejects`.
+- `minus_sign_coadjoint_rejects` (the bundle for ad* = −ad_ξᵀ: at the spot check above ⟨−ad_ξᵀ μ, η⟩ = −1 ≠ 1,
+  and the normal form is −2·⟨μ, [ξ, η]⟩, not zero); `changed_coefficient_rejects`.
 - `sagittal_mirror_table`: P = diag(1, −1, 1): a pitch axis e_y maps to itself, a roll axis e_x to −e_x, a yaw
   axis e_z to −e_z.
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the two specimens and their mutants.
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the two specimens and their mutants. For this card
+its NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-16"), `step` (`T-16/<specimen-or-mutant>`),
+`event`, the exact command line, exit code, wall time, the bundle's BLAKE3, the expected and observed verdict, and
+on a mismatch the first failing rule and the bundle path to reproduce.
 
 ### Known answers and negative controls
 

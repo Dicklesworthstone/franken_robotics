@@ -6,9 +6,9 @@ priority: 3
 milestone: "M4"
 labels: ["m4", "suite", "augur", "upstream", "frankensympy", "frontier"]
 parent: "WP-67"
-deps: ["BD-037", "BD-105", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-105", "N25d-19", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-361", "BD-019", "FD-FSYM-01", "SPEC-C-11", "SPEC-C-34"]
+related: ["N25d-16", "N25d-20", "SPEC-C-11", "SPEC-C-34"]
 gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§10 C-11", "§25.21.3", "§12.1", "§1.7", "§33.4", "§33.8"]
 ---
@@ -120,7 +120,7 @@ known count), and the admitted size is a constant in the lane's contract, not a 
 
 ### Unit tests
 In FrankenSymPy (added):
-- `circle_and_line`: the ideal ⟨x² + y² − 1, x − y⟩ in lexicographic order with x > y has reduced basis {x − y, 2y² − 1}; two real solutions (±1/√2, ±1/√2).
+- `circle_and_line`: the ideal ⟨x² + y² − 1, x − y⟩ in lexicographic order with x > y has reduced (monic) basis {x − y, y² − ½} (reducing x² + y² − 1 by x − y gives 2y² − 1, which a reduced basis normalizes to leading coefficient 1); two real solutions, x = y = ±1/√2.
 - `planar_2r_inverse_kinematics`: links of length 1 and 1, target (1, 1); exactly two solutions, joint angles (0°, 90°) and (90°, −90°).
 - `spatial_3r_has_at_most_four_solutions`: a generic positioning target; the certified solver finds exactly the solutions the closed form gives (up to four).
 - `new_equals_buchberger`: the differential test of the acceptance line.
@@ -136,8 +136,13 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsym_05 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob mission synthesize --strategy linkage --json` on the
-bounded-synthesis fixture and logs wall time and peak memory beside the values recorded at the old pin.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs
+`frob mission synthesize crates/frob-conformance/fixtures/augur/linkage/<fixture>.fmission --strategy linkage
+--key fsym05-<fixture>-<pin>-<run> --json` on the bounded-synthesis fixtures of N25d-19 (a dependency, which
+brings the `--strategy linkage` lane of BD-361 with it; one key per fixture and
+pin, so the new pin's run never returns the old pin's stored receipt), asserts that the candidate set and its
+exact values equal the old pin's (the identical results this bead requires), and logs wall time and peak memory
+beside the values recorded at the old pin.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsym_05/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -149,7 +154,7 @@ and the artifact paths needed to reproduce. A final `summary` line gives asserti
 gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
-- Known answers: the basis {x − y, 2y² − 1}; two solutions for the planar 2R target; up to four for the spatial 3R chain; the general 6R problem has at most 16 solutions, the benchmark count a complete solver must not exceed and, on a generic instance, must reach.
+- Known answers: the reduced basis {x − y, y² − ½}; two solutions for the planar 2R target; up to four for the spatial 3R chain; the general 6R problem has at most 16 solutions, the benchmark count a complete solver must not exceed and, on a generic instance, must reach.
 - Negative controls: a modular computation reconstructed from too few primes must fail the exact verification of its certificates and be rejected; a solver that returns a subset of the roots must be caught by the solution count on the planted instances.
 - Determinism lanes: exact; the reduced basis is canonical for a given order, so output is identical on every platform (class D0).
 
@@ -157,7 +162,13 @@ gates touched. No private-scene data is logged.
 
 - General 6R inverse kinematics by Gröbner bases was assessed and rejected at current tool limits; inside the caps, certified inverse kinematics is Frontier. A faster engine reopens that assessment; it does not reverse it by itself.
 - Coefficient growth, not polynomial count, is often what ends an exact computation; the 4,096-bit and 512 MiB limits of the real solver bind independently of this item.
-- KILL-SYNTH-LINKAGE's numerical lane remains the fallback of exact synthesis whatever the engine's speed.
+- KILL-SYNTH-LINKAGE's numerical lane remains the fallback of exact synthesis whatever the engine's speed. Its
+  trigger: a certified linkage binds or changes circuit on the referee, or more than 25% of the 240 template
+  instances exceed the caps; its fallback: multi-start numerical optimization of linkage dimensions with the same
+  circuit and clearance check, classed `Tested`. This item bears on the second clause only: the post phase
+  records the share of template instances over the caps at the old and the new pin, and a share that falls
+  below 25% only because of the new engine is reported to the kill-gate decision (N25d-20, on the pilot
+  N25d-16), never used to re-decide the gate silently.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
   milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its

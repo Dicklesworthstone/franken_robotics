@@ -1,0 +1,238 @@
+{
+ "round": 3,
+ "slice": "H-verbs-1",
+ "reviewed": 9,
+ "changed": [
+  {
+   "bead": "VERBS-actuator",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S21, S75 and S88 as asked: envelope --torque (N15b-10) and FROB-REF-136 (N15a-02 via N15a-16); check --bind with direction_witness and witness_entries (N15b-12); thermal --speed (BD-072); bus --source-voltage (BD-075) and --battery-age from M6 with 111 (N15b-14); absorber kind in list, show and check (N22bx-01). Also: measured-version and rotor fields (N15ax-03, N15b-36); six-step and iron-loss conditions (N15b-27); bus outputs renamed to BD-075's wire names; 'brownout events' removed (that is a sim.run event); refusal_lists updated; new input_properties test; note that late options answer 802 until their bead lands."
+  },
+  {
+   "bead": "VERBS-algebra",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "algebra.irreps is printed S/F and registered S. Spelled out its inputs and added --nested (wreath product, N13-26, M4, feature frontier-wreath) with its outputs and port conditions. algebra.orbits checked against BD-049 and N13-17 and left unchanged."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S23, S27, S67, S71, S76 and S87; S87 in corrected form, because no number is typed: the stratum refusal is the pending slug connection-outside-stratum. Changes: 215 on symmetry and workspace; workspace certified IK mode (N10ax-01); symmetry events with 263 and 852 (N25d-02); 113 and the full N33b-18 surface on sensitivity; route --margin and --budget-ms (N19b-34). Implementers corrected: N33b-17, N33b-18, N28a-07 to -10, N28ap1-02, N28a-13 and N28a-16 replace stale BD-348 and BD-108 entries. Removed codes raised elsewhere (879 from identifiability, 263 from regimes, 451 from energy-budget, which now has 115). regimes is estimable. Symmetry and workspace are now S/F. Added the findings-versus-refusal note; examples now run verbatim; refusal_lists and tiers tests updated; new example test."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "title"
+   ],
+   "what": "Applied S56 and S66. export gains --to-host and --campaign and the frob.xfer/1 bundle with the transfer block (N21c-08), --replay-closure (N21c-09; 802 without --to-host), 618 from M2 and 310 from M3 (ScenePack::export_check, N19b-02, N37-18). DESIGN decision on the lead question: registered a fourth row, artifact.import (run, M2, S, artifact:run, N21c-08), so a person or an agent can admit a bundle on the receiving machine. The plan gives the transfer rule and no admission command; its 243 is a sum, not a prohibition. The row is reversible if the owner keeps 243. Its seat in operate replaces spark_devices. Counts, tests, script and example updated."
+  },
+  {
+   "bead": "VERBS-autopsy",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Rows checked against BD-279 to BD-284, N27b-03 to N27b-27 and N27bp2-01; all agree. Added a note: FROB-REF-866 (speed experiment without ceiling) is raised by the experiment register's admission check (N38a-07), not by autopsy.intervene, so it stays off the row. Verb-count sentence updated."
+  },
+  {
+   "bead": "VERBS-contact",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S22, S70, S78 and S89. Probe gains these branches and forms, each with its milestone: model (N18b-29, M1); cone and film named; GB-21 squeeze inputs eta, h0, until_h with squeeze time; scene position (N18b-10); tyre (N18b-04); attachment (N15ax-02); cl-1r held displacement (N18ax-01); stribeck_regime (N18a-31, M6). Probe also gains refusals 102 and 103 (card load), 121 and 246 (M4). laws gains --scene and the late output fields. soil takes BD-366's spellings. response takes BD-367's spellings and defaults, plus the pending stale-anchor slug. Path-parameter rule (734, 828) stated. Tests extended. Rejected: probe --state <file> (N19b-06), which no implementing bead defines."
+  },
+  {
+   "bead": "VERBS-control",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S25, S54 and S88. synth gains 443 and 461 and symmetry and verify_reduction (BD-327, M4). symmetry has BD-327's full inputs and output blocks, with precedence 443 before 461. ladder is printed S/F and registered S (N22a-18). mpc gains protocol and the per-design-and-task cap with its four exceptions (N22a-24); mpc-episode-cap and lifted-planner-out-of-regime are pending slugs. lift gets --runs and exactly one mode. S46 and S54(3) applied in corrected form: seed is listed. state is not listed (DESIGN: BD-118's smoke always runs both states). Corrections beyond requests: lift tier F to M (plan §22.20 [M]; N22c-23 is Moonshot); 421 removed from lift (no step of N22c-23 raises it)."
+  },
+  {
+   "bead": "VERBS-cores",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Checked against BD-309, N28c-04 and N28c-07; all agree. Only the verb-count sentence changed, after the artifact.import decision."
+  },
+  {
+   "bead": "VERBS-design",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S20, S26, S37, S42/S77, S68 and S88. bisect uses BD-343's --good, --bad and --predicate with all its options, labels from N28b-02, output schema frob.bisect/1 (DESIGN) and a corrected example. import gains --format with fsim-catalog, --name, --expanded-by, --fold-fixed, --reduced and 734, with the mass-dropped refusal as pending slug import-mass-dropped (no number typed). check: N14b-10's four wire statuses; 308 from the bound A-18 (31 codes); --battery-age; stage-7 lead refusal pending as sens-lead-too-short. new: --from (N32b-03, M3) and 111. templates: --include-variants. Inputs of show, blame and diff completed; 102 added on view. Tests updated."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-073",
+   "what": "list FROB-REF-136 (explicit --shape circle on a six-step card, raised by N15a-02 via N15a-16, asserted by N15b-38) in actuator.envelope's refusals and state the default of --shape"
+  },
+  {
+   "bead": "N22bx-01",
+   "what": "state what actuator.check runs on an absorber card: VERBS-actuator now says the form rules (102, 103, 113) plus the field rules of the kind, and none of the three electromechanical checks; confirm or correct"
+  },
+  {
+   "bead": "BD-141",
+   "what": "add `absorber` to the closed .fcard kind list of the FMT-FCARD row (N22bx-01's absorber cards)"
+  },
+  {
+   "bead": "BD-069",
+   "what": "add `absorber` to its closed kind list; item 4 cites `actuator.show --set field=value`, an option its verb section lacks: reword as an override in a design or parameter row, or add the option"
+  },
+  {
+   "bead": "BD-332",
+   "what": "register A-04 as an Analysis of frob-analyze so that N28a-05's generator can emit the analyze.gait row (no bead carries this registration)"
+  },
+  {
+   "bead": "BD-401",
+   "what": "register A-15 as an Analysis of frob-analyze (the generator emits analyze.structure from it)"
+  },
+  {
+   "bead": "BD-346",
+   "what": "register A-19 as an Analysis of frob-analyze (the read view over the stored stage-5 record); it says it registers no new verb, but the analyze.rank-robustness row is generated only from such a registration"
+  },
+  {
+   "bead": "N25e-45",
+   "what": "name the interim code that the emitting beads use for connection-outside-stratum until N35x-02 allocates it; it must be in analyze.curvature's list. Also note that BD-243 step 1 already refuses a rank drop at M3, earlier than 'not due before M6'"
+  },
+  {
+   "bead": "N25c-43",
+   "what": "use the slug connection-outside-stratum and the interim code N25e-45 names for its four refusal kinds (rank-drop, stratum-crossing, component-removed, certification from bracket rank alone)"
+  },
+  {
+   "bead": "BD-243",
+   "what": "store the fixture snake-a (snake-crawler instance, joints joint1, joint2) so the registry example `frob analyze curvature snake-a --shape joint1,joint2 --loop rect:0.05,0.05 --json` runs verbatim"
+  },
+  {
+   "bead": "N28a-05",
+   "what": "print A-03 and A-05 as S/F and emit the corrected chapter lists: 215 on symmetry and workspace; 263 and 852 on symmetry from M6; 133 on envelope; 113 on sensitivity; 115 not 451 on energy-budget; no 879 on identifiability; no 263 on regimes; estimable = true on regimes"
+  },
+  {
+   "bead": "N28a-16",
+   "what": "say how a read verb obtains the paired perturbation runs its local models need (for example by next_actions, as N33b-18 does) and that --budget is a token budget"
+  },
+  {
+   "bead": "NJL-03",
+   "what": "count artifact.import (VERBS-artifact DESIGN): 244 verbs, 84 run, M2 42, cluster artifact 4. Restate 'exactly the 243 verbs the specification defines and no others' as the 243 plus rows registered by DESIGN in a VERBS bead with their owning bead. Keep the fidelity.rank decision independent (it would make 245)"
+  },
+  {
+   "bead": "NJL-01",
+   "what": "where it states the registry count, read it from NJL-03 (244 with artifact.import)"
+  },
+  {
+   "bead": "NJL-05",
+   "what": "seat artifact_import in operate in place of spark_devices (which keeps its seats in devices and fleet); the note 'three artifact verbs' becomes four"
+  },
+  {
+   "bead": "VERBS-* (all other clusters)",
+   "what": "update the Background sentence 'The registry holds 243 verbs in 44 clusters' to the wording now in the H-verbs-1 beads (244: the 243 of the specification and artifact.import; count of record NJL-03's)"
+  },
+  {
+   "bead": "N21c-08",
+   "what": "From M2 run ingress through `frob artifact import` (now registered), keeping the integration entry only as the reader's test entry. Also name: the code for an item whose bytes do not hash to its manifest digest (exit 9; BD-097 names none); the code for a 'summary' above 16 MiB; the bundle's file name when --out ends with '/'; and the row of registries/transfer_classes.toml for a certificate bundle (the cluster's import example exports b3:61f0)"
+  },
+  {
+   "bead": "N21c-09",
+   "what": "--replay-closure is registered on artifact.export from M2; assert that it is 802 without --to-host or together with digests"
+  },
+  {
+   "bead": "BD-097",
+   "what": "The artifact.list --kind filter closes on seven kinds, which leaves out kinds artifact.export handles (scene packs, xfer bundles, weights, recipes): widen it to the kinds of the format registry, or say why not. Also name the export extensions (618 via N21c-08, 310 via N19b-02's export_check)"
+  },
+  {
+   "bead": "N27-REF",
+   "what": "the raiser column of FROB-REF-866 names 'the bulk attribution of a failure cluster on a device (N27b-27)'; the raiser is the admission check of the method-experiment register (N38a-07) when N27b-27's speed experiment is registered"
+  },
+  {
+   "bead": "N27b-27",
+   "what": "state that 866 is raised at the registration of the speed experiment by N38a-07's check, never by an autopsy.intervene call"
+  },
+  {
+   "bead": "N19b-06",
+   "what": "replace `frob contact probe --state <file>` (no such input) with the film branch's fields, GB-21's squeeze form `--film --eta … --radius … --normal … --h0 … --until-h …`, for its three limits"
+  },
+  {
+   "bead": "N18b-39",
+   "what": "the anchor-capture refusal (anchoring an unconverged or Degraded step) has neither code nor ledger row: file a slug with N35x-02 or name an existing code, so contact.response can list it"
+  },
+  {
+   "bead": "BD-167",
+   "what": "state what contact.probe answers for --interface naming a material pair with no card (the interface-pair-missing slug, or 802)"
+  },
+  {
+   "bead": "N18b-29",
+   "what": "name the branch selector in contact.probe's schema: BD-154, BD-230, GB-20, GB-21, N18a-36 and N18a-37 use --cone and --film, and its DESIGN sketch has no selector"
+  },
+  {
+   "bead": "N18b-10",
+   "what": "spell contact.probe's scene-position input (a scene and a point on its floor); avoid `at`, which N18ax-01 uses for time since contact"
+  },
+  {
+   "bead": "N22a-18",
+   "what": "its entry sketch writes tier = \"S/F\"; RL-12 admits only S, F, M: write tier = \"S\" (printed S/F), as VERBS-control now registers"
+  },
+  {
+   "bead": "N22c-01",
+   "what": "drop --state from `frob control synth` (not an input; BD-118's smoke runs both states): step 4 reads the privileged half and the difference from step 2's envelope instead of a second call; keep --seed"
+  },
+  {
+   "bead": "N22c-47",
+   "what": "drop --state from its `frob control synth` call (keep --seed); --state stays on sim.run"
+  },
+  {
+   "bead": "N22c-48",
+   "what": "drop --state from its `frob control synth` call (keep --seed)"
+  },
+  {
+   "bead": "BD-118",
+   "what": "state the seed input of the standing smoke (as the gate scripts pass it) and its default; confirm that there is no state input because the smoke runs both states"
+  },
+  {
+   "bead": "N35x-02",
+   "what": "file ledger rows for mpc-episode-cap (N22a-24, family 4xx) and insufficient-calibration (§22.12.4), which N22-REF requires and the ledger does not yet carry"
+  },
+  {
+   "bead": "N22c-23",
+   "what": "VERBS-control removed FROB-REF-421 from control.lift (no step raises it) and registered the tier M (plan §22.20 [M]); confirm"
+  },
+  {
+   "bead": "N14a-21",
+   "what": "Align its entry sketches with the registry. design.new is a mutate, so idempotent = false; its stage-1 codes 105, 121 and 126 are findings (exit 2, the design is stored), not refusals; 111 is a refusal. design.show's chapter codes are 102, 103 and 125 (734 and 828 are appended by the field rule)"
+  },
+  {
+   "bead": "BD-343",
+   "what": "name the code for a --bad version that is not a descendant of --good (refused before any probe) and state the exit code of a found change (a-change, first-change)"
+  },
+  {
+   "bead": "N14b-34",
+   "what": "raise the mass-dropped refusal under the ledger slug import-mass-dropped until N35x-02 assigns a number; do not use 'the registry's next free code (proposed 127)' at implementation"
+  },
+  {
+   "bead": "NEG-32",
+   "what": "the same: the mass-dropped refusal is the slug import-mass-dropped until assigned, not 'proposed code FROB-REF-127'"
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All nine registry beads now agree with their implementing beads, and every round-2 request was applied. Five were applied in corrected form: S87 and S20 with pending slugs instead of typed numbers; S46 and S54(3) with seed listed and state left out; the S56 lead question decided as DESIGN by registering artifact.import, with the count requests that follow from it. One input was rejected: contact.probe --state <file>. The slice looks settled apart from the owner's acceptance of the 244th verb."
+}

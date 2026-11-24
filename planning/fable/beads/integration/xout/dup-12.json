@@ -1,0 +1,776 @@
+{
+ "group": "dup-12",
+ "decisions": [
+  {
+   "a": "N10a-02",
+   "b": "N41-09",
+   "action": "rescope",
+   "note": "N10a-02 holds the one cap predicate moonshot_cap, the completeness rule of an active record, the activation-needs-pilot rule and the critical-path rule (moved from N41-09); N41-09 keeps the owner decision OPEN-PROG-5, the default order, the transition command and the readiness and hygiene rule, and calls the predicate"
+  },
+  {
+   "a": "N10a-02",
+   "b": "NAB-21",
+   "action": "rescope",
+   "note": "NAB-21 is the only holder of the Moonshot queue (21 [[moonshot_queue]] records in registries/ev_matrix.toml, schema, state vocabulary, entry and slot-freeing rules, next_entries); N10a-02 lost its queue table and its moonshots.toml and reads NAB-21's records"
+  },
+  {
+   "a": "N40-05",
+   "b": "N41-01",
+   "action": "rescope",
+   "note": "N41-01 alone specifies and tests the risk-review rules (row selection, pre-filled readings, three outcomes, the fired-without-outcome block); N40-05 keeps step 9 as a procedure step, calls risk-review.sh and propagates the block"
+  },
+  {
+   "a": "N40-05",
+   "b": "N41-03",
+   "action": "rescope",
+   "note": "N41-03 keeps the register, loader, default-ADR writer and gains the reporting query due(Mn); the rule that a silent due question blocks stays with the calendar check N40-35; N40-05 keeps step 10 as a call and propagates the block"
+  },
+  {
+   "a": "N40-05",
+   "b": "N41-09",
+   "action": "rescope",
+   "note": "step 11 of the exit procedure calls moonshot_cap of N10a-02 and holds no count of its own; N41-09 keeps the transitions that park an item and the listing of the queue in the exit record from M5 on"
+  },
+  {
+   "a": "GB-09",
+   "b": "N36-04",
+   "action": "link",
+   "note": "the card checks three ceilings on N00-17's calculators; N36-04 is the performance chapter's limits report; they share KA-818 and, after the rescope below, the same functions, so their values cannot differ"
+  },
+  {
+   "a": "N00-17",
+   "b": "N36-04",
+   "action": "rescope",
+   "note": "N00-17 (frob_conformance::thesis) is the one implementation of the shared formulas; N36-04 keeps step_share, physics_share, slowdown_penalty, the limits report and KA-818 to KA-820, and its other six functions became unit-typed adapters that call N00-17"
+  },
+  {
+   "a": "N00-17",
+   "b": "N39a-37",
+   "action": "rescope",
+   "note": "N39a-37 keeps the binding of the six ceilings to ledger-closed runs, the arm rule, the refusals, the ceiling record and the binding ceiling; its formulas are evaluated by N00-17's functions (named per calculator)"
+  },
+  {
+   "a": "N36-04",
+   "b": "N39a-37",
+   "action": "rescope",
+   "note": "two ledger reports with different inputs and milestones (parity-baseline phase rows at M0; frob.tenfold.ledger/1 cells at M1); each Scope names the other and both call N00-17, so no formula is held twice"
+  },
+  {
+   "a": "BD-227",
+   "b": "N19a-31",
+   "action": "rescope",
+   "note": "the seed keeps the schema, loader, the seven files with the 59 rows as data, draw, claim function and verb (its consumers depend on it for the content); N19a-31 no longer enters the home rows: it verifies them, binds them to the home generator, and keeps the draw-and-represent tests, exposure fixtures and the not-represented record. N19a-32 to N19a-37 (outside this packet) are in the same relation"
+  },
+  {
+   "a": "BD-227",
+   "b": "N19a-39",
+   "action": "rescope",
+   "note": "one realism-claim function and one refusal row FROB-REF-312, in BD-227 (the seed's done-condition); N19a-39 keeps the provenance grammar beyond the base load rule, promotion and its record, identity effects, the report side of the claim, strict-data and the lint, and calls BD-227's function"
+  },
+  {
+   "a": "BD-227",
+   "b": "NEG-28",
+   "action": "rescope",
+   "note": "BD-227 holds the registries; NEG-28 holds the consolidated INDEX.toml with the Covered-by column, the agreement check against the seven files and the set-wide invariants; each Scope names the other"
+  },
+  {
+   "a": "N33a-03",
+   "b": "N34-13",
+   "action": "merge",
+   "keep": "N33a-03",
+   "note": "the lock's fields and strict reader are N33a-03's; N34-13's additions folded in (the `stable` key of [auditor], refusal of an unknown table with its test). N34-13 as a whole is superseded by N33a-05"
+  },
+  {
+   "a": "N33a-04",
+   "b": "N34-13",
+   "action": "merge",
+   "keep": "N33a-04",
+   "note": "the receipt, tree hash, drift classifier and writer are N33a-04's; folded from N34-13: frob-core's canonical writer and the dependency on N34-18, the own-lock classification test, the head-only-hash mutant, the leading-slash scan, duplicates recorded and not failed. N34-13 as a whole is superseded by N33a-05"
+  },
+  {
+   "a": "N33a-05",
+   "b": "N34-13",
+   "action": "merge",
+   "keep": "N33a-05",
+   "note": "one bead for the body of check-stack; folded from N34-13: the stack.* finding identifiers and exit code 2 of the six-check framework (kept beside N33a-05's kinds), the lock-against-receipt finding stack.pin (plant 7 of GATE-WS-01), stack.receipt-hash, lockfile-missing, the 10 s share of GATE-WS-04, the per-sibling facts, the first rejected alternative, GATE-WS-01 in gates"
+  },
+  {
+   "a": "BD-305",
+   "b": "N29b-14",
+   "action": "rescope",
+   "note": "BD-305 alone holds the store-wide mechanisms (routing by mark, the listing filter, the dispatcher read check with FROB-REF-731, the export door, log redaction, the sweep and gate record); N29b-14 keeps what is specific to Chronicle's objects (parent edges and the publish cross-check, layout under the private root, private nodes in a closure, private rows in a result, aggregate against detail, where each export format carries the mark, tombstone and status presentation, refusal of an explicit private log field)"
+  },
+  {
+   "a": "N29b-14",
+   "b": "N37-19",
+   "action": "rescope",
+   "note": "the purge and its meeting with the pin rule are specified in N37-19 only; N29b-14 states the rule's effect on Chronicle's pins and supplies the store functions the purge calls; one rule now governs (see fixes)"
+  },
+  {
+   "a": "GB-24",
+   "b": "N20b-13",
+   "action": "link",
+   "note": "the card compares hand goldens with the mission solver and runs the fixture's analytic layer; N20b-13 is that fixture's host evaluator; the card depends on it"
+  },
+  {
+   "a": "N10b-08",
+   "b": "N20b-13",
+   "action": "rescope",
+   "note": "N10b-08 is the specification side (the one derivation file, the reference model that calls no code under test, the law suite generic over DockingSubject, KA-108 to KA-111); N20b-13 is the product-side evaluator in frob-sense (integer predicate, witnesses and exclusions, committed labels and digest, clock-contract timing rows, KA-498 to KA-502), runs the spec's law suite and is cross-checked against the reference model"
+  },
+  {
+   "a": "N17a-15",
+   "b": "N21c-16",
+   "action": "merge",
+   "keep": "N21c-16",
+   "note": "the reading of the specializable share s is N21c-16's (the device chapter governs KILL-SPECIALIZE); folded from N17a-15: the stage-timer reading from N17a-06 as a cross-check on the reference quadruped and the mixed workload, intervals on s, KA-374, the 1 + s control, the revisit condition"
+  },
+  {
+   "a": "N17a-15",
+   "b": "N21c-17",
+   "action": "merge",
+   "keep": "N21c-17",
+   "note": "the three-arm pilot is N21c-17's; folded from N17a-15: registration fields in pilots.toml, the consistency check of the ratio against 1/(1 − s), the cached compile time, clause-by-clause evaluation for the decision bead, the 1,000-step digest run through spark check, two controls, determinism lanes, the milestone note, the fourth-arm hand-off to N17b-24"
+  },
+  {
+   "a": "N33b-03",
+   "b": "N39b-13",
+   "action": "rescope",
+   "note": "N33b-03 is the one freeze of the stack ([freeze] in the stack lock, check-stack in frozen mode, the trains' refusal, receipt-based refusal and pooling, opening and closing); N39b-13 is the tournament's conduct, whose freeze record cites that record and adds the non-stack items, and whose watcher calls check-stack"
+  },
+  {
+   "a": "N39b-13",
+   "b": "N40-16",
+   "action": "rescope",
+   "note": "N39b-13 conducts the tournament and puts on file what the gate cites (event log, freeze record, report and kit digests, cell verdicts); N40-16 is the gate: completeness and freeze-window checks, the audit of verdicts against the written rule, and the single entry of GATE-TENFOLD-07's row"
+  },
+  {
+   "a": "BD-110",
+   "b": "N14b-10",
+   "action": "rescope",
+   "note": "N14b-10 is the one statement of the staging contract (stage table as the constant STAGES, statuses, option semantics, budget rules, analysis map, report notes, conformance suite); BD-110 is the runner (policy table, aggregation, repair ranking, budget enforcement and timing, stage records, the verb, the two gate measurements) and must pass that suite"
+  },
+  {
+   "a": "BD-246",
+   "b": "NEG-30",
+   "action": "rescope",
+   "note": "the per-archetype record lives once, in the zoo (pinned instance, frob.zoo.expect/1 with the group on file, preflight rows, controls); BD-246 keeps the catalog-wide known answer KA-270, the 24 planted asymmetries (now stored as zoo variants), the mass rows and the three gate measurements, and reads the groups on file from the zoo"
+  },
+  {
+   "a": "BET-03",
+   "b": "N18b-33",
+   "action": "link",
+   "note": "the kill-gate bead applies the KILL-CONTACT trigger and writes the kill ADR; the bet bead reads that record, evaluates its two falsifier clauses and writes the bet verdict; thresholds, trigger and fallback agree"
+  },
+  {
+   "a": "BET-32",
+   "b": "N26a-32",
+   "action": "link",
+   "note": "the kill-gate bead applies the three KILL-RARE clauses and writes ADR-KILL-RARE; the bet bead reads it, evaluates its four falsifier clauses and writes the bet verdict; trigger, thresholds and fallback agree"
+  },
+  {
+   "a": "N00-19",
+   "b": "N39a-36",
+   "action": "rescope",
+   "note": "N39a-36 holds the one stored report (frob.tenfold.report/1, ReportedRatio, INV-TENFOLD-08 by construction); N00-19 keeps the metric contract (METRIC.md, the charged-time rule, check_report with its ten violations) and reads the record through a view instead of a second struct; passing check_report is now a completeness rule of the record"
+  },
+  {
+   "a": "N10b-14",
+   "b": "N23a-27",
+   "action": "rescope",
+   "note": "N10b-14 is the contract (statements C-23.T1 to T6, the law suite over C23TransportSubject, KA-129, KA-130, MR-24); N23a-27 is the production InheritanceMap (construction from an edit path, application to specialists and family policies, parity, the manifest record) and now runs the spec's law suite unchanged on its types; each Scope names the other; types and FROB-REF-531 already agreed"
+  },
+  {
+   "a": "N14b-12",
+   "b": "N19b-30",
+   "action": "rescope",
+   "note": "N19b-30 is the one definition of the slab, the transition predicates, the door predicate, fixture modes, the three-valued conjunction, witness labels and FROB-REF-308; N14b-12 reaches it through A-18 (N19b-34) and keeps reach, coverage, the footprint and the mapping of a route verdict onto stage 7's statuses and its one code, 119"
+  },
+  {
+   "a": "N18-CX",
+   "b": "N38b-05",
+   "action": "rescope",
+   "note": "N18-CX enters the Traction entries (CX-167 to CX-183 and four appended ones) with their plants into the catalogue; N38b-05 owns the catalogue schema, the seeding tool that alone writes controls.toml and allocates NC identifiers, the seed map and the join"
+  },
+  {
+   "a": "N19c-05",
+   "b": "N25c-19",
+   "action": "merge",
+   "keep": "N19c-05",
+   "note": "one verb, one bead, in the chapter that owns it (§19.13); folded from N25c-19: the record's threshold list, settles list and text, the type's home in frob-core, the algorithm from an unresolved item to a request (dependency support, thresholds, merge, ordering), the gap rule and instrument ladder, the three rules, the hand-off from unresolved mission cells, six fixtures, two controls, the second half of the script, its dependencies and considerations"
+  },
+  {
+   "a": "N25a-28",
+   "b": "N25c-09",
+   "action": "link",
+   "note": "N25c-09 places family screens on devices and the host and accounts for the checker queue; N25a-28 is the script that measures GATE-AUGUR-15 on two machines and asserts those placement receipts; counts, digests and pilot figures agree"
+  },
+  {
+   "a": "N27b-09",
+   "b": "N38b-15",
+   "action": "rescope",
+   "note": "the 200-failure planted-cause campaign is run once, by N27b-09, which records GATE-AUTOPSY-03; item 1 of CERT-14 in N38b-15 has the same thresholds on the same suite and now reads that row (checking the suite identity) instead of measuring again; N38b-15 keeps the pair tables, the efficiency law, exact against budgeted, the chaotic placebo, the broken certifiers and the conformal self-test"
+  },
+  {
+   "a": "N32b-05",
+   "b": "N37-15",
+   "action": "rescope",
+   "note": "two scripts kept with no shared assertion: tether_capabilities.sh (N32b-05) is depth on a few calls (one refusal followed into the ledger and session roots, altered and expired tokens, accounting of a derived token that spends, the 725 write refusal, forks and job listings, sealed reads, killed client, shared views); safe_capabilities.sh (N37-15) is breadth (the scope matrix over every verb, all refused derivations, the export path across namespaces, governance, no off switch, worker manifest). Moved: refused derivations to N37-15; the altered-token refusal and the 725 edit refusal to N32b-05"
+  },
+  {
+   "a": "N40-08",
+   "b": "NEG-12",
+   "action": "rescope",
+   "note": "N40-08 keeps the gate register's related-threshold row for the film squeeze times and the checks that confirm one bound; NEG-12 keeps the single registration of the tolerance with the known answer, the lint against a gate row restating it, and the E7-B scan; both state 2%"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N34-13",
+   "keep": "N33a-05",
+   "note": "check-stack specified once across N33a-03 (lock reader), N33a-04 (receipt) and N33a-05 (comparison, modes, guard); BD-004, the only bead that depended on N34-13, now needs N33a-05"
+  },
+  {
+   "drop": "N17a-15",
+   "keep": "N21c-17",
+   "note": "one pilot and one reading of s, in the chapter that governs the kill gate; N21c-17 depends on N21c-16, which carries the share reading"
+  },
+  {
+   "drop": "N25c-19",
+   "keep": "N19c-05",
+   "note": "the verb scene.probe-request was specified twice at M5; N25c-29 and N25c-33, which depended on N25c-19, now need N19c-05"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "N41-09",
+   "dep": "N10a-02",
+   "as": "dep",
+   "why": "the transition command calls the cap, completeness and activation predicates of the D-6 check"
+  },
+  {
+   "bead": "N41-09",
+   "dep": "NAB-21",
+   "as": "dep",
+   "why": "the transitions read and write NAB-21's queue records and call next_entries"
+  },
+  {
+   "bead": "N41-09",
+   "dep": "N40-05",
+   "as": "dep",
+   "why": "the queue listing is written into the exit record the runner produces"
+  },
+  {
+   "bead": "N10a-02",
+   "dep": "NAB-21",
+   "as": "dep",
+   "why": "the D-6 check reads the queue records and their schema"
+  },
+  {
+   "bead": "N40-05",
+   "dep": "N41-01",
+   "as": "dep",
+   "why": "step 9 runs the risk review and propagates its block"
+  },
+  {
+   "bead": "N40-05",
+   "dep": "N41-03",
+   "as": "dep",
+   "why": "step 10 reads the open-question register and writes defaults with its command"
+  },
+  {
+   "bead": "N40-05",
+   "dep": "N10a-02",
+   "as": "dep",
+   "why": "step 11 calls moonshot_cap"
+  },
+  {
+   "bead": "N41-01",
+   "dep": "N40-05",
+   "as": "related",
+   "why": "the review script is called by the runner; the runner depends on it, not the reverse"
+  },
+  {
+   "bead": "N41-03",
+   "dep": "N40-05",
+   "as": "related",
+   "why": "the register is read by the runner; the runner depends on it, not the reverse"
+  },
+  {
+   "bead": "NAB-21",
+   "dep": "N10a-02",
+   "as": "related",
+   "why": "the queue is data; the check that reads it depends on it"
+  },
+  {
+   "bead": "NAB-21",
+   "dep": "N41-09",
+   "as": "related",
+   "why": "the order decision writes four fields of the queue records"
+  },
+  {
+   "bead": "GB-09",
+   "dep": "N36-04",
+   "as": "related",
+   "why": "same published inputs and KA-818 values; neither needs the other"
+  },
+  {
+   "bead": "N36-04",
+   "dep": "N00-17",
+   "as": "dep",
+   "why": "the six adapters call the thesis calculators"
+  },
+  {
+   "bead": "N39a-37",
+   "dep": "N00-17",
+   "as": "dep",
+   "why": "calculators 1 to 5 call the thesis calculators"
+  },
+  {
+   "bead": "N39a-37",
+   "dep": "N36-04",
+   "as": "related",
+   "why": "sibling ledger reports over the same arithmetic module"
+  },
+  {
+   "bead": "N10a-02",
+   "dep": "N00-17",
+   "as": "dep",
+   "why": "the D-10 check calls general_bound; its own copy of the formula was removed"
+  },
+  {
+   "bead": "N19a-31",
+   "dep": "BD-227",
+   "as": "dep",
+   "why": "binding and tests need the schema, loader, rows and draw"
+  },
+  {
+   "bead": "N19a-39",
+   "dep": "BD-227",
+   "as": "dep",
+   "why": "promotion extends the loader's base rule and calls the claim function"
+  },
+  {
+   "bead": "NEG-28",
+   "dep": "BD-227",
+   "as": "dep",
+   "why": "the consolidation check reads the seven files through the loader"
+  },
+  {
+   "bead": "NEG-28",
+   "dep": "N19a-31",
+   "as": "dep",
+   "why": "the set-wide checks run after the per-archetype bindings"
+  },
+  {
+   "bead": "BD-004",
+   "dep": "N33a-05",
+   "as": "dep",
+   "why": "the six-check capstone assembles check-stack, whose body is now N33a-05 (was N34-13)"
+  },
+  {
+   "bead": "N33a-04",
+   "dep": "N34-18",
+   "as": "dep",
+   "why": "the receipt is written with frob-core's canonical writer (dependency carried over from N34-13)"
+  },
+  {
+   "bead": "N33a-05",
+   "dep": "BD-001",
+   "as": "dep",
+   "why": "the first lock and receipt exist before the comparison (dependency carried over from N34-13)"
+  },
+  {
+   "bead": "N29b-14",
+   "dep": "BD-305",
+   "as": "dep",
+   "why": "Chronicle's rules rest on the store-wide routing, filter, read check and export door"
+  },
+  {
+   "bead": "N29b-14",
+   "dep": "N37-19",
+   "as": "dep",
+   "why": "its end-to-end script exercises scene.purge on Chronicle's objects"
+  },
+  {
+   "bead": "N29b-14",
+   "dep": "N37-17",
+   "as": "dep",
+   "why": "it uses the mark lattice and put_derived; its own class type and join were removed"
+  },
+  {
+   "bead": "GB-24",
+   "dep": "N20b-13",
+   "as": "dep",
+   "why": "the card's script runs the docking fixture's analytic layer"
+  },
+  {
+   "bead": "N20b-13",
+   "dep": "N10b-08",
+   "as": "dep",
+   "why": "the evaluator implements DockingSubject and passes the spec part's law suite; a specification comes first"
+  },
+  {
+   "bead": "N17b-24",
+   "dep": "N21c-17",
+   "as": "dep",
+   "why": "the limb-archetype arm is added to the three-arm harness (was N17a-15)"
+  },
+  {
+   "bead": "N17a-16",
+   "dep": "N21c-17",
+   "as": "dep",
+   "why": "promotion is funded only after the pilot (was N17a-15)"
+  },
+  {
+   "bead": "N21c-16",
+   "dep": "N17a-06",
+   "as": "dep",
+   "why": "the stage-timer cross-check reads the cohort calibration's timers (dependency carried over from N17a-15)"
+  },
+  {
+   "bead": "N39b-13",
+   "dep": "N33b-03",
+   "as": "dep",
+   "why": "the tournament's freeze record and watcher rest on the stack freeze"
+  },
+  {
+   "bead": "N40-16",
+   "dep": "N39b-13",
+   "as": "dep",
+   "why": "the gate checks and cites what the conduct of the tournament produced"
+  },
+  {
+   "bead": "N40-16",
+   "dep": "N33b-03",
+   "as": "related",
+   "why": "the gate reads the frozen receipt through N39b-13's freeze record"
+  },
+  {
+   "bead": "BD-110",
+   "dep": "N14b-10",
+   "as": "dep",
+   "why": "the runner reads the stage table and is held to the contract's conformance suite"
+  },
+  {
+   "bead": "BD-246",
+   "dep": "NEG-30",
+   "as": "dep",
+   "why": "the catalog gate reads each archetype's group on file from the zoo expectation files and stores its asymmetries as zoo variants"
+  },
+  {
+   "bead": "BET-03",
+   "dep": "N18b-33",
+   "as": "dep",
+   "why": "the bet's verdict reads the KILL-CONTACT decision record"
+  },
+  {
+   "bead": "BET-32",
+   "dep": "N26a-32",
+   "as": "dep",
+   "why": "the bet's verdict reads the KILL-RARE decision record"
+  },
+  {
+   "bead": "N39a-36",
+   "dep": "N00-19",
+   "as": "dep",
+   "why": "report build refuses a record that violates the metric contract"
+  },
+  {
+   "bead": "N23a-27",
+   "dep": "N10b-14",
+   "as": "dep",
+   "why": "the implementation follows its specification and passes its law suite"
+  },
+  {
+   "bead": "N14b-12",
+   "dep": "N19b-34",
+   "as": "dep",
+   "why": "stage 7 asks the analysis A-18 for the route verdict"
+  },
+  {
+   "bead": "N14b-12",
+   "dep": "N19b-30",
+   "as": "related",
+   "why": "reached through N19b-34 and BD-233, which already depend on it"
+  },
+  {
+   "bead": "N18-CX",
+   "dep": "N38b-05",
+   "as": "dep",
+   "why": "the chapter's entries are written in the catalogue schema and become controls through the seeding tool (the registry skeleton)"
+  },
+  {
+   "bead": "N38b-05",
+   "dep": "N18-CX",
+   "as": "related",
+   "why": "the M0 tool cannot wait for an M1 registry bead; it lists the chapter as pending until its rows arrive"
+  },
+  {
+   "bead": "N25c-29",
+   "dep": "N19c-05",
+   "as": "dep",
+   "why": "the surveyed-site compiler emits probe requests (was N25c-19)"
+  },
+  {
+   "bead": "N25c-33",
+   "dep": "N19c-05",
+   "as": "dep",
+   "why": "facility queries list surveys as probe requests (was N25c-19)"
+  },
+  {
+   "bead": "N19c-05",
+   "dep": "BD-135",
+   "as": "dep",
+   "why": "requests are derived from mission answers (dependency carried over from N25c-19)"
+  },
+  {
+   "bead": "N19c-05",
+   "dep": "BD-233",
+   "as": "dep",
+   "why": "requests are derived from unresolved clearance verdicts (carried over from N25c-19)"
+  },
+  {
+   "bead": "N19c-05",
+   "dep": "N25c-18",
+   "as": "dep",
+   "why": "requests feed experiment.suggest as measure proposals (carried over from N25c-19)"
+  },
+  {
+   "bead": "N19c-05",
+   "dep": "BD-398",
+   "as": "related",
+   "why": "N25c-19 depended on the ingestion capstone, but BD-398 depends on this verb; the components N19c-02 and N19c-03 are the dependencies"
+  },
+  {
+   "bead": "N25a-28",
+   "dep": "N25c-09",
+   "as": "dep",
+   "why": "the gate script exercises the placement mechanism and reads its receipts"
+  },
+  {
+   "bead": "N38b-15",
+   "dep": "N27b-09",
+   "as": "dep",
+   "why": "CERT-14 item 1 reads the recorded row of GATE-AUTOPSY-03"
+  },
+  {
+   "bead": "N32b-05",
+   "dep": "N37-15",
+   "as": "related",
+   "why": "sibling end-to-end scripts over the same mechanisms; neither needs the other"
+  },
+  {
+   "bead": "NEG-12",
+   "dep": "N40-08",
+   "as": "dep",
+   "why": "the single registration must keep the register's related-threshold check passing"
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N10a-02",
+   "what": "queue file: its second copy frob-conformance/registry/moonshots.toml removed; the D-6 check reads the [[moonshot_queue]] records of registries/ev_matrix.toml (NAB-21). DESIGN, stated in N10a-02, N41-09 and NAB-21: one file holds the queue"
+  },
+  {
+   "bead": "N41-09",
+   "what": "queue file: its own register registries/moonshots.toml removed for the same reason; record id is MQ-nn (NAB-21) with the epic key in the field `epic`, not the epic's key as id"
+  },
+  {
+   "bead": "N41-09",
+   "what": "state vocabulary: {waiting, active, expired, killed, delivered} replaced by NAB-21's closed set {queued, active, passed, killed, falsified, expired, deferred}; N10a-02's five-word set extended to the same seven; NAB-21 gained `expired`"
+  },
+  {
+   "bead": "N41-09",
+   "what": "meaning of `active`: the draft did not count a running pilot against the cap, against D-6's wording (active from the funding of its pilot until its expiry gate) and the pilot ledger's count; all three beads now state one reading, labelled DESIGN: a funded pilot holds a slot, the work behind it waits for the pilot's passing result"
+  },
+  {
+   "bead": "N41-09",
+   "what": "completeness: the draft required a kill gate of every record, which rejected seven of the 21 planned items that have a fallback and no kill gate; the one rule is N10a-02's (kill gate or fallback in any state; registered pilot, falsifier and expiry gate to be active)"
+  },
+  {
+   "bead": "N41-03",
+   "what": "acceptance line added for the reporting query `open due`, which the Scope and tests already named"
+  },
+  {
+   "bead": "N00-17",
+   "what": "max_trained_fraction at the boundary cheap = C/goal: was `None` for cheap ≥ C/goal; now 0 at equality and `None` above. The plan differs with itself (KA-013: more than 41; KA-819: c_s ≥ 41); DESIGN, labelled in N00-17 and N36-04: the function follows the formula's condition c + f·c_T ≤ C/goal, which is also what card GB-09 states (41 GPU-s is the largest c that reaches ten)"
+  },
+  {
+   "bead": "N36-04",
+   "what": "same boundary: `Impossible` for c_s ≥ 41 replaced by 0 at c_s = 41 and `None` (printed `impossible`) above; argument order compute_per_decision(C, c_s, f, c_t) changed to the thesis module's (C, c_s, c_t, f); function results stated as exact rationals (100/13, 47/6, 59/9, …) instead of decimals, because the arithmetic is now N00-17's"
+  },
+  {
+   "bead": "N10a-02",
+   "what": "second implementation of the general bound, frob_conformance::ceiling::speedup_bound, removed; the D-10 check calls frob_conformance::thesis::general_bound (N00-17), whose acceptance requires one implementation of 1/(1 − f + f/r + h). Not fixable in this packet: N36-05 still declares its own `ceiling(f, r, h) -> f64` for the same formula"
+  },
+  {
+   "bead": "N00-17",
+   "what": "report entry now states what card GB-09 asserts through it: a ledger whose phases do not sum to its wall-clock is refused, and each ceiling names its binding quantity"
+  },
+  {
+   "bead": "BD-227",
+   "what": "provenance and the count: the draft put `provenance` on each dimension entry and counted distinct assumed dimensions, while N19a-31, N19a-39 and the manifest's counting rule (N19a-05) count distinct rows; corrected to the plan's §19.8 and Appendix G.3 (a row has one provenance field): one provenance per row, dimensions_assumed = distinct assumed row identifiers"
+  },
+  {
+   "bead": "N19a-31",
+   "what": "row format: its own field names (id, quantity + unit, mechanism, failures) replaced by BD-227's schema (slug, dimensions with id and unit-carrying range, represented_by, provokes, one provenance per row); row identifier defined once, in BD-227, as <archetype>.<slug> (home.threshold), which is also the form N19a-05 counts"
+  },
+  {
+   "bead": "BD-227",
+   "what": "Frontier rows: the draft required a Solid mechanism of every row, which three plan-time rows (pets, floor vibration, shoppers) do not have; now as NEG-28 and N19a-31: such a row loads, is flagged and is recorded `not-represented`. DESIGN, labelled"
+  },
+  {
+   "bead": "N19a-39",
+   "what": "its second realism check `frob_scene::realism_check` removed; reports call BD-227's `frob_scene::hazards::claim::realism_claim_admissible`; the refusal lists assumed row identifiers per scene in both beads"
+  },
+  {
+   "bead": "NEG-28",
+   "what": "CLI form `frob scene hazards --archetype <a>` corrected to the verb's positional form `frob scene hazards <archetype>` (BD-227, N14a-32); `not represented` spelled `not-represented` as the generator beads spell it; index rows keyed by BD-227's row identifier"
+  },
+  {
+   "bead": "BD-227",
+   "what": "registry file names stated as FACT-derived (`commercial-kitchen.toml`, from the task address registry:hazards/commercial-kitchen:wet-floor). Not fixable in this packet: N19a-35, N19a-36 and N19a-37 name their files plant.toml, retail.toml and kitchen.toml in title and acceptance, and N19a-32 to N19a-37 still describe the rows as their own data entry and use the superseded row format"
+  },
+  {
+   "bead": "N33a-04",
+   "what": "receipt writer: N33a-04 allowed a small local writer in xtask, N34-13 named frob-core's canonical writer; the plan (§34.14) does not say which crate writes the receipt. DESIGN, labelled in N33a-04 and N33a-03: frob-core's writer (N34-18), because L-1 admits the edge, check-generated (BD-004) already links it, and a second writer would escape GATE-WS-05's feature test; N33a-03's statement that xtask may not depend on frob-core corrected"
+  },
+  {
+   "bead": "N33a-04",
+   "what": "tree_hash: N34-13 defined it over sorted (path, git blob hash) pairs, N33a-04 over a length-prefixed stream of path, executable bit and content with a deletion marker; the plan says only that tracked bytes are hashed. DESIGN, labelled: N33a-04's stream is the one definition"
+  },
+  {
+   "bead": "N33a-05",
+   "what": "duplicates: N33a-05 failed check-stack on any asupersync duplicate, N34-13 and BD-008 record it without failing; corrected to the plan (§34.6 gives the rule to check-deps; GATE-WS-01 requires each plant to be caught by its owner and by no other): recorded as data, exit 0, the PASS guard still refuses"
+  },
+  {
+   "bead": "N33a-05",
+   "what": "finding names and exit code: N33a-05 used bare kinds (lockfile-changed, sibling-moved, off-pin, …) and 'non-zero'; N34-13, N34-14 and BD-008 use identifiers stack.* and exit 2 (BD-004's framework). Each finding now carries both: `id` stack.<name> and `kind`; exit codes 0, 2, 3; N34-13's `gate_eligible` is the report field `may_record_pass`"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "purge against pinned evidence: N29b-14 refused with FROB-REF-813 unless --withdraw-claims, N37-19 withdrew inside the purge and never raised 813, and the verb registry lists 813 for scene.purge; the plan (§37.6, §29.17) does not settle it. DESIGN, labelled in both: refused with 813 listing the claims unless `withdraw_claims` is true, then withdrawn in phase 1 of N37-19's transaction; claims are recomputed inside the transaction; N37-19's registry row gained FROB-REF-813 and the argument"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "direct read of a private object without private:read: FROB-REF-720 corrected to FROB-REF-731, as BD-305 and the plan (§37.6, §32.12.7) state; 720 remains only for a verb's own missing capability (N37-19's admission)"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "withdrawal and tombstone reason `purge` corrected to N37-19's `private-purge`; the purge's scopes named as `scene:admin` and `private:read` (N37-19, the verb registry) in place of an unnamed admin scope"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "its own class type `private(scene_pack_id…)` and join in privacy.rs removed in favour of the mark lattice N37-17 (Privacy Public | Private, computed by put_derived); the pack identifiers survive as a non-authoritative index column `private_roots`. DESIGN, labelled"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "`frob store status` showed unscoped callers a byte total of private objects, against BD-305's rule that the surface is identical for a session without the scope; now the private line is printed only with private:read. DESIGN, labelled in N29b-14 and BD-305"
+  },
+  {
+   "bead": "N29b-14",
+   "what": "private exports stated with BD-305's three conditions (scope, flag --allow-private-export, owner key) instead of scope and flag only"
+  },
+  {
+   "bead": "N20b-13",
+   "what": "derivation file: its second file docs/derivations/po_sens_06_docking_boundary.md dropped; PO-SENS-06 cites N10b-08's docs/derivations/docking-fixture.md, to which N20b-13 adds two sections. DESIGN (one derivation file per fixture), labelled in both"
+  },
+  {
+   "bead": "N20b-13",
+   "what": "command form `frob mission synthesize docking --grid 561 --json` corrected to the registry's form used by the plan (§25) and BD-129: `frob mission synthesize docking.fmission --json`"
+  },
+  {
+   "bead": "GB-24",
+   "what": "command form `frob mission synthesize --mission docking --grid 17x33 --json` corrected to `frob mission synthesize docking.fmission --json`, as above"
+  },
+  {
+   "bead": "N21c-16",
+   "what": "verdict of the profile clause: N21c-16 compared the point value of s with 1/3, N17a-15 fired the clause only when the upper end of the interval was below 1/3; the plan (§21.18) says only 'under one third'. DESIGN, labelled: three-valued verdict (met; not met when every upper end is below 1/3; undecided by the profile in between, where the pilot decides)"
+  },
+  {
+   "bead": "N21c-16",
+   "what": "source of s: per-kernel device time of the M2 profile on Q and H decides (device chapter); N17a-15's per-stage reading (stages 1 and 6, N17a-06) kept as a cross-check that must agree within intervals; the mixed workload is recorded and does not decide"
+  },
+  {
+   "bead": "N21c-17",
+   "what": "script, option and digest command stated once: scripts/e2e/pilot_specialize.sh, --kernel-set, bit identity by `frob spark check` (the plan's enforcement, FROB-REF-613) with `frob telemetry divergence --exact` to locate a difference; N17a-15's scripts/pilots/phylum_specialize_three_arm.sh and --kernels are not used"
+  },
+  {
+   "bead": "N39b-13",
+   "what": "what a pin move voids: N39b-13 said the tournament, N33b-03 the spanned runs and their cells (and the campaign after an abort), N40-16 stated both sentences of the plan (§39.13 'voided and re-run'; §43.2 'voids the runs it spans'). DESIGN, labelled in all three and owned by N33b-03: by extent; freeze still open and runs identified by receipt: the spanned runs and their cells, re-run on fresh families; freeze aborted or runs unattributable: the tournament"
+  },
+  {
+   "bead": "N39b-13",
+   "what": "the row of GATE-TENFOLD-07 was entered by both N39b-13 and N40-16; now entered once, by N40-16's check from a fresh-context session; N39b-13's title changed accordingly; its freeze record names the frozen receipt hash of [freeze] beside the stack-lock digest instead of defining a second stack freeze"
+  },
+  {
+   "bead": "BD-110",
+   "what": "home of the stage table: BD-110 had it as data in registries/preflight.toml, N14b-10 as the compiled constant STAGES; the plan (§14.11) names neither. DESIGN, labelled in both: the constant is the only stage table; registries/preflight.toml keeps the check policy per finding kind and is tested against the constant"
+  },
+  {
+   "bead": "BD-110",
+   "what": "`--stages a-b`: BD-110 ran only stage 1 before the range, N14b-10 requires every earlier stage (from the memo graph or recomputed), as does BD-244; corrected to ADR-SKEL-08 (each stage able to refuse the next): earlier stages are required, taken from a valid stage record or computed"
+  },
+  {
+   "bead": "BD-110",
+   "what": "its copy of rows 1 to 6 brought to N14b-10's: stage 1 also owns 125 (unsupported schema version) and the stage-1 raise of 107; stage 6 runs the beam rung of A-15 (§14.11, §31.23)"
+  },
+  {
+   "bead": "N14b-10",
+   "what": "status spellings on the wire fixed once as `passed`, `refused`, `undecided`, `not-run` (BD-110's envelope words; the Rust variants keep their names)"
+  },
+  {
+   "bead": "BD-246",
+   "what": "groups on file were held twice (the catalog test's table; `[symmetry].gamma_mech` of each zoo expectation file). DESIGN, labelled: on file is the zoo expectation file; BD-246's table is KA-270 and the catalog test asserts three-way equality. The 24 planted asymmetries move from beside the template to zoo/<name>.variants/ in the zoo's format"
+  },
+  {
+   "bead": "NEG-30",
+   "what": "preflight stage status in frob.zoo.expect/1: its own five words (pass, finding, refused, undecided, not-applicable) replaced by the four the verb prints under the staging contract N14b-10 (passed, refused, undecided, not-run); findings and the not-run reason are fields of the row"
+  },
+  {
+   "bead": "N00-19",
+   "what": "its second report record, the struct StratumReport, removed: the stored report is N39a-36's frob.tenfold.report/1 and the contract reads it through the trait RatioReportView"
+  },
+  {
+   "bead": "N00-19",
+   "what": "verdict vocabulary: its own words (`confirmed`, `ten-fold confirmed`, `ratio r, interval [a, b]`, `auditability`, derived from the lower bound) corrected to the plan's outcome rules (§39.10): `ten-fold`, `measured`, `withdrawn`, with thresholds on R̂ and the guard, computed by the verdict rule (N39a-32) and worded by N39b-05"
+  },
+  {
+   "bead": "N14b-12",
+   "what": "a route query outside the complex's domain: N19b-30 raises FROB-REF-308, N14b-12 said `undecided`; both kept and connected: 308 is not a code of stage 7's row in the staging contract, so the stage reports `undecided` with that reason and the refusal's repairs; stage status spelled `passed` (N14b-10's wire form), not `pass`; the door predicate stated as N19b-30 states it (at least the closer and latch requirement)"
+  },
+  {
+   "bead": "N18-CX",
+   "what": "target file and record: it wrote rows { cx, shortcut, case, rule, defined_in, mutation, gates } straight into controls.toml; N38b-05 has chapters write registry/counterexamples.toml and its tool write controls.toml. Corrected to N38b-05's scheme (§38.11, Appendix N.1): `mutation` is the catalogue field `plant`, `gates` the gate subset of `rule_ids`; the four provisional rows are appended to the catalogue with a `slug`"
+  },
+  {
+   "bead": "N38b-05",
+   "what": "catalogue record gained `plant` and `slug`; its M0 loader asserted all 384 entries although chapters enter theirs later (Traction at M1): counts are now checked per chapter as rows arrive, with absent chapters listed pending and the total checked when none is pending"
+  },
+  {
+   "bead": "N19c-05",
+   "what": "requested accuracy: N19c-05 used |x̂ − t|/2 − ε_irr and (hi − lo)/20 for an assumed interval; N25c-19 used half the smallest threshold gap, the predicate's declared margin or one tenth of the interval, rounded down to a 1-2-5 ladder; the plan (§19.13) gives only the example ±5 mm. DESIGN, labelled: one rule (slack candidates, gap candidate, margin or one twentieth for a lone threshold with no nominal, smallest applies, then the ladder). Restated known answers: the no-margin sill is ±0.2 mm (was ±0.5 mm), friction [0.2, 1.0] is ±0.02 on the ladder (raw 0.04)"
+  },
+  {
+   "bead": "N19c-05",
+   "what": "command form and output schema: `--scene <id>` / `--for <answer-ref>` with frob.scene.probe-request.list/1 (N19c-05) and `<scene> --answer a:…` (N25c-19) replaced by the verb registry's form, a positional reference with `--cell`, and its output schema frob.scene.probe-request.out/1"
+  },
+  {
+   "bead": "N19c-05",
+   "what": "record: single `threshold` + `decides` and a Rust struct with `reason` of four values reconciled into one layout (thresholds list, settles list, text, three triggers with `limited_by`), typed once in frob-core"
+  },
+  {
+   "bead": "N25c-09",
+   "what": "option that selects where a screen runs in `frob mission synthesize`: N25c-09 wrote `--profile` (which the plan reserves for step profiles) and N25a-28 `--backend`; the plan names no option for this verb. DESIGN, labelled in both: `--tier <batch-cpu | gpu-cuda | gpu-metal>`, the option name the plan uses for every verb that runs on a tier, with `--placement` and `--kernel-class`"
+  },
+  {
+   "bead": "N38b-15",
+   "what": "cost statement corrected: it sized the 200-failure run at ten forks each, while the gate's protocol (N27b-09) is 505 forks per failure plus a ten-fork arm; the campaign is no longer run here"
+  },
+  {
+   "bead": "N40-08",
+   "what": "its check `numbers_frozen` extracted 2% from the two film gate rows, which NEG-12's lint forbids to hold a number; the check now reads a gate's effective threshold (the row's number, or the tolerance registered with the known answer it cites)"
+  }
+ ]
+}

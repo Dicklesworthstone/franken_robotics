@@ -1,0 +1,206 @@
+{
+ "round": 2,
+ "slice": "S39",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "BD-145",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied the requests of U28c and S18: dep N28c-27 (OPEN-ATEL-2) moved from related; strata now read from registries/strata.toml with its scheme, date and hash (scheme A: one stratum of 40; the near/far halves are strata only under E, otherwise a descriptive split by mean signed residual); pre-analysis at the scheme's per-stratum n; bootstrap count 10,000 changed to 2,000 seeded resamples, the count of every bead that computes these rows (N28b-22, BD-265, BD-328, BD-310; plan fixes none; DESIGN); mode table completed from §28.10 (DC-02/DC-03 fallback trigger, re-opening of eliminated designs); test strata_follow_the_record"
+  },
+  {
+   "bead": "BD-310",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "applied U38b-1 request: the e2e no longer calls the undefined `frob conformance run` nor a `--from-log` flag that BD-265's verb does not have; statistics run as the ADR-GAUNT-01 Cargo entry of GATE-CORTEX-12 on a synthetic fixture log, controls with gauntlet-mutations, the ladder log is validated (replays stay with N28b-18's script); NDJSON path, fields, failure values and summary added"
+  },
+  {
+   "bead": "BD-314",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e now names its frob-tenfold commands, the refusal FROB-REF-866, the NDJSON path and fields, failure diagnostics; its summary named five gates while the bead carries six (GATE-TENFOLD-09 is touched by the ceiling pre-check). 35 deps checked: each is a seed dep, a component of a gate it closes, or an owner decision it quotes; none dropped"
+  },
+  {
+   "bead": "BD-315",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e gains the NDJSON path and fields, the training-time check against 1.2 x home figure, failure diagnostics"
+  },
+  {
+   "bead": "BD-316",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "applied U39a request: N39a-25 moved from related to deps and named where arm A's phase-tag map is described (its format, validator and agent proxy; turn tagging by tool_tags); tests arm_a_tagmap_passes_validator and turn_of_author_calls_is_author; e2e log path and failure values"
+  },
+  {
+   "bead": "N39-CX",
+   "kinds": [
+    "deps"
+   ],
+   "what": "applied U38b-1 request: dep BD-146 (a conformance capstone) replaced by N38b-05 (seeding); BD-025 already present. All 27 rows and the normal-tail mutant rows recomputed and correct"
+  },
+  {
+   "bead": "N39-KA",
+   "kinds": [
+    "deps"
+   ],
+   "what": "applied U38b-1 request: dep BD-146 removed (BD-025 and N38a-12 already present). Every row TF-01 to TF-30 recomputed; all correct"
+  },
+  {
+   "bead": "N39a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "0.9^35 printed as 0.0250, which reads as equal to the level it exceeds; now 0.02503 (and 0.02253)"
+  },
+  {
+   "bead": "N39a-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance said no cluster appears in two submissions, which contradicts its own rule that the arms of a pair share the clusters of an index; restated per (mission, campaign, submission index), with the freshness property test extended to assert identical sets across arms"
+  },
+  {
+   "bead": "N39a-09",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the receipt had one enum external|self-adjudicated|cross-home, conflating who adjudicates (N39a-02) with how (N39a-08, N39a-11), so a self-adjudicated cross-home stratum could not be stated; now two fields and a list of simulator pins (two in cross-home); test adjudication_labels_independent"
+  },
+  {
+   "bead": "N39a-10",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "applied U38b-1 request: dep BD-146 replaced by the mechanisms used, N38a-12 (KA rows of clause 1) and N38b-04 (control runner); body names both, with the Cargo form for the control replay"
+  },
+  {
+   "bead": "N39a-15",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "order check 1 lacked the converse rule (no earlier-step entry once a later step exists) and the `freeze-after-open` refusal that its own acceptance criterion and e2e cite and the registry lists; added with the test. N39a-31 already registered a step-2 precondition with this ledger and N39a-40 now registers two more, but the ledger had no such mechanism: added check 7, a registry of step preconditions run before the order checks, with acceptance row and test registered_precondition_runs"
+  },
+  {
+   "bead": "N39a-18",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "applied U39b request: dep N39b-32 (moved from related); the freeze hook calls licences::cleared for engine, learner and every pinned incumbent tool, refusing tenfold.incumbent-licence-not-cleared (exit 3, registry repairs); test licence_unclear_refused_at_freeze, acceptance row, negative control and e2e step. Also step 4.1 now names `freeze-after-open` (its test frozen_after_open had no reason in the body); duplicate N39a-25 removed from related"
+  },
+  {
+   "bead": "N39a-19",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "applied U39b request: dep N39b-31 (moved from related); terms.agent is the projection of the OPEN-TENFOLD-6 record read through tenfold::agentpin; campaign-start revision check delegated to agentpin (tenfold.agent-revision-differs, no second check); freeze hook refuses provisional caps (tenfold.agent-caps-provisional); tests extended and campaign_start_revision_via_agentpin; e2e plants both"
+  },
+  {
+   "bead": "N39a-20",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the bead said five things 'block the freeze' without saying how or with which reason; new step 7 registers them through N39a-18's freeze-check hook with registry reasons (capability-unexplained, freeze-rival-underbuilt, which the registry already had for the easy-win rule and the bead never named, plus freeze-home-task-unexplained and freeze-selection-not-minimum, requested of N39-REF); tests easy_win_rule, home_task_unexplained_blocks, selection_not_minimum, blocks_go_through_freeze_hook; acceptance row; e2e failure values"
+  },
+  {
+   "bead": "N39a-21",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "'a second engine is refused' and 'a pack that imports the product ... is refused' had no reason and no enforcement point; now registered through the freeze-check hook with armc-over-limit, armc-engine-differs and armc-forbidden-use (the last two requested of N39-REF); tests name the reasons and assert no step-4 entry"
+  },
+  {
+   "bead": "N39a-27",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the censoring labels were not total: with c = 2 an A-censored family is not 'at most 1' (pairs (9,000, 1,500) and (10,000, 14,400 c) give 190/159), and A and B censored in different pairs had no label; added `upper-bound` and `mixed`, with test labels_total_with_c_two"
+  },
+  {
+   "bead": "N39a-29",
+   "kinds": [
+    "correct"
+   ],
+   "what": "'a family where arm A was censored has rho <= 1' holds only for c = 1; now rho <= c (at most 2), which still never counts toward X > 5"
+  },
+  {
+   "bead": "N39a-31",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "the parameter-set record held the non-inferiority margin and level beside the OPEN-TENFOLD-8 ratified block (N39b-33), which declares itself the only source of the parameters: two sources of one number; now the block is the record of authority, this bead's record adds only option, mode and population mode, its margin and level are copies that N39b-33 checks (request filed), and the decision file is the ADR's supporting analysis"
+  },
+  {
+   "bead": "N39a-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "same c = 1 assumption as N39a-29 in the monitor's Y_i rule (rho <= 1; lower bound H / T_A); restated for c <= 2 through the scorer's family ratio; behaviour unchanged"
+  },
+  {
+   "bead": "N39a-40",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "applied U41-1 request: deps N41-15 and N41-06 (no cycle; M2 before M3); new step 0 registers N41-15's require_frozen_inputs before every sealing step (sealing-ledger precondition registry) and through the freeze hook, and N41-06's require_record(gate) before the step-2 commit-suite (tournament at M7, needing the post-M6 confirmation); digests in the gate record; clause 1 lists any sealed family created before the adjudication record; acceptance row, three tests, controls (h) and (i), e2e runs both commands. Commands spelled as `frob-tenfold` subcommands (N39a-01) because ADR-GAUNT-01 allows no `frob-conformance` binary; requests filed to N41-15, N41-06 and BD-025"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N39-REF",
+   "what": "Add four first-half harness reasons (exit 3, raised through the freeze-check hook of N39a-18): `freeze-home-task-unexplained` (N39a-20 step 6: the frozen rival's home-task training time on trj is above 1.2 x its published figure and no written explanation is attached; repairs: fix the installation; attach the explanation, after which the measured figure replaces the published one); `freeze-selection-not-minimum` (N39a-20 step 2: the frozen configuration is not the smallest development restricted mean time and no tie-break reason is recorded; repair: freeze the fastest candidate or record the reason); `armc-engine-differs` (N39a-21: arm C pins an engine, learner or environment revision other than arm B's for the stratum, or a second engine; repair: pin arm B's revisions); `armc-forbidden-use` (N39a-21: an arm C pack file imports or invokes a FrankenRobotics crate, binary or artifact, or names the adjudicating simulator; repair: remove it). Also widen the trigger of `freeze-rival-underbuilt` to include a `sustained` under-built objection with no recorded response (N39a-20 step 5), which its repair column already mentions."
+  },
+  {
+   "bead": "N39b-33",
+   "what": "N39a-31 now states that its parameter-set record `tenfold/<gate>/noninferiority.json` holds only option, mode and population_mode as its own, and copies margin and level from the ratified block. Please add the check that refuses a block whose `noninferiority_margin` or `level` differs from that record's, or whose named non-inferiority option differs from its `option` (test e.g. `noninferiority_record_matches_block`), so the margin has one source of authority (an option C or E that moves the margin is then an amendment of the block)."
+  },
+  {
+   "bead": "N41-15",
+   "what": "The command `frob-conformance tenfold require-owner-inputs --json` names a `frob-conformance` binary, which ADR-GAUNT-01 (BD-025) rules out; the ten-fold harness's operator binary is `frob-tenfold` (N39a-01). Please spell it `frob-tenfold require-owner-inputs --json` (a subcommand added to that binary; N39a-01 is already upstream through N39b-31). N39a-40 now depends on this bead, calls `owner_inputs::require_frozen_inputs()` before every sealing step (through a new step-precondition registry in N39a-15) and through the freeze-check hook of N39a-18, and its script runs the `frob-tenfold` form."
+  },
+  {
+   "bead": "N41-06",
+   "what": "Same command-form issue: please spell `frob-conformance tenfold require-adjudication --gate <partial|tournament> --json` as `frob-tenfold require-adjudication --gate <partial|tournament> --json` (subcommand of N39a-01's operator binary; add dep N39a-01 if the command is defined here). N39a-40 now depends on this bead directly and calls `adjudication::require_record(gate)` as a precondition of sealing step 2 (`commit-suite`, the entry that binds the sealed families); it also lists in its gate record any sealed-pool family created before the record's date. If family creation in the sealed pool (N39a-13) must itself be refused, that needs a call from N39a-13, which neither bead currently has."
+  },
+  {
+   "bead": "BD-025",
+   "what": "'Crate. crates/frob-conformance/ (library plus test targets; no binary, no verb)' contradicts N39a-01, which puts two operator binaries in this crate (`src/bin/frob-tenfold.rs`, `src/bin/frob-tenfold-score.rs`, beside the crate's end-to-end log tool). Suggest: 'no `frob-conformance` binary and no verb; the operator tools of the ten-fold harness (`frob-tenfold`, `frob-tenfold-score`, N39a-01) and the end-to-end log tool are the only binaries, and none runs a gate', so that N39a-01, N39a-40, N41-06 and N41-15 can be implemented as written."
+  }
+ ],
+ "unchanged": 18,
+ "notes": "All 39 beads read in full. Round 1 left the slice largely coherent; the changes are mostly applied requests (BD-145, BD-310, BD-316, N39-CX, N39-KA, N39a-10, N39a-18, N39a-19, N39a-40) and enforcement points that beads asserted without a mechanism or a reason id (N39a-15, N39a-20, N39a-21, N39a-40). Arithmetic rechecked: N39-CX and N39-KA rows, N39a-05, N39a-16, N39a-17 warm card, N39a-27 card, N39a-28 bootstrap reference (SplitMix64 stream, p0 = 9569/20000, k_L 398, k_U 9380, L 612/469, U 126/17 reproduced exactly by a scratch script), N39a-29 tails, N39a-30 attainability (59, 93, 124, 153), N39a-35 e-process: all correct except the c = 2 censoring statements fixed in N39a-27/-29/-35. Not changed and noted: N39a-32 lists N39a-35, N39b-01 and N39b-35 in both deps and related (harmless); BD-317 priority 1 against the M3 default. The slice looks settled once the requests to N39-REF, N39b-33, N41-15, N41-06 and BD-025 are applied."
+}

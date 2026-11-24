@@ -6,9 +6,9 @@ priority: 1
 milestone: "M4"
 labels: ["m4", "atelier", "cortex", "reflex", "frob-opt", "frontier", "bet", "gate", "owner-decision"]
 parent: "WP-62"
-deps: ["N00-28", "N00-07", "BD-145", "BD-310", "BD-328", "STD-E2E"]
-needs: ["§42 (OPEN-PROG-4): the owner's approval of the compute for about forty per-design trainings (about 5 GPU-hours where specialists are reused, about 45 otherwise), which exceeds the default envelope", "§23.28: the winner check for a selecting rung (GATE-CORTEX-21)", "§28.10: the rank-agreement ledger record and the three modes `selective`, `discard-only`, `uninformative`"]
-related: ["BET-13", "BET-15", "BET-05", "BET-06", "BD-265", "BD-329", "BD-345", "N00-12", "N00-09"]
+deps: ["BD-145", "BD-310", "BD-319", "BD-328", "N00-28", "N16b-12", "N23b-35", "N28b-22", "N28b-23", "N38a-09", "N41-08", "STD-E2E"]
+needs: []
+related: ["BET-26", "BET-27", "GB-09", "GB-35", "N00-09", "N00-10", "N00-12", "N00-20", "N39b-45", "N40-31", "N40-32", "N41-RISK2", "NS-19"]
 gates: ["GATE-REFLEX-04", "GATE-CORTEX-12", "GATE-ATEL-07", "KILL-RANK"]
 plan_refs: ["§4 (BET-17)", "§40.5", "§0.8 (H-22a)", "§2.4", "§2.7", "§28.23", "§43.7"]
 ---
@@ -32,7 +32,11 @@ beside τ. Tier: Frontier.
 
 In: the pre-registration check (thresholds fixed before data), the M3 reading (pilot on incumbent tools; legged
 and wheeled classes on the baseline rung), the M4 reading (our tiers; tracked and hybrid), the per-class mode
-table, verdict and decision record. Out: the experiment, the ledger, the ladder.
+table, verdict and decision record. Out, with the beads that have them: the pre-registration record itself
+(BD-145) and the owner's compute decision (N41-08); the pilot on incumbent tools or `batch-cpu` (BD-310); the
+40-design calibration, the three gate records and the KILL-RANK decision for rungs (BD-328), which this bead
+reads and cites and never re-decides; the rank-agreement ledger (N28b-22); the rung-mode automaton (N28b-23);
+the winner check (N23b-35); the tier-pair reading of rank agreement, which is not this kill gate (N16b-12).
 
 ## Technical approach
 
@@ -68,7 +72,10 @@ table, verdict and decision record. Out: the experiment, the ledger, the ladder.
    few" lever is gone.
 6. **Procedure.** Pre-registration (design set, strata, the τ thresholds 0.7 and 0.5, the compute request) is
    on record before any data; the owner approves the compute; read at M3 exit and M4 exit;
-   `docs/adr/bet-17-m3.md`, `bet-17-m4.md` with the per-class mode table.
+   `docs/adr/bet-17-m3.md`, `bet-17-m4.md` with the per-class mode table. The M3 reading is taken at the M3
+   exit by the exit review (BD-319), from the gate rows through the bet register's verdict function (N00-28) and
+   the exit state of N40-31; this bead closes at M4 and writes `bet-17-m3.md` from that recorded reading (it
+   does not recompute it from later data) and `bet-17-m4.md` from the M4 reading.
 
 ## Acceptance criteria
 
@@ -76,25 +83,35 @@ table, verdict and decision record. Out: the experiment, the ledger, the ladder.
 - [ ] Per class and task family: τ with its lower bound, top-10 recall, containment of the best design, regret,
       ρ_ep, and the assigned mode (`selective`, `discard-only`, `uninformative`).
 - [ ] The planted winner and the planted-correlation populations were handled as prescribed.
-- [ ] A rung with no record is refused by the ladder; verdict and the KILL-RANK decision recorded as ADRs.
+- [ ] A rung with no record is refused by the ladder; the verdict is recorded in `bet-17-m3.md` and
+      `bet-17-m4.md`, citing the KILL-RANK decision on record by BD-328 (by identifier and hash); with no decision
+      on record the M4 verdict is not filed.
 
 ## Test plan
 
 ### Unit tests
 `bets.rs`: `bet17_tau_lb_0_74_selective`; `bet17_tau_lb_0_58_discard_only`; `bet17_tau_lb_0_41_uninformative`;
 `bet17_winner_lost_despite_tau_0_91` (the 40-design example: τ on the top ten = 1 − 2·2/45 = 0.911 with the
-best at cheap rank 3; a cut to two fails containment → clause c); `bet17_all_classes_fail_fires_kill_rank`;
+best at cheap rank 3; a cut to two fails containment → clause c); `bet17_reads_kill_rank_fired` (BD-328's record:
+GATE-ATEL-07 failed for every class tested, KILL-RANK fired → `Falsified` for every class, the record's hash
+carried); `bet17_one_class_below_0_5_is_held_in_part` (quadruped lower bound 0.74, biped 0.41, no kill →
+`HeldInPart`, biped advisory and out of the speed claim);
 `bet17_threshold_set_after_data_rejected`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_17_decide.sh` recomputes τ, recall and containment from the ledger's rank records, the mode per
-class and the verdict, then asks the ladder (`frob eval rank-agreement --show`) for the mode in force and checks
-it matches. Logged per STD-E2E: class, task family, n, τ and bounds against 0.7 and 0.5, recall, containment,
+`scripts/e2e/bet_17_decide.sh` recomputes τ, recall and containment from the ledger's rank records and the mode
+per class, reads the per-class verdict of BET-17 from the bet register's report (`cargo run -p frob-conformance
+--example bets -- status --json`, example `bets` of N00-28, the one verdict rule), then reads the mode the ladder has in force for each class, `frob evidence trace
+<claim_id of the class's latest rank-agreement row> --json` (the row version of N28b-22 and the `core_decision`
+record of the DC-03 mode automaton that cites it, N28b-23; `eval.rank-agreement` is a run verb and its registry
+row has no read or `--show` option), and checks it matches. Logged per STD-E2E: class, task family, n, τ and bounds against 0.7 and 0.5, recall, containment,
 regret, mode; `summary` naming the three gates and KILL-RANK.
 
 ### Known answers and negative controls
-The winner-lost example above. Negative controls: the planted winner; planted populations at τ = 0.75 and 0.45
-(must be assigned `selective` and `uninformative`); thresholds edited after data.
+The winner-lost example above. Negative controls: the planted winner; N28b-23's three planted populations (τ on
+the top band about 0.85, 0.6 and 0.3), which must be assigned `selective`, `discard-only` and `uninformative`
+from their recorded lower bounds (a population at τ = 0.75 has a lower bound near 0.67 at n = 40 and is
+`discard-only`); thresholds edited after data.
 
 ## Considerations
 

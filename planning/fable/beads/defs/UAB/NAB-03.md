@@ -8,7 +8,7 @@ labels: ["m0", "workspace", "delivery", "solid", "registry"]
 parent: "WP-01"
 deps: ["NAB-01"]
 needs: []
-related: ["NAB-02", "NAB-04", "NAB-05", "NAB-06", "NAB-07", "NAB-08"]
+related: ["NAB-04", "NAB-05", "NAB-06", "NAB-07"]
 gates: []
 plan_refs: ["Appendix A"]
 ---
@@ -37,9 +37,13 @@ and generator (NAB-01); the lint (NAB-02); the other ranges (NAB-04 to NAB-07).
 1. `term` is the row's first column without backticks; `code = true` if the row prints it in backticks.
 2. A trailing parenthetical in the term column is the `sense` (`Archetype (design)` → term `Archetype`, sense
    `design`). An unqualified row that shares its term with a qualified row takes the sense named below.
-3. `meaning` is the second column up to its final parenthetical. The final parenthetical is split into
-   `defined_in` (items beginning with `§` or `Appendix`) and `constructs` (items such as `C-17`, `D-10`,
-   `BET-13`, `GATE-TENFOLD-06`).
+3. `meaning` is the second column without its reference parenthetical (the last parenthetical that holds only
+   identifiers). That parenthetical is split into `defined_in` (items beginning with `§` or `Appendix`) and
+   `constructs` (items such as `C-17`, `D-10`, `BET-13`, `GATE-TENFOLD-06`). Text that follows the reference
+   parenthetical stays in `meaning`, joined with ". " (in this range `Annex`: "… `lean/`. `surface/frob-mcp` is a
+   member of the core workspace, not an annex"; in NAB-06's range `Partial ten-fold gate`). A row whose only
+   reference is inline in its prose takes that reference as `defined_in` and keeps the prose whole (in this range
+   `Alias witness`: `defined_in = ["§20.12"]`).
 4. `kind`: `subsystem` when the meaning begins "The subsystem that owns" (and for `Airlock`); `label` for a code
    literal that appears in tool output; `binary` for the row of executables; `class` for an enumerated set of
    named classes (determinism classes, evidence classes, kernel classes, tiers); `record` for a file or stored
@@ -53,14 +57,19 @@ and generator (NAB-01); the lint (NAB-02); the other ranges (NAB-04 to NAB-07).
 - Senses: `Archetype` has two records (`design`: the eighteen design templates; `interior`: the seven interior
   families). `Arena` has two (`subsystem` for the unqualified row; `device` for the preallocated slabs).
   `Campaign` has two (`design`, `qualification`). `Cell` has three (`clearance`, `mission`, `reality`).
+  Order: records are stored in NAB-01's canonical order, which breaks a tie of `term` by `sense`; it equals the
+  table's order everywhere except `Arena`, where `Arena (device)` precedes the unqualified row (sense
+  `subsystem`), since "device" sorts before "subsystem" (the loader would refuse the table's order with
+  `gloss.unsorted`).
   `Battery (evaluation)` keeps its sense because the electrical battery of an actuator bus is a different thing
   and is deliberately not a glossary term (it is a card kind).
 - Multi-name rows: `Adjoint, coadjoint` (aliases `coadjoint`, `Ad`, `ad*`); `Cold run, warm campaign` (alias
   `warm campaign`).
 - Structural row (no owning section; `structural = true`): `ADR`.
 - Subsystem rows: `Airlock`, `Arena`, `Atelier`, `Augur`, `Autopsy`, `Chronicle`, `Cortex`.
-- `Alias witness` is a cross-reference row: its record carries `see = "indistinguishability-witness"` and its own
-  short meaning (the observation-alias form names two distant states that deliver the same readings).
+- `Alias witness` is a cross-reference row: its record carries `see = "indistinguishability-witness"` (the
+  optional cross-reference field of NAB-01's schema), `defined_in = ["§20.12"]` and its own short meaning (the
+  observation-alias form names two distant states that deliver the same readings).
 - Formulas and numbers to transcribe exactly: the coadjoint convention ad*_ξ = ad_ξᵀ with no minus sign, so that
   μ̇ = ad*_ξ μ + w; anchored position: cell side 8 m, offset centred in [−4, 4) m; brownout: bus power demand
   above E²/(4·R); Cayley map cay(x) = (I − x/2)⁻¹(I + x/2); compute envelope E0: 16 GiB, 8 cores, one hour, one
@@ -149,10 +158,12 @@ Rows in this range: 73.
 
 ## Acceptance criteria
 
-- [ ] `registries/glossary.toml` contains 73 records whose sort key begins with A, B or C, in the order above,
-      and the loader of NAB-01 accepts the file.
+- [ ] `registries/glossary.toml` contains 73 records whose sort key begins with A, B or C, in the order above
+      with the two `Arena` records in canonical order (`device` before `subsystem`), and the loader of NAB-01
+      accepts the file.
 - [ ] `Archetype`, `Arena`, `Campaign` and `Cell` have 2, 2, 2 and 3 records with distinct senses.
-- [ ] Every record except `ADR` has a non-empty `defined_in` or `constructs`.
+- [ ] Every record except `ADR` has a non-empty `defined_in` or `constructs` (`Cayley map`, `Canonical form` and
+      `Ceiling` have only `constructs`, which NAB-01's rule 4 accepts).
 - [ ] `lookup("coadjoint")` and `lookup("warm campaign")` each resolve to one record.
 - [ ] The generated `docs/GLOSSARY.md` prints the 73 meanings character for character as in the table (the
       test compares against a frozen copy of this table).
@@ -163,7 +174,8 @@ Rows in this range: 73.
 
 `crates/frob-conformance/tests/glossary_content.rs`, module `a_to_c` (reads the real registry):
 
-- `count_is_73`; `order_matches_frozen_list` (the 73 terms in sequence).
+- `count_is_73`; `order_matches_frozen_list` (the 73 terms in canonical sequence: the table's order with
+  `Arena (device)` before `Arena`).
 - `senses`: `Archetype` {design, interior}; `Arena` {subsystem, device}; `Campaign` {design, qualification};
   `Cell` {clearance, mission, reality}.
 - `subsystem_rows`: the seven names above have `kind = "subsystem"`.

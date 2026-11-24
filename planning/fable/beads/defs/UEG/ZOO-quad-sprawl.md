@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-02", "BD-054", "BD-055", "BD-056", "BD-072", "BD-103", "BD-084", "BD-100"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-072", "BD-084", "BD-100", "BD-103", "N14b-02", "NEG-30", "NEG-31"]
 needs: []
-related: ["GB-11", "BD-246", "N14b-08", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 2", "§14.10", "§15.7", "§15.6", "§28.4 A-08, A-11", "Appendix M KA-270"]
 ---
@@ -45,10 +45,10 @@ same condition as s < G with s = I²·R₀·α and G = 1/R_th).
 
 | Stage | Default instance | Variant `@hot` |
 |---|---|---|
-| 1 to 3 | pass (13 fills, 4 foot laws, 12 revolute joints, no loops) | pass |
-| 4 Motion | not-applicable (legged) | not-applicable |
-| 5 Structure | pass; Γ_mech = Γ_obs = C₂ × C₂ | pass |
-| 6 Statics and sizing | pass; A-08 margin positive and larger than `quad-mammal`'s at equal mass; holding torque, current and T* reported per joint, T* below the card's limit | A-08 margin still positive; refused with FROB-REF-132 by A-11 (no thermal equilibrium, or one above the limit) with the knee joints named and the repairs "narrower stance", "higher gear ratio", "larger actuator card" as typed edits |
+| 1 to 3 | `passed` (13 fills, 4 foot laws, 12 revolute joints, no loops) | `passed` |
+| 4 Motion | `passed` with the note `not-applicable` (legged, N14b-11) | `passed` with the same note |
+| 5 Structure | `passed`; Γ_mech = Γ_obs = C₂ × C₂ | `passed` |
+| 6 Statics and sizing | `passed`; A-08 margin positive and larger than `quad-mammal`'s at equal mass; holding torque, current and T* reported per joint, T* below the card's limit | `refused`: A-08 margin still positive; refused with FROB-REF-132 by A-11 (no thermal equilibrium, or one above the limit) with the knee joints named and the repairs "narrower stance", "higher gear ratio", "larger actuator card" as typed edits |
 
 `@hot` is the default with a longer horizontal lever at the knee and a smaller actuator card; its values are
 read from the card by the test, which checks the inequality rather than a hard-coded temperature.

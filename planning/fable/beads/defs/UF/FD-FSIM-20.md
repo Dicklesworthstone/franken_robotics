@@ -6,9 +6,9 @@ priority: 3
 milestone: "M4"
 labels: ["m4", "suite", "reflex", "upstream", "frankensim", "frontier"]
 parent: "WP-64"
-deps: ["BD-037", "BD-333", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-333", "BD-334", "N22a-33", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-334", "BD-335", "FD-FSIM-05", "SPEC-C-14"]
+related: ["N22a-38", "N22a-39", "N33b-11", "SPEC-C-14"]
 gates: ["GATE-GAIT-01", "GATE-GAIT-02"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§22.9", "§31.4", "§33.9", "§33.8"]
 ---
@@ -41,7 +41,10 @@ re-located event sequence; near grazing the difference is meaningless).
 In: in FrankenSim, (i) derivatives of articulated forward dynamics in state, input and design parameters;
 (ii) a hybrid multiple-shooting solver in `fs-orbit` over articulated models with guards and resets, using the
 existing saltation correction. Here: the referee orbit route and the re-run of the two gait gates on it. Out:
-the compliant-tier route (BD-333, BD-334, BD-335); reverse-mode adjoints (FD-FSIM-05).
+the compliant-tier route (BD-333, BD-334, BD-335); the referee adapter of `frob-gait`, which answers
+`route-not-available: referee` naming this item until the switch-over enables it (N22a-33); the gate records on
+the other routes (N22a-38, N22a-39); reverse-mode adjoints (FD-FSIM-05). BD-334 (`gait.gradient`, GATE-GAIT-02)
+and N22a-33 are dependencies, because the switch-over enables that adapter and re-runs both gates through them.
 
 ## Technical approach
 
@@ -128,8 +131,8 @@ rollout (a fixed point is re-simulated and its return error reported), not by a 
 
 ### Unit tests
 In FrankenSim (added):
-- `rimless_wheel_return_map`: point-mass rimless wheel with half-angle α = π/8 between spokes (eight spokes), leg length l = 1 m, slope γ = 0.08 rad. The post-impact angular velocity obeys ω²ₙ₊₁ = cos²(2α)·(ω²ₙ + (4·g/l)·sin α·sin γ); the multiplier of the map in ω² is cos²(2α) = 0.5; the fixed point is ω*² = (4·g/l)·sin α·sin γ = 1.2000 rad²/s² (the factor cos²(2α)/(1 − cos²(2α)) equals 1 here). Expected within 10⁻⁶.
-- `saltation_of_a_bouncing_ball`: guard height = 0, reset v → −e·v with e = 0.8; expected the closed-form saltation matrix for the one-dimensional bounce, to 10⁻¹².
+- `rimless_wheel_return_map`: point-mass rimless wheel with half-angle α = π/8 between spokes (eight spokes), leg length l = 1 m, slope γ = 0.08 rad. The post-impact angular velocity obeys ω²ₙ₊₁ = cos²(2α)·(ω²ₙ + (4·g/l)·sin α·sin γ); the multiplier of the map in ω² is cos²(2α) = 0.5; the fixed point is ω*² = (4·g/l)·sin α·sin γ = 1.2000388 rad²/s² with g = 9.81 m/s² (the factor cos²(2α)/(1 − cos²(2α)) equals 1 here). Expected within 10⁻⁶.
+- `saltation_of_a_bouncing_ball`: state (h, v), guard h = 0, reset v → −e·v with e = 0.8, impact velocity v⁻ = −2 m/s, g = 9.81 m/s²; expected the closed form Ξ = [[−e, 0], [−(1 + e)·g/v⁻, −e]] = [[−0.8, 0], [8.829 s⁻¹, −0.8]], to 10⁻¹².
 - `dynamics_derivatives_match_central_differences`: as in the acceptance line.
 - `grazing_is_refused`: an orbit whose swing foot touches with D g·f⁻ within the threshold of zero; expected the typed refusal with the event identity.
 Here:
@@ -142,8 +145,24 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_20 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob gait orbit --tier referee --json` on the rimless-wheel and
-compass-gait fixtures and `frob gait gradient --tier referee --json` on the 100-case suite.
+bead are re-run on the referee route, and the registry row must read `adopted` with a receipt newer than the pin
+move. The referee calls use the fixture spellings of BD-333 and N22a-38, each with a fresh run-scoped key (two
+phases compared, or a re-run after a later pin move, must not replay a stored receipt): `frob gait orbit
+fixture:rimless-wheel --set spokes=8,l=1,slope=0.08 --section post-impact --tier referee --key
+fdfsim20-rw-<run-id> --json` (the values below), `frob gait orbit fixture:rimless-wheel --set
+spokes=8,l=0.5,slope_deg=4 --section post-impact --tier referee --key fdfsim20-rw4-<run-id> --json` (GATE-GAIT-01's
+parameter set), `frob gait orbit fixture:compass-gait --section auto --tier referee --key fdfsim20-cg-<run-id>
+--json`, `frob gait orbit fixture:transverse-instability --set T=1 --tier referee` with and without
+`--spectrum-scope restricted` (keys
+`fdfsim20-ti-<run-id>`, `fdfsim20-tir-<run-id>`), and per case of the frozen 100-case suite `frob gait gradient
+<case orbit> --params <case parameters> --metrics <case metrics> --tier referee --check fd --key
+fdfsim20-gg-<case>-<run-id> --json`. The gate values are recomputed with
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- GATE-GAIT-01 GATE-GAIT-02` (the
+Gauntlet has no `frob` command), and the script stops at that receipt: it writes no gate record. The referee-route
+values are entered from the receipt afterwards, by a session that did not implement the work, with `cargo run -p
+frob-conformance --example record_gate -- --gate GATE-GAIT-01 --receipt <hash>` and the same for GATE-GAIT-02
+(N38b-19's recorder; the rows stay those of the gates' recorder beads N22a-38 and N22a-39, which gain the referee
+route beside the routes they recorded).
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_20/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -155,7 +174,7 @@ and the artifact paths needed to reproduce. A final `summary` line gives asserti
 gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
-- Known answers: the rimless wheel's multiplier cos²(2α) = 0.5 and fixed point ω*² = 1.2000 rad²/s² (4·9.81·sin(π/8)·sin(0.08) = 4·9.81·0.38268·0.07991); the monodromy of ẍ + x = 0 over one period has both multipliers equal to 1 to 10⁻¹², and a monodromy with a multiplier of modulus 1.01 is reported unstable (INT-FSIM-13, KA-768).
+- Known answers: the rimless wheel's multiplier cos²(2α) = 0.5 and fixed point ω*² = 1.2000388 rad²/s² (4·9.81·sin(π/8)·sin(0.08) = 4·9.81·0.3826834·0.0799147); the monodromy of ẍ + x = 0 over one period has both multipliers equal to 1 to 10⁻¹², and a monodromy with a multiplier of modulus 1.01 is reported unstable (INT-FSIM-13, KA-768).
 - Negative controls: a Jacobian assembled without the saltation term must give a wrong multiplier on the bouncing ball and be caught; a solver restricted to the sagittal plane must miss the planted transverse instability and be marked incomplete.
 - Determinism lanes: twice on one machine; debug and release; same-platform class for the referee.
 

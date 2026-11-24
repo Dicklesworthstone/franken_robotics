@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-22", "N12-20", "N12-06", "SPEC-C-04"]
+deps: ["N12-06", "N12-20", "N12-21", "N12-22", "SPEC-C-04"]
 needs: []
-related: ["BD-379", "N12-21", "CARD-T-04", "BD-088", "BD-150"]
+related: ["BD-150", "N12-36"]
 gates: []
 plan_refs: ["§12.3 (T-33)", "§10 C-04", "§10 C-11 (product of exponentials)", "§41 RISK-07"]
 ---
@@ -45,9 +45,11 @@ implementer would close a loop, because the implementer's own acceptance runs th
 does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
 Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
 every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
-(the per-limb certificates on each reference robot's kernels) is run inside the implementing bead, with this
-card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the registry row for
-that output.
+(the per-limb certificates on each reference robot's kernels) cannot be run inside the implementing bead here,
+because that bead lands three milestones earlier (BD-150 at M2) and is not reopened: the per-limb certificates on
+the mass-matrix and bias kernels as built are issued at M5 by this card through the instance-certificate pipeline
+(N12-20), with the randomized identity test (N12-21) where a limb exceeds the budget, both dependencies; the
+receipt of that run moves the registry row, and the coverage run (N12-36) observes it again.
 
 ## Technical approach
 
@@ -93,12 +95,21 @@ m₂ at the tips: M₁₁ = (m₁ + m₂)·ℓ₁² + m₂·ℓ₂² + 2·m₂·
 k = m₂·ℓ₁·ℓ₂·s₂ the Christoffel factorization is C = [[−k·q̇₂, −k·(q̇₁ + q̇₂)], [k·q̇₁, 0]]; then
 Ṁ = [[−2k·q̇₂, −k·q̇₂], [−k·q̇₂, 0]] and Ṁ − 2C = [[0, k·(2q̇₁ + q̇₂)], [−k·(2q̇₁ + q̇₂), 0]], which is skew);
 `plus_2c_fails`; `swapped_index_fails`; `circle_relation_needed_for_3r`; `randomized_test_on_unit_circles`
-(sample points satisfy c² + s² = 1 exactly); `budget_exceeded_is_recorded`.
+(sample points satisfy c² + s² = 1 exactly; the randomized test of N12-21 on the planar specimen returns `Tested`
+with its degree bound, sample set and error bound recorded); `changed_coefficient_fails` (M₁₂ with
+2·m₂·ℓ₁·ℓ₂·c₂ in place of m₂·ℓ₁·ℓ₂·c₂: the (1, 2) entry of the sum is nonzero and the certificate is rejected);
+`budget_exceeded_is_recorded` (a limb over 8,192 operations per expression is recorded `budget-exceeded` with the
+cap named, then routed to the randomized test).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_coverage.sh` (bead N12-36) runs the per-limb identities and logs route, sizes, time, memory
-and verdict; `pilot_lemma_budget.sh` logs arm B.
+and verdict; `scripts/e2e/pilot_lemma_budget.sh` (bead N12-22) logs arm B. For this card their NDJSON lines
+(STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-33"), `step` (`T-33/<model>/<limb>` or `T-33/<mutant>`),
+`event`, the exact command line, exit code, wall time, the limb's joint count, the route taken (identity or
+randomized), expression operations and basis size against their caps, peak memory in bytes, the class printed,
+the certificate's BLAKE3, the expected and observed verdict, and on a failure the first entry (i, j) whose sum is
+not in the ideal, with the path to reproduce.
 
 ### Known answers and negative controls
 

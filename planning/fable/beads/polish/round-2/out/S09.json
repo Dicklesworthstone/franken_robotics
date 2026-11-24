@@ -1,0 +1,306 @@
+{
+ "round": 2,
+ "slice": "S09",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-022",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "scope"
+   ],
+   "what": "Request honoured: schema's verb form is `--verb <name>` narrowed by `--in`/`--out` (table, acceptance, grammar test). Scope named N32b-19 as owner of registries/capabilities.toml, which is N00-02's (M0); capabilities v0 now reads status through a StatusSource interface with a fail-closed source (unlinked not-in-build, linked partial, never implemented) that N00-02 replaces, removing the second definition of how the eight conditions are read; per-device output and --device moved to N32b-19 (M1). doctor findings carry severity/observed/required/repairs and exit 0 for info-only findings, --section repeatable, as the row of record (VERBS-operator) and N32b-20 keep them. Unknown-flag pointer is a JSON pointer (/sektion). Common flag table tied to NJL-01's kinds table; on-cancel values named. The --registries shorthand is now stated as the operator row's own registered shorthand."
+  },
+  {
+   "bead": "N32a-02",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Requests honoured: fields option_capabilities (lint RL-22 unknown-option) and spends_physics (optional; N32b-38's lint runs once it lands); the file's top-level tables made explicit and closed: [[retired_name]] with use as a list and reason, [counts] and [[addition]] for NJLx-51's lints; two-kind list extended with the five rows that now carry actions (session.show audit, sense.symmetry test, design.diff run-control - not design.check as requested, ground.band retire, nemesis.audit prepare); FROB-REF-990 settled as outside every refusal list (DESIGN) with the conformance exemption; RL-15 M2/M3 contradiction fixed to M2. Lint count 23 -> 24, tests added."
+  },
+  {
+   "bead": "N32b-19",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Request honoured: dep VERBS-operator (moved from related); stale text that the row lists operator:read replaced (it is [] with public = true). Paging with a cursor and 806/807 needed the cursor bead N32a-10, which was missing: added dep and stated the cursor frontier (registry digest, gate-register digest) with a 807 test; filters --verb and --device listed."
+  },
+  {
+   "bead": "N00-02",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "tests",
+    "correct"
+   ],
+   "what": "Installs its registry-driven status source into BD-022's StatusSource. Deps added: BD-023 (its acceptance and script compare the refusal over frob-mcp), N34-08 (condition 2 runs xtask check-contracts), N38b-20 (the README status table its acceptance compares). E2E log path, digests, failure details and summary fields completed; the 'planning-stage repository' known answer replaced by a synthetic fixture map and the M0 session verbs."
+  },
+  {
+   "bead": "BD-023",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete"
+   ],
+   "what": "VerbTool reads the derived members (input schema with common fields, envelope schema, short_doc, tags, annotations) that NJL-01 implements, but did not depend on it: dep NJL-01 added (moved from related), the paginated and estimable variations named, and NJL-01's MCP step is run green against this binary (request to NJL-01 to defer it)."
+  },
+  {
+   "bead": "BD-137",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "design.check's verb surface is N28ap1-01's (stages 1 to 6 and policy rows BD-110's): dep N28ap1-01 added and the M1 owner cell corrected; duplicate related entry removed; e2e log fields (ts, script, bead, step, event, failure details, repro paths) completed."
+  },
+  {
+   "bead": "BD-138",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Dep VERBS-session (the rows of record it serves) moved from related; tokens deferred to N32b-01 (M2), BD-258 (M3) and N32a-15 named consistently; session.close takes no session argument and closes the caller's own session; no session verb needs a scope (capabilities [] with public = true); the worked example carries --key as a mutate verb must. Tests session_verbs_need_no_scope, close_is_own_session_only, open_without_key_805; failure details in the log."
+  },
+  {
+   "bead": "FD-FMCP-01",
+   "kinds": [
+    "deps",
+    "placement",
+    "correct"
+   ],
+   "what": "The P0 upstream item depended on nothing it needs and named BD-037's register, which comes after it: deps BD-025 and STD-E2E added; the bead writes its own [[item]] row in BD-037's field names and opens its own failing fixture; the pre-phase doctor call (frob doctor --section upstream) is logged not-run until BD-022 exists."
+  },
+  {
+   "bead": "N00-04",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E logging completed: log path and transcript, the standard fields, wall time against the 60 s target, artifact path and BLAKE3 digest, not-yet lines, failure details with rerun paths, summary."
+  },
+  {
+   "bead": "N28a-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "The loop stage and requires were fields added to verb rows that N32a-02's closed schema rejects: moved to registries/loop.toml ([[verb]] name, stage, requires; outside_loop list) with build lints loop-stage-undeclared and loop-unknown-verb; override and override_reason (at most 500 characters, DESIGN) generated for every verb with requires, override without a reason is 802 with pointer /override_reason. Tests loop_lints, override_properties_generated."
+  },
+  {
+   "bead": "N28a-03",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Same closed-schema defect for the phase field: declared in registries/phases.toml (cluster defaults, per-verb overrides) with lints phase-undeclared and phase-unknown-verb; deps BD-095 and N34-06 added (the job engine and cancellation it restarts through); restart text says in-process job engine at M1 and frobd from M2."
+  },
+  {
+   "bead": "N28b-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "Requests honoured: the drafted second registry entry (scopes result:read/result:revalidate, frob.revalidate.out/1, clusters revalidate/missions, idempotent true, M1) withdrawn for VERBS-result's row of record (result:run, frob.result.revalidate.out/1, refusals 835/854/869/870/872, idempotent false, M4 with the M1 reduced form named by capabilities, clusters mission/repair/transfer, wait table); dep VERBS-result (moved from related) and N12-REF (835's owner); exactly one of --after-edit/--since/--between/--amendment, else 802; 835 (hash offered as licence) split from 870 and 872 (advisory target, N28c-12) added with tests; every scripted call carries a key; schemas under schemas/."
+  },
+  {
+   "bead": "N32-CX",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Two beads claimed to allocate the same controls (the M1 mechanism beads 'enter' CX-345 to CX-350 in the control registry and catch them; N32b-24 'allocates' them at M2), and GATE-TETHER-07 is an M1 gate whose control N32b-24 would only allocate at M2 (a gate with no control is not-eligible). Settled: the bead that first builds and catches a mutant allocates its one control row (seed = CX); later runs add tests to it; controls resolved by seed. due of the two DESIGN additions corrected M2 -> M3 (their beads N32b-02/03 are M3). Tests one_control_row_per_mutant, due_matches_owner_milestone. Record field control_by names the allocating bead; test due_matches_allocating_bead."
+  },
+  {
+   "bead": "N32-KA",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Record fields aligned with STD-TEST's KnownAnswers row (section, fixture, due instead of chapter, first_milestone, tests) so the loader reads them; claims by the ka_<nnn>_ prefix (its own recomputation tests were named ka756_... and bound nothing, so KA-759 to KA-762, due M0, had no claim until M2 to M4); control names the seeding CX, resolved from the due milestone (at M0 the five controls cannot exist yet); none-stated rows report obligation as assert_ka does. Tests renamed and added; log fields, digests, repro command."
+  },
+  {
+   "bead": "N32-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "title"
+   ],
+   "what": "Requests honoured: FROB-REF-990 internal-fault entered (exit 9, retry never, repairs job find by key then doctor, diagnostic path in observed; raised by N32a-03, BD-022, BD-023, N32a-07; listed by no verb, exempt from the listed-by-a-verb lint); 804 widened to design.edit's two-value form (field/expected/current/head, exit 7, BD-058). The provisional numbers are filed through N35-33's allocation ledger (its rule, not 'next free number'). Counts 22 -> 23; tests internal_fault_row, ref804_covers_field_form."
+  },
+  {
+   "bead": "N32a-04",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E log completed: header, standard fields, per-kill frame boundary and the server's next answer, route taken, failure pointer with both values and repro command."
+  },
+  {
+   "bead": "N32a-07",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "RL-INT as written failed every range-narrowed count (sync_wait_ms 0..30,000) and the int53 definition itself: narrowing inside the range allowed, the definition exempt, out-of-range bounds caught. i64str pattern now refuses \"-0\" in the published schema. Allocates CX-348's control for its M1 gate GATE-TETHER-07 (dep N32-CX). Tests lint_allows_narrowed_int53, lint_int53_bound_out_of_range, gate_07_needs_caught_control; e2e runs the mutant and logs digests and failure details."
+  },
+  {
+   "bead": "N32a-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The schema probe used `frob schema <verb> --in`, which the row of record reads as a schema identifier: now `--verb <verb> --in/--out`. Completeness read 'non-empty refusal list' against the chapter field, which doctor and capabilities legitimately leave empty (RL-06): the full served list is checked. Log header and fields."
+  },
+  {
+   "bead": "N32ax-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Its acceptance asserted the 761 refusal and the held job, which N36-20 and N32a-08/09 implement after it (they depend on it): those steps now run once their callers land and are logged skipped before, never passed; the runtime re-read is observed by digest until N21c-35's class_in_force exists. The doctor section is named as contributed through BD-022's interface (--section registries, with the row's registered shorthand --registries) with BD-022's severities (low for override/snapshot/mismatch, high for fail-closed). Test doctor_registries_section."
+  },
+  {
+   "bead": "N32b-17",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Request honoured: dep VERBS-operator (moved from related); the stale statement that the row lists operator:read replaced (capabilities [] with public = true, inputs --cluster, --verb, --budget <tokens>, --encoding), with why --budget does not collide (read kind has no compute budget). Test refusals_listed_with_exit expected 'design.check lists its four refusal codes': the row of record has thirty; now checks every verb's full served list against the refusal registry's exits."
+  },
+  {
+   "bead": "N32b-18",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Dep STD-E2E (it owns steps of the shared robot_docs script); its steps log under bead N32b-18 in the shared log path, with digests of the skill file, resource and prompt texts and a per-bead summary."
+  },
+  {
+   "bead": "N32b-25",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "title"
+   ],
+   "what": "Request honoured: KILL-PEERLINK (DESIGN) added as the eighth kill gate: triggers (a) double admission or charge across daemons, (b) forbidden-class or private byte on the wire, (c) recovered device time below 10% over four weeks; fallback standalone; decided by N32a-35, which creates its record (neither ledger holds it). Reconciliation: a kill record has no pass, so N41-12's 'recorded PASS' reads as the first measurement with (a) and (b) not triggered. Counts 23 -> 24 from M4; OPEN-TETHER-5's owner decision is N41-12 (not N32a-34, the pilot)."
+  },
+  {
+   "bead": "N33-REF",
+   "kinds": [
+    "correct"
+   ],
+   "what": "792 is assigned by the ledger's second round N35x-02 (a dependency), not 'a proposal'; the 79x exit 5 is N35-33's exit rule, so the open 'confirm when the Tether exit table is reviewed' note is replaced."
+  },
+  {
+   "bead": "N33c-26",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "The probe re-reads the library facts after FD-FMCP-01 and FD-ASUP-01 and must build on T, which it cannot do before FD-FMCP-01: both added as deps. Known answers split into the starting state (expected_at_planning) and the expected post-change values (recorded changed without exit 3); the negative control builds against the starting revision explicitly."
+  },
+  {
+   "bead": "N33c-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "needs_groups is a new field of N32a-02's closed entry schema, which names this bead as the one to add it with its lint; the bead never did, nor gave the predicate a shape: DESIGN shape (group name; {groups, when = predicate}; {from_argument} for the probe), lint needs-groups-known, NJL-01's generator appends 790; deps N32a-02 and STD-E2E; exit 5 tied to N35-33's 79x rule. Test needs_groups_lint."
+  },
+  {
+   "bead": "N34-20",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its seven admission stages and N32a-04's seven pipeline steps were two orders for one pipeline: stated as one (locate first on the CLI; stages 1-3 refine Validate; 724, 790 and 891-893 are pure checks between authorize and the first write; the MCP guard before tool lookup falls inside the unknown-verb exemption). It had no e2e script of its own (only N34-21's, which depends on it): scripts/e2e/admission_order.sh with full logging; dep STD-E2E."
+  },
+  {
+   "bead": "N34-24",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "Request honoured: the M1 verbs' refusal lists are the generated ones (NJL-01 appends 891/892/893 from params), not declared; the params field named as N32a-02's. Own e2e script scripts/e2e/artifact_inputs.sh (its only script was N34-23's, which depends on it) with logging; dep STD-E2E."
+  },
+  {
+   "bead": "N34-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob schema doctor --out` is now `frob schema --verb doctor --out --json` (the row reads the positional as a schema identifier); findings carry BD-022's severities (recovered low, integrity and schema-newer high); log header and per-line fields."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "NJL-01",
+   "what": "BD-022 and BD-023 consume its derived members (input_schema_with_common_fields, envelope_schema, short_doc, tags, annotations) while it depends on BD-022: drop that dep so BD-022 can depend on NJL-01, or state that its MCP step (4) runs green in BD-023's acceptance and step (7) in BD-138 (M1), logged not-run before. Spell the on_cancel value `leave` (BD-022, N32a-04, N32a-17), not `leave_running`. List N28a-02's generated override/override_reason properties (verbs with a loop requires) as a field-driven variation. State that FROB-REF-990 is never appended to a generated refusal list (N32a-02 RL-06 DESIGN). Its test field_appended_codes uses needs_groups = [\"gpu-cuda\"], which N33c-32's lint needs-groups-known rejects (not one of the ten airlock groups): use a real group such as \"stats\"."
+  },
+  {
+   "bead": "FD-ASUP-01",
+   "what": "Same P0 ordering fix as FD-FMCP-01: it precedes BD-037, so it writes its own [[item]] row in BD-037's field names and opens its own failing fixture; its pre-phase uses frob doctor --section upstream (logged not-run before BD-022); add dep STD-E2E."
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "capabilities: --device and the per-device output are N32b-19's (M1), not BD-022's; build, gates[] and devices[] arrive at M1 (N32b-19), not M2; the capability map and status function are N00-02's (M0), read by BD-022 through a StatusSource."
+  },
+  {
+   "bead": "N32b-24",
+   "what": "Per N32-CX's settled rule, the M1 mechanism beads (N32a-07, -08, -09, -10) allocate the control rows of CX-345 to CX-350 (seed = CX) when they first catch the mutants; N32b-24 adds its binary-level cx_34x tests to those rows and binds GATE-TETHER-05, -06, -08, allocating a new row only for the packet case. 'For each counterexample this bead allocates a control' would create a second row per mutant."
+  },
+  {
+   "bead": "N32a-08",
+   "what": "Add dep N32-CX: it allocates the control rows seeded by CX-349 and CX-350 (N32-CX's allocation rule) and must find those entries."
+  },
+  {
+   "bead": "N32a-09",
+   "what": "Add dep N32-CX: it allocates the control row seeded by CX-345 (N32-CX's allocation rule)."
+  },
+  {
+   "bead": "N32a-10",
+   "what": "Add dep N32-CX: it allocates the control rows seeded by CX-346 and CX-347 (N32-CX's allocation rule)."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "N32a-04's dispatch refuses a device-tier run verb when no daemon answers with 'the backend-unavailable family (FROB-REF-6xx, exit 6)' and a repair naming frobd, with no number: list the dispatch (N32a-04, BD-022) as a raising site of FROB-REF-601 (no daemon owns the device) with a first repair 'start frobd', so N32a-04 can name 601."
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "About a dozen beads call `frob schema <verb>` positionally (N16b-27, N16b-35, N16c-15, -17, -22, -26, -28, N28c-21, N30b-37, N33b-19, N36-33), which the row reads as a schema identifier: either admit a verb name in the positional (unambiguous, since identifiers carry /<version>) or ask those beads for `--verb <name>`."
+  },
+  {
+   "bead": "N41-12",
+   "what": "It requires 'a recorded PASS of KILL-PEERLINK'; a kill record has no pass (N32b-25, N40-03 outcomes not-fired/fired/not-reached/deferred). Read it as: the record's first measurement (N32a-35's 1,000-schedule campaign) entered with clauses (a) and (b) not triggered; the not-fired/fired decision comes when clause (c) is read at four weeks."
+  },
+  {
+   "bead": "N32a-35",
+   "what": "Same vocabulary as N41-12: 'its recorded pass' -> its first measurement recorded with clauses (a) and (b) not triggered; it creates the KILL-PEERLINK record in the fallback ledger's format (N32b-25 now lists it as the eighth Tether kill gate with N32a-35 as decision bead)."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 33 reviewed (unchanged: N32a-01, N32a-03, N32a-05, N32a-06, N32a-12); most changes are cross-bead coherence that chapter slices could not see (one control row owned twice, registry fields outside N32a-02's closed schema, acceptance needing beads built later, the `schema --verb` form, STD-TEST field and prefix rules). The slice looks close to settled; what remains open sits in the eleven requests to beads outside it."
+}

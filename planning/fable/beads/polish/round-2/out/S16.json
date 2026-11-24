@@ -1,0 +1,280 @@
+{
+ "round": 2,
+ "slice": "S16",
+ "reviewed": 40,
+ "changed": [
+  {
+   "bead": "BD-029",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "deps N21-REF and VERBS-spark (moved from related); --key (run verb, FROB-REF-805); identity computed at write time with the subset listed; E0 two one-device runs on trj merged into the host record (identical machine block, per-device measured_at, peer untested); evidence label operational; shared ±0.1 GiB starting-value check with N21c-06 (222.68 passes, 221.9 fails); merge, identity and key tests"
+  },
+  {
+   "bead": "N21c-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "idempotency keys on spark check/probe/fingerprint (run verbs) and the registry's --backend spelling for spark check; distinct keys for runs A and B; R11 of the envelope register (N44-01) cited for E1; Considerations updated for the shared check and the merge"
+  },
+  {
+   "bead": "N21c-03",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "E1 approval cited as row R11 of the envelope register written by N44-01; dep N44-01"
+  },
+  {
+   "bead": "N21-REF",
+   "kinds": [
+    "correct"
+   ],
+   "what": "610 raised by N21b-23 on device tiers (and BD-175, BD-183); 722 on batch-cpu and lockstep tiers (exit 5, N16-REF, BD-159) from one function; e2e step uses --on-overflow refuse"
+  },
+  {
+   "bead": "BD-030",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "guard bound restricted to the Sterbenz domain s/2 <= 4e (5*2^-25); outside it r>=1/2, r>0 and error <= 7*2^-25, so the exhaustive check is no longer false on correct code; PO-SPARK-02 test named guard::sign_agrees_above_epsilon_boundary_corpus; dep N21c-27"
+  },
+  {
+   "bead": "BD-053",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "bound rules rewritten (binade half-ulp, exact power-of-two multiply, Sterbenz on the guard band with out-of-band sign, subnormal slack only where the range meets it): the old relative rules gave 2^-21+5*2^-126 for the pilot, above tau; derivation now gives 5*2^-25; registration refuses tau below the derived bound; dep N21c-27"
+  },
+  {
+   "bead": "N21a-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e uses the registry device identifiers batch-cpu|cuda:0|cuda:1|metal:0 with a key; determinism class D0"
+  },
+  {
+   "bead": "N21b-36",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "dep N21-REF (raising site of 609); canary keys follow N21b-40's scheme probe-<run-id>-<host>-canary-<n>-<device>-s<seed>"
+  },
+  {
+   "bead": "N21b-40",
+   "kinds": [
+    "correct"
+   ],
+   "what": "classes extension step builds the planted statistics feed through cargo test -p frob-kernels --test stepplan_record -- planted_stat_feed"
+  },
+  {
+   "bead": "N21c-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "one identity function written by BD-029 at write time and reused by live_identity"
+  },
+  {
+   "bead": "N21c-30",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "control 3 split: spark.folded-eft must be caught; spark.fast-math is a hypothesis row recorded per compiler whose survival does not block (as N21b-36 states); seven rows"
+  },
+  {
+   "bead": "N12-03",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "field 13 `review` (OPEN-AUGUR-8 marker) with schema.review-missing and hash.equations-digest under generic rule 1, in the format from M0 (unknown fields are rejected and the schema only grows by version); specimen and mission golden bundles carry equations_reviewed false; tests added"
+  },
+  {
+   "bead": "N12-04",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "report prints 'equations reviewed: yes/no' and JSON gains equations_reviewed and an optional recomputed_values block (checker-recomputed values the card logs need)"
+  },
+  {
+   "bead": "BD-132",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "lp-farkas checks the query's bounds first (lp-farkas.bounds-query, FROB-REF-829) so the capacity-raised mutant's first rule is exact; finite_game_command_bound_rejects corrected (first violation is the probe |u0| = 5/8 > 1/2); checkers fill recomputed_values; test added"
+  },
+  {
+   "bead": "N12-02",
+   "kinds": [
+    "complete"
+   ],
+   "what": "kinds after the baseline enter only by an N12x-08 ledger revision: packet-manifest, alias-pair v2, colouring-bound v1 (checker N12p2-01); related updated"
+  },
+  {
+   "bead": "N12-08",
+   "kinds": [
+    "deps"
+   ],
+   "what": "N12-11 removed from related (already a dep)"
+  },
+  {
+   "bead": "N12-09",
+   "kinds": [
+    "scope",
+    "deps",
+    "tests"
+   ],
+   "what": "structural half read from check-deps facts and rules of N34-25 (dependency count, cert.writer-links-reader, cert.shared-source, cert.source-escape) instead of a second implementation; keeps call-graph lint, near-copy similarity scan (renamed-copy fixture) and dropped-field test; dep N34-25"
+  },
+  {
+   "bead": "N12-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "auditor BLAKE3 checked in hash, keyed_hash and derive_key modes with 131-byte extended output (BD-026 implements all three; identities use derive-key per BD-005); differential vs fs_blake3::hash_bytes and hash_domain with schema-name contexts (FACT: fs-blake3 has no keyed mode, 32-byte output); keyed_modes_absent replaced by a mode-flag mutant"
+  },
+  {
+   "bead": "N12-34",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "complete"
+   ],
+   "what": "per-card tagging (manifest card and log_fields, bead CARD-T-nn, step T-nn/<file>, values from recomputed_values); card-named mutants of T-22, T-24, T-25, T-27, T-31, T-32, T-34 asserted by name; disabled-kind cards logged pending; step 2 reads check-deps facts; self-test added"
+  },
+  {
+   "bead": "N12-52",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "priority 1 -> 0 (owner decision blocking M1 beads); acceptance names existing card beads N12x-01 (T-38), N12x-04 (T-39), N12x-05 (T-41) and the Lean card beads the decision opens for T-36, T-37, T-40"
+  },
+  {
+   "bead": "N12-REF",
+   "kinds": [
+    "placement",
+    "correct"
+   ],
+   "what": "moved M1 -> M0, priority 0: 823/826/829/833/834 are raised at M0 (BD-027, N12-03, N00-25) and listed by VERBS-prove's M0 rows, and the loader refuses a verb row naming a code with no row; fixtures of 835, 168 and 263 run when their mechanisms land"
+  },
+  {
+   "bead": "N00-25",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep N12-REF (its renderer raises 834 at M0)"
+  },
+  {
+   "bead": "N00-26",
+   "kinds": [
+    "deps"
+   ],
+   "what": "deps on the eight registry beads whose codes the admission table raises (RefusalCode is generated from refusals.toml): N12-REF, N16-REF, N20-REF, N24-REF, N25-REF, N30-REF, N35-REF, N37-REF; Considerations lists the mapping"
+  },
+  {
+   "bead": "N00-27",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "GATE-SAFE-01 has one writer (N37-24): rule 13 reads its record; dep N37-24; consideration fixed (rule 12 and the full verb of rule 10 are later, rule 9 runs at M1)"
+  },
+  {
+   "bead": "N29a-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "BD-090's check names and order (manifest-level, then per chunk content, header, partition, chain, then frontier, gap); fourteen mutations each with its expected first check, every check name covered; the chain-skip control now uses the changed-prev case (a swapped pair is caught first by content or header)"
+  },
+  {
+   "bead": "N37-23",
+   "kinds": [
+    "scope"
+   ],
+   "what": "GATE-SAFE-01's M1 record moved out to N37-24, the one writer"
+  },
+  {
+   "bead": "N37-24",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "dep N29a-03: .frun mutants go to frob-verify (authorization-flag, exit 2) besides certificate bundles (flags.true/missing); stated as the one writer of GATE-SAFE-01"
+  },
+  {
+   "bead": "N37-25",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Certified and Proved leaves come through frob-lemma's doorway (N00-26), not the certificate crate, which mints nothing"
+  },
+  {
+   "bead": "FD-FKER-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "FACT re-read: franken-kernel 0.7.0 at head 152237484414, same 1,801 lines and types; sibling tree clean on 2026-11-23"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N12p2-01",
+   "why": "No bead carried the proof kind colouring-bound that BD-363's lower bound and GATE-AUGUR-19's three-reading fixture need (N25c-38 step 2 cannot pass without it); checker with payload, backtracking search with first-use symmetry breaking and a coverage self-check against the Stirling sum, a 2*10^8-node limit, triangle and fixture specimens, eight mutants, a 200-family brute-force differential; admitted through the N12x-08 ledger change colouring-bound-v1"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N12x-08",
+   "what": "Add the ledger change `colouring-bound-v1` (row colouring-bound v1, cap Certified, scope n <= 16 variants and 2*10^8 search nodes, checker N12p2-01) and list it among the requests in the Background."
+  },
+  {
+   "bead": "BD-363",
+   "what": "Depend on N12p2-01 (checker of colouring-bound). The map count is the sum of S(n, j) for j <= k-1, not S(16, k-1) alone; the checker's node limit admits k-1 <= 4 at n = 16, and the fail-closed interval stands above it."
+  },
+  {
+   "bead": "N25b-02",
+   "what": "Field 13 `review`, the RuleIds schema.review-missing and hash.equations-digest, the schema document entry and the golden markers are now in N12-03 from M0; narrow item 3 to cite them rather than add the field at M1."
+  },
+  {
+   "bead": "BD-027",
+   "what": "Add dep N12-REF (now M0): prove.verify raises 823, 826, 829, 833 and 834 at M0 and RefusalCode is generated from refusals.toml."
+  },
+  {
+   "bead": "VERBS-prove",
+   "what": "Add dep N12-REF (now M0): the M0 rows list 823, 826, 829, 833, 834 and the acceptance requires every code to exist in refusals.toml."
+  },
+  {
+   "bead": "N37-REF",
+   "what": "FROB-REF-819 is raised at M0 by N00-25 (a report citing a result for a kind outside evidence.claims); enter its row at M0 (move the bead or split the row) so N00-25 can depend on it."
+  },
+  {
+   "bead": "N29a-08",
+   "what": "Step 6: two chunk files swapped fails `content` at the lower index under BD-090's fixed order (exchanged index entries fail `header`), not `chain`; the control 'frob-verify skips chains' must use a changed-prev mutation."
+  },
+  {
+   "bead": "BD-090",
+   "what": "exchange_detected_at_lower_index: under the mutant without header and partition checks only the exchanged-index-entries bundle reaches `chain`; the exchanged-bytes bundle still fails `content` first."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "All 40 beads read in full; requests addressed to the slice applied after checking (N12p1-01 ones were already in place). Main finds round 1 missed: BD-053's derivation rules could not yield 5*2^-25 (they gave 2^-21+5*2^-126, above tau); BD-030's exhaustive bound was false outside the Sterbenz domain; N12-10 contradicted BD-026/BD-005 on BLAKE3 modes; N12-REF was M1 while its codes are raised and listed at M0; GATE-SAFE-01 had three writers; N29a-03's chain-skip control was dead under the shared check order; run verbs called without idempotency keys. Graph: 0 cycles after all dependency changes. The slice looks close to settled; a round-3 look at N12p2-01 and the N12-REF move is advisable."
+}

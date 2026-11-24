@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "gauntlet", "delivery", "solid", "registry"]
 parent: "WP-01"
-deps: ["NAB-09", "BD-001"]
-needs: ["§1.7, §33.11: the foundation fact sheet that re-reads sibling-code facts at the pinned commits by a script (N00-16); it consumes the records of this bead and appends their `reread` entries", "§33.5: the stack lock with each sibling's pinned commit (BD-001)"]
-related: ["NAB-10", "NAB-15", "NAB-16", "N00-05", "N00-16", "N00-35", "BD-006", "BD-029"]
+deps: ["BD-001", "NAB-09"]
+needs: []
+related: ["NAB-15"]
 gates: []
 plan_refs: ["Appendix H.2", "§0.1 (rule 2)", "§1.7", "§33"]
 ---
@@ -47,12 +47,21 @@ checks (NAB-15).
    `<repo>:<path>`, `read_on = "2026-11-21"`, `licence = "owner"`, one `reading` with `mark = "P"` (a raw file
    was read) and `covers` = the line range where the text gives one, or "whole file".
 2. A crate named without a file (`fs-archive`, `fs-bo`, `fs-topopt`) is one record with `locator =
-   "<repo>:crates/<crate>"` and `covers = "crate surface, as read"`.
+   "<repo>:crates/<crate>"` and `covers = "crate surface, as read"`. A path printed without its crate belongs to
+   the crate named last before it in the same item: a bare file name, or a path that does not start with `src/`
+   or `tests/`, lies under that crate's `src/` (`lie_differential.rs` is
+   `frankensim:crates/fs-ga/src/lie_differential.rs`; `articulated/generalized.rs` is
+   `frankensim:crates/fs-mbd/src/articulated/generalized.rs`), while `src/…`, `tests/…`, `CONTRACT.md` and
+   `Cargo.toml` lie under the crate root; `src/{kernel.h,cuda.rs,metal.rs,emulate.rs}` is four records. A name
+   without an extension inside a crate's list (`tri_wheel_cluster`; `frictional_multicontact`, `certified_ccd`;
+   `product_mlmc_allocation`, `product_control_variate`, `product_copula`) is a module of that crate: one record
+   located at the crate, with `covers = "module <name>, as read"`. A path this rule resolves wrongly is reported
+   by the existence check of the test plan, and the re-read corrects it.
 3. `commit` is filled for the five repositories where a commit was recorded: frankensim `483d09c682`,
    franken_lean `4426f8ea7`, fastmcp_rust `117388bc`, frankentorch `8165d6a18028`,
    franken_drone_geometry_reconstruction `db45703afc5e`. For the others `commit = ""`, and the first re-read
    records the commit it was made at.
-4. `role` (an extra string field of local records): `linked-candidate` (a crate the airlock may consume, subject
+4. `role` (the local-record field of NAB-09's schema): `linked-candidate` (a crate the airlock may consume, subject
    to its admission gate), `document` (a plan, README or rule file), `build-fact` (a manifest, lock or toolchain
    file), `defect-report` (read only as a report of a defect and not linked), `pattern` (read for a pattern to
    follow, not to depend on).
@@ -62,14 +71,22 @@ checks (NAB-15).
 6. Notes carried on records: `fs-conform` is a converter-conformance kit, **not** conformal prediction (a name
    collision that has misled readers); `fs-g1-train` (`src/ppo.rs` lines 253–345, `standin_env.rs`) and
    `fs-cmaes-viz-wasm/src/g1_walking.rs` are `defect-report` records and are never linked.
+7. A document named in words and not by path is one record per phrase, located at its repository (`locator =
+   "<repo>:"`, followed by the crate path where one is printed), with `covers` = the phrase as printed; the first
+   re-read records the exact path in its note. There are seven: franken_numpy's "README and manifests";
+   asupersync's "README and manifests"; franken_lean's "S26 conformance receipt (per-module results)"; the README
+   of frankenscipy's `fsci-opt`; the README of `frankenjax/crates/fj-egraph`; `franken_firmware`'s toolchain file;
+   `franken_drone_geometry_reconstruction`'s status file and schemas.
 
-**The machine record** (`kind = "machine"`, id `SRC-MACH-01`): `sysctl` and `system_profiler` report an Apple
+**The machine record** (`kind = "machine"`, id `SRC-MACH-01`, one reading with mark P: the command output was
+read directly): `sysctl` and `system_profiler` report an Apple
 M5 Ultra with 36 CPU cores, an 80-core GPU with Metal 4, and 256 GB of memory; a Metal device query reports a
 working-set limit of about 222.7 GiB and a largest single buffer of about 167.0 GiB. Only core counts, memory
 size and these two Metal limits are recorded for this machine; bandwidths, launch costs and compile times are
 not (they are in the not-verified list of NAB-14 and are measured by the hardware fingerprint).
 
-**The planning records** (`kind = "planning-record"`, ids `SRC-REC-01` to `SRC-REC-05`): the verdict register of
+**The planning records** (`kind = "planning-record"`, ids `SRC-REC-01` to `SRC-REC-05`, one reading each with
+mark P, the files read directly): the verdict register of
 24 hypotheses with its 23 evidence packs; two independent audits of 76 claims (36 in the first; 40 of 58 in the
 second, with 18 left pending); a harvest of 18 primitive matches; a compilation of eight decision families; and
 the planning reproduction archive (NAB-15). Their files are under `planning/` in this repository, and the
@@ -161,7 +178,8 @@ of eight decision families; and the planning reproduction archive of H.5. Their 
 
 ## Acceptance criteria
 
-- [ ] Every backticked path and crate name above has exactly one `[[source]]` record of kind `local`; the
+- [ ] Every backticked path, crate name and module name above (resolved by rules 1 and 2) and each of the seven
+      documents of rule 7 has exactly one `[[source]]` record of kind `local`; the
       thirteen groups (frankensim plans and repository files; frankensim crates; frankentorch; franken_numpy;
       frankensympy; franken_lean; fastmcp_rust; mcp_agent_mail_rust; asupersync; other siblings; workspace
       rules; this machine; planning records) are the `topic` values.
@@ -178,8 +196,11 @@ of eight decision families; and the planning reproduction archive of H.5. Their 
 
 `crates/frob-conformance/tests/sources_content.rs`, module `local`:
 
-- `every_listed_path_has_a_record`: the frozen list of paths (this bead's text) equals the set of `locator`
-  values of kind `local`.
+- `every_listed_path_has_a_record`: the frozen list of (`locator`, `covers`) pairs, derived from this bead's
+  text by rules 1, 2 and 7, equals the set of those pairs over the records of kind `local`; spot checks:
+  `lie_differential.rs` resolves to `frankensim:crates/fs-ga/src/lie_differential.rs`, `certified_ccd` to
+  `frankensim:crates/fs-contact` with covers "module certified_ccd, as read", and the seven rule-7 phrases are
+  present.
 - `commits_recorded_for_five_repos`: the five (repository, commit) pairs above.
 - `line_ranges_kept`: `fs-mbd/src/planar_drive.rs` has lines 117–133; `fs-contact/src/sustained/solve.rs` line
   26; `fs-ports/src/component.rs` line 52; `fs-qty/src/lib.rs` lines 20–21; `fs-g1-train/src/ppo.rs` lines

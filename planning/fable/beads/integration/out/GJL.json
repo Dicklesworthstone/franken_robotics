@@ -1,10 +1,350 @@
 {
  "group": "GJL",
- "needs": [],
- "edges": [],
+ "needs": [
+  {
+   "bead": "ART-L1",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-21"
+   ],
+   "note": "confirmed: N14a-21 carries design.new and design.show, which the fixture's script calls"
+  },
+  {
+   "bead": "ART-L3",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-02"
+   ],
+   "note": "confirmed: the .ftask schema frob.task/1 and the TaskId; also reached through its dependency BD-122"
+  },
+  {
+   "bead": "ART-L3",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "the named N24c-01 was superseded by N24a-12 (admission by labelled traces, the mutation check, vacuity), which is already delivered through its dependency BD-122 (BD-122 depends on N24a-12); G24 recorded the direct link as related, and the bead's references are corrected"
+  },
+  {
+   "bead": "ART-L8",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-06"
+   ],
+   "note": "confirmed: the rule paired-clopper-pearson/1 and the exact enumerator behind eval.preanalyze"
+  },
+  {
+   "bead": "ART-L8",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28a-21"
+   ],
+   "note": "confirmed: study.compare and frob.comparison/1 with five dispositions; same milestone M3"
+  },
+  {
+   "bead": "NJL-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-21"
+   ],
+   "note": "confirmed: the author section of the transcript calls design.new and design.show"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "NJL-03",
+   "dep": "N34-08",
+   "as": "dep",
+   "why": "coverage (d) of UJL: the cross-check reads the list verbs = [...] in each crate's contract.toml, a key admitted by the contract check of N34-08 (the key is now named there)"
+  },
+  {
+   "bead": "NJL-07",
+   "dep": "N34-01",
+   "as": "dep",
+   "why": "coverage (d) of UJL: the root fixtures/golden/ is added to the repository layout whose rules N34-01 holds (the line is now in its layout table)"
+  },
+  {
+   "bead": "NJL-01",
+   "dep": "BD-258",
+   "as": "related",
+   "why": "coverage (d) of UJL: scope names in the 243 rows are proposals until the scope registry of BD-258 (M3, later) fixes them"
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "dep": "N16b-27",
+   "as": "related",
+   "why": "coverage (d) of UJL: the owner decision on fidelity.rank is recorded with N16b-27; the rows and every count use its fail-closed default"
+  },
+  {
+   "bead": "N30b-13",
+   "dep": "NJL-05",
+   "as": "dep",
+   "why": "the gap G30 reported is carried: NJL-05 seats ground_excite and ground_kit in the task cluster calibrate, which the cluster bead of the Reality lane should use in place of its proposed reality-plan"
+  }
+ ],
  "superseded": [],
- "cross_group_duplicates": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "NJL-01",
+   "other": "N32a-02",
+   "note": "both specify the format and schema of registries/verbs.toml, the MCP tool-name map and the registry lints; N32a-02 adds the build script, the static table and registry-only"
+  },
+  {
+   "mine": "NJL-02",
+   "other": "N32a-11",
+   "note": "both build the parity harness that diffs the served CLI and MCP surfaces against the registry for GATE-TETHER-02; NJL-02 adds the e2e-coverage lint and help-schema snapshots"
+  },
+  {
+   "mine": "NJL-06",
+   "other": "N32b-18",
+   "note": "both generate the text of the resource frob://docs/clusters from the registry"
+  },
+  {
+   "mine": "NJL-06",
+   "other": "N32a-25",
+   "note": "both register and serve the frob://docs resources on the MCP server; NJL-06 has the cluster directory at M1, N32a-25 all resources at M3"
+  },
+  {
+   "mine": "VERBS-module",
+   "other": "N15b-02",
+   "note": "both write the registry entries of module.list, module.show and module.check (also reported by G15)"
+  },
+  {
+   "mine": "VERBS-fidelity",
+   "other": "N16b-27",
+   "note": "both hold the registry rows of the fidelity cluster (also reported by G16)"
+  },
+  {
+   "mine": "VERBS-sim",
+   "other": "N16b-27",
+   "note": "N16b-27 also carries the registry extensions of sim.run and sim.estimate"
+  },
+  {
+   "mine": "VERBS-phylum",
+   "other": "N17b-12",
+   "note": "both hold the seven registry entries of cluster phylum (also reported by G17)"
+  },
+  {
+   "mine": "VERBS-scene",
+   "other": "N19a-02",
+   "note": "both enter the registry rows of the scene cluster: twelve names there, thirteen here (also reported by G19)"
+  },
+  {
+   "mine": "VERBS-sense",
+   "other": "N20b-17",
+   "note": "both write the eight registry rows of the sense cluster (also reported by G20)"
+  },
+  {
+   "mine": "VERBS-nemesis",
+   "other": "N26b-13",
+   "note": "both enter the seven nemesis rows with schemas, tool names and checks (also reported by G26)"
+  },
+  {
+   "mine": "VERBS-autopsy",
+   "other": "N27b-16",
+   "note": "both enter the five registry entries of the autopsy cluster with schemas, refusal lists and task clusters"
+  },
+  {
+   "mine": "VERBS-ground",
+   "other": "N30b-13",
+   "note": "both enter the seven registry rows of cluster ground; N30b-13 has the corrected refusal lists (also reported by G30)"
+  },
+  {
+   "mine": "VERBS-foundry",
+   "other": "N31a-51",
+   "note": "both specify the seven-verb foundry cluster: schemas, corrected refusal lists, CLI and MCP parity"
+  },
+  {
+   "mine": "ART-L5",
+   "other": "NEG-13",
+   "note": "the worked energy budget as a fixture: golden fixture L.5 here, a card with governing labels there (also reported by GEG)"
+  }
+ ],
  "new_beads": [],
- "gaps": [],
- "fixes": []
+ "gaps": [
+  {
+   "section": "Appendix M",
+   "what": "Appendix M has no rows for Appendix J or L: the known answers this unit states inline (registry counts, task-cluster counts, the arithmetic of the nine worked artifacts) have no KA numbers; the known-answer registry of the verification chapter should assign them",
+   "needed_by": [
+    "NJL-03",
+    "NJL-05",
+    "ART-L1",
+    "ART-L2",
+    "ART-L3",
+    "ART-L4",
+    "ART-L5",
+    "ART-L6",
+    "ART-L7",
+    "ART-L8",
+    "NJL-09"
+   ]
+  },
+  {
+   "section": "Appendix J.3, J.4",
+   "what": "verb names used by beads of another unit have no registry row: analyze.sweep-monotone, analyze.constraint-graph, analyze.regressor-identity. The registry is closed at 243 rows with count tests in NJL-03; the bead that introduces a verb adds its row and the counts, or the name is withdrawn (also reported by G25cde)",
+   "needed_by": [
+    "N25e-08",
+    "N25e-27",
+    "N25e-19"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "ART-L3",
+   "what": "superseded N24c-01 replaced by N24a-12"
+  },
+  {
+   "bead": "VERBS-contact",
+   "what": "implementing beads added: N18b-20, N18b-23, N18b-28, N18b-29, N19b-33"
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "extension beads named: N22c-24"
+  },
+  {
+   "bead": "VERBS-cores",
+   "what": "implementing beads added: N28c-04"
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "extension beads named: N28c-44, NEG-32"
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "implementing beads added: N33b-19; extension beads named: N16c-44, N23b-34, N28c-38, N35-08, N39b-34"
+  },
+  {
+   "bead": "VERBS-explain",
+   "what": "extension beads named: N28c-38"
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "extension beads named: N31b-32, N31b-33"
+  },
+  {
+   "bead": "VERBS-ground",
+   "what": "extension beads named: N30b-12"
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "implementing beads added: N28b-29"
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "implementing beads added: N32b-17, N32b-19, N32b-20; extension beads named: N34-26"
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "implementing beads added: N17b-18"
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "extension beads named: N16c-26"
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "extension beads named: N28c-44, N39b-46"
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "implementing beads added: N19b-40, N25c-19; extension beads named: N19a-46"
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "implementing beads added: N20a-34, N20a-41, N20b-16; extension beads named: N20b-08"
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "extension beads named: N16c-15, N16c-20, N16c-38, N35-04, N36-33"
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "implementing beads added: N21b-13, N21b-29; extension beads named: BD-177, BD-181, N21b-33, N35-14"
+  },
+  {
+   "bead": "VERBS-store",
+   "what": "extension beads named: N29b-13"
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "implementing beads added: N32a-13, N33b-19"
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "superseded N24c-01 replaced by N24a-12, N24c-03 replaced by N24a-16; extension beads named: N24c-37"
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "implementing beads added: N23a-14"
+  },
+  {
+   "bead": "ART-L1",
+   "what": "title shortened to 109 characters"
+  },
+  {
+   "bead": "ART-L3",
+   "what": "title shortened to 108 characters"
+  },
+  {
+   "bead": "ART-L4",
+   "what": "title shortened to 107 characters"
+  },
+  {
+   "bead": "ART-L5",
+   "what": "title shortened to 106 characters"
+  },
+  {
+   "bead": "ART-L7",
+   "what": "title shortened to 106 characters"
+  },
+  {
+   "bead": "ART-L8",
+   "what": "title shortened to 109 characters"
+  },
+  {
+   "bead": "ART-L9",
+   "what": "title shortened to 107 characters"
+  },
+  {
+   "bead": "NJL-02",
+   "what": "title shortened to 109 characters"
+  },
+  {
+   "bead": "NJL-03",
+   "what": "title shortened to 107 characters"
+  },
+  {
+   "bead": "NJL-04",
+   "what": "title shortened to 109 characters"
+  },
+  {
+   "bead": "NJL-05",
+   "what": "title shortened to 110 characters"
+  },
+  {
+   "bead": "NJL-06",
+   "what": "title shortened to 109 characters"
+  },
+  {
+   "bead": "NJL-07",
+   "what": "title shortened to 106 characters"
+  },
+  {
+   "bead": "NJL-08",
+   "what": "title shortened to 110 characters"
+  },
+  {
+   "bead": "VERBS-evidence",
+   "what": "title shortened to 107 characters"
+  },
+  {
+   "bead": "NJL-01",
+   "what": "entry schema gains the fields other beads add: released (N34-09) and params with the four parameter kinds (N34-24); needs_groups (N33c-32) and min_determinism (N35-07) named as later additions"
+  }
+ ]
 }

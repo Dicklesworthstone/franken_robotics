@@ -1,0 +1,341 @@
+{
+ "round": 3,
+ "slice": "F-U38a",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "BD-041",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Edit of the interrupted reviewer (file touched 16:32), read whole and found complete and parsing; nothing added. Request H-ka-1 applied: the derivation is the pilot's section of docs/derivations/docking-fixture.md, N10b-08's one file, which this M0 bead creates; no docking.md. Step 9 and the script append one result per revision run to PILOT-PT-06 and PILOT-PT-07 through the pilots example (append-result, rerun-status), the ledger deriving reproduced or differs. Numbers rechecked: 344/217/9 of 561, 1/65 at c = 64/65, levers 36 and 40.694 mm, demands 0.75 and 0.6459."
+  },
+  {
+   "bead": "N38a-37",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "placement"
+   ],
+   "what": "Rewrite of the interrupted reviewer (file touched 16:39), read whole: it parsed and carried the three requests (N40-03 kill-row form with section, consumers, mode, reads, decision and no claim/measured_by/decided_by/control; introduce amendments; scope_kind backend and resolution; milestone M4 and parent WP-14 so that the M4 rut field N18b-17 can be funded; a third row KILL-TAXEL for the tactile-array model, fallback mask-only). Finished here: (1) deps reduced to the register (N38a-09, N38b-18, N40-03, STD-E2E, STD-TEST), N18b-16 and N18b-18 moved to related: a registry bead waits for no pilot (direction rule 5), and N18b-16 can stay open until the M6 exit candidate, which would have held the tactile rows too; step 3, step 5, the funding criterion and three tests restated on scratch records; (2) KILL-TAXEL is decided by the new bead N38ap3-01, not by N38a-39; (3) row 1's leak clause reads 'at batch scale any leak in 10^3 resets on a backend the epic claims', matching the epic's seed done-condition."
+  },
+  {
+   "bead": "N38a-38",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Request S89 applied: the pilot is N18b-16 (N38a-28 superseded) and the trigger is read as registered, five clauses with the falsifier (leak, solo mismatch, undetected plant) separate from the funding flags (256 KiB per world; paired lower bound 1.25); a flag fires clause 2 although the verdict is falsifier-rejected. Brought to N40-03's form: one decision entry per backend {exit, scope = backend:<tier>, outcome, adr, date, session, receipts}; the scope kind exists (no longer 'requested'); the entry is written to the row and checked by N40-03's load, not entered through the gate recorder N38b-19, which never records a kill decision; apply_decisions kills the gate the row reads (the direction was reversed); repair cycle and deferred in N40-03's form. Tests renumbered and added (funding_flag_fires_clause_2, scope errors, not-fired without receipts)."
+  },
+  {
+   "bead": "N38a-39",
+   "kinds": [
+    "correct",
+    "complete",
+    "title",
+    "tests"
+   ],
+   "what": "Request S89: the pilot was already N18b-35; trigger clause 4 worded as registered. Now decides the pads only: title and Background say that the tactile array has its own gate KILL-TAXEL (N38ap3-01). Decision in N40-03's form, one entry per resolution (resolution:2x2, resolution:4x4) with receipts, written to the row and checked at load (not through N38b-19). Clause 4 is not-applicable, with its reason, when N38a-31's receipt records the resultant row 'not run: array not built' or 'not run: mask-only'; before, a pad kept on the contact mask could never be recorded not-fired. Two tests added."
+  },
+  {
+   "bead": "N38a-29",
+   "kinds": [
+    "correct",
+    "deps",
+    "users",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Request S89: pilot repointed to N18b-16 in the text, the script and deps (superseded N38a-28 removed). Start condition now also stops on the pilot's funding flags (KILL-RUT clause 2). Script made runnable: `frob sim run --fixture traction/rut_leak` (a positional design with --scene and --task is refused when the fixture declares them); T_rut set by a new member `--capacity rut-tiles=<T>` (no input set it; requested of VERBS-sim); the exhaustion run uses 8 tiles, since the pass dirties at least 13 and the stated 64 would not overflow; the cost pairs, which the acceptance asked for and no step ran, are added with the 'reference tracked workload' defined; plants built with their own nc features and registered (seed KA-419, GATE-TRAC-08)."
+  },
+  {
+   "bead": "N38a-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request S89 was already applied (pilot N18b-35). The resultant row's 'not run' now carries its reason (array not built; mask-only), which N38a-39 reads; the two plants are builds with registered nc features (total-in-every-taxel is N20a-19's control; drop-contacts is registered here under GATE-GAUNT-06's capacity rule), since `--features gauntlet-mutations` alone plants nothing."
+  },
+  {
+   "bead": "BD-417",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The proposed KILL-RUT wording follows the registered row: any leak at batch scale on a backend the epic claims (it read 'on devices', narrower than the epic's own done-condition), the cost clause as a paired lower bound above 1.25, decided per backend."
+  },
+  {
+   "bead": "BD-418",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The epic names the tactile array's own kill gate KILL-TAXEL (row by N38a-37, decision N38ap3-01, pilot N20a-18, fallback mask-only under the 25% cost rule) beside KILL-TACTILE for the pads; related gains N20a-18 and N38ap3-01."
+  },
+  {
+   "bead": "N38a-04",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Request S81 applied: a role grammar <kind>[:<subject>] with a closed list of kinds (parity, reference, second-checker, comparator, import-fixtures, referee, pilot) that admits comparator:hybrid-reachability, comparator:label-query and the two second-checker roles of fs-checker; rows appended after the thirteen seed rows are admitted, with an optional `family` naming the seed row they specialize (the conventional solvers are pinned one row per tool). Two tests; the row-count test asserts the seed ids."
+  },
+  {
+   "bead": "N38a-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Test queue_verdict_change used a verdict `funded` that the pilot register does not have; it is `falsifier-rejected`."
+  },
+  {
+   "bead": "N38a-07",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Three requests applied. S54: optional `sampling_episodes_per_design`, frozen with the registration, read by control.mpc --protocol through experiments::sampling_allowance (299, 6 and 32 declared). S67: the admissible success.quantity values are a closed list of three, with paired-change-share-lower-bound defined (1 of 15 gives 0.34%). F-U27b: the 866 branch calls N36-05's admit_experiment, the one place the code is raised. Also: verdict tokens are those of eval.preanalyze (promote, inferior, practical-tie, inconclusive; the record said prefer and a test said tie), and the script states the registry form of the call."
+  },
+  {
+   "bead": "N38a-10",
+   "kinds": [
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "Request S48: fourth supplementary record PILOT-PT-S4 (held-command device pilot: 192 of 192 decisions and 3 x 64 byte-equal terminal states per device; owner N16c-45 at M2; covers no source id; bundle receipt 'none: not in the plan-time record'; outside the twenty of GATE-GAUNT-08). Checked against the plan: the pilot is cited as FACT and is in no plan-time table. Request F-U00-2: the subcommands `append-result <record> --result <file.json>` and `rerun-status <record> --json` of the pilots example declared (the ledger derives the status; owner and limits checked; --registry for scratch)."
+  },
+  {
+   "bead": "N38a-11",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Request H-cx-1: the receipts of rows 18 and 19 are the re-run receipts of CX-264 and CX-176; the rule for the catalogue's rerun pair is stated (true with the hash only when reproduced; set here if the entry exists, otherwise by N24-CX and N18-CX at entry, since they are M1). Results are appended through N38a-10's append-result and the status read back with rerun-status; the bead no longer writes a status."
+  },
+  {
+   "bead": "N38a-13",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Request H-ka-2: outcome `not-run: conditional (<decision>)` for a row whose derivation front matter carries conditional_on (KA-779): neither pass, obligation, unbound nor failure, counted on its own line; the key's presence is the signal and the deciding bead removes it when the condition opens. Also: the user-side verb call is a named stage that skips with a reason before task.fixture exists (N24b-03 is not a dependency) and is required from the M1 exit run; it read 'with the frob binary present', which is true from M0."
+  },
+  {
+   "bead": "N38a-14",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Request F-U10a: optional `generated_from = \"C-nn.Sk\"` on the relation record, form and source checked. The runner's `--count <N>` argument, which N38a-19's script already passed, is defined, with the reduced flag in the receipt."
+  },
+  {
+   "bead": "N38a-16",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Request S61: MR-13's entries are bound by N24b-18 (host) and N24a-34 (daemon); its mutation is one nc feature in frob-arena with two branches; the 2,000 campaigns and the '>99%' control run on the world absolute-above (0.9987), the paired worlds (0.034, 0.126) being reported and not held to 99%."
+  },
+  {
+   "bead": "N38a-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request F-U10c, second option: MR-15 to MR-20, MR-27 and MR-28 are due at M2; no record is due before the harness exists, and M1 checks (SPEC-C-30) report them pending."
+  },
+  {
+   "bead": "N38a-18",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Request F-U10a: MR-38's source names C-14 (rewrite class E; statement C-14.S5). MR-36's two mutations and MR-37's are also the chaos tier's protocol controls: their records list GATE-GAUNT-06 beside GATE-GAUNT-03 (N38a-25 reuses them)."
+  },
+  {
+   "bead": "N38a-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Requests S52 and H-verbs-2: the pair runner is N16bp2-01 (N16b-02 keeps the comparison and the store); the script runs the whole battery, no 'first eight scenarios'. Also (convention 7): the acceptance no longer asserts fidelity.ledger and eval.promote, which are delivered by BD-212 and BD-263 after this bead; it asserts the fail-closed resolution it delivers."
+  },
+  {
+   "bead": "N38a-24",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Convention 5: the sim.run and sim.replay calls of its script carry their own keys."
+  },
+  {
+   "bead": "N38a-25",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Request S12, applied in substance: every control is a record of controls.toml naming GATE-GAUNT-06 and is planted through its own nc feature. Not applied literally (five new records seeded GATE-GAUNT-06): four of the five defects already have a record, and a second one would plant one branch twice. Reused: MR-36's two mutations and MR-37's (N38a-18) and BD-096's order-dependent fake device; registered here: commit-before-durable. Deps gain N38a-18 and N38b-04."
+  },
+  {
+   "bead": "N38a-26",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Request S12, applied in substance and not literally: all five of its defects are already planted and registered by the beads that own the code (N34-17 dup-last-wins; SAFE-X01 check-then-open and SAFE-X02 label copied, N37-CX; the removed check of GATE-SAFE-07; BD-261's planted leak). The bead plants nothing twice: it adds GATE-GAUNT-06 to those records' gate lists and the gate row's controls, and its two script plants are builds with those features. Deps gain N37-CX and N38b-04."
+  },
+  {
+   "bead": "N38a-33",
+   "kinds": [
+    "complete",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request F-U19a-2: a generated archetype scene receives its actors through a new flag `scene.gen --actors` (behind frontier-actors; 724 without it or after the kill; 802 on terrain): the proxy scene of the same seed with actors added (geometry, material, optics and clocks digests equal, actors digest different, same split group), which is the pairing N19ax-05 needs. An add-actor edit kind was rejected, with the reason. Acceptance, a unit test and two script steps added; the flag is requested of VERBS-scene."
+  },
+  {
+   "bead": "N38a-34",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its script runs `frob-tenfold audit` (N39b-23, M3), which was on no dependency path: N39b-23 added to deps (no cycle)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N38ap3-01",
+   "why": "KILL-TAXEL, the third row N38a-37 now enters for the tactile-array model, needs its decision bead (the charter asks one per kill gate): it reads N20a-18's verdict and N20a-19's cost fraction, writes docs/adr/ADR-KILL-TAXEL-M6.md and the row's decision in N40-03's form, with outcomes fired, not-fired, not-reached (no registered task) and deferred. Parent BD-418, M6, deps N20a-18, N20a-19, N38a-37, N40-03, STD-E2E."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N18b-17",
+   "what": "Add dep N38a-37 (now M4, deps on the register only; no path back to N18b-17): the KILL-RUT row must exist before this mechanism is funded, as its own acceptance says."
+  },
+  {
+   "bead": "N18b-16",
+   "what": "N38a-37 no longer depends on this pilot and will usually land first: register `fallback.kill_gate = \"KILL-RUT\"` when the row exists and `to-register` otherwise (N18b-35's form). The funding flags are KILL-RUT's clause 2: N38a-29 does not start while one stands, and N38a-38 records it (N38a-38 depends on N38a-29, so it cannot 'answer before the batch-scale bead starts')."
+  },
+  {
+   "bead": "N20a-18",
+   "what": "The tactile-array model has its own row, KILL-TAXEL (N38a-37, entered at M4; decided by N38ap3-01), not a clause of KILL-TACTILE: name it in `fallback.kill_gate` (to-register only if the row is absent at registration) and replace 'requested of N38a-37, which registers KILL-TACTILE'."
+  },
+  {
+   "bead": "N20a-19",
+   "what": "Add dep N38a-37 and name KILL-TAXEL as the gate under which the fallback is adopted: this bead records the cost fraction and closes on its receipt; N38ap3-01 decides. State whether the cost receipt carries paired bounds of the fraction (N38ap3-01 compares the lower bound where present, the fraction itself otherwise)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "The paragraph on kill gates no ledger seeds names KILL-RUT and KILL-TACTILE: add KILL-TAXEL (N38a-37; no scope_kind; decided by N38ap3-01). No change to the scope-kind table."
+  },
+  {
+   "bead": "N40-29",
+   "what": "The rows N38a-37 introduces are three (KILL-RUT, KILL-TACTILE, KILL-TAXEL), entered at M4; the generated fallback ledger gains three lines, and N40-30's due list for M6 should name N38a-38, N38a-39 and N38ap3-01."
+  },
+  {
+   "bead": "BD-427",
+   "what": "M6 exit: add dep N38ap3-01 and KILL-TAXEL beside KILL-RUT and KILL-TACTILE; in the row for BD-418 add N20a-19 as mechanism and N38ap3-01 as decision; N38a-39's title is now 'keep micro-patch fingertip pads at 2 x 2 or 4 x 4, or one patch per pad'."
+  },
+  {
+   "bead": "WP-74",
+   "what": "N38a-37 is now M4 with parent WP-14 (registry work of frob-conformance): remove it from this package's list; add N38ap3-01 (child of BD-418); N38a-39's title changed."
+  },
+  {
+   "bead": "WP-14",
+   "what": "Add N38a-37 (M4): the three kill rows KILL-RUT, KILL-TACTILE and KILL-TAXEL entered by introduce amendments."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "Add the member `rut-tiles=<T>` to `--capacity` of sim.run (owner N38a-29, M6, Moonshot, feature moonshot-ruts): positive integer, default the fixture's declared value or 1,024, part of StepPlanId; FROB-REF-724 on a build without the feature or on a backend where KILL-RUT fired; FROB-REF-802 for zero or a non-integer."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "Add the flag `--actors` to scene.gen (owner N38a-33, M6, Frontier, feature frontier-actors): interior families only (FROB-REF-802 on terrain/...); FROB-REF-724 without the feature or after KILL-DRESSING fires for actors; combines with --seeds, --address and --populated; the result is the proxy scene of the same seed with actors added."
+  },
+  {
+   "bead": "N19ax-05",
+   "what": "Its actor scenes are generated with `frob scene gen --family <f> --seed <s> --actors` on the seeds of the proxy scenes (N38a-33); the pairing can be asserted from the aspect digests (geometry, material, optics, clocks equal; actors different)."
+  },
+  {
+   "bead": "N22a-24",
+   "what": "For a method experiment, read the episode count through `experiments::sampling_allowance(id) -> Option<u32>` (N38a-07's optional field `sampling_episodes_per_design`), the twin of `pilots::sampling_allowance`; None admits the default three."
+  },
+  {
+   "bead": "N38a-12",
+   "what": "(a) Admit the optional derivation front-matter key `conditional_on = \"<decision bead>: <condition>\"` and expose it to the G1 runner (N38a-13's outcome `not-run: conditional`). (b) The specimen row's `derivation = \"docs/derivations/docking.md\"` should read docking-fixture.md (N10b-08's file)."
+  },
+  {
+   "bead": "STD-TEST",
+   "what": "RelationRow gains the optional field `generated_from` (N38a-14's record), so the type still carries the record field for field."
+  },
+  {
+   "bead": "N10a-05",
+   "what": "`generated_from` is now in the relation schema (form C-nn.Sk; the construction must be in the record's source), so check C can run; MR-38's source names C-14."
+  },
+  {
+   "bead": "N18-CX",
+   "what": "CX-176: enter the `rerun` pair from PILOT-PT-19's status and receipt when the row is written (N38a-11, M0, has run by then), and name the record in the label so that the catalogue's rerun-disagrees-with-pilot check holds it."
+  },
+  {
+   "bead": "N24-CX",
+   "what": "CX-264: the same for PILOT-PT-18 (the rotor and cadence pilot re-run by N38a-11)."
+  },
+  {
+   "bead": "N16c-45",
+   "what": "The ledger admits PILOT-PT-S4 (N38a-10): append with `pilots -- append-result PILOT-PT-S4 --result <file.json>`; bundle receipt 'none: not in the plan-time record'; the 'until the ledger admits that record' branch can go."
+  },
+  {
+   "bead": "NAB-15",
+   "what": "The plan-time ledger holds four supplementary records; PILOT-PT-S4 (held-command device pilot, re-run by N16c-45 at M2) covers no SRC-CHK id."
+  },
+  {
+   "bead": "N00-35",
+   "what": "The two subcommands are declared by N38a-10: the result document names its `bead`, carries no status, and `--registry <path>` selects a scratch copy."
+  },
+  {
+   "bead": "BD-043",
+   "what": "Append through N38a-10's `pilots -- append-result <record> --result <file.json>` and read the status with `rerun-status` (also BD-030 and BD-042), so that no script edits pilots.toml by hand."
+  },
+  {
+   "bead": "N10b-08",
+   "what": "BD-041 (M0) creates docs/derivations/docking-fixture.md with the pilot's section; this bead completes the file at M1 and does not start it."
+  },
+  {
+   "bead": "BD-031",
+   "what": "If the frob-units escape hatch opens, remove `conditional_on` from KA-779's derivation front matter in that commit: N38a-13 reads the key's presence as 'condition closed' and prints `not-run: conditional (BD-031: escape-hatch)`; without the key an unbound KA-779 fails the gate."
+  },
+  {
+   "bead": "N33-KA",
+   "what": "N38a-13 now has the outcome asked for: `not-run: conditional (<decision>)`, keyed on the presence of `conditional_on` in the derivation front matter; the interim 'not run: escape hatch closed' line can go."
+  },
+  {
+   "bead": "BD-096",
+   "what": "Its M1 control 'look-up-then-insert idempotency binding in two statements' is the defect of MR-36's first mutation (N38a-18, M2): keep one record and one feature for it. N38a-25 adds GATE-GAUNT-06 to the gate list of its order-dependent fake-device control."
+  },
+  {
+   "bead": "N37-CX",
+   "what": "N38a-26 (M3) adds GATE-GAUNT-06 to the gate lists of three of its controls and plants none again: SAFE-X01 check-then-open, SAFE-X02 label copied into warnings, and the removed check of GATE-SAFE-07. SAFE-X10's digest-skipping loader is the defect N38a-24 registers at M2 for GATE-GAUNT-06: reuse that record."
+  },
+  {
+   "bead": "N34-17",
+   "what": "N38a-26 reuses the mutant `dup-last-wins` as the chaos tier's keep-last-duplicate control and adds GATE-GAUNT-06 to its record's gate list; the record must exist when N34-17 closes (it is still 'requested of N34-CX')."
+  },
+  {
+   "bead": "BD-261",
+   "what": "N38a-26's planted leak is this bead's registered control (the sealed address copied into a warning string); N38a-26 adds GATE-GAUNT-06 to its gate list beside GATE-QUAL-02."
+  },
+  {
+   "bead": "N38a-27",
+   "what": "The family beads' controls are now: kernel six (five seeded GATE-GAUNT-06, MR-09's), protocols five (one seeded GATE-GAUNT-06, MR-36's two, MR-37's, BD-096's fake device), input five (all owned by other beads); count them from GATE-GAUNT-06's `controls` list."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "Resumed after an interruption; there was no result file. Two files were modified after the cutoff: BD-041 (complete as left) and N38a-37 (a complete rewrite that parsed; finished as described). All 35 beads read in full; unchanged, by name: BD-421, N38a-01, N38a-03, N38a-08, N38a-15, N38a-19, N38a-21, N38a-22, N38a-23, N38a-32, N38a-35 (numbers rechecked in N38a-08, N38a-15, N38a-22, N38a-34 and N38a-35; verb calls checked against VERBS-sim, -eval, -scene, -task, -nemesis, -telemetry, -job). Every request of the slice file is applied, three with a stated deviation: S12 for N38a-25 and N38a-26 (existing control records reused instead of second plants), S86 (a third row KILL-TAXEL with its own decision bead N38ap3-01, since a kill row has one fallback and KILL-TACTILE is decided per pad resolution) and F-U18b-1 (M4 entry, and no dependency on the pilot). The slice should settle once N18b-17 and N20a-19 take their dep on N38a-37 and VERBS-sim and VERBS-scene take the two inputs."
+}

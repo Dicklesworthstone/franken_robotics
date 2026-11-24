@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "ground", "upstream", "frankensim", "frontier"]
 parent: "WP-68"
-deps: ["BD-037", "BD-388", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-388", "BD-391", "BD-396", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-391", "BD-396", "FD-FSIM-07", "FD-FSIM-23"]
+related: ["N30a-05", "N30a-23", "N30b-12", "N30b-17", "N33b-13"]
 gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§30.4", "§30.21", "§30.18", "§35.1", "§33.8"]
 ---
@@ -32,7 +32,10 @@ never raised by relabelling); forbidding the ensemble lane (it is the only route
 
 In: in `fs-assimilate`, a written statement of what the ensemble lane guarantees across instruction sets, with
 a test that holds it; here, the cross-machine replay and its record. Out: deterministic math inside `fs-mbd`
-(FD-FSIM-07); the streaming entry (FD-FSIM-23); the replication kit itself (BD-396).
+(FD-FSIM-07); the streaming entry (FD-FSIM-23); the synthetic rehearsal (BD-388); `ground.identify`, whose
+stiction pass uses the ensemble lane through the whole-job adapter (BD-391, with N30a-23 and N30a-05); the
+replication kit itself (BD-396). The last three are dependencies, because the switch-over replays the
+rehearsal's ensemble fit through `ground.identify` and checks what the kit states about architecture.
 
 ## Technical approach
 
@@ -80,9 +83,13 @@ by this bead: one test tagged `FD-FSIM-24`, compiled as the `frob-conformance` i
 marked `#[ignore]` so that the default suite stays green, with `expected.toml` beside it holding the signature
 recorded at the pinned commit (`observed_at`, the failing assertion and the observed value). It fails at the pin
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
-itself a failure of the registry check. It replays one ensemble update of the synthetic rehearsal on both
-machines and compares posterior bytes; without the statement the comparison is recorded as "no class claimed"
-and counts as failing.
+itself a failure of the registry check. A test runs on one machine, so the fixture has two parts. On any
+machine it replays one ensemble update of the synthetic rehearsal and asserts that the lane's receipt names a
+cross-ISA class (absent at the pin: the comparison is recorded as "no class claimed" and counts as failing).
+When a peer record from the other architecture is present (`tests/upstream/FD-FSIM-24/peer/<target-triple>.json`:
+posterior digest, posterior values, machine fingerprint, receipt hash, seed), it also compares its own posterior
+with the peer's under the named class: bytes for `bitwise`, the stated bound for `tolerance`. The peer record is
+produced by the end-to-end script on the other machine and is the only thing carried between the two.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -123,9 +130,11 @@ In FrankenSim (added, behind `ensemble`):
 - `ensemble_golden_bytes` (bitwise statement) or `ensemble_cross_isa_bound` (tolerance statement): a 16-member ensemble on a 2-state, 8-observation problem; the stored golden or the bound is checked on both architectures.
 - `draws_are_keyed_not_ordered`: evaluating members in reverse order gives identical results.
 - `linear_case_matches_kalman`: with a linear model and Gaussian noise the ensemble square-root filter's mean and covariance tend to the Kalman update's as the member count grows; at 4,096 members the mean is within 3 standard errors.
+- `square_root_update_is_exact_on_a_matched_prior`: a 16-member prior ensemble constructed to have exactly the prior mean and covariance (centred and scaled), linear observations; expected the analysis ensemble's mean and covariance equal to the Kalman update's to 10⁻¹⁰ relative (a deterministic square-root update has no sampling error of its own).
 Here:
 - `calibration_record_has_cross_machine_section`: both fingerprints, the class, the difference.
 - `portable_label_requires_comparison`: a calibration without the section cannot be labelled portable.
+- `peer_record_mismatch_refuses`: a peer record naming a different receipt hash or toolchain; expected refusal to compare, not a pass or a failure.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_24.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
@@ -133,9 +142,17 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_24 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. The script is run once on each machine; the second run reads the first run's log and
-compares. Phase `post` also runs `frob ground identify --json` with the ensemble lane on the rehearsal dataset
-and `frob ground kit --json` to confirm what the kit states about architecture.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. The script is run once on each machine. The first run writes its peer record
+(`--emit-peer`, to `target/e2e-logs/upstream_fd_fsim_24/peer-<target-triple>.json`); that file is copied to the
+second machine and passed with `--peer <file>`, and the second run refuses to compare if the two records name
+different receipts or toolchains, then compares under the claimed class and logs the first differing member and
+step. Phase `post` also runs `frob ground identify <rehearsal dataset> --stage actuators --key
+fd24-ens-<target-triple>-<run-id> --json` (the dataset is the positional input; the actuator stage is the one
+whose pass C estimates stiction and the Stribeck speed with the ensemble lane, N30a-23) and `frob ground kit build
+--result <the rehearsal's score> --out <dir> --key fd24-kit-<target-triple>-<run-id> --json` (the kit verb has
+the two forms `build` and `check`) to confirm what the kit's manifest states about architecture. Both are run
+verbs: each call carries a key of its own, different on the two machines and on a re-run after a later pin move,
+so that neither machine is answered with the other's stored receipt.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_24/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

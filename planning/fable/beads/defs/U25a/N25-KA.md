@@ -1,14 +1,14 @@
 ---
 key: "N25-KA"
-title: "Augur known-answer registry: KA-624 to KA-658 with truth, tolerance, tier and control; eighteen late answers awaiting numbers"
+title: "Augur known-answer registry: KA-624 to KA-658, truth, tolerance, tier, control; eighteen late answers unnumbered"
 type: "task"
 priority: 1
 milestone: "M1"
 labels: ["m1", "augur", "gauntlet", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-42"
-deps: ["BD-025", "STD-TEST", "STD-E2E"]
-needs: ["§38.6 and §38.11: the loader and row schema of the known-answer registry and of the negative-control registry in frob-conformance (BD-146)", "Appendix M: suite numbers for the eighteen late known answers of §25.29 to §25.39 listed in the second table (the Gauntlet unit that owns the suite)", "§38.6 rule 1: the derivation files under docs/derivations/, one per fixture, shared with the rows of the constructions chapter that use the same fixture (KA-101, KA-113, KA-127, KA-154)", "§25.26: the known-answer battery beads of the chapter (U25d), which hold the tests these rows are bound to at M1, at M3 and M4, and at M6 and M8"]
-related: ["N25-CX", "N25-REF", "BD-130", "BD-131", "BD-129", "BD-136", "BD-146", "BD-042", "BD-041", "BD-043", "N25a-08"]
+deps: ["BD-025", "N38a-12", "N38a-40", "N38b-04", "N38b-05", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["N25-REF", "N25a-08", "N25d-03", "N25d-08", "N25d-10", "N25d-17", "N25d-18", "N25d-19", "N25d-23", "N25d-24", "N25d-27", "N25d-28", "N25d-41", "N38-KA", "N38b-27", "N41-KA"]
 gates: []
 plan_refs: ["Appendix M.24", "Appendix M.1", "Appendix M.37", "Appendix M.38", "§25.26", "§25.22", "§25.27", "§25.29 to §25.39 (late known answers)", "§38.2", "§38.6"]
 ---
@@ -39,8 +39,13 @@ binds each to the test that realizes it.
 
 ## Scope
 
-In: the thirty-five rows in `registries/known-answers/augur.toml` (the schema of the suite's other chapters);
-the eighteen late rows in the same file under tags `late-01` to `late-18` until numbers are assigned; the
+In: the thirty-five rows in the suite's one known-answer registry,
+`crates/frob-conformance/registry/known_answers.toml` (schema and loader: N38a-12; a second physical copy of
+the registry is a lint failure, so this chapter has no file of its own; this bead first named
+`registries/known-answers/augur.toml`, which is not used); the eighteen late rows in the same file, cited by the
+tags `augur-late-01` to `augur-late-18` until their block is issued and then numbered from it, each keeping its
+tag in the schema's `slug` field (the `augur-` prefix keeps the tags unique across the shared file; the schema
+has no `number` field); the request for their numbers (below); the
 binding of each row to a test identifier; a registered control for each of the eight rows that state none and
 a tolerance for the one row that states none (DESIGN proposals of this bead, marked as such); the registry
 check; the derivation outlines below. Out: the tests themselves (owned by the beads named in the last
@@ -48,10 +53,24 @@ column); the counterexample and refusal registries (N25-CX, N25-REF); known answ
 
 ## Technical approach
 
-Row schema: `id`, `stated_in`, `case`, `truth`, `tolerance`, `tier`, `site`, `negative_control`, `exercises`
-(the verb or proof kind the fixture is for), `same_fixture_as` (the mark "≡ KA-nnn": an earlier row in another
-chapter uses the same fixture; one tests the mathematics, the other the subsystem; the derivation file is
-shared), `provenance` (`design` | `fact-pilot` | `fact-literature`), `test` (bead and test name).
+Row schema: the suite's, owned by N38a-12 (a dependency); this bead adds no field and keeps no file of its own.
+One `[[ka]]` record per row, appended to `crates/frob-conformance/registry/known_answers.toml`, with the columns
+mapped as follows: "Stated in" → `section` (with `owner` = the gate the row serves, from the derivation file);
+"The case" → `case`; "The truth" → `truth`; "Tolerance" → `tolerance` (`exact`, `abs`, `rel`, `printed-digits`,
+`gate` or `to-set`); "Tier · site" → `tier` and `sites`; "Negative control" → `control.text` (`none stated`
+where the column says so; `nc` is filled by the seeding tool of N38b-05 from the stated cells, and for the eight
+rows without one by the registration of the proposed controls below, never by hand); the mark "≡ KA-nnn" (an
+earlier row in another chapter uses the same fixture; one tests the mathematics, the other the subsystem) →
+`same_as = "KA-nnn"` with the same `fixture` name and the same derivation file; the provenance → `label`
+(`DESIGN` for hand derivations; `FACT` for a pilot count or a literature count, with its source and the note "to
+be re-run or re-read before a gate cites it", which the loader requires of every FACT row); plus `fixture`,
+`derivation` (`docs/derivations/<fixture>.md`), `due` and `printed`. The columns "Exercises" (the verb or proof
+kind the fixture is for) and "Realized by" (the beads and test names) go into the derivation file's front matter,
+which lists for each KA it serves the test that checks it and the owning bead; they are not fields of the record.
+The row stores no status: eligibility (`eligible`, `obligation: tolerance`, `obligation: control`, `obligation:
+derivation`, `flagged: unreconciled`) is computed by the loader. DESIGN, correcting an earlier draft of this bead
+that gave the chapter a schema of its own (`stated_in`, `site`, `negative_control`, `exercises`,
+`same_fixture_as`, `provenance`, `test`).
 
 Tolerances: `exact` for integers, rationals, Booleans, verdicts, labels and digests; "to the printed digits"
 means half a unit in the last digit printed. Tiers: G0 laws and self-tests; G1 known answers; G2 parity with an
@@ -63,45 +82,52 @@ runs first on the weakest site that can decide it and then on every tier its gat
 
 | KA | Stated in | The case | The truth | Tolerance | Tier · site | Negative control | Exercises | Realized by |
 |---|---|---|---|---|---|---|---|---|
-| KA-624 | §25.13, §25.26 | Stance family: load 400 N, feet at (±1/3, ±b) m, 160 N ratings, centre-of-mass rectangle 150 mm × 75 mm | Admitted iff b ≥ 3/14 m; forces (160, 130, 110, 0) N at the (60, 30) N·m vertex; 165 N needed at b = 1/5 m | exact (rational) | G1 · host, auditor | The support-polygon-plus-total-capacity screen; a perturbed dual multiplier at b = 1/5 m | `mission.synthesize`, `lp-primal`, `lp-farkas`, `partition` | BD-130, N25a-21 |
-| KA-625 | §25.22, §25.26 | Stance grid: u, v ∈ {2, 3, 4} per metre, ratings ∈ {0, 80, 160, 240}⁴ N, four vertices and centroid | 2,254 of 11,520 states feasible; 114 of 2,304 bodies cover the mission | exact (count) | G1 · host | The weak screen falsely accepts 1,596 bodies | Lowering; negative control for static stability | BD-130, BD-042, N25a-08 |
-| KA-626 | §25.4.7, §25.26 | Passive equal springs at b = 1/4 m | (175, 115, 85, 25) N against the active allocation (155, 135, 105, 5) N and a 160 N rating | exact | G1 · host | A certificate that omits the authority realizing the allocation admits the body | Authority in certificates | BD-130, N25a-13, N25a-08 |
-| KA-627 | §25.4.7, §25.26 ≡ KA-101 | Design-dependent load: feet (±1 − e, ±1) m, 0.5 N ratings, load W at the origin; the positive-x pair carries W·(1 + e)/2 | (e, W) = (0, 1.9) and (0.9, 1) each need 0.95 N and pass; the midpoint (0.45, 1.45) needs 841/800 N from a pair capped at 1 N | exact (rational) | G1 · host | A convexity claim outside an affine chart admits the midpoint | Chart and convexity admission | N25a-08, BD-130, N25a-15 |
-| KA-628 | §25.4.2, §25.26 | Pusher y = max(0, g·u − d), g ∈ [1/2, 2], u ∈ [0, 2], d ∈ [0, 1/4], target y ∈ [3/4, 5/4] | Per-build command set: all of [1/2, 2]; shared command set: empty | exact | G1 · host, auditor | The prefix ∀g ∃u offered for the query ∃u ∀g is rejected (`FROB-REF-826` by the auditor; `FROB-REF-881` by the verb) | Quantifier order | BD-131, N25a-03, N25a-22 |
-| KA-629 | §25.26 | Pusher battery, ten frozen cases | Twenty intervals, including `shared-tight`: shared set {1}; `both-ends`: [2/3, 5/4]; `branch-crossing`: shared [0, 3/8] | exact (closed ends, singletons) | G1 · host, auditor | Six corrupted certificates, six of six rejected | Closed ends, singletons, saturation branch | BD-131, N25a-22 |
-| KA-630 | §25.26 | Persistent gain: out-and-back with g ∈ {1, 2} | Net 0 with a fixed gain; {−1, 0, 1} when the gain is resampled | exact | G1 · host | Resampling a declared-persistent parameter (`world.persistence`) | `world.persistence` | N25a-03, N25a-02 |
-| KA-631 | §25.3.5, §25.26 | Twenty worlds, two stages each passing 19 of 20 | 18/20 if the failures differ, 19/20 if they coincide; 0.9025 only under independence | exact | G1 · host | Multiplying stage rates | Chance constraints | N25a-11 |
-| KA-632 | §25.4.5, §25.26 ≡ KA-154 | Mandatory work: lift 8 kg over 12 mm against a 0.90 J store | 8·9.81·0.012 = 0.94176 J > 0.90 J, excluded; 0.05 J of approach energy removes the exclusion | exact to the printed digits | G1 · host, auditor | An energy budget with an omitted source | Rule 1 scope | N25a-07 |
-| KA-633 | §25.10, §25.26 ≡ KA-113 | Binary sensor correct with probability 3/4, majority vote | 27/32, 459/512 and 3807/4096 for 3, 5 and 7 reads; 3/4 with a common fault bit; a sequential stop-at-gap-two rule reaches 9/10 in 16/5 expected reads; 225/256 when forced at six | exact (rational) | G1 · host | Independent coins assumed for a shared error bit | `alias-pair`, deadlines | BD-290 |
-| KA-634 | §25.11, §25.26 (the text of the fixture is in §25.10) | Passive jaw: k = 1 and 4 N/mm, force bands [2, 4] and [7, 9] N, stroke 6 mm | Feasible iff max{2(c + 1), 7(c + 1/4)} ≤ x ≤ min{4(c + 1), 9(c + 1/4), 6}; K ≥ 28/17 N/mm; K ≥ 4/3 N/mm without the stroke cap | exact (rational) | G1 · host, auditor | Dropping the stroke cap | Shared-policy inner cell | BD-290 |
-| KA-635 | §25.15, §25.26 | Docking, g ∈ {1, 2}, packet on time | Command sequences (1/4, 1/2, −3/4) and (1/4, 0, −1/4) reach (1, 0) | exact | G1 · host, auditor | The same bundle with quantifiers reordered | `finite-game` | BD-129 |
-| KA-636 | §25.15, §25.26 | Docking, packet late | No common command vector; all 561 late-packet cells excluded | exact | G1 · host, auditor | none stated (proposed below) | `alias-pair` | BD-129, BD-134 |
-| KA-637 | §25.15, §25.26 | Docking family | Admitted iff ε < (U + 1/2)/4 on U ∈ [1/2, 1]; of 561 cells 344 admitted, 217 excluded, 9 on the boundary; at U = 3/4, ε = 5/16 both worlds can read 15/16 | exact; strict comparator | G1 · host, auditor | A non-strict comparator admits the equality case | Strict comparators; unattained infimum | BD-129, BD-041 |
-| KA-638 | §25.22, §25.26 | Docking with a third gain 33/32 at ε = 1/64 | No exact docking; best worst-case error 1/65 m | exact (rational) | G1 · host | A certificate reused outside its declared hypothesis support | Eligibility and withdrawal | BD-129, BD-041, N25a-16, N25a-26 |
-| KA-639 | §25.14, §25.26 | Pad probe, four laws, 900 deterministic cases | 29.66 N compact; 24.72 N and 41.15 N broad; three-law probe 675 of 675 in class and 0 of 225 on the withheld law; direct measurement 900 of 900 | exact (counts); forces to the printed digits | G1 · host | A fourth mechanism that shares the probe's early trace reverses all 225 held-out decisions | Conditional witnesses | BD-291, BD-043 |
-| KA-640 | §25.14, §25.26 | Pad family, 75 N pull | 300 g under law V, 240 g under law P at centred readings; an eccentric pull needs 43.125 N at e/s = 0.15; an admitted reading drops the three-compact bound to 73.79 N | to the printed digits | G1 · host | A certificate applied outside its reading set | Additivity and wrench balance | BD-291, BD-043 |
-| KA-641 | §25.16, §25.26 | Coupled A/B on z ∈ [0, 1]: A succeeds iff z ≥ 3/5, B iff z ≥ 2/5 | Outcome (1, 0) is unreachable; B gains on [2/5, 3/5) | exact | G1 · host, auditor | Outcomes enclosed separately: (0, 0) and (1, 1) project onto {0, 1} for both and hide (1, 0) | `product-unreachable` | BD-359 |
-| KA-642 | §25.17, §25.26 | Handoff bit | Pooled history wins both cases; every local deterministic choice loses one; a timely bit restores both | exact (verdict) | G1 · host | A late bit | Decision makers | BD-435 |
-| KA-643 | §25.17, §25.26 | Shared bus: two fingers each need one powered tick; the bus powers one finger per tick | Zero one-tick schedules; two two-tick schedules | exact (count) | G1 · host | An additive peak rule prunes the feasible two-tick case; local motor limits are identical in both cases | Joint resource contracts | BD-360, BD-435, N25a-08 |
-| KA-644 | §25.18, §25.26 | Three variants on commands (x, y) ∈ [0, 1]²: x ≥ 2/3, y ≥ 2/3, x + y ≤ 1 | Every pair intersects; the triple does not (x + y ≥ 4/3 against x + y ≤ 1). Two labels suffice, (2/3, 2/3) and (0, 0); one is impossible | exact | G1 · host, auditor | Pairwise compatibility taken as joint | Minimal conflict sets | BD-363, N25a-08 |
-| KA-645 | §25.18, §25.26 | Three variants, three readings | Two labels per reading; three for a fixed label map across histories | exact | G1 · host | none stated (proposed below) | Label map across histories | BD-363 |
-| KA-646 | §25.18, §25.26 | Station records {left, shared} and {shared, right} | No tag count suffices | exact (verdict) | G1 · host | An encoder premise assumed without a witness | Encoder premise | BD-363 |
-| KA-647 | §25.18, §25.26 | Label deadline: error e = u − bᵢ − q − δ, bᵢ ∈ {−1/4, 0, 1/4} mm, q ∈ [−1/32, 1/32] mm, δ ∈ [−w, w] mm, success abs(e) ≤ 3/8 mm | Largest w is 3/32, 7/32 and 11/32 mm with one, two and three labels before commitment; 3/32 mm for any number delivered late | exact (rational) | G1 · host, auditor | Labels counted without their delivery instants | Deadlines | BD-363 |
-| KA-648 | §25.7, §25.26 ≡ KA-127 | Ballast quotient | 735,471 placements fall into 24,546 classes; {0, 3} and {1, 2} must split | exact (count) | G1 · host | A quotient by the mechanical group that merges {0, 3} with {1, 2} | Mission-observable quotient | BD-357, BD-285 |
-| KA-649 | §25.19, §25.26 | Differential-drive loop, half-track w, wheel radius ρ, wheel angle δ | Sideways displacement 4w·(1 − cos(ρδ/2w)); zero net yaw and advance; the reversed loop gives the opposite | to set (proposed below) | G1 · host, referee | none stated (proposed below) | Holonomy query | BD-425 |
-| KA-650 | §25.19, §25.26 | Skid-steer base under a no-slip connection | ω = 0 | exact | G1 · host | Admitting the connection for a skid-steer base | Connection admission | BD-425 |
-| KA-651 | §25.4.7, §25.26 | ẋ = u, u ∈ [0, 1] | Bracket rank one; negative x is unreachable from zero | exact | G1 · host | Bracket rank read as reachability | Finite witness rule | N25a-08, BD-425 |
-| KA-652 | §25.21, §25.26 | Mass placement: 1 kg inside a ball of radius 1/10 m with principal moments 1/125 kg·m² | No placement: mean squared radius 3/250 m² is needed and at most 1/100 m² is available | exact (rational) | G1 · host, auditor | none stated (proposed below) | Support-aware inertia synthesis | the mass-placement lane of `frob-synth` (U25d) |
-| KA-653 | §25.21.3, §25.26 | Three-pose dyad through (0, 0), (2, 0), (0, 2) | Pivot (1, 1), radius² = 2 | exact | G1 · host | none stated (proposed below) | Linkage lane | BD-361 |
-| KA-654 | §25.21.3, §25.26 | Crank-rocker 1, 4, 3 on ground 4 | B = (11/5, ±12/5) at crank angle π; the two signs are different circuits | exact (rational) | G1 · host, auditor | A root accepted without a circuit certificate | Circuit certificate | BD-361, N25a-08 |
-| KA-655 | §25.21.4, §25.26 | Stewart–Gough forward kinematics; 6R inverse kinematics | 40 and 16 solutions (FACT from the literature, to be re-read from the primary source) | exact (count) | G2 · host | none stated (proposed below) | Continuation labels | BD-437 |
-| KA-656 | §25.12, §25.26 | Guarded strict predicate on 65,536 rows of the docking boundary | 34,590 admitted and 30,946 excluded, of which 1,820 are exact ties; no error after exact fallback; identical bytes on all placements | exact (count, digest) | G5 · host, cuda, metal | Unguarded single precision: 452 false admissions and 23,438 false exclusions on the near grid | Exact-integer and guarded kernels | BD-355, BD-030, N25a-28 |
-| KA-657 | §25.22 | Docking family against a scenario-tree program | 51 linear programs agree with the exact answer | exact (verdicts) | G2 · host | none stated (proposed below) | Conventional comparator | BD-127, BD-129 |
-| KA-658 | §25.22 | Stance classifiers against a conventional solver | 11,520 of 11,520 states agree between two exact classifiers; 102 of 102 spot checks agree | exact (verdicts) | G2 · host | none stated (proposed below) | Second lowering (PO-AUGUR-01) | BD-130, BD-042 |
+| KA-624 | §25.13, §25.26 | Stance family: load 400 N, feet at (±1/3, ±b) m, 160 N ratings, centre-of-mass rectangle 150 mm × 75 mm | Admitted iff b ≥ 3/14 m; forces (160, 130, 110, 0) N at the (60, 30) N·m vertex; 165 N needed at b = 1/5 m | exact (rational) | G1 · host, auditor | The support-polygon-plus-total-capacity screen; a perturbed dual multiplier at b = 1/5 m | `mission.synthesize`, `lp-primal`, `lp-farkas`, `partition` | BD-130, N25c-10, N25a-21 (e2e), N25d-37 |
+| KA-625 | §25.22, §25.26 | Stance grid: u, v ∈ {2, 3, 4} per metre, ratings ∈ {0, 80, 160, 240}⁴ N, four vertices and centroid | 2,254 of 11,520 states feasible; 114 of 2,304 bodies cover the mission | exact (count) | G1 · host | The weak screen falsely accepts 1,596 bodies | Lowering; negative control for static stability | N25c-12 (the grid), BD-130, BD-042 (pilot re-run), N25a-08, N25d-37 |
+| KA-626 | §25.4.7, §25.26 | Passive equal springs at b = 1/4 m | (175, 115, 85, 25) N against the active allocation (155, 135, 105, 5) N and a 160 N rating | exact | G1 · host | A certificate that omits the authority realizing the allocation admits the body | Authority in certificates | N25c-11 (authority models), N25a-13, BD-130, N25a-08, N25d-37 |
+| KA-627 | §25.4.7, §25.26 ≡ KA-101 | Design-dependent load: feet (±1 − e, ±1) m, 0.5 N ratings, load W at the origin; the positive-x pair carries W·(1 + e)/2 | (e, W) = (0, 1.9) and (0.9, 1) each need 0.95 N and pass; the midpoint (0.45, 1.45) needs 841/800 N from a pair capped at 1 N | exact (rational) | G1 · host | A convexity claim outside an affine chart admits the midpoint | Chart and convexity admission | N25a-08, N25c-10 (chart admission), BD-130, N25a-15, N25d-37 |
+| KA-628 | §25.4.2, §25.26 | Pusher y = max(0, g·u − d), g ∈ [1/2, 2], u ∈ [0, 2], d ∈ [0, 1/4], target y ∈ [3/4, 5/4] | Per-build command set: all of [1/2, 2]; shared command set: empty | exact | G1 · host, auditor | The prefix ∀g ∃u offered for the query ∃u ∀g is rejected (`FROB-REF-826` by the auditor; `FROB-REF-881` by the verb) | Quantifier order | BD-131, N25a-03, N25a-22 (e2e), N25d-37 |
+| KA-629 | §25.26 | Pusher battery, ten frozen cases | Twenty intervals, including `shared-tight`: shared set {1}; `both-ends`: [2/3, 5/4]; `branch-crossing`: shared [0, 3/8] | exact (closed ends, singletons) | G1 · host, auditor | Six corrupted certificates, six of six rejected | Closed ends, singletons, saturation branch | BD-131, N25a-22, N25d-37 |
+| KA-630 | §25.26 | Persistent gain: out-and-back with g ∈ {1, 2} | Net 0 with a fixed gain; {−1, 0, 1} when the gain is resampled | exact | G1 · host | Resampling a declared-persistent parameter (`world.persistence`) | `world.persistence` | N25a-03, N25a-02, N25d-37 |
+| KA-631 | §25.3.5, §25.26 | Twenty worlds, two stages each passing 19 of 20 | 18/20 if the failures differ, 19/20 if they coincide; 0.9025 only under independence | exact | G1 · host | Multiplying stage rates | Chance constraints | N25a-11, N25d-37 |
+| KA-632 | §25.4.5, §25.26 ≡ KA-154 | Mandatory work: lift 8 kg over 12 mm against a 0.90 J store | 8·9.81·0.012 = 0.94176 J > 0.90 J, excluded; 0.05 J of approach energy removes the exclusion | exact to the printed digits | G1 · host, auditor | An energy budget with an omitted source | Rule 1 scope | N25a-07, N10bx-01, N25d-37 |
+| KA-633 | §25.10, §25.26 ≡ KA-113 | Binary sensor correct with probability 3/4, majority vote | 27/32, 459/512 and 3807/4096 for 3, 5 and 7 reads; 3/4 with a common fault bit; a sequential stop-at-gap-two rule reaches 9/10 in 16/5 expected reads; 225/256 when forced at six | exact (rational) | G1 · host | Independent coins assumed for a shared error bit | `alias-pair`, deadlines | N25b-27 (indistinguishability witnesses), BD-290, N25d-38 |
+| KA-634 | §25.11, §25.26 (the text of the fixture is in §25.10) | Passive jaw: k = 1 and 4 N/mm, force bands [2, 4] and [7, 9] N, stroke 6 mm | Feasible iff max{2(c + 1), 7(c + 1/4)} ≤ x ≤ min{4(c + 1), 9(c + 1/4), 6}; K ≥ 28/17 N/mm; K ≥ 4/3 N/mm without the stroke cap | exact (rational) | G1 · host, auditor | Dropping the stroke cap | Shared-policy inner cell | N25b-28 (the passive-jaw family), BD-290, N25d-38 |
+| KA-635 | §25.15, §25.26 | Docking, g ∈ {1, 2}, packet on time | Command sequences (1/4, 1/2, −3/4) and (1/4, 0, −1/4) reach (1, 0) | exact | G1 · host, auditor | The same bundle with quantifiers reordered | `finite-game` | BD-129, N25c-22 (e2e), N25d-37 |
+| KA-636 | §25.15, §25.26 | Docking, packet late | No common command vector; all 561 late-packet cells excluded | exact | G1 · host, auditor | none stated (proposed below) | `alias-pair` | BD-129, BD-134, N25c-22, N25d-37 |
+| KA-637 | §25.15, §25.26 | Docking family | Admitted iff ε < (U + 1/2)/4 on U ∈ [1/2, 1]; of 561 cells 344 admitted, 217 excluded, 9 on the boundary; at U = 3/4, ε = 5/16 both worlds can read 15/16 | exact; strict comparator | G1 · host, auditor | A non-strict comparator admits the equality case | Strict comparators; unattained infimum | BD-129, BD-041, N25c-22, N25d-37 |
+| KA-638 | §25.22, §25.26 | Docking with a third gain 33/32 at ε = 1/64 | No exact docking; best worst-case error 1/65 m | exact (rational) | G1 · host | A certificate reused outside its declared hypothesis support | Eligibility and withdrawal | N25c-21 (the three-gain amendment), BD-041, N25a-16, N25a-26, N25c-22, N25d-37 |
+| KA-639 | §25.14, §25.26 | Pad probe, four laws, 900 deterministic cases | 29.66 N compact; 24.72 N and 41.15 N broad; three-law probe 675 of 675 in class and 0 of 225 on the withheld law; direct measurement 900 of 900 | exact (counts); forces to the printed digits | G1 · host | A fourth mechanism that shares the probe's early trace reverses all 225 held-out decisions | Conditional witnesses | N25c-13 (the pad-probe fixture, e2e), BD-291, BD-043, N25d-38 |
+| KA-640 | §25.14, §25.26 | Pad family, 75 N pull | 300 g under law V, 240 g under law P at centred readings; an eccentric pull needs 43.125 N at e/s = 0.15; an admitted reading drops the three-compact bound to 73.79 N | to the printed digits | G1 · host | A certificate applied outside its reading set | Additivity and wrench balance | N25c-14 (the family consequence), BD-043, N25d-38 |
+| KA-641 | §25.16, §25.26 | Coupled A/B on z ∈ [0, 1]: A succeeds iff z ≥ 3/5, B iff z ≥ 2/5 | Outcome (1, 0) is unreachable; B gains on [2/5, 3/5) | exact | G1 · host, auditor | Outcomes enclosed separately: (0, 0) and (1, 1) project onto {0, 1} for both and hide (1, 0) | `product-unreachable` | N25c-24 (pilot), N25c-26 (e2e), BD-359, N25d-38 |
+| KA-642 | §25.17, §25.26 | Handoff bit | Pooled history wins both cases; every local deterministic choice loses one; a timely bit restores both | exact (verdict) | G1 · host | A late bit | Decision makers | N25c-28 (pilot), N25c-30, N25c-34 (e2e), N25d-39 |
+| KA-643 | §25.17, §25.26 | Shared bus: two fingers each need one powered tick; the bus powers one finger per tick | Zero one-tick schedules; two two-tick schedules | exact (count) | G1 · host | An additive peak rule prunes the feasible two-tick case; local motor limits are identical in both cases | Joint resource contracts | N25c-28, N25c-30, BD-360, N25a-08, N25d-38 |
+| KA-644 | §25.18, §25.26 | Three variants on commands (x, y) ∈ [0, 1]²: x ≥ 2/3, y ≥ 2/3, x + y ≤ 1 | Every pair intersects; the triple does not (x + y ≥ 4/3 against x + y ≤ 1). Two labels suffice, (2/3, 2/3) and (0, 0); one is impossible | exact | G1 · host, auditor | Pairwise compatibility taken as joint | Minimal conflict sets | BD-363, N25c-38 (e2e), N25a-08, N25d-38 |
+| KA-645 | §25.18, §25.26 | Three variants, three readings | Two labels per reading; three for a fixed label map across histories | exact | G1 · host | none stated (proposed below) | Label map across histories | N25c-37 (one label map across histories), N25c-38, BD-363, N25d-38 |
+| KA-646 | §25.18, §25.26 | Station records {left, shared} and {shared, right} | No tag count suffices | exact (verdict) | G1 · host | An encoder premise assumed without a witness | Encoder premise | N25c-36 (the encoder premise), N25c-38, BD-363, N25d-38 |
+| KA-647 | §25.18, §25.26 | Label deadline: error e = u − bᵢ − q − δ, bᵢ ∈ {−1/4, 0, 1/4} mm, q ∈ [−1/32, 1/32] mm, δ ∈ [−w, w] mm, success abs(e) ≤ 3/8 mm | Largest w is 3/32, 7/32 and 11/32 mm with one, two and three labels before commitment; 3/32 mm for any number delivered late | exact (rational) | G1 · host, auditor | Labels counted without their delivery instants | Deadlines | N25c-37 (label deadlines), N25c-38, BD-363, N25d-38 |
+| KA-648 | §25.7, §25.26 ≡ KA-127 | Ballast quotient | 735,471 placements fall into 24,546 classes; {0, 3} and {1, 2} must split | exact (count) | G1 · host | A quotient by the mechanical group that merges {0, 3} with {1, 2} | Mission-observable quotient | N25b-14 (the projection π_M), N25b-17, BD-357, BD-285 (KA-127's side), N25d-38 |
+| KA-649 | §25.19, §25.26 | Differential-drive loop, half-track w, wheel radius ρ, wheel angle δ | Sideways displacement 4w·(1 − cos(ρδ/2w)); zero net yaw and advance; the reversed loop gives the opposite | to set (proposed below) | G1 · host, referee | none stated (proposed below) | Holonomy query | N25c-42 (pilot), N25c-43, N25c-44, N25c-45 (e2e), N25d-39 |
+| KA-650 | §25.19, §25.26 | Skid-steer base under a no-slip connection | ω = 0 | exact | G1 · host | Admitting the connection for a skid-steer base | Connection admission | N25c-43 (connection admission), N25c-45, N25d-39 |
+| KA-651 | §25.4.7, §25.26 | ẋ = u, u ∈ [0, 1] | Bracket rank one; negative x is unreachable from zero | exact | G1 · host | Bracket rank read as reachability | Finite witness rule | N25a-08, N25c-43, N25c-45, N25d-39 |
+| KA-652 | §25.21, §25.26 | Mass placement: 1 kg inside a ball of radius 1/10 m with principal moments 1/125 kg·m² | No placement: mean squared radius 3/250 m² is needed and at most 1/100 m² is available | exact (rational) | G1 · host, auditor | none stated (proposed below) | Support-aware inertia synthesis | N25d-07 (pilot), N25d-08 (the mass-placement lane of `frob-synth`), N25d-38 |
+| KA-653 | §25.21.3, §25.26 | Three-pose dyad through (0, 0), (2, 0), (0, 2) | Pivot (1, 1), radius² = 2 | exact | G1 · host | none stated (proposed below) | Linkage lane | N25d-16 (pilot), N25d-17, N25d-19 (e2e), BD-361, N25d-38 |
+| KA-654 | §25.21.3, §25.26 | Crank-rocker 1, 4, 3 on ground 4 | B = (11/5, ±12/5) at crank angle π; the two signs are different circuits | exact (rational) | G1 · host, auditor | A root accepted without a circuit certificate | Circuit certificate | N25d-18 (the circuit certificate), N25d-19, BD-361, N25a-08, N25d-38 |
+| KA-655 | §25.21.4, §25.26 | Stewart–Gough forward kinematics; 6R inverse kinematics | 40 and 16 solutions (FACT from the literature, to be re-read from the primary source) | exact (count) | G2 · host | none stated (proposed below) | Continuation labels | N25d-21 (pilot), N25d-22, N25d-23, N25d-24 (e2e), N25d-39 |
+| KA-656 | §25.12, §25.26 | Guarded strict predicate on 65,536 rows of the docking boundary | 34,590 admitted and 30,946 excluded, of which 1,820 are exact ties; no error after exact fallback; identical bytes on all placements | exact (count, digest) | G5 · host, cuda, metal | Unguarded single precision: 452 false admissions and 23,438 false exclusions on the near grid | Exact-integer and guarded kernels | BD-355, BD-030, N25c-09, N25a-28 (e2e), N25d-38 |
+| KA-657 | §25.22 | Docking family against a scenario-tree program | 51 linear programs agree with the exact answer | exact (verdicts) | G2 · host | none stated (proposed below) | Conventional comparator | N25c-20 (the scenario-tree comparator), N25c-22, BD-127, N25d-37 |
+| KA-658 | §25.22 | Stance classifiers against a conventional solver | 11,520 of 11,520 states agree between two exact classifiers; 102 of 102 spot checks agree | exact (verdicts) | G2 · host | none stated (proposed below) | Second lowering (PO-AUGUR-01) | N25c-12, N25c-10, BD-130, BD-042, N25d-37 |
 
-Provenance: the rows whose truth quotes a pilot count are `fact-pilot` and are re-run before a gate cites them
-(KA-625, KA-639, KA-640, KA-648, KA-656, KA-657, KA-658, and the pilot counts inside KA-637 and KA-638);
-KA-655 is `fact-literature`; all others are `design`.
+Provenance (the `label` field): the rows whose truth quotes a pilot count are `FACT` with the pilot as source and
+are re-run from the planning reproduction bundle before a gate cites them (KA-625, KA-639, KA-640, KA-648,
+KA-656, KA-657, KA-658, and the pilot counts inside KA-637 and KA-638, whose re-runs are BD-041, BD-042 and
+BD-043); KA-655 is `FACT` with a literature source, to be re-read from the primary source; all others are
+`DESIGN`.
+
+Where the "Realized by" column names a capstone or an epic, the test lives in the component beads named beside
+it; the Augur known-answer batteries bind every row to a runner entry by milestone: N25d-37 (the M1 rows), N25d-38
+(the M3 and M4 rows) and N25d-39 (the M6 and M8 rows). BD-425, BD-435 and BD-437 are epics and carry no test of
+their own; their rows are carried by the component beads listed.
 
 **Controls and the tolerance proposed for the rows that state none** (DESIGN of this bead; each is a mutation,
 not a boundary behaviour, and each must be shown to fail before its row supports a gate):
@@ -168,7 +194,18 @@ bead and agree with the printed values).
   E_i = floor((U_i + H)/4) + ((i mod 9) − 4)·k for k = 1 and k = 2,048; admitted iff 4·E_i < U_i + H.
 
 **Late known answers, not yet numbered** (stated in full, with fixtures and derivations, in the beads of the
-unit that owns §25.29 to §25.39; registered here by tag so that the registry is complete):
+unit that owns §25.29 to §25.39; registered here by tag so that the registry is complete). Their numbers: this
+bead commits a request `[[block]] registry = "ka", count = 18, owner = "N25-KA"` in `registry/allocations.toml`
+(N38a-40), cites the rows by the tags below until the block is issued, then maps `augur-late-01` to
+`augur-late-18` to the issued numbers in table order in one commit, each tag kept in its row's `slug`; a tag
+still cited in place of its number in a registry, a test name or a derivation file at this bead's milestone fails
+the ledger check `provisional-tag-past-due`, and the block stays `filling` until the rows of later milestones
+land. The table's tags are written without the prefix for brevity; in the file each is `augur-late-nn`. The
+tier and sites of a late row are entered from the test plan of the bead that states it in full (last column),
+run first on the weakest site that decides it; `label` is `DESIGN` for all eighteen (hand fixtures of the late
+subsections). The tags of this table name known answers only: the counterexample registry of the chapter
+(N25-CX) must not use the same strings for its late entries, because the stale-tag check of N38a-40 searches
+test names and derivation files where both families appear (DESIGN).
 
 | Tag | Subsection, gate | Known answer | Tolerance | Stated in full by |
 |---|---|---|---|---|
@@ -191,16 +228,24 @@ unit that owns §25.29 to §25.39; registered here by tag so that the registry i
 | late-17 | §25.39, GATE-AUGUR-35 | Pack fixed point: 100 kg; an increment-stopping rule returns 99.5 kg after 527 steps of 5 g, where F(99.5) = 99.505 | within 1 g of 100 kg; exact for the mutant | N25e-42, N25e-44 |
 | late-18 | §25.39, GATE-AUGUR-35 | Builds (0, 6), (4, 4), (6, 0): (4, 4) minimizes no weighted sum; a budget of four selects it | exact | N25e-43, N25e-44 |
 
-**The registry check** (`xtask check-contracts`, extended by this bead's rows only): every row names an
-existing test; every test tagged with a KA identifier names an existing row; a row with `negative_control`
-stated has a registered control test that fails when the defect is planted; rows marked "none stated" and "to
-set" are listed and reported as unable to support a gate until their proposed control or tolerance is
-registered; a late row is reported `unnumbered` and cannot be cited by number.
+**The registry check** (the test target `crates/frob-conformance/tests/ka_registry_augur.rs`, run as
+`cargo test -p frob-conformance --test ka_registry_augur`, beside BD-025's `--test registry_check`; no `xtask`
+subcommand and no verb, ADR-GAUNT-01): every row's derivation file names an existing test; every test bound to
+a KA identifier (prefix `ka_<nnn>_`, STD-TEST) names an existing row; a row with a stated control has, after
+N38b-05's seeding, a non-empty `control.nc` whose control fails when the defect is planted (the control runner
+of N38b-04); rows marked "none stated" and "to set" are listed with their computed eligibility and reported as
+unable to support a gate until their proposed control or tolerance is registered; a late row is reported by tag
+until its block is issued and cannot be cited by a number outside that block.
 
 ## Acceptance criteria
 
-- [ ] `registries/known-answers/augur.toml` holds exactly KA-624 to KA-658 with the columns above, and the
-      eighteen late rows under their tags.
+- [ ] `crates/frob-conformance/registry/known_answers.toml` holds exactly KA-624 to KA-658 for this chapter
+      in N38a-12's row schema (columns mapped as above) and validates under its loader, and the eighteen late
+      rows are present by tag until their block is issued; no other known-answer file exists (`ka-second-file`
+      reports nothing).
+- [ ] The block request for eighteen numbers is committed in `registry/allocations.toml`; once issued, the
+      tags are mapped in table order in one commit, each kept in its row's `slug`, `registry::alloc::validate`
+      passes, and no `augur-late-` tag is cited in place of a number at this bead's milestone exit.
 - [ ] Every row is bound to at least one existing test; the check passes at the milestone where the row's
       realizing bead lands and reports `not run` rows before that.
 - [ ] Every row with a stated negative control has a registered control test that fails when the defect is
@@ -219,7 +264,10 @@ registered; a late row is reported `unnumbered` and cannot be cited by number.
 
 `crates/frob-conformance/tests/ka_registry_augur.rs`: `augur_rows_624_to_658_present`; `each_row_has_test`;
 `stated_controls_registered`; `none_stated_rows_listed` (expects the eight rows above before controls are
-added); `to_set_rows_listed` (expects KA-649); `late_rows_are_unnumbered_and_listed` (eighteen);
+added); `to_set_rows_listed` (expects KA-649); `late_rows_by_tag_or_block` (eighteen: by tag before the block is
+issued, after it inside the block issued to N25-KA in table order with the tag in `slug`; a planted late row
+numbered outside the block is refused with `unallocated-number`); `no_chapter_file` (a scratch copy of the rows
+in `registries/known-answers/augur.toml` fails with `ka-second-file`);
 `shared_fixture_marks_resolve` (four); `row_missing_test_fails_check` (the check's own negative control: delete
 one binding). Recomputation tests on the host, in exact rationals, for the derivation outlines:
 `stance_boundary_is_3_over_14`; `stance_grid_counts_2254_114_1596`; `passive_springs_175_115_85_25`;
@@ -230,12 +278,15 @@ one binding). Recomputation tests on the host, in exact rationals, for the deriv
 
 ### End-to-end script and logging
 
-`scripts/e2e/augur_ka_registry.sh` runs the registry check and the recomputation tests through
-`cargo test -p frob-conformance` and prints the table of rows with their status (`bound`, `not run`,
-`no control`, `no tolerance`, `unnumbered`). Logging through the helper of STD-E2E to
-`target/e2e-logs/augur_ka_registry/<utc>.ndjson`: one `assert` line per row with its identifier, status and
-bound test; `metric` lines for the counts (35 numbered, 18 late, 8 without control, 1 without tolerance); a
-`summary`. The rows themselves are asserted by the scripts of their realizing beads (`mission_stance.sh`,
+`scripts/e2e/augur_ka_registry.sh` (header `bead=N25-KA milestone=M1 labels=augur,registry gates=`) runs the
+registry check and the recomputation tests through `cargo test -p frob-conformance --test registry_check` and
+`cargo test -p frob-conformance --test ka_registry_augur`, and prints the table of rows with their status
+(`bound`, `not run`, `obligation: control`, `obligation: tolerance`, `by tag`). Logging through the helper of
+STD-E2E to `target/e2e-logs/augur_ka_registry/<utc>.ndjson` with a transcript beside it: every line with `ts`,
+`script`, `bead`, `step`, `event`, the exact command, exit code and wall time; one `assert` line per row with
+its identifier, status and bound test; `metric` lines for the counts (35 numbered, 18 late, 8 without control, 1
+without tolerance, the block's `first`, `last` and `status`); the digest of `known_answers.toml`; on a failure
+the first differing value and the scratch path; a `summary`. The rows themselves are asserted by the scripts of their realizing beads (`mission_stance.sh`,
 `mission_pusher.sh`, `mission_admission.sh`, `mission_family_screens.sh` and the scripts of the other units),
 each of which logs the KA identifiers it asserts.
 
@@ -243,7 +294,7 @@ each of which logs the KA identifiers it asserts.
 
 This bead is the registry. Its own negative controls: the deleted binding; a row whose printed value is edited
 (the recomputation test for that row must fail); a late row given a number by hand (the check refuses a number
-outside the suite's range). Determinism: every numbered row except KA-639, KA-640 and KA-649 is an exact
+outside the suite's range and outside an issued block). Determinism: every numbered row except KA-639, KA-640 and KA-649 is an exact
 rational, count, verdict or digest.
 
 ## Considerations
@@ -262,7 +313,8 @@ rational, count, verdict or digest.
 - The pilot rows are facts about small programs on small models. None used the project's dynamics, contact or
   sensor pipeline, and every pilot's strong baseline tied or won; a row that reproduces says the implementation
   matches the fixture, nothing about a physical robot.
-- New Augur known answers continue the suite's numbering at its end; they are never inserted here by hand.
+- New Augur known answers take their numbers from a block of the allocation ledger issued to this bead
+  (N38a-40); a number is never typed by hand and the thirty-five rows are never renumbered.
 
 ## References
 

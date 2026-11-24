@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-22", "N12-20", "N12-06", "CARD-T-04", "SPEC-C-36"]
+deps: ["CARD-T-04", "N12-06", "N12-20", "N12-22", "SPEC-C-36"]
 needs: []
-related: ["BD-379", "BD-384", "CARD-T-02", "CARD-T-13", "N12-21", "BD-087"]
+related: ["N12-21", "N12-42", "SPEC-C-05"]
 gates: []
 plan_refs: ["§12.3 (T-06)", "§10 C-05", "§10 C-36", "§7 NS-11", "Appendix D.2 (trapezoidal variational step)"]
 ---
@@ -35,8 +35,8 @@ alternative: a midpoint step followed by a projection, which conserves neither e
 
 ## Scope
 
-In: statement document, registry row, the instance certificate on the free-body variational step kernel (or the
-documented downgrade), specimen and mutants. Out: the step's implementation (the variational-step oracle and the
+In: statement document, registry row, the instance certificate on `K-cay-step`, the drift kernel of the free-body
+variational step (or the documented downgrade), specimen and mutants. Out: the step's implementation (the variational-step oracle and the
 articulated variational integrator beads); energy behaviour (measured, not certified); the general theorem on
 matrix Lie groups (CARD-T-13); the articulated case (no claim).
 
@@ -45,16 +45,22 @@ the free-body variational step of `frob-dyn` (BD-087) is `related`, not a depend
 implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
 does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
 Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
-every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output (a
-certificate bound to the content hash of the free-body step kernel as built) is run inside the implementing bead,
-with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
-registry row for that output.
+every acceptance line that its own fixtures decide. For this card the implementing beads land four and five
+milestones earlier (the drift kernel `K-cay-step`, BD-019 and BD-020 at M0; the host oracle BD-087 at M1, which
+has no kernel) and are not reopened: the certificate bound to the content hash of `K-cay-step` as built is issued
+at M5 by this card through the instance-certificate pipeline (N12-20), which is a dependency, with the transport
+μ° = Ad_cᵀ·μ⁺ as a declared assumption (N12-20's catalogue); the receipt of that run moves the registry row, and
+the coverage run (N12-36) and the demonstration (NS-11) observe it again.
 
 ## Technical approach
 
 1. Route: ideal membership (class `Certified`). Variables: the pose g (rotation as a quaternion with its norm
    relation, or Cayley parameters), μ⁺, ξ, and the outputs g₊, μ°. Generators of the ideal: the update equations
-   of step 3 (c = cay(h·ξ) with denominators cleared, g₊ = g·c, μ° = Ad_cᵀ·μ⁺) and the rotation relations. Claim:
+   of step 3 (c = cay(h·ξ) with denominators cleared, g₊ = g·c, extracted by symbolic execution of `K-cay-step`'s
+   program: c = (1, a/2), q′ = q⊗c, d = 1 + a·a/4, p′ = p + R(q)·u with a = h·ω, w = h·v and
+   u = (w + ½·a×w + ¼·a·(a·w))/d; and μ° = Ad_cᵀ·μ⁺, which the step applies outside the kernel and which the
+   bundle lists among its `assumptions` with its text and the digest of the code that applies it) and the
+   rotation relations. Claim:
    each component of D^m·(Ad_{g₊}⁻ᵀ·μ° − Ad_g⁻ᵀ·μ⁺) lies in the ideal, for the appropriate power of the Cayley
    denominator D. The mathematical content is one line: Ad_{g·c}⁻ᵀ·Ad_cᵀ = Ad_g⁻ᵀ·Ad_c⁻ᵀ·Ad_cᵀ = Ad_g⁻ᵀ, using card
    T-04. The bundle carries the membership cofactors, so the auditor checks a polynomial identity
@@ -78,8 +84,11 @@ registry row for that output.
       composition of T-04 instances, or `Tested`).
 - [ ] On the certified branch: `frob-verify` accepts the bundle and rejects a flipped sign in the transport
       (μ° = Ad_c⁻ᵀ·μ⁺ in place of Ad_cᵀ·μ⁺), a dropped term of the adjoint, and a missing rotation relation.
+- [ ] On the certified branch: the certificate is bound to `K-cay-step`'s `KernelId`, lists the transport among its
+      assumptions, and removing that assumption makes `frob-verify` reject (missing side condition, FROB-REF-829).
 - [ ] On the downgraded branch: the registry row shows `fell-back`, class `Tested`, with the test record; the
-      NS-11 output states that momentum conservation is tested, not certified.
+      `prove.kernel K-cay-step` output (the text NS-11 shows) states that momentum conservation is tested, not
+      certified.
 - [ ] The registry row carries certificate hash and checker identity when `checked`.
 - [ ] The statement document states the hypotheses (free body, exact arithmetic) and what is not claimed.
 
@@ -89,15 +98,26 @@ registry row for that output.
 
 `crates/frob-lemma/tests/cards/t06.rs`: `t06_transport_identity_symbolic` (Ad_{g·c}⁻ᵀ·Ad_cᵀ − Ad_g⁻ᵀ reduces to
 zero modulo the rotation relations on a small instance); `t06_specimen_accepts`;
-`t06_wrong_transport_sign_rejects`; `t06_exact_rational_step` (an asymmetric body with rational inertia, one
+`t06_wrong_transport_sign_rejects`; `t06_dropped_adjoint_term_rejects` (the p̂·R block of Ad_c⁻ᵀ omitted: the
+cofactor identity fails, `reject`); `t06_missing_rotation_relation_rejects` (FROB-REF-829);
+`t06_fallback_row_reads_tested` (with the route set to `Tested` by the pilot outcome, the registry row reads
+`fell-back`, class `Tested`, and the `prove.kernel` text says momentum conservation is tested, not certified);
+`t06_exact_rational_step` (an asymmetric body with rational inertia, one
 step in exact rationals with a rational ξ supplied: spatial momentum before and after are equal exactly);
 `t06_plus_h_differential_keeps_momentum` (the wrong-sign differential in step 2 still passes this identity,
-documenting why energy tests are needed).
+documenting why energy tests are needed); `t06_bound_to_cay_step` (the certificate's embedded kernel hash is
+`K-cay-step`'s `KernelId` and its assumptions contain μ° = Ad_cᵀ·μ⁺); `t06_transport_assumption_removed_rejects`
+(FROB-REF-829).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_coverage.sh` (bead N12-36) runs the pipeline on the kernel and prints the identity in the
-NS-11 demonstration; `scripts/e2e/pilot_lemma_budget.sh` logs the budget figures of arm A.
+NS-11 demonstration; `scripts/e2e/pilot_lemma_budget.sh` (bead N12-22) logs the budget figures of arm A. For this
+card both write NDJSON lines (STD-E2E helper) with `ts`, `script`, `bead` ("CARD-T-06"), `step`, `event`, the
+exact command line, exit code, wall time, peak memory in MiB, the route taken (direct membership, composition of
+T-04 instances, or `Tested`), the envelope's `evidence` block (claim Proof, class, `KernelId`, certificate hash,
+checker identity), the expected and observed verdict of each specimen and mutant, and on a mismatch the first
+failing rule and the bundle path to reproduce.
 
 ### Known answers and negative controls
 

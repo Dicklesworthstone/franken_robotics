@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "lemma", "frob-cert", "frob-scene", "solid", "test"]
 parent: "WP-53"
-deps: ["N12-15", "N12-06", "SPEC-C-33"]
+deps: ["N12-06", "N12-15", "SPEC-C-33"]
 needs: []
-related: ["BD-234", "BD-104", "BD-369", "BD-233"]
+related: ["N12-43", "N12-52", "N19b-28"]
 gates: []
 plan_refs: ["§12.3 (T-31)", "§10 C-33", "§19.11", "Appendix D.3 (clearance sandwich, swept right-angle corner)"]
 ---
@@ -52,13 +52,19 @@ output.
 
 ## Technical approach
 
-1. Route verdict: the bundle carries the inner complex (as a run-length-encoded bitset with its digest and the
-   digest of the source `.fclear`), the grid, the envelope, the fixture mode, start, goal and the path as a list
-   of cells. The auditor checks that the first cell contains the start pose and the last the goal pose, that
-   every cell is in the inner complex and that consecutive cells are face-adjacent (heading wraps).
-2. Impossibility verdict: the bundle carries the outer complex; the auditor recomputes connected components by
-   its own union–find and checks that start and goal lie in different components (or that one of them is not in
-   the outer complex at all).
+1. Route verdict: the bundle (kind `complex-connectivity`, the payload of N12-15) carries the canonical `.fclear`
+   manifest with the digest of each cell blob, the cell blobs by hash (per cell the one-sided clearances c_lo and
+   c_hi, two i16 in millimetres), the margin of the claim `margin_mm`, the grid, the envelope, the fixture mode,
+   start, goal and the path as a list of cells. Complex membership is never shipped as a producer's bitset: the
+   checker decides it in integers (a cell is in the inner complex at margin w when c_lo > w, in the outer complex
+   when c_hi > w, both strict). The auditor checks that the first cell contains the start pose and the last the
+   goal pose, that every cell on the path has c_lo > w and that consecutive cells are face-adjacent (heading
+   wraps).
+2. Impossibility verdict: the bundle carries the same cell blobs and a component labelling of the outer complex
+   (one label per cell, run-length encoded, 0 meaning not in the outer complex); the auditor checks the labels
+   against c_hi, recomputes connected components by its own union–find, requires its partition to equal the
+   labelling up to renaming, and checks that start and goal lie in different components (or that one of them is
+   not in the outer complex at all).
 3. `unknown` band: a verdict claimed for an envelope width inside the band between the inner and outer critical
    widths is rejected; the band (from cell size and heading bin; 48 heading bins give a half-bin of 3.75°) is
    reported in the bundle and never assumed.
@@ -97,13 +103,26 @@ turns a right-angle corner between corridors of width a exactly when L ≤ 2√2
 below the inner critical length and a cut certificate for L above the outer one);
 `scalar_radius_counterexamples` (the circumscribed-disc test L ≤ a refuses every rod between a and 2.83·a although
 each passes; the inscribed-disc test accepts rods longer than 2.83·a, which jam);
-`class_is_minimum_with_complex`; `stale_complex_digest_rejects`.
+`class_is_minimum_with_complex`; `stale_complex_digest_rejects`; `non_adjacent_step_rejects` (two consecutive path
+cells that share only an edge, not a face); `path_outside_inner_rejects` (one path cell absent from the inner
+complex); `false_cut_rejects` (a cut claim on an outer complex whose recomputed components join start and goal);
+`heading_wrap_adjacency` (with 48 heading bins, bin 47 and bin 0 at one (x, y) cell are face-adjacent, so a path
+through the wrap is accepted); `union_find_order_independent` (the components and the verdict are identical
+under three traversal orders of the cells).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants; the scene work's script
-exercises `frob contact clearance` and logs the critical widths, the band, the bottleneck cell and the
-certificate hash.
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants;
+`scripts/e2e/clearance_certs.sh` (bead N19b-31, which emits and re-checks the witness and cut certificates of
+the clearance complexes) and `scripts/e2e/scene_fit_gate.sh` (bead N19b-35) exercise `frob scene fit` (a `run`
+verb, each call with its own `--key`) and log the critical widths, the band, the bottleneck cell and the
+certificate hash. (`contact_clearance_gate.sh` of N19b-33 tests the pairwise enclosure predicate of
+`contact.clearance`, which emits `lp-farkas` and `lp-primal` entries, not this card's route verdicts.) For this card their NDJSON lines (STD-E2E helper)
+carry `ts`, `script`, `bead` ("CARD-T-31"), `step` (`T-31/<fixture-or-mutant>`), `event`, the exact command line,
+exit code, wall time, the envelope width and the inner and outer critical widths in metres, the band, the path
+length in cells or the recomputed component labels of start and goal, the `.fclear` digest and the bundle's
+BLAKE3, the printed class, the expected and observed verdict, and on a mismatch the first failing path index (or
+the shared component) with the path to reproduce.
 
 ### Known answers and negative controls
 

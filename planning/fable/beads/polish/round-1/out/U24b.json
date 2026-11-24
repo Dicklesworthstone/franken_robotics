@@ -1,0 +1,321 @@
+{
+  "round": 1,
+  "slice": "U24b",
+  "reviewed": 37,
+  "changed": [
+    {
+      "bead": "BD-067",
+      "kinds": [
+        "correct",
+        "self-contained",
+        "tests",
+        "e2e-logging",
+        "scope"
+      ],
+      "what": "BD-067 defined its own pin file tools/oracle/pins.toml and a fixture header whose `kind` field clashed with N38a-04's register (oracles.toml, [[pin_move]]) and generic header; now fills row mujoco-c-f64 of N38a-04's register, follows its capture-script convention (--pin/--out, version refusal), carries N38a-04's header fields plus a reference-robot extension (`fixture_kind`), forbids in-place rewrites; DESIGN admission test (pendulum 2.00608 s, control at g = 9.80); tests and e2e log fields added"
+    },
+    {
+      "bead": "BD-123",
+      "kinds": [
+        "tests"
+      ],
+      "what": "the boundary-flag test covered two of the six creep thresholds the acceptance names; now all six, and bracket runs must not carry the flag"
+    },
+    {
+      "bead": "BD-126",
+      "kinds": [
+        "complete",
+        "correct",
+        "e2e-logging",
+        "tests",
+        "users"
+      ],
+      "what": "added the worked session's `bound.family` (template with content hash) on mission.new, with acceptance and tests; fixed a total, ordered rule for prefix_class (six orders: two robust, three clairvoyant, one other); e2e now names two scripts (N24b-26's mission_check_echo.sh and N25a-23's mission_admission.sh) instead of one path owned twice; request from U25d: optional `design_domain.mass_placement` (target pseudo-inertia, fixed part, sites, support ball|box|polytope, caps) and `actuator_loss` (removals, requirement vertices, fault_identity_observed) blocks added to frob.mission/1 with type sketch, check-1 rules, identity and test fmission_optional_blocks"
+    },
+    {
+      "bead": "BD-202",
+      "kinds": [
+        "self-contained",
+        "risks",
+        "deps",
+        "tests"
+      ],
+      "what": "the 'crawl controller' was undefined: now BD-116's statically supported four-beat walk gait at 0.25 m/s, one controller record for both soles, ControllerId per N22a-07; added the referee's 21-contact-per-island cap as a risk with its preflight (contact.capacity, N18b-20, now a dep), FROB-REF-721, the strict-adjudicator fallback for both soles and the capacity-biased flag (FROB-REF-822), with test f2_capacity_preflight; --set/--reflect now N24bx-01's axes (a dep), with the declared sets and mirror map"
+    },
+    {
+      "bead": "BD-259",
+      "kinds": [
+        "correct",
+        "deps",
+        "users",
+        "tests"
+      ],
+      "what": "acceptance claimed refusals 840 and 845, which BD-261 and N24b-19 raise and which depend on BD-259 (plan's seed graph: BD-261 after BD-259); now asserts 841-844 and 567 through the verb and leaves 840/845 to their owners. Input now accepts `design` (resolved to candidate {design, controller}) and defaults, so the worked session's minimal call works; idempotency refusals 803/805 and 567 listed. Added dep N12-48 (request from U12-2) with test levels_match_d8_oracle. Bottleneck finding checked: the lane is already split into N24b-15..18; the remaining executor, receipt and verb are one piece"
+    },
+    {
+      "bead": "BD-261",
+      "kinds": [
+        "complete",
+        "correct",
+        "tests"
+      ],
+      "what": "request from U19c: the read-path set is now derived from the verb registry (same handler set N19c-14 iterates), with the 25+ named verbs as minimum members and a test that both sets are equal; request from U24c: qual:admin minted only for holder roles in config/qualification.toml (N24c-13), fail-closed when absent, a candidate-designing holder rejected at load; acceptance line and test admin_holders_from_config"
+    },
+    {
+      "bead": "N24b-01",
+      "kinds": [
+        "correct",
+        "self-contained",
+        "tests",
+        "deps",
+        "complete"
+      ],
+      "what": "acceptance asserted an eval.run echo that eval.run (N24c-04) owns and that depends on this bead; now defines battery::resolve(name, class) -> Resolved{battery_id, items, manifest_path, event_seq} and the run-record field eval.run fills; designs are not part of BatteryId; smoke tasks under assets/tasks/smoke/ authored here with refusal item FROB-REF-526; tests battery_resolve_returns_current and smoke_refusal_item_526; how a membership event is made was undefined (no writer for the ledger row the acceptance requires): added the append-only events file beside the manifest, chain check from the last registered identity, the row recorded before the first run on the new identity, edits refused; test battery_event_file_recorded"
+    },
+    {
+      "bead": "N24b-03",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "a release build refused `control` with no code; now FROB-REF-724 (verb capability not implemented in this build, exit 5) in the refusal list and the test"
+    },
+    {
+      "bead": "N24b-04",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps"
+      ],
+      "what": "fillet-stratum creep share was 1.83% from a wrong contact point; recomputed (contact at r·sinθ = 35.478 mm, L − r·tanθ = 0.276007 m, bound 15.35 mm, share 2.35%, batch mixture 1.74%) with a test extension; KA-602..611 rows are written by N24-KA, now a dep"
+    },
+    {
+      "bead": "N24b-05",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests",
+        "users"
+      ],
+      "what": "`stalled` was allowed to end an episode early, which would leave the until-window uncovered and turn `violated, stall` into `undetermined`; episodes now run to the horizon unless an absorbing hard limit fires; test f1_stall_runs_to_horizon; request from U24a: tilt-ok had no near-boundary example and was a vacuous hard limit (N24a-12 would refuse the task): added `rollover` and `tilt-exactly-35` (ten examples), the requirement clock named `req`, test f1_task_check_tilt_not_vacuous, dep N24a-12"
+    },
+    {
+      "bead": "N24b-07",
+      "kinds": [
+        "correct"
+      ],
+      "what": "declared verdicts now use N24b-06's tokens (promote, inferior, inconclusive) and the 532 refusal attaches n = 86"
+    },
+    {
+      "bead": "N24b-08",
+      "kinds": [
+        "correct",
+        "self-contained"
+      ],
+      "what": "trial count 'about 1,150' did not follow from the design: counted as 832 new trials (896 if A is re-run in the gain match); `alt-law` now names where the law comes from (N18a-15 registry, N18b-28 admission table) and hashes its identifier"
+    },
+    {
+      "bead": "N24b-10",
+      "kinds": [
+        "correct"
+      ],
+      "what": "the shared-controller refusal named no code; now study::admit's FROB-REF-802 with pointer /controller_arm (numbers at level 0.05/2 re-verified: 0.2687, 0.8237, 0.9985; 0.0671, 0.6073, 0.9925)"
+    },
+    {
+      "bead": "N24b-12",
+      "kinds": [
+        "risks",
+        "correct",
+        "tests"
+      ],
+      "what": "the plate-drag rig ignored the referee's 21-contact cap (the 77-point alternative cannot run there) and the area weighting of compliant samples; added the referee sample layout (8 x 2 cells, cut column split: 16 or 18 samples), area-scaled stiffness, region friction per sample centre, 721 as a failed row; tests f2_rig_sample_layout and the worked numbers of the 8-cell error bound"
+    },
+    {
+      "bead": "N24b-13",
+      "kinds": [
+        "risks",
+        "correct",
+        "tests",
+        "deps",
+        "self-contained"
+      ],
+      "what": "the refinement loop multiplies sole samples by 4 per level and overflowed the referee's 21-contact cap from level 1 while the bead said `referee`; now BD-202's capacity rule: contact.capacity maxima per sole, law and level recorded before registration, one registered adjudicator for every level (strict until FD-FSIM-13), 721 counted, capacity-biased flag; dep N18b-20, tests f2_holdout_adjudicator_single and f2_holdout_capacity_biased; --set holdout --law named as N24bx-01's axes"
+    },
+    {
+      "bead": "N24b-14",
+      "kinds": [
+        "scope",
+        "correct",
+        "self-contained",
+        "tests",
+        "deps",
+        "title"
+      ],
+      "what": "duplicated BD-124 (same Study types, same 552/532/533 at creation) and overlapped N28a-18's pairing admission, with no verb calling it; rewritten as the Arena entry point study::admit that calls BD-124's checks first (so a two-code defect gets the Arena code), then pairing::admit, then validates the three declarations no bead checked (cluster unit, race level, controller arm) with FROB-REF-802 and pointers; determinism check aligned with §35.3 (paired-exact, paired-by-address); controller-arm spelling `inherits-weights` as in N33b-19; KA-618 re-verified (13/256, 2869/32768, 0.12946, 0.17418); dep N22a-07"
+    },
+    {
+      "bead": "N24b-15",
+      "kinds": [
+        "users",
+        "correct",
+        "tests",
+        "complete"
+      ],
+      "what": "request from U24c: opening reads config/qualification.toml (fail-closed defaults; capacity = requests x clusters; file hash in the record; no real claim family while undecided; families_per_task_family enforced); missing qual:admin named FROB-REF-720; second open campaign exit 7; campaign gains clusters_per_request and default_tier_plan (200 in the worked session); tests campaign_reads_config, campaign_families_per_task_family"
+    },
+    {
+      "bead": "N24b-16",
+      "kinds": [
+        "complete",
+        "correct",
+        "tests",
+        "users"
+      ],
+      "what": "BD-259 delegates defaults for the worked session's minimal call to this bead, which had none: added the defaults (candidate controller, campaign, study from three claim templates, clusters and tier plan from the campaign, budget from the estimate) with refusals 802/701; dry preview fields now match Appendix L.9; admission rows name 720 and study::admit's codes; tests defaults_minimal_submission, defaults_refusals, admission_codes_named"
+    },
+    {
+      "bead": "N24b-17",
+      "kinds": [
+        "users",
+        "correct",
+        "tests"
+      ],
+      "what": "request from U19c: opening a campaign on, or drawing or scoring from, a retired family now refused with FROB-REF-886 (the plan's 'reuse of a spent holdout', §30.19), mapping N19c-14's SealedError::Retired; acceptance and test extended"
+    },
+    {
+      "bead": "N24b-18",
+      "kinds": [
+        "correct",
+        "tests",
+        "risks"
+      ],
+      "what": "the >99% control of GATE-QUAL-01 was unattainable on the single paired no-signal world (the paired rule's null size per request is 2.1e-4 to 2.5e-3, so 500 reuses reach at most 0.62); three null worlds now (paired-equal, paired-boundary, absolute-above with p_fail 0.055 against claim 0.05, size 1.32e-2 per request, 0.9987 over 500 reuses); the gate count and the control run on absolute-above and the paired worlds are reported against computed expectations; mutant text corrected; reduced runs re-sized; tests stats_null_sizes, stats_alpha_i_sum_absolute, coin_world_absolute_rate; the mutant test needs 48 of 50"
+    },
+    {
+      "bead": "N24b-20",
+      "kinds": [
+        "deps",
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "step fixtures_battery asserts eval.run's echo (N24c-04, now a dep) against battery::resolve; check_task asserts N24b-05's ten examples, the non-vacuous tilt-ok and the req clock; the M2 steps (variants, batch tier) log `skipped` with a reason until their beads exist and a gate record never cites a log with a needed step skipped"
+    },
+    {
+      "bead": "N24b-21",
+      "kinds": [
+        "users",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "request from U12-1: new step independent_enumeration logs the table digest of the production verb and of the conformance re-implementation and asserts count-for-count agreement, cited by CARD-T-26 with the consequences and refuse_unreachable steps; new step refuse_admission_declarations drives N24b-14's three 802 checks and the 552-versus-553 rule per verb; acceptance extended"
+    },
+    {
+      "bead": "N24b-22",
+      "kinds": [
+        "correct",
+        "risks",
+        "deps"
+      ],
+      "what": "steps now follow BD-202's capacity rule: the referee sample layout of N24b-12 (16/18 samples, cap 21) asserted; contact.capacity preflight (N18b-20 a dep) selects one adjudicator; development set and holdout run on it with 721 refusals counted and capacity-biased flagged; holdout registration includes maxima and adjudicator"
+    },
+    {
+      "bead": "N24b-23",
+      "kinds": [
+        "correct",
+        "e2e-logging"
+      ],
+      "what": "battery_shortened had no user-side way to add the membership event; now appends an [[event]] to the events file N24b-01 defines, asserts the ledger row precedes the run, and that an edited event is refused"
+    },
+    {
+      "bead": "N24b-24",
+      "kinds": [
+        "users",
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "request from U19c: firewall_paths iterates the registry-derived read-path set (same as BD-261 and N19c-14; size and digest logged; at least 25 and BD-261's minimum members); new step config (N24c-13); open_campaign names 720 and the exit-7 second open; dry_run is the worked session's minimal submission with N24b-16's preview fields; new step refuse_567 (N24b-01's acceptance assigns it here); simulator control on N24b-18's absolute-above world; cap and 886 named"
+    },
+    {
+      "bead": "N24b-25",
+      "kinds": [
+        "self-contained"
+      ],
+      "what": "step roundtrip pointed to a flag 'fixed by the auditor's own bead', which no bead fixed; now BD-026's --reserialize path, with the same-verdict check"
+    },
+    {
+      "bead": "N24b-26",
+      "kinds": [
+        "correct",
+        "scope",
+        "tests",
+        "e2e-logging",
+        "deps",
+        "title"
+      ],
+      "what": "same script path as N25a-23 and the old echo line; rewritten as scripts/e2e/mission_check_echo.sh covering what N25a-23 does not (mission.new with bound.family, 803/805, the six worked-session fields, every binder rendering and prefix class, non-semantic identity, the two document-level 868 triggers, the quantifier-order fixture, three mutant builds); dep N25a-02 added"
+    },
+    {
+      "bead": "N24b-27",
+      "kinds": [
+        "correct"
+      ],
+      "what": "step discount read a return value no verb returns; now records the rollout with sim.run and reads the return through BD-194's term-compiler test target, logged"
+    },
+    {
+      "bead": "N24bx-01",
+      "kinds": [
+        "complete",
+        "users",
+        "tests"
+      ],
+      "what": "BD-202, N24b-13 and N24b-22 pass --set development|holdout, --reflect and --law rigid|compliant, which no schema field carried; added axes set (held-out sets disjoint), reflect (needs the mirror map) and contact_law, in SelectionId and the output; refusals 530 per axis; tests set_reflect_law_axes, held_out_set_disjoint; e2e step refuse_undeclared_run_axes; follow-up fixtures of N24b-08 explained as fixtures of their own"
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-eval",
+      "what": "eval.scorecard output schema is `frob.eval.scorecard.out/1` in the registry but `frob.scorecard/1` in N24a-22 (the component that governs) and BD-254; name `frob.scorecard/1` as the output, as eval.qualify names `frob.qualify.receipt/1`"
+    },
+    {
+      "bead": "VERBS-eval",
+      "what": "eval.qualify chapter refusals should add FROB-REF-532, -533, -552 (BD-259 raises them through the study at level α_i); inputs should list `design`, `claim`, `dry`, `sync_wait_ms` as BD-259 now does"
+    },
+    {
+      "bead": "N25a-23",
+      "what": "N24b-26 no longer uses scripts/e2e/mission_admission.sh (its script is mission_check_echo.sh); it asserts two document-level 868 triggers N25a-23's table lacks (empty design box ['6','2']; a quantity without a unit). Either add them as cases (then N24b-26 reads the log) or list them as N24b-26's in the one-trigger table; N25d-32 should read both logs"
+    },
+    {
+      "bead": "N24c-04",
+      "what": "N24b-01 now exposes battery::resolve(name, class) -> Resolved{battery_id, items, manifest_path, event_seq}; eval.run should call it and assert the run record's `battery: {id, items}` echo (the acceptance line N24b-01 used to carry)"
+    },
+    {
+      "bead": "BD-124",
+      "what": "define `StudyPlan` (Appendix I.9) with `ControllerArm` (shared | retuned-equal-resources | inherits-weights) and `SeedProtocol` (unit world | cluster with map) beside the study types: N28a-18's pairing::admit takes it and N24b-14's study::admit validates it, and neither may define it (N28a-18 precedes N24b-14)"
+    },
+    {
+      "bead": "N33b-19",
+      "what": "route study.plan through N24b-14's study::admit (add dep N24b-14; no cycle) so the cluster-unit, race-level and controller-arm checks run on the verb path and a two-code defect returns the Arena code (552/532/533) as N24-REF's rule requires; N24b-21's step refuse_admission_declarations asserts it"
+    },
+    {
+      "bead": "N24-REF",
+      "what": "assign codes (or confirm the DESIGN choices) for: study admission checks 5-7 (cluster unit, race level, controller arm; N24b-14 uses FROB-REF-802 with pointers), a second open campaign on a claim family (exit 7) and the campaign request cap (N24b-15), the campaign-state refusal (campaign not open, claim-family mismatch; N24b-16); and list FROB-REF-886 (reuse of a spent holdout, §30.19) as the Arena trigger for a retired confirmation family (N24b-17)"
+    },
+    {
+      "bead": "N22a-16",
+      "what": "N24b-14 now validates controller_arm at M1 (one ControllerId under shared, equal recorded resources under retuned-equal-resources, transfer baseline under inherits-weights, FROB-REF-802); extend that check for residual policies rather than adding a second one"
+    },
+    {
+      "bead": "BD-260",
+      "what": "N24b-18 now has three null worlds: run the 2,000 campaigns and the >99% reused-cluster control on `absolute-above` (p_fail 0.055, claim 0.05; per-request null size 1.319e-2), where the control is reachable (0.9987 over 500 reuses), and report `paired-equal` and `paired-boundary` beside it against their computed expectations (0.101 and 0.623 over 500); on a paired world alone the >99% control cannot be met"
+    },
+    {
+      "bead": "BD-124",
+      "what": "N24b-14's study::admit now validates the cluster unit, the race level and the controller arm that BD-124's types only record; keep the record fields as the source and do not add a second validation"
+    }
+  ],
+  "unchanged": 8,
+  "notes": "all 37 reviewed; 29 changed, 8 unchanged (BD-194, BD-254, BD-383, N24b-02, N24b-06, N24b-09, N24b-11, N24b-19); incoming requests from U12-1, U12-2, U19c, U24a, U24c, U25d handled; no new beads, no merges. Main fixes: the referee's 21-contact cap through fixture 2 (N24b-12/13/22, BD-202), study admission re-scoped (N24b-14), an unattainable GATE-QUAL-01 control (N24b-18), missing fixture axes (N24bx-01), defaults for the minimal qualify call (N24b-16)"
+}

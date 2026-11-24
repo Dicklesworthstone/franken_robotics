@@ -1,0 +1,96 @@
+{
+  "round": 2,
+  "slice": "S02",
+  "reviewed": 37,
+  "changed": [
+    {
+      "bead": "NAB-17",
+      "kinds": [
+        "correct",
+        "complete"
+      ],
+      "what": "Schema gains a `reason` field and `queue` becomes a list; `ev.rejected-without-reason` reads `reason` or `killed_idea` (EV-P14, EV-P39, EV-P40 have no colon, so the old rule failed on plan data); `ev.queue-mismatch` is defined in both directions against the queue records' `family` (EV-F45 has two items; EV-F46/F55/F56 are queued without saying so; MQ-05 to MQ-08 have no row)."
+    },
+    {
+      "bead": "NAB-19",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Transcription of `queue` follows the queue records, not the word 'queued' (it contradicted its own admitted_rows_are_queued test); acceptance reworded (fifteen rows list sixteen items); test queue_lists_follow_queue_records added."
+    },
+    {
+      "bead": "NAB-20",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "`reason` transcription for the three rejected rows without a colon (EV-P39 gets a labelled DESIGN reason: below 2.0, the plan states none); EV-P35 lists MQ-21; tests rejected_rows_have_reason and deferred_lean_row_lists_mq21 added."
+    },
+    {
+      "bead": "NAB-21",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "Step 8 states the `family` mapping of all 21 items (MQ-16 and MQ-17 to EV-F45, MQ-21 to EV-P35, MQ-05 to MQ-08 none); acceptance and test family_mapping added; Considerations name envelope row R10 for MQ-19 and R19 onward for MQ-17."
+    },
+    {
+      "bead": "NAB-22",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Check (c) also requires a non-empty `reason` on a changed entry (reported as sweep.change-without-evidence), so NAB-23's planted empty-reason raise is actually caught; test change_needs_reason added."
+    },
+    {
+      "bead": "NAB-23",
+      "kinds": [
+        "correct"
+      ],
+      "what": "'Confidence is not raised on the M0 spike alone' contradicted 'allowed only with the reason stated'; now DESIGN guidance, with the check judging the reason, not the direction (NAB-22 rule 1.2)."
+    },
+    {
+      "bead": "NAB-32",
+      "kinds": [
+        "complete"
+      ],
+      "what": "Schema sketch gains the fields later beads use: restates, reason_on_file, reason_proposed, owner_confirmed (KD/KP), [[idea.method]] (KI-45), [[idea.row]] (KI-61, KI-63) and the top-level [[alias]] table; optional fields stated, others refused."
+    },
+    {
+      "bead": "NAB-37",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "Two of the thirteen calculation rows were not evaluable (KI-33 prose; KI-37 symbolic floor): now 1 − 0.9 = 0.1 and ln(20)/(0.1 × 10⁶) = 3.0 × 10⁻⁵ against 3.0 × 10⁻⁶; test ki33_reuse_ceiling added."
+    },
+    {
+      "bead": "NAB-42",
+      "kinds": [
+        "complete"
+      ],
+      "what": "Schema sketch gains counts_toward_tally, proposals_note, placed_rows and the per-prefix fields of FP, CT, BS and UP records used by NAB-43 to NAB-49, plus [[idea.calculation]] for CT records."
+    },
+    {
+      "bead": "NAB-50",
+      "kinds": [
+        "deps",
+        "tests"
+      ],
+      "what": "Graph finding: 28 deps checked; dropped N41-16 (the script never runs tracker-check; the export is read through NAB-42's lint, which depends on it); the other 27 are used directly. Sweep mode now asserts due-family counts (NAB-22's 1,2,7,19,21,7,8,0,7) as well as the pair counts."
+    },
+    {
+      "bead": "WP-34",
+      "kinds": [
+        "complete"
+      ],
+      "what": "Table of contents regenerated from the index: GB-18 (re-parented here at M0) added, N00-33's new title; counts 51 (M0 38)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [],
+  "unchanged": 26,
+  "notes": "Read in work-package order. Round 1 left the slice mostly coherent; the misses were cross-bead: lints that would fail on the plan's own data (rejected-without-reason, queue-mismatch), schema sketches missing fields later row beads use, two non-evaluable calculation rows, a negative control no check caught, and one stale epic table. Arithmetic, counts and kill-gate milestones of N44-01, NAB-18, NAB-33 to NAB-49 rechecked against the plan and found right. The other nine epics' tables match the index. No requests outside the slice."
+}

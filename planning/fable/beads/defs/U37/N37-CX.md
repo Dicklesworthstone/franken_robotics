@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "safety", "gauntlet", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-58"
-deps: ["BD-025", "STD-TEST"]
-needs: ["§38.11: the negative-control registry `frob-conformance/registry/controls.toml` with its record format and its rule that a gate with no control cannot record PASS (the Gauntlet's registry bead)"]
-related: ["N37-KA", "N37-REF", "N37-01", "N37-16", "BD-261", "BD-146", "BD-223", "BD-318"]
+deps: ["BD-025", "N38b-04", "N38b-05", "STD-TEST"]
+needs: []
+related: ["N24b-18", "N37-16", "N37-22", "N37-KA", "N37-REF", "N38a-24", "N38a-26"]
 gates: []
 plan_refs: ["Appendix N.34", "Appendix N.35", "§37.3", "§37.5", "§37.6", "§37.9", "§37.10", "§38.11"]
 ---
@@ -34,8 +34,9 @@ experimental procedure becomes a scripted adversary.
 
 ## Scope
 
-In: CX-384 in full; the chapter's unnumbered smallest cases under local identifiers; one control record per
-entry; the consolidated table of controls per gate; the loader test. Out: building the mutant builds and
+In: CX-384 in full, as a catalogue entry with its plant; the chapter's unnumbered smallest cases under local
+identifiers, with one control record per local entry (seed `SAFE-Xnn`, the form BD-025 admits for them); the
+consolidated table of controls per gate; the loader test. CX-384's control is derived by N38b-05's seeding tool. Out: building the mutant builds and
 planted inputs themselves (each is in the acceptance of the bead named in the table).
 
 ## Technical approach
@@ -46,11 +47,16 @@ planted inputs themselves (each is in the acceptance of the bead named in the ta
 |---|---|---|---|---|
 | CX-384 | Let `eval.qualify` say which worlds failed | An agent could run `nemesis.search` near those worlds, patch for them and resubmit; the level schedule α_i = α/[i·(i + 1)] would then bound an error rate for a procedure that is no longer the one being run. The receipt carries only the decision, the index, the level spent, the units used and a hash | Discovery cannot read confirmation worlds (INV-QUAL-01, INV-SAFE-03); the refusal `FROB-REF-840`; GATE-SAFE-03 | Confirmation isolation |
 
-   Control for CX-384 (kind: scripted adversary on a `mutation`): the build whose receipt returns per-world
-   outcomes, run in the campaign simulator with an adversary that searches near failed worlds and resubmits,
-   500 adaptive retries on no-signal worlds. Expected: the receipt-shape check fails and the false-promotion
-   count exceeds the adaptive-retry gate's bound (at most 123 of 2,000 campaigns, TARGET). Registered against
-   GATE-SAFE-03 and the qualification lane's gates; run by N37-16 with the qualification chapter's simulator.
+   CX-384 is an entry of the catalogue `crates/frob-conformance/registry/counterexamples.toml` in the record of
+   N38b-05 (`control_kind = "mutation"`, run under a scripted adversary); the seeding tool of N38b-05 derives its
+   control, and this bead writes no `controls.toml` row for it. Its plant is N24b-18's build whose receipt
+   returns per-world outcomes, `N24b-18:leak-per-world-outcomes` (gates GATE-SAFE-03 and GATE-QUAL-01), run in the
+   campaign simulator with an adversary that searches near failed worlds and resubmits, 500 adaptive retries on
+   no-signal worlds. Expected: the receipt-shape assertion fails on the first receipt. The detection is the shape,
+   not the count: clusters are fresh for every request, so a leaked outcome of a spent cluster predicts nothing
+   about the next request's clusters, and the false-promotion count is not expected to exceed the adaptive-retry
+   gate's bound (at most 123 of 2,000 campaigns, TARGET). Run by N37-16 with the qualification chapter's
+   simulator.
 
 2. **The chapter's unnumbered smallest cases (local identifiers; each seeds one or more controls).**
 
@@ -67,12 +73,12 @@ planted inputs themselves (each is in the acceptance of the bead named in the ta
 | SAFE-X09 | Load a checkpoint with the usual loader of its framework | A pickled checkpoint archive is a program, not a table of numbers | Weights only in the plain tensor layout from an allowlisted family; `FROB-REF-828` | `planted-input`: pickle, zip, HDF5 and array-file specimens (N37-03, N37-07) |
 | SAFE-X10 | A cached kernel binary is trusted because its file name matches | A cache entry with one flipped byte, or one copied from another host | No kernel loads without a matching content hash (INV-SAFE-08); GATE-SAFE-06 | `planted-input`: the flipped entry; `mutation`: a loader that skips the digest (N37-22, BD-306) |
 
-3. **Control records.** Each control is one record in `frob-conformance/registry/controls.toml` in the
+3. **Control records.** Each control is one record in `crates/frob-conformance/registry/controls.toml` in the
    registry's format, for example:
    ```toml
    [[control]]
    id        = "NC-…"                       # assigned by the registry; stable, never reused
-   seed      = "SAFE-X01"                   # or "CX-384"
+   seed      = "SAFE-X01"                   # a local identifier; CX-384's control comes from the seeding tool
    gate      = ["GATE-SAFE-10"]
    kind      = "mutation"
    target    = "frob-verbs::jail::resolve"
@@ -94,6 +100,15 @@ planted inputs themselves (each is in the acceptance of the bead named in the ta
 | GATE-SAFE-08 | `combine` taking the maximum; standing by majority; a handler that drops one input; a planted class-raising public function; a memo store returning values without products (SAFE-X03) | N37-25, N37-27 |
 | GATE-SAFE-09 | Unrecorded determinism read as D2; a consumer that skips the admission function; training class propagated into evaluation (SAFE-X07) | N37-29 |
 | GATE-SAFE-10 | Check-then-open; percent-decoding of components; a verb taking its output path as a plain string (SAFE-X01) | N37-12 |
+
+   Controls shared with GATE-GAUNT-06 (one branch per defect). N38a-26 (M3) adds GATE-GAUNT-06 to the `gate`
+   lists of three records of this table and plants none of them again: the check-then-open control seeded
+   SAFE-X01, the label-copied-into-`warnings` control seeded SAFE-X02, and the removed-check control of
+   GATE-SAFE-07 (the removed polygon check, on the importer limits of N37-05 completed by BD-307); each of the
+   three records then lists both gates. SAFE-X10's digest-skipping loader is not
+   a second record: it is the record N38a-24 registers at M2 with `seed = "GATE-GAUNT-06"` (a build that executes
+   a cache entry without checking its hash), whose `gate` list names GATE-SAFE-06 beside GATE-GAUNT-06, run by
+   N37-22 for GATE-SAFE-06; SAFE-X10's own record is the planted input (the flipped cache entry).
 
 5. **Loader test.** The conformance crate's registry check asserts: the record for CX-384 exists and names
    GATE-SAFE-03; each local identifier has at least one control; each of the ten gates has at least one
@@ -118,11 +133,12 @@ planted inputs themselves (each is in the acceptance of the bead named in the ta
 `removing_cx_384_control_fails`.
 
 ### End-to-end script and logging
-None of its own. Every safety script has a `planted` step that runs its gate's controls on builds with the
-feature `mutants` and logs, per STD-E2E, one `assert` line per control with the control identifier, the seed
+None of its own. Every safety script has a `planted` step that runs its gate's controls on builds with
+`--features gauntlet-mutations` and the control's own feature, and logs, per STD-E2E, one `assert` line per control with the control identifier, the seed
 (`CX-384` or a local identifier), the step expected to fail and whether it did; the `summary` counts controls
-caught of controls run. A conformance report (`frob-conformance controls report --chapter safe`) prints each
-control's `last_seen`.
+caught of controls run. The controls report prints each control's `last_seen`: `cargo run -p frob-conformance
+--example registry_report -- controls --chapter 37 --json` (the `registry_report` example and its `controls`
+subcommand are N28-CX's; whichever bead lands first creates the file; there is no `frob-conformance` binary).
 
 ### Known answers and negative controls
 This bead is the registry of the chapter's negative controls. The level-schedule fact behind CX-384:
@@ -138,8 +154,8 @@ request i is chosen without knowledge of the worlds that judged request i − 1.
   with the case that exposed it; fuzz reproducers enter this way.
 - The local identifiers exist because the catalogue numbers only one entry for this chapter; if the catalogue
   is extended they receive catalogue numbers and the `seed` fields are updated.
-- Mutant builds are compiled only with the feature `mutants`, which no release profile enables; a registry
-  lint asserts the feature is absent from every shipped binary's feature set.
+- Mutant builds are compiled only under `gauntlet-mutations` (BD-025, N38b-04), which no release profile
+  enables; a registry lint asserts that no plant feature is in any shipped binary's feature set.
 
 ## References
 

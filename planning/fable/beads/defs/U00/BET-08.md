@@ -6,9 +6,9 @@ priority: 0
 milestone: "M2"
 labels: ["m2", "spark", "frob-kernels", "solid", "bet", "gate"]
 parent: "WP-22"
-deps: ["N00-28", "BD-030", "BD-179", "BD-182", "STD-E2E"]
-needs: ["§35.10: the double-float accumulator fallback and the list of quantities it may be applied to"]
-related: ["BD-053", "BET-02", "N00-35", "N00-12", "N00-KA"]
+deps: ["BD-030", "BD-179", "BD-182", "N00-28", "N21bp2-01", "STD-E2E"]
+needs: []
+related: ["GB-04", "GB-22", "N00-12", "N00-35", "N00-KA", "N40-31", "N40-32"]
 gates: ["GATE-SPARK-05", "GATE-SPARK-18"]
 plan_refs: ["§4 (BET-08)", "§40.5", "§35.8", "§35.10", "§0.8 (H-15)"]
 ---
@@ -29,8 +29,11 @@ error: it flips a verdict. Tier: Solid.
 
 ## Scope
 
-In: pre-registration, the M2 reading, verdict and decision record. Out: the anchoring, scaling, guarded kernels
-and the precision battery.
+In: pre-registration, the M2 reading, verdict and decision record. Out, with the beads that have them: the exact
+and guarded predicate kernels and the boundary corpus (BD-030); anchored positions, the precision battery and
+the conditioning certificate, which record GATE-SPARK-18 and measure every clause of GATE-SPARK-05 but the energy
+residual (BD-179); that clause and the GATE-SPARK-05 record (N21bp2-01); the guarded predicates on devices and
+the contact-battery fallback rate that KILL-MARROW-GUARD reads (BD-182).
 
 ## Technical approach
 
@@ -56,14 +59,19 @@ and the precision battery.
    and labelled as such on every result that used them.
 5. **Downstream if falsified.** The affected quantities' kernels are replaced and the throughput parity rows are
    re-measured and disclosed; if strict predicates cannot be guarded bit-identically across backends, the
-   guard's own kill gate applies (strict predicates evaluated exactly only on the CPU tiers, GPU tiers mark
-   worlds that came within the error bound of a boundary, and the sampled referee re-runs them).
+   guard's own kill gate KILL-MARROW-GUARD applies (M2; trigger: a fallback rate above 10⁻² on the contact
+   battery on either GPU backend, or an exact path that cannot be made bit-identical across backends; fallback:
+   strict predicates evaluated exactly only on the `strict` CPU profile and the referee, GPU tiers mark worlds
+   that came within the error bound E of a boundary, and the sampled referee re-runs them). That kill gate is
+   not this bet's: BET-08 has none, and its verdict only cites the guard's decision where it applies.
 6. **Evidence so far (FACT about plan-time checks).** Humanoid contact Hessians: κ₂ of 3 × 10⁴–1 × 10⁵ raw and
    2 × 10³–9 × 10³ scaled at default impedance; 2–3 × 10⁶ raw and 2–5 × 10⁵ scaled near-rigid. The boundary
    screen ran identically on an M5 Ultra and two RTX 4090 for the integer and guarded kernels. Both are to be
    re-run in this repository.
-7. **Procedure.** Register envelopes and the screen before the battery runs; read at M2 exit;
-   `docs/adr/bet-08-m2.md`.
+7. **Procedure.** Register the envelopes of clause (a) and the screen before the battery's `f32` arms run: 4 ulp
+   for group-membership error; 10⁻⁴ relative for the energy-ledger residual; for closure and contact violation
+   the values E of BD-179's `battery/precision/envelopes.toml` (E = max(2·M₆₄, F), fixed from the `f64` arm;
+   the file's hash goes into the pre-registration record). Read at M2 exit; `docs/adr/bet-08-m2.md`.
 
 ## Acceptance criteria
 
@@ -77,13 +85,20 @@ and the precision battery.
 ## Test plan
 
 ### Unit tests
-`bets.rs`: `bet08_within_envelopes_holds`; `bet08_group_error_6_ulp_falsifies_a`;
-`bet08_one_predicate_disagreement_falsifies_b`; `bet08_energy_residual_2e_4_falsifies_a`;
-`bet08_screen_without_unguarded_errors_is_untested`; `bet08_fallback_lists_quantities`.
+`bets.rs`, each on a `synthetic` gate registry: `bet08_within_envelopes_holds` (group error 3 ulp, energy
+residual 4·10⁻⁵, violations inside E, screen 452 and 23,438 unguarded and 0 guarded → `Held`);
+`bet08_group_error_6_ulp_falsifies_a` (6 ulp against 4 → `Falsified`, clause a);
+`bet08_one_predicate_disagreement_falsifies_b` (one guarded decision differing from the exact integer one →
+clause b); `bet08_energy_residual_2e_4_falsifies_a` (2·10⁻⁴ against 10⁻⁴);
+`bet08_screen_without_unguarded_errors_is_untested` (unguarded counts 0 and 0: the screen has no power →
+`Untested`); `bet08_fallback_lists_quantities` (a falsified record without the list of quantities moved to
+double-float accumulators or to `batch-cpu` is rejected); `bet08_energy_clause_not_run_is_untested`
+(GATE-SPARK-05 with its energy clause `not run` → `Untested`, never `Held`).
 
 ### End-to-end script and logging
-`scripts/e2e/bet_08_decide.sh` recomputes the verdict from the two gate rows and the screen's record and checks
-the ADR. Logged per STD-E2E: per backend the maximum group error in ulp against 4, the energy residual against
+`scripts/e2e/bet_08_decide.sh` runs `cargo run -p frob-conformance --example bets -- status --json` (the report
+of the bet register, example `bets` of N00-28), recomputes the verdict of BET-08 from the two gate rows and the screen's record, and checks
+that `docs/adr/bet-08-m2.md` states the same verdict with each clause's measured value. Logged per STD-E2E: per backend the maximum group error in ulp against 4, the energy residual against
 10⁻⁴, the Newton-step error against 10·κ₂·u, the screen's four counts; `summary` naming GATE-SPARK-05 and
 GATE-SPARK-18.
 
@@ -96,8 +111,8 @@ at 5 × 10⁵ scaled, 0.03. Negative controls: the unguarded comparison; a batte
 
 - "Adequate" is defined by the envelopes, which are fixed before the run; a failed quantity is moved, not
   re-enveloped.
-- Guards cost a small fallback rate; if that rate exceeds 10⁻² on the contact battery the guard's own kill gate
-  decides.
+- Guards cost a small fallback rate; if that rate exceeds 10⁻² on the contact battery KILL-MARROW-GUARD
+  decides (above).
 
 ## References
 

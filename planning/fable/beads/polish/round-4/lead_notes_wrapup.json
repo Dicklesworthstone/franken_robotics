@@ -1,0 +1,59 @@
+{
+"BD-069": [
+"KILL-SINEW-SEA's fallback (the plan's wording: transmissions with backlash rows, results flagged 'compliance not modelled') has no bead that produces the flag when the gate fires: N15b-18 is the only producer and is never built on that branch, and BD-069 lists `series_stiffness` as N15b-18's field. Lead ruling (DESIGN, keeps the plan's fallback text): BD-069 admits the compliance fields of a card as descriptive from the start, and any L3 result that binds a card declaring compliance while the compliant element is not in the build carries the flag `compliance not modelled`; add the unit test and the script step for it (found by round 4's reviewer of F-U15b)."
+],
+"N40-23": [
+"KILL-SINEW-SEA's fallback (the plan's wording: transmissions with backlash rows, results flagged 'compliance not modelled') has no bead that produces the flag when the gate fires: N15b-18 is the only producer and is never built on that branch, and BD-069 lists `series_stiffness` as N15b-18's field. Lead ruling (DESIGN, keeps the plan's fallback text): BD-069 admits the compliance fields of a card as descriptive from the start, and any L3 result that binds a card declaring compliance while the compliant element is not in the build carries the flag `compliance not modelled`; add the unit test and the script step for it (found by round 4's reviewer of F-U15b)."
+],
+"N15b-19": [
+"KILL-SINEW-SEA's fallback (the plan's wording: transmissions with backlash rows, results flagged 'compliance not modelled') has no bead that produces the flag when the gate fires: N15b-18 is the only producer and is never built on that branch, and BD-069 lists `series_stiffness` as N15b-18's field. Lead ruling (DESIGN, keeps the plan's fallback text): BD-069 admits the compliance fields of a card as descriptive from the start, and any L3 result that binds a card declaring compliance while the compliant element is not in the build carries the flag `compliance not modelled`; add the unit test and the script step for it (found by round 4's reviewer of F-U15b)."
+],
+"BD-011": [
+"GATE-MARROW-01's M0 part (BD-011) needs a registered negative control caught in its M0 receipt (N38b-19 step 4), but the controls seeded for the reversed-coadjoint convention name the plant `N13-18:M1`, built at M1. Bind a control that exists at M0 to the gate's M0 part (for example BD-010's control (ii), through KA-256) and name it here; otherwise the M0 part is refused as pass-without-control (found by round 4's reviewer of F-U13)."
+],
+"N13-CX": [
+"GATE-MARROW-01's M0 part (BD-011) needs a registered negative control caught in its M0 receipt (N38b-19 step 4), but the controls seeded for the reversed-coadjoint convention name the plant `N13-18:M1`, built at M1. Bind a control that exists at M0 to the gate's M0 part (for example BD-010's control (ii), through KA-256) and name it here; otherwise the M0 part is refused as pass-without-control (found by round 4's reviewer of F-U13)."
+],
+"N13-KA": [
+"GATE-MARROW-01's M0 part (BD-011) needs a registered negative control caught in its M0 receipt (N38b-19 step 4), but the controls seeded for the reversed-coadjoint convention name the plant `N13-18:M1`, built at M1. Bind a control that exists at M0 to the gate's M0 part (for example BD-010's control (ii), through KA-256) and name it here; otherwise the M0 part is refused as pass-without-control (found by round 4's reviewer of F-U13)."
+],
+"N13-18": [
+"GATE-MARROW-01's M0 part (BD-011) needs a registered negative control caught in its M0 receipt (N38b-19 step 4), but the controls seeded for the reversed-coadjoint convention name the plant `N13-18:M1`, built at M1. Bind a control that exists at M0 to the gate's M0 part (for example BD-010's control (ii), through KA-256) and name it here; otherwise the M0 part is refused as pass-without-control (found by round 4's reviewer of F-U13)."
+],
+"N12-34": [
+"N12-13, N12-14, N12-16 and N12-17 say their M3/M4 values of GATE-LEMMA-03 are 'recorded by N12-34's re-run', but N12-34 closes at M1 and no bead at M3, M4 or M8 owns running `lemma_auditor_mutations.sh` and recording that `--part` (convention 9: one recorder per gate part). Name the recorder of each later part in the gate register row: the latest checker bead of the milestone, or that milestone's exit review (found by round 4's reviewer of F-U12-2)."
+],
+"N12-13": [
+"N12-13, N12-14, N12-16 and N12-17 say their M3/M4 values of GATE-LEMMA-03 are 'recorded by N12-34's re-run', but N12-34 closes at M1 and no bead at M3, M4 or M8 owns running `lemma_auditor_mutations.sh` and recording that `--part` (convention 9: one recorder per gate part). Name the recorder of each later part in the gate register row: the latest checker bead of the milestone, or that milestone's exit review (found by round 4's reviewer of F-U12-2)."
+],
+"N12-14": [
+"N12-13, N12-14, N12-16 and N12-17 say their M3/M4 values of GATE-LEMMA-03 are 'recorded by N12-34's re-run', but N12-34 closes at M1 and no bead at M3, M4 or M8 owns running `lemma_auditor_mutations.sh` and recording that `--part` (convention 9: one recorder per gate part). Name the recorder of each later part in the gate register row: the latest checker bead of the milestone, or that milestone's exit review (found by round 4's reviewer of F-U12-2)."
+],
+"N12-16": [
+"N12-13, N12-14, N12-16 and N12-17 say their M3/M4 values of GATE-LEMMA-03 are 'recorded by N12-34's re-run', but N12-34 closes at M1 and no bead at M3, M4 or M8 owns running `lemma_auditor_mutations.sh` and recording that `--part` (convention 9: one recorder per gate part). Name the recorder of each later part in the gate register row: the latest checker bead of the milestone, or that milestone's exit review (found by round 4's reviewer of F-U12-2)."
+],
+"N12-17": [
+"N12-13, N12-14, N12-16 and N12-17 say their M3/M4 values of GATE-LEMMA-03 are 'recorded by N12-34's re-run', but N12-34 closes at M1 and no bead at M3, M4 or M8 owns running `lemma_auditor_mutations.sh` and recording that `--part` (convention 9: one recorder per gate part). Name the recorder of each later part in the gate register row: the latest checker bead of the milestone, or that milestone's exit review (found by round 4's reviewer of F-U12-2)."
+],
+"N40-02": [
+"N12-13, N12-14, N12-16 and N12-17 say their M3/M4 values of GATE-LEMMA-03 are 'recorded by N12-34's re-run', but N12-34 closes at M1 and no bead at M3, M4 or M8 owns running `lemma_auditor_mutations.sh` and recording that `--part` (convention 9: one recorder per gate part). Name the recorder of each later part in the gate register row: the latest checker bead of the milestone, or that milestone's exit review (found by round 4's reviewer of F-U12-2)."
+],
+"N12-19": [
+"this bead has no end-to-end script of its own (convention 11): its specimens are run by N12-34's directory-driven script, whose lines are tagged with N12-34's key, not this bead's as the logging section here says. Give the bead its own script, or have N12-34 tag each line with the checker bead of the kind; N12p2-01 also needs N12-34 in `deps` (it is only in `related`) for its acceptance to be checkable (found by round 4's reviewer of F-U12-2)."
+],
+"N12p1-01": [
+"this bead has no end-to-end script of its own (convention 11): its specimens are run by N12-34's directory-driven script, whose lines are tagged with N12-34's key, not this bead's as the logging section here says. Give the bead its own script, or have N12-34 tag each line with the checker bead of the kind; N12p2-01 also needs N12-34 in `deps` (it is only in `related`) for its acceptance to be checkable (found by round 4's reviewer of F-U12-2)."
+],
+"N12p2-01": [
+"this bead has no end-to-end script of its own (convention 11): its specimens are run by N12-34's directory-driven script, whose lines are tagged with N12-34's key, not this bead's as the logging section here says. Give the bead its own script, or have N12-34 tag each line with the checker bead of the kind; N12p2-01 also needs N12-34 in `deps` (it is only in `related`) for its acceptance to be checkable (found by round 4's reviewer of F-U12-2)."
+],
+"N00-03": [
+"two open points on the identifier table: (1) GATE-PROG-SCHEDULE is the only gate identifier not of the form GATE-<SUBSYS>-NN and is admitted by name; (2) the prefix table has no row for the negative-control series `NC-nnnn` (STD-TEST) or the decision cores `DC-01` to `DC-11`, although the append-only lint lists controls among the checked series; adding them changes the count of 28 series (found by round 4's reviewer of F-U00-1)."
+],
+"VERBS-session": [
+"the rows session.open, session.show, session.focus and session.close give milestone M0 while their implementing bead BD-138 is M1; N00-02 and BD-022 read them as not in the M0 build, which agrees with BD-138, so the milestone column here looks like the outlier (found by round 4's reviewer of F-U00-1)."
+],
+"N10a-09": [
+"the third `nemesis bound` call of the script (`--mode certify --episodes`, target 1e-4) may be refused by N26a-26's budget admission (760) or by the E0 envelope (761) before the lane firewall's 560 that the step expects, depending on the default budget: give the call a budget and scope under which 560 is the first refusal (found by round 4's reviewer of F-U10a)."
+]
+}

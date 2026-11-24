@@ -1,0 +1,260 @@
+{
+ "round": 2,
+ "slice": "S19",
+ "reviewed": 49,
+ "changed": [
+  {
+   "bead": "BD-055",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "binary64 negative control used 0.3000000001 m, which binary64 separates from 0.3 and so cannot catch the mutant; replaced by 0.30000000000000001 m (the same double as 0.3); parses the intent fill {solid: {intended: true}} that N13-04 (option B of N13-03) names as the way past FROB-REF-168, which no typing bead admitted; the 105 repairs follow BD-064's ranking"
+  },
+  {
+   "bead": "BD-058",
+   "kinds": [
+    "complete",
+    "scope",
+    "deps",
+    "e2e-logging",
+    "tests",
+    "sense"
+   ],
+   "what": "owns the design store (write-once versions, CAS-moved heads, one edit record per version; 804/112 per verb), which no bead owned; lock-check function called by every edit path; e2e moved to N41p2-02 (design.new depends on BD-058, so the script could never run); CLI/MCP clause became executor test; extract-module answered by N41p2-01; deps -BD-023 -STD-E2E"
+  },
+  {
+   "bead": "BD-059",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "commits through BD-058's store as one edit record of kind patch, replacing per-op lineage edges under a patch node that conflicted with BD-113"
+  },
+  {
+   "bead": "BD-063",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "e2e moved to N14bp2-01 (design.new/show depend on BD-063); crate-level edit_sequence_matches_full reads the same expected file; --no-memo clause restated at crate level; -STD-E2E"
+  },
+  {
+   "bead": "BD-064",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e called `frob design view`, which runs no lint, and design.check/new depend on BD-064; user-side run moved to N14a-27 steps 7, 7b, 10; envelope clause made a crate test; BD-057 and STD-E2E deps dropped (BD-057 to related); solid-heavy repair row offers the intent form beside the shell"
+  },
+  {
+   "bead": "BD-113",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "records lineage over BD-058's edit records (lineage::record plus back-fill); e2e flags fixed (--expected-parent, --key; stale parent is 804 not 112); +dep BD-109 for the template"
+  },
+  {
+   "bead": "N14a-06",
+   "kinds": [
+    "scope",
+    "correct"
+   ],
+   "what": "lock check is BD-058's function called by the handle; N14a-06 keeps the every-path property test; 'appear in the lineage' became edit records of the store (lineage queries are BD-113, later)"
+  },
+  {
+   "bead": "N14a-17",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps",
+    "title"
+   ],
+   "what": "row 23 extract-module (23 rows, 33 kinds), +dep N41p2-01; requested split_alone_compiled_identical (kinematic and inertial sections bit-identical after splitting quad-a's mirrors) with a polar-axis plant"
+  },
+  {
+   "bead": "N14a-29",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "request applied: step 11 runs N29ax-01 re-execution and compares the four chunk state digests (no digest chain before M2); 'partial' allowance dropped; step 9 covers row 23; receipt wording"
+  },
+  {
+   "bead": "N14a-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "request applied: links and depth counted after the fixed-joint fold (quad-a 13 and 3, n_b of the byte model), bodies 17 and folded 4 kept beside them; new test and plant"
+  },
+  {
+   "bead": "N14a-27",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "step 6 shape values after the fold; new step 7b applies BD-064's rank-1 repairs from the CLI and step 10 runs its clean fixtures (BD-064's user-side run); step 13's solid torso would be stopped by N13-04's stage-2 FROB-REF-168 before the stage-6 finding it asserts, now written in the intent form; +dep BD-064"
+  },
+  {
+   "bead": "N14a-21",
+   "kinds": [
+    "complete",
+    "deps"
+   ],
+   "what": "request applied: section `packed` (BD-148, M2) added through a section table that later producers register into, 724 before it is linked; design.new stores through BD-058's Store::create (+dep BD-058)"
+  },
+  {
+   "bead": "N14b-33",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "e2e ran `frob design import --fold-fixed`, but design.import (BD-065) depends on this bead; import step left to BD-065/N14b-24, crate-level FoldReport::loss_entries test; group count asserted equal to N14a-12's links (+dep N14a-12); stage-2 clause made crate-level"
+  },
+  {
+   "bead": "GB-10",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "repairs disagreed with BD-064's ranking (part-class wall, d_min/4 = 25 mm); now BD-064's t0 = 3 mm order; repair masses (3 mm shell 2.2957992 kg) left to design.check; +dep BD-064"
+  },
+  {
+   "bead": "FD-FSIM-08",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "post phase called design.check/module.check that no dep provides; those steps are now `not run` until the verbs exist, never a pass"
+  },
+  {
+   "bead": "N14b-01",
+   "kinds": [
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "e2e called design.new/show, which depend on N14b-01 (via BD-057); now checks DesignIds with N14a-26's oracle, single-index regeneration and raw mode; extract-module enters sample_edit through N41p2-01"
+  },
+  {
+   "bead": "N14a-28",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "step 5 uses frob-gen-designs raw mode (unusual spellings) and registers 100 files through design.new against the manifest, the generator's user-side check"
+  },
+  {
+   "bead": "N14-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "request applied: the uncoded stage-1 refusal 'Region not admissible as a mass support' (N14a-14) listed with interim code 102 at pointers region.admission (mesh) and region.bound (quadrature bound), as ledger rows of N35-33 beside N14ax-01's two requests; final numbers assigned by the N35-33 ledger under its own rule, not an invented overflow rule; 114 site of extract-module; interim_codes_listed test"
+  },
+  {
+   "bead": "N14-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "kept its own KA file, against N38a-12's single registry file; now rows in that file under its schema, block request through N38a-40, owner-pending rule as N13-KA; e2e skel_ka_registry.sh; deps +N38a-12 +N38a-40"
+  },
+  {
+   "bead": "N14a-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "binary64 control used a value binary64 separates from 0.3; now 0.30000000000000001 m, plus a 0.1 m printing fixture"
+  },
+  {
+   "bead": "N14a-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "request applied: replace_substitutes_component replaced the knee in one mirror image only, but a replace under mirror acts on the subterm, so all four knees change"
+  },
+  {
+   "bead": "N14a-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e's solid torso for FROB-REF-115 would stop at stage 2 on FROB-REF-168 (N13-04); written in the intent form; related +N13-04"
+  },
+  {
+   "bead": "N14a-03",
+   "kinds": [
+    "complete"
+   ],
+   "what": "fill row names the intent form {solid: {intended: true}} that BD-055 types"
+  },
+  {
+   "bead": "N14a-18",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "migrate wrote a lineage edge itself, but BD-113 depends on this bead and builds edges from BD-058's edit records; now commits one edit record plus envelope parents/generator, the edge asserted by BD-113; 'old runs replayable' is N29ax-01's re-execution with chunk digests, as N14a-29 step 11; related +BD-113 +N14a-29 +N29ax-01"
+  },
+  {
+   "bead": "N14a-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "binary64 control claimed 29.97 Hz fails, but its shortest round trip is 29.97, so a round-trip-printing mutant passed; added 0.30000000000000001 m and split the mutant into round-trip and exact printings, each failing on its files"
+  },
+  {
+   "bead": "SPEC-C-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "mirror equality claimed identical ModelId, but BD-061's kinematic section records parity so ModelIds may differ (as N41p1-01 states); equality is per functor image with bodies paired by placement"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N41p2-01",
+   "why": "FMT-FMODULE and Appendix L.2 require extracting a module by a typed edit (request to BD-058); no bead carried it. Catalogue row 23 extract-module with derived port signature, parameters and lever re-pointing, exact mass guarantee, inverse inline, ModelId-unchanged postcondition (114), e2e design_extract_module.sh"
+  },
+  {
+   "bead": "N41p2-02",
+   "why": "BD-058's e2e needed design.new (N14a-21), which depends on BD-058, so it could never close; the script now runs here (16 steps, CLI and MCP, three plants)"
+  },
+  {
+   "bead": "N14bp2-01",
+   "why": "BD-063's e2e needed design.new/show --products, which depend on BD-063; incremental-equals-full through frob over seven edits, plant stale-product"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "ART-L2",
+   "what": "depend on N41p2-01 and make step 2 `frob design edit quad-tray extract-module ...`; quad-tray's levers knee_ratio and foot_radius point into the leg, so the extraction must declare them as module parameters (or remove the levers first); compare body and port signature with the fixture, or pass params and ports that reproduce it, rather than the whole canonical bytes"
+  },
+  {
+   "bead": "BD-060",
+   "what": "Out names extraction as BD-058's; it is N41p2-01's (catalogue row 23)"
+  },
+  {
+   "bead": "WP-07",
+   "what": "child listing shows N14a-17's old title (22 rows); it is 23 rows now; add N41p2-02 and N14bp2-01 (and N41p2-01 under WP-38)"
+  }
+ ],
+ "unchanged": 23,
+ "notes": "All 49 read in full. Main pattern round 1 missed: e2e scripts and acceptance lines calling verbs whose beads depend on the bead itself (BD-058, BD-063, BD-064, N14b-33, N14b-01, FD-FSIM-08, N14a-18 migrate edge), so they could never close; fixed by moving each run to a later bead or to an existing e2e (N14a-27, N14a-29, N14a-28), adding N41p2-02 and N14bp2-01. A second stage conflict: N13-04's stage-2 FROB-REF-168 pre-empted the solid-torso fixtures of N14a-27 and N14a-10; resolved with the intent fill form now typed by BD-055 and N14a-03. Binary64 controls in BD-055, N14a-01 and N14a-26 could not catch their mutant; fixed with values that share a double. New feature bead N41p2-01 (extract-module, catalogue row 23) answers BD-058's request; parent WP-38 by unit, requested under WP-07's listing note. All five addressed requests applied after checking. graph_check cycles: 0; all 29 touched files parse (front matter, JSON lists, known refs, seven sections). Unchanged beads were read and found coherent; the slice looks settled apart from the three requests."
+}

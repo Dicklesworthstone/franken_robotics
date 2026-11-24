@@ -6,9 +6,9 @@ priority: 2
 milestone: "M2"
 labels: ["m2", "suite", "spark", "upstream", "frankentorch", "frob-spark-cuda", "solid"]
 parent: "WP-18"
-deps: ["BD-037", "BD-015", "NF-01", "STD-E2E"]
+deps: ["BD-015", "BD-037", "BD-176", "BD-217", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-172", "BD-173", "BD-175", "BD-217", "FD-FT-01", "FD-FT-02"]
+related: ["BD-172", "FD-FT-01", "FD-FT-02"]
 gates: ["GATE-SPARK-02", "GATE-SPARK-03", "INT-CUDA-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§21.9", "§21.2", "§33.4", "§21.25", "§33.8"]
 ---
@@ -34,7 +34,10 @@ waiting for a gateway before M2 (the direct annex is the design of record).
 ## Scope
 
 In: in FrankenTorch, a crate with the Metal gateway's safe surface over CUDA; here, a differential run of the
-CUDA backend on it. Out: the CUDA backend itself, its launch-graph capture and stream-ordered pools (BD-172);
+CUDA backend on it. The work in FrankenTorch can begin once the admission of INT-CUDA-01 is on record (BD-015);
+the differential run here re-runs two gates and so needs the beads that measure them, which is why this bead
+depends on BD-176 (GATE-SPARK-02) and BD-217 (GATE-SPARK-03, which rests on the full CUDA step of BD-172).
+Out: the CUDA backend itself, its launch-graph capture and stream-ordered pools (BD-172);
 third-party gaps in `cudarc` (graph capture and asynchronous pool bindings are settled at INT-CUDA-01 and are
 not upstream work items; the annex binds the driver directly where a binding is missing, OPEN-SPARK-4).
 
@@ -44,8 +47,10 @@ not upstream work items; the annex binds the driver directly where a binding is 
 (`../frankentorch` beside this one; head `8165d6a18028` and toolchain channel `nightly-2026-08-31` when this was written
 on 2026-11-21, both FACT to re-read), by an agent of this program working there under that repository's own
 `AGENTS.md`, gates and conventions. FrankenTorch calls `ft-kernel-metal` its sanctioned unsafe boundary (FACT:
-`frankentorch/crates/ft-kernel-metal/src/lib.rs`), so any new `unsafe` stays inside that crate and follows its
-safety documentation.
+`frankentorch/crates/ft-kernel-metal/src/lib.rs`). This item adds a second boundary of the same kind: every new
+`unsafe` for CUDA stays inside the new gateway crate, follows the same safety documentation discipline, and
+FrankenTorch's maintainers' rules decide whether a second sanctioned boundary is admitted (if they do not admit
+one, the item stops and the direct annex stays, which is the fallback below).
 
 1. Read that repository's `AGENTS.md` and its coordination rules first. They govern; where they differ from this
    bead, they win, and the difference is written into this bead's closing note.
@@ -140,9 +145,13 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_ft_03 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Run on `trj`. Phase `post` also runs `frob spark probe --json`, `frob spark check --json`
-and the CUDA rows of the performance harness on both routes, logging world-steps per second, the paired ratio
-with its lower bound against 0.98, and the digests.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Run on `trj`. Phase `post` also runs, on each
+route and each card, `frob spark probe --device cuda:<i> --key ft03-probe-<route>-<i> --json` and `frob spark check
+--step --workload Q --backend gpu-cuda:<i> --key ft03-check-<route>-<i> --json` (both are `run` verbs, so each call
+carries its own idempotency key and the two routes are computed, not answered from one stored receipt), and the
+CUDA rows of the performance harness on both routes as one campaign of kind `ratio` (BD-216: arms `direct` and
+`gateway`, ten pairs), logging world-steps per second, the paired ratio with its lower bound against 0.98, and
+the digests.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_ft_03/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

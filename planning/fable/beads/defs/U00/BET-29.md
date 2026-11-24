@@ -6,9 +6,9 @@ priority: 2
 milestone: "M5"
 labels: ["m5", "foundry", "frob-foundry", "frontier", "bet", "gate"]
 parent: "WP-71"
-deps: ["N00-28", "N00-07", "BD-403", "BD-406", "BD-407", "STD-E2E"]
-needs: ["§31.5: the reference links and their engineered reference parts, with the equal-stiffness and equal-fatigue-margin comparison rule"]
-related: ["BD-400", "BD-401", "BD-402", "BD-404", "BD-408", "NS-20", "N00-11"]
+deps: ["BD-403", "BD-406", "BD-407", "N00-28", "N31b-13", "N31b-15", "N31b-18", "N31b-19", "N38a-09", "STD-E2E"]
+needs: []
+related: ["N00-11", "N40-31", "N40-32", "NS-20"]
 gates: ["GATE-FOUNDRY-05", "GATE-FOUNDRY-08", "GATE-FOUNDRY-09", "KILL-TOPOPT", "KILL-TOLERANCE", "KILL-PACKET"]
 plan_refs: ["§4 (BET-29)", "§40.5", "§0.8 (H-12)", "§31.19", "§2.5"]
 ---
@@ -27,8 +27,11 @@ engineered parts, which is 2–8% of robot mass on the one quadruped with a publ
 
 ## Scope
 
-In: pre-registration, the M5 reading, verdict and decision record. Out: load extraction, optimization,
-tolerance allocation, geometry export, the packet.
+In: pre-registration, the M5 reading, verdict and decision record. Out, with the beads that have them: load
+extraction and the packet (their Foundry beads); topology optimization and GATE-FOUNDRY-05 (BD-403, with its
+end-to-end script N31b-13); tolerance allocation and GATE-FOUNDRY-08 (BD-406); geometry export and
+GATE-FOUNDRY-09 (BD-407); the decisions KILL-TOPOPT (N31b-15), KILL-TOLERANCE (N31b-18) and KILL-PACKET (N31b-19,
+which also reads the packet gate GATE-FOUNDRY-10), which this bead reads and cites and never re-decides.
 
 ## Technical approach
 
@@ -51,7 +54,8 @@ tolerance allocation, geometry export, the packet.
    sizing supplies mass and inertia feedback, three-dimensional optimization becomes an offline option or is
    dropped, and the structural margin analysis is unaffected. KILL-TOLERANCE (M5): the allocation gate fails,
    or band-extreme checks fail on more than a fifth of features in the pilot; worst-case boxes per interface.
-   KILL-PACKET (M5): the geometry or packet gate fails after one repair cycle; the packet is reduced to a parts
+   KILL-PACKET (M5): the geometry gate GATE-FOUNDRY-09 or the packet gate GATE-FOUNDRY-10 fails after one
+   repair cycle; the packet is reduced to a parts
    list, mass properties and STL, with STEP and harness deferred. The bet's own fallback: the structural margin
    analysis alone.
 5. **Downstream if falsified.** The scenario "a build packet" is demonstrated with the reduced packet or
@@ -66,20 +70,29 @@ tolerance allocation, geometry export, the packet.
       to convergence, solve time against 120 s.
 - [ ] Tolerance and geometry gates recorded with their measured residuals.
 - [ ] Every packet file carries the three no-authorization flags and `fabrication_released`, all false.
-- [ ] Verdict and the three kill decisions recorded as ADRs.
+- [ ] Verdict recorded in `docs/adr/bet-29-m5.md`, citing the three kill decisions on record (N31b-15, N31b-18,
+      N31b-19) by identifier and hash; with any missing the verdict is not filed.
 
 ## Test plan
 
 ### Unit tests
-`bets.rs`: `bet29_saving_11_percent_holds`; `bet29_saving_5_percent_falsifies_a_and_fires_kill_topopt`;
+`bets.rs`: `bet29_saving_11_percent_holds`; `bet29_saving_5_percent_falsifies_a_with_kill_record` (clause (a)
+true; N31b-15's record: KILL-TOPOPT fired, its hash carried; the trigger is applied there);
 `bet29_round_trip_mismatch_falsifies_b`; `bet29_tolerance_stack_open_falsifies_b`;
 `bet29_equal_margin_violated_is_not_a_saving` (an optimized part 12% lighter with 20% less fatigue margin is
 not counted).
 
 ### End-to-end script and logging
-`scripts/e2e/bet_29_decide.sh` runs `frob foundry optimize` on one reference link at coarse resolution,
-`frob foundry tolerance` on the worked allocation, `frob foundry export` and a re-import, recomputes masses from
-exported geometry, and recomputes the verdict. Logged per STD-E2E: link class, masses with units, saving,
+`scripts/e2e/bet_29_decide.sh` runs `frob foundry optimize <reference design> --links lower-leg --loop --key
+"$(foundry_key bet29-opt)" --json` at coarse resolution (a `run` verb; the key comes from the cluster preamble,
+N31a-51), `frob foundry tolerance --fixture worked-case --json` (a `read` verb, no key) on the worked
+allocation, and `frob foundry export --fixture tube --geometry-only --key "$(foundry_key bet29-geo)" --json`,
+whose read-back report (BD-407 §8) recomputes mass, centre of mass and inertia from each of the four exported
+files; the script asserts `mass_rel_diff_max` ≤ 10⁻⁶ from it, recomputes the tube's mass from the STL itself
+as an independent check, and then reads the verdict of BET-29 from the bet register's report (`cargo run -p
+frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule) over the
+three gate receipts and the three kill records, and checks `docs/adr/bet-29-m5.md` against it. Logged per
+STD-E2E: link class, masses with units, saving,
 stiffness and fatigue margins of both parts, convergence iterations, tolerance residual, round-trip digest,
 flags; `summary` naming the three gates and three kill gates.
 

@@ -1,0 +1,356 @@
+{
+ "round": 1,
+ "slice": "U26a",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "N26a-01",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Added contract.toml (layer 5, plane, determinism, evidence, eight gates, twelve codes, safe mode, three frontier-* features with kill gate and pilot) and tests/conformance.rs per N34-08; added scripts/e2e/nemesis_crate_boundary.sh (check-layers/deps/contracts, planted forbidden edge, planted feature row without kill gate, doctor) with full NDJSON logging; deps N34-08, BD-022, STD-E2E."
+  },
+  {
+   "bead": "BD-270",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Acceptance required reachability through nemesis.oracle and nemesis.search, which depend on this bead: now asserted by N26a-05; recorded the DESIGN correction that the chapter's illustrative .fmcw edit (closer torque 21 N·m) lies outside the registry's 5-20 N·m kitchen swing-door bound."
+  },
+  {
+   "bead": "N26a-03",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Discrete masses read from N19ax-04's site records (edit_mass, OutOfSupport); lint wording fixed (the stored ratio has no reader outside reporting; weights use NominalLaw factors); added site_record_mass test (film term 1/3, -0.477). Request from U19a addressed: the user-side leg needs nemesis.search (BD-273 depends on this bead), so it is run un-skipped by N26a-11."
+  },
+  {
+   "bead": "N26a-04",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Fixed the solvable-trap class split (60 T3, 20 T4, 10 T5, 10 T5-two-mode), the ten GATE-NEMESIS-02 traps five per interior, and a per-step germ (standardized window sum of push impulses) in every GATE-NEMESIS-05 fixture so splitting has fresh randomness after a fork; conditional sampling for that germ; calibration script now sources STD-E2E with charter logging, metrics and a dud-trap control; dep STD-E2E. Later: the 10^-2 potency trap that N26a-06, N26a-11, N26a-12 and N26a-31 read existed nowhere: four calibrated T2 potency traps (role potency, outside the counted 100) added with test and acceptance."
+  },
+  {
+   "bead": "N26a-05",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Step 7 drives nemesis.search --method given: added dep BD-273 and removed the contradictory 'if the oracle is not built' note; undeclared-path worlds now have admitted twins; acceptance covers the search path, 361 and 362."
+  },
+  {
+   "bead": "N26a-06",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Paired lower bound, potency and A/A arms are N38a-08's routines (dep added) so pilot and gate share one routine; pilot script sources STD-E2E with charter fields, falsifier metrics with thresholds, first offending run on failure."
+  },
+  {
+   "bead": "N26a-07",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "Acceptance required a classified, guarded failure but the bead does not depend on the oracle or guard: the downstream of the fallback pipeline is the driver's (BD-273); this bead owns the proposer side and the switch; added baseline_only_portfolio test with FROB-REF-724 for removed methods."
+  },
+  {
+   "bead": "BD-273",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "users"
+   ],
+   "what": "Splitting share and --method splitting conditional on BD-277 (a later seed) registering itself, FROB-REF-724 otherwise and after KILL-RARE; --first stops each arm at its own first failure (both steps-to-first measured); DESIGN definition of the solvable share (otherwise vacuous) printed in the result; FROB-REF-567 criterion reworded to the record this bead writes (refusal is BD-259's); added fallback_pipeline_complete, auto_two_modes_with_archive, handoff_routed_to_descent, solvable_share_counts tests."
+  },
+  {
+   "bead": "N26a-08",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "Its acceptance asserts FROB-REF-563 through N26a-23's accumulator: dep added; the archive-restart half of cem_two_modes needed N26a-09 (parallel bead) and moved to BD-273; restart_from tested here."
+  },
+  {
+   "bead": "N26a-09",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Handoff to descent called N26a-08 without depending on it: the method now emits a Handoff request routed by the driver (BD-273); handoff_threshold test made precise."
+  },
+  {
+   "bead": "N26a-10",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its e2e leg was placed in N26a-11 through frob mission separate (BD-293), which would make the KILL-NEMESIS gate wait on Augur: the user-side exercise is BD-293's mission_separate.sh; request recorded for the fields it must log."
+  },
+  {
+   "bead": "N26a-11",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "Removed the pair step (moved to mission_separate.sh); solvable share computed per BD-273's definition with N38a-08's routine; added step rerunning scene_feature_law.sh with step 5 un-skipped (U19a request) and deps N19ax-04, N26a-03."
+  },
+  {
+   "bead": "N26a-12",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Aligned with N40-03: ADR docs/delivery/adr/ADR-KILL-NEMESIS-M3.md with required fields, outcomes not-fired/fired/not-reached/deferred in the kill row (not pass/killed), GATE-NEMESIS-02 status propagation, owner declaration for N40-30, repair-cycle reading; FROB-REF-724 for removed methods; added scripts/e2e/nemesis_kill_nemesis.sh; deps BD-274 (shrinker accepts the fallback's failures), N40-03, STD-E2E. Later: its procedure control said 'must return killed', contradicting its own outcome_closed_set: now 'fired'."
+  },
+  {
+   "bead": "N26a-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The exploration-law refusal test covered five laws; ProposalLaw has six exploration laws (Given was missing)."
+  },
+  {
+   "bead": "N26a-13",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance runs on N26a-04's planted impossible and solvable traps: dep added; planted_impossible_all_fail (50 bottleneck, 25 energy, 25 dual) and planted_solvable_none_fail tests; e2e text names N26a-33's 100 + 100 run. Later: test-only feature nemesis-oracle-no-necessary (all necessary conditions Unresolved) with test no_necessary_never_infeasible, used by N26a-33 step 5, which named an undefined build flag."
+  },
+  {
+   "bead": "BD-272",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Acceptance asserted the 564 shrink refusal and the hard-set refusal, which belong to later beads (BD-274, BD-275) that depend on this one: now the verdict status they read, asserted from the user's side by N26a-16; scope names the crate-level guard_gate test (record written by N26a-16); the two defective guards are test-only features nemesis-guard-off and nemesis-guard-reject-all used by the self-tests of N26a-16 and N26a-20."
+  },
+  {
+   "bead": "N26a-15",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Registration script nemesis_guard_register.sh had no logging contract: sources STD-E2E, idempotent, charter fields, per-plant tier/variant readouts with hand-checkable window and energy metrics, failure pointer, summary and a zero-margin planted control; dep STD-E2E."
+  },
+  {
+   "bead": "N26a-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The two-edit example silently used 19 N·m where the chapter text prints 21 N·m (outside the 5-20 N·m swing-door bound): recorded why, and made the 21 N·m text the planted out-of-profile case of validation rule 3."
+  },
+  {
+   "bead": "N26a-20",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Misuse probes call eval.qualify (BD-259) and nemesis.bound (BD-276) without depending on them: deps added; step 2 asserts the full guard block; guard-off negative control now has a mechanism and a self-test; each misuse probe has an admissible twin."
+  },
+  {
+   "bead": "N26a-21",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Reconciliation (dup-06/REC-07) addressed: rare::zero_failure::required is the one product function (one Rust function with a Level argument for the plain and qualification forms), N38b-56's zero_failure_episodes is the conformance oracle it must agree with, NEG-04's name withdrawn, 76,963 only as a labelled control; acceptance adds the single-source scan and cites N26b-16's derivation instead of requiring a file another bead writes."
+  },
+  {
+   "bead": "N26a-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Acceptance 'a budget below the plan ends Exhausted, exit 2' contradicted the admission refusal FROB-REF-760 (exit 4) of N26a-21/N26a-26: Exhausted is the module's value when failures exhaust a fitting budget; exit codes are the verb's."
+  },
+  {
+   "bead": "N26a-24",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Acceptance asserted FROB-REF-563 'through N26a-23', a parallel bead it does not depend on: the sampler now refuses at construction a proposal shifting an undeclared field (test undeclared_transform_refused_563)."
+  },
+  {
+   "bead": "N26a-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Zero-failure floor checked numerically: one-sided level-δ test, maximal bet 1.037e-3 (one grid step), adaptive rule about 1.075e-3 (two steps; the epsilon=1 'within one grid step' holds only for the maximal bet), two-sided interval about 1.29e-3; acceptance and test now say which bet and which side."
+  },
+  {
+   "bead": "N26a-26",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "Non-finalist refusal tied to the uncoded slot rare-bound-not-finalist (N35x-02) asserted by exit code and slot name; 760 admission threshold stated per acting policy (80% under table, 100% under baseline and shadow) with the reachable bound computed on that share; tests admission_share_by_policy, non_finalist_slot_name. Later: reads BD-277's switch nemesis.rare.exploration (off: no Explore, no RefuteCheck, whole budget nominal), test exploration_off_is_nominal_only."
+  },
+  {
+   "bead": "N26a-28",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "F5's single-germ modes contradicted 'part of each trigger is per-step' (a static-only mode makes the splitting arm miss it by construction): each F4/F5 box now has a static and a per-step germ, with exact probabilities; potency fixture F2 at 1e-2 added (void runs); clause reading in the pilot fixed to the splitting arm; statistics via N38a-08; pilot script with charter logging and metrics; deps N38a-08, STD-E2E."
+  },
+  {
+   "bead": "N26a-17",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "The memo record of each subset now carries k, invalid counts and the original atom's mean and minimum margin (no extra episode), which the KILL-MCW contrasts ranking needs; test subset_record_carries_margins."
+  },
+  {
+   "bead": "N26a-18",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Added shrink::contrasts (the KILL-MCW fallback: n single-removal queries ranked by margin gain, NonMinimal(n), unverified) so the fallback exists before the decision and is not implemented by the decision bead; contrasts tests moved here from N26a-35; first-round-only shrinker named as test feature nemesis-shrink-first-round-only (used by N26a-34's self-test)."
+  },
+  {
+   "bead": "N26a-29",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "The staged level pilot and the null-fork check fork snapshots with re-keyed streams but depended on no fork bead: deps BD-205 (run.fork) and N27a-04 (child addresses, replicate stream mode); scope says so."
+  },
+  {
+   "bead": "BD-276",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Refusal table now equals the VERBS-nemesis row (adds 549, 569 as fallback record, 840 with owners and exits); certify-with-proposal refusal given an uncoded slot certify-by-importance-sampling (exit 3) with test; PO-NEMESIS-02 cites N26b-16's file instead of requiring it; gate rows measured at crate level by gate_rows, record written by N26a-30 (which depends on this bead)."
+  },
+  {
+   "bead": "N26a-30",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "Probes used nemesis.hardset run and a covering battery without depending on them: deps BD-275, BD-278; --level 0.05/110 is not a flag of the verb (now --delta 1/2200); admissible twins for 560; probes for the certify-with-proposal slot and the 569 fallback record; acceptance says this script writes GATE-NEMESIS-04's record."
+  },
+  {
+   "bead": "BD-277",
+   "kinds": [
+    "complete",
+    "tests",
+    "users"
+   ],
+   "what": "Registers Splitting as a SearchMethod in BD-273's portfolio (the slot BD-273 reserved) and owns the switch nemesis.rare.exploration = splitting | off (724 naming KILL-RARE when off); test registers_with_search_portfolio; the kill decision only sets the switch."
+  },
+  {
+   "bead": "N26a-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Aligned with N40-03 like N26a-12: ADR docs/delivery/adr/ADR-KILL-RARE-M3.md with required fields, kill-row outcomes not-fired/fired/not-reached/deferred (not pass/killed), GATE-NEMESIS-05 propagation, owner declaration, implementer refusal; FROB-REF-724 and capabilities on fired; its e2e was a step in N26a-30, a bead it depends on: now its own scripts/e2e/nemesis_kill_rare.sh; deps N26a-26, N40-03, STD-E2E."
+  },
+  {
+   "bead": "N26a-33",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Used nemesis.search --method given, eval.scorecard and N26a-05's legality record without depending on them: deps BD-273, BD-254, N26a-05; the undefined 'build flag that disables necessary conditions' is now N26a-13's feature."
+  },
+  {
+   "bead": "N26a-34",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Shrink count was 165 for 170 shrinks; self-test feature attributed to N26a-18, which now defines it."
+  },
+  {
+   "bead": "N26a-35",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Aligned with N40-03: ADR docs/delivery/adr/ADR-KILL-MCW-M3.md, four outcomes in the kill row, owner declaration, implementer refusal; the decision bead no longer implements the contrasts branch (N26a-18 computes, BD-274 dispatches, N26a-19 validates); own script scripts/e2e/nemesis_kill_mcw.sh instead of a step in N26a-34; boundary and not-reached cases in trigger_evaluator; deps N26a-18, N40-03, STD-E2E."
+  },
+  {
+   "bead": "N26-KA",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance required owning tests to fail under their controls and owner paths to resolve, but this bead depends on none of the owners (only N26b-17 depends on it): rows now carry planned owner paths with owner_status, owner_paths_exist provided and tested on a fixture, the demonstrations moved to N26b-17's runner (request)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-293",
+   "what": "scripts/e2e/mission_separate.sh is now the only user-side exercise of N26a-10's entry point: log per case the reversal gap g, both verdicts and the reversal kind, the oracle class of the losing design, the guard outcome for both designs, and the flip-probability rank of each evaluated world."
+  },
+  {
+   "bead": "BD-274",
+   "what": "Under nemesis.shrink.mode = contrasts the dispatch calls N26a-18's shrink::contrasts (over N26a-17's per-subset margin record) and writes the file through N26a-19 with non-minimal(n), one_minimal_verified false and the ranked contrasts; the contrasts branch exists before the KILL-MCW decision (N26a-35 only sets the switch)."
+  },
+  {
+   "bead": "N26b-17",
+   "what": "N26-KA's records now carry planned owner test paths with owner_status planned|resolved: run its owner_paths_exist check, require every row resolved at the M3 exit (KA-668 by M4), and record per row the demonstration that the owning test fails under its negative control (moved here from N26-KA, which depends on no owner)."
+  },
+  {
+   "bead": "N35x-02",
+   "what": "Add the uncoded slot certify-by-importance-sampling (nemesis.bound --mode certify with --proposal, --shift or --epsilon; exit 3 by slot name; 570-579 free) beside rare-bound-not-finalist; raised by BD-276."
+  },
+  {
+   "bead": "N26-REF",
+   "what": "Add to the 'situations the plan gives no code' table: certify mode with a proposal on nemesis.bound, refusal exit 3, slot certify-by-importance-sampling, owner BD-276; and state that FROB-REF-569 on nemesis.bound surfaces as the decision policy's fallback trigger (recorded in the result), not as the verb's exit."
+  },
+  {
+   "bead": "N26b-14",
+   "what": "Step 6 (uncoded situations) should also pin nemesis.bound --mode certify --proposal: exit 3 with slot certify-by-importance-sampling and zero episodes drawn."
+  },
+  {
+   "bead": "N40-26",
+   "what": "Kill rows: KILL-RARE reads the exploration pilot record of N26a-28 and GATE-NEMESIS-05; KILL-MCW reads GATE-NEMESIS-03; both mode exit, decided M3; the decision beads N26a-32 and N26a-35 now fill decision = {outcome, adr, date, session} with ADRs docs/delivery/adr/ADR-KILL-RARE-M3.md and ADR-KILL-MCW-M3.md."
+  }
+ ],
+ "unchanged": 6,
+ "notes": "Complete: 42 of 42 reviewed; 36 changed, 6 unchanged (N26a-02, N26a-14, N26a-36, N26a-16, N26a-27, N26a-31); no new beads, no merges. Main themes: forward references (acceptance asserting verbs, refusals or records of later beads) moved to the downstream scripts that depend on the mechanism; the three kill-gate decision beads aligned with N40-03 (ADR path, four outcomes, owner declaration, own e2e script) and kept free of mechanism code (switches owned by N26a-07, BD-277, BD-274/N26a-18); missing fixtures and test features defined where tests use them (potency traps, guard/oracle/shrink mutants). Numbers recomputed and confirmed: ddmin test counts (4,16,26/5,23,41/6,30,56; 15 and 20 for the order example), zero-failure counts incl. 36,887/47,873/63,967/76,959, Clopper-Pearson 0.002991/0.004735/0.006282 and coverages, mixture weights, Good-Turing expectations, walk level probabilities, box probabilities; one correction (betting floor depends on the bet and side). Front matter parses, seven sections and three test subsections present in all 42; deps all exist; graph has 0 cycles. Slice looks close to settled; the requests to BD-274, N26b-17, N35x-02, N26-REF, N26b-14, N40-26 and BD-293 close the remaining seams."
+}

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "kinesis", "spark", "phylum", "frob-kernels", "solid", "test", "card"]
 parent: "WP-47"
-deps: ["NEG-03", "GB-41", "N21b-18", "BD-148"]
+deps: ["BD-148", "GB-41", "N16a-14", "N21b-18", "NEG-03"]
 needs: []
-related: ["N16b-26", "N17a-07", "BD-168", "BD-219"]
+related: []
 gates: []
 plan_refs: ["Appendix E.7 (default capacities)", "§16.6", "§36.3", "§36.10", "§17.7", "Appendix M KA-814"]
 ---
@@ -28,8 +28,12 @@ it.
 ## Scope
 
 In: the single capacities table and its readers; the byte-model regression; the scan. Out: the decision that
-freezes the values (N21b-18); the packed lowering (BD-148); the capacity audit that measures overflow rates
-(BD-168); the card (GB-41).
+freezes the values (N21b-18, a dependency: its freeze step sets the rows of Q and H in this table to the decided
+values with status `frozen`, and writes the bucket set to `registries/shape_classes.toml`); the file
+`registries/capacities.toml` itself, its row format and the defaults of the other workloads (N16a-14, a
+dependency, with the decision OPEN-KIN-3 in N16a-15: this bead adds no second file, only the single-source rule,
+the readers and their consistency test); the packed
+lowering (BD-148); the capacity audit that measures overflow rates (BD-168); the card (GB-41).
 
 ## Technical approach
 
@@ -37,22 +41,28 @@ freezes the values (N21b-18); the packed lowering (BD-148); the capacity audit t
    bodies, C, R, state bytes, status (`design-default` until the M2 freeze, then `frozen` with the measurement
    record). Readers: the packed lowering, the bucket planner, `sim.estimate`, the population memory model, the
    performance harness's disclosure block. No reader has a literal capacity.
+   DESIGN (the same statement in N21b-18): C and R of a reference workload are stated in this table and nowhere
+   else. The shape-class registry `registries/shape_classes.toml`, which N21b-18 writes at the freeze with the
+   bucket set and the other capacities of each class, reads the contacts and rows of a class that a reference
+   workload defines from this table and does not repeat them; it is a sixth reader for the consistency test.
+   Reason: two printed tables drifted apart once, and a second registry file holding C and R would be a third.
 2. **Values at plan time.** Q: n = 18, n_b = 13, C = 32, R = 160. H: n = 35, n_b = 30, C = 64, R = 320.
 3. **Byte model check (exact).** B = 4·(61·n_b + 17·n) + 12·n² + 4·R·n + 48·R + 96·C + state. Q: 4,396 + 3,888
    + 11,520 + 7,680 + 3,072 = 30,556 before state (35 kB with about 4,000 bytes of state). H: 9,700 + 14,700 +
    44,800 + 15,360 + 6,144 = 90,704 (97 kB with about 6,000). With the superseded capacities: Q: 4,396 + 3,888
    + 9,216 + 6,144 + 2,304 = 25,948 (the 27 kB first printed implies about 1 kB of state); H: 9,700 + 14,700 +
    31,360 + 10,752 + 3,840 = 70,352 (72 kB).
-4. **Consistency test across readers.** For each workload the five readers report the same (C, R); the
-   buffers the lowering allocates have exactly the byte sizes the estimate predicts.
+4. **Consistency test across readers.** For each workload the five readers, and the shape-class registry once
+   it exists, report the same (C, R); the buffers the lowering allocates have exactly the byte sizes the estimate
+   predicts.
 5. **Register and scan.** Item E7-A: stale patterns `C = 24`, `R = 128`, `C = 40`, `R = 224`, `27 kB`,
    `72 kB` in the scope of capacity, per-world or bucket text; pinned by `gb_41_reference_terms` and the tests
    below.
 
 ## Acceptance criteria
 
-- [ ] `registries/capacities.toml` exists with the two rows and validates; five readers load it and none has a
-      literal capacity (lint).
+- [ ] `registries/capacities.toml` (N16a-14's file) holds the Q and H rows and validates; five readers load it
+      and none has a literal capacity (lint).
 - [ ] All readers agree on (32, 160) and (64, 320); estimate bytes equal allocated bytes.
 - [ ] Changing a row in a scratch registry changes every reader's value and the bucket identity (the
       `ShapeClassId` or bucket digest differs).
@@ -63,7 +73,9 @@ freezes the values (N21b-18); the packed lowering (BD-148); the capacity audit t
 ### Unit tests
 
 - `capacities_table_schema`, `capacities_single_source` (lint for literals).
-- `capacities_readers_agree`: lowering, planner, estimate, memory model, disclosure block.
+- `capacities_readers_agree`: lowering, planner, estimate, memory model, disclosure block, and the class rows of
+  `registries/shape_classes.toml`; `shape_class_registry_repeats_no_capacity`: a `synthetic` shape-class registry
+  with a literal C or R on a reference workload's class fails the lint.
 - `capacities_byte_model`: 30,556 and 90,704; superseded 25,948 and 70,352 asserted different.
 - `capacities_change_changes_identity`: a scratch row with R = 128 yields a different bucket digest.
 - `capacity_overflow_is_flagged`: a `synthetic` world that needs 33 contacts at C = 32 is flagged `Degraded`

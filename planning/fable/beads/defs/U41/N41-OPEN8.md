@@ -1,14 +1,14 @@
 ---
 key: "N41-OPEN8"
-title: "registries/open.toml, part 8: program-level questions and those adopted from the Gauntlet and the ten-fold test (20 rows, 2 aliases)"
+title: "registries/open.toml, part 8: program questions and those adopted from Gauntlet and ten-fold (20 rows, 2 aliases)"
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "tenfold", "registry", "solid", "owner-decision"]
+labels: ["m0", "delivery", "gauntlet", "tenfold", "registry", "solid", "owner-decision", "review-notes-open"]
 parent: "EPIC-M0"
-deps: ["N41-03"]
-needs: ["§38.16, §39.19: the decision and experiment beads named in the last column for the adopted questions are owned by the Gauntlet and ten-fold units; where this unit also wrote an owner packet (OPEN-GAUNT-1; OPEN-TENFOLD-1 to -4, -6, -8) both keys are named and the lead keeps one as primary"]
-related: ["N41-OPEN7", "N41-05", "N41-06", "N41-07", "N41-08", "N41-09", "N41-10", "N41-15", "N38a-04", "N38a-12", "N40-12", "N40-14", "N40-35"]
+deps: ["N41-03", "N41-OPEN1", "N41-OPEN2", "N41-OPEN3", "N41-OPEN4", "N41-OPEN5", "N41-OPEN6", "N41-OPEN7"]
+needs: []
+related: []
 gates: []
 plan_refs: ["§42.2", "§42.3", "§42.4", "§38.16", "§39.19"]
 ---
@@ -53,7 +53,7 @@ In: the twenty rows and two aliases below as records of `registries/open.toml`. 
 | OPEN-GAUNT-4 | Which incumbent release is the development oracle, and which releases and container digests form the comparator set | No development oracle: pilots that need dynamics before M1 wait for the CPU referee | The rival audit of the ten-fold test | GATE-GAUNT-05; every pilot that needs dynamics before M1 | M0 | N38b-35 (with N38a-04, N38a-06) |
 | OPEN-GAUNT-5 | The Gauntlet's runtime budget per change, per night and per release on each machine | The `smoke` and `fixtures` tiers per change; everything else nightly | Performance program | The schedule of verification tiers G1 to G5 | M1 | N38b-36 |
 | OPEN-GAUNT-6 | Reconciliation of the known-answer values flagged as inconsistent between a chapter and the suite | The row keeps the printed value and is flagged; the gate cites the derivation file | The lead; the owning chapters | Any gate that cites one of them | The milestone of the citing gate | N38b-61 |
-| OPEN-GAUNT-7 | The scenario lists of the standard battery for wheeled, tracked, wheel-legged and manipulating classes | The class has no fidelity claim until its battery is frozen | Arena with Kinesis | GATE-FID-01 for those classes | M2 | N38b-37 (with N38a-20, N16b-01) |
+| OPEN-GAUNT-7 | The scenario lists of the standard battery for wheeled, tracked, wheel-legged and manipulating classes | The class has no fidelity claim until its battery is frozen | Arena with Kinesis | GATE-FID-01 for those classes | M2 | N38b-37 (with N38a-20, which superseded N16b-01) |
 | OPEN-GAUNT-8 | Whether 10⁴ scenarios per relation per tier per release is affordable for the metamorphic relations that need the referee | Referee relations run at 10³ and print the reduced count | Performance program | GATE-GAUNT-03 | M2 | N38b-38 |
 | OPEN-TENFOLD-1 | Which simulator adjudicates each stratum, and whether it can represent terrain, films and tracks | A pinned incumbent CPU engine that no arm trains in; where it cannot represent the mission, cross-home adjudication, labelled | The adjudicator with the Gauntlet lead | GATE-TENFOLD-05 | M2 | alias of OPEN-PROG-2 (N41-06); N39b-26 |
 | OPEN-TENFOLD-2 | Who the adjudicator is | A fresh-context session with no write access to any arm; every ratio is then labelled `self-adjudicated`, and the word waits for an external re-run of the kit | Owner | Before any sealed world family exists | M2 | alias of OPEN-PROG-2 (N41-06); N39b-27 |
@@ -63,7 +63,17 @@ In: the twenty rows and two aliases below as records of `registries/open.toml`. 
 | OPEN-TENFOLD-6 | The agent model, its revision and its caps | The agent the project itself is developed with at the gate's date, pinned; one agent only, with the result stated as conditional on it | Owner | Every freeze | M2 | N41-15 (owner packet); N39b-31 |
 | OPEN-TENFOLD-7 | Incumbent licences: whether each permits publishing a comparison, and what the kit may carry | Revisions and fetch instructions only; an incumbent whose licence forbids publication is replaced by the next strongest, and the replacement is printed | Project lead | GATE-TENFOLD-01 | M0 | N39b-32 |
 | OPEN-TENFOLD-8 | Ratification of the thresholds 3 and 10, the guard floor 5, the tie factor 1.5, the margin 0.05 and the limit of four confirmatory cells | As written | Owner | The first suite hash | M2 | N41-15 (owner packet); N39b-33 |
-| OPEN-TENFOLD-9 | Whether arm D, the product's own layer over an incumbent engine, is built | Not built unless arm C ties on a stratum | Tether lead | Nothing | none | considerations of BD-430 |
+| OPEN-TENFOLD-9 | Whether arm D, the product's own layer over an incumbent engine, is built | Not built unless arm C ties on a stratum | Tether lead | Nothing | none | considerations of N39a-21 and N39b-07 (the arms epic is BD-430) |
+
+Deadline values as records (the forms of N41-03, rule 3). Three rows stand for many small obligations and carry
+`deadline = "per-row"`: OPEN-GAUNT-2 and OPEN-GAUNT-3, with `tracked_by` the known-answer registry's counts of
+rows still printed `to set` and `none stated`, by the milestone of each row's owner section; OPEN-GAUNT-6, with
+`tracked_by` the reconciliation register's flagged values, by the milestone of the gate that cites each. At
+every exit the rows of these three that are due and still open are answered or named in a default ADR, like any
+other question. OPEN-TENFOLD-9 blocks nothing and has `deadline = "none"`. OPEN-PROG-1 has `deadline = "M0"`,
+and its second asking before the M7 pin freeze is recorded in `note` and enforced by N41-05's `require` check
+(`cargo run -p frob-conformance --example open_questions -- require OPEN-PROG-1`); OPEN-PROG-2 has `deadline =
+"M2"`.
 
 Status at entry: twenty `open` rows and two aliases. Counting: this part completes the register at 161 questions
 (147 in the subsystem table, including the six program-level rows above, plus OPEN-GAUNT-2 to -8 and
@@ -81,8 +91,14 @@ asked two milestones early.
 ## Acceptance criteria
 
 - [ ] `registries/open.toml` contains the twenty records and the two aliases; the aliases resolve to OPEN-PROG-2.
-- [ ] With parts 1 to 7 the register holds exactly 161 questions, four closed or decided-and-recorded
-      (OPEN-SKEL-1, OPEN-AUGUR-6, OPEN-SUITE-2, OPEN-TETHER-1) and four defaults confirmed by the gate register.
+- [ ] With parts 1 to 7 (dependencies of this bead) the register holds exactly 161 questions, four closed or
+      decided-and-recorded (OPEN-SKEL-1, OPEN-AUGUR-6, OPEN-SUITE-2, OPEN-TETHER-1) and four defaults confirmed by
+      the gate register: `cargo run -p frob-conformance --example open_questions -- check --complete` (rule 8 of
+      N41-03, through the example target that bead declares; the crate has no binary of its own name, BD-025)
+      passes on the real file.
+- [ ] The owner's table resolves on the real rows: each of its 32 questions (22 rows: 17 single, five grouped
+      rows of 2, 3, 4, 2 and 4) names a decision bead that exists and carries the label `owner-decision`, 15 of
+      them in this unit's packets and 17 in chapter units (known answer K41-15).
 - [ ] Each of the ten owner rows here links to its decision bead in this unit and carries the cost of its default.
 - [ ] OPEN-TENFOLD-4 is flagged as a default that blocks an exit (M3), and the owner calendar lists it at M1 and
       again at M2.
@@ -93,13 +109,18 @@ asked two milestones early.
 
 ### Unit tests
 `crates/frob-conformance/tests/open_part8.rs`: `twenty_rows_two_aliases`; `ids_match_expected_set`;
-`register_total_is_161` (147 + 14); `aliases_resolve_to_prog_2`; `owner_rows_link_to_this_unit` (PROG-1 to -5,
+`register_total_is_161` (147 + 14; the `check --complete` function of N41-03 on the real file); `owner_table_questions_resolve`
+(the 32 identifiers of the owner's table, each to a decision bead labelled `owner-decision`: 15 in this unit, 17
+in chapter units); `per_row_rows_have_tracked_by` (OPEN-GAUNT-2, -3, -6); `aliases_resolve_to_prog_2`; `owner_rows_link_to_this_unit` (PROG-1 to -5,
 GAUNT-1, TENFOLD-3, -4, -6, -8); `tenfold_4_blocks_m3_exit`; `gaunt_2_and_3_counts_come_from_ka_registry`;
 `thresholds_agree_with_gate_register` (3, 10, 5, 1.5, 0.05, four cells; 40 device-hours).
 
 ### End-to-end script and logging
-Covered by `scripts/e2e/registers_exit.sh` (N41-04); the M3 walk asserts that OPEN-TENFOLD-4 at its default blocks
-the exit with the message that names the question, and that an approval record unblocks it.
+Covered by `scripts/e2e/registers_exit.sh` (N41-04); the M3 walk asserts that with OPEN-TENFOLD-4 at its default
+and no stratum of the partial gate recorded the exit is blocked and the message names the question
+(`open-default-blocks-exit`), and that it clears when the gate has a record: either the strata that fit the
+default class measured and the others `not run` with the reason (the rule of N41-15), or an approval followed
+by the run. An approval with no gate record does not clear it.
 
 ### Known answers and negative controls
 Known answers: 161 in total; 133 and 325 open rows of the known-answer suite at the start. Negative controls: a

@@ -1,0 +1,438 @@
+{
+ "round": 1,
+ "slice": "UEG-1",
+ "reviewed": 55,
+ "changed": [
+  {
+   "bead": "GB-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Lane B asserted that x = 0.2 is admitted; 0.2 is not a binary fraction and BD-011/N13-11 decide by the exact sign of (ω·ω)·h² − κ with κ the stored f64 nearest 0.04, under which fl(0.2) is refused. Lane B now uses binary operands at h = 2⁻⁹ s (x = 3/16 admitted, x = 1/4 refused with substep count 2) and the boundary pair fl(102.4)/its predecessor checked against the exact rational sign; added control (c), the rounded √ comparison that admits fl(102.4)."
+  },
+  {
+   "bead": "GB-02",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "Surface command did not match the verb's argument form (N13-14): now `frob algebra irreps C2xC2 --in regular*64 --out regular*64 --json` with free_parameters, unconstrained_parameters and reynolds_rank asserted, plus the C2 forward-lidar row (32,768); noted that the verb refuses quaternionic constituents (FROB-REF-214)."
+  },
+  {
+   "bead": "GB-03",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "correct"
+   ],
+   "what": "The discrete-catalogue test had no numbers: added a three-entry synthetic catalogue with least fixed point 13.2 kg and a greater fixed point 20.4 kg so the from-⊥ rule is actually tested; FROB-REF-116 now carries exit code 3, the returned gain 1.0202 and the registry's four ranked repairs; e2e also calls `frob analyze closure` (A-10's verb) with the design as positional argument."
+  },
+  {
+   "bead": "GB-04",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct",
+    "users"
+   ],
+   "what": "BD-179 (precision battery) is not needed by the card: moved to related, keeping N21b-37 (the anchored type). Lane B (1) made exact (adding 2⁻²² m changes the anchored offset, not the absolute f32). Control (a) replaced by the deterministic CX-369 case (−2⁻²⁵ m + 8 rounds to 8.0). Also: the device-under-test probe is called in its registry form `frob spark probe --device <d> --key <k> --json` (kind run)."
+  },
+  {
+   "bead": "GB-05",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "The sideways cost is reported by the A-07 verb `analyze.maneuverability` (VERBS-analyze), not by design.check; surface and e2e now name `frob analyze maneuverability <design> --json`, with stage 4 of design.check for the growth vector."
+  },
+  {
+   "bead": "GB-06",
+   "kinds": [
+    "correct",
+    "tests",
+    "users"
+   ],
+   "what": "The lane A Monte Carlo band (median within [0.8, 1.6]·N for δ = 1, 0.5) fails for a correct implementation: with span 4σ the bet is capped for δ ≳ 0.27 (simulated median 2.5·N at δ = 1). Now the mean is banded [0.9, 1.2]·N at δ = 0.2, 0.1 and the capped regime is asserted mean > N. Lane B uses BD-124's registered fixed bet λ = ½ run for run. Surface rewritten to the manifest form of `study plan` (N33b-19); unpaired control given its span and measured ratios."
+  },
+  {
+   "bead": "GB-07",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "Lane B's 'six planes of 1,000 m²' cannot fit a 10 × 10 × 3 m scene and 'within brick rounding' was not checkable: now ten 10 × 10 m planes, model functions exact (8/15, 40 MB, 45 MB) and the recounted band fraction asserted in [8/15, 1]. Added the KA-459 with-labels rows (45–84 MB, 1.6–3.9 GB)."
+  },
+  {
+   "bead": "GB-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "'four FACT inputs' miscounted the source figures; the acceptance now lists them (94 k, 88 k, 82 k; 347 k, 1.20 M; 410 s)."
+  },
+  {
+   "bead": "GB-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "GB-10 refused the boundary t = d_min/2 = 0.050 m, contradicting BD-055 (test t > d_min/2; {shell: 50 mm} admitted). Boundary now admitted with the solid mass; FROB-REF-105 repairs aligned with BD-055's ranked list; e2e command forms fixed."
+  },
+  {
+   "bead": "GB-11",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The two-node test used G_ha = 1.3333 W/K, which moves every result in the fifth digit; now G_ha = 4/3 exactly so the series conductance is 0.80 W/K."
+  },
+  {
+   "bead": "GB-13",
+   "kinds": [
+    "users",
+    "correct"
+   ],
+   "what": "Surface rewritten to the verb's form `frob actuator bus <design> --demand 1800W --json`; the 7,201 W demand is refused with FROB-REF-133 and exit code 3; e2e logs command, exit code and payload."
+  },
+  {
+   "bead": "GB-14",
+   "kinds": [
+    "tests",
+    "users"
+   ],
+   "what": "Added `gb_14_exact_error_rates` with the exact promote/reject/provisional probabilities under p₁ and p₀ (to 16 digits); control (c) now quantifies ten restarts: 1 − (1 − 0.0072640)¹¹ = 0.0771 > α⁺. Also: `frob cores show DC-01` corrected to the verb's lower-case core identifier `dc-01`."
+  },
+  {
+   "bead": "GB-15",
+   "kinds": [
+    "users"
+   ],
+   "what": "Surface uses the registry form `frob eval promote r:<result> --method dr|paired --json`; e2e updated."
+  },
+  {
+   "bead": "GB-16",
+   "kinds": [
+    "users",
+    "correct"
+   ],
+   "what": "Surface is `frob sim estimate <humanoid> --tier gpu-cuda --worlds 8192 --json` (design positional, N16b-26) reading group 4's background share, reported `unmeasured` with the hypothesis range 0.14–0.71% until measured; e2e for H and Q."
+  },
+  {
+   "bead": "GB-17",
+   "kinds": [
+    "correct",
+    "tests",
+    "users"
+   ],
+   "what": "Printed 14.8 ms came from Ω rounded to 3.5 while the golden used exact Ω (14.748 ms): the table now carries both readings, each passing the print check. The planner at N = 128 under the default 25% waste returns two buckets (one-bucket waste 0.777), one bucket only with `--waste-limit 0.8`; verb form fixed; FROB-REF-741 is exit 4 with observed 9, required 8 and its repairs."
+  },
+  {
+   "bead": "GB-18",
+   "kinds": [
+    "placement",
+    "deps",
+    "users"
+   ],
+   "what": "The card's calculator (N36-05) was missing as a dependency and N17a-11 was not needed; deps now N00-17, N36-05, NEG-01; milestone M0, priority 0, parent WP-34 and labels aligned with the other ten-fold cards; lane B names the N36-05 calculator. Also: the e2e step named `frob predict register` for FROB-REF-866, but that refusal is raised by the performance harness's campaign admission (N36-05, BD-216), which has no verb by design; the surface step is now the conformance binary running `gb_18_mechanism_866`."
+  },
+  {
+   "bead": "GB-19",
+   "kinds": [
+    "users"
+   ],
+   "what": "Surface rewritten to `algebra.orbits` in N13-17's grammar (`--family D6 --slots 6 --types 10`, the sagittal C2 action, C2xC2, `--representatives`) with the four counts asserted."
+  },
+  {
+   "bead": "GB-20",
+   "kinds": [
+    "correct",
+    "users",
+    "deps"
+   ],
+   "what": "Added the r_eff < 0 refusal (FROB-REF-240, exit 3); surface is `frob contact probe --cone …` with units; BD-167 added to related."
+  },
+  {
+   "bead": "GB-21",
+   "kinds": [
+    "users",
+    "tests"
+   ],
+   "what": "Surface is `frob contact probe --film …` with the verb's flags; e2e adds the strict-data refusal FROB-REF-242."
+  },
+  {
+   "bead": "GB-22",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The f16 refusal step only asserted 'exit non-zero': now FROB-REF-245 with exit code 3, `retry: never` and an empty repair list, and the command line and exit code are logged."
+  },
+  {
+   "bead": "GB-23",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob sense schedule --rates … --horizon` is not the verb's grammar: now an explicit clock list with `--tier lockstep` (hold) and `--tier referee`, asserting q, step_quanta, repeat_quanta and the events' realized steps and lateness (BD-078)."
+  },
+  {
+   "bead": "GB-24",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob task fixture docking --analytic` replaced by the registry grammar `frob task fixture fixture:docking --layer analytic --key … --json`; e2e logs command lines and exit codes."
+  },
+  {
+   "bead": "GB-25",
+   "kinds": [
+    "correct",
+    "tests",
+    "placement",
+    "users"
+   ],
+   "what": "An M0 card asserted checks that need the M2 rewrite table (N21a-19) and the M4 trace checker (N12-18): those two lane B checks are now separate `[[mechanism]]` entries with their own first milestone, reported `not run` before it; acceptance restated per milestone. Also: `frob spark probe` in its registry form with `--device` and `--key`."
+  },
+  {
+   "bead": "GB-26",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob shield budget --file cart.fenergy` is not the verb's form (design and boundary, kind run): now `frob shield budget <cart> --boundary <stop> --key … --json` on synthetic cart designs; rotor variant expected exit 3."
+  },
+  {
+   "bead": "GB-27",
+   "kinds": [
+    "users"
+   ],
+   "what": "Applied the requested CLI form (BD-333 step 10): `frob gait orbit fixture:rimless-wheel --set spokes=8,l=0.5,slope_deg=4 --section post-impact --json`; flag forms fail with FROB-REF-802."
+  },
+  {
+   "bead": "GB-28",
+   "kinds": [
+    "users",
+    "correct"
+   ],
+   "what": "`frob train family --plan-only` does not exist: the break-even is read from the test binary; the admission refusal is FROB-REF-761 with exit code 4 in BD-320's command form."
+  },
+  {
+   "bead": "GB-29",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob eval ledger --json` lacked its campaign positional: now `frob eval ledger q:<campaign> --json` with request 10 at 1/2,200 and spend 1/22 asserted."
+  },
+  {
+   "bead": "GB-30",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob eval preanalyze` omitted required inputs: now `--rule paired-clopper-pearson/1 --level 0.05`; e2e asserts the 532 refusal (exit 3, naming 86) and the hash embedded by study.plan. All four enumeration rows, 95%-control (first tie 72), peeking (13/256, 0.17418) and power figures verified."
+  },
+  {
+   "bead": "GB-31",
+   "kinds": [
+    "users",
+    "tests"
+   ],
+   "what": "Surface uses the owner's `frob mission synthesize stance.fmission --json` and the N25c-11 amendment `--set policy_class.authority=passive-equal-spring`; the 'first such body' row is now an example (the grid has no canonical order: lexicographic enumeration finds (0, 0, 160, 240) first). Counts 2,254/114/1,596 verified."
+  },
+  {
+   "bead": "GB-32",
+   "kinds": [
+    "users",
+    "correct"
+   ],
+   "what": "`nemesis.bound --plan-only` replaced by the owner grammar (`--mode certify --estimate`, `--delta 1/2200` for request 10) and lane B routed through the one count function `rare::zero_failure::required` (N26a-21)."
+  },
+  {
+   "bead": "GB-33",
+   "kinds": [
+    "correct",
+    "tests",
+    "users"
+   ],
+   "what": "The card described its own 30-scene instance while the owner fixture `cover_worked_40x18` has 18 scenes; lane A now uses that fixture and the exhaustive OPT₆ = 90 (18,564 subsets) with prefix optima. Stale incidence: the verb refuses with FROB-REF-565 (exit 3); the standard fallback is battery resolution's (N26b-11). Control (b) as written could not fail (it loosens the bound); replaced with the checker rejection and the dropped-term bound 86 < 90. Surface: `--incidence … --slots 7 --prefixes`."
+  },
+  {
+   "bead": "GB-34",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob autopsy attribute` takes a fork handle: e2e now `frob autopsy attribute f:<fork> --json` on synthetic forks with the card's counts, including the flip case; p-values 5.8926 × 10⁻⁵ and 0.17576 verified."
+  },
+  {
+   "bead": "GB-35",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob opt cascade --plan-only` does not exist: the itemized cost record (NEG-08) is read from the test binary, and from M4 the cascade runs in its registry form with `--allocation conformal|fixed` (BD-329)."
+  },
+  {
+   "bead": "GB-36",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob experiment suggest` needs `--study`; e2e names it and asserts the re-ranking after the first fast batch (referee 1.29 × 10⁻⁴ per unit against 1.02 × 10⁻⁵)."
+  },
+  {
+   "bead": "GB-37",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob foundry tolerance` takes the design positional; e2e adds the zero-sensitivity refusal (FROB-REF-165, exit 3) and says why the damage rows are not driven through `foundry.check`."
+  },
+  {
+   "bead": "GB-38",
+   "kinds": [
+    "correct",
+    "tests",
+    "users"
+   ],
+   "what": "Lane B stopped at iteration 3 on the bound alone, which is N31a-24's planted defect `one-iteration-under-2-percent-suffices`; convergence now requires both 2% conditions and is declared at iteration 4 on both fixtures; the driver's exact Aitken proposal is asserted; e2e uses the owner form `frob foundry optimize --fixture planted-gain --loop --key …`."
+  },
+  {
+   "bead": "GB-39",
+   "kinds": [
+    "users"
+   ],
+   "what": "`frob cores show DC-09` used a spelling no other bead uses: the verb's core identifier is lower case (`dc-09`)."
+  },
+  {
+   "bead": "GB-40",
+   "kinds": [
+    "deps",
+    "users"
+   ],
+   "what": "Lane B tests the task compiler's lowering of rate rewards and discounts, so BD-194 is now a dependency; the e2e's invented `--battery perf-selftest` removed: the performance harness has no verb by design (BD-216), so the surface step is the conformance binary running `report::validate`."
+  },
+  {
+   "bead": "GB-41",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "FROB-REF-602 is raised by a run verb at admission (exit 6), while `sim.estimate` returns `fits: false` with exit 2 (BD-219); repairs aligned with BD-219's list; e2e uses the `--workload` form and `sim.run`'s registry form."
+  },
+  {
+   "bead": "NEG-01",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "The format could not express what the cards need: per-check milestones (GB-25's M2 and M4 lane B checks on an M0 card) as `[[mechanism]]` entries and a surface `first_milestone`; tokens, bit patterns and vectors as values; `unprinted` outputs (many cards print no figure for an intermediate); several surface calls and expected refusals as `[[surface]]` with `expect`. Printed-rounding conventions made decidable (bare numbers, trailing zeros, two readings for a rounded input). The lint now recognizes test prefixes and reads a card index with each card's milestone, failing on a due card only under `FROB_CARDS_EXPECT_THROUGH`, so it no longer contradicts 'passes with zero cards'. Tests added for each."
+  },
+  {
+   "bead": "NEG-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "users"
+   ],
+   "what": "Counts were wrong (five cards at M0, eighteen by M1, not four and twelve); GB-18 (M0) added to deps; registry step uses NEG-01's environment variable; the surface table follows the corrected card commands (analyze.closure, analyze.maneuverability, train.family, opt.cascade, foundry.optimize, sim.run; GB-18 and GB-40 have no verb by design); the refusal step lists codes with exit codes (3, 4, 6) as data from the card files; 'at M5 all 41 pass' replaced by a plug-in rule an M1 bead can satisfy, with a due-set unit test (5, 18, 26, 34, 39, 41)."
+  },
+  {
+   "bead": "NEG-03",
+   "kinds": [
+    "correct",
+    "placement",
+    "tests"
+   ],
+   "what": "An M0 bead asserted pinning tests and links that land from M1 to M4 (GB-32's test at M3, REC-06 and REC-07 at M1): items now carry their owner's `first_milestone`; the scan guards all twelve stale values from M0 while the converse and link checks apply from each item's milestone and report `pending (Mn)` before it; a milestone-consistency test added."
+  },
+  {
+   "bead": "NEG-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "users"
+   ],
+   "what": "Applied the reconciliation request: N26a-21's `rare::zero_failure::required(p_star, level)` with `Level::request(α, i)` is the one product function (the bead's own three-argument form corrected), N38b-56's reference is the oracle, NEG-04's name withdrawn; the 76,963 exceptions are stated as the same three as N38b-56's acceptance line, with the scan engine's general exemptions applying to both. N38b-56, named in scope as a dependency, added to deps; e2e uses the corrected nemesis.bound form."
+  },
+  {
+   "bead": "NEG-05",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The acceptance resolves item E7-2 to REC-02, which N38b-51 (M0) creates: added as a dependency."
+  },
+  {
+   "bead": "NEG-07",
+   "kinds": [
+    "correct",
+    "deps",
+    "users"
+   ],
+   "what": "The 'one table' was named as 'capacities.toml or the performance table'; the planning rates live in the target register `registries/perf_targets.toml` (N36-01, row 7), now named and added as a dependency; the invented `--referee-cores` flag removed from the e2e (GB-16's form)."
+  },
+  {
+   "bead": "NEG-08",
+   "kinds": [
+    "correct",
+    "users"
+   ],
+   "what": "'Integer arithmetic in tenths of a minute' cannot hold 133.65 min: now integer seconds; e2e no longer cites a nonexistent `--plan-only` flag."
+  },
+  {
+   "bead": "NEG-09",
+   "kinds": [
+    "users"
+   ],
+   "what": "e2e named a nonexistent `--horizon` flag and `decision_instants` field: now BD-078's form, counting the 20 s window's policy events from the reply."
+  },
+  {
+   "bead": "NEG-10",
+   "kinds": [
+    "deps",
+    "users"
+   ],
+   "what": "Scope called N38a-11 (the wheel-loop pilot re-run) a dependency but deps omitted it: added; task.fixture command corrected to `fixture:cart-sill-dock --layer analytic --key`."
+  },
+  {
+   "bead": "NEG-11",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "`registries/capacities.toml` and its row format are N16a-14's; this bead now says it adds no second file and depends on N16a-14."
+  },
+  {
+   "bead": "NEG-12",
+   "kinds": [
+    "deps"
+   ],
+   "what": "N40-08 states that NEG-12 depends on it, and NEG-12's acceptance re-runs its related-threshold check: added as a dependency."
+  },
+  {
+   "bead": "NEG-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Quoted 1.49 J and 50.5/45.5 ms without 'printed', which GB-26 forbids: both readings now given (1.491136 J, 50.4432 ms and 45.4432 ms from the product)."
+  },
+  {
+   "bead": "NEG-14",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Acceptance checks the anchored type's documented resolution (N21b-37) and the maneuverability report (BD-106): both added as direct dependencies."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38b-55",
+   "what": "Its row checks print counts through `count_firings` of `frob-sense`, which NEG-09 builds (N38b-55 lists NEG-09 only as related): add NEG-09 to deps (both M1; NEG-09 does not depend on N38b-55)."
+  },
+  {
+   "bead": "N31a-24",
+   "what": "GATE-FOUNDRY-06's acceptance lists the plain iterates 2.8275, 2.824125, 2.82361875 and convergence at iteration 4, while BD-404 requires the run to evaluate the Aitken proposal after iteration 2 (`aitken_used: true`), after which iterates 3 to 5 are not the plain ones; state whether the listed iterates are of the convergence test driven without proposals or of the driver's run, and align BD-404."
+  },
+  {
+   "bead": "N33b-19",
+   "what": "GB-06's surface needs `study.plan` on an anytime manifest (α, span, planning effect δ) to report the expected pair count ⌈2·ln(1/α)/δ²⌉ in its cost estimate (6, 24, 150 at α = 0.05 for δ = 1, 0.5, 0.2)."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "All 55 beads reviewed. Card numbers recomputed (all goldens reproduced, including GB-30's enumerations, GB-31's grid, GB-33's fixture with exhaustive OPT6 = 90). Most changes align surface commands with the verb registry and owner beads (invented flags removed), fix milestone and dependency direction (GB-18, GB-25, NEG-02, NEG-03), and correct three logic errors (GB-33 control (b), GB-38 stop iteration, GB-41 refusal layer). NEG-01 extended so the card format can express per-check milestones, non-numeric values and expected refusals."
+}

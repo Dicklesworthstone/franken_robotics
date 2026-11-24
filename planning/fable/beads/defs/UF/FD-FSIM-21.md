@@ -6,9 +6,9 @@ priority: 3
 milestone: "M2"
 labels: ["m2", "suite", "sinew", "upstream", "frankensim", "solid"]
 parent: "WP-09"
-deps: ["BD-037", "BD-068", "NF-01", "STD-E2E"]
-needs: ["§15.14: the decision OPEN-SINEW-4 (whether the second pair is composed from existing FrankenSim circuit elements or needs this upstream change); this bead proceeds only if the decision is 'upstream change'"]
-related: ["BD-075", "BD-071", "BD-076", "FD-FSIM-08"]
+deps: ["BD-037", "BD-068", "BD-075", "N15b-28", "N15b-30", "N33b-04", "STD-E2E"]
+needs: []
+related: ["N15b-03", "N33a-19", "N33b-10", "NF-09"]
 gates: ["GATE-SINEW-07"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§15.10", "§15.5", "§15.14", "§42", "§33.8"]
 ---
@@ -38,9 +38,13 @@ step, by design, and battery parity would be meaningless).
 ## Scope
 
 In: in `fs-phs`, a battery element with two polarization pairs (the present one-pair element unchanged); here,
-replacement of the in-house reference on the referee. Out: the power bus, brownout events and the battery card
-(BD-075, BD-071); temperature dependence of R₀ and ageing laws; the decision itself (the Sinew chapter's
-decision bead).
+replacement of the in-house reference on the referee. Out: the in-house two-RC element that is the interim
+posture (N15b-03); the power bus, brownout events and the verb `actuator.bus` (BD-075, a dependency, because
+the switch-over re-runs GATE-SINEW-07's brownout rows through it) and the battery card schema (BD-069); the
+power-path end-to-end run that measures GATE-SINEW-07 at M1 (N15b-30, a dependency, whose fixtures the phase
+`post` re-runs against the sibling element); temperature dependence of R₀ and ageing laws; the
+decision of OPEN-SINEW-4 itself (N15b-28, a dependency: if it decides "compose", this bead closes as not
+needed).
 
 ## Technical approach
 
@@ -134,8 +138,19 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_21 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob actuator bus --json` on the reference quadruped's battery
-card with the 10 A step and the 7,300 W demand, asserting the drop, the time constants and the brownout event.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post`
+also re-runs the power-path fixtures of N15b-30, in that bead's command forms, with the referee's battery now the
+sibling element: `frob task fixture battery-step --tier referee --key fd21-step --json` (the 40 A step:
+immediate drop 40·0.05 = 2.0 V, fitted time constants 10 s and 120 s, each within 1%); `frob actuator bus
+bus-48v --demand 1800W --source-voltage 48V --json` (ceiling 7,200 W, 44.785 V, 40.19 A, within 0.1%); `frob
+actuator bus bus-48v --demand 7300W --source-voltage 48V --json` (exit 3, FROB-REF-133: the static verb refuses a
+demand above the ceiling and raises no event); and `frob task fixture brownout-trials --tier referee --key
+fd21-brownout --json` (the fixture's 100 seeded draws, one world each: a `brownout` event in each of the 100
+worlds and no interval delivering the requested power). `sim.run` has no `--seeds` (one run has one root seed),
+and a loop over `--seed` would not reproduce the fixture's draws of source voltage, resistance and demand, which
+the registered manifest keeps with their known answers; `task.fixture` is a run verb, so its two calls carry keys
+of their own, distinct from N15b-30's `pp-step` and `pp-brownout`, whose stored receipts they must not replay.
+The brownout event is asserted on the run, never on the static verb.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_21/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

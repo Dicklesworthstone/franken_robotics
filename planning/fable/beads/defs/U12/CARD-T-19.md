@@ -7,8 +7,8 @@ milestone: "M1"
 labels: ["m1", "lemma", "frob-algebra", "solid", "test"]
 parent: "WP-03"
 deps: ["BD-027", "N12-06", "SPEC-C-03"]
-needs: ["§14.5: inertia derived from geometry and material, with the shell rule in exact rationals (BD-062)"]
-related: ["BD-382", "BD-065", "BD-066", "N12-REF", "CARD-T-28", "BD-051"]
+needs: []
+related: ["CARD-T-28", "CARD-T-35", "N12-41", "N12-REF", "N13-04", "N13-30", "N25d-07", "N25d-08"]
 gates: []
 plan_refs: ["§12.3 (T-19)", "§11.5", "§10 C-03", "§12.7 (FROB-REF-168)", "Appendix D.1 (pseudo-inertia, shell rule, mass-support bound)"]
 ---
@@ -95,12 +95,18 @@ that bead's acceptance; the receipt produced there is what moves the registry ro
 two formulas, exactly); `ldlt_positive_pivots_solid_box`; `triangle_violation_negative_pivot`;
 `mass_support_fixture_refused` (0.024/2 = 0.012 > 0.010); `thin_shell_equality_accepted`
 ((3/150)/2 = 0.010 = 0.10²); `offset_centre_of_mass` (c displaced by 0.05 m inside the same ball adds 0.0025 m²);
-`changed_entry_rejects`; `class_capped_when_card_assumed`.
+`changed_entry_rejects`; `class_capped_when_card_assumed`; `negative_mass_rejects` (m = −1 kg: the last pivot
+of 𝖯 is negative, `reject`); `collision_proxy_envelope_rejected` (the 0.10 m shell checked against a 0.08 m
+collision sphere: the certificate's envelope field is not the declared mass envelope, FROB-REF-829).
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the specimens and mutants; the importer's own
-script exercises the refusals through `frob design check`.
+script exercises the refusals through `frob design check`. For this card the NDJSON lines (STD-E2E helper) carry
+`ts`, `script`, `bead` ("CARD-T-19"), `step` (`T-19/<body-or-mutant>`), `event`, the exact command line, exit code,
+wall time, the four pivots as rationals, the mass-support margin ρ² − ‖c − o‖² − tr(I_C)/(2m) in m², the bundle's
+BLAKE3, the expected and observed verdict, and on a mismatch the first failing rule (the first non-positive pivot
+or the negative margin) and the path to reproduce.
 
 ### Known answers and negative controls
 

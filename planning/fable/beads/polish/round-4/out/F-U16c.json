@@ -1,0 +1,246 @@
+{
+ "round": 4,
+ "slice": "F-U16c",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "BD-083",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "T3's restore-set list now ends with the interval-extremum folds dyn.extremum-folds (N24a-44), the twelve rows of BD-081's registry: without it an implementer restoring 'the listed set' leaves the folds dirty after a retry and the forced-retry digests differ. The seam-input paragraph stated as fact that VERBS-sim names BD-083 owner of --chaos-plan and --numerical-plan-floor (it does), instead of narrating two requests (C13)."
+  },
+  {
+   "bead": "N16c-09",
+   "kinds": [
+    "request",
+    "broken",
+    "convention"
+   ],
+   "what": "Dropped --run-seed $SEED from the battery-form eval.run calls (802 beside --battery per VERBS-eval; the script would fail at its first run). The named variant was spelled `--law cl-h`, which VERBS-eval and sim.run refuse with 802: now `--law CL-H`. Removed the narration that the VERBS-eval row 'still prints cl-1 and is asked to change' (the row now has CL-1|CL-H)."
+  },
+  {
+   "bead": "N16c-11",
+   "kinds": [
+    "request"
+   ],
+   "what": "Dropped --run-seed 11 from the battery-form eval.run call (802). The acceptance and output now name the field the bound table's hash is written to: `decision_digest` of the OPEN-KIN-6 row of registries/open.toml (frob.open/1), write-once while the row is decided; without a named field the implementer has nowhere to write the hash and BD-212 nothing to read. N41-03 does not carry the field yet: request recorded."
+  },
+  {
+   "bead": "N16c-12",
+   "kinds": [
+    "request"
+   ],
+   "what": "Dropped --run-seed 7 from the battery-form eval.run (802 beside --battery); the note explains that seed and world count belong to the single-task form."
+  },
+  {
+   "bead": "N16c-13",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Added dep N16cp3-01 (the kernels exist only on the release branch of KILL-ROWQUEUE's point A; without it the kernels could start before the pilot is read); Background says so. Its script's `frob spark check --kernel K-queue-assign --json` had no --key (spark.check is a run verb: refused 805, convention 5) and no backend: now one keyed call per entry point and present device."
+  },
+  {
+   "bead": "N16c-15",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Removed four narrated requests (C13): the eval.run forwarding, the spark.check solve-queues axis and BD-263's call of execution_qualified are on their owners' rows and are stated as facts; the refusal is stated in N16-REF's form (FROB-REF-820 with detail solve-queues-unqualified, the held 8xx slug, behind one named constant) rather than 'interim until the registry assigns'. Dropped --run-seed from the two battery-form eval.run calls (802) and made the script's call explicit about --profile lockstep."
+  },
+  {
+   "bead": "N16c-16",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Dropped --run-seed $SEED from the clause-2 battery run (802 would fail the overflow clause before it ran); the Considerations list of spellings no longer names --run-seed on eval.run and states the eval.run and spark.check rows as fact rather than 'requested of' (C13); removed a reference to a review slice (H-verbs-6) that means nothing to the implementer."
+  },
+  {
+   "bead": "N16c-20",
+   "kinds": [
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "The tile-ledger option is stated as on VERBS-telemetry's telemetry.summary row (it is, naming N16c-20 extender) instead of 'requested of VERBS-telemetry' (C13). The fleet fixtures were named `fixture:fleet/...` and passed to --scene, a spelling no registry row admits (N25cx-01 names fleet scenes `fleet/<name>` under fixtures/fleet/, VERBS-sim rules out the fixture: prefix): renamed to fleet/<name>, and each is stated as built on N25cx-01's fixture of the same geometry (fleet/two-at-rest, fleet/head-on, fleet/sparse-warehouse-16) with its own policies, sensors and channel, so the two beads no longer define parallel copies of one scene."
+  },
+  {
+   "bead": "N16c-21",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "Same renaming of the fleet fixtures to fleet/<name> (the --scene form). The two-carrier handoff fixture is now N25cx-01's fleet/two-carrier with the handoff policies, the mission chapter's acceptance fixture the gate names, instead of a second two-carrier scene invented here."
+  },
+  {
+   "bead": "N16c-22",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Fleet fixture renamed to fleet/rest-gap-0p10. The fallback check ran a fleet scene with `--tier batch-cpu` and no profile: the default lockstep profile is FROB-REF-160 for a fleet scene without --decouple (N25cx-01), so the check could never see the coupled run; it now passes --profile strict."
+  },
+  {
+   "bead": "N16c-25",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "The three mutants (stale-factor, dropped-world-as-zero, drop-labels) were 'features of frob-dyn': now cfg(feature = \"nc-<nnnn>\") branches with [[control]] records in BD-025's schema, built one per build by the control runner (N38b-04) with --features gauntlet-mutations,frob-dyn/nc-<nnnn>; deps N38b-04 and STD-E2E added. The bead had no script of its own (convention 11; only the gate's): it now owns scripts/e2e/adjoint_sweep.sh, driving the sweep through its tests and an example program on batch-cpu (laws, both fixtures, the single-step law, dropped worlds, the store size, the three controls) with full NDJSON logging; the third negative control is listed in Known answers."
+  },
+  {
+   "bead": "N16c-26",
+   "kinds": [
+    "request",
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "The over-budget adjoint store is FROB-REF-602, a 6xx code with exit 6 (N21-REF), not exit 3: corrected on phylum.gradient and opt.start, in the acceptance line, the unit test and both e2e_expect_refusal calls (an implementer following 'exit 3' fails the registry's one-code-one-exit check). Raised with pointer the slab class adjoint, observed the store's bytes and required the budget, with the row's adjoint repairs in order (on opt.start the two it can act on); no slug or detail. Dropped 'Requested of VERBS-opt' and a review-slice reference (C13)."
+  },
+  {
+   "bead": "N16c-30",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The branch refusal said the registry had no code and the bead 'stays open until one is assigned' (C13): it is the compile stage of N16-REF's row loop-elimination-inadmissible, numbered at M0 by N35-33's first-round run, raised behind one named constant with stage: compile; the unit test and the script name that code and stage."
+  },
+  {
+   "bead": "N16c-32",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Both admission refusals are now N16-REF's loop-elimination-inadmissible row in its own terms: trigger (b) with stage: admission and the row's two ranked repairs, trigger (c) with stage: variant. The variant paragraph said the registry 'does not list this trigger yet' and narrated a request and an interim; the row has carried it since round 3 (C13)."
+  },
+  {
+   "bead": "N16c-34",
+   "kinds": [
+    "request",
+    "plan",
+    "convention"
+   ],
+   "what": "Trigger stated as the ledger's current three-clause text (N40-29's amendment adds the pilot's falsifier; mode pilot-before-funding; reads the N16c-29 pilot record beside GATE-KIN-11), so the ADR's 'trigger as registered and the amendments applied' matches what N40-30 compares. The M3 re-read is now taken by the new bead N16cp4-01, replacing the narrated 'requested of N40-29' and the acceptance line that only scheduled 'a note' (nobody wrote the M3 entry, so the M3 exit would block). Outcome words in What changes downstream and the negative control are the registered fired/not-fired."
+  },
+  {
+   "bead": "N16c-36",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Dropped --run-seed 7 from the battery-form eval.run (802 beside --battery: the script would fail at its first battery run); the note says the battery's addresses are shared by construction."
+  },
+  {
+   "bead": "N16c-38",
+   "kinds": [
+    "request",
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "Dropped --run-seed 7 from the battery-form eval.run in the script (802). The mixing refusal is N16-REF's 5xx row solve-path-mixed-study, numbered at M0 and raised behind one named constant, not 'interim 561 until one is assigned' (C13); the script expects that code. The post-kill refusal is N16-REF's held 8xx row ancestor-path-after-kill, raised as 802 with detail equal to the slug, as the registry and VERBS-sim state."
+  },
+  {
+   "bead": "N16c-40",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The post-kill refusal is stated in N16-REF's held form (FROB-REF-802 with detail ancestor-path-after-kill, observed the coordinate count and admitted range) in the acceptance line and the decision script; outcome words fired/not-fired replace kill/keep in What changes downstream and the negative control."
+  },
+  {
+   "bead": "N16cp3-02",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "KILL-LOOPELIM's trigger is declared as the ledger's current three-clause text (the amendment adding 'or the pilot's falsifier holds'), with mode pilot-before-funding and reads naming the N16c-29 pilot record beside GATE-KIN-11, so N40-30's comparison passes; the paragraph that narrated the request of N40-29 now states the clause each falsifier fires under (C13). The M3 re-read is attributed to N16cp4-01."
+  },
+  {
+   "bead": "N16c-05",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "The KILL-LOOPELIM row of the kill-gate table had the defining row's two clauses only: it now has the ledger's current three-clause trigger (N40-29's amendment, mode pilot-before-funding), the M3 re-read (reread = [\"M3\"]) and N16cp4-01 as carrier of that re-read, so the linkage test and N40-30 compare the same text. The owner declarations' place said 'registries/gate_declarations.toml until that block is agreed' (C13): the [[gate]] block of contract.toml is N34x-02's (now a dep), and the hand-kept file is not used."
+  },
+  {
+   "bead": "N16c-43",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The refusal 'refinement study that changes a clock' said the registry had no code and the bead would not close until one was assigned (C13): it is N16-REF's 5xx row refinement-study-changes-clock, numbered at M0, raised behind one named constant; the script's expected code names it."
+  },
+  {
+   "bead": "N16c-44",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "The label-compare negative control was a [[control]] record whose gate field had to name a gate that does not exist (rule 3 has no gate; BD-025 refuses a record without one), so the acceptance item 'stayed open' with nobody asked to act and the script logged not-run while a request was open (C13): the bead could never close. The control is now the unit test label_compare_caught with two planted pairs (equal stability labels with 49 differing verdicts must give fidelity-dependent; differing labels with equal verdicts must give decimation-stable), which a label-reading comparison fails; the script asserts the test ran."
+  },
+  {
+   "bead": "N16c-45",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "The pilot re-run is appended to the ledger's supplementary record PILOT-PT-S4 (N38a-10 carries it, bundle_receipt 'none: not in the plan-time record') with `cargo run -p frob-conformance --example pilots -- append-result PILOT-PT-S4 --result <file.json>`, the ledger's one path, which derives the status; the 'requested of the ledger bead' narration and the 'until the ledger admits that record' branch are gone."
+  },
+  {
+   "bead": "N16cp2-91",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Considerations said that if the pilot is never run the M8 exit records KILL-INTERACT not-reached 'through N16c-22', which cannot run without the pilot and the gate run; it now states BD-442's handling (an unfunded epic's gate stays not-run with not-reached and does not block)."
+  },
+  {
+   "bead": "N16cp3-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The owner declaration's place said 'or registries/gate_declarations.toml until that block is agreed' (C13): it is the [[gate]] block of frob-dyn's contract.toml (N34x-02, reached through N40-30)."
+  },
+  {
+   "bead": "N16cp3-03",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "'VERBS-sim's row is asked to name N16a-24' is stated as the fact it now is, and the post-kill refusal ancestor-path-after-kill is described in N16-REF's held form (802 with detail the slug) instead of 'interim 802' (C13)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N16cp4-01",
+   "why": "KILL-LOOPELIM carries reread = [\"M3\"] (N40-29) and BD-319 is due its M3 entry, but no bead took the matched share over all eighteen archetypes and wrote the entry with docs/adr/ADR-KILL-LOOPELIM-M3.md, so the M3 exit would block on a missing entry. The new M3 decision bead (as N17bp1-01 for KILL-LIMBKERNEL, N19c-19 for KILL-POOL) reads the M2 entry, restates fired if fired, defers if the catalog is incomplete, otherwise takes the census through design.check with a fail-closed denominator, applies N16c-34's rule and records entry and ADR, with its own tests and script."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N41-03",
+   "what": "Add to frob.open/1 the optional field `decision_digest` (the BLAKE3 hash of a decided row's decision table; for OPEN-KIN-6 the bound table of docs/adr/ADR-KIN-OPEN-6.md) with the loader rule that it may not change while the row is `decided`. N16c-11 writes it and BD-212 reads it for the one re-baseline of GATE-FID-01; without it the 'decided once' check of OPEN-KIN-6 has no field to hold."
+  },
+  {
+   "bead": "BD-319",
+   "what": "Add dep N16cp4-01 (the KILL-LOOPELIM M3 re-read: matched share over the eighteen archetypes, entry exit = \"M3\", docs/adr/ADR-KILL-LOOPELIM-M3.md) and replace the narration 'no M3 bead yet takes the census and writes the entry: one is requested of the Kinesis unit, and until it exists the entry is missing' with the bead's key, as KILL-LIMBKERNEL names N17bp1-01. graph_check: N16cp4-01's deps do not reach BD-319."
+  },
+  {
+   "bead": "N40-29",
+   "what": "In the 'Rows read again at a later exit' note, name N16cp4-01 as the bead that takes KILL-LOOPELIM's M3 re-read and writes docs/adr/ADR-KILL-LOOPELIM-M3.md, beside N17bp1-01 for KILL-LIMBKERNEL."
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "opt.start --gradient adjoint: the over-budget store is FROB-REF-602 (N21-REF's row 602, fifth case, slab class adjoint; adjoint-store-over-budget was merged into it by N35-33 rule 1), exit 6, pointer adjoint, observed the store's bytes, required the budget; the row still names 'the refusal of the ledger slug adjoint-store-over-budget' with exit by family and lists the slug among its uncoded refusals. N16c-26 now raises 602 with the two repairs opt.start can act on (a smaller --population; drop --gradient adjoint)."
+  }
+ ],
+ "unchanged": 20,
+ "notes": "Slice reviewed in full (46 beads) plus one new bead. Main themes: battery-form eval.run calls carried --run-seed (802) in seven beads; refusals narrated as 'no code until assigned' where N16-REF now carries the rows; KILL-LOOPELIM's amended trigger and missing M3 re-read owner (new N16cp4-01; BD-319 and N40-29 asked to name it); FROB-REF-602 exit 6 for the adjoint store. Unchanged: N16c-01, N16c-02 (its --key request already applied), N16c-03, N16c-04, N16c-07, N16c-14, N16c-17, N16c-18, N16c-19, N16c-23, N16c-27, N16c-28, N16c-29, N16c-31, N16c-33, N16c-37, N16c-39, N16c-41, N16c-42, N16cp2-01. The slice looks settled apart from the four cross-unit requests."
+}

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "traction", "marrow", "frob-algebra", "frob-contact", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§18.16: the contact known-answer battery, whose rows are the 'known answers of the contact chapter' this construction's test names (BD-085 on the referee, BD-168 on batched tiers)", "§18.19: the definition of the rounding margin ρ of a computed residual, used in the factor-reuse bound", "§10 C-37: the four-dimensional contact cone with a spin component and the joint-level rows (SPEC-C-37, another unit)"]
-related: ["BD-079", "BD-080", "BD-085", "BD-115", "BD-153", "BD-266", "BD-367", "BD-386", "N10a-14", "CARD-T-07", "CARD-T-08", "N10-KA1", "BD-050"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-050", "BD-115", "BD-266", "N10a-14", "N18b-40", "SPEC-C-13", "SPEC-C-37"]
 gates: ["GATE-MARROW-01", "GATE-TRAC-01", "GATE-TRAC-09"]
 plan_refs: ["§10 C-06", "§13.1", "§13.8", "§18", "§12.3 T-07 T-08", "Appendix D.3", "Appendix I.1", "Appendix M KA-055 to KA-057", "Appendix N CX-026"]
 ---

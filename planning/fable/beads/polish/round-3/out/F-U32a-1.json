@@ -1,0 +1,228 @@
+{
+ "round": 3,
+ "slice": "F-U32a-1",
+ "reviewed": 27,
+ "changed": [
+  {
+   "bead": "BD-022",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied three requests. (S34) `--session` now carries the session identifier s:… (also FROB_SESSION), never a token; the token travels only in FROB_SESSION_TOKEN or --session-token-file (N32b-01). (H-owners-3) added dep NJL-01; the common flags are built from entry.common_properties() (--key, --estimate, kebab case otherwise, --action <name>); flag table rows corrected (--estimate on every run verb; --key on run and mutate; --action row); process options named with NJL-01's PROCESS_OPTIONS; the stale 'NJL-01 follows this bead' sentence replaced; new section on the generated `--help --json` result {entry, input_schema, output_schema, refusals with source, examples} (it was read by NJL-01, NJL-02 and every VERBS bead but defined nowhere), and robot-docs prints the full list with sources. (H-verbs-3) `schema` gains the positional verb name, --refusals and the bare form (refusal table plus the interim list of the allocation ledger), --verbs and --path-args, each defined with its member, and a listing interface (like the doctor sections) through which N32b-20 adds --list, N37-23 --exports and BD-304 --echoing; --exports is NOT implemented here because its columns come from registries/exports.toml, which N37-23 creates at M1. Added dep N35-33 (the ledger file and loader; cycle-free) and the acceptance that runs steps (2) and (4) of N35-33's script against this binary. Unit tests, acceptance criteria and script steps added for all of it; the run-kind synthetic calls now carry --key (convention 5)."
+  },
+  {
+   "bead": "BD-023",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-owners-3: the Tool-field table now states NJL-01's rules (tags: kind once per distinct kind among the actions; read_only only when every action is read; idempotent false when any action is run or mutate; destructive for an admin entry or a destructive admin action; description is short_doc with the 'Refusals (FROB-REF-): …' line); the acceptance names stage 4 of NJL-01's script including the inputSchema and annotation comparison; definition_from_entry gained the two-kind case and byte equality with NJL-01's members."
+  },
+  {
+   "bead": "N32a-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Applied five requests. (S10) examples run verbatim after NJL-02's identity substitution, and RL-07 now checks an abbreviated identity by prefix (it would have failed about sixty examples). (S38, S10) a table of fields that later beads add, each defined once with its type, rule, lint and adding bead: needs_groups (N33c-32), threats (N37-01), uses (N35-07; the name min_determinism is withdrawn, no bead uses it as an entry field), consumes and claim_kinds (BD-308), listing (BD-305), consumes_evidence (N37-26), engines (N32ax-02). (H-owners-3) scope wording (NJL-01 comes before both surfaces); VerbEntry sketch gains released, params, conformance_only, an Action struct, and the list of later members; build-script step 6 wires NJL-01's derive.rs (RL-11 through short_doc, common-property-shadowed, common flags in RL-07), registries/loop.toml (N28a-02) and the later lints. RL-11's test moved to NJL-01's change, since its function does not exist before (convention 7). (H-verbs-7) action members paginated (read action only, lint RL-23) and destructive (admin action only, default true); spark.check and task.check listed among the two-kind rows (seven beyond the plan's three); new entry field conformance_only with lint RL-24 and the build-script rule that strips those properties outside a conformance build. Also: RL-04 staged (no [[task_cluster]] table exists at M0; the tables and their lints are NJL-05's at M1, as VERBS-operator and NJL-05 state); first_milestone row no longer says the field decides whether a verb answers (NJL-01's rule). Lint count 24 → 26; acceptance and unit tests updated."
+  },
+  {
+   "bead": "N32a-04",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied S85: step 2 tests a schema's `forbidden_keys` (map from refusal code to key names) at any depth before the unknown-parameter rule, with acceptance and the unit test forbidden_key_declared_code_first. Applied H-ref-1: a device-tier run verb with no daemon is FROB-REF-601 with pointer `daemon`, exit 6, retry backoff, first repair 'start frobd' (three places), with the unit test refusal_601_no_daemon that N21-REF names. related gains N21-REF and N31a-37."
+  },
+  {
+   "bead": "BD-137",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S10: the 'later' sentence and the table now defer to NJL-02's closed LATE_ROWS (ground.ingest is late, BD-387 at M5; contact.laws, contact.probe and task.settle have M1 handlers N18b-28, N18b-29, N24a-16, now named in the table and added as deps); new section on NJL-02's example-identity substitution, examples_run applies it, new test m1_identities_present, and this bead adds the identities rows for the examples it makes run. Appended refusal sets corrected to NJL-01's kinds table (761 on run; 808 only where an int53 input exists, not on every read and mutate; key_optional and the field-driven codes); deps gain NJL-01, NJL-02 (their members and file are used directly) and N32a-09 (the 805 and 804 tests); the gate is recorded with record_gate from the script's receipt (convention 9); 'the rows are all registered by M1' corrected (rows enter with their cluster's registry bead, M0 to M4); script keys written with e2e_key."
+  },
+  {
+   "bead": "BD-138",
+   "kinds": [
+    "correct",
+    "sense",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S34 (session.close: --session and FROB_SESSION carry the identifier s:…, never a token) and H-owners-3 (acceptance runs stage 7 of NJL-01's script; deps gain NJL-01 and N32a-09). DESIGN change to follow the rows of record: the M1 in-process forms of job_wait and job_cancel are withdrawn. VERBS-job registers job.wait and job.cancel at M2 with handlers N29a-23 on N32a-16's bounded wait ('before the daemon exists a CPU-tier verb never returns a handle'), the verb appendix dates them M2, and N32a-08 has no cancel path at M1 but the running process's own interrupt; the bead could not list tools whose rows do not exist. At M1 a run tool runs to completion in the server process through the in-process route (job record, executor: in-process, replay by key, no request timeout cut), the base set is read from the registry (session_focus at M1, three from M2), and acceptance, unit tests and the script follow. The re-run of the parity script is recorded through record_gate; tool calls in the script carry keys from e2e_key."
+  },
+  {
+   "bead": "BD-211",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-cx-2: the controls of CX-345 to CX-348 are seeded by N38b-05 from N32-CX's entries (plant ids named); this bead binds its daemon-level tests to them by the nc_<nnnn>_ prefix and adds no row. Also: key_optional entries are the stated exception to 'every keyed verb is refused without a key'; gates recorded with record_gate from the script's receipt."
+  },
+  {
+   "bead": "N32a-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S68: records are docs/adr/ADR-TETHER-NN.md, docs/adr/TETHER-PRINCIPLES.md and docs/adr/TETHER-OWNERSHIP.md (KNOWN_DRIFTS 4: no per-chapter subdirectory); acceptance and the test updated."
+  },
+  {
+   "bead": "N32a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S68: the decision record is docs/adr/ADR-KILL-MCP-M0.md with N40-03's required fields and registered outcomes (not-fired, fired with the fallback named, deferred for the function's 'undecided'); the M1 re-read is ADR-KILL-MCP-M1.md and a second decision entry of the rolling row; acceptance and the schema test updated."
+  },
+  {
+   "bead": "N32a-07",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applied H-cx-2: builds CX-348 under plant id schema-bare-int64, writes no row of controls.toml, binds its catching tests to the control seeded by N38b-05 by the nc_<nnnn>_ prefix (three places). Deps gain BD-022 and BD-024: the script drives the frob binary and sim.run, neither of which was a dependency (convention 8); the sim.run calls carry --key."
+  },
+  {
+   "bead": "N32a-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-cx-2: CX-349 chunk-key-tick-range and CX-350 chunk-key-no-episode are built under their plant ids; no control row is written here; the two catching tests bind to the seeded controls by nc_<nnnn>_ (three places). Script: submissions carry keys from e2e_key, and 'reads the job back by identifier' now names how (no job verb exists before M2: a read-only example target job_show at M1, `frob job status` from M2)."
+  },
+  {
+   "bead": "N32a-09",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-cx-2: CX-345 is built under plant id idem-two-statement; no control row is written or allocated here; the catching test binds to the seeded control by nc_<nnnn>_ (three places). Also: the key exemption now names session.focus beside study.plan (RL-21's second case, which NJL-01's script stage 7 exercises against this transaction), in the acceptance, the test and the consideration."
+  },
+  {
+   "bead": "N32a-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-cx-2: CX-346 cursor-offset and CX-347 cursor-time-only are built under their plant ids; no control row is written here; the catching tests bind to the seeded controls by nc_<nnnn>_ (acceptance and the CX bullet)."
+  },
+  {
+   "bead": "N32a-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied S10: behavioural parity passes each example through NJL-02's identity substitution and the same identities file, on both surfaces, with example-unresolved reported. Applied H-owners-3: CLI flags map to properties through common_properties().cli_flag (dep NJL-01 added), not a hand table; the served refusal list is parsed from short_doc's line 'Refusals (FROB-REF-): n, n, …'. The note that the positional of `schema` is only an identifier is corrected. Three unit tests added."
+  },
+  {
+   "bead": "BD-222",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Appended sets aligned with NJL-01's table: 808 is appended only where an int53 input exists (through sync_wait_ms on run), not on every read and mutate. contact.laws and contact.probe removed from the M2 table (M1 handlers N18b-28, N18b-29, in BD-137's set). The no-daemon device row names FROB-REF-601 with pointer daemon. Gate run: recorded with record_gate from the script's receipt; examples run after NJL-02's identity substitution, with this bead adding its identities rows. Script: `run fork --classify-only` now carries --key (run.fork is a run verb); keys through e2e_key."
+  },
+  {
+   "bead": "BD-296",
+   "kinds": [
+    "correct"
+   ],
+   "what": "CX-351: the script plant is named by its catalogue plant id dispatch-no-preempt (it was no-preempt), and the known-answer bullet states that the control is seeded by N38b-05 from N32-CX's entry, first built by N32a-20, and that this bead binds its device-lane test by the nc_<nnnn>_ prefix and writes no row."
+  },
+  {
+   "bead": "BD-299",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The by-kind device stimulus names FROB-REF-601 (pointer the device, or daemon when no frobd answers) instead of 'the 6xx family', as N21-REF's row has it."
+  },
+  {
+   "bead": "BD-312",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "A contradiction with the registry removed: mission.separate and the revalidation pair keep first_milestone = M4 (the appendix's value; VERBS-mission, VERBS-result, BD-137 and NJL-01 all say the field never moves), where this bead set it to M3. Appended sets aligned with NJL-01 (808 only with an int53 input). shield.budget and shield.check named as LATE_ROWS. Script: `session open` (a mutate verb) and `eval qualify --dry` (a run verb) now carry keys. Examples run after NJL-02's identity substitution."
+  },
+  {
+   "bead": "BD-372",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-owners-3: the script no longer uses `frob --root` (no bead defines it); the fresh store is a second FROB_STATE under the run's scratch directory. Corrected the campaign-class refusal: an over-envelope submission is FROB-REF-761 from N36-20's admit_run, never 704; 704 is the scheduler's code at dispatch (BD-296). The test campaign_class_704 expected 704 at submission with no job row, which contradicted both; it is now over_envelope_761_at_submission plus campaign_704_at_dispatch. VERBS-solve removed from related (it is a dep)."
+  },
+  {
+   "bead": "BD-376",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "The declared-late row now lists all four M4 rows of NJL-02's LATE_ROWS (analyze.structure was missing) with their M5 beads; the declared-verb test covers the four; examples run after NJL-02's identity substitution (identities rows added here, a:8b27 among them)."
+  },
+  {
+   "bead": "BD-409",
+   "kinds": [
+    "complete"
+   ],
+   "what": "analyze.structure (dated M4, handler BD-401 at M5) added to the M5 set, where it becomes implemented; the acceptance names the six late rows that land here and leave LATE_ROWS; examples run after NJL-02's identity substitution."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N35-33",
+   "what": "BD-022 now depends on N35-33 (it serves the interim list from registries/refusal_allocations.toml). N35-33's acceptance 'the interim list is part of the refusal table that frob --json schema serves' and steps (2) and (4) of scripts/e2e/refusal_registry.sh need the frob binary, which N35-33 does not depend on and now must not: restate them as stages that BD-022 runs (BD-022's acceptance already does), logged skipped when no binary exists. The same holds for the `frob --json schema` checks of N35x-01 and N35x-02, which do not depend on BD-022: add the dep there (they are decision or second-round beads, not the registry skeleton)."
+  },
+  {
+   "bead": "N37-23",
+   "what": "Contribute the list form `frob schema --exports` (member `exports` of frob.schema.out/1: verb, kind, carrier, pointer, spelling, flag count, one row per row of registries/exports.toml) through BD-022's SchemaListing interface, adding the boolean property `exports` to frob.schema.in/1. N37-24's script reads it; BD-022 cannot implement it at M0 because the locator registry is created here at M1."
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "(1) `schema` 'Implemented by': BD-022 now implements the positional verb name, --refusals and the bare form, --verbs and --path-args at M0; --exports is N37-23's (M1, it owns registries/exports.toml), contributed through BD-022's listing interface. (2) The chapter list of `schema` holds FROB-REF-891, which no bead raises there and whose row (N34-REF) is M1 while the entry is registered at M0, so RL-06 would fail the M0 build: name the bead and milestone that raise it (a registered schema name at a major version the build does not hold; N32b-20's catalogue is the natural place) and enter it then, or drop it. BD-022 answers every unknown identifier with 802 and nearest names. (3) The --help --json result now carries `source` on each refusal (additive)."
+  },
+  {
+   "bead": "N34-REF",
+   "what": "Milestone M1, but its rows 891 to 893 are appended by NJL-01's variations 7 and 8 to rows registered at M0 (spark.precompile has params) and 891 is in VERBS-operator's `schema` chapter list at M0; RL-06 requires every listed code to resolve in registries/refusals.toml. Its deps (BD-005, N35-33) are M0, so it can be M0."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "It depends on BD-022 (a mechanism bead; direction rule 5), so its row 601 is entered after N32a-04, which raises 601 with pointer `daemon` at M0 in its dispatch suite (the test refusal_601_no_daemon it names). Drop the dep on BD-022 (its served checks can be stages run by BD-022 or a later bead) so the rows exist before the first raising site."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "(1) N32a-02 now has the action members `paginated` (read action, lint RL-23) and `destructive` (admin action, default true): drop 'requested of N32a-02 / until it does' in the annotation rule and variation 1. (2) The two-kind rows beyond the plan's three are now seven (add spark.check `list` and task.check `coupling`). (3) RL-11's planted registry and test (rl11_description_801_chars_caught) are wired in this bead's change, because short_doc does not exist before it; N32a-02 only reserves the identifier. (4) Add `help` to the names the lint common-property-shadowed refuses (BD-022's parser built-in --help is not an input property), and note that derive.rs reads the embedded input schema after N32a-02's build script has removed `conformance_only` properties. (5) Variation 1 says a paginated `read`, but several registry rows of other kinds carry paginated = true (solve.run, control.estimate, contact.probe): say whether the arm applies to any kind."
+  },
+  {
+   "bead": "VERBS-job",
+   "what": "BD-138 no longer builds in-process forms of job.wait and job.cancel at M1 (it followed this row). Consider registering the cluster at M1 (its deps are all M1 or earlier), so that the base tools job_wait and job_cancel are listed and answer FROB-REF-724 from M1 and the base set is three from the first cluster build; today the base set served at M1 is session_focus alone. NJL-05's '(base) always listed' and BD-138's tests read the set from the registry either way."
+  },
+  {
+   "bead": "N32a-16",
+   "what": "BD-138 (M1) now states that before this bead a `run` tool over MCP runs to completion in the server process, with VerbTool::timeout() unset for run entries so that the library's 30 s default request timeout does not cut an in-process run, and that sync_wait_ms is validated but has no effect. This bead owns 'the server's request timeout': confirm that it replaces that M1 rule when the bounded wait lands."
+  }
+ ],
+ "unchanged": 6,
+ "unchanged_beads": [
+  "N32a-03",
+  "BD-295",
+  "BD-297",
+  "BD-298",
+  "BD-313",
+  "BD-373"
+ ],
+ "notes": "Resumed slice: no file had been touched by the interrupted reviewer (latest modification 12:31, before the 16:28 cutoff) and no result file existed, so all 27 beads were reviewed. Every request addressed to the slice was applied except one part: BD-022 does not implement `schema --exports`, because its columns come from registries/exports.toml, which N37-23 creates at M1 (requested there). One DESIGN decision the lead may want to look at: BD-138 no longer builds in-process forms of job_wait and job_cancel at M1, to agree with VERBS-job, N32a-16, N29a-23 and N32a-08 (all date them M2); a run tool over MCP at M1 runs to completion and is recovered by key. Recomputed and found correct: the M/G/1 table of BD-296, the slot arithmetic of BD-295, the conformal index and interval examples of BD-297, the set counts of BD-373. No dependency cycle after the edits (graph_check cycles: 0). The six unchanged beads were read in full and are right as they stand."
+}

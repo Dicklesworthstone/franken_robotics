@@ -6,9 +6,9 @@ priority: 1
 milestone: "M4"
 labels: ["m4", "reflex", "cortex", "frob-control", "frontier", "bet", "gate"]
 parent: "WP-27"
-deps: ["N00-28", "N00-07", "BD-252", "BD-323", "BD-331", "STD-E2E"]
-needs: ["§22.22: the delivered-controller lane with its frozen planner record (GATE-REFLEX-11; refusal FROB-REF-817 for an acceptance request with no frozen planner record)"]
-related: ["BET-06", "BET-17", "BD-249", "N00-11", "N00-CX", "N00-23"]
+deps: ["BD-252", "BD-323", "BD-331", "N00-28", "N22c-16", "N22c-31", "N22c-32", "N22c-33", "N23a-21", "N38a-09", "STD-E2E"]
+needs: []
+related: ["N00-11", "N00-23", "N00-CX", "N40-31"]
 gates: ["GATE-REFLEX-06", "GATE-CORTEX-14", "KILL-MPC", "KILL-DISTILL"]
 plan_refs: ["§4 (BET-27)", "§40.5", "§0.8 (H-01)", "§2.5", "§22.18", "§23.23"]
 ---
@@ -31,8 +31,12 @@ lane with a frozen planner record.
 
 ## Scope
 
-In: pre-registration, the M3 and M4 readings, verdict and decision record. Out: the controller, distillation,
-the delivered-controller lane.
+In: pre-registration, the M3 and M4 readings, verdict and decision record. Out, with the beads that have them:
+the controller `control.mpc` (BD-252, at M3 as a fallback) and its GATE-REFLEX-06 campaign (BD-331); distillation
+`train.distill` and GATE-CORTEX-14 (BD-323); the frozen planner record, the delivered-controller lane and its
+gate GATE-REFLEX-11 with its own kill gate KILL-MPCRECORD (N22c-31, N22c-32, N22c-33; not this bet's kill gates);
+the decisions KILL-MPC (N22c-16) and KILL-DISTILL (N23a-21), which this bead reads and cites and never
+re-decides.
 
 ## Technical approach
 
@@ -70,19 +74,29 @@ the delivered-controller lane.
 - [ ] The traverse share on `not-synthesizable` designs against one half; median GPU-minutes per episode
       against 1 and 6; τ against 0.5.
 - [ ] Distillation's step reduction against the from-scratch arm; the shuffled-label control failed.
-- [ ] The planted acceptance request was refused; verdict and both kill decisions recorded as ADRs.
+- [ ] The planted acceptance request was refused (FROB-REF-817); the verdict recorded in
+      `docs/adr/bet-27-m4.md`, citing the KILL-MPC (N22c-16) and KILL-DISTILL (N23a-21) decisions on record by
+      identifier and hash; with either missing the verdict is not filed.
 
 ## Test plan
 
 ### Unit tests
 `bets.rs`: `bet27_traverse_0_58_cost_0_7_and_4_holds`; `bet27_traverse_0_44_falsifies_a`;
 `bet27_quadruped_cost_1_3_gpu_min_falsifies_b`; `bet27_distillation_no_step_reduction_falsifies_c`;
-`bet27_acceptance_without_planner_record_refused_817`; `bet27_student_at_0_66_fires_kill_distill`.
+`bet27_acceptance_without_planner_record_refused_817`; `bet27_reads_kill_distill_student_at_0_66` (N23a-21's
+record: fired after the repair cycle, students at 66% < 70% of the teachers' pass rate → `Falsified` through its
+kill gate whatever clause (c) reads, the record's hash carried; the trigger is applied there).
 
 ### End-to-end script and logging
-`scripts/e2e/bet_27_decide.sh` runs three episodes of `frob control mpc` on one `not-synthesizable` fixture
-design, records GPU-seconds per episode, submits the planted acceptance request (expects FROB-REF-817),
-recomputes the statistics from the ledger and the verdict. Logged per STD-E2E: design, class, episodes,
+`scripts/e2e/bet_27_decide.sh` runs three episodes of `frob control mpc <design> --task <task> --episodes 3
+--seed 1 --key b27-screen --json` on one `not-synthesizable` fixture design (exactly the default screening
+allowance per design; a re-run of the script returns the stored receipt under the same key), records
+GPU-seconds per episode, submits the planted acceptance request in its registered form (`frob eval promote
+<that screening result> --tier referee --key b27-plant --json`; expects FROB-REF-817, exit 3, and no new row
+in the ledger),
+recomputes the statistics from the ledger, reads the verdict of BET-27 from the bet register's report (`cargo run
+-p frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule) and checks
+`docs/adr/bet-27-m4.md` against it. Logged per STD-E2E: design, class, episodes,
 traverse outcome, GPU-seconds per 20 s episode against the thresholds, fork count and digest, distillation step
 counts; `summary` naming GATE-REFLEX-06, GATE-CORTEX-14, KILL-MPC and KILL-DISTILL.
 

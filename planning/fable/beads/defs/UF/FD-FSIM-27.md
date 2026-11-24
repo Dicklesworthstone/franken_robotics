@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "foundry", "upstream", "frankensim", "frontier"]
 parent: "WP-70"
-deps: ["BD-037", "BD-403", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-403", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-401", "BD-402", "FD-FSIM-28", "FD-FSIM-30"]
+related: ["FD-FSIM-28", "FD-FSIM-30", "N31a-04", "N31a-16", "N33b-14"]
 gates: ["GATE-FOUNDRY-04"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§31.4", "§31.7", "§33.9", "§33.8"]
 ---
@@ -68,8 +68,9 @@ by the thickness, the sampled stress is the in-plane stress with σ_zz = 0, the 
 matching coefficients. The stress admission (`stress`, `robust_stress`) states which assumption its samples
 were computed under. Additive: every existing result is unchanged under the default.
 
-**Interim posture here.** Three-dimensional runs only for anything whose stress is used as evidence; plate
-parts use `fs-topols` for shape in two dimensions and are checked in three by the independent solver.
+**Interim posture here.** Three-dimensional numbers only for anything whose stress is used as evidence; plate
+parts use `fs-topols` under plane strain for shape in two dimensions only, and are extruded and checked in three
+by the independent solver (N31a-16; the same posture in N31a-04's gap table).
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FSIM-27/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-FSIM-27`, compiled as the `frob-conformance` integration test `upstream_fd_fsim_27` and
@@ -127,9 +128,11 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_27 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry optimize --json` on the plate fixture under plane
-stress and `frob foundry size --json` for the three-dimensional check, asserting agreement of peak stress
-within the fixture's stated band.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry optimize --fixture bracket-plate --plate --rung topology
+--exploratory --key fd27-opt --json` on the plate fixture under plane stress and `frob foundry check <result>
+--key fd27-chk --json` for the independent three-dimensional check (`foundry.check`, BD-402; `foundry.size` is
+the beam rung and checks nothing in three dimensions), asserting agreement of peak stress within the fixture's
+stated band.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_27/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

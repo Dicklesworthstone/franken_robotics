@@ -1,14 +1,14 @@
 ---
 key: "ART-L7"
-title: "golden fixture L.7: the `.frobcert` bundle listing of six entries, entry e2 in full, its mutations and CLI script"
+title: "golden fixture L.7: the `.frobcert` bundle listing of six entries, entry e2 in full, mutations, CLI script"
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "lemma", "frob-cert", "frob-lemma", "frob-conformance", "solid", "test", "e2e"]
+labels: ["m3", "lemma", "frob-cert", "frob-lemma", "frob-conformance", "solid", "test", "e2e", "review-notes-open"]
 parent: "WP-54"
-deps: ["BD-026", "BD-132", "BD-133", "BD-259", "ART-L4", "NJL-07", "STD-E2E"]
+deps: ["ART-L4", "BD-026", "BD-132", "BD-133", "BD-259", "N12-13", "N24b-19", "NJL-07", "NJLx-02", "STD-E2E"]
 needs: []
-related: ["N12-03", "N12-06", "BD-027", "BD-136", "BD-303", "BD-364", "BD-383", "BD-141", "ART-L9", "NJL-09"]
+related: ["ART-L9", "BD-027", "BD-136", "BD-141", "BD-303", "BD-364", "BD-383", "N12-03", "N12-06"]
 gates: []
 plan_refs: ["Appendix L.7", "§12.4", "§25.5.1", "§25.5.2", "§25.5.4", "§24.13", "Appendix I.4", "§8.2"]
 ---
@@ -41,7 +41,9 @@ pass on both sides; a hand-entered specimen is independent of both).
 In: the listing; entry e2 in full; what the auditor recomputes for each entry; the six mutations; the
 receipt's arithmetic; the class of the bundle; the script that assembles the bundle from the command line and
 verifies it in tree and offline. Out: the bundle schema and reader (BD-026), the checkers per proof kind
-(BD-132), the writer and the `prove` verbs (BD-133), the qualification lane and its receipts (BD-259), replay
+(BD-132), the writer and the `prove` verbs (BD-133), the checker of the proof kind `sample-coverage` (N12-13),
+the campaign section of a bundle and `prove.bundle --design … --receipt` (N24b-19), the qualification lane and
+its receipts (BD-259), replay
 of a whole campaign by the auditor (BD-383); the layers and the identity map (NJL-07).
 
 ## Technical approach
@@ -59,7 +61,7 @@ of a whole campaign by the auditor (BD-383); the layers and the identity map (NJ
 | e3 | `family-exclusion` | Certified | c:01, c:04: v ∈ [4, 8], r ∈ [1, 3/2] | `lp-farkas` | p1, `lp-farkas` | y = (0, ½, ½); 40 + 6v > 40·r on the cells, least gap 4 N at (4, 3/2) | accept |
 | e4 | `family-exclusion` | Certified | c:07 to c:12: v ∈ (8, 12], every r | `lp-farkas` | p2, `lp-farkas` | y = (0, ½, ½); 40 + 6v > 88 for v > 8 | accept |
 | e5 | `partition` | Certified | The whole box [4, 12] × [1, 5/2] | `partition` | p3, `partition` | Thirteen cells; union equals the box; interiors disjoint; open and closed ends as listed | accept |
-| e6 | `qualification-receipt` | Tested | Campaign `q:kitchen-tray/1`, index 1 | `sample-coverage` | — | 2 failures of 200 sealed clusters; bound 0.0357 at α₁ = 0.025; levels spent 0.025 of 0.05 | accept |
+| e6 | `qualification-receipt` | Tested | Campaign `q:kitchen-tray/1`, index 1 | `sample-coverage` | — | 2 failures of 200 sealed clusters; bound 0.0357 at α₁ = 0.025; levels spent 0.025 of 0.05 (the post-close form; bundled before close the entry carries no counts, N24b-19) | accept |
 
 **Entry e2 in full**, in the container form of the bundle schema. A cell with two coordinates lists one
 rational per coordinate in `lo` and `hi`, each rational a pair of integer strings (numerator, denominator):
@@ -120,7 +122,7 @@ cell.
 | e3 | With y = (0, 1/2, 1/2) on the three balance rows, yᵀA = (1, 0, 0, −1), so f₊₊ − f₋₋ = 40 + 6v on every balanced allocation, while f₊₊ − f₋₋ ≤ 40·r on every admissible one; 40 + 6v > 40·r on v ∈ [4, 8], r ∈ [1, 3/2], with least gap 4 N at (4, 3/2) |
 | e4 | The same dual; 40 + 6v > 88 for every v > 8 (the cells are open at v = 8, where equality holds) |
 | e5 | Exact box arithmetic: thirteen cells; their union equals [4, 12] × [1, 5/2]; interiors are disjoint; every open and closed end matches the cells' own entries |
-| e6 | The arithmetic of the receipt: the level α₁ = α/[1·2] = 0.05/2 = 0.025; the one-sided exact binomial upper bound for 2 failures of 200 at that level, 0.0357, which is at most the claimed 0.05; levels spent 0.025 of 0.05. Never a proof: class at most Tested |
+| e6 | The arithmetic of the receipt: the level α₁ = α/[1·2] = 0.05/2 = 0.025; the one-sided exact binomial upper bound for 2 failures of 200 at that level, 0.0357, which is at most the claimed 0.05; levels spent 0.025 of 0.05. Never a proof: class at most Tested. Before the campaign closes the counts are sealed: the entry carries the levels, the request and receipt hashes and the population, and the check (N12-13) reports that the decision is not recomputed |
 
 **The class of the bundle.** Five Certified entries and one Tested receipt: the bundle is Tested, the class of
 its weakest entry (e6). The offline verdict line is: `accept 6 of 6 entries; class of the bundle: Tested
@@ -151,7 +153,9 @@ bundle file while a mission answer cites one bundle hash: the per-claim entries 
       `frob prove verify` and the offline `frob-verify` both accept all five; the bundle class is Certified.
 - [ ] M3 lane: with the receipt of a committed qualification request added, the bundle has six entries, the
       listing has six rows, both checks accept, and the verdict line reports class Tested with e6 as the
-      weakest entry and all three flags false.
+      weakest entry and all three flags false; bundled before the campaign's close, e6 carries no counts and
+      the check reports the decision not recomputed; re-bundled after the close, e6 carries the revealed counts
+      and the decision is recomputed from them.
 - [ ] The auditor's recomputations of the table hold exactly: the eight force vectors of e2, the dual of e3
       and e4, the partition of thirteen cells, and the receipt bound 0.0357.
 - [ ] Each of the six mutations is rejected by `frob prove verify` and by `frob-verify`, with the first
@@ -181,6 +185,8 @@ and `cargo test -p frob-lemma --test golden_l7` (the real writer):
   are each rejected.
 - `l7_e6_receipt_bound`: bounds 0.0183, 0.0275, 0.0357, 0.0432, 0.0504 for 0 to 4 failures of 200 at 0.025;
   2 failures → promoted at claim 0.05; 4 failures → not promoted.
+- `l7_e6_pre_close_form`: e6 without counts on an open campaign is accepted with the note that the decision
+  is not recomputed; the same entry carrying counts while the campaign is open is rejected (N12-13).
 - `l7_bundle_class_is_weakest`: {Certified × 5, Tested} → Tested; no function returns a stronger class.
 - `l7_mutation_m1` … `l7_mutation_m6`; `l7_unknown_kind_rejected`; `l7_changed_quantifier_rejected`.
 - `l7_writer_reader_share_no_code`: a source scan (the writer crate does not depend on the reader crate).
@@ -190,15 +196,24 @@ and `cargo test -p frob-lemma --test golden_l7` (the real writer):
 `scripts/e2e/art_l7_frobcert.sh` (header: `bead=ART-L7 milestone=M3 labels=golden,appendix-l,lemma,
 verb:prove.bundle,verb:prove.list,verb:prove.verify seed=1 needs=cpu,frobd,second-host
 plants=torque-as-moment,flag-true`). Steps: (1) run the mission steps of artifact L.4's script to obtain the
-refined answer; (2) `frob prove bundle … --mission <id> --out quad-tray.m1.frobcert --key l7-b1 --json`,
+refined answer; (2) `frob prove bundle <a:… of the refined answer> --out quad-tray.m1.frobcert --key l7-b1 --json` (the
+mission-slice form: the answer is positional),
 assert five entries and `in_tree_check: "accept"`; (3) `frob prove list quad-tray.m1.frobcert --json`, compare
 the rows with the first five of the listing (`e2e_assert_json` per cell of the table); (4) `frob prove
 verify`, then the offline `frob-verify quad-tray.m1.frobcert`, both `accept`, class Certified; (5) M3 lane:
-commit and run a qualification request for `quad-tray` on the task of artifact L.3 (`frob eval qualify …
---key l7-q1`), then `frob prove bundle … --receipt <hash> --out quad-tray.frobcert --key l7-b2`, assert six
-entries; (6) `frob-verify quad-tray.frobcert`, assert the verdict line's three facts (six of six, class Tested
-with the receipt as weakest entry, flags false) and recompute the receipt bound from its counts with
-`e2e_assert_close` against the bundle's value; (7) copy the bundle to the second host and repeat step (6);
+the script's owner session opens a scratch campaign for the task of artifact L.3 in the scratch root, so that
+no production campaign's index moves (`frob eval ledger --open --task <L.3 TaskId> --world-family <its sealed
+family> --clusters-per-request 200 --key l7-open --json`, N24b-15's admin action; while OPEN-ARENA-3 is
+undecided the open is refused with `qualification-undecided` and the M3 lane is logged as blocked), commits and
+runs a qualification request for `quad-tray` (`frob eval qualify … --key l7-q1`), then `frob prove bundle
+--design quad-tray --mission <q:…> --receipt <hash> --out quad-tray.open.frobcert --key l7-b2 --json`
+(N24b-19's form, which adds the campaign section), assert six entries and that e6 carries no counts, with the
+in-tree check's note that the decision is not recomputed; (6) as the owner close the campaign (`frob eval
+ledger <campaign> --close --key l7-close --json`), re-bundle to `quad-tray.frobcert` under `--key l7-b3`,
+run `frob-verify quad-tray.frobcert`, assert the verdict line's three facts (six of six, class Tested with the
+receipt as weakest entry, flags false) and recompute the receipt bound from the revealed counts with
+`e2e_assert_close` against the bundle's value; (7) copy the post-close bundle to the second host and repeat
+the offline check of step (6);
 (8) the six mutations and the two extra rejections through `e2e_expect_caught`; (9) `frob-golden check
 --artifact L7`. Plants: `torque-as-moment` and `flag-true` must each be rejected. The log
 (`target/e2e-logs/art_l7_frobcert/<utc>.ndjson`) records every command with exit code and wall time, the
@@ -230,6 +245,12 @@ the `summary`. In the M1 lane the M3 steps are logged as skips.
 - The receipt's counts (2 failures of 200) are a story value; the real qualification of step (5) will give
   its own counts, and may not promote. The script asserts the arithmetic from whatever counts the receipt
   holds, and logs the decision as a metric, not as an assertion.
+- The receipt form of `prove.bundle` (`--design`, `--receipt`) lands at M3 with N24b-19, and the checker of e6's
+  kind with N12-13; both are dependencies of this bead because its M3 lane needs them. The registry row of
+  `prove.bundle` (VERBS-prove) lists the receipt form as an input of the same row answering from M3 (N24b-19),
+  before or after the campaign's close; the claim kinds of the full form answer `FROB-REF-724` until M5.
+- The hand specimen e6 (2 failures of 200) is the post-close form; the pre-close form of the same entry has no
+  counts, so the script's assertions on counts run only after the close of step (6).
 - Replay of the whole campaign by the auditor (levels, commitments and, after close, the cluster derivation)
   is a later bead (BD-383, M5); this fixture checks one receipt's arithmetic only.
 - Kill gate KILL-AUGUR-FALSECERT (one certificate accepted by the auditor is shown false within its scope):

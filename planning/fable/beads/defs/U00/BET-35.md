@@ -6,9 +6,9 @@ priority: 1
 milestone: "M4"
 labels: ["m4", "spark", "frob-kernels", "frontier", "bet", "gate"]
 parent: "WP-46"
-deps: ["N00-28", "N00-07", "BD-370", "STD-E2E"]
-needs: ["§21.17: the fleet pilot (its parameter g and the falsifier g < 1/3) and the list of transfer classes allowed to cross between the machines", "§19.15: the world-bank breadth experiment that measures the held-out gap against the number of resident scenes"]
-related: ["BD-029", "BD-199", "BD-236", "BET-09", "N00-17", "N00-22"]
+deps: ["BD-370", "N00-28", "N19c-25", "N19c-26", "N21c-08", "N21c-10", "N21c-11", "N38a-09", "STD-E2E"]
+needs: []
+related: ["N00-17", "N00-22", "N40-31", "N41-12"]
 gates: ["GATE-SPARK-13", "KILL-FLEET"]
 plan_refs: ["§4 (BET-35)", "§40.5", "§1.8", "§21.24", "§36"]
 ---
@@ -35,14 +35,25 @@ bandwidth at these state sizes is a HYPOTHESIS for the M2 profile.
 
 ## Scope
 
-In: pre-registration, the M4 reading, verdict and decision record. Out: the fleet scheduler, the world bank,
-sharding across the two cards.
+In: pre-registration, the M4 reading, verdict and decision record. Out, with the beads that have them: the
+transfer classes, the cross-machine bundle's byte meter and the refusal of a forbidden class (N21c-08,
+FROB-REF-618); the pilot that measures the movable fraction g (N21c-10) and the first reading of KILL-FLEET
+(N21c-11); the fleet scheduler `fleet.plan`, the measurement of GATE-SPARK-13 and the final reading of
+KILL-FLEET (BD-370); the world-bank breadth experiment and its decision KILL-BANK-BREADTH (N19c-25, N19c-26),
+which supply clause (b); the world bank itself and sharding across the two cards (their Spark and Habitat
+beads). This bead reads those records and applies no kill trigger.
 
 ## Technical approach
 
 1. **Falsifier clauses** (any falsifies):
-   a. A campaign on both machines is less than 1.3× faster than on the two RTX 4090 alone.
-   b. A larger world bank does not reduce the held-out gap.
+   a. A campaign on both machines is less than 1.3× faster than on the two RTX 4090 alone. Read on
+      GATE-SPARK-13's paired lower bound of the speedup; the gate compares against the better single machine,
+      which is the two cards on every registered campaign unless the Mac alone is faster, in which case the
+      gate's comparison is the stricter one and is used. The ratio against the two cards alone is printed beside
+      it.
+   b. A larger world bank does not reduce the held-out gap. Read from the breadth experiment (16, 160 and 1,600
+      distinct homes at a fixed step budget, N19c-25) as decided by KILL-BANK-BREADTH (N19c-26: held-out success
+      does not rise with scene breadth beyond its confidence sequence).
    c. More than 1 GB per campaign-hour crosses between the machines.
 2. **Competing arm.** The two cards alone. **Potency controls.** The paired harness returns a planted ratio; an
    A/A campaign does not clear 1.02; a planted forbidden transfer (a scene pack or a trajectory batch sent
@@ -51,36 +62,51 @@ sharding across the two cards.
    of the speedup of two machines over the better single machine is at least 1.3; at most 1 GB crosses per
    campaign-hour; no forbidden transfer class crosses.
 4. **Kill gate and fallback.** KILL-FLEET (M4): the pilot shows g < 1/3, or after one repair cycle the paired
-   lower bound of campaign speedup is below 1.3 against the better single machine. Fallback: the machines run
+   lower bound of campaign speedup is below 1.3 against the better single machine. Here g = M ÷ T is the
+   movable fraction of one campaign's phase ledger on `trj` alone (T the campaign's wall time, M the seconds in
+   phases the Mac's roles could take: large-scene evaluation, replay, certification and the like); a second
+   machine speeds a campaign by at most 1/(1 − g), so a factor of 1.5 needs g ≥ 1/3 (first reading, N21c-11;
+   final reading after the gate, BD-370). Fallback: the machines run
    standalone as independent shards; jobs are assigned by the role table; the seeds-only rule stays; the Mac
    keeps proof, replay and viewer work.
 5. **Downstream if falsified.** No fleet scheduler ships; campaign plans are per machine; clause (b) alone
-   limits the world bank to evaluation, qualification, replay, clearance and retrofit search (its own kill gate
-   decides that); nothing on the critical path depends on this bet.
+   limits the world bank to evaluation, qualification, replay, clearance and retrofit search (KILL-BANK-BREADTH,
+   N19c-26, decides that); nothing on the critical path depends on this bet.
 6. **Procedure.** Register the standard campaign, the role table, the transfer-class list and the byte
    accounting before the run; read at M4 exit; `docs/adr/bet-35-m4.md`.
 
 ## Acceptance criteria
 
-- [ ] Pre-registered with the campaign's digest and the allowed transfer classes (seeds, policy weights,
-      receipts).
+- [ ] Pre-registered with the campaign's digest and the allowed transfer classes, which are the nine of N21c-08's
+      allow-list and no private list of this bead: seeds, scene recipes, design differences, module differences,
+      model-variant tables, policy weights, receipts, digests and telemetry summaries (the table above gives the
+      overview's short form, "seeds, policy weights and receipts"; the device chapter's invariant INV-SPARK-10 is
+      the full list, and it governs, so that a scene recipe or a variant table crossing is not read as a forbidden
+      transfer). Forbidden: compiled scene fields, world state and rollout buffers.
 - [ ] Campaign wall time on both machines and on the two cards alone, paired, with the lower bound of the ratio
       against 1.3 and disclosure blocks for both.
 - [ ] Bytes crossed per campaign-hour against 1 GB, by transfer class; zero forbidden classes.
 - [ ] The held-out gap at two world-bank sizes with its confidence sequence.
-- [ ] Verdict and the KILL-FLEET decision recorded as an ADR.
+- [ ] Verdict recorded in `docs/adr/bet-35-m4.md`, citing the KILL-FLEET readings on record (N21c-11, and BD-370
+      if the scheduler was funded) and the KILL-BANK-BREADTH decision (N19c-26) by identifier and hash; with any
+      missing the verdict is not filed.
 
 ## Test plan
 
 ### Unit tests
 `bets.rs`: `bet35_lb_1_42_and_0_3_gb_per_hour_holds`; `bet35_lb_1_18_falsifies_a`;
 `bet35_gap_unchanged_falsifies_b`; `bet35_1_6_gb_per_hour_falsifies_c`;
-`bet35_forbidden_transfer_class_fails_gate`; `bet35_pilot_g_0_28_fires_kill_fleet`.
+`bet35_forbidden_transfer_class_fails_gate`; `bet35_reads_kill_fleet_first_reading` (N21c-11's record fired at
+g = 0.204, ceiling 1/(1 − 0.204) = 1.256 → `Falsified` through its kill gate with the gate `not run`, the record's
+hash carried; the trigger is applied there); `bet35_reads_kill_bank_breadth_for_b` (N19c-26's record fired →
+clause (b) true).
 
 ### End-to-end script and logging
-`scripts/e2e/bet_35_decide.sh` runs `frob fleet status --json` and `frob fleet plan --json` for the standard
-campaign, reads the two campaigns' receipts and the transfer log, recomputes the paired bound, the byte rate
-and the verdict. Logged per STD-E2E: machine fingerprints, wall times, ratio and bound, bytes by transfer
+`scripts/e2e/bet_35_decide.sh` runs `frob fleet status --json` and `frob fleet plan <the standard campaign>
+--json` (the registry's positional form; both read verbs), reads the two campaigns' receipts and the transfer
+log, recomputes the paired bound and the byte rate, reads the verdict of BET-35 from the bet register's report
+(`cargo run -p frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule)
+and checks `docs/adr/bet-35-m4.md` against it. Logged per STD-E2E: machine fingerprints, wall times, ratio and bound, bytes by transfer
 class per campaign-hour, world-bank sizes and held-out gaps; `summary` naming GATE-SPARK-13 and KILL-FLEET.
 
 ### Known answers and negative controls

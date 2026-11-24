@@ -1,0 +1,355 @@
+{
+ "round": 3,
+ "slice": "F-U38b",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "BD-146",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applied S31: dep N24c-10 (the eleven Arena known answers as fixtures-battery rows, M1, no cycle), which the fixtures battery this capstone runs reads. The e2e's sim.run call now carries its options and --key (KNOWN_DRIFTS 5)."
+  },
+  {
+   "bead": "BD-223",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Bound four battery readers at M2 including eval.detect, which lands at M3 (BD-267): an M2 check waiting on an M3 verb. Now the three M2 readers are bound here and eval.detect is listed due M3 and bound by BD-318; acceptance and unit test follow. spark.check (a run verb) in the e2e carries --key."
+  },
+  {
+   "bead": "BD-318",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Takes over binding eval.detect as the fourth reader of the standard battery identity (from BD-223): dep BD-267 (M3, no cycle), acceptance item and unit test standard_battery_bound_to_eval_detect. nemesis.oracle (run) and design.import (mutate) in the e2e now carry their registry options and --key."
+  },
+  {
+   "bead": "BD-411",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "ground.identify is a run verb: the e2e call now carries --key, and ground.band its --cell (VERBS-ground). Recomputed the rehearsal and structure known answers (19/21, 26.7/11.7, 13.9%, 1.159 mm, 300 MPa, 0.116/8.62, 2.8235 kg, tube 0.0950 kg, 0.0688 ohm, 36/2,063/0.628 mm, 25/24): all correct."
+  },
+  {
+   "bead": "N38b-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied S44: check 4 now names N30a-03's line `cards: guessed=<g>/<N> (<pct>%) [generic= assumed= synthetic= datasheet= measured= candidate=]` over the nine card kinds (it had the old `card fields guessed: <k> of <n>` over four kinds); background counts synthetic as guessed. The anchor loader admits BD-311's eight optional fields from the start (BD-311 adds their checks at M3), with a unit test; share example updated."
+  },
+  {
+   "bead": "N38b-02",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Script called explain.run (BD-112), run.export (N29a-02) without depending on their implementers; added both, M1, no cycle. Step 1's sim.run had no --key. Step 2's plant 'import' named no verb that exists at M1 (artifact.import is M2): the edited bundle is now read back with the offline auditor frob-verify (N29a-03, added as dep), expecting exit 2 and the check authorization-flag; the in-process 816 refusal stays N38b-01's check 5. Guessed share includes synthetic."
+  },
+  {
+   "bead": "N38b-03",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-owners-2: added the `recorded` close type with N41-17's required content (own test; fail gate-record line by a non-implementing session with every control caught; the kill gate; the repair-cycle note where the trigger names one), split duplicate/withdrawn, accepted a decision citation for withdrawn, fallback names its ADR; checks 2-4 cover recorded; N41-17 keeps the decision and kill-read checks. Acceptance item and tests recorded_reason_content, withdrawn_cites_decision."
+  },
+  {
+   "bead": "N38b-05",
+   "kinds": [
+    "complete",
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Resumed the interrupted reviewer's edit (file touched after the cutoff; it parsed and carried all seven requests: per-field fill table for target/defect/expect/feature/fixture, plant as a list of plant records with a string short form, optional entry due copied to controls, case_supplied_by admitting a later entry without same_as (CX-215 from CX-371), the 13 same_as counted over CX-001 to CX-384 only, the pilot-agreement rule rerun-disagrees-with-pilot, and one parser STD-TEST Counterexamples with this bead's validation). Completed it: the feature/fixture fill had no value for an entry with no plant yet, so BD-025's loader would reject the obligation control (feature-missing/fixture-missing); now cx-<nnn> from the CX number. Stated that the feature written is the name the control runner builds (named by plant, cx-262 for NC-0412). Named the catalogue validation's typed reasons (cx-count-mismatch, same-as-invalid, case-supplier-invalid, fact-without-rerun, plant-missing, rerun-disagrees-with-pilot). The e2e now gives its cargo commands, runs BD-025's registry_check on the seeded file, plants the pilot-pair disagreement, and logs evidence block and first unmatched row; unit test seeded_fields_filled covers the no-plant obligation."
+  },
+  {
+   "bead": "N38b-07",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applied H-ref-2: dep N38-REF (registers origin-label-mismatch and origin-not-admissible; no cycle). The e2e ran a known-answer entry 'through frob --json' (no such route; ADR-GAUNT-01): now the g1_known_answers cargo form, the record_gate example for the two refusals with their reasons and gates.toml unchanged, and the origin_labels lint."
+  },
+  {
+   "bead": "N38b-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 3 said one mutant build serves every control of a crate, contradicting BD-025 and N38b-04 (one mutation control per build, its feature never in the umbrella): grouping now shares the umbrella build and cache, each mutation still in its own build."
+  },
+  {
+   "bead": "N38b-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S61: CERT-07's reused-cluster control now rests on N24b-18's absolute no-signal world `absolute-above` (exact per-request size 1.319 × 10⁻² at level 0.05, n = 200 with at most 4 failures), so 500 retries give 1 − (1 − 0.01319)⁵⁰⁰ = 0.9987 > 0.99, as BD-260's arm C; known answers updated."
+  },
+  {
+   "bead": "N38b-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 3 now runs the four planted populations through the verb's fixture form (N23b-35), `frob eval rank-agreement --fixture <population> --key <k> --json`, which exists at M3. All τ values and audit bounds were recomputed and are correct."
+  },
+  {
+   "bead": "N38b-14",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The tie refusal at n = 64 is now measured through eval.preanalyze with declared_verdicts (N24b-06), a dependency, with the e2e `frob eval preanalyze --rule paired-clopper-pearson/1 --n 64|86|128|256 --margin 0.05 --level 0.05 --json` and `--declared-verdicts practical-tie` at 64; tie_at_64_refused follows. Study admission also refuses it: study.plan goes through study::admit (N24b-14) and answers at M1 in N33b-19's CPU form. That path is stated but not measured here, because neither bead is a dependency. Re-enumerated the table exactly: 521/521/0/1,103; 1,031/1,031/1/1,765; 2,517/2,517/4/3,347; 11,384/11,384/39/10,346; preference needs 15, 17, 19, 21, 23."
+  },
+  {
+   "bead": "N38b-17",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Every run-kind call in the row table now carries its own `--key cert-<row>-<n>` and `--json`, distinct per call, so the broken-certifier re-run is never answered by the stored receipt (KNOWN_DRIFTS 5). CERT-09 uses `frob eval rank-agreement --fixture <population> --key cert-09-<p> --json` on N38b-13's populations."
+  },
+  {
+   "bead": "N38b-18",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Applied H-owners-2 (N40-01 rules 1 and 3): kill rows carry none of claim, claim_id, threshold, tier, controls, [[gate.part]] and the claim rule applies to admission, convergence and program rows only; a fail part requires measured, commit, command and a receipt; pass condition (d) includes the receipt resolving to receipts/gates/<hash>.json. Acceptance and unit test kill_row_carries_no_measurement_fields."
+  },
+  {
+   "bead": "N38b-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The registry diff fingerprints a control by seed, kind and target, so N38b-05's one-time replacement of a placeholder target (plant id or CX number) by the chapter's target would be reported `reused` on every seeded obligation. That one change is now an allowed change: the base fingerprint is recomputed, and a later target change is still `reused`. New test placeholder_target_set_once. append_is_allowed added KA-836, above the plan-time maximum, with no block, which step 3 itself calls out-of-order. The test now issues the block in a scratch allocations.toml."
+  },
+  {
+   "bead": "N38b-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "KNOWN_DRIFTS 10 / N40-03: the decision set the kill row to `killed`/`pass`/`not-run`, which N40-01 refuses on a kill row (it carries no status or measurement). The bead now writes `decision = { outcome, adr, date, session, receipts }` with outcome fired, not-fired, deferred (fewer than five pilots: reason 'too few verdicts: k of 5') or not-reached (no development oracle chosen). The record is docs/adr/ADR-KILL-DEVORACLE-M1.md with N40-03's required fields. Tests fewer_than_five_is_deferred and decision_entry_form replace fewer_than_five_is_not_run, and the e2e names its cargo test."
+  },
+  {
+   "bead": "N38b-30",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied H-ka-1: KA-239 (group axioms) cites 'the eight planted mutations', none of which breaks associativity, identity or inverse, so N13-KA reports it `obligation: control`. This bead now registers its first control: the SE(3) inverse (Rᵀ, −p) in place of (Rᵀ, −Rᵀp), which gives g·g⁻¹ a translation of (1, −1, 0) m at R = R_z(π/2), p = (1, 0, 0). Added to the wrong-values test. Rows go 25→26 and first controls 6→7. KA-256 was checked under the binding rule: its control.nc lists M2, M5 and M6, whose catching fixtures include the bit-parity fixture. The e2e builds `<crate>/<feature>` from the record's feature field, not `nc-<nnnn>`, because owners' records and CX plants use other names."
+  },
+  {
+   "bead": "N38b-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KA-348's owner control (the Jacobian term as R·n_b, links instead of coordinates) is registered by N16a-14 and only listed in N16a-18's table; the attribution is corrected. The e2e feature form is now the record's feature field. Closed forms (314-319, 343, 348 = 26,668/17,452 B, 352, 361, 362, 368, 374, 383, 397) were recomputed and are correct."
+  },
+  {
+   "bead": "N38b-32",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "KA-520's control was 'rounding in place of the card's truncation', but the card rounds to the nearest multiple of range_lsb (N20a-20). The control is now truncation, which reads 4.10 m against 4.11 m at 0.1 rad (unquantized 4.10851 m), and is added to the wrong-values test. KA-519 and KA-520 are now listed as N20a-20's owner records, linked. The e2e feature form is the record's feature field. Habitat, Sensorium and Spark arithmetic was rechecked and is correct."
+  },
+  {
+   "bead": "N38b-33",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The e2e feature form is now the record's `feature` field, not `nc-<nnnn>`. Owner counts (5 linked, 6 second) and the closed forms (559, 569, 589, 605, 614/694, 653, 706) were checked and are correct. N23-KA and N27-KA are M2, so the `open: row not registered` wording stands."
+  },
+  {
+   "bead": "N38b-34",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied H-ka-2: N30-KA is M1, so its four Ground rows are present from M1, and N30-KA is now a dependency (M1, no cycle; it was only related). Only the Foundry rows (N31-KA, M5) stay `open: row not registered`. KA-718's owner control is restated as N29-KA has it: a localizer that always names stage 9. Applied H-ka-3: the owners' table gains N36-KA's first-registered controls (KA-808, -812, -815, -817, -818, -823, -825, -826 as second records; KA-810, -821 linked) and N37-KA's (KA-830, -832 linked; KA-835 second). Counts: 34 owners' rows, 16 linked, 18 second, 11 proposal-first (named). The e2e feature form is the record's feature field."
+  },
+  {
+   "bead": "N38b-35",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Step 1 ran `frob conformance run --registry oracles --json`, which does not exist (KNOWN_DRIFTS 1). It now runs N38a-04's loader test `cargo test -p frob-conformance --test oracle_register` and `--test open_questions -- development_oracle` in the scratch tree. The closing ADR is named docs/adr/ADR-OPEN-GAUNT-4.md (KNOWN_DRIFTS 4)."
+  },
+  {
+   "bead": "N38b-36",
+   "kinds": [
+    "complete",
+    "deps"
+   ],
+   "what": "The decision lived only in docs/decisions/OPEN-GAUNT-5.md, and nothing moved the register row. It is now the ADR docs/adr/ADR-OPEN-GAUNT-5.md (KNOWN_DRIFTS 4), which cites the measured table, and the row OPEN-GAUNT-5 moves to decided or defaulted naming it. Dep N41-OPEN8, the bead that creates the row (M0, no cycle), moves from related to deps. The acceptance item is updated."
+  },
+  {
+   "bead": "N38b-37",
+   "kinds": [
+    "complete",
+    "deps"
+   ],
+   "what": "The decision record had no location and the register row no closer. It is now docs/adr/ADR-OPEN-GAUNT-7.md (KNOWN_DRIFTS 4), and the row OPEN-GAUNT-7 moves to decided or defaulted naming it. Dep N41-OPEN8 (M0, no cycle) moves from related to deps. eval.run (M2, run) was checked: it carries --key and its options are in VERBS-eval."
+  },
+  {
+   "bead": "N38b-39",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The mutation feature was `nc-<id>`, but the control is seeded from CX-394 and N38b-05 writes the plant's name into the record's feature (`cx-394` while the entry names no plant), and the runner builds what the record names. The feature is now `cx-394` in frob-lie, and the e2e control step builds `--features gauntlet-mutations,frob-lie/cx-394`."
+  },
+  {
+   "bead": "N38b-40",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "KA-842's entry goes through study.submit and study.status, whose rows are M2. At M1 they answer only in N33b-19's CPU form, which nothing in the bead reached. Added dep N33b-19 (M1, no cycle), named study.plan, and stated the form. The listed e2e commands now use the registry forms, with --key on task.fixture and study.submit. All thermal, orbit, lip and bound values were recomputed and are correct (33.49/34.08/39.92 s, 128.6 s, 27/45, 0.900/1.017 N·m)."
+  },
+  {
+   "bead": "N38b-43",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Named the controls' seeds (CX-386 for KA-837, CX-396 for KA-847) so no second record is registered for the same plant. Added the settlement of REC-12 (KA-837's printed 9.17 cm, appended open by N38b-50): corrected with the recomputed 0.091646/0.190127/0.117076 m, a retired entry, and confirmed_by from another session; dep N38b-50 (M0, no cycle), an acceptance item and test rec_12_settled. contact.response (run) now carries --key in the e2e. Sinkages and the f32 bound were recomputed and are correct."
+  },
+  {
+   "bead": "N38b-44",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Named the seed (CX-397). The geometric-mean variant is a further record with the same seed. The e2e's `frob --json sim run` is now the registry form with --tier batch-cpu and a --key per call (sim.run is a run verb). Mobility, the front exponent and the 2.5 mm stable thickness were checked and are correct."
+  },
+  {
+   "bead": "N38b-46",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied: the script's first stage is N38-KA's ka_adopted_registry.sh, and the table-agreement tests are added to N38-KA's adopted_rows_host.rs rather than a file of this bead's own; acceptance follows. Every command is now the registry form, with a --key per run-kind call and per planted re-run (task fixture, study submit, spark check, sense calibrate, contact response, sim run, mission synthesize, shield fit). KA-842 plans before it submits (N33b-19's CPU form). Mutations are built from the record's feature field (frob-lie/cx-394), not nc-<id>. Stated that this bead runs M0 and M1 and that N38b-41 to N38b-45 run the later arguments (KNOWN_DRIFTS 7)."
+  },
+  {
+   "bead": "N38b-47",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied: KA-356 and KA-357 now use BD-088's fixtures, which the dynamics battery simulates. The pendulum is the compound one at 60° (sphere 1 kg, r 0.05 m, ℓ 1 m, I_p 1.001): T = 2.153951 s against T₀ = 2.007069 s, 6.82% short. The top is at 90°: Ω = 4.905 rad/s. The tilted top (2.5500 rad/s) enters only if BD-088 adds its test; until then it is used only to check the slow-root formula. The first controls of both rows are BD-088's. Tests, known answers and the metamorphic relation are updated, and the simulate step carries --key. The balancer, orifice, sleigh and track-scrub numbers were recomputed and are correct."
+  },
+  {
+   "bead": "N38b-48",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Step 2 ran `frob conformance run --registry ka --json` (KNOWN_DRIFTS 1). It now runs the cargo test target formula_rows_listed of illustrative_cards.rs, which loads known_answers.toml and lists formulas with their fixtures, values and derivation paths; the test is added. Card values and swap differences were recomputed and are correct."
+  },
+  {
+   "bead": "N38b-49",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The burn-down step ran `frob conformance run --registry ka --json` (KNOWN_DRIFTS 1). It now runs `cargo test -p frob-conformance --test coverage_table -- burn_down_report`, the test that computes the four columns and writes target/gauntlet/obligations.json (N38b-47 reads it); the test is added. The coverage table was rechecked: 35 chapters, contiguous ranges, totals 835/325/133/384, tiers 835."
+  },
+  {
+   "bead": "N38b-50",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Applied: appended REC-12 for KA-837. Printed '9.17, 19.01 and 11.71 cm' (§38.17, the n = 0.7 control); recomputed 0.091646, 0.190127 and 0.117076 m from the unrounded p = 5,016.48 Pa (9.17 follows only from p rounded to 5.017 kPa, 0.091660 m). Status open, to be settled as corrected by N38b-43 at M4; KA-837 reads flagged: unreconciled until then. Meta-test, acceptance and test rec_12_plate_sinkage are added."
+  },
+  {
+   "bead": "N38bp1-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied: check 4 and step 5 now use N30a-03's line `cards: guessed=<g>/<N> (<pct>%) [generic= assumed= synthetic= datasheet= measured= candidate=]` over the nine card kinds, with synthetic counted as guessed. They had the old `card fields guessed: k of n` over four kinds. share_arithmetic now reads guessed=7/12 (58.3%), and 8/12 (66.7%) with a synthetic field. Check 2 asserts BD-311's generated sentence and its outcome label inside-sweep or outside-sweep(gap), recorded in `result`. The fixed 'matches <source>' wording, which BD-311 rules out, is now rejected. The anchor step names BD-311's cargo entry points; report.design is written in the registry form."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38b-04",
+   "what": "The runner builds `--features gauntlet-mutations,<crate>/nc-<nnnn>` and the mutation guard keys on `nc-*`, but every CX chapter (N10-CX, N14-CX, N16-CX, N18-CX, N19-CX, N23-CX, N24-CX, N25a-11, N24c-02/-04/-08, BD-229) names its mutation feature after its plant (`cx-262`, `cx-199-friction-from-r0`), and N38b-05 writes that name into the control's `feature`. Build `<crate>/<control.feature>` as written, and make the guard (compile_error without gauntlet-mutations or under release; none in product binaries) cover every feature a control in controls.toml names, not the `nc-` prefix only."
+  },
+  {
+   "bead": "BD-025",
+   "what": "(1) The example record has `feature = \"nc-0412\"` for seed CX-262, whose plant is `BD-123:cx-262` (N24-CX): N38b-05 now fills `feature = \"cx-262\"`; align the example, and make binaries_declared's umbrella check refuse every feature named by a control's `feature`, not only `nc-*`. (2) Rule 1 refuses any change of `target` against the previous commit (`renumbered`); N38b-05 replaces a placeholder target (the plant id `<bead>:<name>`, or the CX number of an entry with no plant) once by the target the chapter later states, only while the control is an obligation or its plant is unbuilt: admit that one change in rule 1."
+  },
+  {
+   "bead": "N38-REF",
+   "what": "Register the counterexample-catalogue validation reasons of N38b-05 (tool `frob_conformance::counterexamples::validate`, Cargo test, exit 101): `cx-count-mismatch`, `same-as-invalid`, `case-supplier-invalid`, `fact-without-rerun`, `plant-missing`, `rerun-disagrees-with-pilot` (a pilot-derived FACT entry whose rerun/rerun_receipt pair disagrees with its PILOT record's status), and the findings disposition `plant-changed` (a plant's kind or target changed after its control exists; repairs: restore the text, or append a plant with a new id)."
+  },
+  {
+   "bead": "STD-TEST",
+   "what": "Counterexample's field list lacks N38b-05's `due` (optional milestone) and the plant record: `plant` is a list of `{id, kind, target, defect, expect, gates, feature, fixture}` (id required, the rest optional), with a plain string accepted as the one-plant short form `[{id}]`."
+  },
+  {
+   "bead": "N38b-29",
+   "what": "Step 2 builds mutations as `--features gauntlet-mutations,<crate>/nc-<nnnn>`. Owners' records and CX plants name their features otherwise (cx-<nnn>, N38b-05), so build `<crate>/<feature>` from the record's `feature` field as written, as N38b-30 to N38b-34 now do."
+  },
+  {
+   "bead": "N38bp1-02",
+   "what": "The CERT-12 row calls `frob study plan` naming a tie at n = 64. study.plan does answer at M1 in N33b-19's CPU form (admission N24b-14 refuses with FROB-REF-532), but neither bead is among this bead's dependencies (KNOWN_DRIFTS 8). Either add N33b-19 and N24b-14 as dependencies, or measure the refusal as N38b-14 now does: `frob eval preanalyze --rule paired-clopper-pearson/1 --n 64 --margin 0.05 --level 0.05 --declared-verdicts practical-tie --json` (eval.preanalyze with declared_verdicts, N24b-06), refused FROB-REF-532."
+  },
+  {
+   "bead": "N38b-61",
+   "what": "N38b-50 now appends REC-12 (KA-837's printed 9.17 cm, status open, due M4, settled by N38b-43) under this bead's standing rule. The M1 closure checklist (items 1 and 2, closure_all_settled, closure_no_flagged_rows) would then fail OPEN-GAUNT-6 at M1 on a record due at M4. Scope the closure to the eleven plan-time records REC-01 to REC-11, and report records appended under the standing rule with their due milestone and settling bead. Those records block only the gates that cite their rows. Keep new_discrepancy_reopens for an appended record that is overdue or has no settling bead."
+  },
+  {
+   "bead": "N38-CX",
+   "what": "Each of CX-385 to CX-398 'names the planted defect with the identifier that row's control cell uses', but no identifier is given. N38b-05 derives a mutation's Cargo feature from the name after the colon of the plant id (`cx-<nnn>` when there is none), and the row beads must declare that exact feature. State each adopted entry's plant id as `<planting bead>:cx-<nnn>`, for example `N38b-39:cx-394` for the unpaired Cayley translation (N38b-39 now declares feature `cx-394`), or leave the plant empty so the fallback `cx-<nnn>` applies."
+  },
+  {
+   "bead": "N38b-41",
+   "what": "The e2e paragraph lists `frob --json spark check` without --key. spark.check is a run verb (KNOWN_DRIFTS 5), and the planted re-run would return the clean run's stored receipt. Use the form N38b-46 now gives: `frob spark check --kernel <statistics kernel> --backend <b> --key aka-841-<b>-<n> --json`."
+  },
+  {
+   "bead": "N38b-42",
+   "what": "The e2e paragraph lists `frob --json sense calibrate` without --key. sense.calibrate is a run verb (KNOWN_DRIFTS 5). Use the form N38b-46 now gives: `frob sense calibrate <two-sensor rig edges> --key aka-849-<n> --json`."
+  },
+  {
+   "bead": "N38b-45",
+   "what": "The e2e paragraph lists `frob --json mission synthesize --strategy continuation` and `frob --json shield fit` without --key. Both are run verbs (KNOWN_DRIFTS 5). Use N38b-46's forms: `frob mission synthesize <query> --strategy continuation --key aka-839-<n> --json` and `frob shield fit <design> --controller <c> --tasks <one-dimensional table> --key aka-846-<n> --json`."
+  }
+ ],
+ "unchanged": 4
+}

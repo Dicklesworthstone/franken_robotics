@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "habitat", "frob-scene", "frob-conformance", "solid", "test", "asset", "registry"]
 parent: "WP-23"
-deps: ["N19b-02", "BD-225", "BD-226", "BD-139"]
-needs: ["Appendix H: the source-register rows for the two retail-scene generators (abstracts only, no URL recorded) and the warehouse builder's documentation pages, as registry entries with their marks"]
-related: ["NEG-17", "NEG-21", "NEG-18", "NEG-20", "BD-302", "NEG-16"]
+deps: ["BD-139", "BD-225", "BD-226", "BD-302", "N19b-02", "NAB-12", "NAB-13", "NAB-14"]
+needs: []
+related: ["NEGp1-51"]
 gates: []
 plan_refs: ["Appendix G.2 (rows 11, 12 and the correction)", "§19.7", "Appendix H.3", "Appendix H.6"]
 ---
@@ -52,7 +52,9 @@ the two retail generators in the source register (none was recorded), or record 
 
 **Absence checks.** No file with one of these source keys in the tree; no dependency, container or script
 references the tools; no import profile names them; a user-supplied import naming one of them is classed
-`unknown` and is unexportable (FROB-REF-310).
+`unknown` and is unexportable: its pack is refused by the pack export check with FROB-REF-310 and anything else
+derived from it at the export door with FROB-REF-733 or FROB-REF-731 (N19b-02's division; the codes are raised
+by those beads, not here).
 
 **Claim check (`no_novelty_claim_for_interior_generation`).** A lint over `README`, `docs/`, crate contracts,
 verb descriptions, report templates and schema examples:
@@ -66,7 +68,9 @@ verb descriptions, report templates and schema examples:
   plants or commercial kitchens must carry the qualifier that this is an absence found by a bounded search
   on a stated date.
 - Reports: the scene section of a design, run or campaign report prints the scene's generator identity and
-  never a novelty statement; the report templates are part of the lint's input.
+  never a novelty statement; the report templates are part of the lint's input. The templates and the report
+  verbs are BD-302's (a dependency, so that this rule is checked on reports that exist); this bead adds the
+  lint and, where a template's scene section lacks the generator identity, the line that prints it.
 
 **Prior-art note.** `crates/frob-scene/CONTRACT.md` carries a short section listing the six prior-art items
 by scene type with their source-register marks and the sentence on bounded search, so that the claim's
@@ -95,7 +99,7 @@ boundary travels with the code.
 
 ### End-to-end script and logging
 
-`scripts/e2e/assets_licences.sh` (NEG-16), scene-asset loop at M3: the absence scan and the claim lint over
+`scripts/e2e/assets_licences.sh` (the M3 scene-asset loop, NEGp1-51): the absence scan and the claim lint over
 the tree and over a freshly rendered `frob report design` and `frob report run`; log lines carry the rows'
 keys and flags, lint hits (zero expected) with file and line, and the generator identity printed by each
 report.

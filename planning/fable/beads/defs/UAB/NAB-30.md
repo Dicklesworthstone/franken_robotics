@@ -4,11 +4,11 @@ title: "M7 exit: sweep of the decision records against the tournament: Impact re
 type: "task"
 priority: 2
 milestone: "M7"
-labels: ["m7", "delivery", "gauntlet", "tenfold", "solid", "registry", "decision-record"]
+labels: ["m7", "delivery", "gauntlet", "tenfold", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M7"
-deps: ["NAB-22", "NAB-29", "BD-434"]
-needs: ["§39: the tournament record with its ledgers, recovery ratios and phase ablations (N40-16, N40-22, BD-432, BD-433)", "§2.4: the lever register with expected ranges by mission class, scored at M7 (N00-20)", "§4: the bet register and the rule that turns gate records into a bet verdict (N00-28)"]
-related: ["NAB-17", "NAB-32", "NAB-42", "NAB-47", "NAB-31", "N00-20", "N00-28", "N40-16", "N40-17", "N40-21", "N40-22", "BD-428", "BD-429", "BD-430", "BD-431"]
+deps: ["BET-13", "BET-14", "N00-20", "N00-28", "N40-04", "N40-16", "N40-20", "N40-22", "N40-28", "NAB-22", "NAB-27", "NAB-50", "STD-E2E"]
+needs: []
+related: ["BD-434", "NAB-28", "NAB-29", "NAB-32", "NAB-39", "NAB-42", "NAB-47"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2 (entries on the thesis and on claims)", "Appendix B.5", "§39", "§43 (M7)", "§0.8"]
 ---
@@ -38,17 +38,29 @@ the Impact of every adopted family against it.
 ## Scope
 
 In: the M7 sweep record and report; an Impact evaluation for every adopted family; the states of the thesis
-records; the tie rule's consequences. Out: running or adjudicating the tournament; the exit review (BD-434);
-the procedure (NAB-22).
+records; the tie rule's consequences. Out: running or adjudicating the tournament; the exit review (BD-434),
+which comes after this sweep (NAB-22 design decision 1: the sweep is made at the exit candidate commit, before
+the exit record), runs its `check` as the attached check `decision-sweep` and copies its section into the exit
+record; the procedure (NAB-22).
+
+**Inputs (each a dependency).** The sweep needs the tournament's records, not the exit verdict: the published
+report and its ledgers (GATE-TENFOLD-07, N40-16), read through the gate report at the exit candidate commit
+(N40-04); the recovery ratios and phase ablations (GATE-TENFOLD-13, N40-22); the rival audit (GATE-TENFOLD-11,
+N40-20); the outcomes of the ten-fold kill gates against their fallback ledger (N40-28); the verdicts of BET-13
+and BET-14 (their decision beads); the lever register (N00-20) and the bet register (N00-28). The sweep before
+it is the M4 sweep (NAB-27): M7 needs M4 and neither M5 nor M6, so the M5 and M6 sweeps (NAB-28, NAB-29) are not
+prerequisites; the sweep reads the decision records as they stand when it runs, and if either of those sweeps
+was recorded first, its entries are part of that state and are cited, never repeated.
 
 ## Technical approach
 
 `decision-sweep skeleton --exit M7`, fill, `check --exit M7`, by a session that implemented none of the cited
 beads and belongs to neither arm.
 
-**1. No family is due by a kill gate.** The seven kill rules of the ten-fold test itself (KILL-TENFOLD-LEVER,
--SPEED, -TIE, -ADJ, -REACH, -CERT and -LEAK, each with its outcome written in advance) are decided per cell by
-the tournament's own beads. The sweep reads their outcomes and decides none.
+**1. No family is due by a kill gate.** Of the seven kill rules of the ten-fold test itself (each with its
+outcome written in advance, N40-28), KILL-TENFOLD-LEVER was decided at M1 on the rival's ledger and at M2 on
+ours; the other six (-SPEED, -TIE, -ADJ, -REACH, -CERT and -LEAK) are decided per cell by the tournament's own
+beads. The sweep reads their outcomes and decides none.
 
 **2. Impact, family by family.** For each family in tables `solid` and `frontier-moonshot` (100 rows):
 
@@ -100,6 +112,8 @@ tournament's report resolves to a source record with a primary reading.
       and each has a history entry.
 - [ ] No ratio appears in any decision record except as a gate's measured value with its interval and ceiling.
 - [ ] The sweep's session belongs to neither arm and implemented no bead it cites.
+- [ ] The sweep record exists at the exit candidate commit before the M7 exit record is written, and the exit
+      runner's attached check reads it.
 
 ## Test plan
 
@@ -112,9 +126,17 @@ tournament's report resolves to a source record with a primary reading.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M7` (NAB-50): the due list (100 families for Impact, six thesis
-records), `check`, counts of `stays` and `changed`. Logged per STD-E2E with the tournament's receipt ids; the
-log quotes no sealed-suite content.
+`scripts/e2e/decision_records.sh --exit M7` (NAB-50, a dependency): `cargo run -p frob-conformance --bin
+decision-sweep -- due --exit M7` (the due list: 100 families for Impact, six thesis records, asserted against the
+counts above), then `decision-sweep check --exit M7` on the filled record, then `FROB_TEST_SEED=0 cargo test -p
+frob-conformance --test decision_sweep m7`; the three negative controls below are planted on scratch copies of
+the record (fixtures under `tests/fixtures/sweep/M7/controls/` written by
+this bead, the hook of NAB-50), each asserted by its finding code. Logged through the shared helper of STD-E2E to
+`target/e2e-logs/decision_records/<utc>.ndjson` with a transcript (`ts`, `script`, `bead` (`NAB-30`), `step`,
+`event`, the exact command line, exit code, wall time): counts of `stays` and `changed` per table, each Impact change with the
+ledger receipt it cites, the thesis records' states, and the tournament's receipt ids; `assert` lines of kind
+`negative-control` with `caught`; on failure the first family without an Impact evaluation, with the path of the
+sweep record; a `summary` with assertions passed and failed. The log quotes no sealed-suite content.
 
 ### Known answers and negative controls
 

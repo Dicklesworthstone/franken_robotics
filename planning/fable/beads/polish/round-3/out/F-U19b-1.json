@@ -1,0 +1,219 @@
+{
+ "round": 3,
+ "slice": "F-U19b-1",
+ "reviewed": 26,
+ "changed": [
+  {
+   "bead": "BD-162",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The e2e read of the out-of-range case passed a manifest file to scene.show, which takes a SceneId. It now plants a pack (a region identifier equal to the region count, scene_id recomputed so only the range check fails) and reads it by SceneId."
+  },
+  {
+   "bead": "BD-233",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "evidence trace takes a claim identifier. The e2e now runs `frob evidence trace <clm:…> --json` on the claim id of each of the three gate records instead of on gate names."
+  },
+  {
+   "bead": "BD-369",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`--param threshold_m` is not a registered galley parameter. The e2e generates the galley, then sets the 19 mm threshold at door D with one N19b-44 `set-overlay-param` edit (`scene compile --base --edits --key`). Demo step 1 says the same."
+  },
+  {
+   "bead": "BD-414",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Falsifier branch now follows N41-17 rule 7. N19b-13 and N19b-14 close `withdrawn` citing the pilot's `[[pilot.result]]` (not `superseded`). KILL-SLOSH records `not-reached` and lists them as withdrawn before this decision. The epic closes `fallback` citing the ADR."
+  },
+  {
+   "bead": "BD-415",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "Added the acceptance branches the seed condition left open. Falsifier holds: children close `withdrawn` citing the pilot result and KILL-PROXY records `fired` (a pilot-before-funding row). R23 not approved: pilot and children close `withdrawn` citing R23 and KILL-PROXY records `not-reached`. Either way the epic closes `fallback` citing the ADR, so it never waits for a pilot that cannot run."
+  },
+  {
+   "bead": "BD-420",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The fallback close on a falsified pilot now cites the owner's ADR docs/adr/ADR-RGB-SPLAT-FUNDING-M6.md. A fallback close must name its ADR (N41-17 rule 5)."
+  },
+  {
+   "bead": "N19b-02",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "H-verbs-5 request applied. The default-pipeline filter's refusal is now the worded refusal `asset-source-not-default-pipeline` (pointer, observed, required, two ranked repairs, retry after-change, family 3xx, exit 3). Its number comes from the N35x-02 ledger and it sits behind the constant ASSET_SOURCE_NOT_DEFAULT on admitted interim FROB-REF-802 with the slug as detail (BD-227's precedent). Raisers: scene.import, and scene.gen --populated from M5. Added an acceptance criterion; `default_pipeline_filter` now asserts the code."
+  },
+  {
+   "bead": "N19b-03",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "H-verbs-6 request applied. New step 7 defines `--purpose` (five values, default evaluation, 802 otherwise) on sim.run and sim.estimate, merged with N15a-30's mode, and `--require-living-tier F|M`. sim.estimate applies the same admission and raises the run's code. Added a hook for KILL-PROXY's evaluation-only fallback form: substitute, or refuse with 726 `purpose-not-eligible` (proposed), reading `fallback_form` from the decision entry, which fails closed when absent. admission_matrix now covers all five purposes (120 rows); three tests added. The e2e drops the stale e2e_skip, spells `--purpose training` and adds sim.estimate steps. Deps added: BD-219, N15a-30, N16b-25 (all M2, no cycle)."
+  },
+  {
+   "bead": "N19b-04",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The two sim.estimate calls are now spelled in full with `--scene`, `--worlds`, `--seconds`, `--tier` and `--purpose training|oracle-check` on N19b-03's island scene."
+  },
+  {
+   "bead": "N19b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "H-verbs-1 request applied. `contact probe --state <file>` is replaced by film-branch probes for the dry (h0 0), squeezed (water, dwell 0.2 s, 4.34 µm, Λ 0.87) and thick-film (oil, Λ 200, 7.54e-5) states, plus GB-21's squeeze form (0.0377 s). The run uses `--fixture film-pad` (VERBS-sim's one fixture spelling; no positional design or --scene). The `strict` row uses `--profile strict`. The telemetry query uses `--stream contact --channels film_thickness`; that channel is requested of BD-230."
+  },
+  {
+   "bead": "N19b-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Falsifier branch: N19b-08 to N19b-10 close `withdrawn` citing this pilot and its `[[pilot.result]]` (N41-17 rule 7) instead of a pointer to N19b-11. The ADR lists them as withdrawn before this decision."
+  },
+  {
+   "bead": "N19b-11",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "S88 request applied. Verdicts are stated as N40-03's four outcomes (`fired` with its trigger, `not-fired`, `not-reached`, `deferred` by ADR). The decision entry gains `receipts`. The ADR markers include \"withdrawn before this decision\", so withdrawn beads are no longer re-read as superseded. Added the rule-7 citation. evidence trace now takes the claim id. The ADR path was already docs/adr/ADR-KILL-ADVECT-M6.md."
+  },
+  {
+   "bead": "N19b-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Same rule-7 fix as N19b-07, for N19b-13 and N19b-14. All worked numbers rechecked."
+  },
+  {
+   "bead": "N19b-13",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The smoke run used `fixture:tray-shake`. That task does not exist (N19b-14 registers -h05/-h10/-h15), and N19b-14 depends on this bead (convention 7). The smoke now uses this bead's own carrier task, fixtures/hab/tray-carry-smoke.ftask."
+  },
+  {
+   "bead": "N19b-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`--tier strict` is not a tier value, so the strict row is now `--tier batch-cpu --profile strict`. The `--step` note now cites sim.run's existing `--step <duration>` option (N16a-03) instead of 'requested'."
+  },
+  {
+   "bead": "N19b-15",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "S88 request applied: N40-03 outcomes, `receipts`, the withdrawn-before-this-decision marker and the rule-7 citation (the ADR path was already right). eval.compare now runs once per arm with `--battery` and a distinct key; before, one key covered both arms. evidence trace now takes claim ids."
+  },
+  {
+   "bead": "N19b-16",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "H-owners-2 request applied. The bead files N44-01's reserved row R23 (WP-73, E1 for gate:GATE-HAB-09) instead of 'the next identifier from R19', and frob-launch names R23. Not-approved branch: the pilot closes `withdrawn` (`not run: no envelope, R23`) and KILL-PROXY and KILL-LIVING record not-reached, with an acceptance criterion. GATE-HAB-09 is recorded through record_gate (convention 9)."
+  },
+  {
+   "bead": "N19b-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "scene compile now carries `--key`. `--tier strict` becomes `--tier batch-cpu --profile strict`. The falsifier note closes children `withdrawn` citing the pilot result (rule 7), not a pointer to N19b-19."
+  },
+  {
+   "bead": "N19b-18",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The strict-row runs are spelled `--tier batch-cpu --profile strict` (strict is a profile, not a --tier value)."
+  },
+  {
+   "bead": "N19b-19",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "S88 and H-verbs-6 requests applied. T is read from N19b-16's articulated-proxies record (tier F). Verdicts map to N40-03 outcomes; the row has one unscoped decision (no scope kind exists) with per-mechanism verdicts in the ADR. Added the not-reached branch for R23 and the rule-7 withdrawn citations and markers. `receipts` added. The fired:cost refusal is named FROB-REF-726, reason `purpose-not-eligible`, with block, repairs, the `fallback_form` the admission reads, and an acceptance criterion. New outcome_mapping test. The e2e uses `--purpose` and `--require-living-tier F` on sim.estimate and claim-id evidence trace."
+  },
+  {
+   "bead": "N19b-20",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "The `kind:` scope is now registered in N40-03 (no longer 'requested'). not-reached also covers R23 not approved. Decision entries gain `receipts`. On not-reached the reason is now `feature-not-built`; `not-linked` was a verb-handler reason of 724 and not in N19b-03's substitution set. The e2e runs use `--purpose oracle-check`, so the kill is the only cause of substitution. evidence trace now takes the claim id."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-scene",
+   "what": "(1) List FROB-REF-303 among scene.show's chapter refusals, and on every other row that reads a pack. N19-REF's row says 'any pack read: … a stored value lies outside its stated range', and BD-162's e2e asserts 303 from `frob scene show <SceneId>` on a planted pack. (2) On scene.import, replace 'that refusal has no code yet' with the worded refusal `asset-source-not-default-pipeline` (N19b-02, constant ASSET_SOURCE_NOT_DEFAULT, interim FROB-REF-802 with that detail until N35x-02 assigns it). List it on scene.gen as well from BD-399 (M5, `--populated`)."
+  },
+  {
+   "bead": "N35x-02",
+   "what": "Add the ledger row `asset-source-not-default-pipeline` (Scenes §19.9). Condition: a draw or import from an asset-source row with default_pipeline = false without --user-supplied (raised by N19b-02 through ASSET_SOURCE_NOT_DEFAULT). Family 3xx, exit 3, no proposal; interim FROB-REF-802 with detail equal to the slug."
+  },
+  {
+   "bead": "N19-REF",
+   "what": "List `asset-source-not-default-pipeline` (N19b-02; number from N35x-02, interim 802 with detail) among the chapter's worded scene refusals."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "(1) On sim.estimate add `--require-living-tier F|M` (N19b-03, M3). Also list there 724 and the proposed 726 (`island-in-training`, `tier-not-eligible`) from N19b-03 at M3, since sim.estimate applies the run's admission and raises its code. (2) Name the reason of N19b-19's training-estimate refusal after KILL-PROXY fires on cost: 726 `purpose-not-eligible`. Add that reason to the `--require-living-tier` row's 726 note."
+  },
+  {
+   "bead": "N32-REF",
+   "what": "On the FROB-REF-726 row: (1) add the reason `purpose-not-eligible`: a living-world mechanism forced with --require-living-tier in a run whose purpose a kill decision's fallback form excludes (KILL-PROXY fired on cost: articulated proxies in evaluation batches only). For it the block also carries `decision` (the ADR path); repairs: 1. drop --require-living-tier and accept the Solid alternative, 2. run under --purpose evaluation. (2) Add sim.estimate to the raising sites (N19b-03, N19b-19)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "(1) An optional decision-entry field `fallback_form` for a row whose fallback names alternative forms. KILL-PROXY's are 'articulated proxies in evaluation batches only' and 'not at all'; N19b-03's admission reads the field, and a fired entry without it reads as 'not at all'. (2) A scope kind for KILL-PROXY's per-mechanism verdicts (for example `mechanism:chain-cord`, `mechanism:hinged-rug`). Until it exists, N19b-19 records one unscoped decision with the per-mechanism verdicts in the ADR."
+  },
+  {
+   "bead": "BD-230",
+   "what": "Declare the per-contact film thickness the contact crate stores as a T2 channel `film_thickness` of the `contact` telemetry stream. N19b-06's e2e reads it with `frob telemetry query <run> --stream contact --channels film_thickness`, and its step 7 asserts no film one metre away. No bead declares it today."
+  },
+  {
+   "bead": "VERBS-contact",
+   "what": "In contact.probe's film branch, spell the state fields as options. N19b-06 uses `--dwell <t>` (the `dwell` field) with `--h0`, `--eta`, `--radius`, `--normal`, `--slip` and `--card` for its dry, squeezed and thick-film states. The row names the fields but has no example of the state form."
+  },
+  {
+   "bead": "N19-KA",
+   "what": "KA-439: the note that its cap form is 'settled by BD-230' with N19b-05/N19b-06 asserting only the shared limits is stale. BD-230 and N19b-05 both state that the capped form governs; record it settled. The row also labels 'Λ ≤ 1' the 'dry limit'. Λ ≤ 1 is the boundary limit (μ_b); the dry limit is h0 = 0, which returns the dry card."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Unchanged: N19b-01, N19b-05, N19b-08, N19b-09, N19b-10 (worked numbers rechecked: h_max 2.48/9.98 mm and the 2.73 mm mutant, tile counts, catenary a = 0.46954 and polygon sags, slosh frequencies, binomial interval [0.735, 0.979], squeeze times). All eight requests were applied after checking them. ADR paths in N19b-11/-15/-19 were already right; the S88 part still needed was the outcomes and the markers. Outcomes when a pilot's falsifier holds: KILL-ADVECT and KILL-SLOSH (exit-mode rows) record not-reached; KILL-PROXY and KILL-LIVING (pilot-before-funding rows, N40-24) record fired (N41-17 rule 7). `--task fixture:<name>` spellings were left alone: VERBS-sim rules out only the positional form. N19b-02's e2e cannot reach the new refusal (scene.import depends on it), so the unit test carries it. Graph: no cycles after the N19b-03 dep additions. The slice looks settled apart from the requested registry rows."
+}

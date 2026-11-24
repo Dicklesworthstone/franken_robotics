@@ -1,0 +1,400 @@
+{
+ "round": 2,
+ "slice": "S66",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-225",
+   "kinds": [
+    "deps",
+    "complete",
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "deps += BD-164, N19a-05, N19a-06, N19a-07, N19a-08: it reads the pool's unique-brick counts, the assumed-count rule, optical tags with FROB-REF-316, and fixture and movable declarations, and none of them depends on it. Shared latents moved here from BD-226 (the kitchen's wet floor needs wetness, and BD-226 comes later). Kitchen and warehouse text completed against the plan's rows (free cart, stainless steel, cold-room threshold, hot liquid as ballast). Verb line: --param, --key (a run call without a key is FROB-REF-805), schemas, a `derivations` field that makes no-resample observable. The undefined 'constraint re-measurement tool' replaced by the constraint report measured on the emitted solids. e2e script given its header, keyed commands, four plants, lanes inside the one-hour envelope (the 1,000-seed lane needs an approved envelope) and honest gate wording."
+  },
+  {
+   "bead": "BD-226",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "`omitted: frontier` replaced by the settled record `not-represented`; the shared-latent paragraph now uses BD-225's mechanism and its test no longer asserts BD-229's conditionals (BD-229 is a later seed: drift 7); test for the three Frontier-only rows; e2e script given header, keyed commands, plants, lanes and gate wording."
+  },
+  {
+   "bead": "BD-227",
+   "kinds": [
+    "complete",
+    "correct",
+    "self-contained",
+    "users",
+    "deps",
+    "tests"
+   ],
+   "what": "Both round-1 requests applied after checking them against N19a-31..38 and N19ax-04: a Slug column with the 59 slugs (plus row numbers) as the list of record, and the options --uncovered-by, --incidence, --feature-law/--param and hazards.exclude listed with their owning beads, with an exclusion hook in the draw so N19a-38 changes no binding. Found and settled: the hot-liquid row (the slosh model is Frontier at M6 though the plan's table prints no [F]; BD-227 and NEG-28 said 8 Frontier rows / 5 with a Solid alternative while N19a-37, N19a-38 and NEG-29 already treated it as ballast-with-slosh-not-represented): now sloshing-payload F beside rigid-ballast S, 9 rows / 6 / 3, DESIGN with reasons. Two dimension-entry forms (drawn, fixed) because N19a-33's categorical entries had no distribution and the loader refused a missing distribution. Registry-name/generator-family pairing table and a refusal that names the right registry when a family is typed. Evidence corrected to the registry's pass-through label. Task-file draws made real: source kind registry:hazards of BD-200's plan (dep added), `#<dimension id>` syntax; the realism check now also receives the assumed rows a cited run's task drew; negative control 1 ('a pack that does not count task draws', which no immutable pack can do) rewritten. Registry-load refusal given a ledger slug and an interim code instead of an unnumbered 'refused'. Duplicate N19a-05 removed from related."
+  },
+  {
+   "bead": "BD-234",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "deps += N19c-27 (requested; verified no cycle, the ledger lists BD-234 on INV-HAB-05). Named the 100-seed test behind its second acceptance criterion with its command, and a no-feedback test for INV-HAB-05."
+  },
+  {
+   "bead": "N14a-32",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "scene gen with --family and --key; a second key for the determinism step (the first would return the stored receipt); e2e_scene_ready before every run; the count is distinct assumed rows, not dimensions; the Frontier/Solid assertion moved from office (which has no Frontier row) to home; `bead` field is N14a-32, the script's owner; new steps for the family-name refusal, for a task-drawn assumed row (the planted defect had no step that could catch it) and the registry-load refusal by code; promotion step uses norm with a dated synthetic source (N19a-39 forbids an unadmitted measured dataset); two self-tests."
+  },
+  {
+   "bead": "N19a-26",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "deps += N19c-27 (requested). Defined what was only implied: the batch form --seeds a..b of scene.gen, the family parameter impossible_quota, scene.list --batch --counts. Regeneration moved out of the read verb (a read may not compile 1,000 scenes) to a second keyed batch. P(gate fails under iid) corrected to 0.127 exactly (0.147 was the normal approximation; 'one run in seven' is one in eight). Keyed commands, plant, lanes, four added unit tests."
+  },
+  {
+   "bead": "N19a-29",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "deps += BD-227 (it draws from hazard rows). Family renamed to `terrain/mixed-route`, the name BD-165 gave the same family at M2 (two names for one family). Hazard draws pinned to named rows (home.threshold, apartment.entry-door, home.hallway); family parameters listed; --difficulty reconciled with BD-165's map. e2e rewritten with single-seed keyed calls (the batch form is N19a-26's, not a dependency), probe and task fixtures, correct sim run form, a plant."
+  },
+  {
+   "bead": "N19a-31",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "e2e: single-seed keyed scene gen (no --seeds: N19a-26 is not a dependency), `scene show` without the undefined --hazards flag, e2e_scene_ready and the real sim run form (probe, --scene, --task, --key) in place of `sim run <pack>`; exposure fixtures named as probe and task files; hazard regions get the label hazard:<row identifier>; the 20-seed script no longer claims GATE-HAB-02."
+  },
+  {
+   "bead": "N19a-32",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Same script corrections as N19a-31; scene fit called with --scene and --key; a disc-test plant so the script has a control; fixtures and pin parameters named; no gate claimed."
+  },
+  {
+   "bead": "N19a-33",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Same script corrections; categorical and counted entries stated as BD-227's fixed-entry form; fixtures named; no gate claimed."
+  },
+  {
+   "bead": "N19a-34",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "deps += N16b-25 (the only one of the seven that did not reach sim.run's --task and --scene inputs). Same script corrections; shifted-bay plant in the script; fixtures named; Frontier parts listed beside their drawn Solid rows; no gate claimed."
+  },
+  {
+   "bead": "N19a-35",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Example row said distribution log-uniform while BD-227 holds every plan-time entry uniform: corrected, with the reason. Same script corrections; dwell times chosen from the squeeze-film arithmetic (3.8 s for the most viscous oil); fixtures named including the block N24a-43 runs later; no gate claimed."
+  },
+  {
+   "bead": "N19a-36",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The acceptance said the pack's tag reads `unresolved` 'before refinement', but BD-234 computes the tag with refinement: now the unrefined verdict comes from scene.fit --refine none and the pack's tag is `witnessed`. Same script corrections; scene fit with --scene and --key; fog sweep and plant spelled out; fixtures and pin parameters named; no gate claimed."
+  },
+  {
+   "bead": "N19a-37",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Hot-liquid row brought in line with BD-227's DESIGN (two mechanisms). Same script corrections; constant-mu plant; fixtures named; no gate claimed."
+  },
+  {
+   "bead": "N19a-38",
+   "kinds": [
+    "complete",
+    "correct",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The incidence export had no surface: added --incidence <scenes>; <scenes> forms defined. hazards.exclude now goes through BD-227's hook; a structural row (an aisle, a hallway) cannot be excluded and is refused. Stated what BD-227 and the seven bindings already record and what this bead adds. e2e with single-seed keyed calls, the two sets under different keys, refusal legs, a plant."
+  },
+  {
+   "bead": "N19a-39",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The report side now collects the assumed rows that cited runs' tasks drew and passes them to BD-227's check; --claims-realism listed per report verb. e2e: `sim run <id>` passed the scene as the design and used an undefined --steps: now design, --scene, --seconds, --key; scratch-root registries instead of an undefined overlay; a task-draw step; plants. NAB-09 removed from related (it is a dep)."
+  },
+  {
+   "bead": "N19a-45",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "deps += N19c-27 (requested). --key on batch calls; regeneration by a second keyed batch; header with timeout 21600 and the approved envelope STD-E2E requires above one hour; the record_gate command (drift 1); an exact quota-rule clause, because the gate's one-point band catches the Bernoulli control only one run in eight; plant sizing; helper tests."
+  },
+  {
+   "bead": "N19a-46",
+   "kinds": [
+    "correct",
+    "complete",
+    "self-contained",
+    "users",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Schemas renamed to the registry's frob.scene.import.in/1 and .out/1; the row's owner is VERBS-scene, not N19a-02. Inputs table added: --user-supplied, --licence-ack, --licence-class, per-object and scale inputs were used by NEG-21..26 and defined nowhere. Example and e2e used sources that are refused at M3 (`synthetic` is no register key; google-scanned-objects is not a default-pipeline row until M5): now frob-scene. scene accept and artifact export keyed; refusal legs by code; plants."
+  },
+  {
+   "bead": "N19ax-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "--params became --param <name>=<value> (scene.gen's spelling); the archetype-to-family pairing cited; terrain families stated as library-only. e2e: keys on scene gen and scene compile, header, two plants, lane sizing for the 1,000-compile loop."
+  },
+  {
+   "bead": "N19b-02",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "deps += BD-163, N19a-05 (its script compiles and shows a pack; the manifest sits behind the provenance block). Step 4: a declared class can no longer weaken a registered row's class (the old sentence contradicted NEG-21's criterion that a procthor import cannot be exported); a user with their own reading uses source user-supplied. e2e: artifact export takes --out and --key (it is a run verb; --to does not exist), compile keyed, private-pack leg, plants; test no longer names a row that a later bead enters."
+  },
+  {
+   "bead": "N19c-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision record moved to docs/adr/OPEN-HAB-1.md (drift 4). Script: scene hazards takes the archetype positionally (it wrote --archetype); the realism claim spelled as real commands with keys and e2e_scene_ready; plants."
+  },
+  {
+   "bead": "NEG-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Row steps of assets_licences.sh written as exact keyed commands with assertions and log fields; ownership of the script (NEGp1-51) stated."
+  },
+  {
+   "bead": "NEG-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request on codes checked: already applied in round 1 and consistent with N37-18. Import command given --kind and --key; 'unless the declared class allows it' removed (it contradicted the bead's own unexportable criterion); steps written as commands."
+  },
+  {
+   "bead": "NEG-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request checked against N37-18 and N19b-02: already applied (pack and scene variant 310, exit 3; still, report, scorecard 731 or 733 at the door; no aggregate exception). N37-18 itself puts a scene variant under kind `pack`, so the request's 'variant export gets 733' is not followed. Import command lacked the required --kind and --key; profile scene-collection named; steps written as commands."
+  },
+  {
+   "bead": "NEG-23",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "Request on codes: already applied. Import command given --kind asset, --key and a profile `scan-store` that runs no geometry stage (the asset pipeline would refuse a scan with holes as an open mesh). The fail-closed 'typed reason' had no code and no place: now one check in the pack reader's geometry accessors, refusal slug scan-profile-absent, ledger request, interim code. Title shortened to 105 characters."
+  },
+  {
+   "bead": "NEG-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request on codes: already applied. Import command given --kind, --key, profile articulated-object, --scale as N19a-46 defines it; steps written out."
+  },
+  {
+   "bead": "NEG-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request checked: already applied (no aggregate override; codes divided as N37-18). Import command given --kind, --key, --profile generic; steps written out."
+  },
+  {
+   "bead": "NEG-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request on codes: already applied. Import command given --kind, --key, --attribution; steps written out with codes."
+  },
+  {
+   "bead": "NEG-27",
+   "kinds": [
+    "deps"
+   ],
+   "what": "deps += BD-302: the bead lints report templates and requires the scene section of reports to print the generator identity, and nothing made the report verbs exist first."
+  },
+  {
+   "bead": "NEG-28",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Row 57 and the Frontier-row paragraph brought in line with BD-227's DESIGN (9 rows, 6 with a Solid alternative: 3, 4, 29, 32, 57, 59); slugs read from BD-227's column."
+  },
+  {
+   "bead": "NEG-29",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "deps += BD-254 (it adds two fields to the scorecard). The two counts given field names in frob.scorecard/1. e2e: trigger scenes compiled from the bead's fixture sources (scene gen has no way to make a one-hazard scene); keys; shield covers logged pending(M4) instead of calling a verb that answers 724; plants. Counts 109 pairs, 53, 8, 24, 12/7/3/2/1 and six refusal-only rows recomputed from NEG-28's table: all correct."
+  },
+  {
+   "bead": "NEGp1-52",
+   "kinds": [
+    "deps",
+    "correct",
+    "title"
+   ],
+   "what": "A scan of a real building is the `place` form: command now --kind place --profile hm3d-scan --key, and deps += BD-398, which registers that form (moved from related). M3 packs stay refused by NEG-23's refusal. Title shortened to 110 characters."
+  },
+  {
+   "bead": "NEGp1-54",
+   "kinds": [
+    "e2e-logging",
+    "title"
+   ],
+   "what": "Keys, e2e_scene_ready and the two import kinds stated for the M5 steps. Title shortened from 149 to 113 characters."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.hazards row: inputs are `<archetype>` (positional registry name) and --slug; add 'Extended by' N19a-38 (--uncovered-by <scenes>, --incidence <scenes>) and N19ax-04 (--feature-law [--param k=v]); the output's provenance values are assumed, norm, measured (the row prints `cited`, `assumed`)."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.gen row: the example `frob scene gen terrain:stairs --difficulty 0.4 …` departs from the implementing bead BD-165 (`--family terrain/stairs`) and would fail NJL-02's example rule; add 'Extended by' BD-225 and BD-226 (interior families, --param <name>=<value>, output field `derivations`), N19a-29 (terrain/mixed-route completed), N19a-26 (--seeds a..b batch form, family parameter impossible_quota), N19a-38 (--param hazards.exclude=<row ids>)."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.list: extended by N19a-26 (--batch <id> --counts). scene.show: extended by N19ax-04 (--draws); BD-163's --receipts and --probe; there is no --hazards option (the hazards drawn are in the default output)."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.import row: the example names --source google-scanned-objects, which is not a default-pipeline row until its M5 admission reading (NEG-19), so at M3 the example is refused by the filter; use --source frob-scene for the repository-authored mug.glb (N19a-46). Inputs added by N19a-46: --user-supplied, --licence-ack, --licence-class, --object-licence, --object-origin, --attribution, --scale / --target-dimension, --card."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "what": "artifact.export: add FROB-REF-310 to the chapter refusals (raised through this verb by ScenePack::export_check when the artifact is a scene pack: N19b-02, N37-18); slice beads call it as `--out <dir> --key <k>`."
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "report.run, report.design, report.mission (and report.campaign when it answers) gain the additive input --claims-realism with chapter refusal FROB-REF-312 (N19a-39)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.scorecard output frob.scorecard/1 gains hazards_drawn_unguarded and hazards_uncovered with their row lists (NEG-29); additive."
+  },
+  {
+   "bead": "N35x-02",
+   "what": "File two ledger rows (family 3xx, exit 3): `hazard-registry-invalid` (BD-227: a hazard registry file fails its load checks; interim FROB-REF-802 behind HAZARD_REGISTRY_INVALID) and `scan-profile-absent` (NEG-23: a consumer reads geometry of a scan pack imported without its scan profile; interim FROB-REF-305 behind SCAN_PROFILE_ABSENT)."
+  },
+  {
+   "bead": "BD-200",
+   "what": "BD-227 registers a source kind for the randomization plan's :from: `registry:hazards/<archetype>:<slug>[#<dimension id>]`. The plan compiler needs the extension point, the resolved-list entry must carry the row identifier and its provenance, and a Frontier-only row is refused as randomize-no-interval. Nothing implemented the hazard-registry source that the task schema (N24a-02) names."
+  },
+  {
+   "bead": "BD-165",
+   "what": "(1) State the formula of the terrain/mixed-route difficulty map (sill height, friction contrast); N19a-29 keeps it and needs it to stay inside home.threshold's 5 to 25 mm (suggest sill = 5 + 20·d mm). (2) Say that `parameters` is spelled --param <name>=<value>, repeatable. (3) Carry the output field `derivations` (exactly 1 per seed) for terrain families too, so one schema serves BD-225's interiors."
+  },
+  {
+   "bead": "BD-163",
+   "what": "Its verbs name schemas frob.scene.compile.result/1 where the registry's rule gives frob.scene.compile.out/1. scene.show should print the constraint report of a generated interior under `constraints` (BD-225) and the typed hazards-drawn list (N19a-38)."
+  },
+  {
+   "bead": "N24c-36",
+   "what": "Its example draws `registry:hazards/push#impulse` and `registry:hazards/gust#force_psd`: no such hazard registry exists. BD-227's address is registry:hazards/<archetype>:<slug>[#<dimension id>] over seven archetype files; push and gust laws need a registry or card kind of their own."
+  },
+  {
+   "bead": "NS-04",
+   "what": "`frob scene gen commercial-kitchen --seed 4 …` passes the registry name as a positional family: the generator family is kitchen-commercial/galley, given with --family (pairing table in BD-227)."
+  },
+  {
+   "bead": "NS-08",
+   "what": "`frob scene gen terrain/stairs …` passes the family positionally; BD-165's form is --family terrain/stairs."
+  },
+  {
+   "bead": "NEGp1-51",
+   "what": "The M3 loop's row steps changed: imports carry --kind asset, --key and the profiles scene-collection (NEG-22), scan-store (NEG-23), articulated-object (NEG-24), generic (NEG-25); NEG-23's fail-closed step asserts the code behind SCAN_PROFILE_ABSENT on scene.fit and on a run; NEG-17 and NEG-21 list exact commands; exports use `artifact export --out … --key …`."
+  },
+  {
+   "bead": "N24a-43",
+   "what": "The probe block-2kg.fbot and the task belt-set-down.ftask of exposure (a) are now delivered by N19a-35 under fixtures/hab/hazards/plant/; use them when turning that leg on."
+  },
+  {
+   "bead": "BD-338",
+   "what": "When shield.check lands at M4, require the S-cover legs of scripts/e2e/hazard_covers.sh (NEG-29: S:stop, S:zone, S:energy pairs, logged pending(M4) until then) to run and pass."
+  },
+  {
+   "bead": "N19a-05",
+   "what": "The resolved-value table now also holds rows recorded `excluded` (BD-227's hook, N19a-38) and `not-represented`: the recount of dimensions_assumed must count only rows with a drawn or used value. The region label hazard:<row identifier> is written by N19a-31..37."
+  },
+  {
+   "bead": "BD-229",
+   "what": "BD-225 now emits shared latents (moved from BD-226) as a latent value plus two conditional references; the test that wetness 0.7 selects the wet interface condition and raises the reflectance belongs here (BD-226 dropped it: it could not depend on this later seed)."
+  },
+  {
+   "bead": "BD-398",
+   "what": "NEGp1-52 reaches the HM3D scan profile through the place form: `scene import --kind place <scan> --source hm3d --user-supplied --licence-ack <file> --profile hm3d-scan --key <k>`; the place form must accept a path with --source, --user-supplied, --licence-ack and --profile beside N19c-04's `--from fdgr` spelling."
+  },
+  {
+   "bead": "BD-302",
+   "what": "N19a-39 adds --claims-realism to the report verbs and collects, for the claim, the manifests of cited scenes and the assumed hazard rows that cited runs' tasks drew; NEG-27 (now a dependant) requires the scene section of every report to print the scene's generator identity."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 33 beads read in full against plan §19.6 to §19.9, §19.10, §19.16 to §19.20, Appendix G.2, G.3 and L.3. Not settled: every bead needed a change, mostly because round 1 ran by chapter and could not see across the package: run verbs called without --key (refused with 805), options no bead defined (--seeds, --hazards, --user-supplied, --licence-ack), `sim run <pack>` passing the scene as the design, and one registry row (hot liquid) counted two ways. DESIGN choices the lead should confirm: (1) hot-liquid row entered as slosh F beside rigid ballast S; (2) the realism check also reads assumed rows drawn by a cited run's task; (3) a declared licence class cannot weaken a registered row; (4) 20-seed hazard scripts claim no gate; (5) HM3D at M3 is `--kind asset --profile scan-store`, at M5 `--kind place`; (6) the mixed-route family keeps BD-165's name terrain/mixed-route. The two refusals without numbers wait on the allocation ledger. No bead was split or merged."
+}

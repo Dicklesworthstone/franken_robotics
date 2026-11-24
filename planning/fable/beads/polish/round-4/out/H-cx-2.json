@@ -1,0 +1,338 @@
+{
+  "round": 4,
+  "slice": "H-cx-2",
+  "reviewed": [
+    "N24-CX",
+    "N25-CX",
+    "N26-CX",
+    "N28-CX",
+    "N30-CX",
+    "N31-CX",
+    "N32-CX",
+    "N33-CX",
+    "N34-CX",
+    "N35-CX",
+    "N36-CX",
+    "N37-CX",
+    "N38-CX"
+  ],
+  "changed": [
+    {
+      "bead": "N24-CX",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "CX-263 and CX-264 are pilot-derived FACT entries naming PILOT-PT-16 (BD-043's sill result) and PILOT-PT-18 (N38a-11 row 18): rerun = true with the result's receipt exactly when pilots::rerun_status reads reproduced, false only while not run or differs; acceptance, the test (now fact_entries_follow_pilots, with the rerun-disagrees-with-pilot refusal) and Considerations follow."
+    },
+    {
+      "bead": "N25-CX",
+      "kinds": [
+        "request",
+        "registry",
+        "convention",
+        "contradiction"
+      ],
+      "what": "Milestone list: CX-282 moved to M3 (BD-292) and CX-284 to M4 (BD-355, whose own run is the receipt; BD-030's PILOT-PT-15 counts only the bare kernel, so it is not named). CX-283 labelled FACT PILOT-PT-16 with the pilot rerun rule, and its plant written in full from BD-043 (7/149/156/0, sill row differs, GATE-GAUNT-08, feature cx-283). Late tags renamed augur-late-nn to augur-cx-late-nn (they collided with N25-KA's augur-late-01..18, which N38a-40's stale-tag check searches in the same files); late plant ids become <planting bead>:cx-<nnn>, because N38a-40 rule 5 makes a tag in a plant id or feature past due at M1. late_slugs_prefixed_unique and the registry's negative control check the KA collision. Convention 13: the N25a-08 bullet no longer calls its rows 'a request to it'; N25a-08 writes no controls.toml row and its shortcut_nn evaluators are the plants."
+    },
+    {
+      "bead": "N26-CX",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "CX-290's control named the count 29,957 rounded down from the approximation; that count errs on the safe side and cannot fail the row (CX-400, N38b-57, N26a-30 withdraw it), so the control is the undercount 29,955 (KA-664's control). The 'one plant per entry as its schema requires' reason was false (N38b-05 admits a list); restated as a DESIGN reason: the further plants are registered by their owners and naming them here would seed a second control for one defect."
+    },
+    {
+      "bead": "N28-CX",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "CX-304, CX-307 and CX-309 now name their plant builders BD-243 (M3), BD-240 (M3) and N28a-13 (M4), each binding its row of N28a-11's table, with N28a-11 keeping the M1 halves. CX-305's rule carries FROB-REF-161; its control states the tie refused with FROB-REF-161 naming the lidar mount by N10a-08's tie consumer at M1 and by train.start --tying equivariant (N23a-31) from M4, in the removed-check form. Added the plant-id rule of N38b-05 (<planting bead>:<identifier>, first bead of the last column); related gains BD-240, BD-243, N10a-08, N23a-31, N28a-13."
+    },
+    {
+      "bead": "N30-CX",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Restated as N38b-05 catalogue entries: the NC-GROUND-0330 example and the 'one control record per entry' text are gone (BD-025 admits only seeding-tool NC numbers, and a chapter bead writes no controls.toml row). Added the block request (cx, count 15, owner N30-CX) with tags CX-G-01..15 kept in slug; rule_ids and defined_in from Appendix N.27 and the late subsections; a plant table naming the planting bead, target, defect, expectation (planted inputs in the removed-check form), gates and due for all 25 (BD-139 rows 26-30 and 31-35 for CX-334/335 at M1; the others M5); CX-G-08 and CX-G-11 are pilot-derived FACT entries (PILOT-PT-17, PILOT-PT-03); the ten word-stated late entries are numeric = false obligations until their planting bead supplies the case. Dep N38b-05 added (graph_check: no cycle); acceptance and tests rewritten (25 entries, no controls.toml row, late block of 15). The case tables are kept verbatim."
+    },
+    {
+      "bead": "N31-CX",
+      "kinds": [
+        "request",
+        "contradiction",
+        "registry"
+      ],
+      "what": "CX-338's target is frob-foundry::check::fatigue (BD-402, N31a-21, module map); the same defect fixed in CX-339's spectrum builder; CX-337's target frob-foundry::loads::limbs, a module that does not exist, is now frob-foundry::loads::symmetry (BD-400, module map). Added the plant ids <planting bead>:<identifier> for all 15 entries."
+    },
+    {
+      "bead": "N32-CX",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "'Who builds' names N32b-41 (16-fork over-cap request) and N32b-43 (gate run) beside N32b-24 for packet-binary-budget; the executed-controls list names cx_<nnn>_packet_payload_budget (N32b-24, M2). Convention 13: due is now each entry's own field (N38b-05 admits it), copied by the seeding tool to the control's due; the compiled-in table keeps only the planting bead; acceptance and due_matches_planting_bead follow. Added plant ids <planting bead>:<identifier>; related gains N32b-43."
+    },
+    {
+      "bead": "N33-CX",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Added a label table for all fifteen entries: seven FACT (CX-352 BD-033's INT-FSIM-05 record; CX-353 BD-036's INT-FNP-02 record; CX-357 BD-034's INT-FSIM-06 record; suite-sampler-marginals N33c-37's G1 entry cx:CX-23-L1@host, which sets the pair here and on N23-CX's CX-23-L1; suite-reduced-catalog N33c-41; suite-power-detects-sign N33c-43; suite-float-bound N33c-45) and eight DESIGN, with the re-run procedure; acceptance and sibling_numbers_have_rerun check them. Plant ids <fixture owner>:<plant name>."
+    },
+    {
+      "bead": "N34-CX",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "Registered the five unnamed mutation plants against GATE-WS-05: N34-18's utf16-sort and escape-all-non-ascii as CX-358's plants 3 and 4 (writer rules 2 and 3 of canonical serialization), N34-17's dup-first-wins, dup-last-wins and skip-escape-decode as CX-361's plants 2 to 4 (best-effort parsing; the duplicate-member rule of §34.14); controls 11 -> 16, plants_per_entry (4, 1, 2, 4, 3, 1, 1), script metric and script list follow. Convention 13: the list-in-plant bullet states N38b-05's schema as fact. Plant ids <planting bead>:<identifier> (N38b-05's own example)."
+    },
+    {
+      "bead": "N35-CX",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "CX-367's planter is N35-13 (pad-plus-zero); N35-15, N35-30 row 2 and BD-160 run it by name; Considerations corrected the same way. Added the ten plant ids <planting bead>:<identifier>."
+    },
+    {
+      "bead": "N36-CX",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Compiled-in table gains the guards perf::bound::planted_inputs_are_refused (CX-375, CX-377, N36-05), perf::shard_ceiling::prediction_must_precede_measurement (CX-379, N36-09), perf::bandwidth::unmeasured_ceiling_keeps_hypothesis_label (CX-382, N36-18) and the check_claim of referee_cannot_cover_everything (CX-383, N36p1-02); the planted-input fixtures under crates/frob-conformance/fixtures/perf/<plant> are named; argument_guards runs the five guards. Added plant ids."
+    },
+    {
+      "bead": "N37-CX",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction",
+        "registry"
+      ],
+      "what": "Feature mutants -> gauntlet-mutations (convention 1, two places). GATE-GAUNT-06 sharing stated: N38a-26 adds the gate to the SAFE-X01, SAFE-X02 and GATE-SAFE-07 removed-check records and plants none again; SAFE-X10's digest-skipping loader is N38a-24's record (seed GATE-GAUNT-06) with GATE-SAFE-06 in its gate list. Defect fixed: CX-384's control expected the false-promotion count to exceed 123, while N37-16 and N24b-18 state the detection is the receipt shape and the count is not expected to exceed the bound, so the control as written would never be reported caught; CX-384 is now a catalogue entry whose plant is N24b-18:leak-per-world-outcomes and whose control the seeding tool derives (a hand-written CX-384 record would have given the entry a second control). Dep N38b-05 added (no cycle); related updated."
+    },
+    {
+      "bead": "N38-CX",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Each adopted entry's plant id is <row bead>:cx-<nnn>: CX-385/387/389/391 N38b-40, CX-386/396 N38b-43, CX-388/393/395 N38b-45, CX-390/392 N38b-41, CX-394 N38b-39, CX-397 N38b-44, CX-398 N38b-42. The empty-plant alternative was not used because N38b-05's loader refuses a runnable entry with an empty plant (plant-missing)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N25e-07",
+      "what": "ANSWER: N25-CX renamed its late tags to augur-cx-late-01..11 (late-02 is augur-cx-late-02, kept only in slug). The entry's plant is N25e-07:cx-<nnn>, with <nnn> the number N38a-40 issues to augur-cx-late-02, and the Cargo feature is cx-<nnn>; step 7's 'plant N25e-07:augur-late-02' must use that form, because N38a-40 rule 5 makes a tag inside a plant id or feature past due at N25-CX's milestone."
+    },
+    {
+      "bead": "BD-043",
+      "what": "The control of CX-283 is built under the feature named by its plant, cx-283 (N38b-05 step 2: 'a mutation feature is named by its plant, not by its NC number'), not under the NC number the seeding tool allocates. N25-CX now states the plant in full from this bead: { id = BD-043:cx-283, target = the sill comparison of tests/pilots_rerun.rs, expect 7/149/156/0 and the sill row differs, gates = [GATE-GAUNT-08], feature = cx-283 }."
+    },
+    {
+      "bead": "N26b-15",
+      "what": "N26-CX carries only nemesis-oracle-point-robot (CX-289), nemesis-lane-open (CX-290) and nemesis-guard-off (CX-295) as entry plants. The other invariant mutants (nemesis-mut-count-without-witness, nemesis-broken-legality, nemesis-mut-evaluate-unchecked, nemesis-mut-fmcw-skip-replay, nemesis-oracle-skip-guard, nemesis-mut-discovery-mark-skipped) are not rows of N26-CX; register them as controls seeded with BD-025's INV-NEMESIS-nn form (or GATE-NEMESIS-nn) and stop calling the eight features 'the rows of N26-CX'."
+    },
+    {
+      "bead": "BD-240",
+      "what": "Build the plant of CX-307, id BD-240:a17-per-reading-accuracy (a redundancy score from per-reading accuracy: seven shared-error cards scored 0.929 where 0.75 is true), as the Cargo feature a17-per-reading-accuracy under gauntlet-mutations against the alias search, at M3, binding row 6 of N28a-11's table (N28-CX names this bead as its builder)."
+    },
+    {
+      "bead": "N38a-40",
+      "what": "Add N30-CX to the cx request table: N30-CX (15; §30.3, §30.5, §30.8 to §30.10, §30.12 to §30.14, §30.18, §30.22 to §30.24; tags CX-G-01 to CX-G-15). The cx total changes by 15."
+    },
+    {
+      "bead": "BD-389",
+      "what": "Build CX-326's plant BD-389:cx-326 (feature cx-326): the clock fit taking the scored event as a declared mark (N30-CX plant table, GATE-GROUND-02, due M5)."
+    },
+    {
+      "bead": "N30a-13",
+      "what": "Build CX-327's plant N30a-13:cx-327 (feature cx-327): the card writer accepting DelayPlusOffset and writing the cross-correlation lag into the card's delay (GATE-GROUND-02, -03)."
+    },
+    {
+      "bead": "BD-390",
+      "what": "Build CX-328's plant BD-390:cx-328 (feature cx-328): the ridge-regularized solver in place of the refusal (GATE-GROUND-03)."
+    },
+    {
+      "bead": "N30a-15",
+      "what": "Build CX-329's planted input N30a-15:cx-329 (synthetic fixture cx-329): the 1 A and 2 A runs only, offered for a fit of μ with the zero-sensitivity check removed (GATE-GROUND-03)."
+    },
+    {
+      "bead": "BD-393",
+      "what": "Build CX-330's plant BD-393:cx-330 (feature cx-330) at frob-ground::band::bucket_key: bucket keyed by design only (GATE-GROUND-06)."
+    },
+    {
+      "bead": "N30b-06",
+      "what": "Build CX-331's plant N30b-06:cx-331 (feature cx-331): ground.score reading the calibration split (GATE-GROUND-04, -05)."
+    },
+    {
+      "bead": "N30a-24",
+      "what": "Build CX-332's plant N30a-24:cx-332 (feature cx-332): admission without the energy cross-check (GATE-GROUND-04)."
+    },
+    {
+      "bead": "N30a-33",
+      "what": "Build CX-333's planted input N30a-33:cx-333 (fixture cx-333): 'failure rate under 5%' at n = 20 offered to a registrar with the reachability pre-analysis removed (GATE-GROUND-05)."
+    },
+    {
+      "bead": "BD-139",
+      "what": "Rows 26 to 30 and 31 to 35 of the battery are the fixtures of CX-334 and CX-335, plant ids BD-139:cx-334 and BD-139:cx-335 (synthetic fixtures cx-334, cx-335); CX-334's expectation names this bead's mutation synthetic-not-sticky as the removed check, CX-335's the removed Reality-citation check (GATE-GROUND-01, due M1)."
+    },
+    {
+      "bead": "N30b-29",
+      "what": "Build CX-G-01's plant N30b-29:cx-<nnn> (the number issued to tag CX-G-01): the fit that splits v·δ + b by a prior (GATE-GROUND-11)."
+    },
+    {
+      "bead": "N30a-37",
+      "what": "Build CX-G-02's plant N30a-37:cx-<nnn> (number issued to CX-G-02): episodes counted as draws for a new unit (GATE-GROUND-06)."
+    },
+    {
+      "bead": "N30a-45",
+      "what": "Build CX-G-03's and CX-G-04's plants N30a-45:cx-<nnn> (numbers issued to CX-G-03, CX-G-04): a scale near 25.4 applied silently; the residual RMS reported as the transform's uncertainty (GATE-GROUND-08). CX-G-04 is stated in words: when the plant is built, record the fixture in the entry's case_supplied_by and set numeric = true."
+    },
+    {
+      "bead": "BD-387",
+      "what": "Build CX-G-05's and CX-G-06's plants BD-387:cx-<nnn> (numbers issued to CX-G-05, CX-G-06): the attempts = \"all\" check removed (GATE-GROUND-01); the validator accepting by = \"rows\" (GATE-GROUND-05). Both are word-stated: record the fixture in case_supplied_by and set numeric = true when built."
+    },
+    {
+      "bead": "BD-391",
+      "what": "Build CX-G-07's plant BD-391:cx-<nnn>: a regularized fit returning a value for an aliased member (GATE-GROUND-03); word-stated: record the fixture in case_supplied_by and set numeric = true when built."
+    },
+    {
+      "bead": "N30a-25",
+      "what": "Build CX-G-08's plant N30a-25:cx-<nnn>: the contact fit admitted with a deliberately wrong actuator card and no stage gate (GATE-GROUND-04). CX-G-08 is FACT naming PILOT-PT-17 (24 of 156)."
+    },
+    {
+      "bead": "N30a-27",
+      "what": "Build CX-G-09's plant N30a-27:cx-<nnn>: draws from independent marginals ignoring the stored joint covariance (GATE-GROUND-04); word-stated: record the fixture in case_supplied_by and set numeric = true when built."
+    },
+    {
+      "bead": "N30a-29",
+      "what": "Build CX-G-10's plant N30a-29:cx-<nnn>: a discrepancy floor of zero (GATE-GROUND-04); word-stated: record the fixture in case_supplied_by and set numeric = true when built."
+    },
+    {
+      "bead": "BD-397",
+      "what": "Build CX-G-11's planted world BD-397:cx-<nnn> (the omitted-law world on which the three-law probe is run; FACT PILOT-PT-03) and CX-G-15's plant BD-397:cx-<nnn> (the recorder with the origin check removed, GATE-GROUND-10); CX-G-15 is word-stated: record the fixture in case_supplied_by and set numeric = true when built."
+    },
+    {
+      "bead": "BD-394",
+      "what": "Build CX-G-12's plant BD-394:cx-<nnn>: a kernel-discrepancy drift test in place of the rank and miss tests (GATE-GROUND-07); it is not among this bead's planted failures today. Word-stated: record the fixture in case_supplied_by and set numeric = true when built."
+    },
+    {
+      "bead": "BD-396",
+      "what": "Build CX-G-13's and CX-G-14's plants BD-396:cx-<nnn>: the private mark checked on direct inputs only; superseded and failed predictions omitted (GATE-GROUND-09). Word-stated: record the fixtures in case_supplied_by and set numeric = true when built."
+    },
+    {
+      "bead": "N30-KA",
+      "what": "The control cell of the alias-9 late row (tag ground-alias9) names the plant N30b-29:cx-<nnn>, CX-G-01's plant in N30-CX, so N38b-05 step 3 reuses the CX-seeded control instead of allocating a second one."
+    },
+    {
+      "bead": "BD-400",
+      "what": "N31-CX now names CX-337's target frob-foundry::loads::symmetry; drop 'the module N31-CX calls loads::limbs'. Plant ids are BD-400:assemble-peaks and BD-400:assume-equal-limbs, and per N38b-05 step 2 the Cargo features are assemble-peaks and assume-equal-limbs, not nc-<nnnn>."
+    },
+    {
+      "bead": "BD-402",
+      "what": "Plant ids are BD-402:finish-per-window and BD-402:unsigned-von-mises (N31-CX); per N38b-05 step 2 the feature is finish-per-window, not nc-<nnnn>; the fixture is unsigned-von-mises."
+    },
+    {
+      "bead": "BD-036",
+      "what": "N33-CX labels CX-353 FACT (the stride conventions of the sibling array libraries) and names this bead's INT-FNP-02 record, which stores the two conventions re-read at the pins, as its re-run receipt. Add the re-run step of BD-033's pattern: when the record reproduces the case and CX-353 is present with rerun = false, the recording session sets rerun = true and rerun_receipt = the record hash, changes no other field and re-runs the seeding tool; a different convention leaves rerun = false and flags the fact changed."
+    },
+    {
+      "bead": "N33c-41",
+      "what": "N33-CX labels suite-reduced-catalog FACT (30 links summing to 31.96314202 kg) and names this bead's GATE-WS-09 probe record at the pin as its re-run receipt: add the BD-033-pattern step that sets rerun = true and rerun_receipt on that entry when the record reproduces the number."
+    },
+    {
+      "bead": "N33c-43",
+      "what": "N33-CX labels suite-power-detects-sign FACT (rates (12, −8) and (−12, 8)) and names this bead's probe record at the pin as its re-run receipt: add the BD-033-pattern step that sets rerun = true and rerun_receipt on that entry when the probe reproduces the rates."
+    },
+    {
+      "bead": "N33c-45",
+      "what": "N33-CX labels suite-float-bound FACT (the two values fs-sos returns) and names this bead's probe record at the pin as its re-run receipt: add the BD-033-pattern step that sets rerun = true and rerun_receipt on that entry when the probe reproduces both values."
+    },
+    {
+      "bead": "N34-18",
+      "what": "utf16-sort and escape-all-non-ascii are registered as CX-358's plants 3 and 4 (N34-18:utf16-sort, N34-18:escape-all-non-ascii, GATE-WS-05); restate 'their records are requested of N34-CX' as that fact."
+    },
+    {
+      "bead": "N34-17",
+      "what": "dup-first-wins, dup-last-wins and skip-escape-decode are registered as CX-361's plants 2 to 4 (N34-17:<name>, GATE-WS-05); restate 'no catalogue entry names these plants yet ... requested of N34-CX' as that fact."
+    },
+    {
+      "bead": "N34-21",
+      "what": "Add N34-18's utf16-sort and escape-all-non-ascii (CX-358 plants 3 and 4, registered against GATE-WS-05) to the controls the GATE-WS-05 run must catch, with the step each fails."
+    },
+    {
+      "bead": "N38a-24",
+      "what": "The record this bead registers for 'a build that executes a cache entry without checking its hash' (seed GATE-GAUNT-06) is also SAFE-X10's digest-skipping loader in N37-CX: its gate list names GATE-SAFE-06 beside GATE-GAUNT-06, so N37-22 runs the same branch and no second plant is built."
+    },
+    {
+      "bead": "N37-22",
+      "what": "The third control of step 6 (a loader that skips the digest comparison) is N38a-24's record seeded GATE-GAUNT-06, with GATE-SAFE-06 in its gate list; build it with --features gauntlet-mutations and its feature, not 'a mutants build' (convention 1)."
+    },
+    {
+      "bead": "N24b-18",
+      "what": "leak-per-world-outcomes is the plant of the catalogue entry CX-384 (N37-CX): plant id N24b-18:leak-per-world-outcomes, gates GATE-QUAL-01 and GATE-SAFE-03; the seeding tool of N38b-05 derives its control (seed CX-384) from that entry, so this bead builds the plant and writes no separate controls.toml record."
+    },
+    {
+      "bead": "N38b-40",
+      "what": "N38-CX states the plants of CX-385, CX-387, CX-389 and CX-391 as N38b-40:cx-385, :cx-387, :cx-389, :cx-391: declare those Cargo features (or synthetic fixtures) for the planted defects of KA-836, KA-838, KA-840 and KA-842."
+    },
+    {
+      "bead": "N38b-41",
+      "what": "N38-CX states the plants of CX-390 and CX-392 as N38b-41:cx-390 and N38b-41:cx-392: declare those features or fixtures for KA-841's and KA-843's planted defects."
+    },
+    {
+      "bead": "N38b-42",
+      "what": "N38-CX states CX-398's plant as N38b-42:cx-398: declare that feature (KA-849's planted defect in the sensing crate)."
+    },
+    {
+      "bead": "N38b-43",
+      "what": "N38-CX states the plants of CX-386 and CX-396 as N38b-43:cx-386 and N38b-43:cx-396: declare those features or fixtures for KA-837's and KA-847's planted defects."
+    },
+    {
+      "bead": "N38b-44",
+      "what": "N38-CX states CX-397's plant as N38b-44:cx-397: declare that feature (KA-848's planted defect in the scene crate)."
+    },
+    {
+      "bead": "N38b-45",
+      "what": "N38-CX states the plants of CX-388, CX-393 and CX-395 as N38b-45:cx-388, :cx-393, :cx-395: declare those features or fixtures for KA-839's, KA-844's and KA-846's planted defects."
+    },
+    {
+      "bead": "N38-KA",
+      "what": "The control cells of KA-836 to KA-849 name the plant ids of their CX entries (<row bead>:cx-<nnn>, listed in N38-CX's Record fields), so N38b-05 step 3 reuses the CX-seeded control."
+    },
+    {
+      "bead": "BD-025",
+      "what": "Owner-level conflict: the example feature = \"nc-0412\" and the rule that a mutation's feature is <crate>/nc-<nnnn> contradict N38b-05 step 2, which names the feature by the plant (cx-262 for NC-0412). Settle one form; N38b-05's form lets a chapter state the feature before the NC number exists. Beads following nc-<nnnn> include BD-400, BD-402, BD-043, N28b-32, N28b-34, N28b-37, N34-17, N34-18, N34-21, N37-16, N38a-24, N38a-26."
+    },
+    {
+      "bead": "N38b-04",
+      "what": "Same conflict as BD-025: the runner's per-control feature nc-<nnnn> against N38b-05 step 2's feature named by the plant (cx-<nnn> or the name after the colon of the plant id). The runner should build --features gauntlet-mutations,<crate>/<control.feature>, whatever the name."
+    }
+  ],
+  "unchanged": [],
+  "notes": [
+    "Answered 20 slice items: 18 added as asked; 2 holds. Holds: (1) F-U25e: the tags were renamed (to H-ka-2's form augur-cx-late-nn, which F-U25e allowed as an example), but the plant does not follow the tag name: it is N25e-07:cx-<nnn> (ANSWER to N25e-07); (2) the N36-CX mechanical finding [C2-file] is a false alarm: the bead quotes registry/counterexamples/perf.toml only to say that an earlier draft's private file is retired and that no such file exists.",
+    "Fixes outside the requests: N26-CX (the safe-side count 29,957 used as CX-290's control; a false schema reason); N31-CX (CX-337's nonexistent loads::limbs module; CX-339 named the same wrong fatigue module as CX-338); N37-CX (CX-384's expected observation contradicted N37-16 and N24b-18, so the control would never have been reported caught; a hand-written CX-384 record would have given the entry a second control beside the seeding tool's).",
+    "Plant ids: N38b-05 requires <planting bead>:<name> for every plant id (the feature or fixture is the name after the colon). Many registries in this slice wrote bare names; N28, N31, N32, N33, N34, N35, N36 and N38 now state the prefixed ids, and N25 and N30 use <bead>:cx-<nnn>.",
+    "Owner-level conflict outside this slice: BD-025 and N38b-04 still name per-control features nc-<nnnn>, while N38b-05 step 2 names them by the plant. Requests sent to both; until it is settled, the planting beads in this slice's requests may get two contradictory instructions.",
+    "N37-CX keeps writing its own SAFE-Xnn-seeded records (BD-025 admits the SAFE-Xnn seed form and N38a-26 cites them), which differs from N38b-05's statement that a chapter bead writes no controls.toml row; only CX-384 was moved to the catalogue. The lead may want N38b-05 to state the SAFE-X exception.",
+    "N30-CX's ten word-stated late entries are numeric = false obligations until their planting beads (all M5) supply the case; GATE-GROUND-07, -09 and -10 therefore have no runnable control before M5, which matches their first measurement milestone.",
+    "graph_check.py path showed no cycle for the new deps N30-CX -> N38b-05 and N37-CX -> N38b-05. All 13 touched files pass the front-matter, list and seven-section check (scratch validate.py)."
+  ],
+  "answered": {
+    "added": 18,
+    "holds": 2,
+    "declined": 0
+  }
+}

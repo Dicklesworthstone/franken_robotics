@@ -1,0 +1,335 @@
+{
+ "round": 2,
+ "slice": "S37",
+ "reviewed": 54,
+ "changed": [
+  {
+   "bead": "BD-188",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "AC said auto exposure grows the rolling-shutter skew; under the midpoint rule skew is set by t_row alone and a longer exposure shifts every row instant by half the difference (as the bead's own e2e N20a-45 step 8 states): corrected AC and test. Zone lighting is N19a-06's field at M3, so added the source order zone > mount `lighting_level` > card t_exp with `exposure_source` on the packet. Gave the camera-across-impact test numbers (f 600 px, edge at 0.6 m, rebound at 9 ms: 1.00 / 8.98 / 1.00 px; dead stop; linear-blend mutant erases or fabricates motion), which is the fixture registry N20-CX says CX-202 awaits from this bead."
+  },
+  {
+   "bead": "BD-190",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e drove `frob gauntlet run` and `frob telemetry divergence` on label buffers; the Gauntlet has no verb (ADR-GAUNT-01). Now runs `cargo test -p frob-conformance --test g1_known_answers -- GATE-SENS-13` and per-site KA-501 rows, compares receipt label digests across sites, and drives `frob sense alias --mission docking --link late|on-time` from the user's side."
+  },
+  {
+   "bead": "BD-238",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e step `frob gauntlet run --gate GATE-SENS-14` replaced by the harness's cargo form (ADR-GAUNT-01)."
+  },
+  {
+   "bead": "BD-239",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Applied request (UJL-2): VERBS-sense moved from related to deps (its row carries --form empirical). SPEC-C-20 moved from related to deps (rule 6; the spec names BD-239 as the empirical-form implementer) and an AC added that laws_c20 runs unchanged with the driver bound to C20Subject::empirical_gramian, mutants failing under --features controls."
+  },
+  {
+   "bead": "BD-240",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Applied request (UJL-2): dep VERBS-sense. e2e `frob gauntlet run --gate GATE-SENS-09` replaced by the cargo harness form (ADR-GAUNT-01)."
+  },
+  {
+   "bead": "BD-241",
+   "kinds": [
+    "deps",
+    "users",
+    "sense"
+   ],
+   "what": "Applied requests: capability sense:read stated as fixed (BD-258), 'proposal' wording dropped (U37); dep VERBS-sense, and the open question 'how the registry row records --test' answered with the row's action `test` of kind run, capability sense:run, evidence run (UJL-2)."
+  },
+  {
+   "bead": "BD-242",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "Applied requests: capability sense:run stated as fixed (U37); dep VERBS-sense (UJL-2); evidence-word note now states the row's reconciled value (run, class Tested, synthetic front end)."
+  },
+  {
+   "bead": "SPEC-C-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Window convention said half-open (a, b]; the chapter's sum and BD-120 run k = 0 … N − 1 from the window start (Φ_0 = I). Corrected, distinguished from the exposure-window convention N20a-49 decides. G1 target named g1_known_answers (N38a-02)."
+  },
+  {
+   "bead": "N20a-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Specular-floor phantom depth was −0.1375 m; recomputed 0.3 − 5.01910·cos 85° = −0.13744, so −0.1374 (body, AC, unit test)."
+  },
+  {
+   "bead": "N20a-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e drove `frob gauntlet pilot run`, which does not exist (ADR-GAUNT-01); now runs the pilot's cargo test target, reads its pilots.toml row and asserts the protocol digest predates the first run."
+  },
+  {
+   "bead": "N20a-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e drove `frob gauntlet pilot show` and `frob gates show` (no such verbs); now reads pilots.toml and gates.toml rows read-only, runs the decision-rule test and N40-03's `kill_gate_records.sh --live` on KILL-EXPOSURE, and traces the receipt's claim with `frob evidence trace`."
+  },
+  {
+   "bead": "N20a-31",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Background said 'three rows' of the failure-mode table; the table has two rows naming three faults."
+  },
+  {
+   "bead": "N20a-34",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied request (UJL-2): the drafted verbs.toml entry (design:read, sim:run, idempotent true, unkeyed example) replaced by VERBS-sense's row of record (sense:run, idempotent false, --key example, wait, owner, purpose), the --estimate cost expression kept as prose; dep VERBS-sense; unit test for FROB-REF-805 and 803 key handling."
+  },
+  {
+   "bead": "N20a-41",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Registry entry was a drafted row (design:read, sim:run, idempotent, unkeyed example) contradicting VERBS-sense's row of record; now states that row (sense:run, idempotent false with --key and FROB-REF-805, run wait, task cluster, its example) and keeps 440/441 as reachable through the checker's world replays (request to VERBS-sense). VERBS-sense moved from related to deps. Refusal note also names FROB-REF-846 (joint-error-law-missing), which N25e-34's --claim-redundancy option raises on this verb."
+  },
+  {
+   "bead": "N20a-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e drove `frob gauntlet pilot run alias-search` (no such verb, ADR-GAUNT-01); now the pilot's cargo test target, the pilots.toml row with its protocol-digest check, and keyed `frob --json sense alias` per corpus mission."
+  },
+  {
+   "bead": "N20a-43",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e drove `frob gauntlet pilot show` and `frob gates show`; now reads the pilots.toml and gates.toml rows read-only, runs the kill_alias_rule test and N40-03's live kill-gate check, and traces the receipt's claim."
+  },
+  {
+   "bead": "N20a-45",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Stage 6 asserted only qualitative impact behaviour on an unspecified fixture; now uses BD-188's CX-202 fixture with its numbers (1.00 / 8.98 px rebound, 9.00 px dead stop). Stage 8 assumed a zone lighting field that only arrives with N19a-06 at M3; now halves the mount's lighting_level, checks exposure_source and that skew is unchanged."
+  },
+  {
+   "bead": "N20a-46",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Stages 3 and 17 drove `frob gauntlet run --ka/--gate`; now the g1_known_answers cargo form (ADR-GAUNT-01). Stage 3's Allan tolerance said 0.05 for both slopes; N20a-14 sets ±0.02 white and ±0.05 walk."
+  },
+  {
+   "bead": "N20b-02",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Considerations cited 'the needs list' for the consumer entry points, but needs is empty; now names the consumer beads (N23a-31, N23a-32, BD-285 depend on it; BD-327 raises 443 through it)."
+  },
+  {
+   "bead": "N20b-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "G1 target was `--test g1 -- gate_sens_10`; N38a-02's target is g1_known_answers filtered by gate id. Known-answers section said 'two control builds' where step 6 and the AC have three."
+  },
+  {
+   "bead": "N20b-06",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Declared its own fault type and trigger (`Fault::ExtrinsicBump`, `OnImpact {link}`, 'exceeds') although it consumes N20a-31's FaultSpec with Trigger::AfterImpact {body} ('at least', committed only); aligned, and the bump_tolerance draw is made by key before the run as N20a-31 requires."
+  },
+  {
+   "bead": "N20b-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied request (U38b-2): KA-849's GATE-GAUNT-11 row is recorded from N38b-46's receipt of N38b-42's test, which cites this script's ka lines. G1 target corrected to g1_known_answers -- GATE-SENS-11."
+  },
+  {
+   "bead": "N20b-12",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its gate rows are recorded 'through the script of N20b-11' (an AC) but N20b-11 was neither dep nor related; added as a dep (M1, no cycle)."
+  },
+  {
+   "bead": "N20b-19",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Graph finding (26 deps) checked: every owner in the two index tables is used directly by the M3 completeness check, and five were missing (N20a-02, BD-099, BD-187 for INV-SENS-05; N20b-10 for -07; N20b-02 for -08, this unit's own rows); added, with a note on why the list is long. G0 target was `--test g0`; BD-025/N38a-01 name it g0_laws."
+  },
+  {
+   "bead": "N20b-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Graph finding (21 deps) checked: each is a direct runner or registry, and every row owner is reachable through them; no change. Runner named `--test g1 -- <row>`; corrected to N38a-02's g1_known_answers with FROB_TEST_SEED."
+  },
+  {
+   "bead": "N20b-31",
+   "kinds": [
+    "correct"
+   ],
+   "what": "`frob task verdict peak-load-limit --run <run>` inverted the task.verdict row (run positional, --task); corrected. G1 target corrected to g1_known_answers -- GATE-SENS-15."
+  },
+  {
+   "bead": "N20b-32",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Applied request (U33b): dep BD-243 (A-09 curvature) replaced by N33b-17 (A-14 analyze.coverage, which this bead extends), moved from related; named in the body. No cycle."
+  },
+  {
+   "bead": "N20b-33",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "Applied requests: BD-243 replaced by N33b-17 (U33b); VERBS-sense moved from related to deps, its row carrying the --motion and explicit forms (UJL-2). Capability wording 'stay proposals until BD-258' replaced by BD-258's fixed naming rule, as on BD-241/BD-242."
+  },
+  {
+   "bead": "N20b-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "G1 target corrected to g1_known_answers -- GATE-SENS-16; the scene fixture said targets every 0.1 m while Considerations relies on 1 cm spacing between 0.5 m and 1.1 m; fixture now states both."
+  },
+  {
+   "bead": "N20b-42",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Self-test counted 'five control builds'; the script has four (imu-no-jump, window-closed-closed, unwrap-nearest-always, loadcell-contact-sum), the card mutants being fixture designs; named them. G1 target corrected to g1_known_answers -- GATE-SENS-18."
+  },
+  {
+   "bead": "N20b-45",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Step 4 put the new codes on sense.profile and sense.visibility, which raise neither (VERBS-sense: lead refusal is design.check's through N20b-33); now names the raising rows and VERBS-sense's 'listed once numbered' rule, with deps VERBS-design, VERBS-eval, VERBS-sense (it edits their rows; no cycle). G0 target corrected to g0_laws."
+  },
+  {
+   "bead": "N25e-36",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "sense.alias and mission.refute were called without --key (both run verbs: FROB-REF-805, exit 3) and without a design; step 6 asserted only exit 3, so a missing key would have passed the refusal check. Added the probe design fixture, keys, and an assertion on the refusal code and detail."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N20a-47",
+   "what": "stage 13 `frob gauntlet run --gate GATE-SENS-08` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N20a-48",
+   "what": "stages 13-14 (`frob gauntlet run --battery alias-…`, `--gate …`, `frob gates show`) uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N20a-09",
+   "what": "e2e `frob gauntlet pilot run sched-race` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N20a-10",
+   "what": "e2e `frob gauntlet run --relation same-instant-commute --battery clock-contract` and `frob gauntlet status` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N20a-11",
+   "what": "e2e `frob gauntlet pilot show sched-race` and `frob gates show` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N20a-14",
+   "what": "e2e `frob gauntlet run --ka KA-512` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do; N20a-46 stage 3 now runs `--test g1_known_answers -- KA-512`"
+  },
+  {
+   "bead": "N20a-18",
+   "what": "e2e `frob gauntlet pilot run tactile` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N20a-29",
+   "what": "e2e `frob gauntlet pilot run …` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N10b-10",
+   "what": "e2e `frob gauntlet pilot run sched-race` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N24-KA",
+   "what": "e2e `frob gauntlet run --tier G1 --filter arena` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N28b-28",
+   "what": "gate_query step `frob gates show GATE-ATEL-16` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "N28b-06",
+   "what": "gate_query step `frob gates show GATE-ATEL-04 --row bisect` uses a `frob gauntlet …` or `frob gates …` command, which does not exist (ADR-GAUNT-01): use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test <target> -- <filter>` and read registry rows (pilots.toml, gates.toml) read-only, as N20a-25/N20a-27/N20a-43 now do"
+  },
+  {
+   "bead": "BD-327",
+   "what": "raises FROB-REF-443 'through the Γ_obs consumer guard (N20b-02)' but has N20b-02 only in related; move it to deps (M3 before M4; graph_check: no cycle)"
+  },
+  {
+   "bead": "VERBS-sense",
+   "what": "sense.alias row: refusals = [] but its checker replays worlds (N20a-37), so FROB-REF-440 and 441 reach the caller, and N25e-34's --claim-redundancy raises FROB-REF-846 (detail joint-error-law-missing); convention 1 fails a verb raising a code its list lacks. List the three, and add the inputs N25e-34 adds (--card, --reads, --claim-redundancy)"
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.refute and mission.synthesize rows lack the inputs --card <sensor card> and --reads n that N25e-34 adds (its error-law credit rule); N25e-36 drives `frob mission refute … --card`"
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "design.check's stage-7 refusal list has -119 only; the stage-7 lead refusal (slot sens-lead-too-short, computed by N20b-33, number applied by N20b-45) should be noted on the row as pending, as VERBS-sense notes it"
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "no row mentions the causal-policy receipt rule of N20b-12: evaluation verbs admit a policy only with a passing receipt (--auto-causal, default on), else the pending refusal slot causal-receipt-missing (5xx, exit 3, numbered by N20b-45); add the input and the pending code to the admitting rows"
+  },
+  {
+   "bead": "BD-255",
+   "what": "its AC `frob task verdict --run <device run> --json` and e2e step 3 `frob task verdict --run <id> --online --json` pass the run as a `--run` option; the task.verdict row of VERBS-task (inputs from N24c-02) has the run positional with `--task <id or name>` (`frob task verdict <run> --task <id> --json`, as N20b-31 now calls it), and neither the row nor N24c-02 has `--online`: align the calls, or have the row carry the option. Same e2e, step 1: `frob task settle --task <…> --design <reference> --tier gpu-cuda --json` should be checked against the task.settle row (task positional, `--model <id>`, an idempotency key)"
+  }
+ ],
+ "unchanged": 22,
+ "notes": "Slice reads coherently in build order; most changes are e2e commands that drove a nonexistent `frob gauntlet`/`frob gates` verb or misnamed the G1/G0 targets, plus run verbs called without --key. Wider drift for the integrator: 83 beads still name the G1 target `--test g1` (N38a-02 names g1_known_answers), including Sensorium beads N20b-13, -14, -22, -35, -37, N20-REF and the U10b specs. N20b-29/N20b-31 never name the verb through which a certified peak-load claim is requested (the plan does not either). Slice looks close to settled. Finishing pass after the interruption: N20b-31's `task verdict` call was already corrected in the file and agrees with the VERBS-task row and N24c-02's input schema; the slice's only other mention (N20b-29) has no arguments; all 54 files parse; no bead file was changed in this pass, one request (BD-255) added."
+}

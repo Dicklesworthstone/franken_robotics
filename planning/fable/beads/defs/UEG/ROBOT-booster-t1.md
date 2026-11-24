@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "BD-109", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-humanoid", "N14b-24", "ROBOT-apollo", "ROBOT-fourier-n1", "ROBOT-op3", "ROBOT-talos"]
+related: ["ROBOT-fourier-n1", "ROBOT-op3", "ROBOT-talos", "ZOO-humanoid"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01", "Appendix H.3"]
 ---
@@ -38,8 +38,9 @@ NOTICE, files unmodified.
 **Expected facts (recalled, mark M; the pinned files govern).** About 23 actuated joints (legs of six, arms
 of four, a waist joint, a two-joint head); total mass on the order of 30 kg.
 
-**Import path.** `frob design import --format mjcf assets/robots/booster-t1/source/<entry> --out
-assets/robots/booster-t1/import.fbot --json`.
+**Import path.** `frob design import assets/robots/booster-t1/source/<entry> --format mjcf --name booster-t1 --key
+asset-booster-t1-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section).
 
 **What this robot adds to importer coverage (HYPOTHESIS until the file is read).** A head with two joints and
 a waist joint between pelvis and torso: a serial chain through the trunk, which exercises parent-frame

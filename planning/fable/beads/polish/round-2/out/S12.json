@@ -1,0 +1,462 @@
+{
+ "round": 2,
+ "slice": "S12",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "N18-CX",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "catalogue field list lacked N38b-05's plan_case and case_supplied_by: CX-168 and CX-175 are word-only entries (plan_case words), CX-175 gets numeric true with its supplied case; added the cx175 unit test (H = diag(1, 1e-8), residual 1e-7 passes 1e-6 while the error is 10); the Stefan test now states radius and viscosities; e2e names the ADR-GAUNT-01 cargo form for plant-off/plant-on runs"
+  },
+  {
+   "bead": "N18-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "rows were written to a chapter file registry/known_answers/traction.toml in a private schema; now the one file known_answers.toml in N38a-12's schema (carrier into the derivation front matter, KA-403 fixture backlash-closure/contact-card per N38b-48); the four hand known answers of §18.19-§18.20 (bound at equality, mode guard, flop count, swept arc) were left unnumbered with 'should receive numbers later': now rows with values and a ka block request of 4 to N38a-40; cites KA-847 for the f32 residual; e2e no longer calls a nonexistent '--list'/registry verb; deps N38a-12, N38a-40, N38b-05"
+  },
+  {
+   "bead": "N18b-32",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "it created 29 registry entries in known_answers.toml for rows N18-KA already writes (two writers of one record): now it adds fixture files, derivation files with the tolerances it sets, test entries and battery membership to N18-KA's records; test target g1 -> g1_known_answers in the ADR-GAUNT-01 form; request applied: dep N38b-48 with row 15's fixture identity and formula field; dep STD-E2E; e2e now runs the controls of rows 1, 3, 5, 7, 19, 20 plant on/off; the control run named '--features gauntlet-mutations' without the control's own nc-<nnnn> feature, which plants nothing: now both"
+  },
+  {
+   "bead": "N20-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "it wrote twenty rows straight into controls.toml, which only N38b-05's seeding tool writes: now catalogue entries in counterexamples.toml with plant, plan_case and case_supplied_by (CX-212 from N20b-05, CX-215 from CX-371, CX-202 an obligation); resolved every 'other unit' catching test to its bead (BD-078, BD-188, N20a-06/07/16/22/24/37/39/40); --test g0 -> g0_laws; own control script added (was deferred to an M3 battery); deps N38b-05, STD-E2E, STD-TEST"
+  },
+  {
+   "bead": "N20-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "record form differed from N38a-12's schema and stored per-site status in the row: harmonized (same_as for KA-486/KA-503, owner and tests in the derivation front matter, status from N38a-13's receipts); the e2e called 'frob gauntlet list/status', a verb ADR-GAUNT-01 rejects: replaced by the cargo form, receipts and the real sense verbs; deps N38b-05, STD-E2E"
+  },
+  {
+   "bead": "N20b-21",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "step 1 registered every named control in controls.toml, duplicating the controls N38b-05 seeds from N20-CX entries and N20-KA rows: now it reuses those NC ids and registers only gate-only controls with seed GATE-SENS-nn; added no_duplicate_plant test; --test g0 -> g0_laws; deps N20-CX, N20-KA, N38b-05"
+  },
+  {
+   "bead": "N21-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "chapter file known_answers/spark.toml and private schema replaced by the one file and N38a-12's schema (gate as owner, carrier and notes in derivation files, printed 14,292 for KA-552); --test g1 -> g1_known_answers; added its own e2e registry script (had none); deps N38a-12, N38b-05, STD-E2E"
+  },
+  {
+   "bead": "N22-CX",
+   "kinds": [
+    "correct"
+   ],
+   "what": "CX-243 now carries plan_case words and case_supplied_by as N38b-05's schema settles (the paragraph still said the counting request was pending)"
+  },
+  {
+   "bead": "N22-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request applied: late hand cases cited by N22c-04's eight slugs and its ka block, not KA-R22-a..h; chapter file reflex.toml replaced by the one file and N38a-12's schema; rows with no stated control become obligations instead of a loader exception; second rimless-wheel instance (l = 1 m, 0.08 rad, 1.20004) recorded beside the GB-27 card so the two beads agree; own e2e script added; deps N38a-12, N38b-05, STD-E2E"
+  },
+  {
+   "bead": "N22c-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request applied: e2e used the nonexistent 'frob conformance list/run'; now the ADR-GAUNT-01 cargo form plus eval.run; fixture 7 pinned only the l = 1 m card while N22-KA derives GB-27's l = 0.5 m, 4 deg card: both instances now pinned with a test; the erosion case is cited as KA-846; dep N38a-12 (it writes rows in that schema)"
+  },
+  {
+   "bead": "N28-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "chapter file registries/known_answers/atelier.toml with a private schema (oracle, negative_control, equivalent_to, owner_bead) moved to the one file and N38a-12's schema (equivalent_to -> same_as, oracle and pilot bundle hash and owner bead in the derivation file); the three rows with no control (KA-694, KA-703, KA-706) were exempted as 'pure arithmetic': now obligation: control until N38b-33's and N28cp1-02's controls exist; e2e called the forbidden 'frob conformance list'; deps N38a-12, N38b-05"
+  },
+  {
+   "bead": "N33-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "it wrote [[control]] rows with private fields straight into registries/negative_controls.toml (controls.toml, which only N38b-05's seeding tool writes): now catalogue entries in counterexamples.toml in N38b-05's schema (CX-357 same_as CX-252); the nine unnumbered late cases were left to 'a request filed with the catalogue's owner': now a cx block of 9 from N38a-40's allocation ledger with slugs kept in slug; suite-chord-bound related to N18-CX's trac-arc; acceptance on the seeded controls; deps N38a-40, N38b-05"
+  },
+  {
+   "bead": "N33b-02",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "request applied: dep BD-146 (the M1 Gauntlet capstone) replaced by N38a-02 (tiers and hash-named receipts), BD-146 kept as related; the record is now a conformance receipt and the dependency assertion names its cargo form"
+  },
+  {
+   "bead": "N33b-08",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "it added posture_test and switch_over_steps to upstream.toml although BD-037's loader rejects any unknown field: now added as optional fields to that loader (schema name unchanged; switch_over_steps must cover switch_over) with a test; its FD-FKER-01 posture ran a second franken-kernel round trip (and called the decision policy PolicyId): now it reads N33c-27's oracle result; dep N33c-27"
+  },
+  {
+   "bead": "N33b-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the synthetic-envelope plant referred to the 'without' properties 'below'; they are stated above"
+  },
+  {
+   "bead": "N33c-27",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "request checked (clm:/ev: prefixes and the reference to N34-11's franken_kernel_text_forms_agree were already in place); it still said DecisionId has no local counterpart and ran no round trip, while N34-11 (item 4b) now defines DecisionId and leaves its layout to this oracle: DecisionId round trip, rejection parity and layout check added, five local kinds"
+  },
+  {
+   "bead": "N34-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "negative control built with '--cfg frob_nc=no-key-sort', which N34-CX rule 4 and N34-18 replace by the one mechanism (--features gauntlet-mutations,frob-core/nc-nnnn, N34-18's no-key-sort mutant, CX-358's record); --test g3/g4 -> g3_metamorphic/g4_chaos with FROB_TEST_SEED"
+  },
+  {
+   "bead": "N34-23",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "gate lane used --test g3/g4 and an unnamed control build: now g3_metamorphic/g4_chaos in the ADR-GAUNT-01 form and N34-18's no-key-sort mutant by the feature mechanism"
+  },
+  {
+   "bead": "N35-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "private row format (test, owner, tier, reproduces) under a 'numerics' section and direct writes to negative_controls.toml: now N38b-05's catalogue record with plan_case, rule_ids, control_kind and plant, the test/owner/literals table kept in its test file, controls seeded by N38b-05; CX-371 now carries same_as CX-215, matching CX-215's case_supplied_by; dep N38b-05"
+  },
+  {
+   "bead": "N35-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "private row schema (site, negative_control, owner_test, gate, values) and a 'value-check' exemption for the ten rows with no control, against N38a-12's rule that such rows are obligation: control: now N38a-12's schema (values -> truth.value, owner test in derivation front matter), the ten rows are obligations, KA-791's control registered here as N38b-34 assigns, owners' controls named; revision rule replaced by N38a-12's printed-value rule; dep N38b-05"
+  },
+  {
+   "bead": "N38-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "record fields lacked N38b-05's plan_case, rerun (CX-388 and CX-390 quote FACTs) and plant; the plant now uses the identifiers of KA-836..849's control cells so the seeding tool reuses one control per plant instead of seeding a second for each adopted row; CX-386's case lacked the track widths (8, 8 and 12 cm) needed to reproduce 3.52, 9.79 and 4.96 cm; tests for the reuse and the widths added"
+  },
+  {
+   "bead": "N38-KA",
+   "kinds": [
+    "correct"
+   ],
+   "what": "said each control 'is registered as an NC record' without saying by whom, which would give KA-836..849 a second control beside N38-CX's: now the CX-seeded record is reused through control.nc; owner gates, same_as and printed added to the field list; KA-839 and KA-841 (FACT) are obligations until their re-run, not 'each eligible'"
+  },
+  {
+   "bead": "N38-REF",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "request applied: the fourteen harness reasons emitted by N38a-03, -05, -10, -12, -14 to -19, -36 and -40 registered with tool, trigger, repairs and exit (3 for the recorder's, 0 for the flag boundary-only, 101 otherwise); due-unbound also covers the tier-matrix check; ka-second-file follows N38a-12's widened rule; test emitting_beads_reasons_registered"
+  },
+  {
+   "bead": "N38a-01",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "the ownership layout omitted the counterexample catalogue and seed map, the allocation ledger and the harness-reason registry, and said one derivation file per row where N38a-12 has one per fixture"
+  },
+  {
+   "bead": "N38a-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the receipt has a seed field but the bead never said where the seed comes from: now FROB_TEST_SEED (STD-TEST) in the full ADR-GAUNT-01 form, with same-seed selection and order reproducible"
+  },
+  {
+   "bead": "N38a-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "its G3 and G4 checks read the relation registry and chaos families, which land at M2 after this M1 bead: they now report not-evaluated (never bound) until then; due-unbound printed as a registered harness reason; deps N38-REF, N38a-12, STD-TEST; test for the pre-M2 case"
+  },
+  {
+   "bead": "N38a-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "rule 5 refuses 'held_out rows' (the sibling PPO update, planar_drive) and N33b-08's posture checks read them, but the register held only the thirteen role rows: the two held-out rows are now named with status and reason; derivations are one file per fixture as N38a-12 has it"
+  },
+  {
+   "bead": "N38a-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "request applied: frob_core::perf::ceiling renamed to frob_conformance::perf::bound::ceiling, N36-05's adapter over N00-17's thesis::general_bound, with bit-for-bit equality"
+  },
+  {
+   "bead": "N38a-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "request applied: the same rename in the technical approach, the acceptance and the 100-table equality test (bit for bit)"
+  },
+  {
+   "bead": "N38a-12",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "the ka-second-file check matched only known_answers*.toml and registries/known-answers/, missing the registry/known_answers/<chapter>.toml spelling that twelve chapter beads still use: widened, with tests; optional slug field added for late rows (as N38b-05 has for CX); contiguity points at N38a-40's amendment"
+  },
+  {
+   "bead": "N38a-14",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "mutations used mut-mr-<nn> features selected at run time, a second mechanism beside the control runner's nc-<nnnn> features (N38b-04, N34-CX rule 4) that the runner could not plant: now each relation mutation is an MR-seeded control with its nc feature; the one-to-one relation-control rule contradicted the four relations that name two defects: now one control per mutation"
+  },
+  {
+   "bead": "N38a-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "mut-mr-c<nn> features replaced by the nc-<nnnn> mechanism; controls carry seed MR-C<nn>"
+  },
+  {
+   "bead": "N38a-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "mut-mr-<nn> features replaced by the nc-<nnnn> mechanism; sixteen controls for the sixteen planted defects (MR-01 and MR-08 name two); MR-09's control also names GATE-GAUNT-06, so N38a-24's redraw control reuses the one branch"
+  },
+  {
+   "bead": "N38a-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "mut-mr-<nn> features replaced by the nc-<nnnn> mechanism"
+  },
+  {
+   "bead": "N38a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "mut-mr-<nn> features replaced by the nc-<nnnn> mechanism; sixteen controls (MR-32 and MR-36 name two)"
+  },
+  {
+   "bead": "N38a-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the mutant step used '--features gauntlet-mutations' alone, which plants nothing under the per-control feature mechanism: now one build per mutation with its nc feature; FROB_TEST_SEED in the relation runs; release binaries checked for nc-* features, not mut-*"
+  },
+  {
+   "bead": "N38a-20",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "check (e), its test hard_only_battery_refused and a negative control needed the hard-world set and its refusal, which arrive at M3 (BD-275, N38a-21) after this M2 bead: (e) now checks that every item is one the grid expands to (test hand_added_item_refused), and the hard-only refusal stays with N38a-21; related N38a-21, N38b-37"
+  },
+  {
+   "bead": "N38a-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "introduced its own tag origin: hardset beside BD-275's discovery mark (is_discovery_world) and left unclear whether it raises the three refusals again: now one mark, the refusals raised by their owners (BD-259/BD-275 for 567, N26a-23 for 560, BD-275 for the only-hard battery at definition) and asserted here from the Gauntlet's side; test discovery_mark_propagates"
+  },
+  {
+   "bead": "N38a-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "request checked: already applied in the staging file (one table, registries/batteries/triggers.toml; this bead owns the fixtures row). Found: the row claimed to be the union with N24b-01's list but replaced its pattern crates/frob-sense/src/clock* by clock/**, so a change to clock.rs would not trigger the battery; both patterns kept, test extended"
+  },
+  {
+   "bead": "N38a-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "defined a second fault vocabulary and await-point naming beside its dependency N33c-15's frob_conformance::lab::Fault and AwaitPoint (and a second minimizer): the schedule now writes N33c-15's variants and points, so await-point coverage is counted once; the release seed is FROB_TEST_SEED; runner in the full ADR-GAUNT-01 form; test fault_kinds_are_lab_vocabulary"
+  },
+  {
+   "bead": "N38a-24",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "its planted builds were neither controls of registry/controls.toml nor built by the one mechanism, so GATE-GAUNT-06 had no control the runner could run (N38b-04 rule 1), and the gate table's first stated control (a leaked device buffer after cancellation) was missing: the six controls are now nc-<nnnn> mutation records naming GATE-GAUNT-06, five seeded GATE-GAUNT-06 here and redraw-on-rejection reusing MR-09's; deps N38a-16, N38b-04"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "to": "N16-KA",
+   "from": "N38a-12",
+   "what": "rows go to crates/frob-conformance/registry/known_answers/kinesis.toml, a chapter file that N38a-12's one-file rule (now also matching the known_answers/ directory) refuses with ka-second-file: append the rows to crates/frob-conformance/registry/known_answers.toml in N38a-12's schema, as N18-KA, N21-KA, N22-KA and N28-KA now do"
+  },
+  {
+   "to": "N23-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/cortex.toml -> the one file known_answers.toml in N38a-12's schema"
+  },
+  {
+   "to": "N24-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/arena.toml -> the one file"
+  },
+  {
+   "to": "N26-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/nemesis.toml -> the one file"
+  },
+  {
+   "to": "N27-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/autopsy.toml -> the one file"
+  },
+  {
+   "to": "N27b-21",
+   "from": "N38a-12",
+   "what": "its suite rows live in registry/known_answers/autopsy.toml; they belong in the one file known_answers.toml (with N27-KA)"
+  },
+  {
+   "to": "N30-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/ground.toml -> the one file"
+  },
+  {
+   "to": "N31-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/foundry.toml -> the one file"
+  },
+  {
+   "to": "N32-KA",
+   "from": "N38a-12",
+   "what": "derivation files are placed under crates/frob-conformance/known_answers/tether/, one per row; N38a-12 puts them at docs/derivations/<fixture>.md, one per fixture, with the rows listed in front matter"
+  },
+  {
+   "to": "N33-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/suite.toml -> the one file"
+  },
+  {
+   "to": "N36-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/perf.toml -> the one file"
+  },
+  {
+   "to": "N37-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/safe.toml -> the one file"
+  },
+  {
+   "to": "N41-KA",
+   "from": "N38a-12",
+   "what": "same as N16-KA: registry/known_answers/delivery.toml -> the one file"
+  },
+  {
+   "to": "N38a-40",
+   "from": "N33-CX",
+   "what": "rule 5 fails a provisional tag left in any registry, but N38b-05 (CX) and now N38a-12 (KA) keep the tag in an optional slug field after numbering: state that a tag in the slug field of its own row is exempt, with a test; list among the known block requests N18-KA's ka block of 4 (the four hand cases of §18.19-§18.20) and N33-CX's cx block of 9 (the late suite cases)"
+  },
+  {
+   "to": "BD-025",
+   "from": "N38a-15",
+   "what": "the admitted seed form is MR-nn, but the eleven carried relations are MR-C01..MR-C11 and their controls are seeded so: state that the MR form admits MR-Cnn, with a case in seed_forms_closed"
+  },
+  {
+   "to": "BD-025",
+   "from": "N34-22",
+   "what": "about 170 beads (for example N20b-45, N16c-*, N18b-*, N21b-*, N36-*) run the tier targets as --test g0/g1/g2/g3/g4/g5, but the targets are g0_laws, g1_known_answers, g2_parity, g3_metamorphic, g4_chaos, g5_determinism: extend the no_conformance_command scan to flag '--test g[0-5]' followed by a non-word character in scripts and print the long name, so the short form cannot ship"
+  },
+  {
+   "to": "N34-17",
+   "from": "N34-22",
+   "what": "its negative-control builds use '--cfg frob_nc=...' and reject Cargo features; N34-CX rule 4 and N34-18 use the suite's one mechanism, cfg(feature = \"nc-<nnnn>\") built with --features gauntlet-mutations,frob-core/nc-<nnnn>: switch the three mutants (dup-first-wins, dup-last-wins, skip-escape-decode) to it"
+  },
+  {
+   "to": "N34p1-01",
+   "from": "N34-22",
+   "what": "its negative-control build is named frob_nc=\"no-key-sort\"; use N34-18's no-key-sort mutant through --features gauntlet-mutations,frob-core/nc-<nnnn> (CX-358's record), as N34-22 now does"
+  },
+  {
+   "to": "N38a-25",
+   "from": "N38a-24",
+   "what": "its negative controls are built with '--features gauntlet-mutations' alone, which plants nothing under the one mechanism (N38b-04): give each (nc_two_statement_key, nc_offset_pagination, nc_commit_before_durable, nc_worker_other_commit, nc_order_dependent_device) a cfg(feature = \"nc-<nnnn>\") branch and a mutation record in registry/controls.toml naming GATE-GAUNT-06 (seed GATE-GAUNT-06), as N38a-24 now does; N38a-27 counts 'every registered control of the three family beads'"
+  },
+  {
+   "to": "N38a-26",
+   "from": "N38a-24",
+   "what": "same as N38a-25: register its negative controls (the last-duplicate reader, the string-prefix path check, ...) as mutation records of registry/controls.toml naming GATE-GAUNT-06, each planted through its own nc-<nnnn> feature"
+  },
+  {
+   "to": "N33c-15",
+   "from": "N38a-23",
+   "what": "lab tests reproduce with FROB_LAB_SEED, a second seed variable beside STD-TEST's FROB_TEST_SEED (rule 1) that N38a-02 records in receipts and N38a-23 uses as the chaos release seed: derive lab seeds from FROB_TEST_SEED and drop FROB_LAB_SEED"
+  }
+ ],
+ "unchanged": 4,
+ "notes": "complete: 45 of 45 reviewed; unchanged: N33a-20, N38a-05, N38a-09 (graph finding checked: deps are BD-025 and the two standards only; scope is the file, schema, registration, funding rule, completeness and cap that GATE-GAUNT-08 reads; acceptance is exact), N38a-13. All nine requests addressed to the slice are applied (N38a-22's was already in the staging file). Main defects round 1 missed: chapter KA files and private row schemas against N38a-12's one file; CX beads writing controls.toml and KA/CX double controls for one plant; a second mutation mechanism (mut-mr-*, --cfg frob_nc, bare --features gauntlet-mutations) beside N38b-04's nc-<nnnn>; checks placed before the beads they read (N38a-03, N38a-20); duplicate vocabularies (hard-set tag, chaos faults). Settled: yes for the slice once the requests land; the main cross-slice risk is ~170 beads using --test g0..g5 short names (request to BD-025)."
+}

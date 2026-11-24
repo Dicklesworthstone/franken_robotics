@@ -1,0 +1,370 @@
+{
+ "round": 1,
+ "slice": "U24c",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BD-122",
+   "kinds": [
+    "complete",
+    "self-contained",
+    "scope"
+   ],
+   "what": "static-admission check 9 now states the full FROB-REF-539 rule (near-boundary example per comparator, monitor agreement, mutation check, vacuous hard-limit refusal); Out names task.check --coupling (N24c-37) and the moment-free traction rule (N24c-18) as later stages that register into the runner; the kitchen-tray acceptance example is defined in the bead"
+  },
+  {
+   "bead": "BD-125",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "recover-push verdict had a pre-push loophole (bare after-push let a body that stood still before the push satisfy the until at t = 2 s); now (and settled (H (0 s 2 s) after-push)), earliest success 4 s, with a control test. Late-packet docking claim 'every world violated' was false; restated per §20.16 (no controller docks in both gains; the reference no-reading branch fails the g = 2 worlds), signal `late = 0` replaced by `reading_late`"
+  },
+  {
+   "bead": "N24-REF",
+   "kinds": [
+    "complete"
+   ],
+   "what": "registered the symbolic refusals the slice's beads use but the table lacked: verdict-task-mismatch and stage-concatenation (task.verdict, CX-269), wrench-command-missing (N24c-18), intent-signal-misused (N24c-21), audit-arm-not-built (N24cp1-01), sampling-mode-not-built (N24c-35), stream-adapter-missing and coupling-choice-not-built (N24cp1-02); foil-as-candidate and the four item-bank refusals marked retired-never-reused on their fallbacks"
+  },
+  {
+   "bead": "N24-CX",
+   "kinds": [
+    "correct"
+   ],
+   "what": "ARENA-W2 row qualified: 0.3486 holds only for forward-only longitudinal traction; signed longitudinal gives 0.3731 (recomputed); catching tests updated"
+  },
+  {
+   "bead": "N24c-02",
+   "kinds": [
+    "complete",
+    "scope",
+    "tests"
+   ],
+   "what": "refusals now a table with codes and repairs (run of another task without --re-evaluate, stage concatenation, FROB-REF-888); Out names the M2 batch form N24cx-01; acceptance and unit test for the mismatch and missing-channel cases"
+  },
+  {
+   "bead": "N24c-06",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "538 step checks outward rounding too; new steps verdict_task_mismatch and verdict_missing_channel with a cart-upright4 fixture"
+  },
+  {
+   "bead": "N24c-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "run_c_new_seed no longer asserts every digest changes where discrete draws can coincide (six docking world types, 64 poses); docking_late assertion aligned with the corrected late-packet semantics of BD-125"
+  },
+  {
+   "bead": "N24c-08",
+   "kinds": [
+    "deps",
+    "optimal",
+    "correct"
+   ],
+   "what": "added dep N24b-14 (INV-ARENA-05 and FROB-REF-552 are its mechanism); PO-ARENA-03 reuses N24b-06's independent frob-conformance enumeration (the row described a 'different code path' that was the production method itself) and adds random n"
+  },
+  {
+   "bead": "N24c-10",
+   "kinds": [
+    "placement",
+    "scope"
+   ],
+   "what": "label `registry` replaced by `e2e`: it is a conformance test bead that depends on mechanisms (a registry may not), which is why the graph tool flagged it; consumers named (BD-147 by request); Out lists the idle-arm and coupling known answers"
+  },
+  {
+   "bead": "N24c-13",
+   "kinds": [
+    "deps",
+    "sense",
+    "tests",
+    "placement"
+   ],
+   "what": "decision bead required tests of the lane that depends on it (direction inversion); enforcement tests moved to the lane beads by reference, the bead now writes config/qualification.toml with fail-closed defaults before the decision; deps N24a-01 and N24b-06 (sizing recomputed by eval.preanalyze); parent EPIC-M2 -> WP-54"
+  },
+  {
+   "bead": "N24c-14",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "deps added for each measured input (N24b-12 plate-drag rig, BD-116 legged baseline, BD-110 design.check) plus STD-E2E; the four inputs are measured by scripts/e2e/open_arena_4_inputs.sh with NDJSON metrics instead of by hand"
+  },
+  {
+   "bead": "N24c-15",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added deps BD-125 and BD-201: the atom corpus is the atoms of the M1 and M2 task files"
+  },
+  {
+   "bead": "N24c-16",
+   "kinds": [
+    "deps",
+    "sense",
+    "scope",
+    "placement"
+   ],
+   "what": "orphan decision required artifacts built later by other beads (the M2 task file, the M3 hexapod mass check); now writes machine-readable records and the hexapod asset-register row, with deps N24a-02 and NEG-15; consumer tests named in BD-201 and the hexapod beads (requests filed); parent EPIC-M2 -> WP-24; priority 2 -> 1 (M2 default)"
+  },
+  {
+   "bead": "N24c-17",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the zero-yaw strip claim 'equals 0.3486 when lateral traction is disabled' is false: with signed longitudinal traction the optimum is bang-bang with a reverse band, (μL−μH)/2 + √(μH(μH+μL)/2) = 0.3731 (verified by LP at 200 and 2,000 strips); 0.3486 needs forward-only traction. Added TractionOptions for the two restrictions, tests for both values, a control for a silently imposed forward-only restriction"
+  },
+  {
+   "bead": "N24c-18",
+   "kinds": [
+    "self-contained",
+    "complete"
+   ],
+   "what": "wrench_command placed in the `study` section (the requirement grammar is fixed) instead of an either/or; the missing-command refusal named (wrench-command-missing); known answers cite 0.3731"
+  },
+  {
+   "bead": "N24c-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "free-yaw plate expectation sharpened to >= 0.3731·N with the program solved at zero yaw and zero lateral force, planning estimates 0.51 and 0.49 labelled HYPOTHESIS; gate-register statement corrected (§40.8 lists GATE-ARENA-10)"
+  },
+  {
+   "bead": "N24c-20",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "added dep N24a-33: the pilot's scorer is the exact evaluator script of the requirement-writing pilot, now named and pinned by hash"
+  },
+  {
+   "bead": "N24c-21",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "the dwell invariant used F (future-time) although the plan says past-time predicates and the bead's own :intent grammar admits only Past; rewritten as (and (O (0 s H) (H (0 s T_d) s)) (O (0 s H) (and s early))) with an `early` atom on t_elapsed; corridor used (H (0 s H) ...), which the origin rule makes -inf on any episode ending before its horizon, now a running minimum; :intent signals are offline-only past 4,096 ticks instead of hitting FROB-REF-528 and may not feed rewards or termination (intent-signal-misused); early-terminated wins re-run to the horizon; the undefined 'looks degenerate to the audit's descriptors' (a forward reference to N24c-24, which depends on this bead) replaced by intent::descriptors hosted here and an unclassified rule against the task's satisfied examples; airborne defined as no contact at all; deps BD-259, BD-263 (the promotion/qualification refusals it adds) and N29a-22 (contact-active)"
+  },
+  {
+   "bead": "N24c-22",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "hand-case fixture now adopts the dwell invariant (T_d 2 s) and carries its admission examples, without which the sled would be unclassified; control test for the unadopted case; progress-atom edit aligned with N24c-27; mark-intended on an idleness finding writes idle: intended"
+  },
+  {
+   "bead": "N24c-23",
+   "kinds": [
+    "sense",
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "said it exists only on the surviving branch of KILL-FOIL, but the gate run that decides KILL-FOIL needs it; reframed (built after the pilot, removed by the fallback bead); acceptance named opt.start, which is M4 (BD-341), now eval.compare/promote/qualify with opt.* inheriting the shared admission check (request filed); dep BD-118 for the relaxed member's re-synthesis, with a failure path and test"
+  },
+  {
+   "bead": "N24c-24",
+   "kinds": [
+    "sense",
+    "correct",
+    "self-contained"
+   ],
+   "what": "same Frontier framing fix; the actual-design path is what the kill gate's fallback keeps, while the pilot's falsifier builds nothing (plan: only the in-campaign check); descriptors now from N24c-21's shared function; clean-twin acceptance no longer asserts zero findings (an unclassified free-body finding is possible and is the gate's measurement); flag --body actual harmonised to --arms actual"
+  },
+  {
+   "bead": "N24c-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "kill-gate trigger 3 read as S >= D, but N24c-26 registers set containment; aligned (S-cap = D) with a containment test and per-arm sets logged; compute envelope 3 corrected to 4.5 reference campaigns (comparator audits omitted); register statement corrected (§40.8 lists the gate); unrun-close path under the pilot's falsifier"
+  },
+  {
+   "bead": "N24c-26",
+   "kinds": [
+    "split",
+    "scope",
+    "correct",
+    "tests"
+   ],
+   "what": "the decision bead also carried out the fallback (removing assets, a design component, a refusal, verb arms); split into N24cp1-01, which depends on the decision, as the plan's other kill gates do (N16b-19/N16b-20); register statement corrected; containment test for trigger 3"
+  },
+  {
+   "bead": "N24c-27",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "best audited return included the idle runs themselves, so any positive idle return reached ratio 1 and every task would be flagged; idle runs excluded, 'not evaluated' when no non-idle run exists; hand-case reward and verdict defined so 'full reward' is a number (58, pre-origin ticks excluded); progress atom conjoined as (F (0 s T) progressing) since a safety-only verdict has no success operand; idle: intended declaration so a station-keeping task is not re-flagged under other laws or worlds; Scope said `needs` for a dependency"
+  },
+  {
+   "bead": "N24c-28",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "fallback profile skipped the foil finding that the qualification path relied on; now audits a hand-written reach-goal-dwell task and checks the hand-case verdict numbers on synthetic traces in both profiles; idle ratio assertion fixed to compare against a recorded carrying run (ratio above 1), not against itself; --body actual -> --arms actual"
+  },
+  {
+   "bead": "N24c-29",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "part 2/3 replays did not say how q is built for a design with no fitted θ; now leave-candidate-out with θ at the class mean and both roles, as the gate (N24c-33) does, using the variance-adaptive betting sequence with the widened span the plan requires; tests for both"
+  },
+  {
+   "bead": "N24c-30",
+   "kinds": [
+    "correct",
+    "tests",
+    "sense",
+    "self-contained"
+   ],
+   "what": "the fit's initialisation (every a_i the same unit vector, θ unstated) is a fixed subspace of the alternating Newton updates: dimensions 2..k get zero gradient and every k fits as k = 1; now an SVD start on logit pass rates, plus a sign convention so parameters are byte-identical; Frontier framing fixed (built before KILL-ITEMBANK because the replay gate fits it); sealed-row refusal named FROB-REF-843; prepared fits only on synthetic batteries; task clusters audit and batteries as the registry lists"
+  },
+  {
+   "bead": "N24c-31",
+   "kinds": [
+    "correct",
+    "tests",
+    "sense"
+   ],
+   "what": "the per-item floor of 1e-6 under the square root moves the plan's known answers (3/400 becomes 759/100,000; the wrong-model weight 10 becomes 9.18, recomputed exactly); floor now only when the model predicts no difference anywhere, with the test-only second-moment-table form for the fixtures; epsilon = 0 refused in a study (explain mode and mutation switch only); a design without rows takes the fitted class mean, not 0; Frontier framing fixed"
+  },
+  {
+   "bead": "N24c-32",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "prepared bank states could not give exact 0/1 second moments with logistic parameters and with the floor, so GATE-ARENA-12's exact variances would fail; fixture now uses second-moment-table fits; plant failure (epsilon = 0) goes through the mutation switch; new refuse_epsilon_zero step; register statement corrected"
+  },
+  {
+   "bead": "N24c-33",
+   "kinds": [
+    "tests",
+    "risks"
+   ],
+   "what": "epsilon = 0 control routed through the mutation switch and reported uninformative rather than passed if coverage holds; unrun-close path under the pilot's falsifier"
+  },
+  {
+   "bead": "N24c-34",
+   "kinds": [
+    "split",
+    "correct",
+    "scope"
+   ],
+   "what": "trigger 3 parenthetical read as 'no better in either direction' (both), contradicting the both-directions pass rule; now fail-closed (fires if either direction fails) with a test; the withdrawal of the item-bank surface moved to the one-branch bead N24c-35; register statement corrected"
+  },
+  {
+   "bead": "N24c-35",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "its Out said the item bank is 'removed on this branch' but no bead removed it; this fallback bead now withdraws eval.items and --sampling item-bank (sampling-mode-not-built) with tests, keeping old results replayable"
+  },
+  {
+   "bead": "N24c-36",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "U19a request: acceptance now requires the task-level legs (part 2, steps a to d) of N19ax-03's scene_field_samples.sh to run and pass with no 'needs N24c-36' skip; the dyadic sum identity was claimed bit-exact, but right = S − left in floating point makes fl(left + right) differ from S on about a quarter of nodes (measured), so node bits are asserted identical and the sum to round-off, as N16c-01 states; Out names N16c-01, BD-180, N19ax-03"
+  },
+  {
+   "bead": "N24c-37",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "dep N33b-19 (study.plan and eval.compare on the CPU, which its study-admission refusal hooks into; request filed for the device eval.compare BD-262); rate check's 'bit-identical' sum corrected to node bits identical and sums to round-off"
+  },
+  {
+   "bead": "N24c-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "register statement corrected (§40.8 lists GATE-ARENA-14)"
+  },
+  {
+   "bead": "N24c-40",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "dep BD-235 (the held-out scenes come from scene.split); kill-gate framing fixed (built before the decision; fallback work is N24cp1-02)"
+  },
+  {
+   "bead": "N24c-41",
+   "kinds": [
+    "split",
+    "scope",
+    "correct",
+    "tests"
+   ],
+   "what": "the decision bead also implemented the fallback (adapter syntax, compiler change, --choose withdrawal); split into N24cp1-02, keeping the fallback's definition here; register statement corrected; rule-4 test"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N24cp1-01",
+   "what": "Fallback on the KILL-FOIL branch, split from N24c-26: remove the foil parts (gate-fired case) or confirm nothing was built (pilot-falsified case); task.audit keeps the actual design, the idle arm and the in-campaign check; audit-arm-not-built; e2e fallback profile by default. Deps N24c-26, N24c-28."
+  },
+  {
+   "bead": "N24cp1-02",
+   "what": "Fallback on the KILL-EXPODOMAIN branch, split from N24c-41: explicit per-stream adapters replace automatic lowering, --choose withdrawn, the four coupling checks kept and still gating studies, migration preserving draws by digest; e2e re-run of the gate fixture with adapters. Deps N24c-38, N24c-41."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-147",
+   "what": "add dep N24c-10: the M1 exit review should read the fixtures-battery report of the eleven Arena known answers (graph tool: nothing depends on N24c-10)"
+  },
+  {
+   "bead": "BD-201",
+   "what": "add dep N24c-16 (OPEN-ARENA-1 must be recorded before the mirrored velocity-tracking task file is written); carry the `source` record (task, version, licence) in the terms section, the no-parity sentence on its scorecard, and tests mirrored_task_has_source_record, mirrored_report_has_no_parity_sentence, score_ratio_without_parity_record_refused"
+  },
+  {
+   "bead": "N14b-02",
+   "what": "add dep N24c-16 (OPEN-ARENA-2); the hexapod-radial archetype's mass-within-15% check reports `not applicable` (reference row `none`), never `passed`; test hexapod_mass_check_not_applicable"
+  },
+  {
+   "bead": "ZOO-hexapod-radial",
+   "what": "add dep N24c-16 (OPEN-ARENA-2): its reference-robot row is `none` and the mass check is `not applicable`"
+  },
+  {
+   "bead": "N24b-15",
+   "what": "read the campaign limits and the qual:admin holder roles from config/qualification.toml written by N24c-13 (fail-closed defaults when undecided); its open/close and no-second-campaign tests now carry the enforcement half that N24c-13 used to claim"
+  },
+  {
+   "bead": "BD-261",
+   "what": "the capability registry reads the qual:admin holder roles from config/qualification.toml (N24c-13); a holder role that also designs candidates is rejected at load"
+  },
+  {
+   "bead": "BD-341",
+   "what": "opt.start/opt.status admit candidates through the shared candidate-admission function, which refuses a design marked foil: true with foil-as-candidate (N24c-23); add test opt_start_refuses_foil, recorded as not applicable if KILL-FOIL has fallen back and the marker no longer exists"
+  },
+  {
+   "bead": "BD-262",
+   "what": "the device form of eval.compare shares the study-admission check of N24c-37 that refuses a paired study on a task whose exposure table has not passed the coupling test (exposure-table-untested); add dep N24c-37 and test study_refused_untested_on_device"
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 42 beads reviewed. Recurring defects fixed: (1) Frontier beads said they exist 'only on the surviving branch' of a kill gate whose own measurement needs them; reframed as built before the decision and withdrawn by the fallback. (2) Three decision beads carried out their fallback; split (N24cp1-01, N24cp1-02) or moved to the existing fallback bead (N24c-35), as the plan's other kill gates do. (3) Numbers recomputed: strip zero-yaw (0.3731 for signed longitudinal traction, LP-verified), item-bank floor effects, dyadic sum round-off, CP interval 61-92%. (4) 'No row in the register' corrected for GATE-ARENA-10 to -14 and the three kill gates (§40.8 lists them). Unchanged: BD-064, N24c-04, N24c-09, N24c-39, N24cx-01. The U19a request on N24c-36 is addressed. Slice is close to settled; the two new beads are the main thing a second round should check."
+}

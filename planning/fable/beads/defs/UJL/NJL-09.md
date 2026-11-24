@@ -4,11 +4,11 @@ title: "golden fixture L.9, part B: the simulated half of the MCP transcript (at
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "tether", "nemesis", "autopsy", "arena", "frob-mcp", "frob-conformance", "solid", "test", "e2e"]
+labels: ["m3", "tether", "nemesis", "autopsy", "arena", "frob-mcp", "frob-conformance", "solid", "test", "e2e", "review-notes-open"]
 parent: "WP-26"
-deps: ["NJL-08", "BD-298", "BD-210", "BD-273", "BD-274", "BD-205", "BD-279", "BD-280", "BD-058", "BD-292", "BD-259", "BD-133", "ART-L3", "ART-L6", "ART-L7", "STD-E2E"]
+deps: ["ART-L3", "ART-L6", "ART-L7", "BD-058", "BD-133", "BD-205", "BD-210", "BD-259", "BD-273", "BD-274", "BD-279", "BD-280", "BD-292", "BD-298", "N24b-15", "N24b-19", "NJL-08", "NJLx-02", "STD-E2E"]
 needs: []
-related: ["BD-211", "BD-261", "BD-283", "BD-299", "N27b-09", "N28b-01", "NJL-05", "ART-L8", "ART-L9"]
+related: []
 gates: []
 plan_refs: ["Appendix L.9 (attack, diagnose, author then mission, attack again, qualify, offline; rules 4 to 11)", "§32.7", "§32.10", "§32.12.5", "§32.12.6", "§26.4", "§26.7", "§27.4", "§27.5", "§27.6", "§28.13", "§24.13", "§12.4"]
 ---
@@ -189,7 +189,7 @@ accept   6 of 6 entries; class of the bundle: Tested (weakest entry e6); all thr
 | B2 | `nemesis_search`, key `nem-1`, budget 240 GPU-seconds, `sync_wait_ms` 5,000 | If the job outlives the wait: `ok: true`, exit 8, a `job` with `id`, `state: "running"`, `progress {done, total, unit}` with a denominator, `eta_s`, `poll_after_ms`, `last_committed`; `next_actions` names `job_wait`. The call returns within 5,500 ms |
 | B3 | `job_wait {job, sync_wait_ms: 30000}`, repeated until completion | The final envelope of `nemesis.search`: `worlds_searched`; `failures_promoted` with a count per class that sums to it; the baseline arm's failures at equal budget; the worst world with its run, requirement, binding atom, a negative margin and its edit count; the artifact guard's line; evidence class Tested with tier and determinism; cost within the 240 GPU-second budget; budget left = budget before − cost |
 | B4 | `nemesis_shrink {world}`, key `shr-1` | A `.fmcw` identity; an edit count; a minimality label; `tests`; `seeds_failing` as a/64 with a ≥ 48; an oracle class that is solvable; one passing neighbour per edit (the invariants of artifact L.6) |
-| B5 | `session_focus {cluster: "simulate"}`, then `run_fork {run, world, before: "failure", dt: "1.0 s", classify_only: true}` | A fork handle; the fork tick; `null_replay: "bitwise"`; one classified entry per proposed change, each with one of the five fork classes and an earliest valid tick; a change to a property the payload carried from the first tick is `structural` with earliest valid tick 0 and a non-empty `forced_by`; with `classify_only` nothing is restored |
+| B5 | `session_focus {cluster: "simulate"}`, then `run_fork {run, world, before: "failure", dt: "1.0 s", classify_only: true}`, key `fk-1` (the step file adds the key the specimen abridges: `run.fork` is a `run` verb and its registry example carries `--key fk-1`) | A fork handle; the fork tick; `null_replay: "bitwise"`; one classified entry per proposed change, each with one of the five fork classes and an earliest valid tick; a change to a property the payload carried from the first tick is `structural` with earliest valid tick 0 and a non-empty `forced_by`; with `classify_only` nothing is restored |
 | B6 | `session_focus {cluster: "diagnose"}`, then `autopsy_intervene {fork, placebo: 64, replicates: 8, coalitions: "pairs", do: [three interventions]}`, key `aut-1` | `forks_run` equals the number of forks the request implies for the admitted interventions (placebo forks, replicates per single intervention and per pair, and the null replay) |
 | B7 | `autopsy_attribute {fork}` | Schema `frob.autopsy.attribution/1`; tier and precision; `null_replay: "bitwise"`; placebo `{n: 64, flips, rate}` with rate = flips/64 (exact arithmetic: 2/64 = 0.03125); a contrast per admitted intervention with `rescued` as k/8, flip rates at the two perturbation scales 10⁻¹² and 10⁻⁷, and a label; pairs with an interaction; the intervention on the tray fill refused with `FROB-REF-581` and earliest valid fork tick 0; evidence class Estimated with scope "cause in the model at this tier, among the listed factors"; a `next_actions` command that is a registered CLI path; budget left = budget before − cost |
 | B8 | `session_focus {cluster: "author"}`, then `design_edit {edit: "set-param", path: …/foot/region/sphere, value: "0.030 m", expected_parent}`, key `ed-1` | Exact: a new design identity whose parent is the design of the first half; `symmetry: "preserved"`; an invalidation set that contains settled poses, the baseline controller, every rollout and the contact binding. A repeat with a stale `expected_parent` is refused (`FROB-REF-804`, exit 7) |
@@ -255,6 +255,9 @@ retry costs power. In the story the committed request observes 2 failures, bound
 - [ ] Rule 10: a read of any sealed field (world addresses, per-unit outcomes, telemetry, stills) from the
       session is refused with `FROB-REF-840`, and the receipt contains only the listed fields.
 - [ ] Rule 11: the bundle of B13 has class Tested and the offline auditor accepts six of six entries.
+- [ ] The test campaign is opened and closed by the administrative session through `eval.ledger`'s `open` and
+      `close` actions with keys; the agent's session is refused `--open` (FROB-REF-720, exit 5); while
+      OPEN-ARENA-3 is undecided a non-synthetic claim family is refused `qualification-undecided` (exit 3).
 - [ ] If a search finds no failure for the unedited design, steps B4 to B7 are logged as skips with that
       reason, never as passes, and the remaining steps run.
 
@@ -283,12 +286,14 @@ recorded fixture responses labelled `synthetic`; the mechanisms are tested in th
 verb:nemesis.search,verb:nemesis.shrink,verb:run.fork,verb:autopsy.intervene,verb:autopsy.attribute,
 verb:design.edit,verb:result.revalidate,verb:eval.qualify,verb:prove.bundle,verb:job.wait,verb:job.find
 seed=901 needs=cpu,cuda,mcp,frobd plants=double-charge,sealed-read`). It runs the first half's step file, then
-`session.b.steps.json`, through `frob-mcp-drive` over stdio, and asserts each row of the table and each
+`session.b.steps.json`, through `frob-mcp-drive` over stdio (after opening the test campaign under the
+administrative session, as Considerations specifies), and asserts each row of the table and each
 accounting invariant on the recorded responses (`e2e_assert_json`, `e2e_assert_num` for budget identities and
 bounds, `e2e_assert_digest_eq` for identities that flow between steps). It then runs the connection-kill
-check of rule 4, the sealed-read refusals of rule 10 (`e2e_expect_refusal FROB-REF-840 3`) and the stale-parent
-refusal of B8. Finally it copies the bundle to a scratch directory with an empty environment and runs
-`frob-verify`. Plants: `double-charge` (a server patched to charge a retried key twice) must fail the budget
+check of rule 4, the sealed-read refusals of rule 10 (`e2e_expect_refusal FROB-REF-840 5`: the one Arena code with exit 5,
+N24-REF and the firewall BD-261) and the stale-parent
+refusal of B8, then closes the test campaign. Finally it copies the bundle to a scratch directory with an empty
+environment and runs `frob-verify`. Plants: `double-charge` (a server patched to charge a retried key twice) must fail the budget
 identity; `sealed-read` (a planted leak path) must be caught by the sealed-field assertion. The log
 (`target/e2e-logs/art_l9_session_b/<utc>.ndjson`) has one `cmd` line per MCP request with the request
 verbatim, wall time, the envelope's exit code and its `evidence` block (claims, class, tier, determinism,
@@ -326,8 +331,20 @@ log.
 - Kill gate KILL-AUTOPSY (planted-cause accuracy below 90%, or the top factor changes in more than 30% of
   cases at 10⁻⁷): fallback, single-factor paired re-runs from the episode start; steps B6 and B7 then assert
   the fallback's shape, without coalitions.
+- B13 calls the receipt form of `prove.bundle` (`design`, `mission`, `receipt`), which N24b-19 adds at M3
+  together with the campaign section of the bundle; BD-133's mission-slice form takes an answer only. N24b-19
+  is a dependency for that reason.
 - The qualification of B12 consumes sealed clusters of a real campaign; the script uses a campaign opened for
-  the test under the administrative scope, in the scratch root, so that no production campaign's index moves.
+  the test in the scratch root, so that no production campaign's index moves. It is opened and closed with
+  the admin actions of `eval.ledger` (N24b-15), under a second, administrative session holding `qual:admin`
+  that the agent's session never sees: before the first half, `frob eval ledger --open --task
+  t:kitchen-tray@88c1… --world-family <the fixture's synthetic family> --key l9-open --json` (the record is the
+  campaign `q:kitchen-tray/1` of the transcript); after the sealed-read refusals of rule 10 and before the
+  offline step, `frob eval ledger <campaign> --close --key l9-close --json`. While OPEN-ARENA-3 is undecided
+  (`decided: false` in `config/qualification.toml`), opening on a non-synthetic claim family is refused with
+  `qualification-undecided` (exit 3), so the fixture's task family carries the `synthetic` label; the script
+  asserts that refusal once on a non-synthetic family (`e2e_expect_refusal` by name), and logs which posture
+  held. The agent's session calling `--open` is refused with FROB-REF-720, exit 5 (asserted once).
 
 ## References
 

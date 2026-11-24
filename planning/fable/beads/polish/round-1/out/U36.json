@@ -1,0 +1,274 @@
+{
+ "round": 1,
+ "slice": "U36",
+ "reviewed": 43,
+ "changed": [
+  {
+   "bead": "BD-040",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "target row 8 (H physics on a heightfield, ratio to the incumbent at matched settings) had no measured denominator: the physics row now names Q's grounds and measures H on flat ground and on a heightfield as separate rows; acceptance names both; unit test ground_named_per_row added."
+  },
+  {
+   "bead": "N36-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the row-capacity granule 32 was justified as 'the smallest granule above 8 that reproduces both values', which is false (10, 16, 20, 32, 40 all map 152 to 160 and 314 to 320); restated as a DESIGN choice from the execution width; unit tests split by crate (identity and strict parser in frob-core, lint in frob-conformance) and row_capacity_granule_is_32 added to pin the reading."
+  },
+  {
+   "bead": "N36-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "two beads specified the bound 1/(1 − f + f/r + h) differently: N00-17 declares thesis::general_bound (exact rationals) the only implementation and binds N36-05 to call it, while N36-05 claimed to be the one implementation and added a second f64 copy in frob_core::perf. DESIGN: ceiling() is now an adapter over thesis::general_bound, the pruning check calls thesis::compose, family_batch_bound computes through ceiling(f, ∞, h); dep N00-17 added; frob-core label dropped; acceptance and tests (ceiling_is_the_thesis_bound, composition_is_thesis_compose) added."
+  },
+  {
+   "bead": "BD-216",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "request from U12-2 applied: N12-48 (D.8 paired-bound oracle) and N12-49 (D.9 units-of-throughput oracle) moved from related to deps, with the unit test harness_agrees_with_compendium_oracles that compares the harness's conversions and campaign bound with those oracles."
+  },
+  {
+   "bead": "N36-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the landing check compared the ceiling and the paired bound itself, a second copy of N36-05's and N36-06's refusals: step 1 now calls admit_experiment (866 raised there) and step 4 requires a PerfRatio from N36-06 (863) with bound ≥ 1.03; tests ceiling_defects_are_866_from_admit_experiment and nine_pairs_is_863_from_perf_ratio, which are the N36-REF matrix cells for this site."
+  },
+  {
+   "bead": "N36-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "'about two and a half standard errors' corrected to 0.05 ÷ √(0.95·0.05/100) ≈ 2.3, with the probabilities that make the 95% headline's case (at 100 runs fewer than 90 inside: 0.42 for an exact 90% interval, about 0.011 for 95%); the gate record's owners updated after the BD-219 split."
+  },
+  {
+   "bead": "N36-33",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "it claimed the frob-core Workload type, its parser and WorkloadId, which N36-02 (M0) owns; it is now the resolver frob_verbs::workload_arg over N36-02's parser, with the embedded registry and its digest; acceptance asserts no second parser; unit tests resolve_q_and_h_fields and embedded_registry_digest replace the duplicated parser tests; frob-core label dropped."
+  },
+  {
+   "bead": "BD-219",
+   "kinds": [
+    "split",
+    "deps",
+    "tests",
+    "title"
+   ],
+   "what": "graph bottleneck (40+ dependents) that waited on the M2 parity rows BD-217 and on a gate record only its own dependent script N36-32 could write. Split: BD-219 keeps the verb and every mechanism of the seed (byte model, budgets, live-interval peak, fit and FROB-REF-602, the record, the envelope hook); the gate campaign, the seed's done-condition and its dependency on BD-217 move to the new capstone N36p1-01. Deps: BD-216, BD-217, N36-18 out (now related); N36-33 (the --workload resolver it calls) in; N12-49 in per the U12-2 request, with test agrees_with_compendium_d9 (scene memory 75 MB, units d = 8, 400 world-steps per world-second). Acceptance gains a pre-gate 5% check on batch-cpu and the local device (test estimate_matches_arena_high_water_batch_cpu) and the --workload resolution check."
+  },
+  {
+   "bead": "N36-32",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "after the BD-219 split it owns the gate test target that assembles the four clauses into one record per device (as N36-29 does for GATE-SPARK-21); record rules (pass, fail, not run with reason, incomplete) stated; unit tests gate22::assemble added (relative difference 283,082,752 vs 290 M → 0.0239; coverage from counts; unchanged allocation counter; four clauses required; not-run rows kept); acceptance narrowed to the devices it is run on, the all-device campaign being N36p1-01's."
+  },
+  {
+   "bead": "N36-16",
+   "kinds": [
+    "split"
+   ],
+   "what": "text named BD-219 as the capstone writing the GATE-SPARK-22 record; now names the verb BD-219, N36-32's gate assembly and the capstone N36p1-01."
+  },
+  {
+   "bead": "N36-18",
+   "kinds": [
+    "split"
+   ],
+   "what": "the fourth-clause hand-off now names N36-32's gate assembly and the capstone N36p1-01 instead of BD-219."
+  },
+  {
+   "bead": "N36-19",
+   "kinds": [
+    "split"
+   ],
+   "what": "text named BD-219 as the capstone writing the gate record; now names the verb BD-219, N36-32's gate assembly and the capstone N36p1-01."
+  },
+  {
+   "bead": "N36-29",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "the M0 rows of the script omitted BD-040's training-rate row (step, with inference, with training) and did not separate grounds, so target row 8's heightfield denominator could not be produced: rows physics_Q_flat, physics_Q_rough, physics_H_flat, physics_H_heightfield and trainrate_Q added; unit tests ground_in_row_identity and trainrate_has_three_values added; not_run_is_not_fail given its assertion."
+  },
+  {
+   "bead": "N36-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the two-fraction ceiling S_max was a local copy of the bound in perf::shard_ceiling, which N00-17's single-implementation scan forbids: it is now N36-05's ceiling(f_c, r_c, h) for an unsharded learner and thesis::compose (collection, then learner on the remaining time) plus h for a sharded one; dep N00-17; tests two_levers_through_compose (50/31) and no_local_bound_formula; acceptance line added."
+  },
+  {
+   "bead": "N36-12",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "it depended on BD-324 and N23b-23 without saying why: asynchronous sharding is also an arm of the alternative-learner pilot and N23b-23 (KILL-ALTALGO) names this bead in its start rule; both gates are now stated, checked at start (test start_checks_both_gates) and in the acceptance. The ceiling 1/(1 − w + h) is N36-05's ceiling(w, ∞, h) and admit_experiment, computed in frob-conformance (frob-learn may not depend on it); its test moved to perf::async_ceiling."
+  },
+  {
+   "bead": "N36-14",
+   "kinds": [
+    "deps"
+   ],
+   "what": "the lane reads optimization-ledger entries (unexplained speedup, baseline advance) and row S4 records bytes touched per world-step: N36-07 and N36-18 added as deps (no cycle) and named in Out."
+  },
+  {
+   "bead": "N36-15",
+   "kinds": [
+    "split",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "it registered predictions that must precede the M2 profile while depending on the profile bead N21a-27 (which records Q and H at its own closing), so the graph could not order registration first. Split: registration, the lint and the coverage function with KA-821/CX-383 moved to new N36p1-02; N36-15 now scores outcomes (H-TIME-4 gets `recorded`, it has no prediction), with new tests (stage_mapping, reference_backend, coverage_from_measured_inputs, late_registration_flagged, outcome_written_once) and its own script perf_where_time_goes.sh instead of a step in BD-217's script, which it does not depend on."
+  },
+  {
+   "bead": "N36-20",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "request from U32a applied: under a scratch registries root (N32ax-03) admission decides from the scratch registry but scratch_hold keeps execution bounded by the record (M0: refused 761 with scratch_verdict admitted; from M1: admitted with hold scratch-approval); the acceptance on approving E1 now asserts the decision, the hold and zero worlds stepped and bytes allocated; the 12-device-hour line asserts decisions on a pre-loaded meter. Request from U44-1 applied: out-of-process launches (incumbent arms and the learning pilots N23b-20, -21, -22, -36 and BD-324 under rows R13 to R17) settle their Admitted token into the meter, an unsettled token is charged at its limit. Tests and script steps added."
+  },
+  {
+   "bead": "N36-21",
+   "kinds": [
+    "deps"
+   ],
+   "what": "its e2e step is appended to BD-217's script and its row-21 figure is computed from BD-217's measured row 1, but it did not depend on BD-217: dep added (N36-21 has no dependents) and stated in Out."
+  },
+  {
+   "bead": "N36-22",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "its three steps were appended to BD-217's script, which it does not depend on and which does not depend on it; none of rows 9, 16, 18 needs that campaign, so they now run in its own script perf_other_rows.sh with full NDJSON fields and envelope admission per row."
+  },
+  {
+   "bead": "N36-23",
+   "kinds": [
+    "deps"
+   ],
+   "what": "it adds three smoke rows to the regression lane but did not depend on it: N36-14 added and named in Out."
+  },
+  {
+   "bead": "N36-24",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the penalty table restated 1 + s·(1/ρ − 1); it is now computed by N36-04's slowdown_penalty (and the shares by step_share, physics_share), whose single home N00-17 records; penalty_table compares against that function."
+  },
+  {
+   "bead": "N36-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance spoke of 'the rational decimation 8 at 2.5 ms' (8 is an integer); now lists 4, 2.5, 1 and 3 ms with 5, 8, 20 and 20/3. The dry run claimed a step in N36-30's script, which neither depends on this bead nor lists it; it is now its own script perf_restatement_dry_run.sh with steps, assertions and NDJSON fields."
+  },
+  {
+   "bead": "N36-28",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the packet's penalty and recomputed Amdahl limits are N36-04's functions, called, not restated."
+  },
+  {
+   "bead": "N36-30",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "N36-KA and N36-CX said this script runs their registry checks first, but it neither depended on them nor listed the step: deps added and the preflight now runs both checks with one assert line per row."
+  },
+  {
+   "bead": "N36-31",
+   "kinds": [
+    "complete"
+   ],
+   "what": "N36-09 says the strong step logs the bound beside the pilot's S_max (scoring the pilot); the step now does."
+  },
+  {
+   "bead": "N36-CX",
+   "kinds": [
+    "split"
+   ],
+   "what": "CX-383's tests now belong to N36p1-02 (registered before the measurement) and are scored by N36-15."
+  },
+  {
+   "bead": "N36-KA",
+   "kinds": [
+    "split"
+   ],
+   "what": "carriers updated after the splits: KA-821 to N36p1-02 and N36-15; KA-826 adds N36p1-01, which records the gate on every device."
+  },
+  {
+   "bead": "N36-REF",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "the ordering rejection is reported as 862 with pointer rates.ordering (N36-03), but the raising-site matrix and the 862 tests omitted it: matrix row and test ordering_is_862_until_assigned added."
+  }
+ ],
+ "new_beads": [
+  "N36p1-01",
+  "N36p1-02"
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38a-08",
+   "what": "it calls `frob_core::perf::ceiling(f, ∞, h)` from N36-05; N36-05 now provides `frob_conformance::perf::bound::ceiling`, an adapter over N00-17's thesis::general_bound (N00-17's single-implementation acceptance forbids a copy in frob-core). Rename the path in its technical approach and acceptance (bit-for-bit equality with that function)."
+  },
+  {
+   "bead": "N21a-27",
+   "what": "it calls `frob_core::perf::ceiling` (N36-05) in its acceptance and tests (screen_calls_the_one_bound); the entry point is `frob_conformance::perf::bound::ceiling`, an adapter over N00-17's thesis::general_bound. Rename the path."
+  },
+  {
+   "bead": "N38a-07",
+   "what": "it recomputes ceilings with `N36-05's frob_core::perf::ceiling`; the path is `frob_conformance::perf::bound::ceiling` (adapter over N00-17's thesis::general_bound). Rename the path."
+  },
+  {
+   "bead": "WP-47",
+   "what": "add the new children N36p1-01 (GATE-SPARK-22 measured on every device; the capstone carrying the seed BD-219's done-condition and its dependency BD-217) and N36p1-02 (the where-time-goes predictions registered before the M2 profile) to its bead list, and N36p1-01 to the beads of GATE-SPARK-22; BD-219's title no longer ends in '(GATE-SPARK-22)': it is the verb, and the gate's measurement is N36p1-01's."
+  },
+  {
+   "bead": "N21a-27",
+   "what": "add N36p1-02 to deps: the six where-time-goes predictions (H-TIME-1 to -4, H-COV) must be on record before the M2 profile of Q and H that this bead records at its closing; otherwise N36p1-02's lint reports them registered after the measurement and they cannot count (no cycle: N36p1-02 depends only on BD-005, BD-025, N36-03 and the standards)."
+  },
+  {
+   "bead": "BD-214",
+   "what": "add N36p1-02 to deps: H-COV-1 (referee coverage 0.001 to 0.024) must be registered before the sampled referee's measured ρ and shadow share (no cycle)."
+  },
+  {
+   "bead": "BD-217",
+   "what": "N36-24 states that spark_parity_rows.sh prints the OPEN-PERF-1 decision record (tolerance, kill threshold, state, ADR path) in its preflight and refuses to start a GATE-SPARK-03 paired campaign without it; add that to the script's first step (BD-217 already depends on N36-24)."
+  }
+ ],
+ "unchanged": 14,
+ "notes": "All 43 beads read in full. Two splits: BD-219 (graph bottleneck: the verb stays BD-219, so its 40+ dependents need no repointing and no longer wait on BD-217; the gate campaign and seed done-condition moved to N36p1-01, which depends on BD-219, BD-216, BD-217, N36-16 to N36-19, N36-32, N21c-35, N44-01); N36-15 (registration before the profile moved to N36p1-02). No cycles: every added edge checked with graph_check path. N36-33 (bottleneck) is a narrow waist with light deps; after removing its duplicate of N36-02's type a further split would shorten no path. Requests from U12-2 (BD-216, BD-219), U32a and U44-1 (N36-20) applied. Single-implementation fixes: the bound (N36-05, N36-09, N36-12), the penalty (N36-24, N36-28). The U36 coverage file was updated for the BD-219 split. Slice looks settled after these changes. Unchanged: BD-142, BD-149, BD-199, N36-01, N36-03, N36-04, N36-06, N36-08, N36-10, N36-11, N36-13, N36-25, N36-27, N36-34."
+}

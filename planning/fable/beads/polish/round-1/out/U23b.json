@@ -1,0 +1,416 @@
+{
+ "round": 1,
+ "slice": "U23b",
+ "reviewed": 53,
+ "changed": [
+  {
+   "bead": "BD-218",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Named FROB-REF-862 (incomplete disclosure) and FROB-REF-863 (ratio without paired bound); completed the disclosure block from §36.7 (placement receipt detail, soak duration, energy or a named gap never zero, mixed-batch fields n/a); made the 'same host state' discard rule concrete (DESIGN thresholds, host-unstable outcome); stated the training profile (device-replay; a fast-training row is scored only by device-replay re-evaluation, FROB-REF-861); added unit tests for each."
+  },
+  {
+   "bead": "BD-267",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "Named the refusal codes the pipeline raises: FROB-REF-561 (D4 arm in a paired statistic), FROB-REF-701 (budget below 16 pairs per arm, exit 4), FROB-REF-820 (citing a flagged result as established); tied 16 and 32 pairs to the promotion rule's e-process numbers; added d4_arm_refused and code assertions."
+  },
+  {
+   "bead": "BD-301",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "GATE-CORTEX-19's adapter rows (docking exclusion through the adapter, reward hidden vs delivered, witness commands) had no carrier after the M2 gate bead N23b-32 left them pending; added them here with acceptance and an e2e step, gate GATE-CORTEX-19, dep N23b-32. Named the provisional code 559 for actor-read-undeclared. Its dep on N23b-27 was inverted: the transport decision N23b-27 is taken on the adapter BD-301 builds on its defaults, so BD-301 no longer depends on N23b-27, N23b-27 depends on BD-301, N23b-13 depends on N23b-27, and the order is stated in Considerations."
+  },
+  {
+   "bead": "BD-320",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Named the envelope refusals by site as N36-20 and N23b-24 divide them (FROB-REF-761 at admission for no admitting row or limits below the estimate; 704 only at the scheduler's dispatch; 701 for the job's own budget) and FROB-REF-724 (pilot falsified or KILL-FAMILY fired, exit 5) in the pipeline; stated the convention augmentation in the pretraining step (3.6% vs 80.6% FACT); added envelope and pilot-blocking tests. The token and network beads N23b-40 and N23b-41 precede this verb, so their e2e scripts could not call `train.family`. This bead now owns `--dry-run --emit-tokens` (the tokenizer digests per design). train_family.sh repeats the re-description digest comparison and N23b-41's smoke with its zero-weight and random controls at verb level. Added test dry_run_emit_tokens."
+  },
+  {
+   "bead": "BD-328",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Mode table lost three clauses of §28.10: discard-only also when a DC-02 or DC-03 fallback trigger fired and the audit lane keeps running; uninformative re-opens designs the rung eliminated earlier; fixed table stated as successive halving with eta 3. Added two unit tests. INV-CORTEX-06 had no owner to move it from pending to active in the Cortex battery (N23b-17): BD-328 now depends on N23b-17 and its acceptance activates the row under the battery's test name."
+  },
+  {
+   "bead": "BD-439",
+   "kinds": [
+    "scope",
+    "sense"
+   ],
+   "what": "The epic still said it would be split when M8 opens although its tasks exist; Scope, unit-test and e2e sections now name its children N23bx-01 (arms B and C) and N23bx-02 (gate and final reading); added them to related."
+  },
+  {
+   "bead": "N23-CX",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Control record format and planting mechanism departed from the negative-control registry BD-025 (cfg switch vs the Cargo feature under gauntlet-mutations; NC- ids; removed_check; synthetic fixture header); aligned to BD-025."
+  },
+  {
+   "bead": "N23-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "self-contained",
+    "title",
+    "e2e-logging"
+   ],
+   "what": "Row format aligned with N35-33's checks (defined_in is a plan subsection, raised_by, related neighbour pairs, fewer_repairs_reason for 522); added the fourth late refusal the allocation ledger lists under Cortex (randomization of a numerical parameter, proposed 572, raised by N23b-03) and a pointer to 571 (N23bx-03); late rows gained pointer/observed/required, retry, exit and milestone and are ledger requests behind named constants; added row_fields_complete and neighbours_symmetric tests and e2e steps for the four late codes. e2e step 13 now uses the fixture name of N33c-37 (`@fixture:planted-linear-phase`) for 558."
+  },
+  {
+   "bead": "N23bx-01",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Named the capability refusal FROB-REF-724 (exit 5) for --arch ga-encoder/ga-tree without the feature or after KILL-GATREE fires."
+  },
+  {
+   "bead": "N23bx-03",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Its registry row used field names that differ from the Cortex registry N23-REF and N35-33 (class/message/block vs name/family/message_template/defined_in/related); aligned; the numerical-parameter neighbour now points to N23-REF's request 572."
+  },
+  {
+   "bead": "N23b-01",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "Its term 'time to a return threshold' was defined as the first crossing, contradicting its own measure (a) and the attainment rule; redefined as the first attained look. Scope and acceptance pointed the at-scale work at the epic BD-439, which cannot carry dependencies; now its tasks N23bx-01 and N23bx-02."
+  },
+  {
+   "bead": "N23b-02",
+   "kinds": [
+    "sense",
+    "scope"
+   ],
+   "what": "The final reading and the downstream branches named the epic BD-439 (to be split later) instead of its existing tasks; now N23bx-02 takes the final reading, and on the fired branch N23bx-01 and N23bx-02 close on the fallback."
+  },
+  {
+   "bead": "N23b-03",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Its 'beyond_card: true' range contradicted BD-200's syntax (no free ranges in a task file); beyond-card is now a declared sub-table beyond_card = { widen } whose presence is the declaration, a bare range field is FROB-REF-103, and the label carries both intervals with the carded-hardware claim excluded. Named the numerical-parameter refusal (request 572, raised also by BD-200) and FROB-REF-502 for scene reuse; added tests with a worked widening (0.6 to 0.8 by 1.5 gives 0.55 to 0.85)."
+  },
+  {
+   "bead": "N23b-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The bin floor and the weight bound (at most 5) held only for a uniform card: 'piecewise-constant density' and 'ratio of bin heights' are wrong for a truncated-normal card. Bins now have equal nominal mass and the adaptive law reweights the nominal law per bin, so w = 1/(B·p_j) <= 1/p_min = 5 for any card law; inverse-CDF draw stated; added a worked draw and a normal-card test."
+  },
+  {
+   "bead": "N23b-05",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Named FROB-REF-561 for a D4 or unrecorded arm. e-process table rechecked (16 clean, 22 with one exceedance, two in three flag)."
+  },
+  {
+   "bead": "N23b-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Acceptance listed the breakaway 4.905 N among the 'three plan-given cases'; the third plan-given case is the rate-and-inertia sweep (0.093 and 0.780 against 1.000 and 1.000), which is now recorded against the planning values with the flag required whatever the exact values; the designed cases keep their own numbers."
+  },
+  {
+   "bead": "N23b-08",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Named the two neighbouring codes for model-conditional results (FROB-REF-820 at citation, FROB-REF-557 at comparison reports) beside 830."
+  },
+  {
+   "bead": "N23b-09",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Named FROB-REF-502 for an evaluation split that intersects the training manifest."
+  },
+  {
+   "bead": "N23b-10",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "Named the refusal codes by raising site as N24-REF divides them: mixed study types 552 (planning) and 553 (eval.compare); paired statistics with a D4 arm 533 (planning) and 542 (eval.compare), 561 outside the study machinery. Added tests for both sites and the exact sign-test peeking enumeration (5.08, 8.76, 12.9, 17.4%)."
+  },
+  {
+   "bead": "N23b-13",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "Stated that the shuffled-label control of FROB-REF-544 applies only with distillation and is recorded 'not applicable'; the attainment control now carries the §23.27 counterexample numbers (0.89 against 0.90, 30 per look, 50 looks: 0.90497, 0.0303, 0.78548; 36, 46, 74, 103); on firing, names N23bp1-01 as the builder of the fallback. Added dep N23b-27: the gate's final reading depends on the adapter's transport decision, which now follows BD-301."
+  },
+  {
+   "bead": "N23b-14",
+   "kinds": [
+    "complete",
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The whole-rollout fallback was built only on the pilot's firing branch, so on the gate's own firing branch (N23b-13, after this bead closed) nobody built it; the build moved to new bead N23bp1-01, this bead keeps the decision and the filed specification. Its latency rule charged a 'rollout-transport' resource line in train that N39a-24's table does not have, contradicting N39a-22 (wait); aligned to wait for transport and train for the rollout, with five receipt fields. Tests and e2e narrowed to the decision and the specification's completeness."
+  },
+  {
+   "bead": "N23b-15",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Acceptance required the first real record built by BD-198, which depends on this bead (time-order violation); now a short real run assembled by its own script, with the full record left to BD-198. Its script used train start, export and eval run without deps on BD-197, N23a-13 and N23b-09 (added). It claimed GATE-CORTEX-01 at full budget, which cortex_train.sh (N23a-35, BD-198) already measures; now gates: [] with smoke."
+  },
+  {
+   "bead": "N23b-16",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Carriers named the epic BD-439 for GATE-CORTEX-17 and KILL-GATREE's final reading; now N23bx-02 (arms N23bx-01). KILL-GYMADAPT's carrier names the fallback builder N23bp1-01; GATE-CORTEX-19's adapter rows name BD-301. Added carriers_resolve (carriers exist and are not epics)."
+  },
+  {
+   "bead": "N23b-17",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "INV-CORTEX-04's mechanism named M4 consumers (BD-320, BD-322) instead of its owner N23a-13; PO-CORTEX-03's and INV-CORTEX-03's mechanisms N23a-19 and N23b-29 were not deps (added). INV-CORTEX-06 was 'active from the pilot record at M3' although its enforcement sites (N23a-24, BD-328) are M4 and nobody activated it; now pending with a reason until BD-328 activates it, never counted as passed."
+  },
+  {
+   "bead": "N23b-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Acceptance required rows to pass at M3 although the bead closes at M2, and left L5 without a milestone; skipped rows now carry first_milestone (M3; M6 for L5), turn into passes in the Gauntlet's run with no edit, and are in their mechanism beads' acceptance."
+  },
+  {
+   "bead": "N23b-20",
+   "kinds": [
+    "complete",
+    "tests",
+    "risks"
+   ],
+   "what": "'The envelope admits the run' named no envelope: about 70 GPU-hours exceeds E0, E1 and E2 and no row of N44-01's request table covers it; the bead files its own request row (N21c-35) with ceiling and falsifier first, and states the not-approved outcome (BD-322 unfunded, KILL-INHERIT fallback recorded). Added a ceiling-cut 'undetermined' rule and strict-boundary falsifier tests."
+  },
+  {
+   "bead": "N23b-21",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "About 10 GPU-hours is above the default E0 and the bead had no envelope dep (BD-324's pilots have one); added N21c-35, an E1 approval criterion with the not-approved outcome, the ceiling-cut rule, the 70% boundary and a per-teacher outcome test."
+  },
+  {
+   "bead": "N23b-22",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "Same envelope gap as N23b-21 (10 GPU-hours, no envelope dep); added N21c-35, the E1 approval criterion, the not-approved outcome, the ceiling-cut rule and the 0.7 boundary test."
+  },
+  {
+   "bead": "N23b-23",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "Named the capability refusal FROB-REF-724 (exit 5) for killed and not-funded algorithms with the capability state; added the ceiling arithmetic as a unit test (1.11 funded, 1.053 not funded)."
+  },
+  {
+   "bead": "N23b-27",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Its order with BD-301 was inverted: the transport decision is taken on the adapter BD-301 builds on its defaults. It now depends on BD-301, and N23b-13 depends on it. The support status of the binding (OPEN-PROG-3) is ruled by N41-07, which reads this record. Acceptance now records the assumption it was made under and the re-reading rule, instead of assuming the answer."
+  },
+  {
+   "bead": "N23b-28",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The re-measured row's pass rule is stated as BD-218 defines it: L is the paired lower bound of the ratio incumbent ÷ ours, and it passes at L ≥ 0.8. Known answers extended: ten pairs of 410 s against 480 s give 0.854 (pass), and against 540 s give 0.759 (fail). A planted record with the ratio reversed is rejected."
+  },
+  {
+   "bead": "N23b-29",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "Named the qualification refusal `sampler-unqualified` (proposed FROB-REF-558 in N23-REF, raised through its named constant), exit 3, with pointer and observed. Updated unqualified_refused."
+  },
+  {
+   "bead": "N23b-30",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Acceptance names `sampler-unqualified` (558) for the planted sampler, and the script's refusal event carries the code."
+  },
+  {
+   "bead": "N23b-31",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "Named the undeclared actor read `actor-read-undeclared` (proposed FROB-REF-559), exit 3, with pointer and observed. Added undeclared_read_refused."
+  },
+  {
+   "bead": "N23b-32",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The adapter rows of GATE-CORTEX-19 are carried by BD-301 (which depends on this bead) by enabling this script's --adapter step. This bead no longer waits for them. Step 4 now uses `frob mission synthesize` and `frob mission show --set excluded|inner`, the M1 verbs that exist. Related is BD-301."
+  },
+  {
+   "bead": "N23b-35",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "The retention refusal was 'the one assigned by the registry'. It is now named `selection-below-containment` (proposed FROB-REF-570 in N23-REF), exit 3, and separated from 537 (no rank-agreement record at all). The test asserts both codes. Related now lists BD-328, BD-329, BD-345 and BD-352. All fixture values were re-verified (41/45, 776/780, k_c = 3, regret +1/-3)."
+  },
+  {
+   "bead": "N23b-36",
+   "kinds": [
+    "complete",
+    "risks",
+    "tests"
+   ],
+   "what": "The plan gives no GPU-hour figure for the pilot, and the bead had envelope deps (N21c-35, N44-01) but no envelope criterion. The budget is now stated in the protocol and requested under the covering class before the first run. Without approval the bead closes 'not run: no envelope': the mechanism is unfunded and the fallback is in force. A ceiling cut reads undetermined. Added strict-boundary falsifier tests (0.35 and 40% exactly give not-falsified)."
+  },
+  {
+   "bead": "N23b-37",
+   "kinds": [
+    "complete",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Added the 'not run: no envelope' branch from N23b-36: not funded, the fallback in force, never read as not-falsified. Named the killed-algorithm refusal FROB-REF-724 (exit 5, capabilities report killed), with test shortgrad_killed_capability, and the e2e asserts 724."
+  },
+  {
+   "bead": "N23b-38",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Named the D4 citation refusals as N23a-18 divides them: FROB-REF-861 for a training return observed during the run, and 867 for the policy offered before re-evaluation under D2 or D3. The e2e asserts 861, exit 3."
+  },
+  {
+   "bead": "N23b-39",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained",
+    "risks"
+   ],
+   "what": "GATE-CORTEX-22 used the pilot's three seeds and compared a plain share against 0.35. The method-gate form (§23.17, enforced by N23b-10's MethodGateRecord, which names this gate) requires at least ten paired seeds and the 95% paired lower bound. Now: ten paired seeds per task, ratio of arm (b)'s GPU-hours to arm (a)'s, pass at L ≥ 1/0.35 = 2.857 on both tasks, unreached pairs censored at the budget, A/A must not clear 1.02. gate_arithmetic shows ratios 4.0/2.2 with a geometric mean of 2.9665 failing on the bound at 2.4713. Named 724, 861 and 867. Added a compute note: about 3.3 times the pilot, requested under the envelope, and a cut is not-run."
+  },
+  {
+   "bead": "N23b-40",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e called `frob train family --dry-run --emit-tokens`, but train.family is built by BD-320, which depends on this bead (time order). The focused script now compares token digests through the conformance test entry on batch-cpu and a device (relabelled, scaled and heading-rotated twins). BD-320 owns the verb-level dry run and repeats the comparison."
+  },
+  {
+   "bead": "N23b-41",
+   "kinds": [
+    "deps",
+    "complete",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Its e2e ran a `frob train family` smoke although BD-320 depends on this bead. Nothing put the morphology transformer into train.start's network grammar (mlp:/gru: only, N23a-14). This bead now adds the NetworkSpec kind `morph-transformer:<d>,<layers>,<heads>` and runs the generator smoke through the learner's test entry, with a dry run and a short single-design run through train.start. A malformed kind gives FROB-REF-802. Added deps N23a-12 and N23a-14, and tests network_kind_grammar and generator_smoke_controls."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N23bp1-01",
+   "why": "KILL-GYMADAPT's fallback (whole rollouts through the job interface) had no builder when the gate fails at its final reading (N23b-13), because N23b-14 built it only on the pilot's firing branch and closes before the gate; the new bead depends on both readings, builds the fallback if either fires and closes unbuilt if the gate passes."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N28-REF",
+   "what": "its test unknown_code_is_load_error uses FROB-REF-558 as a code that does not exist; 558 is the Cortex registry's (N23-REF) proposed code for an unqualified action sampler and is in the allocation ledger's first round; use a code that is never allocated (for example one reserved for tests)."
+  },
+  {
+   "bead": "WP-79",
+   "what": "line 76 still lists N10b-16 (superseded by N23b-01) as the pilot PILOT-C-24; it should read N23b-01."
+  },
+  {
+   "bead": "N20-REF",
+   "what": "the row of FROB-REF-442 (b) should carry the same division sentence as N20a-03, N23a-03 and N23-REF: 524 is frob-learn's access-class check before any freeze; 442 is freeze_actor_schema's for a channel privileged by source or not of actor access."
+  },
+  {
+   "bead": "N35-33",
+   "what": "first-round row for Cortex (N23-REF) should read: four late refusals (proposed 558, 559, 570, and 572 for randomization of a numerical parameter), plus N23bx-03's randomize-no-interval (proposed 571)."
+  },
+  {
+   "bead": "N39a-22",
+   "what": "add dep N23bp1-01: its OT run goes through the whole-rollout fallback when KILL-GYMADAPT fires at the gate, and N23bp1-01 is the bead that builds that path (it closes unbuilt if the gate passes)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "on the firing branch of KILL-GYMADAPT, sim.run gains --policy <checkpoint> and --record trajectories (result frob.rollout/1, eleven arrays), refused with FROB-REF-724 while the gate is not killed (N23bp1-01); no new verb."
+  },
+  {
+   "bead": "N44-01",
+   "what": "the Cortex pilots that exceed E0 have no request row: inheritance (N23b-20, about 70 GPU-hours, above E1 and E2 and not a family pretraining), distillation (N23b-21) and equivariance (N23b-22) at about 10 GPU-hours each (E1), and the six other-algorithm pilots of BD-324 (about 10 each); add rows or state the class under which pilots run."
+  },
+  {
+   "bead": "N23a-14",
+   "what": "the `network` argument table of train.start lists only `mlp:<widths>` and `gru:<hidden>`; add `morph-transformer:<d>,<layers>,<heads>` (added by N23b-41 to the NetworkSpec catalogue, Frontier tier), with FROB-REF-802 for a malformed string."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "the train.family row should note `--dry-run` (no approval token, no device-seconds) and `--emit-tokens` (token digests per design), both added by BD-320, and train.start's network argument should accept the morph-transformer kind added by N23b-41."
+  },
+  {
+   "bead": "N44-01",
+   "what": "in addition to the earlier request: the short-horizon pilot (N23b-36, three arms, two tasks, three seeds) and GATE-CORTEX-22 (N23b-39, ten paired seeds per task, about 3.3 times the pilot) have no request rows; both now request under the covering class (N21c-35) before running."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "complete: all 53 beads of the slice reviewed (seeds BD-218..BD-439, registries N23-CX and N23-REF, N23b-01..41, N23bx-01..03). N23b-26 is already superseded by N23a-29, whose convention is consistent; unchanged. One new bead, N23bp1-01. Main themes: dependency direction (BD-301/N23b-27, N23b-15, N23b-40/41 before BD-320), compute-envelope routes for the Cortex pilots and gates, refusal codes named by raising site, and the method-gate form (ten pairs, paired lower bound) applied to GATE-CORTEX-22."
+}

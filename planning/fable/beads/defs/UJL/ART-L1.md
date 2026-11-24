@@ -1,14 +1,14 @@
 ---
 key: "ART-L1"
-title: "golden fixture L.1: the `.fbot` design `quad-tray`, its canonical form, both views, derived facts and CLI script"
+title: "golden fixture L.1: the `.fbot` design `quad-tray`, its canonical form, both views, derived facts, CLI script"
 type: "task"
 priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-design", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-07"
-deps: ["BD-054", "BD-055", "BD-056", "BD-057", "BD-061", "BD-062", "BD-102", "BD-109", "BD-110", "NJL-07", "ART-L4", "STD-E2E"]
-needs: ["§14, §32.6: the verbs `design.new` (from a file, a template or a mission cell) and `design.show` (drafted by unit U14a as N14a-21)"]
-related: ["N14a-21", "BD-141", "BD-069", "BD-075", "BD-099", "N14a-28", "ART-L2", "ART-L8", "ART-L9"]
+deps: ["ART-L4", "BD-054", "BD-055", "BD-056", "BD-057", "BD-061", "BD-062", "BD-102", "BD-109", "BD-110", "N14a-21", "NJL-07", "NJLx-02", "STD-E2E"]
+needs: []
+related: ["ART-L9", "BD-069", "BD-075", "BD-099", "BD-141", "N14a-28", "N14bx-03"]
 gates: []
 plan_refs: ["Appendix L.1", "§14.4", "§14.5", "§14.9", "§14.11", "§13.4", "Appendix G.4"]
 ---
@@ -149,7 +149,11 @@ an unknown major version refuses (`FROB-REF-125`) and names the migration; a bod
 (`FROB-REF-105`); an empty or inverted joint interval refuses (`FROB-REF-107`); a declared symmetry that
 differs from the computed one refuses with the breaker (`FROB-REF-109`); a lever value outside its bounds, or
 an edit to a locked block, refuses (`FROB-REF-111`); a sensor without a parent frame, a rate or a clock
-refuses (`FROB-REF-126`). Each is exit 3 with one envelope and ranked repairs.
+refuses (`FROB-REF-126`). Each is exit 3 with one envelope and ranked repairs. That is eight planted mutations
+for seven codes (111 twice), each refused by the stage that owns it (N14b-10): the form-stage codes (103, 105,
+111 for a lever value, 125, 126) when the mutated file is loaded with `frob design new --file`; the inverted
+interval (107) at stage 3 and the declared symmetry (109) at stage 5, by `frob design check` on the stored
+design; and the lock (111) by `frob design edit` on a locked block, since a lock constrains edits, not files.
 
 **Round trips.** (a) authored → canonical → value → canonical: zero byte differences, and a second
 canonicalization changes nothing; (b) canonical JSON → S-expression view → canonical JSON: the identity, with
@@ -171,7 +175,8 @@ reads, may differ, so `DesignId` equality is asserted only when `meta` is passed
 - [ ] `frob design show` and `frob analyze symmetry` report the seven derived facts exactly (twelve
       coordinates; feet at (±1/5, ±1/7) m; C₂ × C₂; C₂ with the lidar named; `quad-mammal`; derived inertia;
       levers in bounds).
-- [ ] Each of the seven planted mutations is refused with its code and exit 3; the unmutated file is accepted.
+- [ ] Each of the eight planted mutations (seven codes) is refused with its code and exit 3 by the verb named
+      above; the unmutated file is accepted.
 - [ ] `frob design check quad-tray --json` returns `closure: "closed"`, `symmetry: "C2xC2"` and no finding of
       severity high, with evidence class Tested, tier `static`, determinism `exact`.
 - [ ] The design created from cell c:06a has half-width 1/7 m, ratio 2.35 and the fixture's model identity.
@@ -206,8 +211,9 @@ fixtures/golden/appendix-l/L1/quad-tray.resolved.fbot.json --key l1-new --json`,
 digest equality with the canonical file; (4) `frob analyze symmetry quad-tray --json`, assert both groups and
 the breaker; (5) `frob design check quad-tray --json`, assert closure and symmetry; (6) run the mission steps
 of artifact L.4's script in the same scratch root, then `frob design new quad-tray-cell --from-cell
-<mission>/c:06a --key l1-cell --json`, assert half-width, ratio and model identity; (7) the seven mutations
-through `e2e_expect_refusal <code> 3`; (8) `frob-golden check --artifact L1`. Plants: `ratio-as-decimal` feeds
+<mission>/c:06a --key l1-cell --json`, assert half-width, ratio and model identity; (7) the eight mutations
+through `e2e_expect_refusal <code> 3`, each through the verb that owns its stage (`design new --file`,
+`design check` or `design edit`, as above); (8) `frob-golden check --artifact L1`. Plants: `ratio-as-decimal` feeds
 `"0.142857 m"` and must fail the identity assertion; `lidar-centred-assert` asserts `assert_obs: "C2xC2"` and
 must be refused with 109. The log (`target/e2e-logs/art_l1_fbot/<utc>.ndjson`) records every command with exit
 code and wall time, the envelope's evidence block, digests where state is compared, each assertion with
@@ -221,7 +227,7 @@ observed and expected values, each refusal with code and first repair, and the `
 - Counterexample this fixture keeps alive: taking the mechanical symmetry group as the policy's symmetry. A
   quadruped with one forward lidar has the four-element group mechanically and a two-element group in closed
   loop; only the observation-preserving subgroup may be used for weight sharing and deduplication.
-- Negative controls: the seven mutations; the two plants; a reader built with key sorting disabled must fail
+- Negative controls: the eight mutations; the two plants; a reader built with key sorting disabled must fail
   `l1_roundtrip_value`.
 - Metamorphic relations: key order, white space and unit respelling leave the identity unchanged; mirroring
   the lidar mount to x = −0.21 m leaves Γ_obs of order 2 (the same subgroup).

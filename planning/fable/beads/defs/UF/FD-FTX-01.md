@@ -4,11 +4,11 @@ title: "upstream franken_textiles: exact `serde_json` pin `=1.0.151` relaxed to 
 type: "task"
 priority: 4
 milestone: "M6"
-labels: ["m6", "suite", "habitat", "upstream", "franken_textiles", "moonshot"]
+labels: ["m6", "suite", "habitat", "upstream", "franken_textiles", "moonshot", "review-notes-open"]
 parent: "WP-73"
-deps: ["BD-037", "NF-01", "STD-E2E"]
-needs: ["§33.15: INT-FTX-01 with `ftx-drape` run as a worker process in its own workspace (BD-416), which is the baseline this item's switch-over is compared against"]
-related: ["BD-416", "BD-415", "FD-F3D-01", "FD-FSIM-22", "BD-003"]
+deps: ["BD-037", "N19b-20", "N33b-04", "N33c-28", "STD-E2E"]
+needs: []
+related: ["N33c-38", "N33c-47", "N41-02"]
 gates: ["INT-FTX-01", "GATE-WS-06"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.17", "§33.15", "§33.14", "§34.14", "§41"]
 ---
@@ -76,7 +76,11 @@ and passes once the change is adopted; a fixture that passes at the pin no longe
 itself a failure of the registry check. It runs `cargo metadata` on a scratch workspace in which `ftx-drape` at the
 pinned commit is a development dependency of a stand-in for `frob-conformance` beside FrankenSim's crates, and
 expects resolution to succeed with one `serde_json`; at the pin Cargo reports the conflict between `=1.0.151`
-and `>=1.0.154`.
+and `>=1.0.154`. franken_textiles has no row in `franken-stack.lock` at M0, so under BD-037's fixture timing rule
+the fixture was written against its head as read on the day, `observed_at` names that commit and the row carries
+`pin_state = "unpinned"`. franken_textiles is first admitted by the pilot N33c-28 (INT-FTX-01, a dependency); this
+bead then re-runs the fixture at the admitted pin, records that commit in `observed_at` with the signature
+observed there, and clears `pin_state`.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -99,8 +103,10 @@ features such as insertion-ordered maps or arbitrary-precision numbers for shipp
 conformance crate only". The worker route is kept as the fallback either way.
 
 **Fallback if the change cannot land.** The worker process. If the cloth tier itself is not funded (KILL-LIVING
-decides whether coupled islands are built at all), this item is closed as not needed; without the oracle
-there is no cloth tier, only rigid proxies.
+decides whether coupled islands are built at all, per island kind: N19b-20 records the `kind:cloth` entry in
+N40-03's outcome names, ADR `docs/adr/ADR-KILL-LIVING-M6.md`), an outcome `fired` or `not-reached` for
+`kind:cloth` closes this item `superseded`, citing that ADR, and its row in `registries/upstream.toml` keeps its
+number; without the oracle there is no cloth tier, only rigid proxies.
 
 ## Acceptance criteria
 
@@ -151,8 +157,8 @@ gates touched. No private-scene data is logged.
 
 ## Considerations
 
-- Program risk (medium): an exact version pin in a sibling blocks an oracle, because two siblings require different exact versions of one package; earliest signal: dependency resolution reports two exact requirements on one package. Mitigation: the oracle runs as a worker process; the pin move is this item.
-- Program risk (high): a dependency feature changes canonical bytes. Canonical bytes come only from this project's writer, and the stack lock records the feature set; this item's feature-set test is the guard for the dev-dependency route.
+- RISK-57 (medium): an exact version pin in a sibling blocks an oracle, because two siblings require different exact versions of one package; earliest signal: dependency resolution reports two exact requirements on one package. Mitigation: the oracle runs as a worker process; the pin move is this item. Its planted instance (a second exact pin on one package) is GATE-WS-07's row in N41-02, and the resolution check runs with every optional feature group enabled, since a build that never enables the oracle's feature resolves and hides the conflict until the oracle's milestone.
+- RISK-56 (high): a dependency feature changes canonical bytes. Canonical bytes come only from this project's writer, and the stack lock records the feature set; this item's feature-set test is the guard for the dev-dependency route.
 - fastmcp_rust's own exact pin (`=1.0.154`) means the graph's version is not free to move either; a later `serde_json` release would need that pin relaxed too. It is noted here and is not part of this item.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
   milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
@@ -168,4 +174,4 @@ gates touched. No private-scene data is logged.
 
 ## References
 
-Appendix F.1 (row FD-FTX-01), F.3; §33.17 (row 7 and its consequence), §33.15 (franken_textiles), §33.14 (the worker posture), §34.14 (the JSON feature guard), §41; INT-FTX-01; GATE-WS-06; KILL-LIVING.
+Appendix F.1 (row FD-FTX-01), F.3; §33.17 (row 7 and its consequence), §33.15 (franken_textiles), §33.14 (the worker posture), §34.14 (the JSON feature guard), §41 (§41.5); INT-FTX-01; GATE-WS-06; KILL-LIVING; RISK-56, RISK-57.

@@ -1,0 +1,257 @@
+{
+ "round": 1,
+ "slice": "U10c",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "N10-CX",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the planted 'one gate removed' control had no test that could catch it: added cx_gates_exist (every gate id in registries/gates.toml), cx_gates_match_table (the 31 gate lists of CX-067 to CX-097 equal the table) and cx_kind_matches_table; each negative control now names the test that catches it, and the e2e script plants the five controls on scratch registry copies"
+  },
+  {
+   "bead": "N10c-01",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "carried INV-AUTOPSY-05 (chaotic exactly when rho0 > 0.2), INV-AUTOPSY-06 (attribution scope in the type) and PO-AUTOPSY-01; pair interactions in the record; added the Autopsy chapter's doubling-map chaotic placebo (2^40 amplification, rho0 about 0.5) with its five-iterate control, a 13/64 vs 12/64 threshold test, a scope test and the e-process path of the null calibration; BD-279 added to related as the order-of-work paragraph says"
+  },
+  {
+   "bead": "N10c-02",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "tests",
+    "scope",
+    "placement"
+   ],
+   "what": "added the refusal table FROB-REF-454 (rows with no common command or more than four coupled), -457 (borrowed margin), -826 (quantifier prefix); named INV-SHIELD-01/-02 and PO-SHIELD-02/-03/-04 with tests; PO-SHIELD-02's 10^6-instance rational run (exact KKT) added to the e2e; margin-index rule (n >= 999 at alpha = 1e-3) and borrowed-margin tests; GATE-SHIELD-04 added to gates; Out now names the component beads N22b-19 to N22b-29"
+  },
+  {
+   "bead": "N10c-03",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "scope"
+   ],
+   "what": "the erosion row was to be appended under a new number while N38-KA already numbers it KA-846: bound to KA-846 (no second number); pilot falsifier of §22.17 (coverage < 90% at 16,384 cells, or one false admission in 5,000) and KILL-TUBE trigger stated; added the latency_matters test and mutant; Out names N22b-33 to N22b-36, N12-19, N38b-45"
+  },
+  {
+   "bead": "N10c-04",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "the two appended known-answer rows had no numbering rule: provisional tags late-C32-1/-2 and a block request to the allocation ledger N38a-40 (new dep, M0), mapped by M3; implementers and the pilot added to related"
+  },
+  {
+   "bead": "N10c-05",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "the reality row was to be appended under a new number while N38-KA numbers it KA-844: bound to KA-844 with GATE-GAUNT-11's four-significant-figure tolerance; Out names the components N25d-21 to N25d-25, N12-19, CARD-T-34, and KA-839/KA-844 runs in N38b-45"
+  },
+  {
+   "bead": "N10c-06",
+   "kinds": [
+    "complete",
+    "tests",
+    "self-contained"
+   ],
+   "what": "GATE-FOUNDRY-03's own rows (fatigue block 0.116 per block; rainflow sequence with counts 0.5/1.5/0.5/1.0/0.5, 8.752e-6, split loss 10.7% to 7.816e-6) verified against the contract's six-step counter and added as test owning_chapter_rows_agree; shared-boundary-sample window convention stated; FROB-REF-163 and INV-FOUNDRY-06 named"
+  },
+  {
+   "bead": "N10c-07",
+   "kinds": [
+    "correct",
+    "tests",
+    "complete"
+   ],
+   "what": "the two 'appended' rows duplicated the Foundry row KA-745 (worked case 16.0/6.35 um and its x^2 control): bound to KA-745, no new numbers; FROB-REF-165 named; added correlated_stack_hand_value (the gate's third clause: sqrt17, sqrt21, 5 um) with mutant ignores_correlation; pilot of KILL-TOLERANCE stated"
+  },
+  {
+   "bead": "N10c-08",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "the sleigh test demanded that halving the step 'at least halves' the error, which a correct first-order step can fail by round-off of the ratio: now a factor between 1.8 and 2.2; BD-079 added to related as the order-of-work paragraph says. Sleigh closed form, 1.663 rad heading and skid-steer 1.853 rad/s recomputed and correct"
+  },
+  {
+   "bead": "N10c-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the 'appended' pilot-table row duplicated the Augur row KA-639: bound to KA-639; the reading-interval row keeps a provisional tag late-C39-1 with a ledger request (dep N38a-40); least-cost probe test now states its answer (1.25 m/s; 0.75 m/s intervals touch at 0.55). All relaxation numbers (29.66/24.72/41.15 N, [0.8737, 0.9362], [0.9520, 0.9982]) recomputed and correct"
+  },
+  {
+   "bead": "N10c-11",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the registration step computes EVSI for all thirty experiments but no test checked that computation: added evsi_matches_card (GB-36's substituted rows 0.0013 and 0.0055 at m = 0.03, through SPEC-C-39's reference function, sixfold ratio per cost). Binomial references 0.9302/0.0256/0.0442, control probabilities 0.9705/0.9963 and ceiling 1.3158 recomputed and correct"
+  },
+  {
+   "bead": "SPEC-C-28",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "KA-144 is a G5 referee row but the e2e ran it under the g1 target: now g5, logged pending until BD-274; the contract acceptance listed ten sections that contradict the template order the Scope fixes: now the template's ten sections; related lacked BD-270 and BD-052 that the order-of-work paragraph says are listed (added with BD-272, BD-275, BD-369, N10c-10). ddmin call-count bound checked by simulation (max 149 found vs bound 198)"
+  },
+  {
+   "bead": "SPEC-C-29",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "S5's second sentence (an unsound null fork is refused and nothing is attributed) had no test: added null_fork_mismatch_refused with FROB-REF-583; FROB-REF-586 named in the two-mechanism test; KA-145 (G5) logged pending until BD-205; related was empty though BD-090 is said to be listed (added BD-090, BD-203, N10c-10)"
+  },
+  {
+   "bead": "SPEC-C-30",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "the contract fixes window membership in exact rationals but nothing tested it: added window_ticks_exact_rational (period 1/10 s, window [0, 3/10]: 3*0.1 <= 0.3 is false in f64; mutant float_window_bound); the four refusals the contract relies on (FROB-REF-525/526/528/538) now have a test; related now holds BD-121, BD-122, BD-257 as the text says"
+  },
+  {
+   "bead": "SPEC-C-31",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the pilot was attributed to the mechanism BD-337, but the Reflex pilot bead is N22b-09 (pilots precede mechanisms): corrected, PILOT-C-31 named; KA-213 is a G0 auditor row run under g1: now g0; PO-SHIELD-01 (exact-integer predicate) had no test: added po_shield_01_exact_integer_predicate with mutant parse_via_f64 (0.1251 J -> 125,099 uJ); related BD-337, BD-132, N22b-09, N10c-10. All budget arithmetic rechecked"
+  },
+  {
+   "bead": "SPEC-C-32",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained",
+    "deps"
+   ],
+   "what": "the register row pointed to 'the pilot paragraph of this bead' and there was none: added the §10 C-32 region pilot (12-parameter box, four arms, kill thresholds, fallback) run by BD-289 and the stance comparator (lifted LP, KA-033); the screen test asserted the plan's 'first example' whose position depends on an unstated order: now asserts membership. Grid counts 2,254 / 114 / 1,596 re-derived exactly during review; all stance forces and the dual rechecked; related now carries BD-128, BD-026 and the out-of-scope implementers"
+  },
+  {
+   "bead": "SPEC-C-33",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "ka_162_doorway used a 1.00 m-wide rectangle with rho = 0.40 m, which is impossible (rho >= half-width): restated as the envelope F0 + disc(m) of a 0.566 m square base (rho = 0.40 for every m), with grid alignment stated; outcomes 0.60 witness, 0.70 unknown then witness at 2e = 37 mm, 1.00 cut, band (0.651, 0.949) recomputed; pilot attributed to N19b-25 (not BD-233) with the incumbent planner as generic comparator; related filled"
+  },
+  {
+   "bead": "SPEC-C-34",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "the two pilot statements were said to be run by the mechanism BD-361; the Augur pilot N25d-16 runs them (240 instances with a planted-defect quarter) and BD-361 depends on it: corrected, PILOT-C-34 and the multi-start comparator named, acceptance reads pending until the record exists; related filled (BD-360, BD-105, BD-437, N25d-16). Four-bar closure points, Grashof, tolerance box rechecked"
+  },
+  {
+   "bead": "SPEC-C-35",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps"
+   ],
+   "what": "the bead claimed to register the construction's pilot record and attributed the pilot to mechanisms BD-403/402/406; the Foundry pilots N31b-06/-07/-08 run it at M4 (N31b-07 reads the window-halving clause): Scope, pilot paragraph and acceptance corrected to resolve the pilot field to PILOT-C-35; beam rung named as generic comparator; related filled"
+  },
+  {
+   "bead": "SPEC-C-36",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the SE(3) Cayley row was to be 'appended' though N38-KA already numbers it KA-845: bound to KA-845 (G1 host, its tier) in scope, registry, table, acceptance and e2e; pilot attributed to N16a-21 (BD-384 depends on it), not to the mechanism; related filled (BD-011, BD-087, BD-088, BD-384, N16a-21, N38-KA)"
+  },
+  {
+   "bead": "N10c-10",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "brought to parity with its sibling N10a-22, whose helpers it shares: step 2 runs the D-2 obligations check (dep N10a-01); suite location follows the register row (staged in frob-conformance or moved); controls run per registered control id; rows run at their own tier with G5 rows pending; the C-40 verb is the DESIGN default mission.refute of BD-359 instead of an unnamed verb; the map now lists the rows bound outside KA-142..190 (KA-213, KA-033, KA-845, KA-846, KA-844, KA-639, KA-742, KA-745, tags late-C32-1/-2 and late-C39-1 with provisional-tag-past-due) and every pilot record with its own due milestone (PILOT-C-36 is due at M5 for a part due at M1); deps N10-KA3 and N38-KA added (rows read at M1); new unit tests suite_crate, tag_past_due, row_tier and three more planted controls on scratch copies"
+  },
+  {
+   "bead": "SPEC-C-37",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "the projection identities do not fix the projection when the spin impulse is in N·m·s: the contract now fixes the homogeneous coordinates (λn, λt, λs/r), in which the closed form and the dual 𝒦* agree; added projection_unit_invariant with mutant raw_coordinate_projection (r in m vs mm); related filled (BD-050, BD-069, BD-079, BD-115, N10c-08). Slide-spin, Hertz radius, gap-closure numbers rechecked"
+  },
+  {
+   "bead": "SPEC-C-38",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related was empty though the order-of-work paragraph says BD-069 is listed: added BD-069, BD-068, BD-074, BD-092. Every worked number (runaway 35.806 A, 21.69 K/216.9 s, 162.7 s, 77.4 s; illustrative card 164.7 K, 247 s, 385 s, 18.6 A, 31.9 A, 61 s/83 s) recomputed and correct; otherwise unchanged"
+  },
+  {
+   "bead": "SPEC-C-39",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related was empty though BD-262 is said to be listed: added BD-262, BD-341, BD-344, BD-349, N10c-10. All worked values (0.001306, 0.005496, 6.415, 1.02e-5, 1.91e-5, 0.02510/0.00843, 0.00345, re-valued referee 0.0339/0.0035) recomputed and correct; otherwise unchanged"
+  },
+  {
+   "bead": "SPEC-C-40",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps"
+   ],
+   "what": "row C-40's verb was 'the paired-dominance verb of the mission surface', which no D-2 check can resolve: now mission.refute as BD-359's DESIGN default; the pilot is N25c-24 (BD-359 depends on it), not the mechanism; generic comparator named (conventional hybrid reachability, Flow*); related filled (BD-128, BD-026 as the text says, BD-132, BD-161, BD-262, N25c-24)"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N22b-20",
+   "what": "implements the barrier rows, three-part margin, quantifier order and split cones that N10c-02 specifies (part D of C-31): should depend on N10c-02 (it depends only on SPEC-C-31 today)"
+  },
+  {
+   "bead": "N22b-22",
+   "what": "implements the exact single-row projection (D3, PO-SHIELD-02) specified by N10c-02: should depend on N10c-02"
+  },
+  {
+   "bead": "N22b-23",
+   "what": "implements the two-to-four-row projection with the KKT check and Checked<Command> (D4, PO-SHIELD-03) specified by N10c-02: should depend on N10c-02; its acceptance owes the compile-fail test checked_command_only"
+  },
+  {
+   "bead": "BD-289",
+   "what": "the region-certificate pilot judges its four arms by the three-way verdict R1 and the paving arithmetic R7 of N10c-04: consider a dep on N10c-04 (both M3), or related"
+  },
+  {
+   "bead": "N22b-09",
+   "what": "it is the C-31 tier-1 pilot: name its pilot-register record PILOT-C-31 so row C-31's pilot field resolves (SPEC-C-31); likewise N19b-25 -> PILOT-C-33, N25d-16 -> PILOT-C-34, N31b-07 -> PILOT-C-35, N16a-21 -> PILOT-C-36, N25c-24 -> PILOT-C-40, BD-289 -> PILOT-C-32 (none of them names the record today)"
+  },
+  {
+   "bead": "N10b-19",
+   "what": "N10a-22 and N10c-10 share shell helper functions under scripts/e2e/tests/ with 'the two sibling audit scripts', but N10b-19 is a Rust test target (audit_c16_c27.rs) with a script named spec_constructions_c16_c27.sh; align it with the shared helpers (has_ten_sections, row_is_complete, due_at, suite_crate) or the siblings' claim of sharing is false"
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 25 read in full and every number recomputed. Recurrent defects: (1) every SPEC-C bead's order-of-work paragraph said its prerequisite crate beads 'are listed in related' while related was empty or lacked them; fixed in all 13. (2) Pilots were attributed to the mechanism beads they fund (BD-337, BD-233, BD-361, BD-403, BD-384, BD-359) although each chapter has its own pilot bead and the mechanism depends on it; corrected to N22b-09, N19b-25, N25d-16, N31b-06/07/08, N16a-21, N25c-24. (3) Late-adopted known answers already numbered by N38-KA (KA-844/845/846) or by chapter registries (KA-639, KA-745) were to be 'appended' under new numbers; bound to the existing numbers, and the genuinely new rows (late-C32-1/-2, late-C39-1) go through the N38a-40 ledger. Stance grid counts 2,254/114/1,596 re-derived exactly. Optional: BD-440 is an epic that carries deps, against rule 9. No new beads, no merges. Slice looks settled."
+}

@@ -8,7 +8,7 @@ labels: ["m0", "workspace", "delivery", "solid", "registry"]
 parent: "WP-01"
 deps: ["NAB-01"]
 needs: []
-related: ["NAB-02", "NAB-03", "NAB-04", "NAB-05", "NAB-06", "NAB-08"]
+related: []
 gates: []
 plan_refs: ["Appendix A"]
 ---

@@ -1,0 +1,217 @@
+{
+ "round": 3,
+ "slice": "H-ka-2",
+ "reviewed": 14,
+ "changed": [
+  {
+   "bead": "N22-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "All 23 values recomputed (correct). Added each row's section, owner gate and due milestone from the source tables (GATE-REFLEX-03/-05/-06/-07/-08, GATE-GAIT-01/-02, GATE-SHIELD-01/-02/-04; M1, M3, M4). Brought the Carried-by cells up to the live mechanism beads (N22a-26/-33/-35/-38/-39, N22ap2-02, N22b-02..-41, N22bx-01, N22c-02/-03/-44, BD-115/-333/-334/-336). The completeness test is now a cargo target (`--test known_answers_reflex`), not a removed command."
+  },
+  {
+   "bead": "N23-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "One-file request (S12) was already applied. Values recomputed (0.78548 correct). KA-585 control notes 1.582459 as FACT on the admission probe's weights. Added per-row section, owner gate and due. The derivation path follows N23b-17's `docs/derivations/cortex/`. The completeness target is `known_answers_cortex`. Added scripts/e2e/cortex_ka_registry.sh (registry_check and the target, metric lines, two planted scratch defects, STD-E2E NDJSON fields). Deps +BD-025, N38a-40, STD-E2E."
+  },
+  {
+   "bead": "N24-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S12: the private registry/known_answers/arena.toml with its own fields becomes [[ka]] rows of known_answers.toml in N38a-12's schema, with a column mapping. Fixture identities: cart-sill-dock for KA-602..614 and quad-split-grip for KA-616/617 (KA-616 same_as KA-413). The 11 rows without a control are obligation: control (N38b-33). Applied S37: the e2e `frob gauntlet run` becomes per-tier cargo targets (g0/g1/g3/g4/g5) plus a gauntlet-mutations run; registry rows read-only; no gate recorded. Binomial tails recomputed (0.00953, 0.01228). 27 carrier cells updated. Late rows W1 and W2 get one tier with several sites (DESIGN). Added 4 unit tests and owners and due per row. Deps +BD-025, N38a-40, STD-E2E."
+  },
+  {
+   "bead": "N25-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The private row schema (stated_in, site, negative_control, exercises, same_fixture_as, provenance, test) is mapped onto N38a-12's fields: provenance becomes label; Exercises and Realized-by go to the derivation front matter. The late rows' `number = \"unassigned\"` is replaced by slug tags under N38a-40's provisional-tag-past-due rule. The `xtask check-contracts` check becomes a cargo test target. 35 Realized-by cells updated to live beads. Values recomputed (all correct). Added late_rows_by_tag_or_block and no_chapter_file tests and fuller NDJSON logging. Deps +N38b-05."
+  },
+  {
+   "bead": "N26-KA",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S63: KA-664's control is now the undercount one below the exact count (29,955; 299,571; 2,995,730; 76,958), for which (1-p*)^n > delta (0.0500041 at 29,955), plus the tenth request tested at 29,956. Recomputed: exact counts 29,956/299,572/2,995,731/76,959. The source's rounded-down 29,957 is kept as retired cannot-fail (N38b-57, NEG-04, CX-400), and the row declares safe = higher. S12 one-file was already applied. Added test ka_664_controls_unsafe_side, an acceptance item and scripts/e2e/nemesis_ka_registry.sh, which checks the registry only, with three planted scratch defects including the 29,957 control refused cannot-fail. Good-Turing values 0.0635/0.0598 recomputed. Deps +N38b-28 (owner of the cannot-fail rule), STD-E2E."
+  },
+  {
+   "bead": "N27-KA",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "S12 one-file was already applied. All Appendix M.26 rows matched, and the values were recomputed: 37.95 s, 82.0 C, 113.3 C and a trip at 42.4 s, 2^40, 36.000/40.694 mm, e^12.8 = 3.62e5, 1.1735^40 = 602 and -11/32. The `section` field now carries each row's stated section from M.26, not only §27.16. The no-private-key test planted `owner`, which is a schema field and so cannot fail the test; it now plants `carried_by`. Added scripts/e2e/autopsy_ka_registry.sh, which checks the registry only and plants three scratch defects. Deps +STD-E2E."
+  },
+  {
+   "bead": "N28-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "All 27 rows matched Appendix M.27 and the values were recomputed: 3807/4096, 0.94176, 0.04573, DC-01 16 and 22 by the SPRT, ⌈40·0.95⌉=38, Burnside 86,185, 500,500 and 92, 24,546 distinct moment pairs, M/G/1 2,000.6/620.9/0.17 s, 86/98, 0.0950/0.0495. Added each row's section from M.27 and its owner gate from the register (ATEL-02/-04/-05/-06/-08/-09/-10/-11/-13/-16), with FACT labels for the 4 pilot truths. Removed the invented `known_answer!` macro with compile-time registration, a second binding mechanism; binding is now N38a-13's runner entry plus STD-TEST's ka_<nnn>_ tests and assert_ka. Replaced the invented `pilot-unverified` label with N38a-12's FACT note, and replaced the registry control 'registration fails' with N38a-13's unbound and control-missed. The e2e target is now `--test ka_atelier`."
+  },
+  {
+   "bead": "N29-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "All 14 rows matched M.28, and the values were recomputed: 4.905 J; the K1-K3 rates of 1, 0.5 and 0.016 J/s, 4 W, 2 J, and the mutant's 4 K and 2 K. The late rows used `id = \"KA-pending-chron14-<n>\"`, which is not a KA number; they now carry slug tags (chron14-rest-block, -slide-block, -plastic-drop, the carriers' fixture names) under N38a-40. The text said the bead registered controls.toml records; it now enters control texts only, and N38b-05 seeds them. Added each row's section and owner gate (CHRON-02..-10, -14; KA-715 has none). KA-715 printed `to set` is made eligible by its derivation file's tolerance. The e2e `--test g1` (not a target) becomes g1_known_answers, g4_chaos, g5_determinism and g0_laws, plus a gauntlet-mutations run, with full NDJSON fields; the script no longer waits on carriers. The unit target is ka_chronicle. 9 carrier cells updated. Deps +BD-025."
+  },
+  {
+   "bead": "N30-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "placement",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S12: the private registry/known_answers/ground.toml (fields ka, site, negative_control, test, bead, pending) becomes [[ka]] rows of known_answers.toml with a field mapping. The `pending` mark is replaced by computed eligibility plus N38a-13's unbound/not-due, with a binding map to the gate scripts. The invented `ground.aux.*` ids become derived values that the bead's tests recompute. The GATE-GROUND-11 values become a late row with a block request of 1 (slug ground-alias9) and N30b-29's controls. Moved from M5 to M1 (WP-68 is M1): KA-735 is due at M1 for GATE-GROUND-01 and is cited by M1 beads, so a registry at M5 left it unregistered. Added section, owner gate and due per row; the 4 DESIGN controls are linked with N38b-34's records. All values recomputed, including the Beta quantiles 0.216/0.136, CDF 4.5e-5 and sd 0.0626/0.0211. New tests no_chapter_file, late_row_by_tag_or_block, controls_seeded and supporting_values, and a new registry-only e2e script. Deps +BD-025, N38a-12, N38a-40, N38b-05, STD-E2E."
+  },
+  {
+   "bead": "N31-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S84: Part 3 now names N31b-04 as the author of the foundry/S-1..S-6 sections of derived.md and their tests s_1_cross_export_tube..s_6_member_sizing, with no KA number requested. S12 one-file was already applied. The dep on N31b-04 stays: N31b-04 is a derivations bead that depends only on the skeleton, not a mechanism. The text said N38b-34's records were cited first; it now states N38b-34's rule: the owner's control (this bead's) is first and N38b-34's proposal is linked as the same defect. Controls are entered as texts for N38b-05 seeding. Added section and owner gate per row (FOUNDRY-01..-12). 18 carrier cells updated to live seeds (BD-400/402/403/404/406/407/408) and pilots. Targets are now `--test ka_foundry`. The coverage script gained a registry mode that waits on nothing, and the coverage mode is left to N31b-05. All 18 values recomputed (1.159 mm, 300 MPa, 0.116/8.62, 8.752e-6/7.816e-6, 48/17, 0.0950 kg, 15.99/6.346 µm, 0.0688 Ω, 2,063/0.628 mm, 32,800, 2.5, 4.5%/10.5%, 1.042/1.061/1.125/1.333). Deps +BD-025, N38b-05."
+  },
+  {
+   "bead": "N32-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S12: derivations move from crates/frob-conformance/known_answers/tether/ (one per row) to docs/derivations/<fixture>.md, with 12 fixture identities listed in front matter. The record used `site`, a path as `fixture`, several milestones in `due`, and CX numbers in `control`; it is now N38a-12's schema: sites, fixture identity, one due (daemon forms on the same row), control {text, nc} with N38b-05 reusing the CX-345..351 controls, label, printed, and section and owner from M.31 and the register. Fixed KA-762's second level: the bounds 0.0425/0.0505 hold at alpha2 = 0.05/6, not at 0.025/6 (which gives 0.0466/0.0550), as the derivation and test read. Recomputed: the M/G/1 table (857.4..7,716.4; 439.1..806.2; 0.122..0.224; 2.44..4.48%), the binomial bounds, 2^53+1 and 3/128. Targets are now `--test`. Added no_private_layout; the e2e header gains `gates=`. Deps +N38b-05, STD-TEST."
+  },
+  {
+   "bead": "N33-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S12: the private registry/known_answers/suite.toml (control as an NC id or \"none\", gate list, runs_in, derivations under crates/frob-conformance/derivations/suite/) becomes [[ka]] rows of known_answers.toml in N38a-12's schema, with a field mapping. Derivations move to docs/derivations/<fixture>.md. Added section per M.32, the owner (the INT gate; GATE-WS-01 for KA-767), the label and the due milestone. Due follows the admitting carriers, so KA-769 is M3, because fs-voi and fs-uq are in N33b-13's stats group and not in the M1 fs-eproc admission. Controls are texts that N38b-05 seeds, keeping the stated kinds; KA-776's text is set here and comes first, with N38b-34's as the second record. `frob --json` is replaced by N38a-13 receipts and N38a-12's printout, and `not-run` by unbound/not due. KA-779's conditional state is recorded in its derivation front matter. Values recomputed, all correct: Phi(-1/sqrt2)=0.2397500611, (cos32, sin32), 2^-48, 2/pi, 0.0025/0.05. 12 carrier cells updated. Target is `--test ka_suite`, with 2 new tests and a new registry-only e2e script. Deps +N38a-12, N38b-05, STD-E2E, STD-TEST."
+  },
+  {
+   "bead": "N34-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "All 4 rows match M.33. KA-784's nc was to come from 'the controls of N34-14', which registers none, so the row would wait on a mechanism. Its control text now names the seven plants (six plus the stale stack lock), and N38b-05 step 3 issues one control per plant, reusing N34-CX's, so all four rows are eligible after seeding. No hand-written control record. The registry negative control now plants an empty control.text, not a nonexistent `controls` list. A later row takes its number from an N38a-40 block, not 'the next free number'. Target is `--test ka_workspace`, with a new registry-only e2e script. Deps +N38b-05, STD-E2E."
+  },
+  {
+   "bead": "N35-KA",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "All 21 values recomputed, all correct: Clopper-Pearson 1.0002%/0.9969%/0.9921%/1.0201%/2.40%; 8-2^-25 rounds to 8.0 (0x41000000); pattern>>18 gives 0/4112/4136/4164; 7.63/61.0/0.238/0.477 um; D=2^13, 0.671, 8.192e-4; 16.64; 0x3F7FFFFF; both sketch orders. Applied the slice request: the device-form carrier of KA-790/791 is N21b-37 (with BD-157 and BD-179), and 18 carrier cells were updated to live beads. Added each row's section (M.34), owner (GATE-SPARK-05/-15/-16/-17/-18, GATE-TRAC-10, PO-NUM-01/-03, INV-NUM-06; empty for 800, 803, 805), due (M1 for 804, which can be no earlier than the registry; M3 for 801..803; M2 otherwise) and the 'all tiers' site rule. Previously the bead registered KA-791's control record itself; it now sets the text, and N38b-05 issues the record with seed KA-791. Target is `--test ka_numerics`, with a new test and a registry-only e2e script. Deps +STD-E2E."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N24b-04",
+   "what": "Its acceptance line says rows KA-602..611 'name this bead's tests in their `tests` field'. N38a-12's [[ka]] schema has no `tests` field (the loader refuses unknown keys), so the tests must be named in the front matter of each derivation file under docs/derivations/fixture-cart-sill-dock/, next to the KA id it serves."
+  },
+  {
+   "bead": "N25-CX",
+   "what": "Its late provisional tags augur-late-01..-11 collide with N25-KA's late known-answer tags augur-late-01..-18. N38a-40's stale-tag check searches test names and derivation files, where both families appear. Rename the counterexample tags, e.g. augur-cx-late-nn."
+  },
+  {
+   "bead": "N26a-21",
+   "what": "Its 'Known answers and negative controls' paragraph still gives KA-664's control as 'an episode count from ln(1/delta)/p* rounded down' (29,957), which errs on the safe side and is retired cannot-fail (N38b-57, NEG-04, CX-400). It should name the undercount one below the exact value (29,955; 299,571; 2,995,730; 76,958) and the tenth request at 29,956, as N26-KA, N26a-30 and N26b-17 now do."
+  },
+  {
+   "bead": "N30a-14",
+   "what": "Its acceptance clears the `pending` marks of KA-721 and KA-725 in N30-KA's registry. N30-KA no longer has a `pending` field: N38a-12 refuses unknown keys, and the chapter file is gone. Instead, add each row's runner entry ka:<id>@<site> (N38a-13) and name the test in the row's derivation front matter. The same change is owed by N30a-19 (KA-722, -723), N30a-26 (KA-724, -726, -727), N30a-35 (KA-732, -734), N30a-39 (KA-728, -729, -736), N30a-44 (KA-730, -731) and N30a-48 (KA-733)."
+  },
+  {
+   "bead": "N30a-19",
+   "what": "As for N30a-14: replace 'pending marks are cleared' by adding the runner entries of KA-722 and KA-723 and naming the tests in their derivation front matter."
+  },
+  {
+   "bead": "N30a-26",
+   "what": "As for N30a-14, for KA-724, KA-726 and KA-727."
+  },
+  {
+   "bead": "N30a-35",
+   "what": "As for N30a-14, for KA-732 and KA-734."
+  },
+  {
+   "bead": "N30a-39",
+   "what": "As for N30a-14, for KA-728, KA-729 and KA-736."
+  },
+  {
+   "bead": "N30a-44",
+   "what": "As for N30a-14, for KA-730 and KA-731."
+  },
+  {
+   "bead": "N30a-48",
+   "what": "As for N30a-14, for KA-733."
+  },
+  {
+   "bead": "N30b-30",
+   "what": "GATE-GROUND-11's values are now a late known-answer row of N30-KA, cited by the tag `ground-alias9` until N38a-40 issues its number, and bound by this script's runner entry. The script calls `frob-conformance run ground.alias9 --json` and `frob-conformance gen ground.rehearsal`; KNOWN_DRIFTS rule 1 says no frob-conformance run binary exists. Use `FROB_TEST_SEED=<s> cargo test -p frob-conformance --test g1_known_answers -- ground-alias9` and a cargo test or example of BD-388 for the rehearsal generation."
+  },
+  {
+   "bead": "N30b-29",
+   "what": "Cite GATE-GROUND-11's known answer as N30-KA's late row (tag `ground-alias9` until its number is issued); its two negative controls (prior-split fit; speed instead of axial velocity) are that row's control text."
+  },
+  {
+   "bead": "N38b-34",
+   "what": "(1) It says the Ground rows in N30-KA are an M5 registry reported `open: row not registered` until then; N30-KA is now M1, so those four rows are present from M1. (2) Its owners' table gives KA-718's owner control (N29-KA) as 'a localizer that reports the stage whose digest is first printed as differing'. N29-KA's control is a mutant localizer that always names the last state-writing stage (stage 9), and so is wrong on every plant outside stage 9; restate it as N29-KA does."
+  },
+  {
+   "bead": "N38a-13",
+   "what": "KA-779 (N33-KA) is conditional on BD-031's escape-hatch decision: its carriers N33c-05/-06 are built only if the hatch opens. Without a runner entry, a due row is `unbound`, which fails INT-TOOLCHAIN-01's record, but the plan says it 'is not a pass and does not block an exit'. Add an outcome for a row whose derivation front matter records `conditional_on = <decision record>` while that decision is closed (for example `skipped: conditional (BD-031)`), counted neither as a pass nor as unbound."
+  },
+  {
+   "bead": "N35-01",
+   "what": "KA-804 is in the registry from M1 (N35-KA, due M1), but this bead lands at M0 and cannot depend on N35-KA. Its compile-fail test of the planted `From<D3> for D2` runs at M0 as a developer-level ka_804_ unit test, and the runner entry `ka:KA-804@host` (N38a-13, M1) is added at M1 by the M1 conformance battery (BD-146, which depends on N35-KA) or by a follow-up of this bead. Its acceptance should not claim the runner entry at M0."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 14 registries were read against Appendix M.21-M.34, the mechanism beads and the registry skeleton, and every value I could recompute was recomputed. The 13 earlier S12 requests (one file) are now applied or were already applied everywhere: no chapter file, no private key, and no hand-written NC number remain. Controls are texts seeded by N38b-05. Owners and due come from the gate registers and the admitting carriers, so these are DESIGN choices, stated per row. Registry e2e scripts use cargo targets only, log unbound and not due without failing on them (KNOWN_DRIFTS rule 7), and set gates: []. Errors fixed: KA-762's alpha2 (N32-KA), KA-664's safe-side control (N26-KA), KA-769's due (N33-KA), and N30-KA's milestone (M5 to M1). No new beads, none merged. Deps are skeleton only, plus N31b-04, a derivations bead on the skeleton. graph_check reports 0 cycles. Settled apart from the requests."
+}

@@ -1,0 +1,362 @@
+{
+ "round": 1,
+ "slice": "U16c",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "BD-083",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "exhaustion unit test now names a fixture that really exhausts the ladder (impulse tolerance 1e-20 N·s below f64 resolution) and asserts four attempts; an inconsistent configuration would be FROB-REF-224, terminal."
+  },
+  {
+   "bead": "N16-CX",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E (its script sources the helper); e2e log lines now carry ts/script/bead/step/event and a cmd line per invocation with the exact command."
+  },
+  {
+   "bead": "N16-REF",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "adjoint store trigger was a fixed 160 world-steps; now K·d world-steps (160 at K=16, d=10). Added cross-reference to FROB-REF-263 (derivative where none exists, §16.12). 221 e2e fixture was inconsistent ties (that is 224); replaced. Added dep STD-E2E. Added an eighth uncoded-refusal row: --solve-path ancestor on an 18-to-60-coordinate model after KILL-ANCESTOR (8xx, interim FROB-REF-802), so N16c-38/N16c-40 refuse with a named code. The held-command row now also covers a refinement study that changes any other physical parameter (one rule, one code; N16c-43)."
+  },
+  {
+   "bead": "N16c-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "fixture unsolvable-island used inconsistent prescribed tie speeds, which is indeterminate (FROB-REF-224, terminal, no attempts consumed), not FROB-REF-221; replaced by an unreachable f64 impulse tolerance that fails all four rungs."
+  },
+  {
+   "bead": "N16c-03",
+   "kinds": [
+    "scope"
+   ],
+   "what": "claimed to build all five mutants of rows 1-4; four already exist as negative controls of BD-082, N16a-07, N16c-01 and BD-081. Now registers and runs those unchanged and writes only restore-omit-packet-queues."
+  },
+  {
+   "bead": "N16c-04",
+   "kinds": [
+    "scope",
+    "correct"
+   ],
+   "what": "three of its five mutants duplicated existing ones under new names (capacity-shaped-tree of N35-15, mutant-late-param-read of BD-169, the planted fold of BD-208); names aligned, reuse stated, only rows 7 and 8 mutants written here."
+  },
+  {
+   "bead": "N16c-05",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its script; log lines carry the helper's common fields."
+  },
+  {
+   "bead": "N16c-07",
+   "kinds": [
+    "tests",
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "f_idle formula made explicit (Σ share·(1−(1−s)^p)) with an exact hand value 301/640 for the unit test (was 'computed in the test'); interior fixture made synthetic at M2 since the fixture library N19a-07 is M3; e2e covers batch-cpu as well as GPU (both lockstep tiers); dep STD-E2E."
+  },
+  {
+   "bead": "N16c-09",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its script; log lines carry the helper's common fields."
+  },
+  {
+   "bead": "N16c-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "decision rule required the windowed residual bound b to flag the pyramid-cone exploit, which creates no net energy and is caught by the cone-excess monitor (N29a-22); that could leave every stratum without an admissible bound. Clause (b) now binds b to the penetration hopper; the pyramid must be flagged by any of the three monitors. Added deps N16b-15 (the planted exploits), N29a-22 (the monitors), STD-E2E."
+  },
+  {
+   "bead": "N16c-12",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "acceptance asked for counters on batch-cpu and every device but the script ran gpu-cuda only; now batch-cpu and Metal too (absent device logged not-run). Dep STD-E2E."
+  },
+  {
+   "bead": "N16c-13",
+   "kinds": [
+    "deps",
+    "scope",
+    "correct"
+   ],
+   "what": "scope listed an index-list variant of K-film, which lands at M3 (BD-230) while this bead is M2; moved out with the M3 rule stated. Added dep N18b-25 (K-scale-diag, which it wraps) and STD-E2E (own kernel script)."
+  },
+  {
+   "bead": "N16c-14",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "added the rule for plans without full queue coverage (film rows at M2): built masked, receipt names the missing kernel, envelope flagged; with a unit test."
+  },
+  {
+   "bead": "N16c-15",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "--solve-queues on referee/strict was refused by an unnamed 'profile-admission refusal'; now FROB-REF-802 (schema: the option admissible only with profile lockstep) with pointer, repair and exit 3, on both surfaces."
+  },
+  {
+   "bead": "N16c-17",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its decision script; log lines carry the helper's common fields."
+  },
+  {
+   "bead": "N16c-18",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its pilot script; log lines carry the helper's common fields."
+  },
+  {
+   "bead": "N16c-19",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the gate script uses an ignore-message-clause mutant that no bead built; added it beside velocity-only-bound with its fixture."
+  },
+  {
+   "bead": "N16c-20",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "the digest reference was ambiguous while singletons run lockstep and groups run strict; defined the reference exactly (same planner decisions and profiles, one world, island-wise solves and island-local event splitting), added the reference mode with an interaction witness used by the gate, and the evidence rule for a trajectory under two profiles; unit tests for both."
+  },
+  {
+   "bead": "N16c-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the audit witness was a coupled run under strict, whose trajectories differ from the decoupled run from the first tile, so its event times could not audit the certificates; witness is now N16c-20's reference mode, whose trajectories equal the decoupled ones bit for bit (clause 2)."
+  },
+  {
+   "bead": "N16c-22",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its decision script."
+  },
+  {
+   "bead": "N16c-23",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its pilot script; log lines carry the helper's common fields."
+  },
+  {
+   "bead": "N16c-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "scope",
+    "deps"
+   ],
+   "what": "adjoint-identity law test took JVP from a central difference yet demanded 1e-12 relative, which truncation plus cancellation error cannot reach in f64; JVP now comes from the IR's derived tangent program (exact for rational kernels, 1e-12 otherwise) with a separate 1e-7 FD check of the tangent program. Derivation reuses the transposed-product transformation of N21a-20 instead of writing a second one. Dep STD-E2E."
+  },
+  {
+   "bead": "N16c-25",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the gate script (N16c-27) runs a drop-labels mutant that no bead built; added it here with the scalar-boundary and block-stick cases that catch it."
+  },
+  {
+   "bead": "N16c-26",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "the agreement guard left the band 0.5 <= cosine < 0.65 at K = 8 and requests with K <= 8 undefined; now: floor K_min = min(8, K), halving to max(8, ceil(K/2)), the band returns the gradient flagged low-agreement which optimizers do not step along (DESIGN). Stated that the stencil is BD-353's method paired-fd and that this bead lifts BD-353's FROB-REF-724 refusal of --method adjoint where built; kill state returns to that refusal. Unit tests added."
+  },
+  {
+   "bead": "N16c-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "compared against --method fd, which does not exist; the stencil's method is paired-fd (BD-353)."
+  },
+  {
+   "bead": "N16c-28",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "on kill, --method adjoint was 'rejected as an unknown value'; BD-353 already refuses it with FROB-REF-724 (exit 5) before the mechanism, so the kill returns it to that refusal citing the ADR; tests aligned. Dep STD-E2E."
+  },
+  {
+   "bead": "N16c-29",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its pilot script."
+  },
+  {
+   "bead": "N16c-30",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "the branch refusal had no code; now block 1xx, exit 3, after-change, listed in N16-REF's uncoded refusals with the code assigned by N35-33 and the bead not closing on a generic error; unit test asserts the envelope. Dep N16-REF."
+  },
+  {
+   "bead": "N16c-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the admission-time reference-pose consistency refusal had no code; it is now the loop-elimination branch refusal (N16-REF row, 1xx, exit 3) raised with stage: admission; acceptance asserts code, values, repair, exit and no world-step. Dep N16-REF."
+  },
+  {
+   "bead": "N16c-33",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "clause 4(b) used an option --closures eliminate that no bead defines and an uncoded refusal; replaced by the plan's meaning of 'refused' for the toggle (design.check reports row: near-toggle, the run proceeds as a row with ModelId equal to --closures rows and no four-bar kernel launched). Fixture units stated (0.1 m, so the crossed coupler end is (0.12, -0.06) m)."
+  },
+  {
+   "bead": "N16c-34",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "added dep STD-E2E for its decision script."
+  },
+  {
+   "bead": "N16c-35",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "its script and acceptance read the counts through design.check: added dep BD-110 (design.check) and STD-E2E."
+  },
+  {
+   "bead": "N16c-36",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "solve counts 216/324 are in the table's convention (multiply-adds plus n), not raw counted multiply-adds (306 dense); stated so the ledger prints them consistently. Dep STD-E2E."
+  },
+  {
+   "bead": "N16c-37",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "acceptance required instrumented solve counts of 216 and 647, but the LtL substitutions it specifies perform 2*sum(d_k-1) multiply-adds and 2n divisions (198+36, 612+70); added the exact counting convention (multiply-adds + n, which gives the plan's n^2 on a chain) with raw and table figures for both paths."
+  },
+  {
+   "bead": "N16c-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "after KILL-ANCESTOR a request for ancestor in the dense range is refused with the new N16-REF row (interim FROB-REF-802, exit 3), never run dense silently."
+  },
+  {
+   "bead": "N16c-39",
+   "kinds": [
+    "correct"
+   ],
+   "what": "solve-count assertions state the counting convention and log the raw multiply-adds."
+  },
+  {
+   "bead": "N16c-40",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "title"
+   ],
+   "what": "post-kill rejection 'not admitted for this size' had no code; now the N16-REF row (8xx, interim FROB-REF-802, exit 3) and the script asserts it. Deps N16-REF, STD-E2E. Title was 111 characters; shortened to 103."
+  },
+  {
+   "bead": "N16c-41",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "emits K-held-exact from the kernel IR but did not depend on it: added BD-018; added STD-E2E for its smoke script and the helper's common log fields."
+  },
+  {
+   "bead": "N16c-42",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "the sim.estimate warning on stable-exact-only loops was specified but had no acceptance item or test; added both (warning at d = 1, none at d = 2) and dep BD-219 (sim.estimate)."
+  },
+  {
+   "bead": "N16c-43",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "a study changing a physical parameter was 'refused as changing a physical parameter' with no code; clocks are physical parameters, so it is now the same refusal and code with observed naming the parameter; test asserts it. Dep N16-REF."
+  },
+  {
+   "bead": "N16c-44",
+   "kinds": [
+    "e2e",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "the script ran only the d = 2 arm while acceptance pins three pairs; it now runs d = 1, 2 and 4 against their refinements and asserts the FROB-REF-820 citation refusal. Dep STD-E2E."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-230",
+   "what": "if KILL-ROWQUEUE has not fired when K-film lands (M3), add the index-list entry point (index_list, len, row_bound) of N16c-13 to K-film with its bit-equality test against the masked path; until then N16c-14 builds plans with film rows masked."
+  },
+  {
+   "bead": "BD-422",
+   "what": "the epic's test plan names scripts/e2e/gradients_through_contact.sh 'written by the mechanism child', but the child gate bead N16c-27 writes scripts/e2e/kin_stepadjoint_gate.sh; name that script (or state that the epic's script wraps it)."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Unchanged: N16c-01, N16c-16, N16c-31, N16c-45. Recurring fix: beads that ship their own scripts/e2e script now depend on STD-E2E and log through its helper. Several refusals named without a code (loop-elimination branch at compile and at admission, post-kill solve-path, refinement study changing a physical parameter, undefined --closures eliminate) were tied to the N16-REF uncoded-refusal table or removed. Numerical claims rechecked in exact arithmetic: four-bar values and derivatives, ancestor counts, fill example, held-command counts, passing set, mutant outcomes and margins, paired bounds, binomial bounds, adjoint store. N16-REF's interim FROB-REF-561 and FROB-REF-602 left in place pending N35-33."
+}

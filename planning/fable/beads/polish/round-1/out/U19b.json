@@ -1,0 +1,314 @@
+{
+ "round": 1,
+ "slice": "U19b",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "BD-162",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e named the conformance format rows concretely and made the compile/show/out-of-range steps explicit: logged as e2e_skip until BD-163 (which depends on this bead) is closed, never counted as a pass; the planted out-of-range manifest is read through scene.show and must give exit 3, FROB-REF-303."
+  },
+  {
+   "bead": "N19b-01",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e 'Gauntlet rows' made concrete (KA-426/427/428 rows with the halved-bound control reported caught); the BD-163-dependent compile/show steps are e2e_skip until BD-163 closes."
+  },
+  {
+   "bead": "N19b-03",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Island admission ignored KILL-LIVING although the admission matrix enumerates 'gate killed' for islands: added the KILL-LIVING rule (only existing sibling oracle fixtures run; other islands substitute with reason killed: KILL-LIVING). The exit-5 refusals had no code: DESIGN FROB-REF-724 with block fields, reasons and ranked repairs; added tests island_after_kill_living and require_tier_refuses_724."
+  },
+  {
+   "bead": "N19b-04",
+   "kinds": [
+    "tests",
+    "deps"
+   ],
+   "what": "e2e expected an island estimate 'labelled evaluation tier' at M3, impossible on a default build (moonshot-islands off): now expects the recorded substitution (feature-not-built) and FROB-REF-724 for the training-batch island; conformance step made concrete. Added dep N19b-03 (its admission is what the e2e asserts)."
+  },
+  {
+   "bead": "N19b-09",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "'All fluxes from the state at the start of the sub-step' with sequential application of transport then spreading can drive a cell negative (transport at Courant 1 empties it, spreading computed from the old thickness removes more). Specified sequential operator splitting (each operator reads the state left by the previous one) and added split_order_positivity with its mutant."
+  },
+  {
+   "bead": "N19b-11",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "e2e hedged on 'eval.rank-agreement --runs (or the comparison verb)'; eval.rank-agreement compares tier/rung pairs, not scene arms. Now: eval.scorecard per arm and the decision script computes tau-b with the rank-agreement library estimator and bootstrap."
+  },
+  {
+   "bead": "N19b-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Claim 'containers shorter than about 0.125 m are above the band at any fill' is false (shallow fill lowers f1: L=0.10 m, h=10 mm gives 1.54 Hz, inside the band), and the negative-control box 'shorter than 0.10 m' therefore was not guaranteed to falsify. Corrected the bound (long containers >0.78 m are below the band at any fill), added short_shallow_in_band, and replaced the control box by L 0.05-0.10 m with h 0.05-0.10 m (min f1 2.676 Hz) plus a long-container box."
+  },
+  {
+   "bead": "N19b-13",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "e2e hedge 'actuator check or the card-check verb' replaced by module.check on the slosh payload module asserting omega_n, k_n, c_n with omega1 = 8.956 rad/s."
+  },
+  {
+   "bead": "N19b-16",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "For oil the 'Frontier proxy' column is the Solid-tier dwell-time film patch and the 'Solid proxy' the CX-189 constant patch; pooling oil into T (KILL-PROXY, which is about articulated proxies) would contaminate that decision. T is now computed on cord and rug only; S_F pools all three; added t_excludes_oil."
+  },
+  {
+   "bead": "N19b-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Cost step left the case 'interval straddles 2 after the optimization pass' undefined; now fired: cost only when the re-measured interval is wholly above 2 with no lever left, otherwise not fired with the interval recorded."
+  },
+  {
+   "bead": "N19b-20",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Downstream said admission 'refuses island declarations everywhere and substitutes the proxy' (contradictory, and inconsistent with N19b-03): now substitutes with reason killed: KILL-LIVING except existing sibling oracle fixtures, refusing with FROB-REF-724 only under --require-living-tier M; e2e asserts both."
+  },
+  {
+   "bead": "N19b-21",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "A training batch naming an island was 'refused' with no code; now FROB-REF-724, exit 5, reason island-in-training (N19b-03's admission refusal) in acceptance and e2e."
+  },
+  {
+   "bead": "N19b-22",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Frozen prediction used mu_v without defining it; added mu_v = min(mu_b, eta*|v_t|*pi*R^2/(h*F)), the capped form settled in N19b-05/BD-230, with the viscous-capped flag."
+  },
+  {
+   "bead": "N19b-26",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e fit step relied on scene.fit (N19b-32, which depends on this bead): made the call concrete (Delta 0.05 m, 32 headings, e 74.6 mm plus field term, cell count) and logged it as e2e_skip 'needs N19b-32' until that bead closes; N19b-32's acceptance now requires it."
+  },
+  {
+   "bead": "N19b-27",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Identity mismatch was 'an integrity fault' with no code, class or exit: now class integrity, exit 9, retry never, block fields stated/recomputed/blob; the code is requested of N19c-42 (widen FROB-REF-323 to .fclear). Added integrity_fault_exit_9. e2e: conformance FMT-FCLEAR rows run now; the scene.fit --emit-fclear steps are e2e_skip until N19b-32."
+  },
+  {
+   "bead": "N19b-28",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The doorway query added to clearance_cells_smoke.sh is a scene.fit call (N19b-32 depends on this bead): made concrete and logged as e2e_skip until N19b-32, whose acceptance requires it."
+  },
+  {
+   "bead": "N19b-29",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "floor_stop (eps_field 1 mm, margin 1.5 mm) could never stop at the floor: geometric e is 4.66 mm at the default maximum level 4, so the loop stops at budget. Stated when the floor is reachable (eps_field + u_reg > 4.7 mm; generated near fits under ~11.3 mm stop with band, ~0.13% of uniform pairs), fixed floor_stop (eps_field 5 mm, margin 8 mm), added generated_near_fit_band, corrected the acceptance line."
+  },
+  {
+   "bead": "N19b-30",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Route verdict reports each unresolved segment's stop rule, which is N19b-29's refinement record: added dep N19b-29 (no cycle). e2e cases tied to N19b-35's acceptance."
+  },
+  {
+   "bead": "N19b-31",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "e2e started from scene.fit (N19b-32 depends on this bead): until N19b-32 closes the script verifies the specimens emitted by six_mutated_bundles_rejected (now written to target/e2e-fixtures) and logs the fit/prove steps as e2e_skip; N19b-32's acceptance requires them."
+  },
+  {
+   "bead": "N19b-32",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Claimed to write the registry row, which only VERBS-scene enters: now implements the row; scope corrected scene:read -> scene:run, task cluster places-check, registry example; 304 not in the registry row (requested). Its e2e owner N19b-35 depends on it: added a verb-surface section to clearance_cells_smoke.sh and acceptance that every e2e_skip 'needs N19b-32' step (N19b-26/27/28/31) runs and passes."
+  },
+  {
+   "bead": "N19b-33",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "The registry row lists FROB-REF-320 (thin feature) as a chapter refusal of contact.clearance; the bead omitted it: added the trigger (explicit shapes with route none, mesh-cpu on a GPU tier), BD-232's repairs, acceptance, verb_ref_320_exit_3 and e2e cases. VERBS-contact moved from related to deps (it enters the row); scope, tier and task clusters aligned with the row."
+  },
+  {
+   "bead": "N19b-35",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Corridor pass rule compared L_out - L_in with 'twice e plus the floor', a margin quantity: the bottleneck clearance is a*sqrt2 - b - L/2, so a margin band maps to twice its width in length; now L_out - L_in <= 2*(w_out - w_in) + 2 mm (bisection to 1 mm), with band_to_length. The cases N19b-29 and N19b-30 contribute to this script were not listed: added them and an acceptance line."
+  },
+  {
+   "bead": "N19b-34",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "analyze.route is a read verb in the registry, yet the bead let it return a job handle: it now decides synchronously (bracketing, or the design's own complex with local refinement under a 2 s budget_ms) and points to scene.fit in next_actions when still unresolved; added read_kind_never_job and check_hook_with_and_without_scene. e2e called a non-existent 'frob analyze clearance' (now 'analyze route'), and its design.check --scene steps need stage 7 (BD-244, which depends on this bead): logged e2e_skip until BD-244 (request recorded); acceptance reworded to test the hook."
+  },
+  {
+   "bead": "N19b-36",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "The fallback was reached by 'scene.fit --fallback heuristic' but no bead defined that input: defined the optional field fallback (none|heuristic) on frob.scene.fit.in/1, default heuristic on the fired branch; added fallback_input_field; fixed a wrong cross-reference ('step 1 of this section' -> section 1)."
+  },
+  {
+   "bead": "N19b-37",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The registered control 'a covered row cites an amendment not in the catalog' and the commit-order rule had no unit test: added unknown_amendment_rejected and registration_precedes_result."
+  },
+  {
+   "bead": "N19b-38",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Its list of 'the closed enum of N19b-44' omitted set-source-param (13 kinds): added. e2e applied entries only through scene.retrofit (N19b-40, which depends on this bead): added a runnable derived-compile step with the instantiated threshold-ramp edit (N19b-44 surface) and logged the scene retrofit --apply steps as e2e_skip until N19b-40, whose acceptance requires them."
+  },
+  {
+   "bead": "N19b-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e ran only 'scene retrofit --plan-only' (N19b-40's verb, which depends on this bead): until N19b-40 closes the script runs and logs the retrofit_kits tests and logs the plan-only calls as e2e_skip; N19b-40's acceptance requires them."
+  },
+  {
+   "bead": "N19b-40",
+   "kinds": [
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Claimed the registry entry, which only VERBS-scene enters: now implements the row (scope scene:run, task cluster places-check, registry example, first milestone M4). Its e2e owner N19b-41 depends on it: acceptance now requires the skipped steps of retrofit_catalog.sh and retrofit_plan.sh, plus a verb-surface section (outcome kinds, 313, policy identity, cancel, replay, MCP digests)."
+  },
+  {
+   "bead": "N19b-41",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The verb-surface cases N19b-40 contributes to scene_retrofit_gate.sh (plan-only, apply, FROB-REF-313, job handle, cancellation, replay) were not in the script: added to the e2e and to acceptance."
+  },
+  {
+   "bead": "BD-233",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "overlay_export expected door D3 'blocked with margins (31, 46) mm' with no margin stated, which contradicts the sweep (a witness exists below w_in = 31 mm): the test now states the status per requested margin (passable 20, unresolved 31 and 40, blocked 46 and 50)."
+  },
+  {
+   "bead": "BD-369",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Defined catalog.addressing a second time (N19b-38 defines it): BD-369 now adds only catalog.for_bottleneck, built on N19b-38's addressing."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "NEG-21",
+   "what": "Per the reconciliation DESIGN in N19b-02/N37-18, FROB-REF-310 is raised only by ScenePack::export_check for a scene pack; 'any export containing it is refused with FROB-REF-310' must say: a scene pack or variant -> 310 (exit 3); a report, still, replay or other derived artifact -> FROB-REF-733 at the export door (exit 5)."
+  },
+  {
+   "bead": "NEG-22",
+   "what": "Same 310/733 division: line 67 expects 310 for a non-pack export; derived artifacts are refused at the export door with FROB-REF-733 (licence) or -731 (private), exit 5."
+  },
+  {
+   "bead": "NEG-23",
+   "what": "Same 310/733/731 division: 'every export path is refused with FROB-REF-310' is wrong for stills, reports and replays (733 or 731, exit 5); only the pack and its variants give 310."
+  },
+  {
+   "bead": "NEG-24",
+   "what": "Same division: 'stills and reports containing them refused with FROB-REF-310' should be FROB-REF-733 at the export door (exit 5); 310 only for the pack and variants."
+  },
+  {
+   "bead": "NEG-25",
+   "what": "Same division: 'every export of geometry, stills or packs is refused with FROB-REF-310' -> packs 310 (exit 3); geometry and stills 733 (exit 5)."
+  },
+  {
+   "bead": "NEG-26",
+   "what": "Check the 310 expectation is limited to scene-pack exports (N19b-02 DESIGN); derived artifacts get FROB-REF-733."
+  },
+  {
+   "bead": "BD-163",
+   "what": "BD-162 (scripts/e2e/fscene_roundtrip.sh) and N19b-01 (scripts/e2e/brick_codec.sh) log their scene.compile/scene.show steps as e2e_skip until BD-163 closes; BD-163's acceptance should require both scripts to run those steps and pass."
+  },
+  {
+   "bead": "N32-REF",
+   "what": "N19b-03 uses FROB-REF-724 (exit 5) for a living-world mechanism that is not built, killed at its kill gate, or not admitted for the run purpose (an island in a training batch), with block fields mechanism, declared_tier, reason, run_purpose. Confirm, or assign a 7xx code."
+  },
+  {
+   "bead": "N19c-42",
+   "what": "N19b-27's .fclear reader raises an integrity fault (class integrity, exit 9, block stated/recomputed/blob) when a recomputed identity or blob hash differs; no code exists. Widen FROB-REF-323 to every content-addressed Habitat artifact (.fscene and .fclear), or add a sibling row."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.fit's chapter refusals list 305 and 308; N19b-32 also raises FROB-REF-304 (relative-only scale label on an ingested scene, §19.16) and the format refusal 891 for a stored .fclear. Add 304 to the row."
+  },
+  {
+   "bead": "BD-244",
+   "what": "N19b-34's scripts/e2e/a18_clearance.sh logs its two 'frob design check carrier-a --scene home-fixture' steps (before and after the repair edit) as e2e_skip 'needs BD-244' because stage 7 is BD-244's; BD-244's acceptance should require that script to run them and pass."
+  },
+  {
+   "bead": "N19c-42",
+   "what": "'--strict-data refuses a cost verdict built on assumed prices' (N19b-38, N19b-40, N19b-43, BD-369; plan §19.20/§42 consequence of OPEN-HAB-4) has no refusal code. Assign one (class scene, exit 3, block fields naming the assumed prices) or name the existing code to use."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "N19b-36 adds an optional input field 'fallback' (none|heuristic) to frob.scene.fit.in/1 for the KILL-FCLEAR fallback; the help-schema snapshot of scene.fit will change additively when it lands."
+  }
+ ],
+ "unchanged": 20,
+ "notes": "All 51 beads read in full against plan_refs and the eight points. Recurrent defect: e2e scripts that call a verb (scene.fit, scene.retrofit, design.check stage 7) delivered by a bead that depends on the script owner; fixed with logged e2e_skip steps that the verb bead's acceptance must turn into passes (BD-163, N19b-32, N19b-40, BD-244). Arithmetic re-verified: slosh frequencies, catenary, corridor limit 2*sqrt2*a-2b, cell error terms per refinement level, near-fit shares, Clopper-Pearson intervals, wheel-edge friction, ramp tolerance band, annualization. Open items outside the slice are in requests (NEG-21..26 export codes, N32-REF 724, N19c-42 integrity and strict-data codes, VERBS-scene, BD-163, BD-244)."
+}

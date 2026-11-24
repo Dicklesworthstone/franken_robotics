@@ -1,0 +1,432 @@
+{
+ "round": 2,
+ "slice": "S57",
+ "reviewed": 41,
+ "changed": [
+  {
+   "bead": "N21c-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "Rule 3 released N21c-15 (Solid, unaffected); now N21c-12 to -14 and BD-370. Record: ADR path docs/adr/ADR-KILL-FLEET-M4.md in N21a-03's format with N40-03 fields; the register entry uses N40-03's outcomes (no 'not-fired (first reading)'); fired at first reading GATE-SPARK-13's M4 part is recorded killed so the exit is not blocked by a never-run gate; typed closes per N41-17 (fallback/superseded) replace 'closed as not funded'. Fallback-surface test limited to what deps deliver (VERBS-fleet 724, N21c-07's sim.estimate fields); by-hand mode is BD-370's, fleet.status N21c-15's. E2e logging spelled out; final-reading stage is a hook BD-370 runs. Deps + N21-KA, N21a-03, N40-24 (the kill record it compares), VERBS-fleet; N32a-34, N41-17 related."
+  },
+  {
+   "bead": "N21c-12",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its only e2e was BD-370's later script (KNOWN_DRIFTS 7). Own lane added: scripts/e2e/fleet_model.sh runs frob sim estimate on three fixtures and the fleet_fits example against a two-machine device fixture, with full STD-E2E logging; BD-370's fleet_plan.sh step named as the later shell lane."
+  },
+  {
+   "bead": "N21c-13",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance said four hand cases; there are five (named). Metamorphic relation was false (scaling estimates and A without the waits moves jobs across the aging horizon): restated as two true relations. Own e2e lane (integration test fleet_assign_e2e replaying fixtures, plan goldens across Linux/macOS, STD-E2E NDJSON) replaces sole reliance on BD-370's script."
+  },
+  {
+   "bead": "N21c-14",
+   "kinds": [
+    "correct",
+    "sense",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "scope"
+   ],
+   "what": "Contradicted N32a-35 (its dependency): it re-queued started, handed-over jobs on the 30 s drop-out with epoch+1, so a partitioned peer would run the key twice (KILL-PEERLINK clause a; N32a-35's control 'origin re-queues locally on timeout'). DESIGN: jobs not yet handed over re-queue at once; handed-over jobs wait until the peer answers by key (adopt, keep, or re-queue with epoch+1 when absent); epoch guard kept as second line. Tests requeue_rule_table extended, no_rerun_while_peer_may_hold and a negative control added; e2e cuts the link without killing the peer, keys on every run, full logging. Balance statistics now computed by N21c-15's lane_stats (one definition); dep N21c-15 added (its script calls fleet.status)."
+  },
+  {
+   "bead": "N21c-15",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Stale text said VERBS-fleet's row has tier F (it has S); TOML purpose/examples aligned with the registry row. Lane statistics (bias, over-twice share, reliable/unreliable, backlog) were printed but undefined: defined here as lane_stats (Solid, survives KILL-FLEET), with a hand-case test. waiting[] source stated (fleet plan record; empty when by-hand). Peer half: standalone without a link, unavailable when configured and down. E2e assumed a peer link this bead cannot depend on: now a standalone stage (meter, forbidden export, planted scene-identity mismatch, KILL-FLEET fired -> by-hand) plus a linked-stage hook run by N32a-35."
+  },
+  {
+   "bead": "N21c-16",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps",
+    "tests"
+   ],
+   "what": "E2e ran 'frob sim run ... --profile kernels' (--profile is the execution profile lockstep/strict/referee; no key): now reads the stored frob.stepprofile/1 records of N21a-27 (made by BD-217's profile step) and runs the specializable_share example, with full logging. Scope names N21a-27 as the profile's owner and notes its display-only derived share. share_from_stage_timers no longer lets s_stage decide. Deps + N21a-27, N21-KA (KA-549). Acceptance: `not run` -> `not-run` (N40-01 status spelling)."
+  },
+  {
+   "bead": "N21c-17",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "E2e used options no row has and no keys: --steps (sim.run takes seconds), spark check --kernel-set/--against, telemetry divergence --exact. Now: cold compiles via spark.cache --evict + spark.precompile with keys, sim.run --seconds 2 with a distinct key per arm and pair, bit identity by digests and telemetry divergence --mode exact; --kernel-set defined as a conformance-build-only knob (requested of VERBS-sim/-spark). Protocol step 2 no longer claims FROB-REF-613 at M2 (the fence is N21c-19, M4). Pilot register path per KNOWN_DRIFTS 3. Deps + BD-206, N21b-13, N21c-04."
+  },
+  {
+   "bead": "N21c-18",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied U21a request: dep N21a-03 (ADR format, tier register row it amends). Record per N40-03 (outcome vocabulary, ADR fields, decision array), ADR docs/adr/ADR-KILL-SPECIALIZE-<M2|M4>.md; fired: GATE-SPARK-14's M4 part killed (was the non-status 'not run: ...'), typed closes of BD-371 (fallback) and N21c-19, N21c-20, N17a-16 (superseded). Tests: rule 1 inputs are profile verdicts with intervals; outcome-vocabulary test. Fallback surface tied to N21-REF's refusal_row_before_mechanism with the option declaration requested of VERBS-spark. Deps + N21-KA, N21-REF, N21b-13, N40-24."
+  },
+  {
+   "bead": "N21c-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2e passed a step-plan fixture to spark.place (no such input), ran run verbs without keys and used options absent from the rows. Now: spark.check --specialized per backend with keys, sim.run --kernel-set specialized with a key and its repair, restart and quarantine check; system-choice surface asserted by unit test here and from the user's side by N21c-20's script; --specialized and --kernel-set requested of VERBS-spark/-sim; full logging."
+  },
+  {
+   "bead": "N21c-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2e: two compared train.start runs had no keys (second would replay the first's receipt); telemetry divergence --exact is --mode exact with two runs; the conformance parameter's CLI spelling stated. Added the forced switch to the reassociated set (the fence's system-choice surface N21c-19 now leaves here); capture counter and memory thresholds logged."
+  },
+  {
+   "bead": "N21c-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2e named no runnable gate target: now FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- rejected:: (KNOWN_DRIFTS 1). The train.start --knob step needs N35-06 (M3): it runs only from M3 with an e2e_skip 'needs N35-06 (M3)' before; row 4's CLI guard carries first_milestone M3 while the library-level gemm_device_path_refused_under_d2 runs from M2. Full STD-E2E logging; acceptance line aligned."
+  },
+  {
+   "bead": "N21c-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2e had 'the conformance target for rejected::' (no command), 'an attempted frob telemetry read of a non-committed slab' (no such verb option) and frob eval promote without a key. Now: the g1_known_answers command; spark.place with its row's inputs; the 614 host-read guard through N21b-11's conformance seam (sim.run --conformance-host-read state.working, exit 6, first repair); the variant admission as BD-183's admit step with its own key and the compile counter threshold; eval.promote --tier referee --key from M3 with a skip event before; full STD-E2E fields. Arithmetic rechecked, unchanged."
+  },
+  {
+   "bead": "N21c-28",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "The internal code for an incomplete device receipt was 'asked of BD-005'; the allocation ledger is N35-33, which already holds N21-REF's first-round request for it: text and dep (N35-33 moved from related to deps) aligned. Acceptance listed train.* and eval.* as M2 device verbs although they land later: now the M2 verbs plus every verb the capability report lists with a device tier, covered by the envelope builder without change here. E2e: verbs read from frob capabilities, keys on run verbs, the stored-result re-read, the planted omissions expected as exit 9 with the failing validation in pointer, full STD-E2E fields."
+  },
+  {
+   "bead": "N21c-31",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Withhold overlay spelled --withhold (N21b-31 and VERBS-spark spell --withhold-kernel); dep N21b-31 added (it provides the overlay). E2e: sim.run with its row's inputs and distinct keys per arm, spark.precompile --offline with a key for FROB-REF-612, telemetry divergence <a> <b> --mode exact (was --exact), every control through the companion bead's runner (cargo test -p frob-conformance --test negctl -- <id>, as N21c-30), full STD-E2E fields."
+  },
+  {
+   "bead": "N21c-39",
+   "kinds": [
+    "deps",
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied U21a request: dep N21ap1-01; the bounds now fill frob.stepplan/1's bounds field (was a new 'counters' field) and the chunk field records the no-wrap rule. Applied UJL-2 request: new step 7 states that the check sits in plan construction, so spark.place and sim.run admission (and other run verbs) raise 619 before any world is stepped; acceptance line added; VERBS-sim asked to list 619 on sim.run. --chunk-intervals cited N21b-39, which depends on this bead: now the knob is the chunk rule's (N21b-22, a dep), requested of it and of VERBS-sim/-spark. E2e was only N21c-43's later script (KNOWN_DRIFTS 7): own lane count_bound.sh with the pinned, neighbour (65,535 x 65,537 x 1 = 2^32-1; 'the same' fixture could not hit 2^32-1), shortened, run-admission and identity steps, keys, full logging. Deps + BD-178, N16b-25 (the verbs its lane drives)."
+  },
+  {
+   "bead": "N21c-40",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "E2e was only N21c-43's later script, and it read totals through telemetry.histogram, whose bead N29a-15 depends on this one (KNOWN_DRIFTS 7). Own lane: integration test hist_drain_e2e on batch-cpu with device variants, real arena, fence, drain and ledger: the 10^10 one-bin fixture, chunk lengths 1/16/1,342, one and two shards, 10^3 injected faults, 100 randomized kill points with a child process, a twice-presented epoch, the planted overflow failing conservation at the first drain; STD-E2E NDJSON with thresholds; N21c-43 and N29a-15 named as later lanes."
+  },
+  {
+   "bead": "N21c-42",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "E2e was only N21c-43's later script (KNOWN_DRIFTS 7) and passed planted kernels to spark.place positionally (the row takes no kernel fixture). Own lane arith_gating.sh: lint over the library and the planted sources (FROB-REF-251), the fingerprint's arithmetic block, variant selection shown by spark.place and the sim.run receipt (with keys), the 616 refusals and the mixed-family selection in an integration test through the real planner, 64- vs 32-bit variant identity on 10^6 inputs; full logging. Dep N16b-25 added for sim.run on device tiers."
+  },
+  {
+   "bead": "N21c-43",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Gate recorded with 'cargo test --test g0 -- GATE-SPARK-23' (not a tier for a Known-answer gate): now --test g1_known_answers plus record_gate. spark.place was given positional fixtures; now --design/--task/--worlds per its row, the neighbour fixture with exact 2^32-1 arithmetic, and a sim.run admission step for 619. spark check used --devices (no such option): --kernel/--backend/--seed/--key. sim.run runs had no worlds, duration or keys (the device run would replay the reference's receipt): added, with the fixture's 20 ms control period. Planted overflow through the negctl runner. 'not run' -> not-run (N40-01)."
+  },
+  {
+   "bead": "N32a-34",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Registration path registries/pilots/peer-link.toml -> a row of crates/frob-conformance/registry/pilots.toml (frob.gauntlet.pilot/1, N38a-09) with its frozen protocol under docs/pilots/, the verdicts mapped onto the register's result vocabulary (KNOWN_DRIFTS 3). 'Closed as not built' -> closed withdrawn citing the decision record (N41-17). E2e made concrete: registration order check, N32a-22's extractor on both state roots, a pilot_peer_link example for the synthetic known answers and the real computation, the KILL-FLEET read, the appended result and memo."
+  },
+  {
+   "bead": "N32a-35",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied S09 request: 'its recorded pass' replaced; this bead creates the KILL-PEERLINK kill row in registries/gates.toml in the fallback ledger's (N40-03) format, mode standing, decided M4; the acceptance campaign is the first measurement entered with (a) and (b) not triggered; decisions are N40-03 entries per clause scope with docs/adr/ADR-KILL-PEERLINK-<m>.md; clause (c) deferred if the four weeks end after the M4 exit; fired -> fallback close (N41-17 rule 5). Drop-out text aligned with N21c-14's peer-confirmed re-queue. Linked stage of N21c-15's fleet_status.sh added to acceptance and e2e (dep N21c-15). Keys on submitted jobs; decision test uses N40-03 outcomes; record-format test added. 'Closed as not needed' -> withdrawn."
+  },
+  {
+   "bead": "N41-12",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Applied S09 request: 'recorded PASS of KILL-PEERLINK' replaced in the effect table, Checks, acceptance, the test (now link_on_requires_first_measurement) and the e2e: first measurement entered with (a) and (b) not triggered and no fired entry; a fired entry sets the key back to false. Standalone branch: N32a-35 closed withdrawn citing the ADR; KILL-PEERLINK is then not-reached and never created (handling requested of N32b-25). The --machine option and the cross-machine refusal had no definition or code: defined here (DESIGN), requested of NJL-01, code asked of N35-33 under the constant MACHINE_NOT_LOCAL. E2e made concrete with keys, three planted register states and full logging."
+  },
+  {
+   "bead": "N35-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2e ran sim.run on device tiers, which is N16b-25's work, waiting on this bead through N35-04 (KNOWN_DRIFTS 7), and used a 'conformance fingerprint override' and a mutant loader no dep provides. Own lane now: spark check --all with a key (composition evidence is BD-181's, later, so floats print D3/D4 batch-dependent), spark.place's printed class, and an integration test for stale-check, the planted scheduling-dependent reduction and CX-366; sim.run envelopes named as N35-31's later lane. Single-placement D3 required only an envelope; D3 needs the decisions row too (as the pair rule and the class definition say)."
+  },
+  {
+   "bead": "N35-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Compared runs carried no keys (the second arrangement would replay the first's receipt): distinct keys and idempotent_replay false asserted. --chunk-intervals was attributed to BD-160/N21b-39 (N21b-39 is a later e2e bead): now N21b-22's chunk-rule override (requested). telemetry divergence given two runs and --mode exact. 'not run' -> not-run (N40-01) in the arch row, acceptance, test and the skip path. Considerations: the two remaining `not run` -> `not-run`."
+  },
+  {
+   "bead": "N35-04",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Scope: one shared parser and admission in frob-verbs wired into sim.run (BD-024) and sim.replay (BD-203); later handlers (N16b-25, BD-198, BD-205) call it, and N24c-04 and VERBS-eval/-train/-run are asked. `--on-degraded` requested of VERBS-sim. Dep STD-E2E. The e2e relied only on N35-31: own lane `det_profile_options.sh --seed <s>` on the referee (defaults, explicit, width_refused 604, misspelt 802, not_applicable 247, config_plant, refused_value, schema) plus `cargo test -p frob-verbs --test det_profile_e2e` for batch-cpu and device paths (sim.run on Spark tiers cannot be used: N16b-25 depends on this bead); later lane N35-31."
+  },
+  {
+   "bead": "N35-09",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Own lane `equiv_world.sh --seed <s>`: referee f64 against batch-cpu f32 on 64 worlds with distinct keys, the comparison example, first divergence through `telemetry divergence --mode tolerance`, self-comparison and fixtures; later lane N35-12 (BD-177 depends on this bead)."
+  },
+  {
+   "bead": "N35-10",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Own lane `equiv_verdict.sh --seed <s>`: pair via N35-09, the real n = 64 verdict `insufficient`, the hand cases (30,15,15), (31,31,0), (82,82,0), (11,11,0), (12,12,0), n = 298/299, provisional thresholds; arithmetic table rechecked."
+  },
+  {
+   "bead": "N35-11",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Step 2 now a real batch-cpu f64 sim.run with designs, worlds, seed and key plus the boundary_density example; step 3 timing run on `strict:<backend>` with its key; sim.estimate absent is a skip event."
+  },
+  {
+   "bead": "N35-12",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Dep N21b-42 (mutant loader). Steps 3, 4 and 6 carry distinct keys and assert `idempotent_replay: false`; planted bias through `--mutant decision-bias-1-in-50` (U 2.4007% at k = 82 rechecked); gate step `--test g5_determinism` plus record_gate; absent peer runs and envelope-limited pairs are skip events, never passed."
+  },
+  {
+   "bead": "N35-13",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "E2e relied only on N35-17: own lane `cargo test -p frob-kernels --test padding_e2e` on batch-cpu (K-reduce/K-seg-reduce against the host reference, padding_audit at two capacities, the 0x3F800008/0x3F800007 known answer, the 2x2 factor, four controls) writing STD-E2E NDJSON; N35-17 step `padding` named as the later lane with a keyed spark check. Dep STD-E2E. The CUDA/Metal acceptance moved to N35-17 (this bead reaches no device harness). Arithmetic rechecked: midpoint-split cases and the 1024 x 2^-30 tree."
+  },
+  {
+   "bead": "N35-14",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Deps BD-174 (Metal), BD-176 (spark.check) and STD-E2E added, cycle-checked. Acceptance no longer requires N35-15 mutants (N35-15 depends on this bead); its own plants are the control. Own lane `batch_conditions.sh --seed <s>`: keyed `spark check --conditions --workload --backend` per backend, report read-back, planted edges; later lane N35-17."
+  },
+  {
+   "bead": "N35-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Registry path is BD-025's `crates/frob-conformance/registry/controls.toml`; \"three fixture worlds\" -> four. Own lane `batch_mutants.sh --seed <s>`: the specificity matrix on 64 worlds per backend through an integration test (sim.run has no capacity or shard option), the alone and cotenancy axes through keyed `sim run --mutant` and `sim replay --alone` / `--batch-size --co-tenants`, the release-build refusal; later lane N35-17."
+  },
+  {
+   "bead": "N35-16",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Deps BD-207 (drain), N16b-25 (sim.run), N35-15 (slot-keyed-draws) and STD-E2E. The raw-draw tap is enabled by a named conformance option `--conformance-draw-tap` (DESIGN, asked of VERBS-sim) and drained as a section of BD-207's handler. Own lane `draw_tables.sh --seed <s>` with tests draw_in_situ_arrangements/_controls added; keyed sim runs with and without the tap; later lane N35-17."
+  },
+  {
+   "bead": "N35-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Gate step `--test g5` -> `--test g5_determinism` plus record_gate. Every spark check and sim run carries its own key with `idempotent_replay: false`; `--workers 1,8` (not an option) -> two keyed runs. Step `draws` names N35-16's script; preflight skip is a skip event."
+  },
+  {
+   "bead": "N35-18",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The fast-training acceptance could not be met at M2 (N35-06 depends on this bead): now the audit and canaries take a kernel set and profile, and the fast-training check is N35-06's. E2e: keyed `spark precompile <target> --workload Q`, `spark check --kernel K-canary-bans --backend`, `spark probe --device --suite ieee` (no `--report` option), test filter `corpus_` (the old filter matched no test), planted-contraction tests named; skip events."
+  },
+  {
+   "bead": "N35-19",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2e: seed, device runs of the kernel-level rows through FROB_TEST_DEVICE, keyed `spark check --backend`, registry check, part-2 skip until N35-20. All sixteen worked values rechecked (HZ-27: 0x44F7C90F recomputed)."
+  },
+  {
+   "bead": "N35-20",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Dep N35-15 (HZ-13 is bound to its batch-wide-reduction control). E2e: keyed spark check, HZ-09 as `sim run` then `sim replay --from-snapshot` (exit 0 Bitwise) with the warm-start mutant, HZ-28 clean against `--inject-faults` retry with exact divergence, HZ-11 through its test (the override is a test seam, not a verb option)."
+  },
+  {
+   "bead": "N35-21",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2e used telemetry.histogram \"where available\" (N29a-15 depends on this bead): own lane is the hist tests plus a `hist_shards` example (10^6 values, 1 to 8 shards, 1 and 8 threads, int_bin inverse) writing STD-E2E NDJSON; later lane N29a-16 step group verb-*. Worked values and bin indices rechecked."
+  },
+  {
+   "bead": "N35-27",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Dep STD-E2E. E2e relied only on N35-31: own lane `num_certificate.sh --seed <s>` (arrangement equality through `numcert_e2e` on each backend; keyed sim run and sim replay envelopes with all nine groups; the ill-conditioned fixture under `--on-degraded continue-flagged`; the lint tests); later lane N35-31."
+  },
+  {
+   "bead": "N35-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Closed status vocabulary had `not run` and only four gate outcomes: now N40-01's seven statuses and N40-03's four kill outcomes, read from their types. Acceptance named eval.run/eval.scorecard (M3, later beads): now the generated surface at M2 plus the lint for later verbs. E2e: keyed sim run, telemetry summary, 865 through the shared citation check in an integration test (no citing verb exists at M2); later lanes BD-254, N39b-46, N29a-16."
+  },
+  {
+   "bead": "N35-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Runner names N21c-30's `--test negctl`. E2e: seed, keyed short commands for rows 1, 3, 4 and 6 (row 6 through N35-24's script), rows 9 and 10 as skip events naming their later lanes (N29a-16, N35-32). All host-form arithmetic rechecked (spacings, Sterbenz, k-scale 0.671, residual 8.192e-4, Cholesky hand case)."
+  },
+  {
+   "bead": "N35-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Keys on every run verb with `idempotent_replay: false` (memo hits are by identity, not key). `run fork` uses VERBS-run inputs (run, --world, --at, --change 'f := v'). Certificate step compared blocks over different world sets: now the same world replayed alone and with 1,023 co-tenants. The 864 citation goes through record_gate and BD-176's citable hook. `--require bit-equal` attributed to N35-07 and asked of VERBS-sim. Skips are skip events; the licences step cannot skip (BD-204/205/220 are deps)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-spark",
+   "what": "spark.precompile: declare `--specialize` (FROB-REF-724 while BD-371 is absent or KILL-SPECIALIZE has fired) and the conformance-only `--kernel-set`; spark.check: declare `--specialized`; spark.place: declare the conformance-only `--chunk-intervals N` (owned by N21b-22). Used by N21c-18, N21c-39, N21c-43."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run: declare `--kernel-set generic|specialized` with the conformance pilot sets; `--on-degraded refuse|continue-flagged` (N35-04); list FROB-REF-619 among its refusals (N21c-39: the no-wrap check runs in StepPlan::build); the conformance-only `--chunk-intervals N` (N21b-22) and `--conformance-draw-tap` (N35-16). sim.replay: declare `--require bit-equal` (N35-07; used by N35-31), refused with 247 on a family without D1."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "train.start: declare `--determinism` and `--knob k=v`, parsed by N35-04's shared admission."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run: declare `--determinism`, `--precision` and `--on-degraded`, parsed by N35-04's shared admission."
+  },
+  {
+   "bead": "VERBS-run",
+   "what": "run.fork: declare `--determinism`, `--precision` and `--on-degraded`, parsed by N35-04's shared admission."
+  },
+  {
+   "bead": "N24c-04",
+   "what": "Call N35-04's shared profile parser and admission from the eval handlers instead of parsing the options again, and add N35-04 to deps (no cycle: checked)."
+  },
+  {
+   "bead": "N21b-22",
+   "what": "Define the conformance-only knob `--chunk-intervals N` on sim.run and spark.place (pins the chunk length; refused in a release build) and its receipt field; N21c-39, N21b-39 and N35-03 use this spelling."
+  },
+  {
+   "bead": "N21a-10",
+   "what": "Its e2e calls `frob spark precompile --unit`, which VERBS-spark does not have (inputs: target, --class, --workload, --all-registered, --offline, key); use `spark precompile <target> --class <id>` or the lint through cargo."
+  },
+  {
+   "bead": "BD-370",
+   "what": "Gate step `--test g1` -> the tier target per KNOWN_DRIFTS 1 plus `record_gate`; the final reading appends a second decision entry with its own ADR citing ADR-KILL-FLEET-M4.md rather than editing the first; fleet_plan.sh gains the `fits` step and N21c-13's hand cases."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Kill-decision ADR path `docs/delivery/adr` -> `docs/adr` (KNOWN_DRIFTS 4)."
+  },
+  {
+   "bead": "N32b-25",
+   "what": "Accept a missing KILL-PEERLINK record under the ADR-PROG-12 `standalone` ruling, read as `not-reached`, not as an error (N32a-35 is then closed withdrawn and never creates the row)."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "Add `--machine mac|trj` as a common job input (DESIGN in N41-12): a job addressed to the other machine is refused with MACHINE_NOT_LOCAL, exit 3."
+  },
+  {
+   "bead": "N35-33",
+   "what": "Assign codes for the constants MACHINE_NOT_LOCAL (8xx, exit 3; N41-12) and DEVICE_RECEIPT_INCOMPLETE (N21c-28, from N21-REF's first-round request)."
+  },
+  {
+   "bead": "BD-207",
+   "what": "The chunk-fence drain handler carries one conformance-only statistics section, N35-16's raw-draw tap (64 draws per world per control interval with an overflow flag); absent in release builds."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 41 beads changed, mostly because their e2e existed only as a later bead's script step or ran verbs without distinct keys; each now has its own lane on its deps (cycle-checked), with status spellings, gate tiers, registry paths, unlisted options and acceptance lines that needed dependent beads also fixed, and all arithmetic rechecked. The slice looks settled once the requests, chiefly the option rows of VERBS-sim and VERBS-spark, are applied."
+}

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-38"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20", "BD-101", "BD-056"]
-needs: ["Appendix F: the upstream loop-constraint work item for exact loop closures on the referee, by its identifier"]
-related: ["ZOO-biped-point", "N14b-02", "N14b-24", "N14b-09", "BD-089"]
+deps: ["BD-056", "BD-066", "BD-067", "BD-101", "N14b-20", "NEG-15"]
+needs: []
+related: ["ZOO-biped-point"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.12", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -40,8 +40,12 @@ hip pitch, knee, toe); additional unactuated joints per leg in the loop (shin, t
 loop closures per leg written as equality constraints; two spring joints per leg with stiffness; total mass on
 the order of 32 kg.
 
-**Import path.** `frob design import --format mjcf assets/robots/cassie/source/<entry> --out
-assets/robots/cassie/import.fbot --json`. Mapping rules exercised here: an `equality` of kind `connect`
+**Import path.** `frob design import assets/robots/cassie/source/<entry> --format mjcf --name cassie --key
+asset-cassie-<source hash> --json` (NEG-15's import recipe: `design.import` is a `mutate` verb that writes no
+file and has no output-path option; the key makes a re-run an idempotent replay with the same `DesignId`). The
+golden `assets/robots/cassie/import.fbot` is the design's `term` section (`frob design show <DesignId> --section
+term --json`, the canonical JSON bytes), and the loss report is read with `frob artifact read <report> --json`.
+Mapping rules exercised here: an `equality` of kind `connect`
 between two bodies becomes a `closure` with a spherical or revolute constraint at the stated anchor; a joint
 with `stiffness` and `springref` becomes a passive joint with an elastic element and its rest angle; anything
 the importer cannot map (for example a constraint's solver softness) is listed in the loss report with the
@@ -66,7 +70,9 @@ item lands.
 - [ ] Every equality constraint of the source is a `closure` in the import or an entry of the loss report;
       none is missing from both.
 - [ ] Mobility, closure residual and passive-joint counts are recorded and reproduce.
-- [ ] The mass on file is written by validation and consumed by the `biped-point@cassie` preset row.
+- [ ] The mass on file is written by validation into the manifest field that the `biped-point@cassie` preset row reads; the preset and its
+      GATE-SKEL-07 row are N14b-02's, which reads the pinned fixture, so this bead checks the field (present, sourced,
+      equal to the validated total) and does not wait on the preset.
 
 ## Test plan
 

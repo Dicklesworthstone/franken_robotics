@@ -1,0 +1,411 @@
+{
+ "round": 1,
+ "slice": "U33b",
+ "reviewed": 44,
+ "changed": [
+  {
+   "bead": "BD-008",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "added dep STD-E2E (its script sources the helper); the script called `frob doctor`, which arrives with the higher seed BD-022 (seed order forbids the dep): it now reads the newest receipt and the INT-ASUP-01 record through N33a-07's validator, and the doctor view is left to N33b-20 and N33a-28, which depend on both"
+  },
+  {
+   "bead": "BD-028",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "acceptance required `frob doctor` to list INT-FT-02 although the bead does not depend on the doctor verb; it now requires a record accepted by N33a-07's validator and names N33b-20 as the bead that asserts the doctor listing; e2e `frob spark probe --backend gpu-metal` used a flag the registry lacks (input `--device`): now `--device metal:0`"
+  },
+  {
+   "bead": "BD-033",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "the planar_drive mark used a vocabulary (`not-an-oracle` in a 'conformance oracle registry') that no registry defines: aligned with N38a-04's oracles.toml (admission.status not-admitted, held_out reason citing INT-FSIM-05), dep N38a-04 added; the acceptance had BD-033 write FD-FSIM-11's row in upstream.toml, but BD-037 owns that file and depends on BD-033: now family 2 is a stand-alone ignored test (`sibling_planar_drive_near_straight`) for BD-037 to cite; numbers (cos 32, sin 32), 2/pi, ulp 2^-47 rechecked"
+  },
+  {
+   "bead": "BD-034",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "same vocabulary fix as BD-033: `not-a-baseline` in an undefined 'baseline registry' replaced by held_out rows in N38a-04's oracle register (refused in every role, baseline included) with N38a-04's fixture header on the capture; the upstream.toml pointer is left to BD-037; deps N38a-04 and N33b-09 added (the acceptance's check-deps failure on fs-g1-train is N33b-09's not-admitted rule); probe values (z^2-1 = 1/2, 1.6875-type cases, tanh(1.761594) = 0.942681, ratio 0.98374) rechecked"
+  },
+  {
+   "bead": "BD-035",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "the e2e step and an acceptance line ran `frob sim run --tier referee --fixture wheel-over-lip --no-migration` at M0, but sim.run at M0 (BD-024) has no contact: the M0 step now asserts the refusal records the admission lane writes, and the verb form is BD-093's at M1; FixedWitness repairs aligned with N33a-13's conversion table (shorter interval with migration, then strict); stated that the types are N33a-13's and N33a-14's and this bead adds none; thin-step arithmetic (10 mm travel, 7 mm to clear, 3 mm beyond) rechecked"
+  },
+  {
+   "bead": "BD-079",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "acceptance and e2e used `frob contact probe --pair box,capsule --pose`, but contact.probe (N18b-29, which depends on the higher seed BD-080) evaluates laws at a contact state and takes no primitive pair: the e2e now runs the hand-case lane, the INT-FSIM-08 lane and `frob conformance run --gate GATE-TRAC-02` with a cancellation step, and the bead states it adds no verb; dep N18a-01 added (the frob-contact crate charter and CONTRACT.md it extends); support and half-space formulas and the 0.292893 m and 0.276795 m hand gaps rechecked; the INT-FSIM-08 re-run now names N33b-10's seeded family (1,000 boxes, its ranges and bounds) beside the hand cases"
+  },
+  {
+   "bead": "BD-093",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "acceptance demanded `adjacent-feature` at both transitions, but on the wheel-over-lip geometry the lip is touched while the wheel still rests on the flat (offset sqrt(2Rs - s^2) = 0.071414 m), so flat-to-edge is a new contact and only edge-to-top (normal rotation 0 when the centre is over the lip) is adjacent-feature: transitions, the OPEN-TRAC-5 note (normal turns 45.6 deg continuously on the edge, not 90 deg in one step) and two tests fixed; the `--no-migration` switch the e2e and FDEF-04 use was defined nowhere: specified as a referee-only diagnostic flag whose runs carry diagnostic: true and can enter no claim, with a test; deps N24a-36 and N24a-37 (telemetry.query and telemetry.energy, which the script calls); pivot threshold 3.503 N m and 1.4715 J rechecked"
+  },
+  {
+   "bead": "BD-111",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "request from U17b: BD-111 now states the memo graph's one shadow selector and one lift rule for every node kind (BD-220's episodes and N17b-13's cross-design kinds use them); the per-kind hit ordinal is now durable in the store and drawn transactionally (a fresh CLI process per call would otherwise never reach its shadow slot, breaking the 64-hit bound); the lift rule merges BD-220's 'after the cause is recorded', N17b-13's matching re-run and the version bump: Memo::reenable with an explanation record and a re-run equal twice, never by restart, store deletion or bare version bump, CLI surface OPEN fail-closed; tests and acceptance added, e2e checks the disabled state survives a new process"
+  },
+  {
+   "bead": "BD-124",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "requests from U24b: StudyPlan, ControllerArm (shared | retuned-equal-resources | inherits-weights) and SeedProtocol with UnitOfInference and ClusterMap defined here (Appendix I.9) as the only definitions; the three declarations are recorded from them and validated only by N24b-14's study::admit. Request from U12-2: N12-48 moved from related to deps; the known answer of C-15, KA-089 (16 clean pairs, or 22 with one exceedance at p0 = 0.05, p1 = 0.30, alpha = 0.01), was missing: added as rule lr-bernoulli/1, shown to be the fixed bet 1 + c(p1 - y) with c = 25/21, with exact-rational tests against N12-48's D.8 e-table and Ville rows"
+  },
+  {
+   "bead": "BD-243",
+   "kinds": [
+    "faithful",
+    "correct",
+    "tests",
+    "deps",
+    "split"
+   ],
+   "what": "three-link fixture now compares the whole SE(2) holonomy of the middle link (rotation exact by Stokes to 1e-9; leading-order and sign controls from the translation; circles at (0.5, 0.5) rad, not the zero-curvature S-shape), per SPEC-C-08 and KA-065, with test three_link_se2_holonomy and a sign-mutant test visible in translation; added dep N14bp1-01 (snake-crawler template); bottleneck: A-14's and A-16's registry entries and verbs now belong to N33b-17 and N33b-18, this bead keeps A-09 and the side-by-side check, and dependents needing only one analysis are asked to depend on that bead; title and scope aligned. INT-FSIM-10 recomputed: (700/121, 200/121) correct"
+  },
+  {
+   "bead": "BD-333",
+   "kinds": [
+    "deps",
+    "faithful",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "21 deps cut to 12: BD-048, BD-115 and N22a-29 to N22a-35 are all reached through N22a-36 (graph_check path); scope now says the components are built by N22a-29 to N22a-36 and this bead assembles; new step 10 fixes one input grammar for gait.orbit (`<subject>` or `fixture:<name>`, `--set k=v,...`, no `--param` or per-parameter flags; anything else fails the schema with FROB-REF-802, exit 3 per §32.4/§32.18) and lists --gait/--group/--stride, --section, --check-direct, --spectrum-scope restricted, --impact-report, --seed-orbit, --seed, --key, with --form/--period and --modes/--cycle-length left to N22c beads; e2e uses that spelling, adds the restricted-scope control, `--check-direct` on the trot and the FROB-REF-802 control, with unit test input_grammar_one_spelling, and notes N22a-38 extends the script"
+  },
+  {
+   "bead": "BD-401",
+   "kinds": [
+    "faithful",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the two-instant refusal had no code: it is FROB-REF-167 (§31.16, the VERBS-foundry row lists 163 and 167 for foundry.size), now in the reader, the verb's refusal list, acceptance, unit test assembled_case_refused_167 and a new e2e step on the assembled-peaks fixture; the finite-element fatigue field cited BD-402, which depends on this bead: it now reports no-claim until BD-402 fills it. Numbers recomputed (1.159 mm, 30 MPa, 300 MPa/1.25, 0.20, t = 1.845 mm, 0.141 and 0.153 kg, 4.2e-3 kg·m², shear about 0.2%, floor 60/40 Hz): all correct"
+  },
+  {
+   "bead": "BD-413",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "the child table and the e2e paragraph now name the five children by key (N19b-07 pilot, N19b-08 field, N19b-09 update, N19b-10 gate script, N19b-11 kill decision); numbers recomputed (1.26 m for two revolutions; 361 tiles, about 370 kB; h_max 2.5 mm and 10 mm; squeeze-film law; CX-191): all correct"
+  },
+  {
+   "bead": "N33b-01",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep STD-E2E: it writes step `data` of scripts/e2e/suite_firewall.sh (no cycle); firewall table checked against plan §33.7 row by row"
+  },
+  {
+   "bead": "N33b-02",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the third planted control of the acceptance (an array-file call outside its feature guard) had no named test: added planted_unguarded_array_call_fails"
+  },
+  {
+   "bead": "N33b-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the e2e asserted 'the exit code for an 8xx evidence refusal'; per §32.4 FROB-REF-890 is exit 3 (8xx other than conflicts), now stated"
+  },
+  {
+   "bead": "N33b-04",
+   "kinds": [
+    "placement"
+   ],
+   "what": "title promised 'a rehearsal', which is NF-06's (out of scope here); retitled to 'the first real train', which this bead runs. Breakage-share arithmetic (5/20 = 0.25 fires, 4/20 = 0.20 does not) checked"
+  },
+  {
+   "bead": "N33b-05",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "added dep STD-E2E (it owns scripts/e2e/suite_kill_fsim_decision.sh); the unit cases lived in a shell file scripts/decide/tests/kill_fsim_cases.sh that STD-TEST cannot bind by name: they are now Rust tests in crates/frob-conformance/tests/kill_fsim_decision.rs that run the reader on synthetic records (the pattern N33b-04 uses)"
+  },
+  {
+   "bead": "N33b-08",
+   "kinds": [
+    "correct",
+    "deps",
+    "faithful",
+    "tests"
+   ],
+   "what": "replaced the undefined marks `not-a-baseline` and `not-an-oracle` with the held_out rows of N38a-04's oracle register as BD-033 and BD-034 now write them; added deps N38a-04 and STD-E2E (it owns suite_upstream_postures.sh); the registry rule 'every open item needs posture_test' would fail on other chapters' rows this bead does not own: it is now enforced for the twelve items and for any row that sets one, and other items without one are listed by the staleness report as `posture: untested` (a RISK-20 signal), with test other_chapter_item_without_posture_listed_untested. Graph finding: the user of its outputs is the M1 exit review, requested below"
+  },
+  {
+   "bead": "N33b-09",
+   "kinds": [
+    "faithful",
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "dup-08 applied: the group subset and default-set rules are N34-03's (`fsim.group-not-allowed`, `fsim.default-set`) and the volatile-edge rule is N33c-29's (`fsim.volatile-edge`); this bead keeps the data and implements only the three findings its list defines (`fsim.not-admitted`, `fsim.pattern-edge`, `fsim.oracle-edge`), with deps N34-03 and N33c-29 (no cycle); fixed a contradiction: a dev-edge from frob-conformance to fs-la breaks N33c-29's rule, so fs-la is now reached through frob-fsim's dev-only `harness` group; acceptance and tests name the finding and owning bead for each plant"
+  },
+  {
+   "bead": "N33b-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "said `optimize` is enabled by frob-arena and frob-conformance only, which contradicts the group's consumer list (frob-opt, frob-arena, frob-dyn, frob-mission, frob-analyze in N34-03's reading of the records): now cites the allow-list and names frob-arena as the only M1 production consumer; the scaling metamorphic relation now scales the margin with the differences and the span (with m != 0 it was false). e-BH thresholds 60/30/20, 565 = 500 + 3 sd, 1.5^8 crossing at 8 and 1.6875 recomputed: correct"
+  },
+  {
+   "bead": "N33b-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance put `frob-scene` on the `structure` consumer list; it reaches mesh exchange through `geometry` (N33b-09, N34-03), now stated; the e2e step called `foundry size` without `--fe` and expected 790, but BD-401 answers the beam form without the group: the step now runs `--fe` (expects 790 without the group) and the plain command (expects the beam rung, 1.159 mm and 30 MPa). Tolerance stack recomputed: t = (15.99, 6.35) um, split 28.41/71.59, equal 7.28 um, cost 0.2201 vs 0.2749 (19.9%): correct"
+  },
+  {
+   "bead": "N33b-17",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "faithful",
+    "tests"
+   ],
+   "what": "now writes A-14's analysis-registry entry (moved from BD-243 to break the bottleneck) with test registry_entry_a14; its e2e ran `design check --stages 7,8`, which belongs to N14b-12, N14b-13 and BD-244 that depend on this bead: the step is replaced by a scene-bound `analyze coverage` call and an 80-degree pitch negative control, the entry point is tested directly (preflight_entry_reports_timing), and the stage listing is left to the stage beads' script. Closed forms recomputed (0.134/1.866 m, 1.414 m, 0.45 m, -0.182/0.420 m, 1.0/0.6 m, 33.7/32.0 deg): correct"
+  },
+  {
+   "bead": "N33b-18",
+   "kinds": [
+    "e2e-logging",
+    "faithful",
+    "tests"
+   ],
+   "what": "now writes A-16's analysis-registry entry (moved from BD-243) with test registry_entry_a16; its e2e step 4 asserted `explain` next_actions, which N28a-17 implements and which depends on this bead: replaced by applying the first ranked edit and checking the predicted change, plus a `smoothed-gradient` FROB-REF-724 negative step; the explain check is requested from N28a-17. Numbers recomputed (m* = 2.8235 kg, 1.176471, 0.176471, 0.4750 kg/m, delta = 2/3, 40 and 210 batches, flip at p0 + 0.3125): correct"
+  },
+  {
+   "bead": "N33b-19",
+   "kinds": [
+    "deps",
+    "faithful",
+    "tests",
+    "placement"
+   ],
+   "what": "U24b request applied: dep N24b-14 (no cycle); `study.plan` parses into BD-124's StudyPlan, embeds the pre-analysis, then calls `study::admit` and validates nothing a second time (552/532/533, 543/556 via N28a-18, and 802 with pointers for unit, race level and controller arm); input schema gains `unit: world | cluster` with its map and the arm's resources and transfer baseline; `eval.compare` runs `pairing::admit` first so a two-code defect gets 553/555/542 there; tests plan_routes_through_study_admit and two_code_defect_gets_arena_code_on_plan_and_comparison_code_on_compare. Enumeration counts checked (65*66/2 = 2,145; 87*88/2 = 3,828; splits sum); title shortened from 116 to 109 characters"
+  },
+  {
+   "bead": "N33b-20",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "step int_fsim_04/int_fsim_07_refusal called `frob sim run ... --no-migration` at M0, where sim.run is contact-free and the flag is BD-093's (M1): it now reads BD-035's refusal records; `frob spark probe --backend gpu-metal` used a flag the registry lacks: now `--device metal:0`, with dep BD-017 (the verb's owner; no cycle); the 'oracle mark' check now reads the planar_drive held_out row of N38a-04; the separate self-test script and shell unit tests are replaced by STD-E2E plants (`run-all.sh --verify-plants`), `frob-e2e lint`, and Rust tests for the record cross-checks"
+  },
+  {
+   "bead": "N33b-21",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "spectral step used `--fixture rimless-wheel`: now BD-333's grammar; the `rules` step names each finding and its owning bead (N34-03, N33c-29, N33b-09); 'the sequential-statistics group' is `optimize` (N33b-12); the self-test script and shell tests are replaced by STD-E2E plants (`silent-fallback`, `absent-envelope-property`) and `frob-e2e lint`; now names the one later step another bead adds to this script (`amendments`, N33bx-02) and states that the first-use admissions of N33b-22 and N33bx-03 to -07 are steps of N33a-34's script, not this one"
+  },
+  {
+   "bead": "N33b-22",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "its e2e step lived in N33b-21's two-binary group script, which has no oracle steps and does not list it, and the bead lacked STD-E2E: the step `tri_wheel_oracle_admission` now goes into N33a-34's `airlock_groups.sh` (the first-use admission script to which later beads add steps; it already uses `skipped: not yet due`), with deps N33a-34 and STD-E2E (no cycle) and the planted adapters as script plants. Hand case recomputed: sqrt3*rho = 0.313501, diagonal 0.313409, axis 0.1905, c1 = (0.260112, 0.275), c2 = (-0.021499, 0.412763), centroid (0.079538, 0.262588) at 0.181 from each centre; seat condition and both refusal cases correct"
+  },
+  {
+   "bead": "N33bx-02",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the e2e step in N33b-21's script lacked deps N33b-21 and STD-E2E; the test tracer_absent_maps_to_790_exit_5 exercises N33c-32 without depending on it: deps added (N33b-21, N33c-32, N34-03, STD-E2E; no cycle); scope Out and the fixture tests now name the owning findings (fsim.group-not-allowed and fsim.default-set of N34-03, fsim.volatile-edge of N33c-29) instead of 'rule L-2' alone; the e2e no longer calls a tracer-needing verb (none exists before N20a-28 at M6), only `frob capabilities`"
+  },
+  {
+   "bead": "N33bx-03",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "e2e step moved from N33b-21's group matrix to N33a-34's `airlock_groups.sh` (first-use admissions); deps N33a-34 and STD-E2E added; planted adapters declared as script plants. KA-073 (lambda 1/2, eigenvector (0, 1/4)), B (0.7), the orientation case (mean 2; reversed circuit without the transpose) and the closed form max(1/2, 2*(1/4)) recomputed: correct"
+  },
+  {
+   "bead": "N33bx-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "claimed INT-FSIM-15 at M5 re-runs this lane, but N33b-14 does not depend on it or run it: now says this record is the admission of fs-mesh inside `structure`, re-run by the compatibility train at every pin; e2e step moved to N33a-34's script with deps N33a-34 and STD-E2E. Euler characteristics 1 and 2, volumes 1, 7/8, 1/3 + 4/6, Kuhn cube and the >= 1,000-tetrahedra bound checked"
+  },
+  {
+   "bead": "N33bx-05",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "case 7 compares with frob-model's Region moments (BD-062) without depending on it: dep BD-062 added; e2e step moved to N33a-34's script with deps N33a-34 and STD-E2E. Recomputed: tetrahedron 12.5 and 2.083333 kg m^2 (I_xy = -int rho x y = +rho/480), cube 0.0045, two-material box 0.125 m, 0.0066667 and 0.0141667, transform (0.95, 2.05, 3.05), tube 0.0950 kg, 1.87e-5 and 3.26e-4, folded pair 250 vs 83.33 kg, mm-as-m 2.7e9 kg: correct"
+  },
+  {
+   "bead": "N33bx-06",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "'worst-case half-width is 4.14 times the statistical budget' compared a half-width with a standard deviation; the budget is sigma = 10 um with tolerances at k = 3 (N33b-14), so the like-for-like ratio is 41.4/30 = 1.38 (4.14 sigma), now stated; e2e step moved to N33a-34's script with deps N33a-34 and STD-E2E. Ranges [0, 0.09] and [0, 0.35], corner hull 0.1, decisions at 0.4 and 0.3 checked"
+  },
+  {
+   "bead": "N33bx-07",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "its e2e ran `frob telemetry stills --quality hero`, the hero option of N20a-28, which depends on this bead (tests before mechanism): replaced by `frob capabilities` with and without the feature, and the user-side 790 is requested from N20a-28; e2e step moved to N33a-34's script with deps N33a-34 and STD-E2E. Furnace, bounce series (1.5, 1.75, 1.9375, 1.99609375), camera quadrant (columns 32-47, rows 16-31) and sRGB 0.214 recomputed: correct"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-220",
+   "what": "use BD-111's one shadow selector (per-kind durable hit ordinal n, phase p = low six bits of BLAKE3(kind, version), shadow when (n + p) mod 64 = 0) instead of 'the key's low 6 bits are zero', and BD-111's lift rule (Memo::reenable with an explanation record and a re-run equal twice; never by restart, store deletion or bare version bump) instead of 'explicit operator action after the cause is recorded'; test shadow_selects_one_in_64_by_key_hash becomes the 64-hit window test (request from U17b, settled in BD-111)"
+  },
+  {
+   "bead": "BD-025",
+   "what": "31 end-to-end scripts across the graph (BD-079, N28b-28, N28b-06, N22c-04 and others) call `frob conformance run --gate <G> [--seed s] --json`; no bead defines that command, its arguments or its output schema; frob-conformance v0 (or the gate register's owner) should own it"
+  },
+  {
+   "bead": "N14b-12",
+   "what": "replace dep BD-243 with N33b-17: it uses only A-14 coverage, whose analysis, registry entry and verb `analyze.coverage` are N33b-17's (BD-243 is a graph bottleneck; no cycle)"
+  },
+  {
+   "bead": "N14b-13",
+   "what": "replace dep BD-243 with N33b-17 (uses only A-14 coverage; no cycle)"
+  },
+  {
+   "bead": "N20b-32",
+   "what": "replace dep BD-243 with N33b-17 (uses only A-14 coverage; N33b-17 moves from related to deps; no cycle)"
+  },
+  {
+   "bead": "N20b-33",
+   "what": "replace dep BD-243 with N33b-17 (listed under A-14; no cycle)"
+  },
+  {
+   "bead": "BD-348",
+   "what": "replace dep BD-243 with N33b-18 for the A-16 row of GATE-ATEL-05 (A-16's analysis, registry entry and verb `analyze.sensitivity` are N33b-18's; no cycle)"
+  },
+  {
+   "bead": "N28a-13",
+   "what": "replace dep BD-243 with N33b-18: the sensitivity rank uses A-16's derivatives only (no cycle)"
+  },
+  {
+   "bead": "N28a-14",
+   "what": "replace dep BD-243 with N33b-18 (smoothed gradient from A-16; no cycle)"
+  },
+  {
+   "bead": "N15b-07",
+   "what": "replace dep BD-243 with N33b-18 and say 'A-16 itself (N33b-18)' in Out; Morris screening is N33b-18's (no cycle)"
+  },
+  {
+   "bead": "N28a-17",
+   "what": "replace dep BD-243 with N33b-18 for sensitivity-ranked edits (no cycle)"
+  },
+  {
+   "bead": "N31a-31",
+   "what": "replace dep BD-243 with N33b-18 and cite 'the analysis A-16 itself (N33b-18)' (no cycle)"
+  },
+  {
+   "bead": "N16c-26",
+   "what": "replace dep BD-243 with N33b-18 (A-16 gradient report only; no cycle)"
+  },
+  {
+   "bead": "N22c-38",
+   "what": "use BD-333's gait.orbit spelling (step 10): `--set k=v,...` instead of repeated `--param k=v`, and the rimless wheel's parameter names `spokes`, `l`, `g`, `slope`/`slope_deg` (alpha=pi/8 is spokes=8; gamma=0.08 is slope=0.08), e.g. `frob gait orbit fixture:rimless-wheel --set spokes=8,slope=0.08 --section post-impact --json` and `fixture:planar-loop --set mu=1 --form stroboscopic --period 2pi --json`; `--param` or an unknown key fails the schema with FROB-REF-802, exit 3"
+  },
+  {
+   "bead": "GB-27",
+   "what": "`frob gait orbit --fixture rimless-wheel --spokes 8 --slope-deg 4` becomes `frob gait orbit fixture:rimless-wheel --set spokes=8,slope_deg=4 --section post-impact --json` per BD-333 step 10"
+  },
+  {
+   "bead": "BD-147",
+   "what": "add dep N33b-08: the M1 exit review attaches the upstream staleness report (scripts/train/upstream_report.sh) and reads the upstream work-item records as evidence for the schedule gate (graph finding: nothing depends on N33b-08; no cycle)"
+  },
+  {
+   "bead": "N33a-11",
+   "what": "the `harness` group's crate list gains `fs-la` (oracle only), as N33b-09 now routes the fs-la oracle through frob-fsim with `harness` on; a direct dev-edge from frob-conformance would break N33c-29's volatile-edge rule"
+  },
+  {
+   "bead": "N28a-17",
+   "what": "assert in your e2e that `explain.run`'s `next_actions` equal `analyze.sensitivity`'s ranked typed edits in the same order (N33b-18 dropped that step because it tested your completion before it exists); and depend on N33b-18 rather than BD-243 (requested earlier)"
+  },
+  {
+   "bead": "BD-244",
+   "what": "your script skel_preflight_place_info.sh should assert that stages 7 and 8 list A-14 (N33b-17's `analyze.coverage` result) with its stage timing; N33b-17 no longer runs `design check --stages 7,8`, because the stages depend on it"
+  },
+  {
+   "bead": "N33a-34",
+   "what": "list the later steps that other beads add to `airlock_groups.sh`, each `skipped: not yet due` before its milestone and each declaring its planted adapters as plants: `tri_wheel_oracle_admission` (N33b-22, M3), `tropical_admission` (N33bx-03, M4), `fs_mesh_admission` (N33bx-04, M4), `mass_properties_admission` (N33bx-05, M5), `epistemic_admission` (N33bx-06, M5), `tracer_admission` (N33bx-07, M6)"
+  },
+  {
+   "bead": "N20a-28",
+   "what": "your script should assert, on a default binary, that `frob telemetry stills <run> --quality hero --json` exits 5 with `FROB-REF-790` naming `tracer`, and on a binary built with `tracer` that it writes the presentation artifact with its three flags; N33bx-07 no longer runs your verb because you depend on it"
+  },
+  {
+   "bead": "N34-03",
+   "what": "'a record changes only with the group's admission record' contradicts ADR-SUITE-03 (N33bx-02), which amends consumer and crate lists before the adapters are admitted: say a record changes only with the group's admission record or with an ADR that amends the lists, and that `check-contracts` fails a record that differs from the generated CONTRACT.md table"
+  }
+ ],
+ "unchanged": [
+  "BD-032",
+  "BD-068",
+  "N33b-06",
+  "N33b-07",
+  "N33b-10",
+  "N33b-11",
+  "N33b-13",
+  "N33b-15",
+  "N33b-16",
+  "N33bx-01"
+ ],
+ "notes": "All 44 beads of U33b read in full and reviewed against the plan; 34 changed, 10 unchanged, no new beads, no merges, 22 requests outside the slice. Main themes: slice requests to BD-243 (registry split: A-14 to N33b-17, A-16 to N33b-18, so the dependants can move their dep off BD-243) and BD-333 (one gait.orbit grammar) applied; N33b-09 now owns the not-admitted, pattern and oracle-edge findings and the fs-la harness row, beside N34-03 and N33c-29; N33b-19 routes study.plan through N24b-14's study::admit; e2e steps that ran later beads' verbs removed (N33b-17, N33b-18, N33b-20, N33bx-07); first-use admission steps of N33b-22 and N33bx-03 to -07 moved to N33a-34's airlock_groups.sh with STD-E2E deps; separate self-test scripts replaced by STD-E2E plants. Every number recomputed; three wrong statements fixed (N33bx-04 INT-FSIM-15 re-run claim, N33bx-06 worst-case ratio, N33b-20 M0 verb call). The slice looks close to settled; the remaining risk is that requests to N33a-34, N28a-17, BD-244 and N20a-28 land, because steps were moved to them."
+}

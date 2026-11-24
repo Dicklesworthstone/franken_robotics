@@ -1,0 +1,289 @@
+{
+ "round": 1,
+ "slice": "U27b",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "BD-279",
+   "kinds": [
+    "complete",
+    "users",
+    "deps",
+    "tests",
+    "risks"
+   ],
+   "what": "The plan's e-process mode (forks bought one at a time) was run by no bead: added --test fixed|sequential with rounds of pairs, the stopping rule E_n >= m/alpha, --max-pairs, replayable stopping, FROB-REF-553 on mixing, and tests (8 and 11 rounds). Added the reachability pre-analysis at admission with --allow-unreachable (N27b-05 required it of the verb). --do made optional (null + placebo only, 1 + P forks). Deps + N27a-15 (the diagnostic-force rule it applies; was related) and N27b-05 (test, e-process, reachability). KILL-AUTOPSY consequence aligned with the decision bead N27b-11."
+  },
+  {
+   "bead": "BD-280",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "KILL-AUTOPSY consequence contradicted N27b-11 (kept 'alternative' and 'but-for' from forks): aligned. Gate measurement now also prints the but-for share (KA-670's expected label) beside accuracy, so the stricter reading is not lost. Defined the record for P = 0 (no-placebo flag, nulls) used by the one-at-a-time arm; tests added."
+  },
+  {
+   "bead": "BD-284",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "tests"
+   ],
+   "what": "Transcript field `move` had no defined value set although telemetry.divergence calls are captured: enumerated the eight values. INV-AUTOPSY-06 for transcripts moved here from N27b-15 (which BD-284 depends on, so N27b-15 could not build the type): Transcript has no constructor without a Scope, show envelopes carry N27b-15's non_claims; tests transcript_scope_required, show_envelope_non_claims."
+  },
+  {
+   "bead": "N27-CX",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Request from U12-2 addressed: entries move from registries/counterexamples/autopsy.toml to the one catalogue crates/frob-conformance/registry/counterexamples.toml with N38b-05's schema (numeric, rule_ids, same_as, label, control_kind, plant, slug; equivalent_to/control/mutant keys dropped); per-entry field table; late entries get a block request (cx, 2, owner N27-CX) in N38a-40's ledger with tag replacement and provisional-tag-past-due; entries are obligations until their catching bead closes (a registry may not wait on mechanisms); CX-301 gets its concrete plant; construction links kept by rule_ids and a construction_forms_agree test instead of same_as (DESIGN: same_as count 13 is asserted by N38b-05)."
+  },
+  {
+   "bead": "N27-REF",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "Acceptance required every code to be raised by a test at M2 although 583-587 and 880 are raised by M3 mechanisms (a registry never waits on mechanisms): binding check is hard for 580-582 at close and pending for the rest until the M3 exit review. FROB-REF-587 repairs now give the exact --controller resynth|family:<p>|mpc commands of BD-283."
+  },
+  {
+   "bead": "N27b-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Five-iterate doubling map excluded only the band near 1/2; a start near 0 (mod 1) also flips by wrap-around: both bands excluded, test added. Pendulum fixture's perturbable set fixed to {theta}: with velocity draws rho0 would be about 0.36, not the 'about one half' of the known answer; test added."
+  },
+  {
+   "bead": "N27b-04",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Added the sequential-mode step (rounds, e-values, replay, FROB-REF-553) with its fixture and log metrics; the KA-671 control now asserts which code each strip variant gets (580 at classification, 583 when disguised)."
+  },
+  {
+   "bead": "N27b-05",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Example of an unreachable rule was wrong: R = 2 at m = 12 is reachable (p = 1/2145 < 0.05/12); replaced by R = 1 (p = 1/65), with R = 2 kept as the reachable boundary. Added the 'contrast >= 1/2 as well' row of the reachability table (4, 5, 5, 5, 5, 6), recomputed."
+  },
+  {
+   "bead": "N27b-06",
+   "kinds": [
+    "correct",
+    "tests",
+    "risks"
+   ],
+   "what": "The malformed-table identity (flips = rescued or R - rescued) rejected valid tables with other_failure or unknown replicates: generalized to 'replicates whose verdict differs from replicate 0', with tests. KILL-AUTOPSY consequence aligned with N27b-11. The fallback's label list no longer includes `marginal`, which only the withdrawn single-precision lane produces."
+  },
+  {
+   "bead": "N27b-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "KA-679 fixture asked for a final position 2e-8 below 1 m in f32, which is not representable (the f32 neighbours of 1 are 5.96e-8 below and 1.19e-7 above): now one ulp below in f32 and 2e-8 above in f64. Replaced the 'lane admission stub' (a fake) by the real no-lane path, with the through-lane case moved to N27b-24's ka679_through_lane."
+  },
+  {
+   "bead": "N27b-08",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "SuiteReport gains the but-for share (KA-670's label) beside accuracy, with a test; cost recomputed for ten candidates (505 forks before the 1e-7 series, about 585 with it, 2.3e5 world-seconds; it used the 12-factor 689)."
+  },
+  {
+   "bead": "N27b-09",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "The one-at-a-time arm (--placebo 0 --replicates 1) would be refused by the verb's reachability check and named nothing by test: added --allow-unreachable and read the top factor from the rescued column. Records the but-for share beside accuracy. Cost corrected to 2.4e5 world-seconds."
+  },
+  {
+   "bead": "N27b-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Fork count omitted the unperturbed tables and placebo forks: 8.41e6 forks, 1.68e7 world-seconds, about 25 hours."
+  },
+  {
+   "bead": "N27b-12",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Stage table had no path for the decision model's failure mode 'the cause precedes the snapshot' and no lane outcomes: added the Earlier stage (precedes-snapshot from a supplied episode-start result, else Decline with earlier fork and rerun) and the Precision exits (tier-specific; marginal only for a reproduced failure forced into the lane; precision-sensitive for a not-reproduced, not-admitted one, as plan 27.19 step 5 says); tests added."
+  },
+  {
+   "bead": "N27b-13",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "The resampling grid asked for P = 128 and R = 16 from a pilot that records 64 placebo forks (cannot be resampled without replacement): grid now P in {16, 32, 64}, larger counts need a pilot amendment; size rule restated (it was garbled); dep on N27a-18, whose coalition-gate labels the on-demand rule must meet."
+  },
+  {
+   "bead": "N27b-14",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Delta-debugging conventions differed from the shrinker it calls (N26a-18: complement recursion k = max(k-1, 2), floor partition): aligned so the order-dependence example ends at {c, d, e} with the same 15 tests."
+  },
+  {
+   "bead": "N27b-15",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "Claimed to give RepairResult and Transcript their scope constructors and show its non_claims, but did not depend on N27b-14 (RepairResult) and is itself a dependency of BD-284 (Transcript, show): deps + N27b-14, BD-283 (re-run result); the transcript and show parts moved to BD-284; tests adjusted."
+  },
+  {
+   "bead": "N27b-16",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "BD-279 now raises FROB-REF-553 (sequential/fixed mixing) on autopsy.intervene: the row statement and a negative control for the coverage check added (request to VERBS-autopsy)."
+  },
+  {
+   "bead": "N27b-17",
+   "kinds": [
+    "risks"
+   ],
+   "what": "No KILL-AUTOPSY consequence although the manifest requires a label: null label with described flag, selection rule without named factors, schema ready from the start; test variant."
+  },
+  {
+   "bead": "N27b-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "sample:64 of passing worlds could not be met by a fixture that fails on >= 60 of 64 seeds; the script now passes k = min(64, passing) and asserts it; the world is chosen where the plant is the paired cause; MCP parity leg used tools outside the diagnose cluster (run_fork, autopsy_repair are in repair): cluster per tool; cost corrected (no 87 worlds)."
+  },
+  {
+   "bead": "N27b-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "580 trigger used a --change '{}' spelling run.fork lacks (and no --world); 587 positive control used --controller baseline, which BD-283 does not accept (resynth); 584 observed block now depends on the build (lane, no lane, KILL-ENSEMBLE) and the script logs which form it asserted; repairs given their command spellings."
+  },
+  {
+   "bead": "N27b-20",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Auditor's INV-AUTOPSY-05 check knew only the fixed exact test; sequential ledgers (BD-279) would be mis-audited: recompute E_n per round, a mutant stopping at round 7 (E = 17.1 < 20), and a clean sequential ledger test."
+  },
+  {
+   "bead": "N27b-21",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Fixture statements updated to the corrected values (both doubling-map bands; pendulum perturbs theta only; KA-679 block one ulp below 1 in f32). KA-679 bound to both the no-lane test and N27b-24's ka679_through_lane; lane-2 bound to named tests. Lane bindings (Frontier, not prerequisites) written pending until their bead closes or not-applicable after KILL-ENSEMBLE, enforced by the completeness check."
+  },
+  {
+   "bead": "N27b-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Admission bound stated as G <= 1,667 while G*u <= 1e-4 gives 1,666.7 (1,667 is not admitted, as N27b-23 tests): wording, metric threshold and boundary test aligned."
+  },
+  {
+   "bead": "N27b-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Record called the envelope ln(G)/steps lambda_hat, which the pilot and N35-08 reserve for the slope estimator: renamed lambda_envelope with the distinction stated. Outcome table could label a not-reproduced failure marginal, contradicting plan 27.19 step 5: precedence stated (not reproduced and not admitted is precision-sensitive), test added."
+  },
+  {
+   "bead": "N27b-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "KA-679 through the lane's real admission had no test (N27b-07 and N27b-21 point to it): ka679_through_lane added with acceptance. The auto cluster row could give 'marginal' to not-reproduced failures: aligned with N27b-23's precedence. --plan-only under tier-f32/auto ran admission forks while BD-279 says plan-only runs nothing: stated that it runs only the admission forks (charged, reused), with a test."
+  },
+  {
+   "bead": "N27b-25",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Negative control used the pendulum, which double precision reproduces and so never enters this procedure: replaced by a synthetic single-replay mutant (14 flipped replicates of 16 name nothing), test added."
+  },
+  {
+   "bead": "N27b-26",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Acceptance required exactly 100 of 800 selected, but selection by hash mod 8 gives a binomial count: now 70 to 130 on a fixed identity set and identical on replay."
+  },
+  {
+   "bead": "N27b-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Cost model omitted the double-precision second series at 1e-7 although acceptance requires exact equality with the ledger: term added with its interval. Escalation outcome aligned (rest are precision-sensitive; marginal only when forced; variants first for not-reproduced admitted failures)."
+  },
+  {
+   "bead": "N27b-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Logged the growth envelope as lambda_hat, the name reserved for the slope estimator of N27b-22/N35-08: renamed lambda_envelope, with the lambda-hat of record named."
+  },
+  {
+   "bead": "N27b-29",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Growth bound written 1,667 after 46 steps (the bound is 1,666.7, reached after 46.4 steps); the 'killed: fallback adopted' status under KILL-AUTOPSY reconciled with N27b-11's 'recorded as moot' (reason moot: KILL-AUTOPSY)."
+  },
+  {
+   "bead": "N27b-30",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "Graph finding (24 blocking deps): 15 were implied through other deps; deps cut to the 9 direct prerequisites (N27-CX, N27b-04, -13, -18, -19, -20, -29, N38b-03, N41-28), the others moved to related with the gate owners N27a-09 and N27a-18; no cycle. Step 5 now runs hard the three registry checks other beads defer to this review (no pending refusal binding in N27-REF, no pending lane binding in N27b-21, the N27-CX entries runnable)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-autopsy",
+   "what": "BD-279 now raises FROB-REF-553 on autopsy.intervene (a sequential request on an intervention set opened as fixed, or the reverse): add 553 to that row's refusals and to the refusal_lists test; frob.autopsy.intervene.in/1 gains --test fixed|sequential, --max-pairs (default 64), --allow-unreachable, and --do becomes optional (null and placebo only)."
+  },
+  {
+   "bead": "BD-283",
+   "what": "--worlds failing,sample:<n> does not say what happens when fewer than n worlds passed (the default n = 64 meets this whenever a failure is common): state that all passing worlds are taken, the count is reported as sampled_passing, and add a test."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "All 35 beads reviewed. Main themes: KILL-AUTOPSY/KILL-ENSEMBLE consequences made consistent with the decision beads; the plan's sequential (e-process) mode given to BD-279 and carried to its e2e, auditor and registry check; the 'marginal' versus 'precision-sensitive' precedence of plan 27.19 step 5 stated in N27b-12, -23, -24, -27; arithmetic corrected (reachability example, f32 representability, fork counts and costs, G bound, binomial selection). No graph cycle after the edits. Slice looks close to settled; a second look at BD-279 (largest change) is worthwhile."
+}

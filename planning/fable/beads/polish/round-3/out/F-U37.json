@@ -1,0 +1,286 @@
+{
+ "round": 3,
+ "slice": "F-U37",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "BD-258",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the three S34 requests: step 1 names keys/token.key as the token key only and <state root>/daemon.key (N32a-10, N32a-14) as the cursor key; the implied-read rule now goes by spelling as N32b-01 states it (mission:run, nemesis:run, autopsy:run, qual:run, cert:write imply their :read; study:submit, scene:import, ground:import, job:cancel, admin, export, private and budget scopes imply nothing), and Scopes::close_implied is stated as written in N32b-01 and called by its minting and N32b-02's derivation. Applied H-verbs-5: derivation is `derive` (derive: true, CLI --derive) from the caller's own token, never --derive-from <token>. Unit test implied_read_closed_at_mint adds the mission:run and study:submit cases. Convention 9: the --sessions m3 mode now ends with the receipt step and this bead records the M3 part of GATE-SAFE-10 with record_gate (the script no longer writes the record)."
+  },
+  {
+   "bead": "BD-304",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Applied H-verbs-3: stated the `echoing` member of frob.schema.out/1 ({count, verbs:[{verb, cluster, first_milestone, fields:[{pointer, origin, max_length}]}]}, sorted, generated from the loaded schemas, origin = N37-04's TextKind, max_length = the type's caps) so the schema snapshot can pin it; new unit test echoing_member_shape."
+  },
+  {
+   "bead": "N37-10",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance injection make-fixtures|scan` rewritten as `cargo run -p frob-conformance --example injection -- …`, with the example declared here (make-fixtures is this bead's, scan is BD-304's library function). Convention 9: step 11 is now the receipt step (e2e_tier g4_chaos GATE-SAFE-02 --mutations, KA-830 is G4) asserting the receipt's counts; the record is entered with record_gate by a session that did not implement BD-304 (this bead the one recorder). Step 4 reads the verb list from /result/echoing/verbs/*/verb. Acceptance updated and a no_conformance_command line added."
+  },
+  {
+   "bead": "N37-12",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance jail list-args|swapper` rewritten as `cargo run -p frob-conformance --example jail -- …`, with the example declared (list-args derives the path arguments from registries/verbs.toml independently of frob; swapper is the swap helper). Convention 9: step 11 is the receipt step (e2e_tier g4_chaos GATE-SAFE-10 --mutations, KA-835 is G4); this bead records the M1 part with record_gate --part M1, BD-258 the M3 part. Acceptance updated."
+  },
+  {
+   "bead": "N37-CX",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance controls report --chapter safe` rewritten as `cargo run -p frob-conformance --example registry_report -- controls --chapter 37 --json` (N28-CX's example and subcommand). Corrected the control registry path to crates/frob-conformance/registry/controls.toml (convention 2)."
+  },
+  {
+   "bead": "BD-305",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-verbs-5 in its second form: the listing lint is expressed through the output schema (VisibleList<T>, whose only constructor goes through visible, is generated as an array marked x-frob-listing; the lint fails on an identity-bearing array without the mark), since N32a-02's closed entry schema has no listing field; new unit test identity_array_without_listing_mark_fails_lint. Stated option_capabilities { private = [\"private:read\"] } for the explicit private listings, as VERBS-scene's scene.list row has it. Convention 9: item 10 now names this bead as the one recorder of GATE-SAFE-04 and GATE-SAFE-05 (N37-18, N37-19 and N37-21 measure; none writes a row), with the g1_known_answers tier entries, the receipt from N37-21's script and record_gate."
+  },
+  {
+   "bead": "BD-308",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-ka-3: the worked claim-product case is cited as KA-027 (N00-KA) in acceptance and known answers. Step 8 named a 'conformance verb', which convention 1 forbids: it now names N37-25's test-support verb testprobe.combine."
+  },
+  {
+   "bead": "N37-25",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance claim-sets generate|check` and `evidence-functions scan` rewritten as `cargo run -p frob-conformance --example claim_sets -- generate|check` and `--example evidence_functions -- scan`, both examples declared here. Convention 1 (no `frob conformance` verb; the lint refuses `frob conformance …`): the test-support verb conformance.combine is renamed testprobe.combine (DESIGN, reason stated), with acceptance and test names following. The unit-test command used `--features conformance` on frob-conformance, which declares no such feature: now `--features frob-verbs/conformance`. Convention 9: the script ends with the receipt step (e2e_tier g0_laws GATE-SAFE-08 --mutations, KA-829 is G0) and this bead records the M1 part with record_gate."
+  },
+  {
+   "bead": "N37-27",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied H-owners-1 (claim_sets and evidence_functions examples of N37-25) and H-ka-3 (worked case cited as KA-027 in step 5 and the known answers). testprobe.combine in place of the conformance verb (convention 1). Step 2 called `eval compare A B` 'reading both stored results', a form the eval.compare row lacks, and step 2 ran in profile m1 though eval.compare first answers at M3: now `eval compare A B --task … --backend 1=referee --backend 2=batch-cpu --key sc-1` (N35-08's per-arm placement) in profile m3 only; promote and the re-run carry keys (convention 5). Convention 9: step 11 is the receipt step; this bead records the M3 part."
+  },
+  {
+   "bead": "N37-02",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Applied H-owners-3: FROB_REGISTRIES_ROOT added to the reviewed list of environment variables (read by the env modules of frob, frobd and frob-mcp for N32ax-03's resolver; set by STD-E2E's e2e_registries_scratch), with the reason it disables no mechanism (scratch root only, products marked override and never citable, jobs beyond the class of record held)."
+  },
+  {
+   "bead": "N37-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-owners-1: the fuzz_smoke step's `frob-conformance fuzz` is now `cargo run -p frob-conformance --example fuzz -- --target <t> --executions 100000 --seed 1`, and the gen_corpus step names `cargo run -p frob-io --example gen_limit_corpus -- --out <dir>`; both examples declared in the approach with their arguments and their one-JSON-object output (progress on standard error)."
+  },
+  {
+   "bead": "N37-06",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance gen-limit-corpus` and `frob-conformance fuzz` replaced by N37-05's examples (frob-io gen_limit_corpus; frob-conformance fuzz, final JSON object on stdout saved per target). `--idempotency-key` is not a CLI spelling: `--key`, and every run/mutate call of the step list carries one (convention 5). Convention 9: step 9 no longer writes the gate record; it is the receipt step (e2e_tier g4_chaos GATE-SAFE-07 --mutations, whose entry checks the campaign summaries by digest, re-executes a seeded sample and the reproducers, re-checks the limit rows and runs the controls), and this bead records the M2 part with record_gate in a session that did not implement the importers. Unit test gate_record_refuses_without_control (the recorder's behaviour, N38b-19) replaced by tier_entry_refuses_altered_summary."
+  },
+  {
+   "bead": "N37-07",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied F-U23a-1: the value form of frob.digests/1 is stated ({\"manifest\":<blake3>,\"weights\":<blake3>}, as N23a-13 writes it); a container without frob.policy/1 is FROB-REF-828 not-plain-layout, and a missing (trained-here), malformed or non-matching frob.digests/1 is FROB-REF-828 layout-mismatch with the pointer naming the differing digest (registered observed values of N37-REF's 828 row); new unit tests missing_manifest_key_refused and digests_must_match_contents. The e2e weights step's eval run carries --key (convention 5)."
+  },
+  {
+   "bead": "N37-09",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The two task new calls of the code_payloads step had no idempotency key, so a run of the script would have met FROB-REF-805 before the asserted 828 and 802: each now carries --key (task.new is a mutate verb; VERBS-task example uses --key)."
+  },
+  {
+   "bead": "N37-13",
+   "kinds": [
+    "complete"
+   ],
+   "what": "The per-verb wall-clock ceiling `max_wall_ms` is not a field of N32a-02's closed entry schema: stated as a DESIGN addition (optional int53 ms, absent = the kind default, which the dispatcher reads for every row without it) and requested of N32a-02."
+  },
+  {
+   "bead": "N37-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance worker submit --manifest <file>` is now `cargo run -p frob-fsim --example worker_submit -- --manifest <file>`, an example of the owning crate declared here (connects to the running worker, enforces the receiver's quota count, prints one JSON object). The sim run calls carry --key (convention 5)."
+  },
+  {
+   "bead": "N37-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-verbs-5 (session open calls carry --key s-a / s-b, and each derivation its own key; session.open is mutate with a required key) and H-owners-1 (the worker quota case through N37-14's `cargo run -p frob-fsim --example worker_submit`)."
+  },
+  {
+   "bead": "N37-16",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-ka-3: the level-series known answer is cited as KA-760 (N32-KA, §32.20). Convention 9: BD-261 is GATE-SAFE-03's one recorder, so this bead no longer 'appends to' or records the gate: it registers its controls against the gate (same-run rule puts them in BD-261's receipt) and supplies evidence beside the record; scope, approach item 9 and acceptance updated."
+  },
+  {
+   "bead": "N37-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied H-owners-1: the store audit `frob-conformance marks audit` is now frob_chronicle::marks::audit, run as `cargo run -p frob-chronicle --example marks_audit -- --state <root>` (example of the owning crate, declared, one JSON object, non-zero on a difference or orphan); the migration calls the same function."
+  },
+  {
+   "bead": "N37-18",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Applied S60: a new paragraph moves the two exporters that land before the door (telemetry.export-html --out, N24a-41, kind replay; run.export, N29a-02, kind run) behind export::admit with codes, exits, fields and order unchanged; the order is the door's (flags, privacy, licence, scope, path), which VERBS-train, BD-274, BD-407 and N31a-36 already state, so the M2 handlers are asked to adopt it (no test of theirs tells the orders apart); new test export_m2_exporters_unchanged_behind_door. Applied S68: kind run explicitly covers nemesis.shrink --out's .fmcw (VERBS-nemesis, BD-274); new test fmcw_is_run_kind. Applied S85: tenth export kind geometry for foundry.export --geometry-only, flags carrier and notices in the <file>.flags.json sidecar (N37-23 carrier sidecar), without it 816; decision_table now 5 x 10 = 50 cells; new test geometry_kind_uses_sidecar; acceptance line added. Convention 9: the GATE-SAFE-05 acceptance now says measured here and recorded by BD-305, the one recorder. related gains BD-274, BD-407, N24a-41, N29a-02, N31a-34, VERBS-nemesis."
+  },
+  {
+   "bead": "N37-19",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied H-verbs-5: the restated row now matches VERBS-scene's admin row: no idempotency_key, no 805 (the confirm digest guards the call; a repeat returns the stored receipt as a no-op), no 731 (a session without private:read meets 720), chapter list 813 only (720 and 802 are appended surface codes); CLI spellings --dry-run/--confirm stated; Considerations line updated; new test repeated_purge_returns_stored_receipt. Applied S68: e2e step purge_plan_stale (study plan bound to the private pack, purge, study submit <plan> --key pst-1 -> FROB-REF-809 exit 7 naming the removed identity, budget unchanged), and step 3 states that a plan is not a closure member (a request record with no derived-from edge), so N32a-13's re-validation answers. related gains N32a-13, N37-21."
+  },
+  {
+   "bead": "N37-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-owners-1: the frob-conformance marks subcommands are now the declared example crates/frob-conformance/examples/marks.rs (sweep, random-graphs, scan-digests; one JSON object, non-zero on failure), and the audit is N37-17's frob-chronicle example marks_audit. Applied H-verbs-5: --idempotency-key removed from scene purge (admin, no key); a repeated purge must return the same receipt. Convention 5: every run/mutate call carries --key. Convention 9: step 'record' replaced by 'receipt' (e2e_tier g1_known_answers GATE-SAFE-04 and GATE-SAFE-05 --mutations, asserting controls caught); BD-305 records. S68's companion step purge_plan_stale added (study plan saved at the dry run; submit -> 809 exit 7, nothing charged); deps gain N32a-13; acceptance updated with the 809 case and the no_conformance_command line."
+  },
+  {
+   "bead": "N37-22",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance cache-check` is now `cargo run -p frob-kernels --example cache_check -- --dir <scratch> [--offline]`, an example of the kernel-cache crate (N21b-12's KernelCache) declared here (synthetic entry, one flipped bit, checked lookup, one JSON object, 612 under --offline). Convention 5: spark precompile and sim run carry --key. Convention 9: step 'record' replaced by 'receipt' (e2e_tier g1_known_answers GATE-SAFE-06 --mutations); this bead records the M2 part (--part M2) and BD-306 the M3 part; scope and acceptance updated."
+  },
+  {
+   "bead": "N37-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S38: `exports` is the bool of N32a-02's entry schema: the schema lint, the registry test and the acceptance line now read `exports = true`. Convention 9: the M1 record of GATE-SAFE-01 is made by N37-24 from its script's tier receipt (the script writes no row). For N37p1-01's S60 change, the schema lint admits one extension: the replay header's const `banner` member beside the three flags, on that one schema only."
+  },
+  {
+   "bead": "N37-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-owners-1: `frob-conformance flags sweep|mutate` are now the declared example crates/frob-conformance/examples/flags.rs (sweep, mutate with --in/--kind/--out/--rotation). Convention 5: --key on every run/mutate call of export_all. `exports` read as `exports = true`. Convention 9: step 'record' replaced by 'receipt' (e2e_tier g0_laws GATE-SAFE-01 --mutations); recorders by part: this bead M1 and from M4 on, N37p1-01 M2, BD-303 M3 (as those beads already state); Considerations and acceptance updated."
+  },
+  {
+   "bead": "N37-28",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-verbs-2: on the paired-statistics path and in item 6, a D4 arm asked of eval.compare is FROB-REF-542 (pairing::admit runs first, VERBS-eval), planned with study.plan it is 533 (study::admit, layer rule of N24-REF/N28-REF); 561 on eval.compare answers only what 542 does not cover (an unrecorded arm). Tests renamed/added (eval_compare_d4_arm_is_542, eval_compare_unrecorded_arm_is_561, planned_d4_arm_is_533); acceptance, e2e text, Considerations and references updated. Convention 9: N37-29's script no longer 'appends to the row'; the M5 build-packet re-run is recorded as a later part from its own receipt."
+  },
+  {
+   "bead": "N37-29",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Applied H-owners-1 (both): plant-study, strip-determinism, admit-probe and kernel-lint are subcommands of the declared example crates/frob-conformance/examples/d4.rs; `--test g5` is now e2e_tier g5_determinism GATE-SAFE-09 --mutations. Convention 5: --key on every run/mutate call (train start had --idempotency-key). Neighbouring codes aligned with N37-28 and the registries: study plan 533, eval compare D4 arm 542, unrecorded arm 561, report 861 (step 3.1 text too). Convention 9: steps 'gate' and 'record' become one 'receipt' step and a Recording paragraph following BD-269's rule (BD-269 entered the row; this receipt is recorded again by a non-implementing session with record_gate). Acceptance and references updated."
+  },
+  {
+   "bead": "N37p1-01",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Applied S60: the telemetry.export-html exporter writes the packet header member /authorization/banner from frob_core::auth::banner, pinned by the same golden file; the page (N32b-40) shows it verbatim as line 1 and the page bundle holds no copy; the replay header's schema is the flags fragment plus a const banner property, which the reader takes out before check_carried, any other value FROB-REF-816 Extra{banner}; locator table row, acceptance and new test replay_header_banner_member. Convention 9: GATE-SAFE-01's M2 part is recorded by this bead from the receipt of safe_flags.sh --profile m2 (record_gate --part M2); the script records nothing. `exports = true` in m2_exporters_have_rows; related gains N32b-13."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-artifact",
+   "what": "artifact.list lacks the option --private (BD-305, M3: the explicit private listing, the only way a session sees its private objects; option_capabilities = { private = [\"private:read\"] }; the envelope of a private listing is marked private), as VERBS-scene's scene.list row already carries it. Add it with 'Extended by: BD-305'."
+  },
+  {
+   "bead": "N33c-32",
+   "what": "Its test-support verb conformance.probe conflicts with BD-025's convention (no `frob conformance` command or verb; no_conformance_command refuses lines starting `frob conformance`). N37-25 renamed its own test-support verb to testprobe.combine (cluster testprobe); please rename the probe into the same cluster (for example testprobe.needs-group) so that the program has one test-support cluster."
+  },
+  {
+   "bead": "BD-025",
+   "what": "State in the convention text where test-support verbs live: N37-25 now names its conformance-feature-only verb testprobe.combine and asks N33c-32 to move conformance.probe into the same cluster testprobe, so that no verb is named under `conformance` and rule 1 of no_conformance_command has no exception."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "Add `max_wall_ms` (optional int53 milliseconds; absent = the default of the row's kind: read and mutate 30,000, run the smaller of its wall budget and the envelope limit) to the closed verb entry schema's table of fields added by later beads (N37-13, M3). The round-2 request of S38 for `threats` (N37-01) and `consumes`/`claim_kinds` (BD-308) is still open; `listing` is withdrawn: BD-305 now expresses it through the output schema (x-frob-listing generated from VisibleList<T>)."
+  },
+  {
+   "bead": "N24a-41",
+   "what": "Step 5b lists the export checks as privacy, licence, flags, path; the export door of N37-18 (and VERBS-train, BD-274, BD-407, N31a-36) orders them flags (816), privacy (731), licence (733), scope (720), path (734). So that the M3 switch to export::admit changes no answer, as 5b promises, put the flags check first in the M2 handler (no test of yours distinguishes the orders)."
+  },
+  {
+   "bead": "N29a-02",
+   "what": "Algorithm step 3.2 checks privacy and licence before the input flags (816); the export door N37-18 that replaces these handler checks at M3 runs flags first (flags, privacy, licence, scope, path). Order the M2 checks the same way so the switch changes no answer."
+  },
+  {
+   "bead": "BD-306",
+   "what": "Convention 9: item 8 'append the results of steps 1 to 7' re-records GATE-SAFE-06 at M3; N37-22 now records the M2 part (--part M2) from its script's receipt (e2e_tier g1_known_answers GATE-SAFE-06 --mutations). Record the M3 part from the M3 re-run's receipt with record_gate --part M3 rather than appending."
+  },
+  {
+   "bead": "BD-407",
+   "what": "N37-18 now has the export kind `geometry` (loose geometry files of foundry.export --geometry-only; flags and notices carried by the <file>.flags.json sidecar). Replace the interim kind `packet` and the 'requested of N37-18' sentence in item 9 with ExportKind::Geometry."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "study.compare's chapter refusals list 553 and 840 but not FROB-REF-825, which §37.11/INV-SAFE-07 requires on the paired-statistics path: a stored study whose arm results include a D4 (or unrecorded) result is refused with 825 by the evidence boundary (N37-28, BD-269, N37-29 step 3.1). Add 825 to the row (Implemented by: N37-28)."
+  },
+  {
+   "bead": "VERBS-prove",
+   "what": "prove.bundle's chapter refusals do not list FROB-REF-825, which §37.11/INV-SAFE-07 requires on the certificate path: a D4 or unrecorded result cited as an input of a bundle is refused with 825 by the evidence boundary (N37-28, N37-29 step 3.4). Add 825 to the row."
+  }
+ ],
+ "unchanged": 3,
+ "unchanged_beads": [
+  "BD-303",
+  "N37-01",
+  "N37-08"
+ ],
+ "notes": "All 31 beads reviewed (resumed slice; no slice file had been modified after the 16:28 cutoff, so there were no half-finished edits). Every request addressed to the slice was applied after checking it against its owner bead and the registry rows, and conventions 1, 5, 7, 8, 9, 11 and 12 were checked bead by bead. Convention 9 recorders are now explicit for each gate the slice touches: GATE-SAFE-01 by part (N37-24 M1 and M4 on, N37p1-01 M2, BD-303 M3); GATE-SAFE-02 N37-10; GATE-SAFE-03 BD-261 (N37-16 supplies controls and evidence); GATE-SAFE-04 and -05 BD-305 (receipt from N37-21's script); GATE-SAFE-06 N37-22 M2 and BD-306 M3; GATE-SAFE-07 N37-06 M2 and BD-307 M3; GATE-SAFE-08 N37-25 M1 and N37-27 M3; GATE-SAFE-09 BD-269 (re-recorded from N37-29's receipt, BD-269's rule); GATE-SAFE-10 N37-12 M1 and BD-258 M3. Every `frob-conformance <sub>` form became a declared example (frob-conformance: injection, jail, fuzz, claim_sets, evidence_functions, marks, flags, d4; frob-io: gen_limit_corpus; frob-fsim: worker_submit; frob-chronicle: marks_audit; frob-kernels: cache_check). The test-support verb conformance.combine became testprobe.combine (convention 1 and the no_conformance_command lint); N33c-32 and BD-025 are asked to align. Possible program-wide drift, not changed here: U37's negative-control builds say feature `mutants`, while BD-025 and N38a-14 name control builds `gauntlet-mutations,<crate>/nc-<nnnn>` (N37-16 already uses the latter form). The round-2 request to N32a-02 for threats, consumes, claim_kinds and uses is still open and was not duplicated; its `listing` part is withdrawn (BD-305 now uses the output schema). The slice looks settled apart from the requests listed."
+}

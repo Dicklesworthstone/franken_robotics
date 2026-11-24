@@ -1,0 +1,313 @@
+{
+ "round": 3,
+ "slice": "F-U33c",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "N33c-05",
+   "kinds": [
+    "placement",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "priority 2 -> 0 (the M0 exit review BD-044 waits on it through N33c-06); stated how it closes on both branches of BD-031's decision (pass if the hatch opens; withdrawn citing the frob-units ADR if it stays closed, N41-17 rule 5; reopened by a train that opens the hatch); named it owner of suite_units_hatch.sh stage 1 with log path and summary line."
+  },
+  {
+   "bead": "N33c-06",
+   "kinds": [
+    "placement",
+    "sense"
+   ],
+   "what": "request S01 applied: priority 2 -> 0 and the close rule on both branches (withdrawn citing BD-031's ADR when the hatch stays closed, reopened with N33c-05 by a train that opens it); script ownership named (N33c-05 owns, this bead adds stages 2 to 4)."
+  },
+  {
+   "bead": "N33c-08",
+   "kinds": [
+    "deps"
+   ],
+   "what": "its own script suite_one_toolchain.sh logs through the STD-E2E helper; added dep STD-E2E."
+  },
+  {
+   "bead": "N33c-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "acceptance said 'nine rows' while the table names ten siblings (franken_markdown and frankenmermaid share one line); now one row per sibling, ten rows."
+  },
+  {
+   "bead": "N33c-11",
+   "kinds": [
+    "tests",
+    "sense",
+    "deps"
+   ],
+   "what": "two acceptance lines were checked only by BD-038, which depends on this bead (convention 7); restated against this bead's own unit tests (handshake_then_job, resume_after_kill, evaluate_zero_step_job, worker_events_recorded_in_ledger), with the inproc-versus-remote binary equality left to BD-038's gate. The global option --referee-worker is now entered in NJL-01's PROCESS_OPTIONS (NJL-01's rule: a bead that adds a process option adds it to that list, which the lint common-property-shadowed reads); dep NJL-01 added (M0, no cycle)."
+  },
+  {
+   "bead": "N33c-14",
+   "kinds": [
+    "correct",
+    "risks",
+    "placement"
+   ],
+   "what": "the script called fidelity.shadow at M2, which its verb row delivers only behind the feature frontier-shadow (else FROB-REF-724): both builds now add the feature and the script asserts the verb is listed; added the fail-closed measurement of W if the Frontier shadow sampler BD-214 closes withdrawn, so the kill decision closes either way (convention 10); priority 1 -> 0 (a kill-gate decision the M2 exit waits on, one step above M2's default)."
+  },
+  {
+   "bead": "N33c-15",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "request S12 applied: dropped FROB_LAB_SEED; lab seeds are STD-TEST rule 1 base seeds under FROB_TEST_SEED, several seeds drawn as mix streams, replay line in STD-TEST form; acceptance and e2e step 1 updated."
+  },
+  {
+   "bead": "N33c-16",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the acceptance line 'for each device family present' had no test: added dual_run_ledger_equal_devices (gpu-cuda on trj, gpu-metal on the Mac, one case per family; 'not-run: no device' never counts as a pass). The CUDA and Metal backends BD-172 and BD-174 are already prerequisites through BD-210."
+  },
+  {
+   "bead": "N33c-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the gate row was written by the script (convention 9): the INT-ASUP-02 row is now entered with record_gate from the receipt of the gate's tier run (FROB_TEST_SEED=<S0> cargo test -p frob-conformance --test <tier> --features gauntlet-mutations -- INT-ASUP-02, plant-lost-chunk as the registered control) by a session that did not implement the protocol; acceptance line updated."
+  },
+  {
+   "bead": "N33c-18",
+   "kinds": [
+    "sense"
+   ],
+   "what": "--memo-trace 'on any verb' had no home in any verb row: stated as a process option of the frob skeleton, in no verb's schema and not offered over MCP, entered in NJL-01's PROCESS_OPTIONS (NJL-01 is a prerequisite through BD-111)."
+  },
+  {
+   "bead": "N33c-19",
+   "kinds": [
+    "sense"
+   ],
+   "what": "--memo-policy given its value set <lru|s3fifo|shadow> and stated as a process option of the frob skeleton entered in NJL-01's PROCESS_OPTIONS, as N33c-18 does for memo-trace."
+  },
+  {
+   "bead": "N33c-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the gate row was written by the script (convention 9): the INT-FSQL-02 row is now entered with record_gate from the tier run's receipt, the planted mutants as the gate's controls; acceptance updated; e2e step 4 names the command (frob design check <fixture> --memo-policy <lru|s3fifo|shadow> --json with a budget that forces eviction)."
+  },
+  {
+   "bead": "N33c-21",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request S80 applied: step 0 builds one frob.perf.ceiling/1 record per workload and backend (experiment INT-FJAX-01/<workload>/<backend>, f = a, r = 10/9, h = 0, goal 50/49), files it before the run and passes it to N36-05's admit_experiment, the only raiser of FROB-REF-866; every record refused -> dropped-by-ceiling. Step 4: the independent replay is N12p2-02 (replayer reference or frob-cert), not N12-18; step 6 enters the gate with record_gate. New test ceiling_refusal_through_admit_experiment (0.15 -> 200/197 refused, 0.50 and 0.20 admitted; control: a screen that skips admit_experiment); acceptance lines on the checker and the filed records; e2e logs the record digest and refusal events; dep N36-05; related N12p2-02 replaces N12-18."
+  },
+  {
+   "bead": "N33c-22",
+   "kinds": [
+    "sense",
+    "placement",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request S76 applied: the M2 exit does not wait on it, the M4 exit BD-378 does and finds it done or closed superseded; priority 3 -> 2 (M4); dep N12p2-02 replaces N12-18 (item 7 cites it); e2e now calls frob spark check --backend <b> --key eg-ck-<b>-<run> and sim runs with distinct keys eg-off-<run> and eg-on-<run> (conventions 5 and 8)."
+  },
+  {
+   "bead": "N33c-25",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "pilot record now complete in schema frob.gauntlet.pilot/1: owner §33.15, bead N33c-25, work_package WP-32, gated_beads = [NFp2-02] (the drone lane's own bead; the shared twin-lane beads stay ungated); new acceptance line and unit test drone_record_gates_only_its_lane with the fundable answers; related NFp2-02; step 8 enters the gate with record_gate. Request H-owners-1 (list this bead in its own gated_beads) not applied: see notes."
+  },
+  {
+   "bead": "N33c-26",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "acceptance asked for the citation in INT-FMCP-01's admission record, which BD-023 writes after this bead (convention 7): this bead now delivers the facts file and prints its BLAKE3 in the summary, the citation being BD-023's; added the licence file's BLAKE3 as a read fact (a change is listed, not exit 3), which the Considerations already relied on."
+  },
+  {
+   "bead": "N33c-27",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "its e2e step joins suite_deps_rules.sh without saying whose script it is: now named as created by N33c-09, a dependency, with its STD-E2E log contract, this bead adding the step (convention 11)."
+  },
+  {
+   "bead": "N33c-28",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "pilot id moved off the construction-reserved PILOT-C-nn to the id set CLOTH (PILOT-CLOTH-nn); owner §33.15; the tool site is host (the oracle runs in this lane as a worker of its own workspace, not as N38a-06's development-oracle lane, whose results fund only provisionally and support no gate); the gate row is entered with record_gate by this bead, never by the script."
+  },
+  {
+   "bead": "N33c-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request H-ref-2 applied: the 890 step now names its commands: frob eval run <design> --battery smoke --key ref890-r1, the rebuilt binary with --key ref890-r2, and the pooled scorecard frob eval scorecard <run-1> <run-2> --json (both runs of smoke, so 802 does not apply), expecting exit 3 and FROB-REF-890 from the pooling operation of item 4. The pooled CLI form and 890 on eval.scorecard's row are requested of VERBS-eval."
+  },
+  {
+   "bead": "N33c-32",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "request H-ref-2 met without a test-support verb: the option capabilities --require-group <group> (repeatable; needs_groups from_argument require_group; 790 for a group not compiled, 802 for an unknown name) replaces conformance.probe; the bead registers the predicate scene-has-coupled-island used by sim.run's row and writes arm 6 of NJL-01's derive.rs (needs_groups() and 790 from Field(needs_groups) for a non-empty list); known groups are ten plus tracer (reported not compiled until N33bx-02); tests rewritten (argument_dependent_requirement on a synthetic request, registry_refusal_lists_generated on a scratch row and the real registry, capabilities_require_group, needs_groups_lint gpu-cuda fails and tracer passes); e2e uses --require-group stats and referee; deps VERBS-operator and VERBS-sim (no cycle)."
+  },
+  {
+   "bead": "N33c-36",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "request H-owners-1 applied: there is no frob-conformance binary; the driver is the example target crates/frob-conformance/examples/foundation_probe.rs, declared here (subcommands one per foundation probe of GATE-WS-06 and GATE-WS-09, created by the first probe bead to land, required-features gauntlet-mutations), this bead adding mixed-wrench: cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- mixed-wrench --json, reaching the mutants through frob-fsim's conformance feature, which the umbrella enables (BD-025); the acceptance line that put the results in the GATE-WS-06 record (N33c-40's, which depends on this bead) now asks for the probe's output in the form that record reads."
+  },
+  {
+   "bead": "N33c-37",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "request H-cx-1 applied: cites N23-CX's CX-23-L1 (and N33-CX's suite-sampler-marginals, the same fixture); new item 7, the re-run of the FACT entry: the G1 entry cx:CX-23-L1@host (gates GATE-CORTEX-18 and GATE-WS-06, M2) reproduces the constants re-read at the pin, f exact, 1 - 2f = 0.665510 and the adjacent counts on seeds 1-3 inside 66,551 +- 500 (the frequency band, not the sibling's three counts), run by the GATE-CORTEX-18 tier command; the recording session sets rerun = true and rerun_receipt on both entries and re-runs N38b-05's seeding tool, and a failed reproduction leaves rerun = false; new acceptance line, tests rerun_here_reproduces_fact and rerun_receipt_shows_entry_passed, e2e step with the receipt hash; deps N23-CX and N33-CX (no cycle)."
+  },
+  {
+   "bead": "N33c-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "an acceptance line required the pins record's hash to be in the GATE-WS-06 record, which N33c-40 writes after this bead (convention 7): the probe now prints the hash for N33c-40 to cite."
+  },
+  {
+   "bead": "N33c-39",
+   "kinds": [
+    "correct"
+   ],
+   "what": "same as N33c-38: the facts record's hash is printed for N33c-40's GATE-WS-06 record to cite; the acceptance no longer waits on the later bead."
+  },
+  {
+   "bead": "N33c-40",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "requests S08, S58 and H-owners-1 applied and convention 9: row 8 runs frob spark fingerprint --device metal:0 --key ws06-fp-<run> --json; --sampler-row asserts the plant's refusal (sampler-unqualified, FROB-REF-558, no world created) from the receipt of the GATE-CORTEX-18 tier run, the admission check called in process, with no frob train start; row 5 runs cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- mixed-wrench --json; the gate is measured by G1 entries under GATE-WS-06 (rows 5, 7, 8 here, row 8 at the metal site, row 6 by N23b-30) and its M0 part entered by the recording session with record_gate --part M0 from the tier run on the Mac, part M2 by N23b-30; the script never writes the register."
+  },
+  {
+   "bead": "N33c-41",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 applied: the probe runs as cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- g1-mass --json, this bead adding the subcommand g1-mass to the example declared in N33c-36; frob sim run g1 now carries --key ws09-g1-<run> (run verb, convention 5); the acceptance line that put the result in the GATE-WS-09 record (N33c-48's, which depends on this bead) now asks for this bead's admission record in the form that record cites."
+  },
+  {
+   "bead": "N33c-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 applied: cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- se3-dexp --json, the subcommand added here over the probe_se3_dexp functions; acceptance no longer waits on N33c-48's gate record (convention 7), it asks for the results in the form that record cites."
+  },
+  {
+   "bead": "N33c-43",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "requests S21 and H-owners-1 applied: the PortHamiltonian trait is BD-068's since integration (Scope reworded, N33a-19 dropped from related); the probe runs as cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- transformer-sign --json, reaching the legacy entry through frob_fsim::conformance and the adapter through frob-fsim's actuation feature, enabled on frob-conformance's dependency (in no product build); acceptance no longer waits on N33c-48."
+  },
+  {
+   "bead": "N33c-44",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "requests F-U18b-2 and H-owners-1 applied: the runs use N18b-45's files crates/frob-conformance/fixtures/traction/arc-arm.fbot and arc-hand.fscene (--seconds 0.01, keys ws09-r12-arc-$SEED and ws09-r12-chord-$SEED), with a new acceptance line that no second copy of the hand instance exists; the probe runs as cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- swept-arc --json; row 12 is a G1 entry under GATE-WS-09 with the chord-only control, entered in the M2 part with record_gate under N33c-48's rule, never by the script (convention 9)."
+  },
+  {
+   "bead": "N33c-45",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 applied: cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- sos-bounds --json, the subcommand calling the probes through frob-fsim's optimize feature and deciding verdicts with frob-cert's rationals as bounds_recheck does; acceptance no longer waits on N33c-48's gate record."
+  },
+  {
+   "bead": "N33c-46",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "its e2e is a step of N33c-48's --m2-rows mode but it did not depend on N33c-48 (as N33c-44 does): dep added, no cycle; the text no longer names a frob-conformance probe entry (the driver is the foundation_probe example, which cannot link f3d-math); the runner writes receipts/facts/f3d-ray-<rev>.json, which row 14's G1 entry under GATE-WS-09 reads, and the row is entered in the M2 part with record_gate under N33c-48's rule (convention 9)."
+  },
+  {
+   "bead": "N33c-48",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "request H-owners-1 and convention 9 applied: the probes run through cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- <probe> --json, and row 9's sim run carries --key; the script's step 'write the gate record' is replaced by the gate's G1 tier run (rows 9, 10, 11, 13 registered here, 12 and 14 by N33c-44 and N33c-46) with the M0 part entered by the recording session with record_gate --part M0 and the M2 part by whichever M2 probe bead lands second; acceptance lines follow."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-operator",
+   "what": "add the option require_group (CLI --require-group, repeatable, values the known group names) to the capabilities row, with needs_groups = [{ from_argument = \"require_group\" }] and FROB-REF-790 in its refusals (802 for an unknown name); implemented by N33c-32, which replaces the proposed test-support verb conformance.probe with it."
+  },
+  {
+   "bead": "N33-REF",
+   "what": "its 790 step should provoke the refusal with frob capabilities --require-group stats --json (N33c-32) instead of conformance.probe, which no bead registers."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "add FROB-REF-890 (stack-mismatch, N33c-31) to eval.scorecard's refusals, raised when several runs under different stack receipts are pooled, and state the CLI spelling of the several-runs form: frob eval scorecard <run-1> <run-2> --json."
+  },
+  {
+   "bead": "BD-023",
+   "what": "its INT-FMCP-01 admission record should cite the BLAKE3 of receipts/facts/fastmcp-<rev>.json (printed by N33c-26's script) and list the record's changed facts."
+  },
+  {
+   "bead": "N38a-09",
+   "what": "state that the bead named in a pilot record's bead field (the pilot itself) is not gated by fundable_bead from its own record or from its package's answer; otherwise a pilot that lists itself in gated_beads stays Blocked{registered} forever (N33c-25)."
+  },
+  {
+   "bead": "NFp2-02",
+   "what": "cite N33c-25's drone-lane pilot record (gated_beads = [NFp2-02]) as its pilot and read its readiness with cargo run -p frob-conformance --example pilots -- fundable --bead NFp2-02."
+  },
+  {
+   "bead": "NF-07",
+   "what": "its script runs `frob-conformance probe g1-mass --json`; there is no frob-conformance binary (BD-025): use cargo run -p frob-conformance --features gauntlet-mutations --example foundation_probe -- g1-mass --json (N33c-41's subcommand of the example declared in N33c-36)."
+  },
+  {
+   "bead": "N23b-30",
+   "what": "register row 6's G1 entry (the battery on the plant and the qualified sampler, the in-process admission refusal) under GATE-WS-06 as well as GATE-CORTEX-18, and enter GATE-WS-06's M2 part with cargo run -p frob-conformance --example record_gate -- --gate GATE-WS-06 --receipt <hash> --part M2 from the receipt of the GATE-WS-06 tier run of suite_ws06.sh --sampler-row (N33c-40 item 7). N33c-37's re-run entry cx:CX-23-L1@host also carries GATE-CORTEX-18 and GATE-WS-06."
+  },
+  {
+   "bead": "N33-CX",
+   "what": "name the rerun_here test of suite-sampler-marginals (FACT, rerun = false until re-run): it is N33c-37's G1 entry cx:CX-23-L1@host, whose receipt sets rerun = true and rerun_receipt on that entry and on N23-CX's CX-23-L1."
+  }
+ ],
+ "unchanged": 10,
+ "notes": "All 42 beads reviewed; 32 changed, 10 unchanged (BD-001, N33c-01 to -04, -29, -30, -33, -35, -47). Edits of the interrupted reviewer to N33c-11 (second edit) and N33c-16 to -20 were checked whole, found complete and recorded. Request H-owners-1 on N33c-25 (list the bead in its own gated_beads) was not applied: fundable_bead would answer Blocked{registered} for the pilot itself until its own record is reproduced, so the pilot could never start; the drone lane's own bead NFp2-02 is listed instead (as F-U19c-1 asked) and N38a-09 is asked to state the rule. The probe driver of GATE-WS-06 and GATE-WS-09 is now one declared example, foundation_probe, and both gates are measured by G1 entries and entered with record_gate in parts M0 and M2. Not a bead and so not edited: defs/U33c/coverage.md still names `frob-conformance probe` and conformance.probe. The slice looks settled once the nine requests are taken up."
+}

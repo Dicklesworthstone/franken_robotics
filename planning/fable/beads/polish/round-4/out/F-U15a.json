@@ -1,0 +1,151 @@
+{
+ "round": 4,
+ "slice": "F-U15a",
+ "reviewed": 22,
+ "changed": [
+  {
+   "bead": "BD-072",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Acceptance had GATE-SINEW-05 entered from the user-side script's rows; with N38b-19's one receipt per tier target, the implementer would have two beads trying to record one gate. Now N15a-26 records it with record_gate from its Known-answer tier receipt, after N15a-24's referee script has passed the stepped rows."
+  },
+  {
+   "bead": "BD-073",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Same for GATE-SINEW-06: the record now cites N15a-26's two tier receipts (KA-319 in g0_laws, KA-314 to KA-318 in g1_known_answers) with one --receipt each, so the recorder does not hit receipt-set-invalid or a second recorder."
+  },
+  {
+   "bead": "BD-076",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Named the referee part's gate record of GATE-SINEW-02 without the record_gate form and part; it now is N15a-24's `record_gate -- --gate GATE-SINEW-02 --part M1 --receipt <hash>`, so the M1 and batched parts are not recorded by the same bead twice."
+  },
+  {
+   "bead": "BD-275",
+   "kinds": [
+    "request"
+   ],
+   "what": "Actions were positional (`hardset run <design>`, `hardset show|add|retire|run`), which NJL-01 action rule 1 makes 802: the implementer would build a parser the generator refuses. Step 5, step 8, the e2e line, acceptance and set_selection now use `--action add|retire|run|carry`, `show` is the call with no --action, and the positional form and `--action show` are tested as 802."
+  },
+  {
+   "bead": "N15a-05",
+   "kinds": [
+    "request"
+   ],
+   "what": "No bead registered the predicate design-has-port-actuators, so sim.run's needs_groups member for `actuation` could not be written and a build without the group would run port actuators instead of answering 790. Item 8 registers it (true for an actuator at L1 or above on the referee), adds the needs_groups member in the same change, with an acceptance criterion and test port_actuators_require_actuation; deps gain N33a-19, N33c-32, VERBS-sim (no cycle)."
+  },
+  {
+   "bead": "N15a-09",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Item 8 said repair 2 (backlash to zero) was 'requested of N18-REF' and printed only later, so the implementer would print one repair while N18-REF row 241 and N18a-32 print two. Now states both ranked repairs as fact; refusal_241_no_rotor checks their order."
+  },
+  {
+   "bead": "N15a-12",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "The script wrote target/gates/GATE-SINEW-04.json and gates.toml rows itself (STD-E2E self-recording fails the lint), queried telemetry with `--channel` across two streams (802), cited --chaos-plan as BD-081's, and planted mutant controls had no M1 route. Now: e2e_tier g1_known_answers GATE-SINEW-04 --mutations with the hash listed and a fresh session's record_gate --part M1; two --channels queries, one per stream; --chaos-plan is BD-083's frob.chaos.retry/1 on the chaos build; controls via task.fixture --control on a gauntlet-mutations build, each with its own --key; deps add BD-083, N16ap4-01 (no cycle)."
+  },
+  {
+   "bead": "N15a-18",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "The e2e note said reflected_inertia was 'requested of VERBS-actuator; until then a logged skip', so sinew_cards.sh would keep skipping an assertion the row now supports. It now states the assertion [[4, 2], [2, 4]]·10⁻⁴ kg·m² at differential_unequal:ankle."
+  },
+  {
+   "bead": "N15a-23",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Step 8 sent the battery's results to target/gates/GATE-SINEW-08.json and a gates.toml row, a gate file no tier run writes and a row only record_gate enters. Now the battery is the gate's g0_laws rows whose tier run writes the frob.gauntlet.receipt/1; N15b-32 produces it with e2e_tier g0_laws GATE-SINEW-08 --mutations and is the one recorder; Background no longer says this bead records the gate."
+  },
+  {
+   "bead": "N15a-24",
+   "kinds": [
+    "request",
+    "convention",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Its script wrote gate JSON files and recorded, used `--channel`, gave runs no keys, ran the legged case with no controller (none is bound on the referee without --controller), and re-ran mutants with sim.run --mutant, an M2 input, from an M1 bead. Now: control.synth then --controller <ControllerId> (dep N16ap4-01), --channels with the BD-070/BD-071 L1 and L2 channels asserted one query per stream, --key on every run, mutant re-runs via task.fixture --control on a gauntlet-mutations build, and e2e_tier receipts for GATE-SINEW-01 and -02 that this bead records (02 as --part M1); the 05/06 receipts are N15a-26's."
+  },
+  {
+   "bead": "N15a-25",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "The differential_unequal row kept an e2e_skip 'requested of VERBS-actuator; no row prints it yet', so the script would log a skip forever for a value actuator.check now prints. It now asserts reflected_inertia {joints, matrix} = [[4, 2], [2, 4]]·10⁻⁴ kg·m² at the binding; the acceptance, log bead list and skip lines were aligned (only step 7 is a skip at M1)."
+  },
+  {
+   "bead": "N15a-26",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Wrote gates.toml from a session; asked actuator.thermal for `--model constant-resistance`, which is not an input of the row (802); called design.edit with `--joint knee` (not a spelling; the row's pattern is --joints) and no --key on a mutate verb. Now: e2e_tier receipts for GATE-SINEW-05 (g1) and GATE-SINEW-06 (g1 and g0) with the controls caught, recorded by this bead as the one recorder (06 with two --receipt), after N15a-24 (dep added, no cycle); the constant-R figure is read from the answer's constant_resistance_comparison; design.edit swap-actuator --joints '*.knee' --key."
+  },
+  {
+   "bead": "N15a-27",
+   "kinds": [
+    "request"
+   ],
+   "what": "Its M1 referee runs pass --task, an input N16ap4-01 adds to sim.run at M1; without the dep the script could be scheduled before the referee accepts a task. Dep N16ap4-01 added (no cycle) and step 3 names the input's owner."
+  },
+  {
+   "bead": "N15a-28",
+   "kinds": [
+    "request"
+   ],
+   "what": "Used positional actions (`hardset show`, `add ok_causal`, `hardset run`, `retire`), which NJL-01 action rule 1 refuses with 802, so every step of the script would fail. Steps 1 to 4, 8 and 9 now call `frob nemesis hardset` (the default show) and `--action add|run|retire`, each run action with its own --key."
+  },
+  {
+   "bead": "N15a-29",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "VERBS-sim names this bead owner of --thermal-start with 802 for a malformed value, 132 for a start out of range and a need for --task; the bead stated none of these and lacked the dep on N16ap4-01, whose --task the override needs at M1, so an implementer could reuse the task-file codes (891, 535) on the flag. Step 6 now states the row's rules, test override_refusals covers them, and dep N16ap4-01 is added (no cycle)."
+  },
+  {
+   "bead": "N15a-30",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Step 6 gave the construction request a field `use: Train | Evaluate`, while N16b-25's EnvRequest carries `purpose` (default evaluation) that this bead's --purpose sets; an implementer would add a second field or leave `purpose` unset, so --purpose training would never draw the mixture. It now sets EnvRequest's `purpose`, with the use derived from it."
+  },
+  {
+   "bead": "N15ap3-01",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "The e2e query used `--channel` (not a spelling of telemetry.query, 802), the Background said the registry listed the form 'as requested and defined by no bead', and the layer tag was 'a value requested of N22a-01's tag list'; the --controller input it extends is N16ap4-01's at M1, which the bead did not depend on, so it could be scheduled before the input exists. Now --channels, the VERBS-sim row stated as fact (this bead owns open-loop:<schedule>, N16ap4-01 the input), the tag stated as N22a-01's nominal form printing kind `open-loop`, dep N16ap4-01 (no cycle)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N22a-01",
+   "what": "Rule 3 and layer_tags_are_exhaustive say the nominal layer tag prints the controller kind (baseline, mpc-sample, policy). N15ap3-01's open-loop schedule controller (sim.run --controller open-loop:<schedule>, M1, used by the GATE-SINEW-01 and -04 scripts) runs under the nominal tag; list `open-loop` among the kinds that form prints. Otherwise its implementer must either tag open-loop commands `baseline`, so layer counters and layer_fractions report a scripted schedule as the baseline controller, or add a kind the exhaustiveness test rejects."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "unchanged: BD-069, BD-112, N15a-04, N15a-11, N15ax-02. Every addressed request was applied after checking its owner row; the N15a-30 request was already met in the flags and only its EnvRequest field name needed aligning. Gate recording is now one recorder per gate part from tier receipts (N15a-24: SINEW-01, -02 M1; N15a-26: -05, -06; N15a-12: -04 M1; N15b-32: -08), and no M1 script relies on the M2 sim.run --mutant. The slice looks settled apart from the N22a-01 request."
+}

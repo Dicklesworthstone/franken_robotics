@@ -1,0 +1,35 @@
+{
+ "round": 3,
+ "slice": "F-U10c",
+ "reviewed": 24,
+ "changed": [
+   {"bead": "SPEC-C-29", "kinds": ["deps", "e2e-logging"], "what": "deps += N10-CX, N10-KA3 (rows it binds), N38a-16 (MR-08, M2 like this bead), VERBS-operator (`frob --json doctor`). MR-08's sites are referee and device tiers, so its g3_metamorphic step is logged `pending` until BD-205 binds it (like KA-145), naming the reference tests that cover its three clauses; added the gauntlet-mutations runs once bound."},
+   {"bead": "SPEC-C-30", "kinds": ["deps", "e2e-logging", "complete"], "what": "deps += N10-CX, N10-KA3, VERBS-operator. MR-19/MR-20 are entered by N38a-17 at M2, later than this M1 bead (time rule), so their g3 run and their gate attachment are logged `pending` until then; KA-152 still runs in g3_metamorphic; named the reference tests covering both relations."},
+   {"bead": "SPEC-C-31", "kinds": ["deps", "correct", "e2e-logging"], "what": "deps += BD-027 (prove list, doctor via BD-022), N10-CX, N10-KA3, N12-KA (KA-213), N38a-17 (MR-22). The energy-budget checker is N12-17 (which depends on this bead), not BD-132/BD-337; KA-213's binder is N12-17, so its g0_laws step is logged `pending` until then and the mutation runs cover the bound rows."},
+   {"bead": "SPEC-C-32", "kinds": ["correct", "e2e-logging", "deps", "tests"], "what": "Request H-owners-1 applied: `--test g1`/`g2` -> FROB_TEST_SEED form with g1_known_answers and g2_parity (Scope too), plus gauntlet-mutations runs. deps += BD-027 (prove list). KA-033's control set to N09-KA's registered one (nominal load set, no positive optimum); kept `projection_drops_a_pair` as an extra mutant with the optimum it moves to. frob-verify step logged `pending` until BD-133/BD-132 instead of 'when bundles exist'."},
+   {"bead": "SPEC-C-33", "kinds": ["deps", "e2e-logging"], "what": "deps += BD-027, N10-CX, N10-KA3, N38a-18 (MR-29). Added the gauntlet-mutations run for the KA-161/162, MR-29 and CX-081 controls; KA-163's reference interiors are bound by BD-233, so its g1 step is logged `pending` (synthetic-interior test covers it)."},
+   {"bead": "SPEC-C-34", "kinds": ["deps"], "what": "deps += N10-CX (CX-082), N10-KA3 (KA-164, KA-165), VERBS-operator (doctor)."},
+   {"bead": "SPEC-C-35", "kinds": ["deps"], "what": "deps += VERBS-operator (its script calls `frob --json doctor`)."},
+   {"bead": "SPEC-C-36", "kinds": ["deps", "correct"], "what": "deps += BD-027 (prove list), N10-CX (CX-087), N10-KA3 (KA-172..174), N38-KA moved from related (its script runs KA-845); dropped the 'if this bead lands first it creates the row' clause, now impossible."},
+   {"bead": "SPEC-C-37", "kinds": ["deps", "correct"], "what": "deps += BD-027, N10-CX (CX-089), N10-KA3 (KA-178..182). FROB-REF-241's repair aligned with N18-REF and the plan (raise the card level); the extra 'set backlash to zero' repair is not in the row."},
+   {"bead": "SPEC-C-38", "kinds": ["correct", "e2e-logging", "deps", "tests"], "what": "Request H-owners-1 applied: g0 -> g0_laws, g1 -> g1_known_answers in the FROB_TEST_SEED form, with gauntlet-mutations runs for the four rows and CX-090/091. deps += N10-CX, N10-KA3, VERBS-operator. `illustrative_card` claimed 'eight numbers' for a card of eleven; listed them."},
+   {"bead": "SPEC-C-39", "kinds": ["deps", "e2e-logging"], "what": "deps += N10-KA3 (KA-187), VERBS-operator. Added the gauntlet-mutations run for KA-187's control `value_ignores_mean`."},
+   {"bead": "SPEC-C-40", "kinds": ["deps", "correct", "e2e-logging"], "what": "deps += BD-027, N10-CX (CX-094..097), N10-KA3 (KA-189, KA-190). The product-unreachable checker is N12-17 (depends on this bead), not BD-132/BD-359; frob-verify step logged `pending` until N12-17 and BD-359; added the gauntlet-mutations runs."},
+   {"bead": "N10c-04", "kinds": ["e2e-logging"], "what": "Added the gauntlet-mutations run for the two appended rows' controls and CX-080."},
+   {"bead": "N10c-05", "kinds": ["deps"], "what": "deps += BD-027: the script calls `frob --json prove list` for T-34."},
+   {"bead": "N10c-06", "kinds": ["deps"], "what": "deps += N10-CX (CX-084, CX-085) and N38a-18 moved from related (MR-34 run in g3_metamorphic)."},
+   {"bead": "N10c-07", "kinds": ["deps"], "what": "N31-KA moved from related to deps: the script runs KA-745 and the tests bind it."},
+   {"bead": "N10c-08", "kinds": ["complete"], "what": "Acceptance now names KA-177's mutant control too (the row prints the ideal-row fixture as its control, which is not a mutation)."},
+   {"bead": "N10c-09", "kinds": ["deps", "e2e-logging"], "what": "deps += N00-CX (CX-013), N10-CX (CX-092, CX-093), N25-KA moved from related (KA-639 run). Added the gauntlet-mutations run."},
+   {"bead": "N10c-10", "kinds": ["correct"], "what": "Request S76 applied: step 3d filter `-- ka:<id>` -> the bare row id (N38a-02's filter; `ka:…@site` is an entry id)."},
+   {"bead": "N10c-11", "kinds": ["correct"], "what": "Mission verbs aligned with VERBS-mission: positional is the mission (`.fmission` or `q:…`), not a family; `mission show` takes `--answer` and `--set unresolved`."}
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+   {"bead": "N10-KA3", "what": "Mark the cells the slice's part beads set, as done for SPEC-C-34/35/36 rows: KA-147 and KA-148 controls (set: N10c-01; `no_placebo`, `names_top_without_test`); KA-167 control (set: N10c-05; `threshold_rounded_up`); KA-169 control (set: N10c-06; `drops_rare_cycles`); KA-171 tolerance 10⁻⁹ relative and control `square_root_rule_for_statistical` (set: N10c-07); KA-175 tolerance, KA-176 tolerance and control `euclidean_projection`, KA-177 tolerance and control `all_wheels_ideal` (set: N10c-08). This answers H-ka-1, whose cells are set by the part beads, not the cores."},
+   {"bead": "N38a-17", "what": "MR-19, MR-20 and MR-27 are listed as due at M1 while the bead is M2 (dep N38a-14, M2). Either enter those three at M1 or restate them as due M2; SPEC-C-30 (M1) logs MR-19/MR-20 `pending` until they exist."}
+ ],
+ "unchanged": 4,
+ "notes": "Requests from the slice file (N10c-10, SPEC-C-32, SPEC-C-38) applied. Most changes add missing deps on the registries a bead binds and on the doctor and prove-list verbs, and log `pending` the steps that wait on later beads. N10c-01, N10c-02, N10c-03 and SPEC-C-28 are left as they are. Numbers re-derived throughout; no arithmetic errors found."
+}

@@ -1,0 +1,201 @@
+{
+ "round": 1,
+ "slice": "U10b",
+ "reviewed": 29,
+ "changed": [
+  {
+   "bead": "SPEC-C-16",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "s5 reference value 2.0949958810 is 1.3e-11 relative from the true z* and would fail its own 1e-12 tolerance: now 2.09499588102780 relative 1e-12 with omega+ stated. GATE-GAIT-02 summary gained the bar-fixture clause and GATE-GAIT-03 its thresholds; KILL-GAIT trigger named. related now lists BD-081 and BD-332, which the order-of-work text says are related."
+  },
+  {
+   "bead": "N10b-01",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "A point mass has radius of gyration 0, so t_scale = t0 would make nu = 0 for every crossing: a model with no positive t0 must declare t_scale, else FROB-REF-263 with t_scale missing; the ball fixtures declare g_scale 1 m, t_scale 1 s and the near-threshold ceiling heights are given exactly; new test s11_missing_time_scale. Acceptance no longer requires the pilot's nu_min (the pilot depends on this bead): 1/16 recorded as fail-closed default, pilot writes the fixed value. CX-035 named (refuse half here, order half by CX-238/KA-563 in N22c-54). Added dep N10a-04 (it declares the one DerivativeLabel type at M2 that this suite binds to) with the ownership note; related gains BD-081, N22c-54."
+  },
+  {
+   "bead": "N10b-02",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related now lists BD-332, which the order-of-work text says is related."
+  },
+  {
+   "bead": "N10b-03",
+   "kinds": [
+    "sense",
+    "correct"
+   ],
+   "what": "Acceptance now writes the fixed nu_min into docs/math/C-16.md as a new contract version, with the separating evidence and a rerun of laws_c16_labels; rule when no value separates regular cases from controls."
+  },
+  {
+   "bead": "N10b-04",
+   "kinds": [
+    "complete"
+   ],
+   "what": "KILL-AUGUR-REGION trigger lacked its second clause (GATE-AUGUR-09 fails after one repair cycle); added with the gate's thresholds."
+  },
+  {
+   "bead": "N10b-05",
+   "kinds": [
+    "sense",
+    "deps"
+   ],
+   "what": "Out-of-scope text pointed to an energy family 'named in needs' (needs is empty); now names N10bx-01. The 'run on two families if energy missing' consideration rewritten: N10bx-01 is a dependency; partial only if its bundle is refused, and funded cannot be recorded on a partial result."
+  },
+  {
+   "bead": "N10bx-01",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Added deps N10b-04 (the rule-1 specification this lowering implements) and STD-TEST (unit-test kit)."
+  },
+  {
+   "bead": "SPEC-C-18",
+   "kinds": [
+    "risks"
+   ],
+   "what": "KILL-REUSE was named without trigger or fallback; added (M4: any unsafe reuse in GATE-ATEL-11 or grade 3 saves under a fifth of grade-2 recheck cost; fallback grades 1 and 2 only)."
+  },
+  {
+   "bead": "N10b-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The claim that every one of the 344 admitted cells reverses under the third gain is false on the 561 grid: exact enumeration gives 17 still admitted (all eps = 0) and 327 reversed, matching N20b-14. Section 4, the d6 test, the KA-024/KA-036/KA-205 binding row and a new acceptance line now state the exact counts; reference API gains admits_with_gains."
+  },
+  {
+   "bead": "SPEC-C-19",
+   "kinds": [
+    "risks",
+    "correct"
+   ],
+   "what": "Considerations attached the >5% probe trigger to both KILL-ALIAS and KILL-AUGUR-ALIAS; each kill gate now has its own trigger and fallback, and KILL-SKEL-ALIAS (named without either) gained both."
+  },
+  {
+   "bead": "SPEC-C-20",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related now lists BD-078, which the order-of-work text says is related."
+  },
+  {
+   "bead": "SPEC-C-21",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related now lists BD-061, which the order-of-work text says is related."
+  },
+  {
+   "bead": "N10b-11",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "The bounding-box negative control could not fail the similarity-image test (a box scales exactly by alpha_L); replaced by a fixed 1 m length scale for that test, and the bounding box moved to the re-description (yaw rotation) test where it does fail."
+  },
+  {
+   "bead": "SPEC-C-22",
+   "kinds": [
+    "deps",
+    "risks"
+   ],
+   "what": "Pilot of the projection quotient pointed to superseded N10b-13; now N17a-25. KILL-QUOTIENT trigger and fallback stated. related gains BD-048 (named as related in the order-of-work text) and N17a-25."
+  },
+  {
+   "bead": "N10b-12",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Three references to superseded pilot N10b-13 now point to N17a-25 (with its falsifier); related gains BD-170, which the order-of-work text says is related. Ballast counts 735,471/24,546 re-verified by enumeration."
+  },
+  {
+   "bead": "SPEC-C-23",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "Pilot 1 was 'named in needs' with needs empty; now names BD-145 (pre-registration), BD-310 (execution) and N23b-19, as related. related gains BD-192, named in the order-of-work text."
+  },
+  {
+   "bead": "N10b-14",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "A zero head alone does not keep matched outputs unchanged (the new token's encoder output still enters its neighbours' sums), and recomputed ancestor features change matched actions when a massive link is added: new tokens now get a zero-initialized message gate (DESIGN, with reason), the acceptance is stated for a zero-mass leaf (bit-equal) and a massive link (differences only through recomputed features), new test and mutant. related gains BD-058 (named in the order-of-work text) and N23a-27."
+  },
+  {
+   "bead": "N10b-15",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The 'one-sided 95% bound' on the ratio of medians had no side; now the upper bound (smaller is better), paired bootstrap with 10^4 resamples, recorded beside the point ratio on which the falsifier is read."
+  },
+  {
+   "bead": "SPEC-C-24",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Three references to superseded pilot N10b-16 now name N23b-01 (as the lead asked); related gains BD-192 (named in the order-of-work text), BD-439 and N23b-01."
+  },
+  {
+   "bead": "SPEC-C-25",
+   "kinds": [
+    "deps",
+    "risks",
+    "complete"
+   ],
+   "what": "Pilot references to superseded N10b-17 now name N16b-07; 'KILL-DR (N10b-17 states it)' replaced by the trigger and fallback of section 29.20 (which governs over 16.17; ESS a diagnostic, not a trigger); the plan's pilot, falsifier, ceiling and fallback carried in full. related gains BD-124 (named in the order-of-work text), BD-263, BD-264, N16b-07; plan_refs gain 16.17 and 29.20."
+  },
+  {
+   "bead": "SPEC-C-26",
+   "kinds": [
+    "deps"
+   ],
+   "what": "related gains BD-262 (named in the order-of-work text) and the beads that pre-register, run and productize the pilot (BD-145, BD-310, BD-328, BD-329, BD-265). Index 38, Beta(38,2) 5% quantile 0.884, ladder costs 40.5/6.1/2.0 h re-verified."
+  },
+  {
+   "bead": "SPEC-C-27",
+   "kinds": [
+    "deps",
+    "risks",
+    "tests"
+   ],
+   "what": "KILL-RARE trigger and fallback stated here (was 'N10b-18 states it') and the plan's pilot carried in full; KA-141 bracket made exact: each one-sided bound at delta/2 (union bound gives 1 - delta), crude binomial upper bound and truncated-weight lower bound on the exchanged walk with w_max = (2/3)^19. related gains BD-270 (named in the order-of-work text), BD-276, BD-277, N10b-18, N26a-28. Counts 29,956/299,572/2,995,731/76,959 re-verified."
+  },
+  {
+   "bead": "N10b-18",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "Falsifier's 'fewer than 1% of forks' fixed as pooled over levels with per-level fractions recorded; the constant-score control made coherent (no level is crossed, no fork is made, fraction recorded as 0 so the second clause fires); evaluator test gains the zero-fork case."
+  },
+  {
+   "bead": "N10b-19",
+   "kinds": [
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "26 deps were mostly transitive (SPEC-C-16..23, N10b-08, N10-KA2, N10a-01, N38a-12, BD-025 reached through parts), while check 11 needs pilot records whose producers were missing: deps are now the transitive reduction of what the audit needs at --through M4 (12, including the pilots N10b-03, -07, -10, -11, -15, -18, N16b-07), with a paragraph saying what each reaches. Manifest names each pilot bead and its due milestone; check 11 requires only records due by --through (sibling-audit rule) and accepts 'not run'; new test pilot_due_rule; docking constants gain 17/327. No N10b-16 reference remained."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [],
+ "unchanged": 5,
+ "notes": "All 29 beads read in full against plan section 10 C-16 to C-27 and the cited sections. Recurring defect fixed throughout: SPEC 'order of work' text names a bead 'listed in related' that was not in related. Superseded pilots N10b-13/16/17 are no longer cited by any slice bead (now N17a-25, N23b-01, N16b-07). Numbers re-verified by computation: rimless-wheel z*, docking grid 344/217/9 and third-gain 17/327, ballast 735,471/24,546, control-variate savings, conformal index and Beta quantile, zero-failure counts, walk level probabilities. Unchanged: SPEC-C-17, N10b-06, N10b-07, N10b-09, N10b-10."
+}

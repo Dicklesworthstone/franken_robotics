@@ -1,0 +1,200 @@
+{
+ "round": 4,
+ "slice": "F-U15b",
+ "reviewed": 43,
+ "changed": [
+  {
+   "bead": "BD-075",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Its description of N15b-30's script ran the brownout trials as a loop of 100 `sim.run` calls with `--seed <s>`, while N15b-30 (the script's owner), N15b-35, N15b-28 and FD-FSIM-21 run the registered fixture `frob task fixture brownout-trials --tier referee --key pp-brownout --json`. DESIGN: the fixture form, because a design run with `--seed` draws no E, R or demand at M1 (randomization plans are BD-200, M2); the fixture's rows carry the 100 draws and their known answers. Left as it was, the implementer of N15b-30 would read two different forms of one script stage."
+  },
+  {
+   "bead": "N15b-01",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied the requests of H-owners-1 and H-ref-1: step 10 now states the unmet assumption as the ledger slug `module-assumption-unmet` (N14-REF's uncoded table, §14.6, 1xx, ledger row of N35x-02), raised behind the constant `MODULE_ASSUMPTION_UNMET` as interim 114 with `detail = \"module-assumption-unmet\"` beside the pointer (N35-33 rule 7), with N14-REF's two ranked repairs; the OPEN and 'if a code is assigned' narration is gone (convention 13). The acceptance line, the `sink_assumption` test and the Considerations bullet now assert the `detail`. Left as it was, the raise would lack the `detail` that tells it apart from a digest mismatch, and the ledger's interim check (rule 7) would fail."
+  },
+  {
+   "bead": "N15b-02",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Its refusal map said 114 means only a digest or signature mismatch; with `--in-design`, N15b-01's join check also raises 114 with `detail = \"module-assumption-unmet\"`. One clause added so the handler and an agent reading 114 tell the two apart by `detail`."
+  },
+  {
+   "bead": "N15b-03",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Its description of N15b-30's exhaustion run named `empty-battery` as a positional design; N15b-30 runs it as `--fixture empty-battery` (a registered fixture with its input table, the one spelling of a fixture in VERBS-sim). Aligned to the owner's form."
+  },
+  {
+   "bead": "N15b-04",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied F-U15b-2's request (checked: under rule 3 a to-battery member with no shunt falls back to clip, so at the 2 A limit `flywheel-brake-to-battery` moves exactly as `-clip`). The to-battery design now has a 5 A (240 W) charge limit that accepts the whole 180 W surplus; acceptance and e2e assert three distinct ledger lines with clip alone changing the motion, ω(0.2 s) = 89.24 rad/s against 80 rad/s (recomputed by integrating 200·s − 20·s² = 96: 89.242). Added `to_battery_over_limit_clips`, the unit test of rule 3's fallback at the charge limit, which nothing tested; the run key is N15b-30's `pp-regen-<policy>`; 'numbers below' corrected to 'above'. Left as it was, the acceptance line 'three different trajectories' could never pass."
+  },
+  {
+   "bead": "N15b-05",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "It said N15b-30's script asserts the planted-leak first offender; N15b-30 does not, and the first-offence record under the planted loss is asserted by N15a-24's `sinew_referee_dynamics.sh` for BD-076. Pointed each assertion at the script that makes it, so no implementer adds a duplicate stage or believes the locator is covered where it is not."
+  },
+  {
+   "bead": "N15b-06",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "It said the per-card share is printed by `actuator.show`; VERBS-actuator has `actuator.list` print each card's share and `actuator.show` the provenance of each field. Acceptance and the share paragraph now follow the registry, and the share is told apart from BD-139's `cards:` guess-share line (RISK-32's report line, every field of every bound card, read or not), which the old text left as if the two were one count. Left as it was, the implementer would add a share to the wrong verb and a reader would merge two differently defined numbers."
+  },
+  {
+   "bead": "N15b-07",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: 'N33b-18 is asked to name this extension' narrated a request that N33b-18 already meets; now stated as fact. Convention 1: step 5's '(conformance build)' is now 'a build with the feature `gauntlet-mutations`', the one name of the mutation build. Left as it was, an implementer would look for a build that does not exist."
+  },
+  {
+   "bead": "N15b-10",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied H-ka-1's request: the known answers cite N15-KA's row `sinew-late-01` (the one-rotor torque set of GATE-SINEW-10; G1, host, exact; control: per-joint limits of 1 N·m, which admit (1, −1) N·m), and `one_rotor_generator` and `one_rotor_membership` carry it by that tag. Left as it was, the gate's known answer would have no registered row to cite."
+  },
+  {
+   "bead": "N15b-30",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "The rest of F-U15b-1's request (keys, the regeneration designs, the telemetry braking lines, the brownout fixture form) was already in place; the exhaustion assertion now locates `battery-exhausted` on the dyadic grid at t* = 900 s, N15b-03's exact crossing (z₀ − z_min)·Q/I, never the end of a later step. Convention 13: the 'requested of N15b-04' narration is replaced by N15b-04's committed fact (the 5 A to-battery limit). Left as it was, the script could pass on an exhaustion reported at the end of a coarse step."
+  },
+  {
+   "bead": "N15b-11",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-ka-1's request: the known answers cite N15-KA's row `sinew-late-02` (reflected inertia [[1, 1], [1, 1]] kg·m², 0 J at (1, −1) rad/s and 2 J at (1, 1) rad/s; G1, host, exact; control: the diagonal mutant diag(1, 1), 1 J at both rates), carried by `one_rotor_reflected_inertia` and `one_rotor_energies`. Its description of the free swing named `one-rotor-coupled` as a bare positional; it is a registered fixture whose run condition (rates (1, 1), gravity off, driver disabled) only `--fixture` applies (VERBS-sim), so the run now uses `--fixture one-rotor-coupled`. Left as it was, the swing would start at rest with gravity on and the conservation assertion would measure another experiment."
+  },
+  {
+   "bead": "N15b-12",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: 'the owner of the stage table (N14b-10) is asked to list the stage-1 raises' narrated a request N14b-10 already meets (108 in row 1 for the two binding raises, stage 5 keeping 108 for the port balance); now stated as that fact. Left as it was, an implementer would believe the defect gate counts this refusal against the wrong stage and file a duplicate change."
+  },
+  {
+   "bead": "N15b-13",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Applied F-U15b-2's request and convention 9: step 8 wrote `target/gates/GATE-SINEW-10.json`, a file `record_gate --receipt <hash>` cannot cite; it now runs `e2e_tier g1_known_answers GATE-SINEW-10 --mutations`, asserts the receipt's values equal steps 1 to 3 and its controls `caught`, logs the drift, residuals and witness counts as gate-tagged `metric` lines with thresholds, and leaves `record_gate` to a session that did not implement the work, as N15b-30, -32, -35 and -37 do. Applied H-ka-1's request: assert lines of steps 1 to 3 carry `sinew-late-01` and `sinew-late-02`, and the known answers name both rows with their controls. The free swing runs `--fixture one-rotor-coupled` (VERBS-sim), so its declared run condition applies. Acceptance updated to match. Left as it was, the gate could not be recorded from any receipt."
+  },
+  {
+   "bead": "N15b-14",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied F-U15b-2's request: the fixture design `discharge-40a` is defined (synthetic, committed by this bead: N15b-30's bus-48v battery and harness, Q₀ = 36,000 C, one constant 40 A load, exhaustion at 900 s new and 720 s at f_Q = 0.20). The bus calls now pin `--source-voltage 48V`, as N15b-30 does: the asserted ceilings 7,200 W and 5,486 W are those of the settled E = 48 V, while without the option the verb takes E from the battery state at end of discharge, cold (N15b-30's note on `--source-voltage`), so the asserted numbers were not what the call computes. Left as it was, the script would run a design no bead creates and assert ceilings the default call cannot produce."
+  },
+  {
+   "bead": "N15b-15",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied F-U15b-2's request: the pilot record carries `gated_beads = [\"N15b-17\"]`, and `sinew_ageing_pilot_row_complete` asserts it. Left as it was, N38a-09's `fundable_bead` for N15b-17 would read the package answer over every upper-tier mechanism of WP-33, so the series-elastic pilot's verdict could block or release the ageing law. Added dependency N40-23: the record names KILL-SINEW-AGE, and N38a-09 accepts a `kill_gate` only when it exists in the gate register, which N40-23 enters; nothing ordered it first."
+  },
+  {
+   "bead": "N15b-17",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The campaign's `frob actuator bus bus-48v --demand 6500W --battery-age …` asserted a flip in month 2 from the threshold at E = 48 V, but without `--source-voltage` the verb takes E from the battery state at end of discharge, cold, with the 6,500 W demand current through the pairs, so the asserted ceilings and flip month were not what the call computes. The call now pins `--source-voltage 48V`, as N15b-14 and N15b-30 do. Recomputed the twelve months: ceilings 6,718 W and 6,342 W in months 1 and 2 (flip month 2), f_Q = 0.40 after month 12, inside f_q_max."
+  },
+  {
+   "bead": "N15b-18",
+   "kinds": [
+    "request",
+    "plan",
+    "deadlock"
+   ],
+   "what": "Applied F-U40's request: KILL-SINEW-SEA (N40-23's introduced row) is named with its trigger and fallback in Background and Considerations, in place of 'no kill gate'. Added dependency on the new decision bead N15bp4-01 and the `not-fired` ADR to the funding criterion, as N15b-17 has for KILL-SINEW-AGE. Restored the `needs` entry the merge of N15a-19 dropped ('§30: a calibrated card revision carrying a measured stiffness…'). Left as it was, `br ready` would offer the bead as soon as its dependencies closed although its first acceptance criterion waits on a card from another unit, and the gate it stands under would have no recorded decision."
+  },
+  {
+   "bead": "N15b-19",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U40's request: the pilot record's `fallback.kill_gate` is `KILL-SINEW-SEA`, not `to-register`; the Considerations bullet that narrated the request to N40-23 is replaced by the fact (convention 13). Added dependency N40-23: N38a-09 accepts a `kill_gate` only when it exists in the gate register, and nothing ordered N40-23 first. Left as it was, the record would block N15b-18's funding forever (`kill-gate-to-register`), or be rejected at registration if run before N40-23."
+  },
+  {
+   "bead": "N15b-26",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied F-U16b's request: the re-baseline of GATE-SINEW-04 names its cause `m2-baseline` (N16bp1-01's closed list) and the command `cargo run -p frob-chronicle --example record_rebaseline -- --gate GATE-SINEW-04 --cause m2-baseline --doc docs/adr/ADR-OPEN-SINEW-2-M2.md`; the unit test names the (gate, cause) pair. Left as it was, the recorder would refuse a call with no cause."
+  },
+  {
+   "bead": "N15b-27",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: 'BD-103, which is asked to add the iron loss at each operating point's speed' narrated a request BD-103 already meets (its step on iron loss and `thermal_iron_loss_at_speed`); now stated as fact. Left as it was, an implementer could add the iron loss a second time in stage 6."
+  },
+  {
+   "bead": "N15b-33",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "Step 7 asserted the weak-sink refusal as bare FROB-REF-114, which step 5's digest mismatch also returns; it now asserts N15b-01's form, 114 with `detail = \"module-assumption-unmet\"` and pointer `contract.assumes.sink_conductance_min`, in the step and in acceptance. The 'if a dedicated code is assigned' Consideration became the fact of N15b-01's constant (convention 13). Left as it was, a digest-mismatch bug in the join check would pass the unmet-assumption step."
+  },
+  {
+   "bead": "N15b-35",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 1: step 5's '(a `mutants` build)' is now 'a build with the feature `gauntlet-mutations`'. Left as it was, the implementer would look for a feature that does not exist, and `--control` is 724 in any other build."
+  },
+  {
+   "bead": "N15b-37",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Both mechanical findings were real. Convention 13: '(requested of N15a-12)' is replaced by N15a-12's declared axes (`axes.seed = [\"9\"]`, `axes.profile = [\"referee\", \"lockstep\", \"strict\"]`, `axes.precision = [\"f64\", \"f32\"]`), checked in N15a-12. Convention 1: step 3's '(a `mutants` build)' is now the feature `gauntlet-mutations`. Left as it was, an implementer would wait on a request already met and look for a feature that does not exist."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N15bp4-01",
+   "why": "KILL-SINEW-SEA, entered by N40-23's `introduce` amendment (decided M6, `pilot-before-funding`), had no decision bead, while N40-23 assigns each kill gate's decision to the unit that owns its subsection (§15.9, Sinew). Without it N40-30's `kill_ledger` fails `owner-declaration-missing` from the M6 exit and N00-02's Frontier rider can never be met. Modelled on N15b-16 and N15b-23: the two-clause trigger evaluated from N15b-19's record, the ADR `docs/adr/ADR-KILL-SINEW-SEA-M6.md`, the `decision` table and owner declaration, the rule test with N15b-19's case C and D ratios (0.9037, 0.9725 at 2 ms; 0.9725, 0.9929 at 1 ms), the plant `not-fired-with-falsified-pilot`. N15b-18 now depends on it."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N18-CX",
+   "what": "CX-172's plant `BD-084:cx-172` must keep the number in the carrier's name, but every carrier compiles and runs the control as `mutant-backlash-deadzone` (BD-084, BD-155, N15a-12, N15b-31, N15b-37, N18a-32, N18a-36). Name the plant `BD-084:mutant-backlash-deadzone` (or admit that name as BD-084's refinement). Otherwise the seeding resolves CX-172 to no built control and the counterexample has no live negative control."
+  },
+  {
+   "bead": "N40-30",
+   "what": "The M6 column of introduced rows reads 'KILL-SINEW-SEA (N40-23)' with no decider; the decider is now N15bp4-01 (new in U15b, depends on N15b-19, N40-23 and N40-30). Write '(N40-23; N15bp4-01)', as for KILL-RUT (N38a-37; N38a-38), so the schedule and the exit report name the bead that owes the decision."
+  }
+ ],
+ "unchanged": 20,
+ "notes": "Unchanged (checked, arithmetic recomputed): BD-070, BD-071, BD-074, BD-084, BD-103, BD-151, BD-155, N15b-08, N15b-09, N15b-16, N15b-20, N15b-23, N15b-24, N15b-25, N15b-28, N15b-32, N15b-38, N15b-39, N15b-41, N15bp2-01. N15b-20: F-U15a's request was already applied (the L4 refusal cites `frob sim run <rig> --tier referee --actuator-level L4 --seconds 1 --key l4-1 --json`, answered 724). Larger matter, not changed: KILL-SINEW-SEA's fallback ships 'results flagged compliance not modelled', but no bead on the fallback branch produces that flag. N15b-18 (never built if the gate fires) is the only producer, and BD-069 lists `series_stiffness` as N15b-18's field, so a fallback-branch card cannot even declare compliance. Either BD-069 admits the compliance fields as descriptive, with the flag raised on any L3 result that binds such a card without the element, or the fallback text drops the flag. This needs an owner ruling (BD-069, N40-23). Same pattern outside the slice: N15b-21's hydraulic pilot still writes `kill_gate = \"to-register\"`."
+}

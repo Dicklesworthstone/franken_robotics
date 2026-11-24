@@ -8,7 +8,7 @@ labels: ["m5", "delivery", "frontier", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-412", "N40-23", "N40-27", "N40-04", "N40-05", "EPIC-M4", "EPIC-M6", "EPIC-M7"]
+related: ["EPIC-M6", "EPIC-M7", "EPIC-PROGRAM", "N40-02", "N40-04", "N40-05", "N40-06", "N40-23", "N40-27"]
 gates: ["GATE-LEMMA-01", "GATE-LEMMA-02", "GATE-LEMMA-05", "GATE-QUAL-03", "GATE-TRAC-09", "GATE-HAB-03", "GATE-GROUND-06", "GATE-GROUND-10", "GATE-FOUNDRY-10", "GATE-WS-02", "GATE-GROUND-01", "GATE-GAUNT-01", "KILL-LEMMA", "KILL-REFLECT", "KILL-BAND", "KILL-GROUND", "KILL-INGEST", "KILL-TOPOPT", "KILL-PACKET", "KILL-TREEOP", "KILL-HARDCONTACT", "KILL-VARIATIONAL"]
 plan_refs: ["§43.8", "§43.1", "§43.2", "§40.6", "§40.3", "§40.4", "§43.12"]
 ---
@@ -118,7 +118,10 @@ data is admitted.
 | GATE-FOUNDRY-14 | whole | Known answer ¦ Every envelope case in a packet has a re-extraction record. A planted fast-tier artifact (a stiffness spike that doubles one peak on the fast tier only) is relabelled `tier-sensitive` and replaced in 100 of 100 runs; a packet request holding a provisional case is refused in 100 of 100; the referee cost per packet is reported ¦ M5 | §31.22 |
 | GATE-GROUND-11 | whole | Known answer. In the synthetic rehearsal of §30.21, the two explanations produce bit-equal samples on the +2 m/s pass and the fit reports "delay times speed plus offset = 40 mm" with no card update. With the reversed pass added, both the 20 ms delay and a planted 40 mm offset are recovered within their intervals, and the predicted separation is 80 mm to 10⁻⁹. A card delay update from the single pass is refused. M5. | §30.24 |
 
-**4. Recurring gates.** GATE-GROUND-01, GATE-SAFE-01, GATE-TENFOLD-09, GATE-GAUNT-01, -02, -03, -05, -10.
+**4. Recurring gates.** GATE-GROUND-01, GATE-SAFE-01, GATE-TENFOLD-09, GATE-GAUNT-01, -02, -03, -05, -10;
+GATE-GAUNT-08 at each funding decision (every package of this milestone holds Frontier work: none of WP-31, WP-32,
+WP-68 and WP-70 to WP-72 is funded without a pilot record that has a falsifier, a computed ceiling, a fallback and a
+result).
 
 **5. Kill gates decided here.** In brief: KILL-LEMMA → certificates become exact-rational randomized tests recorded
 as `Tested`. KILL-REFLECT → instance certificates stay `Certified` and reflection is parked. KILL-VARIATIONAL → the
@@ -163,8 +166,9 @@ KILL-REFLECT; KILL-INGEST; the Foundry kill gates.
 licence and provenance; default: `reality: no-claim` everywhere, and the second-simulator stand-in labelled
 `synthetic`). OPEN-GROUND-2 (whether any bench hardware is acquired; default: none). OPEN-HAB-5 (which
 reconstruction package and version is the import contract; default: the walkthrough twin package, and the drone
-route when it publishes geometry). OPEN-FOUNDRY-2 and OPEN-SKEL-2 (cited sources for card prices and the parts
-catalogue; default: generic prices labelled `assumed`; a cost verdict is refused under `--strict-data`).
+route when it publishes geometry). OPEN-FOUNDRY-2 (which parts catalogue and price data, under what licence;
+default: card references and no prices) and OPEN-SKEL-2 (where card prices come from; default: prices labelled
+`assumed`, the cost budget advisory, and a cost verdict refused under `--strict-data`).
 
 **9. Stop or re-plan.** Nothing here stops the program: every lane has a fallback that ships under its own name,
 and the exit is a record or a recorded no-claim. Lanes stop singly. Work on Lemma beyond the coverage gate is not

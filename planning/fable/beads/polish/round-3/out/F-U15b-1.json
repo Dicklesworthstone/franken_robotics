@@ -1,0 +1,219 @@
+{
+ "round": 3,
+ "slice": "F-U15b-1",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "BD-070",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Convention 7: the criterion 'reachable through frob sim run --tier referee ...; cancellation leaves no partial episode' needed sim.run and the fixture registry, which BD-070 does not depend on (N24b-03 depends on it). Replaced by what this bead delivers (the L0/L1 values of sim.run's --actuator-level, the declared telemetry channels, bit-identical snapshot and restore of the actuator state) with the new unit test state_snapshot_restore; user-side reach named as N15a-24's. Script summary: sim.run call carries --actuator-level L1 and --key (convention 5)."
+  },
+  {
+   "bead": "BD-071",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Same convention-7 fix as BD-070 for the L2 reachability and cancellation criterion: the L2 value of --actuator-level, declared thermal and electrical channels, l2_state_snapshot_restore (new unit test); user-side reach is N15a-24's. Script summary gains --key. The stiction row's dissipation split now names the gear line (the c_load share, which N15a-17 books as gear loss) beside friction and iron, so N15b-05's separate gear line closes."
+  },
+  {
+   "bead": "BD-074",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 7: 'a screw with phi >= a holds any load at rest on the referee' needed BD-084's solve (BD-084 depends on BD-074) and 'reachable through frob design check' needed BD-110 (depends on BD-074). Restated against what BD-074 and its deps deliver (c_load >= 1 and N15a-17's self_locking_holds on the row's referee form; actuator.check returns 130 with quadrant and watts) and named N15b-32 (screw-hold) and N15b-38 (130 at stage 1) as the measuring beads. task.fixture call in the script summary gains --key."
+  },
+  {
+   "bead": "BD-075",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Request of H-verbs-6 applied: --seeds 1..100 replaced by a loop of 100 runs with --seed <s> and its own --key. Registry row VERBS-actuator: added FROB-REF-111 and --battery-age (M6, N15b-14) to the verb's refusal list and noted brownout events are run events, not outputs. Convention 9: GATE-SINEW-07's receipt and record are N15b-30's. Convention 7: 'stage 6 refuses' restated as the stage-6 function bus_feasibility (BD-103 wires it); 'cancellation leaves a committed, replayable prefix' needed sim.run and the M2 sim.replay, replaced by bit-identical snapshot and restore of the bus state with the new unit test bus_state_snapshot_restore; the verb's registry example must run."
+  },
+  {
+   "bead": "BD-084",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The task.fixture call in the summary of N15a-12's script carries --seed 9 and a distinct --key per case (convention 5). The row's dissipation split names the gear line (c_load share, N15a-17) beside friction and iron, and iron_bound_split adds a case with c_load = 0.25 and 0.4 N.m transmitted (shares 0.1, 0.1 and 0.014 of 0.214 N.m). Numbers (0.5765 rad/s, 0.01153 J, 17.45 ms, 0.0833 rad/s, 1.04 mJ, 0.114 N.m bound) and registry rows (241, KA-402, KA-403) rechecked and agree."
+  },
+  {
+   "bead": "BD-103",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request of S21 applied after checking N15b-27 and N15a-14: A-11's thermal step adds P_fe = k_h|w_e| + k_e w_e^2 at each point's speed (w_e = pole_pairs*N*w_joint; mean over gait samples, DESIGN) through N15a-14's general criterion, and a card without coefficients carries iron-loss-not-modelled; new unit test thermal_iron_loss_at_speed (125.9/144.1/180.4 C, 15.5 A, recomputed), new acceptance line, the stage-6 flip on hold-17a-at-speed-fe30 named as N15b-27's script; related N15b-27. Convention 12: the analyze.closure row lists FROB-REF-115 and a binding-budget output; A-10 sent a mass-budget overrun to 116. Now: no contraction or the top of a catalog chain is 116; a contracting spiral whose least fixed point exceeds a declared mass or power budget is 115 with the binding budget (DESIGN); new unit test spiral_closes_above_budget_115 (14.58 kg against 12 kg) and acceptance line."
+  },
+  {
+   "bead": "BD-151",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Convention 7: 'spark.check passes on each admitted device family' (BD-176 depends on BD-151; device backends out of scope) and 'cancellation mid-chunk leaves no leaked device buffers' (BD-159 depends on BD-151) restated against this bead's delivery (manifest fields the check reads; kernels allocate nothing, new test kernels_allocate_nothing) with N15b-35 and BD-159 named. Convention 9: GATE-SINEW-03 receipt is N15b-35's. The 10^4-case battery on the kernels had no named test: added sinew03_battery_kernels; bus_brownout_flag extended to the 100-of-100 trials the acceptance states."
+  },
+  {
+   "bead": "BD-155",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The sentence 'the option is not yet in the sim.run row of VERBS-sim; it is requested' is stale: VERBS-sim now has --joint-friction rows|smooth with BD-155 as owner (M2, StepPlanId); restated. Convention 7: the spark.check-on-device criterion (BD-176 depends on BD-155) restated as manifest fields, with the device check named as N15b-37's. The smooth row's dissipation split names the gear line as on the referee."
+  },
+  {
+   "bead": "N15b-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Step 10's interim code 114 for an unmet sink assumption gains its pointer contract.assumes.<name>, is held behind one named constant, and is listed in N14-REF's interim table and filed with N35-33 (family 1xx); the sink_assumption test asserts the code and the pointer."
+  },
+  {
+   "bead": "N15b-02",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Convention 12 against VERBS-module: the module.check TOML gains owner = frob-design and its purpose; a params paragraph states that the file-path declaration (N34-24) makes the generator append 891, 734 and 828, while the module reader raises 125 and 103 and never 891; Considerations name FROB-REF-734 (exit 5) and 828 (exit 3)."
+  },
+  {
+   "bead": "N15b-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Convention 7: discharge_time asserted the event on the dyadic grid, which is BD-082's machinery (not a dep); now asserts the exact crossing t* = 900 s and the guard's sign change in the containing step, with dyadic location named as BD-082's and asserted by N15b-30. Script summary: --tier referee and --key on battery-step, --key on empty-battery (convention 5)."
+  },
+  {
+   "bead": "N15b-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request applied (VERBS-sim rules out --regen): the script summary runs three fixture designs that differ only in regen_policy (flywheel-brake-to-battery, -shunt, -clip, committed here, synthetic), each with --seed 5 and its own --key; --param is M4 (N22c-29) so not used. Convention 7: 'braking-mode lines appear in frob telemetry energy once BD-092 lands' (BD-092 depends on this bead) restated as the four line names exposed for N15b-05's record, with telemetry reach named as N15b-30's. Flywheel numbers (80 W, 96 + 84 W, s = 0.5056, 1.011 N.m) rechecked."
+  },
+  {
+   "bead": "N15b-05",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "The criterion that each transmission emits an account record each step needs BD-074's transmission kinds, which were not a dependency (no cycle: BD-074 does not reach N15b-05); BD-074 added and the criterion names the kinds and their gear line."
+  },
+  {
+   "bead": "N15b-06",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 12: the bead raised 113 in 'the three static verbs', but VERBS-actuator gives --strict-data only to actuator.check (BD-069) and analyze.envelope/stage 6 (BD-103); actuator.envelope, thermal and bus take none. Restated: this bead owns the per-verdict rule strict_data::check(read_set, strict), invoked by stage 6, analyze.envelope and actuator.check; the static verbs report Estimated with the assumed field as weakest input. Convention 7: the 'frob design check --strict-data exits 3' criterion needed BD-110 (depends on this bead) and is restated on the bead's own function, with the CLI pair asserted by N15b-34."
+  },
+  {
+   "bead": "N15b-07",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 8: the script passed designs as '@fixture:sinew/<name>', a spelling no registry row accepts as a positional design (the positional fixture: form is ruled out by VERBS-sim; @fixture: is only for --policy and phylum inputs). Now committed fixture design files assets/fixtures/sinew/<name>.fbot passed by path, the knee named explicitly for the actuator verbs, and the simulated comparison placed on batch-cpu with eval.compare's --backend (the simulated verdict is a batch-tier study)."
+  },
+  {
+   "bead": "N15b-08",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9: 'the measured gate value ... in registries/gates.toml, recorded by a session that did not implement the work' made this bead a recorder; GATE-SINEW-09's receipt and record are N15b-37's. Now metric lines with worst case, count and tolerance. Convention 7: 'dense factorization has size 18, recorded from the step plan's shape class' needed the batched step plan (BD-155/BD-156 depend on this bead); restated as the host reference's reduced dimension (factor_size_quadruped), shape class and Cholesky dimension asserted by N15b-37. Script summary: the rotor-elimination-equivalence fixture call gains --key (convention 5) and fidelity ledger --json. Numbers (0.617384, 0.0080987, 0.0081, [[1,1],[1,1]], 0.09 N.m) rechecked."
+  },
+  {
+   "bead": "N15b-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The iron-loss row of the structure table used p for the pole-pair count beside the rotor row's p = J_r*w and put the eddy share N^2*k_e*p^2 on 'the rotor's viscous term'; that is the joint-side value (BD-071 adds it to the joint's diagonal), off by N^2 on the motor-side rotor. Now states p as pole pairs, k_e*p^2 on the motor side and N^2*k_e*p^2 on the joint diagonal."
+  },
+  {
+   "bead": "N15b-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Background said the bead touches actuator.check; its scope does not, and VERBS-actuator lists it only as an extender of actuator.envelope (the coupling-matrix witness of actuator.check is N15b-12's). Restated. Numbers (diamond, (1.1, 1.0) N.m, separator h = 0, facet bound) rechecked."
+  },
+  {
+   "bead": "N15b-11",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Convention 7: 'a referee free swing of the one-rotor fixture conserves total energy' needed the referee step (BD-081 is not reachable from this bead). Restated as the structural identity q.^T b_r = 1/2 q.^T M_r' q. (so dT_r/dt = 0 in free motion) with the new unit test bias_power_identity (1.76 W both sides on the scalar case, recomputed; 10^3 four-bar states); the referee free swing and its 10^-9 drift are N15b-13's. Script summary: --key on the task.fixture and sim.run calls (convention 5)."
+  },
+  {
+   "bead": "N15b-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Convention 7: 'refuses with FROB-REF-108 at stage 1, while its energy balance still closes to 10^-9' needed design.check (BD-110) and the port account (N15b-05), neither reachable. Restated: refused by the compile's bind-time checks (N15a-03's list) while the reversed transmission's power identity holds to 10^-12; the CLI refusal through design check --stages 1 is N15b-13's. power_balance_blind_to_sign now asserts the port power sum, not N15b-05's account. Two-store rates (12, -8) rechecked."
+  },
+  {
+   "bead": "N15b-13",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Convention 5: the task.fixture and sim.run calls of steps 3 and 4 gain distinct keys (ct-inertia, ct-swing, ct-random). Convention 9: the bead is GATE-SINEW-10's measuring bead but never recorded the value; step 8 and the acceptance now record it from the receipt with record_gate (convention 1), the script writing no record. Convention 8: task fixture one-rotor-coupled --report inertia,energy and random-couplings --seed need registered manifests declaring those rows and the seed axis (N24b-03, N24bx-01); the fixture list now commits them."
+  },
+  {
+   "bead": "N15b-14",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Stale text: '--battery-age is not yet in those verbs' rows; it is requested' is false, VERBS-design, VERBS-actuator and VERBS-sim all list it with this bead as owner from M6 (111 and 133 as stated); restated, and the evolved form named as N15b-17's. The acceptance 'results on a user-set age are Estimated and refused under --strict-data' had no test: added user_set_age_is_assumed (113 through N15b-06's rule, reachable via BD-110 and BD-103). Ceilings 7,200, 5,486 and 6,000 W and 720/900 s rechecked."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N15a-24",
+   "what": "Convention 5: every `frob sim run` and `frob task fixture` call of sinew_referee_dynamics.sh needs its own --key. Also, BD-070 and BD-071 now name this script as the user-side measure of their reach: please assert that the per-actuator telemetry channels (L1: current, voltage, torque, current-limited and voltage-limited flags; L2: i_d, i_q, terminal voltage, node temperatures, trip latch, iron-loss power) are present in `frob telemetry query` for an L1 and an L2 run."
+  },
+  {
+   "bead": "N15a-12",
+   "what": "Convention 5: the `frob task fixture <name> --tier referee --seed 9 --json` calls of sinew_joint_rows.sh (including trac-ramp-breakaway and the KA-403 fixture) need a distinct --key each."
+  },
+  {
+   "bead": "N14-REF",
+   "what": "raised_by gaps: 116 names no raiser (BD-103 raises it at stage 6 and in analyze.closure); 115 should add BD-103 (analyze.closure, a spiral that closes above a declared mass or power budget); 108 should add BD-060 (the module reader, reversed port sign) and N15b-01 (junction sign, copied power port, algebraic loop); 103 and 111 should add BD-060 (frob.module/1 parser, a parameter default outside its bounds). Also list N15b-01's interim pair, code 114 with pointer contract.assumes.<name> (an unmet sink assumption), in the interim table and the N35-33 ledger."
+  },
+  {
+   "bead": "N15b-30",
+   "what": "sinew_power_path.sh: convention 5, every run call needs --key (battery-step --tier referee, empty-battery, each brownout run); convention 8, step 5 '--seeds 1..100' is ruled out (loop over --seed <s> with --key brownout-<s>, as BD-075 now states) and step 7 '--regen to-battery|shunt|clip' is ruled out (run N15b-04's three fixture designs flywheel-brake-to-battery, -shunt and -clip, each --seed 5 --key regen-<policy>). Also assert the four braking lines in frob telemetry energy (N15b-04 now names this script for that) and the exhaustion event on the dyadic grid at t* = 900 s (N15b-03)."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "what": "actuator.check: N15b-09 integrates the exact structural checks (J skew, R positive semidefinite, lossless identities, the composite at binding) and emits instance certificates (poly-identity, rational-ldlt) that frob-verify checks, but the row neither lists N15b-09 under 'extended by' nor has an output field for the certificates. Please add both (DESIGN name, e.g. `certificates: [{kind, hash}]`)."
+  },
+  {
+   "bead": "N15-KA",
+   "what": "KA-337's control column says 'none stated', but N15b-15 defines the pilot's negative control: the dominant coefficient perturbed by 30% toward a larger end-point error (plant dominant-coefficient-30pct), which must report falsified. Please name it in the row (controls.toml) with N15b-15 as owner."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "All 25 beads reviewed: 22 changed, 3 unchanged (BD-060, BD-419, N15b-15), none new, merged or superseded. Most changes bring acceptance criteria into line with conventions 7 and 9 (user-side reach, CLI calls, referee runs and gate records belong to the e2e beads that depend on the mechanism, each restated as the bead's own delivery with a named test) and scripts into line with the VERBS rows (--key, ruled-out --regen, --seeds and fixture spellings, stale 'requested' notes). Numbers in every bead were recomputed and agree. The slice looks settled once N15b-30, VERBS-actuator, N14-REF and N15-KA act on their requests."
+}

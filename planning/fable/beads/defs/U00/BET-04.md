@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "frob-fsim", "solid", "bet", "gate"]
 parent: "WP-02"
-deps: ["N00-28", "BD-006", "BD-031", "BD-038", "STD-E2E"]
-needs: ["§33.8: the drift log that counts working days lost to upstream breakage in each four-week window", "§33.13: the toolchain train procedure and the `frob-units` escape hatch"]
-related: ["BD-007", "BD-032", "BD-033", "BD-034", "BD-035", "BD-036", "BD-044", "N00-16", "BET-12"]
+deps: ["BD-006", "BD-031", "BD-038", "N00-28", "N33a-10", "N33b-04", "N33b-05", "N33c-08", "STD-E2E"]
+needs: []
+related: ["BET-12", "N00-16", "N33c-14", "N40-31", "N40-32", "N41-19"]
 gates: ["INT-FSIM-01", "INT-TOOLCHAIN-01", "KILL-FSIM"]
 plan_refs: ["§4 (BET-04)", "§40.5", "§1.7", "§33.8", "§43.3", "§43.12"]
 ---
@@ -19,7 +19,7 @@ statistics, can be consumed by path dependency from outside its own tree, stably
 to a nightly compiler feature does not block the core. The whole architecture assumes it: FrankenSim is the
 referee and the bedrock, taken by path and pinned by commit behind one airlock crate, never forked.
 
-**Why it could fail.** FrankenSim's API moves daily. Its units crate needs the nightly feature
+**Why it could fail.** FrankenSim's API moves daily. Its units crate `fs-qty` needs the nightly feature
 `generic_const_exprs`, and most of its physics crates depend on that crate, so the toolchain is tied to nightlies
 on which the feature compiles. The consumed siblings start on four different pinned nightlies; the build graph
 must end on one toolchain T. The closure a lift would have to carry is about 1.5 million lines. Tier: Solid.
@@ -32,7 +32,11 @@ locally.
 ## Scope
 
 In: pre-registration, the M0 reading, the rolling re-reading at each pin move, the verdict and decision record.
-Out: the admission tests, the toolchain matrix, the worker fallback and upstream fixes (their own beads).
+Out, with the beads that have them: INT-FSIM-01 and the core row of INT-TOOLCHAIN-01 (BD-006); the toolchain
+matrix and the choice of T (BD-031); the worker fallback exercised as INT-FSIM-18 (BD-038); the KILL-FSIM trigger
+ledger with the effort clock, the cold-check envelope and the breakage share (N33a-10); the compatibility train
+and its log (N33b-04); the KILL-FSIM decision itself (N33b-05), which this bead reads and cites and never
+re-decides; the M0 exit review that records it (BD-044); the upstream fixes (their FD-FSIM items).
 
 ## Technical approach
 
@@ -70,15 +74,16 @@ Out: the admission tests, the toolchain matrix, the worker fallback and upstream
       count and sibling drift; the choice of T is recorded.
 - [ ] The defect admission tests were shown to fail on the defect commit (or the defect is recorded as not
       reproduced, which is itself a finding).
-- [ ] KILL-FSIM is recorded as fired or not fired, and the worker fallback has its INT-FSIM-18 record whichever
-      way the bet falls.
+- [ ] KILL-FSIM is on record as fired or not fired (N33b-05's ADR, cited by identifier and hash; if it is not on
+      record the verdict is not filed), and the worker fallback has its INT-FSIM-18 record whichever way the bet
+      falls.
 - [ ] The drift log exists and the four-week share is computed at each re-reading.
 
 ## Test plan
 
 ### Unit tests
-`bets.rs`: `bet04_both_admissions_pass_holds`; `bet04_cold_check_70_minutes_fires_kill` (over the one-hour
-envelope); `bet04_breakage_5_of_20_days_falsifies_c` (25% > 20%); `bet04_breakage_4_of_20_days_holds` (20% is
+`bets.rs`: `bet04_both_admissions_pass_holds`; `bet04_cold_check_70_minutes_falsifies_a` (70 minutes is over the
+one-hour envelope, so INT-FSIM-01 fails; the KILL-FSIM outcome is read from N33b-05's record, not computed here); `bet04_breakage_5_of_20_days_falsifies_c` (25% > 20%); `bet04_breakage_4_of_20_days_holds` (20% is
 not "more than 20%"); `bet04_defect_test_passing_on_defect_commit_is_untested`.
 
 ### End-to-end script and logging
@@ -88,8 +93,13 @@ per STD-E2E: gate, commit, toolchain, check time and memory against the envelope
 per window, defect tests' results on the defect and fixed commits; `summary` naming the gates and KILL-FSIM.
 
 ### Known answers and negative controls
-KA-003 (planar drive: displacement about (0.834, 0.551) m), KA-004 (ratio stays 1, not 1.582459), KA-005,
-KA-006, KA-007 (stride 3, not 12), KA-008 (witness migration). Negative controls: the defect commits; a stack
+KA-003 (planar drive at heading 32 rad, wheel speeds differing by 6 × 10⁻¹³ m/s, one second: displacement about
+(0.834, 0.551) m against an independent SE(2) exponential, not zero), KA-004 (two independently reset one-step
+episodes under a frozen policy: the second probability ratio stays 1, not 1.582459), KA-005 (negative advantage:
+the clipped surrogate on the correct side of the ratio), KA-006 (critic gradient into the shared bias non-zero,
+equal to the squared-error gradient), the action sampler's joint law (adjacent channels agree in sign with
+probability ½ under independence, not 0.6655), KA-007 (converted stride 3, not 12), KA-008 (rolling round a sharp
+lip changes the material witness and the contact frame, and the witness migrates). Negative controls: the defect commits; a stack
 lock with a second toolchain; a locally patched sibling (caught by the stack check).
 
 ## Considerations

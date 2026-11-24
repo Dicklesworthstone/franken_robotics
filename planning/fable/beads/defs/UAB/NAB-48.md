@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-42"]
+deps: ["NAB-15", "NAB-42"]
 needs: []
-related: ["NAB-44", "NAB-45", "NAB-46", "NAB-47", "NAB-49", "NAB-50", "NAB-15", "BD-124", "BD-259", "BD-267", "BD-345", "BD-354", "BD-369"]
+related: []
 gates: []
 plan_refs: ["Appendix B.6", "Appendix B.6.1", "Appendix B.6.2", "Appendix B.6.3", "§0.7"]
 ---
@@ -42,7 +42,9 @@ still unplaced (NAB-49).
 
 **Transcription rule.** One record per row. Fields: `gap`, `why_missed` (first group) or `evidence` (second
 group) or `mechanism` (third group), `lives` (verbatim), `carriers`, `group` (`asked`, `found`, `late`),
-`placed_rows` where the text names a row. `disposition`: `placed` for the first two groups; for the third,
+`placed_rows` where the text names a row, `plan_checks` (group 2: the `PC-nn` ids of the source register,
+NAB-15, joined as in `group2_checks_resolve`), `counts_toward_tally = false`. `disposition`: `placed` for the
+first two groups; for the third,
 `placed`, `placed-narrowed` or the link to a not-yet-placed record.
 
 **Group 1: named when the passes were asked what no list contained** (`BS-01` to `BS-06`).
@@ -92,7 +94,7 @@ narrowed form; the last column records that and the carrying beads.
 | Common randomness compiled from the task | Key disturbances by place, time and mission event, so pairing survives edits and rate changes | Placed: space-indexed fields and (world, replicate) addresses (C-40, §25.16, §35.9); a pairing keyed by event order is refused (FROB-REF-556) | Placed as stated, and extended by exposure domains and the coupling test: BD-180, BD-359; N24c-36 (GATE-ARENA-14), N25e-06 (KILL-COUPLING) |
 | Convex synthesis from inverse dynamics | Inverse dynamics is affine in the inertial parameters, so mass placement, gearing and actuator sizing along nominal trajectories form one cone program | Not yet placed (the not-yet-placed list (NAB-49)). Neighbours: mass placement (IP-79) and trajectory optimization with design variables (IP-52) | Placed by a later subsection: placement and sizing along a prescribed motion. N25e-18 (pilot) to N25e-22 (GATE-AUGUR-29, KILL-SYNTH-REGRESSOR) |
 | Pre-characterized sub-assembly models | Characterize limbs and modules once at their ports and screen assemblies by composition | Placed in a narrowed form: the limb port interface (IP-53) and module contracts that carry time correlation (IP-01) | Placed as stated, and extended by module capability tables and the composed quasi-static screen: BD-060, N14a-22; N14b-28, N14b-30 (GATE-SKEL-09, GATE-SKEL-10, KILL-SKEL-CELL) |
-| Sensor co-design from estimator observability and self-occlusion | Observability bounds from the invariant filter, with occlusion by the robot's own body, optimized with the morphology | Partly placed: §20.11, A-17, and an estimated-state twin of every return (§23.17). The self-occlusion term is in the not-yet-placed list (NAB-49) | Placed as stated; the self-occlusion term is now placed by a later subsection: BD-120, BD-239; N20b-32, N20b-35 (pilot), N20b-37 (GATE-SENS-16, GATE-SENS-17, KILL-VISIBILITY) |
+| Sensor co-design from estimator observability and self-occlusion | Observability bounds from the invariant filter, with occlusion by the robot's own body, optimized with the morphology | Partly placed: §20.11, A-17, and an estimated-state twin of every return (§23.17). The self-occlusion term is in the not-yet-placed list (NAB-49) | Placed as stated; the self-occlusion term is now placed by a later subsection: BD-120, BD-239; N20b-32, N20a-35 (pilot), N20b-37, N20b-38 (GATE-SENS-16, GATE-SENS-17, KILL-VISIBILITY) |
 
 **Numbers quoted in the evidence that tests pin.** A pilot's shared overhead capped the measurable ratio of a
 speed test at 1.46 before the test ran (842.8 ÷ 575.7). At 64 pairs one of four verdicts of a frozen decision

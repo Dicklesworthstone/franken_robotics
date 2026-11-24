@@ -6,11 +6,11 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "foundry", "upstream", "frankensim", "frontier"]
 parent: "WP-70"
-deps: ["BD-037", "BD-403", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-403", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-401", "BD-402", "FD-FSIM-26", "FD-FSIM-28"]
+related: ["N31a-04", "N31a-17", "N31b-24", "N33b-14", "N33bx-04"]
 gates: ["GATE-FOUNDRY-04"]
-plan_refs: ["Appendix F.1", "Appendix F.3", "§31.4", "§31.7", "§31.8", "§33.8"]
+plan_refs: ["Appendix F.1", "Appendix F.3", "§31.4", "§31.7", "§31.8", "§31.20", "§33.8"]
 ---
 ## Background
 
@@ -77,7 +77,11 @@ Additive: meshes produced today are unchanged; they gain a statement about thems
 **Interim posture here.** Conformity is measured per mesh and recorded with the structural evidence: the
 maximum distance from mesh boundary vertices to the input surface and from input vertices to the mesh boundary
 (both must be zero to rounding for a piecewise-linear input), and the relative difference between meshed and
-enclosed volume. A mesh that fails the measurement is refused as evidence.
+enclosed volume. A mesh that fails the measurement is refused as evidence. The structural check of that surface
+then follows the default of OPEN-FOUNDRY-1 (decided by N31b-24): a second cut-cell solve at a different
+resolution and background offset, whose result carries the weaker label `check: same-family`, never the label of
+an independent body-fitted check. Until N31b-24 records its decision, GATE-FOUNDRY-04 reads
+`blocked: OPEN-FOUNDRY-1` for any surface that did not mesh conformingly.
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FSIM-30/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-FSIM-30`, compiled as the `frob-conformance` integration test `upstream_fd_fsim_30` and
@@ -101,12 +105,17 @@ against the new pin.
 **What the switch-over re-runs.** The rule is "replace the measurement with the stated bound where it
 applies": for an input inside the stated class whose outcome is `Conforming` or `ConformingWithSteiner`, the
 structural evidence cites the sibling's contract and outcome instead of this project's measurement; for an
-input outside the class, or a `NotConforming` outcome, the measurement is still made and still decides.
+input outside the class, or a `NotConforming` outcome, the measurement is still made and still decides, and a
+`NotConforming` mesh is admitted only when the measurement passes and the listed facets lie outside every gauge
+region of the check (BD-402); otherwise it is refused as evidence, naming the facets.
 GATE-FOUNDRY-04 is re-run (two-bar compliance within 10% and bar angle within 5°; the extracted surface meshes
 and passes the mesh audit on 20 of 20 fixtures), and on those twenty the measurement is run once more beside
 the outcome to confirm that the statement and the measurement agree.
 
-**Fallback if the change cannot land.** Per-mesh measurement, as today.
+**Fallback if the change cannot land.** Per-mesh measurement, as today; surfaces that fail it take the
+`check: same-family` route of OPEN-FOUNDRY-1. A landed statement shrinks that route to the inputs outside the
+stated class or with a `NotConforming` outcome, which is the user-visible gain: fewer structural results carry
+the weaker label.
 
 ## Acceptance criteria
 
@@ -137,8 +146,13 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_30 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob foundry size --json` and `frob foundry optimize --json` on
-the gate fixtures and asserts the conformity line of each result.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post`
+also runs the twenty-fixture battery lane of GATE-FOUNDRY-04 (N31a-18's `topology_battery`, reached through
+BD-403) and parses its report, asserting the conformity line (stated or measured) of each fixture, and runs the
+verb route on the two-bar fixture: `frob foundry optimize --fixture twobar --rung topology --exploratory --key
+fd30-post-opt --json`, then `frob foundry check <result> --key fd30-post-chk --json` (the independent check,
+BD-402, is where the mesh and its conformity record are made; `foundry.size` meshes nothing), asserting the
+conformity line of the check record.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_30/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -151,7 +165,7 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - Known answers: the cube's volume 1 and area 6; cantilever deflection within 2% and stress within 5% after refinement on a conforming mesh (GATE-FOUNDRY-01), which is the downstream reason conformity matters.
-- Negative controls: a mesh whose boundary vertex is displaced by 10⁻⁶ m off an input face must fail the measurement and must not be reported `Conforming`; a mesher result with no outcome field must be treated as "measured" and never as "stated".
+- Negative controls: a mesh whose boundary vertex is displaced by 10⁻⁶ m off an input face must fail the measurement and must not be reported `Conforming`; a mesher result with no outcome field must be treated as "measured" and never as "stated"; a structural result computed on a mesh that failed the measurement must carry `check: same-family` (or be refused), never the independent-check label.
 - Determinism lanes: exact predicates make the outcome identical twice on one machine and across platforms; recorded with the mesh's hash.
 
 ## Considerations
@@ -173,4 +187,4 @@ gates touched. No private-scene data is logged.
 
 ## References
 
-Appendix F.1 (row FD-FSIM-30), F.3; §31.4 (`fs-mesh`), §31.7, §31.8, §33.8; GATE-FOUNDRY-04, GATE-FOUNDRY-01.
+Appendix F.1 (row FD-FSIM-30), F.3; §31.4 (`fs-mesh`), §31.7, §31.8, §31.20 (OPEN-FOUNDRY-1), §33.8; GATE-FOUNDRY-04, GATE-FOUNDRY-01.

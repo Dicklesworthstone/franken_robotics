@@ -1,0 +1,99 @@
+{
+ "round": 4,
+ "slice": "H-ka-2",
+ "reviewed": 14,
+ "changed": [
+  {
+   "bead": "N20-KA",
+   "kinds": ["convention"],
+   "what": "Convention 13: the note on KA-520 and KA-523 said N38b-32 and N20a-18 'are asked to' follow. Both now carry the owner's form (N38b-32: truncation, 4.10 m against 4.11 m; N20a-18: 10^-12 and 10^-4), so the note states that as fact. No row changed."
+  },
+  {
+   "bead": "N21-KA",
+   "kinds": ["request", "convention"],
+   "what": "Interrupted reviewer's edit, checked complete. F-U21c request added as asked: the control cells of KA-525 to KA-530 and KA-532 to KA-539 name their plants by the N21c-30 and N21c-31 labels (all verified in those beads); KA-527 and KA-528 cite N21c-30:spark.folded-eft as the control that must be caught, with fast math kept as the recorded experiment spark.fast-math; KA-532 takes CX-218's gates; KA-535's owner is GATE-SPARK-15; new test ka_registry_spark_plant_cells. The C13 finding was real and is fixed: the note on KA-548 to KA-550 now states N38b-32's controls as fact (launch cost omitted; 4.9 against 1.25; 0.25 against 0.125)."
+  },
+  {
+   "bead": "N22-KA",
+   "kinds": ["deadlock"],
+   "what": "Convention 7. The end-to-end script read the logs of the Reflex carrier scripts, whose beads do not depend on this one, and failed at the M1 exit if KA-553 to KA-556 had not been run, so the registry's close waited on its carriers. It now runs the rows through their tier targets (g1_known_answers, g2_parity or g5_determinism), logs unbound rows without failing, and leaves the M1 binding check to the exit review. The registry's negative control required the fixture of N22b-03 (not a dependency) to fail; it now requires ka_reflex_derived_values to fail, and that fixture too once it exists. ka_reflex_derived_values compares with the row's stored truth."
+  },
+  {
+   "bead": "N23-KA",
+   "kinds": ["request", "deadlock"],
+   "what": "Interrupted reviewer's edit, checked complete. F-U23a-2 request added as asked: the completeness test selects the 18 numbered and 5 late rows by identifier, and N23a-37's offpolicy-01 row (M4) is neither counted nor refused (new test ka_cortex_counts_ignore_other_owners). ka_cortex_derived_values also recomputes KA-576's 9.9. Convention 7: the negative control no longer depends on BD-192, which is not a dependency."
+  },
+  {
+   "bead": "N24-KA",
+   "kinds": ["request"],
+   "what": "Interrupted reviewer's edit, checked complete. The H-ka-3 request (round 3 and its round-4 repeat) is added. In the commit that adds KA-602, this bead sets same_as = \"KA-602\" on N41-KA's K41-33, whose derivation file stays in docs/derivations/fixture-cart-sill-dock/; N41-KA says the same. Dep N41-KA was added because the edit touches that row; graph_check finds no cycle. TF-24 of N39-KA carries same_as = \"KA-621\". New acceptance item and test shared_fixture_k41_33. The late row is identified by its tag in slug and carries no number."
+  },
+  {
+   "bead": "N25-KA",
+   "kinds": ["convention"],
+   "what": "Interrupted reviewer's edit, checked complete. Convention 13: removed the narration '(a request to N25-CX records the rename)'. N25-CX already carries augur-cx-late-01..11 as stated."
+  },
+  {
+   "bead": "N27-KA",
+   "kinds": ["broken", "registry"],
+   "what": "Its test related_rows_present_under_owners reads KA-145 to KA-148 (N10-KA3), KA-716 to KA-718 (N29-KA) and KA-802 (N35-KA), but none of those owners was a dependency, and Scope named the first owner as 'the specification beads of C-29'. The three M1 registries are now in deps (none depends on N27-KA, per graph_check), and Scope names them. Without this, the check could run before the rows it reads exist."
+  },
+  {
+   "bead": "N28-KA",
+   "kinds": ["contradiction"],
+   "what": "Interrupted reviewer's edit, checked complete. N28cp1-01, which depends on this bead, creates tests/ka_atelier.rs and scripts/e2e/atelier_known_answers.sh. This bead's unit tests are now tests/ka_registry_atelier.rs and its script is scripts/e2e/atelier_ka_registry.sh, so the two beads no longer create the same files. The script reports rows through the tier targets: unbound, and it never fails on them."
+  },
+  {
+   "bead": "N29-KA",
+   "kinds": ["contradiction"],
+   "what": "It listed first-divergence-monotonicity.md (KA-717) among the derivation files it writes at M1. N27a-09 (M2) writes that file and calls it the only derivation file of PO-AUTOPSY-02, for KA-677 and KA-678, so two beads would have written one file with different front matter. KA-717's derivation is now chronicle-first-divergence.md, which states the same argument: the chained digest is monotone, so bisection finds tick 1, and the pointwise midpoint search reports tick 5. No other bead cites KA-717's derivation file. The H-owners-1 request holds: the long tier names were already used."
+  },
+  {
+   "bead": "N30-KA",
+   "kinds": ["request", "plan"],
+   "what": "H-cx-2 request added as asked. The alias-9 late row's control names plant N30b-29:cx-<nnn>, CX-G-01's plant in N30-CX, so step 3 of N38b-05 reuses that control. The speed-comparing detector, which no CX entry plants, is seeded from the row. ground_ka_negative_controls_seeded checks both. Charter fix: priority 3 -> 1. The bead was moved to M1 but kept the M5 default priority, while BD-139 and the M1 exit review BD-147 (both priority 1) depend on it, so the M1 queue would have scheduled it last. The H-owners-1 request holds: the rows were already in the one file."
+  },
+  {
+   "bead": "N31-KA",
+   "kinds": ["broken", "convention"],
+   "what": "no_ka_identifier_registered_twice reads KA-168 to KA-171 under N10-KA3, which was only a related bead. N10-KA3 (M1; it does not depend on N31-KA) moves to deps, and Part 2 says so. Convention 13: Considerations said N31b-04's control proposals 'stay marked not gate-eligible until the registry owner accepts them'. This bead is that owner, and N31b-04 now proposes the registered form ('as N31-KA registers it'), so the bullet states that the two agree and each control is registered once. Part 2's truths were checked against N10-KA3's rows."
+  },
+  {
+   "bead": "N32-KA",
+   "kinds": ["request"],
+   "what": "Interrupted reviewer's edit, checked complete. H-ka-3 request added as asked: N37-16 is a carrier of KA-760; N37-16 and N37-KA both cite the row."
+  },
+  {
+   "bead": "N33-KA",
+   "kinds": ["request"],
+   "what": "Interrupted reviewer's edit, checked complete. F-U38a request added as asked: KA-779's paragraph, acceptance and consideration use conditional_on = \"BD-031: escape-hatch\" in the derivation front matter and the outcome not-run: conditional (BD-031: escape-hatch), matching N38a-13 rule 5. The H-owners-1 request holds: the rows were already in the one file."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38a-12",
+   "what": "Add an optional field `safe` (\"higher\" | \"lower\") to the [[ka]] row schema and the loader. N38b-28 rule 3 reads 'the row's declared safe direction, a field of the known-answer record' (\"higher\" for an episode count, a margin or a bound on an error; \"lower\" for a claimed probability or a tolerance). N38b-57 declares it on the counting rows, and N26-KA's KA-664 carries safe = \"higher\". The schema lists no such field and refuses unknown keys, so those rows would not load. A row without the field keeps N38b-28's rule: its control is checked by running it."
+  },
+  {
+   "bead": "N38a-12",
+   "what": "State the form of a late row before its block is issued. N23-KA, N24-KA and N30-KA, and N23a-37's offpolicy-01, keep such a row in known_answers.toml with its provisional tag in `slug` and no number, cited by the tag until N38a-40 issues the block (rule 5). The loader's rules (identifiers contiguous; slug is 'the provisional tag of a row appended after plan time') do not say whether a row with an empty `id` loads, or how contiguity and `due:` selection treat it. Either accept that form (id empty, slug the tag, outside the contiguity check) or say that a late row is entered only once its number is issued."
+  },
+  {
+   "bead": "N39-KA",
+   "what": "ANSWER: (H-ka-3's request to N24-KA, the TF-24 clause) N24-KA (M1) does not list TF-24 in KA-621's derivation file, because TF-24 does not exist until N39-KA (M3), which depends on N24-KA. The form that holds: TF-24 carries KA-621's fixture with same_as = \"KA-621\", and N39-KA adds TF-24 to the front matter of KA-621's derivation file (N24-KA's) in the commit that adds TF-24. N24-KA states this; please state it too, in your derivation-file paragraph and acceptance."
+  },
+  {
+   "bead": "BD-025",
+   "what": "ANSWER: (H-owners-1 request to N29-KA) N29-KA already uses the long tier targets (--test g0_laws, g1_known_answers, g4_chaos, g5_determinism). No short form `--test g0`..`g5` remains in N20-KA to N33-KA. Nothing to change."
+  },
+  {
+   "bead": "N38a-12",
+   "what": "ANSWER: (H-owners-1 requests to N30-KA and N33-KA) Both already keep their rows as [[ka]] records of crates/frob-conformance/registry/known_answers.toml. registry/known_answers/ground.toml and suite.toml appear only as the retired form and as scratch copies that their tests must see refused with ka-second-file. Nothing to change."
+  }
+ ],
+ "answered": {"added": 7, "holds": 3, "declined": 0},
+ "unchanged": 1,
+ "notes": "All 14 beads read in full; N26-KA is unchanged. The interrupted reviewer's eight edits (N20, N21, N23, N24, N25, N28, N32, N33-KA) were checked against the round-3 tracker text and found complete and coherent. Mechanical findings: N21-KA's C13 was real and is fixed. The C2-file findings on N24, N26, N27, N30, N31 and N33-KA are false alarms: each quotes a retired chapter file to say it is retired, or plants one in a scratch copy that its test must see refused. answered counts the 10 requests, with N24-KA's round-4 repeat counted as added. The TF-24 clause of the N24-KA request is answered to N39-KA. Left as is: KA-717 restates KA-677's case (N27a-09 says so), but the plan marks no shared fixture and N29-KA keeps same_as empty. N10-KA3 labels KA-146's cases but-for/joint as the plan does, while N27-KA notes the chapter's 'alternative'. The slice looks settled once N38a-12 answers on the `safe` field and the pre-block late-row form."
+}

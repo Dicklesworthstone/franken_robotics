@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "skeleton", "traction", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["NEG-30", "N14b-03", "BD-054", "BD-055", "BD-056", "BD-060", "BD-154", "BD-106", "N14b-11", "BD-102"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-060", "BD-102", "BD-106", "BD-154", "N14b-03", "N14b-11", "NEG-30", "NEG-31"]
 needs: []
-related: ["GB-20", "N18a-27", "N14b-07", "BD-246", "NEG-31"]
+related: []
 gates: []
 plan_refs: ["Appendix G.4 row 11", "§14.10", "§13.6", "§18.6", "C-37", "Appendix M KA-270, KA-399"]
 ---
@@ -26,8 +26,13 @@ at all. No reference robot is on file. It lands at M3.
 
 ## Scope
 
-In: `zoo/swerve-4.fbot`, its expectation file and controls. Out: the template (N14b-03); the four-dimensional
-cone and the effective patch radius (BD-154, N18a-27); the steered-base controller (N14b-07).
+In: `zoo/swerve-4.fbot` (the template instantiated at its defaults), its expectation file with the full
+known-answer table below, the controls, and the generated golden tests (`zoo_swerve4…`). Out: the template
+itself with its manifest, levers, presets and default parameter values, and the template-level unit tests
+(`swerve_scrub_torque`, `swerve_singular_rank`), all in N14b-03: the D₄ group on file, the scrub fixture
+(f_n = 50 N, μ = 0.8, ρ = 8 mm → 0.32 N·m) and the rank-2 concurrent pose are the template's, defined there
+and repeated here. Also out: the four-dimensional cone and the effective patch radius (BD-154, N18a-27); the
+steered-base controller (N14b-07).
 
 ## Technical approach
 

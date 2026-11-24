@@ -1,0 +1,849 @@
+{
+ "group": "dup-01",
+ "decisions": [
+  {
+   "a": "N14b-26",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "one record per gate: N40-02 (N40-10 for the late gates) creates the row and governs identity, claim, parts, section and brief; N14b-26 holds the full criterion, fills controls and tier, writes the owner declaration and names the measuring bead"
+  },
+  {
+   "a": "N14b-26",
+   "b": "N40-23",
+   "action": "rescope",
+   "note": "the kill record (trigger, fallback, decided, mode, reads) is the ledger's; N14b-26 keeps the chapter's statement, the map to decision beads and the check that each has one owner declaration"
+  },
+  {
+   "a": "N14b-26",
+   "b": "N41-OPEN1",
+   "action": "rescope",
+   "note": "the four OPEN-SKEL records and the tombstone are N41-OPEN1's; N14b-26 keeps the check that the Skeleton verbs apply the registered defaults"
+  },
+  {
+   "a": "N16c-05",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-KIN-08 to -13) creates the records; N16c-05 holds the full and machine-readable criteria, fills controls and tier, writes the owner declarations with carriers and confirms the reading of its four two-claim rows; kill records are the ledger's (N40-24, N40-29; KILL-DR and KILL-RANK as consumer)"
+  },
+  {
+   "a": "N19c-29",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-HAB-15, -16) creates the records; N19c-29 holds the full criteria, fills controls and tier, writes the owner declarations, confirms the reading of GATE-HAB-15 and keeps its consistency checks"
+  },
+  {
+   "a": "N19c-29",
+   "b": "N40-24",
+   "action": "rescope",
+   "note": "the ten Habitat kill records are the ledger's (KILL-FARFIELD is N40-29's); N19c-29 keeps the chapter's statement, the map to deciding beads and the check that each has one owner declaration"
+  },
+  {
+   "a": "N20b-21",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-SENS-15 to -18) creates the records; N20b-21 holds the full thresholds, fills controls and tier, writes the owner declarations and the report of gates not yet measured"
+  },
+  {
+   "a": "N21c-32",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-SPARK-23) creates the records; N21c-32 holds the full thresholds, fills controls and tier, writes the owner declarations, and keeps the registry checks and the mechanism register"
+  },
+  {
+   "a": "N22c-49",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for the six late gates) creates the records; N22c-49 holds the full thresholds, fills controls and tier, writes the owner declarations and keeps the registry test; kill records are N40-25's and N40-29's"
+  },
+  {
+   "a": "N23b-16",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-CORTEX-18 to -22) creates the records; N23b-16 holds the full thresholds, fills controls and tier, writes the owner declarations and keeps the kill-record script; kill records are N40-25's and N40-29's"
+  },
+  {
+   "a": "N25d-41",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 creates the 24 records of the gates section; N25d-41 holds the full thresholds, fills controls and tier, writes the owner declarations; the 18 kill records are N40-26's; the late Augur gates stay with N40-10, N40-29 and their measuring beads"
+  },
+  {
+   "a": "N26b-18",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 creates the eight records; N26b-18 holds the full thresholds, fills controls and tier, writes the owner declarations, and keeps the pilot-row content test and the milestone views"
+  },
+  {
+   "a": "N26b-18",
+   "b": "N40-26",
+   "action": "rescope",
+   "note": "the records of KILL-NEMESIS, KILL-RARE and KILL-MCW are the ledger's; N26b-18 keeps the chapter's statement, the map to deciding beads and the check that each has one owner declaration"
+  },
+  {
+   "a": "N28c-25",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-ATEL-17 to -19) creates the records; N28c-25 holds the full thresholds, fills controls and tier, writes the owner declarations, and keeps the method-gate form check and the schedule check"
+  },
+  {
+   "a": "N28c-25",
+   "b": "N40-26",
+   "action": "rescope",
+   "note": "the records of KILL-STATIC, -RANK, -LADDER, -VOI, -REUSE and -ATLAS are the ledger's; N28c-25 keeps the chapter's statement and the map to owners and deciding beads"
+  },
+  {
+   "a": "N28c-25",
+   "b": "N40-29",
+   "action": "rescope",
+   "note": "the record of KILL-BUDGETCURVE is N40-29's (decided at M4); N28c-25 keeps the map to its deciding beads; the M3 pilot reading is an input, not a second decision point"
+  },
+  {
+   "a": "N30b-22",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-GROUND-11) creates the records, including recurring and the milestone-free tenth gate; N30b-22 holds the full thresholds, fills controls and tier, writes the owner declarations and keeps its script lint; kill records are N40-27's"
+  },
+  {
+   "a": "N31b-12",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 creates the records of GATE-FOUNDRY-01 to -12 with claim and milestone; N31b-12 holds the full criteria, fills controls and tier, writes the owner declarations and keeps the form check"
+  },
+  {
+   "a": "N31b-12",
+   "b": "N40-10",
+   "action": "rescope",
+   "note": "N40-10 creates the records of GATE-FOUNDRY-13 to -15 and enters -15 as known-answer on the owner's reading; N31b-12 holds their full criteria and states that reading"
+  },
+  {
+   "a": "N31b-12",
+   "b": "N40-27",
+   "action": "rescope",
+   "note": "the seven Foundry kill records are the ledger's; N31b-12 keeps the chapter's statement, the map to deciding beads and the consumer declaration of KILL-SINEW-AGE"
+  },
+  {
+   "a": "N32b-25",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 (N40-10 for GATE-TETHER-15, -16) creates the records; N32b-25 holds the full thresholds, fills tiers and controls, writes the owner declarations and keeps its ownership lint"
+  },
+  {
+   "a": "N32b-25",
+   "b": "N40-27",
+   "action": "rescope",
+   "note": "the records of six Tether kill gates are the ledger's (KILL-REPLAYPACK is N40-29's); N32b-25 keeps the chapter's statement and the map to decision beads"
+  },
+  {
+   "a": "N38b-23",
+   "b": "N40-02",
+   "action": "rescope",
+   "note": "N40-02 creates the record of GATE-GAUNT-01; N38b-23 registers the controls first, fills controls and tier, and writes the owner declaration"
+  },
+  {
+   "a": "N38b-23",
+   "b": "N40-10",
+   "action": "rescope",
+   "note": "N40-10 creates the records of GATE-GAUNT-02 to -11 and GATE-FID-09 with their parts and indexes KILL-DEVORACLE (record: N40-29); N38b-23 owns the full thresholds and the controls, as the reporter asked"
+  },
+  {
+   "a": "BD-138",
+   "b": "NJL-05",
+   "action": "rescope",
+   "note": "NJL-05 owns the one assignment of verbs to task clusters (all 45, those served at M1 included), the registry form, lints, tags and the list budget on generated definitions; BD-138 owns the switching mechanism, the session verbs and the tests of the rules of focus on a running server at M1 (BD-298 at M3)"
+  },
+  {
+   "a": "BD-264",
+   "b": "N29b-07",
+   "action": "rescope",
+   "note": "seed capstone and its component, already divided by the integrators: N29b-07 owns the store, the row schema and its derivation from exact paired moments; BD-264 owns the estimator, its use of the row, the two gates and the KILL-DR measurements. Only BD-264's Scope and row paragraph were tightened (the row is N29b-07's; the seed listed 'the ledger row' as its own)"
+  },
+  {
+   "a": "BET-09",
+   "b": "N21b-08",
+   "action": "link",
+   "note": "N21b-08 applies the KILL-METAL trigger and writes the kill ADR; BET-09 reads that record, evaluates the bet's falsifier and writes the bet verdict. Thresholds (25%, paired lower bound), fallback and milestone agree; two different ADR files"
+  },
+  {
+   "a": "BET-36",
+   "b": "N18a-34",
+   "action": "link",
+   "note": "N18a-34 applies the KILL-FILM trigger and writes the kill ADR; BET-36 reads it for the Solid half of the bet. Thresholds (10% of outcomes, 5% of step time), fallback and milestone agree"
+  },
+  {
+   "a": "N00-29",
+   "b": "N34-12",
+   "action": "rescope",
+   "note": "one executor of a demo directory remains, in N00-29 (the harness: layout, file keys, run-time rules, skeleton, index by milestone, fresh-agent rule); N34-12 is the script demos.sh that runs every demo of the tree through it, the release rule against the rubric, the worked example and the report. The run-time rules and their self-tests moved from N34-12 to N00-29; nothing was dropped"
+  },
+  {
+   "a": "N10b-17",
+   "b": "N16b-07",
+   "action": "merge",
+   "keep": "N16b-07",
+   "note": "one pilot of construction C-25 (plan: 'ρ on 200 world addresses, from paired data the fidelity gate already pays for'). Kept N16b-07: the chapter that owns the mechanism, an M2 bead on the M2 battery, and the pilot BD-264 waits for. Folded in from N10b-17: the frozen protocol and the record PILOT-C-25 in the pilot register, the out-of-sample comparison against referee-only with keyed audit re-draws, the six parts of a method experiment with both potency controls, the robustness margin as a fourth quantity, the pilot-level verdict (funded, fallback, inconclusive), scripts/e2e/pilot_c25.sh, KA-133 and KA-134, the replay controls, GATE-GAUNT-08"
+  },
+  {
+   "a": "N14b-33",
+   "b": "ROBOT-g1",
+   "action": "rescope",
+   "note": "the fold as a mechanism and its battery on random trees for GATE-SKEL-11 stay in N14b-33; the checks of the fold on the vendored 38-link source (30 bodies, n_v 35, mass conserved, the --fold-fixed loss report) are the asset bead's. One script step of N14b-33 needed the asset, which is built after it: it now imports a generated tree and runs the 38-link import only when the asset is present; ROBOT-g1 gained that import as a validation item"
+  },
+  {
+   "a": "N18b-09",
+   "b": "NS-08",
+   "action": "rescope",
+   "note": "one implementation of scenario NS-08: scripts/e2e/ns_08.sh of NS-08 (demo file, stairs, rubble, soft soil, both lanes). N18b-09 keeps the law-level stages (wheel, tyre, belt, hybrid) and its last stage calls the scenario script. The assertions of its two former scenario stages that NS-08 lacked were moved there (scrub energy, belt law labelled Frontier, Degraded share, promotion against strict, non-zero sinkage, thrust at 20% slip, digest repeats, KA-416)"
+  },
+  {
+   "a": "N20a-40",
+   "b": "N25b-27",
+   "action": "rescope",
+   "note": "one exact enumerator of sensing policies and one total-variation computation, in frob-sense (N20a-40: policies, per-class outputs, the two methods that must agree, the cap of 20 reads); N25b-27 keeps the mission-level witness, its scope rule, the deadline rule, the proof objects and the wording of mission.refute, and calls the enumerator instead of holding a second one in frob-mission"
+  },
+  {
+   "a": "N25b-23",
+   "b": "N26a-10",
+   "action": "rescope",
+   "note": "N26a-10 is the one definition of the pair objective, the pairing by world address, the reversal predicate with its two kinds, the oracle and guard conditions for a pair and the ordering of worlds (entry point search::pair::search_reversal); N25b-23 is the engine around it: confirmation on 48 of 64 paired seeds, referee reproduction, classification, minimization with the first-cause check, the counterfactual neighbour, artifacts and updates"
+  },
+  {
+   "a": "N28c-04",
+   "b": "VERBS-cores",
+   "action": "rescope",
+   "note": "VERBS-cores is the only place the registry row of cores.show is entered; N28c-04 quotes it and owns what the row points to (schema content, flag spellings, output, stale-table behaviour, decision summary)"
+  },
+  {
+   "a": "N35-32",
+   "b": "N37-29",
+   "action": "rescope",
+   "note": "one script per gate: GATE-SAFE-09 (five paths, labelled, unlabelled and re-evaluated) is measured only by safe_d4.sh of N37-29, the safety chapter's own gate; num_licences_d4.sh of N35-32 measures GATE-SPARK-17 only. N35-32's five-path, unlabelled and sweep steps were dropped there; what N37-29 lacked was moved to it (the sweep of every result-consuming verb, the repetition through frob-mcp, the G5 test row, the eval compare 561 neighbour, the skipped-sub-step rule)"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N10b-17",
+   "keep": "N16b-07",
+   "note": "same pilot; everything folded into N16b-07, which keeps the record identifier PILOT-C-25 that N10b-19 cites"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "N14b-26",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the records of GATE-SKEL-01 to -08 must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N14b-26",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of GATE-SKEL-09 to -11 are created by N40-10"
+  },
+  {
+   "bead": "N14b-26",
+   "dep": "N40-23",
+   "as": "dep",
+   "why": "its check reads the ledger records of four Skeleton kill gates"
+  },
+  {
+   "bead": "N14b-26",
+   "dep": "N40-29",
+   "as": "dep",
+   "why": "its check reads the ledger record of KILL-SKEL-CELL"
+  },
+  {
+   "bead": "N14b-26",
+   "dep": "N41-OPEN1",
+   "as": "dep",
+   "why": "its check reads the registered defaults of OPEN-SKEL-2 to -4"
+  },
+  {
+   "bead": "N16c-05",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N16c-05",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N16c-05",
+   "dep": "N40-24",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N16c-05",
+   "dep": "N40-29",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N19c-29",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N19c-29",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N19c-29",
+   "dep": "N40-24",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N19c-29",
+   "dep": "N40-29",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N20b-21",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N20b-21",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N20b-21",
+   "dep": "N40-24",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N20b-21",
+   "dep": "N40-29",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N22c-49",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N22c-49",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N22c-49",
+   "dep": "N40-25",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N22c-49",
+   "dep": "N40-29",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N23b-16",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N23b-16",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N23b-16",
+   "dep": "N40-25",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N23b-16",
+   "dep": "N40-29",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N16c-05",
+   "dep": "N40-26",
+   "as": "related",
+   "why": "KILL-RANK is Atelier's row; Kinesis states it as a consumer"
+  },
+  {
+   "bead": "N16c-05",
+   "dep": "N40-27",
+   "as": "related",
+   "why": "KILL-DR is Chronicle's row; Kinesis states it as a consumer"
+  },
+  {
+   "bead": "N21c-32",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N21c-32",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the record of GATE-SPARK-23 is created by N40-10"
+  },
+  {
+   "bead": "N21c-32",
+   "dep": "N40-24",
+   "as": "related",
+   "why": "seven Spark kill rows are in this ledger group, which lands at M1, later than this M0 bead"
+  },
+  {
+   "bead": "N21c-32",
+   "dep": "N40-27",
+   "as": "related",
+   "why": "KILL-SLOT is Tether's row; Spark states it as a consumer"
+  },
+  {
+   "bead": "N25d-41",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N25d-41",
+   "dep": "N40-26",
+   "as": "dep",
+   "why": "its linkage test reads the ledger records of the eighteen kill gates"
+  },
+  {
+   "bead": "N25d-41",
+   "dep": "N40-10",
+   "as": "related",
+   "why": "the late Augur gates are N40-10's rows and outside this bead"
+  },
+  {
+   "bead": "N25d-41",
+   "dep": "N40-29",
+   "as": "related",
+   "why": "the four late Augur kill gates are N40-29's rows and outside this bead"
+  },
+  {
+   "bead": "N26b-18",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N26b-18",
+   "dep": "N40-26",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N28c-25",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N28c-25",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N28c-25",
+   "dep": "N40-26",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N28c-25",
+   "dep": "N40-29",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N28c-25",
+   "dep": "N40-24",
+   "as": "related",
+   "why": "KILL-FDGRAD is Phylum's row; Atelier states it as a consumer"
+  },
+  {
+   "bead": "N30b-22",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N30b-22",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N30b-22",
+   "dep": "N40-27",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N31b-12",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N31b-12",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N31b-12",
+   "dep": "N40-27",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N31b-12",
+   "dep": "N40-23",
+   "as": "related",
+   "why": "KILL-SINEW-AGE is Sinew's row; Foundry states it as a consumer"
+  },
+  {
+   "bead": "N32b-25",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N32b-25",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N32b-25",
+   "dep": "N40-27",
+   "as": "dep",
+   "why": "its check reads the ledger records of the chapter's kill gates"
+  },
+  {
+   "bead": "N32b-25",
+   "dep": "N40-29",
+   "as": "related",
+   "why": "KILL-REPLAYPACK is in this ledger group, which lands at M1, later than this M0 bead"
+  },
+  {
+   "bead": "N38b-23",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "the gate records must exist before their chapter fields are filled"
+  },
+  {
+   "bead": "N38b-23",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "the records of the chapter's late gates are created by N40-10"
+  },
+  {
+   "bead": "N38b-23",
+   "dep": "N40-29",
+   "as": "related",
+   "why": "KILL-DEVORACLE is in this ledger group, which lands at M1, later than this M0 bead"
+  },
+  {
+   "bead": "BD-138",
+   "dep": "NJL-05",
+   "as": "dep",
+   "why": "the mechanism reads the task-cluster rows the registry bead writes (registries come first)"
+  },
+  {
+   "bead": "BD-298",
+   "dep": "NJL-05",
+   "as": "dep",
+   "why": "the M3 surface tests read the same rows; BD-298 states 'the complete task-cluster assignment' in its Scope, which is NJL-05's data (BD-298 is outside this packet and was not edited)"
+  },
+  {
+   "bead": "BD-264",
+   "dep": "N29b-07",
+   "as": "dep",
+   "why": "the capstone reads the store its component builds (already in the seed's deps)"
+  },
+  {
+   "bead": "BET-09",
+   "dep": "N21b-08",
+   "as": "dep",
+   "why": "the bet's decision reads the kill-gate record"
+  },
+  {
+   "bead": "BET-36",
+   "dep": "N18a-34",
+   "as": "dep",
+   "why": "the bet's decision reads the kill-gate record"
+  },
+  {
+   "bead": "N34-12",
+   "dep": "N00-29",
+   "as": "dep",
+   "why": "demos.sh calls the executor the harness builds; the reverse edge would close a cycle through N41-28 and N41-27, which already depend on N00-29"
+  },
+  {
+   "bead": "BD-264",
+   "dep": "N16b-07",
+   "as": "dep",
+   "why": "a Frontier mechanism depends on its pilot (already in the seed's deps; the superseded N10b-17 was the same pilot)"
+  },
+  {
+   "bead": "N16b-10",
+   "dep": "N16b-07",
+   "as": "dep",
+   "why": "the KILL-DR decision reads the pilot's report (already a dep; it also named the superseded N10b-17)"
+  },
+  {
+   "bead": "N10b-19",
+   "dep": "N16b-07",
+   "as": "related",
+   "why": "the contract audit of constructions cites the record PILOT-C-25, which N16b-07 now writes"
+  },
+  {
+   "bead": "ROBOT-g1",
+   "dep": "N14b-33",
+   "as": "dep",
+   "why": "the asset's validation folds its welded links with the mechanism (already a dep)"
+  },
+  {
+   "bead": "N14b-33",
+   "dep": "ROBOT-g1",
+   "as": "related",
+   "why": "the fold's script uses the asset when present; a dependency would close a cycle and a mechanism does not depend on its test asset"
+  },
+  {
+   "bead": "N18b-09",
+   "dep": "NS-08",
+   "as": "dep",
+   "why": "the capability script's last stage runs the scenario script"
+  },
+  {
+   "bead": "N25b-27",
+   "dep": "N20a-40",
+   "as": "dep",
+   "why": "the mission side calls the sensing crate's enumerator"
+  },
+  {
+   "bead": "N20a-40",
+   "dep": "N25e-34",
+   "as": "related",
+   "why": "the later error_dependence field replaces the reading of dependence used here; N25e-34 depends on the capstones above both beads, so neither can depend on it"
+  },
+  {
+   "bead": "N25b-27",
+   "dep": "N25e-34",
+   "as": "related",
+   "why": "same: the joint-error-law declaration amends the crediting rule later"
+  },
+  {
+   "bead": "N25b-23",
+   "dep": "N26a-10",
+   "as": "dep",
+   "why": "the engine calls the search entry point (the reporter's recorded dependency)"
+  },
+  {
+   "bead": "N28c-04",
+   "dep": "VERBS-cores",
+   "as": "dep",
+   "why": "a verb's implementation depends on its registry row (registries come first)"
+  },
+  {
+   "bead": "N35-32",
+   "dep": "N37-29",
+   "as": "related",
+   "why": "two scripts on the D4 profile with separate gates; neither needs the other"
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N14b-26",
+   "what": "no longer enters gate, kill or open-question rows (a second record would fail duplicate-id); statuses `not run`/`registered` for gates and kill gates replaced by the seven statuses of N40-01 and the outcomes of N40-03; the tombstone test of OPEN-SKEL-1 left to N41-OPEN1, which has it"
+  },
+  {
+   "bead": "N16c-05",
+   "what": "its own row schema (criteria[], carrier_beads[], decided_at, adr in gates.toml) moved to the owner declaration; KILL-DR and KILL-RANK marked as consumer statements with the register's single decision point M4 for KILL-RANK (the bead printed 'M3 (tier pairs); M4 (rungs)'); the four two-claim rows now have the owner's confirmation as an acceptance item, to agree with N40-10"
+  },
+  {
+   "bead": "N19c-29",
+   "what": "statuses `not-due`, `due`, `PASS`, `FAIL` replaced by the seven of N40-01 (due is computed by the exit query); GATE-HAB-13 and GATE-HAB-16 no longer carry a second record or a separately recorded clause that would be a part the register does not have: one part at M2, the M3 re-read cited as evidence, the adapter clause recorded in the mode N19c-40 states"
+  },
+  {
+   "bead": "N20b-21",
+   "what": "status `unmeasured` replaced by `not-run`; the M1 scope text of GATE-SENS-08 is no longer written by this bead (the part's scope is N40-02's); the chapter's reading goes to the declaration and to N40-09's list by amendment"
+  },
+  {
+   "bead": "N21c-32",
+   "what": "field names `earliest`, `state`, `record`, `governing` and kill states `undecided`/`not fired` replaced by N40-01's fields and N40-03's outcomes; 'this row is its authoritative entry for the registry' (GATE-SPARK-23) corrected: the record is N40-10's; KILL-SLOT marked as a consumer statement"
+  },
+  {
+   "bead": "N22c-49",
+   "what": "row format with `milestones`, `negative_controls`, `output_digest`, `decided_at`, `adr` replaced by N40-01's record and N40-03's kill record; GATE-REFLEX-11's reading (fidelity) stated as the owner's, which N40-10 enters"
+  },
+  {
+   "bead": "N23b-16",
+   "what": "the last clause of the chapter's KILL-LEARNKERN fallback (move to FrankenTorch device execution if the upstream item lands) marked as the chapter's note: the register's row (plan §40.4, ledger N40-25) does not carry it"
+  },
+  {
+   "bead": "N25d-41",
+   "what": "the `strata_fixture` and reconciliation notes moved from gate rows to the owner declarations; the 'frozen copy' of kill texts is the ledger's seed, not a second copy"
+  },
+  {
+   "bead": "N40-26",
+   "what": "KILL-AUGUR-PROBE: the trigger added by plan §25.38 (a certificate or counterexample that depends on unshared values of a parameter declared shared passes the checker; fallback unchanged) was missing from the ledger although N25d-41, the decision bead N25c-16 and N40-10 rely on it; entered as a dated amendment to the row. DESIGN (the plan names no reading point): decided at M3 on the mutation results on file; an acceptance found by the M4 battery of GATE-AUGUR-34 re-opens the decision by ADR"
+  },
+  {
+   "bead": "N26b-18",
+   "what": "measuring scripts no longer write gate records through the e2e helper: they write receipts and a recording session enters the part (N40-01, ADR-GAUNT-01); the ADR path `docs/adr/` replaced by 'where N40-03 places ADRs'; Background no longer says this bead enters the pilot rows (its Scope already gave them to N26a-06 and N26a-28)"
+  },
+  {
+   "bead": "N28c-25",
+   "what": "KILL-RANK stated as owned by Atelier with the dynamics subsystem as consumer (the bead counted it among kill gates 'owned elsewhere'), to agree with plan §40.7 and N40-26; its own row mechanics (`parts`, `records`, `decided_at`, `amendments` in gates.toml) replaced by N40-01 and N40-03"
+  },
+  {
+   "bead": "N30b-22",
+   "what": "GATE-GROUND-10: 'at M5 the exit requires that the lane has a record or a recorded no-claim' corrected to the register's rule (plan §40.6 'not tied to a milestone'; N40-04: printed in its own section from M5, never blocks); `earliest = \"unscheduled\"` and its own row fields replaced by N40-01's record"
+  },
+  {
+   "bead": "N31b-12",
+   "what": "design-comparison rows 'not admitted until the six parts are registered' made consistent with its own acceptance line and with N40-02 creating the rows: no part can be set to pass before the form is registered"
+  },
+  {
+   "bead": "N32b-25",
+   "what": "kill rows no longer take status `pass` when a kill gate does not fire: the outcomes are N40-03's (`not-fired`, `fired`, `not-reached`, `deferred`); the added `measured_by` field moved from the gate record to the owner declaration"
+  },
+  {
+   "bead": "N38b-23",
+   "what": "GATE-GAUNT-11: 'Per row: M0 … M8' with one part per milestone replaced by the DESIGN reading now stated identically in N40-10 (one part at M1, scope 'first rows'; later rows are known-answer rows demanded by GATE-GAUNT-02 at their exits). GATE-FID-09: the test said parts M1 and M4; corrected to M1, M4 and M8 (row 4 runs with the continuation lane, which lands at M8), as N40-10 counts"
+  },
+  {
+   "bead": "N40-10",
+   "what": "(by the earlier session of this packet) GATE-GAUNT-11 given one part at M1 as DESIGN with its reason; owner readings entered for GATE-REFLEX-11 (fidelity), GATE-ATEL-19 and GATE-FOUNDRY-15 (known-answer) so those rows are not blocked; the two-claim rows GATE-KIN-08, -10, -11, -12 and GATE-HAB-15 stay blocked until N16c-05 and N19c-29 confirm, which both beads now carry as acceptance items"
+  },
+  {
+   "bead": "N40-02",
+   "what": "(by the earlier session of this packet) step 8 added: the division of each row between the register and the fourteen chapter register beads; acceptance line that a second record for a gate fails with duplicate-id"
+  },
+  {
+   "bead": "BD-138",
+   "what": "its starting assignment of the M1 verbs outside the principal rows conflicted with NJL-05 (`actuators` with design_blame against analyze_envelope; an `algebra` cluster against `symmetry` and `proofs`; `operate-2` against `housekeeping`); the plan (§32.12.4, Appendix J.5) leaves these to the registry, so one assignment is chosen, NJL-05's, labelled DESIGN in both beads with its reason (one table for the every-verb-seated lint)"
+  },
+  {
+   "bead": "BD-138",
+   "what": "registry cluster sizes corrected from the surface chapter's older figures (`design` ten, `analyze` sixteen or more) to the registry appendix's (scene 13, design 12, analyze 26 of 243), as NJL-05 states"
+  },
+  {
+   "bead": "NJL-05",
+   "what": "its end-to-end script no longer drives frob-mcp and frobd: a registry bead must be finishable before the mechanism that reads it; the served-surface steps (focus per cluster, session_show unchanged, disabled-tool refusal) moved into BD-138's script and acceptance, with the two patched-server controls and the metamorphic relation; BD-298 covers them at M3"
+  },
+  {
+   "bead": "NJL-05",
+   "what": "tags of the three base tools: they now carry the task tag of every cluster, and a tag-filtered list returns the cluster plus the base three (the bead said the filter returns the seven tools); DESIGN to agree with the fallback bead N32a-12, which is outside this packet"
+  },
+  {
+   "bead": "N00-29",
+   "what": "demo file keys made one form with N34-12 and the schema of BD-002: `claims` renamed `claim_ids`; `commands` a list of command lines with `checksums`, `expect_exit`, `expect_refusal`, `compare` and `expect` as maps keyed by the command line (it had per-command maps with `run`, `checksum`); digest prefix `blake3:` changed to `b3:`, the plan's usual form"
+  },
+  {
+   "bead": "N00-29",
+   "what": "the 60 s limit stated per command, as BD-002 and N34-12 state it (its acceptance line said 'each CPU-lane command set'); its checks that a demo file validates and that claim identifiers resolve are left to N34-09's check-contracts, which has both"
+  },
+  {
+   "bead": "N34-12",
+   "what": "working directory of demo commands: 'an empty scratch directory' conflicted with the scenario demos, whose command lines name inputs as demos/ns-<nn>/inputs/…; DESIGN in both beads: commands run from the checkout root with a fresh store in scratch, and a post-run scan fails a demo that wrote outside scratch and logs"
+  },
+  {
+   "bead": "N34-12",
+   "what": "`lane` and `tier`: a demo file is always CPU tier (`tier: cpu`); `lane` now means only where a scenario's full instance runs, and a device or long instance is a script, not a demo file, as N34-12's rule required"
+  },
+  {
+   "bead": "N16b-07",
+   "what": "audit fraction of the pilot's comparison against referee-only: the two drafts used 1/8 (N16b-07) and 0.25 with floor 0.1 (N10b-17), and the plan names none. DESIGN, stated in the kept bead: the decision statistic is the out-of-sample gain at constant p = 1/8 (floor 0.1), with the same statistic at 0.25 reported beside it and deciding nothing"
+  },
+  {
+   "bead": "N16b-07",
+   "what": "'200 addresses': N10b-17 drew 200 in total, stratified; N16b-07 required at least 200 per stratum. Kept per stratum, as the register's KILL-DR reads ('on 200 paired addresses in every stratum tested') and as N29b-07 and BD-264 use it"
+  },
+  {
+   "bead": "N16b-07",
+   "what": "per-stratum labels unified (`supports`, `falsified`, `inconclusive`; 'high-agreement stratum' means `supports`), and the pilot-level verdict defined on them, including the case the falsifier's second clause covers (a high-agreement stratum whose gain bound is under 2). N10b-17's potency-control formula, printed as a reciprocal, corrected to the variance ratio 1 − 0.81·(1 − n/N) that its own test asserts"
+  },
+  {
+   "bead": "N16b-07",
+   "what": "milestone kept at M2 (N10b-17 said M3): the pilot runs on the M2 battery, before the estimator's M3 work package, and SPEC-C-25 (M3) is related, not a dependency"
+  },
+  {
+   "bead": "NS-08",
+   "what": "'Rigid-ground traversal is Solid' corrected: the belt law of the tracks is Frontier (plan §18.9 'Tracks [F]'), so every stair and rubble run of the tracked robot labels it Frontier in its evidence, as N18b-09 and the seed BD-365 already asserted"
+  },
+  {
+   "bead": "N20a-40",
+   "what": "scope label of the stochastic witness changed from 'the stated experiment' to the two labels N25b-27 uses (`named-experiment`, `all-admitted-probes`), with the same meaning"
+  },
+  {
+   "bead": "N20a-40",
+   "what": "how redundancy is credited was stated two ways (N20a-40: from the failure cause's dependence class; N25b-27: only under a declared joint law, else single-read accuracy). One rule, in the same words in both, labelled DESIGN: the cause's dependence class is the declaration until the card field error_dependence of plan §25.37 exists (N25e-34), which then governs; with no declaration the guaranteed value is the single-read accuracy"
+  },
+  {
+   "bead": "N25b-23",
+   "what": "sign convention of the objective: it maximized a reversal score s = m_B − m_A while N26a-10 minimized the gap g = S_A − S_B with threshold −Δ_min. One convention in both: thresholds are stated on g; the printed 'reversal score' is −g, named as the same number with the opposite sign (BD-293 prints it). The rule that position-dependent shared inputs are read at each robot's own contact points, with its control, moved to N26a-10, which owns pairing"
+  },
+  {
+   "bead": "VERBS-cores",
+   "what": "registry example `frob cores show DC-01 --json` changed to `dc-01`: the implementing bead's input schema and four other beads spell core identifiers in lower case, and the upper-case example would have been a schema refusal"
+  },
+  {
+   "bead": "VERBS-cores",
+   "what": "FROB-REF-871 on cores.show: the registry note said a stale or missing table 'is refused'; the implementing bead completes with exit 2 and a finding that carries the code (DESIGN there: inspection must work when something is wrong; the plan's row gives trigger and repair only). VERBS-cores now states that behaviour"
+  },
+  {
+   "bead": "N28c-04",
+   "what": "evidence block: fixed values (Tested, static, exact) reconciled with the registry's label pass-through: those are the values for a core's record and tables; with --decisions the block is the weakest among the decision records read"
+  },
+  {
+   "bead": "N37-29",
+   "what": "flag spelling: `--profile fast-training` and `--profile device-replay` corrected to `--determinism …` (plan Appendix J: `--profile` takes a step profile; determinism profiles take `--determinism`), as N35-32 and N37-28 spell it"
+  },
+  {
+   "bead": "N35-32",
+   "what": "GATE-SAFE-09 removed from its gates and title; the gate is recorded from N37-29's script only"
+  },
+  {
+   "bead": "N40-02",
+   "what": "interface note for the lead: in all fourteen chapter register beads the chapter-side data (the full criterion, the measuring beads, and per chapter `criteria[]`, `fixture`, `script`, `kill`, `notes`, `form_hash`, `strata_fixture`, `bet`) moved out of invented fields of gates.toml into the owner declaration that N40-09 reads (the `[[gate]]` block of contract.toml; registries/gate_declarations.toml until agreed), as fields the lint does not compare. N40-09 and N34-08, which own that format, are outside this packet and were not edited: the format must admit these fields"
+  },
+  {
+   "bead": "N16b-07",
+   "what": "title changed (the identifier PILOT-C-25 added) and gates gained GATE-GAUNT-08; INDEX.tsv is not edited by this pass and still shows the old title and no gate"
+  },
+  {
+   "bead": "N35-32",
+   "what": "title changed (GATE-SAFE-09 removed); INDEX.tsv still shows the old title and both gates"
+  },
+  {
+   "bead": "N00-29",
+   "what": "interface note for the lead: the optional keys of demo.yaml that N00-29 and N34-12 now share (`tier`, `expect_exit`, `expect_refusal`, `compare`, `expect`, `title`, `milestone`, `actors`, `lane`, `fresh_agent`, `not_evidence_for`) must be admitted by the schema of BD-002, whose static check in N34-09 refuses unknown keys; both beads are outside this packet"
+  },
+  {
+   "bead": "NJL-05",
+   "what": "interface note for the lead: BD-298 (outside this packet) still lists 'the complete task-cluster assignment' in its Scope and unit tests that repeat NJL-05's lints; its assignment is NJL-05's data, and the edge BD-298 → NJL-05 is recorded"
+  }
+ ]
+}

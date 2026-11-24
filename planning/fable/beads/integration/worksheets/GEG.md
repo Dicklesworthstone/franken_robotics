@@ -1,6 +1,6 @@
 # Integration worksheet for group GEG (units UEG)
 
-## Beads in this group (109)
+## Beads in this group (114)
 
 | Key | Unit | Milestone | Type | Title |
 |---|---|---|---|---|
@@ -21,7 +21,7 @@
 | GB-15 | UEG | M3 | task | card GB-15 (frob-opt): what pairing with the fast tier saves on the referee: 1/(1 − ρ²) |
 | GB-16 | UEG | M2 | task | card GB-16 (frob-dyn): how much of a GPU run the referee can shadow: share c·ρ_rt/(T·h), under 1% |
 | GB-17 | UEG | M2 | task | card GB-17 (frob-phylum): when a size bucket pays for itself: padding overhead Ω_p, crossover at 360 worlds |
-| GB-18 | UEG | M3 | task | card GB-18 (frob-phylum): the most a family batch can gain: speed-up ≤ 1/(1 − f + f/r + h) |
+| GB-18 | UEG | M0 | task | card GB-18 (frob-conformance): the most a family batch can gain: speed-up ≤ 1/(1 − f + f/r + h) |
 | GB-19 | UEG | M1 | task | card GB-19 (frob-algebra): how many distinct designs a symmetric sweep holds: Burnside counts, ballast classes |
 | GB-20 | UEG | M2 | task | card GB-20 (frob-contact): how much friction is left when a foot also spins: the four-dimensional cone |
 | GB-21 | UEG | M3 | task | card GB-21 (frob-contact): how long a foot rides a film before it grips: Stefan squeeze time 3π·η·a⁴/(4·N·h²) |
@@ -67,7 +67,7 @@
 | NEG-20 | UEG | M5 | task | scene asset source `robocasa` (code MIT, assets CC BY 4.0): kitchen fixtures and layouts, assets only |
 | NEG-21 | UEG | M3 | task | scene asset source `procthor` (code Apache-2.0; dataset licence not verified): generator reference only |
 | NEG-22 | UEG | M3 | task | scene asset source `hssd` (CC BY-NC 4.0): user-supplied import only, never redistributed |
-| NEG-23 | UEG | M3 | task | scene asset source `hm3d` (academic, non-commercial): user-supplied import of scanned buildings only |
+| NEG-23 | UEG | M3 | task | scene asset source `hm3d` (academic, non-commercial): register row, per-user acknowledgement, containment |
 | NEG-24 | UEG | M3 | task | scene asset source `partnet-mobility` (non-commercial research): user-supplied articulated objects only |
 | NEG-25 | UEG | M3 | task | scene asset source `behavior-1k` (its own agreement): not used; supported only as a user-supplied import |
 | NEG-26 | UEG | M3 | task | scene asset source `objaverse-xl` (per-object licences): not used by default; one licence entry per object |
@@ -76,6 +76,11 @@
 | NEG-29 | UEG | M3 | task | frob-conformance: every hazard is covered by a requirement, a shield or a refusal: the cover map and its check |
 | NEG-30 | UEG | M1 | task | zoo: the `zoo/` directory of pinned archetype instances, `frob.zoo.expect/1` and its conformance test |
 | NEG-31 | UEG | M1 | task | e2e: `scripts/e2e/zoo_goldens.sh`: every zoo archetype instantiated, preflighted and compared with its golden |
+| NEG-32 | UEG | M1 | task | frob-io: sibling-catalogue robots as designs: a catalog builder lowered through the airlock to a design term |
+| NEGp1-51 | UEG | M3 | task | e2e: the M3 run of `assets_licences.sh`: all nineteen robots, the M3 scene-asset sources, and the 310/731/733 division end to end |
+| NEGp1-52 | UEG | M5 | task | scene asset source `hm3d`: the M5 scan import profile (scale label, unknown mask, levelling, materials, doors) |
+| NEGp1-53 | UEG | M4 | task | zoo M4 rows: tracked-flipper's simulated pivot scrub on the belt law; wheel-leg's braked hold and free roll on the hybrid laws |
+| NEGp1-54 | UEG | M5 | task | e2e: M5 run of `assets_licences.sh`: three permissive sources, the HM3D scan profile, populated-interior licences |
 | ROBOT-a1 | UEG | M1 | task | assets/robots/a1: Unitree A1 from MuJoCo Menagerie (BSD-3): parity fixture and baseline for `quad-mammal` |
 | ROBOT-anymal-b | UEG | M1 | task | assets/robots/anymal-b: ANYmal B from MuJoCo Menagerie (BSD-3): mid-size baseline for `quad-mammal` |
 | ROBOT-anymal-c | UEG | M1 | task | assets/robots/anymal-c: ANYmal C from MuJoCo Menagerie (BSD-3): heaviest baseline for `quad-mammal` |
@@ -114,152 +119,9 @@
 | ZOO-tri-wheel-stair | UEG | M3 | task | zoo/tri-wheel-stair.fbot: archetype 14, two tri-wheel clusters: C₂ outside, C₃ or D₃ inside, riser and tread |
 | ZOO-wheel-leg | UEG | M3 | task | zoo/wheel-leg.fbot: archetype 13, quadruped with driven wheels as feet: C₂ × C₂, two contact laws per foot |
 
-## Prerequisites to resolve (15)
+## Prerequisites to resolve (0)
 
 Each entry: the bead that needs something, the need as its drafter wrote it, and candidate carriers. Where the
 need names its carrier by key, the keys named are listed: confirm each and decide dep, related or none. Otherwise
 the candidates were found mechanically (by plan section, gate and title words): suggestions, not answers.
 
-### NEG-03 (M0) frob-conformance: the discrepancy register `registries/cards/discrepancies.toml` and the stale-value scan
-- **need 1**: Appendix M.38: the eleven rows of values that did not reconcile with their own formulas, as registry rows owned by the known-answer suite
-  - (no mechanical candidates: search INDEX.tsv)
-### NEG-15 (M1) assets/robots: layout, manifest `frob.robot.asset/1`, licence check and validation for reference robots
-- **need 1**: §37.7: the licence join over derivation graphs (a report or pack carries the join of its inputs' licences), as the rule this manifest feeds
-  - `N37-17` (M3, U37, task) frob-chronicle: the mark lattice (privacy × licence set) and its join over lineage, computed at every store write
-  - `N19b-02` (M3, U19b, task) frob-scene: asset licence manifests, the asset-source register, pack-time refusal FROB-REF-310, starter pack
-  - `N39b-32` (M0, U39b, task) Decision OPEN-TENFOLD-7: incumbent licences: publishing a comparison, and what the kit may carry
-  - `BD-399` (M5, U19a, feature) frob-scene: asset-populated interiors with licence manifests, inside the proxies' launch shape
-  - `N19a-05` (M2, U19a, task) frob-scene: the ScenePack provenance block (licences, generator, draws, assumed count, group, privacy)
-  - `N37-18` (M3, U37, task) frob-verbs/frob-chronicle: licences at export: one export door, FROB-REF-733, attribution and dependency notices
-  - `N39b-18` (M7, U39b, task) frob-conformance tenfold: the replication kit builder: contents, manifest of hashes, limits and refusals
-  - `N37-21` (M3, U37, task) e2e: `scripts/e2e/safe_private_licence.sh`: a private, research-only scene from import to purge; licence battery
-  - `BD-396` (M5, U30b, feature) verb ground.kit: build a replication kit with the result, protocol and rehearsal, and nothing private
-  - `BD-305` (M3, U37, feature) frob-chronicle/frob-verbs: private places: private root, absent from views, read and export scopes; GATE-SAFE-04, -05
-### NEG-18 (M5) scene asset source `infinigen-indoors` (BSD-3): offline external generator, never in the production graph
-- **need 1**: §19.13: scene.import for single assets and whole generated interiors at M3 (decode, compile, loss report, licence manifest entry)
-  - `N19a-46` (M3, U19a, feature) verb scene.import (assets): one asset through the compiler to a pack with a loss report and a licence entry
-  - `N19c-04` (M5, U19c, task) frob-scene: real-place ingest: twin-package adapter, what import adds, assumed cards, loss report, privacy
-  - `BD-398` (M5, U33a, feature) frob-scene: real-place ingestion (`scene.import`, `scene.fit`) with scale labels and unknown regions; INT-FDGR-01
-  - `N19c-05` (M5, U19c, feature) verb scene.probe-request: the measurement that would settle an unresolved answer (box, quantity, accuracy)
-  - `N19c-03` (M5, U19c, task) frob-scene: three-valued occupancy, the unknown mask, its treatment per consumer; INV-HAB-04; FROB-REF-305
-  - `N19c-09` (M5, U19c, task) OPEN-HAB-5: owner decision on which reconstruction package and version is the import contract
-  - `NEG-23` (M3, UEG, task) scene asset source `hm3d` (academic, non-commercial): user-supplied import of scanned buildings only
-  - `FD-FSS-01` (M5, UF, task) upstream franken_surveillance_system (conditional): twin package landmarks, scale witness, coverage
-  - `N19c-08` (M5, U19c, task) Decide KILL-INGEST: can the real-place gate pass at scale label witnessed or better after one repair cycle
-  - `N19c-07` (M5, U19c, task) e2e GATE-HAB-03: one real place ingested privately, scale label and unknown regions respected, a probe request
-### NEG-19 (M5) scene asset source `google-scanned-objects` (CC-BY 4.0): household clutter, attribution in every export
-- **need 1**: §19.13: scene.import for single assets at M3 (decode, compile, loss report, licence manifest entry)
-  - `N19a-46` (M3, U19a, feature) verb scene.import (assets): one asset through the compiler to a pack with a loss report and a licence entry
-  - `N19c-04` (M5, U19c, task) frob-scene: real-place ingest: twin-package adapter, what import adds, assumed cards, loss report, privacy
-  - `BD-398` (M5, U33a, feature) frob-scene: real-place ingestion (`scene.import`, `scene.fit`) with scale labels and unknown regions; INT-FDGR-01
-  - `N19c-05` (M5, U19c, feature) verb scene.probe-request: the measurement that would settle an unresolved answer (box, quantity, accuracy)
-  - `N19c-03` (M5, U19c, task) frob-scene: three-valued occupancy, the unknown mask, its treatment per consumer; INV-HAB-04; FROB-REF-305
-  - `N19c-09` (M5, U19c, task) OPEN-HAB-5: owner decision on which reconstruction package and version is the import contract
-  - `NEG-23` (M3, UEG, task) scene asset source `hm3d` (academic, non-commercial): user-supplied import of scanned buildings only
-  - `FD-FSS-01` (M5, UF, task) upstream franken_surveillance_system (conditional): twin package landmarks, scale witness, coverage
-  - `N19c-08` (M5, U19c, task) Decide KILL-INGEST: can the real-place gate pass at scale label witnessed or better after one repair cycle
-  - `N19c-07` (M5, U19c, task) e2e GATE-HAB-03: one real place ingested privately, scale label and unknown regions respected, a probe request
-### NEG-20 (M5) scene asset source `robocasa` (code MIT, assets CC BY 4.0): kitchen fixtures and layouts, assets only
-- **need 1**: §19.13: scene.import for single assets at M3 (decode, compile, loss report, licence manifest entry)
-  - `N19a-46` (M3, U19a, feature) verb scene.import (assets): one asset through the compiler to a pack with a loss report and a licence entry
-  - `N19c-04` (M5, U19c, task) frob-scene: real-place ingest: twin-package adapter, what import adds, assumed cards, loss report, privacy
-  - `BD-398` (M5, U33a, feature) frob-scene: real-place ingestion (`scene.import`, `scene.fit`) with scale labels and unknown regions; INT-FDGR-01
-  - `N19c-05` (M5, U19c, feature) verb scene.probe-request: the measurement that would settle an unresolved answer (box, quantity, accuracy)
-  - `N19c-03` (M5, U19c, task) frob-scene: three-valued occupancy, the unknown mask, its treatment per consumer; INV-HAB-04; FROB-REF-305
-  - `N19c-09` (M5, U19c, task) OPEN-HAB-5: owner decision on which reconstruction package and version is the import contract
-  - `NEG-23` (M3, UEG, task) scene asset source `hm3d` (academic, non-commercial): user-supplied import of scanned buildings only
-  - `FD-FSS-01` (M5, UF, task) upstream franken_surveillance_system (conditional): twin package landmarks, scale witness, coverage
-  - `N19c-08` (M5, U19c, task) Decide KILL-INGEST: can the real-place gate pass at scale label witnessed or better after one repair cycle
-  - `N19c-07` (M5, U19c, task) e2e GATE-HAB-03: one real place ingested privately, scale label and unknown regions respected, a probe request
-### NEG-22 (M3) scene asset source `hssd` (CC BY-NC 4.0): user-supplied import only, never redistributed
-- **need 1**: §19.13: scene.import for user-supplied scenes at M3 (decode, compile, loss report, scale label, licence manifest entry)
-  - `N19a-46` (M3, U19a, feature) verb scene.import (assets): one asset through the compiler to a pack with a loss report and a licence entry
-  - `N19c-08` (M5, U19c, task) Decide KILL-INGEST: can the real-place gate pass at scale label witnessed or better after one repair cycle
-  - `N19c-07` (M5, U19c, task) e2e GATE-HAB-03: one real place ingested privately, scale label and unknown regions respected, a probe request
-  - `N19c-04` (M5, U19c, task) frob-scene: real-place ingest: twin-package adapter, what import adds, assumed cards, loss report, privacy
-  - `N19c-02` (M5, U19c, task) frob-scene: scale labels of ingested scenes (four values by authority), scale term of u_reg, FROB-REF-304
-  - `BD-398` (M5, U33a, feature) frob-scene: real-place ingestion (`scene.import`, `scene.fit`) with scale labels and unknown regions; INT-FDGR-01
-  - `WP-32` (M5, U44, epic) WP-32 Real-place ingestion: one real place imported privately, with its scale label and unknown regions
-  - `NEG-23` (M3, UEG, task) scene asset source `hm3d` (academic, non-commercial): user-supplied import of scanned buildings only
-  - `FD-FSS-01` (M5, UF, task) upstream franken_surveillance_system (conditional): twin package landmarks, scale witness, coverage
-  - `NS-12` (M5, U00, feature) North-Star NS-12: your own kitchen (a private scene pack from a walkthrough; scale labels; re-scan requests)
-### NEG-23 (M3) scene asset source `hm3d` (academic, non-commercial): user-supplied import of scanned buildings only
-- **need 1**: §19.13: scene.import for user-supplied scanned scenes (unknown mask, scale label, loss report)
-  - `N19c-07` (M5, U19c, task) e2e GATE-HAB-03: one real place ingested privately, scale label and unknown regions respected, a probe request
-  - `BD-398` (M5, U33a, feature) frob-scene: real-place ingestion (`scene.import`, `scene.fit`) with scale labels and unknown regions; INT-FDGR-01
-  - `WP-32` (M5, U44, epic) WP-32 Real-place ingestion: one real place imported privately, with its scale label and unknown regions
-  - `N19a-46` (M3, U19a, feature) verb scene.import (assets): one asset through the compiler to a pack with a loss report and a licence entry
-  - `N19c-03` (M5, U19c, task) frob-scene: three-valued occupancy, the unknown mask, its treatment per consumer; INV-HAB-04; FROB-REF-305
-  - `N19c-08` (M5, U19c, task) Decide KILL-INGEST: can the real-place gate pass at scale label witnessed or better after one repair cycle
-  - `N19c-04` (M5, U19c, task) frob-scene: real-place ingest: twin-package adapter, what import adds, assumed cards, loss report, privacy
-  - `N19c-02` (M5, U19c, task) frob-scene: scale labels of ingested scenes (four values by authority), scale term of u_reg, FROB-REF-304
-  - `FD-FSS-01` (M5, UF, task) upstream franken_surveillance_system (conditional): twin package landmarks, scale witness, coverage
-  - `NS-12` (M5, U00, feature) North-Star NS-12: your own kitchen (a private scene pack from a walkthrough; scale labels; re-scan requests)
-### NEG-24 (M3) scene asset source `partnet-mobility` (non-commercial research): user-supplied articulated objects only
-- **need 1**: §19.13: scene.import for user-supplied articulated assets (joint mapping, loss report)
-  - `N19a-46` (M3, U19a, feature) verb scene.import (assets): one asset through the compiler to a pack with a loss report and a licence entry
-  - `N19c-04` (M5, U19c, task) frob-scene: real-place ingest: twin-package adapter, what import adds, assumed cards, loss report, privacy
-  - `NEG-23` (M3, UEG, task) scene asset source `hm3d` (academic, non-commercial): user-supplied import of scanned buildings only
-  - `BD-398` (M5, U33a, feature) frob-scene: real-place ingestion (`scene.import`, `scene.fit`) with scale labels and unknown regions; INT-FDGR-01
-  - `N19c-05` (M5, U19c, feature) verb scene.probe-request: the measurement that would settle an unresolved answer (box, quantity, accuracy)
-  - `N19c-03` (M5, U19c, task) frob-scene: three-valued occupancy, the unknown mask, its treatment per consumer; INV-HAB-04; FROB-REF-305
-  - `N19c-09` (M5, U19c, task) OPEN-HAB-5: owner decision on which reconstruction package and version is the import contract
-  - `FD-FSS-01` (M5, UF, task) upstream franken_surveillance_system (conditional): twin package landmarks, scale witness, coverage
-  - `N19c-08` (M5, U19c, task) Decide KILL-INGEST: can the real-place gate pass at scale label witnessed or better after one repair cycle
-  - `N19c-07` (M5, U19c, task) e2e GATE-HAB-03: one real place ingested privately, scale label and unknown regions respected, a probe request
-### NEG-27 (M3) prior-art register for interior generation (retail, warehouse; not read) and the no-novelty claim check
-- **need 1**: Appendix H: the source-register rows for the two retail-scene generators (abstracts only, no URL recorded) and the warehouse builder's documentation pages, as registry entries with their marks
-  - (no mechanical candidates: search INDEX.tsv)
-### NEG-29 (M3) frob-conformance: every hazard is covered by a requirement, a shield or a refusal: the cover map and its check
-- **need 1**: §24: the registry of requirement templates per task family (the names a task can state and a monitor can decide), as the target of the R codes
-  - `N24-KA` (M1, U24a, task) Known-answer registry for Arena (KA-594 to KA-623): requirements, metrics, fixtures, studies, qualification
-  - `N24-CX` (M1, U24c, task) registry: Arena counterexamples CX-259 to CX-269 and the unnumbered ones of the late subsections
-  - `N24a-42` (M1, U24a, task) e2e: arena_requirement_pipeline.sh: a task file from authoring to verdict, and the GATE-ARENA-03 campaign
-  - `BD-122` (M1, U24c, feature) frob-spec, frob-arena: the task file `.ftask`, static admission, and verbs task.new, show, list, check
-  - `N24c-10` (M1, U24c, task) frob-conformance: the eleven Arena known answers as `fixtures` battery rows, each with its negative control
-  - `VERBS-task` (M1, UJL, task) frob-verbs registry: cluster `task`, eight rows, with parity, e2e and schema-snapshot checks
-  - `BD-125` (M1, U24c, feature) frob-arena: M1 task families (stand and recover, threshold delivery, timed docking) with reference scorecards
-  - `BD-201` (M2, U24a, feature) frob-arena: M2 task families: velocity tracking (this bead) and terrain traversal, with reference scorecards
-  - `N24c-08` (M1, U24c, task) frob-spec and frob-arena: property tests for INV-ARENA-01 to -05 and proof obligations PO-ARENA-01 to -04
-  - `N24-REF` (M1, U24c, task) registry: the 21 Arena refusal codes (502, 520 to 539, 552, 840 to 845) with triggers, repairs, exit codes
-- **need 2**: §22.12: the registry of shield kinds available at M3 and M4 (stopping-distance, geofence, energy-budget), as the target of the S codes
-  - `BD-340` (M4, U22b, feature) verb shield.report: the measured shield margin with its drift alarm; GATE-SHIELD-04; adaptive-element rule
-  - `BD-339` (M4, U22b, task) GATE-SHIELD-03 campaign: shields on 5,000 in-envelope and 5,000 shifted worlds; return kept, step cost
-  - `VERBS-shield` (M3, UJL, task) frob-verbs registry: cluster `shield`, four rows, with parity, e2e and schema-snapshot checks
-  - `N22b-25` (M4, U22b, task) frob-shield: assumption monitors (friction, innovation, impacts, tracking, saturation) that trigger the backup
-  - `N22b-19` (M4, U22b, task) Pilot [F]: reduced-order barrier shield: a trained quadruped behind a velocity-level filter, 10⁴ episodes
-  - `N22b-27` (M3, U22b, task) Owner decision OPEN-SHIELD-2: the shield's calibration level α and the per-episode violation budget
-  - `N22c-03` (M4, U22c, task) frob-conformance: Reflex invariant and proof-obligation battery, part II (the twelve properties due by M4)
-  - `NAB-36` (M0, UAB, task) killed-idea register KI-26 to KI-32: control, learning, transfer (sampling evaluator, universal policy)
-  - `BD-338` (M4, U22b, feature) verbs shield.fit, shield.check: runtime shields with a backup controller in frob-shield; GATE-SHIELD-02
-  - `N12-47` (M1, U12, task) Mathematics compendium D.7: estimation, control and safety as an oracle library with law tests
-### ROBOT-cassie (M3) assets/robots/cassie: Cassie from MuJoCo Menagerie (MIT): closed-loop legs, reference for `biped-point`
-- **need 1**: Appendix F: the upstream loop-constraint work item for exact loop closures on the referee, by its identifier
-  - (no mechanical candidates: search INDEX.tsv)
-### ROBOT-fsim-g1 (M1) assets/robots/fsim-g1: the sibling library's G1 builder (30 links, 31.96314202 kg) as profile `g1-reduced-30`
-- **need 1**: Appendix F: the upstream work item that folds or declares the omitted masses of the sibling's G1 catalogue, by its identifier
-  - (no mechanical candidates: search INDEX.tsv)
-### ZOO-balancer-2w (M3) zoo/balancer-2w.fbot: archetype 18, two-wheeled inverted pendulum: C₂, the open-loop pole in closed form
-- **need 1**: §38.6: the derivation file for the balancer's open-loop pole, which the specification names and does not write
-  - `N38a-12` (M0, U38a, task) frob-conformance: known-answer registry: row schema, five rules, derivation files, generated printout
-  - `N38b-47` (M1, U38b, task) frob-conformance: derivation files for six known answers whose truths are named and not written
-  - `N26b-16` (M3, U26b, task) docs/derivations/nemesis: four proof obligations on file; the candidate theorem card for the zero-failure bound
-  - `N26b-17` (M3, U26b, task) e2e: the Nemesis known-answer battery: eleven rows, each with its negative control, in one runner
-  - `N35-30` (M2, U35, task) frob-conformance: the `numerics` battery: ten known answers with their ten negative controls
-  - `N38b-27` (M1, U38b, task) decision OPEN-GAUNT-2: set tolerances for the 133 known-answer rows printed `to set`, by rule and by chapter
-  - `N38b-29` (M1, U38b, task) frob-conformance: negative controls owed by the 72 known-answer rows of the constructions (KA-039 to KA-187)
-  - `N24c-10` (M1, U24c, task) frob-conformance: the eleven Arena known answers as `fixtures` battery rows, each with its negative control
-  - `N25a-08` (M1, U25a, task) Shortcuts that are not proofs: twelve exact counterexample fixtures, shortcut mutants, registered negative controls
-  - `N38b-33` (M1, U38b, task) frob-conformance: negative controls owed by 29 known-answer rows of Reflex, Cortex, Arena, Augur, Autopsy, Atelier
-### ZOO-tri-wheel-stair (M3) zoo/tri-wheel-stair.fbot: archetype 14, two tri-wheel clusters: C₂ outside, C₃ or D₃ inside, riser and tread
-- **need 1**: §33: the admission test of the sibling's tri-wheel cluster geometry module before it is used as an oracle
-  - `BD-127` (M1, U25a, task) Admission for mission work: fsci-opt linprog as second linear-program oracle; fs-ivl and fs-sos behind the airlock
-  - `N33a-09` (M0, U33a, task) frob-conformance: sibling fact probes: FrankenSim's hazards and limits and the ledger notes, re-read at the pin
-  - `BD-008` (M0, U33b, task) INT-ASUP-01 in check-stack and check-deps; FD-ASUP-01: one published asupersync version across siblings
-  - `N34-13` (M0, U34, task) xtask check-stack: stack lock against lockfiles, toolchain files and sibling heads; receipt; drift classes
-  - `NF-02` (M0, UF, task) suite: the toolchain train: moving T here and in every consumed sibling in one coordinated change
-  - `N33a-20` (M1, U33a, task) frob-conformance: M1 oracle admissions: frankenscipy routines (FD-FSCI), franken-kernel identifier forms (FD-FKER)
-  - `N33c-07` (M0, U33c, task) admission: the suite survey, re-reading head, toolchain and asupersync requirement of fifteen sibling repositories
-  - `NF-01` (M0, UF, task) suite: the compatibility train: pin-move procedure, script, train log and guards
-  - `N31a-62` (M8, U31a, task) frob-foundry firmware export [M]: the hardware side: stable-toolchain lane, boundary pattern, timing receipts
-  - `N33-CX` (M0, U33c, task) registry: counterexamples of Suite consumption (CX-352 to CX-357) and the late foundation-fact shortcuts

@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["BD-381", "N12-23", "N12-24", "N12-06", "SPEC-C-06", "N12-51"]
-needs: ["§18.5: the list of contact laws admitted on lockstep tiers and their convex potentials (BD-080, BD-167)", "§15.6: the joint-level stiction, backlash and stop rows whose terms enter the same objective (BD-084, BD-155)"]
-related: ["CARD-T-07", "N12-16", "BD-379"]
+deps: ["BD-381", "N12-06", "N12-23", "N12-24", "N12-37", "N12-51", "SPEC-C-06"]
+needs: []
+related: ["N12-16", "N12-43", "N15a-05", "N15a-08", "N16b-29", "N18a-16", "N18b-28", "N18b-31"]
 gates: []
 plan_refs: ["§12.3 (T-08)", "§10 C-06", "§16.13 (PO-KIN-01)", "§18.12 (INV-TRAC-01)", "§15.6", "Appendix D.3 (fast-tier contact problem)"]
 ---
@@ -45,8 +45,9 @@ certified per law then; steps 2 and 3 below state that work and it is carried ou
 
 Order of work. The beads that implement or use the theorem (the contact laws, the joint rows, the batched solve)
 are `related`, never dependencies of this card. Its dependencies are the card registry, the specification of the
-contact construction, the Lean lane with its pilot and statement binding, and N12-51, whose receipts the card's
-row cites. A bead at M2 that needs a law's convexity certificate depends on N12-51, not on this card.
+contact construction, the Lean lane with its pilot and statement binding, the capsule script N12-37 whose
+per-card stage seals this card's lemma, and N12-51, whose receipts the card's row cites. A bead at M2 that needs
+a law's convexity certificate depends on N12-51, not on this card.
 
 ## Technical approach
 
@@ -77,8 +78,10 @@ theorem psd_add_sum … -- a positive-definite A plus finitely many PSD terms is
    floating-point factorization (the two-sided scaling and refinement tests cover that) and nothing about the
    hard-contact law, which is a complementarity problem and not one convex program.
 5. Relies on it: construction C-06; the batched Cholesky solve; INV-TRAC-01; PO-KIN-01.
-6. Artifacts: `lean/Frob/Cards/T08.lean` and its capsule; `docs/math/cards/T-08.md`; registry row; per-law
-   certificates beside the law definitions.
+6. Artifacts: the registered statement `lean/Frob/Statements/T08.lean` (written first, emitted and bound under
+   N12-24's rule, so the proof is `theorem T08_proof : Frob.Statements.T08.Statement`); `lean/Frob/Cards/T08.lean`
+   and its capsule `target/lean/T08.flncap`; `docs/math/cards/T-08.md`; registry row; per-law certificates beside
+   the law definitions (N12-51).
 
 ## Acceptance criteria
 
@@ -96,17 +99,30 @@ theorem psd_add_sum … -- a positive-definite A plus finitely many PSD terms is
 
 ### Unit tests
 
-`lean/tests/cards/t08/`: `psd_congr_seals`; `psd_sum_seals`; `closure_avoids_blocked_modules`.
+`lean/tests/cards/t08/`: `psd_congr_seals`; `psd_sum_seals`; `closure_avoids_blocked_modules`;
+`psd_congr_without_hypothesis_fails` (the statement with `hH` deleted does not compile: H = −I, J = I is a
+counterexample); `weakened_statement_binding_fails` (a capsule proving PSD only for diagonal H fails the
+statement binding of N12-24).
 `crates/frob-lemma/tests/cards/t08.rs`: `law_certificate_accepts` (a quadratic penalty ℓ(y) = ½·k·y² with k > 0:
 Hessian k, certified by sign); `nonconvex_law_rejected` (ℓ(y) = −½·k·y² on any piece);
 `stiction_term_psd` (Hessian h·τ_b/ε ≥ 0 inside the kink, 0 outside);
 `assembled_hessian_small_exact` (A = diag(2, 3), one contact with J = (1, 1), H = 4: A + JᵀHJ = [[6, 4], [4, 7]],
-LDLᵀ pivots 6 and 13/3, both positive).
+LDLᵀ pivots 6 and 13/3, both positive); `gram_entry_changed_rejects` (one Gram entry of a per-law `sos-gram`
+certificate changed by 1/7: `reject`); `stale_law_receipt_fails` (a law whose definition hash changed after its
+N12-51 receipt was issued: the M5 re-read fails with the law named).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals the lemma; `scripts/e2e/lemma_coverage.sh` (bead N12-36)
-lists the per-law certificates.
+`scripts/e2e/lemma_lean_capsule.sh --card T-08` (the per-card stage of bead N12-37, a dependency) seals the
+lemma, bundles it and verifies it from the empty environment; this card adds to that stage, for T-08 only, the
+re-read of the per-law receipts: `frob prove list --json`, then `frob prove verify <law bundle> --json` for each
+law admitted on a lockstep tier, asserting `accept` and a definition hash equal to the law's current one. (The
+coverage script N12-36 counts derived kernels, not contact laws, so it does not carry these lines.) The stage
+writes NDJSON lines (STD-E2E helper) with `ts`, `script`,
+`bead` ("CARD-T-08"), `step` (`T-08/lemma/<stage>` or `T-08/law/<law>/<piece>`), `event`, the exact command line,
+exit code, wall time, peak memory, the capsule hash or certificate hash with the checker identity, the law's
+definition hash, the expected and observed verdict, and on a failure the first failing rule (or `fln` diagnostic)
+and the path to reproduce; the `summary` counts laws admitted on lockstep tiers and laws with a current receipt.
 
 ### Known answers and negative controls
 

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "traction", "upstream", "frankensim", "solid"]
 parent: "WP-37"
-deps: ["FDEF-02", "NF-01", "STD-E2E"]
+deps: ["FDEF-02", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-033", "BD-037", "BD-117", "BD-245"]
+related: ["N33b-08", "NF-07"]
 gates: ["INT-FSIM-05"]
 plan_refs: ["Appendix F.1", "Appendix F.2 row 2", "Appendix F.3", "§33.8", "§33.11", "§18.9"]
 ---
@@ -69,8 +69,10 @@ defect; the chord form is preferred because it removes the branch.
 
 A second-order point the fix should settle. With θ = 32 rad and δ = 3·10⁻¹⁵ rad per step, θ′ = θ + δ still
 rounds to θ, so over 400 steps the incremental heading does not advance while a one-shot step advances it by
-1.2·10⁻¹² rad. Over one metre that is a position difference of 1.2·10⁻¹² m, at the edge of the admission test's
-10⁻¹². A compensated heading (carry the rounding remainder of θ + δ into the next step) makes incremental and
+1.2·10⁻¹² rad. The position difference that follows is about 6·10⁻¹³ m (the one-shot chord points along the mean
+heading θ + 6·10⁻¹³ rad, so over one metre it sits 6·10⁻¹³ m to the side of the incremental path), inside the
+admission test's 10⁻¹² m but with less than a factor of two to spare, and the final headings differ by the whole
+1.2·10⁻¹² rad. A compensated heading (carry the rounding remainder of θ + δ into the next step) makes incremental and
 one-shot integration agree to rounding. Whether to carry the remainder in the state is FrankenSim's decision;
 if it does not, the test's incremental-against-one-shot row must use a case whose expected difference is
 computed, and the report says so.
@@ -79,7 +81,9 @@ Additive form: a corrected step beside the present one, the present one document
 FrankenSim's choice under its rules.
 
 **Interim posture here.** Known answers for wheeled bases use the independent formula in `frob-conformance`;
-`planar_drive` is listed `not-admitted` in the oracle registry and nothing cites it.
+`planar_drive` is held out in the oracle register (`crates/frob-conformance/registry/oracles.toml`, N38a-04: row
+`fs-mbd-planar-drive`, `admission.status = "not-admitted"`, a `held_out` reason citing INT-FSIM-05 and this
+item, written by BD-033) and nothing cites it.
 
 **Fixture (one reproducible failing fixture, DESIGN).** `tests/upstream/FD-FSIM-11/`, opened by BD-037 and kept current
 by this bead: one test tagged `FD-FSIM-11`, compiled as the `frob-conformance` integration test `upstream_fd_fsim_11` and
@@ -104,7 +108,9 @@ against the new pin.
 near-zero-curvature case (θ = 32 rad, wheel speeds 1 and 1 + 6·10⁻¹³ m/s, track 0.5 m, Δt = 1/400 s, 400
 steps: one metre along the heading, about (0.83422336, 0.55142668) m); wrapped against unwrapped headings;
 incremental against one-shot integration. When it passes at the new pin, `planar_drive` is admitted as an
-oracle: its registry entry changes to `admitted` with the pin, and the wheeled known answers gain a
+oracle: that passing run of BD-033's test is the one path that clears the register row (`held_out` emptied,
+`admission.status = "admitted"`, the role `reference:planar-drive`, DESIGN in the register's role grammar, and an
+appended `[[pin_move]]` record naming the new pin), and the wheeled known answers gain a
 differential check between the formula and the sibling.
 
 **Fallback if the change cannot land.** The independent formula stays the only oracle for rolling.

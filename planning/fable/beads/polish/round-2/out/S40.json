@@ -1,0 +1,200 @@
+{
+ "round": 2,
+ "slice": "S40",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "N39a-41",
+   "kinds": [
+    "tests",
+    "correct",
+    "deps"
+   ],
+   "what": "The verdict rule (N39a-32) refuses a cell without a tie record (verdict-input-missing), so the 24-family and four-family rehearsal cells could never reach their asserted verdicts. Fixtures now hold arm C's campaigns (RMT_C / RMT_A = 15, same scope), step 10 computes the three-arm object and tie record through the scorer and asserts tied = false; construction test extended; added dep N39b-43 (no cycle). Step 10 wording '24-family' count corrected to three cells plus the four-family cell."
+  },
+  {
+   "bead": "N39b-43",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "Applied round-1 request: the tie record now satisfies N39a-32's TieView {tied, against, hash}; tied defined from both prongs (ablation tie, or r_T and r_C >= 0.8); against carries arm and prong; arm C disqualified gives a 'not available' record with tied = false; arm C never run gives no record (verdict refuses). Added test tie_record_is_tieview and an acceptance line."
+  },
+  {
+   "bead": "N39b-19",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps"
+   ],
+   "what": "Module layout contradicted the harness skeleton N39a-01 (main/input/exact/... vs ratio/bootstrap/guard/.../rng); aligned to N39a-01 and named what this bead adds. Inputs omitted the records the verdict reads (pre-analysis, disqualification, adjudication label, replication record) so the scorer would refuse every verdict; added them, with the tie record computed in threearm (N39b-43). Added the ceilings (item 10: its own AC prints 3.75; level 1 must reproduce every published number) with the boundary consequence for ceiling.rs and the thesis calculators; added dep N39a-37."
+  },
+  {
+   "bead": "N39ax-01",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Pool check 3 requires an unresolved (unknown-with-witness) mission in every stratum, and N39a-14 carries it in non-unknown strata as a companion truthful-unknown card, but the envelope allocation had none, so envelope would fail its own check. One timed-docking query becomes the envelope unresolved control (two admissible plant gains, differing intervals) as a companion card; unresolved-answers paragraph and coverage test updated."
+  },
+  {
+   "bead": "N39b-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Arm-B disqualification said 'no verdict other than descriptive is issued'; the verdict rule N39a-32 returns no-denominator (not a verdict). Aligned."
+  },
+  {
+   "bead": "N39b-07",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The e2e plants 'fires on r_T alone' and 'tie on point estimate with unequal scope' could not be caught: the two strata gave no r_C values and no near-miss case. Now three variants of the three-arm stratum with C values: (a) tie by recovery r_T = r_C = 4/5; (b) near miss r_T = 4/5, r_C = 2/3, arm C 22 of 24 with q = 7/5 (catches both mutants); (c) r_T = r_C = 4/9."
+  },
+  {
+   "bead": "N39b-12",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "Step 9 three-arm stratum gave only T values, so the recovery prong (which needs r_C) could not produce the tie reading asserted in step 10, and N39b-07's mutants had no case to fire on; now three replay variants with C_B, C_W, C_F and arm C scope/ratio, tie records asserted. Fixture description said '24 rehearsal families in two strata' while stratum one alone holds 24; corrected. Graph finding: all 25 deps are used directly by named steps; kept."
+  },
+  {
+   "bead": "N39b-15",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "Unit test w4_warm_limit_refused accepted the sentence '2.12 at 10 amendments, S = 4 h, N* = 5', which has no interval and so violates the bead's own rule W4; the accepted sentence now carries [L, U] against a synthetic warm cell, and the same sentence without interval or without S and N* is asserted refused."
+  },
+  {
+   "bead": "N39b-33",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "The ratified block uses the outcome engine's field names (N39b-05: word_at, noninferiority_margin, max_confirmatory_cells) and the generated [thresholds] table uses N41-15's (confirm_at, margin, confirmatory_cells_max); config_table_matches_block could not be implemented without a mapping. The fixed projection is now stated."
+  },
+  {
+   "bead": "N39b-34",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Moved VERBS-eval from related to deps: the verb registry row (which lists N39b-34 as an extension of eval.preanalyze) comes first, as for the sibling extension N23b-34."
+  },
+  {
+   "bead": "N39b-35",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "Dropped dep N39b-34 (moved to related): the std-only contrast module of the scorer cannot call the frob-arena verb and lists it as out of scope; the dep chained the whole scorer (N39b-19) behind the product verb. Added item 8, the tail-free signal of RISK-59 (label no-tail-observed when n is below the necessary count and every time of an arm is within 3/2 of its fastest; changes no verdict): GATE-WS-07's suite row (N41-31) fires this detector 100 times, and no bead implemented it. AC and test tail_free_label added."
+  },
+  {
+   "bead": "N39b-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Background said N39-KA holds TF-01 to TF-22; the registry now holds TF-01 to TF-30 and says TF-23 to TF-30 are mechanism rows outside this gate's battery. Stated so the target does not load them into the GATE-TENFOLD-03 battery."
+  },
+  {
+   "bead": "N39b-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The e2e script had no header, no plants list and none of the standard NDJSON fields; added header with seed and the six plants, the standard fields, metrics against the card's band maximum, failure context and the summary."
+  },
+  {
+   "bead": "N39b-40",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Same as N39b-39 for tenfold_suitegen.sh: header, plants, standard NDJSON fields, mutant rejection as a metric against 100%, quota counts against 4 and 2, failure context, summary."
+  },
+  {
+   "bead": "N39b-45",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Dropped dep N39b-43 (moved to related): the ablations do not use the recovery ratios (the bead puts them out of scope); the verb N39b-46, the script N39b-47 and the gate N40-22 depend on both."
+  },
+  {
+   "bead": "N39b-46",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Applied round-1 request (UJL-2): VERBS-report moved from related to deps; no cycle."
+  },
+  {
+   "bead": "N39b-47",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The four fixture strata gave only T values, yet the gate requires r_C with an interval for every stratum and the readings need both measures; added C_B, C_W, C_F per stratum (r_C equal to r_T in each), full readings, and intervals asserted on both measures for S1, S2 and S4. Added stratum S5 (r_T = 4/5, r_C = 2/3, mixed, unrecovered phase named): the gate bead N40-22's record script asserts one stratum of each reading, including mixed, on this fixture, which had none."
+  },
+  {
+   "bead": "N40-14",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "N39a-15 builds open with a bare read of the five gates' register statuses, while this bead said open calls may_open; stated that this bead replaces that read with may_open, so a status counts only when its record meets the reading rule of its row."
+  },
+  {
+   "bead": "N40-15",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied both round-1 requests after checking the plan: tenfold06 calls N39b-05's apply and outcome_table() and checks the table digest bound with the parameter block (table kept only as a reader's copy; N39b-05 governs); step 4 reads N39b-11's decisions.json instead of restating, and the all-under-3 consequence is attributed to N39b-05's action list (N39b-11 does not record it); c corrected to campaigns per family (n = m*c) with the arithmetic 24 x 2.9 = 69.6, and the plan's OPEN-TENFOLD-4 approval sentence restored; tests outcome_table_digest_must_match, rows_come_from_apply and a stale decisions.json case added; tenfold_06.sh now takes the rehearsal gate directory from N39b-12's replay mode with --keep-gate and the decision records from the decision beads' scripts, writes no second fixture (N39b-47's three-arm fixture is the one), gains a header with plants and two plants (decision missing, table edited). N39b-11 was already a dep. Graph finding: all 21 deps are used directly (expected ranges N00-20, ledgers N39a-24, censoring N39a-27, bootstrap, guard, monitor, compute envelope N39b-29, ADR records N40-03, owner inputs N41-15, the pre-opening gates, the decision beads); kept."
+  },
+  {
+   "bead": "N40-20",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Applied round-1 request: tenfold.arm-changed replaced by the emitted tenfold.frozen-arm-changed (exit 9), audit-incomplete exit 3, in text, test and e2e. Scope said this bead records the protocol controls, which are N39b-38's and run after opening; marked as context. Unit test ensemble_is_labelled tested the report generator (covered by N39b-38) and was replaced by rival_class_and_short_program_arm, which tests two acceptance lines that had no test; e2e plants the missing short-program arm."
+  },
+  {
+   "bead": "N40-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its e2e description said N39b-47 runs on the three-arm record of tenfold_06.sh; N39b-47 owns its own fixture and takes nothing from tenfold_06.sh. Corrected (the fixture now has five strata, including the mixed one this bead's record script asserts)."
+  },
+  {
+   "bead": "N41-31",
+   "kinds": [
+    "complete",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Step 3 relies on a completion-spread detector and label no-tail-observed that no bead built ('the detectors themselves' were out of scope with no owner); now owned by N39b-35 item 8, named in Out, dep N39b-35 added (no cycle); step 3 scores the tail-free samples through the scorer and the e2e logs each scorer call and per-sample label, LB and bootstrap figure."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N39a-37",
+   "what": "score/ceiling.rs evaluates its formulas through frob_conformance::thesis (N00-17) and pools through N39a-24's inputs::for_ceilings, both outside the scorer boundary of N39a-01 (score/ may import only std and frob_cert). The standalone scorer (N39b-19) must reproduce the ceilings in the kit's bare-compiler build; state that ceiling.rs and the functions it calls are inside the boundary and included by path, and extend the boundary lint to them."
+  },
+  {
+   "bead": "N00-17",
+   "what": "The thesis calculators are called by the ten-fold scorer's ceiling module, which the replication kit builds with a bare rustc (N39b-19); the module must use only std and frob_cert's exact rationals (not Ratio<i128> from an external crate) so it can be included by path."
+  },
+  {
+   "bead": "N39a-32",
+   "what": "Step 2 returns no-denominator (arm B disqualified) before disqualified (arm A); the plan's verdict table puts arm A's disqualification first, and the bead's own combiner gives arm A's disqualification precedence. When both arms are disqualified the cell should read disqualified for arm A (its proof-kind suspension follows) and note the missing denominator."
+  }
+ ],
+ "unchanged": 16,
+ "notes": "All 38 slice beads read in full. Unchanged: N39ax-02, N39b-02, N39b-03, N39b-04, N39b-05, N39b-06, N39b-11, N39b-14, N39b-23, N39b-28, N39b-29, N39b-30, N39b-36, N39b-37, N39b-38, N40-19 (numbers re-derived: 288 and 69.6 device-hours, the 10% band, 32/46/49/182, 0.78568, [1,512, 1,632], 625/62 and 300/31). All five round-1 requests addressed to the slice were checked against the plan and applied (N39b-43, N39b-46, N40-15 x2, N40-20). Most changes are cross-bead coherence: the three-arm tie record that the verdict needs (N39a-41, N39b-43, N39b-12, N39b-07, N39b-47), the scorer's inputs and layout (N39b-19), the outcome table's single definition (N40-15), and a RISK-59 detector that had no owner (N39b-35, N41-31). Three requests made to beads outside the slice (N39a-37, N00-17, N39a-32). graph_check cycles: 0 after the dep edits. The slice looks settled apart from those three requests."
+}

@@ -1,0 +1,1218 @@
+{
+ "group": "GAB",
+ "needs": [
+  {
+   "bead": "NAB-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-03"
+   ],
+   "note": "the glossary only refrains from defining identifier prefixes (field rule 7); no check of this bead reads the prefix table"
+  },
+  {
+   "bead": "NAB-01",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already a dependency: BD-004 owns the generator table of check-generated"
+  },
+  {
+   "bead": "NAB-02",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already a dependency: BD-004 (check-contracts and the ten-section template)"
+  },
+  {
+   "bead": "NAB-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-02"
+   ],
+   "note": "the component of BD-022 that owns registries/verbs.toml and its loader (rule 3: one part, so the component, not the capstone); the lint now names the registry's prose fields as that schema does (fixed in NAB-02)"
+  },
+  {
+   "bead": "NAB-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-08"
+   ],
+   "note": "N00-08 keeps rule H-7 as an exit-review item and hands the mechanical half to this bead; neither waits for the other"
+  },
+  {
+   "bead": "NAB-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-10"
+   ],
+   "note": "the corrected row's four states are compared with the state enumeration of the hypothesis register's schema; the rows N00-11 and N00-12 are not read (H-29 is a literal in the row)"
+  },
+  {
+   "bead": "NAB-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-03"
+   ],
+   "note": "registries/subsystems.toml (23 names) is what the completeness test compares the glossary's subsystem records with (test wording fixed in NAB-06)"
+  },
+  {
+   "bead": "NAB-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-01"
+   ],
+   "note": "rule 5: the source register comes first; N00-01 depends on NAB-09 (G00), so a dependency here would close a cycle"
+  },
+  {
+   "bead": "NAB-09",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005, which depends on BD-001 (the stack lock)"
+  },
+  {
+   "bead": "NAB-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01"
+   ],
+   "note": "the gate record format and loader (statuses pass and not-run, the added field `sources`); BD-025 is already a dependency; the rows of N40-02 are not needed, the lint's tests run on fixtures"
+  },
+  {
+   "bead": "NAB-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-01"
+   ],
+   "note": "the evidence-label lint finds the FACT statements and shares the file walker; this lint grades their citations (cite.fact-without-citation)"
+  },
+  {
+   "bead": "NAB-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-06"
+   ],
+   "note": "the lint reads the ledger's `rerun` status as an input and its own tests run on fixture ledgers; N00-06 waits on the pilot re-runs and on NAB-15, so a dependency would hold the lint behind them; the two citation scans overlap (reported)"
+  },
+  {
+   "bead": "NAB-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-16"
+   ],
+   "note": "N00-16 consumes these records and appends their `reread` entries; the dependency runs from N00-16 to here (edge recorded)"
+  },
+  {
+   "bead": "NAB-11",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already a dependency: BD-001"
+  },
+  {
+   "bead": "NAB-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-13"
+   ],
+   "note": "rule 5: source records come first; N00-13 depends on NAB-12 (G00)"
+  },
+  {
+   "bead": "NAB-12",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-34"
+   ],
+   "note": "the re-read review works through these records and depends on them (G00)"
+  },
+  {
+   "bead": "NAB-12",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-039"
+   ],
+   "note": "the harness records the licences and versions of what it installs and later updates these records; the plan-time records do not wait for it"
+  },
+  {
+   "bead": "NAB-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-10",
+    "N00-11",
+    "N00-12"
+   ],
+   "note": "rule 5: source records come first; the hypothesis rows resolve their figures to them and depend on NAB-13 (G00)"
+  },
+  {
+   "bead": "NAB-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-34"
+   ],
+   "note": "the re-read review depends on these records (G00)"
+  },
+  {
+   "bead": "NAB-13",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N19b-02"
+   ],
+   "note": "M3, later than this M0 bead; the asset-licence join reads these source records"
+  },
+  {
+   "bead": "NAB-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-31"
+   ],
+   "note": "the audit re-reads and appends to the register (N00-31 depends on NAB-09); this bead only lists what is pending"
+  },
+  {
+   "bead": "NAB-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-029",
+    "N21c-01"
+   ],
+   "note": "the beads that will measure items NV-02 to NV-04; the list of unverified items is data entry and does not wait for the measurements"
+  },
+  {
+   "bead": "NAB-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-227",
+    "BD-369"
+   ],
+   "note": "M3 and M4, later than this M0 bead; their values stay `assumed`"
+  },
+  {
+   "bead": "NAB-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-06"
+   ],
+   "note": "rule 5: the plan-check source records come first; N00-06 depends on NAB-15 (G00)"
+  },
+  {
+   "bead": "NAB-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-35"
+   ],
+   "note": "N00-35 re-runs three of these checks and depends on N00-06, which depends on NAB-15"
+  },
+  {
+   "bead": "NAB-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N40-02"
+   ],
+   "note": "the script plants a gate citing a source in a scratch copy of the real gates.toml, which needs the record format and at least one entered row"
+  },
+  {
+   "bead": "NAB-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03"
+   ],
+   "note": "the kill-row format of registries/gates.toml that the lint ev.kill-gate-unknown resolves against; the ledger rows N40-23 to N40-29 are needed by the row beads NAB-18 and NAB-19, not by the schema"
+  },
+  {
+   "bead": "NAB-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-07",
+    "N00-09"
+   ],
+   "note": "readers of the matrix, not prerequisites (N00-09 is M1); neither reads a row's decision as drafted: the funding-record scan that does is the revive lint of NAB-32"
+  },
+  {
+   "bead": "NAB-17",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-10"
+   ],
+   "note": "a history entry names a hypothesis id as evidence; the resolution of those ids is checked by NAB-22, which depends on N00-10"
+  },
+  {
+   "bead": "NAB-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-23",
+    "N40-27"
+   ],
+   "note": "the two fallback ledgers that exist at M0 (KILL-MARROW-GUARD, KILL-SINEW-ROWS; KILL-MCP); the ledgers of M1 are related edges and their names are checked with a recorded skip until then (NAB-17 step 6)"
+  },
+  {
+   "bead": "NAB-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-23",
+    "N40-27"
+   ],
+   "note": "the two fallback ledgers that exist at M0; the five ledgers of M1 are related edges, checked with a recorded skip until then (NAB-17 step 6)"
+  },
+  {
+   "bead": "NAB-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-07"
+   ],
+   "note": "the pilot rows are entered by the pilot beads of the owning units, many at later milestones; the completeness check runs in the ledger's own test and in the sweeps"
+  },
+  {
+   "bead": "NAB-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-309",
+    "BD-349"
+   ],
+   "note": "M3 and M4, later than this M0 bead; the rows only summarize the rejected methods"
+  },
+  {
+   "bead": "NAB-20",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-11",
+    "N00-12"
+   ],
+   "note": "six rows cite hypothesis rows by id; the join to the hypothesis register is checked in NAB-40, which depends on them"
+  },
+  {
+   "bead": "NAB-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N00-07"
+   ],
+   "note": "next_entries is a pure function of the queue and an active count; the cap check and the refusal of a fifth are N00-07's and call it, so nothing here waits for the ledger"
+  },
+  {
+   "bead": "NAB-21",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-06"
+   ],
+   "note": "a shared convention (which milestone an item belongs to); the queue stores its own milestones"
+  },
+  {
+   "bead": "NAB-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04"
+   ],
+   "note": "the exit query and its gate-report.json, from which the due list and the completeness check read recorded gates"
+  },
+  {
+   "bead": "NAB-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-03"
+   ],
+   "note": "the kill rows with their deciding milestones and decision ADRs; N40-30 (the by-exit schedule) is M1, later than this M0 bead: related edge"
+  },
+  {
+   "bead": "NAB-22",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N00-10"
+   ],
+   "note": "the due list reads hypothesis state changes and the completeness check resolves hypothesis ids"
+  },
+  {
+   "bead": "NAB-22",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N00-07"
+   ],
+   "note": "the due list reads the active Moonshot items and the completeness check re-checks the cap against pilots.toml"
+  },
+  {
+   "bead": "NAB-22",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N40-05"
+   ],
+   "note": "the exit record whose existence triggers the completeness check; that the exit record lists the sweep as an input of the next milestone is a request to N40-05, not a dependency of it"
+  },
+  {
+   "bead": "NAB-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04"
+   ],
+   "note": "the M0 exit report the sweep consumes; N40-30 is M1, later than this M0 bead: related edge"
+  },
+  {
+   "bead": "NAB-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-14"
+   ],
+   "note": "rule 7: the sweep reads the M0 re-audit (records KI-61, KI-59, KI-62)"
+  },
+  {
+   "bead": "NAB-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N00-34"
+   ],
+   "note": "rule 7: no reading task may be open for a gate recorded at M0"
+  },
+  {
+   "bead": "NAB-23",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N00-06"
+   ],
+   "note": "rule 7: the re-run status of the plan-time checks (records KI-44, KI-56, KI-34)"
+  },
+  {
+   "bead": "NAB-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-04",
+    "N40-30"
+   ],
+   "note": "the M1 exit report and the kill decisions due at M1 cross-checked against the ledgers"
+  },
+  {
+   "bead": "NAB-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-13"
+   ],
+   "note": "the record of GATE-TENFOLD-02; BD-143 is already reached through the dependency BD-147"
+  },
+  {
+   "bead": "NAB-24",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-11"
+   ],
+   "note": "the schedule gate of M0 plus M1"
+  },
+  {
+   "bead": "NAB-25",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-224, which depends on N40-04 and N40-30"
+  },
+  {
+   "bead": "NAB-25",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-224, which depends on BD-216 and BD-217"
+  },
+  {
+   "bead": "NAB-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-16"
+   ],
+   "note": "rule 7: the measured specializable share decides the row on kernel specialization and the first Moonshot-queue entry"
+  },
+  {
+   "bead": "NAB-25",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-224, which depends on N40-33"
+  },
+  {
+   "bead": "NAB-26",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-319"
+  },
+  {
+   "bead": "NAB-26",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-319, which depends on N40-15 and BD-317"
+  },
+  {
+   "bead": "NAB-26",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-319, which depends on BD-310"
+  },
+  {
+   "bead": "NAB-26",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N00-20"
+   ],
+   "note": "the lever register whose M3 scoring the sweep reads"
+  },
+  {
+   "bead": "NAB-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-378"
+  },
+  {
+   "bead": "NAB-27",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-378, which depends on BD-328 and BD-321"
+  },
+  {
+   "bead": "NAB-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28c-45"
+   ],
+   "note": "rule 7: the record of GATE-ATEL-19 (the reuse ledger), M3"
+  },
+  {
+   "bead": "NAB-27",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-378, which depends on N40-34"
+  },
+  {
+   "bead": "NAB-28",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered through its dependency NAB-27, whose dependency BD-378 depends on N40-04 and N40-30"
+  },
+  {
+   "bead": "NAB-28",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-412, which depends on BD-397"
+  },
+  {
+   "bead": "NAB-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-32"
+   ],
+   "note": "rule 7: the KILL-REFLECT decision moves the kernel-reflection row; BD-382 is already reached through BD-412"
+  },
+  {
+   "bead": "NAB-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered through its dependency NAB-28 (by NAB-27 and BD-378, which depends on N40-04 and N40-30)"
+  },
+  {
+   "bead": "NAB-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-07"
+   ],
+   "note": "the pilot ledger's state of every Moonshot pilot, read for the queue turnover"
+  },
+  {
+   "bead": "NAB-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N19b-20"
+   ],
+   "note": "rule 7: the KILL-LIVING decision, which reads the proxy-adequacy pilot (GATE-HAB-09); the epics BD-415 and BD-416 are never a carrier"
+  },
+  {
+   "bead": "NAB-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-16"
+   ],
+   "note": "the record of GATE-TENFOLD-07 with its ledgers; N40-22 is already reached through BD-434; the epics BD-432 and BD-433 are never a carrier"
+  },
+  {
+   "bead": "NAB-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-20"
+   ],
+   "note": "the lever register whose M7 scoring the sweep reads"
+  },
+  {
+   "bead": "NAB-30",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N00-28"
+   ],
+   "note": "the bet register and its verdict rule"
+  },
+  {
+   "bead": "NAB-31",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-442, which depends on N40-04 and N40-30"
+  },
+  {
+   "bead": "NAB-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N00-07"
+   ],
+   "note": "the pilot ledger's final state"
+  },
+  {
+   "bead": "NAB-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-10"
+   ],
+   "note": "the hypothesis states the records carry and the once-only rule the lint enforces; N00-10 holds NAB-32 as related (G00), so the dependency runs this way"
+  },
+  {
+   "bead": "NAB-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-03"
+   ],
+   "note": "a shared convention: the ADR directory and form; the revival template and its checks are defined in this bead"
+  },
+  {
+   "bead": "NAB-32",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already a dependency: BD-005 creates registries/refusals.toml; the three rows are N13-REF (M0), N18-REF and N22-REF (M1), resolved in NAB-38, NAB-33 and NAB-36"
+  },
+  {
+   "bead": "NAB-32",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N00-01"
+   ],
+   "note": "a shared convention (the banned words); the revive lint does not call the wording lint"
+  },
+  {
+   "bead": "NAB-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-013"
+   ],
+   "note": "the carrier of the surviving form (the dialect lint); a register entry does not wait for its carrier"
+  },
+  {
+   "bead": "NAB-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N18-REF"
+   ],
+   "note": "FROB-REF-245 is a row of the Traction refusal registry, M1, later than this M0 bead; checked with a recorded skip until then (NAB-32 step 4)"
+  },
+  {
+   "bead": "NAB-34",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-181"
+   ],
+   "note": "M2, later than this M0 bead; the carrier of the standing test"
+  },
+  {
+   "bead": "NAB-34",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-214",
+    "BD-268"
+   ],
+   "note": "M2 and M3, later than this M0 bead; carriers of the surviving form"
+  },
+  {
+   "bead": "NAB-35",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19b-16",
+    "N19b-20"
+   ],
+   "note": "M6, later than this M0 bead; the pilot and the KILL-LIVING decision that read GATE-HAB-09 (the epics BD-415 and BD-416 are never a carrier)"
+  },
+  {
+   "bead": "NAB-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-106"
+   ],
+   "note": "M1, later than this M0 bead; it owns the mecanum negative control"
+  },
+  {
+   "bead": "NAB-36",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N22-REF"
+   ],
+   "note": "FROB-REF-817 is a row of the Reflex refusal registry, M1, later than this M0 bead; checked with a recorded skip until then (NAB-32 step 4)"
+  },
+  {
+   "bead": "NAB-36",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-338"
+   ],
+   "note": "M4, later than this M0 bead; it owns the three counterexamples as negative controls"
+  },
+  {
+   "bead": "NAB-36",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-11",
+    "N00-12"
+   ],
+   "note": "the records cite hypothesis rows by id; the join is checked in NAB-40, which depends on them"
+  },
+  {
+   "bead": "NAB-37",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-309",
+    "BD-349"
+   ],
+   "note": "M3 and M4, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-37",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-124"
+   ],
+   "note": "M1, later than this M0 bead; it owns the enumeration"
+  },
+  {
+   "bead": "NAB-37",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-11",
+    "N00-12"
+   ],
+   "note": "the records cite hypothesis rows by id; the join is checked in NAB-40, which depends on them"
+  },
+  {
+   "bead": "NAB-38",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-REF"
+   ],
+   "note": "FROB-REF-214 is a row of the Marrow refusal registry, M0: the acceptance criterion that the code exists with its meaning needs it"
+  },
+  {
+   "bead": "NAB-38",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-325"
+   ],
+   "note": "M4, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-38",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-380"
+   ],
+   "note": "M5, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-38",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N00-12"
+   ],
+   "note": "the records cite hypothesis rows by id; the join is checked in NAB-40, which depends on them"
+  },
+  {
+   "bead": "NAB-39",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-15"
+   ],
+   "note": "each withdrawn claim of KI-61 must resolve to a record of the claims-wording registry (test ki61_wordings_match_claims_registry)"
+  },
+  {
+   "bead": "NAB-39",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N00-17",
+    "BD-040",
+    "BD-217",
+    "BD-218"
+   ],
+   "note": "carriers of the surviving forms of KI-59 and KI-62; the record's own arithmetic is recomputed by the harness of NAB-32; BD-217 and BD-218 are M2"
+  },
+  {
+   "bead": "NAB-39",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N00-11",
+    "N00-12"
+   ],
+   "note": "the records cite hypothesis rows by id; the join is checked in NAB-40, which depends on them"
+  },
+  {
+   "bead": "NAB-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-10",
+    "N00-11",
+    "N00-12"
+   ],
+   "note": "the index is checked against the register: every REFUTED or NARROWED row has a record and each record's state equals the register's"
+  },
+  {
+   "bead": "NAB-40",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-207"
+   ],
+   "note": "M2, later than this M0 bead; the carrier of the surviving form; the row of GATE-SPARK-23 itself is N40-10 (edge recorded)"
+  },
+  {
+   "bead": "NAB-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-17"
+   ],
+   "note": "the owner-agrees test reads the corrected ceilings (7.69; 842.8 ÷ 575.7) from the thesis calculators' fixture"
+  },
+  {
+   "bead": "NAB-41",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-02",
+    "N40-27"
+   ],
+   "note": "pin DX-07 reads the milestone of GATE-FOUNDRY-12 (a row of N40-02) and of KILL-LIFECYCLE (a row of N40-27, M6); the register's list of resolutions is N40-09, M1 and later: related edge; N40-10 does not carry this row"
+  },
+  {
+   "bead": "NAB-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N40-02",
+    "N40-10"
+   ],
+   "note": "the gate record format and the entered gate rows (N40-10 for the gates of the late subsections) that a placed idea's gates must resolve to; kill rows of M1 ledgers are checked with a recorded skip until then"
+  },
+  {
+   "bead": "NAB-42",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N41-16"
+   ],
+   "note": "the export itself is the tracker's own JSONL, present before any bead is worked; what the lint needs is the tracker-export reader of scripts/tracker-check.sh (N41-16, M0), through which carrier keys and states are read"
+  },
+  {
+   "bead": "NAB-43",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "not a prerequisite: the seed set is the tracker's own content and the carriers are already named by current key in this bead"
+  },
+  {
+   "bead": "NAB-47",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-27"
+   ],
+   "note": "the fallback ledger that exists at M0 and holds five of the kill gates named (KILL-DR among the six quoted triggers); the four ledgers of M1 are related edges, checked with a recorded skip until then"
+  },
+  {
+   "bead": "NAB-49",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-217"
+   ],
+   "note": "M2, later than this M0 bead; the M2 sweep NAB-25 reads the trigger"
+  },
+  {
+   "bead": "NAB-49",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-164"
+   ],
+   "note": "M2, later than this M0 bead; the trigger is read after GATE-HAB-13"
+  },
+  {
+   "bead": "NAB-49",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "FD-FSIM-04"
+   ],
+   "note": "M2, later than this M0 bead; the placed form of the idea rests on this upstream item"
+  },
+  {
+   "bead": "NAB-50",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N40-03"
+   ],
+   "note": "the script runs the lints and the due list against the real gate register with its kill rows; N40-30 is M1, later than this M0 bead: related edge"
+  },
+  {
+   "bead": "NAB-50",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N41-16"
+   ],
+   "note": "the tracker-export reader of scripts/tracker-check.sh, which the carrier checks of the script run through (also reached through NAB-42)"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "NAB-18",
+   "dep": "N40-24",
+   "as": "related",
+   "why": "need 1 of NAB-18: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-18",
+   "dep": "N40-25",
+   "as": "related",
+   "why": "need 1 of NAB-18: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-18",
+   "dep": "N40-26",
+   "as": "related",
+   "why": "need 1 of NAB-18: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-19",
+   "dep": "N40-24",
+   "as": "related",
+   "why": "need 1 of NAB-19: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-19",
+   "dep": "N40-25",
+   "as": "related",
+   "why": "need 1 of NAB-19: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-19",
+   "dep": "N40-26",
+   "as": "related",
+   "why": "need 1 of NAB-19: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-19",
+   "dep": "N40-28",
+   "as": "related",
+   "why": "need 1 of NAB-19: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-19",
+   "dep": "N40-29",
+   "as": "related",
+   "why": "need 1 of NAB-19: a fallback ledger that holds kill gates the table names; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-20",
+   "dep": "N40-24",
+   "as": "related",
+   "why": "coverage (d) of UAB: KILL-SPECIALIZE, the one kill gate of the parked table, is a row of this ledger; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-47",
+   "dep": "N40-24",
+   "as": "related",
+   "why": "need 1 of NAB-47: a fallback ledger that holds kill gates the resolutions name; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-47",
+   "dep": "N40-25",
+   "as": "related",
+   "why": "need 1 of NAB-47: a fallback ledger that holds kill gates the resolutions name; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-47",
+   "dep": "N40-26",
+   "as": "related",
+   "why": "need 1 of NAB-47: a fallback ledger that holds kill gates the resolutions name; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-47",
+   "dep": "N40-29",
+   "as": "related",
+   "why": "need 1 of NAB-47: a fallback ledger that holds kill gates the resolutions name; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-22",
+   "dep": "N40-30",
+   "as": "related",
+   "why": "need 2 of NAB-22: the by-exit schedule of kill decisions; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-23",
+   "dep": "N40-30",
+   "as": "related",
+   "why": "need 1 of NAB-23: M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-50",
+   "dep": "N40-30",
+   "as": "related",
+   "why": "need 1 of NAB-50: M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-41",
+   "dep": "N40-09",
+   "as": "related",
+   "why": "need 2 of NAB-41: the gate register's list of resolved discrepancies; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-40",
+   "dep": "N40-10",
+   "as": "dep",
+   "why": "acceptance of NAB-40: GATE-SPARK-23, named by KI-67, must exist in the gate register; the row is entered with the gates of the late subsections"
+  },
+  {
+   "bead": "N00-16",
+   "dep": "NAB-11",
+   "as": "dep",
+   "why": "need 1 of NAB-11, coverage (d) of UAB: the fact sheet re-reads the local-source records at the stack-lock commits and appends their `reread` entries; source records come first (rule 5)"
+  },
+  {
+   "bead": "NAB-02",
+   "dep": "NJL-01",
+   "as": "related",
+   "why": "need 2 of NAB-02: the entry schema of one verb names the prose fields the lint scans; N32a-02 is the dependency"
+  },
+  {
+   "bead": "NAB-41",
+   "dep": "N00-01",
+   "as": "related",
+   "why": "coverage (d) of UAB: one shared file walker; the general wording and label lints are out of this bead's scope"
+  },
+  {
+   "bead": "NAB-14",
+   "dep": "N19b-02",
+   "as": "related",
+   "why": "coverage (d) of UAB: the asset-licence register joins the asset collections whose licences NAB-14 lists as not verified; M3, later"
+  },
+  {
+   "bead": "NAB-49",
+   "dep": "N40-03",
+   "as": "related",
+   "why": "coverage (d) of UAB: the owner's decision record is an ADR in the directory N40-03 proposes; a shared convention"
+  },
+  {
+   "bead": "NAB-45",
+   "dep": "N25-REF",
+   "as": "related",
+   "why": "coverage (d) of UAB: FROB-REF-856 is a row of the Augur refusal registry; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-46",
+   "dep": "N25-REF",
+   "as": "related",
+   "why": "coverage (d) of UAB: FROB-REF-877 is a row of the Augur refusal registry; M1, later than this M0 bead"
+  },
+  {
+   "bead": "NAB-24",
+   "dep": "N18-REF",
+   "as": "dep",
+   "why": "the M1 sweep asserts that FROB-REF-245, named by the killed-idea register, exists in the refusal registry (acceptance criterion of NAB-24)"
+  },
+  {
+   "bead": "NAB-24",
+   "dep": "N22-REF",
+   "as": "dep",
+   "why": "the M1 sweep asserts that FROB-REF-817, named by the killed-idea register, exists in the refusal registry (acceptance criterion of NAB-24)"
+  },
+  {
+   "bead": "NAB-24",
+   "dep": "N25-REF",
+   "as": "dep",
+   "why": "the M1 sweep asserts that FROB-REF-856 and FROB-REF-877, named by the idea register, exist in the refusal registry (acceptance criterion of NAB-24)"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "NAB-21",
+   "other": "N10a-02",
+   "note": "both hold the Moonshot queue of 21 items and the cap of four as data (registries/ev_matrix.toml here, a queue table there); one file should hold it and the other read it"
+  },
+  {
+   "mine": "NAB-15",
+   "other": "N00-06",
+   "note": "overlap with distinct scope: NAB-15 enters the plan-time checks as 25 source records with the archive's revisions; N00-06 holds their re-run status in 14 grouped records and depends on NAB-15; the two are joined by id"
+  },
+  {
+   "mine": "NAB-15",
+   "other": "N38a-10",
+   "note": "the same plan-time checks are held a third time as twenty pilot rows with expected values; one list of recorded values should be the source"
+  },
+  {
+   "mine": "NAB-10",
+   "other": "N00-01",
+   "note": "lint L-SOURCE of N00-01 and the citation lint both refuse a gate row that cites a source whose reread_before_gate flag is set; NAB-10 depends on N00-01 and should be the one place that grades citations"
+  },
+  {
+   "mine": "NAB-10",
+   "other": "N00-06",
+   "note": "the citation rule of N00-06 (a gate may cite only reproduced checks) is the finding cite.plan-check-not-reproduced of NAB-10"
+  },
+  {
+   "mine": "NAB-32",
+   "other": "N00-10",
+   "note": "the hypothesis register's banned-pattern lint (a refuted strong form stated as a goal) and the revive lint's findings ki.strong-form-as-goal and ki.strong-form-duplicated check the same rule from two pattern lists"
+  },
+  {
+   "mine": "NAB-41",
+   "other": "NEG-03",
+   "note": "two discrepancy registers with two stale-value scans (crates/frob-conformance/registry/discrepancies.toml and dx.withdrawn-figure here; registries/cards/discrepancies.toml there)"
+  },
+  {
+   "mine": "NAB-41",
+   "other": "NEG-05",
+   "note": "pin DX-02 and discrepancy E7-2 are the same correction: ceiling 7.7 from the share 0.87"
+  },
+  {
+   "mine": "NAB-41",
+   "other": "NEG-06",
+   "note": "pin DX-03 and discrepancy E7-3 are the same correction: 842.8 ÷ 575.7 = 1.46, the 94% share withdrawn"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [],
+ "fixes": [
+  {
+   "bead": "NAB-10",
+   "what": "title shortened from 112 to 108 characters"
+  },
+  {
+   "bead": "NAB-02",
+   "what": "step 1 (b) named fields `description` and `summary` that registries/verbs.toml does not have; now names the registry's prose fields (`purpose` and the when-to-use sentence) as its schema does"
+  },
+  {
+   "bead": "NAB-06",
+   "what": "the completeness test now reads the subsystem table registries/subsystems.toml (N00-03) instead of a literal list, so that it is the standing check the bead says it is"
+  },
+  {
+   "bead": "NAB-17",
+   "what": "added the rule for kill gates whose ledger group is entered at M1 (five of seven groups): frozen list of expected names, a recorded skip until the M1 exit record exists, a failure afterwards; the group's own skip convention applied to rows of a later milestone"
+  },
+  {
+   "bead": "NAB-32",
+   "what": "same rule for refusal rows entered at M1 (FROB-REF-245, FROB-REF-817) and for kill gates named by records; acceptance criterion made consistent with it"
+  },
+  {
+   "bead": "NAB-42",
+   "what": "same rule for kill gates and the two refusal codes (FROB-REF-856, -877) that idea rows name and that are entered at M1"
+  },
+  {
+   "bead": "NAB-22",
+   "what": "the due-list known answers read deciding milestones from the frozen list for ledger groups entered at M1, until those groups are entered"
+  },
+  {
+   "bead": "NAB-47",
+   "what": "the comparison of the six quoted kill triggers with the register states which row is entered at M0 (KILL-DR) and that the other five are compared under a recorded skip until M1"
+  },
+  {
+   "bead": "NAB-24",
+   "what": "acceptance criterion added: at the M1 exit no cross-reference check still reports a skip for a kill row or refusal row that lands at M1"
+  },
+  {
+   "bead": "NAB-41",
+   "what": "deps gained NAB-05, NAB-06, NAB-14, NAB-21, NAB-40, NAB-43 and NAB-49 (moved from related): the owner-agrees test of pins DX-07 and DX-09 to DX-16 reads their records"
+  }
+ ]
+}

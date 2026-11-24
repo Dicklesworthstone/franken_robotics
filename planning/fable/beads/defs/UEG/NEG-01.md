@@ -4,11 +4,11 @@ title: "frob-conformance: worked-card goldens: the `frob.card/1` file, the loade
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "card", "registry"]
+labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "card", "registry", "review-notes-open"]
 parent: "WP-34"
-deps: ["BD-025", "BD-026", "BD-005", "STD-TEST"]
+deps: ["BD-005", "BD-025", "BD-026", "NAB-09", "STD-TEST"]
 needs: []
-related: ["NEG-02", "NEG-03", "N00-17", "N00-33"]
+related: []
 gates: []
 plan_refs: ["Appendix E (preamble)", "Appendix E.7", "§34.1", "Appendix H.1", "§38"]
 ---
@@ -48,7 +48,8 @@ and has no top-level `cards/` directory, so "`cards/GB-nn.toml`" means this path
 computation a card checks lives in the crate that owns the relation (for example the Cayley retraction in
 `frob-lie`); `frob-conformance` already depends on every core crate, so no low-layer crate gains a dependency.
 
-**File format `frob.card/1` (DESIGN).**
+**File format `frob.card/1` (DESIGN).** The sketch below is abbreviated, several keys to a line; the real
+file has one key per line, as TOML requires.
 
 ```toml
 schema = "frob.card/1"
@@ -62,7 +63,9 @@ intuition = "<prose>"  assumptions = ["<prose>"]  flip = ["<prose>"]
 [[input]]  name = "R0"  value = "0.20"  unit = "ohm"  tag = "illustrative"   # or tag = "FACT", source = "H.3 …", reread = "pending"
 [[output]] name = "rise" value = "164.74464579901152" unit = "K" printed = "164.7" tol_kind = "rel" tol = "1e-9"
 [[control]] name = "constant-resistance" defect = "alpha = 0" expect = "rise == 100.0 (must differ from golden)"
-[surface]  verb = "actuator.thermal"  args = ["--card", "@inputs"]  map = { rise = "equilibrium.rise_K" }
+[[mechanism]] name = "integrated_400s"  first_milestone = "M1"      # optional; one entry per lane B check
+[[surface]] verb = "actuator.thermal"  first_milestone = "M1"  args = ["<card>", "--current", "20A"]  map = { rise = "equilibrium.rise_K" }
+[[surface]] verb = "actuator.thermal"  first_milestone = "M1"  args = ["<card>", "--current", "35A", "--require"]  expect = { exit = 3, refusal = "FROB-REF-132" }
 ```
 
 Rules of the format:
@@ -75,7 +78,13 @@ Rules of the format:
    `rel = 1e-9` unless the card bead states otherwise; iterative solves state their own.
 3. `printed` is the figure the card prints. The validator checks that `value`, rounded to the number of
    significant digits of `printed`, equals `printed` (round half to even on the decimal string). This is the
-   check that would have caught every arithmetic row of the discrepancy list.
+   check that would have caught every arithmetic row of the discrepancy list. Conventions (DESIGN, so the check
+   is decidable): `printed` is a bare number in the unit of `value` (no thousands separators, no "about", no
+   percent sign: 0.33% is written `"0.0033"`); trailing zeros of an integer without a decimal point are not
+   significant (`"2000"` has one significant digit, so 2,000.6 passes), unless the output states
+   `printed_sig = n`; a range in the card's prose is two outputs. Where the card's printed figure was computed
+   from an input rounded first (GB-17 prints 14.8 ms from Ω rounded to 3.5, where the exact Ω gives 14.75 ms),
+   the card carries both readings as separate outputs, each passing the check on its own value.
 4. An input tagged `FACT` carries its source-register row and a `reread` field (`pending` or a date with the
    reader's mark). A card with a pending FACT input reports `citable = false`: a gate may not cite it until the
    primary source has been re-read. Its arithmetic still runs.
@@ -83,16 +92,29 @@ Rules of the format:
    differ from the golden by more than the tolerance. A card with no control fails validation.
 6. `supports` is provenance; `flip` entries are prose, and where a flip has numbers the card bead adds them as
    outputs so that they are tested too.
+7. Value kinds. Besides a number string, an output's `value` may be: a token (a verdict or label such as
+   `"rejected"` or `"but-for"`, compared by string equality, `tol_kind = "exact"`); a bit pattern `"0x3F800000"`
+   with `width = 32` or `64` (`tol_kind = "bits"`); or a vector or matrix written as an array of number strings
+   (`["160", "130", "110", "0"]`, `[["-0.8", "0"], ["8.829", "-0.8"]]`), compared elementwise under the output's
+   tolerance. An output the card does not print (a full-precision intermediate, a bit pattern, a token) sets
+   `unprinted = true` in place of `printed`; every other output must carry `printed`.
+8. `[[surface]]` entries (zero or more) name a verb, its arguments, the map from output names to fields of the
+   verb's JSON, its own `first_milestone`, and optionally `expect = { exit, refusal }` for a call that must be
+   refused; NEG-02 runs them. A card with no verb has no entry and says why in its bead.
 
 **Two lanes (the contract every card test follows).**
 
 - Lane A, `gb_nn_reference`: the test evaluates the card's equation itself, from the file's inputs, in exact
   rationals where the card is exact and in `f64` otherwise, and compares every output with its `value` under its
   tolerance. It uses no mechanism of the owning crate. A failure means the card file is wrong.
-- Lane B, `gb_nn_mechanism`: the test calls the owning crate's public API (and, where `[surface]` names a verb,
-  the verb's in-process handler) on the same inputs and compares the same outputs. A failure means the mechanism
+- Lane B, `gb_nn_mechanism`: the test calls the owning crate's public API (and, where a `[[surface]]` entry
+  names a verb, the verb's in-process handler) on the same inputs and compares the same outputs. A failure means the mechanism
   disagrees with the card. Before `first_milestone` the lane is compiled out and reported `not run`, never
-  `pass`.
+  `pass`. Where lane B checks need mechanisms that arrive at different milestones (GB-25: the rewrite table at
+  M2 and the trace checker at M4, the card itself at M0), each such check is a `[[mechanism]]` entry with its
+  own `first_milestone` and is gated, compiled out and reported separately; the card's `first_milestone` is
+  the earliest of them. The surface step likewise carries the `first_milestone` of its verb (or of the
+  verb's field the card reads) and reports `not run` before it.
 - `gb_nn_controls`: each planted defect is evaluated in lane A's arithmetic and must miss the golden.
 
 **Loader API (DESIGN).**
@@ -101,11 +123,24 @@ Rules of the format:
 pub struct Card { pub id: CardId, pub inputs: Vec<Quantity>, pub outputs: Vec<Golden>, pub controls: Vec<Control>, /* … */ }
 pub fn load(id: &str) -> Result<Card, CardError>;          // validates rules 1 to 6
 pub fn check(card: &Card, name: &str, got: Exact) -> CheckResult;   // records measured, golden, tolerance
-pub fn status() -> Vec<CardStatus>;   // id, lane A, lane B (pass | fail | not run), citable, controls caught
+pub fn status() -> Vec<CardStatus>;   // id, lane A, lane B and each [[mechanism]] check and the surface
+                                      // (pass | fail | not run, with the milestone it waits for), citable,
+                                      // controls caught
 ```
 
-**Coverage lint** (`cards_registry_complete`): exactly 41 files `GB-01` … `GB-41`; each has the three test
-functions; no test names a missing file; `id` equals the stem; `owner_crate` is a workspace member.
+**Card index (DESIGN).** `registries/cards/INDEX.toml` lists the 41 ids with the milestone of each card bead
+(M0: GB-01, -08, -09, -18, -25; M1: GB-02, -03, -05, -06, -10, -11, -12, -13, -19, -23, -24, -30, -31; M2:
+GB-04, -07, -16, -17, -20, -22, -40, -41; M3: GB-14, -15, -21, -29, -32, -33, -34, -39; M4: GB-26, -27, -28,
+-35, -36; M5: GB-37, -38; cumulatively 5, 18, 26, 34, 39, 41). A card file's `first_milestone` may not be
+earlier than its index milestone.
+
+**Coverage lint** (`cards_registry_complete`): no file outside the index (`GB-42.toml` fails); `id` equals the
+stem; `owner_crate` is a workspace member; every card file has at least one test of each of the three kinds,
+recognized by the prefixes `gb_nn_reference`, `gb_nn_mechanism` and `gb_nn_controls` (a card's further tests,
+such as `gb_24_authority_limits`, are allowed); no test names a missing file. Missing cards are reported by id
+with their index milestone. With the environment variable `FROB_CARDS_EXPECT_THROUGH=Mn` the lint also fails
+when a card whose index milestone is Mn or earlier is missing; without it, missing cards are reported and do
+not fail (this bead closes before any card bead).
 
 **Evidence.** Card results are claim kind Known answer ("recovers GB-nn within its tolerance"), class `Tested`
 (the four classes are Proved, Certified, Tested, Estimated, and only a Proof claim can be above Tested), tier G0
@@ -114,10 +149,13 @@ functions; no test names a missing file; `id` equals the stem; `owner_crate` is 
 ## Acceptance criteria
 
 - [ ] `cargo test -p frob-conformance --test cards` runs the loader's own tests and passes with zero cards on
-      file, and the lint reports the 41 missing cards by id (it turns green only when all 41 exist).
-- [ ] A file with a float literal, a missing `printed`, a `printed` that `value` does not round to, a FACT input
-      without a source, or no control is rejected, each with a distinct error naming the field.
-- [ ] `status()` distinguishes `not run` from `pass`, and a card with a pending FACT reports `citable = false`.
+      file, the lint reporting the 41 missing cards by id; with `FROB_CARDS_EXPECT_THROUGH=M0` and zero cards it
+      fails naming the five M0 cards.
+- [ ] A file with a float literal, a missing `printed` on an output not marked `unprinted`, a `printed` that
+      `value` does not round to, a FACT input without a source, or no control is rejected, each with a distinct
+      error naming the field; tokens, bit patterns and vectors load and compare as rule 7 states.
+- [ ] `status()` distinguishes `not run` from `pass` for the whole lane, for each `[[mechanism]]` check and for
+      the surface, and a card with a pending FACT reports `citable = false`.
 - [ ] Rational parsing is exact: `"5/16"`, `"0.3125"` and `"3125e-4"` compare equal.
 - [ ] `crates/frob-conformance/CONTRACT.md` documents the format, the two lanes and the lint.
 
@@ -133,7 +171,17 @@ functions; no test names a missing file; `id` equals the stem; `owner_crate` is 
 - `card_tolerance_kinds`: `rel 1e-9` accepts 1 + 5·10⁻¹⁰ and rejects 1 + 2·10⁻⁹; `count` rejects 615 against 616;
   `bits` distinguishes +0.0 from −0.0.
 - `card_status_not_run_is_not_pass`: a card whose `first_milestone` is later than the build's reports `not run`.
-- `cards_registry_complete`: the lint, with a planted extra file `GB-42.toml` and a planted missing test.
+- `card_mechanism_milestones`: a `synthetic` card at M0 with a `[[mechanism]]` check at M4 and a surface at M2,
+  built as M0, reports lane B `pass` for its M0 checks, the M4 check `not run (M4)` and the surface
+  `not run (M2)`; the summary counts the two `not run` separately from passes.
+- `card_printed_conventions`: value `"2000.6"` with printed `"2000"` passes; the same with `printed_sig = 4`
+  fails; printed `"2,000"` and printed `"0.33%"` are rejected as malformed.
+- `card_value_kinds`: a token output compares by string; `"0x3F800000"` at width 32 equals the bits of 1.0f32
+  and `"0x00000000"` differs from `"0x80000000"`; a four-element vector fails if one element is off; an
+  `unprinted` output with a `printed` field, or neither, is rejected.
+- `cards_registry_complete`: the lint, with a planted extra file `GB-42.toml`, a planted missing test kind, and
+  `FROB_CARDS_EXPECT_THROUGH=M1` on a scratch registry holding only the five M0 cards (fails naming the
+  thirteen M1 cards).
 
 ### End-to-end script and logging
 

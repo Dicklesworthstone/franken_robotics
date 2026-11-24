@@ -1,0 +1,94 @@
+{
+ "round": 4,
+ "slice": "H-verbs-2",
+ "reviewed": 4,
+ "changed": [
+  {
+   "bead": "VERBS-contact",
+   "kinds": ["request", "convention", "contradiction"],
+   "what": "contact.laws and contact.probe spell the law CL-1R (N18b-28's table); a lowercase CL spelling is 802, as on sim.run (F-U18a). contact.probe: the pair form `--interface <mover>/<substrate>` with BD-167's key (mover, substrate, dry) and 802 for an unparseable pair (pointer /card); N18b-10's scene position spelled (`--scene`, `--point <x>,<y>`, `--mover`, required with scene) with its 802 cases (point off the floor or not two numbers, scene without mover, scene with --card/--interface, --at with --scene); the pending slug interface-pair-missing (2xx, filed by N35x-02, numbered by N35-33's rule, entered by N18-REF; pointer /card from M2, /point from M3) listed beside the chapter refusals with the joins-on-assignment rule (F-U18b-1). Example `--law foot-patch` became `--law CL-1` (F-U18b-2). Pulse branch: a contact-state field beside the impulse/m_eff pair, or the pair with a selector or the attachment pair, is 802 (N18b-29's DESIGN) (F-U18b-2). Film branch spelled as options with N19b-06's state form (`--h0`, `--dwell`, `--radius`, `--normal`, `--slip`, `--card`/`--eta`) and GB-21's squeeze form (`--until-h`), both with examples (F-U19b-1). contact.clearance gains `certificate` (`--certificate required|none`, default required; none writes no bundle, Tested never Certified, and answers unknown instead of 321 without bounds) in inputs, outputs, evidence and the notes (F-U19b-2). contact.response names the capture refusal's slug response-anchor-unconverged (2xx, N18b-39) with its exit, observed values, repairs and the joins-on-assignment rule (F-U18b-2, C13). The Considerations' `--state <file>` paragraph states the film-field form instead of 'requested of N19b-06' (C13). Conventions item 2 rewritten to NJL-01's kinds and variation tables: envelope_scope (convention 14), on_cancel leave|cancel_job, x-frob-key in place of a required key, 808 by int53 property, the variation list, and 10 to 13 by reference (H-owners-3, lead note). Tests: refusal_lists names interface-pair-missing, the capture code and 808 rows; probe_and_soil_inputs checks the CL spelling, the pair form, the M1 film state and clearance's certificate; late_branches gains pulse, squeeze, scene-position fields and the planted 802 calls; kind_behaviour has six run properties. Two defects fixed: probe_and_soil_inputs required `impulse` and `m_eff` in the M1 schema although N18bx-01 adds them at M2 and the Notes make them 802 before (the M1 test could not pass without pulling N18bx-01's inputs forward); and late_branches listed `h0` as a late GB-21 input although N18b-29 declares the film state (h0, dwell, radius) from M1 and the Notes answer it with 724 (the snapshot would have classed a field already present as 'gained'). References add BD-167, N19b-06, N19b-33."
+  },
+  {
+   "bead": "VERBS-control",
+   "kinds": ["request", "convention"],
+   "what": "control.mpc refusals and the Notes no longer say the mpc-episode-cap ledger row is requested: both slugs are rows of N35x-02 (mpc-episode-cap: Control, §22.8, 4xx), numbered by the ledger run and read by N22-REF from docs/generated/refusal_round2.md, with no number typed here (F-U22a, C13). control.symmetry inputs carry BD-327's spellings (`--task`, `--controller`, `--gravity`, `--slope`, `--scene`, `--mode`, `--twist-linear`, `--twist-angular`, `--events`) (F-U22b). control.synth: `--task` is stated to supply the symmetry reduction's context from M4 (scene gives gravity and boundary conditions, command the twist; no --scene input) (F-U22b); exit codes are N22a-12's (0 for ok with no flag; 2 for ok with a saturation or clamp flag, synthesized-failed and not-synthesizable; 3 for 421 and 424) and evidence adds Certified for a checked not-synthesizable certificate capped by its weakest input (F-U22c). Conventions item 2 rewritten as in the other three beads (H-owners-3, lead note). Tests: refusal_lists adds 808 on the three run rows and control.estimate (limit); extension_inputs names the symmetry context fields; kind_behaviour has six run properties."
+  },
+  {
+   "bead": "VERBS-cores",
+   "kinds": ["request", "convention"],
+   "what": "Conventions item 2 rewritten to NJL-01's kinds and variation tables (envelope_scope, on_cancel values, x-frob-key, 808 by int53 property, variations 10 to 13 by reference), keeping 761's N36-20 `admit_run` note; the cores.show sentence now says it gets 806, 807 and 808 through the paginated `limit` and neither 734 nor 828 (H-owners-3, lead note). refusal_lists says where 808 comes from (the int53 `limit`), the set unchanged."
+  },
+  {
+   "bead": "VERBS-design",
+   "kinds": ["request", "convention", "plan", "contradiction"],
+   "what": "design.bisect: exit 0 for a found change (a-change, first-change), 2 for bracket and no-change; chapter refusals 542, 543, 561 (pairing::admit then N35-07's licence, before any probe) beside 550; a non-descendant --bad is the surface's 802 (pointer /bad, not-descendant); both '(requested)' notes removed; the TOML example's refusals updated (F-U28a). design.check: `no_memo` input (N28b-38, BD-111) (F-U28b); stage 1 adds 108 (N14b-10 row 1) (F-U14b-1); stage 2 adds 168 (N13-04 through A-02's solid-fill kind, BD-110) (F-U28a); stage 7 is 119 only, 308 from A-18's route query being reported as `undecided` with 308's repairs (N14b-12, plan §14.11) (F-U14b-1); the ordered union is still 31 codes (308 out, 168 in). design.edit: Extended by N41p2-01 (extract-module, catalogue row 23, inverse inline: true, `--name`, `--args @<file>`, outputs result.module and result.model_id_unchanged) (F-U41-2), N14ax-02 (`--correspond`, 101/103, output correspondence) (F-U14a), N31b-41 (resolve-sized with `--loads statics | measured:<batch>`, set-fill `{shell: sized}`, slug sized-fill-unsatisfiable joining on assignment) (F-U31b). design.diff: the composed correspondence or `no lineage path` from M3 (F-U14a). design.patch: key in document or --key (unequal is 802), the document's parent is the expected parent (--expected-parent unequal is 802, so stale is always 112, never 804), chapter refusals 112, 103, 111, an operation's precondition code with its index, a required analysis's stage code; refusals = 112 plus design.check's 31 = 32 codes (F-U14a). design.view: `--pretty` with result.canonical (F-U14a). 808 added to design.new, design.show and design.view (N14a-01 rule 5) (F-U14a). design.import: `sdf` and `usd` values from M1 answering 724 (feature-not-built, mechanism import.sdf|import.usd, exit 5, retry never) until N14b-22 or N14bp1-03 is linked, as BD-065 specifies; Extended by both (F-U14b-1). design.export: stage-1 list adds 108; `--format glb` from M2 with `frames` and `chord` (0.5 mm); Extended by N14b-21 (F-U14b-1, F-U14b-2). design.templates and design.new: N14bx-03's aliases (output aliases per entry, --name accepts an alias; --template accepts an alias, echoing template, preset, alias_used, family canonical) (F-U14b-2). Notes: late options list and the sdf/usd 724 exception. Conventions item 2 rewritten (H-owners-3, lead note). Tests: refusal_lists, bisect_and_import_inputs and kind_behaviour updated. Defect fixed: the path-parameter note gave 734 and 828 to four rows, but design.check takes a design file (NS-01 runs `frob design check demos/ns-01/inputs/quad-a.fbot`), design.view takes `<design-or-file>` (BD-057) and design.edit's extract-module takes `--args @<file>`; without the field rule on those rows the generated refusal table would omit the path-jail codes those verbs raise, and the refusal-list test would fail on the first jailed path. Now seven rows."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "to": "VERBS-artifact",
+   "from": "VERBS-contact, VERBS-control, VERBS-cores, VERBS-design",
+   "text": "ANSWER: (H-verbs-1, the '244 verbs' Background request to the four beads of H-verbs-2) The present form holds in all four: each Background already reads 'The registry holds 244 verbs in 44 clusters (namespaces): the 243 of the specification and `artifact.import` (VERBS-artifact); the count of record is NJL-03's.' Nothing was changed for this request."
+  },
+  {
+   "to": "N35x-02",
+   "from": "VERBS-control",
+   "text": "ANSWER: (H-owners-1, the lifted planner's refusal) The present form holds: VERBS-control already lists it by slug `lifted-planner-out-of-regime` (family 4xx, N22c-23, ledger row in N35x-02) in control.mpc's refusals and in the Notes, with no number printed; the Notes now also say both control slugs take their numbers from the ledger run, read by N22-REF from `docs/generated/refusal_round2.md`."
+  },
+  {
+   "to": "N14b-22",
+   "from": "VERBS-design",
+   "text": "ANSWER: (F-U14b-2, 'list sdf as a later value of design.import's format; before it lands a call is 802') Declined in favour of BD-065's form, which F-U14b-1 asked for: `sdf` is a value of design.import's `format` from M1. BD-065's format dispatch recognises `--format sdf` (and an `<sdf>` root without --format) and, until your importer is linked, answers one envelope FROB-REF-724 (`reason: feature-not-built`, `mechanism: import.sdf`, exit 5, `retry: never`, the message naming the consumer condition), never 802 and never 122. When your importer lands, the value is dispatched to it with no schema change. VERBS-design lists you under 'Extended by' for the SDF importer behind `--format sdf`. Use that form in your own text and tests."
+  },
+  {
+   "to": "N14bp1-03",
+   "from": "VERBS-design",
+   "text": "ANSWER: (F-U14b-2, 'list usd as a later value of design.import's format; before it lands a call is 802') Declined in favour of BD-065's form: `usd` is a value of design.import's `format` from M1, answering FROB-REF-724 (`reason: feature-not-built`, `mechanism: import.usd`, exit 5, `retry: never`, the message naming N14b-23's pilot and your consumer record) until your importer is linked, then dispatched to it with no schema change. VERBS-design lists you under 'Extended by' for the OpenUSD importer behind `--format usd`."
+  },
+  {
+   "to": "N18b-29",
+   "from": "VERBS-contact",
+   "text": "The ProbeBranch comment and any `branch_not_wired` arm say Pulse and Attachment answer 724 until wired. In the registry only the law, cone, film and model branches are declared from M1 (and answer 724 naming their wiring bead); the pulse inputs `impulse`/`m_eff` enter the schema when N18bx-01 lands (M2), and the attachment inputs `force`/`moment`/`conservative` when N15ax-02 lands (M4). Before then a call passing them is an unknown parameter, FROB-REF-802. Say that in the comment and tests."
+  },
+  {
+   "to": "N28ap1-01",
+   "from": "VERBS-design",
+   "text": "design.check's chapter list now has stage 1 with 108 (N14b-10 row 1), stage 2 with 168 (N13-04 through BD-110), and stage 7 with 119 only. A 308 from A-18's route query is reported as `undecided` with 308's repairs (N14b-12) and is not in the list. The ordered union is 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 113, 114, 115, 116, 118, 119, 120, 121, 123, 124, 125, 126, 130, 131, 132, 133, 134, 168, 448, 551 (still 31 codes). Align your refusal list: drop 308 from stage 7, add 168 at stage 2 and 108 at stage 1, and drop the '(requested)'. design.check also takes a design file (NS-01), so type that input as a path parameter; VERBS-design now counts it among the rows that get 734 and 828."
+  },
+  {
+   "to": "N14b-10",
+   "from": "VERBS-design",
+   "text": "VERBS-design's design.check carries FROB-REF-168 at stage 2: N13-04's solid-fill plausibility through A-02's kind `A-02.<body>.solid-fill`, whose policy row in BD-110 is refusing. Add 168 to stage 2's row in `STAGES` and to `refusal_union_matches_registry` (29 codes in your table). Also check that the reader refuses 808 (N14a-01 rule 5) before the runner, or else that row 1 owns 808. VERBS-design lists 808 on design.new, design.show and design.view, but not as a stage code."
+  },
+  {
+   "to": "N14bx-01",
+   "from": "VERBS-design",
+   "text": "Your A-18 row and the union pin: 308 from the route query is reported as stage status `undecided` with 308's repairs (N14b-12) and is not a stage-7 code. With BD-110's 168 at stage 2, the union is 31 codes: N14b-10's 28, plus 168, 448 and 551. Update `first_table_pins_amended` and the 30-code statements when N14b-10 adds 168."
+  },
+  {
+   "to": "NJL-01",
+   "from": "VERBS-contact, VERBS-control, VERBS-cores, VERBS-design",
+   "text": "The four beads' conventions item 2 now lists `envelope_scope` (CLI `--envelope-scope <gate:…|campaign:…|pretrain:…>`) as the sixth common `run` property, per convention 14, and their kind_behaviour tests expect six properties. Add it to your kinds table's `run` row and to your tests. If you adopt F-U28b's request to make `no_memo` a common input of memo-wrapped verbs, design.check's and design.show's own `no_memo` rows in VERBS-design must be removed in the same change, or the lint `common-property-shadowed` fails."
+  },
+  {
+   "to": "N31b-41",
+   "from": "VERBS-design",
+   "text": "VERBS-design's design.edit now lists the kind `resolve-sized` (`--loads statics | measured:<batch>`, no inverse, symmetry effect `preserved`) and set-fill's `{shell: sized}`. Your slug `sized-fill-unsatisfiable` (N31b-45 row 1) joins design.edit's refusal list as well as design.check's in the change that loads its number. Name both lists in that step."
+  },
+  {
+   "to": "N35x-02",
+   "from": "VERBS-contact, VERBS-design",
+   "text": "The registry rows now name these pending slugs as filed by you, to be numbered by N35-33's rule: `interface-pair-missing` (2xx; BD-167 and N18b-10; entered by N18-REF), `response-anchor-unconverged` (2xx; N18b-39; entered by N18-REF), and `sized-fill-unsatisfiable` (1xx; N31b-45 row 1). Carry a ledger row for each one you do not yet have."
+  },
+  {
+   "to": "BD-057",
+   "from": "VERBS-design",
+   "text": "design.view now lists `--pretty` (result.canonical false) and FROB-REF-808 (N14a-01 rule 5) in its chapter refusals. Its `<design-or-file>` file form is counted as a path parameter, so the generator appends 734 and 828. Type the input that way in your CLI table."
+  }
+ ],
+ "answered": {"added": 31, "holds": 5, "declined": 1},
+ "unchanged": 0,
+ "notes": "37 requests answered: VERBS-contact 11 (10 added, including the C13 finding's two places and the lead note; H-verbs-1 holds), VERBS-control 7 (5 added; H-owners-1 and H-verbs-1 hold), VERBS-cores 3 (2 added; H-verbs-1 holds), VERBS-design 16 (14 added; H-verbs-1 holds; one declined). The declined one is F-U14b-2's request to list sdf and usd as later values that answer 802; it conflicts with F-U14b-1's request and with BD-065, which answers 724 from M1, and BD-065's form was adopted. The glb half of that request was added. F-U28a asked for 168 'making 32 codes': 168 was added, but F-U14b-1's correction removes 308 (plan §14.11, N14b-12), so design.check stays at 31 codes. design.patch's list is 32 (112 plus check's 31). The C13 mechanical finding was real (contact.response's capture refusal and the Considerations' N19b-06 sentence); both are now stated rules. No refusal number was invented: interface-pair-missing, response-anchor-unconverged and sized-fill-unsatisfiable stay slugs joining on assignment. 724-versus-802 for options not yet built stays as each bead's Notes state it (802 until the extending bead lands; the 724 exceptions are N18b-29's M1 branches and BD-065's sdf/usd, like N14a-25's --visuals glb), pending any general rule NJL-01 adopts this round. All four files were checked to parse: JSON front-matter values and the seven sections in order. Three defects were fixed and are described under changed."
+}

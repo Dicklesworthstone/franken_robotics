@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frontier", "moonshot", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-17"]
-needs: ["§40.4, §40.8: the kill-gate records the decision column names, with trigger, fallback and deciding milestone (N40-23 to N40-29)", "§0.7, §38.5: the pilot ledger, which holds for every Frontier and Moonshot mechanism its paper-scale pilot, falsifier and ceiling (N00-07)"]
-related: ["NAB-18", "NAB-20", "NAB-21", "NAB-22", "NAB-50", "N00-07", "N40-30"]
+deps: ["N40-23", "N40-27", "NAB-17"]
+needs: []
+related: ["NAB-20", "NAB-22"]
 gates: []
 plan_refs: ["Appendix C.1.2", "Appendix C.1", "§0.1", "§9 (D-6, D-10)"]
 ---
@@ -45,8 +45,11 @@ In: 59 `[[family]]` records, ids `EV-F01` to `EV-F59`, table `frontier-moonshot`
 **Transcription rule.** One record per row, in table order, as in NAB-18. `decision` is `adopted` where the
 decision text begins "Adopted" or names a tier without "Admitted" (rows that read "[S] as …; [F] as …" are
 adopted at both tiers, larger part first); `admitted` where it begins "Admitted". `tiers` lists every tier the
-decision names. `queue` is the Moonshot-queue id for a row whose text says "queued" (NAB-21 assigns
-`MQ-01` … `MQ-21`). `needed_by` is filled for the two adopted rows below 2.0 that are not Moonshots:
+decision names. `queue` lists the Moonshot-queue items whose `family` names the row (NAB-21 assigns `MQ-01` …
+`MQ-21` and the mapping, its step 8): each of the twelve admitted rows has one, except skill transport
+(EV-F45), which has two (MQ-16 and MQ-17); three adopted rows whose [M] part waits in the queue have one
+though their text does not say "queued" (EV-F46 → MQ-10, EV-F55 → MQ-09, EV-F56 → MQ-11). `needed_by` is
+filled for the two adopted rows below 2.0 that are not Moonshots:
 
 - the tree-operator route for mechanisms above 64 degrees of freedom (1.5): needed because hybrid robots above
   64 degrees of freedom cannot use the dense factor; KILL-TREEOP keeps the dense factor and the cap;
@@ -155,8 +158,9 @@ Rows in this table: 59.
 - [ ] Exactly 16 rows are below 2.0; 14 of them have `"M"` in `tiers` and 2 have a non-empty `needed_by`.
 - [ ] 55 rows name at least one kill gate and each resolves in the gate register; the 4 rows without one are
       the four listed above, and each has a fallback stated in its text or in its queue entry.
-- [ ] Every row whose text says "queued" has a `queue` id that exists in the Moonshot queue (NAB-21), and every
-      queue item that names a family of this table is pointed to by a row.
+- [ ] Every row whose text says "queued" has a non-empty `queue` whose ids exist in the Moonshot queue (NAB-21)
+      and name the row in their `family`, and every queue item that names a family of this table is listed by
+      that row: fifteen rows list sixteen items.
 - [ ] Every row's mechanism has a pilot row in the pilot ledger (the completeness check of that ledger passes
       with this table as input).
 
@@ -175,7 +179,9 @@ Rows in this table: 59.
 - `admitted_rows_are_queued`: the twelve `decision = "admitted"` rows (rotor port, skill transport, reachable-set
   tables, the geometric-algebra tree policy, numerical continuation, Study-quadric synthesis, tactile hands,
   firmware export, lifecycle compression, the fused step kernel, coupled islands, facility co-design) each have
-  a `queue` id.
+  a non-empty `queue`.
+- `queue_lists_follow_queue_records`: EV-F45 → [MQ-16, MQ-17]; EV-F46 → [MQ-10]; EV-F55 → [MQ-09]; EV-F56 →
+  [MQ-11]; the rows without a queue item have `queue = []`.
 - `rescored_row`: the connection-curvature oracle has `rescored_from = "3.0"`, score "2.0".
 - `split_tier_rows_sit_in_table_of_larger_part`.
 - `decision_text_frozen` against `tests/fixtures/ev/frontier_moonshot.tsv`.

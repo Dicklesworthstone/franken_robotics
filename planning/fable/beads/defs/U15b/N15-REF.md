@@ -8,7 +8,7 @@ labels: ["m1", "sinew", "frob-actuate", "solid", "registry", "test"]
 parent: "WP-09"
 deps: ["BD-005", "STD-TEST"]
 needs: []
-related: ["BD-069", "BD-072", "BD-073", "BD-074", "BD-075", "BD-103", "BD-110", "BD-137", "N15-CX", "N15b-38", "N15a-15", "N15a-03", "N15b-06"]
+related: ["N15a-03", "N15a-15", "N15b-32", "N15b-34", "N35x-02"]
 gates: []
 plan_refs: ["§15.13", "§14.13", "Appendix O", "§32.4", "§32.5"]
 ---
@@ -55,7 +55,7 @@ On MCP the same envelope is the structured content of a tool result with `isErro
 | FROB-REF-133 | Peak demand above the bus ceiling E²/(4·R) | The peak electrical demand of the nominal gait, taken from the time-resolved profile, exceeds the ceiling at end-of-discharge voltage and cold-temperature resistance. Raised at stage 6 and by `actuator.bus` | The ceiling, the demand, and the battery or harness edit that admits it | 1. Lower `harness_resistance`. 2. A battery card with lower R₀ or a higher voltage. 3. Stagger the peaks (the joint schedule of A-23). 4. Reduce the peak demand |
 | FROB-REF-134 | A card without a current convention, or with conventions that disagree | `current_convention` absent, or `current_convention`, `pole_pairs`, `modulation` and the quoted constants imply different conventions. Raised at card admission and stage 1 | The fields in conflict | 1. Write `current_convention` (`dc`, `phase-peak`, `phase-rms` or `q-axis`). 2. Convert the quoted constant with the factor for the stated convention |
 | FROB-REF-135 | Power requested from an exhausted battery, or state of charge driven outside its bounds | A step or a caller asks for power when the state of charge is at its lower bound, or a charge request would pass the upper bound. Raised at run time on every tier; the kernel never clips | The step and the energy short in joules | 1. A battery card with more capacity. 2. A shorter mission or lower demand. 3. A higher starting state of charge |
-| FROB-REF-136 | A row option the requested tier does not carry | A stiction or backlash row option (for example the Gaussian Stribeck shape, hard backlash rows, a restitution value) is requested on a tier that does not implement it. Raised when the step plan is built | The tiers that carry it | 1. Run on a listed tier (`referee` or `strict`). 2. Change the option to one the tier carries (the rational Stribeck shape). 3. Raise the card level |
+| FROB-REF-136 | A row option the requested tier does not carry | A row or level option whose cell in the tier capability table (N15a-04) is "no" is requested on that tier: for example hard backlash rows or a restitution value on a convex tier, the Gaussian Stribeck shape on a device tier whose kernel class admits no exponential, or `six-step` modulation (no inscribed limit radius) on a batched tier (N15a-02). Raised when the step plan is built; a request never falls back in silence | The tiers that carry it (the table's "yes" cells) | 1. Run on a listed tier. 2. Accept the tier's regularized form (compliant backlash, convex stiction), which sets a flag on the result. 3. Change the card option to one the tier carries (the rational Stribeck shape; `svm-linear` for `six-step`) |
 
 **Registry row layout (DESIGN).** One TOML table per code: `code`, `owner = "frob-actuate"`, `chapter`,
 `message` (a template with named slots), `payload` (the typed fields of the fourth column, each with its

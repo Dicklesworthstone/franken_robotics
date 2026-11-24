@@ -6,9 +6,9 @@ priority: 1
 milestone: "M4"
 labels: ["m4", "habitat", "frob-scene", "frontier", "bet", "gate"]
 parent: "WP-53"
-deps: ["N00-28", "N00-07", "BD-233", "BD-369", "STD-E2E"]
-needs: ["§19.12: the retrofit corpus of minimized failures and the cited sources for prices and dimensional norms", "§26.7: minimal counterexample worlds, the form in which a failure is handed to the retrofit search"]
-related: ["BD-274", "BD-227", "BD-234", "BET-22", "NS-18", "N00-22"]
+deps: ["BD-233", "BD-274", "BD-369", "N00-28", "N19b-37", "N19b-42", "N19b-43", "N38a-09", "STD-E2E"]
+needs: []
+related: ["N00-22", "N28bx-01", "N40-31", "NS-15", "NS-18"]
 gates: ["GATE-HAB-11", "KILL-RETROFIT"]
 plan_refs: ["§4 (BET-37)", "§40.5", "§2.4 (lever 5)", "§19.12", "§19.19"]
 ---
@@ -25,8 +25,16 @@ exists and is the cheaper answer. Tier: Frontier.
 
 ## Scope
 
-In: pre-registration, the M4 reading, verdict and decision record. Out: clearance complexes, the catalogue,
-the search verb.
+In: pre-registration, the M4 reading, verdict and decision record. Out, with the beads that have them:
+clearance complexes `.fclear` with route witnesses and impossibility cuts (BD-233, gated at M3 by
+GATE-HAB-10); minimal counterexample worlds `.fmcw` (`nemesis.shrink`, BD-274); the priced catalogue
+`registries/retrofits.toml`, the search verb `scene.retrofit` and GATE-HAB-11 (BD-369); the catalogue pilot
+(N19b-37); the owner's decision on the sources of prices and norms, OPEN-HAB-4, with its fail-closed default
+(N19b-43); the decision KILL-RETROFIT (N19b-42).
+
+The register lists BET-37 at M3 and M4. No deciding-gate part is due at M3 (GATE-HAB-11 lands at M4 with the
+catalogue), so the M3 exit state is `not-due`; the clearance complex the bet's fallback rests on is gated at M3
+by GATE-HAB-10, which is not this bet's deciding gate.
 
 ## Technical approach
 
@@ -45,10 +53,17 @@ the search verb.
 5. **Downstream if falsified.** Mission answers list robot edits only; the scenario "a twelve-dollar ramp
    against a chassis redesign" is demonstrated as a bottleneck report; the "world as a design variable" goal is
    met by the clearance complex alone.
-6. **Evidence so far.** None measured. The wheel-and-ramp case has a closed form (held in the retrofit
-   mechanism's derivation file), which is why it serves as the known answer for both arms. Two facts usable
-   without it: a ramp of rise h at slope 1:12 needs a run of 12·h; a rigid wheel of radius r cannot roll up a
-   square step of height h ≥ r.
+6. **Evidence so far.** None measured. The wheel-and-ramp case has a closed form, which is why it serves as the
+   known answer for both arms: a driven wheel of radius r that carries its own load and meets an edge of height
+   h quasi-statically, with no help from another axle, needs a friction coefficient of at least
+   tan α = √(h·(2r − h)) / (r − h) at the edge. For r = 50 mm and h = 20 mm that is 40/30 = 4/3, which no floor
+   card offers, so the climb is statically impossible; a wedge with a run of twelve times its rise needs 1/12;
+   doubling the wheel radius to 100 mm needs 60/80 = 0.75. The retrofit arm must return the ramp, the redesign
+   arm the wheel, and the report both. The static figure is a screen, not the verdict: a body arriving at
+   √(2·g·h) = 0.63 m/s has the energy to rise 20 mm before losses, which is why the search re-runs the full
+   episode (FACT recorded in the plan's source register: in an executed planar sill study, 62 of 156 cases a
+   sampled static test rejected succeeded dynamically). A ramp of rise h at slope 1:12 needs a run of 12·h; a
+   rigid wheel of radius r cannot roll up a square step of height h ≥ r.
 7. **Procedure.** Register the corpus, the three-item limit, the 30% share, and the catalogue version with its
    sources before the search; every price and norm without a cited source is labelled `assumed` and its kits
    cannot be accepted under the norm clause; read at M4 exit; `docs/adr/bet-37-m4.md`.
@@ -61,26 +76,39 @@ the search verb.
       10%).
 - [ ] The three planted bottlenecks were repaired by the expected kits; the unfixable failure returned its
       bottleneck and no kit.
-- [ ] No accepted kit violates a cited dimensional norm; verdict and the KILL-RETROFIT decision recorded.
+- [ ] No accepted kit violates a cited dimensional norm; the bet's verdict is recorded and cites the
+      KILL-RETROFIT decision record. The kill gate is decided once, by the kill-gate bead N19b-42, which applies
+      the trigger, writes the kill ADR and supplies the measured shares, the control count, the arm's price
+      comparison and the norm-violation count; this bead reads them, applies the bet's own falsifier clauses and
+      writes the bet verdict, and writes no second kill decision. The bet can be falsified with the kill gate not
+      fired (a norm violation, or a fix share under 30% on the whole corpus where the building-attributed share
+      is not).
 
 ## Test plan
 
 ### Unit tests
 `bets.rs`: `bet37_fix_share_0_38_holds`; `bet37_fix_share_0_24_falsifies_a`;
 `bet37_kit_violating_norm_falsifies_b` (a ramp steeper than its cited norm accepted);
-`bet37_policy_identity_changed_not_counted`; `bet37_referee_reverses_14_percent_fires_kill`;
+`bet37_policy_identity_changed_not_counted`; `bet37_reads_kill_retrofit_reversals_14_percent` (N19b-42's
+record fired because 14% > 10% of kit verdicts reversed on the referee → `Falsified` through its kill gate, the
+record's hash carried; the trigger is applied there); `bet37_edge_friction_4_3_and_0_75` (tan α at r = 50 mm and
+100 mm, h = 20 mm);
 `bet37_assumed_price_cannot_support_acceptance_under_norm_clause`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_37_decide.sh` runs `frob scene fit` on the planted 20 mm threshold (expects an impossibility
-cut naming the threshold), then `frob scene retrofit` on the corresponding minimal counterexample world (expects
+`scripts/e2e/bet_37_decide.sh` runs `frob scene fit … --key b37-fit` on the planted 20 mm threshold (expects an
+impossibility cut naming the threshold), then `frob scene retrofit … --key b37-retrofit` (both `run` verbs, each
+call with its own key) on the corresponding minimal counterexample world (expects
 a one-item kit: a threshold ramp), re-evaluates with the frozen policy and compares policy identities,
-recomputes the corpus statistics and the verdict. Logged per STD-E2E: failure, bottleneck, kit items with price
+recomputes the corpus statistics, reads the verdict of BET-37 from the bet register's report (`cargo run -p
+frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule) and checks
+`docs/adr/bet-37-m4.md` against it. Logged per STD-E2E: failure, bottleneck, kit items with price
 and source or `assumed`, norm checks, policy digest before and after, verdict flip, referee confirmation;
 `summary` naming GATE-HAB-11 and KILL-RETROFIT.
 
 ### Known answers and negative controls
-A 19 mm threshold with a 1:12 ramp needs a run of 228 mm; a 20 mm threshold needs 240 mm. Negative controls: the
+A 19 mm threshold with a 1:12 ramp needs a run of 228 mm; a 20 mm threshold needs 240 mm. The edge-friction
+closed form above (4/3 at r = 50 mm, 0.75 at r = 100 mm, 1/12 on the wedge). Negative controls: the
 unfixable failure; a kit of four items offered where the limit is three; a ramp whose slope exceeds its cited
 norm; a "fix" that works only because the policy was retrained.
 

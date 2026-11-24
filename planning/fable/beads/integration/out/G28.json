@@ -1,0 +1,3566 @@
+{
+ "group": "G28",
+ "needs": [
+  {
+   "bead": "BD-090",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N29a-03",
+    "BD-026"
+   ],
+   "note": "the std-only .frun check inside frob-verify is N29a-03, which depends on this bead for the byte format (and on BD-026 for the auditor crate); a consumer, not a prerequisite"
+  },
+  {
+   "bead": "BD-090",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-207",
+    "N29a-12"
+   ],
+   "note": "both are M2 and depend on this bead (BD-207 through N29a-07); they fill the T0 and T2 levels this bead defines"
+  },
+  {
+   "bead": "BD-090",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-141"
+   ],
+   "note": "BD-141 depends on this bead: the FMT-FRUN row and the second-parser lint are registered from the format defined here"
+  },
+  {
+   "bead": "BD-100",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-027"
+   ],
+   "note": "the rational-ldlt kind and its checker (M0) are what the optional inertia-positivity certificate is written against"
+  },
+  {
+   "bead": "BD-101",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-12"
+   ],
+   "note": "the paper-scale pilot of lattice mobility (M1) gates the Frontier cross-check; the lattice itself is N13-28 (M3), which depends on this bead and is consumed when present: recorded as related under edges"
+  },
+  {
+   "bead": "BD-101",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-056"
+   ],
+   "note": "the closure constructor supplies the loop closures whose Jacobian is ranked"
+  },
+  {
+   "bead": "BD-106",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10a-15"
+   ],
+   "note": "pilot C-07 (M1) must be on record before the index is enabled by default (rule 8)"
+  },
+  {
+   "bead": "BD-106",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-233",
+    "BD-244"
+   ],
+   "note": "both are M3 and depend on this bead (through N19b-34); passability in a bound scene is added by them"
+  },
+  {
+   "bead": "BD-106",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-245"
+   ],
+   "note": "the `skid` contact law is M3 and reaches this bead through its own dependencies; at M1 a skid-steer base is reported under the declared-slip assumption"
+  },
+  {
+   "bead": "BD-107",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N13-14"
+   ],
+   "note": "BD-048 (already a dependency) gives the projectors; the isotypic decomposition into symmetry-adapted blocks is the verb algebra.irreps, N13-14"
+  },
+  {
+   "bead": "BD-107",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-069",
+    "BD-074"
+   ],
+   "note": "bandwidth field of the actuator card (BD-069) and transmission stiffness (BD-074), both M1"
+  },
+  {
+   "bead": "BD-108",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14b-10"
+   ],
+   "note": "the staging contract owns the stage table and assigns no stage to A-20..A-23; this bead's stage-6 placement stands as the DESIGN default until the contract adds the rows"
+  },
+  {
+   "bead": "BD-108",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N28c-25"
+   ],
+   "note": "N40-01 is the gate record and its statuses; N28c-25 enters GATE-ATEL-05 with its parts by milestone"
+  },
+  {
+   "bead": "BD-110",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "stage 1 is delivered by its dependency BD-060 and, through the edge recorded by the Skeleton integrator, by the validate stage N14a-08; BD-063 (incremental compilation) is not needed by the runner"
+  },
+  {
+   "bead": "BD-110",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N28c-25"
+   ],
+   "note": "the gate record format and the Atelier rows of GATE-ATEL-02 and GATE-SKEL-04 parts"
+  },
+  {
+   "bead": "BD-113",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-063"
+   ],
+   "note": "influence records and the invalidation set of an edit, recorded on the lineage edge"
+  },
+  {
+   "bead": "BD-113",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28c-44"
+   ],
+   "note": "M3 and depends on this bead: it adds the --reuse columns to design.diff"
+  },
+  {
+   "bead": "BD-248",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-02"
+   ],
+   "note": "the corpus registry frob.corpus/1 (same milestone, no path back) is the container this bead populates"
+  },
+  {
+   "bead": "BD-248",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-321",
+    "BD-310"
+   ],
+   "note": "BD-321 is M4; BD-310 depends on this bead; until a specialist result exists a winner entry stays rank: pending"
+  },
+  {
+   "bead": "BD-248",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N27b-09"
+   ],
+   "note": "the attribution gate script reads the planted single causes and depends on this bead through N27b-08"
+  },
+  {
+   "bead": "BD-250",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-249",
+    "BD-247"
+   ],
+   "note": "baseline controllers for every archetype and their synthesis on the corpus give the simulated outcomes; BD-253 (task families) is a higher-numbered seed and is recorded as related under edges"
+  },
+  {
+   "bead": "BD-250",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-345"
+   ],
+   "note": "M4 and depends on this bead; only the corpus-level form of the audit is used here"
+  },
+  {
+   "bead": "BD-262",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-12",
+    "N33a-18",
+    "N28c-28"
+   ],
+   "note": "fs-eproc admission at first use (N33b-12), the Racing trait over fs-eproc and fs-race (N33a-18), and the M1 ruling on OPEN-ATEL-3 that says whether the airlock or the local implementation is used"
+  },
+  {
+   "bead": "BD-262",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-177"
+   ],
+   "note": "the decision-level equivalence record that licenses pairing under class D3"
+  },
+  {
+   "bead": "BD-262",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-350"
+   ],
+   "note": "M4 and depends on this bead; PO-ATEL-09 is tested locally here and measured there"
+  },
+  {
+   "bead": "BD-309",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-05"
+   ],
+   "note": "the DC-01 promote and reject table generator and its null self-test (same milestone; reached today only through BD-263)"
+  },
+  {
+   "bead": "BD-309",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-296, which depends on the guard-table bead N32a-21"
+  },
+  {
+   "bead": "BD-309",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-278; the Nemesis integrator also recorded BD-309 -> N26b-11 for the DC-10 decision record"
+  },
+  {
+   "bead": "BD-310",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-08"
+   ],
+   "note": "the owner's approval of compute (OPEN-PROG-4, M1); without it the pilot is not run and every cheap rung stays uninformative, so the pilot exists only on the approved branch"
+  },
+  {
+   "bead": "BD-310",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-35"
+   ],
+   "note": "the winner check (containment rank, regret of a cut) is computed by N23b-35 at M3 and has no path back to the pilot"
+  },
+  {
+   "bead": "BD-310",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28b-22"
+   ],
+   "note": "the record type and table arrive with its dependency BD-265 (tier-pair form); the rung-pair ledger N28b-22 is M4 and is filled from this pilot's rows"
+  },
+  {
+   "bead": "BD-329",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-22",
+    "N28b-24"
+   ],
+   "note": "components of the capstone: the rank-agreement ledger fed by the audit lane and the per-bucket margins with refusal below the floor"
+  },
+  {
+   "bead": "BD-329",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28c-01",
+    "N28c-03"
+   ],
+   "note": "the core contract (record, status vocabulary) and the decision evidence records with shadow, canary and default adoption, both M3; BD-349 records DC-02 and DC-03 afterwards and depends on this bead (related)"
+  },
+  {
+   "bead": "BD-329",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33b-13",
+    "N33b-12"
+   ],
+   "note": "the stats group (fs-surrogate conformal bands) and the fs-eproc admission that holds hardening::MondrianConformal; used as oracles for the local implementation"
+  },
+  {
+   "bead": "BD-329",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-345"
+   ],
+   "note": "BD-345 depends on this bead and is a higher-numbered seed; it consumes the audit lane's results"
+  },
+  {
+   "bead": "BD-332",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N10a-17"
+   ],
+   "note": "the C-10 pilot funds orbit screening (BD-333, BD-335); its named fallback is this atlas without orbits, so the atlas ships on both branches and does not wait for the pilot"
+  },
+  {
+   "bead": "BD-332",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "§33.3: no bead writes the first-use admission record and airlock entry of fs-tropical; N33a-18 calls it a thin entry owned by the bead that admits it. Not blocking: the local exact routine is the only path until then"
+  },
+  {
+   "bead": "BD-332",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28a-05"
+   ],
+   "note": "the analysis registry and the generated analyze verbs (M1) hold the A-04 row that binds to this bead's library"
+  },
+  {
+   "bead": "BD-332",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-107",
+    "BD-243"
+   ],
+   "note": "rows of A-12 (BD-107) and of A-09 and A-14 (BD-243) are not reached through BD-110; the rows of A-01 to A-08, A-10, A-11 and A-13 arrive through its dependency BD-110"
+  },
+  {
+   "bead": "BD-343",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-342"
+   ],
+   "note": "the archive whose per-cell merge rule the lineage merge shares (lower-numbered seed, same milestone, no path back)"
+  },
+  {
+   "bead": "BD-343",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-220"
+   ],
+   "note": "memoized episodes let probes reuse evaluations of versions already run"
+  },
+  {
+   "bead": "BD-345",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28c-30"
+   ],
+   "note": "owner decision of the same milestone with a fail-closed default (control reported not-run); not blocking"
+  },
+  {
+   "bead": "BD-345",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "BD-352 depends on this bead and is a higher-numbered seed; the stage-close hook is the framework N28b-25, already a dependency"
+  },
+  {
+   "bead": "BD-346",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-13",
+    "N16b-15"
+   ],
+   "note": "the variant step plans and the planted exploits used as this stage's control"
+  },
+  {
+   "bead": "BD-346",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N18a-18"
+   ],
+   "note": "CL-2 admitted on throughput tiers and as a model-form arm (M3); CL-H is M5 and its arm stays not-run until then"
+  },
+  {
+   "bead": "BD-346",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-408"
+   ],
+   "note": "M5, and it depends on this bead: the build packet refuses a model-conditional input"
+  },
+  {
+   "bead": "BD-346",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-302",
+    "BD-352",
+    "N28c-19"
+   ],
+   "note": "the reports print the two orders; BD-352 and N28c-19 depend on this bead, BD-302 only shares the statement model"
+  },
+  {
+   "bead": "BD-347",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-111",
+    "BD-220"
+   ],
+   "note": "grades 1 and 2 rest on the derived keys and shadow recomputation of the memo graph"
+  },
+  {
+   "bead": "BD-347",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "the checker's rejection of an unknown rule name or a changed quantifier prefix"
+  },
+  {
+   "bead": "BD-347",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28b-33",
+    "BD-219"
+   ],
+   "note": "the rerun planner prices revoked obligations with sim.estimate's cost intervals; N28b-33 is the component, BD-219 the estimator it reads"
+  },
+  {
+   "bead": "BD-348",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-401"
+   ],
+   "note": "M5 and a higher-numbered seed; the A-15 row is recorded not-yet-due at M4"
+  },
+  {
+   "bead": "BD-348",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-120",
+    "BD-239",
+    "BD-240"
+   ],
+   "note": "the Gramian and alias-witness rows of A-17"
+  },
+  {
+   "bead": "BD-348",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-346"
+   ],
+   "note": "the A-19 row (lower-numbered seed, same milestone, no path back)"
+  },
+  {
+   "bead": "BD-348",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-243"
+   ],
+   "note": "A-16 sensitivity and its known answers"
+  },
+  {
+   "bead": "BD-348",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-132"
+   ],
+   "note": "the exact re-check of the dual certificate by the offline checker"
+  },
+  {
+   "bead": "BD-349",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-309, the capstone of the contract N28c-01, the compiler N28c-02, the evidence records N28c-03 and cores.show N28c-04"
+  },
+  {
+   "bead": "BD-349",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28c-26"
+   ],
+   "note": "the M3 decision on the loss constants and the DC-05 exchange rate; until decided the fixed experiment order acts, as BD-309 already assumes"
+  },
+  {
+   "bead": "BD-349",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-344"
+   ],
+   "note": "registered predictions and their scoring feed DC-05's calibration trigger"
+  },
+  {
+   "bead": "BD-349",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N33b-13",
+    "N28c-28"
+   ],
+   "note": "the stats group holds fs-voi; the M1 ruling on OPEN-ATEL-3 says whether the airlock or the local closed form is used"
+  },
+  {
+   "bead": "BD-350",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-181"
+   ],
+   "note": "the batch-composition invariance harness the scheduling test reuses"
+  },
+  {
+   "bead": "BD-350",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-276"
+   ],
+   "note": "FROB-REF-549 raised by the rare-failure bound"
+  },
+  {
+   "bead": "BD-350",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-371"
+   ],
+   "note": "BD-371 is a higher-numbered seed; the DC-11 table comes with the existing dependency BD-349"
+  },
+  {
+   "bead": "BD-351",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-experiment",
+    "N25c-18"
+   ],
+   "note": "the registry row of the cluster and the Augur-side verb that produces the proposals this bead ranks (edge also recorded by the Augur integrator)"
+  },
+  {
+   "bead": "BD-351",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-291"
+  },
+  {
+   "bead": "BD-351",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-264",
+    "BD-212"
+   ],
+   "note": "the tier-correction ledger and the fidelity ledger supply the variance components"
+  },
+  {
+   "bead": "BD-351",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N33b-13",
+    "N28c-28"
+   ],
+   "note": "the stats group holds fs-voi; the M1 ruling on OPEN-ATEL-3 says whether the airlock or the local closed form and knowledge-gradient routine are used"
+  },
+  {
+   "bead": "BD-352",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28c-37",
+    "N28c-38"
+   ],
+   "note": "the escalation rule plugs into stage 3 of this cascade and depends on this bead; it runs in shadow, so the cascade is complete without it"
+  },
+  {
+   "bead": "BD-352",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28c-44"
+   ],
+   "note": "the three named reuse columns of report.campaign (M3)"
+  },
+  {
+   "bead": "BD-352",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28a-03",
+    "N39a-23",
+    "N39a-24"
+   ],
+   "note": "phase attribution by studio verbs, the thirteen phases and the ledger record frob.tenfold.ledger/1 with its exclusive and resource tables"
+  },
+  {
+   "bead": "BD-352",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-320",
+    "BD-321",
+    "BD-322"
+   ],
+   "note": "family policies, fine-tuning rungs and inheritance used by stages 3 and 4"
+  },
+  {
+   "bead": "BD-352",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-361"
+   ],
+   "note": "a higher-numbered seed; stage 2 records its receipts through N28b-26 when the brief asks for a mechanism"
+  },
+  {
+   "bead": "BD-352",
+   "n": 6,
+   "as": "related",
+   "keys": [
+    "N28c-30"
+   ],
+   "note": "owner decision of the same milestone with a fail-closed default (control not-run, finalists reported as k survivors)"
+  },
+  {
+   "bead": "BD-374",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-372"
+   ],
+   "note": "solve.run must exist to be granted in the third arm (lower-numbered seed, same milestone; BD-372 does not depend on this run)"
+  },
+  {
+   "bead": "BD-374",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-25",
+    "N39a-24",
+    "BD-316"
+   ],
+   "note": "the agent proxy that counts tokens, tool calls and turns, the phase ledger record, and the M3 run of our arm that proves the recorder on fresh agents"
+  },
+  {
+   "bead": "BD-374",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N44-01",
+    "N21c-35"
+   ],
+   "note": "the envelope requests of the work packages and the envelope classes; without approval the run is sized to the default envelope, so not blocking"
+  },
+  {
+   "bead": "N28-CX",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "a registry bead depends only on the registry skeleton, which is its dependency BD-025 (controls.toml); BD-146 loads the catalogue seeds at M1 and is a consumer"
+  },
+  {
+   "bead": "N28-CX",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "no bead assigns Appendix N numbers: every chapter's CX registry carries its own late cases unnumbered (N14-CX, N16-CX, N23-CX do the same); the two late entries stay keyed by name in this registry"
+  },
+  {
+   "bead": "N28-KA",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-025, which creates the registry and its loader"
+  },
+  {
+   "bead": "N28-REF",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-137",
+    "BD-299"
+   ],
+   "note": "a registry bead never depends on a mechanism; the verb registry reads the per-verb refusal lists from these rows (M1), and BD-299 tests the three failure classes at M3"
+  },
+  {
+   "bead": "N28-REF",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "no bead assigns Appendix O numbers; the uncoded refusal is carried by name in this registry's notes and raised by N28c-44 as a generation failure with exit 3"
+  },
+  {
+   "bead": "N28a-01",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-004 (the six checks, check-contracts among them)"
+  },
+  {
+   "bead": "N28a-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23a-14",
+    "BD-302"
+   ],
+   "note": "train.start (M2) and the claim-citing report verbs (M3) are later consumers that adopt the same precondition when they land"
+  },
+  {
+   "bead": "N28a-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28-REF"
+   ],
+   "note": "no dedicated code exists in Appendix O; the settled choice of the chapter is that the upstream stage's own code is re-issued with the recorded override, which N28-REF now notes and N28c-22 tests"
+  },
+  {
+   "bead": "N28a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-23",
+    "N39a-24"
+   ],
+   "note": "the thirteen phases with exclusive attribution and the ledger record frob.tenfold.ledger/1 with its derived tables (both M0)"
+  },
+  {
+   "bead": "N28a-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": "the disclosure block frob.perf.disclosure/1 and its completeness check (M0)"
+  },
+  {
+   "bead": "N28a-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28b-37",
+    "BD-111"
+   ],
+   "note": "consumers: this contract derives its own key from the fields an analysis reads; the Memo trait (N28b-37) and the memo graph (BD-111) bind to it, and N28b-37 already reaches this bead through BD-063, N14a-11 and BD-102, so a dependency would close a cycle"
+  },
+  {
+   "bead": "N28a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-138"
+   ],
+   "note": "a consumer: MCP tool definitions are generated from the rows this bead registers"
+  },
+  {
+   "bead": "N28a-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-102"
+   ],
+   "note": "analyze.symmetry is registered by its owner; this bead generates the other rows and only shares the registry with it"
+  },
+  {
+   "bead": "N28a-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-337"
+   ],
+   "note": "M4, and it depends on this bead; the contact-energy half binds to .fenergy when it exists"
+  },
+  {
+   "bead": "N28a-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-128"
+   ],
+   "note": "a consumer: the mission exclusion rule uses this analysis as a relaxation"
+  },
+  {
+   "bead": "N28a-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23b-31"
+   ],
+   "note": "the actor's information contract (channels, classes, instants) is M2; at M1 chains come from the controller's declared interface, and the seven instants from N20a-05 (dependency recorded by the Sensorium integrator)"
+  },
+  {
+   "bead": "N28a-08",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "not a prerequisite: no code is registered and the settled choice is a High finding that does not refuse (coverage (e) 2 of U28a); N28-REF now notes the absence"
+  },
+  {
+   "bead": "N28a-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16c-42"
+   ],
+   "note": "M2, and it depends on this bead through BD-108: the tier-integrator evaluation and GATE-KIN-13 are added there"
+  },
+  {
+   "bead": "N28a-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N22a-07"
+   ],
+   "note": "the canonical controller record (loop structure, gains) is N22a-07 (M1); the baseline controllers BD-116 and BD-117 depend on this bead through BD-108 and are recorded as related under edges"
+  },
+  {
+   "bead": "N28a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-345"
+   ],
+   "note": "M4; the prune-soundness audit samples what this analysis excluded"
+  },
+  {
+   "bead": "N28a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-127"
+   ],
+   "note": "the second linear-program solver is the independent checker of the dual certificate"
+  },
+  {
+   "bead": "N28a-11",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28a-13"
+   ],
+   "note": "M4; the A-25 shortcut row is bound to its test when A-25 lands"
+  },
+  {
+   "bead": "N28a-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-243"
+   ],
+   "note": "M3; the curvature mutant is shown when A-09 exists"
+  },
+  {
+   "bead": "N28a-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-246"
+   ],
+   "note": "M3, and it depends on this bead; the zero-refusal half is repeated on the fourteen archetypes there"
+  },
+  {
+   "bead": "N28a-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-390"
+   ],
+   "note": "M5, and it builds on this analysis"
+  },
+  {
+   "bead": "N28a-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-291"
+   ],
+   "note": "the proposals of mission.distinguish are one source of excitations; the analysis is defined on any proposed excitation and is tested on its own fixtures"
+  },
+  {
+   "bead": "N28a-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-334"
+   ],
+   "note": "the pilot recomputes the validity conditions offline from the event log when the labels are absent; a pilot depends only on what it needs at small scale"
+  },
+  {
+   "bead": "N28a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml and the funding rule (M0)"
+  },
+  {
+   "bead": "N28a-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N44-01",
+    "N21c-35"
+   ],
+   "note": "the envelope requests and the envelope classes; not blocking, the pilot is sized to what is approved"
+  },
+  {
+   "bead": "N28a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N28c-25"
+   ],
+   "note": "the kill-gate record with its decision ADR (N40-03) and the Atelier kill rows with trigger and fallback fixed in advance (N28c-25)"
+  },
+  {
+   "bead": "N28a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N10b-01",
+    "BD-334"
+   ],
+   "note": "the nine derivative-validity labels (N10b-01) and their propagation through events (BD-334), same milestone, no path back"
+  },
+  {
+   "bead": "N28a-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-204",
+    "BD-205"
+   ],
+   "note": "first-divergence localization and fork classification for the shortest replayable failure"
+  },
+  {
+   "bead": "N28a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-12"
+   ],
+   "note": "traced worlds chosen by address guarantee the same worlds for both arms"
+  },
+  {
+   "bead": "N28a-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28c-38"
+   ],
+   "note": "N28c-38 adds the curves section to explain.compare and now depends on this bead"
+  },
+  {
+   "bead": "N28a-17",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-282"
+   ],
+   "note": "explain only offers the intervention; ranking of causes stays with DC-06"
+  },
+  {
+   "bead": "N28a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-16"
+   ],
+   "note": "the settled-pose cache on the CPU with refusal 529 is M1 (N24a-16); the batched-tier cache BD-195 is M2 and is recorded as related under edges"
+  },
+  {
+   "bead": "N28a-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N35-01"
+   ],
+   "note": "the determinism classes as a type recorded on every run (M0); the D3 decision-level equivalence record (BD-177, M2) and the licences (BD-269, M3) are later and recorded as related under edges"
+  },
+  {
+   "bead": "N28a-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "the stream registry declares each stream's purpose, exposure domain and key schema (M1); the versioned exposure table N24c-36 is M2 and is recorded as related under edges"
+  },
+  {
+   "bead": "N28a-19",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-259"
+   ],
+   "note": "M3; the pre-analysis is recomputed at the level of request i when the blinded lane exists"
+  },
+  {
+   "bead": "N28a-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-12",
+    "N33a-18",
+    "N28c-28"
+   ],
+   "note": "fs-eproc admission (combine and e-BH routines), the Racing trait over fs-eproc and fs-race, and the M1 ruling on OPEN-ATEL-3"
+  },
+  {
+   "bead": "N28a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-263",
+    "BD-264"
+   ],
+   "note": "the promotion receipt and the tier-correction estimate are the types that fill the promotion block (same milestone, no path back)"
+  },
+  {
+   "bead": "N28a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-266"
+   ],
+   "note": "the rank-robustness type of fidelity.modelform (M3); the cascade's strict form BD-346 is M4 and is recorded as related under edges"
+  },
+  {
+   "bead": "N28a-21",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-261"
+   ],
+   "note": "the qualification receipt and the firewall refusals 840 and 845 that absolute verdicts cite"
+  },
+  {
+   "bead": "N28a-21",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N18b-22"
+   ],
+   "note": "the capacity-biased label and per-arm overflow (M2)"
+  },
+  {
+   "bead": "N28a-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N28c-25"
+   ],
+   "note": "the kill-gate record with its decision ADR and the Atelier row of KILL-STATIC with trigger and fallback fixed in advance"
+  },
+  {
+   "bead": "N28a-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-26"
+   ],
+   "note": "the lost-factor record of the ten-fold ledger (M1), written when the gate fires"
+  },
+  {
+   "bead": "N28a-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "BD-292 (already a dependency) freezes the campaign and gives the replay harness; BD-377 registers it in conformance and depends on this pilot through BD-352 and BD-347"
+  },
+  {
+   "bead": "N28a-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register and its funding rule (M0)"
+  },
+  {
+   "bead": "N28a-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N28c-25"
+   ],
+   "note": "the kill-gate record with its decision ADR and the Atelier row of KILL-REUSE (this bead is superseded by N28b-36, which inherits the edge)"
+  },
+  {
+   "bead": "N28a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N28c-25"
+   ],
+   "note": "the kill-gate record with its decision ADR and the Atelier row of KILL-LADDER (this bead is superseded by N28b-20, which inherits the edge)"
+  },
+  {
+   "bead": "N28a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N28c-25"
+   ],
+   "note": "the kill-gate record with its decision ADR and the Atelier row of KILL-VOI (this bead is superseded by N28c-17, which inherits the edge)"
+  },
+  {
+   "bead": "N28a-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-309"
+  },
+  {
+   "bead": "N28a-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-277",
+    "N26a-27"
+   ],
+   "note": "the splitting lane and the failure-mode catalogue with its unseen-mass monitor"
+  },
+  {
+   "bead": "N28a-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-279",
+    "BD-280",
+    "BD-281"
+   ],
+   "note": "interventions with the placebo fork, contrasts with flip rates, and coalition experiments for minimal repair sets"
+  },
+  {
+   "bead": "N28a-27",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N33b-12"
+   ],
+   "note": "fs-eproc admission holds the bernoulli routines; default local"
+  },
+  {
+   "bead": "N28a-28",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-393",
+    "BD-394"
+   ],
+   "note": "both M5 and downstream of this record through BD-349; the shadow row is recorded not-yet-due at M4"
+  },
+  {
+   "bead": "N28a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28a-34",
+    "N16a-04"
+   ],
+   "note": "the new bead N28a-34 carries the effort profiles as model identities and the re-run rule in frob-dyn; N16a-04 is the numerical parameter set with its digest that a profile names"
+  },
+  {
+   "bead": "N28a-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N12-18",
+    "BD-027",
+    "BD-221"
+   ],
+   "note": "the rewrite-trace checker (N12-18), the poly-identity certificates (BD-027) and the KILL-KIR ruling on the derivation toolchain (BD-221)"
+  },
+  {
+   "bead": "N28a-28",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-309"
+  },
+  {
+   "bead": "N28a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-123"
+   ],
+   "note": "fixture:cart-sill-dock with its 64-condition development batch"
+  },
+  {
+   "bead": "N28a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-246"
+   ],
+   "note": "the wheel-leg archetype (M3); its stair task BD-368 is the same milestone with a stated fallback fixture and is recorded as related under edges (this bead is superseded by N28b-06, which inherits the edges)"
+  },
+  {
+   "bead": "N28a-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "the registered gate-scale population (this bead is superseded by N28b-28, which already depends on BD-377 and now builds the reduced fixture itself)"
+  },
+  {
+   "bead": "N28a-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N44-01",
+    "N21c-35"
+   ],
+   "note": "the envelope requests and classes; the default envelope runs the 27-design form on batch-cpu"
+  },
+  {
+   "bead": "N28a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-22",
+    "N28b-23"
+   ],
+   "note": "the rank-agreement ledger rows and the mode automaton with FROB-REF-545; BD-328 (already a dependency) fills them"
+  },
+  {
+   "bead": "N28a-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-252",
+    "N22c-31"
+   ],
+   "note": "the sampling controller as an R1 scorer and its frozen planner record; the gate reading BD-331 is recorded as related under edges"
+  },
+  {
+   "bead": "N28a-33",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-322"
+   ],
+   "note": "inheritance of a specialist from a parent design at the specialist rungs"
+  },
+  {
+   "bead": "N28a-33",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N33a-18",
+    "N28c-28"
+   ],
+   "note": "the Racing trait over fs-race (successive_halving) and the M1 ruling on OPEN-ATEL-3; default local"
+  },
+  {
+   "bead": "N28b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-13"
+   ],
+   "note": "the M1 dependency supports of mission cells, whose obligations are indexed by the same table"
+  },
+  {
+   "bead": "N28b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-059"
+   ],
+   "note": "the registry entry of design.patch; design.edit's entry arrives with its existing dependency BD-058"
+  },
+  {
+   "bead": "N28b-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-343"
+   ],
+   "note": "direction reversed: the verb is the capstone and now depends on this bead (rule 3)"
+  },
+  {
+   "bead": "N28b-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28-REF"
+   ],
+   "note": "the registry row of FROB-REF-550 (M1)"
+  },
+  {
+   "bead": "N28b-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "a consumer: the M4 conformance run wires this battery; it does not depend on it yet and the battery does not wait for it"
+  },
+  {
+   "bead": "N28b-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-343"
+   ],
+   "note": "direction reversed: the capstone now depends on this bead for the merge half (rule 3)"
+  },
+  {
+   "bead": "N28b-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "capabilities and namespaces decide who may absorb whose lineage (M3)"
+  },
+  {
+   "bead": "N28b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-18"
+   ],
+   "note": "the schema migrators and the migrate edit of the design language (M1)"
+  },
+  {
+   "bead": "N28b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-209"
+   ],
+   "note": "retention pins that keep a migrated-from version while a live claim cites it"
+  },
+  {
+   "bead": "N28b-05",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-269"
+   ],
+   "note": "the determinism licences that say when a replay is exact and when it is a comparison replay (same milestone, no path back)"
+  },
+  {
+   "bead": "N28b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-298",
+    "BD-258"
+   ],
+   "note": "two MCP sessions in two namespaces for the merge step"
+  },
+  {
+   "bead": "N28b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-31",
+    "N33a-18"
+   ],
+   "note": "the optimize group: Optimizer and Archive over the search crates (M3) and Racing (M1), each admitted by its own record"
+  },
+  {
+   "bead": "N28b-07",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-341"
+   ],
+   "note": "direction reversed: opt.start calls this interface; the delivery integrator recorded BD-341 -> N28b-07"
+  },
+  {
+   "bead": "N28b-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-247",
+    "BD-320"
+   ],
+   "note": "baseline controllers for every archetype and the family policy as the fixed inner loop; the mixed batch arrives with its existing dependency BD-183"
+  },
+  {
+   "bead": "N28b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-262"
+   ],
+   "note": "the race over paired comparisons; BD-341 is already a dependency"
+  },
+  {
+   "bead": "N28b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17b-19",
+    "N17b-20"
+   ],
+   "note": "the pilot of paired design gradients and the KILL-FDGRAD ruling; gradient stepping exists only on the funded branch"
+  },
+  {
+   "bead": "N28b-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-320",
+    "BD-247"
+   ],
+   "note": "the family policy or the baseline controller as the fixed inner-loop controller of a family batch"
+  },
+  {
+   "bead": "N28b-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-314"
+   ],
+   "note": "the ten-fold suite seals its own briefs under the same schema and must not reuse one consumed here; a shared convention (the sealed-suite epic BD-428 cannot carry an edge)"
+  },
+  {
+   "bead": "N28b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-02"
+   ],
+   "note": "the corpus registry whose planted-defect entries the control briefs start from"
+  },
+  {
+   "bead": "N28b-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-342"
+   ],
+   "note": "M4 consumer: GATE-PHYLUM-08 counts serial rounds on this benchmark (edge recorded by the Phylum integrator)"
+  },
+  {
+   "bead": "N28b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N39a-25",
+    "N39a-24",
+    "BD-316"
+   ],
+   "note": "the agent proxy (tokens, tool calls, turns), the phase ledger record, and the M3 run of our arm that exercises both on fresh agents"
+  },
+  {
+   "bead": "N28b-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-372"
+   ],
+   "note": "the reachability check of the third arm's profile needs solve.run to exist (same milestone; BD-372 does not depend on the protocol)"
+  },
+  {
+   "bead": "N28b-11",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N41-15",
+    "N44-01"
+   ],
+   "note": "the owner's choice of agent model and the envelope requests; fail-closed defaults are stated, so not blocking"
+  },
+  {
+   "bead": "N28b-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-329",
+    "N28a-33"
+   ],
+   "note": "direction reversed: the rung state machine (N28a-33) and the capstone BD-329 now depend on this bead"
+  },
+  {
+   "bead": "N28b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N17a-20",
+    "N23a-24"
+   ],
+   "note": "FROB-REF-541 is raised by the generator-support check (N17a-20) and FROB-REF-537 by the family policy as an evaluation rung (N23a-24); both are passed through"
+  },
+  {
+   "bead": "N28b-12",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N22c-31",
+    "N22c-32"
+   ],
+   "note": "the frozen planner record and the delivered-controller lane that admits sampling-controller episodes under it"
+  },
+  {
+   "bead": "N28b-12",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N28c-31"
+   ],
+   "note": "owner decision of the same milestone; the default (one R2 rung at 5%) holds until it is decided"
+  },
+  {
+   "bead": "N28b-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-329",
+    "BD-310"
+   ],
+   "note": "direction reversed for BD-329, which now depends on this bead; BD-310 only produces the log and the pilot replay N28b-18 already depends on this bead"
+  },
+  {
+   "bead": "N28b-13",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-350"
+   ],
+   "note": "M4 test that reads this bead's records"
+  },
+  {
+   "bead": "N28b-13",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-296"
+   ],
+   "note": "the dispatcher decides when a job's episodes run and never which episodes exist: one enforcement point of the never-cancelled rule (same milestone, no path back)"
+  },
+  {
+   "bead": "N28b-14",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-349"
+   ],
+   "note": "M4; the DC-03 table is generated from this estimator"
+  },
+  {
+   "bead": "N28b-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-328",
+    "BD-310"
+   ],
+   "note": "data sources at run time (the 40 calibration designs), not build prerequisites; BD-328 is M4"
+  },
+  {
+   "bead": "N28b-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "the Surrogate trait over fs-surrogate is an oracle for the index rule if admitted; same milestone, not blocking"
+  },
+  {
+   "bead": "N28b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-33"
+   ],
+   "note": "the rung state machine and the fixed table into which the rule plugs are N28a-33; the capstone BD-329 depends on this bead (related)"
+  },
+  {
+   "bead": "N28b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-35"
+   ],
+   "note": "containment rank and regret of a cut from the winner check"
+  },
+  {
+   "bead": "N28b-15",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-349",
+    "BD-351"
+   ],
+   "note": "both are downstream of this bead through BD-329: the compiled DC-02 artifact and the finalist layer that receives the handover"
+  },
+  {
+   "bead": "N28b-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "M5; one implementation should serve both, and the reality band is the later consumer"
+  },
+  {
+   "bead": "N28b-16",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-349"
+   ],
+   "note": "M4; the fallback triggers of DC-02 and DC-03 read this alarm"
+  },
+  {
+   "bead": "N28b-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "direction reversed: opt.cascade --estimate prints this model and BD-352 now depends on this bead"
+  },
+  {
+   "bead": "N28b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-354"
+   ],
+   "note": "a consumer: the ceiling-before-speed check reads this bead's floor"
+  },
+  {
+   "bead": "N28b-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-276"
+   ],
+   "note": "the exact episode count of a rare-failure bound for the R5 line"
+  },
+  {
+   "bead": "N28b-18",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-310"
+  },
+  {
+   "bead": "N28b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33b-13"
+   ],
+   "note": "a cross-check oracle if fs-voi is admitted; the pilot runs on the local closed form"
+  },
+  {
+   "bead": "N28b-18",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N41-15"
+   ],
+   "note": "the owner's choice of agent model; fail-closed default is the model the project's sessions use, pinned"
+  },
+  {
+   "bead": "N28b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "the registered seeded population with its stored full evaluation and planted over-scored design"
+  },
+  {
+   "bead": "N28b-19",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N44-01",
+    "N21c-35"
+   ],
+   "note": "envelope requests and classes; the default runs the pairs that fit, never fewer than ten"
+  },
+  {
+   "bead": "N28b-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-349"
+   ],
+   "note": "the shadow records of DC-02 and DC-03 are written under the records BD-349 registers"
+  },
+  {
+   "bead": "N28b-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review reads this decision; the Gauntlet integrator recorded BD-378 -> the kill decisions"
+  },
+  {
+   "bead": "N28b-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-349"
+   ],
+   "note": "the decision sets the adoption status in the DC-02 and DC-03 records, which must exist"
+  },
+  {
+   "bead": "N28b-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-26"
+   ],
+   "note": "the lost-factor record of the ten-fold ledger, written if the gate fires"
+  },
+  {
+   "bead": "N28b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-351"
+   ],
+   "note": "rule 7: the decision depends on the mechanism it measures, not the reverse (this bead is superseded by N28c-17, which already depends on BD-351)"
+  },
+  {
+   "bead": "N28b-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-349"
+   ],
+   "note": "the decision sets the adoption status in the DC-05 record"
+  },
+  {
+   "bead": "N28b-21",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28c-26"
+   ],
+   "note": "the replay uses simulation cells only, so the gate does not wait on the exchange rate"
+  },
+  {
+   "bead": "N28b-21",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N25c-16"
+   ],
+   "note": "a neighbouring kill gate on the probe generator; no overlap and no order"
+  },
+  {
+   "bead": "N28b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28c-27"
+   ],
+   "note": "the M1 decision that defines a stratum (default: one per morphology class)"
+  },
+  {
+   "bead": "N28b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-35"
+   ],
+   "note": "containment rank and regret are two fields of the row"
+  },
+  {
+   "bead": "N28b-22",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-264"
+   ],
+   "note": "per-episode cross-tier correlation from promotion's paired addresses"
+  },
+  {
+   "bead": "N28b-23",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-349"
+   ],
+   "note": "BD-349 compiles this automaton into the DC-03 artifact and is downstream through BD-329"
+  },
+  {
+   "bead": "N28b-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-345"
+   ],
+   "note": "BD-345 depends on this bead and sets the audit flags the automaton reads"
+  },
+  {
+   "bead": "N28b-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23b-35"
+   ],
+   "note": "the winner check's pass or fail per row"
+  },
+  {
+   "bead": "N28b-23",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N16b-12"
+   ],
+   "note": "the M3 tier-pair reading of KILL-RANK; the rung reading comes with its existing dependency BD-328"
+  },
+  {
+   "bead": "N28b-23",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-302",
+    "BD-352",
+    "N28c-19"
+   ],
+   "note": "consumers: the reports print modes and apply the wording rule"
+  },
+  {
+   "bead": "N28b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-12"
+   ],
+   "note": "fs-eproc admission holds hardening::MondrianConformal; the local per-bucket estimator implements the same refusal if it is not admitted"
+  },
+  {
+   "bead": "N28b-24",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-264"
+  },
+  {
+   "bead": "N28b-24",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28c-37"
+   ],
+   "note": "a consumer of the same regions at cascade stage 3"
+  },
+  {
+   "bead": "N28b-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "direction reversed: the orchestrator runs stages through this framework and now depends on it"
+  },
+  {
+   "bead": "N28b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28a-03",
+    "N39a-24"
+   ],
+   "note": "phase attribution of studio verbs and the phase-ledger record every stage writes to"
+  },
+  {
+   "bead": "N28b-25",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-302",
+    "N28c-19"
+   ],
+   "note": "consumers: report.campaign prints what this framework records"
+  },
+  {
+   "bead": "N28b-26",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-285"
+  },
+  {
+   "bead": "N28b-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-361"
+   ],
+   "note": "this bead only records the receipts of linkage synthesis when a brief asks for a mechanism"
+  },
+  {
+   "bead": "N28b-26",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "direction reversed: the orchestrator now depends on this bead"
+  },
+  {
+   "bead": "N28b-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-350"
+   ],
+   "note": "the interference test reuses the same null construction; a shared fixture"
+  },
+  {
+   "bead": "N28b-27",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-259"
+  },
+  {
+   "bead": "N28b-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-322"
+   ],
+   "note": "inheritance for finalists inside stage 4; BD-320 is already a dependency"
+  },
+  {
+   "bead": "N28b-28",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-377"
+  },
+  {
+   "bead": "N28b-28",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "delivered through its dependency BD-352, which now depends on the phase-ledger beads N28a-03, N39a-23 and N39a-24"
+  },
+  {
+   "bead": "N28b-28",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-372"
+   ],
+   "note": "solve.run's own end-to-end test belongs to BD-372"
+  },
+  {
+   "bead": "N28b-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-345"
+   ],
+   "note": "BD-345 depends on this bead; the reconciliation with the Nemesis unit is reported under cross_group_duplicates (N26b-02 to N26b-06)"
+  },
+  {
+   "bead": "N28b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26-REF"
+   ],
+   "note": "the registry row of FROB-REF-566 (M3)"
+  },
+  {
+   "bead": "N28b-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N24b-02"
+   ],
+   "note": "the corpus registry that stores planted winners with their recorded ranks; BD-248 is already a dependency"
+  },
+  {
+   "bead": "N28b-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-04"
+   ],
+   "note": "the analysis contract: bound sides with the authority model named, the enclosure rule and FROB-REF-551"
+  },
+  {
+   "bead": "N28b-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N14b-29",
+    "N14b-28"
+   ],
+   "note": "the composed quasi-static screen and the module capability tables are pruning rules this audit must sample (M3)"
+  },
+  {
+   "bead": "N28b-30",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-025 (the negative-control registry that receives the filed case); BD-146 only loads the M1 seeds"
+  },
+  {
+   "bead": "N28b-31",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-377"
+  },
+  {
+   "bead": "N28b-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25a-13",
+    "BD-292"
+   ],
+   "note": "direction reversed: the engines plug into this surface; the Augur integrator recorded N25a-13 -> N28b-32"
+  },
+  {
+   "bead": "N28b-32",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-137"
+   ],
+   "note": "direction reversed: BD-137 lists this verb among the M1 verbs (edge recorded)"
+  },
+  {
+   "bead": "N28b-32",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-132",
+    "N25a-26"
+   ],
+   "note": "consumers: the checker's rejection rule and the M3 campaign script that feeds every mask to the standalone auditor"
+  },
+  {
+   "bead": "N28b-32",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N28-REF"
+   ],
+   "note": "the registry row of FROB-REF-870 (M1)"
+  },
+  {
+   "bead": "N28b-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "direction reversed: BD-347 (M4) is the capstone and now depends on this planner"
+  },
+  {
+   "bead": "N28b-33",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-297"
+  },
+  {
+   "bead": "N28b-34",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "direction reversed: the capstone now depends on this bead for the table's content and tests"
+  },
+  {
+   "bead": "N28b-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N25a-16"
+   ],
+   "note": "the mission polarity rules registered at M3, with which the overlapping rows must agree"
+  },
+  {
+   "bead": "N28b-34",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N28b-36"
+   ],
+   "note": "the decision depends on this bead (rule 7), not the reverse; every rule ships disabled until the ruling"
+  },
+  {
+   "bead": "N28b-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-17"
+   ],
+   "note": "the M3 campaign's authoring roles, sealing procedure and separately built incumbent, repeated here with a new sealed set"
+  },
+  {
+   "bead": "N28b-35",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-377"
+  },
+  {
+   "bead": "N28b-35",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-347"
+  },
+  {
+   "bead": "N28b-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25a-19"
+   ],
+   "note": "the standing M3 decision on the same engine, whose record this ruling reads and extends with the cost trigger"
+  },
+  {
+   "bead": "N28b-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-347"
+   ],
+   "note": "rule 7: the decision depends on the mechanism it measures, not the reverse (today reached through N28b-35)"
+  },
+  {
+   "bead": "N28b-36",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review reads this decision; the Gauntlet integrator recorded the edge"
+  },
+  {
+   "bead": "N28b-37",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-111",
+    "N33b-15"
+   ],
+   "note": "direction reversed: the memo graph should depend on this bead for the trait and keys (edge recorded); the Recompute adapter is the admitted store behind the same trait"
+  },
+  {
+   "bead": "N28b-37",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-172",
+    "BD-173"
+   ],
+   "note": "M2 owners that build the step-plan and kernel-binary caches under the node kinds declared here"
+  },
+  {
+   "bead": "N28b-37",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-163"
+   ],
+   "note": "M2 owner of the scene-compile key"
+  },
+  {
+   "bead": "N28b-38",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-111",
+    "BD-220"
+   ],
+   "note": "direction reversed: both apply this policy and should depend on it (edges recorded)"
+  },
+  {
+   "bead": "N28b-38",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-220"
+   ],
+   "note": "M2; BD-220 owns the gate INT-FSQL-02 and follows the eviction policy stated here"
+  },
+  {
+   "bead": "N28b-38",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-209"
+   ],
+   "note": "M2; retention pins and store.status build on this policy (edge recorded by the Chronicle integrator)"
+  },
+  {
+   "bead": "N28b-38",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-029",
+    "N35-01"
+   ],
+   "note": "the hardware fingerprint record and the determinism classes as a type (both M0); the licences BD-269 are M3 and recorded as related under edges"
+  },
+  {
+   "bead": "N28b-39",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-350"
+   ],
+   "note": "M4 test that reads this bead's records"
+  },
+  {
+   "bead": "N28b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": "the study plan's seed protocol fixes a comparison's world addresses before any episode is drawn"
+  },
+  {
+   "bead": "N28b-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-216"
+   ],
+   "note": "M2; the latency clause is re-taken under the performance harness when it lands"
+  },
+  {
+   "bead": "N28b-40",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-111"
+  },
+  {
+   "bead": "N28b-41",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-285"
+  },
+  {
+   "bead": "N28b-41",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N12-02"
+   ],
+   "note": "the closed, versioned proof-kind registry is what keeps a structural rule from becoming a proof kind (M0)"
+  },
+  {
+   "bead": "N28b-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-02"
+   ],
+   "note": "the determinism classifier carries the planted nondeterministic reduction as its negative control (same milestone); BD-177 and BD-181 are the gates that use it"
+  },
+  {
+   "bead": "N28b-42",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-262"
+   ],
+   "note": "M3; the device comparison lane is added in this battery's M3 re-run; BD-124 is already a dependency"
+  },
+  {
+   "bead": "N28c-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-22",
+    "N34-09"
+   ],
+   "note": "the generic round-trip harness and the check-contracts pass that reads format rows (both M1); BD-141 and BD-410 enumerate the thirteen file formats only, so the rows for these schema names are entered by this bead through that harness"
+  },
+  {
+   "bead": "N28c-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N16b-05"
+   ],
+   "note": "the compiler is generic; the DC-01 generator registers with it and the capstone BD-309 depends on both (the Kinesis integrator recorded N16b-05 -> N28c-01)"
+  },
+  {
+   "bead": "N28c-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-21"
+   ],
+   "note": "the DC-09 guard table registers with the compiler through BD-309; the compiler does not wait for it"
+  },
+  {
+   "bead": "N28c-02",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N26b-10",
+    "BD-278"
+   ],
+   "note": "the DC-10 trace and certificate register with the compiler through BD-309; the compiler does not wait for them"
+  },
+  {
+   "bead": "N28c-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-096"
+   ],
+   "note": "the deterministic simulation harness whose oracles include INV-ATEL-02 and INV-ATEL-06 (M1)"
+  },
+  {
+   "bead": "N28c-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "VERBS-cores"
+   ],
+   "note": "the registry row of the cluster (M3); BD-312 and BD-298 are consumers that list and generate the verb (edge BD-312 -> N28c-04 recorded)"
+  },
+  {
+   "bead": "N28c-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "BD-377 depends on this bead through BD-350; the fixture is shared where the populations coincide"
+  },
+  {
+   "bead": "N28c-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-329",
+    "BD-328"
+   ],
+   "note": "the ladder layers and the rank-agreement modes as running code (today reached through BD-349)"
+  },
+  {
+   "bead": "N28c-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23b-35"
+   ],
+   "note": "the winner check a stratum must pass before it can be selective"
+  },
+  {
+   "bead": "N28c-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "M5; it re-measures the DC-07 row on the synthetic rehearsal dataset"
+  },
+  {
+   "bead": "N28c-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-344"
+   ],
+   "note": "the prediction ledger that scores the intervals of DC-05"
+  },
+  {
+   "bead": "N28c-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-276",
+    "BD-277"
+   ],
+   "note": "the certify, refute and stop policy of nemesis.bound and the splitting lane as running code"
+  },
+  {
+   "bead": "N28c-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-279",
+    "BD-280",
+    "BD-282"
+   ],
+   "note": "interventions with the placebo fork, flip rates in double precision and the attribution decision model with abstention"
+  },
+  {
+   "bead": "N28c-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-34",
+    "N16a-04"
+   ],
+   "note": "the new bead N28a-34 carries the declared effort profiles as model identities, the default profile and the re-run rule in frob-dyn; N16a-04 is the numerical parameter set with its digest"
+  },
+  {
+   "bead": "N28c-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-371",
+    "N12-18"
+   ],
+   "note": "specialized kernels with their rewrite certificates and the independent rewrite-trace checker; BD-349 is already a dependency"
+  },
+  {
+   "bead": "N28c-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-262",
+    "BD-292"
+   ],
+   "note": "the stored verdict record as written by the comparison and the revalidation engine (same milestone, no path back)"
+  },
+  {
+   "bead": "N28c-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N25c-16"
+   ],
+   "note": "the M3 ruling on KILL-AUGUR-PROBE; the partition path of this bead exists only if it does not fire"
+  },
+  {
+   "bead": "N28c-13",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-291"
+  },
+  {
+   "bead": "N28c-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-297"
+   ],
+   "note": "estimates with conformal intervals per stratum, from which the studio's cost predictions are registered"
+  },
+  {
+   "bead": "N28c-17",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependencies BD-310 and BD-351; the replay instrument N28b-18 is added with the merge"
+  },
+  {
+   "bead": "N28c-19",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "delivered through its dependency BD-352, the cascade that depends on BD-329 and its ledger components"
+  },
+  {
+   "bead": "N28c-19",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "delivered through its dependency BD-352, which depends on BD-345"
+  },
+  {
+   "bead": "N28c-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39a-24"
+   ],
+   "note": "the phase-ledger record with exclusive and resource tables and the 2% closure rule"
+  },
+  {
+   "bead": "N28c-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-377"
+   ],
+   "note": "the seeded cascade population registered for M4"
+  },
+  {
+   "bead": "N28c-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-408"
+   ],
+   "note": "M5; the second trigger of FROB-REF-557 is added to the battery when foundry.export exists"
+  },
+  {
+   "bead": "N28c-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28a-02"
+   ],
+   "note": "the loop-order rule: the upstream stage's code is re-issued and the override is recorded on downstream results (M1)"
+  },
+  {
+   "bead": "N28c-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-096"
+   ],
+   "note": "the deterministic simulation harness whose oracles include INV-ATEL-02 and INV-ATEL-06"
+  },
+  {
+   "bead": "N28c-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-34"
+   ],
+   "note": "the polarity table as sixteen registered rules (the thirteen rows' preserved directions) with one derivation and its fixtures per rule; BD-347 is already a dependency"
+  },
+  {
+   "bead": "N28c-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-129"
+   ],
+   "note": "the docking family as a finite observation game, on which the rules are checked exhaustively"
+  },
+  {
+   "bead": "N28c-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28-KA"
+   ],
+   "note": "the chapter's known-answer registry (M1), with which this battery must agree number for number"
+  },
+  {
+   "bead": "N28c-25",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N40-10",
+    "N40-29"
+   ],
+   "note": "the register's late-gate index and its fallback ledger, which already enters KILL-BUDGETCURVE with M4 as its decision point; both write rows of the same file (reported under cross_group_duplicates)"
+  },
+  {
+   "bead": "N28c-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "the method-experiment register with its six parts, which the method-gate form check reads (M1, a registry skeleton)"
+  },
+  {
+   "bead": "N28c-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-216",
+    "BD-219"
+   ],
+   "note": "the measured cost of a referee pair and of a fast-tier pair from the M2 harness and the cost model"
+  },
+  {
+   "bead": "N28c-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-387"
+   ],
+   "note": "M5; the declared cost of bench measurements arrives with the dataset manifest; until then the exchange rate is the DESIGN default"
+  },
+  {
+   "bead": "N28c-27",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28b-22"
+   ],
+   "note": "M4; the ledger's row key uses the stratum this decision defines and depends on it"
+  },
+  {
+   "bead": "N28c-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-17",
+    "N33b-15",
+    "N33a-18",
+    "N33b-12"
+   ],
+   "note": "the ledger group with the Recompute adapter and INT-FSIM-16, the Racing admission of fs-eproc and fs-race, and the M1 use of INT-FSIM-14; the stats group N33b-13 (fs-voi) is M3 and recorded as related under edges"
+  },
+  {
+   "bead": "N28c-29",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-312"
+   ],
+   "note": "direction reversed: the M3 registry freeze must reflect this decision (edge BD-312 -> N28c-29 recorded)"
+  },
+  {
+   "bead": "N28c-30",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-248"
+  },
+  {
+   "bead": "N28c-31",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already its dependency BD-321"
+  },
+  {
+   "bead": "N28c-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register pilots.toml, in which the protocol is recorded before execution (M0)"
+  },
+  {
+   "bead": "N28c-33",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-321"
+   ],
+   "note": "M4; the learned-policy ladder names fine-tuning rungs that arrive there"
+  },
+  {
+   "bead": "N28c-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N28c-31"
+   ],
+   "note": "no decision bead exists for a positive effort scale: the group settled it by design (ladder registered with fit unavailable, N28c-35 refuses, N28c-37 treats it as unsaturated); the question is noted for the OPEN-ATEL-6 decision on the same rungs"
+  },
+  {
+   "bead": "N28c-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-220"
+   ],
+   "note": "the episode node of the memo graph, of which a budget row is an index"
+  },
+  {
+   "bead": "N28c-36",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-13"
+   ],
+   "note": "the audit lane (M3) is the only admissible calibration set; the capstone BD-329 that runs it on real populations is M4 and recorded as related under edges"
+  },
+  {
+   "bead": "N28c-36",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28b-16"
+   ],
+   "note": "the exchangeability test martingale on conformal p-values (M3), shared with the survivor-margin core"
+  },
+  {
+   "bead": "N28c-37",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N25e-15"
+   ],
+   "note": "N25e-15 defines the same label for utility brackets; a shared wording that must print consistently, not an order of work"
+  },
+  {
+   "bead": "N28c-38",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-312"
+   ],
+   "note": "direction reversed: the M3 registry lists the option, the output block and the refusals (edge BD-312 -> N28c-38 recorded)"
+  },
+  {
+   "bead": "N28c-40",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N44-01",
+    "N21c-35"
+   ],
+   "note": "envelope requests and classes; without approval the experiment is sized to the default envelope and the gate row says so"
+  },
+  {
+   "bead": "N28c-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": "registration of the method experiment's six parts before the first run"
+  },
+  {
+   "bead": "N28c-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-29",
+    "N28c-25"
+   ],
+   "note": "the kill-gate record with its decision ADR, the late-gate fallback ledger that enters KILL-BUDGETCURVE at M4, and the Atelier kill rows"
+  },
+  {
+   "bead": "N28c-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-38",
+    "BD-111"
+   ],
+   "note": "the store policy that keeps the recompute cost per node and the memo graph that records it; BD-220 is already a dependency"
+  },
+  {
+   "bead": "N28c-42",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N28b-33"
+   ],
+   "note": "the rerun planner prices each obligation kept or revoked; BD-292 is already a dependency"
+  },
+  {
+   "bead": "N28c-42",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N39a-26"
+   ],
+   "note": "the lever attribution of the phase ledger must not credit avoided training a second time; a shared accounting rule"
+  },
+  {
+   "bead": "N28c-43",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-322"
+   ],
+   "note": "M4; warm starts by inheritance join this control then"
+  },
+  {
+   "bead": "N28c-43",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-335"
+   ],
+   "note": "M4; warm starts by continuation join this control then"
+  },
+  {
+   "bead": "N28c-44",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N28-REF"
+   ],
+   "note": "no bead assigns Appendix O numbers; the registry carries the uncoded refusal by name and this bead raises it as a generation failure with exit 3"
+  },
+  {
+   "bead": "N28c-45",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-13",
+    "BD-216"
+   ],
+   "note": "the disclosure block and the performance harness that the timing columns must carry"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-329",
+   "dep": "N28b-12",
+   "as": "dep",
+   "why": "coverage (d) of U28b: scorer admission is a component of the calibrated ladder (rule 3)"
+  },
+  {
+   "bead": "BD-329",
+   "dep": "N28b-13",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the audit lane is a component of the capstone (rule 3)"
+  },
+  {
+   "bead": "BD-329",
+   "dep": "N28b-14",
+   "as": "dep",
+   "why": "coverage (d) of U28b: split-conformal calibration is a component of the capstone (rule 3)"
+  },
+  {
+   "bead": "BD-329",
+   "dep": "N28b-15",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the survivor set, trust check and handover are a component of the capstone (rule 3)"
+  },
+  {
+   "bead": "BD-329",
+   "dep": "N28b-16",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the exchangeability alarm is a component of the capstone (rule 3)"
+  },
+  {
+   "bead": "BD-329",
+   "dep": "N28b-23",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the rung-mode automaton is a component of the capstone (rule 3)"
+  },
+  {
+   "bead": "BD-329",
+   "dep": "N28b-18",
+   "as": "dep",
+   "why": "rule 8: the offline replay is the pilot of layer 2 beside BD-310"
+  },
+  {
+   "bead": "BD-343",
+   "dep": "N28b-02",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the bisect honesty rules are a component of the verb (rule 3)"
+  },
+  {
+   "bead": "BD-343",
+   "dep": "N28b-04",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the order-independent merge is a component of the seed (rule 3)"
+  },
+  {
+   "bead": "BD-341",
+   "dep": "N28b-07",
+   "as": "dep",
+   "why": "coverage (d) of U28b: opt.start calls the ask/tell optimizer interface"
+  },
+  {
+   "bead": "BD-347",
+   "dep": "N28b-32",
+   "as": "dep",
+   "why": "the verb surface (registry entry, schemas, split verdict) that grades 3 and 4 complete (rule 3)"
+  },
+  {
+   "bead": "BD-347",
+   "dep": "N28b-33",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the rerun planner is the costing half of grade 4 (rule 3)"
+  },
+  {
+   "bead": "BD-347",
+   "dep": "N28b-34",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the polarity table's rules, fixtures and finite-game check (rule 3)"
+  },
+  {
+   "bead": "BD-347",
+   "dep": "N28b-36",
+   "as": "related",
+   "why": "coverage (d) of U28b asked for a dependency; rule 7: the mechanism being measured never depends on the decision about it, and the decision N28b-36 depends on BD-347"
+  },
+  {
+   "bead": "BD-351",
+   "dep": "N28c-17",
+   "as": "related",
+   "why": "coverage (d) of U28b asked for BD-351 to depend on the KILL-VOI decision (N28b-21, now superseded by N28c-17); rule 7: the decision depends on BD-351"
+  },
+  {
+   "bead": "BD-351",
+   "dep": "N28b-18",
+   "as": "dep",
+   "why": "rule 8: the offline replay of choosers is the pilot of the value-of-information ranking"
+  },
+  {
+   "bead": "BD-351",
+   "dep": "N28c-12",
+   "as": "dep",
+   "why": "the advisory type and refusal 872 (M3) that keep a value-of-information quantity out of verdict fields"
+  },
+  {
+   "bead": "BD-352",
+   "dep": "N28b-25",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the stage-control framework is a component of the cascade (rule 3)"
+  },
+  {
+   "bead": "BD-352",
+   "dep": "N28b-26",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the stage 1 and 2 controls are components of the cascade (rule 3)"
+  },
+  {
+   "bead": "BD-352",
+   "dep": "N28b-27",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the stage 4 and 6 controls are components of the cascade (rule 3)"
+  },
+  {
+   "bead": "BD-352",
+   "dep": "N28b-17",
+   "as": "dep",
+   "why": "need 1 of N28b-17: opt.cascade --estimate prints the cost model"
+  },
+  {
+   "bead": "BD-349",
+   "dep": "N28c-02",
+   "as": "dep",
+   "why": "the shared core-table compiler (M3) on which the M4 tables are generated; BD-349 no longer builds a second compiler"
+  },
+  {
+   "bead": "BD-349",
+   "dep": "N28c-03",
+   "as": "dep",
+   "why": "decision evidence records and staged adoption (M3), used by the shadow harness and the adoption check"
+  },
+  {
+   "bead": "BD-111",
+   "dep": "N28b-37",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the memo graph is built on the Memo trait and derived keys"
+  },
+  {
+   "bead": "BD-111",
+   "dep": "N28b-38",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the memo graph applies the store policy (bit-identical hits, shadow recomputation with a latch)"
+  },
+  {
+   "bead": "BD-220",
+   "dep": "N28b-38",
+   "as": "dep",
+   "why": "coverage (d) of U28b: memoized episodes apply the store policy's episode clauses"
+  },
+  {
+   "bead": "BD-137",
+   "dep": "N28b-32",
+   "as": "dep",
+   "why": "coverage (d) of U28b: result.revalidate is listed among the M1 verbs"
+  },
+  {
+   "bead": "BD-292",
+   "dep": "N28b-32",
+   "as": "dep",
+   "why": "need 1 of N28b-32: the full revalidation engine plugs into the verb surface defined at M1 (rule 10)"
+  },
+  {
+   "bead": "BD-248",
+   "dep": "N24b-02",
+   "as": "dep",
+   "why": "coverage (d) of U28b: the corpus content is authored into the corpus registry"
+  },
+  {
+   "bead": "BD-372",
+   "dep": "BD-374",
+   "as": "related",
+   "why": "coverage (d) of U28b: solve.run's gate reads the third arm of the surface A/B and runs no second experiment; seed order (rule 2), and BD-374 depends on BD-372"
+  },
+  {
+   "bead": "BD-374",
+   "dep": "N28b-43",
+   "as": "dep",
+   "why": "the ablation arms are registered with the main arms and launched in the same keyed order (new bead)"
+  },
+  {
+   "bead": "BET-10",
+   "dep": "N28b-43",
+   "as": "dep",
+   "why": "the bet's written consequence reads the per-cluster effect table; fills the gap the G00 integrator reported for §28.8"
+  },
+  {
+   "bead": "N16b-05",
+   "dep": "N28c-02",
+   "as": "dep",
+   "why": "coverage (d) of U28c: the DC-01 table generator registers with the core-table compiler"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N28c-04",
+   "as": "dep",
+   "why": "coverage (d) of U28c: the M3 registry lists cores.show"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N28c-38",
+   "as": "dep",
+   "why": "coverage (d) of U28c: the M3 registry lists eval.compare --budget-curve and the curves section of explain.compare"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N28c-44",
+   "as": "dep",
+   "why": "coverage (d) of U28c: the M3 registry lists design.diff --reuse"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N28c-29",
+   "as": "dep",
+   "why": "need 1 of N28c-29: the registry freeze reflects the decision on OPEN-ATEL-4 (rule 7)"
+  },
+  {
+   "bead": "N26b-01",
+   "dep": "N28b-13",
+   "as": "dep",
+   "why": "cross-group overlap: the plan has one audit lane (the ladder's, drawn before any score); the Nemesis lane should stratify and budget that draw, not make a second one"
+  },
+  {
+   "bead": "N28c-38",
+   "dep": "N28a-17",
+   "as": "dep",
+   "why": "need 2 of N28a-17: the curves section is added to the verb explain.compare"
+  },
+  {
+   "bead": "N28a-28",
+   "dep": "N28a-34",
+   "as": "dep",
+   "why": "the DC-08 record tabulates the effort profiles the new mechanism bead declares"
+  },
+  {
+   "bead": "N28c-11",
+   "dep": "N28a-34",
+   "as": "dep",
+   "why": "the DC-08 gate-row tests run on the new mechanism bead (rule 4)"
+  },
+  {
+   "bead": "BD-101",
+   "dep": "N13-28",
+   "as": "related",
+   "why": "need 1 of BD-101: the Hervé lattice bead is M3 and depends on BD-101; the lattice cross-check is consumed when present"
+  },
+  {
+   "bead": "BD-250",
+   "dep": "BD-253",
+   "as": "related",
+   "why": "need 1 of BD-250: the task families are a higher-numbered seed (rule 2); corpus designs run on the families that exist"
+  },
+  {
+   "bead": "BD-100",
+   "dep": "BD-115",
+   "as": "related",
+   "why": "replaces the drafted dep: a seed never depends on a higher-numbered seed (rule 2); the cone program is posed on the Cone trait BD-050"
+  },
+  {
+   "bead": "BD-108",
+   "dep": "BD-110",
+   "as": "related",
+   "why": "replaces the drafted dep: a seed never depends on a higher-numbered seed (rule 2); the staging contract N14b-10 is the prerequisite"
+  },
+  {
+   "bead": "N28a-09",
+   "dep": "BD-116",
+   "as": "related",
+   "why": "need 2 of N28a-09: the legged baseline depends on this bead through BD-108; the controller record N22a-07 is the prerequisite"
+  },
+  {
+   "bead": "N28a-09",
+   "dep": "BD-117",
+   "as": "related",
+   "why": "need 2 of N28a-09: the wheeled baseline depends on this bead through BD-108"
+  },
+  {
+   "bead": "N28a-18",
+   "dep": "BD-195",
+   "as": "related",
+   "why": "need 1 of N28a-18: the batched-tier reset cache is M2"
+  },
+  {
+   "bead": "N28a-18",
+   "dep": "BD-177",
+   "as": "related",
+   "why": "need 2 of N28a-18: the D3 decision-level equivalence record is M2"
+  },
+  {
+   "bead": "N28a-18",
+   "dep": "BD-269",
+   "as": "related",
+   "why": "need 2 of N28a-18: the determinism licences are M3"
+  },
+  {
+   "bead": "N28a-18",
+   "dep": "N24c-36",
+   "as": "related",
+   "why": "need 3 of N28a-18: the versioned exposure table is M2"
+  },
+  {
+   "bead": "N28a-21",
+   "dep": "BD-346",
+   "as": "related",
+   "why": "need 2 of N28a-21: the cascade's strict rank-robustness form is M4"
+  },
+  {
+   "bead": "N28b-06",
+   "dep": "BD-368",
+   "as": "related",
+   "why": "need 1 of N28a-31 (merged into N28b-06): the stair task is a fixture choice with a stated fallback"
+  },
+  {
+   "bead": "N28a-33",
+   "dep": "BD-331",
+   "as": "related",
+   "why": "need 2 of N28a-33: the gate reading of the sampling controller does not block the R1 scorer"
+  },
+  {
+   "bead": "N28b-38",
+   "dep": "BD-269",
+   "as": "related",
+   "why": "need 4 of N28b-38: the determinism licences are M3"
+  },
+  {
+   "bead": "N28c-28",
+   "dep": "N33b-13",
+   "as": "related",
+   "why": "need 1 of N28c-28: the stats group that holds fs-voi is admitted at M3, after this M1 decision"
+  },
+  {
+   "bead": "N28c-36",
+   "dep": "BD-329",
+   "as": "related",
+   "why": "need 1 of N28c-36: the calibrated ladder on real populations is M4; the M3 prerequisite is the audit lane N28b-13"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N28a-25",
+   "keep": "N28b-20",
+   "note": "both decide KILL-LADDER; folded into N28b-20: the rule that a failed control fires without a repair cycle, the measurements read per run, the downstream list (selective treated as discard-only, handover by count, audit lane kept at a tenth), the rule-table and fired-state tests, the record script's steps, the definition of one repair cycle"
+  },
+  {
+   "drop": "N28a-26",
+   "keep": "N28c-17",
+   "note": "both decide KILL-VOI; folded into N28c-17: the zero-value failure filed as a correctness bug, the comparators recorded, the omitted ratio field, adoption no further than canary before the core-level gate row, the rejection of a decision recorded before its gate row, the rule-table tests"
+  },
+  {
+   "drop": "N28b-21",
+   "keep": "N28c-17",
+   "note": "both decide KILL-VOI; folded into N28c-17: the M4 reading on our own engine's log, evaluator calibration and the void reading, the one-way handover and second fallback route, INV-ATEL-12 and FROB-REF-872 on both branches, the switch tests and script, the DC-05 worked example. The three drafts read 'at least 1.5 times' three ways; the kept bead uses the paired 95% lower bound against 1.5"
+  },
+  {
+   "drop": "N28a-24",
+   "keep": "N28b-36",
+   "note": "both decide KILL-REUSE; folded into N28b-36: firing on the pilot, U counted even when repaired later, revocation of issued grade-3 licences with a recheck list, the second-campaign condition before default, the report line, the rule-table and saving tests; a grade-3 request after firing is answered at grade 4 as the verb's surface fixes, not refused"
+  },
+  {
+   "drop": "N28a-32",
+   "keep": "N28b-28",
+   "note": "two end-to-end scripts for the cascade and GATE-ATEL-16; folded into N28b-28: the reduced fixture and its builder (27-design default form), three more plants, the fixed-table, sabotage, cancel-and-resume, honest-ending and gate-query steps, the self-test with five planted regressions, runtime target, determinism lanes. The GATE-ATEL-08 comparison stays with N28b-19"
+  },
+  {
+   "drop": "N28a-31",
+   "keep": "N28b-06",
+   "note": "two end-to-end scripts for the lineage queries; folded into N28b-06: the M1 section (three-edit lineage, stale parent, diff round trip through design.patch, blame on a derived quantity, branch diff), the 12-edit planted bisect with --assume-monotone and schedule fuzz, the self-merge check, the gate query of GATE-ATEL-04's bisect row, the self-test, runtime targets"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N28b-29",
+   "other": "N26b-05",
+   "note": "CONFIRMED duplicate: both specify the verb nemesis.audit (stratified discards, exact bound, sealed planted winner, FROB-REF-566, GATE-NEMESIS-07). The plan gives the audit to §26.10 and says §28.12 applies it without restating it, so the Nemesis beads should be kept and N28b-29 superseded by N26b-05 after folding; BD-345 and N28b-31 then depend on N26b-05 (edge already recorded by the Nemesis integrator)"
+  },
+  {
+   "mine": "N28b-29",
+   "other": "N26b-02",
+   "note": "confirmed: the false-discard bound 1 − δ^(1/m) per stratum and the stratum verdict are in both; part of the duplicate above"
+  },
+  {
+   "mine": "N28b-29",
+   "other": "N26b-03",
+   "note": "confirmed: the planted winner's seal, blinded entry and reveal are in both; part of the duplicate above"
+  },
+  {
+   "mine": "N28b-29",
+   "other": "N26b-04",
+   "note": "confirmed: the audit record, the label screen-biased and re-qualification are in both; the re-opening and the trust rule stay with BD-345"
+  },
+  {
+   "mine": "N28b-29",
+   "other": "N26b-06",
+   "note": "confirmed: the two synthetic batteries of GATE-NEMESIS-07 are built in both"
+  },
+  {
+   "mine": "N28b-13",
+   "other": "N26b-01",
+   "note": "PARTLY confirmed, not a clean duplicate: the plan has one audit lane, defined in §28.9 and used by §26.10. N28b-13 (frob-opt, M3) is that lane and is needed at M3 by the pilots, the calibration and N28c-36; N26b-01 (frob-nemesis, M4) restates the keyed pre-score draw and adds strata of discards, quotas and spend accounting. Keep both with distinct scope: N26b-01 should take its draw from N28b-13 (edge recorded) and drop its own draw and commitment"
+  },
+  {
+   "mine": "N28b-31",
+   "other": "N26b-07",
+   "note": "confirmed overlap: two scripts record GATE-NEMESIS-07 (screening_audit.sh and nemesis_audit.sh). N26b-07 should record that gate; N28b-31 keeps the cascade's application (GATE-ATEL-09: trust rule, labels and re-opening, prune soundness) and should invoke nemesis_audit.sh for the audit steps"
+  },
+  {
+   "mine": "N28a-27",
+   "other": "N26a-26",
+   "note": "both write the DC-04 record. N28a-27 now states the exact binomial counts (29,956; 299,572; 2,995,731) beside the table formula, as N28c-10 does; the plan has two codes for one refusal (549 in §28.20, 560 in §26.12), now noted as a layered pair in N28-REF"
+  },
+  {
+   "mine": "BD-309",
+   "other": "N26b-11",
+   "note": "the DC-10 record: N26b-11 writes the decision record in frob-nemesis, BD-309 the registry record; the Nemesis integrator recorded BD-309 -> N26b-11"
+  },
+  {
+   "mine": "N28a-12",
+   "other": "N14b-18",
+   "note": "both build the seeded-defect corpus for preflight stages 1 to 6"
+  },
+  {
+   "mine": "N28a-12",
+   "other": "N14b-01",
+   "note": "N28a-12 also contains a generator of random valid designs, which N14b-01 owns"
+  },
+  {
+   "mine": "BD-110",
+   "other": "N14b-10",
+   "note": "stage table, statuses, check options and timing budgets are specified in both; BD-110 -> N14b-10 recorded by the Skeleton integrator, and BD-108 now depends on N14b-10 too"
+  },
+  {
+   "mine": "N28a-18",
+   "other": "BD-124",
+   "note": "BD-124 carries eval.compare on the CPU, eval.preanalyze and names GATE-ATEL-06, whose refusal rows N28a-18 measures; N28a-18 depends on BD-124"
+  },
+  {
+   "mine": "N28a-19",
+   "other": "BD-124",
+   "note": "the fixed-n rule and reachability pre-analysis are in both; N28a-19 depends on BD-124"
+  },
+  {
+   "mine": "N28a-23",
+   "other": "N10b-07",
+   "note": "overlap with distinct scope: twelve scripted amendments exercise polarity in both (PILOT-C-18 at M1 on mission certificates; the grade-3 pilot at M4 on studio verdicts)"
+  },
+  {
+   "mine": "N28c-13",
+   "other": "N25c-18",
+   "note": "both specify measurement proposals of experiment.suggest by decision partition with the direct measurement as comparator; BD-351 ranks them"
+  },
+  {
+   "mine": "N28c-44",
+   "other": "BD-302",
+   "note": "both specify the three named reuse columns of report.campaign and the refusal of an unnamed figure"
+  },
+  {
+   "mine": "N28b-41",
+   "other": "N17a-26",
+   "note": "the memo key built on the mission-observable digest, its store policy and the replay rule are specified in both"
+  },
+  {
+   "mine": "BD-248",
+   "other": "N24b-02",
+   "note": "the freeze of the design corpus is claimed by both: N24b-02 holds the registry, the split and the freeze mechanics, BD-248 the content"
+  },
+  {
+   "mine": "N28c-25",
+   "other": "N40-02",
+   "note": "the nineteen Atelier gates are entered in registries/gates.toml by both (N40-02 with claim and milestone; N28c-25 with thresholds, parts by milestone, measuring beads and controls); the late gates also by N40-10"
+  },
+  {
+   "mine": "N28c-25",
+   "other": "N40-26",
+   "note": "the kill rows of KILL-STATIC, -ATLAS, -LADDER, -REUSE and -VOI are entered by both"
+  },
+  {
+   "mine": "N28c-25",
+   "other": "N40-29",
+   "note": "the kill row of KILL-BUDGETCURVE (decision point M4, GATE-ATEL-18) is entered by both, and they agree"
+  },
+  {
+   "mine": "N28a-05",
+   "other": "VERBS-analyze",
+   "note": "both enter the twenty-six analyze.* rows: VERBS-analyze as registry data, N28a-05 as verbs generated from the analysis registry with proposed names for 25 of them"
+  },
+  {
+   "mine": "N28c-04",
+   "other": "VERBS-cores",
+   "note": "the registry row of cores.show is specified in both"
+  }
+ ],
+ "new_beads": [
+  "N28a-34",
+  "N28b-43"
+ ],
+ "gaps": [
+  {
+   "section": "§33.3",
+   "what": "the first-use admission record and airlock entry of fs-tropical (max_cycle_mean, critical_circuit): N33a-18 calls it a thin entry owned by the bead that admits it, and no bead does. BD-332 uses its local exact routine until then",
+   "needed_by": [
+    "BD-332"
+   ]
+  },
+  {
+   "section": "Appendix O",
+   "what": "no bead assigns new refusal codes for refusals a chapter states without one. In §28: a reuse figure printed without its column name (§28.26), raised by N28c-44 as a named generation failure with exit 3; the plan also carries two codes for one refusal (549 in §28.20, 560 in §26.12)",
+   "needed_by": [
+    "N28c-44",
+    "N28-REF"
+   ]
+  },
+  {
+   "section": "Appendix N",
+   "what": "no bead assigns catalogue numbers to late counterexamples; N28-CX carries two unnumbered (the threshold budget curve; the summed or cold-only reuse figure)",
+   "needed_by": [
+    "N28-CX"
+   ]
+  },
+  {
+   "section": "§14.11",
+   "what": "the preflight stage table has no row for analyses A-20 to A-23, which §28.4 marks as in `check`; BD-108 places them in stage 6 as a DESIGN default and the staging contract N14b-10 should gain the rows",
+   "needed_by": [
+    "BD-108"
+   ]
+  },
+  {
+   "section": "§34.9",
+   "what": "the format registry beads enumerate the thirteen file formats only; whether record schemas introduced by §28 (frob.core/1, frob.core-table/1, frob.core-decision/1, frob.budget-row/1, frob.reuse-ledger/1, frob.proposal/1) need registry rows has no carrier",
+   "needed_by": [
+    "N28c-01",
+    "N28c-03",
+    "N28c-13",
+    "N28c-34",
+    "N28c-42"
+   ]
+  },
+  {
+   "section": "§25.4 (reported by the Augur integrator against §28.4)",
+   "what": "interval and affine forms of the static analyses: §28.4 states no generic-scalar rule, and the plan lists interval forms of the robot static analyses as missing in the suite and places them with the region-certificate work, lowered twice by independent code (PO-AUGUR-01); no bead of §25 or §28 carries that lowering for A-02, A-08, A-10, A-11 and A-13",
+   "needed_by": [
+    "N25b-08",
+    "N25b-09",
+    "BD-358"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-100",
+   "what": "seed order: BD-115 moved from deps to related; Scope states the order of work"
+  },
+  {
+   "bead": "BD-108",
+   "what": "seed order: BD-110 moved from deps to related and the staging contract N14b-10 added as the dependency; Scope states the order of work"
+  },
+  {
+   "bead": "BD-113",
+   "what": "related and the end-to-end reference now name the kept lineage script N28b-06 and the lineage components N28b-01, N28b-05"
+  },
+  {
+   "bead": "BD-310",
+   "what": "overlap re-scoped against N28b-18: the log and the rank-agreement part stay here, the replays are run by N28b-18; the KILL-VOI reading is stated as the paired lower bound; kill-decision keys updated"
+  },
+  {
+   "bead": "BD-329",
+   "what": "made the capstone of layer 2: depends on N28b-12 to N28b-16, N28b-18, N28b-22 to N28b-24, N28c-01, N28c-03; Scope rewritten with a part table; gate run (N28b-19) and decision (N28b-20) are downstream; 5th percentile of coverage aligned to 0.884"
+  },
+  {
+   "bead": "BD-343",
+   "what": "made the capstone of N28b-02 (bisect honesty rules) and N28b-04 (merge); Scope rewritten; the gate row is measured by N28b-03"
+  },
+  {
+   "bead": "BD-347",
+   "what": "made the capstone of N28b-32, N28b-33, N28b-34 behind the pilot N28a-23; Scope rewritten; gate run (N28b-35) and decision (N28b-36) are downstream; rule-registry file name and the --grades form aligned with the engine and the verb surface"
+  },
+  {
+   "bead": "BD-349",
+   "what": "overlap re-scoped against the M3 compiler N28c-02: title sharpened, Scope rewritten as the M4 capstone of the eight cores, deps N28c-02 and N28c-03; FROB-REF-871 behaviour, the fallback-only status and lower-case core identifiers aligned with the core contract; gate rows measured by N28c-08 to N28c-11"
+  },
+  {
+   "bead": "BD-351",
+   "what": "overlap re-scoped against N28c-13, N28c-14, N28c-15 and N28c-16; deps on the pilot N28b-18 and the advisory type N28c-12; GATE-ATEL-15 statistic aligned with the decision bead; decision key N28c-17"
+  },
+  {
+   "bead": "BD-352",
+   "what": "made the capstone of N28b-17, N28b-25, N28b-26, N28b-27 beside its seed dependencies; Scope rewritten; GATE-ATEL-16 is measured by the kept script N28b-28"
+  },
+  {
+   "bead": "BD-374",
+   "what": "title shortened to 108 characters; depends on the new ablation-arm bead N28b-43; Scope and the usage line updated"
+  },
+  {
+   "bead": "N28-REF",
+   "what": "Considerations now record the three conditions of the chapter that have no code and what happens instead, and the layered code pairs (coverage (d) of U28a)"
+  },
+  {
+   "bead": "N28a-15",
+   "what": "decision-record path aligned with the kill-gate record convention used by the other kill decisions of the group"
+  },
+  {
+   "bead": "N28a-22",
+   "what": "decision-record path aligned with the kill-gate record convention"
+  },
+  {
+   "bead": "N28a-23",
+   "what": "Scope and related re-cut against N28b-34, N28b-35 and N28b-36"
+  },
+  {
+   "bead": "N28a-27",
+   "what": "lower-case core identifiers and file names per the core contract; DC-04 exact binomial counts stated beside the table formula, agreeing with N28c-10"
+  },
+  {
+   "bead": "N28a-28",
+   "what": "lower-case core identifiers and file names; depends on the new DC-08 mechanism bead N28a-34; Scope names the mechanism and gate-row beads"
+  },
+  {
+   "bead": "N28a-30",
+   "what": "reference to the kept lineage script"
+  },
+  {
+   "bead": "N28a-33",
+   "what": "overlap re-scoped against N28b-12, N28b-22 and N28b-23, which it now depends on; script reference updated"
+  },
+  {
+   "bead": "N28b-06",
+   "what": "kept end-to-end bead of the lineage queries (N28a-31 folded in); title shortened to 109 characters; gate GATE-ATEL-04 and dependency N28b-03 added"
+  },
+  {
+   "bead": "N28b-08",
+   "what": "title shortened to 109 characters; related key updated"
+  },
+  {
+   "bead": "N28b-11",
+   "what": "Scope and related name the ablation arms of N28b-43"
+  },
+  {
+   "bead": "N28b-12",
+   "what": "Scope: the rung state machine that calls the admission function is N28a-33"
+  },
+  {
+   "bead": "N28b-15",
+   "what": "Frontier mechanism now depends on its pilot N28b-18 and on the rung state machine N28a-33; Scope says so"
+  },
+  {
+   "bead": "N28b-16",
+   "what": "Scope: the fixed table is N28a-33"
+  },
+  {
+   "bead": "N28b-18",
+   "what": "overlap re-scoped against BD-310; one name for the log (frob.ladderlog/1); gate GATE-ATEL-08 added for the pilot row; the KILL-VOI reading aligned with the decision bead"
+  },
+  {
+   "bead": "N28b-20",
+   "what": "kept KILL-LADDER decision (N28a-25 folded in); registry state uses the contract's fallback-only status; decision-record path per the kill-gate record convention; depends on STD-E2E"
+  },
+  {
+   "bead": "N28b-23",
+   "what": "the automaton's artifact path follows the core contract"
+  },
+  {
+   "bead": "N28b-28",
+   "what": "kept end-to-end bead of the cascade (N28a-32 folded in)"
+  },
+  {
+   "bead": "N28b-34",
+   "what": "Frontier mechanism now depends on its pilot N28a-23"
+  },
+  {
+   "bead": "N28b-36",
+   "what": "kept KILL-REUSE decision (N28a-24 folded in); depends on BD-347, the pilot N28a-23 and STD-E2E; decision-record path per the kill-gate record convention"
+  },
+  {
+   "bead": "N28c-11",
+   "what": "depends on the new DC-08 mechanism bead N28a-34; Scope names it"
+  },
+  {
+   "bead": "N28c-17",
+   "what": "kept KILL-VOI decision (N28a-26 and N28b-21 folded in); depends on N28b-18, N10c-11, BD-321 and STD-E2E; decision-record path per the kill-gate record convention"
+  },
+  {
+   "bead": "N28c-25",
+   "what": "registry bead now depends on the gate-register skeleton N40-01"
+  },
+  {
+   "bead": "N28c-31",
+   "what": "Considerations carry the open point on the zero-effort base level of the learned-policy budget ladder (coverage (e) 1 of U28c)"
+  },
+  {
+   "bead": "N28c-38",
+   "what": "depends on N28a-17, the verb whose output it extends"
+  },
+  {
+   "bead": "N28c-41",
+   "what": "decision-record path aligned with the kill-gate record convention"
+  }
+ ]
+}

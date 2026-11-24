@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "lemma", "upstream", "franken_lean", "frontier"]
 parent: "WP-31"
-deps: ["BD-037", "BD-380", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-380", "BD-381", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-381", "BD-382", "FD-FLN-02", "FD-FSYM-02", "FD-FSYM-03"]
+related: ["FD-FLN-02", "FD-FSYM-02", "FD-FSYM-03", "N12-23", "N12-25"]
 gates: ["GATE-LEMMA-02"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§12.1", "§12.2", "§12.3", "§12.4", "§12.8", "§33.4", "§33.8"]
 ---
@@ -88,7 +88,15 @@ recorded at the pinned commit (`observed_at`, the failing assertion and the obse
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
 itself a failure of the registry check. Four one-line theorems under `lean/`, each importing one blocked target
 and stating a trivial true fact from it; stock Lean compiles them; `fln` is asked to re-check and seal each. At
-the pin all four are declined because their closures contain unaccepted modules.
+the pin all four are declined because their closures contain unaccepted modules. Each area is its own assertion
+with its own entry in `expected.toml`, because the item lands one root at a time: at a pin move the areas that
+landed must seal and the others must still be declined with their recorded signature, and the registry row's
+note lists the areas still blocked. franken_lean has no pin in `franken-stack.lock` when BD-037 writes the row at
+M0 (it is first admitted at M5, by BD-380), so BD-037's fixture timing rule applies: the fixture is written against
+the sibling's head as read on the day, `observed_at` names that commit, and the row carries
+`pin_state = "unpinned"`. This bead starts after BD-380, whose admission sets the first pin: its phase `pre`
+re-runs the fixture at that pin, re-records `observed_at` and the four signatures in `expected.toml` there, and
+this bead then clears `pin_state` in the row (the duty BD-037 gives the item's own bead).
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -119,7 +127,7 @@ of the proof routes and are not triggered by this item.
 - [ ] Here: the fixture theorem of each unblocked area is re-checked and sealed, and its capsule verifies from an empty environment; the sign-mutated twin of each is rejected.
 - [ ] Here: each promoted card records the capsule hash, the Lean version and the Mathlib commit of FrankenLean's own pin, and the memory and time its closure took (OPEN-LEMMA-1: measured before any claim).
 - [ ] Here: no card is labelled `Proved` whose capsule's closure contains an unaccepted module.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet; its `pin_state` field, `unpinned` as BD-037 wrote it, is cleared once the fixture has been re-run at the sibling's first pin.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
 
@@ -142,8 +150,10 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fln_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Run on the Linux host. Phase `post` also runs `frob prove verify --json` on the promoted
-cards' capsules and `frob prove list --json`, asserting the proof class of each card.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Run on the Linux host. Phase `post` also runs `frob prove verify <lean-capsule bundle>
+<capsule file> --json` for each promoted card (the bundle written by `frob prove bundle --card T-<nn> --capsule
+<capsule file> --out <dir> --key <k>`, BD-381) and `frob prove list --json`, asserting the proof class of each
+card.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fln_01/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

@@ -1,0 +1,359 @@
+{
+ "round": 1,
+ "slice": "U34",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "BD-003",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "cargo metadata --no-deps cannot give the links key, build deps or the resolved closure the rules and facts need: two reads (--no-deps and resolved --offline --locked); check-stack re-pointed from superseded N34-13 to N33a-05; register row format with standing/adr authority and rule L-10.inversion-without-adr; unit tests for map validation, L-10, L-11, the proof-boundary ownership, links key, closure facts and exit codes; e2e log lines named; time share 10 s per BD-004's table"
+  },
+  {
+   "bead": "BD-004",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "check-stack re-pointed to N33a-03/-04/-05 (N34-13 superseded); the layers+deps 25 s share is one table split 10/7/5/3 among BD-003, N34-03, N34-04 (one cargo tree per binary) and N34-25, and the beads cite it; dep N34-03 added (plant 3 of the matrix exercises its asupersync rule); test check_generated_detects_edit named for INV-SPARK-08 as U21c asked; bead-log and artifact-graph rules that later ride inside check-generated (N29a-09, BD-095) stated"
+  },
+  {
+   "bead": "BD-005",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "family exit rule aligned with the surface's exit table (N32a-03): admitted exit sets per family, explicit exit required in 71x and 74x-79x, 8xx in {3,7,9}, 9xx only 9 with retry never; the U21c request answered by routing the 9xx device-receipt code to the allocation ledger (N35-33, N35x-01, N35x-02) and making an exit-3 9xx row fail to load; TOML subset now states comments, dotted headers and what is outside (manifests are read with it); closed identity prefix list d: m: s: k: p: e:"
+  },
+  {
+   "bead": "BD-141",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added BD-054 (owner of .fbot and its canonical-form rules) as a direct dependency; it was reached only transitively"
+  },
+  {
+   "bead": "BD-145",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "e2e called frob eval preanalyze on the rank-agreement rule, which that verb does not know at M1 (only paired-clopper-pearson/1, N24b-06); the stored pre-analysis is now recomputed by the named test registration::preanalysis and its hash compared; dep N33b-19 added (the M1 study.plan/submit verbs the script drives)"
+  },
+  {
+   "bead": "BD-410",
+   "kinds": [
+    "split",
+    "placement",
+    "scope",
+    "deps"
+   ],
+   "what": "the M5 bead ran per-format gate lanes at M2-M4, but the plan requires each reader's fuzz clause before its format's first release; split into N34p1-01 (M2 .fscene), N34p1-02 (M3 .fclear, .fmcw), N34p1-03 (M4 .fskill, .fenergy); BD-410 keeps .fbuild, the old-identity clause and the 13-of-13 record, and depends on the three"
+  },
+  {
+   "bead": "N34-01",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "forbidden-package rows carry their reason (annex workspace or route id of routes_not_taken.toml, N21c-24), prefix patterns allowed, so the routes-not-taken names (ash, vulkano, opencl3, cubecl, burn*, spirv-std, Slang bindings) are in the one list as U21c asked; trj host defined; start-up backend refusal named (FROB-REF-601, exit 6); receipt/check-stack/toolchain re-pointed to N33a-04/N33a-05/N33c-08; tests for reasons and prefix patterns"
+  },
+  {
+   "bead": "N34-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "arithmetic verified (layer sums, 561 total, 645 trigger, 43 crates); the apps/ link packages are exempt through a list passed in from N34-01's workspace table (reading it directly would close a cycle); test apps_link_packages_exempt"
+  },
+  {
+   "bead": "N34-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "cargo metadata unifies features across the workspace, so per-binary asupersync duplicate candidates are confirmed with cargo tree -p <pkg> --target ... -i asupersync --locked --offline, fail-closed when confirmation cannot run; inputs --locked --offline sharing BD-003's read; 7 s share; test unification_only_candidate_not_reported"
+  },
+  {
+   "bead": "N34-04",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "one unified feature list cannot equal every binary (frob-verify links none; MCP-linking binaries carry arbitrary_precision): [json_library.features] now holds one sorted set per binary, each computed with cargo tree -p <pkg> --target ... -e features -i serde_json --locked --offline, the workspace-unified set printed only as a fact; a binary with no key is json.feature-drift; Out list re-pointed from superseded N34-13 to N33a-03/N33a-04; 5 s share; test per_binary_sets_differ_legitimately"
+  },
+  {
+   "bead": "N34-05",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "dep N34-06 added (the counting sink is a real EvidenceSink of frob_core::ports, not a mock); tests for pub trait methods and pub type aliases of f64, which the scan claims to cover"
+  },
+  {
+   "bead": "N34-06",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "dep BD-003 added (its acceptance runs the L-10 rules BD-003 writes); register row format gains authority standing/adr at M0 so that the M1 rows of N16a-01 and N22a-01 (ADR-WS-05) and the M3 row of N34x-01 (ADR-WS-04) extend it; known answer restated as five standing rows plus ADR-cited rows, as U16a asked; tests for the ADR rule and the standing count"
+  },
+  {
+   "bead": "N34-07",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dep BD-002 added (it creates registries/capsules.toml with zero rows and a placeholder schema that this bead replaces); states that the file still validates with zero rows"
+  },
+  {
+   "bead": "N34-08",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "dep N34-07 added (rule 10 reads its doorway table, now read not copied); the [[gate]] contract block admits the chapter-side fields the lint does not compare (criteria, fixture, script, kill, notes, form_hash, strata_fixture, bet), as the N40-02 reconciliation note asked"
+  },
+  {
+   "bead": "N34-09",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "dep N34x-03 added (it extends the demo schema this rule enforces); demo.schema admits the optional keys N34-12 and N00-29 read (tier, expect_exit, expect_refusal, compare, expect, title, milestone, actors, lane, fresh_agent, not_evidence_for) by reading the schema file, as the N00-29 note asked; new rule demo.expectation-shape for the cross-member constraints JSON Schema cannot state (map keys in commands, refusal iff exit 3, code registered, exactly one checksum or comparison, expect file exists); tests demo_optional_keys_admitted and demo_expectation_shape"
+  },
+  {
+   "bead": "N34-10",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "dep N34-11 added (rule 5 checks the name@vN form with DecisionPolicyId's parser, one grammar for check and runtime); test decision_policy_grammar"
+  },
+  {
+   "bead": "N34-11",
+   "kinds": [
+    "complete",
+    "tests",
+    "title"
+   ],
+   "what": "§34.12 says frob-core mirrors the text form of the three identifiers franken-kernel has; DecisionId was missing although N33c-27 and N33b-08 round-trip ours against the sibling's: added as a text-form mirror (32 lower-case hex, execution identifier, never in a content hash, no graph node, layout read from the sibling at the pin); stated exception that TraceId and DecisionId share a text form; tests decision_id_text and the oracle extended"
+  },
+  {
+   "bead": "N34-12",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "the demo schema is BD-002 extended by N34x-03 (the eleven optional keys), stated in Out and in the file section"
+  },
+  {
+   "bead": "N34-14",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "extra plants are rows of one table (patch, bead, milestone, owner, identifier) so later beads add theirs: N16a-01 and N34-10 at M1, N34x-01 at M3, logged not due before their milestone; self-test checks the table"
+  },
+  {
+   "bead": "N34-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "rule 10's enforcement point re-pointed from superseded N34-13 to N33a-05 (check-stack) and N33a-04 (drift classes)"
+  },
+  {
+   "bead": "N34-16",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "standing mode kept the 'exactly nine registries' assertion, which later registry files (compute envelope, routes not taken) would break; standing mode now requires each registry file present to have its schema and validate; acceptance case for a tenth registry with and without schema"
+  },
+  {
+   "bead": "N34-17",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "the escape examples had lost their backslashes (the duplicate after escape read as a plain duplicate; the surrogate pair as a literal emoji): restored as \\u0061 and \\ud83d\\ude00, the normalization example's code points named; max_string and max_number_len had no fault: string-too-long and number-too-long with defaults; the unnamed grammar faults named control-in-string and syntax; test string_and_number_length_limits"
+  },
+  {
+   "bead": "N34-18",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "exponent layout stated for a single significant digit (no point); risk signal re-pointed to the per-binary json.feature-drift of N34-04; layout test cases 1.5e-7 and 1.2345e22 added"
+  },
+  {
+   "bead": "N34-19",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "FormatRow sketch lacked the row fields of N34x-03 (float_rule, view_kind, writer, auditor_reader) and the decision citation of N34-27: added; loader tests for writer only on the certificate row, auditor_reader only on the run row, consistent view mode; dep N34-REF added (its version-gate mapper returns FROB-REF-891 through the generated code type)"
+  },
+  {
+   "bead": "N34-20",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "the escape-only duplicate example had lost its backslash (restored as \\u0073econds); byte-fault list aligned with N34-17's fault names (there was no fault named grammar); dep N34-26 added (its acceptance reads the doctor ledger block at M0)"
+  },
+  {
+   "bead": "N34-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the guard now compares per-binary feature sets, so the four builds are four binary packages of the fixture each resolving its own features, with a scratch stack lock keyed to the baseline; step 6 asserts json.feature-drift for the three planted binaries and the unified set only as a fact; test probe_packages_resolve_their_own_features"
+  },
+  {
+   "bead": "N34-23",
+   "kinds": [
+    "scope"
+   ],
+   "what": "states which beads add the later formats' rows and run the gate lane before each first release (N34p1-01 to -03, BD-410)"
+  },
+  {
+   "bead": "N34-24",
+   "kinds": [
+    "deps",
+    "tests",
+    "complete"
+   ],
+   "what": "dep N34-REF added (the registry rows its artifact-input stage raises must exist first); takes over from N34-REF the checks that need the mechanism: each registry fixture of 891-893 run through the input stage, the design owner's own codes, the enum-variant source scan, the declared refusal lists of the M1 artifact verbs; tests registry_fixtures_raise_their_codes, only_named_mechanisms_raise_these_codes, artifact_verbs_declare_the_three_codes"
+  },
+  {
+   "bead": "N34-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "rule cert.unsafe-not-forbidden duplicated check-unsafe's unsafe.cert-forbid (N34-07), one defect reported by two checks against the one-owner rule: removed here, plant attributed to check-unsafe, test that check-deps stays silent; time share aligned to BD-004's 3 s"
+  },
+  {
+   "bead": "N34-26",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "its acceptance used a duplicate-member refusal that only N34-20 provides, while N34-20 reads this bead's block (a mutual wait): the instrument is now proven on an unknown-parameter refusal the verb skeleton already issues; N34-20 depends on this bead"
+  },
+  {
+   "bead": "N34-27",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "receipt owner re-pointed from superseded N34-13 to N33a-04/N33a-05 (check-stack --write-receipt); the ruling's citation was a TOML comment, which the loader discards, yet a row without it must fail to load: now a row field decision, added to the row schema (N34x-03) and FormatRow (N34-19)"
+  },
+  {
+   "bead": "N34-KA",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KA-784's seventh plant owner re-pointed from superseded N34-13 to N33a-05 (stack.pin); KA-782 realized-by updated for the BD-410 split (N34p1-01..03 before each first release)"
+  },
+  {
+   "bead": "N34-REF",
+   "kinds": [
+    "deps",
+    "placement",
+    "scope",
+    "tests"
+   ],
+   "what": "a registry bead depended on a mechanism (N34-19) and on the verb skeleton and asserted the mechanisms' behaviour, while those mechanisms need its rows to compile: deps now BD-005 and N35-33 only; fixtures are data with sidecars; running them, the source scan, surface parity and the verbs' declared lists moved to N34-24; the two uncoded admission faults tied to their allocation-ledger requests (N35x-02, held under N35x-01); row tests for raised_by, the family exit rule and fixture admissibility"
+  },
+  {
+   "bead": "N34x-01",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "title"
+   ],
+   "what": "as U16a asked: the adr authority and L-10.inversion-without-adr exist from M0 (N34-06, BD-003) and five ADR-WS-05 rows arrive at M1 (N16a-01, N22a-01), so this bead no longer introduces the field, the rule or a count of six: it adds the member-sizer row (eleven at M3) in N34-06's fixed format, moving the informational wired_by into the ADR text; tests and plants restated for the ADR-backed row; ADR-WS-04 stays here"
+  },
+  {
+   "bead": "N34x-02",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "as the N40-02 note asked, the [[gate]] block admits the chapter-side fields the lint does not compare (criterion, criteria with quantity/unit/op/value/site, measured_by, fixture, script, kill, notes, form_hash, strata_fixture, bet) with shapes; criteria values must equal threshold_numbers; kill and measured_by references checked; tests added"
+  },
+  {
+   "bead": "N34x-03",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "added only four demo keys while N00-29 defines eleven optional keys the schema must admit (expect, title, milestone, actors, lane, fresh_agent, not_evidence_for were missing), and wrote expect_exit/expect_refusal as scalars where N00-29 and N34-12 key them by command line: all eleven with shapes, maps keyed by command, a refusal command exempt from checksum-or-compare; fifth format-row field decision for N34-27; tests and known answers updated"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N34p1-01",
+   "why": "split from BD-410: GATE-WS-02 for .fscene must pass before its M2 release"
+  },
+  {
+   "bead": "N34p1-02",
+   "why": "split from BD-410: GATE-WS-02 with the re-derivation clause for .fclear and .fmcw at M3"
+  },
+  {
+   "bead": "N34p1-03",
+   "why": "split from BD-410: GATE-WS-02 for .fskill and .fenergy at M4"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-162",
+   "what": "its 10^7 fuzz bar for .fscene is deferred to BD-410 (M5); point it to N34p1-01 (M2), which now runs GATE-WS-02 for .fscene before its first release"
+  },
+  {
+   "bead": "N31b-45",
+   "what": "proposes 9xx codes 901-907 with exit 3; under BD-005's family rule a 9xx row admits only exit 9 with retry never and an exit-3 row fails to load; take the codes through the allocation ledger (N35-33, N35x-01, N35x-02) with exit 9"
+  },
+  {
+   "bead": "N33a-03",
+   "what": "describe [json_library] as the version, the allowed crates and the sub-table [json_library.features] with one feature set per binary target (N34-04), not one unified feature list"
+  },
+  {
+   "bead": "N33c-38",
+   "what": "the report line's feature set is the binary's own resolved set compared with its key in [json_library.features] (N34-04), not one unified set for all binaries"
+  },
+  {
+   "bead": "N29b-09",
+   "what": "its note that the sibling's DecisionId has no counterpart: N34-11 now mirrors its text form as §34.12 requires (the three identifiers franken-kernel has), as an execution identifier and not a graph node, so the four-identifier graph decision stands"
+  },
+  {
+   "bead": "N00-29",
+   "what": "add N34x-03 as a dependency (your demo files use the optional keys it admits to the schema, and check-contracts refuses an unknown key); and your test twenty_four_scenarios_have_demo_files makes not-yet-due scenarios stubs with status: not due, a key absent from your eleven: either list status among the optional keys (N34x-03 then admits it and N34-12 skips not-due demos) or keep stubs out of demos/"
+  },
+  {
+   "bead": "N16c-05",
+   "what": "your owner declarations name the Carrier column carrier_beads[]; every other chapter register bead and the block schema of N34x-02 call it measured_by, and the schema refuses unknown keys: rename it measured_by"
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 38 beads reviewed (N34-13 is superseded by N33a-05 and outside the slice). Unchanged: N34-22, N34-CX. Main threads: superseded N34-13 references re-pointed to N33a-03/-04/-05 everywhere (coverage.md, a non-bead note, still names it); per-binary JSON-library features (cargo metadata unifies workspace-wide) carried through N34-04, N34-21, N34-18 with requests to N33a-03 and N33c-38; GATE-WS-04 budget split made one table (10/7/5/3 of the 25 s); BD-410 split so each format's GATE-WS-02 lane precedes its first release (N34p1-01..03); registry bead N34-REF no longer depends on a mechanism (N34-19 and N34-24 now depend on it, the fixture runs moved to N34-24); one-owner fixes (forbid-unsafe rule only in check-unsafe); demo schema now admits all eleven optional keys with map shapes; [[gate]] block admits the chapter-side fields; DecisionId text form mirrored per §34.12. All front matter, sections, keys and the graph (no cycle, no later-milestone dependency) validated. The slice looks settled apart from the requests.",
+ "merged": []
+}

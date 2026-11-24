@@ -1,0 +1,351 @@
+{
+ "round": 1,
+ "slice": "U23a",
+ "reviewed": 49,
+ "changed": [
+  {
+   "bead": "BD-042",
+   "kinds": [
+    "correct",
+    "deps",
+    "placement",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Archive handling aligned with the source record SRC-REC-05 (NAB-15): run the cited revision a635b91 first, the working tree as a second result; results appended to PILOT-PT-01/-02 in crates/frob-conformance/registry/pilots.toml (N38a-09/N38a-10), not a new row in registries/pilots.toml; gate GATE-GAUNT-08 added; deps N38a-09, N38a-10, STD-E2E; three witness mutations (swapped foot order, perturbed multiplier, moment as torque) as unit tests; e2e header, planted runs and STD-E2E logging; scope names N25c-12 as the M1 grid fixture."
+  },
+  {
+   "bead": "BD-192",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "521 and 522 envelopes aligned with N23-REF (exit 3, flag that ended the world, value class, one repair for 522, check before the limiter); synthetic hand-built TaskPrograms stated (BD-194 depends on this bead) and N23a-05 named as the admission check; rate-fixture tolerance 1e-12 in f64 (as BD-194) and 1e-6 in f32."
+  },
+  {
+   "bead": "N23a-01",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Refusal rows were written both here and by the registry N23-REF; this bead now writes no row, adds the crate's raise() plumbing and code constants, depends on N23-REF, and tests a constant without a row (negative control) and the envelope built from the row."
+  },
+  {
+   "bead": "BD-193",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "The stride converter is BD-036's in frob-core (also used by N21a-05); view::convert is now the learner's adapter around it, not a second implementation; 547 vs 617 divided by raising site with the envelope fields; e2e spark check flags corrected to BD-176's (--kernel, --backend)."
+  },
+  {
+   "bead": "BD-196",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e called frob spark check with flags it does not have (--kernels learning --oracle frankentorch --batches); gradient parity is now the conformance battery cortex-grad via frob eval run, and the device-against-CPU differential check uses spark check's real flags."
+  },
+  {
+   "bead": "BD-198",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "e2e gains the estimated-state twin (--state estimated, required by the evaluation protocol), the live-dependency perturbation, and asserts attainment by the attained field rather than the first crossing."
+  },
+  {
+   "bead": "BD-255",
+   "kinds": [
+    "split",
+    "scope",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Graph bottleneck: split. The device emission of the monitor and guarded-atom kernels with the 10^4-trace bitwise equality moved to new bead N23ap1-01, which does not wait for the M3 task families; BD-255 keeps the batched verdict path, decided-early termination, task.verdict/task.settle on batched tiers (task.settle now reuses BD-195's mechanism instead of restating it) and the GATE-CORTEX-10 record. Its since kernel (ring of candidates, decomposition as HYPOTHESIS) contradicted N24a-07's adopted lattice decomposition; aligned. Memory figure corrected to 2W + a per node."
+  },
+  {
+   "bead": "BD-321",
+   "kinds": [
+    "tests"
+   ],
+   "what": "e2e reduced mode used a stub family policy; replaced by a small real family policy labelled synthetic (no fakes)."
+  },
+  {
+   "bead": "BD-323",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "Supervised loss was given only for latent-then-limit; added the clipped-with-endpoint-mass loss (density inside, endpoint masses at bounds) and the rule that labels stored under one law are never fitted under the other (527)."
+  },
+  {
+   "bead": "N23-KA",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KA-578 tolerance proposal aligned with BD-192/BD-194 (1e-12 f64, 1e-6 f32); KA-593 carriers now N23ap1-01, BD-255, N23a-05."
+  },
+  {
+   "bead": "N23a-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Age fixture mixed control periods and quanta; restated with phases, durations (0 to 80 ms), quanta and the dropped-packet age."
+  },
+  {
+   "bead": "N23a-05",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Two findings of the contract table (age-not-exposed, mapping-entry-missing) had no unit test; e2e named eleven defective fixtures for a fourteen-finding table: now one fixture per finding plus a three-defect fixture, with STD-E2E cmd/refusal/assert lines and the codes asserted at both task check and train start."
+  },
+  {
+   "bead": "N23a-06",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Bitwise equality of masked and dense statistics across bucket capacities needs the reduction tree to be indexed by compacted valid samples, not by slots with zeros for padding (grouping differs, last bits differ); stated with K-compact/K-reduce, dep BD-152 added, a negative control and grouping-sensitive test values added."
+  },
+  {
+   "bead": "N23a-07",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e command made exact (--rules P-1,P-7) and run per device backend with the single-precision tolerance, an absent backend logged as skip."
+  },
+  {
+   "bead": "N23a-08",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e battery call made exact (frob eval run --battery cortex-ppo --rules P-3,P-11) and run per backend."
+  },
+  {
+   "bead": "N23a-12",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "scope"
+   ],
+   "what": "e2e ran 'the parity check of BD-196 restricted to these two networks', which BD-196's battery cannot do (it lands first and has no such filter); this bead now registers the cases mlp-twin and gru-twin in cortex-grad. Allowlist consideration corrected: OPEN-SAFE-1's default admits only the non-recurrent MLP, so GRU checkpoints are refused on read (828) until the decision adds a row."
+  },
+  {
+   "bead": "N23a-13",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete"
+   ],
+   "what": "Aligned with the registry row of VERBS-train (now a dep, registries first): --out flag, capabilities, schema, evidence pass-through instead of class Tested; the row's chapter refusals 733 (N37-18) and 828 (N37-07 re-admission on read) named with who raises them; the GRU resume test made true across the OPEN-SAFE-1 decision."
+  },
+  {
+   "bead": "N23a-14",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Aligned with VERBS-train: --key (not --idempotency-key), positional design, schemas frob.train.*.in/out/1, capabilities; exit-3 list no longer 'refusals 521-554' (N23-REF also has 830, 867; 529 and 442 surfaced); the seven parameterized admission failures named; e2e asserts replay and key conflict."
+  },
+  {
+   "bead": "N23a-15",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Hand case 1 lacked b = 0 and L = 1/2 |y|^2, without which the stated gradients cannot be reproduced; taken from N33a-22."
+  },
+  {
+   "bead": "N23a-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e train start lacked the design and the required idempotency key, and 'export, reload and the control evaluations' had no commands; now exact, with the kill-between-update-and-write-back resume."
+  },
+  {
+   "bead": "N23a-18",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The 867 case at the training-gate record builder had no command (the builder has no verb); a thin example binary over the builder is now part of the bead and named in the e2e step."
+  },
+  {
+   "bead": "N23a-19",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e train start lacked design and --key; added, with job wait."
+  },
+  {
+   "bead": "N23a-20",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Required the KILL-RESIDUAL decision on file before the bead starts, but the decision N22c-15 depends on BD-330 which depends on this bead (impossible ordering); now the pilot N22a-27 gates the start, and the M4 clause is measured and decided downstream. e2e commands made exact."
+  },
+  {
+   "bead": "N23a-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The 'fires when baseline and specialist both fail' reading of the trigger was presented as the plan's; marked DESIGN with owner confirmation."
+  },
+  {
+   "bead": "N23a-25",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Aligned with the registry row of VERBS-policy (now a dep): positional policy, --key, schema frob.policy.apply.in/1, capability; the 534/541 division of N23-REF stated (534 raised, 541 cited); 'no family policy' made explicitly exit 5, never 534; e2e adds the no-evaluation-job check and the 537 probe."
+  },
+  {
+   "bead": "N23a-26",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e probe used --policy; now the registry's positional form with --key."
+  },
+  {
+   "bead": "BD-322",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Schema renamed to the registry rule (frob.train.inherit.in/1), idempotency field is --key; e2e train inherit and policy apply calls carry --key and policy apply uses the registry's positional form; the --child vs registry example --design difference noted and requested."
+  },
+  {
+   "bead": "BD-326",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Symmetry-breaking control now names its code FROB-REF-161 (N23a-31's weight-tie raising site) with the payload; e2e train start uses positional design and --key instead of --idempotency-key."
+  },
+  {
+   "bead": "N23a-27",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "A consideration said no design bead records edit correspondences, so topology edits would be refused with 531, contradicting the add-limb acceptance; N14ax-02 (already a dep) records them, so the bead now reads that record and derives none. The twist/wrench unit test used a pure rotation, for which Ad and its dual coincide; it now includes a translation."
+  },
+  {
+   "bead": "N23a-28",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e train inherit calls carry --key and job wait."
+  },
+  {
+   "bead": "N23a-32",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e train start used --design and no key; now positional with --key, job wait, export and the control evaluations named."
+  },
+  {
+   "bead": "N23a-34",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Term-contract fixtures aligned with N23a-05 (fourteen single-defect tasks plus a three-defect task); tensor-views step now uses BD-193's real commands (spark check view-fixtures, sim run --zero-copy) and names the stale-epoch code 614."
+  },
+  {
+   "bead": "N23a-35",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Gradient parity called frob spark check with flags it does not have (--kernels learning --oracle frankentorch --batches); now the battery cortex-grad plus spark check per kernel. The placement step cited a training return as 867; per N23a-18 it is 861 at every site, and 867 is the un-re-evaluated policy at the gate-record builder. --idempotency-key replaced by --key."
+  },
+  {
+   "bead": "N23a-36",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Every run verb call carries --key; policy apply uses the positional form; residual train start names design and task."
+  },
+  {
+   "bead": "N23a-37",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e train start used --design and --idempotency-key; aligned with the registry."
+  },
+  {
+   "bead": "N23a-38",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e train start had no design, task or seed and used --idempotency-key; made exact."
+  },
+  {
+   "bead": "N23a-39",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e train start used --design and --idempotency-key; aligned with the registry."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N23ap1-01",
+   "why": "split from BD-255 (graph bottleneck): device emission of N24a-07's past-time monitor kernels and the guarded atom kernel on CUDA and Metal, bitwise equality on 10^4 traces, boundary screen, battery cortex-verdict, first measurement of GATE-CORTEX-10's streaming clause"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N25c-12",
+   "what": "Its Scope says it is the one holder of the stance grid and that its constants and counts are stated nowhere else; BD-042 (M0, a dependency) computes the same grid in an independent frozen pilot module crates/frob-conformance/src/pilots/stance.rs. Suggest: 'the one holder of the gate fixture; its counts must equal BD-042's pilot re-derivation'."
+  },
+  {
+   "bead": "N24a-14",
+   "what": "Needs only the online margins on devices: could depend on N23ap1-01 (and BD-255 only for the VecEnv wiring) so it does not wait for the M3 task families."
+  },
+  {
+   "bead": "N26a-29",
+   "what": "The distress score reads the online margin: N23ap1-01 carries the device kernels now split from BD-255."
+  },
+  {
+   "bead": "N37-08",
+   "what": "M2 beads build and train GRU policies (N23a-11 PO-CORTEX-02, N23a-12, N23a-04 hidden state); under the fail-closed default (MLP, recurrent = false) a GRU checkpoint is refused on read by N37-07's re-admission. Either decide the recurrent row at M2 (N23a-12's ParamLayout gives the layout function) or state in the decision record that GRU policies at M2 live in memory only."
+  },
+  {
+   "bead": "N23-REF",
+   "what": "Consideration (line ~177) says that after KILL-FAMILY fires 534 'is raised by every policy.apply'; N23a-25 and N23a-26 (the decision) refuse with exit 5 capability-not-admitted when no family policy exists. One event, one code: suggest 534 only for an existing family policy's membership refusal."
+  },
+  {
+   "bead": "VERBS-policy",
+   "what": "The policy.apply row lists chapter refusals 531, 534, 541; by N23-REF's division the verb raises 534 and cites 541 (it never raises 541), and N23a-25 raises 537 for --score-for-ladder (N23a-24's enforcement entry point). Suggest refusals 531, 534, 537, with 541 noted as cited."
+  },
+  {
+   "bead": "N24a-07",
+   "what": "Its Out (and N24a-10, N24a-11's) names BD-255 for the device emission of the monitor and guarded-atom kernels; that work is now the new bead N23ap1-01 (split from BD-255)."
+  },
+  {
+   "bead": "BD-257",
+   "what": "Like N24a-14, BD-257, N26b-20 and N24c-21 need only the online margins on devices and could depend on N23ap1-01 rather than all of BD-255."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "The train.inherit example writes --design for the child, while the implementing bead BD-322 has the input child and every other bead calls --child; suggest --child in the example."
+  },
+  {
+   "bead": "NS-05",
+   "what": "Writes the tying option as --equivariant gobs; the train.start beads (N23a-14, N23a-31, BD-326, N23a-33) use --tying equivariant."
+  }
+ ],
+ "unchanged": 12,
+ "notes": "Reviewed all 49 beads of U23a. One split (BD-255 -> new N23ap1-01, device monitor kernels and 10^4-trace equality). Recurring fixes: e2e commands aligned with the verb registry rows (positional design or policy, --key, schema .in/.out names) and with real verb flags (spark check, cortex-grad battery); refusal-code divisions made consistent with N23-REF (861/867, 534/541, 547/617, 442/524, 161). Graph: 0 cycles after the added deps (N23a-06 -> BD-152, N23a-13 -> VERBS-train, N23a-25 -> VERBS-policy, N23a-01 -> N23-REF, BD-042 -> N38a-09/N38a-10/STD-E2E, BD-255 -> N23ap1-01). Open cross-slice items are listed as requests (OPEN-SAFE-1 GRU allowlist, policy.apply refusal list, 534 after KILL-FAMILY). Unchanged: BD-197, N23a-03, N23a-04, N23a-10, N23a-11, N23a-16, N23a-23, N23a-24, N23a-29, N23a-30, N23a-31, N23a-33."
+}

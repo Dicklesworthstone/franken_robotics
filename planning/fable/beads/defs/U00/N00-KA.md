@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "gauntlet", "frob-conformance", "solid", "registry", "test"]
 parent: "WP-34"
-deps: ["BD-025", "STD-E2E"]
-needs: ["§38.6: the known-answer registry format and its loader in `frob-conformance` (rows are append-only, INV-GAUNT-07; the printed appendix is generated from the registry, ADR-GAUNT-02)"]
-related: ["N00-17", "N00-27", "N00-33", "NS-13", "NS-22", "BD-033", "BD-034", "BD-036", "BD-093", "BD-130", "BD-129", "BD-030"]
+deps: ["BD-025", "N38a-12", "STD-E2E"]
+needs: []
+related: ["BD-308", "N00-33", "N00p1-13", "N36-KA", "N37-27", "N37-KA", "N38a-10", "N38b-27", "N38b-50", "N38b-51", "N38b-58", "N39-KA", "NS-13", "NS-22"]
 gates: ["GATE-GAUNT-02"]
 plan_refs: ["Appendix M.1", "Appendix M.2", "Appendix M.3", "Appendix M.4", "Appendix M.5", "Appendix M.6", "Appendix M.7", "Appendix M.37", "Appendix M.38"]
 ---
@@ -26,29 +26,60 @@ How to read a row. *Tolerance*: `exact` for integers, rationals, Booleans, verdi
 tolerance is registered). *Tier · site*: the verification tier (G0 laws and self-tests, G1 known answers) and
 where it runs: `host` (exact or double-precision arithmetic in a test binary), `auditor` (`frob-verify`),
 `referee`, `all tiers`. *Negative control*: the mutation or planted failure the row must catch; `none stated`
-means the control is owed (bead N00-33 supplies the fourteen owed here). Labels: fixture constants are DESIGN;
+means the control is owed (of the fourteen owed here, N00-33 supplies the seven thesis rows at M0 and
+N00p1-13 the seven North-Star rows at M1). Labels: fixture constants are DESIGN;
 truths derived from them by hand are DESIGN arithmetic with a derivation file under `docs/derivations/`; truths
 quoting a planning pilot or a sibling's source are FACT to be re-run or re-read before a gate cites them. No row
 is a measurement of this project.
 
 ## Scope
 
-In: the 32 registry rows below, one derivation file per row, and the unit test that loads them and checks the
-arithmetic rows. Out: the mechanisms the rows test (named in the last column); the controls and tolerances still
-owed (N00-33); the registry loader itself (BD-025).
+In: the 32 registry rows below, one derivation file per fixture whose truth is derived, and for the six
+sibling-defect rows KA-003 to KA-008, whose truth is the sibling's reported behaviour, a file in the same place that
+names the defect report and the pinned sibling commit in place of a derivation (N38a-12's loader requires a file
+that lists the row; without one the row is `obligation: derivation`), and the unit test that loads them and checks
+the arithmetic rows. Out: the mechanisms the rows test (named in the last column); the controls and tolerances still
+owed (N00-33 for the thesis rows and the four tolerances; N00p1-13 for KA-019 to KA-021 and KA-023 to
+KA-026); the registry loader itself (BD-025).
 
 ## Technical approach
 
-Rows are written to `crates/frob-conformance/registry/known_answers.toml` (one `[[ka]]` record each: `id`,
-`section`, `case`, `truth`, `tolerance`, `tier`, `site`, `control`, `derivation`, `owner_bead`). DESIGN: the
-field names follow the columns of the printed suite.
+Rows are appended to the suite's one physical file, `crates/frob-conformance/registry/known_answers.toml`, one
+`[[ka]]` record each, in the row schema that N38a-12 owns (no chapter file and no private fields: the loader
+refuses any other `known_answers*.toml`, or a `.toml` under a `known_answers` directory, with `ka-second-file`,
+and refuses an unknown field). DESIGN correction: an earlier draft of this bead gave the records its own fields
+(`site`, `owner_bead`); they map as follows. "Where stated" → `section` (with `owner` = the invariant, proof
+obligation or gate where the chapter names one); "The case" → `case`; "The truth" → `truth`; "Tolerance" →
+`tolerance` (`exact`, `printed-digits` or `to-set`); "Tier · site" → `tier` and `sites` (a list); "Negative
+control" → `control.text` (`none stated` where the column says so; `control.nc` is filled by the seeding tool of
+N38b-05, never by hand); "Tested by" and, for an owed row, the owing bead → the derivation file's front matter,
+which lists for each KA it serves the test that checks it, the carrier bead and the owing bead; plus `fixture`
+(one name per physical case: `solver-ceiling`, `fixed-n-verdicts`, `planar-drive-admission`,
+`ppo-update-admission`, `stride-convention`, `sharp-lip-witness`, `amdahl-step-share` (KA-010, whose derivation
+file N38b-51 owns), `thesis-ceilings` (the other thesis rows), `omitted-law-band`, `boundary-screen-65536`,
+`stance-family`, `docking-fixture` (the derivation file `docs/derivations/docking-fixture.md` of N10b-08),
+`claim-product`, `quantifier-order`; the later rows of the doctrine chapter and the constructions that reuse the
+stance, docking and boundary-screen fixtures use these names, and so do the later rows of three chapters that
+restate a case held here: KA-809, KA-819 and KA-820 (performance, N36-KA) and TF-15 (the ten-fold harness, N39-KA)
+take `thesis-ceilings` with `same_as` KA-014, KA-013, KA-011 and KA-009; KA-812 takes `solver-ceiling` (`same_as`
+KA-001) and KA-818 `amdahl-step-share` (`same_as` KA-010), both N36-KA's; KA-828, SAFE-L10 and SAFE-L15 (safety,
+N37-KA) take KA-030's fixture `claim-product` with `same_as` KA-030; each of those beads appends its rows and
+their extra clauses to the existing derivation file's front matter and body and writes no second file, and none
+changes a row of this bead), `same_as` (empty on all 32: these are the earliest
+rows of their fixtures), `label` (DESIGN arithmetic for the derived rows; FACT
+with its source for KA-003 to KA-008, KA-017 and KA-018, which quote a reported defect or a recorded pilot),
+`due` (the milestone of the first carrier that runs the row: M0 for KA-001, KA-003 to KA-007, KA-009 to KA-016,
+KA-018 (host site, BD-030) and KA-028 (the compile-fail tests live with the type, BD-005); M1 for KA-002, KA-008,
+KA-019 to KA-027 and KA-029 to KA-032 (N00-27's battery); M5 for KA-017) and `printed` (empty on all 32: their
+values now reconcile with their formulas; the first-printed figures of the corrected rows below are records
+REC-01 and REC-02 of the reconciliation register, N38b-50 and N38b-51, so that the history has one home).
 
 **Document control (2 rows).**
 
 | KA | Case | Truth | Tolerance | Tier · site | Negative control | Tested by |
 |---|---|---|---|---|---|---|
 | KA-001 | Ceiling pre-check on the recorded solver comparison: a composed solver took 1.345× the time of a specialized one warm and 1.088× cold; the specialized batch held a residual of 575.7 µs the solver does not touch (parsing, assembly, checking, serialization, harness; not separately timed) | No solver could have shown more than about 1.46× (842.8 ÷ 575.7 = 1.4639…); a speed test whose claimed ratio exceeds its computed ceiling is refused before it is locked | `to set` (the text prints 1.46) | G1 · host | A claimed ratio above the ceiling submitted for locking, which must be refused | N00-17, BD-354 |
-| KA-002 | Reachable verdicts of a frozen fixed-n rule with 64 pairs | Three of its four verdicts are reachable at n = 64; the fourth (a tie) is first reachable at 86 pairs | exact | G0 · host | A study that needs the fourth verdict at n = 64, which must be refused at admission | BD-124 |
+| KA-002 | Reachable verdicts of a frozen fixed-n rule with 64 pairs | Three of its four verdicts are reachable at n = 64; the fourth (a tie) is first reachable at 86 pairs | exact | G0 · host | A study that needs the fourth verdict at n = 64, which must be refused at admission | BD-124, N38b-14 |
 
 **The audit of existing systems and foundations (6 rows; each is an admission test for a reported sibling defect).**
 
@@ -79,7 +110,7 @@ field names follow the columns of the printed suite.
 | KA | Case | Truth | Tolerance | Tier · site | Negative control | Tested by |
 |---|---|---|---|---|---|---|
 | KA-017 | Omitted-law fixture for calibration bands: a fixture with an omitted law passes every in-family residual check and reverses the decision (recorded pilot: 675 of 675 correct in class, 0 of 225 on the omitted law) | The exchangeability alarm fires or a refusal is returned; no band is issued on the omitted-law cases | exact (verdict) | G1 · host | A band issued on the omitted-law cases | BET-28, BD-393 |
-| KA-018 | Boundary screen for strict predicates in single precision: 65,536 boundary cases | Unguarded comparison gives 452 false admissions and 23,438 false exclusions; under the guard with the exact fallback the screen ends with zero errors | exact | G1 · all tiers | The unguarded single-precision comparison, which must show the errors | BET-08, BD-030 |
+| KA-018 | Boundary screen for strict predicates in single precision: 65,536 boundary cases | Unguarded comparison gives 452 false admissions and 23,438 false exclusions; under the guard with the exact fallback the screen ends with zero errors | exact | G1 · all tiers | The unguarded single-precision comparison, which must show the errors | BET-08, BD-030 (host), BD-182 (devices) |
 
 **The North-Star fixtures (8 rows).** Stance family: 400 N on four point feet at (±a, ±b), a = 1/3 m; centre of
 mass anywhere in a rectangle of half-dimensions 150 mm (along a) by 75 mm (along b); each foot's commanded normal
@@ -89,16 +120,21 @@ informative packet is the first velocity reading.
 
 | KA | Case | Truth | Tolerance | Tier · site | Negative control | Tested by |
 |---|---|---|---|---|---|---|
-| KA-019 | Stance, inner set | Every b ≥ 3/14 m is in the inner set, corner allocation (160, 130, 110, 0) N as witness; zero reserve on two constraints at the boundary; `frob-verify` re-checks the bundle offline in exact rational arithmetic | exact | G1 · auditor | none stated (bundle mutations exist elsewhere; N00-33) | NS-13, BD-130 |
-| KA-020 | Stance, exclusion | Every b < 3/14 m excluded with a dual vector as impossibility witness; at b = 0.20 m one foot would have to carry 165 N | exact | G1 · auditor | none stated (a perturbed multiplier; N00-33) | NS-13, BD-130 |
-| KA-021 | Stance at b = 1/4 m under commanded forces | Admitted with allocation (155, 135, 105, 5) N | exact | G1 · auditor | none stated (N00-33) | NS-13 |
+| KA-019 | Stance, inner set | Every b ≥ 3/14 m is in the inner set, corner allocation (160, 130, 110, 0) N as witness; zero reserve on two constraints at the boundary; `frob-verify` re-checks the bundle offline in exact rational arithmetic | exact | G1 · auditor | none stated (bundle mutations exist elsewhere; N00p1-13) | NS-13, BD-130 |
+| KA-020 | Stance, exclusion | Every b < 3/14 m excluded with a dual vector as impossibility witness; at b = 0.20 m one foot would have to carry 165 N | exact | G1 · auditor | none stated (a perturbed multiplier; N00p1-13) | NS-13, BD-130 |
+| KA-021 | Stance at b = 1/4 m under commanded forces | Admitted with allocation (155, 135, 105, 5) N | exact | G1 · auditor | none stated (N00p1-13) | NS-13 |
 | KA-022 | Stance amended to a passive equal-spring suspension, b = 1/4 m | Springs deliver (175, 115, 85, 25) N against the 160 N rating; `result.revalidate` withdraws the earlier inner set and says what must be re-solved | exact | G1 · host | An inner set carried across the amendment | NS-13 |
-| KA-023 | Docking, packet on time, U = 3/4 | A first command of 1/4 identifies the gain and both worlds dock exactly (g = 1: commands 1/4, 1/2, −3/4; g = 2: 1/4, 0, −1/4) | exact | G1 · auditor | none stated (N00-33) | NS-22, BD-129 |
-| KA-024 | Docking, tolerable sensor error ε | Feasible exactly when ε < (U + 1/2)/4; choosing probe and feedback together raises the tolerable error from 1/8 to 5/16 on the same actuator | exact | G1 · auditor | none stated (equality at the boundary; N00-33) | NS-22, BD-129 |
-| KA-025 | Docking, packet late | No causal controller docks in both worlds | exact (verdict) | G1 · auditor | none stated (N00-33) | NS-22, BD-134 |
-| KA-026 | Docking with a third gain 33/32 admitted | It aliases with gain 1 at an error radius of 1/64; exact docking becomes impossible; every label that was feasible reverses | exact | G1 · auditor | none stated (N00-33) | NS-22, BD-129 |
+| KA-023 | Docking, packet on time, U = 3/4 | A first command of 1/4 identifies the gain and both worlds dock exactly (g = 1: commands 1/4, 1/2, −3/4; g = 2: 1/4, 0, −1/4) | exact | G1 · auditor | none stated (N00p1-13) | NS-22, BD-129 |
+| KA-024 | Docking, tolerable sensor error ε | Feasible exactly when ε < (U + 1/2)/4; choosing probe and feedback together raises the tolerable error from 1/8 to 5/16 on the same actuator | exact | G1 · auditor | none stated (equality at the boundary; N00p1-13) | NS-22, BD-129 |
+| KA-025 | Docking, packet late | No causal controller docks in both worlds | exact (verdict) | G1 · auditor | none stated (N00p1-13) | NS-22, BD-134 |
+| KA-026 | Docking with a third gain 33/32 admitted | It aliases with gain 1 at an error radius of 1/64; exact docking becomes impossible; every label that was feasible reverses | exact | G1 · auditor | none stated (N00p1-13) | NS-22, BD-129 |
 
-**The claim product (6 rows; implemented by BD-005, exercised by N00-27).**
+**The claim product (6 rows; implemented by BD-005, exercised by N00-27).** KA-027 has two more carriers, listed
+in its derivation file's front matter: BD-308 (the claim product at the boundary of every verb, M3) and N37-27
+(its end-to-end script, M3), whose worked case (a Certified kernel identity, an Estimated card field and a Tested
+D2 study on a fast tier, giving a design comparison that is Estimated, provisional and of reality scope
+`no-claim`, weakest input the card field) is KA-027 input for input; the safety chapter's former tag SAFE-L11 for
+that case is retired in its favour and takes no number (N37-KA).
 
 | KA | Case | Truth | Tolerance | Tier · site | Negative control |
 |---|---|---|---|---|---|
@@ -110,41 +146,82 @@ informative packet is the first velocity reading.
 | KA-032 | Quantifier-order fixture: every build has a command that works and no single command works for all builds | "For every world, some controller works" and "one controller works for every world" receive different answers; evidence for the easier order is rejected; the auditor rejects a changed quantifier even when every hash is consistent | exact (verdict) | G0 · auditor | Evidence for the easier order; a bundle with the quantifier changed and consistent hashes |
 
 **Corrections that these rows already carry (regressions to keep).** Three printed values were found not to
-reconcile with their formulas and were corrected; the rows above carry the corrected values and the test pins
-them: (1) the solver ceiling is 842.8 ÷ 575.7 ≈ 1.46, not 1.345 ÷ 0.94 = 1.43 (the "94% shared share"
-attribution is withdrawn); (2) the step-share ceiling at 87% is 1/(1 − 0.87) = 7.69, printed "about 7.7", not
-7.8 (which came from the unrounded share 82/94); (3) 8,192 quadruped worlds at 20–53 kB each use 0.7–1.8% of a
-24 GB card and 4,096 humanoid worlds at 56–180 kB use 1.0–3.1%, printed "about 1 to 3%", not "1 to 1.5%".
+reconcile with their formulas and were corrected (rows 1, 2 and 9 of the reconciliation table): (1) the solver
+ceiling is 842.8 ÷ 575.7 ≈ 1.46, not 1.345 ÷ 0.94 = 1.43 (the "94% shared share" attribution is withdrawn); KA-001
+carries 8428/5757 with the derivation `docs/derivations/solver-ceiling.md`, and the withdrawn derivation is
+REC-01 (N38b-50); (2) the step-share ceiling at 87% is 1/(1 − 0.87) = 7.69, printed "about 7.7", not 7.8 (which
+came from the unrounded share 82/94, 94/12 = 7.83); KA-010 carries 100/13 printed "about 7.7" with the
+derivation `docs/derivations/amdahl-step-share.md`, and the first-printed 7.8 is REC-02 (N38b-51); (3) 8,192 quadruped worlds at 20–53 kB each use 0.7–1.8%
+of a 24 GB card and 4,096 humanoid worlds at 56–180 kB use 1.0–3.1%, printed "about 1 to 3%", not "1 to 1.5%".
+Item (3) is stated in §1.8 and has no row in this block: it is carried by KA-348 and KA-816 and settled by
+N38b-58, and the thesis-arithmetic bead N00-17 also computes it; this bead records it only so that the
+reconciliation list stays complete.
 
 ## Acceptance criteria
 
-- [ ] All 32 records load from the registry; each has `id`, `truth`, `tolerance`, `tier`, `site`, `control`,
-      `derivation` and `owner_bead`; loading an unknown field or a duplicated or reused number is a load error.
-- [ ] A derivation file exists under `docs/derivations/` for each of KA-001, KA-002 and KA-009 to KA-032.
+- [ ] All 32 records load from `crates/frob-conformance/registry/known_answers.toml` with every field of the
+      N38a-12 schema filled and validate under its loader; no other known-answer file exists; loading an unknown
+      field or a duplicated or reused number is a load error.
+- [ ] A derivation file exists under `docs/derivations/<fixture>.md` for each of KA-001, KA-002 and KA-009 to
+      KA-032 (rows sharing a fixture share the file), and for KA-003 to KA-008 a file that names the defect report
+      and the pinned sibling commit in place of a derivation; every file's front matter lists each KA it serves
+      with its test, its carrier bead and, for an owed row, its owing bead, and each named bead is a live key.
 - [ ] The registry prints the count of rows with tolerance `to set` (4: KA-001, -003, -004, -006) and control
       `none stated` (14: KA-009 to -013, -015, -016, -019 to -021, -023 to -026); neither kind is counted as
-      passing by GATE-GAUNT-02 until N00-33 closes them.
-- [ ] The printed table generated from the registry equals the rows above (`xtask check-generated`).
+      passing by GATE-GAUNT-02 until its owing bead closes it (N00-33 for the tolerances and the thesis rows,
+      N00p1-13 for the seven North-Star rows), and each owed row names its owing bead.
+- [ ] The printed suite regenerated from the registry by N38a-12's printout test
+      (`cargo test -p frob-conformance --test known_answers_printout`) equals the rows above, byte for byte.
 
 ## Test plan
 
 ### Unit tests
-`crates/frob-conformance/tests/ka_part0_8.rs`: `registry_has_ka_001_to_032` (32 ids, contiguous, no gaps);
-`uncontrolled_rows_are_not_counted` (a synthetic gate run that cites KA-009 before N00-33 lands is reported as
-not supported); `corrected_values_pinned` (1.46 not 1.43; 100/13 not 7.8; 0.7–3.1% not 1–1.5%);
-`renumbering_is_a_load_error` (a registry copy with KA-010 and KA-011 swapped is rejected);
-`printed_table_matches_registry`.
+`crates/frob-conformance/tests/ka_part0_8.rs` (host arithmetic, exact rationals; real registry file and scratch
+copies, no mocks):
+- `registry_has_ka_001_to_032`: 32 ids, contiguous, no gaps, every N38a-12 field present, `sites` a list.
+- `thesis_rows_recompute`: KA-009 1/0.12 = 25/3 and 1/(1/8) = 8; KA-010 100/13, 20/3, 50/27, 100/71; KA-011 3,
+  7/2, 15; KA-012 6, 7/2, 47/6, 53/12; KA-013 205/19 ≈ 10.79, f ≤ 3/410, c = 41; KA-014 4000/297 ≈ 13.47 and
+  20/3; KA-015 25/21; KA-016 100/51, 2500/819, 400/39; KA-001 8428/5757 ≈ 1.464; each compared with the row's
+  printed value to the printed digits.
+- `stance_rows_recompute`: with feet ordered (a, b), (a, −b), (−a, b), (−a, −b) and the centre of mass at the
+  corner (150, 75) mm, (160, 130, 110, 0) N at b = 3/14 m and (155, 135, 105, 5) N at b = 1/4 m satisfy Σf = 400,
+  a·(f₁ + f₂ − f₃ − f₄) = 400·0.150 and b·(f₁ − f₂ + f₃ − f₄) = 400·0.075 exactly; the smallest attainable largest
+  foot force at b = 0.20 m is 165 N; the admission boundary 30/b ≤ 140 gives b = 3/14.
+- `docking_rows_recompute`: integrating x ← x + v + ½·g·u, v ← v + g·u from rest, (¼, ½, −¾) with g = 1 and
+  (¼, 0, −¼) with g = 2 both end at (1, 0) with |u| ≤ ¾; (U + ½)/4 = 5/16 at U = ¾.
+- `uncontrolled_rows_are_not_counted`: a synthetic gate run that cites KA-009 before N00-33 lands is reported
+  `obligation: control`, not supported.
+- `owed_rows_name_owing_bead`: the derivation front matter of KA-001, -003, -004, -006 and the seven thesis rows
+  names N00-33; that of KA-019 to -021 and -023 to -026 names N00p1-13.
+- `corrected_values_pinned`: KA-001 carries 8428/5757, printed 1.46 (not 1.43 from 1.345 ÷ 0.94), and KA-010
+  carries 100/13 printed "about 7.7" (|7.8 − 100/13| > 0.05 fails the row's printed-digits check); both rows
+  name the derivation files of REC-01 and REC-02.
+- `renumbering_is_a_load_error`: a registry copy with KA-010 and KA-011 swapped is rejected.
+- `carriers_are_live`: every carrier and owing bead named in the derivation front matter resolves in the exported
+  bead graph (a `synthetic` graph fixture with one dead key for the failing case).
 
 ### End-to-end script and logging
-`scripts/e2e/ka_part0_8.sh` runs `cargo test -p frob-conformance --test ka_part0_8` and the registry printer,
-then asserts the two obligation counts. Logged per STD-E2E: one `assert` line per row with its id, tier, site,
-truth, tolerance and whether a control is registered; a `summary` line with rows loaded, rows counted, rows owed,
-and gate GATE-GAUNT-02.
+`scripts/e2e/ka_part0_8.sh` (header: `bead=N00-KA milestone=M0 labels=gauntlet,registry gates=GATE-GAUNT-02
+plants=swap-number,edit-printout,to-set-cited`). It sources the STD-E2E helper and runs, in order,
+`cargo test -p frob-conformance --test ka_part0_8`, N38a-12's loader and printout tests
+(`--test known_answer_registry`, `--test known_answers_printout`) and then
+for each row, `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier> -- <row>` with `<tier>` =
+`g0_laws` for the G0 rows (KA-002, KA-027 to KA-032) and `g1_known_answers` for the G1 rows (only rows whose
+carrier has landed; a row whose carrier has not landed is logged `skipped` with its `due` milestone, never as
+passed).
+It then applies the three plants to scratch copies under `target/e2e-scratch/ka_part0_8/` and requires each to be
+caught. Log at `target/e2e-logs/ka_part0_8/<utc>.ndjson` with a human transcript beside it; every line has `ts`,
+`script`, `bead`, `step`, `event`, the exact command line, exit code and wall time; one `assert` line per row with
+its id, tier, sites, truth, tolerance kind, eligibility state and whether a control is registered; `metric` lines
+for the two obligation counts against their expected values (4 and 14); the SHA-256 of `known_answers.toml`; on
+failure the first differing field by KA number and the scratch path that reproduces it; a `summary` line with rows
+loaded, rows eligible, rows owed, controls caught and gate GATE-GAUNT-02.
 
 ### Known answers and negative controls
 The rows are the known answers. Controls of this bead itself: the swapped-number registry; a row whose printed
-truth was edited without its derivation file (must fail `check-generated`); a row cited by a gate while its
-tolerance is `to set` (must be reported uncounted).
+truth was edited without its derivation file (must fail the printout test); a row cited by a gate while its
+tolerance is `to set` (must be reported uncounted). Determinism lane: class D0; the loader output and the printout
+are byte-identical twice on one machine and across the two platforms.
 
 ## Considerations
 

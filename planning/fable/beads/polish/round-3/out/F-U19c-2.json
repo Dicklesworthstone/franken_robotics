@@ -1,0 +1,211 @@
+{
+ "round": 3,
+ "slice": "F-U19c-2",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "N19c-23",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Private places contradicted the owners: the bead let a private pack cross with flag and scope and expected FROB-REF-731 for it; N37-18 step 1 and N19b-02 refuse a private pack at the export door with FROB-REF-310 whatever the caller holds (§37.6: a private scan stays on its machine). Step 4, the acceptance line and the unit tests now say: pack never crosses (310, exit 3); a private derived object of an allowed class (its recipe) needs private:export, --allow-private-export and the owner key private.export_allowed, else 731 with observed missing-scope/missing-flag/export-disabled-by-owner (BD-305); a job submitted off the holder is 731 not-on-holder. The script skipped the ingress: it now admits each bundle with artifact import, writes the recipe file with artifact export, passes --device to scene bank admit, and runs N21c-09's fleet_regen_replay.sh as its replay stage instead of a sim replay with no closure on the receiver. deps + BD-305, N37-18 (both M3, no cycle)."
+  },
+  {
+   "bead": "N19c-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-5 applied: scene bank status -> scene bank show --device <D>. admit --recipe <its recipe> named no file: now admit <scene_id> (the pack just compiled locally). The cuda lane's 8,192-world batch had no command: now train start --task flat-velocity --algo ppo --devices cuda:0 --worlds 8192 held through admission (train status polled), train stop before the 500-interval sim run --scenes --schedule draw --policy zero; release is scene bank evict."
+  },
+  {
+   "bead": "N19c-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "eval run --part held-out is not an eval.run option: now the policy form --policy <checkpoint> --task <task> --split <S> (N23b-09) with N24a-31's leak check. Training with the draw schedule names train start --scenes <arm set> --schedule draw, which VERBS-train lacks (N19c-22 puts --scenes/--schedule on sim.run only): requested of N19c-22 and VERBS-train. Scene-set admission given its command."
+  },
+  {
+   "bead": "N19c-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete"
+   ],
+   "what": "Outcome `unsound` is not in N40-03's closed set (not-fired|fired|not-reached|deferred; outcome_closed_set rejects others): an unsound experiment is now recorded as deferred, deferred_to M4, reason 'unsound: placebo contrast excludes zero ...'; unit test and acceptance follow. The bead wrote no owner declaration, which N40-30 check 1 requires of the deciding bead from the due exit: added the [[gate]] role=owner block with the ledger's text and the decision entry with measured values, and an acceptance line on the kill_ledger test. deps + N40-24 (the ledger row it decides) and N40-30 (the check), both M1, no cycle."
+  },
+  {
+   "bead": "N19c-29",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The kill table's 'Decided by' cell for KILL-FARFIELD named N19c-37 only; N40-03 step 6 decides it in two stages at M6, N19cp1-02 (stage A: the owner declaration and the first entry) then N19c-37 (reading = \"final\"). The cell and the bead's kill-gate-to-decider map now name both in order."
+  },
+  {
+   "bead": "N19c-31",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said --brick-layout enters VERBS-scene only if the apron is adopted; the scene.compile row already lists it (8 only in a default build, 9 in this bead's experiment build). Restated, and the option's absence from the scene.gen row, which the terrain workloads need, is requested of VERBS-scene."
+  },
+  {
+   "bead": "N19c-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Claimed fidelity.ledger has no --battery option; the VERBS-fidelity row has it (default the class's frozen battery). Corrected the parenthetical."
+  },
+  {
+   "bead": "N19c-33",
+   "kinds": [
+    "tests",
+    "complete"
+   ],
+   "what": "Request H-cx-1 applied after checking N19-CX: counterexample CXH-C (planted-input, plant N19c-33:cxh-c, the whole-world fork-reuse claim) is cited and bound to a host test, whole_world_claim_rejected_cxh_c, which takes a synthetic fixture at a = 0.20, b = 0.01, d = 0 and pins (1 - a) + b = 0.81 and the 1.23 factor, as N19-CX's arithmetic-only rows require."
+  },
+  {
+   "bead": "N19c-34",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "complete"
+   ],
+   "what": "Request H-verbs-4, option 2 (the one VERBS-run supports: run.fork is 'Extended by: N19c-35'): the smoke script called --no-field-reuse and --field-reuse require, which N19c-35 adds and which depends on this bead (KNOWN_DRIFTS 7 and 8). It now runs one CLI fork in mode auto, plus the in-process integration entry (reuse_equals_full_digests, door, cone, d3_disables_reuse, require_mode_refused_322); the CLI arm comparison moves to N19c-35. Fact recorded: a fork cannot be put in class D3 from the CLI (fast-training and an unpaired cross-backend are FROB-REF-247 on run.fork), so the D3 cases stay in process. Request H-cx-1: CXH-D is cited as plant N19c-34:cxh-d, the feature cxh-d of frob-scene under gauntlet-mutations, and must fail door_through_dry_room and dirty_set_shrinks. The accounting gains the per-substep dirty-set trace (tile coordinates and a content_changed flag), because GATE-HAB-15 asserts per-tile facts that no record carried. New test: dirty_trace_matches_counts."
+  },
+  {
+   "bead": "N19c-35",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request H-verbs-4 applied: its change appends N19c-42 row 3's code to run.fork's refusals (RL-06 staging). The acceptance line no longer claims run.show --phase-ledger, which belongs to N21a-27 (a dependency); this bead reads a from it and adds --receipt. The fork record gains the field_reuse telemetry stream (the dirty-set trace, read with telemetry query --stream field_reuse --world), with a scope line, a criterion and a test (dirty_trace_stream). The script takes over the arm comparison moved from N19c-34 (pairwise telemetry divergence --mode exact over the three modes) and reads the stream. It notes that require under D3 is held in process."
+  },
+  {
+   "bead": "N19c-36",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Step 1 called run.show --phase-ledger unregistered and read the fork's a from its envelope instead of the parent's. VERBS-run lists the option (N21a-27's step profile), so it is used directly, and N21a-27 is added to deps (M2, no cycle). Steps 3, 4 and 6 asserted per-tile, per-substep facts with no data source: they now read N19c-35's field_reuse stream through telemetry query, cross-checked against the receipt. Steps 3, 4 and 8 have keys and commands. Step 7's paired cost measurement is written as a BD-216 harness campaign (perf/campaigns/gate_hab_15_cost.toml, kind ratio, reuse against --no-field-reuse arms), as N19c-31 does, since there is no frob perf verb."
+  },
+  {
+   "bead": "N19c-37",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Request H-owners-2 applied: the stage B entry has reading = \"final\" and receipts, and its ADR is docs/adr/ADR-KILL-FARFIELD-M6-final.md. That is the path N40-03 step 6 gives; the bead had still called it a DESIGN name requested of N40-03. The entry is checked against decision-entry-duplicate and decision-adr-path. The owner declaration is no longer 'updated by copying the ledger row': N19cp1-02 wrote it, and this bead appends the final decision table with measured values. Acceptance and a new test, final_entry_shape, follow."
+  },
+  {
+   "bead": "N19c-38",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request H-cx-1 applied: CXH-A is plant N19c-38:cxh-a, the feature cxh-a of frob-scene, in which distance_bound returns the local value as metres. It must fail sphere_counterexample_bounds and probe_015_would_intersect, and the script runs it through e2e_expect_caught. scene show --source was still called 'requested', but the scene.show row lists it with this bead; corrected."
+  },
+  {
+   "bead": "N19c-39",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request H-cx-1 applied: CXH-B is plant N19c-39:cxh-b, the feature cxh-b of frob-sense, in which cast_instanced sorts and gates on raw local parameters. It is the registered form of the two existing mutants, must fail two_planes_world_order and range_gate_in_metres, and runs as script step 2b through e2e_expect_caught."
+  },
+  {
+   "bead": "N19c-40",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Request S51 checked: the conformance and preview commands were already fixed in round 2; what remained is fixed here. telemetry stills --at start is not a selector of the row (now t=0.05). Step 5 named a test two_planes_host that N19c-39 does not define (now two_planes_world_order and range_gate_in_metres). The viewer step had no command (now node viewer/build/test.mjs, reading pick_two_planes_returns_foreground and ray_param_world_matches_rust_fixture, e2e_skip if the bundle is absent). The adapter step had no command (now N19c-39's conversion tests). The mutant step ran one unnamed mutant on steps 4 to 7, but the compiled path of step 4 has no local parameter for it to bite on. It now runs the CXH-B plant on steps 5 and 7(a) and the CXH-A plant on step 1, and the viewer and sibling controls are read from their owners. The negative-control line is corrected and both counterexamples are cited."
+  },
+  {
+   "bead": "N19c-41",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Private-pack rows contradicted BD-305 and the scene.list row. 'With the scope both succeed' was wrong: plain scene list never lists a private pack, scene list --private needs private:read (FROB-REF-720 without it) and returns an envelope marked private, and a direct read needs private:read alone (731 missing-scope), not the export's 'scope and flag'. Step 12 and the acceptance line are restated."
+  },
+  {
+   "bead": "N19c-42",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Four verified requests applied. (1) Row 9: publishing counts as strict data for cost claims (N19b-43: report.mission --publish refuses with or without --strict-data). This changes the trigger, the second repair on the publish path, the emit site, report.mission in step 6, the script and the test. (2) 323 and 326 are listed in N35-33's retired list as withdrawn proposals, not 'not retired'. N35x-02's hold is on 324, 325 and 327, not '324 to 326'. (3) raised_by takes bead keys and raised_at takes crate and function, as N19-REF states. (4) Step 6: row 2 goes on the run verbs only, since its emit sites are admission and reset (N19c-22) and a bank admission over the cap is 314. Row 4 goes on the seven rows VERBS-scene lists, adding gen (N21c-09) and accept (BD-228), and BD-228 joins row 4's raisers in the table, the Scope and step 5. The script's row-3 step used an unreachable CLI D3 fork; it now uses store-over-budget, and D3 stays in process."
+  },
+  {
+   "bead": "N19cp1-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The stage A decision entry lacked receipts, which N40-03 requires (at least one for not-fired). It now carries the pilot result's receipt and the phase-ledger receipts, and has no reading. The owner declaration's decision array is spelled out with measured d, b, mismatches and largest a, and the final entry of stage B is named. The script still called run.show --phase-ledger unregistered, but VERBS-run lists it from N21a-27, a dependency. record_shape asserts receipts and no reading."
+  },
+  {
+   "bead": "N19cx-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Script step 4 described sense symmetry 'with the galley family' and gave no option. It now uses the row's spelling: frob --json sense symmetry <reference quadruped> --scene-family <family>, the read form, not the --test run action."
+  },
+  {
+   "bead": "N19cx-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request from F-U17b applied after checking N17b-14: step 5 (phylum reuse on a mirror-swapped pair) is skipped with 'needs N17b-14', not 'needs BD-286'. N17b-14 owns the verb and runs the step as step 9 of its script, with an acceptance item for it; BD-286 owns the contract. The surface paragraph still called the show and gen forms requested, but VERBS-scene lists both; corrected."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N21c-08",
+   "what": "State that the export door's grant (N37-18 step 1, and ScenePack::export_check of N19b-02 for a pack) comes before XferWriter::add opens the bundle. A private pack is then answered FROB-REF-310 (exit 3) before any byte is written, and a non-private pack's field blobs answer 618. N19c-23 reads this order as DESIGN."
+  },
+  {
+   "bead": "VERBS-artifact",
+   "what": "In the artifact.export row, give the per-call private flag its spelling, --allow-private-export. BD-305 requires it alongside the scope private:export and the owner key private.export_allowed, and the 731 observed value missing-flag refers to it. N19c-23's script calls it."
+  },
+  {
+   "bead": "N19c-22",
+   "what": "State the training form of the scene schedule: train.start --scenes <set> --schedule fixed|cycle|draw, with the same admission, reset and no-recompilation semantics as sim.run's. N19c-25's breadth experiment trains its 20 policies with --schedule draw over each arm's scene set, and N19c-24's cuda lane holds a training batch beside the bank."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "Add --scenes <set> and --schedule fixed|cycle|draw to the train.start row with N19c-22 under 'Extended by', and append the late refusal rows 1 and 2 of N19c-42 that the run verbs gain. N19c-25 calls train start … --scenes <arm set> --schedule draw; only sim.run lists these options today."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "(1) Add --brick-layout <n> to the scene.gen row: 8 in a default build, 9 only in N19c-31's experiment build, FROB-REF-802 otherwise, as on scene.compile. N19c-31's terrain workloads are generated, not compiled from a source. (2) The scene.list row's outputs list only name, SceneId, family, group, acceptance status and privacy mark. BD-163, which fixes the spellings, lists one row per pack with scene_id, catalog name, family, seed, group, spacings, band-brick count, bytes, acceptance status, feasibility tag, scale label and dimensions_assumed, and N19c-41 asserts those columns, so list them in the row."
+  },
+  {
+   "bead": "N21c-09",
+   "what": "Its text and script still cite FROB-REF-323 for a recipe whose regenerated pack differs and use terrain:stairs as a family. Cite the slug scene-pack-identity-mismatch (N19c-42 row 4, a 9xx row with exit 9, read through the constant IDENTITY_MISMATCH; 323 is a withdrawn proposal) and spell the family --family terrain/stairs (the scene.gen row)."
+  },
+  {
+   "bead": "N32b-10",
+   "what": "Add to viewer/tests/ the two tests that N19c-39 and N33c-46 name as the viewer runner's: ray_param_world_matches_rust_fixture (the JavaScript ray_param_world against fixtures/rays/scaled_instances.json, including its 10^3 seeded anisotropic cases, to 1e-12 relative) and pick_two_planes_returns_foreground (the two-plane case of that file, foreground at 2 m to 1e-4 m). Add N19c-39, which writes the vectors file, to deps (M2; no cycle). N19c-40's gate step 6 reads both results from node viewer/build/test.mjs."
+  },
+  {
+   "bead": "N40-30",
+   "what": "Check 5 compares a declaration's decision entry with the ledger's 'for the same exit and scope'. For a gate decided in two stages at one exit (KILL-FARFIELD: N19cp1-02 then N19c-37; KILL-SHORTGRAD: N23b-37 then N23b-39) it must also match on reading (N40-03 step 6), or stage B's entry is compared with stage A's. Step 1's form of the decision array should list reading beside exit and scope."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Unchanged after checking: N19c-27 (its request was informational; the carried-by column already holds the beads), N19c-28 (arithmetic reproduced; consistent with N19-KA, N38a-40 and allocations.toml), N19c-30 (row counts sum to 59; report run --claims-realism and scene hazards exist in their rows), N19cp1-01. Cross-slice facts used: a fork cannot be placed in determinism class D3 from the command line (run.fork answers fast-training and an unpaired cross-backend with FROB-REF-247), so every D3 refusal of field reuse is tested in process; the dirty-set trace added to N19c-34 and N19c-35 is the data source GATE-HAB-15 needed for its known answers and cone check. N21a-27's build of run.show --phase-ledger was already requested by H-verbs-4 and is not repeated. All 24 files parse (front matter, JSON lists, seven sections, test subsections); no dependency cycle through any slice bead."
+}

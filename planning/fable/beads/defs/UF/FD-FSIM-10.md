@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "cortex", "upstream", "frankensim", "solid"]
 parent: "WP-37"
-deps: ["FDEF-01", "NF-01", "STD-E2E"]
+deps: ["FDEF-01", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-034", "BD-037", "BD-197", "FD-FSIM-32", "BD-218"]
+related: ["FD-FSIM-32", "N33b-08"]
 gates: ["INT-FSIM-06"]
 plan_refs: ["Appendix F.1", "Appendix F.2 row 1", "Appendix F.3", "§33.8", "§33.11", "§23.6"]
 ---
@@ -105,18 +105,23 @@ against the new pin.
 **What the switch-over re-runs.** INT-FSIM-06, three probes: the four combinations of advantage sign and clip
 side, each against a finite difference of the scalar loss to 10⁻³ relative in single precision; the critic
 gradient against the current forward output; a packed sequence against separate episode replays, ratio 1 to
-10⁻⁶. Only after it passes at the new pin may the sibling trainer serve as a comparison baseline, and it is
-then registered as one in `frob-conformance` with the pin; it remains unlinked from every product binary.
+10⁻⁶. Only after it passes at the new pin may the sibling trainer serve as a comparison baseline. The register
+that says so already exists and is the only one: the oracle register
+`crates/frob-conformance/registry/oracles.toml` (N38a-04), whose row `fs-g1-train-ppo-update` is held out today
+(`admission.status = "not-admitted"`, a `held_out` reason citing INT-FSIM-06 and this item, written by BD-034).
+The passing run of BD-034's test at the new pin is the one path that clears it: `held_out` emptied,
+`admission.status = "admitted"`, the role `comparator:ppo-update` (DESIGN, in the register's role grammar) and
+an appended `[[pin_move]]` record naming the new pin. The trainer remains unlinked from every product binary.
 
 **Fallback if the change cannot land.** Nothing changes here. Training comparisons use the external incumbents
 of the parity harness, and the suite has no internal PPO baseline.
 
 ## Acceptance criteria
 
-- [ ] In FrankenSim: the corrected update passes the five hand cases (three ratios, critic, reset boundary) as tests in `fs-g1-train`, and its existing export and plumbing tests still pass.
+- [ ] In FrankenSim: the corrected update passes the hand cases of the four tests below as tests in `fs-g1-train` (three ratios for each sign of the advantage, so both clip sides of INT-FSIM-06's four combinations; the critic; the reset boundary), and its existing export and plumbing tests still pass.
 - [ ] In FrankenSim: the present entry point is either corrected or documented as defective with a pointer to the corrected one.
 - [ ] Here: INT-FSIM-06 passes against the sibling at the new pin, with the three probes' measured values recorded against 10⁻³ and 10⁻⁶.
-- [ ] Here: the baseline registry of `frob-conformance` lists the sibling trainer with its pin only after that record exists; before it, a comparison that names it is refused.
+- [ ] Here: the row `fs-g1-train-ppo-update` of the oracle register (`crates/frob-conformance/registry/oracles.toml`) reads `admitted`, with the new pin, the role `comparator:ppo-update` and its `[[pin_move]]` record, only after that record exists; before it the row stays held out and a comparison that names the trainer is refused.
 - [ ] Here: `cargo metadata` of the core workspace still shows no package named `fs-g1-train`.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
@@ -132,7 +137,7 @@ In FrankenSim (added, in `fs-g1-train`):
 - `sequence_respects_reset`: two independently reset one-step episodes, frozen policy; expected both likelihood ratios 1 to 10⁻⁶ (the uncorrected code gives 1.582459 for the second).
 Here:
 - `int_fsim_06_against_sibling`: the three probes; expected pass at the new pin and the recorded failure signature at the old one.
-- `baseline_registry_requires_admission`: a comparison naming the sibling trainer without an admission record is refused.
+- `baseline_registry_requires_admission`: a comparison naming the sibling trainer while its row of the oracle register is held out is refused; with the row admitted at the new pin and the role `comparator:ppo-update`, the same comparison is accepted, and for any other role it is still refused.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_10.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).

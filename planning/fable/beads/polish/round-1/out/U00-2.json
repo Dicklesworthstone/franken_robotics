@@ -1,0 +1,438 @@
+{
+ "round": 1,
+ "slice": "U00-2",
+ "reviewed": 51,
+ "changed": [
+  {
+   "bead": "N00-15",
+   "kinds": [
+    "self-contained",
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "contradicted_by now names its rows (IA-/DA-/NF- of N00-13/N00-14, or a source key for item 15, which no register row covers) with the initial mapping for all sixteen withdrawn claims; added condition_rows so N11's mixed-batch replay property renders only once re-audit row DA-04 stands (§1.6, N00-14 step 4), with an acceptance line and tests contradicted_by_resolves and n11_property_needs_da04; e2e log gains command, exit code, first differing byte and registry path; N00-14 added to related."
+  },
+  {
+   "bead": "N00-16",
+   "kinds": [
+    "complete"
+   ],
+   "what": "carried the consequences §1.7 states and the bead dropped: fastmcp_rust's unclaimed protocol revision means frob-mcp is admitted through INT-FMCP-01 with KILL-MCP's fallbacks; fs-qty's nightly coupling is the risk tested at INT-TOOLCHAIN-01 with frob-units as escape hatch; the planar-drive routine must be qualified against an independent SE(2) exponential before use as an oracle."
+  },
+  {
+   "bead": "N00-17",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "'Three smaller ceilings' listed four; the referee-coverage helper took one device rate but the bead's 0.1-2.4% range needs device rates from 1,000 to about 4,800 world-s/s: stated the T·h rate and the per-rate pairs (0.14-0.71% at 3,400; 0.12-0.6% at 4,000; up to 2.4% at 1,000) and added test scale_referee with exact rationals (KA-361's values); decimal units stated for the memory shares; e2e log gains ledger digest, mismatch values and the refusal line."
+  },
+  {
+   "bead": "N00-18",
+   "kinds": [
+    "self-contained",
+    "deps"
+   ],
+   "what": "the closure tolerance of the join is now stated (2%, the rule of frob.tenfold.ledger/1, N39a-24); N00-34 (the M0 primary-source re-read of the published phase figures this ledger loads) moved from related to deps, and a still-flagged published row is loaded but not citable."
+  },
+  {
+   "bead": "N00-19",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "Resources gains tool_calls and the declared-price money and human-minute rules of §39.2; energy is optional only with the stated reason that no credible meter exists, and violation (d) says so."
+  },
+  {
+   "bead": "N00-20",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests"
+   ],
+   "what": "per U39a's request: tenfold_phases is taken by reference from N39a-26's lever_phases.toml with an equality check at load (test tenfold_phases_of_eight_levers now resolves and compares, with a planted differing copy); Scope no longer says N39a-26 depends on this bead; N39a-26 moved from related to deps (no cycle: N39a-26 does not reach N00-20)."
+  },
+  {
+   "bead": "N00-22",
+   "kinds": [
+    "self-contained",
+    "complete"
+   ],
+   "what": "eleven goals (GOAL-03, -04, -05, -07, -08, -12, -19, -30, -31, -36, -43) had no initial trace although the traceability test fails a goal without a gate: added traces from the §40 register (SKEL, TRAC, HAB, ARENA-01, MARROW, LEMMA-00, INT admission gates, SINEW, SENS, AUGUR-17/-18, the M6/M8 frontier gates) and an acceptance line that all 43 load and resolve."
+  },
+  {
+   "bead": "N00-23",
+   "kinds": [
+    "self-contained",
+    "complete"
+   ],
+   "what": "delegated guards now name their owners (N12-02, N25e-24, BD-013/N21a-10, GATE-SAFE-01); the non-default halves of NONGOAL-13 (profile share of at least one third: N21c-16, N21c-18) and NONGOAL-15 (validity label on every derivative: N10a-04, N16c-25) had no guard owner and are added; NONGOAL-04 states its M8 milestone as §6.2 does."
+  },
+  {
+   "bead": "N00-24",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "row 3 gains its refusal FROB-REF-862 (performance figure without a complete disclosure block, N36-13, already a dependency); the flag-import e2e step states its exit code 3."
+  },
+  {
+   "bead": "N00-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "acceptance counted nine templates for a list of ten (two Proof, two Design comparison, two Reality, four single); e2e used unregistered forms: now `frob schema frob.claims/1 --json` and `frob sim run g1 --tier referee --seconds 2 --key cw-1 --json` (run verbs need --key); log gains command, exit code, wall time, template id and the mismatch record."
+  },
+  {
+   "bead": "N00-26",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "admission table now cites the refusal codes the plan registers for each entry (821, 845, 862, 863, 866, 873, 883, 889, 895, 825) and states that an entry with no code of its own is refused with FROB-REF-819 and a typed reason; five tests added for the new codes; e2e used eval.run (first milestone M2) in an M1 bead: now a referee `frob sim run` with keys ca-1/ca-2."
+  },
+  {
+   "bead": "N00-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e steps used unregistered or later verbs: mission synthesize and prove bundle now carry --key; the quantifier step expects FROB-REF-826; the amendment step re-synthesizes at M1 and checks the withdrawal with the M1 mission-cell form `frob result revalidate <answer> --against <query>` (N25a-13, N28b-32, already dependencies), adding `frob mission revalidate ... --after-edit` from M4, its first milestone (logged `not yet` before); the referee step carries --key."
+  },
+  {
+   "bead": "N00-28",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "per U00-1's two requests: new verdict GateFailedShort (a deciding gate failed, no falsifier clause true, no kill fired; printed 'open: gate failed short of the falsifier', N40-31 state open until the decision record) with test gate_failed_short_of_falsifier (BET-18 at 0.62); BET-02 added to the per-class bets (per device family) with test bet02_per_device_family; acceptance lists five verdicts."
+  },
+  {
+   "bead": "N00-29",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "per U34's request and dup-01: N34x-03 (which admits the eleven optional demo keys to the schema) is now a dependency; the not-yet-due stubs with an unadmitted `status` key are replaced by the rule that a scenario has no demos/ directory until due (index runner holds the scenario-milestone table); test twenty_four_scenarios_have_demo_files restated (exactly NS-01, -07, -13, -22 at M1; a planted ns-24 fails) and scenario_table_matches_beads added; N34-12 to related."
+  },
+  {
+   "bead": "N00-31",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "C060's κ·u recomputes to 0.12-0.18 raw, not the claim's 0.14-0.19: the difference is recorded; added the arithmetic for C045 (2.048e7 world-steps) and C040 (354/54 = 6.6x quadruped cap from the Amdahl composite) with tests; C061 is not recomputed here but read from N38a-11's conditioning result by hash (dup-08), or recorded hypothesis-grade naming N38a-11 when absent; N38a-11 to related."
+  },
+  {
+   "bead": "N00-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the late mechanisms span twenty-five subsystems, not twenty."
+  },
+  {
+   "bead": "N00-33",
+   "kinds": [
+    "split",
+    "scope",
+    "title",
+    "tests",
+    "e2e-logging",
+    "placement"
+   ],
+   "what": "an M0 bead whose seven North-Star controls (KA-019 to -021, -023 to -026) mutate M1 code (stance classifier BD-130, docking solver BD-129, late-packet witness BD-134, amendment handler N25c-21, auditor kinds BD-132) and register against M1 gates: split them into N00p1-13 (M1); this bead keeps the seven thesis controls and four tolerances, names each control test, prints the seven owed rows, and logs clean values, tolerance errors and the release symbol scan."
+  },
+  {
+   "bead": "N00-34",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "an M0 bead that read its worklist from the M1 Amdahl ledger (N00-18): it now reads the M0 registries N00-11 to N00-14 and the published phase figures it lists, and N00-18 depends on it; deps gain N00-11, N00-12, N00-14 (registries it enumerates), N00-17 (the ceilings it re-runs) and STD-E2E; e2e names the exact thesis-ceilings command and logs before/after values, how-read, digest, locator and ceiling diffs."
+  },
+  {
+   "bead": "N00-35",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the rate script's `frob sim run g1 --tier referee` lacked the idempotency key a run verb requires: one key per thread count and repetition, so no repetition is answered from an earlier one. dup-08 was already applied (conditioning result cited by hash from N38a-11)."
+  },
+  {
+   "bead": "N00-37",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the smoke script named `frob eval run` and `frob task verdict` without forms: now the registered forms with one key per candidate and battery (development and sealed), so a cancelled campaign re-run answers finished episodes from their keys. Arithmetic rechecked (Clopper-Pearson 0.816/0.775; intervals; Fisher p 101/7429 and 2477/7429; 1/C(2m,m))."
+  },
+  {
+   "bead": "N00-CX",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "per U22c's request: CX-012 names its numeric instance, N22-CX's `reflex-untimely` (same_as CX-012, plant list_untimely_assumption_as_monitored, gate GATE-SHIELD-06, fixture of N22c-27) with the fixture numbers; as an M0 bead it cannot depend on the M1/M4 entries, so the record stays owed with `instance` and `plant`, and the loader derives the control (gates BET-25, GATE-SHIELD-06) when that entry loads; tests cx012_resolves_when_instance_loads and cx012_fixture_arithmetic; e2e logs controls whose mechanism is not yet built as `not yet` instead of failing at M0."
+  },
+  {
+   "bead": "N00-KA",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "the fourteen owed controls are now split between N00-33 (thesis rows, M0) and N00p1-13 (North-Star rows KA-019 to -026, M1): rows, Scope, acceptance and a new test owed_rows_name_owing_bead say which bead owes which row."
+  },
+  {
+   "bead": "NS-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "step (c) used an unregistered `design edit` form: now with --expected-parent, --key and --json (VERBS-design); negative controls gain the edit without a key (FROB-REF-805, exit 3) and the swap at one knee (symmetry broken)."
+  },
+  {
+   "bead": "NS-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "tier `cuda` is `gpu-cuda`; sim.run and sim.replay are run verbs and now carry keys (distinct per co-tenancy replay); the Metal lane names `gpu-metal`."
+  },
+  {
+   "bead": "NS-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`study plan` takes a manifest, not flags, and `eval compare` has no --plan: the declared study is now plan (manifest), submit (--key), compare; the one-call `eval compare` form is kept as the story's headline with the same verdict; keys added; refusals named (FROB-REF-553 mixed study types, -542 uncontrolled class); log gains commands and exit codes."
+  },
+  {
+   "bead": "NS-04",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "per U24a's request, dep N24a-40 (inspect-pixel, which step f calls); scene gen, scene accept and sim run use registered forms with keys (sim run has no --task: the requirement verdict is `task verdict`); stills and inspect-pixel use their registered forms (run, world, --at, --pixel)."
+  },
+  {
+   "bead": "NS-05",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "per dup-07 and the U00-1 and U23a requests: `--equivariant gobs` is `--tying equivariant` (with `--tying augmentation` for the augmented arm), per-seed keys; `algebra irreps` takes the group positional with --rep; the symmetry-breaking request is a dry-run train start refused naming the broken generator (FROB-REF-161 for a group outside Γ_obs); under KILL-EQUIV the script checks exit 5 naming the kill record and that augmentation still runs."
+  },
+  {
+   "bead": "NS-06",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "per UJL-2's request, `explain compare` takes a stored comparison (written by `eval compare`); the family dispatch uses `phylum sweep` (or `opt start --family sweep`), patches and bisect use their registered forms with keys; deps gain N28a-17 (explain.compare) and BD-184 (phylum.sweep)."
+  },
+  {
+   "bead": "NS-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "design.import is a mutate verb (keys added); FROB-REF-104 is a stage-2 refusal of `design check` (KA-277), and an import reports a failing inertia in its loss report with the proposed repair (§14.12): steps (d)/(e) now import, check (104, exit 3) and repair by a typed edit, replacing the unregistered `--repair project`; acceptance follows."
+  },
+  {
+   "bead": "NS-08",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "per U19a's request and dup-06: families `terrain/stairs` and `terrain/rubble`; the soil plot is not a terrain family but the flat drawbar scene of N18b-19 with the soil card on its region (dep N18b-19 added); `contact soil` takes --soil and a load with its unit; sim run, control synth and the task verdict use registered forms with keys."
+  },
+  {
+   "bead": "NS-09",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "tier `cuda` is `gpu-cuda`; eval run, detect and promote are run verbs and now carry keys (promote names --tier referee); `fidelity modelform` takes --ranking, --k and --budget-share with a key; log gains commands and exit codes."
+  },
+  {
+   "bead": "NS-10",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "an M2 bead called `report run`, first answering at M3: the M2 step reads `run show` and prints `report run` from M3; `train start` takes the design positional and --backend gpu-metal/gpu-cuda with per-seed keys (not --device metal --seeds 3); `spark check` gets --kernel, --backend and a key; eval run named with its form."
+  },
+  {
+   "bead": "NS-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "per UJL-2's request: `prove verify --card` and `prove bundle --kernel` are not registered: the kernel certificate is checked by `prove verify <certificate path>` and copied as its own file to the offline host for `frob-verify` (as N12-33 does), since prove.bundle takes only a mission answer or, at M5, a design with --mission and --receipt; the capsule is found by `prove list --class Proved` and checked by path; acceptance and logging follow."
+  },
+  {
+   "bead": "NS-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "scene import (name, key; private by construction in a session opened with the scopes each step needs, including private:read and private:export, BD-398, so no `--private` flag; the anchor is a landmark correspondence of the import, not an `--anchor` option), scene fit (--design, --scene, --route, key), probe-request (takes the unresolved answer), sim run plus task verdict, and artifact export (--out, key; refused with FROB-REF-731 without the private-export flag) now use registered forms; the log gains command lines with capture paths replaced by the pack digest."
+  },
+  {
+   "bead": "NS-14",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "spark precompile takes the device architecture and --workload with a key (no --shape-classes); phylum sweep and the single-design sim runs carry tier, seed and keys; the slot admission is the environment's admission call (N21b-16, BD-183, reached through phylum.sweep in BD-184; at M2 `frob sim run --admit-at <chunk> --design <new> --key`), not an unregistered `phylum sweep --admit` and not `--campaign` (N17b-29, M4); an M2 bead called `report run` (M3): the M2 step reads `run show` and prints `report run` from M3."
+  },
+  {
+   "bead": "NS-15",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "per UJL-2's request: `nemesis hardset add trap.fmcw --key` (action word, run action, BD-275 added as a dependency since nothing reached it); search, oracle and shrink take the design or world positional with keys; shrink writes into --out <dir>; `sim replay` takes the .fmcw positional (reader N26a-19 via BD-274), not --mcw; eval run named with its form."
+  },
+  {
+   "bead": "NS-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`run fork` takes the run positional and --before failure --dt with a key (not --run/--at); `autopsy intervene` uses --do per intervention, --placebo, --replicates, --coalitions pairs and a key (not --set/--pairs); rerun names the run, edit and worlds with a key; repair carries a key; show has --budget."
+  },
+  {
+   "bead": "NS-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`eval qualify` takes the design positional with --task, --claim, optional --baseline and a key (not --candidate/--mission/--metrics); `eval ledger` takes the campaign positional; session open and the 500 adversarial requests carry keys; the sealed-read attempts use registered forms and name FROB-REF-840."
+  },
+  {
+   "bead": "NS-18",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "the failing run is `sim run` plus `task verdict` (eval run takes a battery, not --scene/--task) and `explain run <run>`; `scene fit` uses --design/--scene with a key; `scene retrofit` takes --evidence <cut> (or a .fmcw), --permit and --compare-redesign with a key, the catalogue pinned in the registry and kits of at most three by construction (N19b-39, N19b-40), and --apply for the re-evaluated variant; report mission takes the answer; added BD-369's wheel-edge hand check (tan α = 1.27 for r = 50 mm, h = 19 mm) as a known answer and test."
+  },
+  {
+   "bead": "NS-19",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "design patch takes --file with a key; policy apply takes the family policy positional with a key and refuses the hexapod with FROB-REF-534; `eval rank-agreement` is a run verb with no --show: the script writes the record with a key before step b and re-issues that key to read it; train inherit uses --task, --to target, --compare both and a key; the baseline route is control synth plus a sim run."
+  },
+  {
+   "bead": "NS-20",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "per dup-07 the forms were already the Foundry chapter's; the run verbs (loads, optimize, check, export) now carry keys and --json, the referee re-extraction is `--for packet` (N31b-35) with `--admit packet` read (N31b-36); the chain asserted a re-qualified verdict for the edited design but no step produced it: added `eval qualify <design'>` (BD-259) after the mass edit, stopping with `not demonstrated` if not promoted. Graph finding (22 deps): each dependency is the implementer of a step the script calls (loads BD-400/N31a-53/N31b-35/-36, size BD-401, check BD-402/N31a-55/N31b-32, optimize BD-403/-404/N31a-54, fab BD-405, tolerance BD-406/N31a-56, export BD-407/-408, verbs BD-409, verify N31b-44, qualify BD-259, the finalist BD-346); sixteen are also reached transitively, kept as the record of which step needs which bead."
+  },
+  {
+   "bead": "NS-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "ground predict uses BD-392's form (--dataset, --part holdout, --cell, --model, --scene, --task, --metric with level, --decision, --study) with a key, not --design/--episodes; ingest and score carry keys; band names --level; the second score uses a fresh key and expects FROB-REF-886 (reuse of a spent holdout)."
+  },
+  {
+   "bead": "NS-22",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "synthesize, refute and prove bundle carry keys; the grid is --paving; sense alias uses BD-134's M1 docking form with a key (the registry row says M3); the third-gain withdrawal is checked with the M1 `result revalidate --against`; the quantifier check names FROB-REF-881 through --from; negative controls of KA-023 to -026 are owed by N00p1-13, not N00-33; related N00p1-13, NS-13."
+  },
+  {
+   "bead": "NS-23",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "shield budget/check/fit/report use their registered forms (design positional, --boundary declaration carrying the 12 cm step-down instead of an unregistered --situation, --controller/--tasks, ShieldId, keys); the unlisted spring names FROB-REF-451 and the refit-less policy change FROB-REF-457 through --reuse-margin."
+  },
+  {
+   "bead": "NS-24",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "the published lane named its checks without commands: now `frob-conformance -- tenfold check-report` (N00-19), `frob-tenfold kit verify` (N39b-18), the level2 step of tenfold_kit.sh (N39b-20/-21), frob-verify per certificate, and the ledger order from N39b-13's freeze record; the log gains command lines and exit codes."
+  },
+  {
+   "bead": "N00p1-11",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "the record makes wording changes through N00-15 and N00-22 but did not link them: both added to related (as the sibling bet beads do). Arithmetic of all four known-answer cases rechecked."
+  },
+  {
+   "bead": "N00p1-12",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "as N00p1-11: N00-15 and N00-22 added to related. Shares, pooled 437/480, the 181-world island bound and the t^(1/8) spreading exponent rechecked."
+  },
+  {
+   "bead": "NS-13",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "mission check/synthesize/show take the query identifier (from `mission new`) and the answer as registered; synthesize and prove bundle carry keys; the amendment is revalidated with the M1 form `result revalidate <answer> --against <q′>` (N25a-13), not a later verb; negative controls of KA-019 to -021 are registered by N00p1-13; related N00p1-13, N25a-21."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N00p1-13",
+   "why": "split from N00-33: the seven North-Star fixture controls need M1 code (BD-129, BD-130, BD-132, BD-133, BD-134, N25c-21) and register against M1 gates (GATE-AUGUR-02/-03, GATE-LEMMA-03/-04); M1, parent WP-14, with per-control tests, bundle mutations re-hashed so frob-verify's arithmetic (not a hash) catches them, FROB-REF-881 for the clairvoyant witness, and closure of the KA-001 to KA-032 obligation list."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-044",
+   "what": "add deps N00-16 and N00-21: N00-16's acceptance attaches the foundation-fact report to the M0 admission record the exit review reads (graph finding: nothing depends on N00-16), and N00-21's exit-review rule has every milestone exit review run the principles meta-check and record per-principle status (enforced, not yet enforced, unproven); the later exit reviews BD-147, BD-224, BD-319, BD-378, BD-412, BD-427, BD-434 and BD-442 apply the same rule (from M3 an unproven principle blocks the exit) and should depend on N00-21 too."
+  },
+  {
+   "bead": "N40-31",
+   "what": "N00-28 now returns a fifth verdict, GateFailedShort (a deciding gate failed while no falsifier clause is true and no kill gate fired; BET-18 between 0.5 and 0.70 is the case U00-1 raised): map it to your exit state `open` while no decision record is on file, and add a named non-blocking state once the record states what is in force and why (suggested `failed-short`)."
+  },
+  {
+   "bead": "BD-146",
+   "what": "add deps N00-33 and N00p1-13: the rows KA-001 to KA-026 that you count toward GATE-GAUNT-02 at M1 are counted only once their controls and tolerances are registered (N00-KA's rule); N00-33 carries the thesis controls and four tolerances, N00p1-13 (new, split from N00-33) the seven North-Star fixture controls. No cycle (neither reaches BD-146). Graph finding: nothing depended on N00-33."
+  },
+  {
+   "bead": "BD-427",
+   "what": "add dep N00p1-12: your Bets section lists BET-36's Frontier half as due at M6, but the bead BET-36 closes at M3 and the M6 reading (clauses b and c, docs/adr/bet-36-m6.md) is N00p1-12 (M6), which nothing depends on. No cycle (N00p1-12 does not reach BD-427)."
+  },
+  {
+   "bead": "BD-442",
+   "what": "add dep N00p1-11: your Bets section lists BET-30's tree-policy rider as due at M8, but BET-30 closes at M4 and the M8 reading (docs/adr/bet-30-m8.md) is N00p1-11 (M8), which nothing depends on. No cycle (N00p1-11 does not reach BD-442)."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "Done: 51 of 51 reviewed (48 changed, 3 unchanged: N00-21, N00-30, N00-36); one new bead N00p1-13 split from N00-33 (North-Star controls need M1 code). Most changes put North-Star and e2e commands into their registered verb forms (keys on run/mutate verbs, positional arguments, tier names, no verb before its first milestone). Deps added: NS-04 N24a-40, NS-06 N28a-17/BD-184, NS-08 N18b-19, NS-15 BD-275, N00-18 N00-34, N00-20 N39a-26, N00-29 N34x-03, N00-34 registries. Requests: BD-044, N40-31, BD-146, BD-427, BD-442. All 52 files parse; no cycle; no dependency on a later milestone or an epic."
+}

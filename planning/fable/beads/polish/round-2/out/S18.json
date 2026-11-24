@@ -1,0 +1,258 @@
+{
+ "round": 2,
+ "slice": "S18",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "BD-147",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "applied round-1 request: deps N40-28, N40-30 (moved from related), N40-31; added the kill-ledger cross-check in runner step 6 (with the five ledgers read), KILL-FSIM re-read, and the Bets section (BET-12, BET-19, BET-24 due at M1; an open bet blocks); NS-13 added to the demonstration criterion (plan §43.4); unit tests bets_due_m1 and kill_ledger_mismatch_blocks; references corrected (BET-13 is not due at M1); dropped the parent epic from related"
+  },
+  {
+   "bead": "BET-12",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "dep N00-09 (it adds the schedule-gate refusal to funding admit); unit test and negative control for the refusal of M2 funding while the re-plan is pending; full NDJSON logging fields"
+  },
+  {
+   "bead": "N00-09",
+   "kinds": [
+    "complete",
+    "users",
+    "tests"
+   ],
+   "what": "applied round-1 request: optional classes list on speed-lever records (default: every class with a closed ledger), refusal g in admit (class without closed ledger; class on which KILL-TENFOLD-LEVER struck the lever), read the same way by N39a-38's sweep; four unit tests and a mutant control; scope names BET-12 as owner of the schedule-gate refusal"
+  },
+  {
+   "bead": "N00-19",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "e2e log lines given their full fields, per-variant expected and returned codes, and the failure record"
+  },
+  {
+   "bead": "N00-24",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "FROB-REF-533 given its meaning"
+  },
+  {
+   "bead": "N28c-27",
+   "kinds": [
+    "deps",
+    "complete",
+    "correct"
+   ],
+   "what": "deps BD-025, N28a-01, N34-08 (its tests live in frob-opt, the table prints through frob-conformance, the loader goes into check-contracts); option E added for the parameter-box halves that BD-145 hard-codes, and an acceptance item that the ADR states how those halves stand under the chosen scheme"
+  },
+  {
+   "bead": "N28c-28",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "REV-1: a crate failing admission for a sibling cause gets an upstream work item with the local implementation as interim posture (acceptance added); dep STD-E2E"
+  },
+  {
+   "bead": "N40-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "cause tags bound to the cause field of frob.beadlog/1 (N29a-09) with tags outside the closed set refused; a posture listed posture: untested (N33b-08) does not count as applying, as BD-147 states; dep N33b-08; unit test untested_posture_does_not_apply"
+  },
+  {
+   "bead": "N34-10",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "dep N34-14 (it adds steps to workspace_checks.sh); the e2e step now also plants the unlisted telemetry sharing and gives the full log fields"
+  },
+  {
+   "bead": "N34-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the worked example demos/m0-doctor had a command with neither checksum nor compare, which N34-09's demo.expectation-shape refuses; added compare on stack_receipt for frob doctor and accepted exit 2 for doctor on a host with findings"
+  },
+  {
+   "bead": "N34-27",
+   "kinds": [
+    "deps"
+   ],
+   "what": "its e2e step lives in N34-23's script; stated that N34-23 depends on this bead and carries the step (request filed)"
+  },
+  {
+   "bead": "N34x-02",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied both round-1 requests: kill-block mode is exit | pilot-before-funding | standing | rolling, outcome adds not-reached, optional reread, decision as a table or an array of entries with exit and scope (cell:, algorithm:, half:, clause:) as N40-03 defines; schema refusals for reread before decided, bad scope form and duplicate exit+scope; five unit tests; known answers updated"
+  },
+  {
+   "bead": "N34x-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "demo milestone enumeration was M0 to M5, which rejects NS-24 (M7); now M0 to M8; the ns-01 worked example uses nine optional keys, not eleven, so the all-eleven case is a synthetic demo"
+  },
+  {
+   "bead": "N41-08",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the request page was said to go to the owner at the M0 exit, but it is generated from BD-145 (an M1 dependency); now put as soon as BD-145 is committed and before the M1 exit review, R6 having announced it from M0"
+  },
+  {
+   "bead": "N41-17",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "dep N29a-09: the check reads frob.beadlog/1 lines (verdict, recorded_by, claim_ids, implement lines for rule 9); named in Out"
+  },
+  {
+   "bead": "N41-29",
+   "kinds": [
+    "scope",
+    "correct"
+   ],
+   "what": "the GATE-WS-08 record is written by N41-30's script, not here (two beads claimed it); exit code of a check-contracts finding is 2 per the xtask convention"
+  },
+  {
+   "bead": "N41-30",
+   "kinds": [
+    "correct"
+   ],
+   "what": "variant R2 planted a 61-second sleep, which the static demo.command-not-frob check refuses before rule 2 is reached; now a frob sim run with a horizon over 60 s; xtask finding exit 2"
+  },
+  {
+   "bead": "WP-07",
+   "kinds": [
+    "complete",
+    "placement"
+   ],
+   "what": "child list regenerated (two round-2 beads N14bp2-01, N41p2-02; one drifted title); added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-SKEL-11 (folding battery N14b-33, import rows in WP-08); scope names N13-34 as a component of GATE-MARROW-06 measured in WP-10"
+  },
+  {
+   "bead": "WP-08",
+   "kinds": [
+    "complete",
+    "placement",
+    "scope"
+   ],
+   "what": "stale child list (30 listed, 31 children: NEGp1-51 at M3 missing) regenerated; scope gains the M2 (glTF export, N14b-21) and M3 (NEGp1-51) bullets; added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-SKEL-11 import rows (N14b-24, N14b-34)"
+  },
+  {
+   "bead": "WP-09",
+   "kinds": [
+    "correct",
+    "complete",
+    "scope"
+   ],
+   "what": "Out of scope said all of GATE-SINEW-04 is WP-45's, but its referee rows are due at M1 (§43.4 register, BD-147) and measured by this package's BD-084, N15a-08, -09, -12; added the referee rows to gates and acceptance, batched rows stay WP-45's; M2 bullet for the upstream item FD-FSIM-21 with its interim posture N15b-03; added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-SINEW-10 (N15b-10 to -13)"
+  },
+  {
+   "bead": "WP-10",
+   "kinds": [
+    "complete",
+    "scope"
+   ],
+   "what": "M2 bullet for its two upstream items FD-FSIM-01 and NF-10 with their interim postures; added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-MARROW-06 referee rows (N13-35, N13-36; device rows N13-37 in WP-51)"
+  },
+  {
+   "bead": "WP-13",
+   "kinds": [
+    "complete"
+   ],
+   "what": "added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-CHRON-14 referee rows (N29b-23, N29bx-01; batch rows N29b-24 in WP-50)"
+  },
+  {
+   "bead": "WP-14",
+   "kinds": [
+    "placement",
+    "scope",
+    "title"
+   ],
+   "what": "stale child list regenerated (N00p1-13, N38bp1-01, -02, -03 missing; N38-CX and N38-KA listed at M1 but now M0; four drifted titles); scope names the M1 part of GATE-GAUNT-04 (N38bp1-02) and the M1 and M3 Reality-lane duties"
+  },
+  {
+   "bead": "WP-38",
+   "kinds": [
+    "placement",
+    "complete",
+    "scope"
+   ],
+   "what": "stale child list regenerated (NEGp1-53 at M4 and N41p2-01 missing); M4 bullet for the zoo rows waiting on tracked and hybrid laws; scope already said GATE-SKEL-09 and GATE-FOUNDRY-15 are carried here, but gates and acceptance omitted them: added"
+  },
+  {
+   "bead": "WP-39",
+   "kinds": [
+    "complete",
+    "scope"
+   ],
+   "what": "M2 bullet for its three upstream items FD-FSIM-04, -12, -13 with interim postures; added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-TRAC-12 referee rows (N18b-43, N18b-45; batch row N18b-44 in WP-16)"
+  },
+  {
+   "bead": "WP-40",
+   "kinds": [
+    "scope"
+   ],
+   "what": "M2 bullet omitted nine M2 children's content: added OPEN-SENS-1, OPEN-SENS-2, fork re-initialization N20ax-01, the C-19 label-count part and pilot, the race check with KILL-SCHED"
+  },
+  {
+   "bead": "WP-41",
+   "kinds": [
+    "complete",
+    "scope"
+   ],
+   "what": "no M2 bullet although 18 children are M2: added fixture 1 batch rows, fixture 2 with OPEN-ARENA-4 and -5, traction at wrench, exposure domains; added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-ARENA-10 and the fixture half of GATE-ARENA-14 (battery half and KILL-EXPODOMAIN stay WP-24's)"
+  },
+  {
+   "bead": "WP-42",
+   "kinds": [
+    "complete"
+   ],
+   "what": "added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-AUGUR-31 (N25e-28 to -30) and GATE-AUGUR-32 (N25e-31 to -33)"
+  },
+  {
+   "bead": "WP-68",
+   "kinds": [
+    "complete"
+   ],
+   "what": "added the gate(s) defined after the package table (§40.9) that its own children carry, to gates, acceptance (statement, milestone rows, carrying and measuring beads) and references: GATE-GROUND-11, the ninth structural alias (N30b-29, N30b-30), also named in the M5 bullet"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N29a-09",
+   "what": "its cause tags for blocked/unblocked lines (upstream, owner-decision, compute-envelope, dependency, defect) differ from the closed set the schedule gate N40-11 attributes on: sibling-primitive-missing, sibling-defect, owner-input, compute, own-work, other; adopt N40-11's set, and give a sibling-primitive-missing line fields for the sibling, the primitive and the upstream item (FD-...)"
+  },
+  {
+   "bead": "BD-145",
+   "what": "depend on N28c-27 (OPEN-ATEL-2) and take the strata from registries/strata.toml: under the default scheme A one stratum of 40 per class; the near/far parameter-box halves are the strata only under scheme E, otherwise a descriptive split reported by mean signed residual"
+  },
+  {
+   "bead": "N34-23",
+   "what": "depend on N34-27 and carry its step in scripts/e2e/format_registry.sh: plant a verb parameter naming an unregistered schema in a scratch copy of the registries, run cargo xtask check-contracts --json, assert exit 2 with fmt.param-without-row naming the verb and the schema; restore and assert a clean run (logged per STD-E2E)"
+  }
+ ],
+ "unchanged": 9,
+ "notes": "Non-epic beads: round-1 requests applied (BD-147, N00-09, N34x-02) and cross-bead contradictions resolved (cause tags, strata, GATE-WS-08 owner, demo schema, xtask exit 2). Epics: three stale child lists regenerated (plus two lists refreshed for round-2 beads of other slices), milestone bullets completed, and gates defined after the package table (§40.9) added to the ten epics whose children carry them. Settled apart from the three requests; epic child lists must be regenerated (N44-03) once all round-2 slices land."
+}

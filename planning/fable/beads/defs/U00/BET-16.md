@@ -1,14 +1,14 @@
 ---
 key: "BET-16"
-title: "Decide BET-16: inheritance (a child's policy fine-tuned from its parent needs a small fraction of from-scratch steps)"
+title: "Decide BET-16: inheritance (a child policy tuned from its parent needs a small share of from-scratch steps)"
 type: "task"
 priority: 1
 milestone: "M4"
 labels: ["m4", "cortex", "frob-learn", "frontier", "bet", "gate"]
 parent: "WP-61"
-deps: ["N00-28", "N00-07", "BD-322", "STD-E2E"]
-needs: ["§23.12: the edit classes of typed design edits (parameter edits; single-limb topology edits), the audit twin and the depth schedule for resets"]
-related: ["BET-15", "BET-17", "BD-058", "BD-113", "BD-320", "NS-19", "N00-12"]
+deps: ["BD-322", "N00-28", "N23a-30", "N38a-09", "STD-E2E"]
+needs: []
+related: ["BET-17", "N00-12", "N40-31", "NS-19"]
 gates: ["GATE-CORTEX-13", "KILL-INHERIT"]
 plan_refs: ["§4 (BET-16)", "§40.5", "§0.8 (H-21)", "§2.4 (lever 2)", "§23.23"]
 ---
@@ -29,7 +29,11 @@ morphological diversity.
 ## Scope
 
 In: pre-registration, the M4 reading per edit class, verdict and decision record. Out: the mapping table, the
-training runs, the audit twin.
+training runs, the audit twin; the kill-gate decision KILL-INHERIT (N23a-30, a dependency: it applies the
+trigger, writes `docs/adr/ADR-KILL-INHERIT-M4.md`, and switches the default initialization of children
+and the behaviour of `train.inherit`). This bead reads that record, evaluates the bet's three falsifier
+clauses and writes the bet's verdict in `docs/adr/bet-16-m4.md`, which cites the kill record and does not
+repeat or replace it.
 
 ## Technical approach
 
@@ -53,14 +57,24 @@ training runs, the audit twin.
    or from scratch; the mapping table is kept for loading policies. Between the bet's 20% and the kill gate's
    60% the bet is falsified without the kill gate firing: inheritance is offered for parameter edits only, with
    resets on a measured regression and a depth schedule where no audit twin exists, and its measured cost is
-   printed; topology edits start from the family policy or from scratch.
-5. **Bound on the gain.** Whatever the result, the gain is bounded by the share of designs that are trained at
+   printed; topology edits start from the family policy or from scratch. The terms on which it is offered in
+   that state are the ones N23a-30 sets for "not fired, gate not passed": `train.inherit` runs with the label
+   `experimental`, a fresh arm is trained beside it, and no campaign uses it by default.
+5. **Precondition: the pilot.** The Frontier pilot (N23b-20; reached through N23a-30) must be on record with its
+   falsifier not met before the 12-pair experiment is funded: three base robots, 10 parameter edits of 10 to 30%
+   and 5 single-limb edits, three arms (scratch, from parent, from prior) with three seeds, one chain of 10
+   edits, about 70 GPU-hours; falsifier: median parameter-edit cost above 60% of steps, or the inherited arm
+   more than 5% worse in over 20% of edits (the same thresholds as KILL-INHERIT). If the 12-pair experiment is
+   not run (the pilot's falsifier holds, or its compute is not approved), N23a-30 decides on the pilot's record
+   and labels the decision provisional; the bet's verdict then rests on that record and carries the same
+   `provisional` label: `Falsified` if the pilot's falsifier held, `Untested` otherwise.
+6. **Bound on the gain.** Whatever the result, the gain is bounded by the share of designs that are trained at
    all; it is counted once, under "train few", and never again as "reuse".
-6. **Downstream if falsified.** Shortlisted designs are trained from the class prior or from scratch; the
+7. **Downstream if falsified.** Shortlisted designs are trained from the class prior or from scratch; the
    ceilings are recomputed with the measured cost; the second half of the scenario "a family policy walks an
    unseen design" (inheritance reaches the target in 12% of the steps, an illustrative figure) is not
    demonstrated.
-7. **Procedure.** Register the 12 pairs (the 4 blind ones sealed), the return targets, the control's stopping
+8. **Procedure.** Register the 12 pairs (the 4 blind ones sealed), the return targets, the control's stopping
    rule and the chain protocol before any run; read at M4 exit; `docs/adr/bet-16-m4.md`.
 
 ## Acceptance criteria
@@ -69,24 +83,32 @@ training runs, the audit twin.
 - [ ] Per pair: steps for the inherited arm, the raw-checkpoint arm and the early-stopped control; the median
       step fraction; the share of edits where the child is more than 5% worse.
 - [ ] The ten-edit chain result with the audit twin's return, under both reset controls.
-- [ ] Verdict and the KILL-INHERIT decision recorded as an ADR; topology-edit figures reported.
+- [ ] The verdict recorded as an ADR that cites the KILL-INHERIT decision, which is on record as the ADR of its
+      own bead (N23a-30); topology-edit figures reported.
 
 ## Test plan
 
 ### Unit tests
 `bets.rs`: `bet16_median_0_14_holds`; `bet16_median_0_27_falsifies_a_without_kill`;
-`bet16_median_0_64_fires_kill_inherit`; `bet16_no_better_than_raw_checkpoint_falsifies_b`;
-`bet16_chain_minus_7_percent_falsifies_c`; `bet16_worse_in_3_of_12_fires_kill` (25% > 20%).
+`bet16_reads_kill_inherit_fired_at_0_64` (N23a-30's record: fired; the bet carries its hash and names the
+fallback; the trigger itself is tested in N23a-30's truth table); `bet16_no_better_than_raw_checkpoint_falsifies_b`;
+`bet16_chain_minus_7_percent_falsifies_c`; `bet16_worse_in_3_of_12_with_kill_record_falsifies` (25% > 20%; read
+from the kill record); `bet16_pilot_only_verdict_is_provisional`.
 
 ### End-to-end script and logging
 `scripts/e2e/bet_16_decide.sh` recomputes the per-pair fractions from re-evaluation records (never from training
-curves), the median, the chain comparison and the verdict; under a fired kill gate it checks that `frob train
-inherit` returns a refusal naming the fallback. Logged per STD-E2E: pair, edit class, steps per arm, fraction,
+curves), the median and the chain comparison, reads the verdict of BET-16 from the bet register's report
+(`cargo run -p frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule)
+and checks the ADR against both; under a fired kill gate it checks that `frob train inherit --child <child>
+--donor <policy> --dry-run --key b16-probe --json` returns exit 5 with FROB-REF-724 naming
+`docs/adr/ADR-KILL-INHERIT-M4.md` and the fallback (the call carries a key: `train.inherit` is a run verb, and
+without one it is `FROB-REF-805`, exit 3). Logged per STD-E2E, newline-delimited JSON at
+`target/e2e-logs/bet_16_decide/<utc>.ndjson` with a transcript: pair, edit class, steps per arm, fraction,
 child return against control, chain returns per generation; `summary` naming GATE-CORTEX-13 and KILL-INHERIT.
 
 ### Known answers and negative controls
 Thresholds 20%, 5%, 60%. Negative controls: a control run to completion instead of stopped at 95% (rejected);
-a blind pair unsealed before its run; shuffled-label and zero-weight policies failing the return target.
+a blind pair unsealed before its run; zero-weight and random policies and the wrong-donor control of BD-322 failing the return target.
 
 ## Considerations
 

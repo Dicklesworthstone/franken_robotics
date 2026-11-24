@@ -1,6 +1,6 @@
 # Coverage of drafting unit UEG: Appendix E (worked cards) and Appendix G (reference robots, scene assets, licences, hazard lists, archetypes)
 
-Bead files in this directory: 109 (0 seed beads; 41 card beads `GB-01` to `GB-41`; 19 reference-robot beads `ROBOT-<name>`; 18 archetype beads `ZOO-<name>`; 31 new beads `NEG-01` to `NEG-31`). By milestone: M0 8, M1 41, M2 11, M3 37, M4 7, M5 5. Sizes: 84 lines (NEG-07) to 172 lines (NEG-28), 12,063 lines in all.
+Bead files in this directory: 110 (0 seed beads; 41 card beads `GB-01` to `GB-41`; 19 reference-robot beads `ROBOT-<name>`; 18 archetype beads `ZOO-<name>`; 32 new beads `NEG-01` to `NEG-32`, of which NEG-32 was added at integration and is not in the counts that follow). By milestone: M0 8, M1 41, M2 11, M3 37, M4 7, M5 5. Sizes: 84 lines (NEG-07) to 172 lines (NEG-28), 12,063 lines in all.
 
 The unit owns no seed bead. Every `deps`, `parent` and `related` key of the 109 files resolves to a bead in `INDEX.tsv` (own keys, seed keys, reserved keys, and new beads of other units named by their real key). No bead of this unit lies on a dependency cycle, no dependency points to a later milestone, and no bead of another unit depends on a bead of this unit.
 
@@ -25,7 +25,7 @@ Checks run over the whole directory when this file was written:
 | E.6 | Substrate and performance (GB-40 and GB-41) | GB-40, GB-41; NEG-11 (the capacities GB-41 uses) |
 | E.7 | Discrepancies found while recomputing | NEG-03 (the register `registries/cards/discrepancies.toml`, the list of enumerations that reproduced, the stale-value scan), NEG-04 to NEG-10 (rows 1 to 7), NEG-11 to NEG-13 (the three inconsistencies between chapters), NEG-14 (the two corrections to carried cards) |
 | Appendix G, preamble | Licences are FACT from one research pass, re-checked at admission; an asset whose licence was not read stays outside the default pipeline | NEG-15 (licence check, admitted list, `not-read` handling, the mark that must be `P` before a gate cites an asset), NEG-16 (end-to-end script), NEG-21 and NEG-27 (the not-verified and not-read rows) |
-| G.1 | Reference robots | NEG-15 (layout `assets/robots/<name>/`, manifest `frob.robot.asset/1`, validation, index and archetype mapping, the never-Reality rule), NEG-16 (script), the nineteen `ROBOT-…` beads (table a.3). The closing sentence (twelve archetypes without a reference model use their own template as baseline; OPEN-ARENA-2 tracks the hexapod): the count is in NEG-15, each of the twelve affected `ZOO-…` beads states that no reference robot is on file, and ZOO-hexapod-radial names the open question; the baseline rule itself is the scorecard bead's (N24a-22, unit U24a) and the open question's decision bead is N24c-16 (unit U24c) |
+| G.1 | Reference robots | NEG-15 (layout `assets/robots/<name>/`, manifest `frob.robot.asset/1`, validation, index and archetype mapping, the never-Reality rule), NEG-16 (script), the nineteen `ROBOT-…` beads (table a.3), NEG-32 (the last row of the table: a sibling catalogue builder lowered through the airlock to a design term, the `fsim-catalog` format of `design.import`, used by ROBOT-fsim-g1 and ROBOT-iiwa7). The closing sentence (twelve archetypes without a reference model use their own template as baseline; OPEN-ARENA-2 tracks the hexapod): the count is in NEG-15, each of the twelve affected `ZOO-…` beads states that no reference robot is on file, and ZOO-hexapod-radial names the open question; the baseline rule itself is the scorecard bead's (N24a-22, unit U24a) and the open question's decision bead is N24c-16 (unit U24c) |
 | G.2 | Scene assets | NEG-17 to NEG-26 (one bead per source, rows 1 to 10), NEG-27 (rows 11 and 12 and the correction: interior generation is not claimed as new), NEG-16 (scene-asset loop of the script). The manifest entry that travels with every pack, the pack-time refusal FROB-REF-310 and the starter-pack rule are mechanisms of N19b-02 (unit U19b); each bead here depends on it and tests its own row against it |
 | G.3 | Hazard lists, consolidated | NEG-28 (the 59 rows as `registries/hazards/INDEX.toml`, the consolidation check against the seven per-archetype files, the all-`assumed` invariant, `dimensions_assumed`, FROB-REF-312, OPEN-HAB-1, OPEN-HAB-4, the Frontier-row fallback, the counts), NEG-29 (the cover map `registries/hazards/coverage.toml`, the three-part check that every hazard is covered by a requirement, a shield or a refusal, the uncovered-hazard report per battery, the script `hazard_covers.sh`) |
 | G.4 | The eighteen robot archetypes | NEG-30 (the `zoo/` directory, `frob.zoo.expect/1`, the generic conformance test, the exactly-eighteen check), NEG-31 (end-to-end script), the eighteen `ZOO-…` beads (table a.6). The differential-drive rule (closed-form chord, never the sibling's planar-drive routine, as the known answer) is in ZOO-diff-drive. The closing paragraph (six variants outside the eighteen, behind feature flags and off the critical path) is carried in full by N14b-05 (unit U14b) |
@@ -61,7 +61,7 @@ Every card bead adds `registries/cards/GB-nn.toml`, the test `gb_nn` (reference 
 | GB-23 | a 30 Hz policy against 400 Hz physics: Q = 1,200, steps 0, 14, 27, 40, 600 decisions | `frob-sense` | M1 | WP-40 | BD-078 | KA-201, KA-471 | GATE-SENS-04, GATE-SENS-05 | E7-6 (NEG-09) |
 | GB-24 | how bad the sensor may be when the first move is a probe: ε < (U + ½)/4 | `frob-mission`, `frob-sense` | M1 | WP-42 | N10b-08, BD-129 | KA-501, KA-637, KA-656 | GATE-AUGUR-03, GATE-SENS-13 | |
 | GB-25 | why regrouping a sum is a different kernel: class E is bit-exact, class R is not | `frob-kir` | M0 | WP-05 | BD-018, SPEC-C-14 | KA-087, KA-212, KA-705 | none | |
-| GB-26 | can the stop absorb everything that can reach it: 1.49 J against 2.00 J | `frob-shield` | M4 | WP-65 | BD-337, N22b-10, N22c-10 | KA-153, KA-568 | GATE-SHIELD-01, KILL-ENERGY | E7-C (NEG-13) |
+| GB-26 | can the stop absorb everything that can reach it: 1.49 J against 2.00 J | `frob-shield` | M4 | WP-65 | BD-337, N22b-10, N22b-09 | KA-153, KA-568 | GATE-SHIELD-01, KILL-ENERGY | E7-C (NEG-13) |
 | GB-27 | what an impact does to a perturbation: the saltation matrix, rimless-wheel multiplier ½ | `frob-gait` | M4 | WP-64 | N22a-33, BD-333, N10b-03 | KA-093 | GATE-GAIT-01, GATE-GAIT-02 | |
 | GB-28 | after how many designs a family policy repays its pretraining: N > P/(s·(1 − f)) | `frob-learn` | M4 | WP-61 | BD-320 | KA-589 | GATE-CORTEX-11, KILL-FAMILY | |
 | GB-29 | what a retry costs in the qualification lane: α_i = α/[i·(i + 1)] | `frob-arena` | M3 | WP-54 | BD-259, N24b-15 | KA-621 | GATE-QUAL-01 | |
@@ -260,7 +260,7 @@ Kill gates named in a card's Flip or in a bead's Considerations as the fallback,
 | KILL-BUCKET | GB-17 | N21b-19, BD-171, BD-186, BD-224 |
 | KILL-DR | GB-15 | N16b-10, BD-264, BD-319, N29b-07 |
 | KILL-DRESSING | NEG-18 (NEG-19 and NEG-20 depend on the same dressing pilot, N19a-40) | N19a-41, BD-399, BD-412, BD-421 |
-| KILL-ENERGY | GB-26 | N22b-16, N22c-18, BD-337, BD-378 |
+| KILL-ENERGY | GB-26 | N22b-16, BD-337, BD-378 |
 | KILL-EQUIV | GB-02 | BD-326, N23a-33, BD-378, BET-07 |
 | KILL-FAMILY | GB-28 | N23a-26, BD-320, BD-378, BET-15 |
 | KILL-FAMILYLANE | GB-18 | N17a-14, BD-356, N17a-11, N17a-13 |
@@ -284,7 +284,7 @@ Open questions named with their fail-closed defaults, none decided here:
 | OPEN-HAB-1 (cited norms for hazard dimensions) | NEG-28 | N19c-30, N26b-19 |
 | OPEN-HAB-4 (retrofit prices and legality constraints) | NEG-28 | N19b-43 |
 | OPEN-NEMESIS-3 | GB-32 | N26b-21 |
-| OPEN-SPARK-3 | NEG-11 | N21b-18, N21c-36 |
+| OPEN-SPARK-3 | NEG-11 | N21b-18 |
 | OPEN-TRAC-2 | GB-20 | N18a-27 |
 | OPEN-TRAC-3 | GB-21 | N18b-36 |
 
@@ -323,7 +323,7 @@ Further points for the lead:
 - Content of these appendices that is carried by beads of other units, which this unit cites and does not duplicate: the six variants outside the eighteen archetypes (N14b-05, unit U14b); the licence manifest, the asset-source register, the pack-time refusal FROB-REF-310 and the starter-pack rule (N19b-02, unit U19b); the seven per-archetype hazard registry files and their verb (BD-227 and N19a-31 to N19a-37), provenance promotion and the FROB-REF-312 path (N19a-39), the incidence export (N19a-38); the baseline-is-the-template rule (N24a-22) and OPEN-ARENA-2 (N24c-16); OPEN-HAB-1 (N19c-30) and OPEN-HAB-4 (N19b-43). The lead should confirm that those beads keep them.
 - Repository layout: the unit adds `registries/cards/GB-nn.toml`, `registries/cards/discrepancies.toml`, `zoo/` (with `INDEX.toml`), `assets/robots/` (with `INDEX.toml`), `registries/hazards/INDEX.toml` and `registries/hazards/coverage.toml`. The layout table of the workspace chapter lists `registries/ … cards/` and `assets/` and has no `zoo/`; the workspace unit (U34) owns that table.
 - Known-answer numbers: Appendix M has no rows for these appendices. The unit's new known answers are keyed by their file and row (`GB-nn/<output>`, `zoo/<name>/<row>`, `E7-n`); if the known-answer registry of the verification chapter wants numbers for them, the list is in (c).
-- The verb form for building a design from a sibling builder (`frob design new --from-sibling <builder>`) is an assumption of NEG-16; the 54 verb names the unit uses are in the verb registry, the option is not checked there.
+- The verb form for building a design from a sibling builder was an assumption of NEG-16 with no carrier. Settled at integration: it is the `fsim-catalog` format of `design.import`, carried by NEG-32, which adds the format value to the registry row of that verb (VERBS-design, unit UJL). The 54 verb names the unit uses are in the verb registry.
 - `scripts/e2e/zoo_goldens.sh` (NEG-31) is driven by the zoo's expectation files; the archetype-catalogue script of unit U14b walks the template catalogue and the standing rows. They share GATE-SKEL-03 and should stay two scripts with one gate record (BD-246).
 
 ## (e) Contradictions and things that could not be turned into work as written

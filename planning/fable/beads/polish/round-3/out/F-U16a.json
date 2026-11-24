@@ -1,0 +1,202 @@
+{
+ "round": 3,
+ "slice": "F-U16a",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "BD-081",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "S24 request applied: restore-set row 12, the interval-extremum folds (`dyn.extremum-folds`, frob-dyn, N24a-44), registered in the world manifest; its inventory case is added to txn::restore_inventory by N24a-44, which depends on this bead (convention 7), stated in the acceptance line and the unit test. H-verbs-6 request applied: defined the three chaos-build-only sim.run inputs (`--chaos faults=<n>,seed=<s>,point=<p>` with point t4|t5-t6|checkpoint|restore|any and a `chaos` output block; `--chaos-plan <file>`, schema frob.chaos-plan/1, entries {world, intervals, fail_attempts_below}; `--numerical-plan-floor <k>`, k 0..N_retry, applied to the plan's intervals in the worlds it does not force, as N16c-02 step 3 needs), manifest and StepPlanId, `chaos: true`, 802 in release/conformance builds; unit test txn::chaos_inputs. The seed done-condition no longer writes registries/gates.toml (convention 9): KA-342 is this bead's G4 entry (`cargo test -p frob-conformance --test g4_chaos -- kinesis::ka342`, controls under gauntlet-mutations), recorded from its receipt by N16a-10's recording session. Added deps BD-025 (tier targets) and N16-KA (the row; moved from related); N24a-44 to related. E2E commands carry --key (convention 5)."
+  },
+  {
+   "bead": "BD-082",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The ballistic-drop sim.run command carries `--key kin-txn-ballistic-drop-1` (convention 5; N16a-10's key scheme)."
+  },
+  {
+   "bead": "BD-089",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Item 7 said 'one row per robot in the gate registry', which the register schema (one gate record, parts per milestone) does not have: the g2_parity receipt carries the per-robot lines and GATE-KIN-02 is recorded once from it with record_gate by a non-implementing session (convention 9). The e2e runs the row through `e2e_tier g2_parity GATE-KIN-02/<robot>` so the receipt hash is logged; corrected 'frob-conformance has no binary' (it has declared operator binaries, none of which runs a tier)."
+  },
+  {
+   "bead": "BD-159",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "--key on the e2e sim.run commands and on the acceptance command (convention 5); dropped the stale '(DESIGN flag spelling)' for --on-overflow, now N16b-25's VERBS-sim row."
+  },
+  {
+   "bead": "BD-385",
+   "kinds": [
+    "complete"
+   ],
+   "what": "H-owners-1 request applied: declares `[[bin]] name = \"frob-pilot\", path = \"src/bin/frob_pilot.rs\"` (autobins off, BD-025 names BD-385 as owner) with its CONTRACT.md binary-table row (reads pilots.toml and the pilot fixtures, writes pilot records and receipts, never a gate row); whichever of BD-385 and N16a-21 lands first writes both naming BD-385; acceptance line for binaries_declared."
+  },
+  {
+   "bead": "N16a-02",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "--key on the contributed admission command (convention 5)."
+  },
+  {
+   "bead": "N16a-05",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "S59 and H-verbs-6 requests applied: the e2e uses `--adjudicate strict-fallback` (was `--adjudicate strict (DESIGN flag name)`). Added a Surface paragraph for the input it owns (`--adjudicate referee-only|patch-reduction|strict-fallback`; `strict` is 802 naming strict-fallback; defaults as in the routing item), with the identity stated as the manifest (the policy selects the answering step and shapes none; each result carries the answering step's StepPlanId); unit test referee::adjudicate_values; --key on the e2e command."
+  },
+  {
+   "bead": "N16a-07",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "--key on the tied-sliders sim.run command (convention 5)."
+  },
+  {
+   "bead": "N16a-09",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "H-verbs-6 request confirmed and written down: `--txn l-max=<L>,e-max=<E>,retries=<N>` is admitted only under referee and strict, 802 with pointer /txn under lockstep, omitted members keep defaults, values enter StepPlanId, 220/221 as limits bind; unit test open5::txn_input_admission; dropped 'DESIGN flag spelling' now that the row exists. The acceptance line in which this bead 'notes the constants' in registries/gates.toml (only record_gate writes it, convention 9) now puts the constants in the ADR and in the receipts' StepPlanId."
+  },
+  {
+   "bead": "N16a-10",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "H-verbs-6 request applied: step 14 uses `--adjudicate strict-fallback`; step 7 notes --chaos is chaos-build-only (BD-081) and asserts a release build answers 802. Steps 8 and 15 used `--fields`, which telemetry.query does not have: now `--stream solver --channels ...`. Step 17 wrote the gate registry and the bead log itself (self-recording, convention 9): now `gate-receipts`, running N16c-03's kinesis::ka338..ka341 rows (g1_known_answers, g5_determinism) and BD-081's ka342 (g4_chaos) through e2e_tier with --mutations, listing the receipts; the M1 part is recorded with record_gate by a non-implementing session. Scope line follows. Added dep N16c-03 (owner of the KA-338..341 rows and the packet-queue control; M1, no cycle)."
+  },
+  {
+   "bead": "N16a-14",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "H-verbs-6 request applied: item 9 defines `--capacity contacts=<C>[,rows=<R>]` (also `rows=<R>` alone, the spelling VERBS-sim's rename table uses): batch-cpu lockstep/strict and device tiers, C positive, R a positive multiple of 8, omitted R = registry R at the registered C else default_rows(C, actuated), new shape class and StepPlanId, `capacity_source` in the disclosure block, 802 on the referee (its cap is a limit-register entry); unit test cap::override_option. Scope said sim.estimate 'inputs' for what are outputs."
+  },
+  {
+   "bead": "N16a-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "H-verbs-2 request applied: `--run-seed 7` (not --seed) and the design-less battery form, with --key; dropped 'flag spellings are DESIGN'. `frob sim estimate --class` is not an input of sim.estimate: now `frob sim estimate <the class's reference design> --tier <tier>`. The H-verbs-6 request (no --battery on sim.run) was already met: the bead uses eval.run."
+  },
+  {
+   "bead": "N16a-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Every sim.run and sim.replay call carries --key (one sentence before the steps, N16a-10's form). Steps 12 and 14 used `--fields`, which telemetry.query does not have: now `--stream kinematics|runtime --channels ...`. Step 13 ran 'the conformance binary': now N16a-17's rows through `e2e_tier g2_parity GATE-KIN-03 --mutations`. Step 17's replay lacked `--run` (sim.replay takes --run/--world): fixed, on the recorded backend. Step 19 wrote the bead log itself (convention 9): now `gate-receipts` (g5_determinism GATE-KIN-05, g4_chaos GATE-KIN-07 via e2e_tier, receipts listed), parts recorded with record_gate --part M2 by a non-implementing session, the battery-wide rate by N16b-03. The consideration calling --on-overflow, --capacity, --jacobian, --init unregistered DESIGN spellings now cites their VERBS-sim rows. Scope line follows."
+  },
+  {
+   "bead": "N16a-19",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Step 3's `--fields state_digest` is now `--stream provenance --channels state_digest`. Step 9 wrote the bead log itself (convention 9): now runs KA-347's G5 row via `e2e_tier g5_determinism GATE-KIN-06 --mutations`, recorded with record_gate --part M2 by a non-implementing session. VERBS-sim names this bead the owner of `sim.run --select <i>`, which the bead called an unregistered DESIGN spelling: it now defines it (only with --designs, 802 outside the file, manifest) with unit tests select::replicates_variant, requires_designs, index_outside_file; scope says so."
+  },
+  {
+   "bead": "N16a-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 12 wrote the per-class rows to the bead log itself (convention 9): now runs BD-213's Gauntlet entry `e2e_tier g2_parity GATE-FID-03 --mutations` and logs the receipt; recorded with record_gate by a non-implementing session; scope and acceptance follow. The eval.run options --adjudicate and --record coverage are now on VERBS-eval's row, no longer 'DESIGN spellings'."
+  },
+  {
+   "bead": "N16a-21",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Follows the BD-385 request: the frob-pilot binary is BD-385's and exists only by its [[bin]] declaration and CONTRACT.md row (autobins off, BD-025), which N16a-21 writes naming BD-385 if it lands first."
+  },
+  {
+   "bead": "N16a-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Kill-gate decision entry lacked N40-03's `receipts` field (required, at least one for not-fired; convention 10): now `decision = { outcome, adr, date, session, receipts }` in the approach and the acceptance. `frob evidence trace <receipt>` passed a receipt where evidence.trace takes a claim identifier `clm:<hex>`: now traces each receipt's claim id."
+  },
+  {
+   "bead": "N16a-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Same two fixes as N16a-22: N40-03's `receipts` field in the KILL-TREEOP decision entry (approach and acceptance), and evidence.trace called on the receipts' claim identifiers instead of on a receipt."
+  },
+  {
+   "bead": "N16ax-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob telemetry query --events contact --fields ...` used options telemetry.query does not have: now `<run> --stream contact --channels n_active,sig_set,sig_mode` (item 6 and the e2e). The e2e's sim.run calls carry --key; telemetry divergence names its two runs."
+  },
+  {
+   "bead": "BD-213",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "The seed done-condition 'GATE-FID-03 is recorded' had no recording route: new item 7 makes it the Gauntlet's parity entry `cargo test -p frob-conformance --test g2_parity -- GATE-FID-03` (as BD-212 does for GATE-FID-01): it submits the campaign jobs, reads the rows back through fidelity.coverage, checks partition and adjudicator per class and writes a receipt with one line per control; recorded with record_gate by a non-implementing session. --adjudicate, --record coverage and fidelity.coverage --battery are now on their registry rows, no longer 'requested'."
+  },
+  {
+   "bead": "BD-384",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Seed done-condition (c) put the kill inputs 'on record in the gate register': now hash-named receipts (performance harness for the cost ratios, Gauntlet for the momentum row, its part recorded with record_gate by a non-implementing session; the bead writes no gate row, convention 9). --integrator, --init and --step are now VERBS-sim rows (owners named), no longer 'requested'."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "Identity column corrections, each against the plan: (a) `--law`: StepPlanId, not ModelId (plan §16.6: 'The law is part of the StepPlanId'; the step-plan descriptor hashes the contact law; N16a-03 agrees). (b) `--solve-queues`: the digest-neutral execution options (exec_options_digest), outside StepPlanId (§16.19: queue capacities are the step plan's execution options and change no digest; N16a-03 item 3). (c) `--adjudicate`: manifest, not StepPlanId; the policy selects which step answers and shapes none, so a referee-only and a strict-fallback run on an island the referee completes are the same step; each result carries the answering step's StepPlanId (N16a-05 now says so). (d) Chaos-build-only inputs: BD-081 now defines `--chaos`, `--chaos-plan` and `--numerical-plan-floor` (domains and 802 rules); the row can drop 'requested of BD-081'. (e) `--capacity`: N16a-14 also admits `rows=<R>` alone (the form the rename table already cites) and refuses the input on the referee tier (802)."
+  },
+  {
+   "bead": "BD-083",
+   "what": "Step T3's parenthetical list of the restore set omits row 12 of BD-081 (the interval-extremum folds, dyn.extremum-folds, N24a-44); add it, or say 'the whole restore set of BD-081' without the list."
+  },
+  {
+   "bead": "N16a-17",
+   "what": "Its e2e runs `cargo run -p frob-conformance --bin frob-parity -- kin03 ...`: no `frob-parity` binary is declared (BD-025: autobins off, and no binary runs a tier in place of cargo test). Run the rows as the g2_parity entry (`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity -- GATE-KIN-03/<robot>/<row>`, through e2e_tier so the receipt hash is logged; N16a-18 step 13 now calls `e2e_tier g2_parity GATE-KIN-03 --mutations`), and make item 7's 'GATE-KIN-03 is recorded PASS' a record_gate call from the receipt by a session that did not implement the work (convention 9)."
+  },
+  {
+   "bead": "N18a-37",
+   "what": "Step 7 logs e2e_skip until sim.run lists a chaos-plan option: BD-081 now defines `--chaos-plan <file>` (frob.chaos-plan/1, entries {world, intervals, fail_attempts_below}) and VERBS-sim lists it, so the forced retry can run in the chaos build with fail_attempts_below = 1 on the chosen intervals (add the dependency on BD-081 if missing) and the skip can go."
+  },
+  {
+   "bead": "N16c-02",
+   "what": "Its sim.run commands (steps 2, 3, 7) carry no --key (convention 5; a run verb without one is refused 805 from M1). Its use of --chaos-plan and --numerical-plan-floor matches the definitions BD-081 now gives (the floor applies to the plan's intervals in the worlds the plan does not force)."
+  }
+ ],
+ "unchanged": 10,
+ "notes": "All 31 beads read in full. 21 changed, 10 left unchanged (BD-088, BD-150, N16a-01, N16a-03, N16a-04, N16a-08, N16a-11, N16a-13, N16a-16, N16a-24). Every request addressed to the slice was applied after checking it; the N16a-15 request to drop --battery on sim.run was already met (the bead uses eval.run). Slice-wide pattern fixed: scripts that wrote the gate registry or the bead log now produce tier receipts through e2e_tier and leave recording to record_gate (convention 9); telemetry.query calls use --stream/--channels (no --fields). N16a-05 states the --adjudicate identity as the manifest, against VERBS-sim's StepPlanId column, with the reason in the VERBS-sim request. Procedural: early in the session the read-only helper tools/graph_check.py (not written in this session) was run to check new dependency edges for cycles (BD-081 -> BD-025 and N16-KA; N16a-10 -> N16c-03: no cycle); no other foreign script was run and nothing outside the slice files and this result file was written."
+}

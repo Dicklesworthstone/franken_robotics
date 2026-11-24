@@ -6,9 +6,9 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "autopsy", "frob-conformance", "frob-autopsy", "solid", "registry", "test"]
 parent: "WP-56"
-deps: ["BD-025", "STD-TEST"]
-needs: ["§38.11: the negative-control registry and the counterexample catalogue seeds in `frob-conformance` (seed bead BD-146 holds the catalogue's first rows)", "Appendix N: catalogue numbers for the two late cases listed in the second table (the unit that owns the catalogue)", "§27.7, §27.8, §27.10: the control tests inside the coalition, re-run and first-divergence beads (seed beads BD-281, BD-283, BD-206) that the rows below bind beside this unit's tests"]
-related: ["N27-REF", "N27-KA", "N27b-03", "N27b-05", "N27b-06", "N27b-14", "N27b-15", "N27b-20", "N27b-21", "N27b-23", "BD-279", "BD-280", "BD-281", "BD-283", "BD-206", "SPEC-C-29"]
+deps: ["BD-025", "N38a-40", "N38b-05", "STD-TEST"]
+needs: []
+related: ["N27-KA", "N27-REF", "N27a-02", "N27a-07", "N27a-09", "N27a-11", "N27a-12", "N27a-13", "N27a-14", "N27a-16", "N27a-18", "N27b-03", "N27b-05", "N27b-06", "N27b-08", "N27b-09", "N27b-14", "N27b-15", "N27b-20", "N27b-21", "N27b-23", "SPEC-C-29"]
 gates: []
 plan_refs: ["Appendix N N.24", "§27.5", "§27.7", "§27.8", "§27.10", "§27.13", "§27.19", "§10 C-29", "§0.7", "§38.11"]
 ---
@@ -34,16 +34,49 @@ binds each to the control test that realizes it.
 
 ## Scope
 
-In: the six rows in `registries/counterexamples/autopsy.toml`; the two late rows under provisional tags
-`late-01` and `late-02` until numbers are assigned; `equivalent_to` links; the binding of each row to at least
-one control test with the planted shortcut; the registry check.
-Out: the control tests' implementations (in the beads named); counterexamples of other subsystems that Autopsy's
-tests also use (listed in the third table for reference only).
+In: the six Autopsy entries and the two late entries in the suite's one catalogue,
+`crates/frob-conformance/registry/counterexamples.toml`, in the catalogue schema of N38b-05 (a per-chapter file
+such as `registries/counterexamples/autopsy.toml` would be a second copy, which the catalogue lint refuses); the
+request for a block of two `cx` numbers for the late entries in the allocation ledger of N38a-40; the
+construction-level links; the naming of each entry's catching bead and control test, with its plant; the
+registry check.
+Out: the control tests' implementations (in the beads named); the `controls.toml` records and their NC numbers,
+which N38b-05's seeding tool writes from these entries (this bead writes entries, never control records);
+counterexamples of other subsystems that Autopsy's tests also use (listed in the third table for reference
+only).
 
 ## Technical approach
 
-Row schema: `id`, `shortcut`, `case` (with its numbers), `rule`, `defined_in`, `control` (bead and test name),
-`mutant` (the planted shortcut the control must catch), `equivalent_to`.
+Entry fields, exactly N38b-05's catalogue record (the loader rejects any other key): `id`, `shortcut`, `case`
+(with its numbers), `numeric`, `rule`, `rule_ids`, `defined_in`, `same_as`, `label`, `control_kind`, `plant`,
+and `slug` for the late entries. The bead-and-test binding of the tables below is carried by `plant` (the build
+flag or fixture request that puts the shortcut into the real component) and by tagging each control test with the
+entry's identifier (`#[cx("CX-298")]`), which is how the negative-control registry finds the test that must turn
+red.
+
+Field values per entry (DESIGN where the catalogue does not state them):
+
+| Entry | `numeric` | `rule_ids` | `control_kind` | `plant` |
+|---|---|---|---|---|
+| CX-296 | true | GATE-AUTOPSY-04, ADR-AUTOPSY-05, C-29 | `mutation` | build flag `autopsy-label-from-shapley` (labels taken from the largest Shapley value) |
+| CX-297 | true | GATE-AUTOPSY-04, PO-AUTOPSY-01, C-29 | `mutation` | build flag `autopsy-repair-monotone` (a repair search that assumes adding an intervention never loses a rescue) |
+| CX-298 | true | GATE-AUTOPSY-06, INV-AUTOPSY-03, FROB-REF-581, C-29 | `planted-input` | the thermal fixture's request `--do 'model.joint[m].gear_ratio := 16'` at the fork 1 s before the trip, which must be refused, and the build flag `autopsy-forced-fork-answers` for the mutant |
+| CX-299 | true | GATE-AUTOPSY-07, PO-AUTOPSY-02 | `mutation` | build flag `divergence-pointwise-midpoint` |
+| CX-300 | true | GATE-AUTOPSY-05, INV-AUTOPSY-05, C-29 | `planted-world` | the doubling-map fixture at forty iterates, with the build flag `autopsy-no-placebo` for the mutant |
+| CX-301 | false | FROB-REF-880, GATE-SAFE-08 | `planted-input` | the request "cite this attribution as established", which must be refused with FROB-REF-880 (the concrete planted defect N38b-05 asks the owning chapter to supply for this word-only entry) |
+| late-01 | true | GATE-AUTOPSY-09 | `planted-world` | the pendulum fixture released 5 × 10⁻⁸ rad from upright, with the build flag `lane-admit-reads-1e12` |
+| late-02 | true | GATE-AUTOPSY-05 | `mutation` | build flag `perturb-fixed-size` |
+
+`defined_in` is §27.7, §27.7, §27.8, §27.10, §27.5, §27.13, §27.19 and §27.5 in table order; `label` is DESIGN for
+every entry (each case is derived in this program, none is imported); `same_as` is empty for all eight (below).
+
+**Construction-level links.** CX-296, CX-298 and CX-300 restate, with Autopsy's numbers, the construction's
+entries CX-069, CX-071 and CX-070. DESIGN: they are not linked by `same_as`. The catalogue marks thirteen
+`same_as` pairs and N38b-05's loader asserts that count; these three pairs are stated in different words and with
+different detail (CX-071 has no numbers), protect different rules, and so are separate entries with separate
+controls, as the catalogue's rule "one control per protected rule" requires. The link is kept by `rule_ids`
+naming C-29 and by this bead's test `construction_forms_agree`, which checks that the shared numbers of each pair
+are equal (the (½, ½) values of CX-296 and CX-069).
 
 **The six catalogue rows.**
 
@@ -73,36 +106,59 @@ Row schema: `id`, `shortcut`, `case` (with its numbers), `rule`, `defined_in`, `
 | CX-288 | Delta debugging is 1-minimal only: with edits (a, c, d, e, b) and failure when {a, b} or {c, d, e} is present, it ends at {c, d, e}; the one- and two-edit subset check (78 tests at most for 12 edits) finds {a, b} | N27b-14: `order_dependence_then_pair_check` |
 | CX-321 | The 60 mm wheel's warm start grafted onto the 75 mm wheel is refused (FROB-REF-582) | BD-279: `warm_start_graft_refused_582` |
 
-The registry check (`crates/frob-conformance/tests/counterexamples_autopsy.rs`) loads the file and fails when a
-row has no control, when a named control test did not run in the suite, when a row's numbers differ from the
-constants of its derivation file, or when an `equivalent_to` target is missing from the catalogue.
+**Late entries and their numbers.** This bead files one request in
+`crates/frob-conformance/registry/allocations.toml` (`registry = "cx"`, `count = 2`, `owner = "N27-CX"`,
+`section = "§27.19, §27.5"`); nobody types `first`. Until the block is issued the entries carry `slug =
+"late-01"` and `"late-02"`; when it is issued, the tags are replaced by the two numbers in table order in one
+commit, in the catalogue, the test tags and the derivation files, and a tag still present at this bead's
+milestone exit fails N38a-40's check `provisional-tag-past-due`.
+
+**When an entry is runnable.** An entry whose catching bead (the bead that owns its control test) is still open
+is loaded as an obligation, with the catching bead named, and makes no gate eligible; it becomes runnable when
+that bead closes with its tagged test. Every catching bead here is an M3 bead of the Autopsy work package, so all
+eight entries must be runnable by the Autopsy exit review (N27b-30). CX-301 stays an obligation under N38b-05's
+rule for entries with `numeric = false` until its plant above is accepted by that bead's seeding tool.
+
+The registry check (`crates/frob-conformance/tests/counterexamples_autopsy.rs`) loads the catalogue with
+N38b-05's loader and fails when an Autopsy entry is missing or carries a key outside the schema, when a runnable
+entry has no tagged control test or its test did not run in the suite, when an entry's numbers differ from the
+constants of its derivation file, or when a late entry still has its tag at the milestone exit.
 
 ## Acceptance criteria
 
-- [ ] Six catalogue rows and two provisional rows are in `registries/counterexamples/autopsy.toml` with all
-      schema fields; the three equivalences (CX-296 ↔ CX-069, CX-300 ↔ CX-070, CX-298 ↔ CX-071) are recorded.
-- [ ] Every row is bound to at least one control test that exists, ran, and fails when its mutant is planted
-      (each mutant is run once in the registry's own test and must turn the control red).
-- [ ] The numbers in the rows are reproduced by the tests: (½, ½) twice; (½, −½) summing to 0; 37.95 s,
+- [ ] The six numbered entries and the two late entries are in `crates/frob-conformance/registry/counterexamples.toml`
+      with every field of N38b-05's schema; N38b-05's loader accepts the file and counts 6 for the Autopsy
+      chapter; no file `registries/counterexamples/autopsy.toml` exists.
+- [ ] The request for two `cx` numbers is in the allocation ledger; once the block is issued, no `late-0n` tag
+      remains in the catalogue, a test name or a derivation file.
+- [ ] Every entry whose catching bead is closed has a control test tagged with its identifier that exists, ran,
+      and fails when its plant is enabled (each plant is enabled once in the registry's own test and must turn
+      the control red); every other entry is an obligation naming its catching bead.
+- [ ] The numbers in the entries are reproduced by the tests: (½, ½) twice; (½, −½) summing to 0; 37.95 s,
       113.3 °C, 42.4 s, 82.0 °C; tick 1 against tick 5; a placebo flip rate of about one half on the doubling
       map; ρ₀ of about one half for the pendulum at 10⁻⁷ and zero at 10⁻¹².
-- [ ] The two provisional rows are submitted to the catalogue's owner for numbers; until assigned, logs use the
-      tags.
-- [ ] The registry check fails when a binding is removed (shown once).
+- [ ] `construction_forms_agree` passes for CX-296/CX-069, CX-298/CX-071 and CX-300/CX-070.
+- [ ] The registry check fails when a test tag is removed from a runnable entry's control (shown once).
 
 ## Test plan
 
 ### Unit tests
-`crates/frob-conformance/tests/counterexamples_autopsy.rs`: `rows_well_formed`; `controls_exist_and_ran`;
-`numbers_match_derivations`; `equivalents_resolve`; `mutants_turn_controls_red` (one sub-test per row, each
-enabling the planted shortcut through a test-only feature of the owning crate and asserting the named control
-fails); `removing_a_binding_fails_the_check`.
+`crates/frob-conformance/tests/counterexamples_autopsy.rs`: `entries_load_with_n38b05_schema` (and a scratch
+entry carrying `equivalent_to` or `control` is rejected); `autopsy_chapter_counts_6`; `controls_exist_and_ran`
+(runnable entries); `obligation_until_catcher_closes` (a scratch entry whose catching bead is open loads as an
+obligation, and the same entry marked runnable with no tagged test fails); `numbers_match_derivations`;
+`construction_forms_agree`; `late_block_requested` (`owner = "N27-CX"`, `count = 2`); `tag_past_due_fails`
+(a scratch copy at the milestone with `late-01` left in a test name); `plants_turn_controls_red` (one
+sub-test per runnable entry, each enabling its plant through the test-only feature of the owning crate and
+asserting the tagged control fails); `removing_a_tag_fails_the_check`.
 
 ### End-to-end script and logging
 No script of its own. The end-to-end scripts tag their `assert` lines with the counterexample they exercise
 (`cx: "CX-298"` on the gear-change refusal, `cx: "CX-300"` where a chaotic placebo is asserted, `cx: "CX-301"`
-on the citation refusal), and the registry's test run writes one line per row: `id`, control, mutant, outcome of
-the control with and without the mutant.
+on the citation refusal), and the registry's test run writes one NDJSON line per entry with `ts`, `bead`
+(`N27-CX`), `id` (or slug), `state` (runnable or obligation, with the catching bead), the control test, the
+plant, and the outcome of the control with and without the plant, then a `summary` line with counts of
+runnable entries, obligations and controls caught.
 
 ### Known answers and negative controls
 Each row is itself a negative control. Known answers that share cases with the rows: KA-672 (CX-300), KA-673
@@ -117,10 +173,15 @@ platform.
   `assumed`, which the claim product already reduces to `Estimated`.
 - `late-02` is a property of the fixture and the generator, not of physics; it is registered because a future
   simplification of the generator to a fixed size would silently weaken the chaos test.
-- If KILL-AUTOPSY removes coalitions and Shapley summaries, CX-296 and CX-297 keep their rows (the shortcut
-  remains tempting) and their controls reduce to the label and repair tests that survive.
+- If KILL-AUTOPSY removes coalitions and Shapley summaries, CX-296 and CX-297 keep their entries (the shortcut
+  remains tempting) and their controls reduce to the label and repair tests that survive. If KILL-ENSEMBLE
+  fires, late-01 keeps its entry (its rule, "measure stability at 10⁻⁷", still governs the 10⁻⁷ series of every
+  attribution) and its control moves to N27b-03's series tests.
+- Numbers are never reused: an entry withdrawn because its mechanism's kill gate fired is marked void in its
+  block (N38a-40), not deleted.
 
 ## References
 
 Plan Appendix N (N.24: CX-296 to CX-301), §27.5, §27.7, §27.8, §27.10, §27.13, §27.19, §10 (C-29: CX-069 to
-CX-071), §0.7, §38.11. KA-146, KA-147, KA-672 to KA-677; FROB-REF-581, -582, -880.
+CX-071), §0.7, §38.11. KA-146, KA-147, KA-672 to KA-677; FROB-REF-581, -582, -880. Catalogue schema N38b-05;
+number blocks N38a-40.

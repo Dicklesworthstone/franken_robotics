@@ -1,14 +1,14 @@
 ---
 key: "NAB-10"
-title: "frob-conformance: the citation lint: no gate, contract or close reason cites a source that still needs a reading"
+title: "frob-conformance: citation lint: no gate, contract or close reason cites a source that still needs a reading"
 type: "task"
 priority: 0
 milestone: "M0"
 labels: ["m0", "workspace", "gauntlet", "frob-conformance", "solid", "test", "gate"]
 parent: "WP-01"
-deps: ["NAB-09", "BD-002", "BD-025", "STD-TEST"]
-needs: ["§38.13: the record format of `registries/gates.toml` and the runner that writes a gate record, to which the field `sources` is added (N40-01, N40-02, BD-025)", "§0.1 (rule 1): the evidence-label lint that finds FACT statements with external figures (N00-01); this lint resolves and grades their citations", "§0.6, §38.5: the plan-time check ledger whose `rerun` status decides whether a plan-time check may be cited (N00-06)"]
-related: ["NAB-11", "NAB-12", "NAB-13", "NAB-14", "NAB-15", "NAB-16", "N00-01", "N00-06", "N00-13", "N00-16", "N00-34", "N40-09"]
+deps: ["BD-002", "BD-025", "N00-01", "N38a-10", "N40-01", "NAB-09", "STD-TEST"]
+needs: []
+related: ["NAB-11", "NAB-12", "NAB-13", "NAB-14", "NAB-15"]
 gates: []
 plan_refs: ["Appendix H (preamble)", "Appendix H.1", "Appendix H.6", "§0.1", "§0.7", "§38"]
 ---
@@ -40,8 +40,20 @@ Tier: Solid.
 ## Scope
 
 In: the citation grammar, the scan, the grading rule, the reading-task report, the unverified-reliance check,
-the test target. Out: the register and its loader (NAB-09); the records (NAB-11 to NAB-15); performing the
-re-reads (N00-34, N00-16, N00-06, N00-35); the wording of claims (N00-15).
+the test target. This bead is the one place that resolves a citation against the register and grades it: no
+other lint reports whether a cited source exists, whether its reading may be cited by a gate, or whether a
+plan-time check has been reproduced.
+
+Out, and where it is:
+- the register and its loader (NAB-09); the records (NAB-11 to NAB-15);
+- finding the statements labelled FACT that name an outside product, paper or benchmark, and checking that each
+  carries a citation token at all: lint L-SOURCE of the evidence-label lint (N00-01), which exports the list of
+  sites this lint grades and does no resolution or grading itself;
+- the re-run status of a plan-time check: the plan-time pilot ledger (N38a-10), read through
+  `pilots::rerun_status` and `pilots::status_of_source`. The ledger holds no citation scan; the refusal of a
+  gate that cites an unreproduced check is this bead's finding `cite.plan-check-not-reproduced`;
+- performing the re-reads and re-runs (N00-34, N00-16, N00-35 and the pilot re-run beads); the wording of
+  claims (N00-15).
 
 ## Technical approach
 
@@ -54,6 +66,11 @@ re-reads (N00-34, N00-16, N00-06, N00-35); the wording of claims (N00-15).
 2. In prose (`CONTRACT.md`, `docs/**`, `README.md`): the form `[SRC-…]` or `[SRC-…#figure]` after a statement.
 3. In a bead close record (`docs/delivery/logs/<bead>.ndjson`): the field `cites`.
 4. A bare URL, or a path into a sibling repository, anywhere in the scanned files outside code blocks.
+5. A plan-time check cited without a source id: the phrase "FACT, plan-time" or "FACT, Appendix K" after a
+   statement, or a ledger identifier (`PILOT-PT-nn`, `PILOT-PT-Sn`) in a record of `registries/gates.toml`, a
+   contract or a bead close record. Such a citation is resolved through the plan-time pilot ledger (N38a-10) to
+   the ledger record and the `SRC-CHK` ids it covers; a phrase that names no identifiable check, or an
+   identifier that is not in the ledger, is `cite.unknown-source`.
 
 **2. The scan and its findings.** `crates/frob-conformance/tests/citations.rs`, run as
 `cargo test -p frob-conformance --test citations`:
@@ -65,10 +82,10 @@ re-reads (N00-34, N00-16, N00-06, N00-35); the wording of claims (N00-15).
 | `cite.unregistered-url` | A bare URL or sibling path that no source's `locator` equals | "register the source, with its mark" |
 | `cite.needs-reading` | A gate record with status other than `not-run`, or a contract's Oracles section, cites a reading with `reread_before_gate = true` | The reading task: source, what to read, at which version |
 | `cite.pass-on-unread` | A gate record with status `pass` cites a reading with `reread_before_gate = true` | As above; the record must be withdrawn or the reading done |
-| `cite.plan-check-not-reproduced` | A citation of a `plan-check` source whose re-run status is not `reproduced` | The re-run bead |
+| `cite.plan-check-not-reproduced` | A citation (by `SRC-CHK` id, by ledger identifier or by the plan-time phrase) of a plan-time check whose re-run status in the plan-time pilot ledger, `pilots::rerun_status`, is `not-run` or `differs`; a `plan-check` source that no ledger record covers counts as `not-run` | The re-run bead named by the ledger record (`rerun_owner`) |
 | `cite.local-not-at-pin` | A citation of a local source not re-read at the stack-lock commit | The fact-sheet script to run |
 | `cite.relies-on-unverified` | A gate threshold, a contract statement or a report cites an `[[unverified]]` item as a fact | The gate or open question that measures the item |
-| `cite.fact-without-citation` | A statement labelled FACT with a number and no citation (found by the evidence-label lint, graded here) | "cite a source or relabel" |
+| `cite.fact-without-citation` | A statement labelled FACT with a number and no citation. The sites come from `fact_sites` of the evidence-label lint (N00-01), the single detector; that lint's own run reports the same site as `L-SOURCE`, and this lint lists it in the reading-task report without detecting it a second time | "cite a source or relabel" |
 | `cite.by-eye-without-uncertainty` | A figure with `how = "figure-by-eye"` cited without its uncertainty | The recorded uncertainty |
 
 `cite.needs-reading` is a warning while the citing gate's status is `not-run` (the reading task is listed, the
@@ -91,8 +108,12 @@ RTX 4090; the RTX 4090's double-precision ratio, memory bandwidth and peer acces
 single-precision division and square root; and the others). Each names the gate or open question that will
 measure it. The lint treats a citation of an unverified item as clean only when that gate has a recorded value.
 
-**6. Budget and determinism.** Under 5 s on the full tree (TARGET). D0: a pure function of the scanned bytes,
-the register, the gate register and the plan-time check ledger.
+**6. Budget, root and determinism.** Under 5 s on the full tree (TARGET). The tree walked is the workspace root,
+or the directory named by `FROB_LINT_ROOT` (the convention of NAB-02's glossary lint; NAB-02 is not a dependency,
+so this bead walks the tree itself and shares a walker with the other lints only where one already exists), so
+that NAB-16 can run the lint on a
+scratch copy holding its planted defects. D0: a pure function of the scanned bytes, the register, the gate
+register and the plan-time pilot ledger (the plan-time records of `pilots.toml`).
 
 ## Acceptance criteria
 
@@ -119,11 +140,28 @@ labelled `synthetic`):
 - `confirmed_reread_makes_clean`; `corrected_reread_keeps_old_figure_uncitable`.
 - `unknown_source_fails`; `unknown_figure_fails_and_lists_figures`.
 - `bare_url_in_contract_fails` (a URL equal to no `locator`); `url_in_code_block_is_skipped`.
-- `plan_check_needs_reproduced` (status `not-run` and `differs` both fail a citing gate).
+- `plan_check_needs_reproduced` (re-run status `not-run`, which is a ledger record still `registered`, and
+  `differs` both fail a citing gate; a record that is `reproduced` passes). This is the one test of the rule "a
+  gate row cites a plan-time pilot only when its record is `reproduced`", run against the real ledger function
+  of N38a-10.
+- `plan_time_phrase_resolves_to_ledger_record`: a contract sentence ending "FACT, plan-time" beside
+  `PILOT-PT-06` resolves to that record; `PILOT-PT-99` is `cite.unknown-source`; a gate citing `SRC-CHK-24`,
+  which no ledger record covers, fails `cite.plan-check-not-reproduced`; a gate citing `SRC-CHK-13`, covered by
+  the supplementary record `PILOT-PT-S3` while that record has no result, fails the same way.
+- `unsourced_plan_time_pilot_resolves_by_ledger_id`: a gate record citing `PILOT-PT-S4` (the held-command device
+  pilot, which has no `SRC-CHK` id: NAB-15 step 2a; its ledger record covers none) resolves to that record and
+  fails `cite.plan-check-not-reproduced` naming N16c-45 as the re-run owner while the record is `not-run`; on a
+  scratch ledger in which the record carries a reproduced result the same citation is clean.
 - `local_source_needs_pin_reread`.
 - `unverified_reliance_fails_until_gate_recorded`.
 - `by_eye_needs_uncertainty`.
 - `hypothesis_may_cite_unread`: a hypothesis record citing an R reading is not a finding.
+- `oracles_section_citing_unread_fails`: a contract whose Oracles section cites `[SRC-PUB-027#other]` (the S
+  reading of the mixed-readings fixture) → `cite.needs-reading` as a failure, not a warning, because the
+  contract is not a `not-run` gate.
+- `fact_without_citation_from_fact_sites`: a contract sentence "FACT: the incumbent steps 4,096 worlds at
+  1.2 M steps/s." with no citation, reported by N00-01's `fact_sites` → `cite.fact-without-citation` listed
+  once in the reading-task report, and the same sentence ending `[SRC-PUB-027#table-a5]` → clean.
 - `reading_task_report_groups_by_earliest_gate`: three gates at M0, M2 and M3 citing one S reading → the task is
   listed once, under M0.
 

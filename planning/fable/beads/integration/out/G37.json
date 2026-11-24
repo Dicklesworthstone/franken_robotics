@@ -1,0 +1,1069 @@
+{
+ "group": "G37",
+ "needs": [
+  {
+   "bead": "BD-258",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32b-04",
+    "BD-138"
+   ],
+   "note": "session.open and session.show with scopes and budgets (M2) over the M1 session verbs; VERBS-session is the registry row"
+  },
+  {
+   "bead": "BD-258",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-27"
+   ],
+   "note": "the transport bead already depends on BD-258: it maps the bearer and the environment token to this bead's capability token"
+  },
+  {
+   "bead": "BD-258",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "confirmed; BD-261 depends on BD-258 (the firewall stands on the capability layer), so the link is not blocking in this direction"
+  },
+  {
+   "bead": "BD-303",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "the sweep and the banner need the report verbs; BD-302 is the lower seed and its own need for the flags is carried by N37-23"
+  },
+  {
+   "bead": "BD-303",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-41",
+    "N32b-40"
+   ],
+   "note": "the packet writer carries the header flags; the page that plays a packet renders the banner"
+  },
+  {
+   "bead": "BD-303",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N23a-13"
+   ],
+   "note": "train.export writes the checkpoint container and the frob.policy/1 manifest"
+  },
+  {
+   "bead": "BD-303",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-274",
+    "N24c-02"
+   ],
+   "note": "the qualification receipt, the .fmcw written by nemesis.shrink and frob.verdict/1"
+  },
+  {
+   "bead": "BD-304",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-298, the capstone over the resources (N32a-25) and prompts (N32a-26) beads"
+  },
+  {
+   "bead": "BD-304",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-373"
+   ],
+   "note": "later milestone (M4): the fresh-agent gate consumes this bead's corpus and mark, not the reverse"
+  },
+  {
+   "bead": "BD-305",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-305",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-25"
+   ],
+   "note": "N32a-25 names BD-305 as the carrier of the mark filter it calls, so the listing depends on this bead; the MCP half of the listing sweep is run by the script N37-21 (edge recorded)"
+  },
+  {
+   "bead": "BD-305",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-08"
+   ],
+   "note": "the cross-machine bundle writer through which anything that crosses must pass; N21c-08's own need for the private mark is a later milestone and stays related"
+  },
+  {
+   "bead": "BD-305",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-398",
+    "N19c-04"
+   ],
+   "note": "later milestone (M5), and BD-398 depends on BD-305; at M3 the mechanism runs on stand-in packs declared private"
+  },
+  {
+   "bead": "BD-306",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-07"
+   ],
+   "note": "the admission record schema, writer and validator; BD-002 (the file itself) is already a dependency"
+  },
+  {
+   "bead": "BD-306",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32b-13",
+    "N24a-41"
+   ],
+   "note": "the single-file viewer bundle with its vendored library, and the replay packet writer"
+  },
+  {
+   "bead": "BD-306",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-037"
+   ],
+   "note": "registries/upstream.toml, against which the no-local-patch rule is checked; the compatibility train (NF-01, N33b-04) is the procedure and stays related"
+  },
+  {
+   "bead": "BD-307",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-10",
+    "N19a-46"
+   ],
+   "note": "stage-1 decode under limits and the asset path of scene.import"
+  },
+  {
+   "bead": "BD-307",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-25",
+    "N33a-25"
+   ],
+   "note": "the scan-import schema adapter (the reader) and its schema fixtures; the two pilot beads overlap and belong to G33"
+  },
+  {
+   "bead": "BD-307",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-318"
+   ],
+   "note": "confirmed, in the other direction: BD-318 already depends on BD-307 and consumes its corpora"
+  },
+  {
+   "bead": "BD-308",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-03"
+   ],
+   "note": "the bundle schema with its generic rejection rules, among them class.no-receipt (FROB-REF-834), in the std-only auditor"
+  },
+  {
+   "bead": "BD-308",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-111",
+    "N28b-38"
+   ],
+   "note": "the memo graph whose hit returns the stored evidence block, and the store policy of bit-identical hits"
+  },
+  {
+   "bead": "BD-308",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-28",
+    "BD-178"
+   ],
+   "note": "the device-result schema check (placement receipt, fingerprint digest) and the receipt frob.placement/1"
+  },
+  {
+   "bead": "N37-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-02"
+   ],
+   "note": "every gate entered in registries/gates.toml, so that the gate column resolves"
+  },
+  {
+   "bead": "N37-02",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-14"
+   ],
+   "note": "later milestone (M2): the daemon folds the safety digest into its configuration digest when it exists; at M1 the digest is surfaced by doctor"
+  },
+  {
+   "bead": "N37-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-023"
+   ],
+   "note": "the MCP server whose tools/list is generated from the registry; the parity harness N32a-11 is related (a dependency on the M1 verb set would put the path jail after the verbs that use it)"
+  },
+  {
+   "bead": "N37-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-13",
+    "N21a-04"
+   ],
+   "note": "later milestone (M2): spark.precompile and the kernel library index; at M1 the check is that no input schema carries kernel source"
+  },
+  {
+   "bead": "N37-04",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-065",
+    "BD-066"
+   ],
+   "note": "confirmed as consumers: the importers depend on this type (edges BD-065 -> N37-04 and BD-066 -> N37-04), not the reverse"
+  },
+  {
+   "bead": "N37-04",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N19a-10"
+   ],
+   "note": "later milestone (M2): this bead creates the registry file with the design-importer rows; stage 1 of the scene compiler adds its rows to it"
+  },
+  {
+   "bead": "N37-05",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33a-07"
+   ],
+   "note": "not blocking: the in-house seeded driver meets the gate; an admission record is owed only if the optional guided engine is adopted"
+  },
+  {
+   "bead": "N37-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the gate recorder (receipt to row, no self-certification)"
+  },
+  {
+   "bead": "N37-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-13",
+    "N23a-12"
+   ],
+   "note": "the frob.policy/1 manifest with its mapping table, and NetworkSpec's parameter layout"
+  },
+  {
+   "bead": "N37-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N23a-15"
+   ],
+   "note": "the bridge in front of which the bounded reader is placed"
+  },
+  {
+   "bead": "N37-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N23a-12"
+   ],
+   "note": "the candidate families are known from the plan; the decision does not wait for NetworkSpec, and N37-07 applies the fail-closed default meanwhile"
+  },
+  {
+   "bead": "N37-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-194",
+    "BD-121"
+   ],
+   "note": "the pilot classifies reward terms against the closed language and the task terms declared from it"
+  },
+  {
+   "bead": "N37-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-018"
+   ],
+   "note": "class (iii) of the pilot is judged against the straight-line intermediate representation and its dimension checker"
+  },
+  {
+   "bead": "N37-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N37-31"
+   ],
+   "note": "no bead carried the admission of cap-std; written as N37-31 (decision, admission record, named exception in check-deps)"
+  },
+  {
+   "bead": "N37-11",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-065",
+    "BD-066"
+   ],
+   "note": "the importers are consumers of the import-root handle (edge BD-065 -> N37-11 recorded; BD-066 reaches it through BD-065)"
+  },
+  {
+   "bead": "N37-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-16",
+    "N36-19"
+   ],
+   "note": "the per-scene memory model and the camera frame slabs; the per-world model is its dependency BD-219"
+  },
+  {
+   "bead": "N37-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-210"
+   ],
+   "note": "the worker chunk publisher of the job protocol"
+  },
+  {
+   "bead": "N37-13",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N36-20"
+   ],
+   "note": "the device-hour meter and FROB-REF-761"
+  },
+  {
+   "bead": "N37-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-08"
+   ],
+   "note": "the transfer-class allow-list and the cross-machine bundle with its meter (M2); the fleet scheduler BD-370 is M4 and stays related"
+  },
+  {
+   "bead": "N37-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24b-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-17",
+    "N35-22"
+   ],
+   "note": "cluster derivation from the sealed key, and the world address type with its namespace field"
+  },
+  {
+   "bead": "N37-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19a-05",
+    "N19b-02"
+   ],
+   "note": "the provenance block with its privacy field, and the asset licence manifests"
+  },
+  {
+   "bead": "N37-17",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-095 (the artifact graph and its derived-from edges)"
+  },
+  {
+   "bead": "N37-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19b-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "the report generator into which the export door and the Notices section are wired, and through which the laundering battery exports"
+  },
+  {
+   "bead": "N37-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29b-13"
+   ],
+   "note": "withdrawal of a claim as a transaction; tombstones, pins and FROB-REF-813 are its dependency BD-209"
+  },
+  {
+   "bead": "N37-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-220",
+    "BD-111"
+   ],
+   "note": "memoized episodes (the nodes derived from a scene) and the memo graph they live in"
+  },
+  {
+   "bead": "N37-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-173",
+    "BD-236"
+   ],
+   "note": "the device arena and the world bank"
+  },
+  {
+   "bead": "N37-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-13"
+   ],
+   "note": "the manifest's trained_on block, which this bead's test reads under every option"
+  },
+  {
+   "bead": "N37-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-04",
+    "N33a-03"
+   ],
+   "note": "the resolution receipt and the stack-lock schema"
+  },
+  {
+   "bead": "N37-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N12-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-19"
+   ],
+   "note": "the format-registry types through which each owner crate declares its reader; BD-141, the capstone over the M1 formats whose readers call this bead's check, stays related"
+  },
+  {
+   "bead": "N37-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": "the exit reviews (BD-147, BD-224, BD-319) cite this script's record and stay related"
+  },
+  {
+   "bead": "N37-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N00-26",
+    "N00-25"
+   ],
+   "note": "evidence admission (the doorways) and the claim registry"
+  },
+  {
+   "bead": "N37-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N16b-04"
+   ],
+   "note": "later milestone (M2); at M1 the smallest case builds its two leaves through the conformance verb, with standing as a member of the product"
+  },
+  {
+   "bead": "N37-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16b-04"
+   ],
+   "note": "the labels and FROB-REF-820; the trust ladder BD-263 is already a dependency"
+  },
+  {
+   "bead": "N37-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-19"
+   ],
+   "note": "the standing `qualified` and FROB-REF-845, last in this bead's precedence order"
+  },
+  {
+   "bead": "N37-26",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "the report generator whose sentences pass through the admission function"
+  },
+  {
+   "bead": "N37-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-263"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-133",
+    "BD-026"
+   ],
+   "note": "prove.bundle and the frob-verify binary"
+  },
+  {
+   "bead": "N37-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-06",
+    "N35-07"
+   ],
+   "note": "the profile and the licence check are components of BD-269; BD-269 is the capstone that names GATE-SAFE-09 and needs this bead's FROB-REF-825, so the drafted dependency on it was moved to related and the edge BD-269 -> N37-28 recorded"
+  },
+  {
+   "bead": "N37-28",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-408"
+   ],
+   "note": "later milestone (M5): the build packet re-runs the fifth path with the real verb (edge BD-408 -> N37-28 recorded)"
+  },
+  {
+   "bead": "N37-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N37-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-408"
+   ],
+   "note": "later milestone (M5)"
+  },
+  {
+   "bead": "N37-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-209"
+   ],
+   "note": "the collector whose behaviour at the chosen periods this bead tests; the store's own decision N29b-12 (OPEN-CHRON-4) is related"
+  },
+  {
+   "bead": "N37-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-211"
+   ],
+   "note": "the idempotency binding and its key table, tested at 29 and 31 days under a virtual clock"
+  },
+  {
+   "bead": "N37-30",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N24b-17"
+   ],
+   "note": "close-time reveal and family retirement"
+  },
+  {
+   "bead": "N37-CX",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-04"
+   ],
+   "note": "the control runner and the record format of the negative-control registry; the crate BD-025 is already a dependency"
+  },
+  {
+   "bead": "N37-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the known-answer registry: row schema, rules and loader"
+  },
+  {
+   "bead": "N37-REF",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-005 (RefusalCode generated from registries/refusals.toml; an unknown code is a load-time error)"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-258",
+   "dep": "N32b-01",
+   "as": "dep",
+   "why": "capstone over its component: token format, scope catalogue, minting, the check before every verb"
+  },
+  {
+   "bead": "BD-258",
+   "dep": "N32b-02",
+   "as": "dep",
+   "why": "capstone over its component: attenuation and the budget debit"
+  },
+  {
+   "bead": "BD-258",
+   "dep": "N32b-03",
+   "as": "dep",
+   "why": "capstone over its component: namespaces, lineage ownership and the shared views"
+  },
+  {
+   "bead": "N32b-03",
+   "dep": "BD-305",
+   "as": "related",
+   "why": "BD-305 depends on BD-258, the capstone over N32b-03; the mark that the shared views filter on is N37-17"
+  },
+  {
+   "bead": "N32b-03",
+   "dep": "N37-17",
+   "as": "dep",
+   "why": "the privacy mark by which private objects are kept out of the shared archive and leaderboard"
+  },
+  {
+   "bead": "BD-065",
+   "dep": "N37-04",
+   "as": "dep",
+   "why": "coverage (d) of U37: the URDF reader constructs Untrusted text"
+  },
+  {
+   "bead": "BD-066",
+   "dep": "N37-04",
+   "as": "dep",
+   "why": "coverage (d) of U37: the MJCF reader constructs Untrusted text"
+  },
+  {
+   "bead": "BD-097",
+   "dep": "N37-11",
+   "as": "dep",
+   "why": "coverage (d) of U37: artifact.export resolves its path through the jail's export root"
+  },
+  {
+   "bead": "BD-065",
+   "dep": "N37-11",
+   "as": "dep",
+   "why": "coverage (d) of U37 and need 2 of N37-11: relative references of an import resolve beneath the jail's import-root handle"
+  },
+  {
+   "bead": "BD-408",
+   "dep": "N37-28",
+   "as": "dep",
+   "why": "coverage (d) of U37: the build packet re-runs the fifth D4 path with the real verb"
+  },
+  {
+   "bead": "BD-408",
+   "dep": "BD-303",
+   "as": "dep",
+   "why": "coverage (d) of U37: the flags contract row of the build packet"
+  },
+  {
+   "bead": "BD-318",
+   "dep": "BD-307",
+   "as": "dep",
+   "why": "coverage (d) of U37: the M3 conformance bead consumes the corpora BD-307 packages"
+  },
+  {
+   "bead": "BD-269",
+   "dep": "N37-28",
+   "as": "dep",
+   "why": "capstone of GATE-SAFE-09 over the component that raises FROB-REF-825 on the five paths (need 1 of BD-269)"
+  },
+  {
+   "bead": "N35-06",
+   "dep": "N37-28",
+   "as": "related",
+   "why": "N37-28 depends on the profile N35-06; the refusal consumes the label the profile defines"
+  },
+  {
+   "bead": "BD-302",
+   "dep": "N37-23",
+   "as": "dep",
+   "why": "need 4 of BD-302: the flags mechanism at M1 is the prerequisite; BD-303 is a higher seed that sweeps the report verbs afterwards"
+  },
+  {
+   "bead": "BD-303",
+   "dep": "N37-19",
+   "as": "dep",
+   "why": "the M3 sweep covers the purge receipt written by scene.purge"
+  },
+  {
+   "bead": "N37-21",
+   "dep": "N32a-25",
+   "as": "dep",
+   "why": "the script checks that private objects are absent from MCP resource lists and catalogs"
+  },
+  {
+   "bead": "N37-30",
+   "dep": "N29b-12",
+   "as": "related",
+   "why": "the store's own retention decision (OPEN-CHRON-4), decided beside this one"
+  },
+  {
+   "bead": "N37-03",
+   "dep": "N32a-11",
+   "as": "related",
+   "why": "the surface parity harness reads the same tools/list"
+  },
+  {
+   "bead": "N37-24",
+   "dep": "N12-03",
+   "as": "dep",
+   "why": "coverage (d) of U37: the auditor's flag rule (FROB-REF-833), by which frob-verify refuses the mutants"
+  },
+  {
+   "bead": "N37-22",
+   "dep": "N21b-12",
+   "as": "dep",
+   "why": "coverage (d) of U37: the content-addressed kernel cache with checked hits and FROB-REF-612, whose entry the script flips"
+  },
+  {
+   "bead": "BD-306",
+   "dep": "N21b-12",
+   "as": "dep",
+   "why": "coverage (d) of U37: the kernel cache key and loader that the verified-kernel type wraps"
+  },
+  {
+   "bead": "N37-10",
+   "dep": "N38b-19",
+   "as": "dep",
+   "why": "coverage (d) of U37: every script records its gate through the gate recorder"
+  },
+  {
+   "bead": "N37-27",
+   "dep": "N38b-19",
+   "as": "dep",
+   "why": "coverage (d) of U37: every script records its gate through the gate recorder"
+  },
+  {
+   "bead": "N37-25",
+   "dep": "N38b-19",
+   "as": "dep",
+   "why": "coverage (d) of U37: the M1 record of GATE-SAFE-08 goes through the gate recorder"
+  },
+  {
+   "bead": "N37-11",
+   "dep": "N37-03",
+   "as": "related",
+   "why": "replaces the drafted dep: the jail defines frob.path/1 and the leaf lint only lists it; the dep put the jail behind the requirement-language core and the M1 verbs that must resolve through it"
+  },
+  {
+   "bead": "N37-28",
+   "dep": "BD-269",
+   "as": "related",
+   "why": "replaces the drafted dep: BD-269 is the capstone of GATE-SAFE-09 and depends on this bead; a component never depends on its capstone"
+  },
+  {
+   "bead": "N37-23",
+   "dep": "BD-141",
+   "as": "related",
+   "why": "the M1 format readers call this bead's shared check; the sweep N37-24 verifies them"
+  },
+  {
+   "bead": "N37-19",
+   "dep": "VERBS-scene",
+   "as": "dep",
+   "why": "the registry row of scene.purge (schemas, parity and snapshot checks) that this verb fills"
+  },
+  {
+   "bead": "N32a-35",
+   "dep": "N37-14",
+   "as": "dep",
+   "why": "the peer link forwards jobs under the allowlisted manifest, input hashes and output quota that N37-14 fixes as its contract"
+  },
+  {
+   "bead": "N37-08",
+   "dep": "N41-03",
+   "as": "dep",
+   "why": "the open-question register in which the decision on OPEN-SAFE-1 is recorded and closed"
+  },
+  {
+   "bead": "N37-09",
+   "dep": "N41-03",
+   "as": "dep",
+   "why": "the open-question register in which the decision on OPEN-SAFE-3 is recorded and closed"
+  },
+  {
+   "bead": "N37-20",
+   "dep": "N41-03",
+   "as": "dep",
+   "why": "the open-question register in which the decision on OPEN-SAFE-2 is recorded and closed"
+  },
+  {
+   "bead": "N37-30",
+   "dep": "N41-03",
+   "as": "dep",
+   "why": "the open-question register in which the decision on OPEN-SAFE-4 is recorded and closed"
+  },
+  {
+   "bead": "N37-20",
+   "dep": "N37-02",
+   "as": "dep",
+   "why": "the keys private.weights_inherit and licence.weights_inherit of the owner-held configuration, which the decision sets and its tests read"
+  },
+  {
+   "bead": "N37-30",
+   "dep": "N37-02",
+   "as": "dep",
+   "why": "the three retention keys of the owner-held configuration, which the decision sets and its start-up check reads"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N37-15",
+   "other": "N32b-05",
+   "note": "two end-to-end scripts for the same mechanisms (scope refusals with no partial data, attenuation, namespaces): safe_capabilities.sh and tether_capabilities.sh; N37-15 adds budgets and the worker manifest, N32b-05 the sealed-read and shared-view steps"
+  },
+  {
+   "mine": "N37-28",
+   "other": "BD-269",
+   "note": "both run the five-path FROB-REF-825 test with the unlabelled plant and record GATE-SAFE-09; BD-269 is the seed that names the gate, N37-28 builds the refusal and the label rules (edge BD-269 -> N37-28 recorded)"
+  },
+  {
+   "mine": "N37-28",
+   "other": "N35-06",
+   "note": "both put class D4 and the profile name on every result, checkpoint and exported policy of a fast-training job and state the re-evaluation rule"
+  },
+  {
+   "mine": "N37-29",
+   "other": "N35-32",
+   "note": "two end-to-end scripts for D4 on five paths and the record of GATE-SAFE-09: safe_d4.sh and num_licences_d4.sh"
+  },
+  {
+   "mine": "N37-20",
+   "other": "N41-11",
+   "note": "both decide OPEN-SAFE-2; N41-11 bundles OPEN-SAFE-2, -3, -4 and OPEN-CHRON-4 at M2 and keeps the values in registries/policy/data-policy.toml, N37-20 keeps them in the owner-held safety.toml of N37-02"
+  },
+  {
+   "mine": "N37-09",
+   "other": "N41-11",
+   "note": "both decide OPEN-SAFE-3; N37-09 (M4) also defines the paper pilot and its falsifier"
+  },
+  {
+   "mine": "N37-30",
+   "other": "N41-11",
+   "note": "both decide OPEN-SAFE-4; the two beads name different files for the three retention values (safety.toml against data-policy.toml)"
+  },
+  {
+   "mine": "N37-25",
+   "other": "N00-27",
+   "note": "both test the claim product at M1 under GATE-SAFE-08 (the fourteen-rule battery against random evidence sets and the API scan); reported by G00 from its side"
+  },
+  {
+   "mine": "BD-305",
+   "other": "N29b-14",
+   "note": "N29b-14 applies the private mark, the read and export checks and the listing filters to Chronicle's stored objects, which BD-305's listing filter, dispatcher read check and kind sweep also cover; N29b-14 depends on BD-305"
+  },
+  {
+   "mine": "N37-19",
+   "other": "N29b-14",
+   "note": "the two disagree on purge against pinned evidence: N37-19 withdraws the claims and releases the pins inside the purge transaction and never raises FROB-REF-813; N29b-14 refuses with 813 unless --withdraw-claims is passed, and the registry row of scene.purge in VERBS-scene lists 813 among its refusals"
+  },
+  {
+   "mine": "N37-13",
+   "other": "N32a-27",
+   "note": "both set the MCP rate limiter, the listener bound and the call ceiling; the DESIGN defaults disagree (600 requests per minute per session with a burst of 60 in N37-13 and N37-02; 20 calls per second with a burst of 40 in N32a-27); 64 listeners and the 40 s timeout agree"
+  },
+  {
+   "mine": "N37-18",
+   "other": "N19b-02",
+   "note": "the two disagree on the code for a report or other non-pack export that carries a research-only asset: N19b-02 expects artifact.export and the report verbs to call its pack export check (FROB-REF-310); N37-18 sends every export through one door that refuses with FROB-REF-733 and accepts 310 only at pack time"
+  },
+  {
+   "mine": "N37-18",
+   "other": "VERBS-report",
+   "note": "the registry row of the report verbs lists FROB-REF-310 for a report that would export a research-only or private asset; N37-18 and N37-REF give that case FROB-REF-733 (licence) and BD-305 gives FROB-REF-731 (private)"
+  },
+  {
+   "mine": "N37-13",
+   "other": "N32a-15",
+   "note": "both define the session budget vector in every unit and the reservation of trace bytes; N32a-15 owns reservation and settlement at M2, N37-13 the fail-closed defaults, the ceilings and the exhaustion battery at M3"
+  }
+ ],
+ "new_beads": [
+  "N37-31"
+ ],
+ "gaps": [],
+ "fixes": [
+  {
+   "bead": "BD-258",
+   "what": "made the capstone of the capability layer: deps gain the components N32b-01, N32b-02, N32b-03 and N32b-04; Scope rewritten to say which component builds which part and what this bead adds (three-act lint over the M3 registry, admin scopes, per-session roots, scope matrix, M3 record of GATE-SAFE-10)"
+  },
+  {
+   "bead": "N37-28",
+   "what": "BD-269 moved from deps to related (it is the capstone of GATE-SAFE-09 and depends on this bead); deps gain its components N35-06 and N35-07; Scope and Background name which bead has the profile, the licence check and the wiring"
+  },
+  {
+   "bead": "N37-11",
+   "what": "N37-03 moved from deps to related (the jail defines the leaf type the lint lists; the dep ordered the jail after the requirement-language core); dep on the new decision bead N37-31 added and the Considerations point to it"
+  },
+  {
+   "bead": "N37-02",
+   "what": "the MCP rate key described as per session with a burst of 60, as N37-13 states it (it read server-wide)"
+  },
+  {
+   "bead": "N37-31",
+   "what": "new bead: the admission of cap-std for the path jail (the unresolved need 1 of N37-11); coverage.md of U37 updated to list it"
+  }
+ ]
+}

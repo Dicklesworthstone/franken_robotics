@@ -1,0 +1,1495 @@
+{
+ "group": "G27",
+ "needs": [
+  {
+   "bead": "BD-205",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N17a-09"
+   ],
+   "note": "the slot table of a running cohort (free and in-use slots, admission without a compile) is the M2 piece; the daemon's persistent environments per shape class are BD-295 at M3, a later milestone and a higher-numbered seed, recorded as related under edges"
+  },
+  {
+   "bead": "BD-205",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "the confirmation firewall that raises FROB-REF-840 is M3 and a higher-numbered seed; no sealed run exists at M2, so the check is wired when BD-261 lands"
+  },
+  {
+   "bead": "BD-205",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N35-07"
+   ],
+   "note": "licence::check with the per-verb minimum class; raises FROB-REF-562"
+  },
+  {
+   "bead": "BD-279",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27a-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-279",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-281"
+   ],
+   "note": "seed order: BD-281 is the higher-numbered seed and depends on this verb (it consumes the forks); a dependency back would close a cycle"
+  },
+  {
+   "bead": "BD-279",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-15",
+    "BD-219"
+   ],
+   "note": "N32a-15 carries --estimate, reservation, upper-end admission and FROB-REF-701, -702; BD-219 is the cost model. The conformal interval per stratum (BD-297) is a higher-numbered seed and stays related"
+  },
+  {
+   "bead": "BD-280",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-281"
+   ],
+   "note": "seed order, and BD-281 already depends on this bead: the coalition bead fills the pairs and shapley blocks of the record this verb defines"
+  },
+  {
+   "bead": "BD-280",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-10"
+   ],
+   "note": "the cursor frob.cursor/1 and the Paginated trait; BD-211 is the daemon-side gate of the same mechanism"
+  },
+  {
+   "bead": "BD-281",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27b-10"
+   ],
+   "note": "the pilot comes first (coverage (d) of U27b). The decision N27b-11 reads GATE-AUTOPSY-03 through N27b-09, which depends on this bead: the mechanism being measured does not depend on the decision about it (related, under edges)"
+  },
+  {
+   "bead": "BD-281",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N27b-05",
+    "N27b-06"
+   ],
+   "note": "the exact one-sided test (N27b-05) and the rescue criterion (N27b-06, step 2), called here per coalition"
+  },
+  {
+   "bead": "BD-281",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-279"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-282",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27b-12"
+   ],
+   "note": "the policy mechanics (stage machine, guard table, rollback flag, evidence record); BD-282 is the capstone that measures its Decline and Fallback paths"
+  },
+  {
+   "bead": "BD-282",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N27b-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-282",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N28c-01"
+   ],
+   "note": "the core record schema frob.core/1, the loader and its validation"
+  },
+  {
+   "bead": "BD-283",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27b-05",
+    "N27b-06"
+   ],
+   "note": "the exact test and the label table with its precedence"
+  },
+  {
+   "bead": "BD-283",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-262"
+   ],
+   "note": "a next action printed by the re-run, not a call; nothing in the verb waits on eval.compare"
+  },
+  {
+   "bead": "BD-283",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "the Sealed type and the refusal FROB-REF-840 on every read path of a confirmation run"
+  },
+  {
+   "bead": "BD-283",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N32a-15",
+    "BD-219"
+   ],
+   "note": "budget admission (FROB-REF-701, -702) and the cost model; BD-297 (intervals) is a higher-numbered seed, related"
+  },
+  {
+   "bead": "BD-284",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-313"
+   ],
+   "note": "session transcript capture in frob-verbs is carried only inside BD-313, a higher-numbered seed (rule 2); no smaller bead carries it (reported under gaps). Until it lands the writer records the calls of the Autopsy verbs it owns"
+  },
+  {
+   "bead": "BD-284",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-35"
+   ],
+   "note": "the summary builder, its budget rule, drill-down handles and frontier pin"
+  },
+  {
+   "bead": "BD-284",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-10"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-375",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-313",
+    "N32b-03"
+   ],
+   "note": "transcript capture (BD-313) and one namespace per arm (N32b-03)"
+  },
+  {
+   "bead": "BD-375",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-24",
+    "N39a-25"
+   ],
+   "note": "the ledger record frob.tenfold.ledger/1 and the agent proxy that emits turn and tool-call intervals with their phase tags"
+  },
+  {
+   "bead": "BD-375",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N44-01"
+   ],
+   "note": "the envelope register and the owner's ruling per row; this bead files its row there (a bead that needs more than E0 adds a row first) and runs in the fallback form (fewer units) when the row is not approved"
+  },
+  {
+   "bead": "N27-CX",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-05"
+   ],
+   "note": "the catalogue file schema and the seeding tool are the registry skeleton (rule 5); BD-146 runs the seeded controls at M1 and is not a skeleton: related, under edges"
+  },
+  {
+   "bead": "N27-CX",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "Appendix N: no bead allocates catalogue numbers to counterexamples of subsections added late; the two rows stay under the tags late-01 and late-02, which block no work"
+  },
+  {
+   "bead": "N27-CX",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-281",
+    "BD-283",
+    "BD-206"
+   ],
+   "note": "a registry bead never depends on a mechanism (rule 5); the rows name the control tests those beads carry"
+  },
+  {
+   "bead": "N27-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27-REF",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-005"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N27-REF",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-03"
+   ],
+   "note": "the exit-code table and the mapping from refusal code to exit code; the check over the complete registry on both surfaces is BD-299 at M3, later than this M2 registry"
+  },
+  {
+   "bead": "N27-REF",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-205"
+   ],
+   "note": "a registry bead never depends on a raising site (rule 5); BD-205 and N27a-02 raise -580, -581 and -582 at M2"
+  },
+  {
+   "bead": "N27a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-090",
+    "BD-207"
+   ],
+   "note": "T1 event streams and channel declarations (BD-090, referee) and T1 event capture on devices (BD-207)"
+  },
+  {
+   "bead": "N27a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-12",
+    "N29a-11"
+   ],
+   "note": "the address-keyed selection (N29a-12) and the per-world ring flushed on failure, with reconstruction by replay for worlds without one (N29a-11)"
+  },
+  {
+   "bead": "N27a-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "not blocking: the reservoir size is a number read from the memory model of sim.estimate when it exists, and a configured size holds until then; a world outside the reservoir is forked by replay, and OPEN-AUTOPSY-4 blocks nothing"
+  },
+  {
+   "bead": "N27a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-091"
+   ],
+   "note": "the publishing transaction: a second byte string under a committed chunk key is a conflict and sets the run state determinism-violated"
+  },
+  {
+   "bead": "N27a-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N16a-03"
+   ],
+   "note": "StepPlanId hashes every numerical field of a step, the iteration count included, so the doubled-count first tick is a distinct identity"
+  },
+  {
+   "bead": "N27a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N20a-08",
+    "N22a-03"
+   ],
+   "note": "the link model that assigns arrival instants by packet identity (N20a-08) and filter state inside checkpoints with the privileged source (N22a-03); the queue layout is the existing dependency BD-189. No Sensorium bead exposes the rebuild as one call: reported under gaps"
+  },
+  {
+   "bead": "N27a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-08"
+   ],
+   "note": "the shared-fixture table and its one-run-per-milestone check, which names GATE-AUTOPSY-01; the fixture itself is the existing dependency BD-181"
+  },
+  {
+   "bead": "N27a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-07",
+    "N29a-20"
+   ],
+   "note": "per-chunk envelopes (N29a-07) and the tolerance-mode block bounds built from envelopes and samples (N29a-20)"
+  },
+  {
+   "bead": "N27a-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-02"
+   ],
+   "note": "the crate map holds layer and rank as data and the rule that a chapter changes a rank by ADR; the ADR itself (frob-nemesis before frob-autopsy in layer 5) is now written by N27a-10 and listed in its acceptance"
+  },
+  {
+   "bead": "N27a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-01"
+   ],
+   "note": "the gate record frob.gates/1 with its loader, read by the precondition check"
+  },
+  {
+   "bead": "N27a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "the stream registry in which the purpose autopsy.shapley is added as a row"
+  },
+  {
+   "bead": "N27a-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27b-03"
+   ],
+   "note": "the ForkTarget trait (restore, apply, perturb, run) through which the host tables run through the fork and counting code"
+  },
+  {
+   "bead": "N27a-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "the registry skeleton (control records, the no-control check). The conformance-side manifest of the Autopsy plants is BD-318, which depends on these cases through BD-284 and BD-281: related, under edges"
+  },
+  {
+   "bead": "N27a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-20",
+    "N34-06"
+   ],
+   "note": "the scale table per class of variable (N29a-20) and the trace-source trait of frob-core through which layer 5 calls the search (N34-06)"
+  },
+  {
+   "bead": "N27a-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-280"
+   ],
+   "note": "the attribution record and its assembly, to whose contrasts this bead adds the divergence block; the types themselves are in its dependency N27a-10"
+  },
+  {
+   "bead": "N27a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27b-03"
+   ],
+   "note": "the ForkTarget trait and the doubling-map host fixture in 64-bit fixed point, both built by N27b-03 after the re-scoping of the host fixtures"
+  },
+  {
+   "bead": "N27a-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-025"
+   ],
+   "note": "as N27a-12 need 2; BD-318 is related, under edges"
+  },
+  {
+   "bead": "N27a-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-13"
+   ],
+   "note": "the manifest frob.policy/1 with the mapping table and role matcher. The family policy's class and membership fields are BD-320 at M4, later; the family row is tested on a synthetic manifest until then (already related)"
+  },
+  {
+   "bead": "N27a-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-252"
+   ],
+   "note": "the sampling controller with a planning-model option (control.mpc)"
+  },
+  {
+   "bead": "N27a-15",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N27b-06"
+   ],
+   "note": "the label function that never labels a forced child (step 6). The flag --diagnostic-force is BD-279's; neither bead needs the other to be finished (the rule is a pure function, the flag goes through the restore hook of N27a-05): related, under edges"
+  },
+  {
+   "bead": "N27a-16",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N27b-03",
+    "N27b-21"
+   ],
+   "note": "not a prerequisite: this bead's own Scope puts the host thermal system out; it is the ForkTarget fixture of N27b-03, held to this bead's derivation by N27b-21"
+  },
+  {
+   "bead": "N27a-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the derivation-file format and the rule that expected values are never regenerated from the candidate"
+  },
+  {
+   "bead": "N27a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-279"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-279",
+    "BD-280"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27a-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39a-25",
+    "N28a-03"
+   ],
+   "note": "the agent proxy with its frozen phase tag map (N39a-25) and the phase field every studio verb records (N28a-03)"
+  },
+  {
+   "bead": "N27a-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32b-02"
+   ],
+   "note": "attenuation: a derived session with fewer scopes; the token check is its dependency N32b-01"
+  },
+  {
+   "bead": "N27a-19",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N24b-17",
+    "BD-261"
+   ],
+   "note": "sealed world clusters with their derivation (N24b-17) and the firewall that keeps them unreadable by the agent's session (BD-261)"
+  },
+  {
+   "bead": "N27b-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27a-10",
+    "N27a-01"
+   ],
+   "note": "the crate skeleton (N27a-10) and the shared types Intervention, FactorPath, ForkClass, Fork in frob_core::fork (N27a-01)"
+  },
+  {
+   "bead": "N27b-01",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-061"
+   ],
+   "note": "the immutable RobotModel with ModelId; field-level invalidation is the existing dependency BD-063"
+  },
+  {
+   "bead": "N27b-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-20"
+   ],
+   "note": "SceneId composition and the stage receipts of the frozen scene pack"
+  },
+  {
+   "bead": "N27b-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N35-23"
+   ],
+   "note": "the stream registry in which the purpose autopsy.perturb is added as a row"
+  },
+  {
+   "bead": "N27b-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-20"
+   ],
+   "note": "the scale table per class of state variable"
+  },
+  {
+   "bead": "N27b-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-201"
+   ],
+   "note": "already a dependency; the population of 1,000 failing worlds on those task families is the manifest of N27a-06 (edge recorded)"
+  },
+  {
+   "bead": "N27b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": "the two study types and the refusal FROB-REF-553"
+  },
+  {
+   "bead": "N27b-06",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-281"
+   ],
+   "note": "BD-281 depends on this bead (it calls the rescue criterion); the label function declares the coalition input it reads, and BD-281's CoalitionTable supplies it"
+  },
+  {
+   "bead": "N27b-06",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-283"
+   ],
+   "note": "BD-283 depends on this bead (it applies the label table to re-run counts); the label function declares the episode-start input, and BD-283's RerunOutcome supplies it"
+  },
+  {
+   "bead": "N27b-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-212"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-204"
+   ],
+   "note": "sim.replay --tier with the start-state rule across backends; the check at the fork point is made by its dependency BD-205, whose stored result this bead reads"
+  },
+  {
+   "bead": "N27b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-248"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N27b-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-283"
+   ],
+   "note": "not blocking: until autopsy.rerun lands the single-cause check uses sim.run on the same address with and without the plant, as the need says"
+  },
+  {
+   "bead": "N27b-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N38b-19"
+   ],
+   "note": "the gate record frob.gates/1 (N40-01) and the recorder that turns a receipt into a row (N38b-19)"
+  },
+  {
+   "bead": "N27b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-06"
+   ],
+   "note": "the development-oracle lane for pilots that run before a quadruped steps on the CPU referee"
+  },
+  {
+   "bead": "N27b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-198"
+   ],
+   "note": "needed only when the pilot is re-run on our tiers; on the development oracle the pilot trains its own policy (rule 8: a pilot depends only on what it needs at small scale)"
+  },
+  {
+   "bead": "N27b-10",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-143"
+   ],
+   "note": "the ceiling is stated from this ledger when it exists and as `unmeasured` otherwise; the pilot does not wait for it"
+  },
+  {
+   "bead": "N27b-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-26"
+   ],
+   "note": "the kill-row fields and decision ADR template (N40-03) and the ledger row of KILL-AUTOPSY with its trigger and fallback fixed in advance (N40-26)"
+  },
+  {
+   "bead": "N27b-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28c-01",
+    "N28c-03"
+   ],
+   "note": "the core record and the table schema frob.core-table/1 with their validation (N28c-01) and the evidence record per decision with staged adoption (N28c-03); the policy generates its own guard table from the exact test, and the general table compiler N28c-02 is not a prerequisite"
+  },
+  {
+   "bead": "N27b-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-281"
+   ],
+   "note": "the coalition stage and the Shapley trigger, called from the Pairs and Summary stages"
+  },
+  {
+   "bead": "N27b-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N26a-18"
+   ],
+   "note": "shrink::ddmin and shrink::pairs are the library functions; the verb nemesis.shrink (BD-274) is not called and moves from deps to related in the file"
+  },
+  {
+   "bead": "N27b-15",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29b-10"
+   ],
+   "note": "the citation guard: the list of operations that count as citing and the envelope hook; the graph itself is the existing dependency BD-095"
+  },
+  {
+   "bead": "N27b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "the statement model with its mandatory fields and the resolution rule"
+  },
+  {
+   "bead": "N27b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "NJL-05"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-02",
+    "NJL-01"
+   ],
+   "note": "the registry file, build script and generated table (N32a-02) and the entry schema with the tool-name map (NJL-01)"
+  },
+  {
+   "bead": "N27b-17",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-300",
+    "N32b-12"
+   ],
+   "note": "consumers of the feed: the ghost overlay is drawn by N32b-12 (and listed among BD-300's ten overlays); the feed does not wait for a viewer"
+  },
+  {
+   "bead": "N27b-17",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N24a-41",
+    "N32b-41"
+   ],
+   "note": "BD-191 is telemetry.stills and does not write the packet; the writer is N24a-41 and its fork blocks and tables are N32b-41, which consumes this feed (edge recorded)"
+  },
+  {
+   "bead": "N27b-17",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its dependency BD-279 through BD-205: every child is replayable from its address; the feed stores no poses and names the T2 handle only where one was retained"
+  },
+  {
+   "bead": "N27b-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "ART-L3",
+    "N19b-05"
+   ],
+   "note": "the task file kitchen-tray (ART-L3, which brings the kitchen archetype BD-225) and Solid film patches in a scene (N19b-05); NS-04 is the demonstration of the same scenario and is related, under edges"
+  },
+  {
+   "bead": "N27b-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-298"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23a-13",
+    "BD-198"
+   ],
+   "note": "the manifest frob.policy/1 that declares what a policy was trained on (N23a-13) and the reference quadruped policy, a specialist for one body (BD-198)"
+  },
+  {
+   "bead": "N27b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-299"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-206"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N27b-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-281"
+   ],
+   "note": "already a dependency; the arithmetic is its component N27a-11"
+  },
+  {
+   "bead": "N27b-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-281",
+    "BD-283",
+    "BD-206"
+   ],
+   "note": "a suite depends on the tests it binds (rule 4)"
+  },
+  {
+   "bead": "N27b-21",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-06"
+   ],
+   "note": "the development-oracle lane; BD-159 is the alternative carrier when the pilot runs on batch-cpu and is related, under edges (rule 8)"
+  },
+  {
+   "bead": "N27b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-22",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-198"
+   ],
+   "note": "needed only when the pilot is re-run on our tiers"
+  },
+  {
+   "bead": "N27b-22",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-217"
+   ],
+   "note": "TARGET figures are used and labelled when no measured rate exists, as the need says"
+  },
+  {
+   "bead": "N27b-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-205"
+   ],
+   "note": "already a dependency: the fork service runs children on every backend from that backend's checkpoint (device snapshots are BD-203)"
+  },
+  {
+   "bead": "N27b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-183"
+   ],
+   "note": "already a dependency"
+  },
+  {
+   "bead": "N27b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-181",
+    "N35-07"
+   ],
+   "note": "the batch-composition record per device family (BD-181) and the licence check that reads its currency (N35-07)"
+  },
+  {
+   "bead": "N27b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-266",
+    "BD-272"
+   ],
+   "note": "already dependencies"
+  },
+  {
+   "bead": "N27b-25",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N26a-15"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-302"
+   ],
+   "note": "the statement model's resolution rule; the Autopsy citation rule it asks is the existing dependency N27b-15"
+  },
+  {
+   "bead": "N27b-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29b-07"
+   ],
+   "note": "the stratum key and the store's read interface for per-stratum rows"
+  },
+  {
+   "bead": "N27b-27",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N27a-03",
+    "N29a-11"
+   ],
+   "note": "fork-point resolution by replay-to-tick (N27a-03) on the ring's reconstruction path (N29a-11); this bead batches it over many parents"
+  },
+  {
+   "bead": "N27b-27",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-13"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38a-07"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-181"
+   ],
+   "note": "the class-D2 batch-independence record on a device family; BD-181 already depends on both device steps and on batch-cpu"
+  },
+  {
+   "bead": "N27b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-198"
+   ],
+   "note": "the reference quadruped policy; no bead delivers a reference humanoid policy on a device by M3 (reported under gaps), so that sub-clause is recorded not run, as the bead already provides"
+  },
+  {
+   "bead": "N27b-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-10",
+    "N38b-19"
+   ],
+   "note": "the late gate rows, which include GATE-AUTOPSY-09 (N40-10), and the gate recorder (N38b-19)"
+  },
+  {
+   "bead": "N27b-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-29"
+   ],
+   "note": "the decision ADR template (N40-03) and the ledger row of KILL-ENSEMBLE among the 25 late kill gates (N40-29)"
+  },
+  {
+   "bead": "N27b-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N41-28"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38b-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N27b-30",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N27-KA"
+   ],
+   "note": ""
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-205",
+   "dep": "BD-295",
+   "as": "related",
+   "why": "need 1 of BD-205: resident environments in the daemon are M3; at M2 children are admitted through the cohort slot table N17a-09"
+  },
+  {
+   "bead": "BD-279",
+   "dep": "BD-297",
+   "as": "related",
+   "why": "need 3 of BD-279: calibrated estimate intervals; seed order forbids a dependency"
+  },
+  {
+   "bead": "BD-281",
+   "dep": "N27b-11",
+   "as": "related",
+   "why": "need 1 of BD-281: KILL-AUTOPSY is decided on measurements that use this bead (N27b-11 -> N27b-09 -> BD-281); rule 7"
+  },
+  {
+   "bead": "BD-283",
+   "dep": "BD-297",
+   "as": "related",
+   "why": "need 4 of BD-283: calibrated estimate intervals; seed order forbids a dependency"
+  },
+  {
+   "bead": "N27-CX",
+   "dep": "BD-146",
+   "as": "related",
+   "why": "need 1 of N27-CX names BD-146: it makes the seeded controls runnable for the M1 gates; a registry bead depends only on the skeleton"
+  },
+  {
+   "bead": "N27a-12",
+   "dep": "BD-318",
+   "as": "related",
+   "why": "need 2 of N27a-12: BD-318 holds the M3 planted-defect manifest and already depends on this bead (BD-318 -> BD-284 -> BD-281 -> N27a-12)"
+  },
+  {
+   "bead": "N27a-14",
+   "dep": "BD-318",
+   "as": "related",
+   "why": "need 2 of N27a-14: BD-318 already depends on this bead (BD-318 -> BD-284 -> BD-282 -> N27a-14)"
+  },
+  {
+   "bead": "N27a-15",
+   "dep": "BD-279",
+   "as": "related",
+   "why": "need 3 of N27a-15: the flag --diagnostic-force and this bead's admission rule share the label diagnostic-forced and the refusal FROB-REF-582; no order of work between them"
+  },
+  {
+   "bead": "N27b-18",
+   "dep": "NS-04",
+   "as": "related",
+   "why": "need 1 of N27b-18 names NS-04: a North-Star demo with its own script; the session fixture needs the task file and the film patch, not the demo"
+  },
+  {
+   "bead": "N27b-22",
+   "dep": "BD-159",
+   "as": "related",
+   "why": "need 1 of N27b-22 names BD-159: only the re-run on our tiers uses batch-cpu in f32 and f64"
+  },
+  {
+   "bead": "BD-349",
+   "dep": "N27b-12",
+   "as": "dep",
+   "why": "coverage (d) of U27b: the DC-06 policy record and compiled table that GATE-ATEL-13 registers at M4 are written by N27b-12"
+  },
+  {
+   "bead": "BD-375",
+   "dep": "N27b-18",
+   "as": "dep",
+   "why": "coverage (d) of U27b: the M4 agent comparison reuses the fixture and session script of N27b-18"
+  },
+  {
+   "bead": "N32b-41",
+   "dep": "N27b-17",
+   "as": "dep",
+   "why": "coverage (d) of U27b: the replay packet's fork blocks take fork selection, the ticks decimation must keep and the tables as returned text from the ghost manifest"
+  },
+  {
+   "bead": "N32b-12",
+   "dep": "N27b-17",
+   "as": "dep",
+   "why": "coverage (d) of U27b: the counterfactual-ghost overlay draws from the feed (source: Autopsy)"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N27b-30",
+   "as": "dep",
+   "why": "Scope of N27b-30: the program-wide M3 exit review consumes the Autopsy exit review"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N27b-16",
+   "as": "dep",
+   "why": "coverage (e) item 23 of U27b: the M3 verb sweep and registry freeze take the autopsy cluster's entries and tests"
+  },
+  {
+   "bead": "N27b-16",
+   "dep": "VERBS-autopsy",
+   "as": "dep",
+   "why": "rule 5: the five registry rows are entered first as data by the cluster registry bead; N27b-16 completes and tests them (the pair is also reported as a cross-group duplicate)"
+  },
+  {
+   "bead": "BD-205",
+   "dep": "N27b-07",
+   "as": "related",
+   "why": "coverage (d) of U27b asks that run.fork print double_precision from N27b-07's route: N27b-07 is M3 and depends on BD-205, so the check and the field stay in BD-205 at M2 and N27b-07 reads the stored result (Scopes rewritten)"
+  },
+  {
+   "bead": "N27a-13",
+   "dep": "BD-283",
+   "as": "related",
+   "why": "the re-run report attaches this reader's block for the edited arm against the original; neither bead waits on the other"
+  },
+  {
+   "bead": "N27b-23",
+   "dep": "N27a-13",
+   "as": "related",
+   "why": "acts_by of the divergence reader and the lane's lower bound on a fork window read the same first decision-level divergence"
+  },
+  {
+   "bead": "N27b-05",
+   "dep": "N10c-01",
+   "as": "dep",
+   "why": "rule 6: the statistics (placebo flip rate, contrast, probability of necessity, the test) implement the attribution part of the C-29 specification; G10 linked the seeds only"
+  },
+  {
+   "bead": "N27b-06",
+   "dep": "N10c-01",
+   "as": "dep",
+   "why": "rule 6: the label table implements the labels of the C-29 specification part"
+  },
+  {
+   "bead": "N27a-11",
+   "dep": "N10c-01",
+   "as": "dep",
+   "why": "rule 6: the Shapley summary implements the summary and its laws stated in the C-29 specification part"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N27b-16",
+   "other": "VERBS-autopsy",
+   "note": "both write the five registry entries of the cluster autopsy (kinds, schema names, refusal lists, task clusters) with parity and schema checks. N27b-16 also holds the tests that need the verbs (examples execute, refusal lists cover raised codes, the unknown-verb repair for `autopsy fork`). Suggested: VERBS-autopsy keeps the rows as data, N27b-16 keeps the tests and depends on it (edge recorded)"
+  },
+  {
+   "mine": "N27b-16",
+   "other": "BD-312",
+   "note": "BD-312 enters registry entries, schemas, examples, refusal lists and task-cluster assignments for the whole M3 set and freezes the registry; for the autopsy cluster that is N27b-16's content. BD-312 should take the cluster from N27b-16 (edge recorded). N27b-16 proposes a task cluster `repair` for autopsy.repair and autopsy.rerun, which sit in no cluster of the verb appendix; the assignment belongs to NJL-05"
+  },
+  {
+   "mine": "N27b-12",
+   "other": "N28a-27",
+   "note": "both write the DC-06 record registries/cores/dc-06.toml with its compiled table, forced-trigger demonstrations, shadow records and demonstration manifest: N27b-12 at M3 with the policy (BD-282 adds the abstention replay cases), N28a-27 at M4. Suggested: N28a-27 validates and completes the M3 record for GATE-ATEL-13 and writes no second one; it already depends on BD-282"
+  },
+  {
+   "mine": "N27b-08",
+   "other": "BD-318",
+   "note": "BD-318 writes a planted-defect registry of Autopsy, registry/planted/autopsy.toml, with the 200 single causes; N27b-08 writes the manifest frob-conformance/registry/autopsy_planted.toml for the same 200 failures. One file is wanted; BD-318 depends on the Autopsy beads and should index N27b-08's manifest"
+  },
+  {
+   "mine": "N27a-12",
+   "other": "BD-318",
+   "note": "the joint and alternative pairs row of BD-318's Autopsy registry is the registry autopsy-plants-coalitions.toml of N27a-12 (100 cases and three host tables)"
+  },
+  {
+   "mine": "N27a-14",
+   "other": "BD-318",
+   "note": "the chaotic-placebo row of BD-318's Autopsy registry is the registry autopsy-plants-abstention.toml of N27a-14 (100 chaotic, 100 no-cause, 30 controls)"
+  },
+  {
+   "mine": "N27b-09",
+   "other": "N38b-15",
+   "note": "N38b-15 (self-test CERT-14) runs attribution on 200 planted single causes at the thresholds of GATE-AUTOPSY-03 (90% first with but-for; top factor changes in at most 30%), which N27b-09 measures on the suite of N27b-08. Suggested: N38b-15 reads the suite and the gate row and adds only its broken-certifier controls"
+  },
+  {
+   "mine": "N27a-09",
+   "other": "N29a-21",
+   "note": "two gate batteries on one mechanism with the same fixtures: planted tick and stage through the conformance fault hook, the two-tick case, the pointwise mutant, loose bound and missing samples (GATE-AUTOPSY-07 in N27a-09, GATE-CHRON-06 in N29a-21). The plan wants the fixtures shared and each gate compared with its own row; the fault hook and the trace fixtures should be built once"
+  }
+ ],
+ "new_beads": [],
+ "gaps": [
+  {
+   "section": "Appendix M, Appendix N",
+   "what": "no bead allocates catalogue numbers to rows of subsections added late: the two counterexamples of §27.19 and §27.5 stay under the tags late-01 and late-02 (N27-CX) and the two known answers of §27.19 under lane-1 and lane-2 (N27-KA, N27b-21)",
+   "needed_by": [
+    "N27-CX",
+    "N27-KA",
+    "N27b-21"
+   ]
+  },
+  {
+   "section": "§32.23",
+   "what": "capture of a session's verb calls (resolved request, idempotency key, result digest) in frob-verbs exists only inside seed BD-313, which waits on the whole M3 surface (BD-298, BD-299, BD-312). BD-284 (a lower-numbered seed) builds its transcript on that capture and cannot depend on BD-313. Needed: a small frob-verbs bead split out of BD-313 that BD-284, N32b-38 and BD-313 depend on",
+   "needed_by": [
+    "BD-284"
+   ]
+  },
+  {
+   "section": "§20.4",
+   "what": "frob-sense exposes no operation that rebuilds a packet queue at a given tick under a changed link law (in-flight packets keep sampling instant and value and receive a new delivery instant) or re-initializes a filter state from a stated source; N27a-05 specifies the behaviour for information forks and has to reach into the queue layout of BD-189. Needed as an entry point beside BD-189 and N20a-08",
+   "needed_by": [
+    "N27a-05"
+   ]
+  },
+  {
+   "section": "§23",
+   "what": "no bead delivers a trained reference humanoid policy evaluated on a device tier by M3 (BD-198 trains the quadruped only). GATE-AUTOPSY-09 records G(W) for the reference quadruped and humanoid policies; without the policy N27b-28 records the humanoid sub-clause as not run",
+   "needed_by": [
+    "N27b-28",
+    "N27b-22"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "BD-282",
+   "what": "overlap with N27b-12 re-scoped: Scope rewritten as the capstone of the decision model (abstention contract, GATE-AUTOPSY-05, forced triggers on real forks); the policy and the file registries/cores/dc-06.toml are N27b-12's; deps N27b-12 and N27b-07 added; title shortened from 117 to 104 characters"
+  },
+  {
+   "bead": "N27b-12",
+   "what": "overlap with BD-282 re-scoped: Scope names what BD-282 measures; this bead owns registries/cores/dc-06.toml; dep BD-281 added from its resolved need; the note 'overlap to resolve at load time' replaced by the settled division"
+  },
+  {
+   "bead": "N27a-10",
+   "what": "one scope type for the crate: Scope gains fork_tick and horizon and its controller field covers a policy, so that N27b-15 defines no second type; module layout aligned with the file names and owners the U27b beads use; the layer-rank ADR (frob-nemesis before frob-autopsy in layer 5) is now written by this bead, with an acceptance line (coverage (e) item 6 of U27a had no carrier)"
+  },
+  {
+   "bead": "N27b-15",
+   "what": "overlap with N27a-10 re-scoped: uses the type Scope of the crate skeleton in place of a second struct AttributionScope; dep N27a-10 added; Scope rewritten"
+  },
+  {
+   "bead": "N27-KA",
+   "what": "overlap with N27b-21 re-scoped: one registry file, at crates/frob-conformance/registry/known_answers/autopsy.toml (the path N27b-21 and the other chapters use; was known-answers/); row schema gains site and owner; the two lane answers carry the tags lane-1 and lane-2; the carried-by column names the U27b beads in place of 'BD-280's lane'"
+  },
+  {
+   "bead": "N27b-21",
+   "what": "overlap with N27-KA, N27a-16, N27a-09 and N27b-03 re-scoped: writes no second registry file and fills the bindings of N27-KA's rows; the host fixtures are built by N27b-03 and N27b-07 and held to their derivations here; the thermal derivation is N27a-16's and its constants are used (113.283 °C at 36.95 s, 42.415 s, 81.984 °C; the bead had 113.29 °C at 36.951 s and 42.41 s); the monotonicity derivation is N27a-09's; deps N27-KA, N27a-16, N27a-09 added"
+  },
+  {
+   "bead": "N27b-03",
+   "what": "host fixtures: Scope and step 8 now state that this bead builds the ForkTarget trait and the four host fixtures (parameters folded in from N27b-21), because its own tests, N27b-23, N27a-12 and N27a-14 need them before the suite N27b-21 can exist; ForkTarget is implemented by an adapter over frob_core::fork::ForkService, not by a layer-6 type; the stripped-queue control reads FROB-REF-583 for a disguised strip and FROB-REF-580 from classification for a missing contract field, as N27a-02 and N27a-06 have it"
+  },
+  {
+   "bead": "N27b-07",
+   "what": "overlap with BD-205 re-scoped: the comparison replay at the fork point and the field double_precision are BD-205's (M2); this bead reads the stored result and adds the route record, the repeat run, the lane hand-off and FROB-REF-584; the value same-precision named; the threshold-block fixture stated as built here"
+  },
+  {
+   "bead": "BD-205",
+   "what": "overlap with N27b-07 re-scoped: Scope states the M2 form of the double-precision check and that it is the capstone of N27a-01 to N27a-05; the check gains the value unresolved (fail-closed), as N27b-07 has it; dep BD-204 added (the cross-profile comparison replay); ranked repairs of FROB-REF-581 in the order of the registry row"
+  },
+  {
+   "bead": "N27a-02",
+   "what": "ranked repairs of FROB-REF-581 in the order of the registry row N27-REF"
+  },
+  {
+   "bead": "N27a-09",
+   "what": "duplicate work product removed: the monotonicity derivation is one file, docs/derivations/first-divergence-monotonicity.md, written here at M2; the fuller statement drafted in N27b-20 (monotone, decided, correct, the probe sequences of the trap, the lineage rule, the collision gap) is folded in; Scope names N27b-20's cross-checks"
+  },
+  {
+   "bead": "N27b-20",
+   "what": "no longer writes a second derivation file (docs/derivations/autopsy-first-divergence-monotone.md): it checks and cites N27a-09's; title changed accordingly; deps N27a-09 and N27a-11 added; auditor check 05 reads the level of the factor's family, as BD-281 tests coalitions"
+  },
+  {
+   "bead": "N27a-16",
+   "what": "Scope names the host thermal node (N27b-03) and the suite that holds it to this bead's derivation (N27b-21)"
+  },
+  {
+   "bead": "N27a-13",
+   "what": "Scope names the ghost feed N27b-17 as the reader of its block"
+  },
+  {
+   "bead": "N27b-17",
+   "what": "overlap with N27a-13 re-scoped: the first-divergence annotation per ghost is taken from the fork-against-parent reader and not recomputed; dep N27a-13 added"
+  },
+  {
+   "bead": "N27a-15",
+   "what": "forced-fork child carries the class diagnostic-forced, the spelling of BD-279, N27b-06, N27b-14, N27b-17 and N27b-20 (was the label 'diagnostic: forced-fork'); ranked repairs of FROB-REF-587 in the order of the registry row N27-REF (resynth, family policy, sampling controller, study)"
+  },
+  {
+   "bead": "N27a-17",
+   "what": "asserts the class diagnostic-forced and names the flag --diagnostic-force"
+  },
+  {
+   "bead": "BD-283",
+   "what": "ranked repairs of FROB-REF-587 in the order of the registry row; Scope names N27b-05, N27b-06 and N27b-03 and states the capstone relation to N27a-15, N27a-16 and N27a-17; the placebo re-run uses the keyed generator of N27b-03"
+  },
+  {
+   "bead": "BD-279",
+   "what": "coverage (e) item 7 of U27a: a child reads its parent's streams unless re-keyed (the text said a child has fresh streams); --classify-only restores no child that carries a change, as BD-205 reads it; --diagnostic-force states the admission rule of N27a-15 and the block diagnostic_forced"
+  },
+  {
+   "bead": "N27b-16",
+   "what": "--classify-only wording aligned with BD-205; the row of autopsy.rerun lists FROB-REF-562 and -840, which BD-283 raises; Scope names VERBS-autopsy, BD-312 and the generator beads"
+  },
+  {
+   "bead": "N27a-01",
+   "what": "Perturbation::State carries the applied relative size u·ε with u in [1, 2), the generator rule settled in coverage (e) item 5 of U27b"
+  },
+  {
+   "bead": "N27b-01",
+   "what": "Intervention, FactorPath and FieldPath are the types of frob_core::fork (N27a-01), not defined a second time"
+  },
+  {
+   "bead": "N27b-04",
+   "what": "overlap with N27a-06 and N27a-07 re-scoped: the M2 gate records are theirs; this script re-reads them at M3 on the population manifest of N27a-06; deps N27a-06 and N27a-07 added"
+  },
+  {
+   "bead": "N27b-06",
+   "what": "declares the two optional input types it reads (coalition rescues, episode-start outcome), so that BD-281 and BD-283, which depend on it, supply them and no cycle arises"
+  },
+  {
+   "bead": "N27b-14",
+   "what": "dep BD-274 (the verb nemesis.shrink) moved to related; dep N26a-18 (shrink::ddmin and shrink::pairs as library functions) added"
+  },
+  {
+   "bead": "BD-281",
+   "what": "Scope names N27b-05, N27b-06, N27b-12 and N27b-14 in place of 'built with BD-284', and states the capstone relation, the pilot N27b-10 and the order with the decision N27b-11; states on which verb the Shapley flags live"
+  },
+  {
+   "bead": "BD-280",
+   "what": "the level of a coalition's test follows BD-281 (its own size family); Scope states the capstone relation and that N27b-09 and N27b-11 close the gate-record and kill-decision clauses downstream"
+  },
+  {
+   "bead": "N27b-05",
+   "what": "the divisor of the level is a parameter of the test, so that BD-281 tests pairs at α over the number of admissible pairs (the U27b beads divided by the number of single factors for every coalition)"
+  },
+  {
+   "bead": "N27b-23",
+   "what": "exists only on the branch where KILL-AUTOPSY does not fire: dep N27b-11 added, with the reason in Considerations; related N27a-13"
+  },
+  {
+   "bead": "N27b-24",
+   "what": "exists only on the branch where KILL-AUTOPSY does not fire: dep N27b-11 added, with the reason in Considerations"
+  },
+  {
+   "bead": "N27a-12",
+   "what": "names N27b-03 as the carrier of the host-fixture trait"
+  },
+  {
+   "bead": "N27a-14",
+   "what": "names N27b-03 as the carrier of the placebo mechanism and the doubling-map fixture"
+  },
+  {
+   "bead": "N27b-19",
+   "what": "the FROB-REF-583 trigger is the disguised strip of a packet queue; an outright strip is FROB-REF-580 from classification"
+  },
+  {
+   "bead": "N27-REF",
+   "what": "FROB-REF-580 trigger includes a checkpoint with a contract field missing, as the classifier N27a-02 raises it; KA-671's control reads 580 or 583 by kind of strip; the row of FROB-REF-587 names N27a-15 and N27a-17"
+  },
+  {
+   "bead": "N27a-03",
+   "what": "Scope names N27b-07 as the carrier of the precision routing"
+  },
+  {
+   "bead": "N27a-11",
+   "what": "Scope names the label table N27b-06 and the cross-check N27b-20"
+  }
+ ]
+}

@@ -1,0 +1,251 @@
+{
+ "round": 2,
+ "slice": "S43",
+ "reviewed": 55,
+ "changed": [
+  {
+   "bead": "BD-111",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied both requests: the shadow selector is now N28b-38's per-node one (durable per-node ordinal n, phase p = low six bits of BLAKE3(kind, version, key), shadow when (n + p) mod 64 = 0), with the rejected per-kind ordinal and its starvation case; batched lookups reserve every node's ordinals in one store transaction at planning and assign them in (address, member) order; store policy names N33c-18/N33c-19 (M1) and N33c-20, not BD-220. Found: BD-111 specified key derivation as a hash of a declared field mask while N28b-37 (its dependency, the owner) derives the restricted identity from the recorded (path, value hash) read set with two-step lookup; aligned to N28b-37, keeping the declared mask as a debug-build guard. Scope overlapped N28b-37/N28b-38 (trait, registry, selector, latch, lift rule, modes) and N28b-40 (the 10^4-sequence PO-ATEL-07 battery and the latency protocol with 1,000 edits per template vs BD-111's 200): narrowed Scope to the wiring and the seed's clauses; restated owners' rules marked as theirs; PO-ATEL-07 and latency become smoke lanes here with the gate row N28b-40's; INT-FSIM-16 through the production graph runs N33b-15's synthetic 48-node known answer as test-only kinds. Envelope carries N28b-38's memo block plus the disposition. Tests per node; new batch-order test; related += N28b-40, N28b-41, N33c-18, N33c-20."
+  },
+  {
+   "bead": "BD-285",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied S07 request: acceptance and unit test un-ignore card GB-19's gb_19_mechanism_ballast_digest and require it to pass (24,546 classes; distinct digests for {1,4} and {2,3}), closing the card's lane B with KA-367; GB-19 moved from related to deps (M1, no cycle). Also: the verb's group option read `--group <obs|file>` while VERBS-phylum registers `<obs|mech|file>` and the e2e beads spelt the mechanical group `mechanical` (N17a-27) and `mech` (N17b-15), so the lidar control would meet FROB-REF-802 instead of FROB-REF-161; aligned to `obs|mech|file` with `mech` refused by FROB-REF-161 whenever it leaves Γ_obs, and a sweep fixture that records its slots and types may omit `--slots`/`--types` (as the e2e scripts call it)."
+  },
+  {
+   "bead": "BD-286",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its gate script drove `frob phylum reuse`, the verb of N17b-14, which depends on BD-286 (an implementer could not finish). The gate script now runs the controls and campaign through cargo test lanes and exercises the user path with `frob design edit` / `design check` / `phylum sweep` served vs --no-memo; the campaign writes its verdicts to target/reuse_campaign/verdicts.ndjson, which N17b-14 replays through the verb."
+  },
+  {
+   "bead": "BD-292",
+   "kinds": [
+    "self-contained",
+    "tests"
+   ],
+   "what": "Known answers said 'the same eight moves' but listed four; stated the four opposite moves with test values (DESIGN) and their fresh-evaluation outcomes against ε < (U + 1/2)/4 (recomputed)."
+  },
+  {
+   "bead": "BD-347",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied U38b-1 request: replaced `frob conformance run --gate GATE-ATEL-11` with the ADR-GAUNT-01 form `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- GATE-ATEL-11` (Known-answer tier; mutation feature for the stale-key control), logging the receipt."
+  },
+  {
+   "bead": "BD-353",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Output example gave divergence quartiles in control intervals (max 50 = horizon) while the estimator N17b-22 reports physics steps; output now carries horizon in both units and divergence steps in physics steps. e2e step 3 ran the grazing fixture at the default horizon 50, which N17b-22 shows is refused (160 < 250 = H/4); now --horizon 25 for the labelled case plus --horizon 50 asserting FROB-REF-540 pointer divergence."
+  },
+  {
+   "bead": "BD-356",
+   "kinds": [
+    "deps"
+   ],
+   "what": "N16ax-01 was both a dep and related; removed the related duplicate."
+  },
+  {
+   "bead": "BET-31",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Equal-Σx control used a two-slug {0,3}/{1,2} example inside the eight-slug population; aligned to the fixture of BD-285 and GB-19 (eight-slug placements differing in slots {1,4} vs {2,3}, 1-based, Σx = 5, Σx² 17 vs 13)."
+  },
+  {
+   "bead": "N17b-14",
+   "kinds": [
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Took over from BD-286 the replay of the gate campaign's sequences 0 to 99 through `frob phylum reuse` (verdicts must equal the campaign's recorded ones), with an acceptance line. Also took over from N17b-13 (which it depends on) the command-line check that a quarantined kind's results are refused with FROB-REF-162 through `frob phylum reuse` (new step 7)."
+  },
+  {
+   "bead": "N33c-18",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Scope's Out pointed keys, shadow and serving rules at BD-111; now N28b-37 (keys), N28b-38 (shadow, serving, budget clause) and BD-111 (wiring)."
+  },
+  {
+   "bead": "N33b-15",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps"
+   ],
+   "what": "Scope pointed keys/shadow at BD-111 and eviction/oracle at BD-220; now N28b-37, N28b-38, N33c-18/19 and N33c-20 (M1). Its NodeRecord and N28b-37's MemoNode specified the same record with different fields (inputs/stack_receipt vs reads/deps/device_family): made NodeRecord the one record with the union of fields (request filed for N28b-37 to adopt it and depend on N33b-15). Related += N28b-37, N28b-38, N28c-28, N33c-18, N33c-19."
+  },
+  {
+   "bead": "N10b-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e used non-existent Gauntlet targets --test g1/--test g3; now FROB_TEST_SEED=2212 cargo test -p frob-conformance --test g1_known_answers -- KA-127 and --test g3_metamorphic --features gauntlet-mutations -- MR-05 (ADR-GAUNT-01). Digest calibration step restated as N28b-38's per-node selector and lift rule (wired by N28b-41); related += N28b-38, N28b-41."
+  },
+  {
+   "bead": "N17a-11",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Applied U12-2 request: the bound is frob_conformance::thesis::general_bound(f, r, h) of N00-17 (called with f·e and with f); dep N12-49 replaced by N00-17, N12-49 moved to related."
+  },
+  {
+   "bead": "N17a-26",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Restated the shadow rule it attributes to N28b-41's store policy as 'one hit in 64 chosen by key hash' (a fixed per-key choice: a key is always or never shadowed); now N28b-38's one selector (durable per-node hit ordinal, phase from the key hash, (n + p) mod 64 = 0), so a class's shared node is recomputed once in every 64 of its hits."
+  },
+  {
+   "bead": "N17b-13",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the S34 point: cross-design kinds use N28b-38's one per-node selector (durable ordinal, phase from BLAKE3(kind, version, key), (n + p) mod 64 = 0), its latch and its lift rule Memo::reenable; the stale OPEN on two disagreeing selectors (BD-111 vs BD-220) is replaced by the settled rule and the cases that rejected the alternatives. Scope Out named BD-111/BD-220 as owners of the machinery; now N28b-37, N28b-38, N33c-18/19, with BD-111/BD-220 as wiring. Acceptance 'within 1,000 ± 100 of 64,000' made exact (100 nodes × 640 hits → exactly 1,000, one per 64-hit window per node; alternating keys 100 each). Acceptance 'the comparison is asynchronous' contradicted N28b-38 (a shadowed hit returns the recomputed result): now no latency on unshadowed hits, one recomputation per shadowed hit. Ordering defect: unit test and e2e called `phylum.reuse`, the verb of N17b-14 which depends on this bead, and applied the explanation record from the CLI, which N28b-38 leaves without a surface (OPEN, fail-closed); the e2e now asserts the latch through `frob design check` and `frob store status` across a fresh process, the refusal and lift in-process by named cargo tests, and the verb-level refusal moved to N17b-14."
+  },
+  {
+   "bead": "N17a-19",
+   "kinds": [
+    "scope",
+    "correct"
+   ],
+   "what": "Its e2e steps (and N17a-21's) call `frob phylum generate … --split <spec>`, an option no bead implemented and VERBS-phylum does not register (an unknown option is FROB-REF-802): the option is now in this bead's scope with its output (per-sample orbit key, stratum and side; split identity, manifests, counts, excluded candidates, the straddle result) and an acceptance line; request filed to VERBS-phylum."
+  },
+  {
+   "bead": "BD-287",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "N17a-21 step 4 and this bead's own e2e step gen.sum_to_one need every derivation of an enumerable fixture from the CLI through `--enumerate`, which N17a-21 called 'a DESIGN option' but no bead implemented; the verb now owns `--enumerate` (enumerable specifications only, cap 10⁴ derivations, exact total 1/1; otherwise FROB-REF-802, exit 3) with an acceptance line, and names `--split` as N17a-19's."
+  },
+  {
+   "bead": "N17a-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 4 now cites `--enumerate` as BD-287's option and asserts its refusal on a non-enumerable fixture."
+  },
+  {
+   "bead": "N17a-27",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Lidar control spelt `--group mechanical`; the registered value is `mech` (VERBS-phylum, BD-285), otherwise the step fails on FROB-REF-802 instead of FROB-REF-161."
+  },
+  {
+   "bead": "N17b-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e sampled 24 designs (`--seed 1 --count 24`) and expected their probabilities to sum to 1; a sample repeats and misses designs, so the sum is now checked with BD-287's `--enumerate` and identity stability with two sampled runs of 1,000. The quotient calls used an unregistered spelling (`--slots 6 --types 10 --group @fixture:…`); now `--sweep @fixture:… [--group mech|obs]`."
+  },
+  {
+   "bead": "N28b-41",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the S34 request: the shadow paragraph now states N28b-38's selector exactly (durable per-node ordinal n, phase p from BLAKE3(kind ‖ version ‖ key), shadow when (n + p) mod 64 = 0; the key fixes the phase, the ordinal the rate), so each class's shared node is shadowed once in every 64 of its member hits. Acceptance and `shadow_selection_one_in_64` followed it: detection is certain within 64 hits of one node and bounded by (63/64)^640 ≈ 4·10⁻⁵ over 640 hits on distinct nodes (recomputed); repeated member hits give exactly 100 of 6,400, not a binomial band."
+  },
+  {
+   "bead": "N28c-29",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Applied the UJL-2 request: both rows keep first_milestone M4 while the handlers answer earlier with restrictions named (result.revalidate from M1 via N28b-32, measuring GATE-ATEL-11's M1 row through the verb; mission.revalidate from M3 via N25a-16); removed the contrary claim that the M1 row is measured 'not through a verb'. Found: the engine and the single-engine guard named `frob_opt::revalidate`, but BD-292's engine is `frob_verbs::revalidate` (the guard would test a module that does not exist). The verb-level comparison needs mission.revalidate's handler, which this decision does not depend on: logged `skipped` with its owner until it answers; related += N25a-16, VERBS-mission."
+  },
+  {
+   "bead": "N28c-42",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "e2e read the ledger through `frob-conformance run reuse.ledger …`, a binary BD-025 says does not exist (the crate is library plus test targets) and its lint does not catch; now `cargo run -p frob-chronicle --example reuse_ledger_read -- …` (request filed to BD-025 for the 35 other beads that do the same)."
+  },
+  {
+   "bead": "N28c-43",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Applied the UJL-2 request: dep VERBS-train added and the train.start options it lists as this bead's (`--from-scratch`, `--no-carry`, `--no-memo`, `--match-return` with `--seeds`) named in scope. The decision control ran through the non-existent `frob-conformance run`; now `cargo run -p frob-opt --example reuse_decision_control -- …`."
+  },
+  {
+   "bead": "N28c-44",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the UJL-1 request: `--run-control` is design.diff's second action in N32a-02's two-kind form (actions = [{ name = \"run-control\", kind = \"run\", capabilities = [\"design:run\"] }]), dispatched by NJL-01's `action` property with one CLI spelling `--run-control`; run common properties, scope design:run (FROB-REF-720 without it), read_only false; `[counts]` by_kind updated in the same change (read one lower, two kinds 4, NJLx-51 rule 4). Acceptance line and two unit tests added; the Considerations 'sub-mode' wording aligned; related += NJLx-51."
+  },
+  {
+   "bead": "N28c-45",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Considerations said M3 warm starts include 'weight reuse where spaces are unchanged', contradicting its own step 2 and N28c-43 (no M3 verb starts a policy from a parent's weights; train.inherit is M4): now solver warm starts only at M3, with trained and topology edits not-measured or zero until M4."
+  },
+  {
+   "bead": "N33c-19",
+   "kinds": [
+    "scope",
+    "correct",
+    "tests"
+   ],
+   "what": "Scope Out named BD-111 for keys, serving and shadow; now N28b-37, N28b-38 and BD-111 (wiring), as N33c-18. N28b-38's serve path relies only on `admit(node) → Admitted | NotCached(reason)`, which this bead implements but never named: added the interface (reasons size, cost, pins; replaces N28b-38's interim refuse-at-budget store) and a unit test `admit_reasons`."
+  },
+  {
+   "bead": "N33c-20",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Scope Out named BD-111 for key derivation and shadow recomputation; now N28b-37, N28b-38 and BD-111 (wiring)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N28b-37",
+   "what": "Two beads specified the memo node record differently: N33b-15 (single owner of the Recompute trait and of the local implementation LocalRecompute) now defines NodeRecord as the one record with the union of fields (kind, key, inputs, reads as (path, value hash), deps, output, class, device_family, achieved_error, cost, stack_receipt). Make MemoNode that record (or name it as N33b-15's NodeRecord), drop 'the local node record used if the sibling is not admitted' from N28b-37's In scope (it is N33b-15's), and add dep N33b-15 (the wrapper stores nodes through Recompute; no cycle: N33b-15 does not reach N28b-37)."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "phylum.generate's inputs and the option table lack two options that M3 beads implement and the GATE-PHYLUM-07 script (N17a-21) calls: `--enumerate` (BD-287: every derivation of a specification marked enumerable, with exact probabilities and their total; refused with FROB-REF-802 otherwise) and `--split <spec>` (N17a-19: per-sample orbit key, stratum and side, the split identity and the straddle result). Add both to the inputs line and the option table. Also state under phylum.quotient's enumeration form that a sweep fixture (`@fixture:<name>`) recording its slot set and type list may omit `--slots` and `--types` (BD-285; N17a-23, N17a-27 and N17b-15 call it that way)."
+  },
+  {
+   "bead": "BD-025",
+   "what": "ADR-GAUNT-01 says frob-conformance is 'library plus test targets; no binary, no verb', and the lint no_conformance_command scans only `frob conformance` and `frob-conformance record`. 37 beads' scripts invoke `frob-conformance run <check> …` as if it were a binary, so they pass the lint and fail at run time: BD-350, N28c-03, -05, -06, -08, -09, -11, -13, -14, -15, -16, -17, -18, -19, -26, -27, -28, -31, -32, -34, -35, -36, -37, -39, -40, -41, N30a-26, -39, -44, -48, N30b-24, -30, -32, -34, -35 (N28c-42 and N28c-43, in S43, are converted to `cargo run -p <owning crate> --example <name> -- …`). Add `frob-conformance run` (any invocation of a frob-conformance binary) to the lint's literals and state the two admitted replacements (a cargo test target with FROB_TEST_SEED for a Gauntlet row; an `--example` of the owning crate for a harness reader or driver), so the owners of those beads can convert them."
+  }
+ ],
+ "unchanged": 27,
+ "notes": "All 55 beads of WP-63 read in full, in build order. All nine addressed requests applied after checking each against its owner bead (BD-111 ×2, BD-285, BD-347, N17a-11, N28b-41, N28c-29, N28c-43, N28c-44). Main finds round 1 missed: (1) the memo graph's owners: several beads still pointed keys, shadow and eviction at BD-111 or BD-220 and restated the old shadow rules (per-kind ordinal, key-only, 'chosen by key hash', ±100 counts, an 'asynchronous' shadow); aligned BD-111, N17b-13, N17a-26, N28b-41, N33b-15, N33c-18/19/20 to N28b-37/N28b-38; (2) ordering: BD-286 and N17b-13 drove `frob phylum reuse`, the verb of N17b-14 which depends on both; (3) verb options used by gate scripts that no bead implemented or that used unregistered spellings: `--split` (N17a-19), `--enumerate` (BD-287), `--group mech`, the sweep-fixture form (BD-285, N17a-27, N17b-15); request to VERBS-phylum; (4) a non-existent `frob-conformance run` binary in 37 scripts (two fixed here, request to BD-025); (5) unit errors (BD-353), a refused horizon in an e2e, the wrong crate for the revalidation engine (N28c-29), Gauntlet target names (N10b-12), an incomplete known-answer list (BD-292), an M3 warm-start contradiction (N28c-45). Arithmetic re-verified: ballast 735,471/24,546, 56/54, 495/395, 210/182; Burnside 86,185, 500,500, 166,870, 92, 378; bounds and shadow probabilities. 27 beads unchanged. No bead merged, superseded or created. Not settled yet: BD-025 and VERBS-phylum must take their requests and N28b-37 must adopt N33b-15's NodeRecord; after that the slice should need little."
+}

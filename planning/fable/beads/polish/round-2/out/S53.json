@@ -1,0 +1,444 @@
+{
+ "round": 2,
+ "slice": "S53",
+ "reviewed": 48,
+ "changed": [
+  {
+   "bead": "ART-L3",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "self-contained"
+   ],
+   "what": "Under the admission rule (§24.5 'one near the boundary of each comparator', N24a-12 rule 3, m <= 0.1) the eleven traces failed for `upright` (smallest |rho| 0.42, V1 only): S1 now carries tilt 11.4 deg at tick 300 (margin +0.05); near-boundary values per atom listed and tested (l3_near_boundary); nominal trace made tick-exact (distance falls at 0.6 m/s, at-pass first true at a-4, speed 0.02 m/s from the arrival tick); V7 and V8 made exact so the deletion mutants flip them; four-example control now also names the six atoms without a near-boundary example; traces are .frun fragments marked synthetic (N24a-12's form) and task.check/show/verdict calls carry the TaskId and --task as in the VERBS-task row; known answers cite JL-09 and JL-10 of NJLx-02; deps N24a-12 and N24c-02 added (vacuity/near-boundary and task.verdict are used by the AC)"
+  },
+  {
+   "bead": "BD-201",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Round-1 request (N24c-16 dep, source record, no-parity sentence, three tests) was already applied; removed N24c-16 from related (it is a dep). E2E made concrete with the row syntax and an idempotency key on every task.new, task.settle and eval.run call (distinct keys per tier), with failure and summary lines"
+  },
+  {
+   "bead": "BD-248",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "FROB-REF-566 is raised by nemesis.audit prepare (N26-REF, N26b-03/N26b-07, M4), not by the corpus loader: AC, test corpus_winner_needs_rank_record and the control now assert usable_as_control = false from N24b-02's loader; e2e names its harness target (cargo test -p frob-arena --test corpus_content)"
+  },
+  {
+   "bead": "BD-253",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E made concrete with row syntax and idempotency keys for scene.gen, scene.accept, scene.split, task.new, task.settle, eval.run; failure and summary lines"
+  },
+  {
+   "bead": "BD-254",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "FROB-REF-567 on the hard battery is raised by BD-275 and N24b-16, which depend on this bead (KNOWN_DRIFTS 7): AC and unit test now assert that hard items are in the discovery record the guard reads; gate recording stated in the Gauntlet form (g1_known_answers scorecard_accounting, KA-600, record_gate) with N24b-23 adding end-to-end evidence; e2e eval.run call uses the row syntax (design positional, --key)"
+  },
+  {
+   "bead": "BD-255",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request from S37 applied: task.verdict called with the run positional and --task, task.settle with the task positional, --model and a key; --online and task.settle --tier kept as options this bead adds (requested of VERBS-task); sim.run with design positional and key; sim.replay with --run/--world (the old --from is a tick option); the cortex-verdict battery run in the Gauntlet form (KA-593). Round-1 request to drop BD-255 from BD-257 declined: the seed lists it and the pilot's evaluation verdicts on the batched tier are BD-255's"
+  },
+  {
+   "bead": "BD-256",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E calls aligned with the rows (task.check/verdict with TaskId and --task, keys on harness task.new calls); gate recorded with record_gate"
+  },
+  {
+   "bead": "BD-257",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Pilot record path and schema per KNOWN_DRIFTS 3 (crates/frob-conformance/registry/pilots.toml, frob.gauntlet.pilot/1, protocol table, appended result); e2e no longer uses study.plan for registration; arms B, C and A-minus run through a named pilot harness example (no verb option is added), arm A through train.start with keys; eval.run with keys and the controller binding"
+  },
+  {
+   "bead": "BET-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Hand known answer was a raw difference in metres and millimetres (-0.03 m / -30 mm), contrary to ADR-ARENA-03: now the normalized margin -0.6 in both unit systems, raw composition named as the shortcut (KA-581); consideration 'margins have units, cross-unit comparison refused' replaced by the dimensionless rule with FROB-REF-520; e2e reads the three gates from the register, re-runs evaluator agreement in the Gauntlet form (g1_known_answers GATE-ARENA-03), evaluates the exploit run with task.verdict <run> --task, and reads N00-37's sealed-variant summary"
+  },
+  {
+   "bead": "N00-37",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "KNOWN_DRIFTS 1: the campaign entry was a frob-conformance binary subcommand; now an example target (cargo run -p frob-conformance --example bet24_acceptance); registration moved from a private toml to one [[experiment]] entry of N38a-07's register (frob.gauntlet.experiment/1, claim, study_type, the six parts with pairing stated) plus a hashed protocol document; Clopper-Pearson bounds 0.816/0.775 and intervals [0.016, 0.204]/[0.108, 0.385] checked"
+  },
+  {
+   "bead": "N23ap1-01",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request from S30 applied: N24a-07's validity counter vcov restated (nested nodes and missing samples invalid over the whole window; reset clears vcov); the cortex-verdict battery runs through the Gauntlet (g1_known_answers KA-593, features per backend) instead of eval.run --backend (not a row option); spark.check calls carry keys; task.check with the task positional; dep N23-KA (the KA-593 row) added"
+  },
+  {
+   "bead": "N24a-14",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E made concrete with the row syntax: task.new with keys for the two policy-clock variants, task.check with TaskId, train.start with design, --task, --algo, --seed and distinct keys, task.verdict <run> --task; failure line and summary naming KILL-SPEC-REWARD. Request from S30 (no BD-255 dep) already satisfied"
+  },
+  {
+   "bead": "N24a-15",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Outcome words aligned with the gate register (fired / not-fired / not-reached, N40-03); a pilot not run by M3 is not-reached, not 'fired for want of evidence'; ADR path docs/adr/ADR-KILL-SPEC-REWARD-M3.md with N40-03's required fields and the register's decision table; required pilot controls now BD-257's four (shuffled-label applies only to distillation, section 23.23); e2e reads the pilot through N38a-09's reader, not predict.report (agent prediction calibration); test pilot_not_run_is_not_reached added"
+  },
+  {
+   "bead": "N24a-19",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "E2E used BD-201's velocity-tracking task, but BD-201 depends on this bead (KNOWN_DRIFTS 7): now a synthetic fixture battery added to arena_scorecards.sh, eval.run in row syntax with keys on referee and batch-cpu, eval.scorecard with the run; failure line"
+  },
+  {
+   "bead": "N24a-20",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E sim.run calls in row syntax (rig positional, --task, --worlds, --seconds, distinct keys for the std and dup quadrature variants), the sill and pyramid rigs named, eval.scorecard with the run; failure line"
+  },
+  {
+   "bead": "N24a-21",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "E2E used the parallel-shift task of N24a-28, which depends on this bead (KNOWN_DRIFTS 7): now a synthetic fixture task with stages; analyze.maneuverability by its row; eval.run with keys including the planted infeasible program; FROB-REF-888 asserted end to end; failure line"
+  },
+  {
+   "bead": "N24a-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Runs A/B/C used options not in the eval.run row (--task/--scene/--model/--seed/--worlds/--no-memo, KNOWN_DRIFTS 8): now design, battery, tier and distinct keys, the four identities pinned by the battery manifest and the compiled design, fresh cache root, worker count and slot assignment from the pool configuration; live-dependency variants as battery and design variants; job.wait and eval.scorecard in row form; gate recorded with record_gate"
+  },
+  {
+   "bead": "N24a-25",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Near-boundary examples quantified by N24a-12 rule 3 (tilt peak in [31.5, 35) deg, deviation in [0.675, 0.75) m; arrived and settled cross their thresholds in every stopping crossing); e2e in row syntax with keys (scene.gen twice for the SceneId check, task.check, task.settle, eval.run per tier) and the planted impossible gap asserted; failure and summary lines"
+  },
+  {
+   "bead": "N24a-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Labelled examples lacked near-boundary cases for upright and clear, so admission (N24a-12 rule 3) would refuse the task: added a legged crest with tilt in [22.5, 25) deg and an aisle turn at most 5 mm from the racking, and quantified the others; ramp threshold 0.2628, its control 0.1752, margins and CoT checked; e2e in row syntax with keys per friction point, task and fraction, thermal-limit case asserted"
+  },
+  {
+   "bead": "N24a-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Failure class film-slip listed among this bead's scorecard classes although its monitor arrives with N24a-38 (AC already said so): now conditional; near-boundary examples for upright and clear added (N24a-12 rule 3); squeeze times, stopping and turning limits and grip margins checked; e2e in row syntax with keys, telemetry.query and telemetry.stills by their rows"
+  },
+  {
+   "bead": "N24a-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The 'narrow' lateral example ended 0.03 m off (margin -0.5, not near the boundary under N24a-12 rule 3): now 0.021 m (margin -0.05, the near_boundary_lateral case), with a satisfying 0.019 m shift and a clearance example; chained-until stage budgets checked; e2e in row syntax (scene.gen, analyze.maneuverability, task.settle, eval.run with keys); CX-260 tied to KA-595's control"
+  },
+  {
+   "bead": "N24a-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "E2E evaluated single scenes, but eval.run takes a battery: cases (a) to (e) are fixture batteries, each with its own key; scene.gen, scene.split, train.start, train.export and eval.promote in row syntax; --in-sample marked as this bead's option asked of VERBS-eval, the policy's controller input likewise; gate row written with record_gate by a fresh session"
+  },
+  {
+   "bead": "N24a-32",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E calls aligned with the rows (task.new with key, task.check with TaskId, task.verdict with trace and --task)"
+  },
+  {
+   "bead": "N24b-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KNOWN_DRIFTS 1: --test g1 replaced by g1_known_answers; the FROB-REF-566 raising site named (nemesis.audit prepare, N26b-03/N26b-07)"
+  },
+  {
+   "bead": "N24b-23",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request from S30 applied: battery_shortened asserts battery-manifest-invalid with kinds no-event and record-edited; KNOWN_DRIFTS 1 (g1_known_answers), 5 (distinct keys for the two compared smoke runs, keys on every run) and 7 (steps 8 and 9 no longer skipped: BD-278 added as dep; the qualification lane is already a transitive dep); eval.run and nemesis.oracle in row syntax"
+  },
+  {
+   "bead": "N24c-16",
+   "kinds": [
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "ADR paths named (docs/adr/ADR-OPEN-ARENA-1.md and -2.md, KNOWN_DRIFTS 4); the bead had no script: added scripts/e2e/open_arena_decisions.sh running the record tests and the two planted controls with NDJSON per STD-E2E, the consumer-side logging kept"
+  },
+  {
+   "bead": "N24c-20",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot register path and schema per KNOWN_DRIFTS 3; the driver's log made a named script (scripts/e2e/pilot_task_audit_foils.sh) with STD-E2E fields, controls run first, reproduction data on failure; STD-E2E added as dep; dwell hand case checked"
+  },
+  {
+   "bead": "N24c-21",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Its only e2e used task.audit --in-campaign, a verb of N24c-22 which depends on this bead (KNOWN_DRIFTS 7): added its own script (task.new adopting the seven invariants, task.check offline-only and intent-signal-misused, task.verdict intent records on the synthetic traces), the N24c-28 steps kept as the user-side run; STD-E2E added; dwell, attitude and capacity numbers checked"
+  },
+  {
+   "bead": "N24c-22",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The hand case used the sled foil, delivered by N24c-23/N24c-24 which depend on this bead (KNOWN_DRIFTS 7): the sled episode now enters as a synthetic trace through the in-campaign arm (a dependency), AC adjusted; own script scripts/e2e/task_audit_core.sh with keys (audit, resolve, task.check, task.verdict, eval.qualify refusals with the index); STD-E2E added"
+  },
+  {
+   "bead": "N24c-23",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps",
+    "complete"
+   ],
+   "what": "AC 'sled reproduces the 0.2 s dwell' had no unit test: sled_hand_case_dwell added, and list_bodies_runs_nothing; the listing option --list-bodies used by N24c-28 had no owner: defined here and asked of VERBS-task; own script scripts/e2e/foil_library.sh (listing, design.show, foil-as-candidate on eval.compare, eval.qualify, eval.promote) since the search is N24c-24's; STD-E2E added"
+  },
+  {
+   "bead": "N24c-24",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Its e2e was only steps of N24c-28's later script: own script scripts/e2e/task_audit_search.sh (task.audit with the task positional, --arms foil twice under distinct keys for the archive digest, --arms actual, the two-loophole task, job.wait); budget arithmetic 128,000 and 65,536 checked"
+  },
+  {
+   "bead": "N24c-25",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Script calls given in row syntax with a key per task and pass (the determinism re-run would otherwise return the stored receipt, KNOWN_DRIFTS 5); job.wait in row form; gate recorded with record_gate by a fresh session; 24/30 interval 61-92% and containment test checked"
+  },
+  {
+   "bead": "N24c-26",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-FOIL-M3.md with N40-03's fields; outcomes mapped to the register's words (kept = not-fired, fallback after the run = fired, pilot falsified or compute not approved = not-reached, a cycle past M3 = deferred); the fresh-fixture repair cycle recorded as a stricter reading of N40-03 step 5 (request made); own script kill_foil_decision.sh replacing 'no script'; STD-E2E added"
+  },
+  {
+   "bead": "N24c-27",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The hand-case fixture used the requirement-derived reward term, which exists only if KILL-SPEC-REWARD does not fire (N24a-14, off by default) and is not a dependency: now an ordinary rate term over the same three margins (full return 60; the 58 of the requirement-derived form kept as a note); own script task_audit_idle.sh measuring GATE-ARENA-15 with keys and record_gate; STD-E2E added"
+  },
+  {
+   "bead": "N24c-28",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step table brought to the rows: task.audit with the task positional (not --task), default budget instead of the unregistered --budget-share, task.show without --section, eval.qualify/compare/promote/ledger and job.cancel in row form, a key on every run and mutate call; return 60 to match N24c-27; AC on keys added"
+  },
+  {
+   "bead": "N24c-29",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot register path and schema per KNOWN_DRIFTS 3; driver log made a named script with STD-E2E fields and controls first; all part 1 fractions (39/400, 3/400, 309/36,400, 399/400, ratio 3549/309) checked; STD-E2E added"
+  },
+  {
+   "bead": "N24c-30",
+   "kinds": [
+    "e2e-logging",
+    "complete",
+    "deps"
+   ],
+   "what": "AC 'old fit versions remain readable' had no input to read them: eval.items gains an optional fit version; --class and --fit asked of VERBS-eval; own script eval_items.sh on the synthetic prepared-fit battery (the refit and --comparison are N24c-31's); STD-E2E added"
+  },
+  {
+   "bead": "N24c-31",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Options of the item-bank mode (--battery, --sampling, --epsilon, --fit, --explain-variance, --sequence) are not in the eval.compare row: stated as this bead's and asked of VERBS-eval; own script item_bank_sampling.sh (exact variances, refusals, nominal equality) since N24c-32 depends on it; STD-E2E added; floor arithmetic 759/100,000 checked"
+  },
+  {
+   "bead": "N24c-32",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Step table given --task and distinct keys (10^4 replays with one key would return one stored receipt), eval.qualify/promote/ledger and nemesis.bound in row form; gate recorded with record_gate; the options it relies on named with their owning beads"
+  },
+  {
+   "bead": "N24c-33",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "record_matrix uses eval.run in row syntax with a key per design and job.wait; gate recorded with record_gate by a fresh session"
+  },
+  {
+   "bead": "N24c-34",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-ITEMBANK-M3.md with N40-03's fields and outcomes in the register's words (kept and kept-unproven = not-fired, fallback after the study = fired, pilot falsified or unfunded = not-reached); new-matrix repair cycle recorded against N40-03 step 5; own script kill_itembank_decision.sh replacing 'no script'; STD-E2E added"
+  },
+  {
+   "bead": "N24c-35",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "E2E calls in row syntax with a key per study (two keys for the schedule-invariance pair), the qualification refusal before commitment; --sampling stratified named as an option asked of VERBS-eval; hand cases 9/8 and 1/10 checked"
+  },
+  {
+   "bead": "N24c-39",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot register path and schema per KNOWN_DRIFTS 3; driver log made a named script with STD-E2E fields, controls first and the address-disjointness check; toy table and rate/retiming counterexamples checked; STD-E2E added"
+  },
+  {
+   "bead": "N24c-40",
+   "kinds": [
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "--choose, --arms and --pilot-worlds are not in the task.check row: stated as this bead's and asked of VERBS-task with the kind question (the lock appends a ledger record from a read verb); run_domain/run_baseline given as eval.compare calls with a key per pair and arm, the pre-lock refusal under its own key, and the battery half recorded with record_gate by a fresh session; pooled-ratio and toy values checked"
+  },
+  {
+   "bead": "N24c-41",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "ADR path docs/adr/ADR-KILL-EXPODOMAIN-M3.md with N40-03's fields and outcomes in the register's words (kept = not-fired, fallback = fired, no battery measurement by M3 = not-reached); own script kill_expodomain_decision.sh replacing 'no script'; STD-E2E added"
+  },
+  {
+   "bead": "N24cp1-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The three steps it adds to the audit script given as exact task.audit calls (task positional, distinct keys, the foil refusal and the actual-design arm per branch)"
+  },
+  {
+   "bead": "N24cp1-02",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "choose_refused given the full task.check form; adapter_missing_refused given as a keyed task.new call expecting stream-adapter-missing"
+  },
+  {
+   "bead": "N28b-10",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "The e2e relied on the experiment harness of N28b-11, which depends on this bead: the clock's ledger functions (deliver_brief, campaign_time) are now this bead's, exposed through an example program, not a verb; qualify and design.edit calls in row form with distinct keys and the brief's campaign; Clopper-Pearson values 0.9440, 0.9279, 0.9179 and 0.8916, rmt 6,000 s, ratio 6/5 and cap 25/3 checked"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-task",
+   "what": "task.verdict has no --online option and task.settle no --tier, both used by BD-255 (device verdicts and settling on gpu-cuda): add them to the rows or say how BD-255 reaches those modes"
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "task.audit: add --list-bodies (N24c-23 lists the foil bodies a task would get and runs nothing), with N24c-23 under Extended by"
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "task.check: add --choose, --arms and --pilot-worlds (N24c-40, the choice among legal couplings) under Extended by; --choose appends a lock record to the ledger, so either that mode is kind mutate with an idempotency key or it moves to its own verb"
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "the sim.run row has no --seed, which about 83 beads pass; add it or state the seed's source (world address or key) so those scripts can be aligned"
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.run: add the candidate's --controller (BD-257, N24a-31), --in-sample (N24a-31), an operator-only --workers on batch-cpu (N24a-24) and the single-task form --worlds n --run-seed s that N24c-04 specifies"
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.items: add --class and an optional --fit <version> (N24c-30: old fit versions stay readable)"
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare: add --battery, --sampling (nominal default; item-bank from N24c-31; stratified from N24c-35), --epsilon, --fit, --explain-variance and --sequence, with N24c-31 and N24c-35 under Extended by; eval.qualify takes --sampling only to refuse it (N24c-32, N24c-35)"
+  },
+  {
+   "bead": "NEG-15",
+   "what": "allow a class row with reference: none plus a reason and a revisit condition (N24c-16 records ZOO-hexapod-radial with no permissively licensed reference robot)"
+  },
+  {
+   "bead": "N40-03",
+   "what": "step 5 reads a repair cycle as a re-measurement on the same fixture; admit a cycle on fresh instances of the same fixture construction when the first instances' labels or per-pair results were exposed (N24c-26 fresh planted tasks, N24c-34 a newly recorded matrix), logged with the reason"
+  },
+  {
+   "bead": "N24c-02",
+   "what": "optional: say how a synthetic example trace that records no TaskId is treated by task.verdict (accepted without --re-evaluate), which the audit beads' hand cases use"
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Round 1 left most WP-24 beads with their e2e inside later capstone scripts or on later beads' deliverables, with calls outside the VERBS rows, run calls without keys and kill-gate records without N40-03's ADR path and outcomes; each bead now has its own script on its own and its deps' deliverables, three admission near-boundary gaps (N24a-26 to N24a-28) and N24c-27's gated reward term were fixed, and the slice is settled once the VERBS requests land."
+}

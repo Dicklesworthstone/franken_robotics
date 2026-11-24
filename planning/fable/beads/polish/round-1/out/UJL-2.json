@@ -1,0 +1,608 @@
+{
+ "round": 1,
+ "slice": "UJL-2",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "VERBS-explain",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "explain.design owner frob-chronicle (BD-112); inputs of the three verbs from BD-112 and N28a-17 (compare: stored comparison, --metric, --budget 600, --regimes 3); explain.compare 548 replaced by 840 (548 is not in N28-REF's verbs column for it), explain.run lists 840 and 888; runnable example and TOML; owners test added. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "fidelity.ledger inputs per N16bp1-01, paginated, exit 2 on a missed stratum, implemented by N16bp1-01 and BD-212; energy, coverage and modelform inputs; energy lists 840 and 888 (N29a-22); shadow actions start/stop/configure/status (BD-214) plus audit on the KILL-SHADOW branch (N16b-20) with --job/--run, --p, --cpu-cores, --tier; runnable examples; shadow_actions_enumerated and ledger_paginated tests; MCP name list completed. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-fleet",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "fleet.status tier F to S with --machine and --campaign, full outputs and cost model, implemented by N21c-15; fleet.plan inputs (--job repeatable, --campaign, --explain), outputs and the meaning of 618 for a plan; KILL-FLEET note updated. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "applied U31a/U31b requests after checking N31a-51, N31-REF, N31b-35/36, N31a-62: check gains --for packet, --exploratory, --review-record, --firmware-receipt and 169, 261, 860; export gains --packet/--geometry-only, --priced, --with-firmware, --controller and 169, 819, 820, 830; lifecycle --strict-data and 113; loads --for/--admit packet with 820, 821; size 169; uncoded names held in Pending lines; tests and TOML updated. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-gait",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "atlas inputs and exit 2; continue per BD-335 (flags, typed outcomes, cost model, three keyed examples); gradient --params/--metrics with a runnable example; orbit per BD-333 grammar (--set, --section, --form, --modes), refusals 431 and 461 (224 dropped with a correction note), needs_groups spectral (790); needs_groups_orbit and examples_have_keys tests; related N33c-32, N22-REF. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-ground",
+   "kinds": [
+    "complete",
+    "tests",
+    "correct"
+   ],
+   "what": "ground.band input forms (--cell/--design, --metric, --level, --sided, --for, --list, --status, --retire); ground.kit build/check forms with a runnable keyed example; refusal_lists completed (kit 899, predict 883); kit_forms test; MCP name list completed. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones. ground.excite returned to the appendix's M4 (BD-137 keeps the appendix value; it answers 724 until BD-390 lands at M5), with its note, the consideration and the kinds test."
+  },
+  {
+   "bead": "VERBS-job",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "job.cancel reason, exit 8 while cancelling and idempotent repeat; job.find needs --verb and --key and keeps the submitting verb's evidence; job.list filters and paginated; job.status --worlds/--events; job.wait semantics; unknown job is 802 with a pointer; refusal_lists, inputs_by_row and full MCP names tests. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-mission",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U25a/U25b/U25c requests after checking BD-135, N25a-03, BD-293, N25b-10, BD-358, BD-291, N25c-13 and the gate register, under the shared milestone rule (BD-137, NJL-01): rows keep the appendix's milestones (distinguish, separate, revalidate M4; transport M8) and a table names the forms that answer earlier: distinguish M1 reduced (BD-135), probe design M3 (BD-291), separate and revalidate M3 (GATE-AUGUR-13/-12), transport static core M4 (N25c-02); synthesize lists 881; show paginated with --at from M4 (N25b-10, BD-358); revalidate inputs --after-edit/--against and 874, 881 (N25a-16); transport inputs and 847, 850, 851 (N25c-02); refute/revalidate/transport examples keyed and runnable; full refusal_lists, early_forms_not_remilestoned, run_examples_have_keys and MCP name tests. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-module",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "module.substitute: inputs --at, --with module@hash, --bind, expected parent; 112 (reserved by N14-REF to design.patch's patch reader) replaced by 111 (lock and bind bounds, raised per BD-077), stale parent is the appended 804; example gains --at and --expected-parent; module.characterize --box and --directions per N14b-28; tests updated with a planted-112 negative and full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "applied U26b requests after checking N26b-23 and BD-276: hardset action carry (run, nemesis:write, M4, owner N26b-23, 724 before M4, progress in source worlds) with its outcomes and cost; 569 on nemesis.bound noted as the decision policy's fallback trigger (b), recorded in the result's fallback block, not the exit; inputs of every verb from BD-271/273/274/275/276/278 and N26b-05 (audit prepare/run and offline form); bound, cover and oracle examples made runnable (--tier, --task-family/--slots, --task/--world/--legality); hardset show paginated; implemented-by adds N26a-23, BD-277; actions_enumerated test, full refusal_lists and MCP names, e2e step for the M4 actions. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-operator",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "applied U32a and U32b requests after checking BD-022, N32b-17/19/20: the four orientation verbs have capabilities [] with public = true (RL-10); doctor --section (repeatable) with the full section table and the beads that contribute each (N21b-01, N34-26, N32ax-03, N33a-14, N32b-20 store) and --notices (N37-18); capabilities --verb, --device, --status, --cluster, --milestone, --missing, paginated; robot-docs --verb, --budget, --encoding; schema --verb/--in/--out/--list paginated; doctor spelling conflict with N32b-20 (--check) settled to --section; public_rows, doctor_sections, inputs_by_row tests and e2e steps 8-11. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-opt",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "opt.start inputs per BD-341 and --family kinds per N28b-09, refusals add 111, 540, 541, 542, 543, 556, 761; opt.cascade inputs per BD-352 and its callers (--spec, --population, --allocation, --stage, --manifest, --plan-only, --finalists-from) and 557; opt.archive --campaign/--top/--stratum, paginated; opt.status outputs and N28b-08's race_ledger; runnable examples (the former --space was no input); inputs_by_row test, full refusal_lists and MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied the U17b request: phylum.sweep gains --controller, --seed, --profile, --waste-limit, --campaign, --map-spec and N17b-29 in implemented-by; every row's inputs taken from its implementing bead (generate --generator/--count, gradient --design/--metric and BD-353 options, map --campaign/--dispatch/--map/--merge, plan, quotient's two forms, reuse's edit and lineage forms); five examples fixed to the registered spellings; map, quotient and reuse paginated; inputs_by_row and paginated_rows tests; full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-policy",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied the U23a request after checking N23a-25 and N23-REF: refusals 531, 534, 537 (537 for --score-for-ladder), 541 recorded as cited not raised; inputs (fam:/class:, --task, --fine-tune none|steps|fraction|to-target, --seed, --score-for-ladder) and outputs (BoundPolicy, in_distribution, exit 5 when no family policy) per N23a-25; implemented-by adds N23a-24; TOML and tests updated. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-predict",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "predict.register lists 883 (prediction changed after freeze, merged into 883 by N28cx-01) and holds prediction-after-outcome as pending (held in 8xx; interim 883 with detail registration-after-outcome); inputs, outputs and dispositions per BD-344; predict.report filters --predictor, --metric, --since and the accounting identity; TOML and refusal_lists updated. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-prove",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U12-1 and U25b requests after checking BD-382, N12-28, BD-027, BD-133: prove.reflect reflector values kebab-case farkas, ldlt-pos, poly-eq, replay with the kind map, --certificate input, 701 and 724 stated as the appended codes it raises, implemented by N12-28 too; --key as the one key spelling; 848-851 dropped from prove.verify (mission codes stay on mission verbs) with --all and --query; prove.list gains --class, --checker, --withdrawn (N25b-03), --effects (N12-12), --coverage (BD-379); prove.kernel's no-certificate exit 2; prove.bundle example is the M1 form; reflector_values and inputs_by_row tests, full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-report",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "rows completed from BD-302, BD-352, N28c-44, N39b-46, N28c-12, N19a-39 and N28-REF's raised-by columns: report.campaign inputs --cite, --compact, --claims-realism, --arms/--stratum/--regime/--ablate, --register-comparison and codes 312, 557, 820, 845, 862, 863, 865, 869, 872; report.design 312, 557, 820, 845, 869, 872; report.run --claim reality|performance with 312, 447, 820, 845, 869, 872; report.mission --publish and its codes; a 'Pending, uncoded' line for the reuse-figure refusal; extended-by lines; tests refusal_lists, raised_by_cross_check, inputs_by_row and the full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-result",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "placement"
+   ],
+   "what": "result.revalidate inputs, outputs and codes 854, 869, 872 from N28b-32, BD-292, BD-347, N28b-33 and N28c-12; result.show --depth, paginated (806, 807) and 840 for blinded results; the row keeps the appendix's M4 with a table of the forms that answer from M1 (N28b-32, mission cells), M3 (BD-292) and M4 (BD-347); the bead moves from M4 to M1 because rows are entered when the cluster is first registered and a form answers at M1; N28b-32's drafted entry is named as not of record (schema, scope, task clusters, idempotent). Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-run",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "run.export inputs (--out, filters, --view, --at-frontier) and codes 734, 840, 888, 892 with exit 9 for an integrity fault; implemented-by corrected to N29a-02 (BD-097 scopes whole-bundle export out); run.fork inputs and codes 562, 580-583, 840, 894 (BD-205) with a keyed example; run.show --budget and 840; run.list filters and pagination (806, 807); tests refusal_lists, sealed_runs_840 and the full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-scene",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "scene.fit: inputs as N19b-32 specifies them (--scene, --footprint or --design, --margin, envelope and capabilities, --route or --from/--to, modes, refine, require_label, emit) plus N19b-36's optional 'fallback' (none|heuristic, additive); codes 304 and 891 added (N19b-32); scene.retrofit back to the appendix's M3 (answers 724 until BD-369 at M4; the gate register moves only its gate); refusal_lists for all 13 rows, a scene_fit_inputs test and the full MCP name list. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-sense",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U20b requests after checking BD-119, BD-242, BD-241, N20b-33, N20a-34, BD-120 and N20b-45: evidence words reconciled (causal-test, calibrate, visibility use the shared *run* label, visibility with screening: true; profile pass-through); calibrate inputs --episode|--edges, --window, --anchor, --reference, --localize, --retraction, --claim reality and a runnable example; causal-test inputs (--actor-schema, --twins/--twin-fixtures, --no-record, build-gated --control) and 440, 441; observability inputs (--form, --window, route) and the N20a-34 example with a key; symmetry --test as a 'test' action of kind run (N32a-02 two-kind form) and --license-check raising 443; visibility --motion and explicit forms; the three late refusals numbered through N20b-45; scope note updated (BD-241/BD-242 now use sense:*); tests inputs_by_row, evidence_words, full MCP names; an acceptance criterion and e2e step for the test action."
+  },
+  {
+   "bead": "VERBS-session",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U32b requests after checking BD-138, N32b-01, N32b-02, N32b-04, N32bx-01 and N32a-02: every row capabilities [] with public = true (no session:write in the scope catalogue; the worked session holds no session:* scope and calls session_focus and session_show); session.focus key_optional = true (no 805); session.open inputs (scopes, budget, namespace, derive, ttl_s, key), outputs (token x-frob-secret) and the keyed example of N32b-04; session.show option_capabilities {all: [session:read]}, paginated, transcript inputs and the 'audit' action [session:audit] (N32bx-01); session.close keyed example and N32b-02's cascade; the unsupported claim that session.show answers at M0 withdrawn (BD-022: 724 until BD-138); tests scopes_by_rule, focus_key_optional, an acceptance criterion and e2e step (8) for scope-free calls. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-shield",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "rows checked against BD-337, BD-338, BD-340, N22b-32, N22c-28, N22c-44 and N22-REF: inputs of all four verbs (budget declaration, check's --budget/--shield/--instance forms, fit's limits, --calibration, --reuse-margin, --listing, --backup/--param, report's run restriction); shield.fit evidence corrected from *screening* (Estimated) to *run* (Tested, INV-SHIELD-02) and 457 added (BD-338 step 4, N22b-32 step 7); a 'Pending, uncoded' line for monitored-assumption-not-timely, sampled-damping-above-passivity-bound and insufficient-calibration; the M3 rows answer 724 until the M4 handlers; tests refusal_lists (with shield.report), evidence_words and full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-sim",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U16b/U23b/U29a/U31b requests after checking BD-203, BD-204, N16b-25, BD-175, N21b-25, N29ap1-03, N29ax-02, N23bp1-01 and N31b-35: sim.replay inputs as BD-203 states them (episode or --run --world --episode, --from/--from-snapshot/--to, co-tenancy, --capture incl. failure and --markers, --tier with --precision/--comparison) with codes 222, 601, 840 added and a runnable example; N31b-35's replay address maps onto these fields (no new verb); sim.run gains --on-overflow, --present, --peak-capture and the KILL-GYMADAPT-gated --policy/--horizon/--record trajectories (724 otherwise); 610 and 722 both kept with their raising tiers named until the registry owners merge them; tests refusal_lists and run_inputs. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-skill",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "rows checked against BD-336, N22b-07 and N22-REF's raised-by columns: skill.check lists 444 (refinement) beside 448 and its inputs (three state sources, --refinement, --replay); skill.compile and skill.show inputs/outputs completed; skill.transport inputs --design/--task, the outside-training-envelope finding, the Moonshot gate and 448; example --to replaced by --design; tests refusal_lists for all four, inputs_by_row and full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-solve",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U32a requests after checking BD-372, N32ap1-01 and N32a-32: inputs (task, candidates, constraints, budget, stop_at, top_k), paged result (806, 807), the called-verb scope check raising 720 before any job, 'Implemented by BD-372; decided by N32ap1-01 (clause 1) and N32a-32 (clause 2)', and the removal rule for either clause firing; 701/704 noted as also appended (listed once); tests called_scopes_checked and branch_consistency. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-spark",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U21b/U21c requests after checking N21b-32, BD-176, BD-017, BD-029, BD-173, N21b-13, BD-178, N21b-29, N21c-04 and N21c-39: spark.check inputs (--kernel, --backend, --workers, --key and the options other beads add, incl. --exhaustive) and codes 601, 606; spark.probe 601, 603, 606 and its inputs; spark.fingerprint 601; spark.precompile 612; spark.place both forms (workload and --job/--rows/--inputs-resident) with 247, 601, 606, 619; spark.devices optional device and recheck; output schema of spark.place settled as frob.spark.place.out/1 carrying a frob.placement/1 plan; runnable examples for cache, check, fingerprint, place, precompile; tests refusal_lists for all seven, inputs_by_row, full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-store",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "rows checked against BD-209, N29b-13, N28b-38 and BD-305: store.status outputs in full with the private-line rule; store.collect inputs (--dry-run, --budget, --now, --class, --force, --withdraw-claim --reason) and outputs; the conflict between BD-209 (key required for a real collection) and N29b-13 (admin takes no key) resolved by a row-declared optional key that selects a real collection (no 805); test collect_key_selects_mode. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-study",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "rows checked against N33b-19, BD-124, N28a-21, N32a-13, N28-REF and BD-137: study.plan key_optional = true (RL-21, content-addressed plan) with its full manifest inputs and 533 beside 542 (two codes for one trigger, both raised); study.submit 542 (N28-REF raised-by); status, compare (--metric, 990 integrity fault) and cancel completed; the M1 CPU forms named (rows keep M2); acceptance, unit tests (plan_key_optional, full refusal_lists and MCP names) and e2e step 6 updated for the keyless plan. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-task",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "rows checked against N24b-03, N24bx-01, N24c-10, BD-122, N24c-37, N24c-02, N24a-16 and N24c-22: task.fixture inputs (four layers, tier, rows, designs, build-gated control, the eight axis flags and selectors of N24bx-01, --battery, --list) and 529; task.check 556 under --coupling; task.new 891; task.audit inputs and outputs; task.settle and task.verdict examples in their beads' argument order; implemented-by adds N24b-03; tests refusal_lists for all eight, fixture_inputs and full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-telemetry",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied the U29a request after checking BD-206: telemetry.divergence inputs (--world, --mode, --from/--to, --scales, --no-replay), codes 840 and 888 beside 894, and the job case in its cost model (a capture that needs a device returns exit 8); telemetry.query marked paginated; tests refusal_lists for all nine, divergence_job_case and full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  },
+  {
+   "bead": "VERBS-train",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "applied U23 and U28c requests after checking BD-320, BD-322, N23b-41 and N28c-43: train.family inputs with --dry-run and --emit-tokens; train.inherit inputs with --child and its example; train.start network grammar with morph-transformer, --init, --dry-run, and 'Extended by: N23b-41, N28c-43 (--from-scratch, --no-carry, --no-memo, --match-return <run>)'; tests refusal_lists for all seven, inputs_by_row and full MCP names. Convention 4 harmonized with the handler rule (NJL-01, BD-137; the wording the UJL-1 registries use): a verb answers when its handler is in the build, not by comparing milestones."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N28a-17",
+   "what": "output schema frob.explain.compare/1 should be frob.explain.compare.out/1, the name VERBS-explain registers."
+  },
+  {
+   "bead": "NS-06",
+   "what": "the explain compare call form should take a stored comparison (<comparison>), as VERBS-explain and N28a-17 register it."
+  },
+  {
+   "bead": "N31a-51",
+   "what": "foundry.loads raises 821 and 820 and foundry.check raises review-record-packet-mismatch (uncoded): VERBS-foundry now lists them; the uncoded name needs a number through the chapter refusal registry."
+  },
+  {
+   "bead": "BD-409",
+   "what": "foundry export flag --out should be --packet <dir>, the spelling VERBS-foundry registers."
+  },
+  {
+   "bead": "N22c-38",
+   "what": "gait.orbit takes --set mu=..., not --param mu=... (BD-333 grammar, as VERBS-gait registers)."
+  },
+  {
+   "bead": "N30a-10",
+   "what": "`ground kit --rehearsal emit` is not a registered form; use `ground kit build --result ... --out ...` or ask for the form to be registered in VERBS-ground."
+  },
+  {
+   "bead": "BD-077",
+   "what": "CLI spelling of the expected parent is --expected-parent (the generated mutate property), not --parent; and a stale parent is 804 on the lineage write, not 112, which N14-REF reserves to design.patch."
+  },
+  {
+   "bead": "NS-15",
+   "what": "`frob nemesis hardset --add trap.fmcw --json` is not a registered form: the action word is `add` and a run action needs a key, e.g. `frob nemesis hardset add trap.fmcw --key hs-1 --json` (VERBS-nemesis, BD-275)."
+  },
+  {
+   "bead": "N32b-20",
+   "what": "doctor's selector is registered as `--section <name>` (repeatable), BD-022's spelling used by N21b-01, N34-26, N32ax-03, N33a-14; replace `--check <group>`, use BD-022's section names (`stack` holds the pin checks, `kernel_cache` with an underscore) and contribute `store` through BD-022's section interface."
+  },
+  {
+   "bead": "N32b-20",
+   "what": "add dep VERBS-operator (the rows of doctor and schema it implements); VERBS-operator now lists capabilities [] with public = true as you asked."
+  },
+  {
+   "bead": "N32b-19",
+   "what": "add dep VERBS-operator (the capabilities row it implements; the row now lists your filters and paginated = true)."
+  },
+  {
+   "bead": "N32b-17",
+   "what": "add dep VERBS-operator (the robot-docs row; it now lists --verb, --budget, --encoding)."
+  },
+  {
+   "bead": "BD-022",
+   "what": "schema's verb-name form is registered as `--verb <name>` (N32b-20) optionally narrowed by `--in` or `--out`; write it so in the operator verb table."
+  },
+  {
+   "bead": "N17b-18",
+   "what": "`frob opt archive show --campaign …` uses an action word `show` that opt.archive (a single-kind read verb) does not register; write `frob opt archive --campaign stairs-q3 --stratum s:12 --json`."
+  },
+  {
+   "bead": "BD-342",
+   "what": "same as N17b-18: `frob opt archive show` should be `frob opt archive --campaign …`; and add dep VERBS-opt and VERBS-phylum (the rows of opt.archive and phylum.map you implement)."
+  },
+  {
+   "bead": "BD-341",
+   "what": "add dep VERBS-opt (the rows of opt.start and opt.status; opt.start now lists your refusals 111, 542, 543, 556, 761)."
+  },
+  {
+   "bead": "BD-352",
+   "what": "add dep VERBS-opt (the opt.cascade row, which now lists 557 and the options --allocation, --stage, --manifest, --plan-only, --finalists-from used by your callers)."
+  },
+  {
+   "bead": "N28b-09",
+   "what": "add dep VERBS-opt (opt.start --family is registered with 540 and 541)."
+  },
+  {
+   "bead": "N23a-25",
+   "what": "add dep VERBS-policy (the policy.apply row, now 531, 534, 537 with 541 cited, and your inputs)."
+  },
+  {
+   "bead": "BD-344",
+   "what": "add dep VERBS-predict (the rows of predict.register and predict.report); the register row lists 883 and holds prediction-after-outcome as pending per N28cx-01, so raise the interim forms N28cx-01 states."
+  },
+  {
+   "bead": "N12-38",
+   "what": "write the idempotency key as `--key` (the CLI spelling of every registry example), not `--idempotency-key`; add dep VERBS-prove."
+  },
+  {
+   "bead": "BD-382",
+   "what": "add dep VERBS-prove (the prove.reflect row: kebab-case reflectors, --certificate, appended 701 and 724)."
+  },
+  {
+   "bead": "N16c-24",
+   "what": "`frob prove verify --bundle <kernel certificates>` is not a registered form: bundles are positional (`frob prove verify <bundle>… --json`) or `--all`."
+  },
+  {
+   "bead": "NS-11",
+   "what": "`frob prove verify --card <T-card>` and `frob prove bundle --kernel K-cay-step` are not registered forms of prove.verify and prove.bundle; use a registered form or ask the Lemma owner (BD-027, BD-133) to add the option and VERBS-prove to register it."
+  },
+  {
+   "bead": "BD-352",
+   "what": "Name the verb that refuses a build-packet request with FROB-REF-557 (VERBS-report lists 557 on report.design and report.campaign only, per N28-REF's raised-by column)."
+  },
+  {
+   "bead": "N28c-29",
+   "what": "result.revalidate's row keeps the appendix's first_milestone M4 (BD-137 rule) while its first form answers at M1 (N28b-32, GATE-ATEL-11 M1 row); align the decision text: the early form answers M1 and the field stays M4."
+  },
+  {
+   "bead": "N28b-32",
+   "what": "Drop or align the registry entry drafted in your text (output schema frob.revalidate.out/1, capabilities result:read/result:revalidate, task clusters revalidate/missions, idempotent = true): the row of record is VERBS-result (frob.result.revalidate.out/1, result:run, NJL-05's clusters, idempotent = false, first_milestone M4 with the M1 form named by capabilities); add dep VERBS-result."
+  },
+  {
+   "bead": "BD-376",
+   "what": "Add dep VERBS-result (you implement result.show, whose row VERBS-result owns)."
+  },
+  {
+   "bead": "BD-205",
+   "what": "Your scope for run.fork is sim:run while VERBS-run's row says run:run (the cluster rule until BD-258 decides); align, and add dep VERBS-run."
+  },
+  {
+   "bead": "N21c-34",
+   "what": "You call `frob report run --claim performance` at M0, but report.run is M3 (its handler BD-302); either move the call to M3 or expect FROB-REF-724 before then."
+  },
+  {
+   "bead": "BD-302",
+   "what": "Add dep VERBS-report; you implement report verbs whose rows list 820, 845 and 869 and the inputs --cite, --claims-realism, --compact and --claim reality|performance; raise and accept them."
+  },
+  {
+   "bead": "N39b-46",
+   "what": "Add dep VERBS-report (report.campaign's --arms, --ablate and --register-comparison are on its row)."
+  },
+  {
+   "bead": "N20a-34",
+   "what": "Your drafted entry for sense.observability (capabilities design:read, sim:run; idempotent = true; unkeyed example) is not the row of record: VERBS-sense has sense:run, idempotent = false and the example with --key; align or drop it, and add dep VERBS-sense."
+  },
+  {
+   "bead": "BD-119",
+   "what": "List FROB-REF-440 and FROB-REF-441 for the twin worlds sense.causal-test runs (VERBS-sense now lists them, as for sense.observability), and state the evidence label *run* (class Tested)."
+  },
+  {
+   "bead": "BD-241",
+   "what": "Add dep VERBS-sense; sense.symmetry's --test form is the action `test` of kind run (actions = [{ name = \"test\", kind = \"run\", capabilities = [\"sense:run\"] }]) on VERBS-sense's row."
+  },
+  {
+   "bead": "BD-242",
+   "what": "Add dep VERBS-sense (calibrate's inputs --episode/--edges/--window/--anchor/--reference/--localize/--retraction/--claim reality are on its row)."
+  },
+  {
+   "bead": "N20b-33",
+   "what": "Add dep VERBS-sense (sense.visibility's --motion and explicit forms are on its row)."
+  },
+  {
+   "bead": "BD-239",
+   "what": "Add dep VERBS-sense (the empirical form of sense.observability, --form, is on its row)."
+  },
+  {
+   "bead": "BD-240",
+   "what": "Add dep VERBS-sense (sense.alias's search form)."
+  },
+  {
+   "bead": "N20b-16",
+   "what": "Add dep VERBS-sense (the full sense.profile interface)."
+  },
+  {
+   "bead": "N20b-08",
+   "what": "Add dep VERBS-sense (sense.calibrate on imported logs, the --edges form)."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "Add the entry field option_capabilities (a map from an input option to the scopes it additionally needs; N32b-01 and N32b-04 use it, VERBS-session carries it on session.show and session.open) with its lint, since the schema is closed; and the two-kind list now also holds session.show (audit), sense.symmetry (test), design.check (run-control) and ground's retire."
+  },
+  {
+   "bead": "N32b-04",
+   "what": "Add dep VERBS-session; VERBS-session now carries your values (capabilities [] with public = true, option_capabilities, paginated session.show, your keyed example)."
+  },
+  {
+   "bead": "N32bx-01",
+   "what": "Add dep VERBS-session: the audit action on session.show is entered on its row."
+  },
+  {
+   "bead": "BD-138",
+   "what": "session.close and session.focus need no scope (VERBS-session: capabilities [] with public = true); session.close closes the caller's own session; add dep VERBS-session."
+  },
+  {
+   "bead": "N22-REF",
+   "what": "Add a slot for `insufficient-calibration` (shield.fit refuses a calibration count below (1 - alpha)/alpha with exit 3, N22b-29 and N22b-32 step 14); 457's raised-by column should add shield.fit (BD-338 step 4 refuses a margin under another scope key)."
+  },
+  {
+   "bead": "BD-338",
+   "what": "Add dep VERBS-shield; shield.fit lists 457 beside 454 and the three uncoded slugs pending."
+  },
+  {
+   "bead": "BD-337",
+   "what": "Add dep VERBS-shield."
+  },
+  {
+   "bead": "BD-340",
+   "what": "Add dep VERBS-shield."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "Reconcile 'a verb past its first_milestone with no handler fails the capability-level coverage check' with NJL-02 (the capability level accepts an expected refusal) and BD-137 (rows keep the appendix milestone when the seed bead lands later: contact.laws, ground.ingest, task.settle, ground.excite, scene.retrofit, shield.budget, shield.check): the expected refusal 724 must satisfy the check for those rows."
+  },
+  {
+   "bead": "BD-369",
+   "what": "Add dep VERBS-scene; scene.retrofit's row keeps the appendix's M3 and answers 724 until you land at M4."
+  },
+  {
+   "bead": "N19b-32",
+   "what": "Add dep VERBS-scene (scene.fit's row now lists 304, 305, 308, 891 and your inputs)."
+  },
+  {
+   "bead": "N16-REF",
+   "what": "sim.run raises FROB-REF-722 on batch-cpu (N16b-25) and FROB-REF-610 on a Spark device (BD-175, N21b-25) for one trigger under --on-overflow refuse; with N21-REF keep one code (VERBS-sim lists both until then and drops the retired one in the same change)."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "Same pair as N16-REF (610 vs 722 for capacity overflow under refuse); and your 610 test step uses `--capacity-policy refuse`, while sim.run's option is `--on-overflow` (N16b-25, N21b-23, N21b-25)."
+  },
+  {
+   "bead": "N21c-39",
+   "what": "If sim.run's admission also applies the wide-count rule (refused before any world is stepped), say so: VERBS-sim would then list 619 on sim.run as VERBS-spark now does on spark.place."
+  },
+  {
+   "bead": "N31b-35",
+   "what": "No new verb is needed: foundry.loads' replay address maps onto `frob sim replay --run <r> --world <w> --episode <e> --from-snapshot <hash> --from <tick>` (BD-203's fields, now on VERBS-sim's row); quote that form."
+  },
+  {
+   "bead": "N29ax-02",
+   "what": "Add dep VERBS-sim (--peak-capture is now on sim.run's row)."
+  },
+  {
+   "bead": "N22-REF",
+   "what": "448's raised-by column should add skill.transport (N22b-07 step 1 refuses an infeasible target with 448 in its own envelope)."
+  },
+  {
+   "bead": "BD-336",
+   "what": "Add dep VERBS-skill (skill.check now lists 444 and 448 and your inputs)."
+  },
+  {
+   "bead": "N22b-07",
+   "what": "Add dep VERBS-skill (skill.transport's row now takes --design and --task and lists 444 and 448)."
+  },
+  {
+   "bead": "N21b-32",
+   "what": "The generator appends 805 to every run verb from its registration, so a keyless spark.check is refused at M0 too, not only from the M2 job binding; align the text."
+  },
+  {
+   "bead": "BD-176",
+   "what": "Add dep VERBS-spark (spark.check's row lists your --all/--step/--rollout/--workload and 601, 605)."
+  },
+  {
+   "bead": "N21b-29",
+   "what": "Add dep VERBS-spark (spark.place's row lists both forms, output frob.spark.place.out/1, and 247, 601, 606, 619)."
+  },
+  {
+   "bead": "BD-017",
+   "what": "Add dep VERBS-spark (spark.probe lists 601, 603, 606, 609, 616 and your inputs)."
+  },
+  {
+   "bead": "BD-029",
+   "what": "Add dep VERBS-spark (spark.fingerprint lists 601 and 606)."
+  },
+  {
+   "bead": "BD-173",
+   "what": "Add dep VERBS-spark (spark.precompile lists 603 and 612; spark.cache your --list/--verify/--evict forms)."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "FROB-REF-990 (internal fault, exit 9, N32a-03) can come from any handler (study.compare's pair-count check raises it on purpose); add it to the appended set of every kind, or exempt it from the 'unlisted code' conformance test."
+  },
+  {
+   "bead": "N28-REF",
+   "what": "FROB-REF-542 and BD-124's FROB-REF-533 mean the same trigger (paired statistics under an uncontrolled determinism class); N33b-19 raises 533 on study.plan while your raised-by names study.plan for 542. Keep one (with N41-REF); VERBS-study lists both until then."
+  },
+  {
+   "bead": "N33b-19",
+   "what": "You raise 533 where N28-REF's raised-by column names 542 for study.plan; align once the owners keep one. study.plan is key_optional (RL-21): a keyless plan is not 805."
+  },
+  {
+   "bead": "N28a-21",
+   "what": "Add dep VERBS-study (study.compare's row now lists --metric)."
+  },
+  {
+   "bead": "N32a-13",
+   "what": "Add dep VERBS-study (study.compare, study.cancel and study.plan's key_optional are on its rows)."
+  },
+  {
+   "bead": "N24b-03",
+   "what": "Your drafted entry gives task.fixture capability sim:run and lists 724 explicitly; the row of record (VERBS-task) uses task:run (the cluster rule until BD-258) and 724 is appended by kind; align and add dep VERBS-task."
+  },
+  {
+   "bead": "N24bx-01",
+   "what": "Add dep VERBS-task (the eight axis flags and the selectors are on task.fixture's row)."
+  },
+  {
+   "bead": "BD-322",
+   "what": "Add dep VERBS-train; the row's example now uses --child as you specify."
+  },
+  {
+   "bead": "N23b-41",
+   "what": "Add dep VERBS-train (train.start's --network now lists morph-transformer)."
+  },
+  {
+   "bead": "N28c-43",
+   "what": "Add dep VERBS-train (--from-scratch, --no-carry, --no-memo, --match-return on train.start's row)."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 32 registry beads reviewed and changed. Rows were brought into line with the mechanism beads that own the verbs (inputs, refusal codes checked against the chapter REF raised-by columns, evidence labels, runnable keyed examples, full refusal_lists and MCP-name tests). first_milestone is kept at the appendix value in every row (BD-137, NJL-01; checked by script against Appendix J), with early or late forms named (mission, result, sense, study, ground.excite, scene.retrofit, shield); convention 4 harmonized with the handler rule across the slice. Duplicate code pairs (610/722, 533/542) are kept on the rows while both are raised, with merge requests to the registry owners."
+}

@@ -1,0 +1,287 @@
+{
+ "group": "gap-A",
+ "filled": [
+  {
+   "gaps": [
+    4
+   ],
+   "bead": "N33bx-01",
+   "note": "fs-checker stays Pattern for the auditor and gains a second use, Oracle reached as a Subprocess: built in FrankenSim's own tree at the pin, admitted by its own record (covers.tool), no cargo edge. The command-line entry the run needs does not exist in the sibling, so the bead is also the upstream work item FD-FSIM-42 with interim posture `arm not run`"
+  },
+  {
+   "gaps": [
+    36
+   ],
+   "bead": "N33bx-07",
+   "note": "an eleventh airlock feature group `tracer` (record and consumer by ADR-SUITE-03, N33bx-02) with the trait HeroRender over fs-render's upstream feature `tracer`: whole offline jobs, never an observation; the M6 first-use admission doubles as the paper-scale pilot of the hero-render route (furnace, bounce series, camera quadrant, measured closure), with the fallback named"
+  },
+  {
+   "gaps": [
+    40,
+    132
+   ],
+   "bead": "NFx-01",
+   "note": "register rows and identifiers for the upstream beads that had none: FD-FSIM-39 for N22c-22 (input-affine EDMD in fs-surrogate), FD-FSIM-40 and FD-FSYM-06 for the toolchain-train legs NF-03 and NF-04, FD-FSIM-41 and -42 for the two items raised here, FD-FMCP-02 reserved for the conditional NF-13; plus the register-wide test whose count follows the row writers' lists (53 + 6 + 5 = 64) instead of a typed total. BD-037 and N33c-47 already count their own identifiers and accept later rows. Gap 40 is the same report as gap 131 of packet gap-E; this one bead carries both"
+  },
+  {
+   "gaps": [
+    68
+   ],
+   "bead": "N33bx-03",
+   "note": "thin airlock entry for fs-tropical (max_cycle_mean, critical_circuit) in the optimize group, with the edge-form against successor-form convention, capacities as data and the M4 first-use admission record"
+  },
+  {
+   "gaps": [
+    86
+   ],
+   "bead": "N33bx-04",
+   "note": "VolumeMesher over fs-mesh in the structure group (crate added by ADR-SUITE-03, N33bx-02), admitted at M4 because the OPEN-FOUNDRY-1 experiment is the first use. N33bx-02 is a supporting bead no single gap asked for: the one ADR and edit of the airlock's consumer and crate lists that gaps 36, 68, 86, 87, 88 and the residue of 54 all need, since N33a-11 makes any change to those lists an ADR"
+  },
+  {
+   "gaps": [
+    87
+   ],
+   "bead": "N33bx-05",
+   "note": "MassProperties over fs-mbd-material for Foundry (tetrahedral and primitive solids, orientation guard), admitted at M5; frob-foundry added to the referee consumers by ADR-SUITE-03 (N33bx-02)"
+  },
+  {
+   "gaps": [
+    88
+   ],
+   "bead": "N33bx-06",
+   "note": "EpistemicBox over fs-uq::product_epistemic for Foundry's worst-case boxes, with the enclosure-contract spot-check and statuses never upgraded, admitted at M5; frob-foundry added to the stats consumers by ADR-SUITE-03 (N33bx-02)"
+  },
+  {
+   "gaps": [
+    89
+   ],
+   "bead": "NFx-02",
+   "note": "upstream work item FD-FSIM-41 (an optional external differentiable stage in fs-topopt's design map) with the airlock capability probe, interim posture `overhang: post-check only` and the switch-over; conditional on the probe at the M5 pin"
+  }
+ ],
+ "already": [
+  {
+   "gaps": [
+    6,
+    128
+   ],
+   "bead": "N33b-22",
+   "note": "the M3 first-use admission of fs-mbd::tri_wheel_cluster as the geometry oracle of tri-wheel-stair now exists; N14b-04 already depends on it and ZOO-tri-wheel-stair reaches it through N14b-04"
+  },
+  {
+   "gaps": [
+    7
+   ],
+   "bead": "N33a-30",
+   "note": "the mesh half of the geometry group (MeshExchange, distance fields, topology) was moved to M1 with its first-use admission record; N14a-14 and N14a-03 already depend on it"
+  },
+  {
+   "gaps": [
+    107
+   ],
+   "bead": "N33a-03",
+   "note": "N33a-03 owns the one list of franken-stack.lock fields and tables (required_at, optional_at, uses; [freeze]; [json_library]; [auditor]; worker_rev and worker_toolchain by ADR and schema bump) and its parser accepts exactly these; the overlap of N34-13 with N33a-03 is settled in overlap packet dup-12; N34-04 and N34-25 register their tables through N33a-03's hook, recorded as dependencies below"
+  }
+ ],
+ "rejected": [
+  {
+   "gaps": [
+    54
+   ],
+   "why": "§33.9 places fs-adjoint in group `structure`, for structural sensitivities reached by frob-foundry, and nothing in the plan routes it to frob-synth: §25.21.2 only records as a FACT that the module exists, takes the gradients with respect to design parameters from the derived kernels of §21, and BD-362 computes the sensitivity of the optimal cost by the envelope derivative ∂L/∂θ, one gradient evaluation with no implicit-function solve. If a lane ever needs one, fs-ad::ift is on the bedrock-direct list (§33.3) and is admitted by INT-FSIM-10 (§33.10). Moving or sharing fs-adjoint would contradict §33.9. The real residue of the report, that frob-synth is not on the consumer list of `optimize` for the fs-ascent solvers, is closed by row 1 of ADR-SUITE-03 in N33bx-02, which also plants `frob-synth requests structure` as a failing control; the adapter is N33a-31, already a dependency of BD-362 and N25d-13"
+  }
+ ],
+ "new_beads": [
+  "NFx-01",
+  "NFx-02",
+  "N33bx-01",
+  "N33bx-02",
+  "N33bx-03",
+  "N33bx-04",
+  "N33bx-05",
+  "N33bx-06",
+  "N33bx-07"
+ ],
+ "edges": [
+  {
+   "bead": "N34-04",
+   "dep": "N33a-03",
+   "as": "dep",
+   "why": "gap 107: the [json_library] table is validated through the hook of the stack-lock parser, which owns the field list"
+  },
+  {
+   "bead": "N34-25",
+   "dep": "N33a-03",
+   "as": "dep",
+   "why": "gap 107: the [auditor] table is validated through the hook of the stack-lock parser, which owns the field list"
+  },
+  {
+   "bead": "N22c-22",
+   "dep": "NFx-01",
+   "as": "dep",
+   "why": "gap 40: the row FD-FSIM-39, its fixture directory and the mirrored-bead field are written by the register bead first"
+  },
+  {
+   "bead": "NF-13",
+   "dep": "NFx-01",
+   "as": "dep",
+   "why": "gap 132: FD-FMCP-02 is reserved there; NF-13 writes its row against that reservation if it is opened"
+  },
+  {
+   "bead": "NF-03",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: row FD-FSIM-40 holds NF-03's mirror; related, not blocking, because the register depends on BD-037 and the M0 toolchain leg must not wait for it"
+  },
+  {
+   "bead": "NF-04",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: row FD-FSYM-06 holds NF-04's mirror; related for the same reason as NF-03"
+  },
+  {
+   "bead": "NF-07",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: the register-wide count covers its row; the row itself is N33c-47's"
+  },
+  {
+   "bead": "NF-08",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: as NF-07"
+  },
+  {
+   "bead": "NF-09",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: as NF-07"
+  },
+  {
+   "bead": "NF-10",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: as NF-07"
+  },
+  {
+   "bead": "NF-11",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: as NF-07"
+  },
+  {
+   "bead": "NF-12",
+   "dep": "NFx-01",
+   "as": "related",
+   "why": "gap 132: as NF-07"
+  },
+  {
+   "bead": "N31a-29",
+   "dep": "NFx-02",
+   "as": "related",
+   "why": "gap 89: N31a-29 finishes on its fail-closed post-check posture and must not wait on an upstream change; NFx-02 depends on N31a-29 for the switch-over"
+  },
+  {
+   "bead": "N12-29",
+   "dep": "N33bx-01",
+   "as": "dep",
+   "why": "gap 4: the fs-checker arm of the experiment cites this admission record (pass, fail or not-run); the bead closes by the M4 exit review at the latest, so the decision does not wait on the sibling change"
+  },
+  {
+   "bead": "BD-332",
+   "dep": "N33bx-03",
+   "as": "dep",
+   "why": "gap 68: the atlas's law test that the local maximum cycle mean agrees with fs-tropical runs through this entry"
+  },
+  {
+   "bead": "SPEC-C-10",
+   "dep": "N33bx-03",
+   "as": "related",
+   "why": "gap 68: a specification never depends on an adapter; its law test s4_agrees_with_fs_tropical runs in the implementing bead"
+  },
+  {
+   "bead": "N31b-24",
+   "dep": "N33bx-04",
+   "as": "dep",
+   "why": "gap 86: the 20-surface conformity experiment calls the mesher through this entry"
+  },
+  {
+   "bead": "N31a-17",
+   "dep": "N33bx-04",
+   "as": "dep",
+   "why": "gap 86: the independent body-fitted mesh is produced through VolumeMesher"
+  },
+  {
+   "bead": "N31a-19",
+   "dep": "N33bx-04",
+   "as": "dep",
+   "why": "gap 86: the stress check and its refinement run on meshes from VolumeMesher"
+  },
+  {
+   "bead": "BD-402",
+   "dep": "N33bx-04",
+   "as": "dep",
+   "why": "gap 86"
+  },
+  {
+   "bead": "BD-403",
+   "dep": "N33bx-04",
+   "as": "dep",
+   "why": "gap 86: extraction ends in the independent mesh"
+  },
+  {
+   "bead": "N31a-23",
+   "dep": "N33bx-05",
+   "as": "dep",
+   "why": "gap 87: sums tetrahedral volume moments through MassProperties"
+  },
+  {
+   "bead": "N31a-40",
+   "dep": "N33bx-05",
+   "as": "dep",
+   "why": "gap 87: mass.json and the cross-export identity"
+  },
+  {
+   "bead": "BD-404",
+   "dep": "N33bx-05",
+   "as": "dep",
+   "why": "gap 87"
+  },
+  {
+   "bead": "BD-407",
+   "dep": "N33bx-05",
+   "as": "dep",
+   "why": "gap 87: mass properties of exported geometry"
+  },
+  {
+   "bead": "N31a-33",
+   "dep": "N33bx-06",
+   "as": "dep",
+   "why": "gap 88: worst-case boxes of features that fail the band-extreme check"
+  },
+  {
+   "bead": "BD-406",
+   "dep": "N33bx-06",
+   "as": "dep",
+   "why": "gap 88"
+  },
+  {
+   "bead": "N20a-28",
+   "dep": "N33bx-07",
+   "as": "dep",
+   "why": "gap 36: the hero-render route calls HeroRender; this admission is its pilot and funds the wiring only if it passes"
+  },
+  {
+   "bead": "BD-362",
+   "dep": "N33bx-02",
+   "as": "dep",
+   "why": "gap 54 (residue): frob-synth may request the airlock group `optimize` only after row 1 of ADR-SUITE-03; without it check-deps fails the lane's first build"
+  },
+  {
+   "bead": "N25d-13",
+   "dep": "N33bx-02",
+   "as": "dep",
+   "why": "gap 54 (residue): as BD-362; the transcription is built against the Optimizer problem interface of the `optimize` group"
+  }
+ ]
+}

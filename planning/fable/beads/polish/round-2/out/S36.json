@@ -1,0 +1,175 @@
+{
+ "round": 2,
+ "slice": "S36",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "BD-216",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "Request from S10 applied with a fix: every arm, ours and a comparator's, is admitted with N36-20's admit under the campaign's scope (gate:<id> or campaign:<id>) and started through run_admitted, so 761, the process-group limits, CUDA_VISIBLE_DEVICES and the meter apply. DESIGN added: one meter row per arm; a frob run verb started by run_admitted would otherwise be admitted a second time under adhoc (E0, refusing a two-device arm its gate is approved for) and metered twice, so the token is passed to the child (FROB_ENVELOPE_TOKEN) and the verb adopts its scope and writes no row (child half requested of N36-20). Acceptance line and tests every_arm_through_run_admitted, arm_above_envelope_not_run."
+  },
+  {
+   "bead": "BD-217",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "tests",
+    "correct"
+   ],
+   "what": "Round-1 request applied: the script's first step `preflight` reads the OPEN-PERF-1 decision record (tolerance, kill threshold, state, ADR path) and refuses to start any GATE-SPARK-03 pair without it; acceptance line and test preflight_requires_open_perf_1. Gap fixed: row 12 is a ratio across two machines, which the back-to-back pairing rule cannot serve; DESIGN pairing by index in the same scheduled slot, both fingerprints disclosed; test row12_pairs_by_index."
+  },
+  {
+   "bead": "BD-219",
+   "kinds": [
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "No bead fixed which of FROB-REF-602 and FROB-REF-761 a job gets when it fails both (any request above the largest count that fits on a card is also above E0's 16 GiB), and GB-41, N36-32 and N36-REF expect 602 for such requests. DESIGN: the fit test precedes the envelope check, then session budgets (an envelope approval cannot repair a device misfit); test fit_precedes_envelope."
+  },
+  {
+   "bead": "GB-40",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "named the script that runs the card's surface step: scripts/e2e/worked_cards.sh --card GB-40 (NEG-02)."
+  },
+  {
+   "bead": "GB-41",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "named scripts/e2e/worked_cards.sh --card GB-41; the 524,288-world run request (18.1 GB) is also above E0's 16 GiB: stated that the fit test precedes the envelope check so 602, not 761, is expected."
+  },
+  {
+   "bead": "N21a-27",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Both round-1 requests applied: frob_core::perf::ceiling renamed to frob_conformance::perf::bound::ceiling (acceptance and screen_calls_the_one_bound); dep N36p1-02 added (no cycle) so H-TIME-1 to -4 and H-COV-1, -2 are registered before the profile, named in Out with their scorer N36-15."
+  },
+  {
+   "bead": "N36-06",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The planted fixed-order runner (always arm A first, second arm 3% faster) would bias every ratio against the claimed arm and could not fail a one-sided A/A count; restated as the comparator always first (about 26% of A/A campaigns then clear 1.02 at sigma 0.02 per arm, so the count exceeds 9 except with probability below 1e-4), with the mirror defect caught by order_stream_reproducible_and_mixed."
+  },
+  {
+   "bead": "N36-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the Jacobian-traffic variants' 866 is now raised through N36-05's admit_experiment with a filed ceiling record before measurement (N36-05 is the one raising place; N36-REF lists this site)."
+  },
+  {
+   "bead": "N36-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "row 9 arithmetic: five pairs at 2.5 device-hours are 12.5, above the 12 device-hours of one gate measurement; the campaign is sized to the pairs that fit (four, 10 device-hours); test row9_pairs_fit_budget (a five-pair declaration is rejected before any arm, so the meter cannot void the campaign mid-pair)."
+  },
+  {
+   "bead": "N36-30",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Request from S15 applied: preflight runs scripts/e2e/ka_perf.sh (N36-KA) and scripts/e2e/cx_perf.sh --milestone M2 (N36-CX), logs one cmd line per sub-script with its log path and summary counts, and re-implements neither; the registered fixed-order control aligned with N36-06's corrected planting."
+  },
+  {
+   "bead": "N36-32",
+   "kinds": [
+    "correct"
+   ],
+   "what": "step refusal: the request above the largest count that fits is also above E0; expected code 602 (fit test first), and 761 there fails the assertion."
+  },
+  {
+   "bead": "N36-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Raising-site matrix for 866 lacked the funding screen N21a-27 (including the no-profile case); added, with the note that every site raises through admit_experiment. DESIGN precedence 602 before 761 (stated identically in BD-219) with test fit_precedes_envelope and the script's 602 step asserting not 761."
+  },
+  {
+   "bead": "N36p1-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The gate status rule wrote `pass` or `incomplete` only, so a campaign whose only missing points were refused for an unapproved class (OPEN-SPARK-2) could not be told from one with a gap. Rule rewritten to the gate register's statuses: `pass` only when every point incl. capacity is measured; `blocked: OPEN-SPARK-2` when the only missing points were refused by an unapproved class (never printed as pass; stops blocking the exit per N40-04 once OPEN-SPARK-2 is answered or defaulted by ADR); `fail` on a measured failing point; `incomplete` otherwise. status_rule test and the OPEN-SPARK-2 consideration updated."
+  },
+  {
+   "bead": "N39b-10",
+   "kinds": [
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "Step 6 used RMT_A, RMT_B, u, H, C, c, c_T and f without defining them; defined from §39.8 and §36.4 (restricted mean times of arms A and B at horizon H, u the unremovable floor of arm A, C about 410 rival device-seconds per trained candidate, c and c_T our screening and training costs, the trained fraction renamed phi so it cannot be read as a lever's share f_l; ten-fold on compute needs c + c_T*phi <= 41 device-seconds). The e2e section named only metrics; now gives the steps (inputs, levers, order_rule, parity, redo, controls incl. 862/863 refusals, adr), the NDJSON path and standard fields, failure detail and the summary line."
+  },
+  {
+   "bead": "N39b-44",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Incumbent pipeline runs are out-of-process device work, but the bead never said how they are admitted or metered; N36-20 requires every such arm to go through frob-launch with its meter row cited, else it is not evidence. Added step 9 (frob-launch under scope gate:GATE-TENFOLD-13, a 761 refusal is `not run` never `fails`, the receipt cites meter rows; no envelope row admits the gate above E0 today, so larger runs are `not run: no envelope`), the standard NDJSON fields, meter and refusal lines, and test unmetered_run_is_not_evidence."
+  },
+  {
+   "bead": "N40-08",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "placement"
+   ],
+   "what": "Its script ran the batch-independence fixture through an unowned `cargo test -p frob-conformance --test g3 -- batch_independence`; the fixture, its composition record and receipt are BD-181's verb `frob spark check --invariance` (M2, no cycle). Script now runs that verb and reads its stored record with --report; BD-181 added to deps and named in Out, since the script and the M2-exit acceptance read its receipt."
+  },
+  {
+   "bead": "N44-02",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Two contradictions with its dependencies fixed. (1) Pilots R13 to R17 were driven through the script guard of N34-15, which N36-20 says has no meter and is only for work inside E0; pilots above E0 must use frob-launch. The launcher rows now use frob-launch with the scopes of N44-01 (G1 refusal; G2 an E0 probe metered under the pilot's scope; G3 scratch approval decided `admitted` and held per N36-20's scratch rule, a different row's approval refused; G4; G5 the cumulative limit binds launched work), N34-15 moved from deps to related. (2) It asserted 704 never at submission, against the plan's §32.11.2 and N32-REF, N35-REF, N36-REF and BD-296: in-process submission stays 761 (no daemon at M2); once BD-296's size classifier exists a campaign-class daemon job without approval must get 704; acceptance, known answers and the consideration restated."
+  },
+  {
+   "bead": "NEG-14",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The validity note 'alpha below about 0.3 rad for 1% agreement' is wrong (not in the plan): the small-angle form is within 1% of the exact cost up to alpha about 0.49 rad (d = 0.0471 m at b = 0.20 m) and within 0.37% at 0.3 rad. Note corrected and computed from the two forms; test small_angle_validity_threshold (d = 0.04 m inside, 0.05 m outside)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N36-20",
+   "what": "Its 'which envelope refusal fires where' says admit_run raises 761 on every surface including the daemon at submission and 704 only at dispatch, and its acceptance says a submission is 'never FROB-REF-704'; the plan's §32.11.2, N32-REF (owner of row 704), N35-REF, N36-REF and BD-296 all state that a job queued by the daemon in the campaign size class whose session cites no approved envelope is refused with 704 by the size classifier before envelope admission, every other case 761. Align N36-20 (DESIGN paragraph, acceptance line and test submission_refusal_is_761_not_704) with that division; N44-02 now asserts it."
+  },
+  {
+   "bead": "N36-20",
+   "what": "Child-side half of BD-216's one-meter-row rule: run_admitted exports the token to its child as FROB_ENVELOPE_TOKEN=<token id>; admit_run in a frob run verb that finds a valid, unsettled token whose declared demand contains its own demand adopts the token's scope and class and writes no meter row (the parent's settlement is the arm's only row); a token that does not contain the verb's demand is refused with 761. Without it a gate campaign's own arms are re-admitted under adhoc (E0) and metered twice. Add a test (one row per arm, scope taken from the token)."
+  },
+  {
+   "bead": "N36-20",
+   "what": "State the order at admission: the device-fit test (FROB-REF-602, BD-219) runs before the envelope check and session budgets (as BD-219 and N36-REF now state), and its 761 repair list has three entries where the owner row in N35-REF has four (the fourth: take the registered not-approved fallback of the work package)."
+  }
+ ],
+ "unchanged": 14,
+ "notes": "All 32 beads read against their plan sections and their numbers recomputed; 18 changed, chiefly for the 602-before-761 order, out-of-process work (incumbent arms, pilots, arm W) admitted and metered through run_admitted/frob-launch, and the 704/761 division, plus arithmetic and definition fixes (N36-06 planted control, N36-22 row 9, NEG-14 validity note, N39b-10 symbols). The slice looks settled once N36-20 takes the three requests addressed to it."
+}

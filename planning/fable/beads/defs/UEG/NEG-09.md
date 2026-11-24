@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "sensorium", "frob-sense", "solid", "test", "card"]
 parent: "WP-40"
-deps: ["NEG-03", "GB-23", "BD-078"]
+deps: ["BD-078", "GB-23", "NEG-03"]
 needs: []
-related: ["N13-06", "N20a-44", "GB-40"]
+related: ["N20a-06", "N20a-49"]
 gates: []
 plan_refs: ["Appendix E.7 row 6", "§20.4.6", "§20.20", "Appendix M.38 row 6", "Appendix M KA-471"]
 ---
@@ -27,13 +27,19 @@ by one function, not re-derived in prose.
 ## Scope
 
 In: the counting function and its convention; the regression test; the scan. Out: the clock contract (BD-078);
-the conventions battery for time rows (N13-06); the card (GB-23).
+the conventions battery for time rows (N13-06); the card (GB-23); the reconciliation record REC-06 of the
+known-answer suite, with the corrected control text of the two known-answer rows that use the shortcut, of the
+clock re-phasing relation and the derivation file `docs/derivations/clock-thirteenth-step.md` (N38b-55, which
+records the same correction in the known-answer registry and whose row checks print counts through the function
+built here).
 
 ## Technical approach
 
-1. **Convention (binding).** A window is half-open: [a, b) for instants, (a, b] for exposures that integrate
-   up to and including their closing instant, as the conventions state for each stream kind. Decision instants
-   are counted on [0, T).
+1. **Convention (binding).** A window of instants is half-open, [a, b): decision instants are counted on [0, T),
+   and an event at exactly the closing instant belongs to the next window. Exposure windows are not ruled here:
+   the conventions chapter writes them (a, b] and the Sensorium chapter [open, close); the owner decision N20a-49
+   rules between them, and N20a-06's `window_contains` implements the ruling (`OpensAt`, [open, close), the
+   fail-closed default; `ClosesAt`, (open, close], if ruled). No count of this bead depends on that ruling.
 2. **One function.** `frob-sense` exposes `count_firings(period_quanta, phase_quanta, window_start,
    window_end) -> u64` in integer quanta, = number of n in [start, end) with n ≡ phase (mod period). Every
    report that prints "k decisions in T seconds" calls it.
@@ -67,9 +73,11 @@ the conventions battery for time rows (N13-06); the card (GB-23).
 
 ### End-to-end script and logging
 
-`scripts/e2e/worked_cards.sh` (NEG-02) through GB-23's surface row (`frob sense schedule … --horizon 20
---json`, field `decision_instants = 600`), and the stale-value step for item E7-6; log lines carry Q, the
-periods in quanta, the window in quanta and the count.
+`scripts/e2e/worked_cards.sh` (NEG-02) through GB-23's surface rows (`frob sense schedule` on the explicit
+clock list with a 20 s window, BD-078's form: the policy events of `events[]`, all pages, number exactly 600,
+and the count the script prints is taken from the reply, never computed as rate × duration), and the
+stale-value step for item E7-6; log lines carry the exact command line, exit code, Q, the periods in quanta,
+the window in quanta and the count.
 
 ### Known answers and negative controls
 

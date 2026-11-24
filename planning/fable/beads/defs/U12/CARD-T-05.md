@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-027", "N12-06", "CARD-T-04", "SPEC-C-02"]
+deps: ["BD-027", "CARD-T-04", "N12-06", "SPEC-C-02"]
 needs: []
-related: ["BD-076", "BD-092", "CARD-T-15", "CARD-T-29", "BD-047"]
+related: ["CARD-T-15", "CARD-T-16", "CARD-T-29", "N12-41"]
 gates: []
 plan_refs: ["§12.3 (T-05)", "§11.1 (wrench)", "§11.3", "§10 C-02", "Appendix D.1 (power pairing, three typed frame maps)"]
 ---
@@ -73,7 +73,8 @@ what moves the registry row for that output.
 ### Unit tests
 
 `crates/frob-lemma/tests/cards/t05.rs`: `t05_pairing_identity_expands`; `t05_specimen_accepts`;
-`t05_twist_map_on_wrench_rejects`; `t05_planar_2r_power` (links 0.4 m and 0.3 m, joint angles 0 and π/2, axes
+`t05_twist_map_on_wrench_rejects`; `t05_changed_coefficient_rejects`; `t05_missing_rotation_relation_rejects`
+(FROB-REF-829); `t05_planar_2r_power` (links 0.4 m and 0.3 m, joint angles 0 and π/2, axes
 along +z: tool point (0.4, 0.3) m, point Jacobian J = [[−0.3, −0.3], [0.4, 0.0]] m/rad; tool force (10, 0) N gives
 joint torques Jᵀ·f = (−3, −3) N·m; joint rates (0.2, −0.1) rad/s give tool velocity (−0.03, 0.08) m/s; power is
 −0.3 W by f·v and by τ·q̇, exactly in rationals); `t05_moment_arm_spot_check` (R = I, p = (1, 0, 0) m, wrench
@@ -82,7 +83,13 @@ joint torques Jᵀ·f = (−3, −3) N·m; joint rates (0.2, −0.1) rad/s give 
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_coverage.sh` (bead N12-36) covers the frame-map kernels and logs this identity's status.
+At M1, when the card closes, the T-05 specimen and its mutants join the specimen set that
+`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) replays offline with `frob-verify`; at M5
+`scripts/e2e/lemma_coverage.sh` (bead N12-36) covers the frame-map kernels as built and logs this identity's
+status. Both log, per specimen and mutant, NDJSON lines (STD-E2E helper) with `ts`, `script`, `bead`
+("CARD-T-05"), `step`, `event`, the exact command line, exit code, wall time, the envelope's `evidence` block
+(claim Proof, class `Certified`, kernel identities, certificate hash, checker identity), the expected and observed
+verdict, and on a mismatch the first failing rule and the bundle path to reproduce.
 
 ### Known answers and negative controls
 

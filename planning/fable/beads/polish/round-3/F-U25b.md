@@ -1,0 +1,49 @@
+# Polishing round 3, slice F-U25b
+
+33 beads.
+
+| Key | Milestone | Type | Parent | Changed last round | Title | File |
+|---|---|---|---|---|---|---|
+| BD-021 | M0 | task | WP-05 | yes | frob-lemma v0: claims and instance certificates for T-01, T-03, T-04 on the M0 kernels, checked by FrankenSymPy | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-021.md` |
+| BD-027 | M0 | feature | WP-05 | yes | frobcert kernel bundles: frob-lemma writer, poly-identity and rational-ldlt checkers, prove.kernel/verify/list | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-027.md` |
+| BD-133 | M1 | feature | WP-42 | yes | Mission bundles: frob-lemma writer for cells, prove.bundle/verify/list, the checker run before an answer returns | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-133.md` |
+| BD-136 | M1 | task | WP-42 | no (here for a request) | The mission mutation corpus (60+ cases) and the checker-independence campaign (200 mutants per proof kind) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-136.md` |
+| BD-289 | M3 | task | WP-59 | yes | Pilot: region certificates on the 12-parameter box, four paving arms at 10⁴ boxes; KILL-AUGUR-REGION decided | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-289.md` |
+| BD-290 | M3 | feature | WP-59 | yes | Alias and jaw fixtures; mission.refute on the blind payload task returns three engineering answers (GATE-AUGUR-10) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-290.md` |
+| BD-293 | M3 | feature | WP-59 | yes | verb mission.separate: two designs separated by a minimized world pair, on ten planted reversals (GATE-AUGUR-13) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-293.md` |
+| BD-357 | M4 | feature | WP-66 | yes | Family search: quotients, checked cuts and cell refinement, measured on the frozen catalog (KILL-AUGUR-CUTS) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/BD-357.md` |
+| N25b-02 | M1 | task | WP-42 | yes | Decision OPEN-AUGUR-8: review of a bundle's primitive equations, with a fail-closed unreviewed marker | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-02.md` |
+| N25b-03 | M1 | feature | WP-42 | yes | The false-certificate procedure: report, kind disablement, bundle withdrawal, downgrade, permanent fixture | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-03.md` |
+| N25b-04 | M1 | task | WP-42 | yes | Kill-gate decision KILL-AUGUR-FALSECERT, standing from M1: cause analysis and the false-certificate drill | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-04.md` |
+| N25b-05 | M0 | task | WP-36 | no (here for a request) | e2e auditor_independence.sh: copied crate, offline build, no socket and no child process (GATE-WS-03) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-05.md` |
+| N25b-07 | M1 | feature | WP-42 | yes | frob-mission: inconsistent missions refused with a minimal conflicting subset (FROB-REF-877) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-07.md` |
+| N25b-08 | M3 | task | WP-59 | yes | frob-mission: static constraints lowered by recording; the constraint-to-parameter graph; PO-AUGUR-01 | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-08.md` |
+| N25b-09 | M4 | feature | WP-66 | yes | frob-mission: per-constraint paving driver with interval, affine and Taylor enclosures and contractors | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-09.md` |
+| N25b-10 | M4 | feature | WP-66 | yes | frob-mission: region answers from per-constraint sets: implicit membership, monotone bounds first, dual witnesses | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-10.md` |
+| N25b-11 | M4 | task | WP-66 | yes | e2e mission_region_certificates.sh: region certificates on the 12-parameter quadruped family (GATE-AUGUR-09) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-11.md` |
+| N25b-12 | M4 | feature | WP-66 | yes | frob-mission: the cell worklist: ordered attempts, splits, explanations, scheduling that cannot change a verdict | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-12.md` |
+| N25b-13 | M4 | feature | WP-66 | yes | frob-mission: discrete families as terms with typed holes: best-first fill, checked cuts, recorded dominance | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-13.md` |
+| N25b-14 | M4 | feature | WP-66 | yes | frob-mission: the mission-observable projection π_M, class memoization and the bit-identical replay test | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-14.md` |
+| N25b-15 | M4 | feature | WP-66 | yes | frob-mission: starter designs across archetype families, family ranking, and its 20-mission falsifier | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-15.md` |
+| N25b-16 | M4 | task | WP-66 | yes | Pilot: a frozen 1,024-leaf catalog exhausted on the CPU with and without checked cuts | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-16.md` |
+| N25b-17 | M4 | task | WP-66 | yes | Kill-gate decision KILL-AUGUR-CUTS at M4: checked cuts from the pilot; standing clause for quotient merges | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-17.md` |
+| N25b-22 | M3 | feature | WP-59 | yes | frob-mission: admissibility contract for separating worlds: smallness, priors apart, declared causal paths | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-22.md` |
+| N25b-23 | M3 | feature | WP-59 | yes | frob-mission: design-pair separation search: referee reproduction, minimization, first-cause check | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-23.md` |
+| N25b-24 | M4 | feature | WP-66 | yes | frob-mission: the dual query: the smallest priced world edit that restores a mission, in one repair budget | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-24.md` |
+| N25b-25 | M3 | task | WP-59 | yes | Pilot: first hybrid-contact slice (split-grip stance, one gait, rear-wheel pull-over) for design-pair separation | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-25.md` |
+| N25b-26 | M3 | task | WP-59 | yes | Kill-gate decision KILL-AUGUR-SEPARATE at M3: mechanism-changing minimizations; scenario tool at equal cost | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-26.md` |
+| N25b-27 | M3 | feature | WP-59 | yes | frob-mission: indistinguishability witnesses: the (1 + TV)/2 bound, probe scope, deadlines, binary-probe fixture | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-27.md` |
+| N25b-28 | M3 | feature | WP-59 | yes | frob-mission: the passive-jaw family, an exact shared-policy inner cell, with its physical falsifiers | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-28.md` |
+| N25b-29 | M3 | task | WP-59 | yes | Kill-gate decision KILL-AUGUR-ALIAS at M3: audit of generated alias witnesses against permitted probes | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-29.md` |
+| N25b-30 | M3 | feature | WP-59 | yes | frob-lemma: mission bundle writer for the proof kinds checked from M3 (transports, composition, sample-coverage) | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25b-30.md` |
+| N25bp1-01 | M3 | task | WP-59 | yes | fixtures/separation: the ten planted design reversals, validated on the referee and sealed before any engine run | `/Users/jemanuel/projects/franken_robotics/planning/fable/beads/defs/U25b/N25bp1-01.md` |
+
+## Addressed to your beads
+
+- `BD-027`: request from round 2, slice S16: Add dep N12-REF (now M0): prove.verify raises 823, 826, 829, 833 and 834 at M0 and RefusalCode is generated from refusals.toml.
+- `BD-133`: request from round 2, slice S72: for an answer marked unchecked-transports (test builds, BD-288 step 8), prove.bundle exports the entries the check before the answer returns withheld, marked withheld with their first failing rule, so that N25a-25 step 4 can run the standalone frob-verify on them
+- `BD-133`: request from round 3, slice F-U12-1: prove.bundle prints not_claimed through lemma::not_claimed() and its Proof strings through fmt_proof_claim (N12-08 says BD-133 builds on it): add dep N12-08 (checked: N12-08 does not depend on BD-133).
+- `BD-136`: request from round 2, slice S33: Case B4 (a passive-suspension query witnessed by the active allocation (155, 135, 105, 5) N) is rejected by the authority rule of N25cp2-01 (lp-primal.authority-equations, or authority-query if the tag is independent); suggest naming that rule in B4's row and N25cp2-01 in related.
+- `N25b-05`: request from round 3, slice H-cx-2: Add a fifth scratch variant shared-canonicalizer-drops-field (one canonicalizer shared by producer and checker, a field dropped before hashing; the bundle must be rejected by two implementations), run at gate time and caught under GATE-WS-03 and GATE-AUGUR-06; N34-CX CX-362's third plant, which no bead built.
+- `N25b-11`: request from round 2, slice S72: write the M4 parts that BET-20 and BD-289 can no longer wait for: docs/adr/bet-20-m4.md citing bet-20-m3.md, and, if KILL-AUGUR-REGION is read again at M4 after one repair cycle, docs/adr/ADR-KILL-AUGUR-REGION-M4.md
+- `N25b-22`: request from round 3, slice H-owners-1: Adopt the DESIGN slugs `world-edit-scale-undeclared` (3xx) and `decision-names-shaping-reward` (5xx), second-round rows of N35x-02, behind one named constant each.

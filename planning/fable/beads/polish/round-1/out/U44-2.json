@@ -1,0 +1,329 @@
+{
+ "round": 1,
+ "slice": "U44-2",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "WP-39",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated from the staging files: N33a-30 added (request of U33a, moved from WP-17), BD-082 title updated; counts 29 (M1 26, M2 3)"
+  },
+  {
+   "bead": "WP-40",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N20ap1-51 (M1) and N20ax-01 (M2) added"
+  },
+  {
+   "bead": "WP-41",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: seven new children (N24ap1-01, N24ax-02..04, N24bx-01, N24cx-01, N28cx-01), three titles updated; GATE-ARENA-05 now states the rule and the reachability enumeration it must reproduce (n = 64, 86, 128, 256) instead of only pointing at §24.10"
+  },
+  {
+   "bead": "WP-42",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N10bx-01 added, five titles updated; KILL-AUGUR-FALSECERT fallback states the four-step false-certificate procedure (N25b-03) instead of only citing §25.5.5; GATE-AUGUR-01 names BD-136 as the holder of the corpus and its codes"
+  },
+  {
+   "bead": "WP-43",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N29bp1-01 and N32ax-01 added, N29b-10 title updated"
+  },
+  {
+   "bead": "WP-44",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: superseded N17b-12 and N21b-27 dropped, N17bp1-01 (M3) added, N17b-11 title updated; milestone list gains the M3 line for GATE-PHYLUM-09 completion and the KILL-LIMBKERNEL coverage re-read"
+  },
+  {
+   "bead": "WP-45",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N18bx-01 added"
+  },
+  {
+   "bead": "WP-46",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: superseded N17a-15 dropped, N21-REF and N21c-27 removed (their parents are WP-35 and WP-04), N32a-34 title updated; GATE-SPARK-11 and -15 name their negative controls; KILL-D1 fallback explains the decision-level test and the reworded replay claim"
+  },
+  {
+   "bead": "WP-47",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "KILL-TENFOLD-LEVER added to gates and Considerations (its M2 re-reading N39b-10 is a child of this package); KILL-PARITY names the three physics rows (Q row 1, H rows 7 and 8) and the 0.67 tolerance reasoning; GATE-SPARK-20 states the 0.25 normalization known answer and its 0.5 control; TOC title of N36-REF updated; TOC re-run at the end: N36p1-01 (GATE-SPARK-22 measured on every device) added, BD-219 title updated"
+  },
+  {
+   "bead": "WP-48",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N23bx-03 added, N23-REF title updated; GATE-CORTEX-06 to -09 state their fixture values and controls (bootstrap 0 and 9.9, 500/1,000 reward, the three PPO defects of the sibling with their finite differences, 0.25 and 32/9 shard fixtures, stride element 3 versus 12)"
+  },
+  {
+   "bead": "WP-49",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: superseded N20b-17 dropped; GATE-SENS-07 states the mirror, glass, steam and repeated-read known answers; GATE-SENS-10 states the two Γ_obs cases"
+  },
+  {
+   "bead": "WP-50",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated: N16b-33 now cites scripts/e2e/created_energy_gate.sh (reconciliation dup-10 and request of U16b), superseded N10b-17 dropped, N29ax-02 added, N16b-07 and N16b-27 titles updated; the KILL-RANK bullet no longer contradicts the child N16b-12: it explains that N16b-12 records only a consumer reading for tier pairs at M3 while the kill gate proper is decided at M4 on GATE-ATEL-07"
+  },
+  {
+   "bead": "WP-51",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N29ap1-03 added; GATE-CHRON-05 states the five fork classes with their start ticks, state handling and refusals 580 to 582"
+  },
+  {
+   "bead": "WP-52",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N32bp1-01 (M3, viewer live mode) added; GATE-CHRON-13 names the disclosure block's owner (WP-47, FROB-REF-862/863) and the workload Q"
+  },
+  {
+   "bead": "WP-53",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: six new children (N12x-03, N19ax-01, N19ax-02, N19cx-01, N19cx-02, N34p1-02), two titles updated; GATE-HAB-04 lists the eight acceptance fixtures and GATE-HAB-05 the four-state tile checks"
+  },
+  {
+   "bead": "WP-54",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N24c-13 (M2 owner decision OPEN-ARENA-3) added; milestone list gains its M2 line with the fail-closed config; GATE-SAFE-03 control names GATE-QUAL-01"
+  },
+  {
+   "bead": "WP-55",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N12x-05 and N26bp1-01 added, superseded N26b-13 and N28b-29 dropped, N26b-17 and N26b-24 titles updated"
+  },
+  {
+   "bead": "WP-56",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC title of N27b-16 updated; GATE-AUTOPSY-06 states the four numbers of the thermal counterexample (37.95 s, 82.0 °C, 113.3 °C, 42.4 s; recomputed) with KA-675 and CX-298"
+  },
+  {
+   "bead": "WP-57",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated: N23bp1-01 (the KILL-GYMADAPT fallback branch) added; the line cap is stated as the plan has it (Python half 1 thousand lines, annex 3 thousand); the job-interface fallback is explained"
+  },
+  {
+   "bead": "WP-58",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N37x-01 added, two titles updated; the milestone list now covers the eleven M1 children (threat register, path jail, Untrusted text, import limits, registries), the M2 weight and licence beads and the M4 decision OPEN-SAFE-3, which it omitted"
+  },
+  {
+   "bead": "WP-59",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: five new children (N12x-06, N12x-08, N25ax-02, N25bp1-01, N25cx-02), two titles updated; KILL-AUGUR-REGION names its pilot, KILL-AUGUR-REUSE names the memo graph's packages, KILL-FAMILYCERT explains D-17"
+  },
+  {
+   "bead": "WP-60",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N39ax-01 and N39ax-02 (development missions of the partial gate) added, N39-REF removed (an M0 child of WP-34), N40-15 title updated; KILL-TENFOLD-SPEED names the capabilities that never depended on speed, KILL-TENFOLD-TIE the two documented and two unverified engine-internal gaps, KILL-TENFOLD-REACH the reachability conditions with the exact guard's critical counts; GATE-TENFOLD-03 states the harness known answers and negative controls of §39.17, GATE-TENFOLD-04 the six sealing steps"
+  },
+  {
+   "bead": "WP-61",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "KILL-ALTALGO names the six alternative algorithms, the pilot design (equal wall-clock, three seeds, about 10 GPU-hours each) and the falsifier"
+  },
+  {
+   "bead": "WP-62",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N28cp1-01 (M1) and N28cp1-02 (M3), the staged Atelier known-answer battery, added; four titles updated; milestone list gains M1 and the M3 battery stage; GATE-ATEL-14 lists the nine interference tests of §28.19.3"
+  },
+  {
+   "bead": "WP-63",
+   "kinds": [
+    "complete",
+    "correct",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N25ap1-01 (grade 3 polarity-rule registry) added, superseded N10b-13 dropped, three titles updated; milestone list now gives the M1 memo graph and memo-store eviction (INT-FSIM-16, INT-FSQL-02) and the M2 upstream change and digest pilot, and states the grade split as the children have it (grades 1, 2 and 4 at M3, grade 3 behind its flag; BD-347 at M4); out-of-scope line no longer excludes the implication registry that is a child here; GATE-PHYLUM-01, -05 and -06 state their rows and controls; TOC re-run at the end: GB-18 removed (now an M0 child of WP-34)"
+  },
+  {
+   "bead": "WP-64",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N33bx-03 (fs-tropical entry) added; milestone list gains the M3 line (spectral airlock group with INT-FSIM-13, autonomous-orbit pilot) it omitted"
+  },
+  {
+   "bead": "WP-65",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N12x-04, N22bx-01 and N34p1-03 added, N22b-14 title updated; milestone list gains M3 (OPEN-SHIELD-2) and the M4 absorber card, damping-injection theorem card and format rows; GATE-SHIELD-01 states the worked card and the rotor counterexample, GATE-SHIELD-02 the (1, 0.5) example and PO-SHIELD-02/03"
+  },
+  {
+   "bead": "WP-66",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: four new children (N12x-07, N25ax-01, N25ex-01, N33bx-01), N25e-02 title updated; KILL-COUPLING, whose first clause child N25ex-01 is here, added to Considerations; GATE-AUGUR-16 and -19 state their fixtures"
+  },
+  {
+   "bead": "WP-67",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC title of N25e-43 updated; GATE-AUGUR-17 states the GB-03 closed form, the bus fixture, the three-pose dyad and the crank-rocker circuit fixture"
+  },
+  {
+   "bead": "WP-68",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated (request of U30a: N30a-15 and BD-390 titles), N30ax-01 added, superseded N30b-13 dropped, three more titles updated; milestone list gains the M1 registries and the M3 published-anchor line; GATE-GROUND-02, -03, -04, -05, -06 and -08 state the rehearsal's planted truths, the eight structural aliases and the controls of §30.21"
+  },
+  {
+   "bead": "WP-69",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Text contradicted the four children (it said seed beads none, no code, no tests): scope, milestone line, child summary, unit tests and e2e now describe the protocol format, the per-package protocols with dry runs on synthetic twins, their tests and scripts"
+  },
+  {
+   "bead": "WP-70",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: five new children (N14bx-02, N16bx-04, N18bx-03, N33bx-04, N33bx-05); milestone list gains the M4 line (derivations, the two structure-loop pilots, OPEN-FOUNDRY-1, the volume mesher); GATE-FOUNDRY-01, -02, -03, -04 and -06 state their fixtures, the assembled-peak, equal-limb and window-split mutations and the loads-mass iterates"
+  },
+  {
+   "bead": "WP-71",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N31ap1-51, N31ax-01, N33bx-06, NFx-02 added, superseded N31b-14 dropped, two titles updated; milestone list gains the M4 pilots; GATE-FOUNDRY-08 states the worked allocation and the quadratic case, GATE-FOUNDRY-09 the STEP bound, GATE-WS-02 its four clauses and control"
+  },
+  {
+   "bead": "WP-72",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC title of N16a-23 updated (KILL-SKEL-PORT is decided by its own child N14a-24); milestone list gains the M4 pilot C-06; KILL-SKEL-PORT states PO-SKEL-04"
+  },
+  {
+   "bead": "WP-73",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated: N19cp1-02 (KILL-FARFIELD stage A) added, N19c-37 retitled stage B; KILL-FARFIELD now describes the two stages, the falsifier's numbers and the reuse arithmetic"
+  },
+  {
+   "bead": "WP-74",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: superseded N38a-28 and N38a-30 dropped, N18b-35 placed under its child epic, N18ax-02, N18ax-03, N19ax-05 and N33bx-07 added, N38a-31 title updated; Considerations name the M6 re-reading of KILL-DRESSING by N19ax-05"
+  },
+  {
+   "bead": "WP-76",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N39ax-03, -04, -05 added under child epics; the two suite pilots and the enlarged development pool described; GATE-TENFOLD-03 states the known answers and controls of §39.17, GATE-TENFOLD-04 the six sealing steps, KILL-TENFOLD-REACH the reachability conditions"
+  },
+  {
+   "bead": "WP-77",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N39ax-06 added, N39b-13 title updated; the publication dry run is named as the rehearsal on record; KILL-TENFOLD-SPEED and -TIE state what §39.10 holds"
+  },
+  {
+   "bead": "WP-78",
+   "kinds": [
+    "complete"
+   ],
+   "what": "TOC regenerated: N19bx-01, N25cp1-01, -02, -03 and N25cx-01 added under the child epic; the milestone line and pilots describe the two stages (fixture and stop rule, then the multi-room shift proposed to the owner), decoupled stepping and OPEN-AUGUR-9, which were missing"
+  },
+  {
+   "bead": "WP-79",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "TOC regenerated: superseded N10b-16 and N25a-20 dropped (reconciliation dup-14 and request of U23b: PILOT-C-24 is N23b-01), N12-19, N23bx-01, N23bx-02 added; the pilot paragraph names N23b-01; KILL-COUPLING notes its M4 clause in WP-66"
+  },
+  {
+   "bead": "WP-80",
+   "kinds": [
+    "complete",
+    "self-contained"
+   ],
+   "what": "TOC regenerated: N12p1-01 added; GATE-FOUNDRY-11 states the fixed-point counterexamples and what the 10⁶ vectors are"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [],
+ "unchanged": 1,
+ "notes": "All 42 epics read in full against §44.1, the gate register and their chapters; every TOC regenerated from the staging files and checked for drift at the end; package order edges of §44.1 all present in related. Unchanged: WP-75. The two requests drafted mid-review (WP-22 to list N16bp1-01; N17bp1-01's duplicated Background heading) were found already resolved by their owners at the final check and are not filed. Requests in the slice file resolved: WP-39 (N33a-30), WP-50 (N16b-33 title), WP-68 (N30a-15, BD-390 titles), WP-79 (N23b-01 for PILOT-C-24). Late gates of §40.8 and §40.9 stay out of the epics' gates per U44 coverage note 9; those decided inside a package are named in Considerations. TOCs can drift again as other slices add or move beads; N44-03 regenerates them from the graph."
+}

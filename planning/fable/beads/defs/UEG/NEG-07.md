@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "kinesis", "frob-dyn", "solid", "test", "card"]
 parent: "WP-50"
-deps: ["NEG-03", "GB-16", "N16b-26"]
+deps: ["GB-16", "N16b-26", "N36-01", "NEG-03"]
 needs: []
-related: ["BD-214", "N16b-34", "BD-216"]
+related: []
 gates: []
 plan_refs: ["Appendix E.7 row 4", "§16.11", "§36.9", "§36.3 row 7", "Appendix M KA-361, KA-821"]
 ---
@@ -27,19 +27,24 @@ make every coverage figure derive from that table.
 ## Scope
 
 In: the single source for planning rates in coverage arithmetic; the regression test; the scan. Out: the
-coverage model in `sim.estimate` (N16b-26); the background referee (BD-214); the card (GB-16).
+coverage model in `sim.estimate` (N16b-26); the target register that holds the planning rates (N36-01, a
+dependency); the background referee (BD-214); the card (GB-16).
 
 ## Technical approach
 
-1. **Single source.** The planning rates of the reference workloads live in one registry table
-   (`registries/capacities.toml` or the performance table the harness reads; the key is workload and tier).
-   The coverage model takes a workload key, never a literal rate. A unit test fails if a numeric rate appears
-   as a literal in the coverage code path.
+1. **Single source.** The planning rates of the reference workloads live in one registry table, the target
+   register `registries/perf_targets.toml` of N36-01 (row 7: H, physics only, `gpu-cuda`, planning 1.7 M
+   world-steps/s; the quadruped row, planning 2.0 M), keyed by workload and tier; the workload records
+   themselves are `registries/workloads.toml` (N36-02). The coverage model of `sim.estimate` takes a workload
+   key and reads T from that row (or from the device's measured rate once one exists), never a literal rate.
+   A unit test fails if a numeric rate appears as a literal in the coverage code path.
 2. **Values (from the table's TARGETs; h = 2 ms; 24 cores at 0.2 to 1.0 of real time).** Humanoid 1.7 M:
    3,400 world-seconds per second, 4.8/3,400 = 0.1412% to 24/3,400 = 0.7059%. Quadruped 2.0 M: 4,000, 0.12% to
    0.6%. The stale 0.5 M gives 1,000 and 0.48% to 2.4%.
-3. **Receipts.** Every `fidelity.shadow` receipt prints the measured share (selected world-seconds over
-   produced world-seconds); the planning value appears only in `sim.estimate` and is labelled TARGET.
+3. **Receipts.** Every `fidelity.shadow` receipt prints the measured share in BD-214's block `referee_coverage`
+   (`share` = `shadowed_world_seconds` / `gpu_world_seconds`: world-seconds actually re-simulated over
+   world-seconds produced, so a dropped snapshot lowers it); the planning value appears only in `sim.estimate` and
+   is labelled TARGET.
 4. **Register and scan.** Item E7-4: stale patterns `0.5 M world-steps` in the scope of referee, shadow or
    coverage text, and `0.5 to 2.4%`; pinned by `gb_16_reference` and the test below.
 
@@ -63,9 +68,10 @@ coverage model in `sim.estimate` (N16b-26); the background referee (BD-214); the
 
 ### End-to-end script and logging
 
-`scripts/e2e/worked_cards.sh` (NEG-02) through GB-16's surface row (`frob sim estimate --workload H
---referee-cores 24 --json`), which logs the table row used, its tag (TARGET), the share range, and item E7-4
-in the stale-value step.
+`scripts/e2e/worked_cards.sh` (NEG-02) through GB-16's surface row (`frob sim estimate <humanoid> --tier
+gpu-cuda --worlds 8192 --json` on the reference host, c = 24 background cores; the verb has no flag for the
+core count), which logs the target-register row used, its tag (TARGET), the share range, and item E7-4 in the
+stale-value step.
 
 ### Known answers and negative controls
 

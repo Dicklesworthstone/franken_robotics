@@ -1,0 +1,518 @@
+{
+ "group": "GF",
+ "needs": [
+  {
+   "bead": "FD-FDGR-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-25"
+   ],
+   "note": "the M3 pilot that builds the scan-import schema adapter and its fixtures (N33a-25 was folded into it); published geometry is first validated against it"
+  },
+  {
+   "bead": "FD-FSIM-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N15b-28"
+   ],
+   "note": "rule 7: the item is worked only on the branch 'upstream change' of the decision OPEN-SINEW-4"
+  },
+  {
+   "bead": "FD-FSIM-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19b-20"
+   ],
+   "note": "rule 7: the item is worked only if KILL-LIVING did not fire; the decision bead depends on the proxy-adequacy pilot N19b-16 (GATE-HAB-09)"
+  },
+  {
+   "bead": "FD-FSIM-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-30"
+   ],
+   "note": "the joint-law battery (GATE-CORTEX-18) that the switch-over re-runs against the corrected sampler; the battery does not wait for the upstream item (G23 holds it as related)"
+  },
+  {
+   "bead": "FD-FSIM-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-36"
+   ],
+   "note": "the type MixedWrench and its probe, which the switch-over re-runs and replaces; the gate record N33c-40 is reached through the dependency FDEF-05"
+  },
+  {
+   "bead": "FD-FSS-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N19c-01",
+    "N33c-25"
+   ],
+   "note": "the item is opened only on the finding of the twin-package inspection: N19c-01 is the pilot of the Habitat chapter, and the M3 pilot N33c-25 carries the same inspection since N33a-25 was folded into it"
+  },
+  {
+   "bead": "FD-FTX-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-28"
+   ],
+   "note": "the pilot that runs ftx-drape as a worker process (INT-FTX-01), the baseline the switch-over is compared with; the epic BD-416 is never a carrier and N33a-26 was folded into N33c-28"
+  },
+  {
+   "bead": "FDEF-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-36",
+    "N33c-40"
+   ],
+   "note": "the report copies the record of the mixed-wrench probe (N33c-36) as recorded at GATE-WS-06 (N33c-40)"
+  },
+  {
+   "bead": "FDEF-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N23b-30",
+    "N33c-37"
+   ],
+   "note": "the report copies the record of the joint-law battery (GATE-CORTEX-18) and of its planted linear-phase sampler"
+  },
+  {
+   "bead": "NF-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N33b-03",
+    "N39b-13"
+   ],
+   "note": "M7, later than this M0 bead: N33b-03 declares the freeze as a `[freeze]` table in franken-stack.lock and N39b-13 opens it; the guard of NF-01 now reads that record (fixed in NF-01)"
+  },
+  {
+   "bead": "NF-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-038"
+   ],
+   "note": "a step of the procedure that applies once the worker exists: the train regenerates the lockfile of worker/ and re-runs INT-FSIM-18 when it has a record; the procedure does not wait for the worker"
+  },
+  {
+   "bead": "NF-02",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already a dependency: BD-031, which depends on the matrix harness N33c-01 whose cells a train re-runs"
+  },
+  {
+   "bead": "NF-02",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33b-03",
+    "N39b-13"
+   ],
+   "note": "M7, later than this M0 bead; the guard reads the freeze record N33b-03 declares (fixed in NF-02)"
+  },
+  {
+   "bead": "NF-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-41"
+   ],
+   "note": "the admission probe of row 9, whose record the report copies; the Suite bead owns the probe and the interim posture, this bead the change in the sibling"
+  },
+  {
+   "bead": "NF-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-42"
+   ],
+   "note": "the admission probe of row 10, whose record the report copies; the Suite bead owns the probe and the interim posture, this bead the change in the sibling"
+  },
+  {
+   "bead": "NF-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-43"
+   ],
+   "note": "the admission probe of row 11, whose record the report copies; the Suite bead owns the probe and the interim posture, this bead the change in the sibling"
+  },
+  {
+   "bead": "NF-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-45"
+   ],
+   "note": "the admission probe of row 13, whose record the report copies; the Suite bead owns the probe and the interim posture, this bead the change in the sibling"
+  },
+  {
+   "bead": "NF-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-44",
+    "N18b-43"
+   ],
+   "note": "the admission probe of row 12 (the arc fixture) and frob-contact's own arc-enclosing bounds, against which the sibling's bound is tested differentially; the beads that record GATE-TRAC-12 are related edges"
+  },
+  {
+   "bead": "NF-12",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-46",
+    "N19c-39"
+   ],
+   "note": "the admission probe of row 14 (the two-plane fixture) and the sibling ray adapter with world-metre hit parameters that the upstream scale replaces; the GATE-HAB-16 script is a related edge"
+  },
+  {
+   "bead": "NF-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-47"
+   ],
+   "note": "N33c-47 writes the register rows of the six items added by description and assigns each the next free number of its sibling's series; in row order that is FD-FSIM-34, the number proposed here and now stated in the bead; no bead elsewhere names a different number"
+  },
+  {
+   "bead": "NF-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-47"
+   ],
+   "note": "N33c-47 writes the register rows of the six items added by description and assigns each the next free number of its sibling's series; in row order that is FD-FSIM-35, the number proposed here and now stated in the bead; no bead elsewhere names a different number"
+  },
+  {
+   "bead": "NF-09",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-47"
+   ],
+   "note": "N33c-47 writes the register rows of the six items added by description and assigns each the next free number of its sibling's series; in row order that is FD-FSIM-36, the number proposed here and now stated in the bead; no bead elsewhere names a different number"
+  },
+  {
+   "bead": "NF-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-47"
+   ],
+   "note": "N33c-47 writes the register rows of the six items added by description and assigns each the next free number of its sibling's series; in row order that is FD-FSIM-37, the number proposed here and now stated in the bead; no bead elsewhere names a different number"
+  },
+  {
+   "bead": "NF-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-47"
+   ],
+   "note": "N33c-47 writes the register rows of the six items added by description and assigns each the next free number of its sibling's series; in row order that is FD-FSIM-38, the number proposed here and now stated in the bead; no bead elsewhere names a different number"
+  },
+  {
+   "bead": "NF-12",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-47"
+   ],
+   "note": "N33c-47 writes the register rows of the six items added by description and assigns each the next free number of its sibling's series; in row order that is FD-F3D-02, the number proposed here and now stated in the bead; no bead elsewhere names a different number"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-008",
+   "dep": "FD-ASUP-01",
+   "as": "dep",
+   "why": "coverage (d) of UF: the done-condition of BD-008 (INT-ASUP-01 passes) needs the alignment in the siblings, which FD-ASUP-01 owns; no cycle (FD-ASUP-01 depends only on BD-001 and BD-006)"
+  },
+  {
+   "bead": "BD-023",
+   "dep": "FD-FMCP-01",
+   "as": "dep",
+   "why": "coverage (d) of UF: INT-FMCP-01 needs fastmcp_rust on the toolchain T; already drafted in BD-023, recorded for completeness"
+  },
+  {
+   "bead": "CARD-T-13",
+   "dep": "FD-FLN-01",
+   "as": "related",
+   "why": "replaces the drafted dep: no bead waits on an upstream item that has an interim posture; the card is parked and its statement, registry row and closure probe proceed without the Mathlib roots; the probe is re-run at FD-FLN-01's switch-over"
+  },
+  {
+   "bead": "N19b-18",
+   "dep": "FD-FSIM-04",
+   "as": "related",
+   "why": "replaces the dep recorded for need 2 of N19b-18: no milestone waits on a sibling change; on the interim posture of FD-FSIM-04 a chain anchored at both ends is closed by bilateral rows under the transactional profile (N16b-23), and the switch-over re-runs the fixture on the referee"
+  },
+  {
+   "bead": "N19b-18",
+   "dep": "N16b-23",
+   "as": "dep",
+   "why": "need 2 of N19b-18 on the interim posture of FD-FSIM-04: the in-repository loop closures (bilateral rows when transactional) that anchor the chain to the scene at both ends"
+  },
+  {
+   "bead": "FD-FTX-01",
+   "dep": "N19b-20",
+   "as": "dep",
+   "why": "rule 7: FD-FTX-01 is closed as not needed if KILL-LIVING fires (no cloth tier without coupled islands), so it depends on that decision"
+  },
+  {
+   "bead": "FD-F3D-01",
+   "dep": "N33c-24",
+   "as": "dep",
+   "why": "a Frontier item waits for its pilot: N33c-24 runs INT-F3D-01 on the subprocess route, the record the switch-over is compared with"
+  },
+  {
+   "bead": "FD-FTUI-01",
+   "dep": "N33c-23",
+   "as": "dep",
+   "why": "a Frontier item waits for its pilot: N33c-23 runs INT-FTUI-01 with the executor forbidden, the record the adoption re-runs"
+  },
+  {
+   "bead": "FD-ASUP-01",
+   "dep": "N33c-35",
+   "as": "related",
+   "why": "OPEN-SUITE-1 (the version V) is decided by N33c-35 at INT-ASUP-01, after BD-008 and therefore after this bead; the fail-closed default stated in FD-ASUP-01 holds until then"
+  },
+  {
+   "bead": "NF-10",
+   "dep": "N18b-45",
+   "as": "related",
+   "why": "GATE-TRAC-12 on the referee (the arc fixture and its generator), which the switch-over re-runs; rule 4: a mechanism does not depend on a gate's test bead"
+  },
+  {
+   "bead": "NF-10",
+   "dep": "N18b-44",
+   "as": "related",
+   "why": "GATE-TRAC-12 on the transactional batch profile, which the switch-over re-runs"
+  },
+  {
+   "bead": "NF-12",
+   "dep": "N19c-40",
+   "as": "related",
+   "why": "the GATE-HAB-16 script, whose ray rows the switch-over re-runs; rule 4: a mechanism does not depend on an end-to-end bead"
+  },
+  {
+   "bead": "NF-12",
+   "dep": "N19c-38",
+   "as": "related",
+   "why": "the scaled-instance rules on this side (distances and normals in world metres), out of this bead's scope"
+  },
+  {
+   "bead": "FD-FSIM-18",
+   "dep": "N26b-22",
+   "as": "related",
+   "why": "the Nemesis bead owns the admission tests of the two sample caps and the interim posture; this bead owns the change in the sibling"
+  },
+  {
+   "bead": "FD-FSIM-19",
+   "dep": "N26b-22",
+   "as": "related",
+   "why": "the Nemesis bead owns the admission test of the missing splitting estimator and the interim posture; this bead owns the change in the sibling"
+  },
+  {
+   "bead": "NF-13",
+   "dep": "N34-20",
+   "as": "dep",
+   "why": "the item is opened only if the two guard tests of N34-20 fail on a transport (also in the bead's deps)"
+  },
+  {
+   "bead": "N34-20",
+   "dep": "NF-13",
+   "as": "related",
+   "why": "need 1 of N34-20: the conditional upstream item for a raw-frame hook in fastmcp_rust, reported as a gap by G34, now exists as NF-13; N34-20 proceeds on its own guard and does not wait for it"
+  },
+  {
+   "bead": "N22c-22",
+   "dep": "BD-037",
+   "as": "related",
+   "why": "the upstream register that will hold the row of N22c-22 once it has an identifier (see gaps)"
+  }
+ ],
+ "superseded": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "NF-01",
+   "other": "N33b-04",
+   "note": "both specify the compatibility train: the procedure as a script with its refusals and abort path, the list of gates a train re-runs, the train log and its schema, and the breakage share that KILL-FSIM reads; one should keep it (N26b-24 already depends on both)"
+  },
+  {
+   "mine": "NF-06",
+   "other": "N33b-04",
+   "note": "the rehearsal of a pin move on scratch stacks is a bead here and the last part of N33b-04 there"
+  },
+  {
+   "mine": "NF-02",
+   "other": "N33c-08",
+   "note": "both specify the toolchain train (docs/runbooks/toolchain-train.md, a dry run for a proposed T, the record a train leaves); N33c-08 adds the check-stack conditions of the one-toolchain rule, NF-02 the legs in the siblings and the refusals"
+  },
+  {
+   "mine": "NF-01",
+   "other": "N33a-10",
+   "note": "the upstream breakage share over four weeks is computed in both: from the train log here, in the KILL-FSIM trigger ledger there"
+  },
+  {
+   "mine": "FD-ASUP-01",
+   "other": "BD-008",
+   "note": "BD-008's Scope lists the execution of FD-ASUP-01 in frankensim, frankentorch and fastmcp_rust; FD-ASUP-01 owns those changes and their mirrored beads and leaves BD-008 the INT-ASUP-01 measurement and its wiring into check-stack and check-deps; BD-008 should depend on it (edge recorded) and drop the execution from its Scope"
+  },
+  {
+   "mine": "FD-FSIM-18",
+   "other": "N26b-22",
+   "note": "the upstream registry row and failing fixture of the 10⁶ sample caps are specified in both"
+  },
+  {
+   "mine": "FD-FSIM-19",
+   "other": "N26b-22",
+   "note": "the upstream registry row and failing fixture of the missing splitting estimator are specified in both"
+  },
+  {
+   "mine": "FD-FSIM-18",
+   "other": "N26b-24",
+   "note": "the switch-over after the caps are lifted (re-run of the gates at the larger count) is in both; N26b-24 depends on FD-FSIM-18"
+  },
+  {
+   "mine": "FD-FSIM-19",
+   "other": "N26b-24",
+   "note": "the differential test of the two splitting estimators and the choice between them is in both; N26b-24 depends on FD-FSIM-19"
+  },
+  {
+   "mine": "NF-07",
+   "other": "N33c-47",
+   "note": "both write the item's row in registries/upstream.toml and open its mirrored bead; N33c-47 assigns the identifier (FD-FSIM-34 is proposed in NF-07), and NF-07 now depends on it"
+  },
+  {
+   "mine": "NF-08",
+   "other": "N33c-47",
+   "note": "both write the item's row in registries/upstream.toml and open its mirrored bead; N33c-47 assigns the identifier (FD-FSIM-35 is proposed in NF-08), and NF-08 now depends on it"
+  },
+  {
+   "mine": "NF-09",
+   "other": "N33c-47",
+   "note": "both write the item's row in registries/upstream.toml and open its mirrored bead; N33c-47 assigns the identifier (FD-FSIM-36 is proposed in NF-09), and NF-09 now depends on it"
+  },
+  {
+   "mine": "NF-10",
+   "other": "N33c-47",
+   "note": "both write the item's row in registries/upstream.toml and open its mirrored bead; N33c-47 assigns the identifier (FD-FSIM-37 is proposed in NF-10), and NF-10 now depends on it"
+  },
+  {
+   "mine": "NF-11",
+   "other": "N33c-47",
+   "note": "both write the item's row in registries/upstream.toml and open its mirrored bead; N33c-47 assigns the identifier (FD-FSIM-38 is proposed in NF-11), and NF-11 now depends on it"
+  },
+  {
+   "mine": "NF-12",
+   "other": "N33c-47",
+   "note": "both write the item's row in registries/upstream.toml and open its mirrored bead; N33c-47 assigns the identifier (FD-F3D-02 is proposed in NF-12), and NF-12 now depends on it"
+  }
+ ],
+ "new_beads": [
+  "NF-13"
+ ],
+ "gaps": [
+  {
+   "section": "Appendix F.1, §22.20",
+   "what": "a register row and an FD- identifier for the upstream item N22c-22 (input-affine EDMD fit in fs-surrogate), which §22.20 calls an upstream change without listing it in F.1; proposed FD-FSIM-39, after FD-FSIM-34 to -38 proposed for NF-07 to NF-11; neither BD-037 (53 rows) nor N33c-47 (six more) writes it",
+   "needed_by": [
+    "N22c-22"
+   ]
+  },
+  {
+   "section": "Appendix F.1, §33.18",
+   "what": "BD-037 tests for exactly 53 register rows; with the six items added by description (NF-07 to NF-12, registered by N33c-47) the count is 59, and 60 or 61 once N22c-22 and the conditional NF-13 have rows; BD-037's count should follow the registry's list",
+   "needed_by": [
+    "NF-07",
+    "NF-08",
+    "NF-09",
+    "NF-10",
+    "NF-11",
+    "NF-12",
+    "NF-13"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "FD-F3D-01",
+   "what": "title shortened from 113 to 109 characters"
+  },
+  {
+   "bead": "FD-FMCP-01",
+   "what": "title shortened from 112 to 106 characters"
+  },
+  {
+   "bead": "FD-FSIM-02",
+   "what": "title shortened from 114 to 110 characters"
+  },
+  {
+   "bead": "FD-FSIM-06",
+   "what": "title shortened from 115 to 106 characters"
+  },
+  {
+   "bead": "FD-FSIM-14",
+   "what": "title shortened from 111 to 109 characters"
+  },
+  {
+   "bead": "FD-FSIM-19",
+   "what": "title shortened from 115 to 104 characters"
+  },
+  {
+   "bead": "FDEF-02",
+   "what": "title shortened from 114 to 110 characters"
+  },
+  {
+   "bead": "FDEF-05",
+   "what": "title shortened from 112 to 101 characters"
+  },
+  {
+   "bead": "NF-07",
+   "what": "title shortened from 115 to 108 characters; the proposed identifier FD-FSIM-34 and the numbering rule stated in the body"
+  },
+  {
+   "bead": "NF-08",
+   "what": "the proposed identifier FD-FSIM-35 and the numbering rule stated in the body (they were only in `needs`)"
+  },
+  {
+   "bead": "NF-09",
+   "what": "the proposed identifier FD-FSIM-36 and the numbering rule stated in the body"
+  },
+  {
+   "bead": "NF-10",
+   "what": "the proposed identifier FD-FSIM-37 and the numbering rule stated in the body"
+  },
+  {
+   "bead": "NF-11",
+   "what": "the proposed identifier FD-FSIM-38 and the numbering rule stated in the body"
+  },
+  {
+   "bead": "NF-12",
+   "what": "the proposed identifier FD-F3D-02 and the numbering rule stated in the body"
+  },
+  {
+   "bead": "NF-01",
+   "what": "freeze guard, its test and its consideration now read the freeze record that N33b-03 declares (a `[freeze]` table in franken-stack.lock with an empty `closed` field) in place of the proposed receipts/FREEZE.toml"
+  },
+  {
+   "bead": "NF-02",
+   "what": "freeze precondition and negative control aligned with the `[freeze]` table of N33b-03"
+  },
+  {
+   "bead": "NF-06",
+   "what": "rehearsal step 8 and its consideration aligned with the `[freeze]` table of N33b-03"
+  }
+ ]
+}

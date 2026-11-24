@@ -1,0 +1,495 @@
+{
+ "round": 1,
+ "slice": "U40",
+ "reviewed": 54,
+ "changed": [
+  {
+   "bead": "N40-01",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "GATE-GROUND-10 status aligned with N30b-22/N38b-26/N41-10 (blocked OPEN-GROUND-1, then no-claim no-dataset-admitted; no-claim needs a reason); added the field blocks_exit that N40-02, N40-04 and every chapter register bead use but the schema lacked; kill-row fields named as N40-03 has them (owner is section); recurring set split into the four of rule 8 and the late recurring gates of N40-10 (the old 'no other gate' contradicted N40-10/N40-04); blocked admits 'claim-reading: <bead>' as N40-10 needs; e2e ran the validator through xtask check-generated, which by this bead's own rule does not link frob-conformance: now a validate_register example and record() in the test target (record_gate is N38b-19's, which depends on this bead); dep STD-E2E; names the additive top-level tables ([[amendment]], [[shared_fixture]], [[related_threshold]], [[fallback_exit]], [[variant]]) and their owner beads; an unknown top-level table fails the load"
+  },
+  {
+   "bead": "N40-02",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "recorded where chapter-side data lives (the owner declaration of N40-09/N34x-02, not gates.toml), answering the reconciliation note; e2e gains the duplicate-record and stray-field plants and full NDJSON logging; dep STD-E2E. Counts 279/197/34/16/13/10/7/2 and 35 multi-part rows recomputed from §40.3"
+  },
+  {
+   "bead": "N40-03",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "'five standing or rolling gates' was six (FSIM, MCP, AUGUR-FALSECERT, AUGUR-REUSE, TENFOLD-CERT, TENFOLD-LEAK); the eight kill fields named; owner is section; amendment field admits claim (late-row claim confirmation); tests for deferred, not-fired without receipt, pilot-before-funding and rolling modes; e2e adds the implementer-ADR plant and full logging; dep STD-E2E; second pass: a row decided more than once (rolling re-read, exit row with reread, per-cell or per-algorithm gates, re-opened decision) could not be recorded in the single decision table: decision now admits an array of the same tables with exit and scope (single table still valid, so chapter decision beads are unaffected); new optional field reread (KILL-MCP rolling re-read at M1 only, as N40-30's schedule has it, where 'rolling = every later exit' put it in every due set; KILL-TENFOLD-LEVER M1+M2; per-cell ten-fold gates M3+M7); acceptance no longer leans on N40-04 (which depends on this bead); live mode --live --ids of kill_gate_records.sh, the close-time e2e of the seven ledger groups; tests rolling_reread_named_exits and decision_array; optional reread list (KILL-MCP reread M1, so not due M2-M8; exit rows may be re-read); decision may be an array of entries with exit and scope (cell, algorithm, half, clause), latest per scope in force, single table read as one entry; propagation per scope; close-time --live --ids mode for the ledger beads; tests rolling_reread_named_exits, decision_array (incl. RC-57 edited earlier entry)"
+  },
+  {
+   "bead": "N40-04",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "blocking table lacked the case of a failed gate whose kill decision is not-fired (the gap between gate and trigger, e.g. GATE-LEMMA-01 at 65%): blocks under rule 6, printed partial; blocked rows also clear on a confirmed claim reading; dep STD-E2E. Load table 23/4/2/6/0/4/2/0/0, 11/59/80/77/49/25/7/0/7, 2/4/14/28/30/18/9/0/8 (sum 113) recomputed; second pass: due-set rule 3 reads reread exits and per-scope decisions; rolling rows are due only at their reread exits (KILL-MCP no longer due M2-M8); due-set rule 3 counts exit rows at decided or reread exits and rolling rows only at their named reread exits"
+  },
+  {
+   "bead": "N40-05",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "runner did not call the dependency firewall although N40-07 says it is run by the exit runner: step 5 now calls firewall(Mn) and propagates its six findings; exit record gains the Foundations section and the stop-or-re-plan reading; dep N40-07; tests and plants extended"
+  },
+  {
+   "bead": "N40-06",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "schema lacked the needs list that m7_needs_m4_only tests and the stop_rule the exit runner applies; added both (DESIGN reading of §43.1); deps N40-01 (the estimate-cited-by-gate check loads gate rows) and STD-E2E"
+  },
+  {
+   "bead": "N40-07",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "e2e gains the missing-route, variant-clears and freeze-window plants and full logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-08",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "stated that [[shared_fixture]] and [[related_threshold]] are additive top-level tables of frob.gates/1 (the schema rejects unknown fields); e2e adds the numbers_frozen plant; dep STD-E2E; screening bound 0.0950 recomputed"
+  },
+  {
+   "bead": "N40-09",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "declaration format pointed at N34x-02's [[gate]] block and reader, which admits the chapter-side fields (criterion, criteria, measured_by, fixture, script, kill, notes, form_hash, strata_fixture, bet) the lint carries but does not compare (the dup-01 request); check 1 'exactly one owner' now applies from the gate's due exit with pending for crates not yet built (otherwise every M3-M8 gate fails at M1); outdated N34-08 caveat replaced; dep STD-E2E"
+  },
+  {
+   "bead": "N40-10",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "'blocked: claim reading' had no OPEN id and would be refused by N40-01: now detail 'claim-reading: <bead>' (admitted by N40-01), cleared by a claim amendment; e2e plants for RC-34, RC-35 and an unread two-claim row; dep STD-E2E. 76/25 and late parts 8,12,22,21,16,3,4,0,3 (89) recounted from §40.8/§40.9"
+  },
+  {
+   "bead": "N40-11",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "after a re-plan GATE-SCHED reads killed with detail 'BET-12: written re-plan adopted; <ADR>' (killed-without-decision admits the bet); e2e asserts the pre-check admits M2 after the ADR, full NDJSON logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-12",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "controls are the three negative controls of the test plan (was 'at least the two'); log path and evidence block; dep STD-E2E"
+  },
+  {
+   "bead": "N40-13",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "ceiling_must_cite_rival_ledgers uses the registry reasons ceiling-wrong-arm and ceiling-needs-closed-ledger (FROB-REF-866) and defines none; e2e replays the four negative controls with full logging; dep STD-E2E. The reconciliation note (factor-on-removed-work) no longer applies: no such name is left in N40-13"
+  },
+  {
+   "bead": "N40-14",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e plants the four conjunction controls with full logging; numbers re-verified (0.1174, 25/3, guard counts, 18 of 24); dep STD-E2E"
+  },
+  {
+   "bead": "N40-15",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "step 4 decisions named with their deciding beads (KILL-AUGUR-TIE N25a-18, KILL-FAMILYCERT N12-30, KILL-GYMADAPT N23b-14, BET-10 arm, adapter latency and train-phase share N39b-11), answering dup-08's N39b-11 overlap: this bead takes none and checks each is recorded before the row (decision-not-recorded); deps on those four beads and STD-E2E; test decision_not_recorded_blocks_entry; e2e adds the relabelled-verdict plant and charter logging"
+  },
+  {
+   "bead": "N40-16",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e adds the M3-family and kit-less-report plants and charter logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-17",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "its e2e ran level 1 and level 2 itself although Scope says this bead runs neither and reads N39b-21's log: now invokes tenfold_kit.sh, runs tenfold08 on its log, and replays the check's refusals (kit digest mismatch, 8/10, rehearsal log, foreign fingerprint, private mark, unreplicated stamp) with charter logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-18",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "stale consideration claiming N40-13 uses factor-on-removed-work replaced (one name, order-rule-violation, everywhere); e2e adds the admitted-control and other-commit records with charter logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-19",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep STD-E2E (its record script sources the helper)"
+  },
+  {
+   "bead": "N40-20",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e adds the late-sign-off and unequal-provisioning plants and charter logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-21",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "e2e adds the verdict-disagrees-with-pre-open-registration plant and charter logging (no sealed content logged); dep STD-E2E"
+  },
+  {
+   "bead": "N40-22",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "the bead's own steps (row parts, per-stratum decision with KILL-TENFOLD-TIE ADR, the funding pre-check) had no e2e: record script tenfold_13_record.sh that measures nothing (runs N39b-47 unchanged) and asserts the five stratum outcomes, the ADR, the pre-check before and after, and the stitched-receipt refusal; decision_rule boundary cases 0.8 inclusive and 0.5 strict; dep STD-E2E"
+  },
+  {
+   "bead": "N40-23",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "rows re-verified against §40.4 (13 of 13 byte-equal); e2e was only N40-30's later script: close-time run of kill_gate_records.sh --live, the group tests and validate_register with charter logging; acceptance reads N40-03's due lists and no longer requires N40-09's lint at close (N40-09 is later and does not depend on it); owner in section; dep STD-E2E"
+  },
+  {
+   "bead": "N40-24",
+   "kinds": [
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "35 rows byte-equal to §40.4; close-time e2e with charter logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-25",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "17 rows byte-equal to §40.4; the mode of each row was unstated: KILL-ALTALGO pilot-before-funding, the rest exit (DESIGN reading), test modes; close-time e2e; dep STD-E2E"
+  },
+  {
+   "bead": "N40-26",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "28 rows byte-equal to §40.4; U26a request: KILL-RARE reads N26a-28's pilot and GATE-NEMESIS-05, KILL-MCW reads GATE-NEMESIS-03, both exit at M3, decision beads N26a-32/N26a-35 with their ADR paths; U25d request: KILL-SYNTH-PLACEMENT recorded as a proposed row not entered without the owner's ruling (ADR), entering through the late group if confirmed, funding fails closed meanwhile; tests nemesis_reads, placement_not_entered; close-time e2e; dep STD-E2E"
+  },
+  {
+   "bead": "N40-27",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "19 rows byte-equal to §40.4; KILL-MCP 'parts at M0 and M1' restated as rolling with reread [M1] (not due after M1); close-time e2e; dep STD-E2E"
+  },
+  {
+   "bead": "N40-28",
+   "kinds": [
+    "complete",
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "modes were unstated for five rows and 'parts' does not exist on kill rows: CERT/LEAK standing M3; LEVER exit M1 reread M2; SPEED/TIE/ADJ/REACH exit M3 reread M7 per cell; reads of each row stated (DESIGN reading of §40.5/§39.18); close-time e2e; dep STD-E2E"
+  },
+  {
+   "bead": "N40-29",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "KILL-COUPLING 'two parts' restated as decided M4 reread M8 with one decision per clause; modes of non-pilot rows stated; test coupling_two_clauses; close-time e2e; dep STD-E2E"
+  },
+  {
+   "bead": "N40-30",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "one owner declaration rule timed (at most one before due, exactly one from due exit) per U25d; two-time gate branch beads may depend on the pilot per U20b; decision-copies-differ check and RC-58; declaration decision may be an array; attaches its test to step 6 of the exit runner from M1; tests decision_copies_agree, branch_bead_on_pilot; e2e plants and STD-E2E logging"
+  },
+  {
+   "bead": "N40-31",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Bets section of the exit report and when checks (a)-(d) run; deps N40-04, STD-E2E; e2e plants RC-46 to RC-48 with charter logging"
+  },
+  {
+   "bead": "N40-32",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "[[fallback_exit]] stated additive; coverage reads the bet register and marks ledger groups not yet present pending (complete from M1, BET-02/BET-04 at M0); test coverage_pending_before_m1; RC-50 plant and logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-33",
+   "kinds": [
+    "deps",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "removed deps N14b-26, N25d-41, N30b-22 (Skeleton, Augur, Ground have no M2 parts per §40.3); names the tier-supplying register beads; [[variant]] defined here as additive table; two refusal plants and logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-34",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "e2e-logging"
+   ],
+   "what": "deps N40-26 (KILL-RANK row), N40-33 ([[variant]] and exit::variants), STD-E2E; ownership stated; plants and logging"
+  },
+  {
+   "bead": "N40-35",
+   "kinds": [
+    "correct",
+    "optimal",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "default_effect closed set was missing keeps-conservative-value: now defers to N41-03 loader rule 2; [[owner_input]] becomes an additive table of registries/open.toml that copies nothing from the [[open]] row (default, effect, blocks, deadline read from it; only the two id-less inputs carry their own); check attached to step 10 of N40-05's runner over due(Mn); test calendar_copies_nothing and RC-59; RC-53/RC-54 plants; dep STD-E2E and charter logging"
+  },
+  {
+   "bead": "N40-36",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "complete"
+   ],
+   "what": "records through N38b-19's recorder (dep added; it is the only row writer); M0 reduced form named as N38b-21's script; adds itself to step 4 of the exit runner"
+  },
+  {
+   "bead": "N40-37",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "complete"
+   ],
+   "what": "dep BD-057 (the S-expression view, GATE-SKEL-05 test and planted printer defect the fixture exercises); real decision stays N14a-20's; adds itself to step 6 of the exit runner"
+  },
+  {
+   "bead": "N40-CX",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "rows RC-57 (earlier decision entry edited in place), RC-58 (owner declaration and ledger decision disagree), RC-59 (calendar copy of a default) for the new rules; counts 59; inert-mutant control in the e2e; charter logging; dep STD-E2E"
+  },
+  {
+   "bead": "N40-KA",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "row R-30: the five recurring gates of later subsections (GATE-GAUNT-02, -05, -10, -03, GATE-WS-08); counts 30; off-by-one plant in the e2e; charter logging; dep STD-E2E"
+  },
+  {
+   "bead": "EPIC-M1",
+   "kinds": [
+    "complete"
+   ],
+   "what": "KILL-TENFOLD-LEVER's first decision on the rival's ledger is recorded at M1 (N40-28): stated in §5 and added to the acceptance; N40-28 in related"
+  },
+  {
+   "bead": "EPIC-M2",
+   "kinds": [
+    "complete"
+   ],
+   "what": "acceptance adds the ADR of the M2 re-read of KILL-TENFOLD-LEVER on our own profile (N40-28); N40-28 in related"
+  },
+  {
+   "bead": "EPIC-M3",
+   "kinds": [
+    "complete",
+    "correct"
+   ],
+   "what": "KILL-TENFOLD-ADJ was missing from the per-class rules applied at the partial gate; SPEED/TIE/ADJ/REACH decided per cell and taken again at M7; acceptance and gates list updated; N40-28 in related"
+  },
+  {
+   "bead": "EPIC-M6",
+   "kinds": [
+    "complete"
+   ],
+   "what": "acceptance counted fourteen epics and dropped the tree-operator route and the mesh path on devices that plan §43.9 lists; now sixteen, the two conditional on KILL-TREEOP (M5) and KILL-MESHGPU (M3)"
+  },
+  {
+   "bead": "BD-224",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "deps N35-20 (numeric hazard register part 2) and N35-29 (OPEN-NUM-4 decision, moved from related), both M2 beads nothing waited for; N40-31 and STD-E2E; acceptance for the LEVER M2 entry and the Bets section (seven bets due); tests bets_due_m2, lever_reread_m2; log path"
+  },
+  {
+   "bead": "BD-319",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "'later subsections: as listed in needs' pointed at an empty list: now names the 21 late parts; deps N20b-19, N20b-20 (Sensorium index and battery, M3, nothing waited for), STD-E2E; KILL-TENFOLD-ADJ added and per-cell entries stated; acceptance for cell decisions and Bets section; tests cell_decisions_complete, bets_due_m3; log path"
+  },
+  {
+   "bead": "BD-378",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "stale 'as listed in needs' replaced by the 16 late parts; scoped entries for KILL-ALTALGO, KILL-AUGUR-CUTS, KILL-COUPLING finite clause; Bets section; tests scoped_decisions, bets_due_m4; STD-E2E and log path"
+  },
+  {
+   "bead": "BD-412",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Bets section (BET-11, -28, -29) and test bets_due_m5; STD-E2E and log path"
+  },
+  {
+   "bead": "BD-427",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "table cited superseded pilots N38a-28/N38a-30 (now N18b-16/N18b-35) and said GATE-TRAC-09 device rows had no bead (N18ax-03 exists and is a dep); the fourteen epics BD-413..426 the text says are in related were not: added; acceptance covers tree-operator and mesh-path epics; Bets section (BET-36); STD-E2E and log path"
+  },
+  {
+   "bead": "BD-442",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "table cited superseded N25a-20 (now N25c-05) and said GATE-CORTEX-17 had no bead (N23bx-02 exists and is a dep); BD-435..441 added to related as the text says; KILL-COUPLING tray clause as a scoped entry and KILL-GATREE's two readings; test coupling_tray_entry, bets_due_m8; STD-E2E and log path"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N34x-02",
+   "what": "kill block enumerations differ from the register's owner N40-03: mode should be exit | pilot-before-funding | standing | rolling (not at-exit | standing | rolling), and outcome should include not-reached (fired | not-fired | not-reached | deferred)"
+  },
+  {
+   "bead": "BD-397",
+   "what": "form B of the Reality lane's record should write GATE-GROUND-10's part with status no-claim and detail no-dataset-admitted (not status 'not run' with state = no-claim), as N40-01, N30b-22, N38b-26 and N41-10 now say"
+  },
+  {
+   "bead": "BD-147",
+   "what": "the M1 exit review should depend on N40-30 (kill-ledger cross-check in runner step 6 from M1), N40-31 (Bets section of the exit report) and N40-28 (KILL-TENFOLD-LEVER is decided at M1)"
+  },
+  {
+   "bead": "N34x-02",
+   "what": "the kill block should also admit the optional reread list and a decision given as an array of entries with exit and scope (cell:, algorithm:, half:, clause:), as N40-03 now defines; a single table stays valid"
+  },
+  {
+   "bead": "BD-434",
+   "what": "the M7 exit review depends on BD-427 (M6 review), which puts M5 and M6 on M7's path (BD-434 -> BD-427 -> BD-412 -> BD-378); plan §43.1/§43.7/§43.9 say M7 needs M4 and neither M5 nor M6: replace dep BD-427 by BD-378 and keep BD-427 in related (BD-442 then needs nothing more: M8 does not depend on M6)"
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Done: 54 of 54 reviewed (49 changed, 5 epics unchanged: M0, M4, M5, M7, M8). Main fixes: kill rows re-decided (reread list, per-scope decision arrays) made consistent through N40-03/04/30, the ledgers, epics and exit reviews; close-time e2e for every ledger bead; stale or superseded bead references in the exit reviews. Program-wide about 540 beads have no dependents and no exit review waits for them; only the few found against plan text were wired here."
+}

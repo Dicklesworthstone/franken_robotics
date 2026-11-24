@@ -1,0 +1,237 @@
+{
+ "round": 3,
+ "slice": "F-U25b",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-027",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Request of S16 applied: dep N12-REF (M0; prove.verify raises 823, 826, 829, 833, 834 at M0 and RefusalCode is generated from refusals.toml); step 5 says so."
+  },
+  {
+   "bead": "BD-133",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Request of S72 applied: a rejected bundle is kept as a withheld entry outside the root, and prove.bundle exports withheld entries under withheld/ marked with their first failing rule only for an answer marked unchecked-transports (BD-288's test switch; N25a-25 step 4). Request of F-U12-1 applied: dep N12-08; not_claimed through lemma::not_claimed(), proof strings through fmt_proof_claim. Against VERBS-prove: the positional is the answer (a kernel identifier is not a claim source of the row; full-form kinds answer 724), the example carries --key, and prove.bundle's chapter codes 826, 833, 834 are stated (re-check before writing). Tests prove_bundle_prints_not_claimed, prove_bundle_refuses_corrupted_set, withheld_exported_only_for_unchecked_answers; the 734 test carries --key."
+  },
+  {
+   "bead": "BD-136",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request of S33 applied: B4 names N25cp2-01's rule lp-primal.authority-equations (row (1,-1,-1,1): 155-135-105+5 = -80) or authority-query for an independent tag; N25cp2-01 made a dep (same milestone, no cycle) because the manifest's rule column needs it. List D's 854 case is raised by N25c-21's --reuse check, not by admission, and N25c-21 depends on this bead: D14 is now a hook row (pending, filled by N25c-21); 64 of 64 owned cases at closure. The script wrote the gate records itself (drift 9): it now writes a receipt and the gates are recorded with record_gate (GATE-AUGUR-06 --part M1) by a non-implementing session; dep N38b-19. CX-362's third plant (registered with GATE-AUGUR-06) is run at M1 as a stage through N25b-05's self-test; dep N25b-05 (moved from related)."
+  },
+  {
+   "bead": "BD-293",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Step 4 named only 'a malformed decision'; it now lists N25b-22's two ledger-numbered admission refusals by their N35x-02 slugs (decision-names-shaping-reward 5xx, world-edit-scale-undeclared 3xx), without printing numbers; the script gains the no-declared-scale admission case and reads both codes from the ledger by slug; the script's last step is the receipt, not a gate record (drift 9)."
+  },
+  {
+   "bead": "BD-290",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "The script's step list ended with 'the gate record'; it now ends with the receipt from which record_gate records GATE-AUGUR-10 (drift 9; acceptance already said so). Step 2 now states the kill-gate branch: the witness's all-admitted-probes scope stands under every outcome of KILL-AUGUR-ALIAS (N25b-29 steps 6-7, exhaustive enumeration of the whole permitted probe set), so a fired decision changes neither witness nor answers; the script asserts scope and decision in force."
+  },
+  {
+   "bead": "N25b-02",
+   "kinds": [
+    "sense",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "Acceptance asserted claim lists of real mission answers, which only BD-133/BD-135 (its dependents) produce (drift 7): the claim rule is now the function review::proof_citable with unit tests (stance copies by MissionId, 819 at N00-25's citation boundary), and the user-side assertions are named as N25b-06's step 9. The fixture allowlist got a path (DESIGN registries/proof_fixture_missions.toml)."
+  },
+  {
+   "bead": "N25b-03",
+   "kinds": [
+    "users",
+    "complete",
+    "tests"
+   ],
+   "what": "No command existed to file, confirm or re-enable a false-certificate report, so the drill script could not run the procedure (drift 8): added step 10, the operator example `cargo run -p frob-conformance --example falsecert -- file|confirm|reenable` with --ledger/--status for scratch runs (not a verb: it changes what every user's answers rest on); Scope, acceptance and test falsecert_cli_round_trip."
+  },
+  {
+   "bead": "N25b-04",
+   "kinds": [
+    "complete",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The drill named no commands: it now runs keyed mission.synthesize with the box narrowed by --set, a falsecert_drill example (plant: BD-136's boundary operator, a synthetic-drill answer in the scratch ledger only), the auditor built with a registered nc mutation, N25b-03's falsecert example, and the read verbs, under e2e_init's FROB_STATE. The ADR template follows N40-03: docs/adr/ADR-KILL-AUGUR-FALSECERT-<milestone>.md with its required fields. Step 3 used 'killed: fallback adopted' / 'triggered' as register states: now N40-03's outcomes (not-fired for an implementation defect, fired for a rule fault), with the standing gate's per-exit entry and a -reopened entry/ADR for a confirmed report at an exit already decided."
+  },
+  {
+   "bead": "N25b-05",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Request of H-cx-2 applied: fifth self-test variant shared-canonicalizer-drops-field (CX-362 plant 3, gates GATE-WS-03 and GATE-AUGUR-06): scratch auditor on frob-core's mutated canonicalizer accepts the drifted bundle, the genuine auditor rejects it; --variant runs it alone (BD-136 runs it at M1); dep N34-CX. The script wrote the GATE-WS-03 row itself (drift 9): it now assembles a receipt and the row is recorded with record_gate --part M0|M1."
+  },
+  {
+   "bead": "N25b-07",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The script ran `frob prove bundle` on a refusal's certificate, but prove.bundle takes an answer address and a refused query has none: the 877 payload now carries the certificate inline (DESIGN), audited with prove.verify and frob-verify; mission.new calls carry --key; dep BD-133 (the writer and in-process check that produce the certificate; no cycle)."
+  },
+  {
+   "bead": "BD-357",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The product-path reading was 'appended as a dated second reading' to ADR-KILL-AUGUR-CUTS-M4.md: N40-03 makes a second entry per scope at one exit reading = \"final\" with its own ADR, and any other path fails the load (decision-adr-path). Now ADR-KILL-AUGUR-CUTS-M4-final.md, two final entries (half:cuts, half:quotient) citing N25b-17's file; the --cuts/--quotient defaults read the outcome in force; the script writes the receipt and no register entry. It is the carrier of PILOT-QUOTIENT-01 (row 5 of N25d-40's Augur pilot records, whose plan-time enumeration it must repeat) and said nothing of it, which leaves the record unregistered and blocks funding: step 3 now commits the frozen protocol and appends the [[pilot.result]] (24,546 classes of 735,471, pairs replayed, mismatches); acceptance item; dep N25d-40 (moved from related)."
+  },
+  {
+   "bead": "N25b-08",
+   "kinds": [
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "The script 'reads the graph artifacts back by hash' and runs the second route, but the driver had no form for either: the example gains `--get <hash>` and `--compare`, and the script names its three commands."
+  },
+  {
+   "bead": "N25b-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Acceptance said a three-mass budget is 'decided with one monotone-transport proof', against step 1a and BD-288 (one transport per direction, half space per parameter): restated per parameter, cells decided by corner evaluation or unresolved. Test monotone_mass_budget_no_bisection gains its hand-checkable reason on BD-289's ranges (only m_b > 10 is a half space; m1 > 1.8, m2 > 1.6, m_m > 0.7 lie outside)."
+  },
+  {
+   "bead": "N25b-11",
+   "kinds": [
+    "complete",
+    "deps",
+    "correct"
+   ],
+   "what": "Request of S72 applied: step 12 writes docs/adr/bet-20-m4.md (N00-28's fields, verdict from the bets example, citing bet-20-m3.md and both KILL-AUGUR-REGION entries; deps BET-20 and N00-28, no cycle). The M4 kill reading uses N40-03's outcomes (not-fired/fired, an exit = M4 entry beside BD-289's M3 entry, written by the recording session, not the script); summary names the outcome and the bet verdict."
+  },
+  {
+   "bead": "N25b-17",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Register states 'killed: fallback adopted'/'kept' replaced by N40-03's outcomes per scope of kind half (half:cuts, half:quotient); measured values move to the cited receipt (a kill row carries none); BD-357's product-path reading is a reading = \"final\" entry with its own -final ADR (appending to this file would fail decision-adr-path); a later false merge is a reopened entry; new test entries_load_per_half; the script writes the receipt and ADR skeleton, not the register."
+  },
+  {
+   "bead": "N25b-26",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Outcomes per N40-03 (fired / not-fired / deferred for a void measurement) instead of killed/kept; the script wrote the register row (drift 9): now receipt plus ADR skeleton, entry by a non-implementing session. The comparator called `frob scene gen <family>` (the row has --family, no positional) and `eval run --battery <sampled worlds>` (--battery takes a registered name): it is now nemesis.search's one-arm campaigns over the case's legality set (card-uniform random, given-worlds grid), same seed for both designs, keyed per design, mode and budget."
+  },
+  {
+   "bead": "N25b-29",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Outcomes per N40-03: fired / not-fired / deferred (n < 20, 'too few verdicts') replace killed/kept/underpowered in the rule, acceptance and tests; the decision entry and ADR are written by a session outside the generators and implementers; the script writes the audit's receipt and ADR skeleton, not the register row (drift 9)."
+  },
+  {
+   "bead": "N25b-15",
+   "kinds": [
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Stage 2 of the falsifier script named no command: per mission `frob mission synthesize <m> --family-order fixed --budget <b> --key sr-<run>-fal-<m>`; step 6 states the ranking is recorded under every order, which is how a run that ignored it yields it."
+  },
+  {
+   "bead": "N25b-16",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Step 6 wrote 'a row in the pilot register', which would be a second record for the mechanism: it is PILOT-CUTS-01, row 4 of N25d-40's Augur records, whose carrier commits the protocol hash before running (registered) and appends one [[pilot.result]]; acceptance restated; dep N25d-40."
+  },
+  {
+   "bead": "N25b-22",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request of H-owners-1 applied: the two admission refusals are N35x-02's DESIGN slugs world-edit-scale-undeclared (3xx) and decision-names-shaping-reward (5xx), assigned at M0, each raised through one named constant (no number printed); tests check the code against the ledger by slug, new test slug_constants_bound_to_ledger; the script compares with the ledger's number, never a literal; first repair for the reward refusal named."
+  },
+  {
+   "bead": "N25b-25",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The pilot record is named (PILOT-SEPARATE-01, row 7 of N25d-40; no second record), dep N25d-40. The script evaluated single worlds with `eval run --battery <one-world battery>` (--battery takes a registered name): now nemesis.search --method given; nemesis.shrink takes no custom test, so step 5 shrinks on the failing design and re-checks the reversal (reversal-lost recorded); the comparator is named (card-uniform with a shared seed, given-worlds grid)."
+  },
+  {
+   "bead": "N25b-28",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Acceptance required referee checks at three closing speeds but no test ran them: new test referee_closing_speeds. The misaligned-contact amendments had no command: the fixture declares a hidden contact_offset [0, 0] and the script amends it with --set (a new MissionId per e)."
+  },
+  {
+   "bead": "N25bp1-01",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "The validation script used `eval run --battery <one-world battery>`, which the eval.run row does not admit: now nemesis.search --method given with 64 paired documents per variant (identical for both designs), legality refusals read from the result's refused list; dep BD-273 (already transitive, now explicit for the verb it calls)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N25c-21",
+   "what": "Fill BD-136's manifest row D14 (a screen compiled for gains {1, 2} offered with --reuse to the docking mission over {1, 33/32, 2}: FROB-REF-854, pointer /world/hidden/g), run it through `frob mission synthesize <query> --reuse <screen> --key ...` in the fixed-case stage of scripts/e2e/mission_mutation_campaign.sh, and register its control under GATE-AUGUR-01; BD-136 cannot depend on N25c-21 (N25c-21 -> N25a-13 -> N25c-11 -> BD-136)."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.check (and mission.new where the document is admitted on creation) lists only 868, 874, 877, 884, but admission raises 846, 847, 853, 855, 856 (admission trigger) and 887 (N25-REF rows bound to BD-126, BD-128 and N25a-02; asserted at admission by N25a-23 cases a8, a9, a11 to a14, a17 and by BD-136 list D, whose script says 'the registry entry of the verb lists the code raised'). Add them to the admission rows or state which verb raises them."
+  },
+  {
+   "bead": "N40-26",
+   "what": "KILL-AUGUR-REGION's trigger has a second clause (GATE-AUGUR-09 fails after one repair cycle) that can only be read at M4, where N25b-11 records an entry with exit = M4 and docs/adr/ADR-KILL-AUGUR-REGION-M4.md: give the row reread = [\"M4\"] so that the M4 entry is due and loads (N40-03 step 2)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "KILL-AUGUR-FALSECERT's fallback acts per proof kind (a rule fault removes that kind only) and two kinds can be decided at one exit with different causes; add a scope kind (DESIGN `proofkind:<kind>`) to the closed table and give the row scope_kind, or state that one entry per exit covers every kind (N25b-04 currently writes one ADR per exit with a section per kind)."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.separate's chapter refusals list 360, 362 and 859 only; N25b-22 raises two ledger-numbered refusals of N35x-02 at admission, slugs world-edit-scale-undeclared (3xx) and decision-names-shaping-reward (5xx), asserted by BD-293's script: add them to the row by slug."
+  }
+ ],
+ "unchanged": 10,
+ "notes": "Unchanged: BD-021, BD-289, N25b-09, N25b-12, N25b-13, N25b-14, N25b-23, N25b-24, N25b-27, N25b-30 (numbers re-derived: ballast 735,471/24,546 by enumeration, jaw breakpoints and misaligned family, alias table, stance dual 165 N, closure chain 2 kg, Kleene k = 459). All 33 files parse (front matter, twelve fields, JSON lists, seven sections, three test subsections, known dep keys, no deps/related overlap); graph_check cycles: 0. The slice is settled apart from the five registry requests."
+}

@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "workspace", "gauntlet", "delivery", "solid", "registry"]
 parent: "WP-01"
-deps: ["BD-002", "BD-005"]
-needs: ["§0.1 (rule 1): the evidence-label lint that requires every external figure to resolve to a source record (N00-01)", "§33.5: the stack lock `franken-stack.lock`, which holds each sibling's pinned commit that a local source is re-read at (BD-001)"]
-related: ["NAB-10", "NAB-11", "NAB-12", "NAB-13", "NAB-14", "NAB-15", "NAB-16", "N00-01", "N00-06", "N00-13", "N00-16", "N00-34", "N19a-39"]
+deps: ["BD-002", "BD-004", "BD-005"]
+needs: []
+related: ["NAB-23"]
 gates: []
 plan_refs: ["Appendix H (preamble)", "Appendix H.1", "§0.1", "§0.6", "§0.7"]
 ---
@@ -54,16 +54,21 @@ contracts, which cannot carry a mark, a version or a re-read history. Tier: Soli
 
 In: the file, its schema, the loader, the mark order, the re-read record, the generated summary counts. Out: the
 records (NAB-11 to NAB-15); the lint over gates, contracts and close reasons (NAB-10); re-reading itself (N00-34
-for published figures, N00-16 for sibling-code facts, N00-06 and N00-35 for plan-time checks).
+for published figures, N00-16 for sibling-code facts, the plan-time pilot ledger N38a-10 with N00-35 and the pilot re-run beads for plan-time checks).
 
 ## Technical approach
 
 **1. File and schema.** `registries/sources.toml`, schema `frob.sources/1`, JSON-Schema at
-`schemas/registries/sources.schema.json`.
+`schemas/registries/sources.schema.json`, hand-written by this bead like every registry-file schema (not a
+`check-generated` output, BD-004). It names every field below, including the kind-specific fields the record
+beads use (`role`, NAB-11; `group` and `context_only`, NAB-14; `cited_in`, `scripts_retained`, `revisions`,
+`cited_revision` and `limits`, NAB-15); a field outside it fails `src.schema`.
 
 ```toml
 schema = "frob.sources/1"
 read_on_default = "2026-11-21"                # the date of the plan-time readings
+local_root = "/Users/jemanuel/projects/"      # the one absolute prefix of every local locator; a replication kit
+                                              # rewrites this key alone (NAB-11)
 
 [[source]]
 id        = "SRC-PUB-027"                     # SRC-LOC-nnn local file or crate; SRC-PUB-nnn public; SRC-REF-nnn
@@ -76,6 +81,8 @@ locator   = "https://mujoco.readthedocs.io/en/latest/_sources/mjwarp/index.rst.t
                                               # a URL; or "<repo>:<path>" under the projects directory; or "" when
                                               # no URL was recorded (then `unlocated = true`)
 repo      = ""                                # sibling repository name for a local source
+role      = ""                                # local sources only: linked-candidate | document | build-fact |
+                                              # defect-report | pattern (NAB-11); "" for other kinds
 commit    = ""                                # commit the reading was made at, where one was recorded
 version   = ""                                # release tag or version the text was read at ("4.0.1", "v1.8.0")
 read_on   = "2026-11-21"
@@ -83,17 +90,49 @@ licence   = "unknown"                         # SPDX id, "owner" (an owner's own
                                               # we redistribute), or "unknown"
 licence_verified = false
 unlocated = false
+locator_derived = false                       # true when the locator was built from a bare identifier (arXiv id)
+group     = ""                                # reference records only: carried | mission-and-synthesis | numerics |
+                                              # scene-and-sensing | control (NAB-14)
+context_only = false                          # true: named as context; no conformity may be claimed against it
+cited_in  = []                                # plan-check records only: the chapters that cite the check (NAB-15)
+scripts_retained = true                       # plan-check records only: false when the check's script was not kept
+revisions = []                                # the archive record SRC-REC-05 only (NAB-15): { commit, bytes, sha256,
+                                              #   entries } per revision, entries = 0 when not counted
+cited_revision = ""                           # the archive record only: the commit of the revision the record cites
+limits    = []                                # the archive record only: the stored limits text, one string per entry
 
   [[source.reading]]                          # one or more; each has its own mark
   mark    = "P"                               # P | S | F | R | M | U
   covers  = "batched model fields, per-world assets, the determinism answer, the 60-degree-of-freedom note"
   supports = ["§1.1 incumbent audit: per-world parameters", "§17 topology as data"]   # what the reading is used for
   figures = []                                # typed figures: { name, value, unit, hardware, how = "raw-text" |
-                                              #   "figure-by-eye" | "derived", uncertainty }
+                                              #   "figure-by-eye" | "derived" | "executed", uncertainty }
+                                              #   ("executed": the output of a program run at plan time)
 
   [[source.reread]]                           # appended by a re-read; never edited
-  date = ""; session = ""; at_version = ""; result = "confirmed"   # confirmed | corrected | not-found | changed
-  note = ""; record = ""                      # ledger reference of the reading note
+  date       = ""
+  session    = ""
+  at_version = ""                             # or the commit, for a local source
+  result     = "confirmed"                    # confirmed | corrected | not-found | changed
+  note       = ""
+  record     = ""                             # ledger reference of the reading note
+
+[[unverified]]                                # a statement the plan explicitly did not verify (NAB-14)
+id          = "NV-01"                         # NV-nn, append-only
+statement   = "Absolute MuJoCo Warp or Newton throughput on an RTX 4090"
+why         = "The published absolute figures are for an RTX 6000 Ada and an RTX 5090"
+measured_by = ["GATE-SPARK-21"]               # gates, open questions or beads that settle it
+status      = "unverified"                    # unverified | measured | read | withdrawn; changes only with `record`
+record      = ""                              # gate record, source id or ADR once settled
+
+[[tombstone]]                                 # a retired id: never reused, never renumbered
+id     = "SRC-PUB-099"
+reason = "duplicate of SRC-PUB-027"
+
+[history]                                     # one digest appended with each reread entry, in file order
+reread_digests = ["<blake3 of the canonical bytes of each reread entry>"]
+                                              # the loader recomputes and compares (src.reread-edited); an edit
+                                              # that also rewrites a digest shows in the diff of an append-only list
 ```
 
 **2. Derived fields (computed by the loader, not stored).**
@@ -111,7 +150,8 @@ unlocated = false
 
 **3. Loader and errors.** `frob_core::registry::sources::load`. Typed errors: `src.schema`, `src.duplicate-id`,
 `src.no-reading`, `src.bad-mark`, `src.unlocated-without-flag` (empty `locator` with `unlocated = false`),
-`src.local-path-missing-repo`, `src.reread-edited` (a `reread` entry differs from the previous commit's copy of
+`src.local-path-missing-repo`, `src.unverified-status-without-record` (an `[[unverified]]` record whose
+`status` is not `unverified` and whose `record` is empty), `src.reread-edited` (a `reread` entry differs from the previous commit's copy of
 the same entry; checked against a digest list kept in the file's `[history]` table), `src.id-reused`.
 
 **4. Mark-merge rule as code.** `merge_marks(a, b, audited_figures)`: returns the weaker of the two, except that
@@ -162,6 +202,10 @@ about FrankenRobotics; it is what a claim of kind Parity or Known answer cites.
 - `local_needs_stack_lock_commit`: a local reading re-read at a commit other than the stack lock's stays
   flagged.
 - `unlocated_requires_flag`; `duplicate_id_refused`; `reread_edit_refused`.
+- `kind_specific_fields_load`: a `plan-check` record with `cited_in`, `scripts_retained = false` and a figure
+  with `how = "executed"`, and a `planning-record` with two `revisions`, a `cited_revision` and three `limits`,
+  load and validate against the hand-written schema; a record carrying an undeclared field `note` fails
+  `src.schema` in the loader and in schema validation.
 - `summary_counts`: on a five-record fixture the generated block prints the expected counts per mark.
 
 ### End-to-end script and logging

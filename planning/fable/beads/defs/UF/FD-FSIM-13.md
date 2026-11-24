@@ -6,10 +6,10 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid"]
 parent: "WP-39"
-deps: ["FDEF-04", "NF-01", "STD-E2E"]
+deps: ["BD-080", "FDEF-04", "N24b-03", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-035", "BD-037", "BD-168", "BD-086", "BD-213", "BD-080", "FD-FSIM-12"]
-gates: ["INT-FSIM-04", "GATE-TRAC-06", "GATE-FID-03"]
+related: ["N16a-05", "N33a-14", "N33b-07", "N33b-08", "NFp3-12"]
+gates: ["INT-FSIM-04"]
 plan_refs: ["Appendix F.1", "Appendix F.2 row 4", "Appendix F.3", "§16.4", "§18.11", "§33.3", "§33.8"]
 ---
 ## Background
@@ -33,9 +33,16 @@ the solve (a fork of the referee); silently clamping at 21.
 ## Scope
 
 In: in FrankenSim, one of: (i) a higher or parameterized capacity; (ii) an island-wise solve; (iii) a
-documented patch model with a qualification fixture. Here: the capacity read as data and the capacity fixtures
-re-run. Out: the capacity check and refusal in the airlock (BD-007, BD-080); the capacity audit and the
-capacity-bias label on this side (BD-168, BD-086); witness migration (FD-FSIM-12).
+documented patch model with a qualification fixture. Here: the capacity read as data, the pin move and the
+referee-side re-runs of the switch-over (INT-FSIM-04's refusal row at the new limit; the 22-contact fixture on the
+referee). Out: the M2 side of the switch-over, that is the capacity audit through `contact.capacity` and
+`contact.audit`, the capacity-bias fixture of GATE-TRAC-06 and the re-issue of the referee's coverage table
+GATE-FID-03 (NFp3-12, which depends on this bead and on the M2 beads that own those checks, N18b-24 and BD-213, so
+that this upstream work can start before they exist; the split made for FD-FSIM-02 in NFp2-01); the capacity
+record and its two checks in the airlock (`RefereeContact`, N33a-14) and the referee step's
+capacity refusal (BD-080, a dependency: the 22-contact fixture runs through it); the capacity audit and the
+capacity-bias label on this side (BD-168, N18b-22);
+witness migration (FD-FSIM-12).
 
 ## Technical approach
 
@@ -105,13 +112,17 @@ T moves while a ten-fold tournament is running. If a gate named here does not ex
 the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
 against the new pin.
 
-**What the switch-over re-runs.** The capacity fixtures of the Traction chapter: INT-FSIM-04's refusal row at
-the new limit (a set one above the new capacity refuses; a set at it solves); the capacity audit; the
-capacity-bias fixture (a tracked design against a point-foot design under an artificially low cap must return
+**What the switch-over re-runs.** The rule is "re-run the capacity fixtures of Traction". In this bead, the ones
+that need only the referee: INT-FSIM-04's refusal row at the new limit (a set one above the new capacity
+refuses; a set at it solves), and the 22-contact fixture run on the referee through `frob sim run`. If form
+(iii) is what landed, the patch model's qualification fixture is re-run through the airlock and its bound is
+recorded. Their record, with the receipt hash and the capacity read at the new pin, is what NFp3-12 starts from,
+and this bead leaves the row `landed`. In NFp3-12, the ones that need the M2 capability beads: the capacity audit;
+the capacity-bias fixture (a tracked design against a point-foot design under an artificially low cap must return
 `capacity-biased` and no winner), which is part of GATE-TRAC-06; and the referee's coverage per robot class
-(GATE-FID-03), re-issued with the refusal cause "capacity" expected to fall for tracked and many-sample robots.
-If form (iii) is what landed, the patch model's qualification fixture is re-run through the airlock and its
-bound is recorded with every result that used a patch.
+(GATE-FID-03), re-issued with the refusal cause `contact-cap` expected to fall for tracked and many-sample robots;
+under form (iii), the bound entered with the patch reduction's row so that it is printed with every result that
+used the patch. Only then does this item's row become `adopted`.
 
 **Fallback if the change cannot land.** Named refusals and declared patch reductions on this side; the `strict`
 profile adjudicates where the referee refuses; referee coverage for tracked robots stays low and is reported.
@@ -122,8 +133,8 @@ profile adjudicates where the referee refuses; referee coverage for tracked robo
 - [ ] In FrankenSim: for form (i), a solve at the new tested maximum agrees with the same scene solved island by island or by a reference method to its stated tolerance; for form (iii), the qualification fixture passes with its bound.
 - [ ] Here: the airlock's capacity field equals the value read from FrankenSim at the new pin, with no constant 21 anywhere above the airlock.
 - [ ] Here: the 22-contact fixture solves (or, under form (iii), solves through a declared patch), and a set one above the new capacity still returns `FROB-REF-721` carrying the upstream reason.
-- [ ] Here: the capacity-bias fixture still returns `capacity-biased` under an artificially low cap; GATE-TRAC-06 passes; GATE-FID-03's table is re-issued.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] Here: the switch-over's referee-side record (INT-FSIM-04 at the new limit, the 22-contact run, the capacity value read at the new pin, the form that landed and, under form (iii), the qualification bound, with the receipt hash) is on file for NFp3-12, which re-runs the capacity audit and the capacity-bias fixture of GATE-TRAC-06 and re-issues GATE-FID-03's coverage table; nothing in this bead waits on those M2 checks.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead, the switch-over bead NFp3-12 and the mirrored bead in the sibling's tracker; its `status` is `landed` once the change is on the sibling's `main` and the pin has moved (NFp3-12 moves it to `adopted`).
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
 
@@ -139,17 +150,27 @@ In FrankenSim (added):
 Here:
 - `airlock_capacity_is_read_not_assumed`: a scan finds no literal 21 in capacity logic above the airlock; the field equals the sibling's constant.
 - `over_capacity_refuses_at_new_limit`: capacity + 1 contacts; expected `FROB-REF-721`.
-- `capacity_bias_label_survives`: the tracked-against-point-foot fixture under a cap of 8; expected `capacity-biased`, no winner.
+- `doctor_reports_the_capacity_read`: the `referee` section of `frob doctor --section referee --json` (N33a-14) prints the capacity the airlock read at the new pin, equal to the value the 721 refusal carries.
+(That the capacity-bias fixture still returns `capacity-biased` and no winner under a cap of 8 is re-run by NFp3-12, with N18b-22's script.)
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_13.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
 Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_13 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
-asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob contact capacity --json` and `frob contact audit --json` on
-the tracked reference design, `frob sim run <22-contact fixture> --tier referee --json`, and
-`frob fidelity coverage --json`, asserting the capacity value, the refusal counts and the coverage table.
+asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, INT-FSIM-04's refusal row
+is re-run at the new limit, and the registry row must read `landed` with a receipt newer than the pin move
+(`adopted` once NFp3-12 has run: GATE-TRAC-06 and GATE-FID-03 are read there, not here). Phase `post` also runs
+`frob doctor --section referee --json` (the capacity the airlock read, N33a-14), `frob sim run --fixture
+traction/plate_on_22_points --tier referee --seed 5 --key fd13-22-post --json` (the 22-contact fixture, registered
+by this bead in the fixture registry of N24b-03 and stepped by the referee step of BD-080: a committed run, where
+phase `pre` under the key `fd13-22-pre` asserts `FROB-REF-721`, exit 5, with the contact count, the capacity and
+the upstream reason; where only form (ii) or form (iii) landed the capacity of one island is still 21, the `post`
+run still refuses and the script logs that as the expected state, the run through a registered patch reduction
+being NFp3-12's `patch-model` step). The refusal one above the new capacity is asserted by INT-FSIM-04's row and by
+`over_capacity_refuses_at_new_limit`, in the conformance crate: a fixture's contact count is not an input of
+`sim.run`. The capacity audit (`frob contact capacity`, `frob contact audit`), the
+capacity-bias fixture and the coverage table (`frob fidelity coverage`) are in NFp3-12's script.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_13/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -170,8 +191,9 @@ gates touched. No private-scene data is logged. Refusals are logged with the cod
 - RISK-31 and BET-34: coverage below 90% in a reference class at M2 exit falsifies the bet for that class; this item and FD-FSIM-12 are the bet's named fallbacks, with the `strict` profile as the highest tier until they land.
 - A larger dense solve makes each referee step slower by the cube law above; the referee is called in rollouts and for adjudication, never inside a training loop, so the cost is paid where an answer is otherwise a refusal.
 - The lockstep tiers have their own capacities, raised by a new step-plan identity on this side; nothing here changes them.
-- No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
-  milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
+- If form (ii) is the only one that lands, the fixture still refuses, truthfully: 22 contacts under one body are one island. The row then stays `landed` with the form named in its note, the interim posture stays for a single many-contact robot, and what the pin move gains (scenes with several robots or loose objects) is shown by the two-island case through the airlock. The row becomes `adopted` only when form (i) or form (iii) makes the fixture pass.
+- No milestone waits on this bead. Its milestone label says when its switch-over gate first exists (NFp3-12), not that the
+  milestone's exit depends on it; the work itself may start as soon as the referee step BD-080 is done. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its
   critical path.
 - If this change never lands, the program still ships on the interim posture, at the cost stated there. A change

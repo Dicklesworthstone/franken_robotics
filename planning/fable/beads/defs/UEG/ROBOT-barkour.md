@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "N14b-20", "NEG-15", "ROBOT-go1"]
 needs: []
-related: ["ZOO-quad-mammal", "N14b-24", "ROBOT-go1", "ROBOT-a1"]
+related: ["N37-17", "N37-18", "NEGp1-51", "ZOO-quad-mammal"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01", "Appendix H.3"]
 ---
@@ -39,14 +39,18 @@ licence text and any upstream NOTICE, files unmodified.
 **Expected facts (recalled, mark M; the pinned files govern).** 12 actuated revolute joints; 13 bodies;
 n_v = 18; total mass on the order of 12 kg.
 
-**Import path.** `frob design import --format mjcf assets/robots/barkour/source/<entry> --out
-assets/robots/barkour/import.fbot --json`.
+**Import path.** `frob design import assets/robots/barkour/source/<entry> --format mjcf --name barkour --key
+asset-barkour-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section).
 
 **What this robot adds to coverage (HYPOTHESIS until the file is read).** (1) A fourth quadruped skeleton
 from a different author: the parameter-stripped term must equal the Unitree quadrupeds' skeleton or differ
 only at paths that name a real structural difference (for example a different order of the hip axes).
 (2) Licence join: a `synthetic` report that cites one BSD-3 quadruped and this one must carry both licence
-entries, both notices, and the stricter of each obligation; a pack containing both exports both texts.
+entries, both notices, and the stricter of each obligation; an export holding both carries both texts. The
+join over lineage and the export door that carries the entries are M3 work (N37-17, N37-18), so at M1 this
+bead writes the robot's entry in the form the join reads (NEG-15 rule 5), with its NOTICE, and prepares the
+two-robot fixture; the join's assertions run at M3 in NEGp1-51.
 (3) Versioned directories: the index must not treat two versions of one robot as two robots, and the
 manifest's `display` carries the version.
 
@@ -59,8 +63,9 @@ quadruped; the skeleton comparison; the licence-join fixture.
       version is recorded.
 - [ ] `import.fbot` has a pinned `DesignId`; loss report equals its golden; counts equal the manifest.
 - [ ] The skeleton comparison with the Unitree quadrupeds is recorded with any differing paths explained.
-- [ ] A report citing this robot and a BSD-3 robot carries both licence entries; the robot appears in no mass
-      row and no scorecard.
+- [ ] The robot's licence entry (Apache-2.0, NOTICE present) and the `go1` entry (BSD-3-Clause) both parse in the
+      form the licence join reads, and the two-robot report fixture is on file; the assertion that the report
+      carries both entries and notices is NEGp1-51's at M3. The robot appears in no mass row and no scorecard.
 
 ## Test plan
 
@@ -68,23 +73,26 @@ quadruped; the skeleton comparison; the licence-join fixture.
 
 - `robot_barkour_manifest_valid`, `robot_barkour_licence_apache2_notice`.
 - `robot_barkour_counts`: actuated 12, bodies 13, n_v 18 (as computed at the pin).
-- `robot_barkour_skeleton_vs_unitree`.
-- `robot_barkour_licence_join_two_licences`: the join of {BSD-3-Clause, Apache-2.0} lists both with both
-  notices.
+- `robot_barkour_skeleton_vs_unitree`: the parameter-stripped term against `go1`'s (a dependency; ROBOT-a1 shows
+  that the three Unitree skeletons agree), equal or differing only at listed paths.
+- `robot_barkour_licence_entries_joinable`: the barkour and go1 entries parse in the join's input form, are
+  distinct, and carry their notices (the join of {BSD-3-Clause, Apache-2.0} listing both with both notices is
+  asserted by NEGp1-51 once N37-17 exists).
 - `robot_barkour_single_index_entry_for_versions`.
 - `robot_barkour_mass_properties_consistent`, `robot_barkour_joint_limits_valid`,
   `robot_barkour_leg_mirror_consistency`, `robot_barkour_loss_report_golden`, `robot_barkour_design_id_pinned`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/assets_licences.sh` (NEG-16): import, both checks, golden comparison, the two-licence report
-fixture; logs commit, entry and version, licence, counts, mass, skeleton digest and the joined licence set.
+`scripts/e2e/assets_licences.sh` (NEG-16): import, both checks, golden comparison, and the two-licence report
+fixture (logged `not run` at M1, run by NEGp1-51 at M3); logs commit, entry and version, licence, counts, mass,
+skeleton digest and, from M3, the joined licence set.
 
 ### Known answers and negative controls
 
 The import-parity row (10⁻⁹ m, 10⁻⁹ rad, 10⁴ configurations). Licences over derivation graphs: the licence
-set of a derived artifact equals the join of its inputs' (the safety gate's rule). Controls: a report that
-drops the Apache-2.0 entry when a BSD-3 entry is present; the robot added to the mass gate by a planted index
+set of a derived artifact equals the join of its inputs' (the safety gate's rule; asserted at M3). Controls: a
+report that drops the Apache-2.0 entry when a BSD-3 entry is present (M3, NEGp1-51); the robot added to the mass gate by a planted index
 edit; an altered licence hash. Determinism: goldens are data.
 
 ## Considerations

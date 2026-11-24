@@ -1,0 +1,32 @@
+{
+  "round": 4,
+  "slice": "F-U10c",
+  "reviewed": 20,
+  "changed": [
+    {
+      "bead": "N10c-05",
+      "kinds": ["contradiction", "registry", "deadlock"],
+      "what": "KA-844 (reality of a certified root) is N38-KA's record and derivation file. Its entry `ka:KA-844@host|auditor` and its control, plant `N38b-45:cx-393`, belong to N38b-45, which depends on this bead (N38b-45 -> N25d-23 -> N10c-05). The bead claimed to write the row's derivation file, attach its control and bind the number. Its e2e ran `g1_known_answers -- KA-844` with `reality_from_real_part` required to fail the row. Left as it was, the implementer would write a second derivation file and control for a row N38-KA already defines. The e2e step could never pass at this bead's acceptance, because the entry it runs comes from a bead that waits on this one. Changes: Scope, section 5 and acceptance now say the law test `reality_robust_test` reproduces KA-844 on the reference model and that the bead adds no row, number, derivation file or control. The e2e drops the KA-844 g1 run; instead it runs the mutant as a law-suite subject and checks the registry for KA-844's record with control `N38b-45:cx-393`. Table row: tier corrected to `G1 host, auditor` as N38-KA has it, and the control is named as N38b-45's plant, with `reality_from_real_part` as this bead's law-suite mutant."
+    },
+    {
+      "bead": "N10c-10",
+      "kinds": ["broken", "contradiction"],
+      "what": "Step 3c ran each law suite with `--features controls`. BD-025 defines no such feature, so cargo refuses the build. As written, step 3c fails for every construction and `--milestone M1` can never exit 0, or the implementer invents a feature that BD-025 and N10a-01 section 6 rule out. Step 3c now uses the form of N10a-01 section 6, the same as sibling N10a-22: one build per registered control, with the feature the control's record names. That is `cargo test -p <crate> --features <feature> --test <target>` in an owning crate, or `--features gauntlet-mutations,<feature>` while the suite is staged in frob-conformance. The test named in the record must fail, and `controls_are_caught` runs in each build. Also, the paragraph on further rows and provisional tags said those checks happen at 'step 2d'. Step 2 is the doctrine test, and the acceptance criterion requires `provisional-tag-past-due` at step 3d. Both references now read 3d, so the log's `step` field matches the acceptance check."
+    },
+    {
+      "bead": "SPEC-C-36",
+      "kinds": ["contradiction", "registry"],
+      "what": "KA-845 (the Cayley map on SE(3)) is N38-KA's record and derivation file. N38b-39 (M0) owns its entry `ka:KA-845@host`, binds the row by name (`ka_845_...`) and owns its control, the feature `frob-lie/cx-394` seeded from CX-394. N38-KA's row names the control `N38b-39:cx-394`. This bead instead bound KA-845 to its own test `cayley_se3_worked` 'with its derivation file' and named its control as the mutant `translation_unchanged`. Left as it was, the M1 implementer would rebind a row that N38b-39 bound at M0 and add a second control. That breaks N38b-39's acceptance, or the registry ends up with two bindings and two controls for one row. Changes: Scope, section 5 and acceptance now say that `cayley_se3_worked` reproduces KA-845 on the reference model, that `translation_unchanged` (a law-suite mutant) fails it, and that the bead adds no row, number, derivation file or control. The KA-845 table row names the plant `N38b-39:cx-394`. The e2e no longer runs `g1_known_answers -- KA-845`: that entry is N38b-39's, and depending on N38b-39 would pull in BD-011, which this bead states it does not depend on. Instead the e2e runs the mutant as a law-suite subject and checks the registry for KA-845's record and control."
+    },
+    {
+      "bead": "SPEC-C-40",
+      "kinds": ["convention"],
+      "what": "Convention 13. The register row's `verb` was described as routed through `mission.refute` 'until the M4 verbs are registered', with a possible rename. VERBS-mission already registers `--baseline`, `--baseline-policy` and `--paired-plan` on the `mission.refute` row from M4 for BD-359's product-system dominance, and BD-359's script uses that form. Left as it was, the implementer would fill row C-40's verb as a provisional placeholder and might wait for a dominance verb that no registry will add. The row now states the registered form as a fact."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [],
+  "unchanged": 16,
+  "notes": "Unchanged (checked against the plan sections, N10-KA3, N10-CX, N38-KA, the VERBS and REF registries and the conventions; arithmetic recomputed): N10c-04, N10c-06, N10c-07, N10c-08, N10c-09, N10c-11, SPEC-C-29, SPEC-C-30, SPEC-C-31, SPEC-C-32, SPEC-C-33, SPEC-C-34, SPEC-C-35, SPEC-C-37, SPEC-C-38, SPEC-C-39. Requests addressed to this slice: (1) H-ka-1's request to SPEC-C-29, SPEC-C-34, SPEC-C-35 and SPEC-C-36 (set the open N10-KA3 cells) is already answered. N10-KA3 now records every one of those cells as '(set: ...)' by the beads that carry them: N10c-01 (KA-147, KA-148 controls), N10c-05 (KA-167 `threshold_rounded_up`), N10c-06 and N10c-07 (KA-169 `drops_rare_cycles`; KA-171 tolerance 10^-9 relative and control `square_root_rule_for_statistical`), and N10c-08 (KA-175 to KA-177 tolerances; KA-176 `euclidean_projection`; KA-177 `all_wheels_ideal`, a real mutation in place of 'omega = 0'). The SPEC beads do not contradict those cells, so they needed no edit. (2) H-ka-1's tier-target request to SPEC-C-32 and SPEC-C-38 was already applied (g0_laws, g1_known_answers, FROB_TEST_SEED form; SPEC-C-38 in round 3). No request was recorded to N10a-22: its step 3c already uses the one-control-per-build form of N10a-01 section 6, with no `--features controls`. SPEC-C-30's Scope lists MR-19 and MR-20 under 'In'. N38a-17 owns them, and SPEC-C-30's acceptance already says N38a-17 enters them, so this was judged a wording matter and left alone. The provisional tags `late-C32-1`, `late-C32-2` and `late-C39-1` in N10c-04, N10c-09 and N10c-10 are N38a-40's ledger mechanism, not convention-13 narration. N10c-10's map still calls KA-845 and KA-844 rows 'the specification and part beads bind'. That is loose now that N38b-39 and N38b-45 own their entries, but the audit's step 3d checks the same rows at the same milestones, so it was left alone. All four edited files parse: front matter between `---` lines, lists as one-line JSON, seven body sections in order. The slice looks settled."
+}

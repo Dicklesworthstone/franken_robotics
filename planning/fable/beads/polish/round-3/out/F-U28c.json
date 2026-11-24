@@ -1,0 +1,343 @@
+{
+ "round": 3,
+ "slice": "F-U28c",
+ "reviewed": 46,
+ "changed": [
+  {
+   "bead": "BD-309",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Request (S42) applied: the DC-01 null-run simulation is the library function frob_conformance::cores::dc01_null_runs (the module N28c-06's replay driver uses), which atelier_harness's cores.dc01.null wraps (BD-025: examples are thin parsers over library functions); inline tests added (bounds 132/569, seeded, a loose α⁺ = 1/2 table caught, exact acceptance bounds). Convention 9: step 6 and the acceptance no longer record GATE-ATEL-13; the M3 checks are registered under GATE-ATEL-13 in g1_known_answers and N28c-05 is the M3 part's one recorder."
+  },
+  {
+   "bead": "BD-350",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Requests (S42, H-owners-1) applied: `frob-conformance run cores.replay` → `cargo run -p frob-conformance --example atelier_harness -- cores.replay …`. Convention 9: gate run through the g1_known_answers entry (nine tests as library functions of frob_conformance::interference), receipt via e2e_tier, BD-350 is GATE-ATEL-14's one recorder with record_gate. Convention 5: keys on every run-verb call (IT-9's three eval.compare runs and IT-5b's before/after sim.run were otherwise answered from a stored receipt). Script ownership named (N28c-06 writes it)."
+  },
+  {
+   "bead": "N28c-01",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Request (S42) applied: dep N28cp2-01 added; the contract check reads obligation ids from crates/frob-conformance/registry/obligations.toml (plain TOML, xtask does not link the conformance crate) and refusal ids from registries/refusals.toml; unit test obligation_resolves_against_registry (PO-ATEL-01 resolves, PO-ATEL-11 fails)."
+  },
+  {
+   "bead": "N28c-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9: step 10 wrote the gate row; now e2e_tier g1_known_answers GATE-ATEL-13 --mutations gives the receipt and this bead is the M3 part's one recorder (record_gate --part M3, non-implementing session). Convention 5: eval.promote calls carried no --key; every run call now has a distinct seed-derived key. Convention 8: step 9 used --workers on cores.show, eval.promote and nemesis.cover, which no row has; the worker lanes now come from the private daemon's pool configuration. cores.dc01.null now wraps BD-309's library function. Also: deps + N28c-26; the recording paragraph now has OPEN-ATEL-1 decided or left open by N28c-26 first (without constants.toml the DC-01 clause is entered `blocked: OPEN-ATEL-1`), and a later decision is re-entered by rerunning step 10 with the same record_gate form."
+  },
+  {
+   "bead": "N28c-08",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Convention 9: the bead recorded GATE-ATEL-13 rows itself, as did three sibling row beads and BD-349 (which they depend on): its clauses are now entries under GATE-ATEL-13 in g1_known_answers and the M4 part has one recorder, the new N28cp3-01; the killed status is derived (N40-03). Added dep STD-E2E (its phases are built on the STD-E2E template)."
+  },
+  {
+   "bead": "N28c-09",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Convention 9 as N28c-08 (entries under GATE-ATEL-13, DC-07 shadow clause not-yet-due (M5), recorder N28cp3-01). Convention 8: `--budget gpu-s=600` is not a budget key of experiment.suggest's row; now gpu_s. Added dep STD-E2E."
+  },
+  {
+   "bead": "N28c-11",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request (S80) applied: N12-18 (orbit-count, group-enumeration checkers) replaced by N12p2-02, the rewrite-trace checker the class-E certificate replay needs, named in the DC-11 text. Convention 9 as N28c-08 (recorder N28cp3-01). Convention 5: keys on the sim.run pair and the before/after corpus runs. Added dep STD-E2E. Recomputed: f32 spacing near 1e8 is 8; profile bounds (9/40, 3/40, 1/40); the planted ladder's 78% and 0.063."
+  },
+  {
+   "bead": "N28c-16",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Convention 9: GATE-ATEL-15 had three writers (BD-351's record_gate of the replay clause, this script's zero-value clause, N28c-17's row); this bead, the one after both clauses, is now the one recorder of GATE-ATEL-15 and of GATE-AUGUR-11 at M4, from e2e_tier receipts. STD-E2E: `frob --root` does not exist; fixtures are restored into the run's FROB_STATE root. Convention 8: experiment.suggest is a read with no estimate_only, so step 10 asserts that it spends nothing instead of calling --estimate. STD-E2E: step 9's e2e_registries_scratch makes the run's receipts `override`, which the recorder rejects, so the gate step runs as its own phase."
+  },
+  {
+   "bead": "N28c-14",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Request (H-owners-3) applied: this bead lands variation 11 of NJL-01 and now writes arm 11 of crates/frob-verbs/src/registry/derive.rs (from_proposal on every run entry, --from-proposal, 804 appended), with test from_proposal_generated and the update of NJL-01's exact-set tests; dep NJL-01 added (already transitive). Stale proposal: FROB-REF-804, exit 7, pointer /from_proposal. Unknown proposal: N35-33 assigns no 8xx number without the owner decision (rule 8), so 802 with the same pointer, exit 3, the job.cancel/study.cancel convention; tests and e2e assert both. STD-E2E: `--root` replaced by restoring the fixture into FROB_STATE; the planted late hook is an nc-* control build, not a FROB_TEST_HOOK_* variable frob would have to read."
+  },
+  {
+   "bead": "N28c-15",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "STD-E2E: the snapshots were 'passed with the global --root option'; frob has none. Snapshots are now restored into the run's FROB_STATE and the registries of record are read in place. Recomputed the band: L = 19, U = 28 at 0.8 (tails 0.0256, 0.0442), false flags 0.0698, detection 0.951/0.709/0.812/0.940/0.997, cuts at 0.5, 0.9, 0.95: all as stated."
+  },
+  {
+   "bead": "N28c-17",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9 and 10: the bead wrote 'the row of registries/gates.toml for KILL-VOI and for GATE-ATEL-15'. It now writes only the KILL-VOI decision entry {outcome, adr, date, session, receipts} (N40-03's form) and reads GATE-ATEL-15's record, whose one recorder is N28c-16; a fired outcome makes GATE-ATEL-15 `killed` through N40-03's propagation. The script reads the zero-value clause from the record instead of a row 'written by experiment_suggest.sh'. Also: acceptance adds the owner declaration of KILL-VOI, which N28c-25 leaves to the deciding bead, agreeing with the ledger row (N40-30)."
+  },
+  {
+   "bead": "N28c-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9: 'owns the script and its gate rows' of GATE-ATEL-16, whose one recorder is N28b-28; the bead now contributes the prediction controls (registered in controls.toml against the gate) and writes no row. STD-E2E: `--root` replaced by restoring snapshots into FROB_STATE. Convention 5: step 9's race now has its command with a key."
+  },
+  {
+   "bead": "N28c-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 9: 'the measured counts are written to the gate row' of GATE-ATEL-16 (recorder N28b-28); now metric and summary lines, no row. Convention 8: `--workers 1/36` on report.campaign, which has no such option; the worker lanes now come from the private daemon's pool configuration."
+  },
+  {
+   "bead": "N28c-21",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Convention 5: no request to a run verb carried --key, so FROB-REF-805 would have fired before every chapter check of eval.compare, eval.promote, opt.cascade, design.bisect, result.revalidate, eval.rank-agreement and the cascade's bound; a key rule (distinct per violating request and twin) and a keys_distinct helper test were added. Convention 8: `study compare --as anytime`, `study plan --type/--metric/--pair-by` are in no row: 543 and 556 (a) now use study.plan's manifest (anytime block, seed_protocol.pair_by), and 553 (b), which no verb row can express, runs on N28a-18's pairing::admit through an atelier_harness subcommand (a request asks N28a-18 for a user-side form)."
+  },
+  {
+   "bead": "N28c-23",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Convention 9: 'GATE-ATEL-13's calibration clause is recorded as satisfied only when…' had no recorder; the ledger check obligations_atelier is now that clause's entry under GATE-ATEL-13, read by the M4 recorder N28cp3-01 (which now depends on this bead). The M3 guard sentence named BD-309 as recorder; it is N28c-05. Recomputed: C(66,2) = 2,145; C(88,2) = 3,828; concordance endpoints 0.0662, 0.0497, 0.0503; b = 15 threshold; binomial bounds 132, 569, 42; Beta(38,2) 0.8840."
+  },
+  {
+   "bead": "N28c-24",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob design bisect` and its first-change request carried no key (a run verb: 805 first); now `--key ka702-$FROB_E2E_SEED` and `ka702-fc-$FROB_E2E_SEED`."
+  },
+  {
+   "bead": "N28c-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Convention 9: the Measured-by column names one recorder per part (-13: M3 N28c-05, M4 N28cp3-01 with N28c-23; -14 BD-350; -15 N28c-16; -16 N28b-28 with BD-352, N28c-18 to -20; -17 N28c-39; -18 N28c-40; -19 N28c-45); the declaration gains `recorded_by` per part with the rule for parts recorded outside the unit (examples N28b-03, -19, -35, -40, -42); acceptance 'exactly one recorded_by bead per part'; new test `one_recorder_per_part`."
+  },
+  {
+   "bead": "N28c-26",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Step 4 and acceptance said this bead enters the DC-01 clause of GATE-ATEL-13; it is N28c-05's to record (one recorder), after this decision. This bead writes no gate row."
+  },
+  {
+   "bead": "N28c-27",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Requests S42 and H-owners-1: `frob-conformance` invocation replaced by `cargo run -p frob-conformance --example atelier_harness -- atelier.strata-options --json` over `frob_opt::strata::option_table`; this bead or N28c-28 (the first M1 users) creates the example; acceptance adds the example and the `no_conformance_command` lint."
+  },
+  {
+   "bead": "N28c-28",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Requests applied: deps + BD-025 (no cycle); e2e `atelier_harness -- atelier.race-null --candidates 81 --replays 512 --seed $FROB_E2E_SEED --json` over `frob_opt::race::null_race`; creates the example if first; a duplicated sentence fragment removed."
+  },
+  {
+   "bead": "N28c-30",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Acceptance: GATE-ATEL-09 is entered by its recorder BD-345, this bead writes no row; every `opt.cascade` call carries `--key pw-<step>-$FROB_E2E_SEED`; the seed-best goes in through `e2e_registries_scratch`."
+  },
+  {
+   "bead": "N28c-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob eval rank-agreement --show` is in no row (a run verb that writes a row); the calibration rows are read with `frob evidence trace <record id> --json`."
+  },
+  {
+   "bead": "N28c-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Requests S54 and H-owners-1: every control.mpc request carries `--protocol PILOT-BUDGETCURVE-01` (DESIGN id) and a key `pbc-<design>-<address>-<budget>-$FROB_E2E_SEED`; the protocol declares `sampling_episodes_per_design = 24`; deps + N22a-24. Convention 10: KILL-BUDGETCURVE is pilot-before-funding and decided M4 (N40-29, N28c-25), so the M3 reading is a `[[pilot.result]]` (the funding decision via `pilots fundable`), not a decision entry; the write-up moved from docs/delivery/adr/ADR-KILL-BUDGETCURVE-M3.md to the note docs/adr/ADR-PILOT-BUDGETCURVE-01.md; 'not decided: pilot void twice' (no registered outcome) replaced by `fundable: void`; e2e asserts the cap refusals and the fundable answer."
+  },
+  {
+   "bead": "N28c-34",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Phase `rows` pointed `FROB_HOME` at a fixture copy (nothing reads it); the fixture is restored into the run's `FROB_STATE`."
+  },
+  {
+   "bead": "N28c-37",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`FROB_HOME` at a scratch store replaced by restoring `budget-27` into `FROB_STATE`."
+  },
+  {
+   "bead": "N28c-38",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "`FROB_HOME` replaced by restoring each fixture store into `FROB_STATE`; a distinct key per comparison."
+  },
+  {
+   "bead": "N28c-39",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "One recorder: step 14 is now `e2e_tier g1_known_answers GATE-ATEL-17 --mutations` with this bead's entries and planted defects registered there, the script writing no row, and a Recording paragraph (record_gate by a non-implementer); `FROB_HOME` replaced by `FROB_STATE` restores; step 7 dropped `--scenes <file>` (not in eval.compare's row; three addresses is the default allowance); step 13 sets 1/36 workers via BD-160's pool configuration, not `--workers`; the killed status is derived by N40-03, not written."
+  },
+  {
+   "bead": "N28c-40",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Request S54: the oracle's 32 episodes per design run as `frob control mpc … --protocol <experiment id> --key oracle-<design>-$FROB_E2E_SEED` (the product verb is not replaced; it admits the registered count); the sweep and arm B use the same verb under the protocol with keys; step 10 is the one-recorder form (tier run with controls, record_gate by a non-implementer, script writes no row); acceptance no longer writes `killed` (derived) and adds the cap assertions."
+  },
+  {
+   "bead": "N28c-41",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Convention 10: one decision entry at M4 in N40-03's form (`fired` / `not-fired`, receipts of the pilot and GATE-ATEL-18), ADR docs/adr/ADR-KILL-BUDGETCURVE-M4.md (was docs/delivery/adr); the first reading is the pilot's `[[pilot.result]]`, an input (N28c-25); `killed` statuses derived, never written; the 30-50% band is `not-fired` with GATE-ATEL-18 `fail` and a re-opened reading if a re-measurement meets the trigger; writes the kill gate's owner declaration (N28c-25 item 3) with an N40-30 acceptance; e2e restores the worked store into FROB_STATE and keys its eval.compare call."
+  },
+  {
+   "bead": "N28c-42",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob control synth` (a run verb) had no key; every run and mutate call of phase `ledger` now has its own key. Request S42 refused: see notes."
+  },
+  {
+   "bead": "N28c-44",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Planted route (b) `--reuse-summary total` is an option no row has, so it is refused at the schema (802, exit 3) before the generator; routes (a) and (c) keep the reuse refusal; acceptance split accordingly."
+  },
+  {
+   "bead": "N28c-45",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob train inherit --design` is not in BD-322's row: `--child <child> --donor … --task …`; keys on every run and mutate call, including the run-control action of design.diff (cold and warm keys); step 10 aligned with N28c-44 (option at 802); step 12 is the gate receipt `e2e_tier g1_known_answers GATE-ATEL-19 --mutations` with this bead's entry and controls, a Recording paragraph, and the script writes no row."
+  },
+  {
+   "bead": "N28cx-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Convention 12 (VERBS-predict `refusal_lists`; N35-33 rule 7): a row's list holds codes only, so predict.register lists 883 and the pending slug sits in the interim list served by `frob schema --refusals`, not on a row list; test `slug_on_a_row_list_fails_load` replaces the slug-accepting loader test; status `requested`/`owner-decision` before N35x-01's hold (N35-33 rule 8); e2e checks the interim list."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N28cp3-01",
+   "why": "GATE-ATEL-13's M4 part had no possible single recorder: BD-349 claimed to assemble rows measured by N28c-08 to N28c-11, which depend on it (convention 7), and each row bead recorded its own rows (convention 9). The new bead depends on all four, adds the phase `gate` to decision_cores_m4.sh, runs the eight phases and the tier run, cross-checks receipt against phases, checks adoption status against outcome, and records the part once. Later in this round its deps gained N28c-23 (the obligations ledger entry it cross-checks with `registry_report -- obligations --chapter 28`)."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare's row lacks `no_memo` (CLI `--no-memo`), the memo bypass BD-220 and BD-111 define on the request ('--no-memo on any verb disables serving for that call'); BD-350's IT-9 and BD-220's own acceptance call `frob eval compare … --no-memo`. Add it to the row (or as a derivation variation of NJL-01 if it is meant for every verb)."
+  },
+  {
+   "bead": "BD-349",
+   "what": "Step 9 and the last acceptance criterion say the GATE-ATEL-13 rows are 'assembled into the gate record here', but N28c-08 to N28c-11 measure them and depend on BD-349 (convention 7). The M4 part's one recorder is now N28cp3-01 (depends on BD-349 and the four row beads); drop the assembly and recording clause and keep the tables and the readiness of the entries."
+  },
+  {
+   "bead": "N28c-10",
+   "what": "Convention 9, as applied to its siblings N28c-08, -09, -11: register the DC-04 and DC-06 clauses as entries under GATE-ATEL-13 in g1_known_answers with the controls behind gauntlet-mutations, write no gate row ('GATE-ATEL-13 rows for DC-04 and DC-06 recorded' in the acceptance), and name N28cp3-01 as the M4 part's one recorder; add dep STD-E2E (its phases use the STD-E2E template)."
+  },
+  {
+   "bead": "BD-378",
+   "what": "The M4 exit review reads GATE-ATEL-13's M4 part, now recorded by the new N28cp3-01: add dep N28cp3-01 (it already depends on N28c-09 and N28c-10)."
+  },
+  {
+   "bead": "BD-351",
+   "what": "GATE-ATEL-15's one recorder is now N28c-16 (it depends on BD-351 and measures the zero-value clause; one part, one record). Keep the replay clause as BD-351's entry under GATE-ATEL-15 in the gate's tier target and have atelier_suggest.sh produce its receipt, but drop its `record_gate -- --gate GATE-ATEL-15` step. Its acceptance 'GATE-AUGUR-11 ... recorded by the beads that depend on it' stands: N28c-16 is that recorder."
+  },
+  {
+   "bead": "N28b-28",
+   "what": "GATE-ATEL-16's one recorder: its tier run must include the prediction controls of N28c-18 and the report-section controls of N28c-19 (both registered against GATE-ATEL-16, the 'report prints every mode, every fallback and the phase ledger' clause is what N28c-19 implements), and N28c-20's report clause measurements. Add deps N28c-18, N28c-19 and N28c-20 (no cycle: none of them depends on N28b-28), and name those entries among the controls the receipt must show caught."
+  },
+  {
+   "bead": "N28a-18",
+   "what": "Your 553 trigger 'evaluate an e-process on the stored outcomes of a fixed-n study' has no user-side form in any verb row (study.compare takes the study and --metric only; N28c-21's battery used a nonexistent `study compare --as anytime`). Either name the request (verb and option, requested of its row owner) that reaches it, or state it is reachable only on pairing::admit; N28c-21 now fires it there through atelier_harness."
+  },
+  {
+   "bead": "N28a-18",
+   "what": "GATE-ATEL-06 (M1, one part) has three claimed recorders: BD-124 (acceptance: 'the enumeration clause of GATE-ATEL-06 is recorded'), N28a-18 ('measures and records' the refusal clause) and N28a-30 (M3), whose script step 12 runs record_gate for -06 and -04 itself. Convention 9: one recorder per part, entered from a receipt by a non-implementer session; scripts never write rows. Proposal: N28a-18, the M1 bead that depends on BD-124, records the whole part from one `e2e_tier g1_known_answers GATE-ATEL-06 --mutations` receipt; BD-124 measures its clause and writes no row; N28a-30's script asserts on receipts and drops its record_gate calls (it may be the named recorder of -04's M3 comparison part, outside its script). N28c-25's one_recorder_per_part check fails until this is settled."
+  },
+  {
+   "bead": "BD-124",
+   "what": "Your last acceptance line records the enumeration clause of GATE-ATEL-06; N28a-18 measures the other clause and depends on you. One recorder per part (convention 9): measure and register your clause's entry, write no row, and name N28a-18 as the part's recorder (request sent to N28a-18)."
+  },
+  {
+   "bead": "N28a-30",
+   "what": "Script step 12 runs `record_gate` for GATE-ATEL-06 and -04 from inside the script: convention 9 (scripts produce receipts and never write rows; one recorder per part, a non-implementer session). Keep the tier runs and the receipt assertions; move recording to a Recording paragraph for -04's M3 part if you are its recorder, and leave -06 to N28a-18 (its M1 recorder)."
+  },
+  {
+   "bead": "BD-025",
+   "what": "The crate section says `atelier_harness` is N28c-06's (M4), but its first users are N28c-27 and N28c-28 at M1, which now create `crates/frob-conformance/examples/atelier_harness.rs` (whichever lands first; both depend on you). Write 'atelier_harness (first created by N28c-27 or N28c-28 at M1; the studio beads add subcommands)' in both places (lines ~69 and ~86)."
+  },
+  {
+   "bead": "N40-29",
+   "what": "KILL-BUDGETCURVE's first trigger ('the pilot shows no crossing') reads the pilot record, but the row's `reads` is GATE-ATEL-18 only. N40-03: `reads` lists 'the gates or pilots whose records the trigger reads'. Add the pilot `PILOT-BUDGETCURVE-01` (N28c-32, DESIGN id) to `reads`; the decision stays one entry at M4 (N28c-41), the pilot result at M3 being the funding decision of the pilot-before-funding row."
+  },
+  {
+   "bead": "VERBS-experiment",
+   "what": "experiment.suggest's chapter codes are 859 only, but N30-REF lists it among the sites that raise the interim form of `prediction-after-outcome` (883 with its detail) 'when it registers its own outcome interval' (N28cx-01; §28.16: every suggestion registers its prediction, subject to the same refusals). Add 883 to its list, or have N30-REF drop the site with a reason."
+  },
+  {
+   "bead": "N35-33",
+   "what": "Rule 7 admits an interim only as an existing code raised 'with `detail` equal to the request's slug', but the held request `prediction-after-outcome` is raised as 883 with `detail = \"registration-after-outcome\"` in N28cx-01, VERBS-predict, N30-REF, N41-REF and BD-344. Rule on it: either rule 7 admits a declared detail (and the interim list prints it), or those five switch the detail to the slug in one change."
+  }
+ ],
+ "unchanged": 13,
+ "notes": "All 46 beads read in full. 33 changed, 13 unchanged (N28c-03, -06, -12, -13, -19, -29, -33, -35, -36, -43, N28cp1-01, N28cp1-02, N28cp2-01). One new bead, N28cp3-01 (GATE-ATEL-13's M4 recorder); none merged or superseded. Main finds: (1) convention 9, one recorder per gate part: GATE-ATEL-13 (N28c-05 at M3, N28cp3-01 at M4), -15 and GATE-AUGUR-11 (N28c-16), -17 (N28c-39), -18 (N28c-40), -19 (N28c-45) now each run `e2e_tier` and record once with record_gate; scripts write no rows; N28c-25 declares `recorded_by` per part with a one_recorder_per_part test; GATE-ATEL-06 still has three claimants outside the unit (requests to N28a-18, BD-124, N28a-30). (2) Convention 10: KILL-BUDGETCURVE is pilot-before-funding and decided at M4 (N40-29, N28c-25), so N28c-32's M3 reading became a `[[pilot.result]]` (the funding decision) with a docs/adr note, and N28c-41 enters the one N40-03 decision entry (docs/adr/ADR-KILL-BUDGETCURVE-M4.md; docs/delivery/adr retired); `killed` is derived everywhere, never written; deciding beads N28c-17 and N28c-41 now write their kill gate's owner declaration as N28c-25 requires. (3) Convention 5/8: missing keys on run/mutate calls (bisect, control.synth, opt.cascade, eval.compare, design.diff run-control, control.mpc), options not in rows (`--root`, `FROB_HOME`, `--workers`, `--scenes`, `--estimate` on a read verb, `train.inherit --design`, `eval rank-agreement --show`, `--reuse-summary` now a schema refusal) replaced by row forms, `FROB_STATE` restores and BD-160 pool settings. (4) Requests applied: S54 (control.mpc `--protocol` for the pilot and the oracle), H-owners-1 (sampling_episodes_per_design = 24 in the pilot protocol; N28c-27 harness), H-owners-3 (N28c-14 variation 11, arm 11, 804/802), S42 for N28c-27 and N28c-28 (atelier_harness, created at M1 by whichever lands first). Refused with reason: S42's request that N28c-42 and N28c-43 move their readers into `atelier_harness`: round 2 (S43) already converted both to examples of their owning crates (`frob-chronicle --example reuse_ledger_read`, `frob-opt --example reuse_decision_control`), which BD-025 admits ('a harness reader or driver of another subsystem is an example of this crate, or of its owning crate when its code lives there'); moving them would add a frob-conformance dependency to M3 chronicle and opt beads for no gain; no `frob-conformance run` form remains. Numbers re-derived in scratch: N28c-15 band (L=19, U=28 at c=0.8), N28c-23, -24, -26, -27 and N28c-32's potency bound (t 6.03 at 8 addresses, 4.69 at 13, 4.39 at 16) and N28c-39's Beta(96,5) tail (0.090 for one draw; ten-draw mean below 0.92 about 2e-5). Cycle checks pass for every added dep (N28c-01, -05, -11, -14, -28, -32, N28cp3-01) and for the requested N28b-28 deps; all 46 files keep front matter and the seven sections. The slice looks settled apart from the requests, chiefly GATE-ATEL-06's recorder and the interim `detail` rule of N35-33."
+}

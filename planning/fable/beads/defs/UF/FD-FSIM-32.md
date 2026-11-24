@@ -6,9 +6,9 @@ priority: 2
 milestone: "M2"
 labels: ["m2", "suite", "cortex", "upstream", "frankensim", "solid"]
 parent: "WP-48"
-deps: ["FDEF-06", "NF-01", "STD-E2E"]
-needs: ["§23.25: the joint-law battery of rule P-12 in `frob-conformance` (GATE-CORTEX-18), which the switch-over re-runs against the corrected sampler"]
-related: ["FD-FSIM-10", "BD-197", "BD-180", "BD-037"]
+deps: ["FDEF-06", "N23b-30", "N33b-04", "STD-E2E"]
+needs: []
+related: ["N33c-37", "N33c-47"]
 gates: ["GATE-CORTEX-18", "GATE-WS-06"]
 plan_refs: ["Appendix F.1", "Appendix F.2 row 6", "Appendix F.3", "§33.17", "§23.25", "§41"]
 ---
@@ -102,7 +102,11 @@ against the new pin.
 GATE-CORTEX-18), with its four statistics over N decisions: the sign-agreement frequency of every pair of
 channels; the same for one channel at consecutive decisions; the same for one channel in adjacent
 environments; and the empirical covariance of the standardized noise. Under a product law every agreement
-frequency has mean ½ and standard deviation ½/√N. Only after it passes may the sibling trainer serve as a
+frequency has mean ½ and standard deviation ½/√N. The gate's terms (GATE-CORTEX-18, M2): action dimensions 2,
+12 and 29, N = 10⁵ decisions and 64 worlds; every channel-pair, consecutive-decision and adjacent-world sign
+agreement in ½ ± 0.005 (about 3.2 standard deviations); every off-diagonal entry of the standardized covariance
+below 4/√N = 0.01265 in magnitude; the number of pairs tested is recorded so that the family-wise rate is
+stated (29 channels give 406 channel pairs). Only after it passes may the sibling trainer serve as a
 comparison baseline (together with FD-FSIM-10's condition for the update). The planted copy stays as this
 project's negative control whatever happens upstream (the sampler row of GATE-WS-06, at M2).
 
@@ -110,7 +114,7 @@ project's negative control whatever happens upstream (the sampler row of GATE-WS
 
 ## Acceptance criteria
 
-- [ ] In FrankenSim: the corrected sampler passes joint-law tests there (all pairwise sign-agreement frequencies inside ½ ± 0.005 at N = 100,000; standardized covariance within 0.01 of the identity), and its marginal tests still pass.
+- [ ] In FrankenSim: the corrected sampler passes joint-law tests there (all pairwise sign-agreement frequencies inside ½ ± 0.005 at N = 100,000, with the number of pairs tested recorded; every off-diagonal entry of the standardized covariance below 4/√N = 0.01265 in magnitude, the threshold of GATE-CORTEX-18), and its marginal tests still pass.
 - [ ] In FrankenSim: the present sampler is either corrected or documented as having a non-product joint law.
 - [ ] Here: the battery passes against the corrected sampler at the new pin, with the four statistics recorded; the planted copy is still rejected in 100 of 100 runs.
 - [ ] Here: the sibling trainer is registered as a comparison baseline only when both this item and FD-FSIM-10 are adopted; `cargo metadata` of the core workspace still shows no package named `fs-g1-train`.
@@ -125,7 +129,7 @@ In FrankenSim (added, in `fs-g1-train`):
 - `adjacent_channels_are_independent`: N = 100,000 two-channel draws for each of three seeds; expected sign agreement in ½ ± 0.005 (three standard deviations are 0.0047); the present sampler gives 0.6655.
 - `channels_two_apart_are_independent`: expected ½ ± 0.005; the present sampler gives 1 − 2φ/π = 0.3310.
 - `consecutive_decisions_are_independent`: one channel at decisions t and t + 1; expected ½ ± 0.005.
-- `standardized_covariance_is_identity`: 12 channels, N = 100,000; every off-diagonal entry within 0.01 of 0 and every diagonal entry within 0.02 of 1.
+- `standardized_covariance_is_identity`: 12 channels, N = 100,000; every off-diagonal entry below 4/√N = 0.01265 in magnitude (the gate's bound; one standard deviation is 1/√N = 0.00316, and a 0.01 band would fail a correct sampler on about one seed in ten across 66 pairs) and every diagonal entry within 0.02 of 1 (4.5 standard deviations of a sample variance).
 - `marginals_unchanged`: mean within 0.01 of 0, variance within 0.02 of 1, and a Kolmogorov–Smirnov statistic below its 1% critical value against the standard normal.
 Here:
 - `battery_against_sibling_sampler`: the fixture; expected pass at the new pin and the recorded failure (the offending pair and its frequency) at the old one.
@@ -158,7 +162,7 @@ gates touched. No private-scene data is logged.
 
 ## Considerations
 
-- Program risk (high): a sampler with correct marginals and a wrong joint law. Earliest signals: a pairwise sign-agreement frequency outside ½ ± 0.005; a learning curve that changes when channels are reordered.
+- Program risk RISK-58 (high): a sampler with correct marginals and a wrong joint law; its planted instance is the GATE-WS-07 row at M2 (N41-38). Earliest signals: a pairwise sign-agreement frequency outside ½ ± 0.005; a learning curve that changes when channels are reordered.
 - The fraction is arithmetic on constants in the source, so it is a strong prediction; it is still recorded at the pin before anything cites it.
 - A corrected sampler changes the sibling's training trajectories; checkpoints from before and after are not comparable, which the report states.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
@@ -175,4 +179,4 @@ gates touched. No private-scene data is logged.
 
 ## References
 
-Appendix F.1 (row FD-FSIM-32), F.2 (row 6), F.3; §33.17 (row 6), §23.25 (rule P-12); GATE-CORTEX-18, GATE-WS-06; RISK-24.
+Appendix F.1 (row FD-FSIM-32), F.2 (row 6), F.3; §33.17 (row 6), §23.25 (rule P-12); GATE-CORTEX-18, GATE-WS-06; RISK-58, RISK-24.

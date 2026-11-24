@@ -1,10 +1,459 @@
 {
  "group": "G44",
- "needs": [],
- "edges": [],
+ "needs": [
+  {
+   "bead": "N44-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the classes E0 to E3 must be ratified or left at the default before a ruling per request can cite one; N21c-35's own need for the list of requests was recorded as related by G21, so no cycle"
+  },
+  {
+   "bead": "N44-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N17b-07"
+   ],
+   "note": "the OPEN-PHYLUM-3 decision is M2, later than this M0 bead; it decides row R3, which this register records as requested until then"
+  },
+  {
+   "bead": "N44-01",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N26b-21"
+   ],
+   "note": "the OPEN-NEMESIS-3 decision is M3, later than this M0 bead; it decides row R5"
+  },
+  {
+   "bead": "N44-01",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N41-08"
+   ],
+   "note": "the OPEN-PROG-4 decision is M1, later than this M0 bead, and already depends on it (G41); it decides row R6"
+  },
+  {
+   "bead": "N44-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N36-20"
+   ],
+   "note": "N36-20 is the enforcement that reads the envelope registry at run time and raises FROB-REF-761, and its own acceptance approves a class in a scratch registry; the option that selects the registry root is named by no bead (reported under gaps)"
+  }
+ ],
+ "edges": [
+  {
+   "bead": "N44-04",
+   "dep": "N40-02",
+   "as": "dep",
+   "why": "coverage (d) of U44: registries/gates.toml with every gate and kill gate entered with its milestone, read by checks 6 to 8"
+  },
+  {
+   "bead": "N44-02",
+   "dep": "BD-296",
+   "as": "related",
+   "why": "coverage (d) of U44: the daemon's campaign size class and FROB-REF-704; M3, later than this M2 test, which accepts either code until then"
+  },
+  {
+   "bead": "N44-01",
+   "dep": "N23b-24",
+   "as": "related",
+   "why": "row R7 is the OPEN-CORTEX-1 request; N23b-24 (M3) decides it and writes its own row in the same registry file"
+  }
+ ],
  "superseded": [],
- "cross_group_duplicates": [],
+ "cross_group_duplicates": [
+  {
+   "mine": "N44-01",
+   "other": "N21c-35",
+   "note": "both put the per-package envelope requests and their not-approved fallbacks to the owner. N21c-35 ratifies the classes and records them in registries/compute_envelope.toml; N44-01 keeps the ten request rows and the rulings in registries/envelopes.toml. One list and one carrier should remain (also reported by G21)"
+  },
+  {
+   "mine": "N44-01",
+   "other": "N17b-07",
+   "note": "row R3 (the head-to-head on 512 topologies) is the envelope request that the OPEN-PHYLUM-3 decision also files (also reported by G17)"
+  },
+  {
+   "mine": "N44-01",
+   "other": "N23b-24",
+   "note": "row R7 and N23b-24's row family-pretrain/<class> record the same pretraining approval in registries/envelopes.toml with different fields"
+  },
+  {
+   "mine": "N44-01",
+   "other": "N41-08",
+   "note": "row R6 is the compute request for the rank-agreement experiment that the OPEN-PROG-4 decision rules on (also reported by G41)"
+  },
+  {
+   "mine": "N44-01",
+   "other": "N26b-21",
+   "note": "row R5 is the envelope request that the OPEN-NEMESIS-3 decision rules on"
+  }
+ ],
  "new_beads": [],
- "gaps": [],
- "fixes": []
+ "gaps": [
+  {
+   "section": "§32.4, §36.14",
+   "what": "no bead names the option or environment variable by which frob and frobd read registries/ from another root. The refusal and verb registries are embedded at build time; the envelope registry must be read at run time. N36-20, N21c-35 and N44-02 all test with a scratch registry",
+   "needed_by": [
+    "N44-02"
+   ]
+  },
+  {
+   "section": "§43.9, §43.10, §45",
+   "what": "epics that are not work packages and have no child bead (their work is parented to the work package beside them, or not drafted): BD-422, BD-424, BD-428, BD-429, BD-430, BD-431, BD-433, BD-439, N18a-06, N18b-08, N33b-07",
+   "needed_by": []
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N44-01",
+   "what": "superseded N23a-22 replaced by N23b-24 in related and body; the record names registries/compute_envelope.toml of N21c-35 as the class registry and the division between the two files; Scope names N36-20"
+  },
+  {
+   "bead": "N44-02",
+   "what": "superseded N23a-22 replaced by N23b-24 in related; N36-20 added to deps"
+  },
+  {
+   "bead": "N44-04",
+   "what": "title shortened to 108 characters"
+  },
+  {
+   "bead": "WP-49",
+   "what": "title shortened to 107 characters"
+  },
+  {
+   "bead": "WP-70",
+   "what": "title shortened to 109 characters"
+  },
+  {
+   "bead": "WP-58",
+   "what": "the open point on GATE-SAFE-10 (coverage (e) 11) replaced by its resolution: the M1 part is carried by N37-11 and N37-12, BD-258 completes it at M3"
+  },
+  {
+   "bead": "WP-01",
+   "what": "bead list rewritten from the index: 93 children (M0 90, M1 3)"
+  },
+  {
+   "bead": "WP-02",
+   "what": "bead list rewritten from the index: 24 children (M0 21, M1 3)"
+  },
+  {
+   "bead": "WP-03",
+   "what": "bead list rewritten from the index: 43 children (M0 10, M1 32, M2 1)"
+  },
+  {
+   "bead": "WP-04",
+   "what": "bead list rewritten from the index: 21 children (M0 21)"
+  },
+  {
+   "bead": "WP-05",
+   "what": "bead list rewritten from the index: 23 children (M0 18, M1 4, M2 1)"
+  },
+  {
+   "bead": "WP-06",
+   "what": "bead list rewritten from the index: 64 children (M0 27, M1 37)"
+  },
+  {
+   "bead": "WP-07",
+   "what": "bead list rewritten from the index: 47 children (M1 47)"
+  },
+  {
+   "bead": "WP-08",
+   "what": "bead list rewritten from the index: 30 children (M1 29, M2 1)"
+  },
+  {
+   "bead": "WP-09",
+   "what": "bead list rewritten from the index: 51 children (M1 50, M2 1)"
+  },
+  {
+   "bead": "WP-10",
+   "what": "bead list rewritten from the index: 37 children (M1 35, M2 2)"
+  },
+  {
+   "bead": "WP-11",
+   "what": "bead list rewritten from the index: 36 children (M1 34, M2 1, M3 1)"
+  },
+  {
+   "bead": "WP-12",
+   "what": "bead list rewritten from the index: 23 children (M1 23)"
+  },
+  {
+   "bead": "WP-13",
+   "what": "bead list rewritten from the index: 19 children (M1 19)"
+  },
+  {
+   "bead": "WP-14",
+   "what": "bead list rewritten from the index: 172 children (M0 37, M1 98, M2 19, M3 12, M4 2, M5 2, M6 1, M8 1)"
+  },
+  {
+   "bead": "WP-15",
+   "what": "bead list rewritten from the index: 66 children (M2 66)"
+  },
+  {
+   "bead": "WP-16",
+   "what": "bead list rewritten from the index: 15 children (M2 15)"
+  },
+  {
+   "bead": "WP-17",
+   "what": "bead list rewritten from the index: 42 children (M1 1, M2 41)"
+  },
+  {
+   "bead": "WP-18",
+   "what": "bead list rewritten from the index: 5 children (M2 5)"
+  },
+  {
+   "bead": "WP-19",
+   "what": "bead list rewritten from the index: 9 children (M2 9)"
+  },
+  {
+   "bead": "WP-20",
+   "what": "bead list rewritten from the index: 13 children (M2 13)"
+  },
+  {
+   "bead": "WP-21",
+   "what": "bead list rewritten from the index: 22 children (M2 22)"
+  },
+  {
+   "bead": "WP-22",
+   "what": "bead list rewritten from the index: 20 children (M2 20)"
+  },
+  {
+   "bead": "WP-23",
+   "what": "bead list rewritten from the index: 30 children (M3 30)"
+  },
+  {
+   "bead": "WP-24",
+   "what": "bead list rewritten from the index: 45 children (M2 5, M3 40)"
+  },
+  {
+   "bead": "WP-25",
+   "what": "bead list rewritten from the index: 28 children (M3 28)"
+  },
+  {
+   "bead": "WP-26",
+   "what": "bead list rewritten from the index: 40 children (M3 38, M4 1, M5 1)"
+  },
+  {
+   "bead": "WP-27",
+   "what": "bead list rewritten from the index: 44 children (M2 1, M3 30, M4 13)"
+  },
+  {
+   "bead": "WP-28",
+   "what": "bead list rewritten from the index: 33 children (M4 33)"
+  },
+  {
+   "bead": "WP-29",
+   "what": "bead list rewritten from the index: 19 children (M1 1, M3 2, M4 16)"
+  },
+  {
+   "bead": "WP-30",
+   "what": "bead list rewritten from the index: 27 children (M4 27)"
+  },
+  {
+   "bead": "WP-31",
+   "what": "bead list rewritten from the index: 28 children (M4 1, M5 27)"
+  },
+  {
+   "bead": "WP-32",
+   "what": "bead list rewritten from the index: 22 children (M3 1, M5 21)"
+  },
+  {
+   "bead": "WP-33",
+   "what": "bead list rewritten from the index: 20 children (M6 20); 1 more under child epics"
+  },
+  {
+   "bead": "WP-34",
+   "what": "bead list rewritten from the index: 49 children (M0 36, M1 13)"
+  },
+  {
+   "bead": "WP-35",
+   "what": "bead list rewritten from the index: 13 children (M0 11, M1 2)"
+  },
+  {
+   "bead": "WP-36",
+   "what": "bead list rewritten from the index: 26 children (M0 7, M1 19)"
+  },
+  {
+   "bead": "WP-37",
+   "what": "bead list rewritten from the index: 50 children (M0 41, M1 9)"
+  },
+  {
+   "bead": "WP-38",
+   "what": "bead list rewritten from the index: 69 children (M1 27, M3 42)"
+  },
+  {
+   "bead": "WP-39",
+   "what": "bead list rewritten from the index: 28 children (M1 25, M2 3)"
+  },
+  {
+   "bead": "WP-40",
+   "what": "bead list rewritten from the index: 34 children (M1 26, M2 8)"
+  },
+  {
+   "bead": "WP-41",
+   "what": "bead list rewritten from the index: 71 children (M1 56, M2 15)"
+  },
+  {
+   "bead": "WP-42",
+   "what": "bead list rewritten from the index: 90 children (M1 90)"
+  },
+  {
+   "bead": "WP-43",
+   "what": "bead list rewritten from the index: 53 children (M1 22, M2 31)"
+  },
+  {
+   "bead": "WP-44",
+   "what": "bead list rewritten from the index: 48 children (M1 3, M2 45)"
+  },
+  {
+   "bead": "WP-45",
+   "what": "bead list rewritten from the index: 24 children (M2 24)"
+  },
+  {
+   "bead": "WP-46",
+   "what": "bead list rewritten from the index: 86 children (M2 69, M4 17)"
+  },
+  {
+   "bead": "WP-47",
+   "what": "bead list rewritten from the index: 30 children (M2 30)"
+  },
+  {
+   "bead": "WP-48",
+   "what": "bead list rewritten from the index: 39 children (M2 39)"
+  },
+  {
+   "bead": "WP-49",
+   "what": "bead list rewritten from the index: 55 children (M1 1, M2 17, M3 36, M4 1)"
+  },
+  {
+   "bead": "WP-50",
+   "what": "bead list rewritten from the index: 48 children (M2 22, M3 26)"
+  },
+  {
+   "bead": "WP-51",
+   "what": "bead list rewritten from the index: 28 children (M2 28)"
+  },
+  {
+   "bead": "WP-52",
+   "what": "bead list rewritten from the index: 26 children (M2 9, M3 17)"
+  },
+  {
+   "bead": "WP-53",
+   "what": "bead list rewritten from the index: 78 children (M3 68, M4 10)"
+  },
+  {
+   "bead": "WP-54",
+   "what": "bead list rewritten from the index: 19 children (M3 19)"
+  },
+  {
+   "bead": "WP-55",
+   "what": "bead list rewritten from the index: 88 children (M2 2, M3 74, M4 12)"
+  },
+  {
+   "bead": "WP-56",
+   "what": "bead list rewritten from the index: 53 children (M2 3, M3 47, M4 3)"
+  },
+  {
+   "bead": "WP-57",
+   "what": "bead list rewritten from the index: 7 children (M2 1, M3 6)"
+  },
+  {
+   "bead": "WP-58",
+   "what": "bead list rewritten from the index: 44 children (M1 11, M2 6, M3 26, M4 1)"
+  },
+  {
+   "bead": "WP-59",
+   "what": "bead list rewritten from the index: 45 children (M3 45)"
+  },
+  {
+   "bead": "WP-60",
+   "what": "bead list rewritten from the index: 76 children (M1 1, M3 75)"
+  },
+  {
+   "bead": "WP-61",
+   "what": "bead list rewritten from the index: 36 children (M3 4, M4 32)"
+  },
+  {
+   "bead": "WP-62",
+   "what": "bead list rewritten from the index: 85 children (M3 22, M4 63)"
+  },
+  {
+   "bead": "WP-63",
+   "what": "bead list rewritten from the index: 56 children (M1 6, M2 2, M3 34, M4 14)"
+  },
+  {
+   "bead": "WP-64",
+   "what": "bead list rewritten from the index: 38 children (M3 2, M4 36)"
+  },
+  {
+   "bead": "WP-65",
+   "what": "bead list rewritten from the index: 42 children (M3 1, M4 41)"
+  },
+  {
+   "bead": "WP-66",
+   "what": "bead list rewritten from the index: 65 children (M4 65)"
+  },
+  {
+   "bead": "WP-67",
+   "what": "bead list rewritten from the index: 28 children (M4 28)"
+  },
+  {
+   "bead": "WP-68",
+   "what": "bead list rewritten from the index: 101 children (M1 7, M3 3, M5 91)"
+  },
+  {
+   "bead": "WP-69",
+   "what": "bead list rewritten from the index: 4 children (M5 4)"
+  },
+  {
+   "bead": "WP-70",
+   "what": "bead list rewritten from the index: 58 children (M4 4, M5 54)"
+  },
+  {
+   "bead": "WP-71",
+   "what": "bead list rewritten from the index: 49 children (M4 2, M5 47)"
+  },
+  {
+   "bead": "WP-72",
+   "what": "bead list rewritten from the index: 21 children (M4 1, M5 20)"
+  },
+  {
+   "bead": "WP-73",
+   "what": "bead list rewritten from the index: 15 children (M6 15); 13 more under child epics"
+  },
+  {
+   "bead": "WP-74",
+   "what": "bead list rewritten from the index: 31 children (M6 31); 27 more under child epics"
+  },
+  {
+   "bead": "WP-75",
+   "what": "bead list rewritten from the index: 1 children (M6 1); 8 more under child epics"
+  },
+  {
+   "bead": "WP-76",
+   "what": "bead list rewritten from the index: 8 children (M7 8)"
+  },
+  {
+   "bead": "WP-77",
+   "what": "bead list rewritten from the index: 13 children (M7 13); 1 more under child epics"
+  },
+  {
+   "bead": "WP-78",
+   "what": "bead list rewritten from the index: 7 children (M8 7); 8 more under child epics"
+  },
+  {
+   "bead": "WP-79",
+   "what": "bead list rewritten from the index: 14 children (M8 14); 7 more under child epics"
+  },
+  {
+   "bead": "WP-80",
+   "what": "bead list rewritten from the index: 7 children (M8 7); 16 more under child epics"
+  }
+ ]
 }

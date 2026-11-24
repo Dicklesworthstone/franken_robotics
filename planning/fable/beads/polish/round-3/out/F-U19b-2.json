@@ -1,0 +1,184 @@
+{
+ "round": 3,
+ "slice": "F-U19b-2",
+ "reviewed": 26,
+ "changed": [
+  {
+   "bead": "N19b-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "kill-gate registration in the N40-03 form (convention 10): no ledger seeds the RGB/splat gate, so it enters by an amendment with field = \"introduce\" dated before every receipt of its reads, with an empty decision entry (derived state not-run) instead of a stored status 'not run'; acceptance and e2e assertion follow."
+  },
+  {
+   "bead": "N19b-26",
+   "kinds": [
+    "tests"
+   ],
+   "what": "CX-193 had no plant although N19-CX names N19b-26:cx-193: added plant cx-193 (scalar inscribed/circumscribed disc test in place of the footprint family) caught by inv_hab_06_property on KA-448's corridor both ways (L = 1.40 m false inner cell; L = 1.30 m free configurations outside the outer complex)."
+  },
+  {
+   "bead": "N19b-27",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "e2e read the complex with `frob artifact read <fclear_id>`; artifact.read takes a store digest and fclear_id hashes the manifest without its own member, so the step now reads the store digest reported beside fclear_id and checks the recomputed identity."
+  },
+  {
+   "bead": "N19b-29",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Out named the probe-request verb as BD-291; VERBS-scene says scene.probe-request is N19c-05. Added CX-194's plant cx-194 (refinement loop disabled) in the real component, caught by doorway_60mm staying Unresolved; the pilot N19b-25 that N19-CX names as carrier is outside the workspace."
+  },
+  {
+   "bead": "N19b-30",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "§8 said a cut whose separation would vanish if unknown space were solid is still valid (backwards); restated: cuts are computed with unknown free, so a passage only through unknown space is unresolved (305 at the verb when a decided route is required). The acceptance ('declaring an unknown strip solid never creates a cut') became a testable fixture, and cut_never_relies_on_unknown gained its planted variant."
+  },
+  {
+   "bead": "N19b-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "e2e called `frob prove bundle <answer>`, which takes a mission answer at M3 and answers FROB-REF-724 for other claim kinds until M5; the script now exports the bundle each fit wrote (`--emit fclear,bundle`) with `frob artifact export <digest> --out <tmp>/ --key cert-x-1|2` and runs frob-verify on it; skip line renamed."
+  },
+  {
+   "bead": "N19b-32",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Out: scene.probe-request is N19c-05, not BD-291. Refusal-list statement brought to the row (scene-pack-identity-mismatch now listed by slug; FROB-REF-303 of the .fclear reader requested). FROB-REF-309 stated as N32ax-01's admission check habitat.standing-cut (verbs, override, basis, stage A, admission_basis version bumped in the cut's transaction, diagnostic_overrides, diagnostic-run warning, --estimate would_refuse); tests extended (override labels, estimate, basis_version_bumped). Output names each artifact's store digest for artifact.read/export."
+  },
+  {
+   "bead": "N19b-33",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "e2e used `frob prove bundle` (724 at M3): now exports the verb's own .frobcert with artifact.export and runs frob-verify. 'Whether a certificate is requested' had no spelling: DESIGN `--certificate required|none` (default required; none writes no bundle, Tested class, unknown without bounds = the second repair of 321), requested of VERBS-contact, with a test; certificate_roundtrip no longer says prove bundle."
+  },
+  {
+   "bead": "N19b-34",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Removed the stale statement that VERBS-analyze lists only design, scene and route and that the snapshot reports a difference; the row now lists all five inputs (--margin, --budget-ms)."
+  },
+  {
+   "bead": "N19b-35",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Gate script used `frob prove bundle <answer>` (724 at M3): decided fits now run with --emit bundle and each bundle is exported (`frob artifact export ... --key gate-x-<n>`) for frob-verify; the disc-test control names CX-193's plant cx-193 of N19b-26."
+  },
+  {
+   "bead": "N19b-36",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Decision recorded as 'gates.toml gets killed: fallback adopted', not the N40-03 form (convention 10): now the N40-24 row's decision entry {outcome fired|not-fired, adr docs/adr/ADR-KILL-FCLEAR-M3.md, date, session, receipts}, the owner declaration in frob-scene's contract.toml, and kill_ledger (N40-30) passing, in acceptance and e2e, with an outcome_names test (the N19b-20 pattern). Added dep N40-30 (M1; no cycle)."
+  },
+  {
+   "bead": "N19b-38",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Considerations said the optional facility table is ignored by scene.retrofit; N19bx-01 and the VERBS-scene row read it under --facility (M8): now ignored by the kit search and every report except one asked for with --facility."
+  },
+  {
+   "bead": "N19b-40",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied H-verbs-5's request: the registry example is `frob scene retrofit --evidence w:3fa9 --key rt-1 --json`; --evidence is an identifier only (a .fmcw by its world identity), so no params entry and none of 891, 734, 828. Stale sentences replaced (the row lists the spellings, plus --facility; retrofit-cost-on-assumed-prices cited by slug). Added CX-195's plant cx-195 (static rejection recorded as no flip) caught by a new static_rejection_rerun test."
+  },
+  {
+   "bead": "N19b-42",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Decision recorded as 'gates.toml gets killed: fallback adopted' (convention 10): now the N40-24 row's N40-03 decision entry (fired|not-fired, docs/adr/ADR-KILL-RETROFIT-M4.md, date, session, receipts), owner declaration in frob-scene's contract.toml, kill_ledger (N40-30) in acceptance and e2e, outcome_names test. On fired the verb 'removed from the verb registry' contradicted FROB-REF-724's row and VERBS-scene's ownership of rows: the row stays and every call answers 724 with reason killed: KILL-RETROFIT, asserted by the script."
+  },
+  {
+   "bead": "N19b-44",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied H-verbs-5's request: an EditError on the derived form is the worded refusal `scene-edit-invalid` (3xx, exit 3, detail = variant, pointer = edit, ranked repairs; constant SCENE_EDIT_INVALID, cited by slug, number from the ledger; requested of N19-REF, N19c-42 and VERBS-scene) instead of 'a refused input, no new code'; the edit-list document gets its registries/formats.toml row (FMT-FEDIT, .fedit, frob.scene.edit/1, owner frob-scene, decision field) and N34-22's harness per N34-27's fmt.param-without-row, with fmt_fedit_roundtrip/refusals; schema faults 802, version 891; acceptance, unit tests and e2e updated; stale 'derived form requested of VERBS-scene' removed. Added deps N34-22 and N34-27 (M1; no cycle)."
+  },
+  {
+   "bead": "N19bp2-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The decision is also N19b-23's pilot-before-funding kill gate: ADR moved to the convention-10 path docs/adr/ADR-<gate name>-M6.md (ADR-KILL-RGBSPLAT-M6.md under the working name) and the row's N40-03 decision entry added (drop = not-reached, defer = deferred with deferred_to and reason, fund = not-fired with receipts), with acceptance, an outcome_names test and an e2e assertion."
+  },
+  {
+   "bead": "N19bx-01",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "`frob artifact read frob://catalog/retrofits` does not exist (artifact.read takes a store digest): the catalog resource is read through frob-mcp resources/read (N32a-25), in Surface, acceptance and e2e. The script ran scene.retrofit against catalog copies, which the binary cannot see (retrofits.toml is an embedded registry under N32ax-03): those two checks now run as the named unit tests, and the binary step asserts no facility block. Added what the script does if KILL-RETROFIT fired (724, killed)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.fit's refusal list lacks FROB-REF-303, which the .fclear reader of N19b-27 raises for a stored complex whose blob reference does not resolve or whose blob length differs from the lattice arithmetic; add it beside 891 and scene-pack-identity-mismatch."
+  },
+  {
+   "bead": "N19-CX",
+   "what": "CX-194's plant carrier is N19b-25, a standalone pilot outside the workspace (tools/pilots/clearance/) with no real component for a gauntlet-mutations feature; change the plant to `N19b-29:cx-194` (the refinement loop returning after candidate selection), which N19b-29 now registers and catches with doorway_60mm."
+  },
+  {
+   "bead": "VERBS-contact",
+   "what": "contact.clearance's input 'whether a certificate is requested' has no CLI spelling; N19b-33 fixes the DESIGN spelling `--certificate required|none` (default required; none writes no bundle and answers unknown instead of FROB-REF-321 when no bounds are registered); add it to the row so the help-schema snapshot matches."
+  },
+  {
+   "bead": "N19-REF",
+   "what": "Add an eleventh refusal implied and not numbered: `scene-edit-invalid` (a derived scene.compile whose edit list cannot be applied to its base: unresolved target, parameter outside its kind's range, two edits setting one field differently, or an edit changing an aspect it does not declare; family 3xx, exit 3; raised by N19b-44); unnumbered_slugs_are_ten becomes eleven."
+  },
+  {
+   "bead": "N19c-42",
+   "what": "Enter the row of `scene-edit-invalid` (N19b-44: 3xx, exit 3, retry after-change; detail the EditError variant, pointer the edit, observed/required the value and the kind's range; repairs: a target that resolves (nearest labels), the parameter in range, drop one conflicting edit, correct the declared aspects), taking its number from the allocation ledger."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "scene.compile's refusal list should carry `scene-edit-invalid` (by slug, N19b-44) for the derived form --base/--edits; N19b-44 now enters the format row FMT-FEDIT for frob.scene.edit/1, so the edits params entry no longer trips fmt.param-without-row."
+  },
+  {
+   "bead": "BD-420",
+   "what": "Cites the owner's ADR as docs/adr/ADR-RGB-SPLAT-FUNDING-M6.md; N19bp2-01's decision is also the kill gate's, so per convention 10 it is docs/adr/ADR-<gate name>-M6.md (ADR-KILL-RGBSPLAT-M6.md under the working name); update both citations (step and acceptance)."
+  },
+  {
+   "bead": "N32-REF",
+   "what": "FROB-REF-724's trigger says a mechanism whose kill gate 'has a `killed: fallback adopted` record'; under N40-03 the kill-gate record is the row's decision entry with outcome `fired` (block reason `killed: <gate>` unchanged). Reword so decision beads that follow N40-03 (N19b-36, N19b-42) match."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "26 reviewed: 17 changed, 9 unchanged (N19b-21, -22, -24, -25, -28, -37, -39, -41, -43). Both H-verbs-5 requests applied: N19b-40's --evidence is an identifier only (a .fmcw by its w: identity), so no params entry and no 891/734/828; N19b-44 names scene-edit-invalid and enters the frob.scene.edit/1 format row. Main drifts fixed: prove.bundle used for non-mission bundles (724 at M3) replaced by artifact.export of the verb's own bundle; kill-gate decisions brought to the N40-03/N40-30 form; missing CX-193/194/195 plants. Slice looks close to settled once the requests land."
+}

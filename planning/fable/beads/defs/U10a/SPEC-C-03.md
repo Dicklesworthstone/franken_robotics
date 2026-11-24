@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-algebra", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["Appendix G: the reference-robot fixtures (mass, centre of mass, inertia per body) audited by statement C-03.S8; BD-067 captures them with pin and date"]
-related: ["BD-051", "BD-062", "BD-100", "N10a-13", "CARD-T-19", "N10-KA1", "BD-050"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-050", "BD-051", "BD-062", "N10a-13", "N13-29"]
 gates: ["GATE-MARROW-01", "GATE-SKEL-07", "GATE-ATEL-02"]
 plan_refs: ["§10 C-03", "§11.4", "§11.5", "§13.1", "§13.10", "§12.3 T-19", "§14.5", "Appendix D.1", "Appendix M KA-043 to KA-046", "Appendix N CX-021 CX-022"]
 ---
@@ -174,7 +174,10 @@ parameter has a unit and a provenance (INV-SKEL-03).
 - `s5_geodesic_pd`: 𝖯 = diag(1, 2, 3, 4)·10⁻³ and 𝖰 = diag(4, 3, 2, 1)·10⁻³; ten points on the geodesic are
   diagonal with entries aᵢ^(1−s)·bᵢ^s, all positive.
 - `s6_shell_closed_forms`: box shell against the difference of two solid boxes; the thin-sphere limit tends to
-  (2/3)·m·r² as t → 0 (ratio within 10⁻⁶ at t = 10⁻⁶·r).
+  (2/3)·m·r² as t → 0. With x = t/r the ratio I/((2/3)·m·r²) is (3/5)·(1 − (1 − x)⁵)/(1 − (1 − x)³), a rational
+  function with π cancelled, equal to 1 − x + (2/3)·x² + O(x³); the test evaluates it exactly at x = 10⁻⁶ and
+  requires it below 1 and within 2·10⁻⁶ of 1 (a bound at 10⁻⁶ itself would leave a margin of 7·10⁻¹³, which a
+  floating-point evaluation of the two differences cannot resolve).
 - `s7_solid_enclosure_flagged`: the aluminium box declared solid in an enclosure part class is refused with
   FROB-REF-168; the same with a declared fill passes.
 

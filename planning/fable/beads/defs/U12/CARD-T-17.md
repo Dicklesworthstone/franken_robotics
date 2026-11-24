@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "lemma", "frob-lemma", "frontier", "test"]
 parent: "WP-31"
-deps: ["N12-22", "N12-20", "N12-06", "SPEC-C-16"]
+deps: ["N12-06", "N12-20", "N12-22", "N22ap2-02", "SPEC-C-16"]
 needs: []
-related: ["CARD-T-18", "BD-334", "BD-082", "N12-REF", "BD-379", "BD-333"]
+related: ["BD-333", "GB-27", "N12-42", "N12-REF", "N22a-30", "N22a-33"]
 gates: []
 plan_refs: ["§12.3 (T-17)", "§10 C-16", "§12.7 (FROB-REF-263)", "Appendix D.2 (saltation matrix)"]
 ---
@@ -37,19 +37,20 @@ determinant −1 where the true map preserves area with determinant +1.
 ## Scope
 
 In: statement document, registry row, per-event-class certificates on a model's saltation kernels, specimen and
-mutants. Out: deriving the kernels and the return map (the gait-orbit beads); the refusal near grazing and at
+mutants. Out: deriving the kernels (N22ap2-02) and the return map (the gait-orbit beads); the refusal near grazing and at
 ambiguous event order (the event-derivative code raises FROB-REF-263); the symmetry–event identity
 (CARD-T-18); validation of every `saltation` derivative by perturbation and event re-location (a test).
 
-Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the hybrid gait-orbit code that derives saltation kernels (BD-333) is `related`, not a dependency (a card that
-waited for its implementer would close a loop, because the implementer's own acceptance runs the card's law
-tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the route
-is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens
-and mutants, and every acceptance line that its own fixtures decide. An acceptance line that can only be observed
-on live output (the per-event-class certificates on a model's saltation kernels, the planar-biped event class
-included) is run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the
-receipt produced there is what moves the registry row for that output.
+Order of work. The derived saltation kernels per event class are built by N22ap2-02 at M4, one milestone
+earlier, and the gait-orbit verb that uses them by BD-333 (which depends on N22ap2-02). N22ap2-02 does not wait
+on this card (its kernels' coverage rows read `pending: T-17` until this card's certificates are accepted), so no
+loop is possible and it is a dependency: the per-event-class certificates on the kernels as built, the strict
+planar biped's touchdown classes included, are issued at M5 by this card through the instance-certificate
+pipeline (N12-20), also a dependency, and N22ap2-02 is not reopened. BD-333 stays `related`. What the card further
+depends on is the card registry, its specification, its pilot where the route is Frontier, and Lemma's own proof
+machinery. It closes on its statement document, its registry row, its specimens and mutants, and every
+acceptance line that its own fixtures and those kernels decide; the receipt of the certificate run moves the
+registry row, and the coverage run (N12-36) observes it again.
 
 ## Technical approach
 
@@ -92,12 +93,19 @@ receipt produced there is what moves the registry row for that output.
 f⁻ = (v⁻, −g), f⁺ = (−r·v⁻, −g): f⁺ − D_xR·f⁻ = (−(1 + r)·v⁻, −(1 + r)·g); divided by D_xg·f⁻ = v⁻ and multiplied by
 (1, 0) it adds [[−(1 + r), 0], [−(1 + r)·g/v⁻, 0]] to diag(1, −r), giving the stated Ξ); `determinant_is_r_squared`;
 `reset_jacobian_control_rejects` (for r = 1 its determinant is −1); `swapped_flows_rejects`;
-`transversality_side_condition_required` (FROB-REF-829 when missing); `event_time_shift_formula`
-(δt = −δy/v⁻).
+`transversality_side_condition_required` (FROB-REF-829 when missing); `changed_coefficient_rejects` (the entry
+−(1 + r)·g/v⁻ written −(1 + r)·g/(2·v⁻)); `event_time_shift_formula` (δt = −δy/v⁻); `grazing_is_refused` (the
+ceiling-apex ball: transversality number 0, FROB-REF-263 with the offending state, no matrix).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_coverage.sh` (bead N12-36) covers the saltation kernels; `pilot_lemma_budget.sh` logs arm D.
+`scripts/e2e/lemma_coverage.sh` (bead N12-36) covers the saltation kernels; `scripts/e2e/pilot_lemma_budget.sh`
+(bead N12-22) logs arm D. For this card both write NDJSON lines (STD-E2E helper) with `ts`, `script`, `bead`
+("CARD-T-17"), `step` (`T-17/<model>/<event-class>`), `event`, the exact command line, exit code, wall time, peak
+memory, the route (certified or `Tested`), the envelope's `evidence` block (claim, class, `KernelId`, certificate
+hash or test-record digest, checker identity), the expected and observed verdict of each specimen and mutant, a
+`refusal` line with FROB-REF-263 for the grazing control, and on a mismatch the first failing entry of K and the
+bundle path to reproduce.
 
 ### Known answers and negative controls
 
@@ -110,8 +118,9 @@ matrix. CX-043. Determinism: exact.
 
 - A non-normal monodromy can amplify a perturbation before it decays; multipliers are local. None of that is
   this card's claim.
-- Simultaneous events tied by a symmetry are resolved by one coupled solve; their derivative is ordinary on the
-  symmetric subspace and `generalized` off it, and has no saltation certificate.
+- Simultaneous events tied by a symmetry are resolved by one coupled solve; their derivative carries the label
+  `saltation` on the symmetric subspace and `generalized` off it (N10b-01, N10b-02), and has no saltation
+  certificate.
 
 ## References
 

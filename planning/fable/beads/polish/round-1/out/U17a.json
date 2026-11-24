@@ -1,0 +1,215 @@
+{
+ "round": 1,
+ "slice": "U17a",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-285",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Background now names the plan's three mechanisms correctly (orbit, digest, invalidation contract in BD-286) and the similarity form as C-21's; equal-Σx acceptance criterion restated for the eight-slug fixture (six common slugs, differing pair {1,4} vs {2,3}), not a two-slug placement with total Σx = 5."
+  },
+  {
+   "bead": "BD-287",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Importance-weight unit test made unambiguous (p_B/p_A = 2 and 2/3, reciprocal 1/2 and 3/2); sampling and mutation draws registered as stream rows phylum.generate and phylum.mutate in the one stream registry (N35-23)."
+  },
+  {
+   "bead": "BD-356",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Lane key's contact part now the published ContactSetSig.set with order-independent ContactKey and exact active_keys confirmation (was 'by candidate index', which changes with narrow-phase order); added dep N16ax-01 and two unit tests (candidate-order freedom, forced-hash-collision confirmation)."
+  },
+  {
+   "bead": "N17-KA",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Registry paths made crates/frob-conformance/registry/...; row format aligned field for field with N38a-12's [[ka]] record (fixture, same_as KA-127 on KA-367, sites, label, due, printed); derivation files per fixture, KA-367 sharing KA-127's; added dep N38a-12; KA-372 second control's outcome corrected (1/Ω ≈ 0.77, not 1); KA-373 control's 10 × 5 explained. CX row of the 1 + s ceiling now carried by N21c-16/N21c-17 (N17a-15 is superseded)."
+  },
+  {
+   "bead": "N17a-01",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Refusal exit codes stated per registry (740, 741 exit 4, not 3); validity domain corrected to buckets 12 to 64; the crate first appears at M1 with BD-144's pilot tool (src/pilot/), kept and later promoted; deps VERBS-phylum (the e2e calls the seven verbs), N17-REF (source of record for CONTRACT refusals) and BD-144."
+  },
+  {
+   "bead": "N17a-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Link count defined after the model compiler's fixed-joint fold (the model table's links; reference quadruped 13 links, depth 3, matching the byte model's n_b = 13) and read from ShapeSummary, not recounted; new test requirement_counts_after_fold; reachability through phylum.plan/sweep moved to the beads that add those verbs (this bead closes before them)."
+  },
+  {
+   "bead": "N17a-04",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Two Ω implementations removed: this bead promotes BD-144's M1 pilot code (src/pilot/omega.rs) into arith and re-points frob-phylum-pilot, whose filed record must reproduce byte for byte; added dep BD-144; dropped the superseded N21b-27 as a tester."
+  },
+  {
+   "bead": "N17a-05",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Planner replaces the M1 pilot's bucket code (one planner after M2); acceptance that min_buckets reproduces the filed pilot counts (3c, 3d); property test greedy min_buckets equals exhaustive search."
+  },
+  {
+   "bead": "N17a-06",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "Added dep N17b-04 (its e2e drives frob phylum sweep for the mixed cells); s is handed to the device chapter's specializable-share measurement N21c-16 (feeding the pilot N21c-17), not to the superseded N17a-15."
+  },
+  {
+   "bead": "N17a-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Pooled-budget negative control was not a control (an even split fits exactly when the pool fits; at U = 16 GB the cited row fails either way): replaced by an uneven two-design population (22.3 GB + 2.23 GB); bucket-class byte test pinned with n_b (36,32,48,256 → 79,568/81,008; 64,64,96,448 → 214,528/217,088)."
+  },
+  {
+   "bead": "N17a-08",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Worked-card step said the plan chooses one bucket at 128 worlds; under the 25% limit the planner (N17a-05) returns two and attaches the one-bucket plan as repair; added the --waste-limit 1.0 variant. Registered-six step now passes --waste-limit 0.45 (at 25% most singletons are infeasible and the planner falls back to population mode), with the fallback asserted at the default."
+  },
+  {
+   "bead": "N17a-10",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N17b-05 (configuration 4's co-tenancy runs through its environment-level admission at M2, as the bead's Considerations state)."
+  },
+  {
+   "bead": "N17a-11",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Bound computed by the shared speed-up bound function of the oracle library (N12-49), not a formula of its own; pilots path made crates/frob-conformance/registry/pilots.toml; added dep N12-49."
+  },
+  {
+   "bead": "N17a-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Guard test uses the published ContactSetSig.set (N16ax-01) with exact sorted active_keys confirmation (a hash is only a filter); non-contact rows as a sorted index list; new test guard_hash_collision_confirmed."
+  },
+  {
+   "bead": "N17a-16",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Out list pointed at the superseded pilot N17a-15; now names the specializable-share measurement N21c-16, the three-arm pilot N21c-17 and the first KILL-SPECIALIZE decision N21c-18."
+  },
+  {
+   "bead": "N17a-17",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pilot register path made crates/frob-conformance/registry/pilots.toml (the register of N38a-09)."
+  },
+  {
+   "bead": "N17a-18",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "badly_specified_flag test: 60 of 100 is flagged but provisional (95% Clopper-Pearson lower bound 0.497), 700 of 1,000 confirmed (0.671); added dep BD-171 (its acceptance and e2e compare against frob phylum plan)."
+  },
+  {
+   "bead": "N17a-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Independent reference sampler now produces the golden list of every fixture generator (the text limited it to the enumerable one, leaving the cross-platform golden lists without a non-candidate source); DesignIds come from frob-design's canonical writer."
+  },
+  {
+   "bead": "N17a-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "similar_with_factors test: (2,4,3) is not a similarity with gravity held, so 'Different' is stated with the reason (t_d/t0 x 3/2), and the same factors with gravity scaled by 4/9 give 'Similar'."
+  },
+  {
+   "bead": "N17a-23",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Considerations say the link to theorem card T-24 is 'related', but related did not list it: added CARD-T-24 and its checker N12-18."
+  },
+  {
+   "bead": "N17a-24",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Transport direction was stated as transport(R, g^-1) for d' = g.d (wrong under either convention); convention fixed against N17a-23's to_representative; a mirror cannot tell g from g^-1, so added the hexapod 60-degree rotation acceptance, unit test transport_direction_non_involution and e2e step transport.rotation."
+  },
+  {
+   "bead": "N17a-25",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pilot register path made crates/frob-conformance/registry/pilots.toml (N38a-09); stage B cost corrected to 1,080 design-episodes per tier (270 pairs x 2 designs x solo and mixed), not 540."
+  },
+  {
+   "bead": "N17a-27",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "correct"
+   ],
+   "what": "Script omitted steps the mechanism beads contribute (sim.scale_map, digest.unread_edit, transport.rotation, transport.unmapped, transport.paired): added fixtures and steps, step names mapped to their beads, a missing step is a failure; the sweep's transport check now compares with direct evaluation in mapped worlds (MR-04), not with the representative's own scorecard (a tautology)."
+  },
+  {
+   "bead": "N17a-30",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Rule 3 (four planted winners) contradicted the Considerations (fewer allowed when the design corpus lacks them): rule, acceptance and composition test now define the recorded 'unmet' case and refuse a corpus that leaves an available winner out."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38b-31",
+   "what": "Phylum KA-372 proposal 'per-design launch overhead omitted → 1 at every size' is arithmetically wrong: dropping c_L gives D·W·τ/(Ω·D·W·τ) = 1/Ω ≈ 0.77 at Ω = 1.3; correct the expected outcome (N17-KA lists it corrected)."
+  },
+  {
+   "bead": "N14a-12",
+   "what": "ShapeSummary.links/depth for quad-a print 17 and 4, counting the fixed foot attachment as a body; the model compiler folds fixed joints (pseudo-inertia summed into the parent), and the shape class's link capacity bounds folded model-table rows (byte model n_b = 13 for the reference quadruped). Count links and depth after the fold (quad-a: 13 and 3) or add a folded count field that N17a-02 reads."
+  },
+  {
+   "bead": "BD-144",
+   "what": "State that its src/pilot/omega.rs and buckets.rs are promoted into frob-phylum's arith (N17a-04) and bucket (N17a-05) modules at M2 and the pilot binary re-pointed, so one Ω and one planner exist; today it calls itself 'the one implementation at M1' without saying what happens at M2."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "Complete. Unchanged: N17a-03, N17a-09, N17a-13, N17a-14, N17a-19, N17a-20, N17a-26, N17a-28, N17a-29. N17a-15 (superseded by N21c-17) is outside the slice; references to it and to the superseded N17b-06 and N21b-27 in slice beads now name the carriers. N17a-16's KILL-SPECIALIZE profile clause (share under one third) is kept: the register rules that the kernel chapter governs (N21c-18). Cycle checks run for every added dependency; all 33 staging files parse."
+}

@@ -1,0 +1,280 @@
+{
+ "round": 1,
+ "slice": "U30b",
+ "reviewed": 40,
+ "changed": [
+  {
+   "bead": "BD-139",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "no-claim after retirement prints reason (and cell) and the fixed field order, as N30a-02; the six malformed forms defined with tests; the three gate controls named NC-GROUND-0101 to -0103"
+  },
+  {
+   "bead": "N30-CX",
+   "kinds": [
+    "complete",
+    "tests",
+    "correct"
+   ],
+   "what": "GATE-GROUND-09 and -10 had no control although acceptance claimed coverage: added CX-G-13 (inherited private mark), CX-G-14 (losing and superseded predictions omitted from kits), CX-G-15 (stand-in recorded as first real cell, 814); counts 25 records; test for every gate 01 to 11"
+  },
+  {
+   "bead": "BD-388",
+   "kinds": [
+    "correct",
+    "deps",
+    "risks",
+    "tests"
+   ],
+   "what": "R-10 power: ten clean episodes shrink the pure-product e-value, so 0.7 gives only 0.86; registered floor raised to 0.8 (0.98), power numbers corrected (0.70 not 0.71); dep on N30-KA; test drift_fixture_power_registered"
+  },
+  {
+   "bead": "BD-389",
+   "kinds": [
+    "correct"
+   ],
+   "what": "gate passability figures: 42% (not 38%) below 990/1000 at 0.990; 2.5% (not 2%) at 0.9945"
+  },
+  {
+   "bead": "BD-391",
+   "kinds": [
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "U13 request: stage-3 inertia steps through N13-30 InertiaStep (chart from pilots.toml) or projected Euclidean fit without the feature, chart and infeasible-iterate count recorded; acceptance, unit test and the per-chart e2e leg; dep N13-30; six transitive deps moved to related (21 to 16)"
+  },
+  {
+   "bead": "BD-393",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "U12-2 request: dep N12-48; test quantile_index_matches_d8_oracle over n 1..500 at four levels"
+  },
+  {
+   "bead": "BD-394",
+   "kinds": [
+    "deps",
+    "complete",
+    "correct",
+    "users",
+    "tests"
+   ],
+   "what": "U24a request: dep N24a-38, GATE-CHRON-08, item 9 switches the model-drift failure class to available with predicate, fixture and control, acceptance and test; power facts corrected (0.70) and power from the current e-value printed; fixture floor 0.8"
+  },
+  {
+   "bead": "BD-395",
+   "kinds": [
+    "tests",
+    "complete"
+   ],
+   "what": "gate clause 'as-built variant has a new ModelId' added to acceptance with a test; vague 2% boundary test replaced by unit_suspicion_band_edges with concrete scales"
+  },
+  {
+   "bead": "BD-396",
+   "kinds": [
+    "correct"
+   ],
+   "what": "rehearsal shipping made consistent: everything ships except the R-04 100-rig population (recipe, ids, per-rig digests), regenerated and compared in D2 or D3"
+  },
+  {
+   "bead": "BD-397",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "dup-07: form B gives terminal no-claim with reason, blocked with detail OPEN-GROUND-1 while undecided (N40-01 statuses); test updated"
+  },
+  {
+   "bead": "N30b-25",
+   "kinds": [
+    "deps"
+   ],
+   "what": "orphan: deps BD-025, N30-REF, N30b-22, N41-OPEN6"
+  },
+  {
+   "bead": "N30b-26",
+   "kinds": [
+    "deps"
+   ],
+   "what": "orphan: deps BD-025, N41-OPEN6"
+  },
+  {
+   "bead": "N30b-28",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "orphan: deps BD-308, BD-409, N41-OPEN6; the edited-class refusal named FROB-REF-834"
+  },
+  {
+   "bead": "N30b-37",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "dep N30b-29 (its 879 exposure-delay case); edited-class step names FROB-REF-834"
+  },
+  {
+   "bead": "N30b-40",
+   "kinds": [
+    "deps"
+   ],
+   "what": "deps N30b-25 and N30b-27, which its considerations call prerequisites (N30b-27 must precede the first form-A record)"
+  },
+  {
+   "bead": "N30b-14",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "deps N38a-09 (pilot register) and STD-E2E; monitors armed fresh at e-value 1 and the 200 held-out A episodes scored for coverage only, not fed to them"
+  },
+  {
+   "bead": "N30b-15",
+   "kinds": [
+    "deps"
+   ],
+   "what": "deps N38a-09 and STD-E2E"
+  },
+  {
+   "bead": "N30b-16",
+   "kinds": [
+    "deps"
+   ],
+   "what": "deps N38a-09 and STD-E2E"
+  },
+  {
+   "bead": "N30b-01",
+   "kinds": [
+    "correct",
+    "users",
+    "e2e-logging"
+   ],
+   "what": "guess-share step asserts BD-139's grammar (guessed=k/N ... measured=0 candidate=0) and evidence.card_guess_share; surfaces also checked through frob-mcp over stdio; three control ids NC-GROUND-0101 to -0103; cli-fallback only if KILL-MCP fired (frob-mcp is in the core graph from M0)"
+  },
+  {
+   "bead": "N30b-08",
+   "kinds": [
+    "deps",
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "dep N28a-28: the DC-07 record exists from M4 and is amended as a new policy version (cell key, monitors, draw dimension, 30-episode cap), never a second record; acceptance and test for one record; record cites the expiry limits' policy_version"
+  },
+  {
+   "bead": "N30b-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "step 3: ids equal on the recorded fingerprint family (D2); on another platform regenerated bundles compared in D3 and replay uses shipped bundles; R-04 population regenerated (id or envelope); test rehearsal_cross_platform_envelope"
+  },
+  {
+   "bead": "N30b-17",
+   "kinds": [
+    "sense",
+    "tests"
+   ],
+   "what": "fired branch: pass A stays only as a diagnostic, never writing a card value; test"
+  },
+  {
+   "bead": "N30b-19",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "2% -> 2.5% (0.0249); fired branch adds 876 to ground.predict's refusal list and the verb to the 876 row in both registries; test"
+  },
+  {
+   "bead": "N30b-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "'everything ships' -> 'ships or regenerates from its recipe' (R-04 population)"
+  },
+  {
+   "bead": "N30b-22",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "statuses are the seven of N40-01 (not-run spelling); GATE-GROUND-10 blocked on OPEN-GROUND-1, then terminal no-claim with reason, pass only on a real cell; M1 table wording; test gate_10_status_sequence"
+  },
+  {
+   "bead": "N30b-23",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "deny-list and test file names aligned with N30a-01 (registries/deny/ground-io.toml, xtask/tests/ground_firewall.rs); e2e list uses ground_protocol.sh (N30a-35) and adds ground_firewall.sh for 07; a network crate reached via a lower-layer crate is resolved there"
+  },
+  {
+   "bead": "N30b-27",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "constants placed where N30a-40 reads them (registries/ground/expiry.toml: max_age_days, max_operating_hours, on_part_replacement), policy_version cited by DC-07; effective limit min(at issue, now): never lengthened retroactively, shortened at once; dep N30a-40; two tests"
+  },
+  {
+   "bead": "N30b-29",
+   "kinds": [
+    "deps"
+   ],
+   "what": "dep BD-391: its two-pass solve, 879 refusal and card writes live in the identify verb"
+  },
+  {
+   "bead": "N30b-30",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "recovery clause was a coin flip (joint coverage 0.9025, P(<90/100) = 0.38): now four per-parameter counts at 88/100 (about 0.6% false failure), joint count logged; 'four datasets' -> six; naive double form agrees on 96 of 101 samples, not about half"
+  },
+  {
+   "bead": "N30b-36",
+   "kinds": [
+    "tests"
+   ],
+   "what": "tamper controls cite CX-G-13 and add CX-G-14 (dropped superseded or losing predictions) with plant omit-superseded"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N30a-14",
+   "what": "gate passability figures: P(X<=989 | 1000, 0.990) = 0.417 (42%, not 38%); at 0.9945 it is 0.0249 (about 2.5%, not 2%)"
+  },
+  {
+   "bead": "N30a-26",
+   "what": "carry N13-30's per-chart inertia leg in ground_identify.sh (infeasible iterates per chart, zero for geodesic and log-Cholesky; recovery error against planted values), as BD-391 now requires"
+  },
+  {
+   "bead": "N30a-44",
+   "what": "R-10 power: ten clean episodes shrink the pure-product e-value, so at post-drift miss probability 0.7 power is 0.86, not 0.99; register at least 0.8 (0.98); fresh-start figures are 0.70/0.92/0.99 (not 0.71), as BD-388 and BD-394 now state"
+  },
+  {
+   "bead": "N30a-42",
+   "what": "miss_power_note should also give power from the monitor's current e-value (after ten covered episodes at n = 20: 0.58, 0.86, 0.98 at 0.6, 0.7, 0.8), which BD-394 item 7 now prints"
+  },
+  {
+   "bead": "N30a-40",
+   "what": "expiry.toml as N30b-27 now uses it: per-class rows keyed by actuator and transmission class with a source, a policy_version cited by DC-07, the limits and version stored in each calibration record at issue, effective limit = min(at issue, now in force)"
+  },
+  {
+   "bead": "lead",
+   "what": "informational (dup-03 via N30b-15): twelve beads outside this slice still register pilots only under docs/delivery/pilots/ instead of frob-conformance/registry/pilots.toml"
+  }
+ ],
+ "unchanged": 10,
+ "notes": "All 40 read against §30 and the brief; arithmetic re-derived (binomial tails, Beta law, e-process power by enumeration, naive double rounding). BD-139's candidate fields (cell, dataset) were already right per N30a-02; only no-claim after retirement was added. Unchanged: N30-REF, BD-392, N30b-06, N30b-09, N30b-18, N30b-20, N30b-24, N30b-31, N30b-38, N30b-39. No cycles after edits; every touched file validated."
+}

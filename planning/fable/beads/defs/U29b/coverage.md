@@ -181,6 +181,8 @@ BD-208 on N29b-22 (the two lines); N29a-22 on N29b-02 and N29b-03.
 8. **Two printed forms of a claim identifier.** `clm:…` in the gate registry's example (§38.13) and `c:…` in the
    bead-log example (§29.14); `c:` is also the prefix of a controller identity in envelopes. BD-095 and N29a-09
    follow the bead-log example. N29b-09 makes the text form part of the identifier decision and proposes `clm:`.
+   (Integration pass: N34-11 of unit U34 implements `clm:` and `ev:` at the foundation milestone; N29a-09 and
+   N29b-09 were aligned to it.)
 9. **"More than 1% of stance time" has three readings** for `cone-excess`: pooled over (contact, tick) pairs,
    per contact, or per world-tick. N29a-22 uses the pooled reading; N29b-03 follows it and records the
    per-contact share beside it, with the smallest case in which they differ (0.75% against 3%), so the

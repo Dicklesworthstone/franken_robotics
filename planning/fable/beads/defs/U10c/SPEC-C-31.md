@@ -6,9 +6,9 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "spine", "spec", "frontier", "reflex", "safety", "frob-shield", "test"]
 parent: "WP-65"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-027", "N10-CX", "N10-KA3", "N10a-01", "N12-KA", "N38a-17", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-132", "BD-092", "BD-208", "BD-338", "BD-339", "BD-340", "N10c-02", "N10c-03", "N10-CX", "SPEC-C-38", "N10c-10", "CARD-T-28", "BD-337", "N10a-02"]
+related: ["SPEC-C-33", "SPEC-C-38", "BD-337", "BD-132", "N22b-09", "N10c-10"]
 gates: ["GATE-SHIELD-01"]
 plan_refs: ["§10 C-31", "§22.11", "§12.3 T-28", "§12.4", "§12.7", "§38.7 MR-22", "Appendix D.7", "Appendix E GB-26", "Appendix I.15", "Appendix M.9", "Appendix N.7"]
 ---
@@ -50,7 +50,8 @@ In: `docs/math/C-31.md` part A (tier separation) and part B (tier 1); law tests 
 T-28's statement as a contract clause, and the controls seeded from CX-076.
 
 Out: the `.fenergy` format, the exact-integer monitor kernel `K-energy-monitor`, the proof kind `energy-budget`
-and the verbs `shield.budget` and `shield.check` (BD-337); the auditor's checker for that kind (BD-132, BD-337);
+and the verbs `shield.budget` and `shield.check` (BD-337); the auditor's checker for that kind (N12-17, on the
+proof-kind registry of BD-132; it depends on this bead and binds KA-213);
 tier 3 (N10c-02; mechanism BD-338, BD-339, BD-340); tier 2 (N10c-03; mechanism BD-440); recording GATE-SHIELD-01
 and deciding KILL-ENERGY (BD-337).
 
@@ -161,7 +162,10 @@ gravity term gives `reject`" (KA-213) is bound to the same mutant.
 
 ### Pilot, implementers and gates
 
-Pilot (run by BD-337): the tray-cart stop fixture. Falsifier (TARGET): any accepted budget with an omitted source.
+Pilot (run by N22b-09, the Reflex chapter's energy-budget pilot at M4, before BD-337 is funded; a pilot comes
+before the mechanism it funds, so the mechanism bead does not run it; its record is the one row C-31's `pilot`
+field names, `PILOT-C-31`, and the pilots of tiers 3 and 2 are N22b-19 and N22b-33, carried by N10c-02 and
+N10c-03): the tray-cart stop fixture. Falsifier (TARGET): any accepted budget with an omitted source.
 Ceiling: safety evidence; no speed is claimed. Fallback: tier 3 drops to monitoring only and tier 1 stands on its
 own. Implementer: `frob-shield` (BD-337), with the auditor's checker in `frob-cert`. Gate: GATE-SHIELD-01 at M4
 (the worked card reproduces; no exceedance over 10⁴ randomized contact sequences with μ in [0, 5], restitution in
@@ -173,8 +177,9 @@ claim is withdrawn and the monitor remains as an alarm of class Estimated.
 
 - [ ] `docs/math/C-31.md` exists with part A and part B: the inequality with every symbol defined, B1 to B6, the
       monitor rule, the four premises, the unsupported uses, the artifact sketch and the pilot.
-- [ ] `cargo test -p frob-shield --test laws_c31_budget` passes on the reference model, and on the production
-      budget of BD-337.
+- [ ] `cargo test -p frob-shield --test laws_c31_budget` passes on the reference model; the suite is generic
+      over `C31BudgetSubject` so that BD-337, which depends on this bead, runs it unchanged on the production
+      budget (its test `laws_c31_on_production_budget`).
 - [ ] Every mutant below fails its named law.
 - [ ] KA-153 and KA-154 are registered with derivation files; the derivation of KA-153 records the gravity-term
       discrepancy described under Considerations.
@@ -205,12 +210,22 @@ claim is withdrawn and the monitor remains as an alarm of class Estimated.
   restitution in [0, 1]: delivered energy never exceeds the budget's left side; replacing the "policy" (the drive
   schedule inside its power bound) leaves the budget unchanged.
 - `claim_class_follows_weakest_input`: an absorber card marked `assumed` gives class Estimated, reality no-claim.
+- `po_shield_01_exact_integer_predicate` (PO-SHIELD-01): every quantity of the fixtures, read from its decimal
+  string, becomes its exact integer of micro-units (0.1251 J is 125,100 µJ); the predicate and the margin are
+  recomputed offline from the serialized budget and an integer telemetry trace and equal the monitor's values
+  tick for tick, in debug and release. Mutant `parse_via_f64` (parse as `f64`, scale by 10⁶, truncate) gives
+  125,099 µJ for 0.1251 J and is caught.
 
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c31_budget.sh`: `frob --json doctor`; `cargo test -p frob-shield --test laws_c31_budget`;
-`cargo test -p frob-conformance --test g1 -- KA-153 KA-154 KA-213`; `cargo test -p frob-conformance --test g3 --
-MR-22`; `frob --json prove list` filtered to card T-28; file and registry checks. Log to
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-153 KA-154`;
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-213` (the auditor row is a G0 row of
+N12-KA whose binding bead is the checker N12-17, which depends on this bead, so the step is logged `pending`
+until N12-17 binds it; `omitted_gravity_rejected` covers it on the reference model);
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g3_metamorphic -- MR-22`; the bound runs again
+with `--features gauntlet-mutations`, asserting that every registered control (the mutants below, CX-076) is
+caught; `frob --json prove list` filtered to card T-28; file and registry checks. Log to
 `target/e2e-logs/spec_c31_budget/<utc>.ndjson` with a transcript; each line has `ts`, `script`, `bead`, `step`,
 `event`, command line, exit code, wall time, the evidence block (claim Known answer, class, tier G1 auditor or
 host, determinism D0, seed), each term in micro-joules against its expected value, and on failure the first
@@ -226,23 +241,26 @@ differing term and the fixture path. The `summary` line counts assertions and na
 Other mutants: `payload_only_mass`; `accepts_unlisted_source`; `contact_creates_energy` (a synthetic contact with
 restitution above 1, which the sweep must expose). Counterexample carried: CX-076 (an energy budget may not leave
 out small sources). Related case: the pre-slip aliasing fixture (two friction regimes with identical histories
-before first slip) is named by the bets and has no numbers anywhere in the plan; a proposed numeric instance is
-under Considerations. Determinism: integer arithmetic, twice on one machine, debug and release.
+before first slip), named by the bets; its numbers are §22.21's and are owned by N22c-27 (2.0 m/s, μ = 0.8 and
+0.3, GATE-SHIELD-06); a complementary instance for this tier is under Considerations. Determinism: integer arithmetic, twice on one machine, debug and release.
 
 ## Considerations
 
 - Gravity-term discrepancy. The plan prints 8 × 9.81 × 0.040 × 0.08 = 0.25 J; the product is 0.251136 J. The known
   answer and the artifact sketch carry the declared bound 0.25 J, and KA-153 keeps the printed values. A checker
-  that re-derives the bound from its stated basis would find it low by 0.001136 J. The derivation file must say
-  which is meant; the fail-closed default is outward rounding of a declared bound (0.26 J, total 1.50 J, longest
-  delay 50.0 ms), with the printed row listed for the registry's reconciliation table.
+  that re-derives the bound from its stated basis would find it low by 0.001136 J. Settled downstream with three
+  named readings (N22b-14, GB-26, N22b-09): *printed* (0.25 J declared with no structured basis: 1.49 J, 50.5 ms,
+  45.5 ms; KA-153 is asserted on it), *product* (0.251136 J, the governing reading whenever the basis is present:
+  1.491136 J, 50.4432 ms, 45.4432 ms; the budget builder derives it and raises `declared-below-derived`, N22b-11)
+  and *outward* (0.26 J at two decimals: 1.50 J, 50.0 ms). The derivation file of KA-153 records all three.
 - Label note: an earlier wording of the test called the 0.25 J term stored energy and the 0.10 J term reserve. The
   settled labels are external work (gravity over the stroke) and stored energy (a series spring), with reserve a
   further 0.10 J that shortens the delay from 50.5 ms to 45.5 ms.
 - The margin is thin by design of the example: a quarter of the absorber.
 - Open question OPEN-SHIELD-1 (where absorber envelopes come from before bench data exist): default `assumed`
   cards and Estimated claims; owner the Sinew lead with Ground; it blocks any energy claim above Estimated.
-- Proposed numeric instance for the pre-slip aliasing control (DESIGN, for the Reflex lead to confirm): the 8 kg
+- Complementary instance of the pre-slip aliasing control for tier 1 (DESIGN; the plan's own instance is §22.21's,
+  N22c-27, about the shield's monitor; this one shows the budget holding where a monitor is late): the 8 kg
   cart at 0.4 m/s brakes 0.10 m before the stop on μ = 0.5 (stops in 0.08 m at 1 m/s²) or on μ = 0.05 (wheels lock,
   deceleration 0.4905 m/s², arrival at the stop with ½·8·(0.16 − 2·0.4905·0.10) = 0.248 J). Encoder histories are
   identical until the brakes are applied; a monitor that only observes cannot prevent the contact, and the budget

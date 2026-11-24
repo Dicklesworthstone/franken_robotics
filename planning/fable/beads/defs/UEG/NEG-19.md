@@ -6,9 +6,9 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "habitat", "frob-scene", "frontier", "test", "asset", "registry"]
 parent: "WP-32"
-deps: ["N19b-02", "N19a-40", "BD-307", "N19a-05"]
-needs: ["§19.13: scene.import for single assets at M3 (decode, compile, loss report, licence manifest entry)"]
-related: ["BD-399", "BD-231", "NEG-17", "NEG-18", "NEG-20", "NEG-16"]
+deps: ["BD-307", "N19a-05", "N19a-40", "N19a-46", "N19b-02", "N37-18"]
+needs: []
+related: ["NEG-20", "NEG-26", "NEGp1-54"]
 gates: []
 plan_refs: ["Appendix G.2 (row 3)", "§19.9", "§19.10 (rigid proxies)", "Appendix H.3"]
 ---
@@ -46,8 +46,10 @@ trade dress raises a separate question; branded items are excluded from the sele
 with its hash, the category (toy, shoe, container, tool), the bounding dimensions, and `branded = false`.
 Only listed objects are importable in the default pipeline.
 
-**Import profile.** `frob scene import --source google-scanned-objects --profile small-rigid <object> --json`:
-decode the mesh; check watertightness; compute volume and assign mass from a declared density per category
+**Import profile.** `frob --json scene import --kind asset <object> --source google-scanned-objects --profile
+small-rigid --behaviour free --key <k>` (the verb and its inputs are N19a-46's: `kind` is required, a `run` verb
+takes an idempotency key, and a part that can move needs its declared behaviour; this bead adds the import
+profile `small-rigid`, recorded in `registries/import-profiles.toml`, with the steps below). The import: decode the mesh; check watertightness; compute volume and assign mass from a declared density per category
 (`assumed`); compute inertia from the solid mesh; build a collision shape (convex decomposition with a cap on
 hull count and recorded Hausdorff error, or fitted primitives); assign an interface card by category
 (`assumed`) and an optical class; mark as a free rigid body; write the licence entry with the attribution
@@ -65,8 +67,9 @@ the attribution text and the change statement.
       answer.
 - [ ] Ten selected objects import, validate and settle; each has a licence entry with attribution and a
       change statement.
-- [ ] An export containing any of them embeds the attribution; removing the `notice` field makes the export
-      check fail.
+- [ ] An export containing any of them embeds the attribution (a pack through the pack export check of
+      N19b-02, a report through the export door of N37-18, which adds the notices); removing the `notice` field
+      makes the pack check fail and the door refuse the report.
 - [ ] A non-selected or branded object is refused by the default pipeline.
 
 ## Test plan
@@ -83,9 +86,18 @@ the attribution text and the change statement.
 
 ### End-to-end script and logging
 
-`scripts/e2e/assets_licences.sh` (NEG-16), scene-asset loop at M5: import of the selection, a scene with five
-objects dropped on a floor, export of the pack and of a report; log lines carry object identifiers, hashes,
-mass, collision error, the attribution text's hash and its presence in both exports.
+`scripts/e2e/assets_licences.sh` (the M5 scene-asset loop, owned and run by NEGp1-54, which depends on this
+bead; this bead lists the steps of its row), every `run` verb call with its own `--key`: the import of each
+selected object as written above (`--key al-gso-<n>`); a non-selected object and a branded one (`--key al-gso-x1`,
+`al-gso-x2`; refused by the default pipeline); a scene with five objects dropped on a floor (`frob --json scene
+compile` of the stand-in floor with the five objects, `--key al-gso-scn`; after `e2e_scene_ready <pack>`, a
+referee run `frob --json sim run quad-a --scene <pack> --tier referee --seconds 2 --key al-gso-run`, every object
+settled within 2 s); `frob --json artifact export <pack> --out exports/ --key al-gso-exp1` and the export of the
+run's report (`--key al-gso-exp2`), each embedding the attribution and the change statement; the same with the
+`notice` field removed (the pack check fails, the door refuses the report). Log lines carry `ts`, `script`,
+`bead: "NEG-19"`, `step`, `event`, the exact command, exit code, wall time, the `evidence` block, object
+identifiers, hashes, mass, collision error, the attribution text's hash and its presence in both exports, each
+refusal code with its exit code, and no geometry.
 
 ### Known answers and negative controls
 

@@ -1,0 +1,309 @@
+{
+ "round": 2,
+ "slice": "S17",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "BD-032",
+   "kinds": [
+    "scope",
+    "self-contained"
+   ],
+   "what": "Out and Considerations named the later foundation-fact gates only as 'owned by the unit that drafts the rest of the suite chapter'; now name the carrying beads N33c-42 (fs-ga refusal beyond 32 m, GATE-WS-09) and N33c-36 (MixedWrench, GATE-WS-06)."
+  },
+  {
+   "bead": "BD-033",
+   "kinds": [
+    "correct",
+    "tests",
+    "scope"
+   ],
+   "what": "heading_increment_not_absorbed demanded 1e-14 rad, but 400 complex multiplies at heading 32 rad round in a biased direction (increments of 22.54 and 14.9 ulp) and drift about 2e-14 rad; tolerance set to 5e-14 rad with the bound derived (worst case 3.1e-14), still 24x below the 1.2e-12 advance. Removed N38a-04 from related (already a dep). Out names N33c-41 for the G1 catalog masses."
+  },
+  {
+   "bead": "BD-034",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Out named the sampler joint law only as 'a later foundation-fact gate'; now names N33c-37 (planted sampler) and N33c-40 (GATE-WS-06 record)."
+  },
+  {
+   "bead": "BD-035",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Its code block declared RefereeRefusal as an enum with Capacity{cap,requested}/FixedWitness/Upstream arms and a RefereeCapacity with stack_lock_digest, contradicting N33a-13 (struct with code, kind, upstream, retry, observed, required) and N33a-14 (ContactCapacities with source); restated as assertions on those types, tests and acceptance updated (observed 22, required 21, retry AfterChange; capacity names its source pin). The capacity refusal is raised by the airlock's run-time check before any sibling call, so the e2e no longer asserts an upstream reason for it (only for the fixed-witness case). Seeded thin-step family placed the plate with L - 2r - w while allowing 60 deg incidence, so oblique draws could leave the far endpoint in contact or miss a finite box; constraint now uses L cos(phi) along the normal and requires lateral extent to cover the swept footprint."
+  },
+  {
+   "bead": "BD-037",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained",
+    "scope"
+   ],
+   "what": "Graph finding (68 dependents): scope kept (the plan's done-condition requires a fixture and mirror per item), acceptance made exact. 'Fails at the pinned commit' was undefined for the seven items whose sibling has no pin at M0 (FD-FLN-01/-02, FD-FTUI-01, FD-F3D-01, FD-FDGR-01, FD-FTX-01, FD-FSS-01) and impossible for the conditional FD-FSS-01: added a fixture timing rule, optional schema field pin_state, the single named exemption, hardware skips that never count as passes, and test upstream_unpinned_rows_named (over its own 53 rows). The lint upstream_priority_never_blocks ('without naming its interim posture') could not be evaluated and would flag BD-008, N32a-05, N41-14, N41-20, NF-05; restated as three exact allowances (P0 items, dependents whose title names the item, moonshot), which the real export passes. Procedure step 3 now confirms the existing FD beads rather than opening them. Added NFx-01's five late rows to the text and to Out."
+  },
+  {
+   "bead": "N33c-11",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "Fine-grained helpers were gated by cfg(feature = \"inproc\"), a feature that does not exist; corrected to mode-inproc (the pair N33a-11 declares). Removed N33c-12 from related (already a dep)."
+  },
+  {
+   "bead": "FD-FSIM-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said the incremental-versus-one-shot position difference at heading 32 rad is 1.2e-12 m 'at the edge of' the 1e-12 test; the chord points along the mean heading, so the difference is about 6e-13 m (inside the tolerance) while the final headings differ by 1.2e-12 rad. Corrected."
+  },
+  {
+   "bead": "FD-FNP-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Acceptance relied on 'the converter crate's boundary lint', which no bead defines; now names BD-036's compile-fail test bare_tuple_does_not_compile and run-time test foreign_descriptor_without_unit_refused, re-run at the new pins."
+  },
+  {
+   "bead": "FD-FSIM-10",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "First acceptance line said 'five hand cases' while the tests cover three ratios for each sign of the advantage (both clip sides of INT-FSIM-06's four combinations), the critic and the reset boundary; restated to match."
+  },
+  {
+   "bead": "FDEF-01",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "The negative-control sentence was inverted (it had the planted copy classified 'not reproduced'). Now: a corrected reference must give the correct column and be classified 'not reproduced'; a planted copy of the reported logic must give -0.25, -0.5, 0; 0; a second ratio other than 1, and be classified 'reproduced'; a misclassified control voids the verdict."
+  },
+  {
+   "bead": "FDEF-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Acceptance relied on a non-existent 'boundary lint'; replaced by BD-036's bare_tuple_does_not_compile and foreign_descriptor_without_unit_refused on frob_core::view."
+  },
+  {
+   "bead": "FDEF-04",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "scope",
+    "tests"
+   ],
+   "what": "Out named BD-007 for the capacity check and refusal conversion; now N33a-14 and N33a-13 (BD-080 at M1). Test used a non-existent API; now capacities().max_contacts_per_solve. The M0 e2e ran 'frob sim run', which reaches no contact step at M0; it now runs the reproduction and BD-035's admission lane and reads its refusal records (721, exit 5; upstream reason verbatim for the wheel transition; observed 22 / required 21 for the capacity case, which the airlock refuses before calling the sibling). Acceptance and test airlock_refusal_carries_upstream_reason distinguish the two cases."
+  },
+  {
+   "bead": "FDEF-05",
+   "kinds": [
+    "scope",
+    "tests",
+    "correct"
+   ],
+   "what": "Out said the type and probe were 'owned with GATE-WS-06 in the suite chapter's beads'; now N33c-36 (type, tests, probe) and N33c-40 (record). Its unit tests re-wrote N33c-36's MixedWrench tests under other names; they are now named as N33c-36's, re-run here, and the bead's own tests are the reproduction's plus report_values_match_gate_record. Acceptance named an undefined 'airlock's own lint' that fails a crate naming MixedWrench; now the re-run of N33c-36's tests and check-deps refusing a planted fs-mbd dependency (INV-SUITE-01). The transposed-R control kept and pointed at both the reproduction and N33c-36's guard."
+  },
+  {
+   "bead": "N33c-36",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The mutant existed 'only under #[cfg(test)]' yet N33c-40's driver (frob-conformance probe mixed-wrench) must run it; mutants and probe entry now live in frob_fsim::conformance under cfg(any(test, feature = \"conformance\")), with an acceptance line that no default build carries them. Added the transposed-R mutant (case D gives (-0.001, 0, 0)) that FDEF-05 needs as its second control, with test, acceptance and log events."
+  },
+  {
+   "bead": "N33c-41",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "Called its upstream item 'described, not yet numbered'; N33c-47 numbers it FD-FSIM-34 and NF-07 carries it; now says so."
+  },
+  {
+   "bead": "N33c-42",
+   "kinds": [
+    "self-contained",
+    "scope"
+   ],
+   "what": "Upstream item now named FD-FSIM-35 (N33c-47) carried by NF-08; Out names N33a-13 as owner of the refusal conversion table this bead only adds a case to."
+  },
+  {
+   "bead": "N33c-43",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "The symbol test asserted 'the identifier of the legacy transformer' does not occur outside 'the probe target', but the bead's own adapter is coupling::transformer (same identifier) and the probe target was undefined; now the legacy function's path fs_phs::interconnection::transformer is checked, outside the module frob_fsim::conformance (same module as N33c-36), plus no symbol in a default release build. The 'compile test' for a negative ratio mixed a run-time refusal with a compile check; split. Upstream item named FD-FSIM-36 / NF-09."
+  },
+  {
+   "bead": "N33c-47",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "The link table said rows 1 to 4 map to 'their identifiers or the note, as the plan's table gives them'; now gives them (row 1 FD-FSIM-10, row 2 FD-FSIM-11, row 3 FD-FNP-01, row 4 FD-FSIM-12 and -13). The uniqueness test named a tombstone list no bead had written at M0; restated (no duplicates, no reissued number; tombstones checked once NFx-01 writes them). FD-F3D-02 concerns franken_threed, unpinned at M0: its fixture follows BD-037's unpinned timing rule, stated in the approach and the acceptance."
+  },
+  {
+   "bead": "N33c-45",
+   "kinds": [
+    "self-contained",
+    "scope"
+   ],
+   "what": "Upstream item was 'not yet numbered'; now FD-FSIM-38 (numbered by N33c-47) carried by NF-11, which Out names."
+  },
+  {
+   "bead": "NF-07",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Background says N33c-47 assigns FD-FSIM-34. Its test import_without_declared_reduction_is_refused is N14b-34's (re-run here), so N14b-34 added to deps (no cycle). E2e phase pre now names its commands (frob-conformance probe g1-mass --json, frob design check) and the fixture upstream_nf_07."
+  },
+  {
+   "bead": "NF-08",
+   "kinds": [
+    "self-contained",
+    "scope"
+   ],
+   "what": "Background says FD-FSIM-35 is assigned by N33c-47; Out names N33c-42 (the probe)."
+  },
+  {
+   "bead": "NF-09",
+   "kinds": [
+    "deps",
+    "self-contained",
+    "tests",
+    "correct"
+   ],
+   "what": "Background says FD-FSIM-36; its 'Here' tests were re-written copies of N15b-12's and N33c-43's; now named as theirs and re-run (gear_positive_ratio_passes, gear_ratio_negated_in_lowering_fails FROB-REF-108, power_balance_blind_to_sign, probe_transformer_sign, legacy_symbol_not_reachable); N15b-12 added to deps (no cycle). Acceptance checks the legacy path fs_phs::interconnection::transformer outside frob_fsim::conformance, not the bare identifier."
+  },
+  {
+   "bead": "NF-11",
+   "kinds": [
+    "tests",
+    "self-contained"
+   ],
+   "what": "Background says FD-FSIM-38; its tests are N33c-45's probe1_verdict_at_pin, probe2_verdict_at_pin, recheck_degree1_exact and recheck_rejects_overstated_bound, re-run; after the fix neither verdict is not-a-bound and the fixed proposal 1 is still rejected."
+  },
+  {
+   "bead": "N33b-06",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Used mode names other than N33c-10's mode-inproc/mode-remote; item 1 now makes referee-remote the frob binary's default with the groups moved into the worker (accepted by cargo build -p frob). Out names N33c-10 to N33c-13 and BD-038. refusal_carries_upstream_reason claimed both cases carry the upstream reason; now the lip fixture is FixedWitness with the upstream reason and 22 contacts is Capacity with observed 22 / required 21 and none."
+  },
+  {
+   "bead": "N33b-10",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Out now names the sign-hazard probe (GATE-WS-09 row 11, N33c-43) instead of leaving it unowned."
+  },
+  {
+   "bead": "N33b-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The int_fsim_04 step asserted an upstream reason for both refusals; split (fixed witness: upstream reason verbatim; capacity: observed 22 / required 21, raised by the airlock)."
+  },
+  {
+   "bead": "N33c-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Claimed KA-779's first and third clauses; it owns the third, the first two are N33c-06's."
+  },
+  {
+   "bead": "BD-043",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "BD-042 says it shares BD-043's archive rule, but BD-043 ran the working-tree revision only; now the cited revision a635b91 (241,568 bytes, 161 entries, every driver present) is run and compared first and the working tree is a second result (NAB-15 SRC-REC-05), with a not-run rule for shallow clones and both revisions logged. The admission fixtures' result still went to the review log 'until PILOT-PT-S3 exists'; N38a-10 now seeds S3, so it is appended there (step 8, acceptance, rows_map_to_ledger)."
+  },
+  {
+   "bead": "N00-35",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "Still wrote to N00-06's plan-time check ledger, withdrawn when N00-06 was merged into N38a-10; now appends to PILOT-PT-S1 and S2 and reads rows 19 and 20 by receipt hash, appending nothing (tests results_appended_to_s1_s2, conditioning_read_by_hash; e2e, controls, Out). Added the source table's quadruped wording of the CPU rate (about 410,000 steps/s at 2 ms on 36 threads; not-run if the catalog has no quadruped) beside the review log's humanoid. Metal limits 222.7 / 167.0 GiB; the 85% conversion is 189.3 GiB = 203.3 GB."
+  },
+  {
+   "bead": "N25d-40",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied round 1's request (U38a): record fields renamed to N38a-09's owner, bead, work_package and fallback{ships, kill_gate}. The tier field is one letter, so rows 16 and 17 (mixed F/M) are split into 16a/16b and 17a/17b (24 records); bead is a single key, so rows with several carriers name the primary (row 6 BD-292, row 9 BD-291, row 1 BD-042) and reach the others through the linked records' rerun_owner. Linkage, acceptance, rows_complete and new test carriers_resolve updated."
+  },
+  {
+   "bead": "N38a-10",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Scope said two supplementary records while the approach and tests have three (S1, S2, S3). It still had N00-35 copy the conditioning result into N00-06's withdrawn ledger; now N00-35 appends to S1 and S2 and reads rows 19 and 20 by receipt hash."
+  },
+  {
+   "bead": "N38a-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Row 19 sampled 'the G1 description: mass 35.1 kg, 29 joints' (planning claim C061) from the referee adapter, which builds FrankenSim's catalog G1, the reduced profile g1-reduced-30 (30 links, 31.96314202 kg, N33c-41); now records that model as a substitute and cites the reduction in the result."
+  },
+  {
+   "bead": "N41-24",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Applied round 1's request (U41-1): it adds a case to N41-18's session_record.rs validator, so N41-18 added to deps (no cycle) and named in the text."
+  },
+  {
+   "bead": "NAB-15",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Said the ledger has two supplementary records and that PC-13 has no ledger record; N38a-10 has three, S3 covering PC-13 (BD-043), S1/S2 PC-22/PC-23 (N00-35). Out said N00-35 re-runs 'the three unretained scripts' though conditioning (PC-20, PC-21) is N38a-11's; corrected. The e2e ran only the working-tree revision against the recorded values, against its own cited-revision-first rule; now runs a635b91 first and the working tree as a second result."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N33-REF",
+   "what": "FROB-REF-792 row gives retry 'after-change' for kind owner-limit; N33a-13 (which raises it) gives OwnerLimit retry NumericalOnly ('use the path this project owns'), which matches the meaning of the kind. Align N33-REF's unit test rows_790_791_792_890_load and row to numerical-only for owner-limit, or record why not."
+  },
+  {
+   "bead": "N33a-11",
+   "what": "N33c-36, N33c-43 and N33c-44 need a conformance probe module in frob-fsim (frob_fsim::conformance: probe entries and planted mutants), reached by frob-conformance's 'probe' driver. Declare a non-group feature 'conformance' (off by default, implies mode-inproc, enabled only by frob-conformance, excluded from the group records and BUILT_WITH), so group_records_match_manifest still holds."
+  },
+  {
+   "bead": "N15b-12",
+   "what": "Its no_legacy_symbol source scan matches the bare identifier 'transformer', which also names N33c-43's adapter coupling::transformer; match the path fs_phs::interconnection::transformer outside the module frob_fsim::conformance (as N33c-43 and NF-09 now do), plus no symbol of it in a default release build."
+  }
+ ],
+ "unchanged": 16,
+ "notes": "All 50 beads reviewed in work-package order. Unchanged: BD-036, BD-038, BD-041, BD-042, FDEF-02, N33-KA, N33a-09, N33b-07, N33c-06, N33c-10, N33c-12, N33c-13, N33c-40, N33c-48, NFx-01, EPIC-PROGRAM. Both round-1 requests applied (N25d-40 field names, N41-24 dep on N41-18); the BD-037 graph finding handled with scope kept and acceptance made exact. Recurring defects round 1 left: the capacity refusal (FROB-REF-721, raised by the airlock before any sibling call) described as carrying an upstream reason in four beads; late upstream items still called unnumbered after N33c-47 numbered them; tests of upstream beads re-written under new names instead of re-running the owner's; stale pointers to the superseded N00-06 ledger; the cited-revision-first archive rule stated but not followed by BD-043 and NAB-15's e2e. New convention introduced: frob_fsim::conformance (probe entries and planted mutants under cfg(any(test, feature = \"conformance\"))); the feature itself is requested of N33a-11. Graph checked after the two dep additions (NF-07, NF-09) and N41-24: no cycle. Every touched file validated (front matter, JSON lists, seven sections, three test subsections)."
+}

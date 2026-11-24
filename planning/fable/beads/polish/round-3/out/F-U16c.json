@@ -1,0 +1,457 @@
+{
+ "round": 3,
+ "slice": "F-U16c",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BD-083",
+   "kinds": [
+    "complete",
+    "e2e-logging",
+    "deps",
+    "correct"
+   ],
+   "what": "Defined the chaos-build run inputs of its fault-injection seam (--chaos-plan <file> of ForceRetry entries, --numerical-plan-floor <k>, their 802 cases) and the per-interval solver-stream channels a caller reads (attempt, state_digest, physical_params_digest via telemetry.query); acceptance no longer records gate rows (convention 9: N16c-02's receipt, N16a-10 records); own script scripts/e2e/retry_ladder.sh with STD-E2E logging and two fixtures kin/tied-sliders, kin/unsolvable-island (convention 11); --key on the verb; deps N24a-36, N24b-03, STD-E2E."
+  },
+  {
+   "bead": "N16c-01",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Own script scripts/e2e/refinement_law.sh (test binary plus example program on its own deps; statistics, golden vector, purity, admission refusal 223) instead of 'covered by N16c-02' (convention 11); the redraw mutant is an nc-<nnnn> feature run by the control runner under gauntlet-mutations, not a 'mutants' feature; dep STD-E2E."
+  },
+  {
+   "bead": "N16c-02",
+   "kinds": [
+    "correct",
+    "users",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied H-verbs-7 (telemetry summary with the run positional; per-interval digests via telemetry.query on the solver stream); --steps 500 (M2) replaced by --seconds 1; fixtures as --fixture names (M1 form, --scene is M2) reusing BD-083's two; forced run and plan-k twin are two runs with distinct keys (two worlds of one run have different noise addresses, so the one-call design could not compare digests); FROB_TEST_SEED on the statistics row; controls through the control runner with nc-* features (chaos inputs are absent from conformance builds); sim.replay (M2) replaced by a same-seed rerun under a second key; acceptance: the script leaves a receipt and writes nothing to gates.toml (N16a-10 records); deps N24a-35, N24a-36, N24b-03, N38b-04."
+  },
+  {
+   "bead": "N16c-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Mutants are cfg(feature = nc-<nnnn>) branches built by the control runner (--features gauntlet-mutations,<crate>/nc-<nnnn>), not '--features mutants' with a --mutant selector; control rows use BD-025's [[control]] schema (id, seed, gate, kind, target, defect, expect, feature); FROB_TEST_SEED on the rows; release check by cargo tree; the script kinesis_known_answers.sh is named as owned here, N16c-04 adding stages (convention 11)."
+  },
+  {
+   "bead": "N16c-04",
+   "kinds": [
+    "correct",
+    "users",
+    "deps"
+   ],
+   "what": "Mutants as per-control nc-* features and [[control]] records; row 6 no longer passes a positional design beside --designs (802): batch run --designs <file> and homogeneous runs --designs <file> --select <i>, each keyed; names N16c-03 as the script's owner; dep N16a-19 (--select)."
+  },
+  {
+   "bead": "N16c-05",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Applied S89: KILL-STEPADJOINT carriers N16cp2-01 (point A) and N16c-28 (point B); KILL-INTERACT carriers N16cp2-91 and N16c-22; KILL-ROWQUEUE, KILL-LOOPELIM, KILL-ANCESTOR carriers now name the new point-A beads N16cp3-01, -02, -03 beside N16c-17, -34, -40; states that the point-A bead writes the owner declaration (the point-B bead may never exist), as KILL-SHORTGRAD does; GATE-KIN-04 carrier names the recorder N16a-10 (referee) and BD-161 (strict)."
+  },
+  {
+   "bead": "N16c-07",
+   "kinds": [
+    "correct",
+    "users",
+    "deps"
+   ],
+   "what": "Script runs carry --key per set and tier, --telemetry T1 (uppercase), a positional design with --scene instead of a positional fixture; telemetry histogram takes the run positional and --channel; ADR path docs/adr/ADR-KIN-OPEN-2.md like the other Kinesis open-question decisions; dep N29a-15."
+  },
+  {
+   "bead": "N16c-09",
+   "kinds": [
+    "correct",
+    "users",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied H-verbs-2 and H-verbs-6: eval.promote --adjudicator batch-cpu:strict --law CL-1|CL-H with keys; uppercase laws throughout; batteries through eval.run (referee run to find the refused scenarios, strict runs per law, a lockstep run for the fast-tier results) instead of eval items plus per-item sim.run; added the Technical-approach paragraph, acceptance item and unit test for the two eval.promote inputs this bead extends (VERBS-eval names it extender), removing the stale 'requested of VERBS-eval'; dep N24c-04."
+  },
+  {
+   "bead": "N16c-12",
+   "kinds": [
+    "correct",
+    "users",
+    "deps"
+   ],
+   "what": "Applied S48 and S91: the record is a frob.gauntlet.pilot/1 record PILOT-KIN-13 in crates/frob-conformance/registry/pilots.toml with protocol hash, falsifier, ceiling, fallback {ships, kill_gate}, integrated gate, result appended (01 to 12 are taken, so S48's 07 to 09 cannot be used); applied H-verbs-2 and H-verbs-6 by dropping --worlds and --telemetry from the battery run (T1 counters are recorded at the default level) and using --run-seed and per-tier keys; histogram --channel active-contacts with the run positional (no --quantity); spark fingerprint --device all --key; register check; the falsifier and Out name the point-A decision N16cp3-01; deps N29a-15, N38a-09."
+  },
+  {
+   "bead": "N16c-14",
+   "kinds": [
+    "e2e-logging",
+    "deps",
+    "complete"
+   ],
+   "what": "Own script scripts/e2e/kin_rowqueue_stepplan.sh (test binary plus a queued-plan example) with STD-E2E logging (convention 11); the queue counters reach callers as the solver-stream T1 channel queue_class; deps N16cp3-01 (released only by point A) and STD-E2E."
+  },
+  {
+   "bead": "N16c-15",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "eval.run forwards --solve-queues (no new stratum) and spark.check --invariance gains the solve-queues axis, so the gate's clauses have a caller-reachable form; the promotion refusal for a non-qualified execution is an execution_qualified(result) check this bead supplies (eval.promote is M3 and not a dependency; BD-263 is asked to call it); unit tests eval_run_forwards_solve_queues and invariance_axis_solve_queues; own script scripts/e2e/sim_solve_queues.sh (option, forwarding, invariance, plan, estimate, label, refusal) with keys; the kill answers 724 naming docs/adr/ADR-KILL-ROWQUEUE-M2.md with off still accepted, instead of removing the option; deps BD-181, N24c-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-16",
+   "kinds": [
+    "correct",
+    "users",
+    "deps"
+   ],
+   "what": "Applied S52, H-owners-1 and H-verbs-6: batteries through eval.run --battery standard --run-seed; long g5_determinism/g1_known_answers targets with FROB_TEST_SEED; uppercase --telemetry T1; trot fixture by --fixture with telemetry query on the solver stream; mixed cohort through phylum.sweep with named plans and --task; paired runs with distinct keys; controls through the control runner; record_gate --part M2 by a non-implementer. H-verbs-6's co-tenancy suggestion (sim.replay --co-tenants) applied as spark.check --invariance --axes cotenancy,solve-queues --cotenancies 100: sim.replay reproduces one world without queues, so it cannot carry clause 1's 1,000 episodes x 100 co-tenancies with queues on; deps N24a-36, N24b-03, N24c-04."
+  },
+  {
+   "bead": "N16c-17",
+   "kinds": [
+    "split",
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "title"
+   ],
+   "what": "Restricted to point B: point A (trigger 1, the pilot) moves to new N16cp3-01, because this bead waits on the gate run that exists only when point A released the mechanism (convention 10), so a falsified pilot could never have been recorded; trigger 1 re-read from point A's record, never re-evaluated; outcomes fired/not-fired in N40-03's entry with receipts (keep/kill/not-admitted were not register outcomes; per-backend admission stays the gate's per-backend status, since the row has no scope_kind); ADR docs/adr/ADR-KILL-ROWQUEUE-M2.md with N40-03's fields (draft ADR-KIN-14 withdrawn); on fired the option answers 724 naming the ADR with off accepted, instead of being removed from the schema (VERBS-sim rule); unit tests at kill_rowqueue_point_b.rs incl. entry_form; script runs them and the refusal check with keys; deps N16cp3-01, N40-03, STD-TEST."
+  },
+  {
+   "bead": "N16c-18",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Register check is cargo test -p frob-conformance --test pilot_register (the bare filter pilots_registry matches no test and passes vacuously); the script runs the pilot library's tests and the certification as a standalone host crate with named commands; the falsifier names the first reading N16cp2-91 as the recorder; acceptance gains the register check."
+  },
+  {
+   "bead": "N16c-22",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Decision entry gains receipts (required for not-fired, N40-03); outcomes fired/not-fired instead of kill/keep; on fired --decouple answers 724 naming the ADR (VERBS-sim's rule) instead of being removed from the schema; closed superseded when point A fired; checks N16cp2-91's owner declaration unchanged via kill_ledger; unit tests at kill_interact_final_reading.rs incl. entry_receipts; script runs them with a keyed refusal check; known answer 0.5 does not fire; deps N40-03, N40-30."
+  },
+  {
+   "bead": "N16c-23",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Applied S91: the record is PILOT-KIN-14 (01 to 13 taken, listed) with every frob.gauntlet.pilot/1 field (mechanism, tier M, bead, WP-74, protocol path and hash, falsifiers, ceiling, fallback, integrated gate GATE-KIN-10, cost, tool) and the result under the protocol hash; the falsifier and acceptance hand the verdict to point A N16cp2-01 (S91's notice of the identifier is applied there); analysis library as a standalone host crate with test and run commands; register check pilot_register; failure details and digests in the log."
+  },
+  {
+   "bead": "N16c-29",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The identifier parenthetical now lists who holds PILOT-KIN-01 to -09 (it said 07 to 09 were left to three pilots); the falsifiers and the verdict are handed to the new point-A decision N16cp3-02; failure details and digests in the log."
+  },
+  {
+   "bead": "N16c-34",
+   "kinds": [
+    "split",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "title"
+   ],
+   "what": "Restricted to point B (point A to new N16cp3-02, same deadlock as N16c-17); entry gains receipts; the M3 census re-read is a second entry exit=M3 with ADR docs/adr/ADR-KILL-LOOPELIM-M3.md (N40-03's multi-exit form, reread requested of N40-29), not a re-opening of the M2 entry; unit tests at kill_loopelim_point_b.rs incl. entry_form; script runs them; deps N16cp3-02, N40-03, STD-TEST."
+  },
+  {
+   "bead": "N16c-36",
+   "kinds": [
+    "correct",
+    "users",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Applied H-verbs-2 and H-verbs-6 (eval.run --run-seed; batteries through eval.run): the instrument is the named test target kin_solve_ledger.rs (--test pilots named no target); worker count comes from the pool configuration (eval.run has no --workers, N24a-24); script builds frob-cli with the solve-ledger feature, runs the tests and the keyed battery runs plus a same-count rerun, and checks the register; the verdict is handed to the new point-A decision N16cp3-03."
+  },
+  {
+   "bead": "N16c-40",
+   "kinds": [
+    "split",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps",
+    "title"
+   ],
+   "what": "Restricted to point B (point A to new N16cp3-03, same deadlock); entry gains receipts and is one entry (no scope_kind on the row): fired on trigger 3 or trigger 2 on every family, a family where trigger 2 alone fires keeps dense as default; unit tests at kill_ancestor_point_b.rs incl. entry_form; script runs them; failure details; deps N16cp3-03, N40-03."
+  },
+  {
+   "bead": "N16cp2-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Pilot input is PILOT-KIN-14 (S91), not entry kin-stepadjoint; writes the gate's owner declaration (N16c-05: point B may never exist) and checks it with kill_ledger; the rule refuses a result whose protocol hash differs; ADR fields completed to N40-03's list; acceptance gains the script and the declaration; unit tests hash_mismatch_releases_nothing and declaration_copies_ledger; deps N40-29, N40-30, STD-TEST."
+  },
+  {
+   "bead": "N16cp2-91",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Writes the owner declaration and checks it with kill_ledger; the unit tests are the named target kill_interact_first_reading (the bare filter kill_interact_first could pass vacuously); register check pilot_register instead of pilots_registry; on fired --decouple answers 724 naming the ADR (VERBS-sim's rule) instead of 'never added', checked with a keyed run on quad-a since the warehouse fixture is never made on that branch; N16c-22 closes superseded; deps N40-03, N40-30."
+  },
+  {
+   "bead": "N16c-19",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Mutants velocity-only-bound and ignore-message-clause in nc-* form with [[control]] records; the script's mutants step runs them through the control runner (g1_known_answers GATE-KIN-09) instead of plain --features builds; dep N38b-04."
+  },
+  {
+   "bead": "N16c-20",
+   "kinds": [
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Mutants step runs fresh-address-on-split and mid-tile-merge as nc-* controls through the control runner (g5_determinism GATE-KIN-09); dep N38b-04."
+  },
+  {
+   "bead": "N16c-21",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 9 no longer runs record_gate inside the script (which contradicted its own non-implementer acceptance): the script emits the receipt, the reviewing session records; controls reported caught by the runner."
+  },
+  {
+   "bead": "N16c-26",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Applied H-verbs-4: opt.start adjoint horizon K = min(task horizon, 32), halved by the guard; over-budget store refused 602 at admission with repairs, no silent fallback; new acceptance item and test; mutants via the control runner (g1); own script phylum_gradient_adjoint.sh; deps N38b-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-27",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Gate script runs N16c-26's script as a stage; controls in nc-* form via the control runner; dep N38b-04."
+  },
+  {
+   "bead": "N16c-28",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Point-B reading of PILOT-KIN-14: decision entry with receipts and fired/not-fired vocabulary, full ADR fields, owner declaration checked unchanged; tests kill_stepadjoint_point_b.rs (entry_form, the 0.5 case); script runs kill_ledger; deps N40-29, N40-30, STD-TEST."
+  },
+  {
+   "bead": "N16c-30",
+   "kinds": [
+    "self-contained",
+    "placement",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Released by N16cp3-02; now makes the design:fourbar/* and design:leg/parallel-knee fixtures (moved from the gate bead so mechanisms do not wait on it); design check form fixed; own script closure_recognizer.sh; deps N16cp3-02, STD-E2E."
+  },
+  {
+   "bead": "N16c-31",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Released by N16cp3-02; own script fourbar_kernels.sh (unit, emit, keyed spark checks, controls); mutants in nc-* form; deps N16cp3-02, N38b-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-32",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "VERBS-sim row is now owned (stale 'requested' removed); mutants nc-*; own script reduced_loop_dynamics.sh with distinct keys, the 802 refusal, spark K-loop-reduce and g2 controls; deps N16a-19, N38b-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-33",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "scope"
+   ],
+   "what": "Gate script runs N16c-30/-31/-32 scripts as stages; fixtures attributed to N16c-30; telemetry T2 uppercase and kinematics stream; stale parenthetical removed; Scope Out names N16c-30, N16cp3-02, N16c-34."
+  },
+  {
+   "bead": "N16c-37",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Released by N16cp3-03; own script ancestor_solve.sh (unit, counts example, spark kernels, g1 controls); mutants nc-*; deps N16cp3-03, N38b-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-38",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Default records not-fired; spark row listed; keyed sim.run acceptance for ancestor and dense; identity mutant nc-*; own script sim_solve_path.sh; fallback consideration limited to the point-B kill; deps N24c-04, N38b-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-39",
+   "kinds": [
+    "e2e-logging",
+    "correct",
+    "scope"
+   ],
+   "what": "Gate script runs N16c-37/-38 scripts as stages; ledger test command in gauntlet form with the solve-ledger feature; telemetry T2; kill decision named as N16c-40."
+  },
+  {
+   "bead": "N16c-41",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "--fixture attributed to N24b-03, --substeps/--integration listed in VERBS-sim; task listing frob task list --kind fixture (H-verbs-7); mutants nc-*; script gains the two refusals and the listing, exit and wall time per line, manifest hash, summary counts."
+  },
+  {
+   "bead": "N16c-42",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Own script a22_tier_radius.sh (convention 11; was only a mention in the gate script) with STD-E2E fields, digest and failure details; design check and sim estimate in valid forms; ignore-tier-radius mutant in nc-* form via the control runner; deps N38b-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-43",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Own script step_refinement_clocks.sh covering plan, keyed submit, the four refusals, normalization, quantization and --refine-step; stale 'requested of VERBS-study/VERBS-sim' fixed (both rows list it); decimation-held in nc-* form; acceptance gives the full plan command; deps N38b-04, STD-E2E."
+  },
+  {
+   "bead": "N16c-44",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Script runs frob-opt unit tests (frob-opt owns eval.compare/promote) and a known-answer row held-deadline-decimation; label-compare mutant nc-* in frob-opt, with the missing gate stated as open; full STD-E2E line fields, digests, failure details; stale VERBS-eval request fixed; deps N38b-04, STD-TEST."
+  },
+  {
+   "bead": "N16c-45",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Gate script runs the own scripts of N16c-41, -42 and -43 as stages (convention 11)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N16cp3-01",
+   "why": "Point A of KILL-ROWQUEUE: N16c-17 depends on the gate run, which exists only if the pilot passed, so no bead could record a kill at the pilot (convention 10); this bead reads PILOT-KIN-13 by a pure fail-closed rule, on fired writes the entry and ADR-KILL-ROWQUEUE-M2 and closes N16c-13 to -16 fallback and N16c-17 superseded, on pass records the release of N16c-13; writes the owner declaration. Same split as N16cp2-01 and N16cp2-91."
+  },
+  {
+   "bead": "N16cp3-02",
+   "why": "Point A of KILL-LOOPELIM, for the same reason against N16c-34: reads PILOT-KIN-10's three falsifiers (f64 parity 1e-9, closer than the compliant row in both measures, census at least one half), releases N16c-30/-31 or closes N16c-30 to -33 fallback and N16c-34 superseded; writes the owner declaration."
+  },
+  {
+   "bead": "N16cp3-03",
+   "why": "Point A of KILL-ANCESTOR, for the same reason against N16c-40: reads PILOT-KIN-11 (four operations under one fifth of the batch-cpu step for both Q and H), releases N16c-37 or closes N16c-37 to -39 fallback and N16c-40 superseded with the hypothesis entries updated; writes the owner declaration."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N16c-13",
+   "what": "Add dep N16cp3-01: the row-class queue kernels exist only when the point-A decision of KILL-ROWQUEUE releases them (N16c-14 already depends on it); without the dep the kernels can start before the pilot is read."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "Rows for the chaos-build inputs --chaos-plan <file> (frob.chaos.retry/1) and --numerical-plan-floor <k> with owner BD-083 (not BD-081), chaos build only (802 otherwise); --solve-queues identity column: the step plan's execution block, outside StepPlanId; sim.estimate's solve_queues output group with N16c-15 as extender; after a point-A kill of KILL-ANCESTOR, --solve-path's owner is N16a-24 (tree, M6) and ancestor answers 724 naming docs/adr/ADR-KILL-ANCESTOR-M2.md."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.promote --law values are CL-1/CL-H uppercase (the row's lowercase cl-1/cl-h contradicts its own 'as sim.run's --law', where lowercase is 802); eval.run forwards --solve-queues (N16c-15, extender) with no new stratum."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "spark.check --invariance --axes gains the value solve-queues (N16c-15, extender), used by GATE-KIN-08 clause 1 with cotenancy."
+  },
+  {
+   "bead": "BD-181",
+   "what": "Add the solve-queues invariance axis (N16c-15 supplies the hook) to the axes list."
+  },
+  {
+   "bead": "BD-263",
+   "what": "Call N16c-15's execution_qualified(result) check in eval.promote and assert its 820 refusal for a result run with --solve-queues on a backend not qualified by GATE-KIN-08; add dep N16c-15."
+  },
+  {
+   "bead": "N16a-10",
+   "what": "Its GATE-KIN-04 runs use --scene at M1, which is N16b-25's M2 option; use --fixture kin/tied-sliders and kin/unsolvable-island (BD-083 registers both)."
+  },
+  {
+   "bead": "N18a-37",
+   "what": "The forced-retry input now exists: BD-083's chaos-build --chaos-plan <file> (frob.chaos.retry/1); once VERBS-sim lists it, step retry_restores_film can drive it in a chaos build instead of e2e_skip."
+  },
+  {
+   "bead": "N40-29",
+   "what": "KILL-LOOPELIM row: add the trigger 'the pilot's falsifier holds' and mode pilot-before-funding, as the other pilot-triggered rows have (its pilot N16c-29 registers three falsifiers that end the mechanism before it is built; point A is N16cp3-02), making ten such rows; and reread = [\"M3\"] for the census re-read at M3 (N16c-34)."
+  },
+  {
+   "bead": "N16c-25",
+   "what": "Declare the mutants stale-factor, drop-labels and dropped-world-as-zero as cfg(feature = \"nc-<nnnn>\") branches with [[control]] records (BD-025 schema), built by the control runner (N38b-04) with --features gauntlet-mutations,<crate>/nc-<nnnn>, not as named cargo features; add dep N38b-04."
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "opt.start --gradient adjoint (N16c-26): no horizon input; K = min(task horizon, 32), halved by the memory guard; a tape store over budget is refused FROB-REF-602 at admission, exit 3, repairs smaller --population or drop --gradient adjoint; no silent fallback to paired differences."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "All 42 reviewed; unchanged: N16c-11, N16c-24. Three point-A beads N16cp3-01..03 break the convention-10 deadlocks of KILL-ROWQUEUE, KILL-LOOPELIM and KILL-ANCESTOR (point B waited on mechanisms that waited on it); point B (N16c-17, -34, -40) now reads the pilot plus the release and checks the owner declaration. Every mechanism bead now owns its e2e script; gate scripts run them as stages. Mutants moved to nc-* controls through the runner. H-verbs-6 lowercase/uppercase conflict with H-verbs-2 on N16c-09 resolved on the uppercase law-table spelling that sim.run requires. S48's suggested PILOT-KIN-07..09 for N16c-12 not applied (ids taken); PILOT-KIN-13 used. Open, not a request: N16c-44's label-compare control has no gate to name (rule 3 is outside GATE-KIN-13 and the plan gives it none); the bead runs it as a unit test until the gate register names one. Checks: front matter and seven sections parse on all 45 slice and new files; graph_check cycles 0."
+}

@@ -1,0 +1,68 @@
+{
+  "round": 3,
+  "slice": "H-verbs-5",
+  "reviewed": 4,
+  "changed": [
+    {
+      "bead": "VERBS-scene",
+      "kinds": ["inputs", "outputs", "refusals", "examples", "implemented-by", "params", "actions", "tests", "e2e", "notes", "related"],
+      "what": "All 21 requests from S50, S56, S65, S66, S69, S70, S71, S74, S78 and S90 handled. Every row's Inputs now uses the spellings its implementing beads fix: gen (BD-165 --family terrain/<f>, --difficulty, --param, --seed|--seeds|--address|--recipe, --grid, --survey, --populated/--assets, --workers), compile (BD-163 options, plus the derived form --base/--edits), show (receipts/probe/bytes/source plus the field, draws, route/corridor and family forms), list (--batch --counts, --private), bank (show/estimate/admit/evict/pin/unpin, one tagged-union output), split (create/add/move-group as mutate, show/check/part-of/audit as read), accept (closed --only names, --tiers, --waive, the preview form), hazards (registry archetype, --slug, --uncovered-by/--incidence, --feature-law), import (asset and place forms in full, --private), retrofit (N19b-40 spellings plus --facility), probe-request (N19c-05) and purge (N37-19). Added a worded-refusals table for N19c-42 rows 4-9: rows 5 and 6 cited by their proposed numbers 324 and 325, the other rows by slug, with no new number invented. Refusal lists completed: compile 315/316/320 plus row 8 plus row 4; gen 303/306/320 plus rows 8 and 4; accept 302 plus row 4; bank 303 plus row 4; import 301/315/317; split 324/325 plus row 7; retrofit row 9; row 4 on show, list and fit. Added a path-parameter table so 734 and 828 are appended through the params rule. Five examples fixed (gen, hazards commercial-kitchen, import --source frob-scene, retrofit --evidence, split create). Superseded N25c-19 replaced by N19c-05. Tests and e2e step 9 updated."
+    },
+    {
+      "bead": "VERBS-sense",
+      "kinds": ["inputs", "outputs", "refusals", "implemented-by", "params", "paginated", "tests", "notes"],
+      "what": "sense.alias: refusals 440, 441 and 846 (detail joint-error-law-missing, through augur_late until N25e-45's row is assigned); inputs completed with optional design, --task|--mission, --worlds, --source lanes (searched lane withdrawn on KILL-ALIAS), --card <sensor>=<card>, --reads, --deadline-reads and --claim-redundancy; outputs gain the redundancy block; extended-by lists N20a-37/38/39/40/43 and N25e-34. sense.profile gains --scene and --tiers (N20b-16) and the frontier_models output (N20a-30, M6). sense.observability gains --recommend-mount (N20a-36, F, M4; 724 when not funded or withdrawn). sense.schedule: --clocks, --tier and a DESIGN spelling --window <t0>..<t1>; the row is now paginated, as BD-078 requires. sense.visibility: --tier, plus DESIGN spellings --target-filter and --age-bound. causal-test: --seeds. Added a path-parameter table (alias design, mission and card; calibrate --edges; causal-test --actor-schema and --twin-fixtures). The scope paragraph now states that BD-258 has decided the naming. Tests updated."
+    },
+    {
+      "bead": "VERBS-session",
+      "kinds": ["inputs", "tests"],
+      "what": "session.open gains the `principal` input (DESIGN: N37-02, BD-258 and N37-15 mint for a named principal's grant while N32b-04 lists no such input). It applies to root sessions only and is 802 together with derive. `derive` is stated to use the caller's own token, never a token argument. New unit test open_inputs. The other three rows already matched BD-138, N32b-04, N32b-02 and N32bx-01."
+    },
+    {
+      "bead": "VERBS-shield",
+      "kinds": ["inputs", "outputs", "params", "tests", "acceptance"],
+      "what": "shield.fit gains --table <subsystem description> (N22b-35, M8; 724 after KILL-TUBE's fallback, N22b-36). It is a params entry with 891, 734 and 828, and Extended by now names N22b-35. shield.report gains the table block: kept cells per mode, coverage, uncovered fraction and certificate reference. input_spellings now includes `table`."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {"bead": "N21c-09", "what": "Write the scene.gen family as `--family terrain/stairs` (BD-165), not positionally. Cite the identity refusal by its slug `scene-pack-identity-mismatch` (constant IDENTITY_MISMATCH), never as FROB-REF-323, which is withdrawn."},
+    {"bead": "N24a-25", "what": "Replace `scene gen terrain:<kind>` with `scene gen --family terrain/<kind>` (BD-165; VERBS-scene row)."},
+    {"bead": "N19c-14", "what": "Call `frob scene bank show` (BD-236's read action, also the default); `status` is the name of the output variant, not an action, and is 802."},
+    {"bead": "N19c-20", "what": "Spell the segment statistics `scene bank show --segments`, not `status --segments`."},
+    {"bead": "N19c-21", "what": "Call `scene bank show` in place of `scene bank status`."},
+    {"bead": "N19c-24", "what": "Call `scene bank show` in place of `scene bank status`."},
+    {"bead": "N19c-42", "what": "Step 6: row 2 (`scene-variant-not-resident`) belongs to the run verbs only. Its emit sites are job admission and reset (N19c-22), so scene.bank should not gain it. Row 4 should also be listed on scene.gen (the --recipe emit site of N21c-09) and scene.accept (BD-228 item 4: recomputing the identity part). VERBS-scene lists row 4 on seven rows."},
+    {"bead": "N19b-44", "what": "Name the refusal (a ledger code or an existing one) raised when an edit falls outside its kind's declared aspects or ranges (EditError), so that scene.compile's derived form can list it. Add `frob.scene.edit/1` to registries/formats.toml, since the edits file is an artifact-input<frob.scene.edit/1> params entry."},
+    {"bead": "N19b-02", "what": "Give the default-pipeline filter's refusal a code through the ledger (N35x-02). It refuses a non-default-pipeline source without --user-supplied, and scene.import must list it."},
+    {"bead": "N19a-46", "what": "Spell the repair option `--repair none|fill` (BD-163's values for the same stage-4 pipeline, used by N19a-13 and N19a-42), not `explicit`. Cite the default-pipeline filter refusal by the code N19b-02 obtains."},
+    {"bead": "BD-398", "what": "In the place-form input table, spell `--repair none|fill`, not `explicit`."},
+    {"bead": "N19b-40", "what": "Quote the registry example as `frob scene retrofit --evidence w:3fa9 --key rt-1 --json`, since positional evidence is not one of your spellings. State whether --evidence also accepts a file path (a .fmcw). If it does, declare it as a params entry (artifact-input<fmcw>) and the row gains 891, 734 and 828."},
+    {"bead": "N37-19", "what": "Bring the restated scene.purge row in line with the registry row (DESIGN, NJL-01 admin kind). Remove `idempotency_key` and 805, because admin takes no key; the confirm digest guards the call, and a repeated purge returns the stored receipt as a no-op. Remove 731: a session without private:read gets 720. Leave the surface codes 720 and 802 out of the chapter list, since they are appended. Update the Considerations line that says the real call needs an idempotency key."},
+    {"bead": "N37-21", "what": "Remove `--idempotency-key` from the scene purge call; scene.purge is admin and takes no key."},
+    {"bead": "BD-163", "what": "Drop the request for FROB-REF-317 on scene.compile. Stage 10 reports the deviation as a finding, and the refusal with its waiver belongs to scene.accept (BD-228 item 1). Declare the positional source (a *.src document or an asset) as a foreign-file params entry."},
+    {"bead": "BD-165", "what": "Name the schema of the --grid curriculum specification and register its format. It is a foreign-file params entry until then."},
+    {"bead": "N19c-06", "what": "Register `frob.scene.survey/1` in registries/formats.toml; --survey is an artifact-input<frob.scene.survey/1> params entry."},
+    {"bead": "BD-305", "what": "The listing lint names a field `listing = true` that is not in N32a-02's closed entry schema. Either request the field of N32a-02 or express the lint through the output schema."},
+    {"bead": "N34-24", "what": "Across all clusters, decide whether a design argument that accepts a name as well as a path is artifact-input<fbot> (and so gets 891, 734 and 828) or artifact-ref<fbot>. VERBS-sense declares only the path forms that sense.alias callers pass (N25e-36)."},
+    {"bead": "BD-134", "what": "Replace the fixture shorthands `--link late|on-time`, `--link-latency` and `--encoder single-turn|multi-turn` with the registered forms: a mission variant through `--mission`, and the encoder card through `--card <sensor>=<card>`. Add a distinct `--key` to each `sense alias` call, since it is a run verb and 805 applies from M3."},
+    {"bead": "N20a-48", "what": "In scripts/e2e/sense_alias.sh, use only the options in sense.alias's row: no `--link`, `--link-latency` or `--battery-m`; express variants through `--mission` and `--card`. Add `--key` to every `sense alias` call (KNOWN_DRIFTS 5 and 8)."},
+    {"bead": "N20a-37", "what": "Express `--battery-m 29` as a mission variant (`--mission`), because it is not an option of sense.alias. Add `--key`."},
+    {"bead": "N13-36", "what": "Through the verb, write `--card encoder=<single-turn card>` (or the multi-turn card) in place of `--encoder`, and add `--key`."},
+    {"bead": "N20a-39", "what": "Add `--key` to the `sense alias … --source symmetry` call."},
+    {"bead": "N20a-40", "what": "Add `--key` to the `sense alias --mission payload-class --reads 7 --deadline-reads 6` call."},
+    {"bead": "N25e-34", "what": "Write the card binding as `--card <sensor>=<card>` (DESIGN: one grammar with BD-134's general spelling), for example `--card probe=pairwise-only.fcard`."},
+    {"bead": "N25e-36", "what": "Use `--card <sensor>=<card>` in steps 2 and 6, as above."},
+    {"bead": "BD-078", "what": "Item 9: the capability is `sense:read`, not `design:read`: BD-258 step 2 rejected object-named scopes. Adopt `--clocks <id>=<rate>,…` and `--window <t0>..<t1>` (DESIGN in VERBS-sense) as the spellings, and say that the row is paginated."},
+    {"bead": "N13-06", "what": "`frob sense schedule <task> --json` passes a task positionally. Pass the fixture design positionally with `--task`, or use `--clocks` (BD-078)."},
+    {"bead": "N20b-16", "what": "Drop the sentence that the cluster's scope names stay proposals; BD-258 has decided them (`sense:read`)."},
+    {"bead": "N20b-33", "what": "Confirm the CLI spellings `--target-filter` and `--age-bound` (DESIGN in VERBS-sense). Give the recorded-nominal-trajectory motion form a spelling before any script calls it."},
+    {"bead": "N22b-35", "what": "Name the schema of the subsystem description file that `shield.fit --table` takes (the payload schema N12-19 reads). The row declares it as an artifact-input params entry."},
+    {"bead": "N32b-04", "what": "Add the `principal` input to session.open: root sessions only, 802 together with derive, and 723 for an unlisted principal (N37-02). State which principal a root call without it receives, and whether omitted `scopes` means the principal's whole grant."},
+    {"bead": "N37-15", "what": "Add `--key` to each `frob --json session open --principal …` call; session.open is a mutate verb with a required key (805)."},
+    {"bead": "BD-258", "what": "Item 4: write `derive` (N32b-04: derive from the caller's own token) in place of `--derive-from <token>`. A token never travels as an argument (N32b-01 item 5)."}
+  ],
+  "unchanged": 0,
+  "notes": "Request outcomes. One rejected: S71 asked for scene.bank's read action to be named `status`. BD-236, which implements the verb, names it `show` and uses `status` as the output variant, so the row keeps `show` and the four beads that write `status` are asked to change. The rest of S71 (admit, --allow-evict, --free, show --segments, split audit, check --deep, the retrofit inputs, compile --base/--edits) was applied. Applied in corrected form: S37 (alias --card unified as <sensor>=<card>); S69 and S66 (import --repair spelled none|fill after BD-163, not explicit); S77 (N20a-36 is listed as Extended by, because it adds an option conditional on its pilot; it does not implement the verb); S70 (accept --sync-wait-ms is the generated common property sync_wait_ms); S50 (2) (row 2 not added to scene.bank, because N19c-22's emit sites are run admission and reset). All other requests were applied as written. DESIGN choices made here: purge is admin with no key, idempotent by effect; scene.show --at takes x,y,z[,yaw]; the split's create takes the empty parent by default; a project document with no registered format is a foreign-file params entry until its owner registers it; sense.schedule --window and sense.visibility --target-filter/--age-bound spellings; session.open principal. No refusal, known-answer or counterexample number was invented. N19c-42 rows 4 and 7-9 are cited by slug and rows 5 and 6 by their held proposals 324 and 325; the withdrawn 323 and 326 appear nowhere. Not done: VERBS-sense's `related` is still empty, although its text says the implementing beads are listed there (a pre-existing gap in many VERBS beads, left alone). All four files parse: front matter is one key per line with valid JSON values, all seven sections are present, and backticks are balanced."
+}

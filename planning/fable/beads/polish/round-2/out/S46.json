@@ -1,0 +1,316 @@
+{
+ "round": 2,
+ "slice": "S46",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "N13-07",
+   "kinds": [
+    "correct",
+    "deps",
+    "risks"
+   ],
+   "what": "Row 8's tier form demanded an integer turn count k in device state for every revolute joint; plan 13.11 and N13-37 give k only to joints with turn state (a lifted law). Now (c, s) always, k only where needs_turn_count; dep N13-37 (the device turn slab) moved from related. Added how the battery closes under the no-GPU variant."
+  },
+  {
+   "bead": "N22a-13",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Scope named 'its own bead' for the wheeled controller's batch form; no such bead existed. Now names N22ap2-01."
+  },
+  {
+   "bead": "N22c-47",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "self-contained"
+   ],
+   "what": "The script ran an unregistered task (stand-and-traverse) and passed --precision to control.synth, which has no such option; now the registered tasks stand-10s and traverse-5m-flat, with the widths through sim.run --precision (N35-04). The 256-copies equal-digest assertion had no command form and would fail on address-keyed sensor noise: now privileged state and physics-state digests, keyed on the randomization block. The three negative controls are declared plants with kinds. Dep N22ap2-01 (the wheeled controllers on batch-cpu)."
+  },
+  {
+   "bead": "N22a-22",
+   "kinds": [
+    "placement",
+    "risks",
+    "correct",
+    "deps"
+   ],
+   "what": "Pilot of WP-27's Frontier part was parented to EPIC-M2: now WP-27 (as N22c-05 is). About 15 GPU-hours with humanoid specialists up to an hour each had no compute-envelope statement (plan 45.11; lifecycle rule 7): request row under N44-01's rule (E2, ceiling 15 device-hours), an E0 form and what verdict it allows; deps N21c-35, N44-01. Unit test said 'lower 95% bound 0.434' for an 'exact 95% interval': that is the one-sided bound; the two-sided interval is [0.406, 0.773]; both now stated."
+  },
+  {
+   "bead": "N22a-27",
+   "kinds": [
+    "placement",
+    "risks",
+    "deps"
+   ],
+   "what": "Parent WP-27. About 10 GPU-hours over eight runs implies runs above one hour: smoke measurement first, then E0 jobs or a request row (E1, gate:KILL-RESIDUAL) with its not-approved fallback; deps N21c-35, N44-01."
+  },
+  {
+   "bead": "N33c-21",
+   "kinds": [
+    "placement",
+    "correct",
+    "sense"
+   ],
+   "what": "Parent WP-15, whose epic lists INT-FJAX-01 as 'carried by a bead of this package' while no child carried it; priority 2 to 1 (charter default; the M2 exit waits on it). BD-221 step 5 and this bead's step 0 both recorded the dropped-by-ceiling result with different wording: this bead is now the one writer of the gate row and admission entry and must agree with BD-221's screen. The typed close reasons for the dropped outcome are stated (pass for the pilot, superseded for N33c-22)."
+  },
+  {
+   "bead": "N33c-22",
+   "kinds": [
+    "placement",
+    "deps",
+    "e2e-logging",
+    "sense"
+   ],
+   "what": "Dated M2 but its acceptance needs the independent rewrite-trace checker N12-18 (M4) and regenerates every kernel source: a passing pilot would have left the M2 exit waiting on a bead that cannot finish before M4, and a regeneration at the exit would change the hashes the exit's receipts cite. Now M4, parent EPIC-M4, deps N12-18 and STD-E2E; report mode kept as the pass's first mode; the --all-kernels script mode gets the STD-E2E log fields."
+  },
+  {
+   "bead": "N39b-26",
+   "kinds": [
+    "correct",
+    "deps",
+    "sense"
+   ],
+   "what": "The representability probes were to run 'on development missions through the neutral exchange description', both of which are built at M3 by N39a-08, which depends on this decision. At M2 the probes are synthetic fixtures in the candidate's own format; the adapter re-runs them through the description. Part 2 of the ADR is given its machine-read block (N41-06's record fields). Label e2e, dep STD-E2E."
+  },
+  {
+   "bead": "N39b-27",
+   "kinds": [
+    "tests",
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "An M2 bead whose tests were those of the M3 role registry (N39a-02), whose e2e was a step of an M3 script and whose acceptance named M3 events. Now: the party-kind vocabulary and the label function are this bead's, with seven tests on the decision and configuration records; its own M2 script tenfold_adjudicator_decision.sh with three plants; the gate-time enforcement is named where it lives (N39a-02, N39b-12, N41-06). Part 1 of the ADR gets its machine-read block."
+  },
+  {
+   "bead": "N40-33",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Said four kill gates are 'deferred to the exit at which a device is admitted'; N40-03 requires a named later exit, and six gates read only device parts while others have one CPU clause and one device clause. New section 9: outcome derived from the parts each kill record reads (decided; deferred to M3; fired on a CPU clause or deferred), never not-fired on unevaluated clauses; tests and acceptance; the exit line is met by the deferred ADRs."
+  },
+  {
+   "bead": "N41-06",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Requests applied: the command is frob-tenfold require-adjudication (no frob-conformance binary exists, BD-025; dep N39a-01); the two wording rows are [[conditioned_phrase]] records with patterns, reader, field and allowed values, shown consistent with rules W1 and W3 of N39b-15. The configuration record had no schema and 'generated from the ADR' no mechanism: schema frob.tenfold.adjudication/1, fenced blocks, the generate subcommand. Sealing-order text follows N39a-40's direct call at step 2; the role-registry test is N39a-02's, not N39b-27's. Tests and full log fields added."
+  },
+  {
+   "bead": "N41-15",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Requests applied: frob-tenfold require-owner-inputs; [agent] carries caps_status and the freeze precondition refuses provisional caps with tenfold.agent-caps-provisional (one reader with N39a-19); the bead supplies only the stratum rule for OPEN-TENFOLD-4 and the M3 block is named by N40-35's check (f) with open-default-blocks-exit; the asking is the calendar's M1 and M2 rows. Tests and log fields added."
+  },
+  {
+   "bead": "N41-34",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "KILL-SHARD's threshold was given as 1.25 with 1.3 as the safe side: the plan and N36-10 put the kill threshold at 1.6 (1.25 is the scaling gate's tolerance), so at 1.3 the trigger fires. Now 1.1 fires, 1.7 does not, and a test separates the two numbers. The coverage test said no adjudicator is named at 85%: fidelity.coverage names one below 90% (BD-213, GATE-FID-03); 80% is the risk signal only."
+  },
+  {
+   "bead": "NAB-25",
+   "kinds": [
+    "deps",
+    "sense",
+    "e2e-logging"
+   ],
+   "what": "Depended on BD-224, which made it the one M2 bead that cannot be an ancestor of the M2 exit review (tracker-orphan, and the review could not run the sweep's attached check). Now it precedes the review: deps are the beads whose records it reads (the kill decisions, the profile, the variant record, the gate report). MQ-01's state change is N41-09's transition (M5), so the sweep writes the ADR and the freed entry. Log fields added."
+  },
+  {
+   "bead": "BD-224",
+   "kinds": [
+    "deps",
+    "complete",
+    "correct",
+    "tests",
+    "risks"
+   ],
+   "what": "Request applied with one exception: 110 deps added (108 M2 beads no other M2 bead waits for, the decision sweep NAB-25 among them; FDEF-06; and N00-21 as round 1 asked), so every M2 bead is an ancestor except the 20 upstream work items, whose own text and REVISION_2 say no milestone waits on them: those are in related and their state is read from the upstream registry. Body: stated as N40-05's protocol on M2 data with the attached checks and their owners; six dispositions (no-claim was missing); 41 risk rows readable by M2; GATE-GAUNT-08 at each funding decision; OPEN-CHRON-4's default corrected (30 days, 64 GB) with OPEN-SAFE-4 at M3; the 41 questions with deadline M2 and the owner's rows (OPEN-SPARK-5, OPEN-SAFE-2, OPEN-TENFOLD-3, -4, -6, -8 were missing); the fourth stop rule of plan 43.5 (name an adjudicator); kill decisions under the variant and a DESIGN rule that a deferral does not meet the exit line outside it; branch beads and upstream items; gates gain the four late kill gates. Tests and acceptance for each."
+  },
+  {
+   "bead": "WP-15",
+   "kinds": [
+    "correct",
+    "placement"
+   ],
+   "what": "INT-FJAX-01 was 'carried by a bead of this package' with no such child: N33c-21 is now a child (list 67); the note says who records the screen and that the adoption pass is dated M4 outside the package."
+  },
+  {
+   "bead": "WP-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Listed KILL-CONTACT in gates and 'what lands' although its decision bead N18b-33 and its gate GATE-FID-01 are in WP-22: gates and text now say so."
+  },
+  {
+   "bead": "WP-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Said KILL-CONTACT is 'carried by WP-16' while the decision bead is its own child: gates gain KILL-CONTACT, with trigger and fallback stated."
+  },
+  {
+   "bead": "WP-19",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "Child list was stale: FD-FT-01 retitled (stages 1 and 2), NFp1-51 and NFp1-52 added (11). Key gate GATE-SPARK-06 has no child here: the line names the beads that measure its Metal rows. OPEN-SPARK-1 consideration added (WP-18 has it); upstream children block no gate."
+  },
+  {
+   "bead": "WP-44",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request applied: Envelope bullet cites row R3 of registries/compute_envelope.toml, with N17b-07 as the bead that records the ruling."
+  },
+  {
+   "bead": "WP-46",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request applied: Envelope bullet cites reserved row R12 (the fleet gate, BD-370) with its class, run lengths (13.2 and 16.3 minutes, recomputed) and not-approved fallback; the M2 services need nothing above E0."
+  },
+  {
+   "bead": "WP-47",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Requests applied: Envelope bullet cites row R1 (shared with WP-34); N36p1-02 (M1) added to the list with an M1 line, N36-15 retitled; N36p1-01 named as the bead that measures GATE-SPARK-22. GATE-SPARK-20 line names the WP-48 beads that measure it."
+  },
+  {
+   "bead": "WP-48",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Request applied: Envelope bullet cites row R2 (shared with WP-21) in WP-21's wording."
+  },
+  {
+   "bead": "WP-52",
+   "kinds": [
+    "complete"
+   ],
+   "what": "A child added by another reviewer this round (N32bp2-44, M5) entered in the list and in 'what lands'."
+  },
+  {
+   "bead": "WP-58",
+   "kinds": [
+    "correct"
+   ],
+   "what": "N37-REF is now an M0 bead: list regrouped (M0 1, M1 10) and the milestone lines corrected."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N22ap2-01",
+   "why": "missing: BD-117 and N22a-13 both left the wheeled and omnidirectional baselines' batched execution to 'its own bead', which nobody wrote; GATE-REFLEX-01 at M2 needs diff-drive and mecanum on batch-cpu (lockstep kernels, per-world records, class mask, wheel-odometry row of the batched filter)"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N41-16",
+   "what": "Check 3(b) (every bead of Mn is an ancestor of the Mn exit review) must exempt beads labelled `upstream`: each says 'no milestone waits on this bead' and REVISION_2 REV-1.3 forbids a milestone waiting on a sibling change. BD-224 now has every M2 bead as an ancestor except the 20 upstream items (in related; state read from registries/upstream.toml). Without the exemption the tracker check blocks the M2 exit on them; the same holds at every later exit."
+  },
+  {
+   "bead": "NAB-22",
+   "what": "Design decision (1) says the sweep follows the exit review and consumes its record. For M2 the order is now reversed (NAB-25 no longer depends on BD-224; BD-224 depends on NAB-25 and its runner executes `decision-sweep check --exit M2` as the attached check): restate (1) as 'made at the exit candidate commit, before the exit record', and make the same change in NAB-23, NAB-24 and NAB-26 to NAB-31, each of which still depends on its exit review and is the orphan S01 found at M0."
+  },
+  {
+   "bead": "WP-27",
+   "what": "N22a-22 and N22a-27 (the sampling-controller and residual pilots, M2) are now children of this package: add them to the list (M2 3) and to the count; cite in the Envelope bullet the request rows they file under N44-01's rule (next free identifiers from R19: E2, campaign:pilot-reflex-mpc, ceiling 15 device-hours; E1, gate:KILL-RESIDUAL)."
+  },
+  {
+   "bead": "BD-117",
+   "what": "Out-of-scope says 'batched execution on batch-cpu (M2 row of the same gate)' with no bead: it is N22ap2-01. Its script runs task `traverse-5m` while the reflex beads and N22c-47 run `traverse-5m-flat`: one name. `traction_clip` uses g = 9.81 (3.924 m/s²) while the conventions fix g = 9.80665 (3.92266 m/s²): read gravity from the model."
+  },
+  {
+   "bead": "BD-125",
+   "what": "The traverse task of GATE-REFLEX-01 is registered by no arena bead (this one registers stand-10s and recover-push): register `traverse-5m-flat` (5 m of net displacement on flat ground, no fall; no randomized field), which N22a-11, N22a-13, N22ap2-01, N22c-47 and BD-249 run; BD-117, BD-247, N14b-06, -08, -09 spell it `traverse-5m`."
+  },
+  {
+   "bead": "BD-221",
+   "what": "Step 5 records a dropped e-graph item 'in the admission file as `not run, ceiling below goal`'. N33c-21 is now the one writer of the INT-FJAX-01 gate row and admission entry, with reason `dropped-by-ceiling`: have this bead record only the screen (the arithmetic share and the go or no-go) and cite that reason."
+  },
+  {
+   "bead": "N39a-08",
+   "what": "N39b-26's representability probes are now synthetic fixtures in the candidate's own format (the exchange description did not exist at M2 and depends on that decision): re-run each probe through the exchange description here; a probe that passed natively and fails through the description is a defect of the description, one that fails both ways reopens the decision for that stratum."
+  },
+  {
+   "bead": "N39a-02",
+   "what": "Write the role registry's `adjudication` field by calling `tenfold::adjudication::adjudication_label` (N41-06; `external` gives `external`, `internal-session` gives `self-adjudicated`) with the party kinds of N39b-27, and add dep N39b-27 (now related). N39b-27's tests no longer duplicate this bead's: `authorship`, `channel_closes_at_step_2` and `wording_lock` are cited there as owned here."
+  },
+  {
+   "bead": "N39b-12",
+   "what": "N39b-27 now has its own M2 script (scripts/e2e/tenfold_adjudicator_decision.sh) for the decision record; its acceptance points to this bead's `roles` step as the place where the default session is created, its access asserted and its action log entered. Keep those assertions here and call the M2 script before them."
+  },
+  {
+   "bead": "N39a-13",
+   "what": "Call `adjudication::require_record(gate)` (N41-06; `frob-tenfold require-adjudication`) when a family is created in the sealed pool, so that creation is refused while no adjudication record exists. Today the only call site is N39a-40's sealing step 2, and N41-06 states the weaker guarantee until this call exists."
+  },
+  {
+   "bead": "N41-17",
+   "what": "Rule 2's closed set of close reasons (pass, fallback, superseded, duplicate, withdrawn) has none for a bead on the branch a decision did not take, while N13-33, N21a-14 and N23a-17 close 'not needed: <kill gate> not fired': add that reason with the decision's ADR required, or say which of the five they use. BD-224 now checks such closes against the ADR."
+  },
+  {
+   "bead": "N40-CX",
+   "what": "Register a control for N40-33's new rule: a kill gate recorded `not-fired` at the M2 exit under the no-GPU variant while a part its record reads is `not run (variant: no-GPU)` (caught by `kill_decisions_under_variant`)."
+  },
+  {
+   "bead": "N44-04",
+   "what": "Check 6 (each key gate of a package is measured by a child) fails for WP-19 (GATE-SPARK-06 is carried by BD-175 in WP-18 and N21b-25 in WP-46) and for WP-47 (GATE-SPARK-20 is carried by BD-199, N36-08 and N36-31 in WP-48). Either accept a key gate whose measuring bead the epic names in another package, or re-parent N36-31 to WP-47 and give WP-19 a child for the Metal rows."
+  },
+  {
+   "bead": "N41-03",
+   "what": "The register's operator commands are spelled as subcommands of a `frob-conformance` binary (`frob-conformance open due|default|check|require`, and likewise `risks` in N41-01, `risk plants` in N41-32, `moonshot` in N41-09). BD-025 (ADR-GAUNT-01) gives that crate no binary of that name; N41-06 and N41-15 now use the operator binary `frob-tenfold` for theirs. Name the binary these commands belong to, so that BD-224, N41-34 and the exit runner cite a command that exists."
+  },
+  {
+   "bead": "BD-378",
+   "what": "N33c-22 (the e-graph extraction pass, conditional on the INT-FJAX-01 pilot) is now an M4 bead under EPIC-M4 with dep N12-18: add it to this exit review's deps; it closes `superseded` if the pilot was dropped or failed."
+  },
+  {
+   "bead": "N41-09",
+   "what": "NAB-25 (M2) may write an ADR proposing MQ-01 `falsified` before this bead's transition command exists (M5): when the command first runs, apply the pending proposals of earlier sweeps (`release` to `falsified` with that ADR), and say so."
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "`control.synth` lists `tier` among its inputs but not `state` or `seed`, which the M1 and M2 gate scripts pass (N22c-01, N22c-47); it has no precision input, so N22c-47 now takes the two widths through `sim.run --precision`. List `state` and `seed`, or say the smoke runs both states itself and the scripts drop the options."
+  },
+  {
+   "bead": "N14b-07",
+   "what": "The wheeled and omnidirectional lockstep forms now exist at M2 (N22ap2-01: per-world records, class mask, wheel-odometry row of the batched filter). The steered, three-wheel omnidirectional, skid-steer and balancing classes need the same form for the M3 batch-cpu rows of GATE-REFLEX-01 (BD-247): say which bead carries it."
+  },
+  {
+   "bead": "N19c-31",
+   "what": "Priority 2 on an M2 bead that the M2 exit review (priority 1) now waits on: set 1, or state the reason it is below the milestone default."
+  },
+  {
+   "bead": "N22c-05",
+   "what": "Priority 2 on an M2 bead that the M2 exit review (priority 1) now waits on: set 1, or state the reason it is below the milestone default."
+  },
+  {
+   "bead": "N29b-17",
+   "what": "Priority 2 on an M2 bead that the M2 exit review (priority 1) now waits on: set 1, or state the reason it is below the milestone default."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "All 33 beads read in full against plan 11, 13.11, 22.3 to 22.8, 22.17, 22.18, 23.27, 33.15, 36.3, 36.14, 39.3, 39.19, 40.4 to 40.9, 41.3, 42, 43.2, 43.5, 43.12, 44, 45.3, 45.10 and 45.11; the gate lists, kill tables, counts (2, 80, 14, 22 late parts) and the arithmetic were recomputed. Unchanged: WP-17, WP-18, WP-20, WP-21, WP-45, WP-49, WP-50, WP-51. What round 1 left was between beads: an exit review that a quarter of M2 did not reach and a sweep that could never reach it; a gate script and two epics pointing at a wheeled batch controller nobody carried; an M2 decision whose probes and tests needed M3 mechanisms; a kill threshold confused with a gate tolerance; pilots with no compute-envelope row. For the lead: BD-224's dep list (202) will drift as other slices move edges and should be closed mechanically after each round; N41-06 (274 lines) and BD-224 (286) are long but each is one piece of work; the 20 upstream items of M2 are deliberately not deps of the exit review. Not settled: one more round should confirm N22ap2-01, the reversed sweep order once NAB-22 answers, and the exemption in N41-16."
+}

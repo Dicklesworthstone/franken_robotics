@@ -6,9 +6,9 @@ priority: 3
 milestone: "M2"
 labels: ["m2", "suite", "atelier", "upstream", "frankensqlite", "solid"]
 parent: "WP-63"
-deps: ["BD-037", "BD-111", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-111", "N33b-04", "N33c-20", "STD-E2E"]
 needs: []
-related: ["BD-220", "BD-009", "BD-209"]
+related: ["N33b-08", "N33c-18", "N33c-19"]
 gates: ["INT-FSQL-02"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.15", "§33.4", "§33.6", "§28", "§33.8"]
 ---
@@ -36,8 +36,9 @@ test under a bijection, not in the store).
 
 In: in FrankenSQLite, the state machine parameterized by key type, with `PageNumber` as the default; here, the
 local copy replaced by the sibling's. Out: the memo graph, its shadow recompute and its keys (BD-111, BD-220);
-byte-size accounting and cost-weighted admission, which are this project's departures and stay here; the
-other two pager policies.
+the local S3-FIFO state machine that this item retires (N33c-18); byte-size accounting and cost-weighted
+admission, which are this project's departures and stay here (N33c-19); the INT-FSQL-02 differential oracle and
+its ten recorded traces (N33c-20), which this item re-runs and must exist first; the other two pager policies.
 
 ## Technical approach
 

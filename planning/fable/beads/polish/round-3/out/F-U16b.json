@@ -1,0 +1,330 @@
+{
+ "round": 3,
+ "slice": "F-U16b",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "BD-212",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "GATE-FID-01 now run as the g2_parity Gauntlet entry and recorded from its receipt with record_gate (KNOWN_DRIFTS 1, 9); the m2-baseline record written with N16bp1-01's new example target record_rebaseline; BD-212 made the one recorder of the batch-tier (M2) part of GATE-ARENA-04, which N24b-09 cannot record against a frozen envelope (request filed)."
+  },
+  {
+   "bead": "N16bp1-01",
+   "kinds": [
+    "complete",
+    "users",
+    "tests",
+    "correct"
+   ],
+   "what": "S69 applied: record_rebaseline exposed as `cargo run -p frob-chronicle --example record_rebaseline -- --gate --cause --doc` with its test; S62 applied: plan §26.6 cases (artifact-candidate failures from the Nemesis guard) get their own table fidelity_case (frob.fidelity.case/1), record_case and the read input `fidelity.ledger --cases`, kept out of every stratum and envelope, with tests; output row list gains kind and sub_key as VERBS-fidelity has them; cause m2-baseline worded per gate; the freeze routine accepts as a stratum's address set a measurement record committed before the stratum's first pair (N16bx-04's port-wrench strata, which eval.run cannot measure), with the same completeness rule and test freeze_record_address_set."
+  },
+  {
+   "bead": "BD-214",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "H-cx-2 request applied: CX-383's planted record (full-referee-coverage-claim, caught by N36p1-02's referee_cannot_cover_everything) is a control of the M2 gate run; the M2 part of GATE-FID-07 runs as the g2_parity entry fid_07.rs (created here) and is recorded with record_gate --part M2."
+  },
+  {
+   "bead": "BD-268",
+   "kinds": [
+    "tests",
+    "correct"
+   ],
+   "what": "The M3 record of GATE-FID-07 made through the Gauntlet entry and record_gate --part M3 (no direct gates.toml write); CX-383's control added to the gate's controls (every registered control must be caught in the same run, N38b-19), control_registry_complete now expects three."
+  },
+  {
+   "bead": "N16b-34",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 6 used `--workers` on the device job, which eval.run does not have (802): the shadowed job is now `frob sim run ... --task flat-velocity` (operator-only --workers on batch-cpu) with concrete commands; step 1 also checks an eval.run receipt; seed spelled per verb (--seed on sim.run, --run-seed on eval.run)."
+  },
+  {
+   "bead": "BD-263",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "users"
+   ],
+   "what": "H-verbs-2 applied: --adjudicator auto|referee|batch-cpu:strict and --law (spelled CL-1|CL-H as sim.run's law table, not the lowercase of the request: VERBS-sim rules lowercase out) with 246 and 802 rules; the refusal list written out to match the row (171, 246, 502, 548, 561, 811, 817, 820, 821, 825, 830, 871, 872, 890 plus the two pending slugs) with each raiser; H-ref-2 applied: 548 on pooling across identities at admission; GATE-FID-02 recorded from its g1_known_answers receipt with record_gate; tests added."
+  },
+  {
+   "bead": "N16b-25",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "H-verbs-6 applied: the inputs VERBS-sim gives this bead are defined in one table with domains, defaults, identities and rules (positional design, --scene, --task, --worlds, exactly one of --seconds/--steps/--intervals with the resolved step count in the manifest, --episodes, --init, --controller default baseline exclusive with --policy, --tier, --profile, --law spelled as the law table, --on-overflow, --fail-fast), with tests for each; S58 applied: with --task the frob-verbs handler builds the environment through BD-192's VecEnv (dep BD-192 added, no cycle), forwarding --reset-mode and carrying a purpose field (default evaluation) that N15a-30's --purpose sets; --present and its 802 test moved to its owner N16b-24; --law identity written as StepPlanId (plan 16.6) against the registry row (request filed); owners of --law (N18b-28) and the M1 --profile (N16a-02) named."
+  },
+  {
+   "bead": "N16b-24",
+   "kinds": [
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "Takes the input --present of sim.run, which VERBS-sim assigns to it (M3) and N16b-25 used to define: one world paced, physics and StepPlanId unchanged, more than one world 802; test present_needs_one_world; dep N16b-25 added (no cycle)."
+  },
+  {
+   "bead": "N16b-31",
+   "kinds": [
+    "complete",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "S59 applied: step 16 promotes an energy-created result (N16b-15's mutation M1, conformance build) and asserts exit 2, blocked_by energy-created, status provisional, no higher-tier episode; new steps for 548 (mixed effort profiles in the promotion ledger) and for --adjudicator/--law (strict named with CL-1, 246 or the CL-H branch, 802 with referee); step 13's 811 case made reachable after BD-263's admission (background pairs of another kernel version; a round with no audited address); freeze repair given its design and key; seed per verb (--seed on sim.run, --run-seed on eval.run)."
+  },
+  {
+   "bead": "N16b-33",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Step 10 wrote the GATE-FID-06 row from the script (KNOWN_DRIFTS 9): the gate now runs as the g1_known_answers entry fid_06.rs (created here) with the folded-residual control, and is recorded from its receipt with record_gate; eval.run calls use --run-seed 17; the note that eval.run has no profile option corrected (N16bp2-01 adds one; the script passes none)."
+  },
+  {
+   "bead": "BD-266",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "H-verbs-2 applied: --on-overflow refuse|continue-flagged (default refuse; reset 802) on the verb surface; step 3 raises 722 on batch-cpu and passes 610 through on a device tier, never merged (KNOWN_DRIFTS 6); the DESIGN listing 557 and 830 on the row removed (N28-REF): the verb sets model-conditional and the consumers raise them; GATE-FID-05 run as its Gauntlet entry and recorded with record_gate; tests overflow_policy and refusal_list_matches_row."
+  },
+  {
+   "bead": "N16b-03",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "GATE-KIN-07 run as `FROB_TEST_SEED=7 cargo test -p frob-conformance --test g1_known_answers -- GATE-KIN-07` (kin_07.rs) and recorded from its receipt with record_gate (KNOWN_DRIFTS 1, 9); the script no longer writes the gate row; eval.run called in the registry's class form with --run-seed 7 and no --profile (S52, partly applied: see notes)."
+  },
+  {
+   "bead": "N16b-04",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The strict adjudicator now carries its law (`Adjudicator::BatchCpuStrict { law: LawName }`, LawName a newtype because the law table sits above frob-core), printed `batch-cpu:strict/CL-1` as eval.promote's row requires; test adjudicator_prints_law; CX-151 wording aligned."
+  },
+  {
+   "bead": "N16b-07",
+   "kinds": [
+    "correct"
+   ],
+   "what": "H-owners-1 applied: pilots form `cargo run -p frob-conformance --example pilots -- fundable --bead N16b-07 --json`; the pilot's own binary declared as a `[[bin]]` (src/bin/pilot_*.rs) with its CONTRACT.md row (BD-025: the crate has no default binary)."
+  },
+  {
+   "bead": "N16b-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Same BD-025 alignment as N16b-07: pilot binary declared as `[[bin]]` with a CONTRACT.md row; pilots example form with --bead."
+  },
+  {
+   "bead": "N16b-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "KILL-DR outcomes written in N40-03's terms (not-fired | fired) and the kill row's decision entry given its full form `{ outcome, adr, date, session, receipts }` (KNOWN_DRIFTS 10); acceptance and negative control aligned."
+  },
+  {
+   "bead": "N16b-11",
+   "kinds": [
+    "correct"
+   ],
+   "what": "H-owners-1 applied: pilots example form with --bead; pilot binary declared as `[[bin]]` with a CONTRACT.md row."
+  },
+  {
+   "bead": "N16b-12",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The decision bead writes no gate row (KNOWN_DRIFTS 9): the ADR cites the GATE-FID-04 receipt recorded by its measuring bead; acceptance aligned."
+  },
+  {
+   "bead": "N16b-14",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Out list names who consumes the flag; acceptance asserts the created-energy flag reaches every claim product built from a flagged world; test flag_reaches_claim_product."
+  },
+  {
+   "bead": "N16b-15",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests",
+    "users"
+   ],
+   "what": "The plants had no request spelling: they are now requested through N29a-25's conformance-build `--conformance-plant <file>` with a plant kind `mutation` (one mutation per file: penetration-recovery, explicit-penalty with k_n_per_m, pyramid4-base; fixture files under crates/frob-conformance/fixtures/exploits/plant/), registered in plant-kinds.toml; dep N29a-25 (no cycle); test mutation_plant_kind; N16b-31 and N16b-33 use the form."
+  },
+  {
+   "bead": "N16b-19",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "KILL-SHADOW decision recorded per back end in N40-03's form: outcomes not-fired | fired, one decision entry per measured back end with scope backend:<tier> and its GATE-FID-07 receipts, scope_kind requested of N40-24; on fired, apply_decisions marks the part killed and this bead writes no gate row; test decision_entries_per_backend; negative control in N40-03 terms."
+  },
+  {
+   "bead": "N16b-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Branch condition written in N40-03's outcome (`not-fired` on every back end) instead of 'kept'."
+  },
+  {
+   "bead": "N16b-23",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "S28 applied: the kinematic-loop refusal names its limit id `no-loop-constraints` (N16a-05's register); strict-fallback routing worded as N16a-05's policy, with BD-263 asserting the verb-level adjudicator; test referee_refuses_loop asserts the limit."
+  },
+  {
+   "bead": "N16b-26",
+   "kinds": [
+    "correct"
+   ],
+   "what": "adjudicator_named_below_90 expects `batch-cpu:strict/CL-1` (the adjudicator with its law, as N16b-04 now prints it). S35 was already applied (152 by the rule, 160 from the registry)."
+  },
+  {
+   "bead": "N16b-27",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "H-verbs-2 applied: fidelity.modelform's expected refusals are exactly 610 and 722, the 557/830 DESIGN removed (N28-REF), its --on-overflow values recorded; eval.promote's --adjudicator and --law (CL-1, CL-H) recorded; 721 no longer expected on eval.promote or the rank verb (neither row has it), 546 added to the rank verb. H-verbs-6 applied for this chapter's inputs: sim.run's Kinesis-owned inputs re-recorded with the table's spellings and value sets (and the ruled-out spellings as 802), the sim.run refusal list corrected (610 beside 722), the other chapters' and the operator, conformance, chaos and conditional inputs left to VERBS-sim's own conformance script (see notes); tests updated."
+  },
+  {
+   "bead": "N16b-30",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Seed per verb (--run-seed 17 on eval.run, which has no --seed); step 9's KA-338 control run as its Gauntlet row instead of an undefined 'conformance build' run; the --cases read of N16bp1-01 added to step 4 (zero rows, one synthetic case, strata unchanged, 802 with --quantity); the M3 eval.promote stages named as stages whose acceptance is N16b-31's (KNOWN_DRIFTS 7), with skipped logging in the acceptance."
+  },
+  {
+   "bead": "N16b-32",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "Seed per verb (no seed on the verbs called; --seed 17 on opt.cascade); planted populations read through the row's --fixture input (registration requested of BD-265, skipped until then); step 12's undefined 'conformance switch' replaced by the base order of the model-form record; step 13's 'disable the second contact law' replaced by --budget-share (not-run: budget) and the unit test for the unadmitted law; new step 14 for --on-overflow (reset 802 through the binary; 722/610 through the verb's tests); acceptance lists 722, 610, 802 and the skipped stages."
+  },
+  {
+   "bead": "N16b-35",
+   "kinds": [
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "N16b-25's e2e section says this script drives every row of its validation matrix, but the script drove only the profile pairs: new step 3b drives the input rules (length forms giving one RunId, --episodes, --init, --controller default, --scene, --task) and every refused form of the 802 row; step 7 asserts the default overflow policy; step 10 asserts --fail-fast; step 16 asserts --present with two worlds is 802 (N16b-24); seed per verb; commands list carries the new inputs."
+  },
+  {
+   "bead": "N16bx-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "Pilot binary declared as `[[bin]]` (src/bin/pilot_runtime_closure.rs) with its CONTRACT.md row (BD-025), its test module run with --bin; the falsifier made consistent with N38a-09's funding rule: the record's falsifier is clause (a) or (c), the kill-gate wording, and clause (b) is the lockstep criterion deciding PASS against PARTIAL (as one falsifier, a PARTIAL result would have been falsifier-holds and blocked N16bx-02 against the decision table); gated_beads = [N16bx-02]; the funding read `pilots -- fundable --bead N16bx-02` in the script and acceptance; test kin_runtime_closure_verdict_matches_decision."
+  },
+  {
+   "bead": "N16bx-02",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Adjudicator printed `batch-cpu:strict/CL-1` and the referee refusal given N16b-23's limit no-loop-constraints; funding read through the pilots example; script commands given their positional design, --task, --tier and --seed (the referee call used --profile referee without a tier), with the lockstep 724 branch; unit-test command uses --test."
+  },
+  {
+   "bead": "N16bx-03",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Pilot binary declared as `[[bin]]` (src/bin/pilot_continuum_arm.rs) with its CONTRACT.md row (BD-025), test module run with --bin; KILL-LIVING's branch written in N40-03's outcome `fired`."
+  },
+  {
+   "bead": "N16bx-04",
+   "kinds": [
+    "complete",
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "S84 applied: a below-envelope-floor case is admitted to a packet with its label and the referee's value (N31b-36). The freeze surface was stale ('once the eval registry carries it'; eval.run now does) and could not apply: eval.run --freeze-envelopes freezes whole battery runs, and this quantity is measured on a committed slice of sim.run runs and referee replays, with nothing writing its pair rows. The bead now owns the example target `cargo run -p frob-foundry --example port_wrench_ledger -- --record <r> [--freeze]` (DESIGN) that writes the pair rows and freezes through N16bp1-01's routine (whose address-set rule now covers committed records); the script calls it, including the idempotent re-freeze, the altered-content refusal and the incomplete stratum; test ledger_example_writes_pairs_and_freezes."
+  },
+  {
+   "bead": "BD-264",
+   "kinds": [
+    "correct"
+   ],
+   "what": "GATE-FID-08 and GATE-CHRON-09 recorded from their Gauntlet receipts with record_gate by this bead only (N29b-08's store rows are inputs)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N24b-09",
+   "what": "Its acceptance records 'the batch-tier half of GATE-ARENA-04' with rows 'inside the frozen fidelity envelope', but envelopes are frozen by BD-212, which depends on N24b-09 (KNOWN_DRIFTS 7, 9). BD-212 now records the M2 part from its re-evaluation against frozen envelopes; N24b-09 should produce the rows and a receipt against its provisional bands and not record the gate."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "Add the input `cases` (flag) to fidelity.ledger (N16bp1-01 step 10, plan §26.6): with it the rows are tier-sensitive cases (kind \"case\", schema frob.fidelity.case/1), --tier-pair becomes optional and filters, and --quantity, --profile-pair, --law-pair, --battery are 802; additive help-schema change."
+  },
+  {
+   "bead": "BD-272",
+   "what": "N16bp1-01 now defines record_case and the table fidelity_case (frob.fidelity.case/1) with the read `fidelity.ledger --class <c> --cases`: write the artifact-candidate case through record_case (the verdict may keep its copy) and close the OPEN in step 6."
+  },
+  {
+   "bead": "N15b-26",
+   "what": "Step 6 writes 'the one re-baseline record of GATE-SINEW-04' with record_rebaseline but names no cause; causes are a closed list keyed per (gate, cause): name `m2-baseline` and the example `cargo run -p frob-chronicle --example record_rebaseline -- --gate GATE-SINEW-04 --cause m2-baseline --doc <path>` (N16bp1-01)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "The identity column of `--law` says `ModelId`; plan 16.6 puts the contact law in StepPlanId (hash of shape class and capacities, kernel versions, contact law, step profile, h, ...), and N16b-25's test law_changes_only_step_plan asserts that CL-2 changes StepPlanId and nothing else: write `StepPlanId`. Also add N16b-25 to the owners of `--law` (M2: admitted on every tier) beside N18b-28 (M1)."
+  },
+  {
+   "bead": "N15a-30",
+   "what": "Step 6 still offers `--mode train|eval` on sim.run; VERBS-sim replaces it with `--purpose training|evaluation` (default evaluation) owned by this bead. N16b-25's environment request now carries the field `purpose` (default evaluation), so this bead's change sets it from `--purpose` (training giving `use: Train`) and drops `--mode` and the 'requested of VERBS-sim' note; scripts use `--purpose training`."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.promote's `law` is written `cl-1` or `cl-h` 'spelled as sim.run's --law', but VERBS-sim spells the law table's rows `CL-1`, `CL-H` and rules lowercase out (802): write `CL-1`, `CL-H` (BD-263 does). Also state the split between 561 and 825 for a D4 or unrecorded result offered to eval.promote (both rows claim it), and drop 'Extended by: N16c-09 (--adjudicator, --law)' now that BD-263 carries both inputs (N16c-09 uses them)."
+  },
+  {
+   "bead": "N29a-22",
+   "what": "Its script runs the planted fixtures 'with the fixture's mutation option', which no sim.run row defines (KNOWN_DRIFTS 8). N16b-15 now requests its mutations M1 to M3 through N29a-25's conformance-build `--conformance-plant <file>` with plant kind `mutation` (one mutation per file under crates/frob-conformance/fixtures/exploits/plant/): write that input in scripts/e2e/energy_audit.sh."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "List N16b-15's plant kind `mutation` (penetration-recovery, explicit-penalty, pyramid4-base) beside N29a-25's `--conformance-plant` row, and N16b-15 among the conformance-build owners."
+  },
+  {
+   "bead": "N40-24",
+   "what": "Set `scope_kind = \"backend\"` on the KILL-SHADOW kill row: N16b-19 records one decision entry per back end (`scope = \"backend:<tier>\"`), and N40-03's load checks need the row's scope kind."
+  },
+  {
+   "bead": "BD-265",
+   "what": "Register the planted populations of the certifier check (rank correlation 0.8, 0.6, 0.3, and the lost planted winner) as named fixtures of eval.rank-agreement's `fixture` input (synthetic, tier static), so that N16b-32 steps 3 and 4 reach them through the row instead of loading score tables by hand."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 38 beads reviewed; 33 changed, 5 unchanged (N16b-02, N16b-05, N16b-06, N16b-13, N16bp2-01: checked against KNOWN_DRIFTS 1 to 12 and their registry rows and found right). Requests not applied as written: (1) S52 to N16b-03 asked to add a design to `eval.run --battery standard --class <c>` and either depend on N16bp2-01 or drop --profile. --profile was dropped (lockstep is the batched tiers' default), but no design was added: VERBS-eval's eval.run row now lets the design be omitted when --class is given (the class battery form), so the call is valid as written; N16b-31 and N16b-33 follow the same form. (2) H-verbs-2 to BD-263 asked for `--law cl-1|cl-h`; BD-263 spells them CL-1 and CL-H, because VERBS-sim's law table spells them so and its ruled-out table makes `--law cl-h` 802; a request goes to VERBS-eval to correct the row's casing. (3) H-verbs-6 to N16b-27 was applied for the inputs this chapter owns (owners N16a, N16b, N16c in VERBS-sim's tables), with their value sets and the ruled-out spellings; the other chapters' inputs and the operator, conformance, chaos and conditional inputs are not restated in N16b-27, because its check covers the dynamics chapter's names only and VERBS-sim's own conformance script (verbs_cluster_conformance sim) checks the whole served schema against those tables (KNOWN_DRIFTS 12: the registry is the authority; a second full copy would drift). Convention 11 reading: the mechanism beads of this unit name a shared e2e script owned by one of the e2e beads N16b-30 to N16b-35, each naming its owner and its steps; this is the 'shared script with one owner, named in the others' form, so no mechanism bead gained a script of its own. The 548/811 overlap in BD-263 is settled by a DESIGN split: 548 at admission for pooled label-rule and promotion-ledger evidence (BD-350 IT-5), 811 for the dr estimate across identities, with no audited address, or below the ESS floor (N28-REF, N29-REF). New surfaces introduced as DESIGN to close gaps, each owned by a bead of this slice: the conformance plant kind `mutation` (N16b-15, on N29a-25's input), the record_rebaseline and record_case entries (N16bp1-01), and the port_wrench_ledger example target (N16bx-04). N16b-32 steps 3 and 4 log `skipped` until BD-265 registers its planted populations as fixtures (request filed); no step was dropped. The slice looks settled apart from the filed requests, which change only other beads and registries."
+}

@@ -1,0 +1,588 @@
+{
+ "round": 1,
+ "slice": "U19a",
+ "reviewed": 57,
+ "changed": [
+  {
+   "bead": "BD-104",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Its acceptance and e2e ran `design check` on the quad-mammal template, both of which depend on this bead (BD-110, BD-109 via NEG-30): rewritten onto synthetic .fbot fixtures driven by `frob analyze self-collision` with the analysis-verb exit rule of N28a-05 (finding exit 2, code 123; design.check owns the exit-3 refusal). Added deps N14b-10 (stage contract, undecided, budget), BD-058 (design edit for the repair loop), STD-E2E; specified the second sphere of the mid-range test; added exit-code and budget tests; full NDJSON logging."
+  },
+  {
+   "bead": "BD-228",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "e2e-logging",
+    "risks",
+    "scope",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Named the unaccepted-pack refusal FROB-REF-318 with its run verbs, fields, repairs and exit from N19c-42 instead of 'proposed'; the gate PASS over 100 scenes x 7 archetypes needs generator and tag seeds later than this one, so this bead now proves the gate machinery on warehouse and kitchen scenes and N19a-43 records the PASS; feasibility section reads not-run until BD-234 writes the tag; added no-skip-flag test with a planted flag. It had no e2e script of its own (pointed to N19a-43): added scripts/e2e/scene_accept.sh (20 generated scenes, 302 and 6 mm known answers, 318 refusal then admission, cancel) which also runs the accept legs that N19a-21/-22/-24/-25 log as skips; dep STD-E2E. Its refusal of unaccepted packs (FROB-REF-318) would break every earlier e2e script that runs a compiled pack: it now adds the STD-E2E helper function e2e_scene_ready (accepts when the verb exists, no-op before), converts the existing scripts in the same change and reruns them (criterion, unit test, e2e step)."
+  },
+  {
+   "bead": "BD-229",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "Unit tests compare ray outputs, physics digests and interface cards: added deps BD-167, BD-187, BD-203; gate PASS on CUDA and Metal recorded by N19a-44 (which depends on this bead); referee and batch-cpu checks stay here."
+  },
+  {
+   "bead": "BD-234",
+   "kinds": [
+    "deps",
+    "scope",
+    "tests"
+   ],
+   "what": "Gate PASS needs the quota and audit mechanism N19a-26, which depends on this bead: acceptance now asserts the tag clauses on 100 seeds and N19a-45 records the full GATE-HAB-02 PASS; added dep N19a-19 (stage 9's first half runs before the tag); added the goal-inadmissible -> impossible test moved from N19a-19."
+  },
+  {
+   "bead": "N19-KA",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Specified its own file and record (habitat.toml, fields where/site/test/bead) where N38a-12 owns one file and record schema: aligned to known_answers.toml with N38a-12's fields, derivation files, controls.toml, printed values for KA-438/445/460; scope now names N38b-27 (tolerances), N38b-32 (21 missing controls), N38b-53/-54 (reconciliations); replaced the invented `frob conformance known-answers` CLI with the self-test plus verb-produced rows, skipped rows logged; added deps BD-025, N38a-12, STD-E2E; planted-value negative controls."
+  },
+  {
+   "bead": "N19a-01",
+   "kinds": [
+    "complete",
+    "deps",
+    "tests"
+   ],
+   "what": "Added contract.toml (layer, rank, determinism, evidence, refusals, budgets, safe mode, feature rows with kill gate and pilot) and tests/conformance.rs per N34-08; deps N34-08, BD-022 (doctor in e2e), STD-E2E; verb count corrected to twelve."
+  },
+  {
+   "bead": "N19a-02",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Its compile-based e2e and progress test needed scene.compile (BD-163), which depends on this bead: tests now use declared progress models and the adapter, the compile/job-wait leg moves to N19a-42; e2e uses capabilities, schema and the exit-5 FROB-REF-724 path; added FROB-REF-802 for out-of-range sync_wait_ms and the CLI default; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-03",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Added STD-E2E and full NDJSON logging with a planted renamed-test pass."
+  },
+  {
+   "bead": "N19a-04",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Spawn-on-keep-out had no code and duplicated stage 9: pose checks left to N19a-19; unknown adjacency refused with FROB-REF-305 (footprint radius 0.43 m case), dangling references with FROB-REF-303; deps BD-163 (compile and show in e2e) and STD-E2E."
+  },
+  {
+   "bead": "N19a-05",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Placed group and authorization inside the provenance block, contradicting the manifest table of BD-162 (top-level): aligned. The M2 e2e used a mirrored variant from the M3 group bead N19c-11: replaced by seed changes and an identity-mismatch check (FROB-REF-323, exit 9); recount test uses a mutant generator; deps BD-165, STD-E2E."
+  },
+  {
+   "bead": "N19a-19",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Spawn region with no admissible pose had no refusal code: proposed FROB-REF-326 (request to the registry), with repairs and exit 3; the goal-blocked case asserted a tag from BD-234, which depends on this bead: now a receipt flag goal_admissible=false; added keep-out test; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-06",
+   "kinds": [
+    "deps",
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The card check had two homes (validator and compile stage 7, BD-229): one function optical::require_cards called by both; deps BD-069, BD-163, N19-REF, STD-E2E; e2e steps needing stage 7 logged as skip 'needs BD-229' and BD-229's acceptance requires them."
+  },
+  {
+   "bead": "N19a-07",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "placement",
+    "scope",
+    "tests"
+   ],
+   "what": "Card check criterion moved to stage 7 (BD-229, which depends on this bead); its e2e compiles fixtures, which stage 8 (N19a-18) does after this bead: those steps logged skip 'needs N19a-18' and N19a-18 must run them; dep STD-E2E; door push ramp 0-30 N over 3 s specified. Its conveyor unit test asserted a block carried at belt speed, which needs the moving-surface contact rows of N24a-43 (M4): replaced by the MovingSurface record check, the carrying test pointed to N24a-43."
+  },
+  {
+   "bead": "N19a-08",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Same ordering defect as N19a-07 (movables compiled by stage 8): skip pattern with N19a-18 completing it; energies 0.5/0.25/0.25 J asserted; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-09",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "The film leak test wrote film through the film law, which lands later (BD-230 through N19b-05) and depends on this bead: written through the pool API; e2e on door-tote-64 with telemetry.divergence (BD-206) and the film leg skipped until N19b-05; deps BD-203, BD-206, N19a-18, STD-E2E."
+  },
+  {
+   "bead": "N19a-10",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e calls scene.compile (BD-163, which depends on this bead): skip 'needs BD-163', completed by N19a-42; added cancel leg, peak-memory metric, optional-missing case, charter fields; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-11",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Same ordering fix; probes through scene show --probe (BD-163) instead of an unrelated contact verb; reflected-root import case added; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-12",
+   "kinds": [
+    "tests",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Unit tests compared brick digests, which stage 5 (later beads) produces: they now compare the stage-3 field input set; the digest comparisons moved to the e2e with skip until BD-163; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-13",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Box-corner known answer stated the box ambiguously: [-0.5,0.5]^3, nearest the edge x=y=0.5, 0.7071 m; skip pattern; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-14",
+   "kinds": [
+    "placement",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The M2 e2e ran `scene accept --only field-bound`, an M3 verb (BD-228): the 10^6-sample check now runs through the G1 binding of KA-426 (N38a-13) on packs from scene.compile, with scene show --receipts and probes; acceptance binds ka:426 and ka:428 with the halved-bound control; deps N19-KA, N38a-13, STD-E2E."
+  },
+  {
+   "bead": "N19a-15",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e used scene.compile and the probe's region (BD-163) without the dep: added BD-163 (no cycle) and STD-E2E; two-region floor and 'no region' probes, determinism compare."
+  },
+  {
+   "bead": "N19a-16",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Skip pattern until BD-163 (which depends on this bead through N19a-17); overlays spaced 0.30 m from other geometry so the probe minimum is the overlay's own value; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-17",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Skip pattern until BD-163; added the no-route plate refusal, the threshold sweep with the probe's source field; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-18",
+   "kinds": [
+    "deps",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Acceptance now requires the stage-8 steps of scene_fixtures.sh (N19a-07) and scene_behaviours.sh (N19a-08) to run and pass; e2e adds fell-through, unsettled and cancel legs with full logging; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-42",
+   "kinds": [
+    "placement",
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "Steps 4 and 14 called `scene accept`, an M3 verb, in an M2 bead: field rows through the KA-426 G1 binding; ripple through sim.run and telemetry.query on referee and batch-cpu f64/f32 (BD-166, N24a-36), devices not run and repeated by N19a-25 at M3. Took over the long-verb legs of N19a-02 (exit 8, job.wait, same SceneId, exit-7 key reuse, which had been dropped) and the eight per-stage scripts of N19a-10..17; deps BD-080, BD-166, N19a-15, N24a-36, N29a-23."
+  },
+  {
+   "bead": "N19a-20",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e used scene.gen (BD-165) without the dep: added BD-165 and STD-E2E; e2e adds worker counts, mesh and analytic fixtures, the tamper step (exit 9, FROB-REF-323) and the overlay-capacity identity change."
+  },
+  {
+   "bead": "N19a-21",
+   "kinds": [
+    "placement",
+    "deps",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Its e2e called `scene import`, which is M5 (BD-398, which depends on this bead): registration now runs in compile stage 2 from a landmark sidecar (plan 19.5.1 says the compiler checks it), with an acceptance criterion for that hook; e2e on scene.compile with the five refusal cases, the accept leg skipped until BD-228; deps BD-163, STD-E2E."
+  },
+  {
+   "bead": "N19a-22",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Its e2e called scene.accept (BD-228 depends on it): compile and probe steps run now, the accept leg is a skip completed by BD-228; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-23",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Unit tests compare referee runs, lidar scans and stills (BD-080, BD-187, BD-191) without those deps: added, with STD-E2E; e2e adds untagged/optical-only decoration and the GLB-swap digests."
+  },
+  {
+   "bead": "N19a-24",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Acceptance required passing on the seven interior archetypes, which land after it: now terrain families (BD-165, added) and synthetic rooms here, archetypes in N19a-43; skip pattern for the accept legs; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-25",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Skip pattern for its scene.accept legs; the ripple row's M2 measurement by N19a-42 and the every-tier repeat here stated; CX-188 control compiled in the e2e; dep STD-E2E."
+  },
+  {
+   "bead": "N19a-26",
+   "kinds": [
+    "deps",
+    "complete",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "The audit had no caller-side path: scene.list gains --batch/--counts returning record, recount and audit verdict (exit 2 on a failed audit); acceptance no longer records the seven-archetype gate row (N19a-45) or GATE-HAB-14 (N19c-15); e2e on 1,000 warehouse seeds plus three tampered batches; deps BD-225, BD-226, STD-E2E."
+  },
+  {
+   "bead": "N19a-27",
+   "kinds": [
+    "placement",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "M2 bead's e2e called `scene accept` (M3): replaced by receipts and probe sweeps (slope, sinusoid, step, culvert, tile seam); dep STD-E2E."
+  },
+  {
+   "bead": "N19a-28",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Claimed the stairs map contains the interior tread range 230-300 mm, but the run map spans 0.25-0.31 m: corrected, explicit parameters reach 230-250 mm treads, with a test and criterion for the 0.20/0.23 m stair; the grid continuity criterion no longer cites the M3 acceptance fixture."
+  },
+  {
+   "bead": "N19a-29",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Acceptance and e2e use scene.accept, feasibility tags, fixture compilation and the film patch without deps: added BD-226, BD-228, BD-234, N19a-18, N19b-05, STD-E2E; e2e adds reversed and wet variants, the impossible door case and telemetry.query of the four transition signals."
+  },
+  {
+   "bead": "N19a-30",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "Step (a) used --sync-wait-ms 60000, above the 30,000 ms maximum (FROB-REF-802): set to 30000; added the map-equality and monotonicity assertions N19a-28 names as its e2e, and the explicit interior-extreme stair."
+  },
+  {
+   "bead": "N19a-31",
+   "kinds": [
+    "deps",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "Exposure fixtures need the referee, rug and cord proxies, compiled movables and the gauges: deps BD-080, BD-231, N19a-18, N19a-25, STD-E2E; the 1,000-seed represent check is now generator draws here and compiled seeds in N19a-45; e2e on 20 seeds plus the three exposure runs and the fixed-step control."
+  },
+  {
+   "bead": "N19a-32",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Not aligned to the BD-227 split (dup-12): still entered rows as data and wrote rows in a non-schema format (id/quantity/unit/mechanism/failures); now verifies BD-227's file with BD-227's schema and five slugs; deps BD-080, N19a-18, N19b-32 (scene.fit), STD-E2E; e2e on 20 seeds and the four exposure runs."
+  },
+  {
+   "bead": "N19a-33",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Same dup-12 alignment (schema, seven slugs, categorical dimension per BD-227); deps for the exposure tests (BD-080, BD-167, BD-187, BD-229, BD-237, N19a-18, STD-E2E); full e2e."
+  },
+  {
+   "bead": "N19a-34",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "Same dup-12 alignment (schema, ten slugs, not-represented records); deps BD-080, N19a-18, STD-E2E; full e2e."
+  },
+  {
+   "bead": "N19a-35",
+   "kinds": [
+    "correct",
+    "placement",
+    "scope",
+    "deps",
+    "e2e-logging",
+    "tests",
+    "title"
+   ],
+   "what": "Same dup-12 alignment; file is manufacturing-plant.toml not plant.toml (title, verb argument, row identifiers); the belt carrying, placement error and boundary-work test needs N24a-43's contact rows (M4): replaced by the surface-record check, that exposure leg skipped until N24a-43; deps BD-080, BD-187, BD-230, BD-237, N19a-08, N19a-18, N19b-05, STD-E2E."
+  },
+  {
+   "bead": "N19a-36",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "e2e-logging",
+    "tests",
+    "title"
+   ],
+   "what": "Same dup-12 alignment; file is retail-store.toml; the 'tags of all three kinds over 1,000 seeds' criterion could not hold for a 0.50 m base (impossible only arises incidentally): replaced by pinned lanes with stated tags and a 0.70 m base; deps for fit, tags, film, proxies, optics, STD-E2E."
+  },
+  {
+   "bead": "N19a-37",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "e2e-logging",
+    "tests",
+    "title"
+   ],
+   "what": "Same dup-12 alignment; file is commercial-kitchen.toml with the three fixed slugs; deps for stills, film, proxies, optics, compiled fixtures, STD-E2E; full e2e."
+  },
+  {
+   "bead": "N19a-38",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "Used old archetype names (kitchen.wet-floor, plant, retail) and a failure field not in BD-227's schema: aligned to registry names and `provokes`; the `--uncovered-by` option and the `hazards.exclude` generator parameter its test relies on are now stated (excluded rows recorded, never silent); deps N19a-31..37 (the drawn rows it exports) and STD-E2E; full e2e with show, reverse-order export digest and the home pets row."
+  },
+  {
+   "bead": "N19a-39",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "E2e ran `report run --claims-realism` and sim runs without the report verb, the source register, accept or the generator: deps BD-226, BD-228, BD-302, NAB-09, STD-E2E; e2e adds the two-run claim, the edited-count pack and old/new scene_id after the synthetic promotion."
+  },
+  {
+   "bead": "N19a-40",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "E2e called an undefined `frob conformance pilots --show`: now reads the pilot register of N38a-09 (dep added; N00-07 is superseded), runs its schema tests and `pilots fundable --all` for WP-32, checks commit order; STD-E2E."
+  },
+  {
+   "bead": "N19a-41",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "E2e used `spark check` for launch shape (the step plan is `sim run --plan-only`, BD-172) and `telemetry failures` (BD-094) without deps: corrected, with the planted controls and the fallback refusal in the script; the actor addendum now points to N19ax-05, the M6 reading."
+  },
+  {
+   "bead": "N19a-43",
+   "kinds": [
+    "placement",
+    "correct",
+    "deps",
+    "complete"
+   ],
+   "what": "Part B called `scene import` (M5) and an undefined `conformance control` verb, and used --sync-wait-ms 120000 (max 30,000): the reflected room now runs through compile-stage registration (N19a-21), the three-point control as a test, the wait as 30000 plus job wait; family names fixed; dep BD-234 (the feasibility section a complete report needs); the record closes BD-228's done-condition."
+  },
+  {
+   "bead": "N19a-44",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "Runs on compiled tiles need acceptance (318) and the wet variants run with the film law: deps BD-228, BD-230, N19b-05; acceptance adds the film-law on/off check; the record closes BD-229's done-condition."
+  },
+  {
+   "bead": "N19a-45",
+   "kinds": [
+    "deps",
+    "complete"
+   ],
+   "what": "Now closes the 1,000-compiled-seed draw-and-represent clauses that N19a-31..37 delegate to it (deps added) and BD-234's done-condition; family and registry names stated."
+  },
+  {
+   "bead": "N19a-46",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "E2e called scene.accept and artifact.export, and the research-only lane needs the private root, without deps: BD-097, BD-228, BD-305 added; e2e adds --kind place (exit 5), the unit declaration, a cancel leg and the no-private-root refusal."
+  },
+  {
+   "bead": "N19ax-01",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "E2e compiled zones (fixture stage N19a-18), ran an unaccepted pack and queried telemetry without deps: BD-163, BD-228, N19a-18, N24a-36, STD-E2E; e2e adds the typed closer edit (force halves, geometry digests equal) and the step-cost check the acceptance names."
+  },
+  {
+   "bead": "N19ax-02",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Acceptance and e2e relied on the adopted intent invariant of N24c-21, which depends on this bead: the test task now writes the requirement inline and N24c-21 is named as the library form; e2e compiles a synthetic straight/corner route scene so the known answers run end to end; deps BD-163, BD-226, BD-228, N24a-36, N24c-02, STD-E2E."
+  },
+  {
+   "bead": "N19ax-03",
+   "kinds": [
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "E2e needs a task with field draws, lowered by N24c-36, which depends on this bead: the script runs the real test suites per backend now and the task legs as skips 'needs N24c-36' (plus the snapshot-restore and capacity-one legs); deps N24a-36, STD-E2E."
+  },
+  {
+   "bead": "N19ax-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The 10⁴-seed frequency criterion used a per-key 99.9% interval over hundreds of keys (about one honest run in four fails): Bonferroni level 1 − 0.001/K; the log₁₀ criterion depended on N26a-03 (which depends on this bead): now edit_mass's exact ratio here; e2e uses registry name commercial-kitchen, reads the edit through the site table, the Nemesis step as a skip 'needs N26a-03', a terrain leg; deps BD-163, STD-E2E."
+  },
+  {
+   "bead": "N19ax-05",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "E2e aligned to the M5 tooling (step plan via sim run --plan-only, divergence, BD-216 harness, protocol diff, accept, fallback refusal and uncovered-by leg); the quoted M5 text updated to the M5 bead's pointer to this bead."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14b-18",
+   "what": "Its code-123 rows (drive wheel at mount KA-281, self-collision in a declared range, two limbs overlapping) need analysis A-13: add dep BD-104."
+  },
+  {
+   "bead": "BD-110",
+   "what": "The design.check leg of A-13 moved out of BD-104 (which BD-110 depends on): BD-110's e2e should assert the widened hip adduction on quad-mammal refused at stage 3 with FROB-REF-123, exit 3 and a set-limits repair."
+  },
+  {
+   "bead": "N19-REF",
+   "what": "Compile stage 9 refuses a spawn region with no admissible pose for the nominal footprint and §19.16 has no code: enter a row (proposed FROB-REF-326, class scene, exit 3; repairs: move or enlarge the spawn region; remove the obstruction named; declare the nominal footprint with provenance), through N19c-42's late-codes ADR."
+  },
+  {
+   "bead": "BD-163",
+   "what": "Its scope says the ripple clause of GATE-HAB-01 is measured by N19a-25 (M3) and N19a-42 records the gate once N19a-25 is in, which an M2 bead cannot wait for: say the ripple row is measured at M2 by N19a-42 on the referee and batch-cpu (sim.run, telemetry.query), with N19a-25 repeating it on every tier at M3."
+  },
+  {
+   "bead": "WP-17",
+   "what": "Its child list still names N18a-41 as the bead of scripts/e2e/scene_gen_terrain.sh; N19a-30 owns it (N18a-41 superseded)."
+  },
+  {
+   "bead": "NS-08",
+   "what": "Writes `frob scene gen --family stairs` and `rubble`, `soil-plot`: the verb's names are terrain/stairs and terrain/rubble (N19a-28), and soil-plot is not one of the ten terrain families; name the family that provides the soil plot or add it through N19a-28."
+  },
+  {
+   "bead": "BD-227",
+   "what": "Print the 59 slugs in the registry table (one column) so the seven per-archetype beads N19a-31..37 read one list; the slugs they now assume by the head-words rule are, e.g., apartment: entry-door, lift-door, right-angle-corridor-turn, balcony, compact-kitchen-galley; manufacturing-plant: conveyor, floor-grate, oil, cable-tray, fence, polished-metal, floor-vibration, chips (full lists in N19a-32..37 step 2)."
+  },
+  {
+   "bead": "N24a-43",
+   "what": "N19a-35's exposure fixture (a), a block set down on a plant conveyor (placement error = belt speed x timing error; boundary work on the line), and N19a-07's carried-block test are logged as skips 'needs N24a-43': its acceptance should require scripts/e2e/hazards_plant.sh's belt leg to run and pass."
+  },
+  {
+   "bead": "N19b-05",
+   "what": "N19a-09's film-patch leg of scripts/e2e/scene_state_leak.sh is logged as a skip 'needs N19b-05': the film patch's acceptance should require that leg to run and pass."
+  },
+  {
+   "bead": "BD-227",
+   "what": "scene.hazards gains two options from this slice: `--uncovered-by <battery|scene list>` (N19a-38) and `--feature-law --params` (N19ax-04); and the generator parameter `hazards.exclude=<row ids>` read by the seven archetype bindings (N19a-38). List them in the verb's schema snapshot and registry row."
+  },
+  {
+   "bead": "BD-163",
+   "what": "scene.show and scene.list gain options from this slice: scene.list `--batch <id> --counts` (N19a-26); scene.show `--draws` (N19ax-04), `--field … --at` (N19ax-03), `--route/--corridor/--at/--footprint` (N19ax-02), the `pinch_zones` block (N19ax-01). List them in the verb registry rows. Also line 206 says an unaccepted pack 'must not be runnable outside fixtures', while BD-228 states the refusal cannot be skipped by any flag; reword so the two agree (fixtures are accepted like any pack)."
+  },
+  {
+   "bead": "N24c-36",
+   "what": "N19ax-03's scripts/e2e/scene_field_samples.sh logs its task legs (scene show --field, the four invariance runs, device tiers, snapshot restore) as skips 'needs N24c-36': the exposure-table bead's acceptance should require that part to run and pass."
+  },
+  {
+   "bead": "N26a-03",
+   "what": "N19ax-04's scripts/e2e/scene_feature_law.sh step 5 (nemesis search on the add-film variant; prior block defined, film term ratio 1/3) is a skip 'needs N26a-03': the density bead's acceptance should require it to run and pass."
+  },
+  {
+   "bead": "STD-E2E",
+   "what": "BD-228 adds the helper function `e2e_scene_ready <scene_id> [--tiers]` (accepts the pack when scene.accept is registered, logged no-op before) to the shared helper when the 318 refusal is switched on; document it in the helper's function list."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "All 57 reviewed. Recurring defects fixed: e2e scripts calling verbs from beads that depend on them (skip pattern, the downstream bead's acceptance running the legs, with requests where it is outside the slice); M2/M3 beads calling later verbs (scene.accept, scene.import, report, conformance tools); hazard beads N19a-32..37 not aligned to BD-227's split and schema; gate PASS records placed on the e2e gate beads (N19a-43/-44/-45) with seeds pointing to them; missing STD-E2E and verb deps; sync_wait above 30,000 ms. Cross-cutting risk found late: BD-228's unskippable 318 refusal would break earlier scripts running compiled packs; BD-228 now owns the helper and the migration. 0 cycles; no dep on a later milestone or a superseded bead. Settled except the requests."
+}

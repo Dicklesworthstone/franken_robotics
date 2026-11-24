@@ -1,0 +1,201 @@
+{
+"N31a-35": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-36": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-37": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-39": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-40": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-41": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-43": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-44": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-45": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-46": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-47": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"N31a-48": [
+"this bead still names a later end-to-end bead's script as its only end-to-end evidence, while the first half of its unit (N31a-01 to N31a-34) now gives every mechanism bead its own script: under conventions 7 and 11 give it its own `scripts/e2e/<name>.sh` built on its own dependencies (the later bead may run it as a stage, and N31a-53 to N31a-57 list such stages), with the structured logging of the charter."
+],
+"NJL-01": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Add `envelope_scope` (`--envelope-scope`) to the common inputs of every `run` verb, with its schema, its place in the scope order and its refusals from existing rows; this answers round 3's request from F-U36 ('decide whether run verbs get a common citation input')."
+],
+"N36-20": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Replace the OPEN on citing an approved envelope by the ruling: the cited `envelope_scope` feeds `Demand.scope` after a launcher's token and before a verb-derived scope; add the unit test and the script step for a directly started run verb that cites an approved scope (admitted, one meter row under that scope) and for a citation that contradicts the token (refused)."
+],
+"BD-296": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Align: a campaign-class submission with no approved envelope is refused with 704 by the size classifier at submission (plan §32.11.2), 761 is the envelope in force, and the envelope checks precede the budget check 701. Tests and table rows that assert the opposite (for example `campaign_submission_is_761_not_704`, `stage_order_envelope_after_budget`) change with it."
+],
+"N32ax-01": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Align: a campaign-class submission with no approved envelope is refused with 704 by the size classifier at submission (plan §32.11.2), 761 is the envelope in force, and the envelope checks precede the budget check 701. Tests and table rows that assert the opposite (for example `campaign_submission_is_761_not_704`, `stage_order_envelope_after_budget`) change with it."
+],
+"N44-02": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Steps that submit a job 'for this job's scope' through a run verb cite it with `--envelope-scope`; a run verb started with no citation, no token and no derived scope is `adhoc` (class E0)."
+],
+"N32ax-03": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Steps that submit a job 'for this job's scope' through a run verb cite it with `--envelope-scope`; a run verb started with no citation, no token and no derived scope is `adhoc` (class E0)."
+],
+"N44-01": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Steps that submit a job 'for this job's scope' through a run verb cite it with `--envelope-scope`; a run verb started with no citation, no token and no derived scope is `adhoc` (class E0)."
+],
+"N32-REF": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Make the rows 704 and 761 (triggers, the stage at which each fires, repairs in order) agree with it; the repair 'resubmit citing it' names `--envelope-scope`."
+],
+"N35-REF": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Make the rows 704 and 761 (triggers, the stage at which each fires, repairs in order) agree with it; the repair 'resubmit citing it' names `--envelope-scope`."
+],
+"N36-REF": [
+"convention 14 (new; read it in the conventions file) settles the envelope refusals, their order and the citation input. Make the rows 704 and 761 (triggers, the stage at which each fires, repairs in order) agree with it; the repair 'resubmit citing it' names `--envelope-scope`."
+],
+"VERBS-actuator": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-algebra": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-analyze": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-artifact": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-autopsy": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-contact": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-control": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-cores": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-design": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-eval": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this.",
+"from the lead, after H-verbs-4's review: NJL-01 gives an action of kind admin no idempotency key (it is idempotent by its effect, and `--key` on it is 802); H-verbs-4 reports that this cluster gives an admin action its own key, as `ground.band`'s retire action did before it was corrected. Check each admin action of the cluster against NJL-01's rule and bring the rows into line, with a request to each mechanism bead whose script passes the key."
+],
+"VERBS-evidence": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-experiment": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-explain": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-fidelity": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-fleet": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-foundry": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-gait": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-ground": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-job": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-mission": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-module": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-nemesis": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-operator": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-opt": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-phylum": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-policy": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-predict": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-prove": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-report": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-result": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-run": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-scene": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-sense": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-session": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-shield": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-sim": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-skill": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-solve": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-spark": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-store": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-study": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-task": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-telemetry": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+],
+"VERBS-train": [
+"convention 14 (new) adds one common input, `envelope_scope` (`--envelope-scope`), to every `run` verb; NJL-01 owns it. If your conventions section enumerates the common run inputs, add it there; if it only cites NJL-01's list, change nothing for this."
+]
+}

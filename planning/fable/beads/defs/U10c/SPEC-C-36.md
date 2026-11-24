@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "frontier", "kinesis", "frob-dyn", "frob-lie", "test"]
 parent: "WP-10"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-027", "N10-CX", "N10-KA3", "N10a-01", "N38-KA", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-088", "BD-161", "BD-384", "N10c-08", "N10-CX", "N10c-10", "CARD-T-06", "CARD-T-13", "BD-011", "BD-087", "N10a-02"]
+related: ["BD-011", "BD-087", "BD-088", "BD-384", "N16a-21"]
 gates: ["GATE-KIN-01"]
 plan_refs: ["§10 C-36", "§10 C-05", "§16.7", "§12.3 T-06 T-13", "§38.18", "Appendix D.1", "Appendix D.2", "Appendix M.9", "Appendix N.7"]
 ---
@@ -47,8 +47,11 @@ Tested, Estimated; status HYPOTHESIS.
 ## Scope
 
 In: `docs/math/C-36.md` part A; law tests in `crates/frob-lie/tests/laws_c36_dcay.rs` (the differential) and
-`crates/frob-dyn/tests/laws_c36_step.rs` (the four-step map); registry entries for KA-172, KA-173, KA-174, the
-late-adopted row "the Cayley map on SE(3)", and the control seeded from CX-087.
+`crates/frob-dyn/tests/laws_c36_step.rs` (the four-step map); registry entries for KA-172, KA-173, KA-174; the
+law test `cayley_se3_worked`, which reproduces on the reference model the late-adopted row "the Cayley map on
+SE(3)" (the verification chapter's adoption bead N38-KA enters it as KA-845, exact, G1 host, with its derivation
+file; N38b-39 owns its entry `ka:KA-845@host` and its control, the feature `frob-lie/cx-394` seeded from CX-394;
+this bead adds no row, number, derivation file or control for it); and the control seeded from CX-087.
 
 Out: the free-body step as an oracle in the product (BD-087); the dynamics known-answer battery and GATE-KIN-01
 (BD-088); the articulated variational integrator, its cost pilot and KILL-VARIATIONAL (BD-384); the Cayley
@@ -145,9 +148,13 @@ be confirmed by the differential law test: the angular part of μ⁺ is (I + (h/
 with `tests/support/c36_ref.rs`: the four steps written directly in `f64` with a Newton solve to 10⁻¹³ relative,
 and the transport identity in exact rationals. Generic over a trait `C36StepSubject` so the production step of
 BD-087 runs the same laws. Mutants in `tests/support/c36_mutants.rs`. Registry: KA-172 to KA-174 with derivation
-files stating the tolerances below; the SE(3) Cayley row (no printed KA number; appended); the control from CX-087.
+files stating the tolerances below; the control from CX-087. The SE(3) Cayley case is KA-845: N38-KA (a
+dependency) writes its record and derivation file, N38b-39 its entry and control.
 
-Pilot of the construction, for the variational step on the batch tiers (run by BD-384): cost of step 2 against the
+Pilot of the construction, for the variational step on the batch tiers (run by N16a-21, the Kinesis chapter's pilot
+at M5, before the articulated integrator BD-384 is funded, since a pilot comes before the mechanism it funds and
+BD-384 depends on it; it writes the record `PILOT-C-36` that row C-36's `pilot` field names, and the semi-implicit
+Cayley step is the row's `generic_comparator`): cost of step 2 against the
 semi-implicit step at matched energy error on one free body and one heavy top. Kill (TARGET): more than twice the
 cost at matched accuracy, in which case the step stays in the referee and the strict profile only. The owning
 chapter's pilot adds: the same two fixtures at h = 2 ms and 0.25 ms; falsifier, an energy error that does not fall
@@ -165,7 +172,9 @@ known-answer oracle and every rollout uses the default integrator.
       reference model and on the production step of BD-087.
 - [ ] Every mutant below fails its named law, and `wrong_trivialization` is shown to pass the momentum law.
 - [ ] KA-172, KA-173 and KA-174 are registered with derivation files and stated tolerances (they were printed
-      `to set`); KA-174, printed with no control, has the control named below.
+      `to set`); KA-174, printed with no control, has the control named below; `cayley_se3_worked` reproduces
+      KA-845's truth on the reference model and the mutant `translation_unchanged` fails it, and no second row
+      for the SE(3) Cayley map exists.
 - [ ] `scripts/e2e/spec_c36_step.sh` exits 0.
 - [ ] Row C-36 of `frob-conformance/registry/constructions.toml` has its obligation fields filled as the
       Scope states, and `cargo test -p frob-conformance --test g0_doctrine -- d2` reports no failed
@@ -196,9 +205,14 @@ known-answer oracle and every rollout uses the default integrator.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c36_step.sh`: `frob --json doctor`; the two cargo test targets; `cargo test -p frob-conformance
---test g0 -- KA-172`; `cargo test -p frob-conformance --test g1 -- KA-173 KA-174`; `frob --json prove list`
-filtered to cards T-06 and T-13; file and registry checks. Log to `target/e2e-logs/spec_c36_step/<utc>.ndjson`
+`scripts/e2e/spec_c36_step.sh`: `frob --json doctor`; the two cargo test targets; the registry rows in the
+Gauntlet's tier targets (ADR-GAUNT-01, BD-025: there is no `g0` or `g1` target), `FROB_TEST_SEED=<seed> cargo test
+-p frob-conformance --test g0_laws -- KA-172` and `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test
+g1_known_answers -- KA-173 KA-174`, each also with `--features gauntlet-mutations` for its control, the
+receipt hash logged; the law suite with the mutant `translation_unchanged` as its subject, which must fail
+`cayley_se3_worked`; `frob --json prove list` with the card rows T-06 and T-13 selected from its output; file and
+registry checks (KA-845 of N38-KA, a dependency, exists in `crates/frob-conformance/registry/known_answers.toml`
+with its derivation file and the control `N38b-39:cx-394`; its entry runs in N38b-39's script). Log to `target/e2e-logs/spec_c36_step/<utc>.ndjson`
 with a transcript; each line has `ts`, `script`, `bead`, `step`, `event`, command line, exit code, wall time, the
 evidence block (claim Known answer, class Tested, tier, determinism D0 for rational rows and the host class for
 `f64` rows, seed), momentum drift, energy-error ratio and reversal error with their thresholds, and on failure
@@ -211,7 +225,7 @@ the first step index at which a bound is exceeded. The `summary` line counts ass
 | KA-172 | The printed matrix times the left-trivialized differential is the identity; the rotation block inverts to 2/(4 + ‖ω‖²)·(2·I − ω̂) | exact in rationals; 10⁻⁷ for the finite-difference form | G0 host | The differential taken at +h·ξ_k |
 | KA-173 | Free asymmetric body: spatial momentum constant; energy error bounded and divided by four per halving; reversal returns the initial state | momentum 10⁻¹² relative over 10⁶ steps; ratio in [3.6, 4.4]; reversal 10⁻¹⁰ relative | G1 referee, strict | Mutant `wrong_trivialization`: momentum still exact, energy ratio and reversal fail |
 | KA-174 | With gravity: vertical angular momentum and horizontal linear momentum constant | 10⁻¹² relative | G1 referee, strict | Mutant `kick_in_wrong_frame` (new): applies the potential wrench without transport, breaking the symmetry momenta |
-| The Cayley map on SE(3) (late-adopted row) | Quarter turn about z; translation (1/2, 1/2, 0) | exact | G0 host | Mutant `translation_unchanged`: returns (1, 0, 0) and fails KA-172 |
+| KA-845: the Cayley map on SE(3) (late-adopted row; record N38-KA, entry and control N38b-39) | Quarter turn about z, the matrix [[0, −1, 0], [1, 0, 0], [0, 0, 1]]; translation (1/2, 1/2, 0) | exact (rationals) | G1 host | Plant `N38b-39:cx-394` (feature `frob-lie/cx-394`): pairs cay(ω̂) with v unchanged and returns (1, 0, 0); in this bead's law suite the same defect is the mutant `translation_unchanged`, which fails `cayley_se3_worked` and the differential test of KA-172 |
 
 Other mutants: `transport_by_inverse_adjoint` (uses Ad_c⁻ᵀ in step 3; momentum fails); `single_kick`
 (kick–drift only; first order). Counterexample carried: CX-087 (momentum conservation does not show that the

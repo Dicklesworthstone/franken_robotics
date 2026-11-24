@@ -18,7 +18,7 @@ By milestone: M0 8, M1 9, M2 8, M3 19, M4 8, M5 1.
 | §32.5 | Three failure classes | N32a-19 (fixture, kill harness, M2 record); BD-299 (full M3 surface); N32a-17 (transport class mechanics); BD-023 (error skeletons and the unknown-tool exemption) |
 | §32.6 | Verb clusters | BD-022 (operator cluster and M0 entries); BD-138 (`session` cluster); BD-137, BD-222, BD-312, BD-376, BD-409 (the verbs of M1 to M5 by cluster, each mapped to the bead that builds it); N32a-02 (the registry itself, one name per verb) |
 | §32.6.1 | The two-phase study | N32a-13 (`study.compare`, `study.cancel`, plan identity, FROB-REF-809, pair accounting); the CPU verbs `study.plan`, `study.submit`, `study.status`, `eval.compare` are seed BD-124 and its verb bead in another unit |
-| §32.6.2 | The one-call pipeline | N32a-31 (pilot: plumbing turns), BD-372 (`solve.run`), N32a-32 (KILL-SOLVE) |
+| §32.6.2 | The one-call pipeline | N32a-31 (pilot: plumbing turns), N32ap1-01 (KILL-SOLVE clause 1, before the verb), BD-372 (`solve.run`), N32a-32 (KILL-SOLVE clause 2 and final status) |
 | §32.7 | Idempotency | N32a-09 (the admission transaction, PO-TETHER-01, in-process rows); BD-211 (on the daemon; GATE-TETHER-05) |
 | §32.8 | Pagination and numbers | §32.8.1: N32a-10 (cursor, PO-TETHER-02), BD-211 (GATE-TETHER-06). §32.8.2: N32a-07 (types, lint, double-decoding client; GATE-TETHER-07 at M1), BD-211 (re-read at M2) |
 | §32.9 | Estimates and budgets | N32a-15 (`--estimate`, what a budget caps, upper-end admission, reservations, attributable device time, the overhead line); BD-297 (the conformal interval per stratum, PO-TETHER-04, GATE-TETHER-11) |
@@ -65,7 +65,8 @@ Seed beads that draw on U32b's subsections and were written completely here: BD-
 | KILL-SLOT | N32a-23 (decision), BD-295 (measurement). Not in the brief's list; §32.21 owns it and the Spark units point here |
 | KILL-PREEMPT | N32a-24 (decision), BD-296 (measurement), N32a-20 (flip point), N32a-21 (fallback configuration) |
 | KILL-MCPTASKS | N32a-29 (decision), N32a-28 (pilot), N32a-30 (the adapter, only if not fired), BD-298 |
-| KILL-SOLVE | N32a-32 (decision), N32a-31 (ceiling), BD-372 (A/B arm) |
+| KILL-SOLVE | N32ap1-01 (clause 1 decision: the ceiling, read before BD-372 starts; added in polishing round 1), N32a-32 (clause 2 and final status), N32a-31 (ceiling), BD-372 (A/B arm) |
+| KILL-PEERLINK | N32a-35 (trigger, fallback and four-week reading; added in polishing round 1) |
 | KILL-TUI, KILL-REPLAYPACK | Expected from U32b |
 | INT-FMCP-01 | BD-023 (M0), BD-137 (M1 verbs), N32a-27 and BD-298 (M3 full surface), N32a-05 |
 | GATE-ATEL-03 (shared A/B) | BD-372 and N32a-32 name it; owned by another unit (seed BD-374) |

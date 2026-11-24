@@ -1,0 +1,233 @@
+{
+ "round": 4,
+ "slice": "H-owners-2",
+ "reviewed": 8,
+ "changed": [
+  {
+   "bead": "N38a-40",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request (b) added: the 'Requests on file' table, re-read from the owners at round 4, now lists N41-KA (40; §41, §42, §45.10, §45.11, §46, §47; K41-01 to K41-40) and annotates N37-KA (15; §37) and N39-KA (30; §39.16, §39.17, §39.20, §39.22). The table also lacked five other owners that file blocks: N15-KA (2), N19c-28 (8), N23a-37 (1), N40-KA (32, R-01 to R-32) and N41-CX (57, X41-01 to X41-57). It also had N40-CX at 65, which is now 70. Totals: ka 145 becomes 228 plus the sensor rows. The printed cx total of 187 was an arithmetic error (the rows summed to 191); it is now 253. No existing row was reordered. Request (a) holds, because rule 5 already exempts the `slug` field (ANSWERs sent)."
+  },
+  {
+   "bead": "N38b-19",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "All nine requests added. Deps: added N33a-08 and N38-REF (no cycle). Step 2: a receipt with `stack_dev` = true is refused with `receipt-stack-dev`; may_cite(gate_class) of N33a-08 is called on the receipt's `build_identity`, so a dev-salt pass of a Performance or Parity gate is refused (`dev-build-identity`). Step 3: added the fourth line, `no-claim: <reason>` (reality gates only; written by BD-397's tier entry; no same-run rule). Step 7 hooks: added exploratory_not_cited (N21c-34) and receipts_of_record (N32ax-03's assert_of_record; N32ax-03 says the recorder calls it, but N38b-19 did not, so a run under a scratch registry could have been cited for a gate). Step 8 omitted fingerprint and seed, which N40-01 rule 1 requires, so the validator of step 7 would have refused every pass; both are now written. Step 9: each receipt is committed at receipts/gates/<hash>.json, and the bead log gets a gate-record line carrying `receipt` (N29a-09). New DESIGN paragraphs: 'Receipts of a part' (`--receipt` repeatable, one per tier as N40-08's one_run allows; a frob.gauntlet.receipt-set/1 file; refusal receipt-set-invalid; the multi-machine form of BD-142, BD-217, N21a-24 and N36p1-01, which answers F-U36) and 'Recording a part again' (one lifter, once; refusal part-rows-dropped; answers F-U18b-1). E2E: runs in a scratch clone, the checkout's gates.toml digest must be unchanged, and the reaffirm-* group is N29bp1-01's. Acceptance, unit tests and controls extended to match."
+  },
+  {
+   "bead": "N40-01",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Added dep N38-REF. self-certified is now membership in implemented_by, with a co-implementer test ('s1,s3' refuses s3). A part's receipt may name an N38b-19 receipt set whose members each resolve (rule 1, 'Where receipts live', test). Considerations count corrected to 36 convergence rows plus 3 admission rows among the compiled rows (N40-02), and 12 late rows (GATE-MARROW-06 among them; N40-KA R-23). C13: the two plants are stated as N40-CX RC-66 and RC-67. F-U24a-1 holds: this bead carries no rows (ANSWER sent; requests to N40-02, EPIC-M3 and EPIC-M4)."
+  },
+  {
+   "bead": "N40-03",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Scope kinds grow from eight to eleven: family (KILL-RESPONSE; N18a-26), mechanism (KILL-PROXY; N19b-19) and proofkind (KILL-AUGUR-FALSECERT; N25b-04). Also added: half values cuts and quotient; clause values screening and comparison for KILL-SYNTH-REGRESSOR (N25e-22); KILL-SHADOW and KILL-HARDCONTACT under backend. The KILL-D1 note is reworded: family never names a device family. New optional decision field `fallback_form`: only on a fired entry, and it must appear verbatim in the row's fallback text; a fired entry without it reads as 'not at all' (N19b-03). Decision receipts may also resolve under receipts/pilots/<hash>.json, for pilot-read entries (KILL-FLEET, KILL-SPECIALIZE, KILL-MEGA). Step 4 adds KILL-TAXEL, the ledger beads' introduce rows, and the PROBE and LOOPELIM trigger amendments. Step 2 adds the reread examples. Acceptance and tests updated (eleven kinds, fallback_form_verbatim, pilot receipts). C13: the plants are stated as RC-68 to RC-70, and the table as N40-KA R-32. The H-owners-1 request holds."
+  },
+  {
+   "bead": "N40-26",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied F-U25b at the row level: KILL-AUGUR-FALSECERT now carries scope_kind 'proofkind'. Each exit gets one entry per proof kind in scope, as sections of the per-exit ADR, plus `reading = \"reopened\"` for a report confirmed after the exit was already decided. So a rule fault removes only that kind. Scope, the 'no other seeded row' sentence, acceptance, and the test falsecert_per_kind were updated."
+  },
+  {
+   "bead": "N41-16",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U39a: in check 3(b), a bead of Mn that has the Mn exit review among its ancestors (BET-12 after BD-147) must instead be an ancestor of the Mn+1 exit review; it is tracker-orphan if it is not, or at M8. Added an acceptance item, unit test post_exit_bead_held_to_next_exit, and a seventeenth plant. C13: the 15th and 16th plants are stated as N41-CX X41-54 and X41-55. Request to BD-224 to add dep BET-12."
+  },
+  {
+   "bead": "N41-17",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13, three places: K41-26 is now stated as six types; the two plants are stated as X41-56 and X41-57; and 'both requested in this round' was removed (N38b-03 and N29a-09 already carry the six types and the recorded closing line). The recorded-close check follows a receipt set to its members."
+  },
+  {
+   "bead": "N44-01",
+   "kinds": [
+    "request",
+    "contradiction",
+    "convention"
+   ],
+   "what": "F-U36(b): R1 and R2 both admitted gate:GATE-SPARK-20, which fails this bead's own every_row_admits_a_scope test and N21c-35's lint. GATE-SPARK-20 is now R2's only, as in the plan's R2 fallback. (c): R1 now admits gate:GATE-SPARK-22 from M0, so the owner rules on it. (d): new reserved row R28 (WP-47; E2, one campaign: scope named by N36-22; about 25 device-hours; not approved: row 9 not run). F-U22b: new reserved row R27 (WP-79; N22b-07's gate-scale experiment for gate:GATE-REFLEX-09; not approved: not-run, KILL-SKILL not-reached). Reservations now R12 to R28 (seventeen); new requests take R29 onward; every count, total, test and acceptance item that used R26/R27 updated. (a): Considerations restate the 704/761 division per convention 14. Lead note: the admits paragraph gives the scope order (launcher token, `--envelope-scope`, derived scope, adhoc = E0)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N36-KA",
+   "what": "ANSWER: N38a-40 rule 5 already exempts the value of a numbered row's own `slug` field (N38a-12) and the catalogue's `slug` (N38b-05); the same tag in any other field, test name or derivation file is `provisional-tag-past-due`. Keep each tag in `slug` only; no change to N38a-40 was needed."
+  },
+  {
+   "bead": "N37-KA",
+   "what": "ANSWER: N38a-40 rule 5 already exempts the value of a numbered row's own `slug` field (N38a-12) and the catalogue's `slug` (N38b-05); the same tag in any other field, test name or derivation file is `provisional-tag-past-due`. Keep each tag in `slug` only; no change to N38a-40 was needed."
+  },
+  {
+   "bead": "N39-KA",
+   "what": "ANSWER: N38a-40 rule 5 already exempts the value of a numbered row's own `slug` field (N38a-12) and the catalogue's `slug` (N38b-05); the same tag in any other field, test name or derivation file is `provisional-tag-past-due`. Keep each tag in `slug` only; no change to N38a-40 was needed."
+  },
+  {
+   "bead": "N40-KA",
+   "what": "ANSWER: N38a-40 rule 5 already exempts the value of a numbered row's own `slug` field (N38a-12) and the catalogue's `slug` (N38b-05); the same tag in any other field, test name or derivation file is `provisional-tag-past-due`. Keep each tag in `slug` only; no change to N38a-40 was needed."
+  },
+  {
+   "bead": "N41-KA",
+   "what": "ANSWER: N38a-40 rule 5 already exempts the value of a numbered row's own `slug` field (N38a-12) and the catalogue's `slug` (N38b-05); the same tag in any other field, test name or derivation file is `provisional-tag-past-due`. Keep each tag in `slug` only; no change to N38a-40 was needed."
+  },
+  {
+   "bead": "N38b-19",
+   "what": "ANSWER (H-owners-1, round 3, to N40-03): the form holds. N40-03 step 6 puts every kill decision record at docs/adr/ADR-<gate>-<milestone>.md (docs/delivery/adr/ retired, refused by decision-adr-path), and step 7 makes `apply_decisions` the one place a gate becomes `killed`. N38b-19 already cites both."
+  },
+  {
+   "bead": "N38-REF",
+   "what": "Register the recorder reasons of N38b-19 (exit status 3), each with trigger and repair as N38b-19 states them: `receipt-stack-dev` (receipt with stack_dev = true; re-run from a binary built under a clean stack receipt); `dev-build-identity` (may_cite of N33a-08 refuses a Performance or Parity pass under dev-salt; rebuild under depgraph-receipt); `receipt-set-invalid` (two receipts of one tier, or receipts of two commits; give one per tier from one commit); `part-rows-dropped` (a re-recording omits a still-registered entry the replaced recording measured; add that tier's receipt). Also register the step-7 hook reason `receipt-not-of-record` (N32ax-03's receipts_of_record: an evidence receipt failing frob_core::registries::assert_of_record; re-run under the registries of record)."
+  },
+  {
+   "bead": "N38a-02",
+   "what": "The receipt's gate line has a fourth form, `no-claim: <reason>`, as N38b-19 step 3 reads it. It is written only by the Reality lane's tier entry (BD-397), only for a gate whose claim is `reality`, carries no control outcome, and is never printed by GateReport for any other gate. Add it beside pass, fail and not-eligible. (The stack_receipt, stack_dev and build_identity fields are already requested in H-owners-1's slice.)"
+  },
+  {
+   "bead": "N32ax-03",
+   "what": "N38b-19 lists your check as step-7 hook `receipts_of_record` (added by N32ax-03 at M0; reason `receipt-not-of-record`): an evidence receipt for which frob_core::registries::assert_of_record fails. The recorder cannot call you directly, because you depend on it through BD-022. State it as a registration in register::record::CHECKS and test it there; the recorder's hook_refusal_stops_write covers the mechanism."
+  },
+  {
+   "bead": "BD-397",
+   "what": "N38b-19 step 3 now carries the receipt line `no-claim: <reason>` (status no-claim, detail = reason, reality gates only, no same-run rule). State it as N38b-19's and N38a-02's form and drop 'requested of N38a-02 and N38b-19' (convention 13)."
+  },
+  {
+   "bead": "N18b-17",
+   "what": "Re-record GATE-TRAC-08's M4 part under N38b-19's 'Recording a part again': `cargo run -p frob-conformance --example record_gate -- --gate GATE-TRAC-08 --receipt <g1_known_answers hash> --receipt <g4_chaos hash> --part M4`, with receipts of both tiers from runs at your own commit and recorded by a session that implemented neither N18b-17 nor BD-366. The recording replaces BD-366's part fields, dated by recorded.date, and BD-366's receipts stay committed. Giving only the G4 receipt is refused with part-rows-dropped. Replace 'as a dated amendment' with this form."
+  },
+  {
+   "bead": "BD-366",
+   "what": "State that the rut row of GATE-TRAC-08, recorded on the fallback 'off; terrain resets each episode', is lifted once by N18b-17, which re-records the M4 part under N38b-19's 'Recording a part again' rule. Your own recording gives one receipt per tier the part's entries run in (`--receipt` repeated: g1_known_answers for KA-415 to KA-417, plus g4_chaos if the rut entry runs at M4) with `--part M4`."
+  },
+  {
+   "bead": "N29a-09",
+   "what": "A gate-record line's `receipt` may name a receipt set (frob.gauntlet.receipt-set/1 of N38b-19: gate, part, members in tier order). The `recorded` closing rule (controls caught) and the repair-cycle order follow the set to its members; the controls are caught across the members together."
+  },
+  {
+   "bead": "N33c-30",
+   "what": "check-stack's stack.gate-receipt must follow a part's receipt that is a receipt set (frob.gauntlet.receipt-set/1, N38b-19) to its member receipts and check each member's stack_receipt."
+  },
+  {
+   "bead": "N40-05",
+   "what": "The exit review reads a part's receipts through a receipt set (frob.gauntlet.receipt-set/1, N38b-19) when the part was measured in several tiers; read every member."
+  },
+  {
+   "bead": "BD-253",
+   "what": "ANSWER (F-U24a-1): N40-01 carries no rows; its schema admits one [[gate.part]] per milestone, recorded with `--part`. GATE-ARENA-01's row is N40-02's, compiled from the EPIC due tables, which list it at M2 only. Adding parts at M3 and M4 is requested of N40-02, EPIC-M3 and EPIC-M4. Record with `cargo run -p frob-conformance --example record_gate -- --gate GATE-ARENA-01 --receipt <hash> --part M3`."
+  },
+  {
+   "bead": "BD-368",
+   "what": "ANSWER (F-U24a-1): N40-01 carries no rows; its schema admits one [[gate.part]] per milestone, recorded with `--part`. GATE-ARENA-01's row is N40-02's, compiled from the EPIC due tables, which list it at M2 only. Adding parts at M3 and M4 is requested of N40-02, EPIC-M3 and EPIC-M4. Record with `cargo run -p frob-conformance --example record_gate -- --gate GATE-ARENA-01 --receipt <hash> --part M4`."
+  },
+  {
+   "bead": "N40-02",
+   "what": "Give GATE-ARENA-01 two more [[gate.part]] entries, M3 (scope: the four M3 task families, recorded by BD-253 with --part M3) and M4 (scope: the M4 families, recorded by BD-368 with --part M4). Make it a DESIGN paragraph beside GATE-MARROW-01's: the §45 seed done-conditions of BD-253 and BD-368 are GATE-ARENA-01 for their families, and WP-24 lists the gate. parts_equal_exits then counts 37 convergence rows. N40-01's Considerations quote your count (36) and need the same change."
+  },
+  {
+   "bead": "EPIC-M3",
+   "what": "List GATE-ARENA-01 in the table 'Gates with a part due at M3' (scope: the four M3 task families of BD-253), so that N40-02 compiles an M3 part."
+  },
+  {
+   "bead": "EPIC-M4",
+   "what": "List GATE-ARENA-01 in the table 'Gates with a part due at M4' (scope: the task families of BD-368), so that N40-02 compiles an M4 part."
+  },
+  {
+   "bead": "N40-24",
+   "what": "Step 1a: give KILL-RESPONSE `scope_kind = \"family\"` (values counterfactual, adjoint, stencil; decided per family by N18a-26) and KILL-PROXY `scope_kind = \"mechanism\"` (values chain-cord, hinged-rug; decided per mechanism by N19b-19, each fired entry naming its `fallback_form`). Both are kinds of N40-03's closed table. Update 'No other row of this group carries scope_kind' and the test scoped_rows."
+  },
+  {
+   "bead": "N40-KA",
+   "what": "R-32: N40-03's closed table now has eleven scope kinds. Add family (`family:<name>`: counterfactual, adjoint, stencil; KILL-RESPONSE), mechanism (chain-cord, hinged-rug; KILL-PROXY) and proofkind (`proofkind:<kind>`; KILL-AUGUR-FALSECERT). Add the values half: cuts and quotient; clause: screening and comparison (KILL-SYNTH-REGRESSOR); backend: KILL-SHADOW and KILL-HARDCONTACT. The pinning test scope_kinds_eight becomes eleven."
+  },
+  {
+   "bead": "N38a-09",
+   "what": "Commit each [[pilot.result]]'s receipt byte-identical at receipts/pilots/<hash>.json (hash = its `receipt` without the blake3: prefix), in the commit that appends the result. Kill decisions of pilot-before-funding rows (KILL-FLEET, KILL-SPECIALIZE, KILL-MEGA) cite it in `receipts`, and N40-03 resolves it there."
+  },
+  {
+   "bead": "N18a-26",
+   "what": "N40-03's closed table has scope kind `family` (`family:counterfactual`, `family:adjoint`, `family:stencil`) for KILL-RESPONSE; N40-24 is asked to set the row's scope_kind. Write one entry per family, and drop 'a scope kind requested of N40-03' and the interim single-entry form (convention 13)."
+  },
+  {
+   "bead": "N19b-19",
+   "what": "N40-03 carries the decision field `fallback_form` (a fired entry only, verbatim from KILL-PROXY's fallback text, e.g. \"articulated proxies in evaluation batches only\"; absent reads as \"not at all\") and the scope kind `mechanism` (`mechanism:chain-cord`, `mechanism:hinged-rug`). Record one entry per mechanism, and drop 'requested of N40-03' and the unscoped interim entry."
+  },
+  {
+   "bead": "N19b-03",
+   "what": "`fallback_form` is N40-03's decision-entry field; a fired entry without it reads as 'not at all'. Drop 'requested of N40-03' (convention 13)."
+  },
+  {
+   "bead": "N25b-04",
+   "what": "KILL-AUGUR-FALSECERT carries `scope_kind = \"proofkind\"` (N40-26; N40-03's table). At each exit write one decision entry per proof kind in scope, `scope = \"proofkind:<kind>\"`, as sections of docs/adr/ADR-KILL-AUGUR-FALSECERT-<milestone>.md. A report confirmed at an exit already decided adds an entry with `reading = \"reopened\"` (ADR suffix -reopened). A rule fault fires the row for that kind only."
+  },
+  {
+   "bead": "BD-224",
+   "what": "Add dep BET-12 (no cycle: BET-12 depends on BD-147, never on BD-224). The M1 owner decision is taken from BD-147's schedule gate, so it cannot be an ancestor of BD-147. N41-16 check 3(b) now holds such a bead to be an ancestor of the next exit review, and it is tracker-orphan otherwise."
+  },
+  {
+   "bead": "N41-CX",
+   "what": "Add a counterexample row for N41-16's seventeenth plant: 'a decision taken after its exit review needs no later exit to wait on it'. Breaking case: an M1 bead depending on BD-147 that is no ancestor of BD-224. Rule: a bead with its milestone's exit review among its ancestors is an ancestor of the next exit review (tracker-orphan). Caught by N41-16 post_exit_bead_held_to_next_exit."
+  },
+  {
+   "bead": "N22b-07",
+   "what": "N44-01 reserves R27 for your gate-scale experiment: packages [\"WP-79\"]; the class that covers the three treatments' stated budget, for gate:GATE-REFLEX-09; not approved: GATE-REFLEX-09 not-run and KILL-SKILL not-reached with the fallback in force; M8. File R27 (replace 'the next free identifier from R27') and cite it in WP-79's Envelope bullet."
+  },
+  {
+   "bead": "N22b-19",
+   "what": "R27 and R28 are now reserved (N22b-07, N36-22), so new requests take R29 onward. Your conditional E1 row (gate:KILL-SHIELD, WP-65) takes 'the next free identifier from R29'."
+  },
+  {
+   "bead": "N36-22",
+   "what": "N44-01 reserves R28 for performance target row 9: packages [\"WP-47\"]; E2 for one campaign: scope you name; about 25 device-hours for ten pairs; not approved: row 9 recorded `not run` with the envelope reason and no ratio. File R28 before the first pair and cite it in WP-47's Envelope bullet. Start each two-card arm under `frob-launch --scope campaign:<id> --request R28 …` (or a run verb with `--envelope-scope campaign:<id>`). Size the declared campaign to the approved budget: ten pairs fit E2's 48 device-hours; with no gate, no gate: scope or E1 row can admit it."
+  },
+  {
+   "bead": "N36p1-01",
+   "what": "R1 now admits gate:GATE-SPARK-22 from M0 (N44-01: R1's gates are GATE-SPARK-21, GATE-SPARK-03 and GATE-SPARK-22), so the owner rules on it. Cite R1; replace 'adds the scope gate:GATE-SPARK-22 to its admits' with 'which admits gate:GATE-SPARK-22'."
+  },
+  {
+   "bead": "N21c-35",
+   "what": "N44-01 now reserves seventeen rows, R12 to R28 (R27 N22b-07, the gate-scale experiment of GATE-REFLEX-09; R28 N36-22, performance target row 9, E2 campaign), and new requests take R29 onward. Update 'the fifteen reserved rows R12 to R26', 'R19 to R26' and 'new requests taking R27 onward'."
+  },
+  {
+   "bead": "N44-02",
+   "what": "Reserved rows are now R12 to R28 (seventeen). Add R27 (WP-79, gate:GATE-REFLEX-09, N22b-07, arms under frob-launch) and R28 (WP-47, one campaign: scope named by N36-22, E2, two-card trainings) to the row table and the launcher or verb steps, with their not-approved forms as N44-01 states them."
+  },
+  {
+   "bead": "N44-04",
+   "what": "The fixture of reserved rows gains R27 `WP-79` (N22b-07) and R28 `WP-47` (N36-22). Check 11(b) reads 'a row R12 to R28'. 'A new row from R27 on' becomes 'from R29 on'. The synthetic test logs R12 to R28 as reserved, not filed. The plant 'WP-33's Envelope bullet citing a row R27 that neither the register nor the fixture holds' must cite R29, since R27 is now in the fixture."
+  },
+  {
+   "bead": "WP-79",
+   "what": "The Envelope bullet cites R27 too (N22b-07's gate-scale experiment of GATE-REFLEX-09; the class that covers its stated budget; not approved: GATE-REFLEX-09 not-run, KILL-SKILL not-reached), as N44-01's reservation table states it."
+  },
+  {
+   "bead": "WP-47",
+   "what": "The Envelope bullet cites R28 too (performance target row 9, N36-22: E2 for one campaign: scope; about 25 device-hours; not approved: row 9 not run), as N44-01's reservation table states it. R1's gates are GATE-SPARK-21, GATE-SPARK-03 and GATE-SPARK-22."
+  }
+ ],
+ "answered": {
+  "added": 27,
+  "holds": 3,
+  "declined": 0
+ },
+ "unchanged": 0,
+ "notes": "All 8 beads read in full and all changed; none unchanged. Slice requests: 27 added; 3 hold (N38a-40 (a), the slug exemption; N40-01 F-U24a-1, which needs rows that are N40-02's; N40-03's H-owners-1 request, already carried); 0 declined. No mechanical finding was a false alarm: the C13 narration in N40-01, N40-03 (two places) and N41-17 (three places) is restated as owner facts after checking that N40-CX RC-66 to RC-70, N41-CX X41-54 to X41-57, N41-KA K41-26, N38b-03 and N29a-09 carry them. Defects found outside the requests: N38a-40's cx total (printed 187, actual 191) and six missing owners; N38b-19 step 8 omitted fingerprint and seed (every pass would have failed N40-01 rule 1); N38b-19 did not list N32ax-03's assert_of_record; N44-01's R1 and R2 both admitted gate:GATE-SPARK-20; N41-16 reported BET-12 as an orphan. Design choices: a part measured in two tiers is recorded from one receipt per tier through a receipt set, not from one collated receipt, so that BD-366's fallback rows stay valid; R27 and R28 are reserved rows, so new requests take R29 on, with requests sent to every bead that quoted R26 or R27. Slice settled, pending the requests."
+}

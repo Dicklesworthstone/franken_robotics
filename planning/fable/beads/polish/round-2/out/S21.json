@@ -1,0 +1,314 @@
+{
+ "round": 2,
+ "slice": "S21",
+ "reviewed": 53,
+ "changed": [
+  {
+   "bead": "BD-068",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "PortHamiltonian builds every transformer junction only through N33c-43's adapter coupling::transformer(driving, driven, Direction, PositiveRatio) and adds no signed-coefficient entry (the request addressed to N33a-19, applied here because BD-068 owns PortHamiltonian since integration); legacy source scan matches the path fs_phs::interconnection::transformer outside frob_fsim::conformance plus no symbol in a default release build, not the bare word (S17 request); test enum spelled Direction::Opposite as in N33c-43 (was Reversed)"
+  },
+  {
+   "bead": "BD-070",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "N12-44 added to deps; D.4 motor-envelope oracle test in crates/frob-conformance/tests reading the library rows, with the row's back-EMF control (request)"
+  },
+  {
+   "bead": "BD-071",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "N12-44 added to deps; D.4 motor-axis (tau = 10 ms, gyrator form, k_t != k_e control) and thermal-node oracle tests (request)"
+  },
+  {
+   "bead": "BD-072",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct",
+    "users",
+    "self-contained"
+   ],
+   "what": "N12-44 moved from related to deps; D.4 runaway (35.8 A) and entropy oracle tests with the rows' controls; output schema frob.actuator.thermal.out/1 (requests); on resume: the verb gains --speed w (motor shaft speed at which the iron-loss term is added; default 0; not with --rms-of), since its static rows were said to include a speed-dependent loss with no speed input and N15b-27's script already passed one; test static_iron_loss_at_speed (144.1 C at 17 A and 300 rad/s, 125.9 C at rest)"
+  },
+  {
+   "bead": "BD-073",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "N12-44 moved from related to deps; D.4 voltage-limit oracle test (base and top speed, 1 - sqrt(3)/2, unbounded top-speed control); output schema frob.actuator.envelope.out/1 (requests)"
+  },
+  {
+   "bead": "BD-074",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "N12-44 added to deps; D.4 four-quadrant (0.658/0.496, lock, round trip, single-multiplier control) and gear-law oracle tests (request); the lowering splits the signed ratio into Direction and PositiveRatio for N33c-43's adapter"
+  },
+  {
+   "bead": "BD-075",
+   "kinds": [
+    "deps",
+    "tests",
+    "users",
+    "self-contained"
+   ],
+   "what": "N12-44 moved from related to deps; D.4 bus-ceiling oracle test (5,760 W at 24 V, 40.97 V at 2,880 W, 6,000 W brownout control) (request); on resume: the verb gains --source-voltage V (pins E; condition source-voltage-pinned; never the stage-6 verdict), which N15b-30 and FD-FSIM-21 pass and without which 7,200 W, 44.785 V and 40.19 A cannot be asked from the command line; its e2e commands carry the option; test source_voltage_pin"
+  },
+  {
+   "bead": "BD-076",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "N12-44 moved from related to deps; D.4 energy-balance oracle test (zero residual in rationals, double-counted heat control) (request)"
+  },
+  {
+   "bead": "BD-084",
+   "kinds": [
+    "tests",
+    "complete"
+   ],
+   "what": "breakaway_on_ramp and gap_crossing_time registered as the referee rows of KA-402 and KA-403 (incl. 1.04 mJ) for GATE-TRAC-04, asserted against N18a-32's joint_row_known_answers(), dead-zone mutant failing KA-403; gate and refs added (request)"
+  },
+  {
+   "bead": "FD-FSIM-21",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "battery card schema is BD-069's (not BD-071); post-adoption e2e re-runs N15b-30's fixtures: battery step and brownout through referee runs, the 7,300 W demand through actuator.bus as exit 3 FROB-REF-133 (a static verb raises no event); N15b-30 moved from related to deps"
+  },
+  {
+   "bead": "N15a-09",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "names the card field tooth_dissipation_time (BD-069's table) for tau_d; FROB-REF-136 on a convex tier when it or tooth_stiffness is missing, with a test"
+  },
+  {
+   "bead": "N15a-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "stale ownership corrected: the KA-402/KA-403 referee runs are BD-084's rows driven by this script as two extra steps asserted against N18a-32's joint_row_known_answers(); batched runs named (N18a-36, N18b-32 rows 14/15); dead-zone mutant also on KA-403; GATE-TRAC-04 added"
+  },
+  {
+   "bead": "N15a-14",
+   "kinds": [
+    "tests"
+   ],
+   "what": "tests tagged with N38b-48's fixture identities (thermal-runaway/chapter-card, thermal-runaway/construction-card); requested dep on N38b-48 declined, N38b-48 added to related (see notes)"
+  },
+  {
+   "bead": "N15a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "PO-SINEW-03 is already card T-15 (N12-52 adds no row), checked by BD-027's poly-identity checker; CARD-T-15 added to related; single-multiplier fixture is N15a-17's file, not duplicated"
+  },
+  {
+   "bead": "N15a-24",
+   "kinds": [
+    "correct"
+   ],
+   "what": "sim.run actuator level flag aligned with BD-071 and N15b-29 (--actuator-level, was --level)"
+  },
+  {
+   "bead": "N15a-25",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "fixtures derive from named base cards (actuator rows qdd-m, transmission rows the generic cards, rating_unreachable the worked thermal card with alpha_flux = 0) instead of all from qdd-m; single-multiplier fixture reused from N15a-17; payload of FROB-REF-132 stated; duplicate N15b-06 in related removed"
+  },
+  {
+   "bead": "N15b-03",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "N12-44 added to deps; D.4 two-RC oracle test (step response, charge balance, reversed-current control), the battery being the mechanism of a compendium-only row"
+  },
+  {
+   "bead": "N15b-04",
+   "kinds": [
+    "scope",
+    "tests"
+   ],
+   "what": "own passivity property at 10^4 points; the 10^6-point share of GATE-SINEW-08 is N15a-23's battery (the only bead that defines it)"
+  },
+  {
+   "bead": "N15b-05",
+   "kinds": [
+    "deps"
+   ],
+   "what": "N15b-01 (junction zero power sum, used by the composite check) added to related"
+  },
+  {
+   "bead": "N15b-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Uncertainty enum made one-to-one with BD-069's five unc kinds (exact, abs, rel half-width, interval, normal); rel was mislabelled as a standard deviation"
+  },
+  {
+   "bead": "N15b-09",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "stale proposal text replaced: N12-52 admitted PO-SINEW-01 as instance card T-38 (N12x-01, a dependency); this bead runs T-38's law tests on catalog certificates and its receipt moves the row; general theorem not a card"
+  },
+  {
+   "bead": "N15b-10",
+   "kinds": [
+    "users",
+    "correct",
+    "tests"
+   ],
+   "what": "coupled groups gain the input --torque t1,...,tn (the vector counterpart of BD-073's --point), exit 3 under --require and exit 2 without; a coupled group is addressed as design:joint by any of its joints (the verb takes a card or a design:joint, never a bare design), so the e2e commands read one-rotor-coupled:j1 and assert the joints list; configured_coupling states its tau_max"
+  },
+  {
+   "bead": "N15b-11",
+   "kinds": [
+    "correct",
+    "scope",
+    "deps",
+    "tests"
+   ],
+   "what": "BD-070's N^2*J_rotor insertion is the C = [N] case and moves into rotor_pullback, with simple_gear_switch_no_double_count; rotor_pullback takes coupling maps and rotor inertias, not a RobotModel (frob-actuate is below frob-model); the packed lowering is BD-148's at M2, so at M1 the one caller is the referee lowering and the acceptance no longer asks for two callers; the controller's assertion of the flag is N15b-39's test (it depends on this bead), not a test here"
+  },
+  {
+   "bead": "N15b-12",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "users",
+    "tests"
+   ],
+   "what": "airlock rule goes through N33c-43's adapter with typed Direction and PositiveRatio; the legacy scan matches the path fs_phs::interconnection::transformer outside frob_fsim::conformance plus the release-build symbol check (S17 request); the --bind <design>:<joint> form that its e2e and N15b-13 used is now defined (in-memory bind, no edit, outputs direction_witness and witness_entries); the catalog sweep is over actuator and transmission cards; the packed lowering is witnessed when BD-148 lands; the stage-1 raise of FROB-REF-108 is stated against the stage table's stage 5"
+  },
+  {
+   "bead": "N15b-13",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "deps BD-092 (telemetry.energy, for the free swing) and N28ap1-01 (design.check verb and stage 1); the free-swing fixture states its lossless card, disabled driver, gravity off and initial rates; commands address one-rotor-coupled:j1; --require gives exit 3 and its absence exit 2; the witness sweep lists actuator and transmission cards only and the rig's own bindings are named; step 6 runs --stages 1"
+  },
+  {
+   "bead": "N15b-27",
+   "kinds": [
+    "deps",
+    "tests",
+    "e2e-logging",
+    "self-contained"
+   ],
+   "what": "the decision's measurement ran on beads it did not depend on: deps BD-073, BD-084, BD-092, BD-110, N15b-05 added (nothing depends on this bead, no cycle); the e2e is concrete: three cards with coefficients (7 pole pairs, 10.4 W and 31.2 W at 300 rad/s), three designs, expected 125.9, 144.1 and 180.4 C and 18.6, 17.6 and 15.5 A, the FROB-REF-132 flip at 30%, the iron ledger line from a referee run, the silent-flag mutant, and the full log fields; --speed named as BD-072's input"
+  },
+  {
+   "bead": "N15b-28",
+   "kinds": [
+    "deps",
+    "e2e-logging",
+    "self-contained",
+    "tests"
+   ],
+   "what": "its switch-over script re-runs GATE-SINEW-07 on N15b-30's fixtures: N15b-30 moved from related to deps; the flag --battery-element had no owner: the element is chosen by the conformance lane variable FROB_BATTERY_ELEMENT (as FROB_AIRLOCK), recorded in identities and the stack-lock digest; the script has steps, commands, expected values and log fields; test lane_selector_recorded"
+  },
+  {
+   "bead": "N15b-30",
+   "kinds": [
+    "deps",
+    "correct"
+   ],
+   "what": "step 4 runs design.check stage 6 and design.edit without depending on them: deps BD-110 and BD-058 added (KA-325's stage-6 clause is this script's by the registry); the repair is applied in the registered form with --expected-parent and --key (FROB-REF-805 without it); --source-voltage named as BD-075's input"
+  },
+  {
+   "bead": "N15b-32",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "gear-single-eta is N15a-17's rejection card read in place, not a second card; it is checked with --at 10,1 (a gear card has no default evaluation point for the 2.5 W figure); the self-locking hold on a running system has a fixture and a command (screw-hold: displacement 0 exactly behind screw-3-5, nonzero behind screw-5-3) and its direct dep BD-084"
+  },
+  {
+   "bead": "N15b-38",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "fixture convex-row-on-referee could not be refused by anything (the referee has no 'no' cell in N15a-04's table): replaced by six-step-circle through actuator.envelope (N15a-02's rule); backlash-option-missing names its tier and is a logged skip until sim.run carries batch-cpu (other tiers answer 724 before M2), asserted meanwhile by payload_136_lists_tiers; --at 10,1 for the single-multiplier card; design repairs in the registered design.edit form; ten of the fourteen fixtures (the five stage codes) are the seeded defects, not all fourteen"
+  },
+  {
+   "bead": "N33a-19",
+   "kinds": [
+    "deps",
+    "tests",
+    "correct"
+   ],
+   "what": "request to add dep N33c-43 declined for this bead (it has no transformer; BD-068 owns PortHamiltonian and depends on N33c-43); BD-068 moved from related to deps because the adapters read materials only through its MaterialData (fs-matdb is admitted there, never here), which also orders this bead after N33c-43; stale 'through the traits defined here' corrected; control (2) had no test: thermal_node_first_law added (2,528.5 J stored of 4,000 J, 1,471.5 J to ambient)"
+  },
+  {
+   "bead": "N33bp2-01",
+   "kinds": [
+    "deps",
+    "risks",
+    "sense"
+   ],
+   "what": "dep BD-008 added (an adopted train must show INT-ASUP-01 passing; it was reached only through an incidental chain); the consideration said the M0 exit review reads the refusals while the bead stays open, but BD-044 depends on it through N33b-05: now states the fail-closed default (M0 does not exit without a real train) and a logged owner request after refusals on five days"
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N33c-43",
+   "what": "Scope says the PortHamiltonian trait is N33a-19's (M1); since integration it is BD-068's (N33a-19 keeps Magnetics, ThermalNetwork, CurrentLoop). Replace N33a-19 with BD-068 in that sentence and in related if wanted."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.run inputs list no actuator level; BD-070, BD-071, N15a-24, N15b-29 and N15b-20 call `frob sim run --actuator-level <L>`. Add the input (domain L0 to L3; L4 refused per N15b-20), owner Sinew (BD-070/BD-071), using the value domain of N24bx-01's actuator_level axis."
+  },
+  {
+   "bead": "VERBS-actuator",
+   "what": "Inputs that implementing beads define and the rows lack: actuator.envelope gains --torque t1,...,tn for a coupled group, addressed as design:joint by any joint of the group (N15b-10), and its refusal list gains FROB-REF-136 for an explicit --shape circle on a six-step card (N15a-02's rule through N15a-16; N15b-38 observes it); actuator.check gains --bind <design>:<joint> and the outputs direction_witness and witness_entries (N15b-12); actuator.thermal gains --speed w (BD-072); actuator.bus gains --source-voltage V with condition source-voltage-pinned (BD-075)."
+  },
+  {
+   "bead": "BD-148",
+   "what": "The packed lowering must call frob_actuate::coupling::rotor_pullback exactly once as its only source of rotor inertia (constant blocks into the model slot's tables, the blocks record kept for sparsity) and register its path with the signed motion witness of N15b-12. Add N15b-11 and N15b-12 to deps (both M1; today N15b-11 is only related and the text never mentions rotor inertia). N15b-11's single_caller_enforced admits this one further caller."
+  },
+  {
+   "bead": "BD-103",
+   "what": "A-11's thermal steady state should add the card's iron loss P_fe = k_h*|w_e| + k_e*w_e^2 at each operating point's speed (BD-071's law, through the general criterion of N15a-14) and carry the condition iron-loss-not-modelled for a card without coefficients. N15b-27's script asserts the stage-6 flip on hold-17a-at-speed-fe30: exit 3, FROB-REF-132, equilibrium 180.4 C, largest sustainable current 15.5 A."
+  },
+  {
+   "bead": "N14b-10",
+   "what": "The stage table lists FROB-REF-108 at stage 5 only. Two raises happen in the compile, stage 1: the signed motion witness at binding (N15b-12; N15b-13 asserts frob design check quad-reversed-knee --stages 1 -> exit 3, FROB-REF-108, stage 1) and N14a-09's actuator on no bus or on two. List them as stage-1 raises, as for 107, so that GATE-SKEL-04 counts them as refused by the owning stage; VERBS-design's stage-1 code list follows the table."
+  },
+  {
+   "bead": "N15a-25",
+   "what": "Step 7 asks for hard backlash on a GPU tier to be refused with FROB-REF-136 but names no command. At M1 sim.run answers every tier but the referee with FROB-REF-724 before a step plan is built (BD-024), so the refusal is reachable only through N15a-04's unit test capability_refusal until M2. Name the command, or log the step as a skip until M2 as N15b-38 now does."
+  }
+ ],
+ "unchanged": 21,
+ "notes": "Resumed and finished: all 53 beads reviewed. BD-070, the bead the interrupted note concerned, was read whole: it parses and its edit (dep N12-44, the D.4 motor-envelope oracle test) was complete, so nothing was added to it; N15b-10 to -13 had been edited after the last result write and were checked and finished. Most findings were end-to-end scripts calling verbs or inputs that no bead defined or that their bead did not depend on. The request to make N15a-14 depend on N38b-48 stays declined (a Sinew library upstream of BD-069 should not wait on another chapter's fixture registry; N38b-48 is related). Unchanged: BD-069, GB-11, GB-12, GB-13, N15-CX, N15-KA, N15-REF, N15a-01 to -06, N15a-08, N15a-15, N15a-16, N15a-17, N15a-23, N15a-26, N15ax-03, SPEC-C-38."
+}

@@ -1,0 +1,270 @@
+{
+ "round": 1,
+ "slice": "U25a",
+ "reviewed": 49,
+ "changed": [
+  {
+   "bead": "BD-002",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "demo.yaml schema now admits the optional keys the executor (N00-29) and demo runner (N34-12) use (tier, expect_exit, expect_refusal, compare, expect, title, milestone, actors, lane, fresh_agent, not_evidence_for) with types, and refuses unknown keys; acceptance criterion and four schema unit tests added"
+  },
+  {
+   "bead": "BD-130",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "added dep N12-46 (the D.6 stance oracle the lowering is compared against; request from U12-2); new conformance tests comparing boundary, vertex forces and dual with the oracle, with a planted 5 N rating offset as negative control; acceptance criterion added"
+  },
+  {
+   "bead": "BD-135",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "registry refusal list of mission.synthesize made consistent with VERBS-mission (added 857) and with the surface codes the verb raises (702, 802, 803, 805); stated where 881 is raised and that a listed code with no raising site is reported pending, so the completeness lint can pass"
+  },
+  {
+   "bead": "BD-292",
+   "kinds": [
+    "split",
+    "deps",
+    "scope",
+    "title",
+    "tests"
+   ],
+   "what": "graph bottleneck: narrowed to the Solid engine (record, supports, classifier, grades 1, 2 and 4, grade-3 hook, masks, eligibility, prefix check); the Frontier grade-3 registry, joint-edit rule and disablement moved to new bead N25ap1-01; BD-288 (seed dep, needed only for polarity) carried by N25ap1-01 and kept here as related, N10b-07 to related; tests and acceptance re-split"
+  },
+  {
+   "bead": "BD-354",
+   "kinds": [
+    "correct"
+   ],
+   "what": "time unit: phases were 'integer microseconds' while the pilot's 842.8 µs is not an integer; record now uses integer nanoseconds (842,800), test renamed accordingly"
+  },
+  {
+   "bead": "BD-355",
+   "kinds": [
+    "deps",
+    "sense"
+   ],
+   "what": "graph bottleneck: removed dep N25c-08 (trajectory-reuse certificates), which the bead itself says are not used (every logical world is stepped), to related; fixed the text that called N25c-09 a bead building on this one although it is a dependency (component of the capstone). All counts (34,590/30,946/1,820, digest, guarded 58,254/7,282, unguarded 452/23,438, batch 616/368/40, 648 points, 8 ties) recomputed and confirmed"
+  },
+  {
+   "bead": "N25-KA",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "rows moved to the suite's one file crates/frob-conformance/registry/known_answers.toml (request from U12-2 and dup-07); late rows tagged augur-late-01..18 with number unassigned; block request for 18 numbers via registry/allocations.toml (N38a-40) and mapping rule; acceptance updated"
+  },
+  {
+   "bead": "N25a-01",
+   "kinds": [
+    "complete"
+   ],
+   "what": "feature list gains frontier-revalidate-implication (used by N25a-16's mission rules) and the rule that a later bead adding a Frontier or Moonshot mechanism adds its feature (N25a-31 adds frontier-sos)"
+  },
+  {
+   "bead": "N25a-16",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "depends on new N25ap1-01 (rule registry and PolarityRule trait its six rules plug into); scope updated"
+  },
+  {
+   "bead": "N25a-02",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "stated the refusal for an unlabelled clairvoyant policy class (887, pointer /policy_class/kind, first repair the exclusion-only label or a causal policy), consistent with BD-126 and N24b-26; noted both raising sites of 856; e2e section names N24b-26's mission_check_echo.sh beside N25a-23's mission_admission.sh"
+  },
+  {
+   "bead": "N25a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "e2e text claimed exit 2 for every budget stop; now follows BD-135's rule (2 with resolution-unmet only when the unresolved set exceeds the declared resolution, else 0) and names the two explanations asserted"
+  },
+  {
+   "bead": "N25a-06",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "the determinism lane compares reconstructed bytes from both solvers on the 51 docking programs, but the oracle solver and the frozen fixture come from BD-127, which was not a dep; added, and named the conformance test (34 optima, 17 duals proportional to (2, -1))"
+  },
+  {
+   "bead": "N25a-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "said all twelve host evaluators are due at M1 while row 10 (pad probe, four laws) can only be evaluated against N25c-13's M3 fixture and its test was skipped; made consistent: row 10 registered not-run with owner and due milestone, acceptance split, typed skip reason enforced, digest self-test named"
+  },
+  {
+   "bead": "N25a-09",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "acceptance fixtures use the docking family's alias-pair proofs (BD-129) and the pusher plant (BD-131), neither a dep; added both; e2e names N25c-22 step 5 (docking refute through the CLI)"
+  },
+  {
+   "bead": "N25a-10",
+   "kinds": [
+    "tests",
+    "complete"
+   ],
+   "what": "docking cost tests now say how their cells are built (a fixture from the closed-form rule, so the test does not wait on the family lowering) and what they assert (attained false, open threshold 3/4, candidate and gap; catalog minimum 7/8 with the cheaper entries named); the docking unattained infimum and catalog minimum, which no script asserted through the CLI, are placed in N25c-22's docking script (requested)"
+  },
+  {
+   "bead": "N25a-12",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "the explicit paving rule (every interior cut owned by the lower cell) could not produce the plan's tray cells [1, 3/2], (3/2, 2), [2, 5/2] that its own acceptance and N25a-24 assert; added per-cut ownership (r:3:lu) with 802 for a malformed string and a test; --from now states the prefix check (881) and the other-mission refusal (802), with two tests, matching BD-135"
+  },
+  {
+   "bead": "N25a-15",
+   "kinds": [
+    "correct"
+   ],
+   "what": "K7 stratum fixture had no cell, and on the battery's g in [1/2, 2] the u = 1 case never leaves contact; cell g in [1/8, 1] stated with pass sets and pair measures (20/49, 24/49); K4's encoder constraint involves 2*pi, so it is stored as a rational radius threshold to keep the DAG exact. All other corpus numbers and pair measures recomputed"
+  },
+  {
+   "bead": "N25a-17",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "the pad-family base answer comes from N25c-14, not reachable before; added. Scope and the engine-independence note updated for the split of BD-292 (grade-3 rules in N25ap1-01, which depends on this pilot) and for the tracker path to BD-292 through BD-290"
+  },
+  {
+   "bead": "N25a-18",
+   "kinds": [
+    "tests"
+   ],
+   "what": "e2e named the docking script vaguely; now scripts/e2e/mission_docking_family.sh (N25c-22)"
+  },
+  {
+   "bead": "N25a-19",
+   "kinds": [
+    "deps",
+    "scope"
+   ],
+   "what": "the rule registry and its disablement switch moved from BD-292 to N25ap1-01; dep added, scope and the disabled_by field named"
+  },
+  {
+   "bead": "N25a-22",
+   "kinds": [
+    "correct"
+   ],
+   "what": "step 5 used a --evidence flag that BD-135 does not define; the verb route is --from a:... (881), and the auditor's code 826 is named; the hand-check formula missed the empty case A > B (hidden-gap) and quotients by zero. All twenty intervals recomputed and confirmed"
+  },
+  {
+   "bead": "N25a-23",
+   "kinds": [
+    "scope"
+   ],
+   "what": "scope claimed every single-field admission trigger, but N24b-26's mission_check_echo.sh asserts the unlabelled clairvoyant 887 and two 868 documents; exceptions stated so the refusal battery cites the right script; a16 states the --from route"
+  },
+  {
+   "bead": "N25a-26",
+   "kinds": [
+    "scope"
+   ],
+   "what": "arm C's rule registry, grader and disablement switch are N25ap1-01's after the BD-292 split; scope says so"
+  },
+  {
+   "bead": "N25a-24",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "first-pass paving now v:4,r:3:lu so the cells match the plan's tray table (see N25a-12); new step 6b isolates the rule of the resolution field (bound 1/2 met, mandatory interior undischarged, still resolution-unmet), the case N25a-33 had said it would add to this script"
+  },
+  {
+   "bead": "N25a-27",
+   "kinds": [
+    "correct",
+    "scope"
+   ],
+   "what": "time unit aligned with BD-354: integer nanoseconds (842,800 for 842.8 us), not tenths of microseconds; fractions unchanged. Fourteen fixture ceilings recomputed and confirmed. The M3 row of GATE-AUGUR-14 was claimed both here (an M4 bead) and by N25ax-02 (M3); assigned to N25ax-02, this script records the M4 row"
+  },
+  {
+   "bead": "N25a-31",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "e2e and acceptance hedged on the auditor's sos-gram rule existing ('not run' otherwise), but that rule is N12-16, already a dependency; hedges removed and the rule named"
+  },
+  {
+   "bead": "N25a-32",
+   "kinds": [
+    "tests"
+   ],
+   "what": "test plan said eight pin-fact tests where step 1 lists nine, and omitted the two absence tests the register of missing pieces relies on; both listed. Probe known answers (Phi(-1), 8829/8000, e-value 3/2, the pi-group basis) recomputed"
+  },
+  {
+   "bead": "N25a-33",
+   "kinds": [
+    "tests"
+   ],
+   "what": "the third e2e case (mandatory interior) kept the bound at 1/4, which 4/12 unresolved already fails, so it did not isolate the rule; bound raised to 1/2 and the case placed as step 6b of N25a-24's script, which owns that script"
+  },
+  {
+   "bead": "N25a-34",
+   "kinds": [
+    "tests"
+   ],
+   "what": "named the docking refutation script (N25c-22, mission_docking_family.sh) where the text said 'the docking script of the family'. All eight cases recomputed"
+  },
+  {
+   "bead": "N25ax-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "time unit aligned with BD-354 (integer nanoseconds)"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N25ap1-01",
+   "why": "split from BD-292: the Frontier grade-3 path (polarity-rule registry, pure-change and joint-edit rules, licences, disablement for KILL-AUGUR-REUSE, fail-closed loading) so that the Solid engine no longer waits on monotone transport or the rule framework; carries the seed dependency on BD-288"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.synthesize chapter refusals omit FROB-REF-881, which the verb raises when an answer supplied with --from a:..., or a proof, establishes another quantifier prefix than the query's (N25a-03, BD-131 acceptance); BD-135's registry entry lists it"
+  },
+  {
+   "bead": "N28a-23",
+   "what": "its dry run of grade-3 reuse on the frozen campaign uses the polarity-rule registry and grader, now in new bead N25ap1-01 (split from BD-292); consider adding N25ap1-01 to deps"
+  },
+  {
+   "bead": "N25c-13",
+   "what": "write the row-10 truth evaluator and shortcut mutant of N25a-08's shortcut fixtures (frob_conformance::fixtures::shortcuts, its fixture format) against the four-law pad fixture, and un-skip row10_probe_counts (675 of 675 in class, 0 of 225 on the withheld law); N25a-08 registers the control not-run with this bead as owner"
+  },
+  {
+   "bead": "N25c-22",
+   "what": "add two steps to mission_docking_family.sh for N25a-10's cost claims: minimize U at eps = 5/16 over U in [1/2, 1] (attained false, open threshold 3/4, a candidate with its gap and the warning) and the catalog twin U in {1/2, 5/8, 3/4, 7/8, 1} (minimum 7/8, attained true); no other script asserts them through the CLI"
+  },
+  {
+   "bead": "N25d-32",
+   "what": "the refusal battery's completeness table should cite scripts/e2e/mission_check_echo.sh (N24b-26) for the unlabelled-clairvoyant 887 trigger and the two extra 868 documents (empty free box, unit removed); N25a-23 no longer claims them"
+  }
+ ],
+ "unchanged": 19,
+ "notes": "All 49 beads reviewed in full, one at a time; N25a-13 and N25a-16 read while splitting BD-292. Numbers recomputed by hand where stated (stance, tray, docking grids, pusher battery, monotone corpus pair measures, SOS fixtures, ceilings, carrier instance). Out-of-slice requests listed."
+}

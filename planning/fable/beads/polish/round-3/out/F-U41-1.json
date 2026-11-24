@@ -1,0 +1,190 @@
+{
+ "round": 3,
+ "slice": "F-U41-1",
+ "reviewed": 27,
+ "changed": [
+  {
+   "bead": "BD-058",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The two-value form's widened 804 trigger was described as a pending request to N32-REF; N32-REF's 804 row now carries it (payload field, expected, current; repair: re-read the field at the head), so the bead cites the row."
+  },
+  {
+   "bead": "BD-087",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Brought into line with SPEC-C-36 and the KA registry: the step now refuses h·‖ω‖ > 0.2 per substep (SubstepBound, the condition of FROB-REF-212) as the spec's law test substep_bound_refused requires, the Newton test domain is ‖h·ξ‖ ≤ 0.2, and a unit test was added; KA-172's finite-difference tolerance is the registered 10⁻⁷ (was 10⁻⁸) and KA-173's reversal tolerance the registered 10⁻¹⁰ (was 10⁻⁹). The two planted defects are cfg(feature = \"nc-<nnnn>\") branches of frob-dyn under the BD-025/N38b-04 mutation convention (was a private `--features mutants`), and the e2e runs each control build in debug."
+  },
+  {
+   "bead": "BD-157",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S48's request: the turn-counter crossing rule's actual range of validity is stated (exact for |Δθ| < π/2 per step; the quarter-turn miscount shown with θ = 0.1, Δθ = −1.8 rad; the Cayley step here moves at most 0.199 rad; reusers such as N16c-31 at 1.4 rad must stay below π/2). Added test turn_counter_validity_range."
+  },
+  {
+   "bead": "BD-166",
+   "kinds": [
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied S50's request: ε_brick is read from the brick's 4-byte metadata word in the third section of the pool buffer (BD-164, N19b-01), with the DESIGN rule for queries spanning bricks; test epsilon_brick_from_metadata_word. Applied S52's request: test scene_cell_index_equals_anchored pins frob-scene's duplicate of c = ⌊x/8 + ½⌋ to AnchoredPos::from_world_f64 on 10⁶ points and every face within ±2 km (with the f32 rounding band stated), plus an acceptance line. The e2e's scene.compile calls carry --key (a run verb) and the thin-barrier scene is compiled and passed by identity, since --scene takes an identity or name."
+  },
+  {
+   "bead": "BD-180",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The e2e's mutant builds used private features (mutant-…) and listed four of the six mutants; they are now the BD-025/N38b-04 nc-<nnnn> features of frob-kernels, built in debug, all six listed, with N35-16 reusing the same builds."
+  },
+  {
+   "bead": "BD-200",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied S66's and F-U24c's requests: the :from extension point (resolvers keyed by source-kind prefix, injected by frob-verbs like the band reader) with the registry sources registry:disturbances (N24cp3-02, M2) and registry:hazards (BD-227, M3); registry rows carry row id and provenance into the plan, the resolved list, --resolved-out and the provenance shares; an unresolvable prefix is 103 at :from; a row with no usable law is the no-interval refusal; streams follow the draw's :stream. Test source_kind_extension_point and an acceptance line added. Applied F-U23b-2's request: randomize-no-interval is raised through RANDOMIZE_NO_INTERVAL holding the ledger's assigned number (interim none), never the slug or 571; the same rule applied to randomize-numerical-parameter (proposed 572, N23-REF's request), which the bead raised as a literal FROB-REF-572; tests and e2e read the assigned numbers. The sim.replay example gained its key."
+  },
+  {
+   "bead": "BD-341",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "A campaign-class job queued without an approved envelope is FROB-REF-704 from the daemon's size classifier (BD-296; the division of N36-20 and N32-REF), not 761: the refusal table gains the 704 row, the bead passes 704 and 761 through its envelope, deps gain BD-296, a unit test campaign_class_unapproved_704 and an e2e fixture were added, the e2e's exit-code line covers both, and `frob opt status` takes the campaign identifier. A sentence that attributed 445 and foil-as-candidate wrongly ('both of the last two') was corrected."
+  },
+  {
+   "bead": "N41-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "H-owners-1's request: frob-conformance has no binary (BD-025), so the register's commands are the declared example target `risks` (crates/frob-conformance/examples/risks.rs): `cargo run -p frob-conformance --example risks -- check --complete|--cross [--root] --json` (exit 0 pass, 1 fail) and the review step as its `review <Mn>` subcommand under the attached-check contract, with risk-review.sh a thin wrapper; test risks_example_target added."
+  },
+  {
+   "bead": "N41-02",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The gate record was written by the script itself; under one recorder per gate the script produces the receipt and the recording session records the M0 part with `cargo run -p frob-conformance --example record_gate -- --gate GATE-WS-07 --receipt <hash>`. The part's registered controls are named: N41-CX's X41-06 (dummy-dep-insertion-order, instance A) and X41-01 (second-pin-behind-feature, instance B), seeded and not written here, with an acceptance line; N41-CX moved from related to deps (the controls must exist before the part is recorded)."
+  },
+  {
+   "bead": "N41-03",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the requests of S46, F-U15b-2, F-U25d-2 and H-owners-1: the register's commands are the declared example target `open_questions` (the name N15b-25, N25d-47 and N33b-03 already cite), with this bead's subcommands check --complete, due --exit, default <id> --exit and defaults-product (exit 0 ran, 1 load error or failed check, 2 unknown subcommand) and the dependants' subcommands named (calendar by N40-35; require and page by N41-05); every `frob-conformance open …` line rewritten; acceptance line and test open_questions_example_target added."
+  },
+  {
+   "bead": "N41-04",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "H-owners-1's request: the three register-wide checks, the due listing, the calendar check and the default writer are called through the declared example targets (risks of N41-01, open_questions of N41-03 and N40-35). The three mutant runners were selected by an environment switch; they are now nc-<nnnn> branches of frob-conformance at the guards they disable, under the BD-025/N38b-04 convention, numbered by the controls seeded from X41-11, X41-14 and X41-19, built by the script's --mutant option, so no real exit can run one."
+  },
+  {
+   "bead": "N41-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied F-U33b's and H-owners-1's requests: the page and require commands are subcommands this bead adds to N41-03's example target, `cargo run -p frob-conformance --example open_questions -- page|require OPEN-PROG-1 [--json]` (the form N33b-03 calls), in every line. In the exit runner's mode the visibility guard now exits 0 whenever it ran (N40-05's contract; a non-zero exit would read as not-run), a mismatch being a block with reason release-visibility (N41-REF) and unverified a warning; exit 3 stays the release checker's mode."
+  },
+  {
+   "bead": "N41-06",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied F-U39a's request: N39a-13 now calls require_record(gate) before it creates a sealed-pool family (M3-partial, M7-tournament; rehearsal stores exempt), so the sealing-order check states two call sites and the stronger guarantee (no sealed family created, or bound, without the record); the 'requested of that bead; until it exists' wording is gone."
+  },
+  {
+   "bead": "N41-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "H-owners-1's request: the transition command had no target (`cargo run -p frob-conformance -- moonshot …`, and the crate has no default binary); it is now the declared example target `moonshot` (crates/frob-conformance/examples/moonshot.rs), `cargo run -p frob-conformance --example moonshot -- <enter|release|reorder> <id> --adr <path> [--root] --json`, exit 0 written and 1 refused, in the form of --example pilots and --example bets."
+  },
+  {
+   "bead": "N41-10",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied S86's request: the OPEN-GROUND-2 row no longer says the package beads close as not funded; the record lists which packages' real rig runs are funded (none under the default), and the package beads close at M5 on their protocols and dry runs whatever the decision says (N30b-26)."
+  },
+  {
+   "bead": "N41-12",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied F-U32a-2's request: on a build ruling this bead enters KILL-PEERLINK's kill row (N40-03 format, N32a-35's trigger and fallback, decided M4, mode standing, reads) and sets PILOT-PEER-01's fallback.kill_gate to KILL-PEERLINK in the ADR's change, since N38a-09 keeps N32a-35 Blocked{kill-gate-to-register} until then; under standalone nothing is entered. Applied H-owners-1's request: machine-not-local is in 6xx with exit 6 (N35x-02), raised through MACHINE_NOT_LOCAL holding the assigned number. Applied H-owners-3's request: the bead writes variation 12 of derive.rs (machine, mac|trj, every run entry) in the change that receives the number. Acceptance lines, tests build_ruling_enters_kill_row_and_pilot_gate, standalone_enters_no_kill_row, variation_12_machine_on_run_entries, and the e2e's exit code and kill-row assertions added."
+  },
+  {
+   "bead": "N41-15",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "The M3-exit rule said N40-35's check (f) calls owner_inputs::partial_gate_has_record, but N40-35 (M0) does not depend on this M2 bead and could not; this bead now wires that call into check (f) in its own change, and N40-35 joins its deps (its test runs through check (f))."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14-REF",
+   "what": "FROB-REF-123's row lists only self-collision at stage 3, but BD-058 and VERBS-design also raise 123 for the design.edit precondition of a mirror/radial wrap of a limb mounted on the constructor's plane or axis (its image would coincide with it). Add that trigger and site (design.edit, BD-058) to the row."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "The --scene domain is 'a scene identity or name', yet N18a-12, N18a-36, N18b-23 and N18b-30 pass a compiled pack path (fixtures/*.fscene). Either admit a pack path in the row (with the path rules and their codes, as artifact-input<scene> already says in the path table) or have those scripts compile first and pass the identity, as BD-166 now does."
+  },
+  {
+   "bead": "N32ax-01",
+   "what": "It says an unapproved campaign is refused 761 at submission and 704 only at dispatch; N36-20 and N32-REF divide the two as 704 from the daemon's size classifier (BD-296) for a campaign-class queued job without an approved envelope and 761 otherwise (in process). Align with that division (BD-341 now raises 704 for the queued case)."
+  },
+  {
+   "bead": "N40-05",
+   "what": "The attached checks now have declared targets: `risks-complete` is `cargo run -p frob-conformance --example risks -- check --complete`, then `-- check --cross` (N41-01); `open-complete` is `cargo run -p frob-conformance --example open_questions -- check --complete` (N41-03); `risk-review` wraps `--example risks -- review <Mn>`. Cite these forms in the checks table."
+  },
+  {
+   "bead": "N40-35",
+   "what": "N41-03 now declares the example target `open_questions`; add your `calendar <Mn> --root <dir> --json` subcommand to it in your change and cite it as `cargo run -p frob-conformance --example open_questions -- calendar <Mn> ...` (N41-04's script calls that form). The default writer is `-- default <id> --exit <Mn>`."
+  },
+  {
+   "bead": "N41-RISK4",
+   "what": "The completeness check is now `cargo run -p frob-conformance --example risks -- check --complete` (N41-01's declared example target); cite that form."
+  },
+  {
+   "bead": "N41-OPEN8",
+   "what": "The completeness check is now `cargo run -p frob-conformance --example open_questions -- check --complete` (N41-03's declared example target); cite that form."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "Variation 12's row says MACHINE_NOT_LOCAL is 'protocol family 8xx, exit 3'; N35x-02 places machine-not-local in 6xx with exit 6 and N41-12 now accepts that. Change the row's family and exit; N41-12 writes the arm in the change that receives the number."
+  },
+  {
+   "bead": "N35-33",
+   "what": "H-owners-3 asked you to allocate MACHINE_NOT_LOCAL as a protocol-family code with exit 3; N35x-02 files machine-not-local in 6xx with exit 6 and N41-12 accepts that family. Allocate the number in 6xx (exit 6), not 8xx."
+  },
+  {
+   "bead": "N14-REF",
+   "what": "FROB-REF-113's row reads 'an actuator card with a required field of class assumed', but VERBS-design's strict_data ('a card field assumed refuses, 113') and N41-13 raise it at stage 6 for an assumed price on any card summed for cost (battery, sensor, material as well as actuator). Widen the condition to any card field of class assumed on which a stage-6 verdict rests."
+  }
+ ],
+ "unchanged": 10,
+ "notes": "Done. Unchanged: BD-153, BD-160, BD-231, BD-344, N41-07, N41-08, N41-11, N41-13, N41-14, N41-19. Rejected requests: none. N41-04's deps list is not in sort order (pre-existing; left as is). Process note: before reading the instruction closely I ran the shared read-only tools/graph_check.py for dependency paths, which this round's rules exclude (scripts not written in this session); its answers were rechecked with my own reach.py for the three new edges (N41-02 to N41-CX, N41-15 to N40-35, BD-341 to BD-296: no cycle, no milestone inversion)."
+}

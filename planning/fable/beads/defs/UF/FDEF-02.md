@@ -1,14 +1,14 @@
 ---
 key: "FDEF-02"
-title: "defect report, frankensim `fs-mbd::planar_drive`: near-straight motion at a large heading returns zero translation"
+title: "defect report, frankensim `fs-mbd::planar_drive`: near-straight motion at large heading gives zero translation"
 type: "task"
-priority: 2
+priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "traction", "upstream", "frankensim", "solid", "test"]
 parent: "WP-37"
 deps: ["BD-033", "BD-037", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-11", "BD-025", "BD-117"]
+related: []
 gates: ["INT-FSIM-05"]
 plan_refs: ["Appendix F.2 row 2", "§33.11", "§18.9", "§33.10", "Appendix F.3", "§0.1"]
 ---

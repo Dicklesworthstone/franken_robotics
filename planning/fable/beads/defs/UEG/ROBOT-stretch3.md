@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20", "BD-074"]
+deps: ["BD-066", "BD-067", "BD-074", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-diff-drive", "ZOO-mobile-manipulator", "BD-109", "N14b-04", "N14b-24", "BD-117", "ROBOT-tiago"]
+related: ["ROBOT-tiago", "ZOO-diff-drive", "ZOO-mobile-manipulator"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -40,8 +40,9 @@ vendors them unmodified.
 skid; a prismatic lift; a telescoping arm of several prismatic segments that extend together; wrist joints; a
 gripper driven through a linkage or tendon; a pan-tilt head with cameras; total mass on the order of 24 kg.
 
-**Import path.** `frob design import --format mjcf assets/robots/stretch3/source/<entry> --out
-assets/robots/stretch3/import.fbot --json`. Mapping rules exercised: joints coupled in the source by `tendon`
+**Import path.** `frob design import assets/robots/stretch3/source/<entry> --format mjcf --name stretch3 --key
+asset-stretch3-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). Mapping rules exercised: joints coupled in the source by `tendon`
 or `equality joint` elements (the telescoping segments; the gripper fingers) become one actuator driving
 several joints through a coupling matrix (a transmission), never independent actuators; cameras become
 sensors with frame, rate and clock, the rate `assumed` if the source gives none. Expected loss-report entries

@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "workspace", "gauntlet", "frob-conformance", "solid", "test"]
 parent: "WP-01"
-deps: ["NAB-01", "BD-004", "BD-025", "STD-TEST"]
-needs: ["§34.5: the ten-section `CONTRACT.md` template and `contract.toml` that `check-contracts` validates (BD-004); this lint reads the same files and is a test, not a seventh check", "§32.6: `registries/verbs.toml` verb descriptions, the second text the lint scans (BD-022)", "§0.7: the plain-names review rule whose mechanical half this lint is (N00-08, rule H-7)"]
-related: ["NAB-03", "NAB-04", "NAB-05", "NAB-06", "NAB-07", "NAB-08", "N00-01", "N00-03", "N00-08"]
+deps: ["BD-004", "BD-025", "N32a-02", "NAB-01", "STD-TEST"]
+needs: []
+related: ["NAB-03", "NAB-04", "NAB-05", "NAB-06", "NAB-07", "NJL-01"]
 gates: []
 plan_refs: ["Appendix A", "§0.2", "§0.7", "§34.5", "§34.6"]
 ---
@@ -41,17 +41,21 @@ for known terms and for a short, explicit set of term-shaped patterns.
 
 ## Scope
 
-In: the scanner, the candidate-term rules, the sense rule, the ornamental-label list, the allow file, the report
-format, the test target. Out: the registry and generator (NAB-01); the term records (NAB-03 to NAB-07); the
+In: the scanner, the candidate-term rules, the sense rule and its `[glossary]` key in the contract schema, the
+ornamental-label list, the allow file, the report format, the test target. Out: the registry and generator (NAB-01); the term records (NAB-03 to NAB-07); the
 evidence-label and wording lints (N00-01); the identifier lint (N00-03); grading whether a definition is right
 (the exit review).
 
 ## Technical approach
 
 **1. Inputs scanned.** (a) every `crates/*/CONTRACT.md`, `surface/*/CONTRACT.md`, `spark/*/CONTRACT.md`,
-`derive/*/CONTRACT.md`; (b) the `description` and `summary` fields of `registries/verbs.toml`; (c) the
+`derive/*/CONTRACT.md`; (b) the prose fields of each entry of `registries/verbs.toml` (`purpose` and the
+when-to-use sentence, from which the tool description is generated; the verb registry's schema names them); (c) the
 `meaning` fields of `registries/refusals.toml`; (d) `docs/*.md` except `docs/delivery/**` and generated files.
-Fenced code blocks and inline code spans that are not registered code terms are skipped.
+Fenced code blocks and inline code spans that are not registered code terms are skipped. The tree that is walked
+is the workspace root, or the directory named by the environment variable `FROB_LINT_ROOT` when it is set
+(DESIGN: the end-to-end script of NAB-08 runs the lint on a scratch copy holding its planted defects; the
+real tree is never edited to plant a defect).
 
 **2. What counts as a use of a term of art.** A token sequence is a *use* when one of these holds:
 
@@ -72,10 +76,16 @@ in order: an explicit qualifier in the text (`cell (mission)`, `mission cell`, `
 `owner_crate` of exactly one sense equal to the crate whose contract is being read; the contract's
 `[glossary] senses = { cell = "mission" }` table in `contract.toml`. If none decides, the finding is
 `gloss.ambiguous-sense` with the candidate senses. A crate that genuinely uses two senses declares both in
-`contract.toml` and qualifies each use.
+`contract.toml` and qualifies each use. This bead adds the optional table `[glossary]`, with its one key `senses`
+(a map from a registered term to one of its senses), to `schemas/contract.schema.json`: under the rule of
+`check-contracts` (N34-08) the bead that introduces a `contract.toml` key adds it to the schema, and a contract
+using an absent key fails `contract.schema`.
 
 **4. The ornamental-label list.** `registries/glossary.toml` carries `[[ornamental]]` records: `label`, `plain`
-(the plain name to use), `allowed_if` (the theorem whose use would license the label). A use of a `label`
+(the plain name to use), `allowed_if` (the theorem whose use would license the label). The registry schema is
+hand-written (NAB-01), so this bead adds the `[[ornamental]]` table, with exactly these three string fields, to
+`schemas/registries/glossary.schema.json` and to NAB-01's loader in the same commit (an unknown field there fails
+`gloss.schema`). A use of a `label`
 outside a record that satisfies `allowed_if` is `gloss.ornamental-label`, with the plain name printed as the
 repair. Seed records (eight): decorated cospan → composition over typed ports; sub-PROP → the same; Futamura
 projection → build-time partial evaluation; Pearl-causal model → interventions on a forkable simulator;
@@ -108,6 +118,8 @@ nothing in the ledger and claims nothing about the system; it is hygiene.
 - [ ] Each of the seven planted fixtures of the test plan fails with its named finding and the path and line.
 - [ ] A two-sense term used in a crate that owns one sense resolves without annotation; used in a third crate
       without a qualifier it fails `gloss.ambiguous-sense`.
+- [ ] `schemas/contract.schema.json` admits `[glossary] senses`; a fixture `contract.toml` carrying it passes
+      `cargo xtask check-contracts`, and one carrying `[glossary] sense` (misspelled) fails `contract.schema`.
 - [ ] The eight ornamental labels are refused in a contract and accepted inside the killed-idea register's
       generated document (which quotes them as the strong form that was rejected).
 - [ ] The allow file holds no entry without a reason, and a 41st entry fails.
@@ -130,9 +142,20 @@ nothing in the ledger and claims nothing about the system; it is hygiene.
 - `ambiguous_sense_fails`: `tier` in a contract of `frob-chronicle` with no qualifier →
   `gloss.ambiguous-sense` listing `maturity` and `physics`.
 - `qualifier_resolves`: `physics tier` and `tier (maturity)` both resolve.
+- `senses_table_decides_and_validates`: `tier` in a fixture crate whose `contract.toml` has
+  `[glossary] senses = { tier = "physics" }` resolves to `Tier (physics)`, and that `contract.toml` validates
+  against `schemas/contract.schema.json`; a sense that the term does not have fails `gloss.ambiguous-sense`.
 - `ornamental_label_fails_with_plain_name`: "a cellular sheaf over the sensor graph" →
   `gloss.ornamental-label`, repair "a least-squares pose graph".
 - `code_block_is_skipped`: an undefined phrase inside a fenced block produces no finding.
+- `prose_definition_absent_fails`: "The shadow budget (…) is the share of …" in Invariants, with no record for
+  `shadow budget` → `gloss.undefined-term` (negative control 6).
+- `deleted_registry_term_fails`: the clean fixture contract, whose Outputs section prints `` `provisional` `` as a
+  label value, checked against a copy of the registry without the `provisional` record → `gloss.undefined-term`
+  on that line (negative control 7). A deleted term is caught only where the contract uses it in one of the
+  three candidate forms of step 2, rule 3; a plain-prose use of a deleted term is invisible to the scanner,
+  which is why NAB-01's change rule removes a term only after this lint, run with the term still present,
+  reports it as `gloss.unused-term`.
 - `allow_entry_requires_reason`, `expired_allow_entry_fails`, `forty_one_allow_entries_fail`.
 - `unused_term_is_a_warning_only`.
 

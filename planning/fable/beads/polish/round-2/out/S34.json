@@ -1,0 +1,466 @@
+{
+ "round": 2,
+ "slice": "S34",
+ "reviewed": 55,
+ "changed": [
+  {
+   "bead": "BD-095",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "Applied the UJL-1 request: the bead commits fixtures/verbs/evidence/claim.json and replaces the placeholder digits of the evidence.trace registry example with the fixture's computed ClaimId (test registry_example_is_fixture_claim); a malformed identifier is FROB-REF-802 before the store is read (test malformed_claim_id_802)."
+  },
+  {
+   "bead": "N28b-37",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The episode row of the memo-kinds registry is the plan's minimum key; stated that BD-220 completes it at M2 (step-plan identity, fingerprint digest, attained class, stack-lock digest; thirteen inputs) in the same row, so the two beads no longer give two episode keys."
+  },
+  {
+   "bead": "N28b-38",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Its shadow selector (fresh hash per hit, no bound) and latch-clearing rule (administrative action) differed from BD-111/BD-220's. Adopted one selector, made precise: per-node durable hit ordinal n, phase p = low six bits of BLAKE3(kind, version, key), shadow when (n + p) mod 64 = 0 (exactly one per 64 hits of a node; one key in 64 by key hash). Rejected the per-kind ordinal with the counterexample that two keys requested alternately leave one never shadowed. Adopted BD-111's lift rule (Memo::reenable with explanation record and a re-run equal twice). Narrowed the budget/eviction/admission/pins clause to its contract, naming N33c-18/N33c-19 as implementers (their tests duplicated here were removed), with an interim refuse-at-budget rule; tests updated (exactly 100 of 6,400; restart durability; batch ordinals; lift rule); e2e needs at most 64 repeats."
+  },
+  {
+   "bead": "N28b-40",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Latency protocol and e2e ran 'against the running daemon' and started frobd, which does not exist until M2 (N32a-14); now in process with FROB_HOME at a scratch store, execution mode in the disclosure block."
+  },
+  {
+   "bead": "N28b-42",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Tripwire uses N28b-38's one selector (each episode node shadowed exactly once per 64 of its hits): at most 64 repeats, not 640."
+  },
+  {
+   "bead": "BD-220",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the U33b request in substance: one shadow selector and one lift rule, now N28b-38's per-node form (the per-kind ordinal leaves alternately requested keys unshadowed); batch ordinals reserved per node in address order; test updated. Acceptance of the episode part of GATE-ATEL-12 aligned with N28b-42's battery (seed ranges, DESIGN split of the 10^4 sequences) instead of claiming 10^4 sequences on its own."
+  },
+  {
+   "bead": "BD-222",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Common codes by kind now include 761 for run and NJL-01's field-driven codes (790; 891 to 893; 734 and 828 for file-path parameters); test appended_refusals_one_rule enumerates rows by kind and fields from the registry. Its 34 deps checked: each is a handler-building bead the M1 surface needs; kept."
+  },
+  {
+   "bead": "N29a-02",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Out list named BD-191 for HTML replay; it is telemetry.export-html (N24a-41, M2); noted that the evidence-graph recording function is BD-095's."
+  },
+  {
+   "bead": "N29a-06",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its e2e runs frob run export and frob-verify: deps add BD-095, BD-096, N29a-02, N29a-03, N29b-18 and N32a-09 as used."
+  },
+  {
+   "bead": "N29a-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the U28b and S16 requests: step 6 has five mutations in BD-090/N29a-03's check order (swapped chunk files fail content at the lower index, exchanged index entries fail header, a changed prev fails chain); the 'verify skips chains' control uses the changed-prev mutation; helper tests swap_two_entries and edit_prev."
+  },
+  {
+   "bead": "N29a-09",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the S18 request: blocked/unblocked cause tags are N40-11's closed set (sibling-primitive-missing with sibling, primitive and upstream_item; sibling-defect; owner-input; compute; own-work; other with reason); out-of-set or untagged refused by append; retag is a new line; test blocked_cause_closed_set. Also reconciled with N29b-10: an unresolvable pass is stored as fail with 869 in refusals and append returns 869; cause value evidence-unavailable allowed for re-affirmation's fail line (N29bp1-01)."
+  },
+  {
+   "bead": "N29a-23",
+   "kinds": [
+    "complete",
+    "users",
+    "tests",
+    "deps"
+   ],
+   "what": "Applied the U32b request: job.list gains all_agents (option_capabilities session:read; other principals' id, namespace, verb, class, slots, state, never results; visibility rule N32b-03's in dispatch) and the streaming form of follow on the daemon (one progress frame per job event with the new frontier, line-delimited JSON on the CLI, KILL-TUI's fallback). Order key aligned with N32a-10 (admission sequence, job id), not submission instant. Dep N32a-10 (the cursor it uses). Criteria and tests added."
+  },
+  {
+   "bead": "VERBS-job",
+   "kinds": [
+    "correct",
+    "complete",
+    "deps"
+   ],
+   "what": "Applied the S10 request (761 for run, NJL-01 field-driven codes, exit 4 for 70x and 761, kind-and-fields wording; deps NJL-04, NJL-05), the U37 scope-name rule of BD-258, and the U32b rows: job.list all_agents with option_capabilities session:read and the follow event stream; order key (admission sequence, job id); test option_scopes."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "S10 request applied (761, NJL-01 field-driven codes, 70x and 761, kind and fields; deps NJL-04, NJL-05); scope names follow BD-258's decided rule (U37 request)."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "S10 request applied (761, NJL-01 field-driven codes, 70x and 761, kind and fields; deps NJL-04, NJL-05); scope names follow BD-258's decided rule."
+  },
+  {
+   "bead": "VERBS-sense",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "S10 request applied (761, NJL-01 field-driven codes, 70x and 761, kind and fields; dep NJL-04); U37 request: scope names follow BD-258's decided cluster rule, run and write imply read, closed at mint and derivation."
+  },
+  {
+   "bead": "VERBS-store",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "S10 request applied (761, NJL-01 field-driven codes, 70x and 761, kind and fields; deps NJL-04, NJL-05); scope names follow BD-258's decided rule."
+  },
+  {
+   "bead": "VERBS-study",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "S10 request applied (761, NJL-01 field-driven codes, 70x and 761, kind and fields; deps NJL-04, NJL-05); study.cancel cites NJL-02's LATE_ROWS (N32a-13, lands M3) for its 724 answer at M2; scope names follow BD-258."
+  },
+  {
+   "bead": "VERBS-train",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "S10 request applied; train.export writes outside the store (exports = true) and now lists the export door's codes 731, 734 (out) and 816 beside 733 and 828, with the authorization block in its output; test export_row_through_door; scope names follow BD-258."
+  },
+  {
+   "bead": "VERBS-scene",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "S10 request applied (convention 2/3, kind and fields, deps); scene.import lists 828 for its importer's reader (N37-03 sniffs each member file) and declares its path a foreign-file parameter (734, 828, 893 by NJL-01); scene.retrofit cites LATE_ROWS. Found: the scene.import example was the M5 real-place form without the required kind, which fails NJL-02's ordinary rule once N19a-46's asset form lists the row implemented at M3; example is now N19a-46's asset import, and the script expects 724 for --kind place until BD-398 (test scene_import_forms, e2e step 8)."
+  },
+  {
+   "bead": "BD-096",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its INV-CHRON-04 oracle and pagination_pinned test drive the store's pinned pagination at M1: dep N29a-04 added (no cycle); oracle text names the mechanism and what the second wave adds."
+  },
+  {
+   "bead": "BD-097",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "artifact.list and run.list are paginated verbs (frob.cursor/1, follow, 806/807 per VERBS-artifact and VERBS-run): dep N32a-10 added, exit-3 list includes 806 and 807, test list_cursor_changed_filter_806."
+  },
+  {
+   "bead": "N29b-11",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Family P expected FROB-REF-896 through the surface; it is 806 with cause 896 (896 only at the store interface, N29-REF) and 807 for a collected frontier; the subject is N32a-10's M1 cursor under BD-209's M2 collector plus follow segments. Memo eviction is N33c-18/N33c-19's mechanism: deps N32a-10, N33c-18, N33c-19 added; tests renamed and follow_segment_exact added."
+  },
+  {
+   "bead": "N29b-09",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Applied the U34 request: the sibling's DecisionId is mirrored for its text form by N34-11 (execution identifier, never hashed, no graph node), so the four-identifier graph decision stands; the options table and the compatibility test cover it."
+  },
+  {
+   "bead": "N29b-10",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Its rule that an unresolvable closing line is refused and nothing written contradicted N29a-09's append rule (stored as fail with the refusal); aligned: the recorder gets 869, the log gets a fail line with 869, never a pass; gate registry part still writes nothing. Test beadlog_cites updated."
+  },
+  {
+   "bead": "N29b-15",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Modules 01-04 and 12 invoke N29b-11's scenario families (P, R, L) at M2: dep N29b-11 added (was related)."
+  },
+  {
+   "bead": "N29bp1-01",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "The demotion line it appends must validate as frob.beadlog/1; stated how its required fields are filled (event, commit, host, toolchain; claim_type, determinism, state_hash and gate copied from the closing line; metrics missing_nodes) and tested."
+  },
+  {
+   "bead": "N32a-08",
+   "kinds": [
+    "deps",
+    "tests",
+    "users",
+    "complete"
+   ],
+   "what": "Applied the S09 request: dep N32-CX; allocates the CX-349 and CX-350 control rows (GATE-TETHER-08) per N32-CX's rule; tests cx_349_range_keys_caught and cx_350_episode_free_keys_caught; criterion added. (Resumed pass.) No bead said how a cancel request reaches a job that runs in process with no daemon, although this bead's own e2e 'runs a cancel', N29a-05's stop steps need one at M1 and BD-170 assumes SIGINT cancels such a run. Added (DESIGN): for the duration of an in-process job frob handles SIGINT and SIGTERM; the first signal is the cancel request (steps 1 to 6, one envelope, state cancelled, exit 2), a second exits 9 and leaves the job to recovery step 4; --on-cancel is not consulted in process. Criterion, tests in_process_interrupt_cancels, second_interrupt_exits_9, on_cancel_leave_not_consulted_in_process; e2e names the signal; label frob-cli."
+  },
+  {
+   "bead": "N32a-09",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Applied the S09 request: dep N32-CX; allocates the CX-345 control row (GATE-TETHER-05) per N32-CX's rule; criterion extended."
+  },
+  {
+   "bead": "N32a-10",
+   "kinds": [
+    "deps",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the S09 request: dep N32-CX; allocates the CX-346 and CX-347 control rows (GATE-TETHER-06). Found: the cursor tag uses 'the daemon key' but at M1 there is no daemon and the e2e verifies a cursor in a fresh process; the key is the state root's daemon.key, created atomically by the first issuing process and adopted by frobd (N32a-14); test key_created_once."
+  },
+  {
+   "bead": "N32a-14",
+   "kinds": [
+    "correct"
+   ],
+   "what": "daemon.key is created by the first process that needs it (an in-process cursor at M1) and adopted by the daemon; held-job test cancels through the engine, not the job.cancel verb of N29a-23 which builds on this daemon. (Resumed pass.) The state-root layout said daemon.key authenticates tokens and cursors while N32b-01 and BD-258 put the token key at keys/token.key: the layout now lists both files, daemon.key for cursors and keys/token.key for tokens (created only by the daemon)."
+  },
+  {
+   "bead": "N32a-15",
+   "kinds": [
+    "correct",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "Criterion required session.show to report reserved/spent/overhead, but that M2 form is N32b-04, which depends on this bead: now the ledger's report function, exposed by N32b-04; e2e reads envelopes and the report through the harness where session.show lacks it. Stated how token budget scopes (gpu:seconds, cpu:core_seconds) set granted for the unit keys. Dep BD-138 (session.open --budget used by its e2e)."
+  },
+  {
+   "bead": "BD-210",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Five unit tests were names only (retry_then_607, device_loss_no_family_refuses_trials, cancel_ack_from_store, conflict_fails_job_indeterminate, resources_return_to_baseline); each now states its inputs and expected values (three failures then success versus four failures and 607; refused with 601 and no cross-family resume; acknowledgement read from the store; 878 at the store and 810 exit 9 with both codes; three resource numbers at baseline over 10^3 jobs)."
+  },
+  {
+   "bead": "BD-211",
+   "kinds": [
+    "tests",
+    "deps",
+    "scope"
+   ],
+   "what": "GATE-TETHER-06 and -07 had no named negative-control test on the daemon: added offset_and_time_only_variants_fail and bare_u64_schema_caught with expected values. Stated N32-CX's allocation rule: the rows of CX-345 to CX-348 were allocated at M1 by N32a-09, N32a-10 and N32a-07; this bead adds its daemon-level tests to them and binds GATE-TETHER-05 and -06, allocating none. Out list named BD-210 for the chunk-publishing transaction; it is BD-091 (BD-210 its device workers). N24a-36 and N29a-23 were in both deps and related: removed from related."
+  },
+  {
+   "bead": "N29a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Its e2e paged with --page-size 500; the registry generator's option on every paginated read is limit (NJL-01, N32a-02; the plan's own example is --limit), and an unknown option is refused with 802: now --limit 500. The round-1 requests (806 at the CLI with 896 as cause, 896 only from the store's paging interface) were already applied."
+  },
+  {
+   "bead": "N29a-05",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "The stop step group cancelled an M1 run 'from a second process through the job engine's cancel request', which the single-writer ledger refuses, and started it 'with a bounded wait' that does not exist before M2: at M1 the script now sends the in-process run an interrupt signal (N32a-08's request path) and from M2 also cancels a daemon job with frob job cancel. Stated why the budget-stop step still reaches 702 and not 701 once M2's estimate gates admission (N32a-15's slow fixture)."
+  },
+  {
+   "bead": "N32a-17",
+   "kinds": [
+    "complete"
+   ],
+   "what": "Its CLI interrupt rule covered only a call waiting on a daemon's job; added the pointer for a job that runs in the CLI's own process (no wait apart from the work, --on-cancel not consulted, first interrupt is the cancel request; rule and tests in N32a-08, same two exits)."
+  },
+  {
+   "bead": "N29a-10",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its script builds the fixture corpus with `frob sim run --tier referee` and makes a claim on the chain head of the kinematics chunks, but neither the sim.run bead nor the publishing transaction was a prerequisite, directly or transitively: deps BD-024 and BD-091 added (no cycle); Out list names them."
+  },
+  {
+   "bead": "N29b-16",
+   "kinds": [
+    "deps"
+   ],
+   "what": "Its e2e calls `frob telemetry histogram` (N29a-15, not reachable from its deps) and PO-CHRON-07's record cites the single-precision part of GATE-CHRON-03 (BD-208, reachable only through an incidental chain): deps N29a-15 and BD-208 added; stated that PO-07 is discharged only when both parts of the gate row are cited (BD-092 at M1, BD-208 at M2). Arithmetic rechecked (640 and 112 bins, standard deviation 300, n²/2¹²⁹): unchanged."
+  },
+  {
+   "bead": "N29b-18",
+   "kinds": [
+    "correct",
+    "users",
+    "tests",
+    "deps"
+   ],
+   "what": "Its script ran each candidate with `frob sim run --chunk-len <L>`, an option no bead defined and the sim.run row does not list (it would be refused with 802). Added (DESIGN): sim.run gains the input chunk_len (a power of two from 64 to 1,024, default the decided value, otherwise 802), copied into the manifest field of BD-090 and so into the run identity; rejected an environment variable and a store-wide setting, with reasons. Criterion and test chunk_len_input_validated; deps BD-024 and VERBS-sim. Arithmetic rechecked (2,343.75 rows/s, 5.2 s, 205 kB, 330 MB): unchanged."
+  },
+  {
+   "bead": "N32a-18",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The overlapping-ranges fault was stated with C = 50, a chunk length the fixture job (default 256, and now an admitted set of powers of two) can never have: restated on the run's own C ([0, 2C) and [C, 3C), the plan's ranges scaled), with the mid-chunk remainder as the publish that 885 refuses."
+  },
+  {
+   "bead": "N32ax-01",
+   "kinds": [
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "Its M2 tests and known answer exercised the size class (704) and the admission guard (703), which are BD-296's and arrive at M3, and the budget stage (701) of N32a-15 without depending on it. Now: dep N32a-15; the pipeline is six named stage slots of which size_class and guard are empty until BD-296 fills them; tests stage_order_envelope_after_budget and stage_slots_fixed (a synthetic stage in each empty slot); the exit-code fixture has the six rows that exist at M2 and reports the 704 and 703 rows `not yet due` until BD-296 adds them (fifteen rows then)."
+  },
+  {
+   "bead": "N32b-01",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "risks"
+   ],
+   "what": "Applied the U37 request in the only direction the graph allows: BD-258 (M3) depends on this bead, so Scopes::close_implied is written here and minting closes the requested set before the tag; the rule is made precise by spelling (a scope spelled <c>:run or <c>:write of a registry cluster implies <c>:read when the catalogue has it, the plan-listed mission:run, nemesis:run, autopsy:run, qual:run and cert:write included; study:submit, imports, admin, export, private and budget scopes imply nothing). Found two conflicts: the token key was `keys/token.key` here and `daemon.key` in N32a-14 (now two files with the reason: only a daemon may create the token key; rotating it must not expire cursors); and the token was read from FROB_SESSION_TOKEN here but from `--session <token>` and FROB_SESSION in BD-022, BD-138 and N32a-27 (DESIGN: never an argument value; --session and FROB_SESSION carry the session identifier; a token there is 802). Criteria and tests implied_read_closed_at_mint, token_on_argv_refused, token_and_cursor_keys_are_separate."
+  },
+  {
+   "bead": "N32b-04",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the UJL-2 request: dep VERBS-session; the two registry entries now carry public = true and session.show paginated = true as that bead's rows do (registry_rows_match compares them field for field). session.open's appended list lacked 808 (NJL-01's mutate row). With the implied-read rule the stored and shown scope set is closed: the criterion, the known answer of the worked session and open_show_roundtrip now expect the six requested scopes plus their implied reads, computed from the catalogue; stated that `cap` is N32a-15's `granted` read through budget::report and that `delegated` is 0 before M3."
+  },
+  {
+   "bead": "N32b-20",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "risks"
+   ],
+   "what": "Applied both UJL-2 requests: doctor's selector is --section (repeatable), the sections carry BD-022's names (stack for the pin checks, kernel_cache), store is registered through BD-022's section interface, the output is one block per section, and finding codes begin with the section's name; dep VERBS-operator (moved out of related) and the stale sentence about operator:read removed. Found: the kernel_cache check hashed every entry with no bound against BD-022's rule of 2 s per section: entries are now hashed most recently used first and those not reached are an info finding, never ok. Tests doctor_cache_partial_is_info, doctor_store_section_registered, finding_codes_prefixed_by_section."
+  },
+  {
+   "bead": "N32b-24",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests"
+   ],
+   "what": "Applied the S09 request: it no longer allocates a control for each counterexample, which would have made a second row per mutant; the six rows of CX-345 to CX-350 are those allocated at M1 by N32a-09, N32a-10, N32a-07 and N32a-08, to which it adds its binary-level tests and binds GATE-TETHER-05, -06 and -08; it allocates one row, for the packet case. Applied the U38b-1 request: dep BD-146 (a capstone) replaced by the mechanisms used, N38a-13 (the known-answer run) and N38b-05 (the seeded control registry, which brings the runner N38b-04). Criterion and test one_row_per_mutant; the packet numbers stated. The arithmetic of the twelve known answers was rechecked and stands."
+  },
+  {
+   "bead": "N33a-17",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests",
+    "deps",
+    "risks"
+   ],
+   "what": "Its refusals were 'rejected with the reason named' with no code, although N33a-13 requires every RefereeRefusal to carry a registered code and each adapter bead to add its rows to the closed mapping. Five rows added, checked in a fixed order: FROB-REF-891 for an unknown major version and FROB-REF-816 for the authorization flags (the codes the workspace and safety registries require of any reader of this system's artifacts), and FROB-REF-792 for a missing stack receipt, a missing or changed blob and a machine path at pack (DESIGN). Deps N34-REF and N37-REF; tests refusal_codes_registered and first_fault_is_stable; Considerations gained the fail-closed default if fs-session or fs-package cannot be admitted, and the cost of check."
+  },
+  {
+   "bead": "N33c-15",
+   "kinds": [
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "Its only end-to-end coverage was a step of N33c-17's script, an M2 bead, so the admission it makes at M1 (probe, one-package check, minimizer, admission record) was run by no script at its own milestone. It now owns scripts/e2e/lab_runtime_admission.sh: seven steps with STD-E2E logging (metrics with thresholds, trace, fixture and record hashes, the paths needed on failure); dep STD-E2E and label e2e; a criterion with a planted second asupersync package."
+  },
+  {
+   "bead": "N33c-16",
+   "kinds": [
+    "correct"
+   ],
+   "what": "The dual-run job had 4 chunks of 50 ticks; its real side is a real run and 50 is not an admissible chunk length (N29b-18): now one episode of 256 ticks published as 4 chunks of 64."
+  },
+  {
+   "bead": "N33c-17",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "Step 1 of its script calls N33c-15's lab_runtime_admission.sh and folds its summary in, instead of restating the probe."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-111",
+   "what": "Adopt the memo graph's one shadow selector as stated in N28b-38 (which BD-111 depends on and which implements it in shadow.rs): per-NODE durable hit ordinal n and phase p = low six bits of BLAKE3(kind, kind version, key), shadow when (n + p) mod 64 = 0. The per-kind ordinal with a phase from the kind starves keys whose hits recur with a period sharing a factor with 64: two keys of one kind requested alternately (an agent re-checking designs A and B) put all of one key's hits on even ordinals and the other's on odd, so one of them is never shadowed. Tests shadow_window_has_exactly_one and shadow_ordinal_survives_restart become per node. Also its store-policy paragraph says 'the policy bead is BD-220; until then LRU': eviction is N33c-18/N33c-19 at M1 under N28b-38's clause."
+  },
+  {
+   "bead": "N28b-41",
+   "what": "Its shadow paragraph cites N28b-38's selector as 'hashes the key with the node's hit ordinal'; N28b-38 now states it exactly (phase from BLAKE3(kind, version, key), rate from the per-node durable ordinal, (n + p) mod 64 = 0): each class's shared node is shadowed exactly once per 64 of its member hits."
+  },
+  {
+   "bead": "NJL-02",
+   "what": "LATE_ROWS lists scene.import (M3; BD-398, M5), but N19a-46 (M3) ships its asset form, so from M3 the build lists the row implemented (reduced form) and your ordinary rule applies; the entry never takes effect. VERBS-scene now uses N19a-46's asset import as the row's example and its script expects 724 for --kind place until BD-398. Consider removing scene.import from LATE_ROWS or noting that it covers only the place form's call, not the row."
+  },
+  {
+   "bead": "N24a-36",
+   "what": "Its e2e pages with `frob telemetry query … --page-size 500`; the option the registry generator adds to every paginated read is `limit` (NJL-01, N32a-02: cursor, limit, follow; the plan's own example is `frob mission show … --limit 3`), and an unknown option is refused with FROB-REF-802. Use --limit. The same spelling is in N24a-39, BD-088 (telemetry query), N25c-22, N25a-24 (mission show) and N17b-18 (phylum map)."
+  },
+  {
+   "bead": "BD-170",
+   "what": "Its e2e step 6 cancels an in-process run with SIGINT and asserts a `cancelled` receipt: that request path is now specified in N32a-08 (first interrupt of an in-process job is its cancel request; exit 2, one envelope); name N32a-08 there (it is already upstream of the job engine you use) and expect exit 2."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "The sim.run row lists no input for several options that scripts across the beads pass and that an unknown-parameter rule would refuse with 802: `telemetry` (36 beads call `frob sim run … --telemetry T0|T1|T2`, also `task-all` and `packets`; no bead defines the option), `episodes` (N32a-18, N29a-16, N19b-10, BD-301), `seed` and `fixture` (defined in BD-024), and `chunk_len` (added by N29b-18: a power of two from 64 to 1,024 control ticks, default the decided L, otherwise 802; it enters the run identity). List them in the row, with the bead that implements each."
+  },
+  {
+   "bead": "BD-296",
+   "what": "N32ax-01 now keeps the admission pipeline as six named stage slots (preconditions, budget, size_class, envelope, guard, transaction) with size_class and guard empty until this bead: register the size classifier (704) and the admission guard (703) into those two slots, add the order tests against the real stages (a refusing check or an over-budget request is never answered 704 or 703; guard last), and add the 704 and 703 rows to crates/frob-conformance/fixtures/tether/admission_stage_order.toml (five conditions singly and in pairs, fifteen rows)."
+  },
+  {
+   "bead": "BD-258",
+   "what": "(1) It says 'this bead adds the closure as one function (Scopes::close_implied) called by N32b-01's minting', but it is M3 and depends on N32b-01 (M2), where minting is: the function is now written in N32b-01 and called here and by N32b-02; say so. (2) 'Named scopes imply nothing' is ambiguous for the plan-listed scopes with the cluster spelling (mission:run, nemesis:run, autopsy:run, qual:run, cert:write): N32b-01 states the rule by spelling (<c>:run and <c>:write of a registry cluster imply <c>:read when the catalogue has it; the worked session holds mission:run and reads its mission answers); adopt the same sentence. (3) The cursor key is a second file, <state root>/daemon.key (N32a-10, N32a-14); keys/token.key is the token key only."
+  },
+  {
+   "bead": "BD-022",
+   "what": "Its common flag `--session <token>` 'Session token; also read from FROB_SESSION' conflicts with N32b-01 (and BD-258, N37-02, NJL-02): a token travels only in FROB_SESSION_TOKEN, a file named by --session-token-file, or the HTTP bearer header, never as an argument value (argument vectors are visible in the process table and in every recorded command). N32b-01 now states that `--session` and FROB_SESSION carry the session identifier s:… (not a credential; optional from M2; must equal the token's session) and that a token string there is FROB-REF-802. Reword the flag row; the same wording is in BD-138 ('the --session value or FROB_SESSION') and N32a-27 ('the same token string works as --session on the CLI, as FROB_SESSION for stdio')."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "Its kinds table gives on_cancel the values `leave_running` (default) or `cancel_job`; BD-022 and N32a-17 (the bead that serves the option) use `leave` (default) and `cancel_job`. One spelling: `leave`."
+  },
+  {
+   "bead": "N33a-13",
+   "what": "N33a-17 adds the five rows of the `Session` adapter to your closed mapping, with two new arms of RefereeRefusalKind: FormatVersion (FROB-REF-891, AfterChange) and AuthorizationFlags (FROB-REF-816, Never). The other three use existing arms with FROB-REF-792: OutsideDomain for a manifest without a stack receipt and for a machine path at pack, and Other with retry Never for a missing or changed blob. List the two arms, and say that an adapter raises a workspace code (891, 816) where a registry requires it of every reader of this system's artifacts."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 55 beads reviewed: 32 by the pass that was interrupted and the other 23 by this one, which changed 18 of them and confirmed 5 unchanged (BD-091, N29a-24, N29b-19, N32a-16, N32a-19); it also extended two beads the first pass had changed (N32a-08, N32a-14). The first pass's figure of 10 unchanged was not borne out, and requests addressed to N32b-01, N32b-04, N32b-20 and N32b-24 had not yet been applied. The slice is not settled: this pass made DESIGN choices that beads of other slices must follow (an in-process job is cancelled by an interrupt signal; sim.run takes chunk_len; a token is never an argument value and has its own key file; implied read goes by the scope's spelling; the admission pipeline is six named stage slots), carried by eight new requests, so the next round should check that they were taken up."
+}

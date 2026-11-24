@@ -1,0 +1,97 @@
+{
+ "round": 4,
+ "slice": "H-verbs-7",
+ "reviewed": 5,
+ "changed": [
+  {
+   "bead": "VERBS-run",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Resumed: the interrupted reviewer's edits (Background count 244 with NJL-03 as count of record; FROB-REF-883 on run.export, BD-387's read guard, entered by N30-REF at M1 and so needing no staging; run.show --phase-ledger in N21a-27's two forms, exit 0 with frob.stepprofile/1 for a run recorded with sim.run --profile-kernels, else job-level phases with per-kernel rows and field_tile_share `unavailable`, exit 2, next action with --profile-kernels; Implemented-by and notes state that N21a-27 builds the option; BD-205's fork defaults (the parent's ProfileRecord, --on-degraded outside the pins) and admission order 245, 247, 604, 562, 894; conventions item 2 to NJL-01's kinds table: x-frob-key in place of a required idempotency_key, on_cancel leave|cancel_job, 808 by int53 field, variations 10 to 13 by reference, and convention 14's envelope_scope; kind_behaviour six properties) were read whole against N21a-27, BD-205, N30-REF, NJL-01 and KNOWN_DRIFTS 14 and found complete and coherent. Added: run.fork's params entry children = artifact-input<frob.fork.children/1> (the unit test asserted 734 and 828 for --children, but no params entry declared its kind, so the generator would have appended neither and the test could not pass); the stale 'scope names are proposals until BD-258' replaced by BD-258's decided rule."
+  },
+  {
+   "bead": "VERBS-scene",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Resumed and completed. Checked the interrupted reviewer's edits (244; scene.purge's handler in frob-verbs; slugs asset-source-not-default-pipeline and scene-edit-invalid; 303 paragraph; grid as artifact-input<frob.scene.grid/1>; bank --device rules; show/status; compile's scene-edit-invalid; conventions item 2 with envelope_scope). Finished: FROB-REF-303 on scene.fit (N19b-27's .fclear blob checks), scene.list and scene.show (BD-162's planted pack), and in the TOML example and refusal_lists test; scene.import's C13 sentence replaced by the worded refusal asset-source-not-default-pipeline, also listed on scene.gen from M5 (--populated, BD-399); scene.purge block owner frob-verbs to agree with N37-19 and N19a-02; scene.gen --grid spelled per BD-165 (levels >= 2, columns, tile_m), --brick-layout 8|9 per N19c-31, --actors per N38a-33 (interior only, 802 on terrain, 724 without frontier-actors or after KILL-DRESSING, combines with --seeds, --address, --populated); scene.list outputs the twelve columns BD-163 fixes plus the privacy mark; scene.split --rule typed by action (rule string under create, 1-based index under audit) with BD-235's selectors and N19c-13's episode:<name>:<lo>..<hi>; scene.import --profile list from registries/import-profiles.toml (asset-default; scene-collection, scan-store, articulated-object, generic at M3; populated-interior, small-rigid, kitchen-fixture, kitchen-layout at M5); the LATE_ROWS sentence for scene.import's place form replaced (NJL-02 lists thirteen rows, scene.import not among them); kind_behaviour six properties; new tests scene_split_rule_by_action and the gen forms. Convention 13: purge, --repair, bank and notes narration restated as facts after checking N37-19, N37-21, N19a-46, BD-398, N19c-14/20/21/24. Defects outside the requests: NEG-23's scan-profile-absent (raised by the pack reader's geometry accessors) and N35x-02's import-articulation-interpenetrates (NEG-24, NEG-20 joint sweep) were on no row, so scene.compile, scene.fit, scene.show and scene.import would have raised unlisted codes and failed the conformance rule; listed by slug."
+  },
+  {
+   "bead": "VERBS-sense",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Resumed: only conventions item 2 had been edited (checked, complete). Added: Background 244; sense.observability --spacing <metres> (default 0.5 m) and --lambda-warn <value> per N20a-34; sense.profile's frontier_models block and Extended-by moved to N20ap3-01; sense.visibility's third motion form --trajectory <run> (run id or .frun recorded at T2; 802 without the pose streams or with two motion forms), --target-filter kinds and --age-bound confirmed by N20b-33, and its trajectory parameter declared artifact-input<run> in the paths table (a .frun path would otherwise have lacked 734, 828, 891); the open question on the design argument closed by N34-24's one-kind rule; sense.schedule --window per BD-078 (C13 finding fixed). Convention 13: the fixture-shorthand, scope and missing-key narration restated as facts after checking BD-078, N20b-16, BD-134, N13-36, N20a-37, -39, -40, -48. Unit tests: inputs_by_row extended; kind_behaviour six properties."
+  },
+  {
+   "bead": "VERBS-session",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "users"
+   ],
+   "what": "Resumed: only conventions item 2 had been edited (checked, complete). Added: Background 244; session.open's 'N32b-04 is asked to add it' replaced by N32b-04's rule (one granted principal by default, else 802 at /principal; unlisted or none granted 723; omitted scopes grant no non-budget scope; an omitted budget unit takes the grant's amount; a root call presenting a token is 723, so session_open over MCP is derive-only) and --derive as BD-258 spells it; session.show's own session input renamed of_session (N32bx-01) and its own limit, cursor and follow dropped (generated by pagination; common-property-shadowed would have failed the build and --session could never reach the audit action); session.show gains phases (M1, N28a-03) with its output block; which test compares what is stated; acceptance, e2e step 8 and a new show_inputs test use --of-session; the stale scope-proposals paragraph replaced by BD-258's rule."
+  },
+  {
+   "bead": "VERBS-shield",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Not touched by the interrupted reviewer. Added: Background 244; conventions item 2 to NJL-01's kinds table with envelope_scope, keeping the cluster's path-parameter tail; FROB-REF-451 on shield.check (a .fenergy copy whose w_abs_j exceeds the card's W_abs, N22bx-01, as N22-REF lists) and in refusal_lists; shield.fit --table named as params table = artifact-input<subsystem>, format frob.shield.subsystem/1 (N22b-35); the stale 'which N22-REF does not yet list' replaced by the state of N22-REF and the ledger; convention 13: the --budget to --energy-budget narration restated as fact after checking BD-337, BD-338, N22b-16, N22b-18, ART-L5, NS-23, N34p1-03; kind_behaviour six properties; the stale scope-proposals paragraph replaced by BD-258's rule."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N19cp1-02",
+   "what": "Its stage-A script records the living-world fixtures by a plain `frob sim run … --key kfa-a-…` and then reads a from `frob run show <run> --phase-ledger`; for a run recorded without `--profile-kernels`, N21a-27 (and VERBS-run's row) prints field_tile_share as `unavailable` with exit 2, so stage A cannot read a. Record the three profile runs with `--profile-kernels` (VERBS-sim's sim.run option). Also state that N21a-27 builds the option (drop 'the bead the row asks to build it; round 3: …', convention 13)."
+  },
+  {
+   "bead": "BD-205",
+   "what": "VERBS-run now declares run.fork's `--children` plan as the params entry `children = \"artifact-input<frob.fork.children/1>\"` (891, 734 and 828 appended). As the bead that defines the child plan `frob.fork.children/1`, enter its row in `registries/formats.toml` (N34-27's rule fmt.param-without-row) and state the parameter kind in the verb section."
+  },
+  {
+   "bead": "N32b-04",
+   "what": "session.show now has the input `phases` (N28a-03, M1, so present in every M2 build) and N32bx-01's foreign-session input is spelled `of_session` (VERBS-session). `registry_rows_match` excepts only N32bx-01's fields: if it compares input properties, compare `phases` too or except it beside N32bx-01's, and name the foreign-session input `of_session`."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "(1) Convention 14: the registry beads now list `envelope_scope` (`--envelope-scope <gate:…|campaign:…|pretrain:…>`) among the run kind's common properties (six); the kinds table still lists five. (2) The 'known case' of the lint common-property-shadowed (session.show's own `session`, `limit`, `cursor`, `follow`, 'requested of VERBS-session and N32bx-01') is fixed in VERBS-session (`of_session`, paging generated); state it as a planted negative control, not a pending request (convention 13)."
+  },
+  {
+   "bead": "N19-REF",
+   "what": "N35x-02's ledger row `import-articulation-interpenetrates` (3xx, exit 3, retry after-change, no proposal, no interim; raised by the joint sweeps of NEG-24 and NEG-20) says it is registered by N19-REF, but N19-REF's late worded rows do not carry it. Enter it with its block, repairs and a named constant; VERBS-scene's scene.import lists it by slug."
+  },
+  {
+   "bead": "NEG-24",
+   "what": "The joint-sweep validation 'refuses the import with the part and the joint value named' without naming the refusal: it is N35x-02's `import-articulation-interpenetrates` (3xx, exit 3), raised behind the constant N19-REF enters; scene.import's row in VERBS-scene lists it."
+  },
+  {
+   "bead": "NEG-20",
+   "what": "The kitchen-fixture joint sweep 'refuses the import with the part and the joint value named' without naming the refusal: it is N35x-02's `import-articulation-interpenetrates` (3xx, exit 3), raised behind the constant N19-REF enters; scene.import's row in VERBS-scene lists it."
+  },
+  {
+   "bead": "NEG-23",
+   "what": "VERBS-scene now lists `scan-profile-absent` on scene.compile (derived form on a scan base), scene.fit and scene.show (--probe, --route, --corridor), from your list of consumers. If another scene verb's handler reads a scan pack's geometry through the reader's accessors (scene.accept, scene.bank admit, scene.retrofit), name it so the registry row lists the code."
+  }
+ ],
+ "answered": {
+  "added": 37,
+  "holds": 0,
+  "declined": 0
+ },
+ "unchanged": 0,
+ "notes": "Resumed: the interrupted reviewer had finished VERBS-run and half of VERBS-scene, which are completed, and sense, session and shield are reviewed in full; all 37 slice entries were added as asked. The slice looks settled; scan-profile-absent, import-articulation-interpenetrates, run.fork's params kind and the stale scope-proposal text were fixed outside the requests, and several requesting beads (BD-165, N19c-31, N38a-33, N20a-34, N20b-33, N28a-03, N22b-35) can now restate their requests as facts."
+}

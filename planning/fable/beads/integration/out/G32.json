@@ -1,10 +1,3225 @@
 {
  "group": "G32",
- "needs": [],
- "edges": [],
- "superseded": [],
- "cross_group_duplicates": [],
- "new_beads": [],
- "gaps": [],
- "fixes": []
+ "needs": [
+  {
+   "bead": "BD-022",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-03",
+    "N33a-04",
+    "N33a-07"
+   ],
+   "note": "doctor prints the stack lock (parsed by N33a-03), the resolution receipt (N33a-04) and the admission records (N33a-07); BD-001 creates the first lock and receipt and is already reached through BD-005"
+  },
+  {
+   "bead": "BD-022",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21c-04"
+   ],
+   "note": "spark.devices is a verb built on this skeleton (N21c-04 depends on BD-022); doctor and capabilities embed its list once it exists and print an empty device list before"
+  },
+  {
+   "bead": "BD-022",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N38b-18",
+    "N38b-19"
+   ],
+   "note": "the gate record that capabilities reads and the recorder that writes a PASS row with its caught control"
+  },
+  {
+   "bead": "BD-022",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "BD-037"
+   ],
+   "note": "BD-037 depends on BD-023 and so on this bead, and a seed does not depend on a higher-numbered seed; doctor lists whatever rows registries/upstream.toml holds"
+  },
+  {
+   "bead": "BD-023",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-26"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-023",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-03",
+    "N33c-09"
+   ],
+   "note": "check-deps with one asupersync per binary and forbidden sibling forms (N34-03) and the suite deny rules for asupersync 0.5.0 and the registry package (N33c-09)"
+  },
+  {
+   "bead": "BD-023",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33a-02",
+    "N33a-07"
+   ],
+   "note": "the fastmcp_rust row among the foundation rows of the stack lock, and the admission record with DEPENDENCY_ADMISSION.md"
+  },
+  {
+   "bead": "BD-137",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N14a-21",
+    "BD-065",
+    "N14a-25"
+   ],
+   "note": "design.new and design.show (N14a-21), design.import (BD-065; the MJCF half BD-066 is already a dependency), design.export (N14a-25)"
+  },
+  {
+   "bead": "BD-137",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-137",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-304"
+   ],
+   "note": "later milestone (M3), and BD-304 reaches this bead through BD-298; the mark x-frob-untrusted is applied to the M1 schemas in this bead"
+  },
+  {
+   "bead": "BD-137",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N33b-19",
+    "BD-124"
+   ],
+   "note": "N33b-19 is the verb bead (study.plan, study.submit, study.status, eval.preanalyze, eval.compare on the CPU); BD-124 is the engine under it"
+  },
+  {
+   "bead": "BD-138",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "later milestone (M3); the M1 session is a local record, as the bead says"
+  },
+  {
+   "bead": "BD-211",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-096",
+    "N33c-16"
+   ],
+   "note": "the lab-runtime harness (BD-096) and its lab-clock device stub (N33c-16); BD-210 is already a direct dependency"
+  },
+  {
+   "bead": "BD-211",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-209"
+   ],
+   "note": "the cursor-pin clause of GATE-TETHER-06 is measured with collection running, so retention with tombstones is finished first"
+  },
+  {
+   "bead": "BD-211",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32-CX",
+    "BD-025"
+   ],
+   "note": "N32-CX holds the rows for CX-345 to CX-348; BD-025 is the control registry they are entered in"
+  },
+  {
+   "bead": "BD-222",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-163",
+    "BD-165"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-222",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-171",
+    "BD-184"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-222",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-167",
+    "BD-168"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-222",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-207",
+    "BD-208"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-222",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "BD-189",
+    "BD-215"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-222",
+   "n": 7,
+   "as": "related",
+   "keys": [
+    "BD-303"
+   ],
+   "note": "later milestone (M3), and BD-303 depends on this bead; the flags are declared in the M2 schemas here and gated by BD-303"
+  },
+  {
+   "bead": "BD-138",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-210",
+    "N29a-23"
+   ],
+   "note": "later milestone (M2): the daemon forms of the job verbs are N29a-23 on BD-210; the in-process CPU forms of job.wait and job.cancel are served in this bead"
+  },
+  {
+   "bead": "BD-222",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N29a-23",
+    "BD-210"
+   ],
+   "note": "N29a-23 is the verb bead (job.list, job.status, job.wait, job.find, job.cancel); BD-210 is the device job protocol under it"
+  },
+  {
+   "bead": "BD-295",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21b-21"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-295",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21b-20"
+   ],
+   "note": "the pilot of slot dispatch; a Frontier-style ceiling is on record before the mechanism is funded"
+  },
+  {
+   "bead": "BD-295",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N17a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-295",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "BD-181 is already a direct dependency"
+  },
+  {
+   "bead": "BD-296",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-203",
+    "BD-189"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-296",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N21c-35"
+   ],
+   "note": "the owner decision on the compute envelope; until it is taken the campaign class is refused under the default (one device, one hour per GPU job), enforced by N36-20, already reached through BD-219"
+  },
+  {
+   "bead": "BD-296",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-309"
+   ],
+   "note": "BD-309 depends on this bead and publishes its tables; a seed does not depend on a higher-numbered seed"
+  },
+  {
+   "bead": "BD-297",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "the fingerprint fields that define an epoch; BD-219 is already a direct dependency"
+  },
+  {
+   "bead": "BD-297",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-309"
+   ],
+   "note": "the DC-09 monitor reads this bead's coverage figures; BD-309 is a higher-numbered seed and the consumer"
+  },
+  {
+   "bead": "BD-298",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-312"
+   ],
+   "note": "seed order: the two close together; BD-312 registers the M3 verbs and the tools are generated from whatever the registry holds"
+  },
+  {
+   "bead": "BD-298",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-304"
+   ],
+   "note": "BD-304 depends on this bead (it sweeps the tool descriptions, prompts and next_actions built here)"
+  },
+  {
+   "bead": "BD-298",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N39b-31"
+   ],
+   "note": "the owner's decision on the common agent (model, revision, caps); the per-harness table with pinned versions is registries/mcp_clients.toml of its dependency N32a-12"
+  },
+  {
+   "bead": "BD-299",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32-REF",
+    "N12-REF",
+    "N13-REF",
+    "N14-REF",
+    "N15-REF",
+    "N16-REF",
+    "N17-REF",
+    "N18-REF",
+    "N19-REF",
+    "N20-REF",
+    "N21-REF",
+    "N22-REF",
+    "N23-REF",
+    "N24-REF",
+    "N25-REF",
+    "N26-REF",
+    "N27-REF",
+    "N28-REF",
+    "N29-REF",
+    "N30-REF",
+    "N33-REF",
+    "N34-REF",
+    "N35-REF",
+    "N36-REF",
+    "N37-REF",
+    "N38-REF",
+    "N39-REF",
+    "N41-REF"
+   ],
+   "note": "every chapter registry due by M3 (N31-REF is M5 and joins with BD-409); no bead owns the catalogue as a whole, which is reported under gaps; the loader BD-005 is reached through BD-022"
+  },
+  {
+   "bead": "BD-299",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-312"
+   ],
+   "note": "seed order; the gate is measured over whatever the registry holds at the M3 freeze, and BD-313 depends on both"
+  },
+  {
+   "bead": "BD-299",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-261"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-312",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-279",
+    "BD-280",
+    "BD-283"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-312",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-271",
+    "BD-273",
+    "BD-274",
+    "BD-276",
+    "BD-278"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-312",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-262",
+    "BD-263",
+    "BD-254",
+    "N24b-15"
+   ],
+   "note": "eval.compare on devices (BD-262), eval.promote (BD-263), eval.scorecard (BD-254) and eval.ledger (N24b-15); BD-259 is already a direct dependency"
+  },
+  {
+   "bead": "BD-312",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-309"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-312",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-258"
+   ],
+   "note": "the whole capability (scopes on every M3 verb), so the capstone"
+  },
+  {
+   "bead": "BD-312",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "N14b-28",
+    "N20b-33",
+    "N24c-22",
+    "N24c-30",
+    "N19b-33",
+    "N19b-32",
+    "BD-227",
+    "BD-265",
+    "N16b-27"
+   ],
+   "note": "module.characterize (N14b-28), sense.visibility (N20b-33), task.audit (N24c-22), eval.items (N24c-30), contact.clearance (N19b-33), scene.fit (N19b-32), scene.hazards (BD-227); fidelity.rank is by default a retired name for eval.rank-agreement with a tier pair (BD-265), the naming question being N16b-27; scene.retrofit (N19b-40) is M4 and is recorded as related under edges"
+  },
+  {
+   "bead": "BD-312",
+   "n": 7,
+   "as": "dep",
+   "keys": [
+    "N37-19",
+    "BD-305"
+   ],
+   "note": "N37-19 is the verb scene.purge; BD-305 the private root it purges"
+  },
+  {
+   "bead": "BD-313",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-248"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-313",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N39b-31"
+   ],
+   "note": "the pinned model, revision and caps of the agent; the rule that a fresh agent receives only the generated documentation is restated in this bead and, for the demos, in N00-29"
+  },
+  {
+   "bead": "BD-313",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "not a prerequisite: the diagnosis battery (N32b-37 to N32b-39) consumes this bead's transcript record and runner, and N32b-38 and N32b-39 already depend on it"
+  },
+  {
+   "bead": "BD-313",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N24a-35"
+   ],
+   "note": "the token-budgeted summary with drill-down handles and the compact encoding is telemetry.summary (N24a-35); BD-094, named by the drafter, carries the failure taxonomy and telemetry.failures only"
+  },
+  {
+   "bead": "BD-372",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-374",
+    "N28b-11"
+   ],
+   "note": "the A/B consumes this verb as its one-verb arm and is a higher-numbered seed; the decision N32a-32 depends on both"
+  },
+  {
+   "bead": "BD-372",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-352 is already a direct dependency"
+  },
+  {
+   "bead": "BD-372",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-352 (which carries report.campaign) is already a direct dependency"
+  },
+  {
+   "bead": "BD-373",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-304"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-373",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-259",
+    "BD-261"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-373",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-135",
+    "BD-292"
+   ],
+   "note": "BD-355 is already a direct dependency"
+  },
+  {
+   "bead": "BD-373",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-273",
+    "BD-274",
+    "BD-279"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-373",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "N39b-31"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-373",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "BD-026"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-376",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-332",
+    "BD-333",
+    "BD-336"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-376",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-337",
+    "BD-338"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-376",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-320"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-376",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-341",
+    "BD-342"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-376",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-328",
+    "BD-345"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-376",
+   "n": 6,
+   "as": "dep",
+   "keys": [
+    "BD-347",
+    "BD-111"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-376",
+   "n": 7,
+   "as": "dep",
+   "keys": [
+    "N32a-32"
+   ],
+   "note": "the entry of solve.run exists on one branch of KILL-SOLVE only, so the M4 freeze follows the decision"
+  },
+  {
+   "bead": "BD-409",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-387",
+    "BD-390",
+    "BD-391",
+    "BD-392",
+    "BD-393"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-409",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-400",
+    "BD-401",
+    "BD-403",
+    "BD-405",
+    "BD-406"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "BD-409",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N19c-05"
+   ],
+   "note": "the Habitat verb bead; N25c-19 specifies the same verb from the Augur side (a duplicate between two other groups)"
+  },
+  {
+   "bead": "BD-409",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-303",
+    "BD-258"
+   ],
+   "note": "BD-408 is already a direct dependency"
+  },
+  {
+   "bead": "BD-409",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "N22c-23",
+    "N31a-50",
+    "N25c-03",
+    "N22b-07",
+    "N31a-44"
+   ],
+   "note": "later milestones (M6, M8): control.lift, foundry.lifecycle, the simulation-relation form of mission.transport, skill.transport and the firmware export are registered here as declared and flipped by their own beads; the static core of mission.transport is M4 (N25c-02) and belongs to BD-376"
+  },
+  {
+   "bead": "N32-CX",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its direct dependency BD-025 (the control record format and the append-only NC numbering); the seeding tool N38b-05 reads this registry"
+  },
+  {
+   "bead": "N32-CX",
+   "n": 2,
+   "as": "gap",
+   "keys": [],
+   "note": "Appendix N: no bead allocates catalogue numbers to counterexamples that late subsections state without one; the three cases stay under their provisional names, which block no work"
+  },
+  {
+   "bead": "N32-KA",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-12"
+   ],
+   "note": "the known-answer row schema with derivation files; the control registry BD-025 is already a direct dependency"
+  },
+  {
+   "bead": "N32-KA",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32-CX"
+   ],
+   "note": "later milestone (M1), and a registry does not wait for another registry; the control named in a row is bound by N32b-24"
+  },
+  {
+   "bead": "N32-KA",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-259"
+   ],
+   "note": "later milestone (M3): the lane's own registry must agree with KA-760 and KA-762"
+  },
+  {
+   "bead": "N32-REF",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N35-26"
+   ],
+   "note": "later milestone (M1) and a test: the sweep consumes these rows"
+  },
+  {
+   "bead": "N32-REF",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N29-REF",
+    "N29a-04"
+   ],
+   "note": "two registries that state the same split (878 and 896 in the store, 810 and 806 at the surface); the ruling of a catalogue owner is reported under gaps"
+  },
+  {
+   "bead": "N32-REF",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N14-REF"
+   ],
+   "note": "later milestone (M1): 112 is the design layer's stale parent, 804 the surface's; both registries record the overlap"
+  },
+  {
+   "bead": "N32a-01",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-08"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32b-06",
+    "N32b-10",
+    "BD-300"
+   ],
+   "note": "later milestones: the dashboard and viewer beads are governed by ADR-TETHER-10 and INV-TETHER-12 recorded here, and carry their own tests of them"
+  },
+  {
+   "bead": "N32a-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-004"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-03",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": "the registry bead no longer depends on BD-022 (a registry does not depend on a mechanism), so no cycle; the loader BD-005 is already a direct dependency"
+  },
+  {
+   "bead": "N32a-03",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-03",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-005 (the flag type and its constant) is already a direct dependency; the M1 schema work of the safety unit (N37-23) is a consumer"
+  },
+  {
+   "bead": "N32a-04",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-008"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-04",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N33c-35"
+   ],
+   "note": "the default (handlers take Cx) holds until the decision is recorded and is what this bead builds; not blocking"
+  },
+  {
+   "bead": "N32a-05",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-044"
+   ],
+   "note": "the exit review depends on this decision, not the reverse (edge recorded)"
+  },
+  {
+   "bead": "N32a-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-27"
+   ],
+   "note": "the kill-gate record with its decision ADR and the fallback ledger that holds the KILL-MCP row; the Tether rows N32b-25 are now a direct dependency; the cross-check of decisions against the ledger (N40-30) is M1 and follows the decision"
+  },
+  {
+   "bead": "N32a-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-01"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-03"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-07",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N34-17",
+    "N34-18"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-08",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-091",
+    "BD-210"
+   ],
+   "note": "consumers: the chunk transaction reads the lease generation issued here, and BD-210 extends this ledger on devices and depends on it"
+  },
+  {
+   "bead": "N32a-08",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-209"
+   ],
+   "note": "later milestone (M2): retention reads the checkpoints and pins recorded here"
+  },
+  {
+   "bead": "N32a-08",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33c-15"
+   ],
+   "note": "the lab runtime admitted as a dev-dependency; BD-096 is the test of this state machine and depends on it (edge recorded)"
+  },
+  {
+   "bead": "N32a-09",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-15"
+   ],
+   "note": "the lab runtime admitted as a dev-dependency; the harness BD-096 tests this transaction and depends on it (edge recorded)"
+  },
+  {
+   "bead": "N32a-09",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-059"
+   ],
+   "note": "design.patch depends on this transaction; the expected-parent comparison is defined here against a lineage head supplied by the caller"
+  },
+  {
+   "bead": "N32a-09",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-258",
+    "N32b-03"
+   ],
+   "note": "later milestone (M3); until then there is one local principal"
+  },
+  {
+   "bead": "N32a-10",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-209"
+   ],
+   "note": "later milestone (M2): retention honours the pins and decides their lifetime"
+  },
+  {
+   "bead": "N32a-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-090"
+   ],
+   "note": "the stream schema with its order key; the store-level pin, total order and cursor of N29a-04 are wrapped by this bead's authenticated cursor (an overlap across groups, reported), and BD-094 is one of the paginated verbs"
+  },
+  {
+   "bead": "N32a-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-258",
+    "N32b-01"
+   ],
+   "note": "later milestones; before tokens exist the key is a file under the state root"
+  },
+  {
+   "bead": "N32a-11",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-12",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N39b-31"
+   ],
+   "note": "the list of harnesses is data this experiment records itself; the ten-fold test's common agent is one row of it and is decided separately"
+  },
+  {
+   "bead": "N32a-13",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33b-19"
+   ],
+   "note": "the CPU verb bead with its end-to-end script; the engine BD-124 is already a direct dependency"
+  },
+  {
+   "bead": "N32a-13",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-262 is already a direct dependency"
+  },
+  {
+   "bead": "N32a-13",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32b-01"
+   ],
+   "note": "one part of the capability, so the component: the scope catalogue (job:cancel, study:submit) and the check before every verb; BD-258 is the capstone over it"
+  },
+  {
+   "bead": "N32a-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-172",
+    "BD-173",
+    "BD-174"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-14",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-210"
+   ],
+   "note": "BD-210 depends on this bead (the daemon is the process the device protocol runs in); the M1 chunk transaction BD-091 is reached through N32a-08's neighbours and is not needed to finish the daemon shell"
+  },
+  {
+   "bead": "N32a-14",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N32b-01",
+    "BD-258"
+   ],
+   "note": "N32b-01 (M2) mints tokens inside this daemon and depends on it through BD-211; BD-258 is M3"
+  },
+  {
+   "bead": "N32a-14",
+   "n": 4,
+   "as": "related",
+   "keys": [
+    "N37-13"
+   ],
+   "note": "later milestone (M3), and N37-13 reaches this bead through BD-297; the ceilings are applied to the boundary built here"
+  },
+  {
+   "bead": "N32a-15",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-219 is already a direct dependency"
+  },
+  {
+   "bead": "N32a-15",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32b-01",
+    "N32b-02",
+    "BD-258"
+   ],
+   "note": "budgets are enforced per call and per local session without tokens; budget scopes arrive with N32b-01 and the parent debit with N32b-02 (M3), which depends on this bead"
+  },
+  {
+   "bead": "N32a-15",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21c-35",
+    "N36-20"
+   ],
+   "note": "the owner decision on the compute envelope and its enforcement (the device-hour meter and FROB-REF-761)"
+  },
+  {
+   "bead": "N32a-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-210"
+   ],
+   "note": "the daemon's job protocol; the job verbs themselves (N29a-23) share this bead's bounded wait and depend on it"
+  },
+  {
+   "bead": "N32a-16",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "the point estimate behind the remaining-time interval; the calibrated interval BD-297 is M3 and takes over the field (related, already listed by BD-297)"
+  },
+  {
+   "bead": "N32a-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-175"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-23",
+    "BD-210"
+   ],
+   "note": "job.cancel as a registry entry and on the daemon"
+  },
+  {
+   "bead": "N32a-17",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N32b-01",
+    "BD-258"
+   ],
+   "note": "the scope job:cancel is declared in the registry entry; enforcement arrives with the token beads, and before them there is one local principal"
+  },
+  {
+   "bead": "N32a-18",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-175",
+    "BD-223"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-18",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-091"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-005",
+    "N32-REF",
+    "N12-REF",
+    "N13-REF",
+    "N14-REF",
+    "N15-REF",
+    "N16-REF",
+    "N17-REF",
+    "N18-REF",
+    "N19-REF",
+    "N20-REF",
+    "N21-REF",
+    "N22-REF",
+    "N23-REF",
+    "N24-REF",
+    "N25-REF",
+    "N27-REF",
+    "N28-REF",
+    "N29-REF",
+    "N30-REF",
+    "N33-REF",
+    "N34-REF",
+    "N35-REF",
+    "N36-REF",
+    "N37-REF",
+    "N38-REF",
+    "N41-REF"
+   ],
+   "note": "the loader and every chapter registry due by M2; the registries of M3 and M5 join at BD-299 and BD-409"
+  },
+  {
+   "bead": "N32a-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N29a-23",
+    "BD-210"
+   ],
+   "note": "job.find is one of the verbs of N29a-23"
+  },
+  {
+   "bead": "N32a-20",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-309"
+   ],
+   "note": "BD-309 depends on BD-296, which depends on this bead; the record publishes this bead's capacity table"
+  },
+  {
+   "bead": "N32a-20",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-12",
+    "N32-KA"
+   ],
+   "note": "the row schema with derivation files, and the chapter registry that holds KA-758"
+  },
+  {
+   "bead": "N32a-21",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28c-01"
+   ],
+   "note": "the decision-core contract (versioned table, loss, obligations, fallback with triggers, shadow run); the DC-09 record BD-309 cites this table and depends on it through BD-296 (related)"
+  },
+  {
+   "bead": "N32a-21",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-219"
+   ],
+   "note": "the memory model and the refusal before allocation that the second-environment guard calls"
+  },
+  {
+   "bead": "N32a-22",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-224"
+   ],
+   "note": "the trace is captured by the job engine of its dependencies N32a-14 and BD-210 during M2 use; the M2 exit activities are when that use exists"
+  },
+  {
+   "bead": "N32a-22",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N21b-20"
+   ],
+   "note": "the two share the trace schema frob.queuetrace/1; neither waits for the other"
+  },
+  {
+   "bead": "N32a-23",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-27"
+   ],
+   "note": "the kill-gate record with its decision ADR and the fallback ledger that holds the KILL-SLOT row; the Tether rows N32b-25 are now a direct dependency"
+  },
+  {
+   "bead": "N32a-23",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-319"
+   ],
+   "note": "the exit review depends on this decision, not the reverse (edge recorded)"
+  },
+  {
+   "bead": "N32a-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N21b-21"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-24",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-319"
+   ],
+   "note": "the exit review depends on this decision (edge recorded)"
+  },
+  {
+   "bead": "N32a-24",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-309"
+   ],
+   "note": "the decision amends the DC-09 record for the branch taken, so the record exists first"
+  },
+  {
+   "bead": "N32a-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-305"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-304"
+   ],
+   "note": "BD-304 depends on BD-298 and so on this bead; it sweeps the resource texts built here"
+  },
+  {
+   "bead": "N32a-25",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32-REF"
+   ],
+   "note": "the registry carries the provisional row (838) for a resource read above the cap; its number is subject to the catalogue-wide allocation reported under gaps"
+  },
+  {
+   "bead": "N32a-25",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its direct dependency BD-191 (stills with their overlays); the viewer overlays N32b-11 and N32b-12 are drawn in the page and are not read by resources"
+  },
+  {
+   "bead": "N32a-26",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32b-17",
+    "N32b-18"
+   ],
+   "note": "the generator of the guide (N32b-17) and the single source that generates the prompt texts with their drift check (N32b-18); BD-313 completes the guide later and depends on this bead through BD-298"
+  },
+  {
+   "bead": "N32a-26",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-304"
+   ],
+   "note": "BD-304 depends on BD-298 and so on this bead; its corpus is run over the prompts built here"
+  },
+  {
+   "bead": "N32a-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-258 is already a direct dependency"
+  },
+  {
+   "bead": "N32a-27",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N37-13"
+   ],
+   "note": "N37-13 depends on BD-298 and so on this bead; the two beads set different default rate limits (reported as a cross-group overlap)"
+  },
+  {
+   "bead": "N32a-27",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33c-26"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-28",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N33c-26"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-29",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-29",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-319"
+   ],
+   "note": "the exit review depends on this decision (edge recorded)"
+  },
+  {
+   "bead": "N32a-29",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N33b-04"
+   ],
+   "note": "the pin-advance procedure whose gate list gains the pilot script; NF-01 states the same train from the upstream side"
+  },
+  {
+   "bead": "N32a-30",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-26"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-30",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32b-01"
+   ],
+   "note": "the scope catalogue with job:cancel and the check before every verb; the capstone BD-258 is reached through N32a-27"
+  },
+  {
+   "bead": "N32a-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": "the pilot register; the ceiling-before-speed mechanism of the mission chapter (BD-354) is a sibling convention and is recorded as related under edges"
+  },
+  {
+   "bead": "N32a-31",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-316"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-31",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-352"
+   ],
+   "note": "a paper pilot needs the stage list, which it states itself, and not the built cascade"
+  },
+  {
+   "bead": "N32a-32",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N28b-11"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N40-03",
+    "N40-27"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-32",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-378"
+   ],
+   "note": "the exit review depends on this decision (edge recorded)"
+  },
+  {
+   "bead": "N32a-33",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-316"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-33",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N36-23"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-34",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-07",
+    "N21c-11"
+   ],
+   "note": "the role table used by the eligibility rule, and the first reading of KILL-FLEET that step 5 reads; the fleet scheduler BD-370 consumes the link and depends on N32a-35 (related)"
+  },
+  {
+   "bead": "N32a-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N38a-09"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-34",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N40-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-35",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-07",
+    "N21-REF"
+   ],
+   "note": "the role table and the registry row of FROB-REF-618; the fleet scheduler BD-370 consumes this link and depends on it (related, already listed)"
+  },
+  {
+   "bead": "N32a-35",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-165",
+    "BD-269"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32a-35",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-258 is already a direct dependency; its components N32b-02 (attenuation) and N32b-03 (the grow-only shared archive) are reached through it"
+  },
+  {
+   "bead": "N32a-35",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N37-01"
+   ],
+   "note": "the threat register in which the listener's threats are entered and traced; no bead carries the review itself, which is reported under gaps"
+  },
+  {
+   "bead": "N32b-01",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-27"
+   ],
+   "note": "later milestone (M3): the transport bead maps the bearer and the environment variable to this token and depends on this bead through BD-258"
+  },
+  {
+   "bead": "N32b-01",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-261"
+   ],
+   "note": "later milestone (M3): the owner-held scopes are entered in this catalogue as names an agent session cannot hold; BD-261 depends on this bead"
+  },
+  {
+   "bead": "N32b-01",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-305"
+   ],
+   "note": "later milestone (M3): the private scopes are entered in this catalogue; their enforcement and FROB-REF-731 are BD-305's"
+  },
+  {
+   "bead": "N32b-02",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-138"
+   ],
+   "note": "the session verbs, session.close among them"
+  },
+  {
+   "bead": "N32b-02",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-15"
+   ],
+   "note": "reservations at admission and their refund at a job's terminal state are N32a-15 (M2); BD-297, named by the drafter, supplies only the calibrated upper end and is related"
+  },
+  {
+   "bead": "N32b-03",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-342",
+    "BD-254"
+   ],
+   "note": "consumers: opt.archive (M4) and eval.scorecard call the shared-view functions this bead supplies"
+  },
+  {
+   "bead": "N32b-03",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-305"
+   ],
+   "note": "BD-305 depends on BD-258, the capstone over this bead; the privacy mark the views filter on is N37-17 (dependency recorded by the safety group)"
+  },
+  {
+   "bead": "N32b-03",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "BD-370"
+   ],
+   "note": "later milestone (M4): the fleet scheduler is the only path by which two daemons exchange archive entries"
+  },
+  {
+   "bead": "N32b-04",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its direct dependency BD-138 (session.focus and the focus field)"
+  },
+  {
+   "bead": "N32b-04",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its direct dependency BD-138 (session.close)"
+  },
+  {
+   "bead": "N32b-04",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-15"
+   ],
+   "note": "the per-session accounting (cap, reserved, spent, left) and the attributable-device-time charge are N32a-15 (M2); the calibrated interval BD-297 is M3 and is not needed for the fields"
+  },
+  {
+   "bead": "N32b-05",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-261"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-05",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-27"
+   ],
+   "note": "one part of the MCP surface, so the component: the loopback HTTP transport with the bearer mapped to the session's token; BD-298 is the capstone over it"
+  },
+  {
+   "bead": "N32b-06",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-23"
+   ],
+   "note": "the pilot of the Frontier dashboard (the drafted twin N33a-23 is superseded by it); the admission record of frankentui is kept by the capstone BD-300"
+  },
+  {
+   "bead": "N32b-06",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32a-04",
+    "N32a-14"
+   ],
+   "note": "the frob.rpc/1 framing with its socket back end, and the daemon that serves the socket and the job event stream"
+  },
+  {
+   "bead": "N32b-06",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N32a-02"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-07",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-341"
+   ],
+   "note": "later milestone (M4); until then the Races pane shows studies only, as the bead says"
+  },
+  {
+   "bead": "N32b-07",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24b-15",
+    "BD-254"
+   ],
+   "note": "eval.ledger and eval.scorecard are the verbs whose fields the pane reads; the lane BD-259 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-07",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-212",
+    "N28b-16"
+   ],
+   "note": "the fidelity ledger with its frozen envelopes and the exchangeability alarm; the fields surface through telemetry.summary (N24a-35) and eval.scorecard (BD-254)"
+  },
+  {
+   "bead": "N32b-07",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N32b-19"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-08",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N21c-04"
+   ],
+   "note": "the verb spark.devices; the slot and environment fields it reports at M3 come from its direct dependency BD-295"
+  },
+  {
+   "bead": "N32b-08",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-297"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-09",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-300"
+   ],
+   "note": "the capstone records INT-FTUI-01 from this script's measurements and depends on it (edge recorded)"
+  },
+  {
+   "bead": "N32b-10",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-179"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-10",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N19a-12",
+    "BD-163"
+   ],
+   "note": "the part tags of the scene compiler (optical-only among them) and the compiler driver that writes the pack with its visual mesh; the acceptance rule N19a-23 is M3 and is not needed to read the tag"
+  },
+  {
+   "bead": "N32b-10",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N32a-27",
+    "BD-298"
+   ],
+   "note": "later milestone (M3): until the loopback endpoint exists the page reads exported views only, which is its fail-closed default"
+  },
+  {
+   "bead": "N32b-10",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N20a-33",
+    "N24a-40"
+   ],
+   "note": "the still renderer's identifier buffers and ray convention, and the verb whose answer a pick must agree with"
+  },
+  {
+   "bead": "N32b-11",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-154 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-11",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-092"
+   ],
+   "note": "BD-208 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-11",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-071"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-11",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-100"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-11",
+   "n": 5,
+   "as": "dep",
+   "keys": [
+    "BD-078"
+   ],
+   "note": "BD-187 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-12",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-233 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-12",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-230 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-12",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-206",
+    "N27b-17"
+   ],
+   "note": "first divergence of two runs, and the counterfactual-ghost feed that pairs a fork with its parent for the viewer; BD-205 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-12",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "BD-274 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-12",
+   "n": 5,
+   "as": "related",
+   "keys": [
+    "BD-393"
+   ],
+   "note": "later milestone (M5); until then the reality-band overlay shows no-claim"
+  },
+  {
+   "bead": "N32b-12",
+   "n": 6,
+   "as": "none",
+   "keys": [],
+   "note": "BD-228 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-13",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-300",
+    "N33c-24"
+   ],
+   "note": "later milestone (M3): the plain bundle of M2 does not wait; the optional route is switched on only after its pilot (N33c-24) and admission gate, which depend on this bead"
+  },
+  {
+   "bead": "N32b-13",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N34-01"
+   ],
+   "note": "the workspace layout that places viewer/ outside every Cargo workspace; the vendored-library rule of BD-306 is M3 and consumes this bundle"
+  },
+  {
+   "bead": "N32b-14",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-40"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-14",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N32b-44"
+   ],
+   "note": "gap closed by the new bead N32b-44: two pinned browser builds and the headless driver, recorded with versions and hashes"
+  },
+  {
+   "bead": "N32b-15",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-344"
+   ],
+   "note": "later milestone (M4); until then the script expects FROB-REF-724 at that step"
+  },
+  {
+   "bead": "N32b-15",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-109",
+    "BD-069"
+   ],
+   "note": "the archetype templates behind design.new --template and the actuator card catalogue; the template name quadruped-12dof of the worked session is not in the catalogue of BD-109 (reported under gaps)"
+  },
+  {
+   "bead": "N32b-16",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-126"
+   ],
+   "note": "mission.new with the .fmission schema; the template delivery-and-placement and its small instance are carried by no mission bead (reported under gaps), so this script authors the instance as its own fixture"
+  },
+  {
+   "bead": "N32b-16",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-259 and BD-261 are already direct dependencies"
+  },
+  {
+   "bead": "N32b-17",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32a-02",
+    "NJL-05"
+   ],
+   "note": "the registry with its cluster field, and the cluster assignment with its seven-tool lint"
+  },
+  {
+   "bead": "N32b-17",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-35"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-17",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-004"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-18",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N32a-25",
+    "N32a-26",
+    "BD-298"
+   ],
+   "note": "later milestone (M3): the resource and prompt beads register these texts with the MCP library; N32a-26 depends on this bead"
+  },
+  {
+   "bead": "N32b-18",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-304"
+   ],
+   "note": "later milestone (M3); the screen of this bead is the M1 form and BD-304 the gate"
+  },
+  {
+   "bead": "N32b-18",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-023"
+   ],
+   "note": "the generated tool descriptions and server instructions of the generic VerbTool"
+  },
+  {
+   "bead": "N32b-19",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N38b-18",
+    "N38b-20"
+   ],
+   "note": "the gate record and the status views generated from it; the Tether rows N32b-25 are already a direct dependency"
+  },
+  {
+   "bead": "N32b-19",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-017",
+    "BD-029",
+    "N21c-04"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-19",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "N34-08",
+    "BD-004"
+   ],
+   "note": "N34-08 is check-contracts itself; BD-004 assembles the six checks"
+  },
+  {
+   "bead": "N32b-20",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33a-03",
+    "N33a-04"
+   ],
+   "note": "the stack lock parser and the resolution receipt; BD-031 is already a direct dependency, and BD-006, named by the drafter, is the FrankenSim admission and does not carry the lock"
+  },
+  {
+   "bead": "N32b-20",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-173 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-20",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-029"
+   ],
+   "note": "BD-017 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-20",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "N32a-07"
+   ],
+   "note": "the integer lint is built by N32a-07 at M1; BD-211 re-reads its gate at M2 and is not the carrier"
+  },
+  {
+   "bead": "N32b-21",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "N35-26"
+   ],
+   "note": "the same three rules tested engine-wide; this battery tests them at the surface and neither waits for the other"
+  },
+  {
+   "bead": "N32b-21",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "already delivered by its direct dependency BD-299, which depends on BD-298 and through it on the error skeletons of BD-023"
+  },
+  {
+   "bead": "N32b-22",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-181"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-22",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-215"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-23",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-096 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-23",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-309",
+    "N32a-21"
+   ],
+   "note": "the DC-09 record as a registry file and the guard table it cites"
+  },
+  {
+   "bead": "N32b-23",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-219"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-24",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32-KA"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-24",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-146"
+   ],
+   "note": "BD-025 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-24",
+   "n": 3,
+   "as": "related",
+   "keys": [
+    "N32a-20",
+    "BD-296"
+   ],
+   "note": "later milestone (M3): the closed-form half of KA-758 runs at M2; its simulation half and the CX-351 control join when the event simulator of N32a-20 exists"
+  },
+  {
+   "bead": "N32b-25",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N40-01",
+    "N40-03",
+    "N38b-18"
+   ],
+   "note": "the gate record with its statuses and rules, the kill-gate record, and the base record of status accounting; the recorder N38b-19 writes into these rows later"
+  },
+  {
+   "bead": "N32b-25",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N40-10",
+    "N40-29"
+   ],
+   "note": "the program register folds in the gates and kill gates of the late subsections; same file, not blocking"
+  },
+  {
+   "bead": "N32b-26",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-023 is a direct dependency of the kept bead N32a-05"
+  },
+  {
+   "bead": "N32b-26",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "FD-ASUP-01"
+   ],
+   "note": "the upstream item whose recorded attempt the decision reads; FD-FMCP-01, BD-008 and BD-023 are direct dependencies of the kept bead N32a-05"
+  },
+  {
+   "bead": "N32b-26",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "reached through BD-023, a direct dependency of the kept bead N32a-05, which depends on N32a-04 and N32a-02"
+  },
+  {
+   "bead": "N32b-27",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-295 is a direct dependency of the kept bead N32a-23"
+  },
+  {
+   "bead": "N32b-27",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-181 is a direct dependency of the kept bead N32a-23"
+  },
+  {
+   "bead": "N32b-27",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-295 (shadow rollout and the rollback switch) is a direct dependency of the kept bead N32a-23"
+  },
+  {
+   "bead": "N32b-28",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-296 is a direct dependency of the kept bead N32a-24"
+  },
+  {
+   "bead": "N32b-28",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-309"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-28",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-203",
+    "BD-098"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-29",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the pilot N32a-28 is a direct dependency of the kept bead N32a-29; BD-298 records the outcome and depends on the decision"
+  },
+  {
+   "bead": "N32b-29",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-023",
+    "N33b-04"
+   ],
+   "note": "the pinned commit of the library and the pin-advance procedure"
+  },
+  {
+   "bead": "N32b-30",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the pilot N32a-31 is a direct dependency of the kept bead N32a-32"
+  },
+  {
+   "bead": "N32b-30",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-373"
+   ],
+   "note": "BD-374 and BD-372 are direct dependencies of the kept bead N32a-32; BD-373 measures the first arm of the same gate and does not block the decision"
+  },
+  {
+   "bead": "N32b-30",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "turns are counted by the pilot N32a-31 (a direct dependency of the kept bead) from the session transcript record of BD-313; the ten-fold phase ledger is a second source of sessions through BD-316"
+  },
+  {
+   "bead": "N32b-31",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N33c-23"
+   ],
+   "note": "the pilot's recorded result; the capstone BD-300 reads this decision and depends on it (edge recorded by the suite group)"
+  },
+  {
+   "bead": "N32b-31",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N34-02",
+    "N41-OPEN7"
+   ],
+   "note": "OPEN-WS-2 is recorded in the crate map and in the open-question register and is decided by the same admission gate; read together, not blocking"
+  },
+  {
+   "bead": "N32b-32",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-408"
+   ],
+   "note": "later milestone (M5): the build packet must tolerate the packet's absence"
+  },
+  {
+   "bead": "N32b-32",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-33",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the three fallbacks are built in the kept bead N32a-12 itself, and the dynamic mode is its direct dependency BD-138"
+  },
+  {
+   "bead": "N32b-33",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "N32a-27",
+    "BD-298"
+   ],
+   "note": "later milestone (M3) than the kept bead (M1): the experiment runs on the stdio and loopback HTTP transports of its direct dependency BD-023 and is re-read when the M3 transports land"
+  },
+  {
+   "bead": "N32b-34",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-298 and N32a-16 are direct dependencies of the kept bead N32a-33"
+  },
+  {
+   "bead": "N32b-34",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-297",
+    "BD-219"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-35",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the guard table with its loss (N32a-21) and the event simulator (N32a-20) are direct dependencies of the kept bead N32a-22; BD-296, named by the drafter, depends on the experiment"
+  },
+  {
+   "bead": "N32b-35",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-309"
+   ],
+   "note": "BD-309 depends on BD-296, which depends on the kept bead N32a-22; the record cites the constants decided here"
+  },
+  {
+   "bead": "N32b-35",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-217",
+    "BD-203"
+   ],
+   "note": "the M2 profile (step time by world count) and the fence snapshots whose measured save and restore time is the preemption cost; BD-295 is M3 work that follows the experiment"
+  },
+  {
+   "bead": "N32b-36",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "the pilot is the kept bead N32a-34 itself; the mechanism N32a-35 depends on it"
+  },
+  {
+   "bead": "N32b-36",
+   "n": 2,
+   "as": "related",
+   "keys": [
+    "BD-370"
+   ],
+   "note": "the fleet scheduler consumes the link and depends on N32a-35; its role table N21c-07 and the first reading of KILL-FLEET N21c-11 are dependencies of the kept bead"
+  },
+  {
+   "bead": "N32b-36",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "the trace schema is defined by N32a-22 (which superseded N32b-35), a direct dependency of the kept bead N32a-34"
+  },
+  {
+   "bead": "N32b-37",
+   "n": 1,
+   "as": "related",
+   "keys": [
+    "BD-351",
+    "N25c-16"
+   ],
+   "note": "later milestone (M4) for the verb; no bead delivers a third-milestone form (reported under gaps), so the inconclusive tasks name the deciding experiment from the battery's own grid"
+  },
+  {
+   "bead": "N32b-37",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-228 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-37",
+   "n": 3,
+   "as": "none",
+   "keys": [],
+   "note": "BD-119 and BD-215 are already direct dependencies"
+  },
+  {
+   "bead": "N32b-37",
+   "n": 4,
+   "as": "none",
+   "keys": [],
+   "note": "BD-123 and BD-202 are already direct dependencies"
+  },
+  {
+   "bead": "N32b-38",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-095 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-38",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-211 is already a direct dependency and depends on N32a-09"
+  },
+  {
+   "bead": "N32b-38",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-209"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-39",
+   "n": 1,
+   "as": "none",
+   "keys": [],
+   "note": "BD-313 (the fresh-agent runner and its harness record) is already a direct dependency"
+  },
+  {
+   "bead": "N32b-39",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "BD-124"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-40",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-41"
+   ],
+   "note": "the writer defines the packet and produces the files this page reads; the writer depends on the page bundle N32b-13 and not on this bead"
+  },
+  {
+   "bead": "N32b-40",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-41"
+   ],
+   "note": "the header is the writer's; the shapes entry this page needs is not in the writer bead (reported as a cross-group item)"
+  },
+  {
+   "bead": "N32b-40",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-090"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-41",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N24a-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-41",
+   "n": 2,
+   "as": "none",
+   "keys": [],
+   "note": "BD-205 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-41",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-269"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-41",
+   "n": 4,
+   "as": "dep",
+   "keys": [
+    "BD-282"
+   ],
+   "note": "BD-280 is already a direct dependency"
+  },
+  {
+   "bead": "N32b-42",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "BD-205",
+    "BD-280"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-43",
+   "n": 1,
+   "as": "dep",
+   "keys": [
+    "N32b-44"
+   ],
+   "note": "gap closed by the new bead N32b-44: two pinned browser builds (one Chromium-family, one Gecko-family) and the headless driver, recorded with versions and hashes"
+  },
+  {
+   "bead": "N32b-43",
+   "n": 2,
+   "as": "dep",
+   "keys": [
+    "N24a-41"
+   ],
+   "note": ""
+  },
+  {
+   "bead": "N32b-43",
+   "n": 3,
+   "as": "dep",
+   "keys": [
+    "BD-123",
+    "BD-202"
+   ],
+   "note": ""
+  }
+ ],
+ "edges": [
+  {
+   "bead": "BD-044",
+   "dep": "N32a-05",
+   "as": "dep",
+   "why": "coverage (d) of U32a: the M0 exit review records the KILL-MCP decision and did not list its decision bead"
+  },
+  {
+   "bead": "BD-096",
+   "dep": "N32a-08",
+   "as": "dep",
+   "why": "coverage (d) of U32a: the lab-runtime harness explores the M1 job state machine; a test follows the mechanism it tests"
+  },
+  {
+   "bead": "BD-096",
+   "dep": "N32a-09",
+   "as": "dep",
+   "why": "coverage (d) of U32a: the lab-runtime harness explores the M1 admission transaction of the submit path"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-06",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the seed is the capstone of the dashboard and viewer beads; the dashboard core"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-07",
+   "as": "dep",
+   "why": "coverage (d) of U32b: capstone over its component (Races, Budgets and Evidence panes, gate view)"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-08",
+   "as": "dep",
+   "why": "coverage (d) of U32b: capstone over its component (Devices, Queue and Failures panes)"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-09",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the dashboard half of GATE-TETHER-14 and the INT-FTUI-01 measurements the seed records"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-10",
+   "as": "dep",
+   "why": "coverage (d) of U32b: capstone over its component (the viewer page)"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-11",
+   "as": "dep",
+   "why": "coverage (d) of U32b: capstone over its component (overlay interface and the first five overlays)"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-12",
+   "as": "dep",
+   "why": "coverage (d) of U32b: capstone over its component (the second five overlays and the map layers)"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-13",
+   "as": "dep",
+   "why": "coverage (d) of U32b: capstone over its component (the plain bundle and the FrankenThreeD route of INT-F3D-01)"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-14",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the viewer half of GATE-TETHER-14"
+  },
+  {
+   "bead": "BD-300",
+   "dep": "N32b-31",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the seed records the KILL-TUI outcome; N32b-31 depends on N32b-09 and not on the seed"
+  },
+  {
+   "bead": "BD-313",
+   "dep": "N32b-15",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the wrapper worked_sessions.sh calls the studio session script; the fresh-agent test reads its truths"
+  },
+  {
+   "bead": "BD-313",
+   "dep": "N32b-17",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the generator of the agent guide that this seed completes"
+  },
+  {
+   "bead": "BD-313",
+   "dep": "N32b-18",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the skill file and the generated resource and prompt texts with their drift check"
+  },
+  {
+   "bead": "BD-373",
+   "dep": "N32b-16",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the mission session script is the scripted precondition of GATE-TETHER-13"
+  },
+  {
+   "bead": "N24a-41",
+   "dep": "N32b-13",
+   "as": "dep",
+   "why": "coverage (d) of U32b: the writer embeds the packaged page bundle"
+  },
+  {
+   "bead": "N24a-41",
+   "dep": "N32b-40",
+   "as": "related",
+   "why": "coverage (d) of U32b asked for a dependency; it would close a cycle, because the packet reader N32b-40 is finished against packets the writer produces and depends on N24a-41"
+  },
+  {
+   "bead": "BD-258",
+   "dep": "N32b-05",
+   "as": "related",
+   "why": "coverage (d) of U32b lists N32b-05 among the seed's mechanism beads; a dependency would close a cycle, because the script runs over the transport bead N32a-27, which depends on the seed"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N32a-23",
+   "as": "dep",
+   "why": "need 2 of N32a-23: the M3 exit review lists the KILL-SLOT decision"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N32a-24",
+   "as": "dep",
+   "why": "need 2 of N32a-24: the M3 exit review lists the KILL-PREEMPT decision"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N32a-29",
+   "as": "dep",
+   "why": "need 2 of N32a-29: the M3 exit review lists the KILL-MCPTASKS decision"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N32b-31",
+   "as": "dep",
+   "why": "the M3 exit review lists the KILL-TUI decision"
+  },
+  {
+   "bead": "BD-319",
+   "dep": "N32b-32",
+   "as": "dep",
+   "why": "the M3 exit review lists the KILL-REPLAYPACK decision"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N32a-32",
+   "as": "dep",
+   "why": "need 3 of N32a-32: the M4 exit review lists the KILL-SOLVE decision"
+  },
+  {
+   "bead": "BD-378",
+   "dep": "N32a-34",
+   "as": "dep",
+   "why": "need 3 of N32a-34: the owner decision OPEN-TETHER-5 is due at the M4 exit, with standalone machines recorded by default"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "N19b-40",
+   "as": "related",
+   "why": "need 6 of BD-312: scene.retrofit is an M4 verb; it is registered as declared at the M3 freeze and flipped by BD-376"
+  },
+  {
+   "bead": "N32a-31",
+   "dep": "BD-354",
+   "as": "related",
+   "why": "need 1 of N32a-31: the ceiling-before-speed rule of the mission chapter is a sibling convention, not a prerequisite of the paper pilot"
+  },
+  {
+   "bead": "BD-376",
+   "dep": "N25c-02",
+   "as": "dep",
+   "why": "gap reported by the Augur group: the static core of mission.transport is delivered at M4 and is now registered in the M4 verb set (BD-376 edited)"
+  },
+  {
+   "bead": "N32b-10",
+   "dep": "N32b-44",
+   "as": "dep",
+   "why": "the page's tests run under the pinned browsers and launcher of the new bead N32b-44"
+  }
+ ],
+ "superseded": [
+  {
+   "drop": "N32b-26",
+   "keep": "N32a-05",
+   "note": "both decide KILL-MCP; folded into N32a-05: the pure decision function with its undecided outcomes, the starting-state facts, the standing reachability checks of fallback 1 (socket smoke test and registry-only build check in the default build), fuller consequences per branch, the fail-closed default, the fresh-session recording rule, tests, the second e2e script and three negative controls"
+  },
+  {
+   "drop": "N32b-27",
+   "keep": "N32a-23",
+   "note": "both decide KILL-SLOT; folded into N32a-23: the decision function, the slot-share and ceiling arithmetic, admissibility of the gate record (caught cross-slot control, shadow rollout), consequences for budgets, scheduling and the dashboard, the runtime rule, the fail-closed default, tests and KA-761"
+  },
+  {
+   "drop": "N32b-28",
+   "keep": "N32a-24",
+   "note": "both decide KILL-PREEMPT; folded into N32a-24: the decision function with the minimum of 200 resume cycles, the 95th percentile recorded beside the deciding 99th, the combined fallback when KILL-SLOT fired first, the priority-only capacity column, the runtime rule, the fail-closed default, tests, KA-758 and CX-351; N32a-24 now depends on N32a-23 (decided first)"
+  },
+  {
+   "drop": "N32b-29",
+   "keep": "N32a-29",
+   "note": "both decide KILL-MCPTASKS; folded into N32a-29: the decision function, the cases the 20 pilot jobs cover and the state mapping read by the decision, the rule that a killed adapter is removed and not left dormant, the feature default tied to GATE-TETHER-12, tests and three negative controls"
+  },
+  {
+   "drop": "N32b-30",
+   "keep": "N32a-32",
+   "note": "both decide KILL-SOLVE; folded into N32a-32: the two-stage decision function, admissibility checks on the pilot and A/B records (registered selection rule, conservative recount of rater disagreements, stated-alternative check), the rule that an inconclusive A/B fires, fuller consequences, tests and negative controls"
+  },
+  {
+   "drop": "N32b-33",
+   "keep": "N32a-12",
+   "note": "both run OPEN-TETHER-2; folded into N32a-12: the nine probes P1 to P9 with the frame recorder, the four named focus modes, the per-harness decision rule and secondary settings, registries/mcp_clients.toml keyed by version, the generated connecting-your-harness page, the two-way measurement of the gate's focus clause, tests and negative controls"
+  },
+  {
+   "drop": "N32b-34",
+   "keep": "N32a-33",
+   "note": "both run OPEN-TETHER-3; folded into N32a-33: the event simulation of a call with its four hand-computed cases (now the deciding model, the closed form kept as an audited upper bound), the per-harness cap from tool-call timeouts, the 2% tie-break, per-verb overrides, the cheap-turn rule reported to KILL-SOLVE, the registry recording with the FROB-REF-802 bound, the confirmation run, the wider grid (16 pairs)"
+  },
+  {
+   "drop": "N32b-35",
+   "keep": "N32a-22",
+   "note": "both run OPEN-TETHER-4; folded into N32a-22: simulator validation against recorded waits (5% at the median), two robustness arrival processes, three further admissibility constraints, the keep-default-within-2% and stable-across-batch-weights rules, Kingman's factor, the fuller trace record, the loss with every term defined, the superset grid (320 points), stricter sufficiency (2,000 jobs, 7 days), hand-computed known answers"
+  },
+  {
+   "drop": "N32b-36",
+   "keep": "N32a-34",
+   "note": "both prepare OPEN-TETHER-5; folded into N32a-34: the time-fraction reading of overlap held against 10% beside the device-time reading, the definition of a transferable job (privacy, shape class, overhead), recoverable device time by greedy replay and the ceiling, the rule that below the threshold the rule alone decides, the fuller memo and consequences, hand-trace known answers"
+  }
+ ],
+ "cross_group_duplicates": [
+  {
+   "mine": "N32a-08",
+   "other": "BD-210",
+   "note": "job row, state machine, lease generations and restart recovery are in both: N32a-08 at M1 in frob-verbs, BD-210 on devices at M2; BD-210 depends on N32a-08 (recorded by the Chronicle group) and its Scope should say that it extends that ledger"
+  },
+  {
+   "mine": "N32a-08",
+   "other": "N29a-05",
+   "note": "terminal receipts and trial accounting are in both (the job ledger here, store-level stop and receipt types there); one must state that it uses the other's types"
+  },
+  {
+   "mine": "N32a-10",
+   "other": "N29a-04",
+   "note": "frontier-pinned pagination with a cursor at M1 in both: the store-level pin, total order and cursor in frob-chronicle, the authenticated frob.cursor/1 that wraps it in frob-verbs; FROB-REF-896 against -806 follows the same split"
+  },
+  {
+   "mine": "N32a-16",
+   "other": "N29a-23",
+   "note": "job.wait semantics and the bounded wait are in both; N29a-23 owns the registry entries of the five job verbs and depends on N32a-16"
+  },
+  {
+   "mine": "N32a-17",
+   "other": "N29a-23",
+   "note": "job.cancel semantics (drain, cancelled wait is not a cancelled job) are in both"
+  },
+  {
+   "mine": "N32a-09",
+   "other": "N29a-23",
+   "note": "job.find by idempotency key is specified in both, and again in BD-211"
+  },
+  {
+   "mine": "N32a-18",
+   "other": "N29a-24",
+   "note": "two end-to-end scripts measure GATE-TETHER-08 (the job protocol under seeded faults): job_protocol on a running daemon here, the device rows with GATE-CHRON-04 and -11 there; one should own the gate record and the other feed it"
+  },
+  {
+   "mine": "N32-REF",
+   "other": "N29-REF",
+   "note": "one event, two codes, twice: FROB-REF-810 and -878 (different bytes for a committed chunk), -806 and -896 (cursor used with another pin); both registries state the same layer split and a ruling is owed"
+  },
+  {
+   "mine": "N32-REF",
+   "other": "N14-REF",
+   "note": "FROB-REF-804 (surface) and -112 (design layer) both name a stale parent in a patch"
+  },
+  {
+   "mine": "N32-REF",
+   "other": "N36-REF",
+   "note": "FROB-REF-704 (the daemon's campaign class) and -761 (the compute envelope) can both refuse the same oversized job"
+  },
+  {
+   "mine": "N32b-19",
+   "other": "N00-02",
+   "note": "both define registries/capabilities.toml, the status computed from the gate register and the dispatch that raises FROB-REF-724; N00-02 (M0) has the registry schema and the eight conditions, N32b-19 (M1) the verb's output, the per-device section and the MCP resource; N32b-19 depends on N00-02 (recorded by the charter group)"
+  },
+  {
+   "mine": "N32b-05",
+   "other": "N37-15",
+   "note": "two end-to-end scripts for the same mechanisms (scope refusals with no partial data, attenuation, namespaces): tether_capabilities.sh and safe_capabilities.sh"
+  },
+  {
+   "mine": "N32a-27",
+   "other": "N37-13",
+   "note": "both set the MCP rate limiter, the listener bound and the call ceiling, and the DESIGN defaults disagree (20 calls per second with a burst of 40 here; 600 requests per minute per session with a burst of 60 there); 64 listeners and the 40 s timeout agree"
+  },
+  {
+   "mine": "N32a-15",
+   "other": "N37-13",
+   "note": "both define the session budget vector in every unit and the reservation of trace bytes; N32a-15 owns reservation and settlement at M2, N37-13 the fail-closed defaults and ceilings at M3"
+  },
+  {
+   "mine": "N32a-15",
+   "other": "N36-20",
+   "note": "admission of a job against the compute envelope is refused in both (FROB-REF-704 here, the device-hour meter with FROB-REF-761 there)"
+  },
+  {
+   "mine": "N32b-25",
+   "other": "N40-27",
+   "note": "the seven Tether kill gates with triggers and fallbacks are rows of both the chapter's register bead and the fallback ledger"
+  },
+  {
+   "mine": "N32b-25",
+   "other": "N40-02",
+   "note": "the sixteen Tether gates are entered in registries/gates.toml by both (claim and milestone there; threshold, measuring bead and controls here); GATE-TETHER-15, -16 and KILL-REPLAYPACK also in N40-10 and N40-29"
+  },
+  {
+   "mine": "N32a-20",
+   "other": "GB-39",
+   "note": "the same queueing figures (2,001 s, 621 s, 0.17 s; KA-758, CX-351): the dispatcher model with its event simulator here, the worked card there"
+  },
+  {
+   "mine": "BD-299",
+   "other": "N35-26",
+   "note": "the three standing rules of refusal as a sweep over the registry there, the three failure classes on both surfaces here"
+  },
+  {
+   "mine": "N32a-11",
+   "other": "NJL-02",
+   "note": "two surface parity harnesses in frob-conformance: served CLI and MCP diffed against the registry (GATE-TETHER-02) here, the registry conformance harness with parity, e2e coverage lint and help-schema snapshots there"
+  },
+  {
+   "mine": "N32a-02",
+   "other": "NJL-01",
+   "note": "registries/verbs.toml, its entry schema, the tool-name map and the registry lints are specified in both"
+  },
+  {
+   "mine": "BD-137",
+   "other": "NJL-03",
+   "note": "the verb rows are entered twice: by milestone in BD-137, BD-222, BD-312, BD-376 and BD-409, and by cluster in NJL-03 and the VERBS-<cluster> beads, each with parity and schema-snapshot checks"
+  },
+  {
+   "mine": "BD-138",
+   "other": "NJL-05",
+   "note": "task clusters of at most seven tools with the 12 kB list budget are assigned in both (the seventeen principal clusters here and in BD-298; the 45-cluster assignment there)"
+  },
+  {
+   "mine": "N32a-25",
+   "other": "NJL-06",
+   "note": "the resource frob://docs/clusters is built in both"
+  },
+  {
+   "mine": "N32b-41",
+   "other": "N24a-41",
+   "note": "fork timelines and the tables block of the replay packet are specified in both; N32b-41 extends the parent-only writer and depends on it"
+  },
+  {
+   "mine": "BD-295",
+   "other": "N17a-09",
+   "note": "the pure slot-assignment function, the job cap and the 5% reserve are specified on the Phylum side and in the daemon; BD-295 depends on N17a-09"
+  },
+  {
+   "mine": "N32b-06",
+   "other": "BD-300",
+   "note": "a seed and its components, not a duplicate: BD-300 (admission INT-FTUI-01, GATE-TETHER-14 record, KILL-TUI outcome) is the capstone of the dashboard beads N32b-06 to N32b-09 and N32b-31; its Scope should say so (dependencies recorded under edges)"
+  },
+  {
+   "mine": "N32b-10",
+   "other": "BD-300",
+   "note": "a seed and its components: BD-300 lists the viewer overlays and the FrankenThreeD route, which are built by N32b-10 to N32b-14; its Scope should say so (dependencies recorded under edges)"
+  },
+  {
+   "mine": "N32b-01",
+   "other": "BD-258",
+   "note": "a seed and its components: BD-258 is the capstone over the token, attenuation, namespace and session-verb beads N32b-01 to N32b-04 (dependencies recorded by the safety group); the end-to-end script N32b-05 stays related because it runs over N32a-27"
+  },
+  {
+   "mine": "N32b-40",
+   "other": "N24a-41",
+   "note": "the packet's block layout is restated by the reader; the writer owns the format, and the reader depends on it"
+  }
+ ],
+ "new_beads": [
+  "N32b-44"
+ ],
+ "gaps": [
+  {
+   "section": "Appendix O, §32.4",
+   "what": "no bead owns the refusal catalogue as a whole (allocation of new numbers, uniqueness across chapters, one exit code per code). N32-REF registers three provisional numbers (836 packet over the byte cap, 837 frames from a chunk neither stored nor pinned, 838 resource read over the 4 MiB cap), records four pairs of codes for one event (804 and 112, 806 and 896, 810 and 878, 704 and 761), and §32.4 names no exit for the families 71x and 74x to 79x, which N32a-03 requires each registry row to state",
+   "needed_by": [
+    "N32-REF",
+    "N32a-03",
+    "N32a-25",
+    "BD-299",
+    "N32b-41"
+   ]
+  },
+  {
+   "section": "Appendix N",
+   "what": "no bead allocates catalogue numbers to counterexamples that late subsections state without one; N32-CX carries three such cases (one of §32.24, two DESIGN additions) under provisional names",
+   "needed_by": [
+    "N32-CX"
+   ]
+  },
+  {
+   "section": "§37",
+   "what": "a threat review of a network-facing service: the peer link would be the system's only network listener and its acceptance needs the review's checklist; the threat register N37-01 holds rows but no bead reviews a listener",
+   "needed_by": [
+    "N32a-35"
+   ]
+  },
+  {
+   "section": "§28.17",
+   "what": "a third-milestone form of experiment.suggest (the expert grid) that names the experiment deciding between two causes; BD-351 delivers the verb at M4 and the diagnosis battery needs it at M3 for its inconclusive tasks",
+   "needed_by": [
+    "N32b-37"
+   ]
+  },
+  {
+   "section": "§14.11",
+   "what": "the worked studio session creates its design with `--template quadruped-12dof`; the archetype catalogue BD-109 names its twelve-joint quadruped `quad-mammal` and no bead registers the other name or an alias",
+   "needed_by": [
+    "N32b-15",
+    "BD-313"
+   ]
+  },
+  {
+   "section": "§25.3",
+   "what": "the mission template `delivery-and-placement` used by `frob mission new --template` in the worked mission session, and a small instance of it (an inner cell, an excluded cell with a witness, an unresolved cell) that synthesizes on the CPU slice; no mission bead carries either, so N32b-16 authors the instance as its own fixture",
+   "needed_by": [
+    "N32b-16",
+    "BD-373"
+   ]
+  },
+  {
+   "section": "§29.12",
+   "what": "the header of the replay packet has no geometry block: the page cannot draw bodies from poses alone. N32b-40 reads a `shapes` entry (collision primitives per body and analytic scene elements, digest-covered, counted in the size computation) that the parent-only writer N24a-41 does not embed",
+   "needed_by": [
+    "N32b-40",
+    "N32b-41",
+    "N32b-43"
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "bead": "N32a-05",
+   "what": "folded N32b-26 (see superseded); gained dependency N32b-25 (the register row is entered before the decision); the MCP-only gates under fallback 2 are now recorded killed (the register's status) instead of not run"
+  },
+  {
+   "bead": "N32a-23",
+   "what": "folded N32b-27 (see superseded); gained dependency N32b-25"
+  },
+  {
+   "bead": "N32a-24",
+   "what": "folded N32b-28 (see superseded); gained dependencies N32a-23 (KILL-SLOT is decided first, since this gate's fallback names the slot reserve) and N32b-25"
+  },
+  {
+   "bead": "N32a-29",
+   "what": "folded N32b-29 (see superseded); gained dependencies N32b-25 and BD-138"
+  },
+  {
+   "bead": "N32a-32",
+   "what": "folded N32b-30 (see superseded); gained dependency N32b-25"
+  },
+  {
+   "bead": "N32a-12",
+   "what": "folded N32b-33 (see superseded); the seven observations became the nine probes P1 to P9; the logging rule now excludes a model's free text"
+  },
+  {
+   "bead": "N32a-33",
+   "what": "folded N32b-34 (see superseded); gained dependencies N32b-38, N32b-15 and N32b-16 (transcript counts and the two session scripts of the confirmation run); grid widened from 8 to 16 pairs"
+  },
+  {
+   "bead": "N32a-22",
+   "what": "folded N32b-35 (see superseded); gained dependencies BD-210 and BD-219; grid widened from 81 to 320 points; sufficiency raised to 2,000 jobs over 7 days"
+  },
+  {
+   "bead": "N32a-34",
+   "what": "folded N32b-36 (see superseded); the falsifier now fires if either reading of overlap is under 10%"
+  },
+  {
+   "bead": "N32-REF",
+   "what": "a registry does not depend on a mechanism: BD-022 moved from deps to related, which removes the cycle N32a-03 → N32-REF → BD-022 → N32a-03"
+  },
+  {
+   "bead": "N32b-25",
+   "what": "the five decision beads of the build graph, the dispatcher, the Tasks adapter and the one-call pipeline are named by their kept keys; mentions of the superseded drafts removed; KILL-PREEMPT is decided after KILL-SLOT"
+  },
+  {
+   "bead": "N32b-08",
+   "what": "reference to the superseded N32b-35 replaced by N32a-22"
+  },
+  {
+   "bead": "N32b-23",
+   "what": "references to the superseded N32b-27, N32b-28 and N32b-35 replaced by the kept keys"
+  },
+  {
+   "bead": "N32b-38",
+   "what": "related entry N32b-34 (superseded) replaced by N32a-33"
+  },
+  {
+   "bead": "N32a-30",
+   "what": "the feature mcp-tasks stays off by default until the kill-gate ADR says not fired and GATE-TETHER-12 has passed with it on, and a killed adapter is removed, as the kept decision N32a-29 now says"
+  },
+  {
+   "bead": "N32b-10",
+   "what": "depends on the new bead N32b-44 (pinned browsers and launcher); Scope names it"
+  },
+  {
+   "bead": "N32b-14",
+   "what": "depends on N32b-44; the sentence that only the packet gate exercises hardware rendering corrected (both use the software path)"
+  },
+  {
+   "bead": "N32b-43",
+   "what": "depends on N32b-44; Scope names it as the owner of tools/browsers.lock and the launcher"
+  },
+  {
+   "bead": "BD-313",
+   "what": "now the capstone of its components in the file: depends on N32b-15, N32b-17 and N32b-18, and its Scope says what each builds and what is built only here; the worked studio listing states that every mutating and job-submitting call carries --key (FROB-REF-805 otherwise), as the scripts N32b-15 and N32b-16 do"
+  },
+  {
+   "bead": "BD-373",
+   "what": "depends on N32b-16 (the mission session script, its scripted precondition); Scope says so"
+  },
+  {
+   "bead": "BD-022",
+   "what": "Scope names the later beads that take over the four operator verbs (N32b-17 robot-docs, N32b-19 capabilities, N32b-20 schema and doctor)"
+  },
+  {
+   "bead": "BD-138",
+   "what": "Scope names N32b-04 as the M2 form of session.open and session.show"
+  },
+  {
+   "bead": "N32a-25",
+   "what": "overlap with N32b-18 re-scoped: the frob://docs texts are generated there and registered and served here; depends on N32b-18"
+  },
+  {
+   "bead": "N32a-26",
+   "what": "overlap with N32b-18 re-scoped: the prompt texts, the argument rules as data and the drift check are generated there; this bead registers and serves the prompts and enforces the rules at the call; depends on N32b-17 and N32b-18"
+  },
+  {
+   "bead": "N32b-18",
+   "what": "Scope states the split with N32a-25 and N32a-26; the prompt table's arguments and steps now equal those of N32a-26 (studio_loop, mission_query, compare_designs, import_robot, calibrate_to_reality differed)"
+  },
+  {
+   "bead": "BD-376",
+   "what": "the static core of mission.transport is registered in the M4 set with its carrier N25c-02 (now a dependency); the note that the verb has no verb-set bead applies only beyond the static core"
+  },
+  {
+   "bead": "N32a-12",
+   "what": "registry size stated as about 243 verbs, as in BD-138, N32a-02 and N32a-11 (the folded text said about 160)"
+  },
+  {
+   "bead": "N32b-17",
+   "what": "registry size stated as about 243 verbs, as in the U32a beads (was about 160)"
+  },
+  {
+   "bead": "N32a-27",
+   "what": "the rate-limit default is no longer set here (20 calls per second, burst 40): it is read from the owner-held safety configuration, whose default is the 600 requests per minute per session with a burst of 60 of N37-13"
+  },
+  {
+   "bead": "N32a-05",
+   "what": "REVISION_2 check: states that in the design of record frob-mcp does not reach verbs through its socket back end (a tested spare), while the daemon's socket stays in use by the CLI and the dashboard"
+  }
+ ]
 }

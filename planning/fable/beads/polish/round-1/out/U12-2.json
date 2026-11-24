@@ -1,0 +1,546 @@
+{
+ "round": 1,
+ "slice": "U12-2",
+ "reviewed": 50,
+ "changed": [
+  {
+   "bead": "N12-12",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "added dep BD-133 (fixture (a) consumes the stance exclusion bundles the mission writer produces); unit tests now carry the fixture numbers (b in {1/10, 1/5, 1/4, 3/10} m, exact totals consumed 4, changed 2, unchanged 1, unknown 1) and an all-changed negative control"
+  },
+  {
+   "bead": "N12-13",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "claimed binomial bounds must be rounded upward: the KA-762 table is rounded to nearest and 0.0275, 0.0432, 0.0504 fall below the exact bounds (0.027542, 0.043208, 0.050414) and are correctly rejected; added the E- reject side of the one-bit e-process (plan 16 tier audit: E- >= 1/alpha-, (3,2) rejects at alpha- = 1/20) to the e-table rule; exact values on the e-table tests; e2e now names the corpus directory, mutant files and logged fields"
+  },
+  {
+   "bead": "N12-14",
+   "kinds": [
+    "complete",
+    "tests",
+    "self-contained",
+    "correct"
+   ],
+   "what": "monomial-product lost the plan's sums-of-monomials rule (25.31: term-wise and weighted-mean derived constraints, re-derived by the checker); added it with rule monomial.derivation; added the tau = 2.5 N.m control (product 0.8829 rejected) and the (6/7, 1/7) weighted-mean known answer; defined v = 1/b; stated the auditor-829 vs mission-verb FROB-REF-852 mapping"
+  },
+  {
+   "bead": "N12-15",
+   "kinds": [
+    "self-contained",
+    "correct"
+   ],
+   "what": "cell blob encoding was unspecified in sign: c_lo can be negative inside obstacles; now i16 little-endian, producer rounds c_lo down and c_hi up so the integer comparison is sound, margin_mm i16 as the producer's WitnessCert/CutCert"
+  },
+  {
+   "bead": "N12-16",
+   "kinds": [
+    "correct",
+    "tests",
+    "self-contained"
+   ],
+   "what": "the interval-root 'no root' mutation reused x~ = 29/20 outside the box [7/5, 141/100]; now x~ = 281/200 gives K ~ [1.41378, 1.41413] not inside X, the no-root claim is accepted from f(X) = [-1/25, -119/10000], and a separate centre-outside test; taylor-box range evaluation stated monomial-wise in normalized coordinates (even powers in [0,1]) so the order-2 known answer [-3/10, -1/20] is reproducible"
+  },
+  {
+   "bead": "N12-17",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N22b-10: the checker parses the embedded .fenergy document, whose schema frob.energy/1 that bead defines (no cycle)"
+  },
+  {
+   "bead": "N12-18",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "orbit-count applied k^c(g) also to wreath products, which is wrong when orientations are acted on; added the product-over-cycles fixed-point formula and the fixed counts of the order-8 specimen (a k^c(g) checker would claim 21, not 6, for k = 3); reconciled the cap wording (over the group cap: unsupported, never Tested inside the kind)"
+  },
+  {
+   "bead": "N12-19",
+   "kinds": [
+    "split",
+    "placement",
+    "deps",
+    "title",
+    "tests",
+    "e2e-logging",
+    "risks"
+   ],
+   "what": "narrowed to tube-inclusion: the two Moonshot checkers serve unrelated mechanisms with separate pilots and kill gates, so alpha-root moved to the new bead N12p1-01; parent EPIC-M8 -> WP-79 (the reachable-set work package); dropped deps N25d-21 and SPEC-C-34, added N12-03; KILL-TUBE fallback and size/cap considerations stated"
+  },
+  {
+   "bead": "N12-20",
+   "kinds": [
+    "correct"
+   ],
+   "what": "acceptance named T-01, T-02, T-03 as the M0 set; GATE-LEMMA-00 is T-01, T-03, T-04, so the pipeline now must reproduce that set (agreeing with BD-027's certificates) and add T-02"
+  },
+  {
+   "bead": "N12-21",
+   "kinds": [
+    "correct"
+   ],
+   "what": "formatter wording 'tested: ...' did not follow the permitted Known-answer wording of 8.1; now 'recovers <identity id> within exact (0) ...' with the Schwartz-Zippel bound appended"
+  },
+  {
+   "bead": "N12-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "fallback said cards stay Certified with stock Lean alone; BD-381 and 12.2 say Proved (single kernel) under a printed qualification; aligned, and stated that such theorems are not sealed and do not count toward GATE-LEMMA-02"
+  },
+  {
+   "bead": "N12-25",
+   "kinds": [
+    "correct"
+   ],
+   "what": "the Mathlib bridge for wreath-product campaigns is the product-over-cycles form, not k^c(g); stated in the considerations"
+  },
+  {
+   "bead": "N12-27",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "planted LDL^T instances stated as unit-lower L and positive D so that the exact pivots are exactly D; the true-by-construction test checks that"
+  },
+  {
+   "bead": "N12-28",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Slp omits select, compare, min, max and abs, so such rewrite-trace bundles are refused as not reflectable and the differential test draws only from the subset; this bead now writes and runs phase 2 of lemma_reflect.sh itself (N12-38 must close before KILL-REFLECT, which gates this bead)"
+  },
+  {
+   "bead": "N12-30",
+   "kinds": [
+    "correct"
+   ],
+   "what": "equal cost now includes checking time on both sides (the comparator's own witness check against producer plus frob-verify time)"
+  },
+  {
+   "bead": "N12-31",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N12-12: step 4 writes the decision-effect count from that ledger into the ADR"
+  },
+  {
+   "bead": "N12-34",
+   "kinds": [
+    "scope"
+   ],
+   "what": "Out list names the new alpha-root checker N12p1-01 among the checker beads whose specimens the script reads"
+  },
+  {
+   "bead": "N12-38",
+   "kinds": [
+    "scope",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "phase 2 (poly-eq, replay, admission cases) said 'enabled when N12-28 lands', but N12-28 exists only if KILL-REFLECT does not fire and that decision reads this bead's gate record; phase 2 is now written and run by N12-28 and this bead closes on phase 1; related N12-27, N12-28, N12-32; over-budget refusal names FROB-REF-701"
+  },
+  {
+   "bead": "N12-39",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "T-24 bridge: k^c(g) is wrong for wreath-product campaigns that act on orientations; the general statement either proves the product-over-cycles form or is restricted to plain slot permutations with wreath counts left instance-certified"
+  },
+  {
+   "bead": "N12-41",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "the shared compendium_laws.sh called 'frob conformance run --battery smoke', a verb that does not exist (ADR-GAUNT-01: the Gauntlet has no verb); the script now runs the registry check and the ten section targets with the testkit evidence stream, one assert per row and per control, a planted -ad^T mutation that must be caught, a doc-drift check, row counts per section, log path and fields"
+  },
+  {
+   "bead": "N12-42",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "risks"
+   ],
+   "what": "exposure row stated (a, b] while the plan states [open, close) in the Sensorium chapter and decision N20a-49 (fail-closed default [open, close)) rules it; added dep N20a-49, the oracle follows the ruling and stays independent of frob-sense's window_contains; boundary tests count an impulse once on the ruled side, with closed-closed and open-open controls; the Cholesky scaling-by-3 control asserts a difference exists in the seeded sample rather than on every matrix"
+  },
+  {
+   "bead": "N12-44",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N12-41 (record schema, registry check and the shared e2e script are defined there)"
+  },
+  {
+   "bead": "N12-45",
+   "kinds": [
+    "correct",
+    "deps"
+   ],
+   "what": "complex-type row claimed the C3 commutant has the block form [[a, -b], [b, a]] in the lattice basis; there it is [[a, -b], [b, a - b]] (det a^2 - ab + b^2), and the block form appears only after the orthonormal change of basis, computed in Q(sqrt 3); added dep N12-41"
+  },
+  {
+   "bead": "N12-46",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "defined the 561-cell docking grid (U = 1/2 + i/32, eps = j/64, admitted iff 2j < 32 + i) and the twelve polarity moves (six amendments times inner and exclusion certificates, with the A moves of this fixture and their evaluated outcomes); added the 33/32-gain amendment (inclusion at (3/4, 1/64) reverses, least worst-case error 1/65 m); added dep N12-41"
+  },
+  {
+   "bead": "N12-48",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N12-41"
+  },
+  {
+   "bead": "N12-49",
+   "kinds": [
+    "correct",
+    "deps",
+    "scope",
+    "risks"
+   ],
+   "what": "five D.9 rows (completion cap, general bound, engine-only ceiling, one design per turn, compute per decision) duplicated N00-17's thesis calculators, which by that bead's acceptance are the only implementation; the records now name the thesis functions as oracle and d9.rs holds only the other nine; added deps N00-17 and N12-41; fixed the 'bucket bound' label on the general bound and the M0 availability claim"
+  },
+  {
+   "bead": "N12-50",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep N12-41"
+  },
+  {
+   "bead": "N12-52",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "registry effects now use N12-07's not-decidable schema: PO-GROUND-01 joins the existing row 8 (statistical-error-rate) as a consumer, PO-HAB-02 takes new row ND-13 (clearance-lipschitz, max_class Tested), the guard refuses with FROB-REF-834; added dep STD-E2E for its new script; a new lemma_card_admission.sh replaces assertions N12-33 (M0) could never make on M1 rows, with an expect_refusal step for both subjects"
+  },
+  {
+   "bead": "N12-CX",
+   "kinds": [
+    "correct",
+    "deps",
+    "complete"
+   ],
+   "what": "rows were to go to a per-chapter registries/counterexamples/lemma.toml; the suite has one catalogue, crates/frob-conformance/registry/counterexamples.toml, with N38b-05's schema (a second copy is a lint failure); fields aligned to that schema (numeric, rule_ids, same_as, label, control_kind, plant); added dep N38b-05; acceptance now has the loader count the Lemma chapter at 10"
+  },
+  {
+   "bead": "N12-KA",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "KA-223, KA-225 and KA-226 belong to no end-to-end script by nature (build-time differential tests, host enumeration); their recorded run is now named: the testkit's frob.testevidence/1 lines, read by the registry check"
+  },
+  {
+   "bead": "N12-REF",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "FROB-REF-834 is also raised by N12-07's not-decidable guard (N12-52 relies on it) but raised_by did not list it, so the bead's own source-scan acceptance would fail; added that raiser, the test ref834_not_decidable_subject, and N12-07 to related"
+  },
+  {
+   "bead": "N12x-01",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "specimen states its port convention (u = (V, -tau_load) against y = (i, omega)), which the 15 W port power and the cross-check depend on"
+  },
+  {
+   "bead": "N12x-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "said the decision enters the analytic form in the not-decidable registry; N12-52 writes such rows only for candidates it does not admit, and this one is admitted as an instance; now says what holds the analytic form in place (the route rejects it as an argument; the kind caps the class at Tested)"
+  },
+  {
+   "bead": "N12x-06",
+   "kinds": [
+    "correct",
+    "scope",
+    "e2e-logging"
+   ],
+   "what": "an acceptance line waited on N25b-27 and BD-290, which depend on this bead, so it could never close; now its specimens are their fixtures and their own acceptance runs this checker; named N25e-34 (error_dependence, frob.sense.errorlaw/1) in Out and related; the mission.refute step logs skip until BD-290 lands"
+  },
+  {
+   "bead": "N12x-07",
+   "kinds": [
+    "correct",
+    "sense"
+   ],
+   "what": "said it is decided before N25e-03 closes while depending on N25e-03; reconciled: decided after N25e-03 lands the default shape 2A, whose specimens are the evidence, and before any transported chance claim is Certified (the fail-closed default withholds that); a 2B ruling retires the block in the same ledger revision"
+  },
+  {
+   "bead": "N12x-08",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests"
+   ],
+   "what": "status flips (not-implemented to enabled, and retirement) had no change type, though acceptance is fixed per revision; added change 'enable' carrying the six admission items, mapped 'retire' to N12-02's status disabled-pending-cause, both taking a revision number; test enable_takes_a_revision"
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N12p1-01",
+   "why": "split from N12-19: the alpha-root checker (Smale's alpha-test in exact rationals) serves the continuation lane (pilot N25d-21, KILL-SYNTH-CONT) and must not wait for the tube pilot; also adds the distinctness and non-reality checks the plan requires (disjoint balls, conjugate ball) that the old text only mentioned"
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "CARD-T-34",
+   "what": "replace dep N12-19 with N12p1-01 (the alpha-root checker was split out of N12-19 in round 1)"
+  },
+  {
+   "bead": "N25d-23",
+   "what": "replace dep N12-19 with N12p1-01 and the Out line 'the Moonshot-tier alpha-root rule of N12-19' with N12p1-01"
+  },
+  {
+   "bead": "N25d-24",
+   "what": "replace dep N12-19 with N12p1-01 (its certified roots go through the alpha-root checker)"
+  },
+  {
+   "bead": "N38b-45",
+   "what": "add dep N12p1-01 (reality of certified roots); keep N12-19 for the one-sided tube erosion"
+  },
+  {
+   "bead": "N12-02",
+   "what": "registry table row alpha-root: owner bead N12-19 -> N12p1-01; Out line 'N12-13 to N12-19' should also list N12p1-01"
+  },
+  {
+   "bead": "BD-132",
+   "what": "Scope line 'the remaining kinds (N12-13 to N12-19)' should also list N12p1-01"
+  },
+  {
+   "bead": "BD-078",
+   "what": "move N12-42 from related to deps (or add it): its tests compare the schedule (L = 1,200; periods 3, 12, 40; firing count floor((n - phi)/N) + 1) against the compendium's D.2 oracles, which implementations never regenerate (graph finding: nothing depends on N12-42)"
+  },
+  {
+   "bead": "BD-087",
+   "what": "move N12-42 from related to deps (or add it): its tests compare the free-body step (spatial momentum, reversibility, energy with the wrong-differential control) against the compendium's D.2 oracles, which implementations never regenerate (graph finding: nothing depends on N12-42)"
+  },
+  {
+   "bead": "N13-06",
+   "what": "move N12-42 from related to deps (or add it): its tests compare the rational-clock and exposure-window rows against the compendium's D.2 oracles, which implementations never regenerate (graph finding: nothing depends on N12-42)"
+  },
+  {
+   "bead": "N20a-16",
+   "what": "move N12-42 from related to deps (or add it): its tests compare the exposure average (20 N interior impulse; boundary impulse once on the side N20a-49 rules) against the compendium's D.2 oracles, which implementations never regenerate (graph finding: nothing depends on N12-42)"
+  },
+  {
+   "bead": "BD-179",
+   "what": "move N12-42 from related to deps (or add it): its tests compare the f32 spacing of anchored positions against the compendium's D.2 oracles, which implementations never regenerate (graph finding: nothing depends on N12-42)"
+  },
+  {
+   "bead": "N18b-25",
+   "what": "move N12-42 from related to deps (or add it): its tests compare the bitwise power-of-two scaling of the Cholesky factor against the compendium's D.2 oracles, which implementations never regenerate (graph finding: nothing depends on N12-42)"
+  },
+  {
+   "bead": "BD-050",
+   "what": "move N12-43 from related to deps (or add it): its tests compare cone duality, projection (14/5, (21/25, 28/25)) and the Jordan product against the compendium's D.3 oracles, which implementations never regenerate (graph finding: nothing depends on N12-43)"
+  },
+  {
+   "bead": "BD-085",
+   "what": "move N12-43 from related to deps (or add it): its tests compare the contact rows (cone, 4-D cone coupling, joint rows) against the compendium's D.3 oracles, which implementations never regenerate (graph finding: nothing depends on N12-43)"
+  },
+  {
+   "bead": "BD-106",
+   "what": "move N12-43 from related to deps (or add it): its tests compare growth vectors and the sideways-shift cost against the compendium's D.3 oracles, which implementations never regenerate (graph finding: nothing depends on N12-43)"
+  },
+  {
+   "bead": "N18a-16",
+   "what": "move N12-43 from related to deps (or add it): its tests compare the fast-tier contact problem's one-contact closed form against the compendium's D.3 oracles, which implementations never regenerate (graph finding: nothing depends on N12-43)"
+  },
+  {
+   "bead": "BD-230",
+   "what": "move N12-43 from related to deps (or add it): its tests compare the squeeze-film closed form against the compendium's D.3 oracles, which implementations never regenerate (graph finding: nothing depends on N12-43)"
+  },
+  {
+   "bead": "BD-366",
+   "what": "move N12-43 from related to deps (or add it): its tests compare pressure-sinkage and shear against the compendium's D.3 oracles, which implementations never regenerate (graph finding: nothing depends on N12-43)"
+  },
+  {
+   "bead": "N19b-28",
+   "what": "move N12-43 from related to deps (or add it): its tests compare the corner bound 2*sqrt(2)*a and the clearance sandwich against the compendium's D.3 oracles, which implementations never regenerate (graph finding: nothing depends on N12-43)"
+  },
+  {
+   "bead": "BD-070",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the L0/L1 motor envelope and the port-Hamiltonian balance against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-071",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the motor axis (tau = L/R_w) and the thermal node against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-072",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the runaway current (35.8 A fixture) and entropy production against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-073",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the dq voltage circle, base and top speed against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-074",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the four-quadrant screw efficiencies and lock against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-075",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the bus ceiling E^2/(4R) and brownout against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-076",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the per-element energy balance against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-092",
+   "what": "move N12-44 from related to deps (or add it): its tests compare the energy-balance row (heat stored, not lost) against the compendium's D.4 oracles, which implementations never regenerate (graph finding: nothing depends on N12-44)"
+  },
+  {
+   "bead": "BD-048",
+   "what": "move N12-45 from related to deps (or add it): its tests compare Reynolds and isotypic projectors and the complex-type commutant against the compendium's D.5 oracles, which implementations never regenerate (graph finding: nothing depends on N12-45)"
+  },
+  {
+   "bead": "BD-049",
+   "what": "move N12-45 from related to deps (or add it): its tests compare Burnside counts (86,185; 500,500; 92) and the wreath count 6 against the compendium's D.5 oracles, which implementations never regenerate (graph finding: nothing depends on N12-45)"
+  },
+  {
+   "bead": "BD-052",
+   "what": "move N12-45 from related to deps (or add it): its tests compare Kleene iteration on products of chains against the compendium's D.5 oracles, which implementations never regenerate (graph finding: nothing depends on N12-45)"
+  },
+  {
+   "bead": "BD-107",
+   "what": "move N12-45 from related to deps (or add it): its tests compare the isotypic block structure against the compendium's D.5 oracles, which implementations never regenerate (graph finding: nothing depends on N12-45)"
+  },
+  {
+   "bead": "BD-332",
+   "what": "move N12-45 from related to deps (or add it): its tests compare the H/K pairs and the max-plus cycle mean against the compendium's D.5 oracles, which implementations never regenerate (graph finding: nothing depends on N12-45)"
+  },
+  {
+   "bead": "BD-120",
+   "what": "move N12-46 from related to deps (or add it): its tests compare the observability Gramian and the range-anchor ambiguity against the compendium's D.6 oracles, which implementations never regenerate (graph finding: nothing depends on N12-46)"
+  },
+  {
+   "bead": "BD-130",
+   "what": "move N12-46 from related to deps (or add it): its tests compare the stance family (3/14 m, 165 N dual, passive springs) against the compendium's D.6 oracles, which implementations never regenerate (graph finding: nothing depends on N12-46)"
+  },
+  {
+   "bead": "BD-190",
+   "what": "move N12-46 from related to deps (or add it): its tests compare the 561-cell docking grid against the compendium's D.6 oracles, which implementations never regenerate (graph finding: nothing depends on N12-46)"
+  },
+  {
+   "bead": "BD-114",
+   "what": "move N12-47 from related to deps (or add it): its tests compare the invariant error on SO(3) against the compendium's D.7 oracles, which implementations never regenerate (graph finding: nothing depends on N12-47)"
+  },
+  {
+   "bead": "BD-121",
+   "what": "move N12-47 from related to deps (or add it): its tests compare robustness semantics and the streaming window minimum against the compendium's D.7 oracles, which implementations never regenerate (graph finding: nothing depends on N12-47)"
+  },
+  {
+   "bead": "BD-337",
+   "what": "move N12-47 from related to deps (or add it): its tests compare the energy-budget arithmetic (1.49 J against 2.00 J; 50.5 ms) against the compendium's D.7 oracles, which implementations never regenerate (graph finding: nothing depends on N12-47)"
+  },
+  {
+   "bead": "BD-338",
+   "what": "move N12-47 from related to deps (or add it): its tests compare the single-row shield (1, 0.5) and the residual-risk bound against the compendium's D.7 oracles, which implementations never regenerate (graph finding: nothing depends on N12-47)"
+  },
+  {
+   "bead": "BD-124",
+   "what": "move N12-48 from related to deps (or add it): its tests compare Ville calibration and the e-table (16 clean pairs; 22 with one exceedance) against the compendium's D.8 oracles, which implementations never regenerate (graph finding: nothing depends on N12-48)"
+  },
+  {
+   "bead": "BD-259",
+   "what": "move N12-48 from related to deps (or add it): its tests compare the level series alpha/[i(i+1)] against the compendium's D.8 oracles, which implementations never regenerate (graph finding: nothing depends on N12-48)"
+  },
+  {
+   "bead": "BD-329",
+   "what": "move N12-48 from related to deps (or add it): its tests compare the split-conformal index arithmetic against the compendium's D.8 oracles, which implementations never regenerate (graph finding: nothing depends on N12-48)"
+  },
+  {
+   "bead": "BD-393",
+   "what": "move N12-48 from related to deps (or add it): its tests compare the reality-band index against the compendium's D.8 oracles, which implementations never regenerate (graph finding: nothing depends on N12-48)"
+  },
+  {
+   "bead": "BD-144",
+   "what": "move N12-49 from related to deps (or add it): its tests compare padding overhead and bucket bounds against the compendium's D.9 oracles, which implementations never regenerate (graph finding: nothing depends on N12-49)"
+  },
+  {
+   "bead": "BD-171",
+   "what": "move N12-49 from related to deps (or add it): its tests compare padding, bucket and mixing ratios against the compendium's D.9 oracles, which implementations never regenerate (graph finding: nothing depends on N12-49)"
+  },
+  {
+   "bead": "BD-219",
+   "what": "move N12-49 from related to deps (or add it): its tests compare units of throughput and scene memory against the compendium's D.9 oracles, which implementations never regenerate (graph finding: nothing depends on N12-49)"
+  },
+  {
+   "bead": "BD-314",
+   "what": "move N12-49 from related to deps (or add it): its tests compare the restricted-time ratio, the completion cap and the smallest suite (32, 46, 49) against the compendium's D.9 oracles, which implementations never regenerate (graph finding: nothing depends on N12-49)"
+  },
+  {
+   "bead": "BD-402",
+   "what": "move N12-50 from related to deps (or add it): its tests compare cumulative damage and rainflow with carried residues against the compendium's D.10 oracles, which implementations never regenerate (graph finding: nothing depends on N12-50)"
+  },
+  {
+   "bead": "BD-403",
+   "what": "move N12-50 from related to deps (or add it): its tests compare the compliance sensitivity against the compendium's D.10 oracles, which implementations never regenerate (graph finding: nothing depends on N12-50)"
+  },
+  {
+   "bead": "BD-406",
+   "what": "move N12-50 from related to deps (or add it): its tests compare the tolerance allocations against the compendium's D.10 oracles, which implementations never regenerate (graph finding: nothing depends on N12-50)"
+  },
+  {
+   "bead": "BD-216",
+   "what": "move N12-48 and N12-49 from related to deps: its paired lower bound (t = 1.833 at n = 10) and units of throughput are tested against the D.8 and D.9 oracles (graph finding: nothing depends on them)"
+  },
+  {
+   "bead": "N17a-11",
+   "what": "its acceptance calls the general speed-up bound 'of the oracle library of bead N12-49'; the one implementation is frob_conformance::thesis::general_bound of N00-17 (N12-49 now registers it as the D.9 row's oracle and tests it, holding no copy); add dep N00-17 and name that function"
+  },
+  {
+   "bead": "BD-167",
+   "what": "move N12-51 from related to deps (both M2; no cycle) and add an acceptance line: its rolling and torsional laws carry a LawConvexity certificate from N12-51's generator, or are not admitted on the lockstep tiers (T-08 instances)"
+  },
+  {
+   "bead": "N25e-03",
+   "what": "its OPEN line (whether the transport certificate gets its own registry row) is ruled by N12x-07, which depends on it and decides after it lands shape 2A; cite N12x-07 there and add it to related; read 'the registry of kinds is unchanged' as 'no row is added': the registry revision still increments (ledger slug transport-block, N12x-08)"
+  },
+  {
+   "bead": "N25-KA",
+   "what": "rows go to registries/known-answers/augur.toml; the suite has one file, crates/frob-conformance/registry/known_answers.toml (STD-TEST section 5: a second physical copy is a lint failure), as dup-07 fixed for N12-KA"
+  },
+  {
+   "bead": "N29-KA",
+   "what": "rows go to registries/known-answers/chronicle.toml; point them at crates/frob-conformance/registry/known_answers.toml, the suite's one known-answer file"
+  },
+  {
+   "bead": "N25-CX",
+   "what": "entries go to registries/counterexamples/augur.toml; the suite has one catalogue, crates/frob-conformance/registry/counterexamples.toml, with N38b-05's schema (add dep N38b-05 as N17-CX and N38-CX have it)"
+  },
+  {
+   "bead": "N27-CX",
+   "what": "entries go to registries/counterexamples/autopsy.toml; point them at crates/frob-conformance/registry/counterexamples.toml with N38b-05's schema"
+  }
+ ],
+ "unchanged": 14,
+ "notes": "complete: all 50 beads read in full. Unchanged: N12-22, N12-24, N12-26, N12-29, N12-32, N12-33, N12-35, N12-36, N12-37, N12-43, N12-47, N12-51, N12x-03, N12x-04. One new bead, N12p1-01 (alpha-root checker split from N12-19). The registry beads N12-42 to N12-50 were named in the graph findings as having no dependants: the consumers are asked (44 requests) to move them from related to deps; N12-41 to N12-50 now depend on N12-41 for the shared schema and compendium_laws.sh. Arithmetic re-checked: D.1 to D.10 known answers, the N12-51 slide Hessian, the alias-pair v2 fractions (11/16, 203/256, 1759/2048, 225/256), the zero-failure counts (29,956; 299,572; 299), the damping-injection tick energies (-0.5, 0, +1.5 J)."
+}

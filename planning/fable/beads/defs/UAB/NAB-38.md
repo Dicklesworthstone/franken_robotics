@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "lemma", "marrow", "augur", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-32", "NAB-02"]
-needs: ["Appendix O: refusal code FROB-REF-214 (a quaternionic constituent is refused, because meeting one means the group computation is wrong) in the refusal registry", "§13.5: the equivariant blocks with the Reynolds operator kept as their test oracle (BD-325)", "§12.1, §12.5: the stated limits of the proof layer and the admission of the proof checker (BD-380)", "§0.8: hypothesis rows H-17, H-19 and H-20 (N00-12)"]
-related: ["NAB-37", "NAB-39", "NAB-20", "NAB-26", "NAB-28", "NAB-31", "NAB-15", "N12-30", "N25a-18", "N25e-10", "BD-048", "BD-049", "BD-131", "BD-325", "BD-339", "BD-360", "BD-361", "BD-362", "BD-382", "BD-437"]
+deps: ["N13-REF", "NAB-02", "NAB-32"]
+needs: []
+related: ["NAB-39"]
 gates: []
 plan_refs: ["Appendix C.2.6", "§0.8 (H-17, H-19, H-20)", "§12.5", "§13.5", "§25.21", "§25.22"]
 ---
@@ -36,9 +36,10 @@ named gate records a value; thresholds are TARGETs. Tier of the bead: Solid (a d
 
 ## Scope
 
-In: records `KI-47` to `KI-56` with calculations, keywords, carriers and revival conditions; the eight
-ornamental labels of KI-50 as `[[ornamental]]` records consumed by the glossary lint. Out: the schema, harness
-and lint (NAB-32); the glossary lint itself (NAB-02); the surviving mechanisms (their carriers).
+In: records `KI-47` to `KI-56` with calculations, keywords, carriers and revival conditions; KI-50's list of
+the eight ornamental labels and the test that it agrees with the glossary's `[[ornamental]]` records. Out: the
+schema, harness and lint (NAB-32); the glossary lint and its `[[ornamental]]` records in
+`registries/glossary.toml` (NAB-02); the surviving mechanisms (their carriers).
 
 ## Technical approach
 
@@ -73,9 +74,11 @@ the semidefinite solver costs O(N⁴) for an N × N Gram block) are local source
 the nine-point counts are standard references to confirm; the executed pilots of KI-56 (standard exact
 methods returned the same complete answers on every fixture) are plan-time checks to re-run.
 
-**KI-50, ornamental labels, as data.** Each label becomes an `[[ornamental]]` record (`label`, `plain`,
-`allowed_if`) read by the glossary lint, so that the rule "a term from a richer theory is used only where a
-theorem of that theory is used" is enforced on contracts and verb descriptions:
+**KI-50, ornamental labels, as data.** One list, one home: the eight labels are `[[ornamental]]` records
+(`label`, `plain`, `allowed_if`) of `registries/glossary.toml`, seeded by NAB-02 and read by its glossary lint,
+so that the rule "a term from a richer theory is used only where a theorem of that theory is used" is enforced
+on contracts and verb descriptions. The KI-50 record carries `ornamental = [<the eight labels>]`, and a test
+asserts that this list equals the glossary's labels, so the register and the lint cannot drift:
 
 | Label | Plain name to use | Where the plain mechanism lives |
 |---|---|---|
@@ -227,8 +230,8 @@ tool has, specialized solver ten-fold.
 ## Acceptance criteria
 
 - [ ] Records `KI-47` … `KI-56` exist with the three paragraphs verbatim, revival conditions, carriers and
-      keywords; eight `[[ornamental]]` records exist (one per label; the first row of the table holds two) and
-      the glossary lint reads them.
+      keywords; KI-50's `ornamental` list names the eight labels (the first row of the table holds two) and
+      equals the labels of the glossary's `[[ornamental]]` records, which the glossary lint reads.
 - [ ] The harness recomputes the eight calculation rows; the Frobenius–Schur indicators are computed by a test
       from the groups' character tables, and the orbit count by brute-force enumeration of 81 labelings.
 - [ ] `FROB-REF-214` exists in the refusal registry with the stated meaning.
@@ -253,7 +256,8 @@ tool has, specialized solver ten-fold.
   number of orbits under C₂ × C₂ acting by the three
   double transpositions is 27; without symmetry 81; at twelve contacts 3¹² = 531,441.
 - `ki56_ceiling`: 610.1 − 34.4 = 575.7; 842.8/575.7 = 1.4640; and 842.8/610.1 = 1.381 ≠ 1.345.
-- `ornamental_records_load_into_glossary_lint`.
+- `ki50_ornamental_list_equals_glossary`: the KI-50 record's eight labels equal the labels of
+  `registries/glossary.toml`'s `[[ornamental]]` records; removing one from either side fails.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g6.md`.
 
 ### End-to-end script and logging

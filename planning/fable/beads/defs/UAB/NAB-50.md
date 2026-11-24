@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "test", "e2e", "decision-record"]
 parent: "EPIC-M0"
-deps: ["STD-E2E", "NAB-17", "NAB-18", "NAB-19", "NAB-20", "NAB-21", "NAB-22", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39", "NAB-40", "NAB-41", "NAB-42", "NAB-43", "NAB-44", "NAB-45", "NAB-46", "NAB-47", "NAB-48", "NAB-49"]
-needs: ["§38.13: a `registries/gates.toml` with the kill-gate records and their deciding milestones, read by the due-list step (N40-01, N40-03, N40-30)", "§45.11: the tracker export of bead keys, read by the carrier checks"]
-related: ["NAB-23", "NAB-24", "NAB-25", "NAB-26", "NAB-27", "NAB-28", "NAB-29", "NAB-30", "NAB-31", "N40-36", "N40-37"]
+deps: ["N40-01", "N40-03", "NAB-17", "NAB-18", "NAB-19", "NAB-20", "NAB-21", "NAB-22", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39", "NAB-40", "NAB-41", "NAB-42", "NAB-43", "NAB-44", "NAB-45", "NAB-46", "NAB-47", "NAB-48", "NAB-49", "STD-E2E"]
+needs: []
+related: []
 gates: []
 plan_refs: ["Appendix B", "Appendix C", "§0.7", "§38"]
 ---
@@ -52,8 +52,9 @@ Plain shell, sourcing `scripts/e2e/lib.sh`, idempotent, offline, seed-free, on a
    records 4 present; spot values logged as metrics: 4,801; 2.34; 0.37; 75,411; 152; 45.6 GB; 2,025,000; 299;
    2,145; 0.157671; 27; 1.464; 29.96.
 4. **Idea passes.** `e2e_cmd -- cargo test -p frob-conformance --test idea_register -- --nocapture`.
-   Assertions: 30 `FP`, 88 `IP`, 19 `CT`, 27 `BS`, 16 `UP`; tally 90 + 13 + 9 = 112; unresolved carriers 0;
-   unresolved gates 0; the orbit count 86,185.
+   Assertions: 30 `FP`, 88 `IP`, 19 `CT`, 27 `BS`, 16 `UP`; tally 90 + 13 + 9 = 112, and the join of NAB-42
+   §3 gives 90 placed and 9 not placed over 99 counted records; unresolved carriers 0; unresolved gates 0;
+   findings 0 (every record with no gate or no upper-tier kill gate carries `ungated`); the orbit count 86,185.
 5. **Discrepancy pins.** `e2e_cmd -- cargo test -p frob-conformance --test discrepancy_pins`; 17 records; no
    withdrawn figure in context.
 6. **Revive lint on the real tree.** `e2e_cmd -- cargo test -p frob-conformance --test revive_lint`; metrics:
@@ -66,13 +67,15 @@ Plain shell, sourcing `scripts/e2e/lib.sh`, idempotent, offline, seed-free, on a
 9. **Planted defects** (each through `e2e_expect_caught`, restored afterwards):
    - matrix: a score edited to "2.2" for (3, 3, 4) → `ev.score-mismatch`; a Solid row at 1.5 with no
      `needed_by` → `ev.below-two-unjustified`; a rejected row with an empty reason; an "admitted" row with no
-     queue entry; a fifth active Moonshot in the queue function.
+     queue entry; a fifth active Moonshot in the queue function; a `[[family.history]]` entry with empty
+     `evidence` and `unchanged = false` → `ev.history-without-evidence`.
    - killed ideas: a calculation's value changed (2.75 for the refinement ratio at n = 18); a record deleted
      (`ki.record-removed`); a bead "Copy-on-write forks for device state" with no citation
      (`ki.match-without-citation`); a revival ADR of the wrong evidence kind; a gate threshold stating a strong
      form (`ki.strong-form-as-goal`).
    - idea passes: an `IP` record with no carrier; a gate record citing `IP-33` as evidence
-     (`idea.cited-as-evidence`); a ratio with no label; a `CT` record marked settled with no gate record.
+     (`idea.cited-as-evidence`); a ratio with no label; a `CT` record marked settled with no gate record; a
+     record's `proposals` raised with no `[[history]]` entry (`idea.tally`, against the frozen plan-time copy).
    - pins: the sentence "a ceiling of about 7.8 at a step share of 87%" in a contract
      (`dx.withdrawn-figure`).
 10. `summary`.
@@ -80,23 +83,34 @@ Plain shell, sourcing `scripts/e2e/lib.sh`, idempotent, offline, seed-free, on a
 **Sweep mode (`--exit M<n>`).**
 
 1. `e2e_cmd -- cargo run -p frob-conformance --bin decision-sweep -- due --exit M<n> --json`; assert the count
-   of family-and-kill-gate pairs equals the known answer for that exit (1, 2, 8, 22, 24, 11, 8, 0, 8 for M0
-   to M8) and log the due killed ideas, queue items, ideas and reading tasks.
+   of due kill-gate families (1, 2, 7, 19, 21, 7, 8, 0, 7 for M0 to M8, the known answers of NAB-22) and the
+   count of family-and-kill-gate pairs, a family due by two kill gates counting twice (1, 2, 8, 22, 24, 11, 8,
+   0, 8, the counts the sweep beads NAB-23 to NAB-31 use), and log the due killed ideas, queue items, ideas and
+   reading tasks.
 2. If `docs/delivery/exits/M<n>/decision-records.json` exists: `… -- check --exit M<n>`; assert no finding;
    log outcomes by kind, `active_after` (threshold `<= 4`) and open reading tasks (threshold `== 0`).
-   Otherwise write a skeleton into the scratch tree, fill it from the fixture exit report under
-   `tests/fixtures/sweep/M<n>/`, and run `check` on that, so the path is exercised before the real exit.
+   Otherwise write a skeleton into the scratch tree, fill it from the fixture gate report under
+   `tests/fixtures/sweep/M<n>/` (NAB-22's fixtures; the sweep reads the gate report of N40-04, never an exit
+   record), and run `check` on that, so the path is exercised before the real exit. Then
+   `… -- check --exit M<n> --root <scratch> --json`: assert one object with `check == "decision-sweep"`,
+   `milestone`, `section`, `blocks` and `warnings` (the exit runner's check contract, N40-05 section 5a) and exit
+   code 0, so the attached check the exit runner calls is exercised too.
 3. Plant the sweep findings: a due family removed (`sweep.row-not-swept`); a change with no evidence; a fired
    kill gate with the family still "adopted"; a sweep by an implementer session; a row moved without an ADR.
+   Then replay the exit's own negative controls (the hook the sweep beads use, so that this bead waits on none
+   of them): every file under `tests/fixtures/sweep/M<n>/controls/`, written by the sweep bead of that exit
+   (NAB-23 to NAB-31), one per negative control it lists, holds a patch of the sweep record and the finding it
+   must produce; each is applied to a scratch copy and asserted caught. An exit with no such directory yet logs
+   the step as `skip` with the reason.
 
 ## Acceptance criteria
 
 - [ ] The script exits 0 on a clean tree in default mode and writes
       `target/e2e-logs/decision_records/<utc-timestamp>.ndjson` with a transcript beside it.
-- [ ] Every planted defect of step 9 is caught (15 plants), and with a lint stubbed to always pass the script
+- [ ] Every planted defect of step 9 is caught (17 plants), and with a lint stubbed to always pass the script
       itself fails, which shows the catches are real.
-- [ ] `--exit M<n>` runs for each of M0 to M8 on fixtures before any real exit, with the due-pair counts 1, 2,
-      8, 22, 24, 11, 8, 0, 8.
+- [ ] `--exit M<n>` runs for each of M0 to M8 on fixtures before any real exit, with the due-family counts 1,
+      2, 7, 19, 21, 7, 8, 0, 7 and the due-pair counts 1, 2, 8, 22, 24, 11, 8, 0, 8.
 - [ ] The script touches no gate (the decision records measure none) and leaves the working tree unchanged.
 - [ ] Under 120 s in default mode on a warm build on the CPU tier (TARGET).
 
@@ -114,15 +128,15 @@ This bead is the script. Per STD-E2E every line carries `ts`, `script`, `bead`, 
 the exact command line, exit code and wall time; `assert` and `metric` lines the observed value, the expected
 value or threshold and the unit; digests of the four registries and three generated documents; on failure the
 first differing value, the record id and the scratch path. No `frob` verb is called, so the `evidence` block
-is recorded as absent with reason `no-verb`. In sweep mode the log carries the exit, the exit report's receipt
-id and the commit. The log quotes no sealed-suite content and no private-scene data.
+is recorded as absent with reason `no-verb`. In sweep mode the log carries the exit, the digest of the gate
+report the sweep read and the commit. The log quotes no sealed-suite content and no private-scene data.
 
 ### Known answers and negative controls
 
 Known answers: 143 families (41, 59, 43); 0, 16 and 32 below 2.0; 82 kill gates named; 21 queue items; 67
 killed ideas with 4 declined and 4 parked records beside them; 180 idea records (30, 88, 19, 27, 16); tally
 112 = 90 + 13 + 9; 17 pins; due pairs per exit 1, 2, 8, 22, 24, 11, 8, 0, 8 (84 pairs; 72 family-exit pairs
-over 69 families). Negative controls: the fifteen plants of step 9 and the five of the sweep mode.
+over 69 families). Negative controls: the seventeen plants of step 9 and the five of the sweep mode.
 Determinism lanes: twice on one machine with identical assertion results and document digests; identical
 digests on macOS (Apple silicon) and Linux (x86-64).
 

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "suite", "skeleton", "upstream", "frankensim", "frob-fsim", "solid"]
 parent: "WP-07"
-deps: ["BD-037", "BD-007", "SPEC-C-12", "NF-01", "STD-E2E"]
+deps: ["BD-007", "BD-037", "N33a-15", "N33b-04", "SPEC-C-12", "STD-E2E"]
 needs: []
-related: ["BD-061", "BD-077", "BD-060", "BD-068", "BD-076"]
+related: ["BD-109", "BD-110", "FD-FSIM-21", "N15b-02", "N33b-05", "NF-09"]
 gates: ["INT-FSIM-09"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.2", "§33.3", "§10 C-12", "§41", "§33.8"]
 ---
@@ -35,7 +35,8 @@ with the referee on the other one); pinning forever to the commit whose v0 we ad
 
 In: in FrankenSim, the trait frozen as v1 with a written contract, a versioning rule and a conformance kit;
 here, the airlock adapter retargeted and the functor laws re-run. Out: the airlock trait `PortSystem` itself
-(BD-007 and its successors); module files and their port contracts (BD-060); the invalidation contract of
+(N33a-15, a dependency: the v0 adapter with its `contract_version()` check is what this item retargets, on the
+skeleton of BD-007); module files and their port contracts (BD-060); the invalidation contract of
 substitution (BD-077); constrained interconnections, which FrankenSim defers.
 
 ## Technical approach
@@ -134,7 +135,8 @@ In FrankenSim (added):
 - `ports_is_pure_and_ordered`: two calls return equal lists in equal order.
 Here:
 - `contract_version_is_known`: the adapter's compile-time assertion; a scratch build against a constant of 2 must fail to compile.
-- `dynamic_functor_commutes_with_composition`: (motor ∘ gear) ∘ link against motor ∘ (gear ∘ link): equal port signatures and equal stored energy at 10³ seeded states, to 10⁻¹².
+- `dynamic_functor_commutes_with_composition`: F(motor ∘ gear), the dynamic functor applied to the composed design, against F(motor) ∘ F(gear), the two v1 components composed through `fs-system::SystemBuilder`: equal port signatures (exact) and equal port powers and stored energy at 10³ seeded states, to 10⁻¹² relative.
+- `composition_is_associative`: (motor ∘ gear) ∘ link against motor ∘ (gear ∘ link), through the functor: equal port signatures and equal stored energy at 10³ seeded states, to 10⁻¹².
 - `algebraic_loop_is_refused`: two effort sources wired port to port; expected the named refusal.
 
 ### End-to-end script and logging
@@ -143,8 +145,18 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_08 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob design check` and `frob module check` on a template quadruped,
-asserting that the port energy balance in the envelope closes and that the contract version it reports is 1.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post`
+also runs `frob design check quad-mammal --json` (the template quadruped of BD-109) and `frob module check <one
+leg module of that template> --json`, asserting that neither reports a port finding (`FROB-REF-108`: power sign
+mismatch, copied power port or algebraic loop; `FROB-REF-101`: port type mismatch) and that the module's
+`ports_ok` is true. Neither verb prints the contract version: that it is 1 is asserted by the fixture test, which
+reads it through the airlock. Those verbs are other beads'
+(`design.check` BD-110, `module.check` N15b-02, the templates BD-109), none of which this bead waits for: the
+script asks `frob capabilities --verb design.check --json` and `frob capabilities --verb module.check --json`
+(BD-022; `doctor` reports pins and devices, not verbs) whether the build has each verb, and a verb whose status
+is `not-in-build` makes its step `not run`
+(logged with the missing verb, listed in the summary, never counted as a pass); the step runs on the first
+`post` run after those beads land.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_08/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

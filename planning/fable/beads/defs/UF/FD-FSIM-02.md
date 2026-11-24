@@ -1,14 +1,14 @@
 ---
 key: "FD-FSIM-02"
-title: "upstream frankensim: a persistent contact time stepper (its open Moreau–Jean lane; the barrier lane stays its own)"
+title: "upstream frankensim: a persistent contact time stepper (its open Moreau–Jean lane; barrier lane stays its own)"
 type: "task"
 priority: 1
 milestone: "M2"
 labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid"]
 parent: "WP-22"
-deps: ["BD-037", "BD-081", "NF-01", "STD-E2E"]
+deps: ["BD-037", "BD-081", "BD-086", "N24b-03", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-212", "BD-080", "BD-083", "BD-093", "FD-FSIM-12", "FD-FSIM-13"]
+related: ["FD-FSIM-12", "FD-FSIM-13", "N16a-05", "N33b-07", "NFp2-01"]
 gates: ["GATE-FID-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§16.4", "§16.5", "§18.5", "§33.8"]
 ---
@@ -37,7 +37,9 @@ lane and is not built in this repository); lifting the event solve and extending
 ## Scope
 
 In: FrankenSim's Moreau–Jean lane landed as a persistent stepper with a checkpoint interface; its use behind the
-airlock trait `RefereeContact`; the one-time re-baseline of the fidelity ledger. Out: the transaction, the
+airlock trait `RefereeContact`; the pin move and the referee-side re-runs of the switch-over. Out: the one-time
+re-baseline of the fidelity ledger against the new stepper (NFp2-01, which depends on this bead and on the M2
+ledger measurement BD-212, so that this upstream work can start before the ledger exists); the transaction, the
 fence, the retry ladder and event location (BD-081, BD-082, BD-083), which remain ours; witness migration
 (FD-FSIM-12, BD-093); capacity above 21 contacts (FD-FSIM-13); the barrier lane.
 
@@ -110,12 +112,18 @@ T moves while a ten-fold tournament is running. If a gate named here does not ex
 the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
 against the new pin.
 
-**What the switch-over re-runs.** The referee's outputs change when its stepper changes, so the **fidelity
-ledger is re-baselined once**, with a written rationale, and then frozen again. The gate is GATE-FID-01 (M2
-battery, `batch-cpu` against `referee`: median and 95th-percentile disagreement at most 2% and 5% for base
-displacement over 2 s, 3% and 8% for energy per metre, 5% and 12% for stance impulse). The contact known-answer
-battery on the referee and the thin-barrier and sill fixtures are re-run first; the re-baseline is recorded
-only if they pass. The transaction stays: the new stepper is called inside it, through its checkpoint interface.
+**What the switch-over re-runs.** In this bead: the contact known-answer battery on the referee, the thin-barrier
+and sill fixtures, and INV-KIN-02 on forced retries, all at the new pin; their record, with the receipt hash, is
+what NFp2-01 starts from. The transaction stays: the new stepper is called inside it, through its checkpoint
+interface. The referee's outputs change when its stepper changes, so the plan's switch-over rule also says that
+the **fidelity ledger is re-baselined once**, with a written rationale. That step is NFp2-01's. The new referee
+kernels make every (fast, `referee`) stratum a new stratum; it is measured on the frozen battery and frozen under
+the cause `upstream:FD-FSIM-02` of the ledger's re-baseline record (N16bp1-01), and the old strata stay as they
+were. GATE-FID-01 (M2 battery, `batch-cpu` against `referee`: median and 95th-percentile disagreement at most 2%
+and 5% for base displacement over 2 s, 3% and 8% for energy per metre, 5% and 12% for stance impulse) is then
+read against the new strata, and only then does this item's row become `adopted`; until then it is `landed`. If
+this change is adopted before BD-212 has frozen the M2 envelopes, no re-baseline is needed: the M2 measurement is
+simply made against the new stepper, and NFp2-01 records that.
 
 **Fallback if the change cannot land.** Nothing changes: the transactional step above the existing solve is
 already the referee at M1.
@@ -126,7 +134,7 @@ already the referee at M1.
 - [ ] In FrankenSim: its own contact known answers pass on the new stepper (resting, sliding, impact with restitution), and the old step's golden values are unchanged.
 - [ ] Here: `RefereeContact` reports the persistent stepper at the new pin and the transactional step calls it through checkpoint and restore; INV-KIN-02 (a retried interval equals a first attempt) still holds on 10⁴ forced retries.
 - [ ] Here: the referee's contact battery and the thin-barrier and sill fixtures pass at the new pin.
-- [ ] Here: the fidelity ledger is re-baselined exactly once for this item, with the rationale, the old and new envelopes and the receipt hash recorded; GATE-FID-01 then passes against the new baseline.
+- [ ] Here: the switch-over's referee-side record (the three re-runs, with the receipt hash) is on file for NFp2-01, which makes the one re-baseline of the fidelity ledger for this item and reads GATE-FID-01 against it; nothing in this bead waits on the ledger.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
@@ -139,7 +147,7 @@ In FrankenSim (added):
 - `block_above_friction_angle_accelerates`: incline 35°, μ = 0.5; expected acceleration g·(sin 35° − μ·cos 35°) = 9.81·(0.5736 − 0.4096) = 1.609 m/s² within 10⁻³ relative.
 - `ball_restitution_apex_ratio`: e = 0.8, drop from 1 m; expected successive apex heights in ratio e² = 0.64 within 10⁻³.
 - `checkpoint_restore_is_exact`: bitwise equality of state and of the next step after restore.
-- `warm_start_reduces_iterations`: a ten-box stack at rest; expected iteration count on step 2 no greater than on step 1, with identical impulses to 10⁻¹⁰.
+- `warm_start_reduces_iterations`: a ten-box stack at rest; expected: the warm-started solve of step 2 takes no more iterations than step 1, and its impulses agree with a cold-started solve of the same step 2 to 10⁻¹⁰ relative (warm starting changes the work, not the answer).
 Here:
 - `transaction_uses_upstream_checkpoint`: with the capability reported, the restore set no longer duplicates the contact memory the stepper owns, and a forced retry reproduces the committed digest.
 
@@ -148,10 +156,15 @@ Here:
 Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_02 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
-asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob fidelity ledger --json` before and after the re-baseline and
-`frob sim run --tier referee` on the incline and stack fixtures, asserting the digests of a retried run equal
-those of an undisturbed run.
+asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the referee-side re-runs
+of this bead are made (the contact known-answer battery, the thin-barrier and sill fixtures of BD-086, INV-KIN-02
+on forced retries), and the registry row must read `landed` with a receipt newer than the pin move (`adopted`
+once NFp2-01 has run: GATE-FID-01 is read there, not here). Phase `post` also runs `frob sim run --tier referee
+--fixture <incline|stack> --seconds 2 --seed 5 --key fd02-<fixture>-<a|b> --json` (`--fixture` names a registered
+fixture, N24b-03) twice per fixture under distinct keys, the second in the conformance build with one
+interval forced to retry, asserting that the digests of the retried run equal those of the undisturbed run (both
+envelopes show `idempotent_replay: false`). The ledger reads before and after the re-baseline are in NFp2-01's
+script.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_02/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -164,12 +177,12 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - Known answers: the stick condition tan α ≤ μ; sliding acceleration g·(sin α − μ·cos α); apex ratio e²; exact restore.
-- Negative controls: a stepper that drops tangential memory between steps must creep on the 20° incline; a `restore` that omits the warm-start impulses must fail bitwise equality; a re-baseline attempted a second time for this item must be refused by the ledger.
+- Negative controls: a stepper that drops tangential memory between steps must creep on the 20° incline; a `restore` that omits the warm-start impulses must fail bitwise equality. (That a second re-baseline for this item is refused by the ledger is NFp2-01's control.)
 - Determinism lanes: twice on one machine, across worker counts, debug and release; same-platform class.
 
 ## Considerations
 
-- The re-baseline is a deliberate, single exception to "frozen envelopes". It is allowed only for the two upstream items that change the referee's stepper (this one and FD-FSIM-12), and each uses it once.
+- The re-baseline is a deliberate, single exception to "frozen envelopes". It is allowed only for the two upstream items that change the referee's stepper (this one and FD-FSIM-12), and each uses it once. For this item it is made by NFp2-01, and no frozen envelope is edited: the new stepper's strata are new strata.
 - If the Moreau–Jean lane lands before witness migration does upstream, the transactional step still migrates witnesses above the airlock; the two items are independent.
 - RISK-31 and BET-34 (referee coverage): a persistent stepper does not by itself raise coverage, which is limited by fixed witnesses and capacity; it improves the law the referee adjudicates with.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the

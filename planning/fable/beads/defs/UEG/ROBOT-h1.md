@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "BD-109", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-humanoid", "BD-109", "N14b-24", "BD-089", "ROBOT-g1"]
+related: ["ZOO-humanoid"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -37,8 +37,9 @@ the no-endorsement clause.
 torso yaw, four per arm); about 20 bodies; n_v about 25; total mass on the order of 47 kg; ankle with a single
 pitch axis in the public model.
 
-**Import path.** `frob design import --format mjcf assets/robots/h1/source/<entry> --out
-assets/robots/h1/import.fbot --json`. Expected loss-report entries (HYPOTHESIS until read): visual meshes;
+**Import path.** `frob design import assets/robots/h1/source/<entry> --format mjcf --name h1 --key
+asset-h1-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual meshes;
 fitted collision primitives with recorded error; unmapped solver and contact parameters; `armature`,
 `damping`, `frictionloss` to an `assumed` card; foot collision geometry (boxes or several spheres) mapped to a
 foot patch with a stated patch radius, the mapping listed with its error.
@@ -55,7 +56,9 @@ up to the template's conventions). Arm and leg mirror consistency as for every b
 - [ ] `assets/robots/h1/` passes the licence check and validation; `mark = "P"` with commit and date.
 - [ ] `import.fbot` has a pinned `DesignId`; loss report equals its golden; counts equal the manifest.
 - [ ] The `humanoid@h1` preset's locked tree is isomorphic to the import's, with the locked joints listed.
-- [ ] The mass on file is written by validation and consumed by the `humanoid@h1` preset row.
+- [ ] The mass on file is written by validation into the manifest field that the `humanoid@h1` preset row reads; the preset and its
+      GATE-SKEL-07 row are BD-109's, which reads the pinned fixture, so this bead checks the field (present, sourced,
+      equal to the validated total) and does not wait on the preset.
 
 ## Test plan
 

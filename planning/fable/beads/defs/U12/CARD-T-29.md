@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "frob-design", "solid", "test"]
 parent: "WP-07"
-deps: ["BD-027", "N12-06", "CARD-T-15", "SPEC-C-12"]
-needs: ["§14: the compiled wiring of a design (junctions, port orientations, causality) from the design compiler (BD-054, BD-061)"]
-related: ["BD-076", "BD-092", "CARD-T-05", "CARD-T-28", "BD-060"]
+deps: ["BD-027", "CARD-T-15", "N12-06", "SPEC-C-12"]
+needs: []
+related: ["BD-060", "N12-44", "N12-52", "N12x-01", "N12x-04", "N15b-01", "N15b-09", "N15b-33"]
 gates: []
 plan_refs: ["§12.3 (T-29)", "§10 C-12", "§14.13 (design refusals)", "Appendix D.4 (port-Hamiltonian form, energy balance)"]
 ---
@@ -39,9 +39,9 @@ component passivity and the run-time energy balance (the actuator and ledger bea
 contracts.
 
 Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the `.fmodule` format with its ports (BD-060), like the design compiler is `related`, not a dependency (a card
-that waited for its implementer would close a loop, because the implementer's own acceptance runs the card's law
-tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the route
+the `.fmodule` format with its ports (BD-060) and the design compiler's port-junction checks (N15b-01) are
+`related`, not dependencies (a card that waited for its implementer would close a loop, because the implementer's
+own acceptance runs the card's law tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the route
 is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens
 and mutants, and every acceptance line that its own fixtures decide. An acceptance line that can only be observed
 on live output (the wiring certificate of each archetype design and the design compiler's matching refusal) is run
@@ -95,12 +95,21 @@ flows sum to zero); `motor_gear_wheel_chain` (battery–driver–motor–gear–
 ratio as a rational entry); `copied_port_breaks_identity` (one flow delivered to two consumers gives power
 e·f + e·f − e·f = e·f ≠ 0); `reversed_sign_rejects`; `missing_relation_rejects`;
 `algebraic_loop_has_no_order` (two stateless gains in feedback); `loop_through_state_is_allowed` (the same loop
-through an integrator has a valid order).
+through an integrator has a valid order); `backward_edge_order_rejects` (an acyclic graph with a claimed order
+in which one edge goes backward: `reject`, naming the edge); `edge_list_recomputed_from_causality` (an edge
+omitted from the payload's list but implied by a component's declared causality is restored by the auditor, and
+the claimed order is then checked against the full list).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the wiring specimens; the design scripts log the
-certificate hash per archetype through `frob design check`.
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the wiring specimens;
+`scripts/e2e/module_verbs.sh` (bead N15b-33) runs `frob design check` and logs the certificate hash per archetype.
+For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-29"), `step`
+(`T-29/<design-or-mutant>`), `event`, the exact command line, exit code, wall time, the number of power ports and
+junctions, the shape of B and C and whether CᵀB = 0, the number of algebraic edges and the order's length, the
+bundle's BLAKE3, the expected and observed verdict (and the design compiler's own verdict on the same fixture),
+and on a mismatch the first nonzero entry of CᵀB, the first missing relation or the first backward edge, with the
+path to reproduce.
 
 ### Known answers and negative controls
 

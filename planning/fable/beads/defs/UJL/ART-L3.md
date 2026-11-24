@@ -1,14 +1,14 @@
 ---
 key: "ART-L3"
-title: "golden fixture L.3: the `.ftask` kitchen tray delivery, its eleven labelled traces, the task.check table and CLI script"
+title: "golden fixture L.3: the `.ftask` kitchen tray delivery, eleven labelled traces, task.check table, CLI script"
 type: "task"
 priority: 2
 milestone: "M3"
 labels: ["m3", "arena", "frob-spec", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-24"
-deps: ["BD-121", "BD-122", "BD-225", "BD-227", "BD-235", "NJL-07", "STD-E2E"]
-needs: ["§24.4: the `.ftask` schema `frob.task/1` with nine sections, canonical JSON and the content-addressed `TaskId` (drafted by unit U24a as N24a-02)", "§24.5: `task.check` with labelled example traces, monitor agreement, the mutation check and vacuous atoms (drafted by unit U24c as N24c-01)"]
-related: ["N24c-01", "N24a-02", "N24c-02", "N24c-06", "BD-078", "BD-124", "BD-195", "BD-255", "BD-141", "ART-L6", "ART-L8", "ART-L9"]
+deps: ["BD-121", "BD-122", "BD-225", "BD-227", "BD-235", "N24a-02", "N24a-12", "N24c-02", "NJL-07", "NJLx-02", "STD-E2E"]
+needs: []
+related: ["ART-L9", "BD-078", "BD-124", "BD-141", "BD-195", "BD-255", "N24c-06"]
 gates: []
 plan_refs: ["Appendix L.3", "§24.4", "§24.5", "§24.7", "§24.12", "§20.4", "§23.3", "§19.8"]
 ---
@@ -39,14 +39,18 @@ run).
 In: the specimen in the S-expression view and its resolved and canonical forms; the eleven synthetic labelled
 traces that make the admission check pass; the table of what `task.check` establishes, with the refusal each
 check raises when planted; the margin and tick known answers; the script. Out: the requirement language and
-its evaluators (BD-121), the task file and its verbs (BD-122, N24c-01), the kitchen archetype and the hazard
-registries (BD-225, BD-227), scene splits (BD-235); the layers and the identity map (NJL-07).
+its evaluators (BD-121), the task file and its verbs (BD-122), example admission with the near-boundary rule, the
+mutation check and vacuity (N24a-12), the verb `task.verdict` (N24c-02), the kitchen archetype and the hazard
+registries (BD-225, BD-227), scene splits (BD-235); the layers and the identity map (NJL-07); the known-answer
+rows JL-09 and JL-10 (NJLx-02).
 
 ## Technical approach
 
 **Files** under `fixtures/golden/appendix-l/L3/`: `kitchen-tray.specimen.ftask.sexpr` (the text below);
 `kitchen-tray.resolved.ftask.sexpr` (identities filled, eleven examples); `kitchen-tray.canonical.ftask.json`
-(written by the implementation, blessed once); `traces/*.json` (the eleven synthetic traces);
+(written by the implementation, blessed once); `traces/<S1…V9>.frun` (the eleven synthetic traces, each in the
+example-trace form of N24a-12: a `.frun` fragment holding only the eight Task-stream channels the requirement reads,
+on their declared clocks, marked `synthetic` in its manifest);
 `check.expect.json`; `fields.toml`.
 
 **The artifact** (S-expression view).
@@ -182,11 +186,13 @@ refused; with six hard-limit atoms, two violated examples cannot distinguish the
 therefore carries eleven traces, of which the specimen's four are S1, S2, V1 and V9. Each trace gives the
 eight signals at the requirement clock for 1,101 ticks (0 to 22 s). The nominal trace N has tilt 3°, tray tilt
 2°, tray acceleration 1 m/s², clearance 0.10 m, winding temperature 350 K, no spill, speed 0.6 m/s, and the
-distance to the pass falling linearly to 0.10 m at the arrival tick, after which speed is 0.02 m/s.
+distance to the pass falling at 0.6 m/s (0.012 m per requirement tick) to 0.10 m at the arrival tick a, so that
+`at-pass` first holds at tick a − 4 (0.148 m, margin +0.0133); from tick a on (the arrival tick included) the speed
+is 0.02 m/s and the distance stays 0.10 m.
 
 | Trace | Difference from N | Label | Decided by |
 |---|---|---|---|
-| S1 | arrival at tick 500 (10 s) | satisfied | `placed` first true at tick 550 (11 s) |
+| S1 | arrival at tick 500 (10 s); tilt 11.4° at tick 300 (the near-boundary example of `upright`, margin +0.05) | satisfied | `placed` first true at tick 550 (11 s) |
 | S2 | arrival at tick 950 (19 s) | satisfied | `placed` first true at tick 1,000 (20 s), the closed end of the window |
 | V1 | arrival at tick 600; tilt 17.04° at tick 565 (11.3 s) | violated | `upright`, margin −0.42 |
 | V2 | arrival at tick 600; tray tilt 8.2° at tick 300 | violated | `tray-level`, margin −0.025 |
@@ -194,9 +200,15 @@ distance to the pass falling linearly to 0.10 m at the arrival tick, after which
 | V4 | arrival at tick 600; clearance 0 m at tick 300 | violated | `clear` (strict comparison) |
 | V5 | arrival at tick 600; winding temperature 383.5 K at tick 300 | violated | `cool`, margin −0.025 |
 | V6 | arrival at tick 600; one spill event at tick 300 | violated | `no-spill`, margin −1 |
-| V7 | never closer than 0.151 m | violated | `at-pass` never holds; no placement |
-| V8 | arrives; speed never below 0.051 m/s | violated | `settled` never holds; no placement |
+| V7 | stops at 0.151 m at tick 600 (speed 0.02 m/s from then on); never closer | violated | `at-pass` never holds (margin −0.0067); no placement |
+| V8 | arrival at tick 600, after which the speed is 0.051 m/s, never lower | violated | `settled` never holds (margin −0.02); no placement |
 | V9 | arrival at tick 951 (19.02 s) | violated | `placed` first true at tick 1,001, one tick late |
+
+The near-boundary rule on this set (N24a-12 rule 3, the chapter's "one near the boundary of each comparator",
+threshold m ≤ 0.1 on the smallest |ρ| at ticks the verdict reads): `at-pass` 0.0067 (V7) and 0.0133 (every
+arriving trace at tick a − 4); `settled` 0.02 (V8); `upright` 0.05 (S1); `tray-level` 0.025 (V2); `gentle` 0.033
+(V3); `clear` 0 (V4); `cool` 0.025 (V5); the `:exact` atom `no-spill` takes both values (V6). Without S1's 11.4°
+the smallest |ρ| of `upright` would be 0.42 (V1) and admission would refuse with FROB-REF-539.
 
 The mutation check on this set: reversing any comparator changes the label of S1; deleting an atom changes
 the label of the violated trace that atom alone decides (V1 to V8). Every atom is distinguished.
@@ -211,12 +223,13 @@ the label of the violated trace that atom alone decides (V1 to V8). Every atom i
 - [ ] M3 lane: `frob task new` on the resolved file succeeds with the scene family, the split and the three
       hazard-registry draws resolved and echoed in `bound`; `frob task check` reports every row of the check
       table as passed, with evidence class Tested, tier `static`, determinism `exact`.
-- [ ] With only the specimen's four examples, `task.check` reports five hard-limit atoms as vacuous
-      (`tray-level`, `gentle`, `clear`, `cool`, `no-spill`) and refuses (`FROB-REF-539`, detail
-      `vacuous-hard-limit`): the control that shows why eleven are needed.
+- [ ] With only the specimen's four examples (S1, S2, V1, V9), `task.check` reports five hard-limit atoms as
+      vacuous (`tray-level`, `gentle`, `clear`, `cool`, `no-spill`, form (ii)) and refuses (`FROB-REF-539`, detail
+      `vacuous-hard-limit`); the same report lists `settled`, `tray-level`, `gentle`, `clear`, `cool` and
+      `no-spill` without a near-boundary example: the control that shows why eleven are needed.
 - [ ] Each of the nine planted defects of the refusal table is refused with its code, exit 3, one envelope.
-- [ ] `frob task verdict` on V1 returns `frob.verdict/1` with verdict `violated`, binding atom `upright`,
-      margin −0.42 and time 11.3 s; on S2 `satisfied` decided at 20 s; on V9 `violated`.
+- [ ] `frob task verdict traces/V1.frun --task <TaskId> --json` returns `frob.verdict/1` with verdict `violated`,
+      binding atom `upright`, margin −0.42 and time 11.3 s; on S2 `satisfied` decided at 20 s; on V9 `violated`.
 - [ ] `TaskId` and canonical bytes are identical on two runs, in debug and release, on Linux and macOS (class
       D0); once blessed, the identity equals the map's entry for `t:kitchen-tray@88c1…`.
 
@@ -237,9 +250,13 @@ the label of the violated trace that atom alone decides (V1 to V8). Every atom i
   evaluator) return the labels of the table for all eleven traces and agree bit for bit.
 - `l3_boundary_pair`: S2 satisfied at tick 1,000; V9 violated with placement at tick 1,001.
 - `l3_no_latch`: in S1, raising speed to 0.06 m/s at tick 560 makes `placed` false at tick 560.
+- `l3_near_boundary`: the smallest |ρ| of each scaled atom over the eleven traces is the value listed above and at
+  most 0.1, and `no-spill` takes both values; with S1's tilt set back to 3° the check refuses with 539 naming
+  `upright` (smallest |ρ| 0.42).
 - `l3_mutation_check`: sixteen mutants (eight reversals, eight deletions); every atom distinguished.
 - `l3_four_examples_vacuous`: with S1, S2, V1, V9 only, `tray-level`, `gentle`, `clear`, `cool` and `no-spill`
-  are reported vacuous under deletion.
+  are reported vacuous (form (ii)), and `settled`, `tray-level`, `gentle`, `clear`, `cool`, `no-spill` have no
+  near-boundary example.
 - `l3_refusal_<code>` for the nine planted defects.
 
 ### End-to-end script and logging
@@ -247,10 +264,10 @@ the label of the violated trace that atom alone decides (V1 to V8). Every atom i
 `scripts/e2e/art_l3_ftask.sh` (header: `bead=ART-L3 milestone=M3 labels=golden,appendix-l,arena,
 verb:task.new,verb:task.show,verb:task.check,verb:task.verdict seed=1 needs=cpu
 plants=four-examples,late-label`). Steps: (1) `frob task new …/kitchen-tray.resolved.ftask.sexpr --key l3-new
---json`, exit 0, capture the `TaskId` and the `bound` block; (2) `frob task show` and assert the nine
-sections; (3) `frob task check --json`, assert each row of the check table and the mutation table with
-`e2e_assert_json`; (4) `frob task verdict` on V1, S2 and V9 from the trace files, assert verdict, binding atom,
-margin and time (`e2e_assert_num` on −0.42 and on 11.3 s); (5) the nine refusals through `e2e_expect_refusal
+--json`, exit 0, capture the `TaskId` and the `bound` block; (2) `frob task show <TaskId> --json` and assert the
+nine sections; (3) `frob task check <TaskId> --json`, assert each row of the check table, the per-atom
+near-boundary values and the mutation table with `e2e_assert_json`; (4) `frob task verdict traces/<V1|S2|V9>.frun
+--task <TaskId> --json`, assert verdict, binding atom, margin and time (`e2e_assert_num` on −0.42 and on 11.3 s); (5) the nine refusals through `e2e_expect_refusal
 <code> 3`; (6) the four-example control through `e2e_expect_refusal FROB-REF-539 3`; (7) `frob-golden check
 --artifact L3`. Plants: `four-examples` removes seven traces and must fail step (3); `late-label` labels V9 as
 satisfied and must be refused with 539. The log (`target/e2e-logs/art_l3_ftask/<utc>.ndjson`) records every
@@ -260,8 +277,9 @@ units, each refusal with code and first repair, and the `summary`.
 ### Known answers and negative controls
 
 - Known answers (exact): 50 and 1,000 ticks; 51 ticks in the closed one-second window; reach 20 s; margin
-  −0.42; lidar on tick 25 + 50·k; the eleven labels. They have no number in the known-answer suite; the
-  unit's coverage file lists them for registration.
+  −0.42; lidar on tick 25 + 50·k; the eleven labels. They are the rows JL-09 (clocks) and JL-10 (the eleven
+  labels) of NJLx-02, which maps the tags to numbers of its allocated known-answer block; tests cite the number
+  once it is issued.
 - Counterexample kept alive: composing margins without scales. A clearance margin of 0.02 m and a thermal
   margin of 3 K compose to a raw minimum of 0.02, so clearance binds; in millimetres the raw minimum is 3, so
   the thermal margin binds; with scales the binding atom does not depend on the unit system.

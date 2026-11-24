@@ -4,12 +4,12 @@ title: "upstream franken_surveillance_system (conditional): twin package landmar
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "suite", "habitat", "upstream", "franken_surveillance_system", "frontier"]
+labels: ["m5", "suite", "habitat", "upstream", "franken_surveillance_system", "frontier", "review-notes-open"]
 parent: "WP-32"
-deps: ["BD-037", "NF-01", "STD-E2E"]
-needs: ["§19.13: the paper-scale inspection pilot of one existing twin package; this bead is opened for work only if the pilot finds any of the three things missing"]
-related: ["BD-398", "BD-228", "BD-305", "FD-FDGR-01"]
-gates: ["GATE-HAB-03"]
+deps: ["BD-037", "N19c-01", "N33b-04", "STD-E2E"]
+needs: []
+related: ["BD-398", "N19c-04", "N19c-06", "N19c-08", "N19c-09", "N33c-25", "NFp2-03"]
+gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§19.13", "§19.5", "§33.4", "§37", "§42"]
 ---
 ## Background
@@ -40,15 +40,23 @@ unobserved space would be false).
 ## Scope
 
 In: recording the pilot's finding; if needed, the three additions to the twin package in its repository; here,
-the gate re-run with a better scale label. Out: `scene.import` and `scene.fit` (BD-398); scene acceptance and
-four-point registration (BD-228); the drone route (FD-FDGR-01); privacy handling (BD-305).
+the validator fixture and the record of the package version exported from the landed commit. Out: the pilot itself
+(N19c-01, M3, which this bead reads); the switch-over (the package version into the import contract, the checks
+through the importer and GATE-HAB-03 re-run at `witnessed` or better: NFp2-03, which depends on this bead and on
+BD-398, so that this upstream work starts when the pilot reports instead of waiting for the M5 capstone);
+`scene.import` and `scene.fit` (BD-398); scene acceptance and four-point registration (BD-228); the drone route
+(FD-FDGR-01); privacy handling (BD-305).
 
 ## Technical approach
 
-**Step 0, here: the pilot's record.** Copy the inspection pilot's finding into
+**Step 0, here: the pilot's record.** Copy the inspection pilot's finding (N19c-01's appended result in
+`crates/frob-conformance/registry/pilots.toml`, cited by its id and digest) into
 `tests/upstream/FD-FSS-01/PILOT.md`: which twin package and version was inspected, and for each of the three
-things, present or missing, with the field or file where it was found. If all three are present, set the
-registry row's `status` to a closed state with the note "not needed (pilot)", and stop.
+things, present or missing, with the field or file where it was found. If all three are present (verdict
+`falsifier-rejected`), set the registry row's `status` to `not-needed` (DESIGN: the value requested of BD-037's
+schema `frob.upstream/1`, admitted only on a conditional row whose pilot found nothing missing, with `PILOT.md`
+citing the pilot record; until the schema admits it the row stays `open` and `PILOT.md` carries the verdict
+"not needed (pilot)"), and stop.
 
 **Where the work is done, and under whose rules (binding), if step 0 finds something missing.** The change is
 made in the `franken_surveillance_system` repository (beside this one; its head and toolchain were not read for
@@ -64,7 +72,10 @@ repository's `main` through its own gates; nothing in this repository patches or
 
 1. *Landmarks.* At least four named landmarks with stable identifiers, each with its coordinates in the twin's
    frame and a description sufficient to find it in the place; the package states that they are not coplanar,
-   and the exporter refuses to claim so if the tetrahedron they span has volume below a stated threshold.
+   and the exporter refuses to claim so if the tetrahedron they span has volume V below 1% (TARGET) of d³, where d
+   is the largest of the six pairwise distances between the four landmarks. That is the importer's own rule for
+   four-point registration (failure there is `FROB-REF-302`; CX-185), so a package the exporter accepts is never
+   refused by the importer for near-coplanarity.
 2. *Scale witness.* At least one measured length between two identified points of the twin, with the measuring
    method and its uncertainty.
 3. *Coverage or confidence per region.* A partition of the twin into regions, each marked observed or not, or
@@ -78,20 +89,29 @@ scale declared by the operator and `reality: no-claim`.
 
 **Fixture (DESIGN).** `tests/upstream/FD-FSS-01/`: a validator that reads a twin package and asserts the three
 things; it fails on the package the pilot inspected if the pilot found something missing, with `expected.toml`
-naming the missing items.
+naming the missing items. BD-037 wrote the row with `pin_state = "unpinned"` and `observed_at = "pending:
+inspection pilot"`, the one row exempt from "fails at its recorded commit" until the pilot has run. Step 0 ends
+that exemption: `observed_at` becomes the commit that exported the inspected package (with the package version
+in `PILOT.md`), and the fixture must fail there with the recorded signature (in the not-needed case it passes
+there, and the `not-needed` status is the row's exemption). `pin_state` stays `unpinned`, since
+this sibling is never a Cargo dependency, until NFp2-03 enters a package version into the import contract, which
+is this sibling's first admission; NFp2-03 clears it.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
 is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
 (`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
-T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
-become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
-T moves while a ten-fold tournament is running. If a gate named here does not exist yet when the change lands,
-the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
-against the new pin.
+T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. For this sibling, a pattern and
+not a Cargo dependency, the "pin" is the package version: this bead records the version exported from the landed
+commit and the commit itself, runs the validator on it, and leaves the row `landed`. No PASS is recorded on a dirty
+sibling tree, and neither a pin nor T moves while a ten-fold tournament is running. The gate this item names needs
+the `place` form of `scene.import`, so its run against the new version, the contract row and the move to `adopted`
+are the switch-over bead NFp2-03 (the plan's rule: if a gate named here does not exist yet when the change lands,
+the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made against
+the new pin).
 
-**What the switch-over re-runs.** GATE-HAB-03 **with a scale label of `witnessed` or better** (Reality: one real
+**What the switch-over re-runs (NFp2-03).** GATE-HAB-03 **with a scale label of `witnessed` or better** (Reality: one real
 place ingested end to end, privately, with its scale label and unknown regions respected, and at least one
 probe request emitted for it; a place for which no capture exists is recorded as `no-claim`, not as a pass).
 The twin package's version becomes part of the import contract (OPEN-HAB-5).
@@ -103,10 +123,9 @@ survey, with every surveyed dimension recorded as `measured`, and the pack says 
 ## Acceptance criteria
 
 - [ ] The pilot's finding is recorded in `tests/upstream/FD-FSS-01/PILOT.md` with the package version and the three verdicts.
-- [ ] If nothing was missing: the registry row is closed as not needed, and no change was made in the sibling.
+- [ ] If nothing was missing: the registry row reads `not-needed` (or `open` with the verdict in `PILOT.md` while BD-037's schema lacks that value), and no change was made in the sibling.
 - [ ] If something was missing, in the sibling: the twin package carries the missing items as new fields; its exporter refuses four coplanar landmarks; its own tests pass.
-- [ ] Here: the validator passes on a package from the landed commit; four-point registration succeeds from the package's landmarks; the scene's scale label is `witnessed` or better; regions the package marks unobserved are unknown space in the scene.
-- [ ] Here: GATE-HAB-03 is run with that label on one place, or recorded `no-claim` if no capture is admitted.
+- [ ] Here: the validator passes on a package from the landed commit (four named landmarks spanning a tetrahedron above the threshold, a witness with method and uncertainty, a coverage partition), and fails with the recorded signature on the package the pilot inspected; the package version and the exporting commit are recorded and the row reads `landed` (NFp2-03 runs the importer checks and GATE-HAB-03 and moves it to `adopted`).
 - [ ] The mirrored bead exists (if the change was needed), files were reserved and released, and nothing in this repository patches the sibling.
 
 ## Test plan
@@ -117,18 +136,25 @@ In the sibling (added, if the change is made):
 - `tetrahedral_landmarks_are_accepted`: (0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1); spanned volume 1/6 m³; accepted.
 - `scale_witness_has_method_and_uncertainty`: a package without either is invalid.
 - `coverage_partitions_the_twin`: every face of the exported geometry belongs to exactly one region.
-Here:
-- `validator_three_things`: the fixture.
-- `registration_from_four_landmarks`: a twin rotated 30° about z, translated by (2, −1, 0.5) m and scaled by 1.02 relative to the scene; the recovered transform reproduces the four landmarks within 1 mm, and its mirror image is rejected (the determinant of the rotation is +1).
-- `scale_without_witness_is_not_witnessed`: a package without a witness yields at best the label `estimated` (clearance verdicts are then `unresolved` within the stated scale interval), and with no scale prior `relative-only`, on which every metric task is refused (`FROB-REF-304`).
-- `unobserved_region_is_unknown`: as for the drone route.
+Here (`tests/upstream/FD-FSS-01/`, compiled as the `frob-conformance` integration test `upstream_fd_fss_01`,
+`#[ignore]` so that the default suite stays green; packages labelled `synthetic`):
+- `validator_three_things`: a complete skeleton passes; one without landmarks, one without a witness, one without coverage each fail naming the missing item.
+- `validator_coplanar_fails`: landmarks (0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0) fail the tetrahedron check (volume 0); (0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1) pass (V = 1/6 m³, d = √2 m, V/d³ = 0.0589 against the 1% threshold); (0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 0.05) fail (V = 1/120 m³, d = √2 m, V/d³ = 0.0029).
+- `validator_signature_matches_pilot`: on a skeleton reproducing the pilot's findings, the failure equals `expected.toml`.
+- `pilot_record_read`: `PILOT.md` cites a pilot record that loads under `frob.gauntlet.pilot/1`; a citation to a missing record is an error.
+(Registration from the package's landmarks, the scale label and unobserved regions as unknown space run through
+`scene.import` and are NFp2-03's tests.)
 
 ### End-to-end script and logging
-`scripts/e2e/upstream_fd_fss_01.sh --phase pre|post`. Phase `pre`: prints the pilot record and runs the
-validator on the inspected package, asserting the recorded verdicts. Phase `post`, after the pin move (or after
-the package version is fixed, since this sibling is a pattern and not a Cargo dependency): `frob scene import
---json` on a package from the landed commit, `frob scene accept --json`, and the checks above; the log records
-identities and labels only, never the place's content.
+`scripts/e2e/upstream_fd_fss_01.sh --phase pre|post` (sources the STD-E2E helper; header `bead=FD-FSS-01
+milestone=M5 plants=three-landmarks,witness-without-method`). Phase `pre`: prints the pilot record and runs the
+validator on the inspected package (`cargo test -p frob-conformance --test upstream_fd_fss_01 -- --ignored`),
+asserting the recorded verdicts; or, in the not-needed case, asserts the row's `not-needed` state and the verdict in `PILOT.md`. Phase `post`, after the
+package version is fixed (this sibling is a pattern and not a Cargo dependency): the validator on a package exported
+from the landed commit, expecting a pass; the version and exporting commit read back from the row, which must read
+`landed`; nothing of the sibling in `Cargo.lock` or the tree. The imports through `scene.import`, the probe request
+on an unresolved door and GATE-HAB-03 are NFp2-03's script. The log records identities and labels only, never the
+place's content.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fss_01/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -141,16 +167,17 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - Known answers: four points are coplanar exactly when the tetrahedron they span has zero volume (1/6 m³ for the unit corner; 0 for the square); a similarity transform has seven parameters, and four non-coplanar correspondences determine it with redundancy and exclude a reflection.
-- Negative controls: a registration from three landmarks must report the mirror ambiguity; an importer that ignores the coverage partition must answer `free` in an unobserved region and be caught (CX-355).
-- Determinism lanes: validation and registration are deterministic; registration twice gives identical transforms.
+- Negative controls: a validator that accepts four coplanar landmarks, or a witness without method and uncertainty, must be caught by the planted skeletons. (Registration from three landmarks and an importer that ignores the coverage partition, CX-355, are NFp2-03's controls.)
+- Determinism lanes: validation is deterministic; the same package validated twice gives identical verdicts and signature.
 
 ## Considerations
 
 - The item is unusual in the register: it may never be opened. The pilot is cheap by design (inspection of one package) and comes first so that the importer is not built on an assumption.
 - Real-place data is private: packs are stored outside the repository and everything derived inherits the mark; no log line carries scene content.
 - This sibling is a pattern, not a build dependency: "pin" here means the package version named in the import contract, and the switch-over's receipt records that version.
-- No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
-  milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
+- No milestone waits on this bead. Its milestone label says when its switch-over gate first exists (NFp2-03), not
+  that the milestone's exit depends on it; the work itself may start as soon as the pilot N19c-01 (M3) records
+  `falsifier-holds`. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its
   critical path.
 - If this change never lands, the program still ships on the interim posture, at the cost stated there. A change

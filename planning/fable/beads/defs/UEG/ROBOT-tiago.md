@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "BD-105", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-mecanum", "ZOO-mobile-manipulator", "BD-109", "BD-245", "N14b-04", "N14b-24", "ROBOT-stretch3"]
+related: ["ZOO-mecanum", "ZOO-mobile-manipulator"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -44,8 +44,9 @@ any upstream NOTICE, unmodified files.
 a gripper; a pan-tilt head; a base with either two driven wheels and casters or four mecanum wheels; total
 mass on the order of 70 kg.
 
-**Import path.** `frob design import --format mjcf assets/robots/tiago/source/<entry> --out
-assets/robots/tiago/import.fbot --json`. Base-kind determination (step 1 of validation): count driven wheels
+**Import path.** `frob design import assets/robots/tiago/source/<entry> --format mjcf --name tiago --key
+asset-tiago-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). Base-kind determination (step 1 of validation): count driven wheels
 and inspect how the source models them. Mecanum wheels in public models are written in one of three ways:
 explicit roller bodies on each wheel; an anisotropic friction setting on a plain wheel; or a planar joint with
 velocity actuators that bypasses wheel contact. The importer maps the first two to `roller-wheel` with the
@@ -54,7 +55,11 @@ third is not a wheel model at all and is reported in the loss report as "base mo
 contact", in which case the base serves kinematic parity only.
 
 **Validation specifics.** (2) If mecanum: the twist-to-wheel map built from the imported wheel positions and
-roller angles has rank 3. (3) The arm: seven revolute joints, Jacobian rank 6 at the reference pose. (4)
+roller angles has rank 3. The map is the one BD-109 states for the `mecanum` template (wheel i at (xᵢ, yᵢ) with
+radius r and roller angle αᵢ to its rolling direction, tᵢ = tan αᵢ): ωᵢ = (1/r)·(v_x + tᵢ·v_y + (tᵢ·xᵢ − yᵢ)·ω_z),
+four rows in (v_x, v_y, ω_z); the validation builds it from the imported xᵢ, yᵢ, r and the recovered αᵢ and
+computes its rank exactly at rational wheel positions (the positions rounded to the file's printed digits),
+and with all four tᵢ equal the first two columns are parallel and the rank is 2. (3) The arm: seven revolute joints, Jacobian rank 6 at the reference pose. (4)
 Base-only sub-design `base.fbot` by a recorded edit, conserving mass. (5) Mass properties and limits as for
 every robot.
 

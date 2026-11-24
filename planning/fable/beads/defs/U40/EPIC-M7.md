@@ -8,7 +8,7 @@ labels: ["m7", "delivery", "tenfold", "solid", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
-related: ["BD-434", "N40-14", "N40-16", "N40-17", "N40-18", "N40-20", "N40-21", "N40-22", "N40-28", "N40-07", "EPIC-M4", "EPIC-M8"]
+related: ["EPIC-M8", "EPIC-PROGRAM", "N40-02", "N40-06", "N40-07", "N40-14", "N40-16", "N40-17", "N40-18", "N40-20", "N40-21", "N40-22", "N40-28"]
 gates: ["GATE-TENFOLD-03", "GATE-TENFOLD-04", "GATE-TENFOLD-05", "GATE-TENFOLD-07", "GATE-TENFOLD-08", "GATE-TENFOLD-11", "GATE-TENFOLD-12", "GATE-TENFOLD-13", "GATE-TENFOLD-09", "GATE-GAUNT-01", "KILL-TENFOLD-SPEED", "KILL-TENFOLD-TIE", "KILL-TENFOLD-CERT", "KILL-TENFOLD-LEAK", "KILL-TENFOLD-ADJ", "KILL-TENFOLD-REACH"]
 plan_refs: ["§43.10", "§43.1", "§43.2", "§40.5", "§40.6", "§39.10", "§39.13", "§43.12"]
 ---

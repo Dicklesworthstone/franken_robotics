@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid"]
 parent: "WP-02"
-deps: ["BD-037", "BD-006", "FD-ASUP-01", "NF-01", "STD-E2E"]
+deps: ["BD-006", "BD-037", "FD-ASUP-01", "N33b-04", "STD-E2E"]
 needs: []
-related: ["BD-004", "BD-008", "NF-03", "FD-FSIM-14"]
+related: ["N33b-08", "NF-03"]
 gates: ["INT-FSIM-01", "INT-ASUP-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.2", "§33.5", "§33.8", "§41"]
 ---
@@ -77,7 +77,9 @@ current head before it is edited.
    the entry waits. Each waiting entry is listed in the mirrored bead with its reason.
 4. *asupersync.* Its entry is the one published version V fixed by FD-ASUP-01, at V's commit.
 5. *Verify.* FrankenSim's verify-only preflight passes at the landed commit; its test suite passes against the
-   locked constellation.
+   locked constellation. The lock is rewritten by FrankenSim's own lock command, never by hand, so that its
+   `lock_hash` (FACT, schema `frankensim-constellation-lock-v2`: it covers `lib`, `version` and `git_head` only;
+   paths are per machine) is recomputed with the entries.
 
 Additive in effect: no source changes; the lock states what was already being built.
 
@@ -91,8 +93,12 @@ marked `#[ignore]` so that the default suite stays green, with `expected.toml` b
 recorded at the pinned commit (`observed_at`, the failing assertion and the observed value). It fails at the pin
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
 itself a failure of the registry check. It reads FrankenSim's `constellation.lock` and `Cargo.lock` at the pinned
-commit and asserts that every constellation entry equals the revision `Cargo.lock` resolves; at the pin the
-asupersync entry (0.5.0 against 0.6.2) fails first.
+commit (read-only, `git show <rev>:<file>`). A path dependency carries no source and no revision in `Cargo.lock`,
+only a name and a version, so the comparison has two parts: every entry's `version` equals the version
+`Cargo.lock` resolves for that package (an entry whose version is `unversioned-workspace`, as FrankenSQLite's is,
+is compared by commit only); and every entry's `git_head` equals the commit of that sibling's checkout recorded
+in this project's newest resolution receipt, which is the tree the build used. At the pin the asupersync entry
+(0.5.0 against 0.6.2) fails first.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -128,7 +134,8 @@ else depends on FrankenSim's lock being fresh.
 
 ### Unit tests
 In FrankenSim (added):
-- `constellation_matches_cargo_lock`: parses both files; expected equality of revision for every path-resolved sibling. Input today: asupersync 0.5.0 at `7a0f2f55047c` against 0.6.2; expected after: equal.
+- `constellation_matches_cargo_lock`: parses both files; expected, for every path-resolved sibling, the entry's `version` equal to the version `Cargo.lock` resolves (commit-only for `unversioned-workspace`), and the entry's `git_head` equal to the head of the checkout the build used. Input today: asupersync 0.5.0 at `7a0f2f55047c` against 0.6.2 at `b32c5ba66315`; expected after: equal.
+- `lock_hash_is_recomputed`: the landed lock's `lock_hash` equals the hash FrankenSim's own lock command computes over (`lib`, `version`, `git_head`); a hand-edited entry with the old hash fails it.
 Here (`tests/upstream/FD-FSIM-16/`):
 - `own_lock_agreement_is_computed`: on a `synthetic` sibling pair with a lock one commit behind, the receipt says `agrees: false`, class `stale-lock`; with the lock refreshed, `agrees: true`, class `on-pin`; with a dirty tree, class `drift`.
 - `receipt_hashes_the_own_lock`: changing one byte of the stand-in's lock changes the receipt's `own_lock.hash`.

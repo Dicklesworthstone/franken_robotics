@@ -1,0 +1,212 @@
+{
+ "round": 2,
+ "slice": "S31",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "N24b-06",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the U38b-2 request: frob.preanalysis/1 now echoes rule, n, margin and carries `level` (α as a reduced rational, beside concordance_interval) and `interval_level` (1 − α/2) so the record and its hash cover the level; a record without `level` does not parse; the printout puts the level beside every bound and first-reachable n (N38b-59). Added tests rule_level_tenth (α = 0.1: U(0;64) = 0.056009, tie unreachable at 71 with 721/721/0/1,186, reachable at 72 with 740/740/1/1,220; recomputed) and preanalysis_record_carries_level, and an acceptance line. Added curtailment_tie_region_not_monotone (n = 256, state (0, 6) with 5 unresolved must not curtail: the completion (5, 6) is a tie), guarding `curtail` against a corner shortcut."
+  },
+  {
+   "bead": "N24b-11",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Acceptance required invariance on recorded histories of the plate-drag rig (N24b-12) and the walking quadruped (BD-202), both of which depend on this bead, so it could not close. Now the bead records its own referee history (16-sample compliant box patch, 100 N, 20 mm drag) plus 10^4 random patches; the rig and quadruped checks are named as N24b-12's and BD-202's. Added test slip_recorded_box_drag_invariance."
+  },
+  {
+   "bead": "N24b-13",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Capacity paragraph said level 1 is the first to overflow the referee's 21-contact cap; with 16 samples per sole and four feet level 0 already does (64 contacts, as the bead's own test and BD-202's capacity rule state). Corrected."
+  },
+  {
+   "bead": "N24b-21",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Step `levels` now asserts the new `level` field of each record (1/40, 1/2200, 1/5010000; 1/20 for step 1), that the four n = 64 hashes differ, and that `--level 1/20` reproduces step 1's hash, so the e2e covers N24b-06's level change."
+  },
+  {
+   "bead": "N24bx-01",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The bead adds input fields and refusals (FROB-REF-136, -222) to the `task.fixture` registry row; registries come first, so VERBS-task added to deps (no cycle)."
+  },
+  {
+   "bead": "N24c-02",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Acceptance cited 'the cart reference traces ... the four examples', which no bead ships (the cart task has ten labelled examples, N24b-05). Now four synthetic traces built from the requirement text: clean docking and dwell restart (satisfied), stuck lip with env_min_x 0.069 m (violated, margin −0.31, binding `cleared`), chassis strike (violated at the strike tick); the ten-example set is N24b-05's and checked by N24c-06."
+  },
+  {
+   "bead": "N24c-04",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "eval.run never called N24b-01's `battery::resolve`, though N24b-01 states that run records store the resolved battery. Added step 0 (resolve once before digest, echo BatteryId in `bound`, store battery {id, items}, refuse LoadError, iterate `items`), an acceptance line for --battery smoke/fixtures, and test run_record_echoes_resolved_battery."
+  },
+  {
+   "bead": "N24c-06",
+   "kinds": [
+    "deps",
+    "correct",
+    "self-contained"
+   ],
+   "what": "The script's fixtures described four examples and its own task file, while the cart task and its ten labelled examples are N24b-05's. Fixtures now are N24b-05's ten traces (vacuous-hard-limit = the ten without rollover and tilt-exactly-35), the task file byte-identical to N24b-05's, referee runs on N24b-05's designs and scene; N24b-05 added to deps; rows examples_ok and vacuous_hard_limit (539, form (ii), atom tilt-ok) updated."
+  },
+  {
+   "bead": "N24c-10",
+   "kinds": [
+    "deps",
+    "self-contained"
+   ],
+   "what": "Depended on BD-146, the M1 conformance capstone that reads this bead's rows (a component depending on its capstone). Removed BD-146; added N24-KA (the KA rows it reads) and N24b-01 (the fixtures battery it runs), and named all three in Out."
+  },
+  {
+   "bead": "N24c-14",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Input 1 asked for q ≤ 5 samples per sole and an invalid `--q` command; the rig (N24b-12) needs 16/18 conforming samples (non-conforming misses by 5.9%) and BD-202 names the adjudicator by its capacity rule. Rewrote input 1 (rig layout, full-stance count 64–72 from contact.capacity, adjudicator strict on batch-cpu until FD-FSIM-13, counts against A only if B loads fewer soles), added N18b-20 to deps, updated acceptance, fixture2_contact_count_fits and the e2e commands."
+  },
+  {
+   "bead": "N24c-36",
+   "kinds": [
+    "complete",
+    "correct",
+    "tests"
+   ],
+   "what": "Example randomization block lacked BD-200's `:from <kind>:<path>#<field>` and used stream names not in N35-23's registry. Rewrote it with :from and :stream rows (scene-field, disturbance-process, disturbance-event, sensor-noise), domain-mismatch refused under exposure-domain-missing, unknown stream 103; stated the `:key` syntax recognised only to refuse with 556; added stream_names_resolve_to_registry_rows and gave the 556 tests their syntax."
+  },
+  {
+   "bead": "N28-REF",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Applied the UJL-2 request (542 vs 533, one trigger). Both codes stay (the plan registers both); the verbs column now follows N24-REF's layer rule: study.plan and the Arena study verbs answer 552/532/533 via study::admit, eval.compare, study.compare and the Atelier verbs 553/555/542 via pairing::admit; study.plan, study.submit and eval.preanalyze leave the 542/553/555 rows. Added test layer_rule_one_code_per_pair, an acceptance line and an e2e step `layer_rule`."
+  },
+  {
+   "bead": "N28a-18",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "Applied the U38b-1 request: the gate measurement now uses BD-025's cargo form (FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- GATE-ATEL-06, --features gauntlet-mutations for the mutant control). The e2e asserts the code of each layer (553/555/542 via eval.compare; 552/532/533 via study.plan); names the M1 user-side run (N33b-19 step 8) since atelier_compare.sh is M3; Considerations cite the settled layer rule instead of asking for equivalence marking."
+  },
+  {
+   "bead": "N28a-19",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Exact curtailment declared 'every completion inconclusive' when the corners were neither promote nor inferior and (a, b) was not a tie; the tie region is not monotone, so that stops wrongly (at n = 256, (0, 6) with 5 unresolved: completion (5, 6) is a tie; 230 such states at 256, first at n = 156; computed). The brute-force check at n ≤ 32 could not see it (no tie reachable). Replaced the clause by an O(r) tie scan, added curtail_tie_scan_at_256, a mutant control, an acceptance line and an e2e step; named the M1 e2e (N24b-21)."
+  },
+  {
+   "bead": "N28cx-01",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The e2e phase ran `frob-conformance run refusals.prediction ...`, a binary BD-025 says does not exist (library plus test targets). Now runs the bead's own test target in the cargo form, whose payload tests print each built envelope as one `refusal-fixture` JSON line that the phase validates against frob.refusal/1 and asserts."
+  },
+  {
+   "bead": "N33a-18",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "The e2e section said the study verbs' script belongs to BD-124; it is N33b-19's `scripts/e2e/study_two_types.sh` (BD-124 says so itself). Pointer corrected; numbers checked (P(X>569) = 0.00088, P(X>568) = 0.00102; e-BH thresholds 60/30/20)."
+  },
+  {
+   "bead": "N33b-19",
+   "kinds": [
+    "complete",
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied the three round-1 requests: study.submit refuses an unknown plan_id with FROB-REF-809 (exit 7, two repairs) and lists 809 (N32-REF added to deps); study.plan is key_optional (RL-21): keyless plan admitted and not 805, submit without key is 805; anytime block gains optional `planning_effect` δ and the estimate reports expected_pairs = ⌈2·ln(1/α)/δ²⌉ (6, 24, 150; GB-06), labelled gaussian-growth, never entering the stopping rule. Stated the four rows' refusal lists under the layer rule (533 on study.plan, 542 on eval.compare). eval.compare now accepts an optional study-type block (ADR-ATEL-02), without which its planted 553 and 555 cases could not be made. New tests and e2e steps for each."
+  },
+  {
+   "bead": "NEG-10",
+   "kinds": [
+    "complete",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Recomputed all radii from the fixture's parameters (1.4820, 0.9207, 2.6917, 2.7075; Euler 1.854/1.497). Added the parameters for the reader (the test still reads the fixture file), the closed forms of the instantaneous model, the undamped values of (a) and (b) (1.4784, 0.9275) in place of 'they move', and KA-610's 1.854 wrong-order figure for (a), which was missing."
+  },
+  {
+   "bead": "SPEC-C-15",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "The e2e used a rule id, flags and token N24b-06 does not define (`paired-cp975`, `--band`, `PracticalTie`) and expected 555/553 from `study plan`, which under the layer rule answers 532/552. Now uses N24b-06's spellings and asserts the code of each path (532/552 via study plan, 555/553 via eval compare); refusal statements state both layers; S5–S7 tests drive both paths. (19/14)^16 is 132.4, not 132.5."
+  },
+  {
+   "bead": "SPEC-C-30",
+   "kinds": [
+    "e2e-logging"
+   ],
+   "what": "The e2e ran `cargo test -p frob-conformance --test g1` / `--test g3`, targets BD-025 does not define. Now the ADR-GAUNT-01 form with `g1_known_answers` and `g3_metamorphic`, FROB_TEST_SEED, and the mutations feature for control runs. All hand numbers rechecked (KA-149, until trace, rational window)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-task",
+   "what": "task.fixture should list FROB-REF-136 and FROB-REF-222 (raised by N24bx-01's run-axis selectors), and task.list gains the optional input field `kind = \"fixture\"` that N24bx-01 uses."
+  },
+  {
+   "bead": "BD-146",
+   "what": "Consider adding N24c-10 to deps: BD-146 is the M1 conformance capstone and reads the Arena fixtures rows N24c-10 records (N24c-10 no longer depends on BD-146)."
+  },
+  {
+   "bead": "BD-200",
+   "what": "Add `:key` to the list of randomization keys later beads add: N24c-36 recognises `:key <counter>` (control-tick, footfall-index, contact-index, draw-index, training-counter) only to refuse it with FROB-REF-556."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "Layer rule settled in N28-REF and N24-REF (both codes of each pair stay; one verb lists one): study.plan lists 532, 533, 552, 543, 556 and drops 542 and 555; study.submit drops 542 (the class is checked at plan time as 533 by study::admit; a backend whose class record changed after planning is a superseded identity, 809) and keeps 809; replace the 'Two codes for one trigger' note with the rule. N28-REF's test layer_rule_one_code_per_pair fails a verb listing both codes of a pair."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.compare should list 542, 543, 553, 555, 556 and drop 533 (it runs pairing::admit first, so a defect with two codes answers with the comparison code; N33b-19, N28-REF layer rule), and gain the optional study-type input block (`anytime {…}` or `fixed_n {…}`, the fields of study.plan, default anytime) that N33b-19 now accepts; without it 555 cannot be raised through eval.compare."
+  },
+  {
+   "bead": "BD-124",
+   "what": "Lines 67 and 196 say 'three-corner form' of the curtailment test; N28a-19 now specifies corners for promote and inferior plus a tie scan for the inconclusive case (the tie region is not monotone: n = 256, (0, 6) with 5 unresolved). Reword to 'the corner form with its tie scan'."
+  },
+  {
+   "bead": "BD-025",
+   "what": "Extend no_conformance_command to `frob-conformance run` and to tier targets that do not exist: about 39 beads (most of U28c, several of U30b, and N28a-30's `frob conformance run --gate`) invoke a frob-conformance binary BD-025 says does not exist, and about 99 lines (U36, U21b and others) use `--test g1` / `--test g3` instead of `g1_known_answers` / `g3_metamorphic`; the lint would surface them all."
+  },
+  {
+   "bead": "GB-06",
+   "what": "N33b-19 now reports the expected pair count: the anytime block of study.plan takes `planning_effect` (δ) and the cost estimate carries `expected_pairs` labelled `approximation: gaussian-growth`; the surface step (and NEG-02's call) can move from `not run` to asserted, using those field names."
+  }
+ ],
+ "unchanged": 19,
+ "notes": "All 39 read in full; numbers recomputed and agreeing (fixture 1 analytic rows, CP enumeration at 64/86/128/256, power, levels, peeking, fixture 2 model and quadrature, N24cx-01 sizing, PO-ATEL-02 coverage min 0.979/0.983, wheel-loop radii, binomial limits, C-15 tables). One real defect beyond stale text: N28a-19's 'every completion inconclusive' corner test ignored the non-monotone tie region (wrong stops from n = 156; 230 states at 256), invisible to its n ≤ 32 brute force. Systemic issues outside the slice: about 39 beads invoke a `frob-conformance run` binary and about 99 lines use `--test g1`/`--test g3`, neither of which BD-025 defines (request to BD-025). The 533/542 request is settled by keeping both codes with N24-REF's layer rule, now stated and tested in N28-REF; VERBS-study and VERBS-eval must drop the other layer's codes or N28-REF's test fails. Slice looks settled after these edits."
+}

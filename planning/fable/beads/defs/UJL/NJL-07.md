@@ -1,14 +1,14 @@
 ---
 key: "NJL-07"
-title: "fixtures/golden/appendix-l: layout, three layers, the identity map, the story-consistency check and the blessing rule"
+title: "fixtures/golden/appendix-l: layout, three layers, identity map, story-consistency check, the blessing rule"
 type: "task"
 priority: 1
 milestone: "M1"
 labels: ["m1", "gauntlet", "frob-conformance", "solid", "test", "registry", "delivery"]
 parent: "WP-14"
-deps: ["BD-005", "STD-E2E", "STD-TEST"]
+deps: ["BD-005", "N34-01", "N40-05", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-141", "BD-410", "N34-23", "BD-054", "BD-060", "BD-122", "BD-126", "BD-133", "ART-L1", "ART-L2", "ART-L3", "ART-L4", "ART-L5", "ART-L6", "ART-L7", "ART-L8", "ART-L9"]
+related: ["NJL-02", "NJLx-02"]
 gates: []
 plan_refs: ["Appendix L (preamble, L.1 to L.9)", "Appendix H.5", "§34.1", "§34.9", "§38"]
 ---
@@ -111,6 +111,12 @@ world (L.6, L.9) and its passing neighbours `w:51b0…`, `w:e7c4…`, `w:0a9d…
 `b3:e2a0…` the qualification receipt (L.7 entry e6, L.9); `plan:b3:52e8…` and `b3:5d10…` the study plan and
 its pre-analysis (L.8). Cell names (`c:03`, `c:06a`) are labels, not hashes, and are `exact`.
 
+The map has one reader outside this bead: the verb conformance harness (NJL-02) keeps
+`fixtures/verbs/identities.toml` for the abbreviations that registry examples use (`r:19e2`, `b3:61f0`,
+`d:7a3e`), and from M1 its test `example_identities_agree` requires every abbreviation that both files list to
+carry the same full identity. A row renamed, re-blessed or removed here is therefore changed in that file in the
+same commit.
+
 **The story-consistency check** (`frob-golden check --story`; also a unit test). Facts that tie the artifacts
 together and must hold on the resolved layer:
 1. L.1 sits at the centre of the inner cell c:06a of L.4: the cell is v ∈ (6, 8], r ∈ [11/5, 5/2] in the
@@ -132,7 +138,12 @@ together and must hold on the resolved layer:
 8. Every body named in L.5's `load_path` resolves to a body or limb instance of the compiled L.1 design.
 
 **Tool** (`crates/frob-conformance/src/bin/frob-golden.rs`; it may link the owner crates' readers, never a
-second parser of its own). `frob-golden check [--artifact Ln] [--story]`: manifest hashes of the specimen layer;
+second parser of its own). It is an operator binary of the verification crate under BD-025's rule: a `[[bin]]`
+entry of the crate's manifest with `name = "frob-golden"` and `path = "src/bin/frob-golden.rs"` (the manifest
+sets `autobins = false`, so a binary exists only by declaration), with a row in the binary table of
+`crates/frob-conformance/CONTRACT.md`: owning bead NJL-07; reads the fixture tree, `MANIFEST.toml`,
+`IDENTITIES.toml`, the `fields.toml` files and end-to-end logs; writes the resolved layer and, with `bless`,
+identities and blessing records in `IDENTITIES.toml`; it runs no tier and writes no gate row. `frob-golden check [--artifact Ln] [--story]`: manifest hashes of the specimen layer;
 strict parse, schema validation and round trip of the resolved layer through the owner's reader and writer;
 the story facts. `frob-golden resolve`: rewrites the resolved layer from specimen and map; refuses while a
 needed identity is empty. `frob-golden bless --artifact Ln --from <e2e log>`: copies full identities from a
@@ -144,29 +155,50 @@ run in small mode, and when the blessing session is the session that implemented
 milestone, in story order (L.4, L.1, L.2, L.3, then L.6, L.9, L.8, L.5, L.7), inside one scratch root so that
 identities produced by one step are the inputs of the next, then runs `frob-golden check --story`.
 
+**What is tested when.** This bead closes before any artifact is entered: the nine `ART-L*` beads depend on it
+for the layout, the map and the tool. Its own tests therefore run on a test tree
+`crates/frob-conformance/tests/data/golden_appendix_l/` (labelled `synthetic`; not golden files and not in
+`MANIFEST.toml`) that holds, for each story fact, only the fields the fact reads, entered from Appendix L's
+printed values, plus one specimen and resolved pair in a format whose reader is already a dependency (the
+canonical JSON of `frob-core`, BD-005) for the manifest, resolve and round-trip paths, and the planted variants.
+On the real tree a fact is evaluated only when every artifact it reads is in the manifest; otherwise it is
+reported `not-due` with the missing artifacts, never as a pass (facts 1 and 2 read L.1, L.2 and L.4 and become
+evaluable at M1; facts 3 to 7 at M3; fact 8 at M4 with L.5). The story runner is added to step 4 of the exit
+runner `scripts/exit/review.sh` (N40-05, a dependency), so every exit from M1 runs the artifact scripts due at
+the candidate commit and the facts they make evaluable, and a failed script or fact is a blocking item of the
+exit record.
+
 ## Acceptance criteria
 
 - [ ] The layout exists; `MANIFEST.toml` lists every golden file with its SHA-256, and `frob-golden check`
       fails when one byte of a specimen changes (negative control).
 - [ ] `frob-golden resolve` produces resolved files that parse strictly and round-trip with zero byte
-      differences for every artifact due at the milestone; it refuses to write while an identity is empty.
-- [ ] `frob-golden check --story` passes on the resolved layer and fails, naming the fact, on each planted
+      differences (on the test tree at this bead's close; on the real tree for every artifact due at each exit
+      from M1); it refuses to write while an identity is empty.
+- [ ] `frob-golden check --story` passes on the test tree and fails, naming the fact, on each planted
       inconsistency: a half-width of 1/6 m in L.1 (fact 1); a fourth edit in L.6 (fact 5); a changed force in
-      entry e2 (fact 6); a study with n = 96 in L.8 (fact 3).
+      entry e2 (fact 6); a study with n = 96 in L.8 (fact 3). On the real tree a fact whose artifacts are not all
+      present is reported `not-due` naming them, never `pass`.
 - [ ] An abbreviation resolves to one full identity everywhere it occurs; a planted second value fails.
 - [ ] `frob-golden bless` refuses a dirty commit, a failed log, a small-mode log and a self-blessing session,
       each with a named reason; a valid blessing appends its record.
 - [ ] The tool contains no parser for any registered artifact format (a source scan; it calls the owner's
       reader), so the single-parser rule of the format registry holds.
-- [ ] `scripts/e2e/appendix_l_story.sh` runs the artifacts due at M1 (L.4, L.1, L.2, L.3) in one scratch root
-      and passes; artifacts of later milestones are logged as skips, never as passes.
+- [ ] `frob-golden` is a declared `[[bin]]` with explicit `name` and `path` and has its row in the binary table
+      of `CONTRACT.md`; BD-025's test `binaries_declared` passes with it.
+- [ ] `scripts/e2e/appendix_l_story.sh` is in step 4 of the exit runner. At this bead's close, with no artifact
+      entered, it logs every artifact and fact as a skip with its milestone and exits 0. At the M1 exit it runs
+      the artifact scripts due at M1 (L.4, L.1, L.2) in one scratch root with facts 1 and 2 evaluated and passes;
+      L.3 is due at M1 only through its library-level lane (`cargo test -p frob-spec --test golden_l3`, which
+      the runner calls as a step), because its script uses the task verbs of M3; a failure blocks the exit;
+      artifacts and scripts of later milestones are logged as skips, never as passes.
 
 ## Test plan
 
 ### Unit tests
 
-`cargo test -p frob-conformance --test golden_appendix_l` (real files in a temporary copy of the fixture tree;
-no mocks):
+`cargo test -p frob-conformance --test golden_appendix_l` (real files in a temporary copy of the test tree
+`tests/data/golden_appendix_l/`, and of the real fixture tree where artifacts are present; no mocks):
 - `manifest_hashes_match`; `manifest_detects_changed_specimen` (one flipped byte).
 - `identity_pattern_lenient`: `d:7a3e…` is accepted in a specimen and refused in a resolved file.
 - `resolve_replaces_every_abbreviation`: after `resolve`, no resolved file contains the character `…`.
@@ -179,6 +211,8 @@ no mocks):
   17.04° and 12°, exactly as decimals), `story_fact_5_three_edits`, `story_fact_6_partition_thirteen`,
   `story_fact_7_receipt_index`, `story_fact_8_load_path`.
 - `bless_refusals`: the four refusals, one fixture log each.
+- `fact_not_due_when_artifact_missing`: with L.2 removed from a copy of the manifest, fact 2 is `not-due` naming
+  L.2, and the summary counts it apart from the passes.
 
 ### End-to-end script and logging
 
@@ -189,8 +223,9 @@ script name, its exit code and wall time and the identities it produced (digests
 `e2e_assert_digest_eq` against the map once blessed); the `frob-golden check --story` command with one
 assertion per story fact (observed and expected values, for example `7` and `47/20` against the cell bounds as
 rationals); skips for artifacts not due; and the final `summary`. With `E2E_PLANT_FAILURE=specimen-byte` or
-`story-fact` the script must exit 1 with a failed assertion naming the plant. No gate is claimed by this
-script.
+`story-fact` the script must exit 1 with a failed assertion naming the plant. Facts not yet evaluable are logged
+`skip` with the missing artifacts. No gate is claimed by this script; it runs at every exit from M1 as a step of
+the exit runner.
 
 ### Known answers and negative controls
 

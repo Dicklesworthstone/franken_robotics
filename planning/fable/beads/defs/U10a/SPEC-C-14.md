@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "lemma", "spark", "frob-kir", "frontier", "spine", "spec", "test"]
 parent: "WP-05"
-deps: ["BD-025", "N10a-01", "STD-TEST", "STD-E2E"]
-needs: ["§33 INT-FSYM-01: admission of FrankenSymPy as the build-time derivation engine and certificate checker (BD-019)", "§10 C-21: the similarity rescaling test that exercises dimensional homogeneity in floating point (SPEC-C-21, another unit)"]
-related: ["BD-019", "BD-020", "BD-021", "BD-053", "BD-149", "BD-150", "BD-221", "BD-371", "BD-379", "N10a-21", "N10a-03", "N10a-04", "CARD-T-09", "CARD-T-27", "N10-KA1", "BD-018"]
+deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+needs: []
+related: ["BD-018", "BD-019", "BD-053", "BD-221", "BD-371", "BD-379", "N21a-13", "SPEC-C-21"]
 gates: ["GATE-SPARK-00", "GATE-SPARK-02", "GATE-LEMMA-00", "GATE-LEMMA-01"]
 plan_refs: ["§10 C-14", "§9 D-7 D-8", "§21.6", "§21.7", "§12.3 T-09 T-27", "§12.4", "§35", "§38.7", "Appendix M KA-085 to KA-087", "Appendix N CX-039"]
 ---
@@ -30,11 +30,12 @@ skeletons (loops, gathers, sorts), not in the mathematical core of a batched ker
 its adjoint or its excuse): a kernel either has a derivative program or a recorded reason it does not, with
 the estimator that replaces it.
 
-Tier: Frontier. Pilot: N10a-21 (the M0 kernels derived, emitted on three back ends and certified). Kill gate
-named in advance, KILL-KIR: trigger, at M2 the derivation toolchain cannot express or emit more than 20% of
-the kernel arithmetic, or emitted kernels miss the speed bound of the algebra-pays-for-itself bet after one
-optimization pass; fallback, arithmetic is hand-written in Rust and the dialect and bound by differential
-tests, and certificates fall back with it.
+Tier: Frontier. Pilot: N21a-13 (record `PILOT-C-14`: the M0 kernels derived, emitted on three back ends,
+certified and timed). Kill gate named in advance, KILL-KIR: trigger, at M2 the derivation toolchain cannot
+express or emit more than 20% of the kernel arithmetic, or emitted kernels miss the speed bound of the
+algebra-pays-for-itself bet BET-01 after one optimization pass (an emitted kernel more than 1.3× slower than a
+hand-tuned kernel for the same stage on the same backend); fallback, arithmetic is hand-written in Rust and the
+dialect and bound by differential tests, and certificates fall back with it. The measurement is BD-221's.
 
 Foundations (FACT, FrankenSymPy `29f847c1`, 2026-11-21; existence is not admission): `Expr`,
 `fsym_calculus::diff`, `Matrix::jacobian`, `simplify`, a proof kernel with `Claim::AlgebraicIdentity` and a
@@ -50,9 +51,9 @@ trace format as mathematics; the dimension-typing rules; the adjoint-duality law
 fixture; the register row; tolerances and controls for KA-085 to KA-087; the statements of T-09 and T-27.
 
 Out: the straight-line representation, emitters and dimension checker as code (BD-018); the derivation
-subprocess (BD-019); predicate classes and the select lint (BD-053); certificate coverage for derived kernels
+workspace `derive/frob-derive` (BD-019); predicate classes and the select lint (BD-053); certificate coverage for derived kernels
 (BD-379); survivor specialization (BD-371); the measurement against the kill gate (BD-221); the pilot
-(N10a-21).
+(N21a-13).
 
 Order of work (DESIGN; the specification-first rule stated in section 6 of the construction register bead
 N10a-01). This bead is written before the code it specifies and does not depend on BD-018 (`frob-kir` v0, which
@@ -146,8 +147,11 @@ and side conditions hold, (iii) ends at the target program's hash. It shares no 
 - *Odd square root.* √(a) with a an area type-checks (L² halves to L); √(ℓ) with ℓ a length is rejected.
 - *Adjoint pair.* The kernel y = R(q)·x for the Cayley rotation R of a rational q: J·v with respect to x is
   R·v and Jᵀ·w is Rᵀ·w, and ⟨R·v, w⟩ = ⟨v, Rᵀ·w⟩ exactly in rationals.
-- *Power-of-two scaling.* x × 0.5 against x ÷ 2 on all `f32` inputs in the normal range: bit-equal; near the
-  subnormal boundary the range condition fails and the rule is not applicable.
+- *Power-of-two scaling.* The rewrite (x × 2⁻¹) × 2 → x on `f32`: bit-equal for every x whose intermediate
+  x × 2⁻¹ is normal. At x = (1 + 2⁻²³)·2⁻¹²⁶, the smallest normal number plus one unit in the last place, the
+  intermediate is subnormal and loses its last bit, so the round trip returns 2⁻¹²⁶ and not x: the range
+  condition fails there and the checker must refuse the step. (x × 0.5 against x ÷ 2 is not a fixture of this
+  rule: both are the correctly rounded value of x/2 and agree on every input, subnormals included.)
 
 **What it does not claim.** Throughput beyond the ceiling above; equivalence of class-R rewrites;
 correctness of skeleton code (loops, gathers, sorts), which is tested by parity and determinism gates;
@@ -204,8 +208,9 @@ hand; CI regenerates and compares digests.
 `scripts/e2e/spec_c14.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G0 and G2 rows
 KA-085 to KA-087; `frob --json prove kernel K-cay-step` (asserting the identities listed, the certificate
 hash, class `Certified`, the checker identity); `frob --json prove verify <certificate>` in an environment
-without the simulator; where a device is present, `frob --json spark check K-cay-step` asserting agreement
-inside the device's class. Log `target/e2e-logs/spec_c14/<utc>.ndjson` with transcript: commands, exit codes,
+without the simulator; where a device is present, `frob --json spark check --kernel K-cay-step --backend
+<gpu-cuda|gpu-metal> --key spec-c14-<backend>-<run>` (a `run` verb: without its idempotency key it is refused
+with `FROB-REF-805`) asserting agreement inside the device's class. Log `target/e2e-logs/spec_c14/<utc>.ndjson` with transcript: commands, exit codes,
 wall times, hashes of source, emitted and certificate artifacts, the evidence block (class, determinism
 class, kernel identity), per-kernel maximum ulp difference against its threshold, and on failure the first
 input and output word that differed. Final `summary` line.
@@ -240,4 +245,4 @@ input and output word that differed. Final `summary` line.
 ## References
 
 Plan §10 C-14; §9 D-7, D-8; §21.6, §21.7; §12.3 (T-09, T-27), §12.4; §35; §38.7; Appendix M KA-085 to KA-087;
-Appendix N CX-039. Bets: BET-01, BET-11. Kill gate: KILL-KIR. Pilot: N10a-21.
+Appendix N CX-039. Bets: BET-01, BET-11. Kill gate: KILL-KIR. Pilot: N21a-13.

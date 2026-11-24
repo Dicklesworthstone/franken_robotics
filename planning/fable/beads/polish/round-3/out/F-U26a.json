@@ -1,0 +1,171 @@
+{
+ "round": 3,
+ "slice": "F-U26a",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "BD-270",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Seed done-condition waited on N26a-04 (built on this checker) and N26a-05 and had the legality row recorded from N26a-05's receipt: now the part this bead delivers (checker, refusal, unit and property tests); illegal_refused is N26a-04's, the user-side count is in N26a-05's receipt, and GATE-NEMESIS-01's one record is N26a-33's (register N26b-18; conventions 7 and 9)."
+  },
+  {
+   "bead": "BD-272",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "deps"
+   ],
+   "what": "F-U16b request applied after checking N16bp1-01 step 10: the artifact-candidate case is written by frob_chronicle::fidelity::record_case into fidelity_case (frob.fidelity.case/1; source nemesis.guard, quantity task-decision, pair_or_variant = the first removing check, idempotent on case_id) and read with `fidelity ledger --class <c> --cases`; the verdict keeps its copy with case_id; the OPEN is closed. Acceptance and ledger_record_written assert one row, the case_id match, the --cases listing and no second row on a second guard run. Dep N16bp1-01 (M2, no cycle). Seed done-condition in the convention 7/9 form (N26a-16 records)."
+  },
+  {
+   "bead": "BD-273",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "tests"
+   ],
+   "what": "Options were said to be 'requested of the verb registry': VERBS-nemesis now carries them (convention 12); --seed is <u64str> as the row types it. Seed done-condition no longer waits on N26a-11/N26a-12 (convention 7): this bead delivers the per-arm quantities (first_stops, budget_split_and_reserve, solvable_share_counts); N26a-11 measures and records, N26a-12 decides. New --method exploration (DESIGN; requested of VERBS-nemesis): splitting and cross-entropy only, half each, on one archive, the arm GATE-NEMESIS-05 needs (its two-mode trap has a static-only and a per-step-only mode); test exploration_arm (724 without the explorer)."
+  },
+  {
+   "bead": "BD-276",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging",
+    "users"
+   ],
+   "what": "S63 request applied: mode certify names N26a-22's choose_design (sequential when n_clean fits budget and the 10^6 cap, else fixed-n at required(p*,delta); 92,872 at 1e-4; fixed-n at 1e-5 and 1e-6), with unit test certify_design_choice; the e2e paragraph drops 'the binary's batch entry point' and names the Gauntlet run of gate_rows (g1_known_answers -- GATE-NEMESIS-04) with the 20-study parity. Seed done-condition in the convention 7/9 form (N26a-30 records). The request line gains N26a-26's --finalist attestation, which the row lacks (requested)."
+  },
+  {
+   "bead": "BD-277",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Seed done-condition and Scope claimed GATE-NEMESIS-05's record, which N26a-31 (depending on this bead) enters: now the quantities this bead puts in each splitting result, checked by its own tests; N26a-31 measures and records, N26a-32 decides (conventions 7 and 9). Surface and registers_with_search_portfolio cover --method exploration (half splitting, half cross-entropy, one archive; 569 static-only; 724 when off)."
+  },
+  {
+   "bead": "N26a-01",
+   "kinds": [
+    "correct"
+   ],
+   "what": "contract.toml note names N26a-28's record PILOT-RARE-01 as the earlier record of the family behind PILOT-C-27 (the second half of the S62 request to N26a-28)."
+  },
+  {
+   "bead": "N26a-04",
+   "kinds": [
+    "correct"
+   ],
+   "what": "S63 request applied: T5's reader named truthfully: GATE-NEMESIS-01's witness row (N26a-33, all 100 solvable traps) only; no exploration gate reads it (N26a-31 measures 1e-5 on T5-two-mode). 'The search pilot' and 'the exploration pilot' were dropped as readers, and N26a-06 from the potency readers: the M2 pilots precede this M3 registry and build their own fixtures."
+  },
+  {
+   "bead": "N26a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "It had a session enter GATE-NEMESIS-01 with record_gate from this script's receipt, while N26a-33 enters the same gate from its combined receipt: two recorders (convention 9). Now this receipt carries the legality row and N26a-33, the register's one recorder, enters the record (Scope, item 4, acceptance)."
+  },
+  {
+   "bead": "N26a-12",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision entry gains receipts (N40-03 requires them); `frob evidence trace` takes the claim identifier each receipt carries, not a receipt hash (VERBS-evidence); new item 5, the unfunded branch (convention 10): if PILOT-C-28's falsifier holds, N26a-08, N26a-09 and N26a-11 close withdrawn citing the pilot result (N41-17 rule 7), so this bead records not-reached and never waits on methods that were not built."
+  },
+  {
+   "bead": "N26a-16",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "hardset add/show lacked --class with --task, which the VERBS-nemesis row requires (else 802, not the refusal under test). The fidelity record is now BD-272's case copy with case_id (100 distinct); the ledger's --cases read is named but not called until VERBS-fidelity carries it (convention 8)."
+  },
+  {
+   "bead": "N26a-19",
+   "kinds": [
+    "complete",
+    "tests"
+   ],
+   "what": "H-verbs-6 request applied: item 7a defines mcw::resolve, which sim.replay calls for a w:<hash> positional: the discovery record first (nemesis_worlds gives run, world and episode; the shrinker tested every single removal at the parent's base address), then stored .fmcw files (own id, or a neighbours_passing identity rebuilt by dropping the one edit whose removal recomputes to it), replayed as a first run labelled 'none (first run)', exit 0, when no episode exists; neither: FROB-REF-802 (the row's missing identity). Acceptance line and three unit tests."
+  },
+  {
+   "bead": "N26a-20",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Step 5 now replays each neighbours_passing identity positionally (N26a-19's resolver) and asserts the mission succeeds against the recorded episode, with the resolution logged (NS-15's step f); hardset add/show/run carry --class and --task as the VERBS-nemesis row requires (else 802)."
+  },
+  {
+   "bead": "N26a-21",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "S63 and H-ka-2 requests applied (checked against N26-KA, N38b-57, NEG-04): KA-664's control is the undercount one below the exact value (29,955; 299,571; 2,995,730; 76,958; (1-1e-4)^29,955 = 0.0500041 > delta) and the tenth request sized at 29,956; the rounded-down 29,957 is retired cannot-fail and survives only in approximation_is_not_the_count. New unit test undercount_control_caught. Counts recomputed (29,956; 299,572; 2,995,731; 36,887, 47,873, 63,967, 76,959; Clopper-Pearson 0.00299125, 0.00473499, 0.00628229; reachable 2.996e-5)."
+  },
+  {
+   "bead": "N26a-28",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "S62 request applied: A/A pass rule is N38a-08's (the paired lower bound does not clear 1.02) in acceptance and aa_arm; the record is PILOT-RARE-01 (PILOT-<SET>-<nn>, set RARE) with N38a-09's fields (tier F, bead, WP-55, gated_beads BD-277, fallback with kill_gate KILL-RARE, integrated_gate GATE-NEMESIS-05) and an acceptance line; schema frob.gauntlet.pilot/1 at the crates/ path. Box probabilities rechecked."
+  },
+  {
+   "bead": "N26a-30",
+   "kinds": [
+    "correct"
+   ],
+   "what": "KA-141 (SPEC-C-27) and KA-665 (N26-KA) are G0 rows, so they run under --test g0_laws, not g1_known_answers (convention 1). The acceptance line 'This script writes GATE-NEMESIS-04's record' contradicted item 4 and convention 9: this bead is the one recorder, from the script's receipt. Planning value 8,062 at 1e-3 recomputed."
+  },
+  {
+   "bead": "N26a-31",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "S62 request applied: A/A rule 1.02 (registration and acceptance); thresholds are Phi-bar^-1 of N26a-04's exact tails (2.3263 and 4.4172 are prints), so 1e-4 and 9.999975e-6 stay exact; T5 is not this gate's fixture. Arm 1 was '--method splitting with tilting on one archive', which no option expressed and which finds the static-only mode A only by luck: now --method exploration (BD-273). KA-666's sanity step runs as the G0 row under g0_laws."
+  },
+  {
+   "bead": "N26a-32",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "'The seed bead for splitting is done only when this gate is decided' made BD-277 wait on its own dependent (convention 7): reworded. Decision entry gains receipts; evidence trace takes the claim identifier; new step 6 and acceptance line for the unfunded branch (convention 10): BD-277, N26a-29 and N26a-31 close withdrawn citing the pilot result (N41-17 rule 7), so this bead can record fired or not-reached."
+  },
+  {
+   "bead": "N26a-35",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "Decision entry gains receipts (N40-03); evidence trace takes the claim identifier, not a receipt hash; new item 5, the unfunded branch (convention 10): N26a-34 closes withdrawn citing PILOT-C-28's result while BD-274 in contrasts mode, N26a-17, N26a-18 and N26a-19 stand, so the bead can record not-reached."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.search --method: add the value `exploration` (BD-273, DESIGN): splitting and cross-entropy only, half of the search arm each, on one shared failure archive with the restart rule; FROB-REF-569 on a task with no per-step randomness after the fork, FROB-REF-724 without the splitting explorer or after KILL-RARE. It is the arm GATE-NEMESIS-05 measures (N26a-31); BD-277 asserts the split. Implemented by BD-273, completed by BD-277."
+  },
+  {
+   "bead": "VERBS-nemesis",
+   "what": "nemesis.bound: add the input `--finalist` (flag; the caller's recorded attestation that the candidate is a finalist, for a candidate not drawn from a recorded campaign's finalists), which N26a-26's finalists-only rule admits and BD-276's request line now names; a non-finalist request is the uncoded refusal rare-bound-not-finalist (exit 3)."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "sim.replay outputs: N26a-19 now defines the w:<hash> resolution (discovery record, then stored .fmcw files, else 802). A world identity that resolves from a file with no recorded episode (a hand-written file's neighbour) is replayed as a first run with comparison `none (first run)`, exit 0, never Bitwise: add that label to the row's outputs and drop 'DESIGN form, requested of N26a-19'."
+  }
+ ],
+ "unchanged": 14,
+ "notes": "All 32 beads read in full. Requests: all seven applied after checking them against the owners (N16bp1-01; N26a-22; N26-KA, N38b-57, NEG-04; N38a-08, N38a-09; VERBS-sim). Every number in the slice was recomputed with my own scripts (zero-failure counts and the four qualification levels, Clopper-Pearson bounds, the Beta(1/2,1/2) clean counts 8,062, 92,872, 1,050,021, 11,705,893, box tails, Good-Turing expectations, mixture weights, grid steps): all correct. Kept on purpose: the U26a mechanism beads still name the gate scripts of their e2e beads (N26a-05, -11, -16, -30, -31, -33, -34) as the shared scripts with one owning bead (convention 11's last clause, the charter's one e2e bead per capability, the gate register N26b-18 and the same choice in F-U26b); their acceptance and tests no longer wait on those beads. A coordinator who reads convention 11 as one script per mechanism bead would need a cross-slice change of about fifteen U26a/U26b beads. VERBS-fidelity still lacks the --cases input (requested by F-U16b), so N26a-16 reads the verdict's copy until it lands."
+}

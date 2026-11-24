@@ -1,0 +1,237 @@
+{
+ "round": 1,
+ "slice": "U20a-2",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "N20a-20",
+   "kinds": [
+    "sense",
+    "deps",
+    "self-contained",
+    "correct",
+    "tests",
+    "scope"
+   ],
+   "what": "The `ramp` grazing law consumes the per-region latent of N20a-24 (M3) and could not be built at M2 without a per-sample coin (forbidden by ADR-SENS-08): its kernel stage moved to N20a-24 (formula kept here, a `ramp` card is rejected until then). Defined the guarded comparison (the Guarded predicate class: bound E = c·u·S, exact fallback), resolved the contradiction between 'surfaces away from the limit' and the 0.30 m at-limit row (analytic plane, strictness at equality), noise keyed by world address (ADR-SENS-10), standard normal made explicit, quantization tie rule, units of σ coefficients, `detection_threshold` defined. Added dep BD-053 (guarded predicates), tests for equality fallback, ramp-card rejection, world-address keying, and the non-strict-comparison control."
+  },
+  {
+   "bead": "N20a-21",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "complete",
+    "tests"
+   ],
+   "what": "Glass fixture was underdetermined (a 0.5-albedo wall's transmitted return outweighs the 0° direct return) and the 30° ranges were wrong (2 m and 4 m are perpendicular distances; along the ray 2.309 m and 4.619 m): specified albedo, thresholds and computed strengths. With the plan's polynomial R(85°) ≈ 0.65 for any r0, so a matte dry floor would show phantoms: added DESIGN roughness factor κ(w) = clamp(1 − w/(π/4), 0, 1) and a worked specular-floor fixture ((5.000, 0, −0.1375) m wet glossy; floor hit dry matte). Stated the strength convention, the wetness conditional, `acceptance_angle` as a glass-card field (refused if absent), tie rule; tests and mutant added."
+  },
+  {
+   "bead": "N20a-22",
+   "kinds": [
+    "deps",
+    "tests"
+   ],
+   "what": "Added dep N20a-21 (the second segment it charges must exist for its acceptance test); e2e now asserts the 0.75 m slab outcome (strength 0.0498, attenuated)."
+  },
+  {
+   "bead": "N20a-23",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "Pattern irradiance included the albedo (an irradiance excludes it; albedo and camera-side extinction cancel in the contrast ratio): corrected; defined E_a from zone level plus the region card's declared `emission`; volumes now an explicit check (`attenuated`, exp(−(τ_p + τ_c))) with dep N20a-22; noise keyed by world address; specular reject uses R·κ; grazing `ramp` routed to N20a-24; noise test given σ_disp and f·b."
+  },
+  {
+   "bead": "N20a-24",
+   "kinds": [
+    "scope",
+    "deps",
+    "complete",
+    "tests"
+   ],
+   "what": "Takes the `ramp` grazing kernel stage from N20a-20 (its first latent consumer): formula p = clamp((c0 − cos θ)/(c0 − c1), 0, 1), card admission, one dialect function shared with the pattern camera; dep N20a-20 added; tests for formula values, 4,096-episode frequency interval [0.228, 0.272], per-sample-coin mutant, card admission."
+  },
+  {
+   "bead": "N20a-25",
+   "kinds": [
+    "sense"
+   ],
+   "what": "The KILL-EXPOSURE decision rule must be frozen before the pilot runs, but its decision bead N20a-27 starts only after the pilot: the pilot's frozen protocol now carries the rule (digest), and acceptance checks it."
+  },
+  {
+   "bead": "N20a-27",
+   "kinds": [
+    "sense"
+   ],
+   "what": "Applies the rule frozen in the pilot's protocol (digest compared) instead of registering it itself after the pilot has run; a differing rule is refused."
+  },
+  {
+   "bead": "N20a-30",
+   "kinds": [
+    "self-contained"
+   ],
+   "what": "New mask reason `bloom` and flag `truncated` must be added to the closed reason registry with the model (an unknown code is a load-time error)."
+  },
+  {
+   "bead": "N20a-33",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "scope"
+   ],
+   "what": "M2 acceptance asked for a 'glass reason' that only exists at M3; now `unsupported-optical-class` and `beyond-range` at M2. Added dep BD-188 (the per-row and per-beam poses its overlay honours) and a rolling-shutter overlay test; named BD-191, N24a-40, N32b-10/-11 in Out."
+  },
+  {
+   "bead": "N20a-35",
+   "kinds": [
+    "tests"
+   ],
+   "what": "Gave the exact binomial interval test its expected values (12/100: 90% [0.0707, 0.1872], 95% [0.0636, 0.2002]); other quoted intervals verified."
+  },
+  {
+   "bead": "N20a-36",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Corridor hand case was wrong: yawing the only beam to the end wall trades the null direction (W stays rank one, J_worst 0). Fixture now has a fixed side beam and a movable second sensor: W → (N/s²)·I, J_worst 0 → 10⁶ m⁻²; added the single-beam negative test."
+  },
+  {
+   "bead": "N20a-38",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Certified when t* ≤ t_info, but a packet arriving exactly at a decision instant is visible to that decision (boundary rule), so equality can leak θ: now strictly t* < t_info, stated in the certificate; acceptance and test `commitment_at_t_info_not_certified` added (3 s patch at 1 m/s, zero latency)."
+  },
+  {
+   "bead": "N20a-41",
+   "kinds": [
+    "complete",
+    "deps",
+    "correct",
+    "tests",
+    "scope"
+   ],
+   "what": "Author-declared pairs (one of the three sources that survive KILL-ALIAS) had no lane: added the declared lane first in order, with test. Refusal 445 must be wired into `train.start` (M2) at M3: dep N23a-14 and one lookup entry `alias::standing_witness`; the optimization refusal moved to BD-341 (opt.start is M4). On-time docking status pinned: `none exists` (abstraction scope, policy attached) replacing the M1 'none found' form."
+  },
+  {
+   "bead": "N20a-42",
+   "kinds": [
+    "sense",
+    "deps"
+   ],
+   "what": "Frozen protocol now carries the KILL-ALIAS decision rule (N20a-43 starts after the pilot, so it could not register it 'before the pilot's first run'). Ceiling measurement runs `sense.alias` with the Solid lanes: dep N20a-41 added."
+  },
+  {
+   "bead": "N20a-43",
+   "kinds": [
+    "sense"
+   ],
+   "what": "Applies the rule frozen in the pilot's protocol (digest checked) instead of registering it itself; a differing rule is refused."
+  },
+  {
+   "bead": "N20a-44",
+   "kinds": [
+    "placement",
+    "tests",
+    "deps"
+   ],
+   "what": "M1 bead whose acceptance required M2 every-tier passes: stages 12 (every tier), 14 and 15 now log `not due` and are the acceptance of BD-189 and N20a-10, which already run the script; it closes on referee/CPU rows. Stage 7's boundary assertion follows the ruled window convention; dep N20ap1-51 (ruling confirmed on the referee before the GATE-SENS-04 CPU record)."
+  },
+  {
+   "bead": "N20a-45",
+   "kinds": [
+    "correct",
+    "self-contained"
+   ],
+   "what": "Moving-bar fixture lacked camera parameters; with the yaw-edge camera's 4 ms exposure the 9 ± 2 `mixed` answer is wrong (3.6): fixture now f = 600 px, 10 ms, four sub-instants (B = 6 px, 2·6·3/4 = 9); stage 10 owner N20a-26 named."
+  },
+  {
+   "bead": "N20a-46",
+   "kinds": [
+    "placement",
+    "correct",
+    "tests"
+   ],
+   "what": "M2 bead with M3 acceptance ('passes all stages', gate records) and no M3 deps: closes on its M2 stages; M3 stages are fixed here and passed by their owners (N20a-21..24, N20a-31, BD-237, BD-238, which already run the script). Stage 9 corrected (2.000 m at 0°, 4.619 m along a 30° ray, fixture parameters); stage 10 asserts 0.75 m `attenuated`; self-test scoped to due stages."
+  },
+  {
+   "bead": "N20a-47",
+   "kinds": [
+    "placement",
+    "tests",
+    "scope"
+   ],
+   "what": "M1 bead with M3 acceptance (empirical form, route profile, design-check warning): closes on stages 1-7; stages 8-13 fixed here, passed by BD-239 and N20a-34 (which already run it); self-test scoped to due stages."
+  },
+  {
+   "bead": "N20a-48",
+   "kinds": [
+    "placement",
+    "tests",
+    "correct"
+   ],
+   "what": "M1 bead with M3 acceptance (stages 7-14): closes on stages 1-6; later stages passed by N20a-38/-39/-40/-41 and BD-240, which already run it; self-test scoped to due stages. Stages 2 and 5 state the status per milestone (M1 'none found: a separating policy exists'; M3 `none exists` with the policy)."
+  },
+  {
+   "bead": "N20a-49",
+   "kinds": [
+    "placement",
+    "split",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Decision upstream of N12-42 (hence of the referee, event location, `window_contains`, the FT accumulator) yet its deciding experiment ran on that referee, and it re-owned N20a-06's function and lint. Now decides on an exact-rational model of the stated procedures (with a per-step device accumulator variant), specifies the function for N20a-06, records the model table; the referee experiment moved to new N20ap1-51, which re-applies the frozen rule on any mismatch. New model tests and e2e `window_rule_decide.sh`; dep STD-E2E."
+  },
+  {
+   "bead": "N20ax-01",
+   "kinds": [
+    "e2e-logging",
+    "placement",
+    "tests"
+   ],
+   "what": "E2E drove `frob run fork`, whose restore handling (N27a-05, N27a-08) depends on this bead: now drives both entry points on a real checkpoint through a crate example binary and BD-098's restore path (hand case A, refusal 441 at 3 vs 5, FromTruth/Keep, INV-SENS-02 over 10⁴ ticks); the fork-verb path is N27a-08's. Duplicate-ordering test wording corrected."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N20ap1-51",
+   "why": "Split from N20a-49: the boundary-impact experiment on the real referee in both WINDOW_RULE builds (committing step, stage order, receiving window, split-boundary sensor, mutants), compared cell by cell with N20a-49's model table; re-applies the frozen rule on mismatch. M1, deps BD-081, BD-082, N20a-06, N20a-16, N20a-49, STD-E2E; N20a-44 depends on it."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-187",
+   "what": "Out list says the `ramp` grazing law with its region latent is N20a-20's; it is now N20a-24's (N20a-20 keeps the card field names and the deterministic stages)."
+  },
+  {
+   "bead": "N19a-06",
+   "what": "Optical card schema has no `acceptance_angle` (needed by the glass rule, 'the card's acceptance angle') and gives no unit for `roughness`; N20a-21 reads roughness as the specular-lobe half-width in radians and requires `acceptance_angle` on `glass` cards."
+  },
+  {
+   "bead": "N20a-06",
+   "what": "Add N20a-49's model test `crates/frob-conformance/tests/window_rule_model.rs` to the single-definition lint's allow-list beside N12-42's oracle; the selector for `ClosesAt` must be usable by N20ap1-51's second build."
+  },
+  {
+   "bead": "N13-06",
+   "what": "Consider dep N20ap1-51: the boundary row should freeze after the ruling is confirmed on the referee; on a reopening it is marked `pending N20a-49`."
+  },
+  {
+   "bead": "BD-134",
+   "what": "From M3 the verb (N20a-41) reports the on-time docking case as `none exists` (scope: declared abstraction) with the same separating policy; tests asserting the literal 'none found' status should assert the policy and absence of a witness, or note the M3 status."
+  },
+  {
+   "bead": "BD-341",
+   "what": "opt.start raises FROB-REF-445 through N20a-41's lookup entry `alias::standing_witness(interface, mission)`; N20a-41 no longer claims the optimization refusal at M3."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "Slice complete. Recurring pattern fixed: early e2e beads whose acceptance claimed later-milestone stages now close on their own milestone; later stages are passed by the owning beads, which already run those scripts (no new beads needed). Kill-gate rules (KILL-EXPOSURE, KILL-ALIAS) frozen inside the pilots. One split (window ruling vs referee confirmation). graph_check cycles: only a pre-existing N21 cycle (N21a-02, N21a-03, N21c-34), outside this slice."
+}

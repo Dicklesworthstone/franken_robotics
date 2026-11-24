@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "lemma", "spine", "spec", "solid", "autopsy", "frob-chronicle", "frob-autopsy", "test"]
 parent: "WP-51"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["N10-CX", "N10-KA3", "N10a-01", "N38a-16", "STD-E2E", "STD-TEST", "VERBS-operator"]
 needs: []
-related: ["BD-203", "BD-205", "BD-279", "BD-283", "N10c-01", "SPEC-C-28", "N10-CX", "N10c-10", "BD-090", "N10a-02"]
+related: ["BD-090", "BD-203", "N10c-10"]
 gates: ["GATE-AUTOPSY-01", "GATE-AUTOPSY-02"]
 plan_refs: ["§10 C-29", "§27.3", "§27.4", "§27.5", "§29.8", "§38.7 MR-08", "Appendix I.12", "Appendix M.9", "Appendix N.7"]
 ---
@@ -39,8 +39,9 @@ Design reasoning. FACT (FrankenSim `483d09c682f2`, observed 2026-11-21): `fs-ran
 sibling has an atomic full-world snapshot, so snapshots are this project's. Because streams are addressed and not
 consumed, a continuation after an intervention reads exactly the draws the parent read: that is what makes
 "prediction" exact. Rejected alternatives: forking by re-seeding (a fork without the parent's streams answers a
-question about a different world); forking with shared streams for replicates (children that share the parent's
-address are identical copies and add nothing).
+question about a different world); forking with shared streams where the children are meant to differ by
+noise alone (children that share the parent's streams and carry no other difference are identical copies and
+add nothing).
 
 ## Scope
 
@@ -92,7 +93,7 @@ and is logged `pending` here until then.
 | S4 | *Prediction* is continuation on the same streams: every draw a fork reads at tick t under stream name s equals the draw the parent read at (t, s). | Tested (exact) |
 | S5 | The null fork (the empty intervention) reproduces the parent bit for bit on the originating profile. If it does not, the record is unsound and nothing is attributed. | Tested (digest equality) |
 | S6 | A fork never mutates its parent, and a world forked alone and in a batch with other children gives identical digests. | Tested |
-| S7 | A child given its own address (the parent's address extended by a fork path) has fresh streams; children that share the parent's streams are identical copies. | Tested |
+| S7 | Every child has its own address (the parent's address extended by a fork path), and which streams it reads is an explicit mode of the child. `shared` (the default) reads the parent's streams, which is S4. A re-keying mode keys the named stream (a replicate), or every per-step disturbance stream (a splitting stage), by the child's address from the fork tick on: those streams are then fresh, and every other stream and every draw before the fork tick stay the parent's. Children that share the parent's streams and carry no other declared difference (equal change set, no perturbation) are identical copies, and are detected as such. | Tested |
 | S8 | An intervention at a snapshot answers a question about the continuation only. For a design parameter (a gear ratio, a mass) the thermal state, the estimator state and the policy's history at the snapshot would all differ under the changed design, so the intervention is re-run from the episode start on the same streams. | Tested (counter-fixture) |
 | S9 | The policy's reaction is part of the effect. A fork is refused when the controller cannot adapt without retraining (for example when the change alters its observation or action space). | Tested (refusal) |
 | S10 | Attribution runs in double precision on a CPU tier. A successful counterfactual is not a minimal repair, and a local rescue can disagree with the global outcome. | Non-claims, recorded |
@@ -111,6 +112,13 @@ nothing regenerated. `ContactAffecting` restarts at the fork tick with contact m
 cold, and is labelled. `Information` restarts at the fork tick with packet queues and filter state re-initialized.
 `Structural` (design parameters included) restarts from the authored initial condition, settled again:
 `earliest_valid_tick` is the episode start. `NullReplay` is `Bitwise`, or the record is unsound.
+
+The sketch is the type appendix's and fixes intent. The production types are the fork vocabulary of
+`frob_core::fork` (N27a-01), which this contract cites and does not redefine: there the child's address is a
+`ChildAddr` (the parent's `WorldAddr` plus a fork path), the classes carry the order used to classify a change
+*set* (Continuation < Exogenous < Information < ContactAffecting < Structural, which is not the declaration
+order above), and a child specification carries its stream mode (`shared`, `rekey`, `rekey-disturbances`; the
+behaviour is N27a-04's). The contract file records that mapping in its implementation map.
 
 ### 3. Conventions, failure cases and non-claims
 
@@ -173,11 +181,18 @@ thermal counterexample of GATE-AUTOPSY-06 (M3) measures S8 on a real model. This
 - `prediction_reads_parent_draws`: after do(limiter := off) at tick k, every draw read at t ≥ k equals the
   parent's draw at the same (t, name).
 - `intervention_changes_one_mechanism`: the model difference of do(limiter := off) touches the limiter only; a
-  requested change that touches friction and drive together is refused.
+  requested change that touches friction and drive together is refused with FROB-REF-586.
+- `null_fork_mismatch_refused`: on the subject whose snapshot omits the slow state h (the `snapshot_without_queue`
+  defect), the null fork's digest first differs at the tick after the fork; the fork is refused with
+  FROB-REF-583, the first differing tick is reported, and no contrast or attribution is produced from that record
+  (the second sentence of S5).
 - `fork_never_mutates_parent`: the parent's digest chain is byte-identical before and after 100 forks.
 - `fork_batch_invariance`: one child run alone and among 511 siblings has identical digests.
-- `child_address_gives_fresh_streams`: two replicates with distinct fork paths read different draws; two children
-  forced to the parent's address are detected as duplicates.
+- `child_address_gives_fresh_streams`: two replicates whose stream `noise` is re-keyed by their distinct child
+  addresses read different draws on `noise` from the fork tick on, and the parent's draws on every other
+  stream and at every tick before the fork; the same two children in the `shared` mode read the parent's
+  draws on every stream (S4) and, having equal change sets and no perturbation, are detected as identical
+  copies.
 - `design_parameter_reruns_from_start`: doubling θ₁ at snapshot k leaves the slow state h at its parent value,
   while the re-run from the episode start has a different h at k and a different end state; the mid-episode request
   is classified `Structural` with `earliest_valid_tick` equal to the episode start, and is refused at tick k.
@@ -185,9 +200,14 @@ thermal counterexample of GATE-AUTOPSY-06 (M3) measures S8 on a real model. This
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c29.sh`: `frob --json doctor`; `cargo test -p frob-chronicle --test laws_c29`; `cargo test -p
-frob-conformance --test g5 -- KA-145`; `cargo test -p frob-conformance --test g3 -- MR-08`; file and registry
-checks. It sources the STD-E2E helper and writes `target/e2e-logs/spec_c29/<utc>.ndjson` and a transcript; every
+`scripts/e2e/spec_c29.sh`: `frob --json doctor`; `cargo test -p frob-chronicle --test laws_c29`;
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g5_determinism -- KA-145` (a G5 referee row:
+logged `pending` until BD-205 binds it, while `ka_145_null_fork_replays_bitwise` covers it on the integer
+reference model); `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g3_metamorphic -- MR-08` (its
+sites are the referee and the device tiers, so it is likewise logged `pending` until BD-205 binds it, while
+`ka_145_null_fork_replays_bitwise`, `prediction_reads_parent_draws` and `child_address_gives_fresh_streams`
+cover its three clauses on the reference model); each of the two again with `--features gauntlet-mutations`
+once bound, in which `reseed_on_fork` and MR-08's two planted defects must be caught; file and registry checks. It sources the STD-E2E helper and writes `target/e2e-logs/spec_c29/<utc>.ndjson` and a transcript; every
 line has `ts`, `script`, `bead`, `step`, `event`, the command line, exit code, wall time, the evidence block
 (claim Known answer, class Tested, tier, determinism D0 for the integer model, seed), the digests compared, and on
 failure the first differing tick and digest with the fixture path. The `summary` line counts assertions and names

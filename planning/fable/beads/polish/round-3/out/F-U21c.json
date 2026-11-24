@@ -1,0 +1,362 @@
+{
+ "round": 3,
+ "slice": "F-U21c",
+ "reviewed": 37,
+ "changed": [
+  {
+   "bead": "BD-370",
+   "kinds": [
+    "request",
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "S57: the final reading now writes its own ADR docs/adr/ADR-KILL-FLEET-M4-final.md citing ADR-KILL-FLEET-M4.md (never edited) and appends a second decision entry {exit M4, reading final, outcome, adr, date, session, receipts} per N40-03; fleet_plan.sh gains step `fits` (frob fleet plan --job <fixture> --explain --json on N21c-12's three fixtures) and all five N21c-13 hand cases (two_cards_balance was missing); the gate-step part of S57 was already applied, record_gate now stated as outside the script. H-ref-2: protocol step 2 calls N36-05's admit_experiment on the ceiling record N21c-11 files (ceiling(g, inf, 0), goal 1.3, warm ledger-closed baseline); ceiling_refusal test goes through it; dep N36-05 added. Found: the planted 1.2 GB 'summary' would be refused by the 16 MiB summary bound before the byte clause; now 80 items of 15 MB so the byte clause is what fails."
+  },
+  {
+   "bead": "BD-441",
+   "kinds": [
+    "request"
+   ],
+   "what": "H-ref-2: short-plan step 1 files N36-05's ceiling record ceiling(f, r, 0), goal 2.0, M2 profile baseline, and FROB-REF-866 is raised by admit_experiment; the allowance h stays in the pilot's registration and never refuses. Acceptance: when KILL-MEGA fires the children close with N41-17's typed reasons (N21c-23 superseded, the epic fallback 'the staged step plan')."
+  },
+  {
+   "bead": "N21c-03",
+   "kinds": [
+    "e2e-logging",
+    "correct"
+   ],
+   "what": "No request. A `skip` event is not a STD-E2E event: now an assert with status skip (e2e_skip). The acceptance item asserting the verb path's FROB-REF-761 is moved to N21c-06 (BD-029, the verb, depends on this bead: convention 7). The later fingerprint call gains --key (convention 5)."
+  },
+  {
+   "bead": "N21c-05",
+   "kinds": [
+    "request",
+    "correct"
+   ],
+   "what": "H-verbs-7: repair 2 of 606 is `frob spark check --backend <b> --key <k>` (b the device's backend), repair 1 gains --key."
+  },
+  {
+   "bead": "N21c-06",
+   "kinds": [
+    "request",
+    "e2e-logging",
+    "correct",
+    "deps"
+   ],
+   "what": "H-owners-1: --combine runs e2e_tier g1_known_answers GATE-SPARK-07 (no `--test g1`); the tier test reads the two host receipts named by FROB_SPARK07_HOSTS (DESIGN) and writes a gauntlet receipt; the row is recorded outside the script with record_gate by a session that did not implement (conventions 1, 9). Also: --state-root dropped for e2e_init's state root (frob has no --root); seed logged as the declared decimal seed, not `none`; summary.gate_recordable -> gates_claimable; --self-test -> declared plants checked by run-all.sh --verify-plants; new step asserting FROB-REF-761 exit 4 for the two-device fingerprint under E0 (taken over from N21c-03); dep N36-20 (no cycle)."
+  },
+  {
+   "bead": "N21c-07",
+   "kinds": [
+    "deps"
+   ],
+   "what": "The script calls `frob prove bundle` (BD-133's verb) but did not depend on it: BD-133 added (no cycle). The role/preferred_machines outputs of sim.estimate are requested of VERBS-sim."
+  },
+  {
+   "bead": "N21c-08",
+   "kinds": [
+    "request",
+    "correct",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "H-verbs-1: ingress through the registered `frob artifact import` from M2; the integration entry kept only as the reader's own test entry. Named: the digest-mismatch integrity refusal slug `xfer-item-digest-mismatch` (9xx, exit 9, retry never, nothing admitted; ledger row requested of N21-REF, numbered by the ledger); a summary above 16 MiB is treated as an unregistered kind, FROB-REF-618 with observed bytes; --out ending '/' writes <hex>.frobxfer; certificate bundles map to Receipt (DESIGN). Tests, acceptance and fleet_transfer.sh cover each; the receiver's state root named (work/peer/state as FROB_STATE); dep VERBS-artifact (already reached through BD-097)."
+  },
+  {
+   "bead": "N21c-09",
+   "kinds": [
+    "request",
+    "correct",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "S50, H-owners-1, H-verbs-5: FROB-REF-323 replaced throughout by the 9xx slug scene-pack-identity-mismatch (IDENTITY_MISMATCH, N19c-42's row numbered by N35x-02, exit 9). H-verbs-5: scene gen written `--family terrain/stairs`. H-verbs-1: --replay-closure asserted 802 exit 3 without --to-host or with digests (acceptance and script). --recipe and --replay-closure are now registered, so 'requested of' and the integration-entry fallback are removed; deps VERBS-artifact and VERBS-scene (already transitive)."
+  },
+  {
+   "bead": "N21c-10",
+   "kinds": [
+    "correct",
+    "complete"
+   ],
+   "what": "The registration lacked the record fields N38a-09 requires: id PILOT-FLEET-01, mechanism, owner, protocol {path docs/pilots/PILOT-FLEET-01.md, blake3, frozen, ledger_seq}, integrated_gate GATE-SPARK-13 and gated_beads [N21c-12, N21c-13, N21c-14, BD-370] (WP-46 holds two Frontier mechanisms, so fundable needs per-record gating). The standard campaign ran cold, but N36-05 refuses a ceiling on a cold baseline and every gate arm runs warm: now run on a warm kernel cache."
+  },
+  {
+   "bead": "N21c-11",
+   "kinds": [
+    "request",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "S56: inputs are the [[pilot.result]] N21c-10 appends to PILOT-FLEET-01 and the payload frob.pilot.fleet/1 read by its receipt hash (not a second pilot record); the script reads it that way. H-ref-2: rule 3 files N36-05's ceiling record for GATE-SPARK-13 and calls admit_experiment (the one raiser of 866); new test kill_fleet_ceiling_record; dep N36-05. The decision entry gains `receipts` (N40-03) and the final entry is named reading final with its -final ADR."
+  },
+  {
+   "bead": "N21c-15",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "No request. The Lane statistics paragraph split the output table (rows transfer and scene_identity fell outside it): moved after the table. The planted identity mismatch used a differing generator pin, which N21c-09 refuses with 303 before generation and records no mismatch: now a recipe with a wrong expected SceneId, exit 9 scene-pack-identity-mismatch. The scratch gate register is written after e2e_registries_scratch."
+  },
+  {
+   "bead": "N21c-17",
+   "kinds": [
+    "request",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "H-ref-2: protocol step 1 files N36-05's ceiling record ceiling(s, inf, 0) (s at the upper end of its interval), goal 1.2, baseline the M2 step profile (warm, fingerprint) before the first timing, and admit_experiment raises 866; test ceiling_record_admission; dep N36-05. Also: registration gains id PILOT-SPECIALIZE-01, bead, work_package, gated_beads [N21c-19, N21c-20, BD-371, N17a-16] and integrated_gate GATE-SPARK-14; the record frob.pilot.specialize/1 is the evidence of an appended [[pilot.result]], not a second pilot record."
+  },
+  {
+   "bead": "N21c-32",
+   "kinds": [
+    "request",
+    "correct"
+   ],
+   "what": "H-ka-1: GATE-SPARK-05 measured by BD-179 (membership, closure, contact) and N21bp2-01 (energy-ledger residual; records the gate). GATE-SPARK-07's row names which bead measures and which records."
+  },
+  {
+   "bead": "N21c-18",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "No request; aligned with N21c-11's form. Inputs are the [[pilot.result]] N21c-17 appends to PILOT-SPECIALIZE-01 and its payload read by receipt hash; the decision entry gains `receipts` (N40-03); BD-371's final reading is a second entry reading = final with docs/adr/ADR-KILL-SPECIALIZE-M4-final.md; the fallback-surface test notes --specialize is registered (724, never 802); the script reads by hash."
+  },
+  {
+   "bead": "N21c-19",
+   "kinds": [
+    "correct"
+   ],
+   "what": "No request. `spark check --specialized` and `sim run --kernel-set` were described as requested; both are registered (VERBS-spark, VERBS-sim with this bead as owner), answering 724 while the bead is absent (convention 12)."
+  },
+  {
+   "bead": "N21c-21",
+   "kinds": [
+    "request",
+    "correct",
+    "tests",
+    "deps"
+   ],
+   "what": "H-ref-2: the fusion ceiling is N36-05's record ceiling(f, r, 0), goal 2.0, warm M2 profile baseline; admit_experiment raises 866; fusion_ceiling test goes through it; dep N36-05. Also: step 0 registers the [[pilot]] record N38a-09 requires (id PILOT-MEGA-01 DESIGN, mechanism, tier M, owner, work_package WP-80, gated_beads [N21c-23] because WP-80 holds several Moonshot epics, falsifier, fallback, cost, tool); frob.pilot.fused/1 is the evidence of an appended [[pilot.result]]; divergence calls use --mode exact (VERBS-telemetry has no --exact)."
+  },
+  {
+   "bead": "N21c-22",
+   "kinds": [
+    "correct",
+    "complete",
+    "e2e-logging"
+   ],
+   "what": "No request. Input is PILOT-MEGA-01's [[pilot.result]] and its payload by hash. The fallback said the fused option is 'not added'; VERBS-sim registers --step-plan fused with owner N21c-23, so on fired it answers FROB-REF-724 exit 5; N21c-23 closes superseded and BD-441 closes fallback 'the staged step plan' (N41-17 rule 5). The decision entry carries receipts. The end-to-end script was only sketched: now fully specified with the 724 run and STD-E2E logging to target/e2e-logs/kill_mega_record/<utc>.ndjson."
+  },
+  {
+   "bead": "N21c-23",
+   "kinds": [
+    "correct"
+   ],
+   "what": "No request. Step 4 says --step-plan fused is registered in VERBS-sim with this bead as owner; divergence uses --mode exact; the 10^3 cancel cycles give each fused run its own key fs-c-<i> and cancel with `frob job cancel <job> --json` (convention 5)."
+  },
+  {
+   "bead": "N21c-25",
+   "kinds": [
+    "request"
+   ],
+   "what": "S56: confirmed the four plant names N21-CX cites (N21c-25:half-precision-factor CX-225, :two-centroid-sketch CX-228, :f32-sum-reordered CX-230, :gemm_device_path_refused_under_d2 CX-231), each mapped to the test that must fail, in the Known answers section; no rename, so N21-CX needs no change."
+  },
+  {
+   "bead": "N21c-26",
+   "kinds": [
+    "request",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "S56: confirmed the plants of CX-224, -226, -229 in Known answers; new tests directory_rejects_too_large_claim (claim-227 against 75,411 slots, 301,644 bytes, under 1.5%) and a claimed-figure rejection inside tile_bounds (claim-232, 5 to 20); CX-233 bound to sampling_control_cost and N22a-25's 817 guard. Two `skip` events (not STD-E2E events) became e2e_skip asserts."
+  },
+  {
+   "bead": "N21c-27",
+   "kinds": [
+    "request"
+   ],
+   "what": "S56: INV-SPARK-06's owners are N21b-11 (defines the property test), BD-173 (re-runs it on CUDA), BD-174; the acceptance parenthesis now says every row uses its owners' names and lists which (INV-SPARK-03, -07, -09 by BD-173, BD-178, BD-371; -05 BD-172 and BD-183; -06; PO-SPARK-02 BD-030 and BD-053)."
+  },
+  {
+   "bead": "N21c-28",
+   "kinds": [
+    "correct"
+   ],
+   "what": "No request. The internal refusal was described as allocated in registries/refusals.toml 'the ledger'; the allocation ledger is N35-33's registries/refusal_allocations.toml and the row is N21-REF's `device-receipt-incomplete` (9xx, exit 9, retry never), whose number refusals.toml carries."
+  },
+  {
+   "bead": "N21c-30",
+   "kinds": [
+    "request",
+    "correct",
+    "e2e-logging",
+    "tests",
+    "deps"
+   ],
+   "what": "S56 and H-cx-1: the bead no longer writes controls.toml rows with a private field list. Each control is a BD-025 Control record seeded by N38b-05 (the only writer) from the KA row or CX entry that names the plant (KA-525, KA-526, CX-220, CX-216 with KA-529/KA-530, CX-218 with KA-532); the bead supplies plant (defect + feature), owner test (target) and observable (expect), with the old-field mapping stated and N38b-05's CX-first reuse rule. The fast-math build has no kind `hypothesis` in BD-025 and a control must be caught: it is a recorded experiment, logged per compiler, blocking nothing; control 3 is carried by spark.folded-eft. Unplantable -> stale (N38b-04); harness outcomes are N38b-04's (missed, caught-unexpected). Script: STD-E2E log path, seed, negative-control asserts with nc/ka/cx, summary controls_caught/gates[] with measured_ok false (the script records nothing). Dep N38b-05 (M0, no cycle)."
+  },
+  {
+   "bead": "N21c-31",
+   "kinds": [
+    "request",
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "S56 (via N21c-30's request): controls 7-12 are BD-025 Control records seeded by N38b-05 from KA-534..KA-539; control 13 (plan overflow), stated by no KA row or CX entry, is the one record this bead registers with seed GATE-SPARK-23 (ADR-GAUNT-03, as N20b-21 and N38a-24 do); kinds, gates and the field mapping stated; row 11 is due = M4 and a fired kill gate disposes it withdrawn in control_reviews.toml (not 'not applicable'). Found: the fence plant was a test feature mutant-no-commit-fence, but N21b-07 and VERBS-sim define it as --inject-faults <plan>,fence=off; --withhold-kernel's owner is N21b-29 per VERBS-sim; KA-539's gate GATE-SPARK-13 was missing from the recording acceptance. New test plan_overflow_record_loads; script summary in STD-E2E fields."
+  },
+  {
+   "bead": "N21c-34",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "tests"
+   ],
+   "what": "No request. The script ran `record_gate` itself, which STD-E2E's self-recording lint refuses outside N38b-19/N38b-21: it now runs the recorder's check as a test filter (`cargo test -p frob-conformance exploratory_hook`, receipt in FROB_OS1_RECEIPT, DESIGN) under e2e_registries_scratch. The recorder wiring is now a check `exploratory_not_cited` in N38b-19's step-7 hook list (the documented extension point), not an edit of its evidence-resolution step. The M3 `frob report run --claim performance` assertion (BD-302, not a dependency; also given a key though report.run is a read verb) is moved to BD-302 (conventions 7, 8); the bead proves 819 through its test verb. A declined ruling closes device beads `withdrawn` citing the row (N41-17), not 'not funded'."
+  },
+  {
+   "bead": "N21c-35",
+   "kinds": [
+    "request",
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "H-owners-2: a [[request]] row's `decision` (and a class's `reference`) is the path of the owner's decision record under docs/adr/ (convention 4; the packet may sit under docs/decisions/), checked by the loader and test decision_under_docs_adr; a class refusal closes beads that exist only under approval `withdrawn` citing the row (N41-17). Also: the packet cited reserved rows R12-R18 while N44-01 now reserves R12-R26 (new requests R27 on); the script's four scratch registries go through e2e_registries_scratch and log to target/e2e-logs/open_spark_2/."
+  },
+  {
+   "bead": "N21c-39",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "No request. The refusal was a 'DESIGN proposal FROB-REF-619' with an open item; it is N21-REF's ledger row `device-count-wrap` (proposed 619), numbered by N35-33's allocation ledger and raised through one constant, never a literal (new acceptance item; the script reads the assigned code). --chunk-intervals and the sim.run listing were described as requested; both are now registered (VERBS-sim, VERBS-spark, owner N21b-22)."
+  },
+  {
+   "bead": "N21c-40",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "No request. The integration test used 'the plant N21c-31 registers', but N21c-31 depends on this bead (convention 7): the over-limit plan is built in this test and N21c-31 reuses the construction. STD-E2E lines gain `script` (the test target) and the seed as a decimal string."
+  },
+  {
+   "bead": "N21c-41",
+   "kinds": [
+    "correct",
+    "e2e-logging",
+    "complete"
+   ],
+   "what": "No request. The bead had no lane of its own (its e2e was 'a step of' N21c-43's script, a bead that depends on it: convention 7): it now owns scripts/e2e/add2.sh and the annex integration test tests/wide_counts.rs add2_pairs, logged per STD-E2E to target/e2e-logs/add2/, with N21c-43 as the later lane. Acceptance said 'both negative controls' where three are listed."
+  },
+  {
+   "bead": "N21c-43",
+   "kinds": [
+    "correct",
+    "e2e-logging"
+   ],
+   "what": "No request. The script ran record_gate itself (convention 9, STD-E2E self-recording lint): the gate step is now e2e_tier g1_known_answers GATE-SPARK-23 with its receipt, and recording happens outside the script by a fresh session; FROB-REF-619 cited as N21-REF's device-count-wrap code; `--self-test` replaced by declared plants (carry-dropped, double-drain, skip-zeroing) checked by run-all.sh --verify-plants; summary in STD-E2E fields (gates[], gates_claimable, controls_caught); `strict:batch-cpu` avoided (<tier> is batch-cpu on --backend batch-cpu); clause 4 names N21c-41's annex tests."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "to": "VERBS-sim",
+   "what": "sim.estimate's outputs: add `role` and `preferred_machines` (N21c-07, which computes them through role_of; also BD-219, which implements the verb); the estimate block of every run verb under --estimate carries the same two fields.",
+   "from_bead": "N21c-07"
+  },
+  {
+   "to": "BD-219",
+   "what": "sim.estimate prints `role` and `preferred_machines` from N21c-07's role table beside the envelope class (N21c-07 owns role_of; the verb's output schema needs the two fields).",
+   "from_bead": "N21c-07"
+  },
+  {
+   "to": "N21-REF",
+   "what": "Register the integrity refusal `xfer-item-digest-mismatch` (9xx, exit 9, retry never, pointer the item id, observed/required the two digests; raised by N21c-08's XferReader / artifact.import) as a ledger row for N35-33 to number; and list, as a trigger of FROB-REF-618's row, a TelemetrySummary item above 16 MiB (16,777,216 bytes), treated as an unregistered kind.",
+   "from_bead": "N21c-08"
+  },
+  {
+   "to": "VERBS-artifact",
+   "what": "artifact.import: name the integrity fault `xfer-item-digest-mismatch` (N21c-08) in place of 'requested of N21c-08'; artifact.export --to-host with --out ending in '/' names the bundle <hex>.frobxfer; N21c-08 now maps kind `certificate` to Receipt, so the import example's b3:61f0 bundle is allowed.",
+   "from_bead": "N21c-08"
+  },
+  {
+   "to": "VERBS-train",
+   "what": "train.start: register `--specialize-force-switch` as a conformance-build-only input (owner N21c-20, M4; 802 in a release build), which N21c-20's switch-over test uses.",
+   "from_bead": "N21c-20"
+  },
+  {
+   "to": "N40-03",
+   "what": "A pilot-read decision (pilot-before-funding: KILL-FLEET, KILL-SPECIALIZE, KILL-MEGA) cites as `receipts` the receipt hash of the [[pilot.result]] it read; state that such a hash resolves under receipts/pilots/ (or wherever N38a-09 stores pilot receipts) as well as receipts/gates/, else every pilot-read entry fails to load.",
+   "from_bead": "N21c-11"
+  },
+  {
+   "to": "BD-371",
+   "what": "The M4 final reading of KILL-SPECIALIZE is a second decision entry {exit M4, reading final, outcome, adr, date, session, receipts} with docs/adr/ADR-KILL-SPECIALIZE-M4-final.md citing the first ADR, never an edit (N40-03; N21c-18 now says so).",
+   "from_bead": "N21c-18"
+  },
+  {
+   "to": "N38a-09",
+   "what": "Three pilot identifiers now registered by slice beads (DESIGN where the plan names none): PILOT-FLEET-01 (N21c-10, gated_beads N21c-12/13/14, BD-370, gate GATE-SPARK-13), PILOT-SPECIALIZE-01 (N21c-17, WP-46, gate GATE-SPARK-14), PILOT-MEGA-01 (N21c-21, WP-80, gated_beads [N21c-23]); list them if the registry keeps a plan-time table.",
+   "from_bead": "N21c-21"
+  },
+  {
+   "to": "N21-KA",
+   "what": "Control cells: KA-525, -526, -529, -530, -532 and KA-534 to -539 should name their plants by the labels N38b-05 resolves (N21c-30:spark.contraction-prelude, :spark.fused-form, :spark.bare-f32-strict, :spark.bare-f32-corpus, :spark.verbatim-strides; N21c-31:spark.mixed-allowed-counterpart, :spark.digest-slot-chain, :spark.cache-corrupt, :spark.fence-disabled, :spark.specialized-reassociated, :spark.generator-constant). KA-527 and KA-528 state 'a build with fast math on', a HYPOTHESIS that may survive (N21b-36): cite the folded mutants N21c-30:spark.folded-eft as the must-catch control and keep fast math as a recorded experiment. KA-532 and KA-535 name no gate, so seeding resolves one or files a finding.",
+   "from_bead": "N21c-30"
+  },
+  {
+   "to": "N38b-04",
+   "what": "Admit an annex driver: Spark plants live in annex workspaces as `mutant-*` features that the core conformance crate cannot depend on (INV-SPARK-01); N21c-30's negctl::run builds them through the annex test binaries and emits the same nc outcome lines. State that a control's `feature` may name such an annex feature and that the mutation guard covers `mutant-*` as well as `nc-*`.",
+   "from_bead": "N21c-30"
+  },
+  {
+   "to": "N21b-42",
+   "what": "The fence-disabled control is no longer 'registered by N21c-31': it is seeded by N38b-05 from KA-537 (N21c-31 supplies the plant, N21b-07's --inject-faults ...,fence=off); add your lane to that record as before.",
+   "from_bead": "N21c-31"
+  },
+  {
+   "to": "N21bp2-01",
+   "what": "The script's `gate` step runs the tier target 'then the recording command': a cmd line running record_gate fails STD-E2E's self-recording lint; the script should stop at the receipt and the recording happen outside it (convention 9).",
+   "from_bead": "N21c-32"
+  },
+  {
+   "to": "N38b-19",
+   "what": "List the step-7 check `exploratory_not_cited` (added by N21c-34 at M0; reason `evidence-unresolved` with cause `exploratory: OPEN-SPARK-1 <status>`): a Performance or Parity part whose evidence is a device receipt is refused while ADR-SPARK-01 is not `ratified`.",
+   "from_bead": "N21c-34"
+  },
+  {
+   "to": "BD-302",
+   "what": "report.run --claim performance (and any citation of a device throughput) calls N21c-34's predicate frob_core::decisions::exploratory_blocks and refuses with FROB-REF-819 (pointer evidence.device.exploratory, observed OPEN-SPARK-1 and the row's status); assert it in your tests and script; add dep N21c-34 (no cycle). N21c-34 no longer asserts it (convention 7).",
+   "from_bead": "N21c-34"
+  },
+  {
+   "to": "N40-33",
+   "what": "Your test exploratory_not_citable relies on N21c-34's recorder check, but N40-33 does not depend on N21c-34: add the dependency (no cycle).",
+   "from_bead": "N21c-34"
+  },
+  {
+   "to": "N21b-36",
+   "what": "Line 117 calls `spark.fast-math` 'N21c-30's row'; it is now a recorded experiment (not a controls.toml record), whose survival blocks nothing; the must-catch control of the canaries is N21c-30's spark.folded-eft.",
+   "from_bead": "N21c-30"
+  }
+ ],
+ "unchanged": 7,
+ "unchanged_beads": [
+  "N21c-12",
+  "N21c-13",
+  "N21c-14",
+  "N21c-16",
+  "N21c-20",
+  "N21c-24",
+  "N21c-42"
+ ],
+ "notes": "All 37 beads reviewed; 30 changed, 7 left unchanged (N21c-12, -13, -14, -16, -20, -24, -42), no new or merged beads. DESIGN choices made: FROB_SPARK07_HOSTS (N21c-06), xfer-item-digest-mismatch (N21c-08), PILOT-MEGA-01 (N21c-21), test feature mutant-plan-overflow (N21c-31), check exploratory_not_cited and FROB_OS1_RECEIPT (N21c-34), DEVICE_COUNT_WRAP constant (N21c-39). Recurring defect fixed across the slice: scripts that ran record_gate themselves or used --self-test / skip events (N21c-03, -06, -26, -34, -43). The controls requests (S56, H-cx-1) are applied by having N38b-05 seed records from the KA/CX cells, with one GATE-SPARK-23-seeded record registered by N21c-31; whether the two bare-f32 checks become one record is left to N38b-05's plant-and-target rule. N21c-22's 'flag not added' fallback replaced by 724 because VERBS-sim registers --step-plan fused. N21c-06's tier-test input variable FROB_SPARK07_HOSTS is DESIGN. N21c-10's campaign moved from cold to warm cache because N36-05 rule 1 refuses a ceiling on a cold baseline and the ceiling record is now filed from it."
+}

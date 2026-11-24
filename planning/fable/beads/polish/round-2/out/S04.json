@@ -1,0 +1,371 @@
+{
+  "round": 2,
+  "slice": "S04",
+  "reviewed": 47,
+  "changed": [
+    {
+      "bead": "N00-08",
+      "kinds": [
+        "scope",
+        "correct"
+      ],
+      "what": "H-4 (scope caps) no longer re-implemented: rule 4 points to check-contracts rule 11 (N34-08); the line-counter tests and the inflated-crate plant moved to their owners"
+    },
+    {
+      "bead": "N34-14",
+      "kinds": [
+        "complete",
+        "correct"
+      ],
+      "what": "extra plants gain BD-003's two (tokio in frob-dyn, frob-lemma -> frob-cert) and the cap.over-115 plant from N34-08; plant 5 edits a generated schemas/frob.*.json, not a hand-written schema"
+    },
+    {
+      "bead": "N00-03",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "append-only lint names its base revision (HEAD or HEAD~1, --since for pairs) and gains base_selection test"
+    },
+    {
+      "bead": "N00-01",
+      "kinds": [
+        "correct",
+        "complete"
+      ],
+      "what": "contract check owner is N34-08, not BD-004; --help snapshots discovered from cargo metadata for every binary target"
+    },
+    {
+      "bead": "BD-001",
+      "kinds": [
+        "correct"
+      ],
+      "what": "xtask at crates/xtask (as N34-01, BD-003, BD-004 say); usage exit 3; cargo xtask alias written here; Cargo.lock committed before the receipt names repo_rev; posture list includes build-time; the other ten ledger rows are N33a-02's (it had said later rows never exist before admission); alias sentence no longer claims sole ownership of .cargo/config.toml (N33a-08 owns the [env] rules)"
+    },
+    {
+      "bead": "N33a-04",
+      "kinds": [
+        "correct"
+      ],
+      "what": "request applied: own_lock.reason (null | dirty | retreated | diverged | unknown-pin) named in the schema, with precedence and test"
+    },
+    {
+      "bead": "N33a-03",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "request applied: [json_library] is package, version, allowed_in and [json_library.features] per binary; firewall cell key renamed firewall_cells (uses is the posture list); reader named (N34p2-01) and dep added; digest via fs-blake3; schema file frob.stack-lock.1.json written by BD-004's generator row, with an agreement test; rule 9's off-T trigger (a failure once INT-TOOLCHAIN-01 had a record) would fail every check under candidate (b) until the train to (a): off-T is now N33c-08's condition, triggered by the first adopted train"
+    },
+    {
+      "bead": "N33a-01",
+      "kinds": [
+        "correct",
+        "deps"
+      ],
+      "what": "lift schema replaces BD-002's placeholder under schemas/registries/ (hand-written, as all registry schemas) instead of an ungenerated schemas/frob.lifts.schema.json; deps BD-002 and N34p2-01 (the TOML reader it parses with)"
+    },
+    {
+      "bead": "N33a-02",
+      "kinds": [
+        "correct",
+        "complete",
+        "deps",
+        "tests"
+      ],
+      "what": "FD-FSS had no first_needed (M5 added, DESIGN); critical_path acceptance no longer cites a later bead's test; the planted-edge acceptance is checked with edge_allowed here and by check-deps in N33a-27; dep N34-02 for the crate-map test"
+    },
+    {
+      "bead": "N33b-01",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests"
+      ],
+      "what": "the firewall's per-milestone cell key collided with the posture list uses: renamed firewall_cells; FD-FJAX, FD-FKER, FD-FSS (not in the firewall table) would have failed to load: all rows carry the three keys; test that critical_path equals M1 in required_at"
+    },
+    {
+      "bead": "N33a-06",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "fail-closed build script named a remedy that could not build (xtask links frob-core): remedy is FROB_STACK_DEV=1 cargo xtask check-stack --write-receipt; HEAD and LOCK_DIGEST tracked"
+    },
+    {
+      "bead": "BD-005",
+      "kinds": [
+        "split",
+        "scope",
+        "deps"
+      ],
+      "what": "TOML-subset reader split out to N34p2-01 (needed by BD-002, N33a-01, N33a-03 without fs-qty); BD-005 keeps the refusal loader on it, gains registry_unknown_row_key_is_error"
+    },
+    {
+      "bead": "BD-002",
+      "kinds": [
+        "deps",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "its acceptance and e2e needed check-generated (BD-004, which depends on BD-002): readme_block_is_current test with bless mode is the writer until then; check-generated steps moved to BD-004; deps N34p2-01 (reader) and STD-E2E (its script)"
+    },
+    {
+      "bead": "BD-004",
+      "kinds": [
+        "correct",
+        "tests",
+        "e2e-logging"
+      ],
+      "what": "generator output schemas/** made every hand-written schema a gen.orphan on the clean tree: outputs are schemas/frob.*.json; stack-lock schema generator row added; status_table.sh check-generated steps added here; admission-document generator row (N33a-07's generator, now in xtask::generate)"
+    },
+    {
+      "bead": "BD-003",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "volatile-edge rule was defined twice (L-2.volatile-outside-airlock here, fsim.volatile-edge in N33c-29): one rule, fsim.volatile-edge; L-4 now reads rows through N33a-03 and decides with N33a-01's edge_allowed (adds L-4.edge-spec; deps added); FD-FSIM edges reported once; xtask deps frob-core and fs-blake3; nongoal rows of L-5.forbidden"
+    },
+    {
+      "bead": "N33c-29",
+      "kinds": [
+        "scope",
+        "correct"
+      ],
+      "what": "no longer redefines the volatile-edge rule: adds the worker and standalone exceptions and fsim.standalone-edge to BD-003's rule"
+    },
+    {
+      "bead": "N33c-03",
+      "kinds": [
+        "scope",
+        "deps",
+        "tests"
+      ],
+      "what": "fs-qty confinement row is BD-003's L-2.fs-qty-direct (was defined twice); generated qty declarations get their check-generated row (dep BD-004, test); the bare-f64 count belongs to N34-05's scan, not the contract check"
+    },
+    {
+      "bead": "FD-FSIM-31",
+      "kinds": [
+        "correct"
+      ],
+      "what": "claim that the feature-off form breaks fewer of our crates ignored Cargo feature unification and frob-core's own fs-qty dependency: benefit stated with its two conditions"
+    },
+    {
+      "bead": "N34-17",
+      "kinds": [
+        "correct"
+      ],
+      "what": "interim refusal mapping aligned with N34-REF (802 for arguments, owner's code or 891 for artifacts, 808, ledger requests)"
+    },
+    {
+      "bead": "N00-23",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "deny entries were in a registries/deny_deps.toml no check reads: now rows with reason nongoal in N34-01's core list and BD-003's L-5.forbidden table, with named packages; dep N34-01"
+    },
+    {
+      "bead": "N34-01",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "forbidden-package reasons gain nongoal = NONGOAL-id for N00-23's rows"
+    },
+    {
+      "bead": "N33c-09",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "suite.dev-only was a second rule for the franken-kernel edge that BD-003's L-4 already decides on the FD-FKER row: folded into L-4.foundation-confined, the plant kept"
+    },
+    {
+      "bead": "N33a-07",
+      "kinds": [
+        "correct",
+        "placement",
+        "tests"
+      ],
+      "what": "generator moved to xtask::generate (check-generated runs generators in process; xtask does not link frob-conformance) with a bless test until BD-004's row; acceptance no longer requires frob doctor (BD-022) or check-generated (BD-004), both of which depend on this bead; status_lists_every_foundation and admission_doc_is_current tests; check_admitted no longer carries the off-T rule"
+    },
+    {
+      "bead": "N33a-08",
+      "kinds": [
+        "complete",
+        "tests"
+      ],
+      "what": "FD-FSIM-14 expected check-stack to reject FrankenSim's own salt and an empty build_env, and no bead defined it: stack.env kind foreign-build-class added here with test"
+    },
+    {
+      "bead": "FD-FSIM-14",
+      "kinds": [
+        "correct"
+      ],
+      "what": "foreign_salt_is_rejected names the finding and the rule's owner (N33a-08)"
+    },
+    {
+      "bead": "N33a-27",
+      "kinds": [
+        "correct"
+      ],
+      "what": "preflight ran cargo run -p xtask -- --help, which is no subcommand: cargo xtask with no argument prints the six names and exits 3"
+    },
+    {
+      "bead": "N33c-01",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "harness exported the salt (a second source N33a-08 forbids) and its salt-unset control could never fail, since probes under the repository read the root [env]: control runs a copy outside the tree; tests cell_build_script_salt_unset and harness_exports_no_salt"
+    },
+    {
+      "bead": "N33c-02",
+      "kinds": [
+        "correct"
+      ],
+      "what": "F31 is a count in FrankenSim's graph, not crates freed in this project's build (feature unification, frob-core's own fs-qty edge), as FD-FSIM-31 now says"
+    },
+    {
+      "bead": "N33c-04",
+      "kinds": [
+        "e2e-logging",
+        "deps"
+      ],
+      "what": "its e2e was a step of BD-031's script, but BD-031 does not wait for this owner decision: own script qty_alias_set.sh with NDJSON and both negative controls; dep STD-E2E"
+    },
+    {
+      "bead": "N33a-05",
+      "kinds": [
+        "complete"
+      ],
+      "what": "finding table gains stack.toolchain off-T and row-toolchain-stale (N33c-08) and stack.env foreign-build-class (N33a-08)"
+    },
+    {
+      "bead": "N33c-08",
+      "kinds": [
+        "correct",
+        "complete",
+        "tests"
+      ],
+      "what": "off-T became a failure when an ADR said so (no check can read that): trigger is an adopted toolchain line of receipts/train-log.ndjson; worker_rev/worker_toolchain do not exist in frob.stack-lock/1, so the exception is tested on model values; identifiers and kinds named; conditions 1 and 4 are N33a-05's toolchain-changed row, not a second implementation; row-toolchain-stale"
+    },
+    {
+      "bead": "N33c-30",
+      "kinds": [
+        "correct",
+        "deps",
+        "tests"
+      ],
+      "what": "allowed a result development that frob.gates/1 does not have; conflated the gate part's harness receipt with the stack receipt; read admission records from the generated DEPENDENCY_ADMISSION.md and re-implemented N33a-07's rules: now dirty parts are fail or not-run dirty-stack, both receipts resolved, stack.gate-receipt kinds, N33a-07's validator cited; reader N34p2-01; deps N33a-06, N34p2-01, N40-01"
+    },
+    {
+      "bead": "N33c-33",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "every check-stack run appended to a tracked drift log, but verify mode writes nothing (N33a-05): a sampler script writes it; option A no longer relies on a development result class"
+    },
+    {
+      "bead": "N33c-38",
+      "kinds": [
+        "correct"
+      ],
+      "what": "request applied: the report line's feature set is each binary's own resolved set compared with its key in [json_library.features]"
+    },
+    {
+      "bead": "N34-02",
+      "kinds": [
+        "correct"
+      ],
+      "what": "BD-001 creates the xtask package; this bead adds its library target with crate_map"
+    },
+    {
+      "bead": "N34-03",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "requests applied: N33a-11's frob-dyn/structure fixture run by a named test; records change by admission record or by ADR (ADR-SUITE-03), and check-contracts fails a record that differs from the generated CONTRACT.md table"
+    },
+    {
+      "bead": "N34-05",
+      "kinds": [
+        "correct"
+      ],
+      "what": "named a Dimensionless quantity type that the alias set does not have: dimensionless aliases of frob_core::qty or Checked"
+    },
+    {
+      "bead": "N34-07",
+      "kinds": [
+        "correct"
+      ],
+      "what": "a crate not inheriting the lint table was both unsafe.core-lint and lints.not-inherited: one finding per defect"
+    },
+    {
+      "bead": "N34-11",
+      "kinds": [
+        "correct",
+        "tests"
+      ],
+      "what": "request applied: franken_kernel_text_forms_agree is N33c-27's test in ids_oracle.rs (this bead cannot link the sibling); switch-over rule points to it"
+    },
+    {
+      "bead": "N34-15",
+      "kinds": [
+        "deps",
+        "e2e-logging"
+      ],
+      "what": "writes a section of AGENTS.md, which BD-002 creates: dep BD-002; the e2e positive case wrapped check-stack, which is not a dependency: wraps cargo metadata, check-stack logged not-run until it exists"
+    }
+  ],
+  "new_beads": [
+    {
+      "bead": "N34p2-01",
+      "why": "split from BD-005: the strict TOML-subset reader depends on nothing and is needed by BD-002, N33a-01, N33a-03 and BD-005's loader, while BD-005 links fs-qty and fs-blake3"
+    }
+  ],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N40-07",
+      "what": "N33b-01's per-milestone firewall cells are the key firewall_cells (uses is the posture list of N33a-01/N33a-03); use firewall_cells wherever N40-07 reads the firewall"
+    },
+    {
+      "bead": "NAB-01",
+      "what": "schemas/registries/glossary.schema.json is hand-written (N34x-03), like every registry schema; it is not generated with other registry schemas (BD-004 generates only schemas/frob.*.json)"
+    },
+    {
+      "bead": "N34x-03",
+      "what": "BD-002 already ships the eleven optional demo keys in schemas/demo.schema.json; keep only the five format-row fields and the agreement test, and check that the demo key types match BD-002's"
+    },
+    {
+      "bead": "N33bx-02",
+      "what": "cites N33c-29's fsim.volatile-edge; the rule is BD-003's rule 1 (fsim.volatile-edge), which N33c-29 extends with the worker and standalone exceptions"
+    },
+    {
+      "bead": "N33b-09",
+      "what": "cites N33c-29's fsim.volatile-edge; the rule is BD-003's rule 1, extended by N33c-29"
+    },
+    {
+      "bead": "FD-FKER-01",
+      "what": "N33c-09 no longer has suite.dev-only: a frob-core -> franken-kernel edge is BD-003's L-4.foundation-confined on the FD-FKER row; case 1's narrowing is an ADR changing that row's uses, and the negative control expects L-4.foundation-confined"
+    },
+    {
+      "bead": "N40-01",
+      "what": "N33c-30's check-stack resolves a gate part's receipt hash and needs one place for harness receipts: adopt receipts/gates/<hash>.json, and state that a harness receipt carries evidence.stack_receipt (N33a-06)"
+    },
+    {
+      "bead": "N33b-04",
+      "what": "N33c-08's off-T condition reads the fields kind and outcome of receipts/train-log.ndjson (an adopted toolchain train ends the informational period); keep those two field names and values (toolchain, adopted, abandoned) stable in frob.train-log/1, and NF-02 step 7 writes that line"
+    }
+  ],
+  "unchanged": 7,
+  "notes": "All 47 read in full; 40 changed, most for cross-bead contradictions round 1 left. Main themes: (1) the TOML reader split into N34p2-01 (BD-002, N33a-01, N33a-03 needed it before BD-005); (2) one rule, one owner: volatile edge (BD-003 rule 1), fs-qty confinement, franken-kernel edge (L-4), off-T (N33c-08, trigger = adopted train, not an ADR or INT-TOOLCHAIN-01), admission validation (N33a-07); (3) key collisions and missing keys in the stack lock (uses vs firewall_cells; three rows without firewall keys); (4) acceptance that needed later beads (BD-002 and N33a-07 on check-generated, N33a-07 on frob doctor, N34-15 on check-stack, N33c-04 on BD-031's script); (5) generator output schemas/** orphaned every hand-written schema; (6) the gate register has no development status, and harness receipts have no stated home (request to N40-01). Not changed but noted: N33c-07's survey is a shell script reading registries/siblings.toml with no named reader; xtask's 3 kloc cap now carries generators, the stack rules and the admission validator (RISK-18 applies). Graph: no cycles after edits; every added dependency checked with graph_check path first."
+}

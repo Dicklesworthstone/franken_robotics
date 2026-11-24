@@ -8,7 +8,7 @@ labels: ["m1", "lemma", "frob-lie", "solid", "test"]
 parent: "WP-03"
 deps: ["BD-027", "N12-06", "SPEC-C-01"]
 needs: []
-related: ["BD-101", "BD-054", "CARD-T-16", "BD-046"]
+related: ["CARD-T-16"]
 gates: []
 plan_refs: ["§12.3 (T-11)", "§10 C-01", "§13.9 (kernel class Exact)", "§14.4 (joint field)", "Appendix D.1 (bracket on se(3))", "Appendix I.1"]
 ---
@@ -99,11 +99,20 @@ produced there is what moves the registry row for that output.
   generated algebra has dimension 3, class planar gliding.
 - `helical_pitch_recovered`: (e_z, p·e_z) has pitch p; stated as revolute it is refused.
 - `twelve_classes_table` (one fixture per class); `structure_constant_mutant_rejects`.
+- `universal_with_structure_constants_rejects`: the universal basis offered with c₁₂³ = 1 against a phantom S₃;
+  the auditor recomputes [S₁, S₂] = (e_z, 0), finds no S₃ in the basis, and rejects.
+- `spherical_non_closure_claim_rejects`: the spherical basis offered as "not closed" with w = ((0, 0, 1), 0): w
+  does not vanish on S₃ = (e_z, 0), and since [S₁, S₂] = S₃ no covector can vanish on the basis and not on the
+  bracket; `reject`.
 
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the witnesses as `poly-identity` specimens;
-design-side scripts exercise the refusal of a mis-stated class through `frob design check`.
+design-side scripts exercise the refusal of a mis-stated class through `frob design check`. For this card the
+NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-11"), `step` (`T-11/<class-or-mutant>`),
+`event`, the exact command line, exit code, wall time, the witness hash, the expected and observed verdict, the
+reported class against the stated class, and on a mismatch the first failing rule (the bracket or dot product
+that differs, with both rationals) and the fixture path to reproduce.
 
 ### Known answers and negative controls
 

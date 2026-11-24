@@ -6,9 +6,9 @@ priority: 2
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20", "N14a-13"]
+deps: ["BD-066", "BD-067", "N14a-13", "N14b-20", "NEG-15"]
 needs: []
-related: ["ZOO-humanoid", "N14b-24", "ROBOT-fourier-n1", "ROBOT-talos"]
+related: ["ROBOT-talos", "ZOO-humanoid"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01", "Appendix H.3"]
 ---
@@ -37,8 +37,9 @@ NOTICE, files unmodified.
 **Expected facts (recalled, mark M; the pinned files govern).** 20 actuated joints (legs of six, arms of
 three, a two-joint head); height about 0.5 m; total mass about 3.5 kg; position-controlled servos.
 
-**Import path.** `frob design import --format mjcf assets/robots/op3/source/<entry> --out
-assets/robots/op3/import.fbot --json`.
+**Import path.** `frob design import assets/robots/op3/source/<entry> --format mjcf --name op3 --key
+asset-op3-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section).
 
 **What this robot adds to coverage (HYPOTHESIS until the file is read).** Scale. (1) Inertia consistency must
 be decided exactly: a small link's principal moments are of order 10⁻⁵ kg·m², so a check with an absolute
@@ -84,8 +85,9 @@ verdict comparison.
 ### Known answers and negative controls
 
 The import-parity row (10⁻⁹ m, 10⁻⁹ rad, 10⁴ configurations; for this robot 10⁻⁹ m is 2 × 10⁻⁹ of its height,
-still far above `f64` round-off). Controls: an inertia check with an absolute threshold of 10⁻⁶ (rejects
-every link of this robot); an altered licence hash. Determinism: goldens are data.
+still far above `f64` round-off). Controls: an inertia check with an absolute eigenvalue threshold of 10⁻⁶
+kg·m² (it rejects the consistent `synthetic` link (1, 1, 1.9) × 10⁻⁷ kg·m², and with it every link of this robot
+whose smallest second moment lies below the threshold); an altered licence hash. Determinism: goldens are data.
 
 ## Considerations
 

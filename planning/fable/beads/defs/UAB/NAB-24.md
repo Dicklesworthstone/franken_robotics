@@ -4,11 +4,11 @@ title: "M1 exit: sweep of the decision records after the referee studio and the 
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "delivery", "gauntlet", "solid", "registry", "decision-record"]
+labels: ["m1", "delivery", "gauntlet", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M1"
-deps: ["NAB-22", "NAB-23", "BD-147"]
-needs: ["§40.6: the M1 exit report with its kill decisions (N40-04, N40-30)", "§2.2, §39: the incumbent design-loop phase ledger measured on `trj` with the ceilings recomputed from measured shares (BD-143, N40-13)", "§40.5: the schedule gate of M0 plus M1 (N40-11)"]
-related: ["NAB-17", "NAB-32", "NAB-42", "NAB-25", "N40-11", "N40-13", "BD-131", "BD-140", "BD-143", "BD-145"]
+deps: ["BD-087", "BD-131", "BD-132", "BD-145", "N14a-16", "N14b-11", "N15a-06", "N16a-07", "N18-REF", "N22-REF", "N24b-06", "N25-REF", "N25b-04", "N40-04", "N40-11", "N40-13", "N40-30", "NAB-22", "NAB-23", "NAB-50", "STD-E2E"]
+needs: []
+related: ["BD-147", "NAB-32", "NAB-42"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2", "§43 (M1)", "§0.8"]
 ---
@@ -30,12 +30,21 @@ phase) is measured, which gives the first measured shares behind the ten-fold th
 ## Scope
 
 In: the M1 sweep record `docs/delivery/exits/M1/decision-records.json` and report; history entries on due rows;
-proposals. Out: deciding gates; the exit review (BD-147); the procedure (NAB-22).
+proposals. Out: deciding gates (the decision beads this bead depends on: N14a-16 for KILL-SKEL-SUBST, N25b-04 for
+the standing KILL-AUGUR-FALSECERT; the M1 re-read of KILL-MCP is N32a-05's record `ADR-KILL-MCP-M1`); the exit
+review (BD-147), which comes after this sweep, runs its `check` as an attached check and copies its section into
+the exit record; the procedure (NAB-22).
 
 ## Technical approach
 
-`decision-sweep skeleton --exit M1`, fill, `check --exit M1`, by a session that implemented none of the cited
-beads.
+The sweep is made at the M1 exit candidate commit, before the exit record (NAB-22 design decision 1). It reads
+the M1 gate records through the gate report of N40-04 at that commit, the kill-gate ADRs of N14a-16 and N25b-04,
+the schedule gate (N40-11) and the incumbent design-loop ledger (N40-13), and the beads behind the killed-idea
+evaluations of step 3 (N24b-06 the pre-analysis verb, BD-131 the pusher battery, N16a-07 coupled impulses,
+BD-087 the free-body variational oracle, N14b-11 the growth vector at preflight, N15a-06 the thermal node's
+second-law test, BD-132 the certificate checkers) and the rank-agreement pre-registration (BD-145); it needs no
+exit verdict. `decision-sweep skeleton --exit M1`, fill, `check --exit M1`, by a session that implemented none
+of the cited beads; the exit runner of BD-147 runs the same `check` as the attached check `decision-sweep`.
 
 **1. Families due by a kill gate decided at or standing from M1.**
 
@@ -75,8 +84,9 @@ and outer design sets (first slice); the crash-consistent job protocol; the grow
 
 **4. Moonshot queue.** No item is eligible. `active_after = 0`.
 
-**5. Idea register.** Three of the five best first-pass ideas ship at M1 and are marked `placed, gate
-recorded`: check before you simulate; a baseline controller for every design (first archetypes); the energy
+**5. Idea register.** Three of the five best first-pass ideas ship at M1 and are marked `in-progress` with
+their M1 gate records cited (`delivered` only once every named gate has a recorded pass, NAB-42
+`idea.state-ahead-of-gate`): check before you simulate; a baseline controller for every design (first archetypes); the energy
 ledger (on the referee). The rank-agreement experiment is pre-registered at M1 (design set, strata, thresholds
 0.7 and 0.5 fixed before data); the sweep records that the pre-registration exists and predates any data.
 
@@ -97,6 +107,11 @@ entries.
 - [ ] The ceilings of the ten-fold thesis are recomputed from the measured shares and stored with the sweep
       (for a measured step share s the ceiling of a faster step is 1/(1 − s)).
 - [ ] No reading task is open for a gate recorded at M1.
+- [ ] No cross-reference check of the decision records still reports a recorded `skip` for a row that lands at
+      M1: every kill gate named by the matrix, the Moonshot queue, the killed-idea register and the idea
+      register resolves in the gate register with the deciding milestone of the frozen list, the six quoted
+      triggers of the contested records equal the register's, and `FROB-REF-245`, `FROB-REF-817`, `FROB-REF-856`
+      and `FROB-REF-877` exist in the refusal registry.
 
 ## Test plan
 
@@ -108,17 +123,28 @@ due lists of M1 through M8).
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M1` (NAB-50): due list, `check`, the two kill-gate pairs, zero open
-reading tasks. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh --exit M1` (NAB-50): prints the due list, runs `decision-sweep check --exit M1`,
+and asserts the two kill-gate pairs, the EV-S29 re-read, the evaluations of step 3, the recomputed ceilings and
+zero open reading tasks; then replays the two negative controls below (fixtures under
+`tests/fixtures/sweep/M1/controls/` written by this bead, the hook of NAB-50) on scratch copies of the sweep record and
+asserts that `check` fails on each with `sweep.change-without-evidence`. Logged through the shared helper of
+STD-E2E to `target/e2e-logs/decision_records/<utc>.ndjson` with a transcript, every line with `ts`, `script`,
+`bead` (`NAB-24`), `step`, `event`: `cmd` lines with the exact command line, exit code and wall time; one
+`assert` per pair with the kill gate, the ADR identifier and the outcome; one `metric` per measured phase share
+with its ceiling 1/(1 − s); open reading tasks as a `metric` (threshold `== 0`); the digests of the gate report
+and of the sweep record; `assert` lines of kind `negative-control` with `caught`; on failure the first due item
+without an outcome, with the path of the sweep record; a `summary` with assertions passed and failed and the
+kill gates read.
 
 ### Known answers and negative controls
 
 Known answers: two kill-gate pairs; 8 × 60 ÷ 16 = 30 GPU-minutes per candidate (the top of the published
 range); with one design per agent turn and 300 s of training the loop ratio is at most (300 + t)/t, which is
-3.5 at t = 120 s and 6 at t = 60 s. Negative controls: a sweep that records KI-56 as decided at M1 (it is
-decided at the M3 partial gate; `sweep.kill-not-reflected` must not be silenced by an early entry, and the
-planted record fails the due-date check); a history entry that cites the schedule gate as evidence for raising
-an Impact.
+3.5 at t = 120 s and 6 at t = 60 s. Negative controls: a sweep that records KI-56's condition as evaluated at
+M1 (`condition_met` set, citing the partial-gate record, which does not exist until M3: the evidence does not
+resolve and the check fails `sweep.change-without-evidence`; an early entry must not silence the M3 due item);
+a history entry that cites the schedule gate as evidence for raising an Impact (fails
+`sweep.change-without-evidence` by the evidence-kind rule of NAB-22 rule 1.2).
 
 ## Considerations
 

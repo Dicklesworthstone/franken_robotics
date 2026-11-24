@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "spine", "spec", "frontier", "augur", "frob-mission", "frob-cert", "test"]
 parent: "WP-42"
-deps: ["N10a-01", "STD-TEST", "STD-E2E"]
+deps: ["BD-027", "N09-CX", "N09-KA", "N10-CX", "N10-KA3", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["BD-042", "BD-115", "BD-130", "BD-132", "BD-133", "BD-382", "N10c-04", "N10-CX", "SPEC-C-40", "N10c-10", "CARD-T-21", "CARD-T-22", "BD-128", "BD-026", "N10a-02"]
+related: ["SPEC-C-40", "BD-128", "BD-026", "BD-115", "BD-133", "BD-135", "BD-382"]
 gates: ["GATE-AUGUR-02", "GATE-LEMMA-03"]
 plan_refs: ["§10 C-32", "§25.13", "§25.5", "§12.3 T-21 T-22", "§12.4", "§12.7", "Appendix D.6", "Appendix E GB-31", "Appendix I.4", "Appendix M.8", "Appendix M.9", "Appendix N.7"]
 ---
@@ -50,7 +50,10 @@ Tested, Estimated. Status today: HYPOTHESIS.
 In: `docs/math/C-32.md` parts A (dual witnesses) and B (stance family and specimen); law tests in
 `crates/frob-mission/tests/laws_c32.rs`, with the auditor-side rows bound in `crates/frob-cert/tests/`; registry
 entries for KA-157 to KA-160, KA-033, the statements of theorem cards T-21 and T-22 as contract clauses, and the
-controls seeded from CX-077, CX-078, CX-079 and CX-016.
+controls seeded from CX-077, CX-078, CX-079 and CX-016. The registry records themselves are created by the
+registry beads (KA-157 to KA-160: N10-KA3; KA-033: N09-KA; CX-077 to CX-079: N10-CX; CX-016: N09-CX), which
+are dependencies; this bead supplies their derivation files and binds their controls, and its script runs the
+rows through the Gauntlet's tier targets `g1_known_answers` and `g2_parity`.
 
 Out: the stance-family solver and the verb path (`mission.synthesize`, `mission.refute`; BD-130, BD-135); the
 checkers for `lp-primal` and `lp-farkas` (BD-132); bundle writing (BD-133); the cone-program solver that produces
@@ -63,8 +66,10 @@ are empty; this bead fills row C-32: `rust_type` (the subject trait of the law s
 production type when the implementing bead binds it), `verb` (`mission.refute`; also `mission.synthesize`,
 `prove.bundle`, `prove.verify`), `failing_test` (a test of `frob-mission::laws_c32` with its registered control),
 `payoff.gate` (GATE-AUGUR-02), `statements`, `known_answers` (KA-157 to KA-160), `cards` (T-21, T-22), `gates`,
-`pilot` (the record `PILOT-C-32` of the pilot register, required because the tier is Frontier) and
-`generic_comparator` (the off-the-shelf method named in the pilot paragraph of this bead). Doctrine D-2 (no
+`pilot` (the record `PILOT-C-32` of the pilot register, required because the tier is Frontier; written by the
+region pilot BD-289 at M3, see the pilot paragraph below) and `generic_comparator` (the lifted robust linear
+program of rule D-17 for the stance family, KA-033; the region part adds its own comparators through N10c-04).
+Doctrine D-2 (no
 ornamental mathematics) is checked on these fields: a construction with no verb or no failing test is moved to the
 parked register by a decision record. The part bead N10c-04 adds their statements and tests to the same row. The
 contract `docs/math/C-32.md` has the ten sections of the template `docs/math/TEMPLATE.md` of the same bead, in the
@@ -172,6 +177,15 @@ at M1 (boundary exactly 3/14 m; four vertex witnesses; the dual (0, 1/2, 1/2) fo
 amendment withdraws the cell at b = 1/4 m) and GATE-LEMMA-03 at M1 (the four stance mutations rejected). The
 specimen bundle is also part of GATE-LEMMA-04 and GATE-AUGUR-05.
 
+Pilot and ceiling (carried; not run here). The construction's pilot is the region pilot of §10 C-32: a
+12-parameter quadruped box paved with 10⁴ boxes four ways (plain intervals, affine forms, contractors,
+per-constraint decomposition); kill (TARGET) when the best arm leaves more than 90% of the volume undecided or more
+than 95% of the decided volume falls to a single monotone bound; ceiling, evidence quality and robustness to
+tolerances, no speed claimed; fallback, pointwise checks at proposed designs. It is run by BD-289 at M3, which
+writes `PILOT-C-32`, and its contract side is N10c-04. The dual witnesses and the stance specimen of this bead
+are not gated on it: the stance family's comparator is the lifted robust linear program (KA-033), which is also
+the first implementation (ADR-AUGUR-03).
+
 ## Acceptance criteria
 
 - [ ] `docs/math/C-32.md` exists with parts A and B: A1 to A4, B1 to B6, the full derivation, the vertex table,
@@ -209,18 +223,23 @@ specimen bundle is also part of GATE-LEMMA-04 and GATE-AUGUR-05.
   with the four vertices and their centroid, 11,520 states: the interval test and the zonotope test agree on all;
   2,254 states are feasible; 114 bodies cover the mission.
 - `support_polygon_screen_is_wrong`: the screen "centre of mass inside the support polygon and total capacity at
-  least the weight" accepts 1,596 bodies the exact model rejects; first example u = v = 2, ratings
-  (80, 80, 80, 160) N, vertex (60, 30), where t would need to be at least 180 N and at most 80 N.
+  least the weight" accepts 1,596 bodies the exact model rejects; the plan's printed example, u = v = 2, ratings
+  (80, 80, 80, 160) N, vertex (60, 30), where t would need to be at least 180 N and at most 80 N, is among them.
+  The plan calls it the "first" example under an unstated order; the test asserts membership, not position (in
+  lexicographic order of the ratings [++, +−, −+, −−] over {0, 80, 160, 240} the first is (0, 0, 160, 240)).
 - `affine_law_needs_half_metre`: an affine allocation law in the load exists at v = 2 (f₊₊ = 100 + 45·x + 15·y
   with x = P_x/60, y = P_y/30) and none exists for v > 2; the bilinear interpolant works at v = 14/3.
 - `ka_033_lifted_equals_projected`: the lifted program and the projection return the same optimum 3/14 m.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c32.sh`: `frob --json doctor`; `cargo test -p frob-mission --test laws_c32`; `cargo test -p
-frob-conformance --test g1 -- KA-157 KA-158 KA-159 KA-160`; `cargo test -p frob-conformance --test g2 -- KA-033`;
-`frob --json prove list` filtered to cards T-21 and T-22; when bundles exist, `frob-verify` on the specimen bundle
-and on its four mutations, expecting accept and four rejects. Log to `target/e2e-logs/spec_c32/<utc>.ndjson` with
+`scripts/e2e/spec_c32.sh`: `frob --json doctor`; `cargo test -p frob-mission --test laws_c32`;
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-157 KA-158 KA-159 KA-160`;
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity -- KA-033` (the tier targets of
+ADR-GAUNT-01, BD-025); both again with `--features gauntlet-mutations`, in which every registered control of the
+five rows must be caught; `frob --json prove list` filtered to cards T-21 and T-22; `frob-verify` on the specimen
+bundle and on its four mutations, expecting accept and four rejects (logged `pending` until the bundle writer
+BD-133 and the checkers of BD-132 exist; the reference checks of the law suite cover them meanwhile). Log to `target/e2e-logs/spec_c32/<utc>.ndjson` with
 a transcript; each line has `ts`, `script`, `bead`, `step`, `event`, command line, exit code, wall time, the
 evidence block (claim Known answer, class, tier G1 auditor or host, determinism D0, seed), forces and multipliers
 as rationals against expected, the three grid counts, and on failure the first differing state with its body
@@ -234,7 +253,7 @@ index. The `summary` line counts assertions and names GATE-AUGUR-02 and GATE-LEM
 | KA-158 | At b = 1/5 m the dual gives f₊₊ − f₋₋ = 165 N against 160 N | exact | G1 auditor | A perturbed multiplier is rejected |
 | KA-159 | At b = 1/4 m active (155, 135, 105, 5) N; passive (175, 115, 85, 25) N | exact | G1 host | Mutant `authority_ignored`: carries the inclusion to the passive suspension |
 | KA-160 | Support torque (P_y, −P_x, 0); (30, −60, 0) N·m | exact | G1 auditor | A packet that passes (60, 30) as the torque |
-| KA-033 | Lifted program and projection reach the same optimum in one solve each (FACT, recorded pilot; re-run here) | exact | G2 host | Mutant `projection_drops_a_pair` (new): omits one generator pair |
+| KA-033 | Lifted program and projection reach the same optimum in one solve each (FACT, recorded pilot; re-run here) | exact | G2 host | The row's control as N09-KA sets it: mutant `nominal_load_set`, the lifted program with its robust load set replaced by the centre of the rectangle, in which four 100 N forces balance the load for every b > 0, so it attains no positive optimum and must be flagged as disagreeing with the projection; also mutant `projection_drops_a_pair` (new), which omits one generator pair of the rectangle and moves the optimum (b → 0 without the y pair, 1/8 m without the x pair) |
 
 Other mutants: `support_polygon_screen`; `weak_conic_witness_accepted`; `sample_point_excludes_cell`.
 Counterexamples carried: CX-077 (first moment passed as torque), CX-078 (authority), CX-079 (support polygon plus

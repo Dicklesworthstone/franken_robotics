@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["NEG-15", "BD-066", "BD-067", "N14b-20"]
+deps: ["BD-066", "BD-067", "BD-109", "N14b-20", "NEG-15", "ROBOT-anymal-b"]
 needs: []
-related: ["ZOO-quad-mammal", "BD-109", "N14b-24", "BD-089", "ROBOT-anymal-b", "BD-201"]
+related: ["ZOO-quad-mammal"]
 gates: []
 plan_refs: ["Appendix G.1", "§14.10", "§14.15 GATE-SKEL-01, GATE-SKEL-07", "Appendix H.3"]
 ---
@@ -35,8 +35,9 @@ notice, licence text and the no-endorsement clause.
 **Expected facts (recalled, mark M; the pinned files govern).** 12 actuated revolute joints; 13 bodies;
 n_v = 18; total mass on the order of 50 kg; actuator force ranges stated per joint; an X leg configuration.
 
-**Import path.** `frob design import --format mjcf assets/robots/anymal-c/source/<entry> --out
-assets/robots/anymal-c/import.fbot --json`. Expected loss-report entries (HYPOTHESIS until read): visual
+**Import path.** `frob design import assets/robots/anymal-c/source/<entry> --format mjcf --name anymal-c --key
+asset-anymal-c-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
+the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual
 meshes; fitted collision primitives with recorded error (this model's collision geometry is likely more
 detailed than the small quadrupeds', so the fitting error is reported per body and the worst is flagged if
 above 5 mm); unmapped solver and contact parameters; `armature`, `damping`, `frictionloss` and actuator force
@@ -57,7 +58,9 @@ reference scorecard for terrain traversal at M2.
 - [ ] `assets/robots/anymal-c/` passes the licence check and validation; `mark = "P"` with commit and date.
 - [ ] `import.fbot` has a pinned `DesignId`; loss report equals its golden with per-body fitting errors.
 - [ ] Body-by-body mass ratios against `anymal-b` are recorded; the template's monotonicity test passes.
-- [ ] The mass on file is written by validation and consumed by the `quad-mammal@anymal-c` preset row.
+- [ ] The mass on file is written by validation into the manifest field that the `quad-mammal@anymal-c` preset row reads; the preset and its
+      GATE-SKEL-07 row are BD-109's, which reads the pinned fixture, so this bead checks the field (present, sourced,
+      equal to the validated total) and does not wait on the preset.
 
 ## Test plan
 

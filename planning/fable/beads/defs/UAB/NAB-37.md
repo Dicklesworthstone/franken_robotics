@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "atelier", "nemesis", "augur", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-32"]
-needs: ["§28.19: the decision-core tables DC-01 to DC-11 with their fixed-table fallbacks, against which the nine rejected methods of KI-45 were weighed (BD-309, BD-349)", "§24.12: the reachability pre-analysis of a fixed-n study (`eval.preanalyze`), which owns the enumeration of KI-44 (BD-124)", "§0.8: hypothesis rows H-03, H-06 to H-10, H-13, H-22a, H-22b and H-23 (N00-11, N00-12)"]
-related: ["NAB-36", "NAB-38", "NAB-20", "NAB-26", "NAB-27", "NAB-15", "N28c-45", "BD-124", "BD-186", "BD-257", "BD-264", "BD-276", "BD-277", "BD-280", "BD-289", "BD-292", "BD-310", "BD-328", "BD-351", "BD-353", "BD-354"]
+needs: []
+related: ["NAB-38"]
 gates: []
 plan_refs: ["Appendix C.2.5", "§0.8 (H-03, H-06, H-07, H-08, H-09, H-10, H-13, H-22a, H-22b, H-23)", "§28.19.4"]
 ---
@@ -48,12 +48,12 @@ matches each method separately and the expected-value matrix's rejected rows can
 
 | Record | Expression | Value |
 |---|---|---|
-| KI-33 | share of per-design compute that is rollouts and training (no rollout is reusable bit for bit after a mass or geometry edit) | at least 90%, so exact reuse is at most about 10%, below the hypothesis's own falsifier of 30% |
+| KI-33 | ceiling of exact reuse when at least 90% of per-design compute is rollouts and training (no rollout is reusable bit for bit after a mass or geometry edit): 1 − 0.9 | 0.1, at most about 10%, below the hypothesis's own falsifier of 0.3 |
 | KI-35 | bisections bought by 10⁴ boxes: log₂ 10⁴ | 13.3, less than one cut per axis in 20 dimensions |
 | KI-35 | side kept by uniform boxes in 20 and in 10 dimensions: 2^(−13.3/20), 2^(−13.3/10) | 0.63; 0.40 |
 | KI-36 | nominal episodes for a zero-failure 95% bound at 10⁻⁵: ln(20)/10⁻⁵ | 3.0 × 10⁵ |
 | KI-37 | the same at 10⁻⁶ (also the cost of checking a fitted tail there): ln(20)/10⁻⁶ | 3.0 × 10⁶ |
-| KI-37 | floor of a defensive mixture with nominal share β after n draws at confidence 1 − δ | ln(1/δ)/(β·n) |
+| KI-37 | floor of a defensive mixture with nominal share β after n draws at confidence 1 − δ, ln(1/δ)/(β·n), at β = 0.1, δ = 0.05, n = 10⁶; against the crude floor ln(1/δ)/n | 3.0 × 10⁻⁵; ten times 3.0 × 10⁻⁶ |
 | KI-40 | control-variate saving 1/(1 − ρ²) at ρ = 0.7, 0.9, 0.95 | 2.0; 5.3; 10.3 |
 | KI-40 | correlation needed for a fifth of the expensive samples: ρ = √(1 − 1/5) | 0.894 |
 | KI-42 | padding an 18-degree-of-freedom quadruped to 64: linear, quadratic and cubic stages: 64/18, (64/18)², (64/18)³ | 3.6; 12.6; 45 |
@@ -182,7 +182,7 @@ adversary.
 - *Survives.* Value of information as a stop rule and a budget allocator at the finalist stage, and for choosing
   measurements (C-39; §28.16; GATE-ATEL-15; KILL-VOI).
 - *Revive only if.* An A/B against capable agents that shows at least 1.5 times fewer simulations to a decision. The stop-rule form is decided at GATE-ATEL-15.
-- *Carried by.* BD-351, N28b-21.
+- *Carried by.* BD-351, N28c-17 (the KILL-VOI decision).
 
 **KI-40. Rank fidelity assumed between rungs** (H-22a and H-22b, both ACTIVE and unmeasured)
 - *Strong form.* A shared policy on the fast tier ranks designs as trained specialists on the referee do, at
@@ -261,7 +261,7 @@ is not built; §28.19.4 holds the full list.
 
 *Revive only if.* Per method, the negation of its reason: a validated kernel on typed designs of varying topology (surrogates); residual counts far above twenty (two-sample tests); more than one daemon per host (consensus); estimates supplied by agents (mechanism design). Regret-based allocation and expected information gain are not revived as decision rules.
 
-*Carried by.* BD-282, BD-296, BD-309, BD-349.
+*Carried by.* BD-282, BD-296, BD-309, BD-349, N28a-28 (the DC-07 record, for the drift-test row).
 
 **KI-46. Unconstrained zero-sum adversarial worlds**
 - *Strong form.* Search or train an adversary over worlds with no constraint beyond the robot's failure.
@@ -291,6 +291,7 @@ is not built; §28.19.4 holds the full list.
 
 `crates/frob-conformance/tests/killed_ideas.rs`, module `g5_search`:
 
+- `ki33_reuse_ceiling`: 1 − 0.9 = 0.1, below the falsifier 0.3.
 - `ki35_paving`: log₂ 10⁴ = 13.288; 2^(−13.288/20) = 0.631; 2^(−13.288/10) = 0.398.
 - `ki36_ki37_episodes`: ln 20 = 2.9957; ÷ 10⁻⁵ = 299,573; ÷ 10⁻⁶ = 2,995,732.
 - `ki37_mixture_floor`: at β = 0.1, δ = 0.05, n = 10⁶ the floor is 2.9957/(0.1 × 10⁶) = 2.996 × 10⁻⁵, ten times

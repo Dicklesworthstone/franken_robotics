@@ -1,0 +1,297 @@
+{
+ "round": 2,
+ "slice": "S30",
+ "reviewed": 40,
+ "changed": [
+  {
+   "bead": "N24-REF",
+   "kinds": [
+    "complete",
+    "correct",
+    "self-contained"
+   ],
+   "what": "Applied U26b request: FROB-REF-840 exit 5 (outside the session's scopes, per §37.12). Applied U24b request: symbolic campaign refusals (campaign-already-open exit 7, request cap, campaign-not-open, claim-family-mismatch) with triggers and repairs; FROB-REF-802 confirmed for N24b-14 admission checks 5-7; 886 listed for a retired confirmation family. 'Raised by' column now names beads; exit-code test and e2e updated. Later in the round: symbolic rows `task-structure-invalid` (N24a-02, N15a-29) and `battery-manifest-invalid` (N24b-01's loader, which had no code), and FROB-REF-103 listed as the task-file reader's unknown-field refusal."
+  },
+  {
+   "bead": "N24-KA",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Late rows now file a `ka` block request in the N38a-40 allocation ledger (labels kept in slug, provisional-tag-past-due applies) instead of reporting to the catalogue owner; KA-ARENA-W2's 0.3486 qualified as the forward-only traction value (signed traction gives 0.3731, checked by LP); test arena_late_rows_in_block."
+  },
+  {
+   "bead": "N24-CX",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Late subsections file a `cx` block request of 8 in the N38a-40 ledger, mapped in table order; acceptance and test late_entries_in_block added."
+  },
+  {
+   "bead": "N24a-02",
+   "kinds": [
+    "self-contained",
+    "correct",
+    "tests"
+   ],
+   "what": "Canonical bytes named the normalisation of magnitudes without stating it; now states the one number rule of §34.9 rule 4 (shortest decimal, p/q when non-terminating, authored unit kept) with examples; golden note corrected (1/500 s prints 0.002 s); test number_rule_printing."
+  },
+  {
+   "bead": "N24a-03",
+   "kinds": [
+    "correct",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Lossless round trip was claimed 'identically' though 0.10 m canonicalises to 0.1 m; now 'up to whitespace, comments and the number rule'; e2e diff normalises magnitudes and logs each rewritten literal, and uses the --as sexpr flag BD-122 and design.view define (was --view)."
+  },
+  {
+   "bead": "N24a-04",
+   "kinds": [
+    "correct",
+    "risks"
+   ],
+   "what": "Definitional evaluator for U and S was O(T·W²); at the 4,096-tick capacity the 10⁶-trace campaign of BD-121 (with a debug determinism lane) would take days. Now O(T·W) by accumulating the inner minimum in scan order inside one tick, still a transcription sharing no structure with the fast evaluators."
+  },
+  {
+   "bead": "N24a-05",
+   "kinds": [
+    "correct"
+   ],
+   "what": "Mixed deg/rad differences (the angle_is_tracked case) are converted in double precision, so bit-identity under rescaling holds only for all-rational conversions; the criterion is restricted accordingly."
+  },
+  {
+   "bead": "N24a-07",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "valid = covered and inputs valid fails the bead's own nested_validity test (reports tick 1); replaced by a validity counter vcov (reset to 0) so nested nodes and missing samples invalidate the whole window (INV-ARENA-02); tests nested_validity strengthened and missing_sample_invalidates_window added."
+  },
+  {
+   "bead": "N24a-08",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "MonitorValue gains the valid flag with N24a-07's rule so the two streaming evaluators compare validity; acceptance and test nested_and_missing_validity added."
+  },
+  {
+   "bead": "BD-121",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "Agreement table compared the binding witness across the block kernel, which computes none; witness now compared deque vs definitional, and the valid flag compared across all three with the definitional evaluator's derived rule stated. Large-window traces bounded to b+64 ticks and cost note corrected to the O(T·W) oracle."
+  },
+  {
+   "bead": "N24b-01",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "scope"
+   ],
+   "what": "Finished the U38a request (one trigger table: file, format, loader and smoke row here; the fixtures row's union list owned by N38a-22; BD-146 and N38b-25 read it): Out now names N38a-22; the second-table check is bounded to registries/ and crates/ (not target/ or vendored trees) and trigger errors are LoadError values for CI, not verb refusals. The loader's refusal was 'the design-and-model refusal for an invalid registry file', a code that does not exist: now the symbolic `battery-manifest-invalid` (kinds no-event, event-mismatch, empty-reason, record-edited, schema; exit 3; repairs), with 103 for unknown keys, and tests. `battery::item` returns the canonical item the scenario loop needs, and a TaskId that static admission refuses (the smoke 526 item) is found among assets/tasks/. E2e: the M1 step scorecard-identity (N24ap1-01) named beside the M3 script; logging fields stated."
+  },
+  {
+   "bead": "N24a-22",
+   "kinds": [
+    "correct",
+    "tests",
+    "scope"
+   ],
+   "what": "Section 6 defined BatteryId as a hash over name and version, differing from N24b-01 (its dependency and the owner): now restates N24b-01's definition and events, and keeps only the scorecard's binding to one identity. 'Removal without the event is impossible through the API' and the e2e's 'shortened file yields a different BatteryId' contradicted N24b-01's loader, which refuses it: now refused with `battery-manifest-invalid` (no-event) showing a differing computed identity, then admitted with the event at n = N − 1. Two acceptance lines needed beads that depend on this one (the verb, BD-125's reference scorecards): restated as checkable here. Test scorecard_one_battery."
+  },
+  {
+   "bead": "N24ap1-01",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests"
+   ],
+   "what": "Step scorecard-identity aligned with N24b-01 (refusal without the event; new BatteryId, event row and 19 scenarios with it); `--quantile 0.99` was 'exits 3' with no code while N24a-17 prints a not-observable cell: now exit 0 with p_max and n_needed. Added how fixtures reach the binary (scratch registries root, --registries-root of N32ax-03) and how planted outcomes arise: real referee episodes fixed by their worlds, a test-feature seam for the two outcomes no world file can produce (plant:fault, plant:gap; 724 in other builds), recorded synthetic ledger stores for the energy fixtures."
+  },
+  {
+   "bead": "N24a-17",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The unobservable-quantile answer was a printed cell in the approach and a 'refusal' in the e2e text: now DESIGN, an answer (status not-observable, n, p_max, n_needed, exit 0) with its reason. The acceptance line about `frob eval scorecard --json` needed the verb, which depends on this bead: restated on the metric's result type."
+  },
+  {
+   "bead": "BD-125",
+   "kinds": [
+    "correct",
+    "scope",
+    "tests"
+   ],
+   "what": "Timed docking held state as integers in units of 1/64, but x₃ = g·(5k₀ + 3k₁ + k₂)/128 for commands k/64 is not on that grid for odd sums: positions and velocities now in 1/128 units (target 128), commands and readings in 1/64; witness test restated with an odd vector. Out named 'the fixture's unit; needs' for the batch and rule: now N24b-07 and N24b-06."
+  },
+  {
+   "bead": "N24b-03",
+   "kinds": [
+    "correct",
+    "deps",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Applied UJL-2 request: capability task:run (the row of record is VERBS-task's, now a dep), chapter refusals 529 and 530 only, 724 and the other surface-wide codes appended by kind; fixture named `fixture:<name>` and the call carries --key as the registry example does; Out names N24bx-01 (axes, --list) and N24c-10 (--battery fixtures); test fixture_row_matches_registry; e2e logging fields."
+  },
+  {
+   "bead": "BD-122",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "deps",
+    "tests"
+   ],
+   "what": "Aligned with its components: canonical quantities follow N24a-02's one number rule (0.10 m is written \"0.1 m\"); unknown, misspelt and duplicate fields are FROB-REF-103 and only an unknown major version or required field is 891; check 1 admits :exact on any integer-quantized channel (the reference task's own drive_saturated flag was refused by the old wording); check 7 counts the far bound as N24a-07 does. Verbs table carries VERBS-task's capabilities and names it the row of record (now a dep, was related). `task.check --overlay` (used by two e2e steps and defined nowhere) is wired here from N24a-13's overlay::check, with acceptance and test check_overlay_stage; dep N24a-13."
+  },
+  {
+   "bead": "N24a-13",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging",
+    "deps"
+   ],
+   "what": "Online decision is now three-valued (rule 1a): an unknown operand never decides; a definite false after a gap still does, matching N24a-09's interval semantics; test unknown_operand_defers; dep N24a-02 (the terminate terms it binds). The overlay refusal was 'a schema refusal' with no code and the e2e called `task check` with an overlay no verb accepted: now FROB-REF-103 with pointer and repair, the library function overlay::check here and the verb input wired by BD-122 (which is built after this bead, so acceptance is stated on the function). The hard-limit digest mismatch was 'reported by task.check' with no input path: now a comparison this bead supplies and its consumers report. Tests for digest canonicity and the named overlays; logging fields."
+  },
+  {
+   "bead": "N15a-29",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "Admission refusals named after N24a-02's reader rules: unknown or misspelt key is FROB-REF-103 (was 891), a start outside the three values stays 891, weights and an undeclared stream are `task-structure-invalid` with kinds weights and dangling (were 'a form refusal' with no code); five failures counted; tests unknown_key_refused and undeclared_stream_refused; dep N24a-03 (the S-expression view it extends)."
+  },
+  {
+   "bead": "N24ax-02",
+   "kinds": [
+    "self-contained",
+    "tests",
+    "deps"
+   ],
+   "what": "An unknown kind is refused with FROB-REF-891 (closed vocabulary; was uncoded), with test unknown_kind_refused covering the aliases' one TaskId; dep STD-E2E for its own script task_symmetry.sh."
+  },
+  {
+   "bead": "N24ax-03",
+   "kinds": [
+    "self-contained",
+    "deps",
+    "e2e-logging"
+   ],
+   "what": "The refusal of a channel with no declared source set is FROB-REF-103 with detail no-declared-source-set and a pointer (was 'the loader's unknown-field refusal'); the e2e step asserts code and detail and logs the refusal event; dep STD-E2E for its own script task_reads.sh."
+  },
+  {
+   "bead": "BD-123",
+   "kinds": [
+    "tests"
+   ],
+   "what": "The creep-feasible-set row was 'checked on the referee at δ = 0.023 m and μ = 0.95 ± 0.01' with no test: added f1_rig_creep_feasible_edge (demand 0.94998; brackets 0.94 and 0.96, 0.95 excluded). Known answers read KA-603 to KA-611 while the table and References include the mass row KA-602."
+  },
+  {
+   "bead": "N24a-16",
+   "kinds": [
+    "correct",
+    "complete",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Acceptance and the e2e used the fixture 1 cart, whose model and task (N24b-05) depend on this bead, and settled a fixture name where a task is expected: now two synthetic boxes (1 kg and 1.25 kg; 9.81 N and 12.26 N) with task settle-box, the cart's rows left to N24b-05, N24b-20 and N24c-07. The plan's rule that a world failing the criterion on its tier is marked `Degraded: unsettled` and counted had no M1 owner on the referee (BD-195 has it in the M2 vectorized environment): added the load check load_settled with the mark, no re-roll, acceptance and test load_check_marks_unsettled. Logging fields and paths stated."
+  },
+  {
+   "bead": "N24a-18",
+   "kinds": [
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Two acceptance lines needed beads built after this one (eval.scorecard's output; fixture 1 trials): restated on the result type and the per-episode report, naming the beads that assert the rest. E2e reads recorded synthetic ledger stores with eval.scorecard and telemetry.energy (it said eval.run on episodes that cannot total exactly 10 J); logging fields."
+  },
+  {
+   "bead": "N24a-23",
+   "kinds": [
+    "deps"
+   ],
+   "what": "added dep BD-122: the bead rewires `task.list` and `task.show`, which BD-122 lands (the order held only through N24a-22 -> N24b-01 -> BD-122)."
+  },
+  {
+   "bead": "N24a-42",
+   "kinds": [
+    "correct",
+    "self-contained",
+    "tests",
+    "e2e-logging"
+   ],
+   "what": "Step sexpr-view used `--view sexpr` and 'equals the input modulo whitespace', but the view flag is `--as` and the golden `0.10 m` is printed `0.1 m` (N24a-03's number rule): fixed, with the helper test. Step boundary-* evaluated 'recorded docking runs' that the fixture table did not list: row added (docking-boundary task with the atom `(> separation 0)`, two runs of N20b-13's fixture at ε = 5/16 and 1/4, expected verdicts). The overlay step now calls `task check --overlay` with FROB-REF-103 and an admitted control overlay; the vacuous hard-limit refusal names 539. The script's planted files differed from BD-122's files of record while a note said the two scripts share one table: stated as second mutations with the files of record in N24c-06's script, and one nine-code constant."
+  },
+  {
+   "bead": "N24ax-04",
+   "kinds": [
+    "deps"
+   ],
+   "what": "deps BD-201 (the flat velocity task and its reference scorecard, which the e2e step and the test refusal_lists_admitted_alternatives read) and STD-E2E (its own script metric_smoothness.sh)."
+  },
+  {
+   "bead": "N12p2-01",
+   "kinds": [
+    "correct",
+    "tests"
+   ],
+   "what": "The work limit was 2·10⁸ 'search nodes' while the admission bound and every number in the bead count complete maps: at n = 16, k − 1 = 4 the bound 178,973,355 passes but the tree has 238,642,067 nodes, so a limit read in nodes would refuse mid-search what was admitted. The limit is now on complete maps covered (known before the search), with the node bound stated; registry scope, log fields and test limit_admits_sixteen_by_four follow."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N23ap1-01",
+   "what": "its restated kernel steps (vi)/(vii) say valid = covered and inputs valid; restate N24a-07's corrected validity counter (vcov <- in_valid ? min(vcov+1, b+1) : 0; valid <- vcov = b+1; reset to 0) so nested nodes and missing samples are invalid over the whole window on the device too"
+  },
+  {
+   "bead": "N24c-04",
+   "what": "align with the owners in S30: (1) a battery LoadError is now the symbolic refusal `battery-manifest-invalid` with its kind (N24b-01, N24-REF), and `battery::item(&Resolved, ItemId)` gives the canonical item of each ItemId; (2) unit test quantile_needs_count says a p99 request on 5 episodes is 'refused': N24a-17 makes it an answer (cell not-observable with p_max and n_needed = 299, exit 0); (3) clopper_pearson_exact prints the upper endpoint for 0 of 64 as 0.0560, which rounds inward: N24a-17 prints 0.0561 (rounded outward); (4) name the refusal eval.scorecard gives for run identifiers of two different BatteryIds (N24a-22's constructor returns an error)"
+  },
+  {
+   "bead": "N24b-23",
+   "what": "its step battery_shortened logs 'N24b-01's loader error with its code': the refusal is now `battery-manifest-invalid`, kind no-event (then record-edited for the edited reason); assert the name and kind"
+  },
+  {
+   "bead": "VERBS-task",
+   "what": "record the inputs and blocks that beads of S30 add to your rows: task.check gains the optional `--overlay <file>` (training-overlay stage; N24a-13's overlay::check wired by BD-122; refusal 103 already listed) and `--element <file>` with the `symmetry` block (N24ax-02; 891 for an unknown kind, 535 with detail representation-mismatch); task.show gains `--design <d> --section reads` (N24ax-03, M2; 103 with detail no-declared-source-set) and `--section symmetry` (N24ax-02); task.fixture accepts the bare fixture name as well as `fixture:<name>` (N24b-03)"
+  },
+  {
+   "bead": "BD-195",
+   "what": "the load check and the `Degraded: unsettled` mark now exist from M1 on the referee in N24a-16 (`load_settled` returning Settled or Unsettled{support_ratio, penetration}; the world keeps running, is counted, never re-rolled); reuse that function and mark on the batched tiers and in VecEnv, adding the per-arm counts, and do not define them a second time"
+  },
+  {
+   "bead": "N24c-02",
+   "what": "the e2e steps of N24a-04, N24a-07, N24a-08 and N24a-42 call `frob task verdict` with `--evaluator definitional`, `--recompute-online` and `--check-online`; your bead defines only `--re-evaluate`. Define these inputs (which evaluator answers; recomputation of online signals from the atom channels and the tick-by-tick comparison with the recorded ones) or name the bead that does"
+  },
+  {
+   "bead": "N24c-06",
+   "what": "N24a-42 keeps second mutations of the nine refusal codes beside BD-122's files of record, which your script drives; check the files of record against the one nine-code constant in frob-conformance that N24a-42's planted_table_complete reads, so a code added to GATE-ARENA-03 must gain both"
+  },
+  {
+   "bead": "N20b-13",
+   "what": "N24a-10 and step boundary-* of N24a-42 evaluate `frob task verdict` on two recorded runs of the exact docking fixture at (U, ε) = (3/4, 5/16) and (3/4, 1/4) under a task whose one atom is `(> separation 0)`, separation = p − 2ε with p = 5/8: confirm your fixture records those two runs with a `separation` signal, or say which bead does"
+  },
+  {
+   "bead": "N12x-08",
+   "what": "the ledger change colouring-bound-v1: the row's scope is 'n ≤ 16 variants, at most 2·10⁸ complete maps covered' (N12p2-01 now counts maps, Σ_{j≤k−1} S(n, j), not search nodes; the request of slice S16 quoted search nodes)"
+  },
+  {
+   "bead": "BD-363",
+   "what": "N12p2-01's work limit is 2·10⁸ complete maps covered, Σ_{j≤k−1} S(n, j) (it admits k − 1 ≤ 4 at n = 16; 1,275,163,905 at k − 1 = 5 is refused before any search), not a node limit; quote it so where you state when the fail-closed interval applies"
+  }
+ ],
+ "unchanged": 12,
+ "notes": "All 40 beads of the slice are accounted for: 28 changed, 12 unchanged (N24a-01, CARD-T-26, GB-06, GB-30, N24a-06, N24a-09, N24a-10, N24a-11, N24a-12, BD-124, BD-202, N24a-33). The interrupted edit of N24b-01 (the U38a trigger-table request) was complete in its paragraph, acceptance and tests and was finished in Scope; six beads the earlier reviewer had edited after its last result write (BD-122, N24a-13, N15a-29, N24ax-02, N24ax-03, a second pass on N24-REF) were reviewed whole and recorded. What this round still found was mostly cross-bead: one artifact specified twice (BatteryId), refusals with no code, e2e steps calling inputs no verb defined, and acceptance lines that needed beads built later; a further round should be much quieter but the ten requests to other slices need applying."
+}

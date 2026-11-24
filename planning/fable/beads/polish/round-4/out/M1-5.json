@@ -1,0 +1,126 @@
+{
+  "round": 4,
+  "slice": "M1-5",
+  "reviewed": 12,
+  "changed": [
+    {
+      "bead": "VERBS-mission",
+      "kinds": ["request"],
+      "what": "Test-build switches note: stated with BD-288 that the frob-mission feature `test-switches` is enabled exactly when `frob-verbs/conformance` is, both through `gauntlet-mutations` (BD-025's umbrella), so that the schema and the handler agree. `conformance_only = [\"transport_unchecked\"]` and `same_engine_as = \"result.revalidate\"` kept as written (both ANSWERs hold)."
+    },
+    {
+      "bead": "VERBS-nemesis",
+      "kinds": ["request"],
+      "what": "NJL-01 action rule 1: nemesis.hardset restated so the default `show` is the call with no `--action` (with `--class` alone listing the class's sets) and the run actions are `--action add <.fmcw>`, `--action retire <world> --reason … --decision …`, `--action run <design>`, `--action carry --from …` and `--action carry --refresh`; a positional action word or `--action show` is 802. nemesis.audit restated the same way (`--action prepare`; the default `run` has no name), since its e2e step used the positional `prepare`. The input-schema test, `actions_enumerated` and e2e step 8 restated (`frob nemesis hardset --action carry …`, `frob nemesis audit camp:12 --action prepare …`)."
+    },
+    {
+      "bead": "VERBS-phylum",
+      "kinds": ["registry"],
+      "what": "Convention 2: 'Variations 10 to 13' now '10 to 16' (NJL-01's table now runs to 16: no_memo, the reality guard's codes, diagnostic_override). The request about phylum.gradient's 602 holds (ANSWER to VERBS-opt)."
+    },
+    {
+      "bead": "VERBS-result",
+      "kinds": ["request", "registry"],
+      "what": "result.revalidate carries `same_engine_as = \"mission.revalidate\"` (in the entry TOML, the notes and Extended by), with the converse on mission.revalidate in VERBS-mission; N28c-29 adds it at M3 through its row in N32a-02's later-field table. Convention 2: variations 10 to 16."
+    },
+    {
+      "bead": "VERBS-run",
+      "kinds": ["registry"],
+      "what": "Convention 2: later variations now 10 to 16, naming no_memo, the reality guard's seven codes and diagnostic_override with the admission checks' codes. `envelope_scope` already present (request holds)."
+    },
+    {
+      "bead": "VERBS-scene",
+      "kinds": ["request", "registry"],
+      "what": "NJL-01 action rule 1. scene.bank: actions selected only with `--action <name>`, scene ids positional (`frob scene bank --action admit s:kitchen-17 --device cpu`); the default `show` is the call with no `--action`; `scene bank status`, `--action status` and `--action show` are 802; `--segments` on the default call; Extended by restated. scene.split: the default `create` is `scene split` with no action; `add`, `move-group`, `show`, `check`, `part-of`, `audit` take `--action`; the example is now `frob scene split --name galley-holdout …`; the round-3 note about the old example restated to what it was (no `--name`, `--family` from `add`). Notes, acceptance item, the tests `scene_split_rule_by_action` and `scene_bank_and_split_actions`, and e2e step 9 restated. Convention 2: variations 10 to 16. `envelope_scope` already present (holds)."
+    },
+    {
+      "bead": "VERBS-sense",
+      "kinds": ["request", "registry"],
+      "what": "sense.symmetry: `--test` is now `--action test` (a `run` action with `--key`); `--test` is 802; evidence label, acceptance item and `inputs_by_row` restated. Convention 2: variations 10 to 16. `envelope_scope` already present (holds)."
+    },
+    {
+      "bead": "VERBS-session",
+      "kinds": ["registry"],
+      "what": "Convention 2: later variations now 10 to 16. `envelope_scope` already present (request holds)."
+    },
+    {
+      "bead": "VERBS-shield",
+      "kinds": ["registry"],
+      "what": "Convention 2: later variations now 10 to 16. `envelope_scope` already present (request holds)."
+    },
+    {
+      "bead": "VERBS-sim",
+      "kinds": ["request"],
+      "what": "sim.run sets `memo = true` (BD-111, M1) and gets `no_memo` (`--no-memo`) from NJL-01's variation 14, with its meaning (nothing served, every node computed and stored, disposition `NoMemo`, outside every identity); the row's own `--no-memo` input row and N28b-38 in the owners list removed; `memo = true` in the field-driven TOML lines and test `field_driven_lines` (a planted own `no_memo` fails `common-property-shadowed`). Test `worded_refusals_pending` replaced by `worded_refusals_by_ledger` (VERBS-train's form: listed exactly under the ledger's `assigned` number, absent while unassigned). Convention 2: variations 10 to 16. Holds: `envelope_scope` (present), 726 (already an assigned row with four reasons on sim.run; sim.estimate among the raising sites), `--capacity-step` (already a row of the conformance-build-only table)."
+    },
+    {
+      "bead": "VERBS-skill",
+      "kinds": ["request"],
+      "what": "Convention 2: variations 10 to 16. `envelope_scope` already present."
+    },
+    {
+      "bead": "VERBS-solve",
+      "kinds": ["request"],
+      "what": "solve.run: dropped `paginated = true` and its 806/807; the ranked set is bounded by `top_k` (default 3) and returned whole in the job's result (variation 1 applies to `read` only); `refusal_lists` test now expects no 806 or 807. Convention 2: variations 10 to 16. `envelope_scope` already present."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "NJL-01",
+      "what": "ANSWER: (H-owners-3's requests to the slice M1-5 beads) the sixth `run` property `envelope_scope` (`--envelope-scope <gate:…|campaign:…|pretrain:…>`) was already in convention 2 and in `kind_behaviour`'s six common properties of VERBS-run, -scene, -sense, -session, -shield, -sim, -skill and -solve; the present form holds. 'Variations 10 to 13' is now '10 to 16' in all ten slice beads that said it, including VERBS-run, -scene, -sense, -session, -shield, -phylum and -result, whose requests did not ask for it (their wording, 'later variations, 10 to 13' and 'Variations 10 to\\n13', escaped the search). VERBS-mission keeps `conformance_only = [\"transport_unchecked\"]` and `same_engine_as = \"result.revalidate\"` as written and now states the `test-switches` / `frob-verbs/conformance` condition; VERBS-sim sets `memo = true` and declares no `no_memo`; VERBS-solve carries no `paginated`; nemesis.hardset, nemesis.audit, scene.bank, scene.split and sense.symmetry select actions only with `--action <name>`."
+    },
+    {
+      "bead": "VERBS-opt",
+      "what": "ANSWER: (H-verbs-5's request to VERBS-phylum) the present form holds: phylum.gradient lists FROB-REF-602 for the adjoint store over the device budget. N35-33's first round merged `adjoint-store-over-budget` into 602 by rule 1 (`6xx`, exit 6: the K-interval step store is a memory estimate over the device budget at admission, 602's condition; N16c-26 raises 602 with the slab class of the adjoint store as `pointer`), so the slug has no number of its own and no ledger `assigned` value to compare against. Make opt.start the same: list FROB-REF-602 (merged; exit 6; pointer the slab class `adjoint`) for `--gradient adjoint` over budget, drop the slug `adjoint-store-over-budget` from its worded list, and remove the statement that 602 is in no row."
+    },
+    {
+      "bead": "N16c-26",
+      "what": "The adjoint store over the device budget is FROB-REF-602 (N35-33's first round merged `adjoint-store-over-budget` into 602 by rule 1; exit 6; `pointer` the slab class `adjoint`), on phylum.gradient (VERBS-phylum, which holds) and on opt.start (VERBS-opt, asked to match). Where an earlier answer or this bead names the slug as its own code or as a `detail`, raise 602 instead; no slug is raised."
+    },
+    {
+      "bead": "N32-REF",
+      "what": "ANSWER: (H-ref-3's request to VERBS-sim) the present form holds: VERBS-sim already writes FROB-REF-726 as N32-REF's assigned row (`mechanism-not-admitted`, exit 5), with no 'proposed' on either row; sim.run lists all four reasons (`island-in-training`, `tier-not-eligible`, `purpose-not-eligible`, `card-provenance`) and sim.estimate lists 726 as a raising site through the run's admission it applies (N19b-03 step 7) with the first three reasons. `card-provenance` (N15b-18) is raised from `--actuator-level`, which sim.estimate does not take."
+    },
+    {
+      "bead": "VERBS-phylum",
+      "what": "ANSWER: (H-verbs-6's request to VERBS-sim) the present form holds: VERBS-sim's conformance-build-only table already has the row `--capacity-step 1|max` (owner BD-170, M2; N17a-10's test option of the same name on phylum.sweep), entering the manifest and `StepPlanId`, and the table's heading gives feature `conformance` and 802 on a release build."
+    },
+    {
+      "bead": "BD-372",
+      "what": "Line 58 says solve.run has a 'paginated result'. NJL-01's variation 1 (`cursor`, `limit`, `follow`, 806, 807) applies to the `read` kind only, and solve.run is a `run`: VERBS-solve now carries no `paginated` and no 806 or 807. State that the ranked set is bounded by `top_k` (default 3) and returned whole in the job's result."
+    },
+    {
+      "bead": "BD-275",
+      "what": "NJL-01 action rule 1 (VERBS-nemesis): nemesis.hardset's actions are selected only with `--action <name>`; the default `show` is the call with no `--action`. Restate step 5 (`nemesis.hardset run <design> [--set hs:…]` becomes `nemesis.hardset --action run <design> [--set hs:…]`), the e2e line (`frob nemesis hardset show|add|retire|run` becomes `frob nemesis hardset` and `frob nemesis hardset --action add|retire|run`) and any other positional action word; `--action show` and `frob nemesis hardset add …` are 802."
+    },
+    {
+      "bead": "N26b-05",
+      "what": "NJL-01 action rule 1 (VERBS-nemesis): nemesis.audit's `prepare` is selected only with `--action prepare`, and the default `run` has no name to pass (a positional `run` would be read as the campaign). Restate lines 60, 66, 99 and 173: `frob nemesis audit prepare <campaign> …` becomes `frob nemesis audit <campaign> --action prepare …`; `frob nemesis audit run <campaign> …` becomes `frob nemesis audit <campaign> …`; the offline form `frob nemesis audit --stage-record <file> --outcomes <file> …`."
+    },
+    {
+      "bead": "N26b-07",
+      "what": "NJL-01 action rule 1 (VERBS-nemesis): line 50, `frob nemesis audit prepare …` becomes `frob nemesis audit <campaign> --action prepare …` and `frob nemesis audit run …` becomes `frob nemesis audit <campaign> …` (the default action has no name)."
+    },
+    {
+      "bead": "N26b-14",
+      "what": "NJL-01 action rule 1 (VERBS-nemesis): lines 46, 66 and 121, `frob nemesis audit prepare` becomes `frob nemesis audit <campaign> --action prepare` (and `nemesis audit prepare --plant` becomes `nemesis audit <campaign> --action prepare --plant`)."
+    },
+    {
+      "bead": "N28b-31",
+      "what": "NJL-01 action rule 1 (VERBS-nemesis): line 65, `frob nemesis audit run C --stage 3 --key k --json` becomes `frob nemesis audit C --stage 3 --key k --json` (the default action `run` has no name to pass)."
+    },
+    {
+      "bead": "BD-345",
+      "what": "NJL-01 action rule 1 (VERBS-nemesis): line 69, `frob nemesis audit prepare <campaign> …` becomes `frob nemesis audit <campaign> --action prepare …`; line 85, `frob nemesis audit run <campaign> --stage <n> --key <k>` becomes `frob nemesis audit <campaign> --stage <n> --key <k>` (the default action, with no name)."
+    }
+  ],
+  "answered": {
+    "added": 11,
+    "holds": 9,
+    "declined": 0
+  },
+  "unchanged": 0,
+  "notes": "Mop-up slice: 20 listed requests. Added (11): VERBS-mission item 1 (test-switches condition); VERBS-nemesis, VERBS-scene and VERBS-sense action restatements; VERBS-result same_engine_as; VERBS-sim no_memo via memo = true, the 10-to-16 part of its envelope request, and worded_refusals_by_ledger; VERBS-skill 10 to 16; VERBS-solve paginated dropped and 10 to 16. Holds (9): VERBS-mission item 2; VERBS-phylum 602 (N35-33 merged the slug into 602, so the requester's premise of a separate assigned number is wrong; ANSWER to VERBS-opt, note to N16c-26); the envelope_scope requests to VERBS-run, -scene, -sense, -session and -shield (already present); VERBS-sim 726 and --capacity-step (already present). Beyond the literal requests, and reported as such: 'variations 10 to 13' changed to '10 to 16' in VERBS-run, -scene, -sense, -session, -shield, -phylum and -result, where H-owners-3's notes say every such stale text was meant to get a request; nemesis.audit's positional `prepare` restated with the hardset rule because its e2e step contradicted it. No number invented: the worded-refusal test reads the ledger's assigned values. Users of the restated actions not named by H-owners-3 got requests (BD-275, N26b-05, N26b-07, N26b-14, N28b-31, BD-345, BD-372). The slice is settled once VERBS-opt lists 602 and N16-REF's mop-up (slice M1-1) drops the interim slug row."
+}

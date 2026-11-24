@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "delivery", "reflex", "cortex", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
 deps: ["NAB-32"]
-needs: ["Appendix O: refusal code FROB-REF-817 (a sampling controller's episodes may not be cited as acceptance evidence for a trained policy) in the refusal registry", "§22.12: the shield's projection with its KKT check, which owns the three counterexamples of KI-32 as negative controls (BD-338)", "§0.8: hypothesis rows H-01, H-02, H-05, H-20, H-21 and H-24 (N00-11, N00-12)"]
-related: ["NAB-35", "NAB-37", "NAB-20", "NAB-27", "NAB-31", "N22c-30", "N23a-26", "N23a-30", "BD-252", "BD-320", "BD-321", "BD-322", "BD-331", "BD-335", "BD-337", "BD-338", "BD-339", "BD-439"]
+needs: []
+related: ["NAB-37", "NAB-47"]
 gates: []
 plan_refs: ["Appendix C.2.4", "§0.8 (H-01, H-02, H-05, H-20, H-21, H-24)", "§22.8", "§22.12", "§23.11", "§23.12"]
 ---
@@ -50,6 +50,7 @@ harness and lint (NAB-32); the surviving mechanisms (their carriers).
 | KI-26 | a battery of 256 twenty-second episodes at 2.0 M world-steps/s: sampling control; a policy | 86.4 minutes; 1.28 s |
 | KI-26 | clean episodes to bound a failure rate at 1% with 95% confidence: ⌈ln 0.05 / ln 0.99⌉ | 299 |
 | KI-26 | 299 episodes at 0.33 GPU-minute each | about 99 GPU-minutes |
+| KI-26 | per-episode cost at which 299 acceptance episodes cost one training run (under 10 and 60 GPU-minutes): 600 s ÷ 299; 3,600 s ÷ 299 | 2.0; 12.0 GPU-seconds |
 | KI-27 | held-out against familiar return: 1,489.6 / 4,030.6 | 37% |
 | KI-27 | no-adaptation against from-scratch on one test morphology: 136.82 / 1,406.58 | 9.7% |
 | KI-27 | 5 days on 160 GPUs; the same on two cards | 19,200 GPU-hours; 400 days |
@@ -103,7 +104,7 @@ projection for the filter.
   about 0.33 and 1 GPU-minutes per 20 s episode at a 20 ms planning step and about 1.7 and 5.2 at 4 ms. A request
   to cite it as acceptance evidence for a trained policy is refused (`FROB-REF-817`); where it is the delivered
   controller, its own episodes are admitted under a frozen planner record.
-- *Revive only if.* A measured cost per 20 s episode at or below the break-even against training once (2.0 GPU-seconds for a quadruped, 12 for a humanoid), together with GATE-REFLEX-06. Otherwise only the delivered-controller lane admits its own episodes.
+- *Revive only if.* A measured cost per 20 s episode at or below the break-even against training once (2.0 GPU-seconds for a quadruped, 12 for a humanoid: training once divided by the 299 clean episodes acceptance needs), together with GATE-REFLEX-06. Otherwise only the delivered-controller lane admits its own episodes.
 - *Carried by.* BD-252, BD-331, N22c-30 to N22c-34.
 
 **KI-27. One universal policy** (H-02, NARROWED)
@@ -184,7 +185,7 @@ projection for the filter.
 
 - [ ] Records `KI-26` … `KI-32` exist with the three paragraphs verbatim, revival conditions, carriers and
       keywords.
-- [ ] The harness recomputes the twelve calculation rows, and a test solves the small quadratic program of
+- [ ] The harness recomputes the thirteen calculation rows, and a test solves the small quadratic program of
       KI-32 exactly and obtains (1, 0.5).
 - [ ] `FROB-REF-817` exists in the refusal registry with the stated meaning.
 - [ ] The three counterexamples of KI-32 are registered as negative controls of the shield.
@@ -202,7 +203,8 @@ projection for the filter.
 - `ki26_step_cost`: 30 × 3 × 450 × 50 = 2,025,000; 2,025,000/500 = 4,050.
 - `ki26_battery_time`: 256 × 20 × 2,025,000 / 2,000,000 = 5,184 s = 86.4 min; 256 × 20 × 500 / 2,000,000 =
   1.28 s.
-- `ki26_clean_episodes`: ln(0.05)/ln(0.99) = 298.07 → 299; 0.99²⁹⁹ = 0.0495 ≤ 0.05 and 0.99²⁹⁸ = 0.0500 > 0.05.
+- `ki26_clean_episodes`: ln(0.05)/ln(0.99) = 298.07 → 299; 0.99²⁹⁹ = 0.0495 ≤ 0.05 and 0.99²⁹⁸ = 0.0500 > 0.05;
+  the acceptance break-even 600/299 = 2.007 and 3,600/299 = 12.04 GPU-seconds per episode.
 - `ki27_ratios`: 0.3696; 0.0973; 5 × 24 × 160 = 19,200; 19,200 / (2 × 24) = 400.
 - `ki30_shares`: 4/240, 260/240, 4/410, 260/410.
 - `ki32_projection`: half-space projection (1.25, 0.25); clip (1, 0.25) with row value 1.25; exact optimum

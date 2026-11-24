@@ -4,11 +4,11 @@ title: "M0 exit: sweep of the decision records (EV matrix re-score, killed-idea 
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
+labels: ["m0", "delivery", "gauntlet", "solid", "exit-review", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-22", "BD-044"]
-needs: ["§40.6: the M0 exit report with its kill decisions for KILL-FSIM and KILL-MCP (N40-04, N40-30)", "§1.4: the M0 re-audit of incumbents with execution on host `trj` (N00-14)", "Appendix K.5: the re-read of every published figure the thesis, the audit and the bets quote (N00-34)", "§0.6, §38.5: the plan-time check ledger after the M0 re-runs (N00-06)"]
-related: ["NAB-17", "NAB-32", "NAB-42", "NAB-09", "NAB-24", "N00-06", "N00-14", "N00-34", "N00-35", "N40-12", "BD-029", "BD-039", "BD-040"]
+deps: ["BD-029", "BD-030", "BD-033", "BD-034", "BD-035", "BD-036", "BD-040", "BD-041", "BD-042", "BD-043", "N00-14", "N00-16", "N00-34", "N00-35", "N32a-05", "N33b-05", "N38a-10", "N38a-11", "N40-04", "NAB-22", "NAB-50", "STD-E2E"]
+needs: []
+related: ["BD-044", "NAB-32", "NAB-39", "NAB-42"]
 gates: []
 plan_refs: ["Appendix C.1", "Appendix C.2", "Appendix H", "§43 (M0)", "§0.8"]
 ---
@@ -34,12 +34,20 @@ source register does, and that is the point of sweeping here.
 
 In: the M0 sweep record `docs/delivery/exits/M0/decision-records.json` and its generated report; history
 entries on the rows that were due; proposals where a revival or reopening condition was met. Out: deciding any
-gate or kill gate; the exit review (BD-044); the procedure and tool (NAB-22).
+gate or kill gate (the decision beads this bead depends on: N32a-05 for KILL-MCP, N33b-05 for KILL-FSIM); the
+exit review (BD-044), which comes after this sweep, runs its `check` as an attached check and copies its section
+into the exit record; the procedure and tool (NAB-22).
 
 ## Technical approach
 
-Run `cargo run -p frob-conformance --bin decision-sweep -- skeleton --exit M0`, fill each due item, then
-`… check --exit M0`. The session that performs the sweep did not implement the M0 beads whose gates it cites.
+The sweep is made at the M0 exit candidate commit, before the exit record (NAB-22 design decision 1). It reads
+the gate records of M0 through the gate report of N40-04 at that commit, the kill-gate ADRs of N32a-05 and
+N33b-05, the plan-time pilot ledger (N38a-10, with the re-runs of BD-030, BD-041, BD-042, BD-043, N38a-11 and
+N00-35), the parity baseline (BD-040), the hardware fingerprint (BD-029), the foundation admission tests (BD-033
+to BD-036), the fact sheet (N00-16), the incumbent re-audit (N00-14) and the re-read review (N00-34); it needs
+no exit verdict. Run `cargo run -p frob-conformance --bin decision-sweep -- skeleton --exit M0`, fill each due
+item, then `… check --exit M0`; the exit runner of BD-044 runs the same `check` as the attached check
+`decision-sweep`. The session that performs the sweep did not implement the M0 beads whose gates it cites.
 
 **1. Families due by a kill gate decided at M0.**
 
@@ -50,8 +58,8 @@ Run `cargo run -p frob-conformance --bin decision-sweep -- skeleton --exit M0`, 
 Family and kill-gate pairs due at this exit: 1.
 
 KILL-FSIM (trigger: the path-dependency admission test INT-FSIM-01 cannot pass within two weeks of M0 effort,
-or its cold check exceeds the machine envelope, or upstream breakage exceeds 20% of working days) has no single
-family row; it governs the *posture* toward the foundations. Its outcome is recorded against the posture record
+or its cold check exceeds the machine envelope, or upstream breakage exceeds 20% of working days in any
+four-week window (BET-04); decided "M0, then rolling") has no single family row; it governs the *posture* toward the foundations. Its outcome is recorded against the posture record
 of the killed-idea register (`KI-63`, the row on copying the foundations wholesale): consume by path behind the
 airlock; a worker process as the first fallback; a minimal lifted referee set last.
 
@@ -60,8 +68,10 @@ register; expected at plan time): the Lie-typed core; exact-integer and guarded 
 classes (the boundary screen of 65,536 rows on three GPUs is re-run here); derived kernels with dimension
 typing (one kernel source on `batch-cpu`, CUDA and Metal); instance certificates; the offline auditor and the
 claim product. Each is recorded `unchanged` with the gate records looked at, or changed with its reason.
-Confidence in derived kernels is **not** raised on the M0 spike alone: its kill gate (KILL-KIR) is decided at
-M2.
+Confidence in derived kernels should not be raised on the M0 spike alone, because its kill gate (KILL-KIR) is
+decided at M2. That is DESIGN guidance to the sweep's author, not a check: the check does not judge direction
+(NAB-22 rule 1.2), so a raise before M2 is recorded only with its reason stated, and one with an empty reason
+fails `sweep.change-without-evidence`.
 
 **3. Killed-idea records whose condition can be evaluated at M0.**
 
@@ -77,12 +87,12 @@ M2.
 **4. Moonshot queue.** No item is eligible (the first, the fused per-world step kernel, waits for the M2
 profile). The sweep records `active_after = 0`.
 
-**5. Idea register.** Carriers whose first gate is at M0 are marked `in progress`: single-source kernels on
+**5. Idea register.** Carriers whose first gate is at M0 are marked `in-progress`: single-source kernels on
 three backends, the one verb registry, the negative-control registry.
 
 **6. Source register.** (a) Every reading task attached to a gate recorded at M0 must be closed: the incumbent
-figures behind the parity baseline are re-read from primary sources (39 of 163 public readings were primary at
-plan time). (b) Local sources are re-read at the stack-lock commits by the fact-sheet script; paths that moved
+figures behind the parity baseline are re-read from primary sources (43 of the 174 public readings, 39 of the
+163 brackets, were primary at plan time). (b) Local sources are re-read at the stack-lock commits by the fact-sheet script; paths that moved
 are listed. (c) `[[unverified]]` items settled at M0: NV-01 (incumbent throughput on an RTX 4090, by
 GATE-SPARK-21), NV-02 to NV-04 (hardware properties, by the fingerprint), NV-10 (the unexecuted parts of the
 reported foundation defects, by the admission tests). (d) The reproduction archive's revision is matched and
@@ -114,9 +124,18 @@ and terms the contracts introduced are added.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh --exit M0` (NAB-50) prints the due list, runs `check`, and asserts the counts
-of step 1 (one family-and-kill-gate pair) and step 6. Logged per STD-E2E: due items, outcomes by kind, open
-reading tasks (threshold `== 0`), the archive revision.
+`scripts/e2e/decision_records.sh --exit M0` (NAB-50) prints the due list, runs `decision-sweep check --exit M0`,
+and asserts the counts of step 1 (one family-and-kill-gate pair), the evaluations of step 3 and the closures of
+step 6; then replays the two negative controls below (fixtures under
+`tests/fixtures/sweep/M0/controls/` written by this bead, the hook of NAB-50) on scratch copies of the sweep record and asserts that
+`check` fails on each with its reason. Logged through the shared helper of STD-E2E to
+`target/e2e-logs/decision_records/<utc>.ndjson` with a transcript, every line with `ts`, `script`, `bead`
+(`NAB-23`), `step`, `event`: `cmd` lines with the exact command line, exit code and wall time; the due items and
+the outcomes by kind; one `metric` per evaluation of step 3 with the measured number, its unit and the plan-time
+value beside it; open reading tasks as a `metric` (threshold `== 0`); the archive revision and the digests of the
+gate report and of the sweep record; `assert` lines of kind `negative-control` with `caught`; on failure the
+first due item without an outcome, with the path of the sweep record; a `summary` with assertions passed and
+failed.
 
 ### Known answers and negative controls
 

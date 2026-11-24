@@ -1,0 +1,347 @@
+{
+ "group": "gap-B",
+ "filled": [
+  {
+   "gaps": [
+    26
+   ],
+   "bead": "N32ax-01",
+   "note": "frob-verbs run-admission preconditions: a registered table of admission checks evaluated before anything is bound or charged, with the diagnostic override; the standing cut (309) and pack acceptance (318) register into it"
+  },
+  {
+   "gaps": [
+    65
+   ],
+   "bead": "N32bx-01",
+   "note": "session call capture split out of BD-313: the row (resolved request digest, idempotency key, job, stable envelope digest, result digest), daemon-written open and close, the resolved request by digest, `session.show --transcript`; BD-313 keeps the guide, worked sessions, tasks and scorer and consumes the record"
+  },
+  {
+   "gaps": [
+    81
+   ],
+   "bead": "N32bx-02",
+   "note": "`ground:retire` enters registries/scopes.toml as a named admin scope guarding the action `retire` of ground.band (the `actions` entry form), with minting, attenuation, the 720 refusal and the lints for any named scope"
+  },
+  {
+   "gaps": [
+    60,
+    134
+   ],
+   "bead": "NJLx-51",
+   "note": "registry rows for analyze.sweep-monotone, analyze.constraint-graph and analyze.regressor-identity; counts 243 to 246 (analyze 26 to 29), seats in `analyze-evidence` and `audit`, the `[counts]` and `[[addition]]` data and the lints that make a verb name without a row fail; defs/UJL/NJLx-01.md is an earlier copy of this bead (key collision with gap-C, since settled) and carries `superseded_by: \"NJLx-51\"`"
+  },
+  {
+   "gaps": [
+    117
+   ],
+   "bead": "N32ax-02",
+   "note": "the engine back end: an out-of-process worker over a pinned incumbent engine below the job engine, with an engine registry, selection echoed in `bound.engine`, identity and evidence rules, and the reference worker `self-cpu`; exists only on the firing branch of KILL-TENFOLD-TIE (or when arm D is opened), so it depends on N39b-07"
+  },
+  {
+   "gaps": [
+    126
+   ],
+   "bead": "N32ax-03",
+   "note": "the registries root: an index classing each registry as embedded or run-time, the process option `--registries-root` and the variable `FROB_REGISTRIES_ROOT` (never a verb parameter), fail-closed readings, and the scratch mark: a scratch state root is required, receipts are not admissible for gate records, and jobs admitted only by a scratch approval are held, not run"
+  }
+ ],
+ "already": [
+  {
+   "gaps": [
+    34
+   ],
+   "bead": "NJL-05",
+   "note": "the task-cluster owner assigns all eight sense verbs: `sensing` holds the seven of Appendix J.5, `sense_visibility` sits in `audit` and `sense_calibrate` also in `calibrate`; this follows Appendix J.5, not the `perceive` split N20b-17 proposed"
+  },
+  {
+   "gaps": [
+    43
+   ],
+   "bead": "N35-33",
+   "note": "the allocation ledger's first round numbers the three late Cortex refusals (proposed 558, 559, 570) and the refusal to randomize a numerical parameter"
+  },
+  {
+   "gaps": [
+    59
+   ],
+   "bead": "BD-376",
+   "note": "the M4 verb set now registers the static core of mission.transport (handler N25c-02, which it depends on); the row itself is in VERBS-mission with `static core at M4`"
+  },
+  {
+   "gaps": [
+    75
+   ],
+   "bead": "VERBS-store",
+   "note": "the store.collect row records the extension by N29b-13 (claim withdrawal, `--withdraw-claim`), which specifies and tests the surface over BD-209's withdraw"
+  },
+  {
+   "gaps": [
+    82
+   ],
+   "bead": "NJL-05",
+   "note": "ground_excite and ground_kit sit in the task cluster `calibrate` (seven tools); VERBS-ground lists the same cluster; the name `reality-plan` proposed by N30b-13 is not used"
+  },
+  {
+   "gaps": [
+    97
+   ],
+   "bead": "N35-33",
+   "note": "owns registries/refusals.toml as a whole: allocation ledger and rule, uniqueness, one exit per sub-family (74x, 76x to 4; 79x to 5; a 7xx decade with a code and no row fails the load), neighbour pairs; N32-REF's provisional 836 to 838 and its four pairs enter as later requests under the same rule"
+  },
+  {
+   "gaps": [
+    104
+   ],
+   "bead": "N35-33",
+   "note": "the exit rule gives 79x exit 5, as N33-REF states; N32a-03 requires the explicit exit in each row of an unnamed family"
+  },
+  {
+   "gaps": [
+    106
+   ],
+   "bead": "NJL-01",
+   "note": "the entry schema admits `needs_groups` (added by N33c-32 with its lint) among the fields later beads add"
+  },
+  {
+   "gaps": [
+    112
+   ],
+   "bead": "VERBS-spark",
+   "note": "the spark.check row lists its extensions (BD-177 --decisions, BD-181 --invariance, N21b-33 sweeps, N35-14 --conditions); VERBS-eval lists N35-08's pairing report on eval.compare; flag spellings are pinned by the help-schema snapshots"
+  },
+  {
+   "gaps": [
+    130
+   ],
+   "bead": "VERBS-design",
+   "note": "the design.import row records the extension by NEG-32 (format `fsim-catalog` with `--builder`); NEG-32 depends on it"
+  }
+ ],
+ "rejected": [],
+ "new_beads": [
+  "N32ax-01",
+  "N32bx-01",
+  "N32bx-02",
+  "NJLx-51",
+  "N32ax-02",
+  "N32ax-03"
+ ],
+ "edges": [
+  {
+   "bead": "N20b-17",
+   "dep": "NJL-05",
+   "as": "dep",
+   "why": "gap 34: the sense rows take their task clusters from the assignment"
+  },
+  {
+   "bead": "N23-REF",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 43: the late Cortex refusals are numbered by the allocation ledger"
+  },
+  {
+   "bead": "N25c-02",
+   "dep": "VERBS-mission",
+   "as": "dep",
+   "why": "gap 59: the handler needs its registry row"
+  },
+  {
+   "bead": "N25e-02",
+   "dep": "VERBS-mission",
+   "as": "dep",
+   "why": "gap 59: extends the mission.transport row"
+  },
+  {
+   "bead": "N29b-13",
+   "dep": "VERBS-store",
+   "as": "dep",
+   "why": "gap 75: the withdrawal option extends the store.collect row"
+  },
+  {
+   "bead": "N30b-13",
+   "dep": "NJL-05",
+   "as": "dep",
+   "why": "gap 82: ground_excite and ground_kit take the cluster `calibrate` from the assignment"
+  },
+  {
+   "bead": "N32-REF",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 97: provisional numbers and neighbour pairs go through the catalogue owner"
+  },
+  {
+   "bead": "BD-299",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 97: one exit per code is checked against the catalogue's exit rule"
+  },
+  {
+   "bead": "N32a-03",
+   "dep": "N35-33",
+   "as": "related",
+   "why": "gap 97: the envelope's exit table and the catalogue's exit rule state the same map"
+  },
+  {
+   "bead": "N33-REF",
+   "dep": "N35-33",
+   "as": "dep",
+   "why": "gap 104: the 79x exit row"
+  },
+  {
+   "bead": "N33c-32",
+   "dep": "NJL-01",
+   "as": "dep",
+   "why": "gap 106: needs_groups is a field of the closed entry schema"
+  },
+  {
+   "bead": "BD-177",
+   "dep": "VERBS-spark",
+   "as": "dep",
+   "why": "gap 112: extends the spark.check row"
+  },
+  {
+   "bead": "BD-181",
+   "dep": "VERBS-spark",
+   "as": "dep",
+   "why": "gap 112: extends the spark.check row"
+  },
+  {
+   "bead": "N35-14",
+   "dep": "VERBS-spark",
+   "as": "dep",
+   "why": "gap 112: extends the spark.check row"
+  },
+  {
+   "bead": "N35-08",
+   "dep": "VERBS-eval",
+   "as": "dep",
+   "why": "gap 112: extends the eval.compare row"
+  },
+  {
+   "bead": "N19b-32",
+   "dep": "N32ax-01",
+   "as": "dep",
+   "why": "gap 26: FROB-REF-309 is raised through the admission-check table"
+  },
+  {
+   "bead": "BD-228",
+   "dep": "N32ax-01",
+   "as": "dep",
+   "why": "gap 26: the unaccepted-pack refusal is an admission check of the run verbs"
+  },
+  {
+   "bead": "N19c-22",
+   "dep": "N32ax-01",
+   "as": "related",
+   "why": "gap 26: the non-resident variant refusal at job admission can register as a check"
+  },
+  {
+   "bead": "N36-20",
+   "dep": "N32ax-01",
+   "as": "related",
+   "why": "gap 26: the envelope admission keeps its own function; the bead fixes its place in the stage order (later milestone, not blocking)"
+  },
+  {
+   "bead": "BD-284",
+   "dep": "N32bx-01",
+   "as": "dep",
+   "why": "gap 65: the Autopsy transcript is built from the captured session calls"
+  },
+  {
+   "bead": "N32b-38",
+   "dep": "N32bx-01",
+   "as": "dep",
+   "why": "gap 65: transcript counts and the clean client read the capture"
+  },
+  {
+   "bead": "BD-313",
+   "dep": "N32bx-01",
+   "as": "dep",
+   "why": "gap 65: the capture is a component of the fresh-agent test; it is built in N32bx-01"
+  },
+  {
+   "bead": "N30a-43",
+   "dep": "N32bx-02",
+   "as": "dep",
+   "why": "gap 81: manual retirement requires the scope"
+  },
+  {
+   "bead": "N30b-13",
+   "dep": "N32bx-02",
+   "as": "dep",
+   "why": "gap 81: the ground.band entry cites `ground:retire`"
+  },
+  {
+   "bead": "BD-258",
+   "dep": "N32bx-02",
+   "as": "dep",
+   "why": "gap 81: the scope vocabulary and its act lint cover the named admin scope"
+  },
+  {
+   "bead": "N25e-08",
+   "dep": "NJLx-51",
+   "as": "dep",
+   "why": "gaps 60, 134: the registry row of analyze.sweep-monotone"
+  },
+  {
+   "bead": "N25e-27",
+   "dep": "NJLx-51",
+   "as": "dep",
+   "why": "gaps 60, 134: the registry row of analyze.constraint-graph"
+  },
+  {
+   "bead": "N25e-19",
+   "dep": "NJLx-51",
+   "as": "dep",
+   "why": "gaps 60, 134: the registry row of analyze.regressor-identity"
+  },
+  {
+   "bead": "BD-312",
+   "dep": "NJLx-51",
+   "as": "dep",
+   "why": "gaps 60, 134: the registry freeze includes the three added rows"
+  },
+  {
+   "bead": "N39b-07",
+   "dep": "N32ax-02",
+   "as": "related",
+   "why": "gap 117: the fallback work of the decision; a decision never depends on work that exists only on its firing branch"
+  },
+  {
+   "bead": "N39a-21",
+   "dep": "N32ax-02",
+   "as": "related",
+   "why": "gap 117: optional arm D runs through the same engine back end (later milestone, not blocking)"
+  },
+  {
+   "bead": "N44-02",
+   "dep": "N32ax-03",
+   "as": "dep",
+   "why": "gap 126: the script runs frob against a scratch copy of registries/"
+  },
+  {
+   "bead": "N36-20",
+   "dep": "N32ax-03",
+   "as": "dep",
+   "why": "gap 126: envelope enforcement is tested with a scratch registry and reads the run-time registry through the resolver"
+  },
+  {
+   "bead": "N21c-35",
+   "dep": "N32ax-03",
+   "as": "dep",
+   "why": "gap 126: the decision record's tests approve E1 in a scratch registry"
+  },
+  {
+   "bead": "N32a-14",
+   "dep": "N32ax-03",
+   "as": "dep",
+   "why": "gap 126: the daemon resolves the registries root at start and puts the digests in its configuration digest"
+  },
+  {
+   "bead": "N38b-19",
+   "dep": "N32ax-03",
+   "as": "related",
+   "why": "gap 126: the gate recorder refuses receipts that are not of record"
+  }
+ ]
+}

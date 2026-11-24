@@ -23,7 +23,7 @@ integrating bead that closes the gate and decides the kill gate. The wiring the 
 | §30.5 | Data admitted, and the cell | BD-387 and N25a-29 (U25a: manifest, admission rules, sealing, `ground.ingest`); N30a-07 (the cell key as a type, envelope containment, diff, pool guard 814); N30a-08 (instruments, shared calibration error, the covariance R) |
 | §30.6 | The procedure | N30a-09 (ten steps as per-cell state, preconditions, fail-closed outcomes, step 10 feedback); N30a-10 (end-to-end script) |
 | §30.7 | Clock fitting [F] | N30a-11 (fit, two-mark formulas, piecewise, 876); N30a-12 (rules 1, 4, 5); N30a-13 (rules 2, 3); N30a-14 (GATE-GROUND-02 script); integrating seed BD-389 (U30b) |
-| §30.8 | Identifiability and excitation design [F] | BD-390 (Fisher analysis, the checks, `ground.excite`); N30a-15 (eight structural aliases, fit guard 879); N30a-16 (experiment grammar); N30a-17 (greedy selection; decision relevance); N30a-18 (profile likelihood; model-class caution); N30a-19 (GATE-GROUND-03 script) |
+| §30.8 | Identifiability and excitation design [F] | BD-390 (Fisher analysis, the checks, the fit guard 879, `ground.excite`); N30a-15 (eight structural-alias fixtures); N30a-16 (experiment grammar); N30a-17 (greedy selection; decision relevance); N30a-18 (profile likelihood; model-class caution); N30a-19 (GATE-GROUND-03 script) |
 | §30.9 | Identification: actuators first [F] | N30a-20 (why actuators first, order, L1 model, gating, L2 quantities, direct measurement); N30a-21 (pass A); N30a-22 (pass B); N30a-23 (pass C); N30a-24 (receipt, autocorrelation, energy cross-check `wrong-reason`); N30a-25 (stages 2 to 4); N30a-26 (GATE-GROUND-04 script); integrating seed BD-391 (U30b) |
 | §30.10 | Card updates from logs [F] | N30a-27 (new card version, covariance, correlated draws); N30a-28 (candidate then admitted; INV-GROUND-05); N30a-29 (discrepancy floor); N30a-30 (unit and class cards) |
 | §30.11 | Frozen predictions, sealed trials, holdout retirement [F] | N30a-31 (record, freeze, tolerances); N30a-32 (interval score, bias, coverage, structure; `ranking-falsified`); N30a-33 (study type; reachability); N30a-34 (versions, spent holdout, α_i); N30a-35 (GATE-GROUND-05 script); integrating seed BD-392 (U30b) |
@@ -177,3 +177,27 @@ From other units:
     §30 is followed, with a local reference implementation as differential check and fallback (N30a-06).
 12. **`ground.ingest` at M1.** The verb table gives M1 "for admission and the `reality:` line" while admission is
     an M5 seed bead; only the crate, the status type and the line exist at M1 (N30a-01, N30a-02, BD-139).
+
+## (f) Integration note (group G30)
+
+Added by the integration pass; the tables above are the drafter's and are left as drafted.
+
+- **Capstones.** The seed beads BD-139, BD-389, BD-391, BD-392, BD-393, BD-394 and BD-395 depend on the part
+  beads of U30a (N30a-01, N30a-02; N30a-11 to -13; N30a-20 to -25 and N30a-27 to -30; N30a-31 to -34; N30a-36 to
+  -38; N30a-40 to -43; N30a-45 to -47), and their Scope sections say so. The verb `ground.score` (N30b-06)
+  depends on N30a-28, -29, -32, -33 and -34.
+- **Superseded beads of U30b** (each carries `superseded_by`; content folded into the kept bead or beads):
+  N30b-02 → N30a-23; N30b-03 → N30a-24; N30b-04 → N30a-27 (and N30a-28, -29, -30); N30b-05 → N30a-25;
+  N30b-07 → N30a-38 (and N30a-37); N30b-10 → N30a-43 (and N30a-40); N30b-11 → N30a-47; N30b-32 → N30a-26
+  (clock half: N30a-14); N30b-33 → N30a-35; N30b-34 → N30a-39 (drift half, the DC-07 walk and the planner rows:
+  N30a-44); N30b-35 → N30a-48.
+- **Gate scripts.** GATE-GROUND-02 `ground_clock.sh` (N30a-14); -03 `ground_excite.sh` (N30a-19); -04
+  `ground_identify.sh` (N30a-26); -05 `ground_protocol.sh` (N30a-35); -06 `ground_band.sh` (N30a-39); -07
+  `ground_drift.sh` (N30a-44); -08 `ground_asbuilt.sh` (N30a-48). The kill-gate decisions N30b-17 to N30b-20
+  depend on these.
+- **Design choices settled between the two units.** Rehearsal fixtures are those of BD-388's catalogue (the
+  delay grid is T_c/8). GATE-GROUND-02 asserts coverage at the registered scored instant. An envelope
+  excursion retires the calibration. The across-units statistic defaults to a keyed pick per unit. A combined
+  result with a synthetic part is `synthetic`. The reality line is printed in N30a-02's grammar, the `cards:`
+  line in N30a-03's. A unitless tolerance is refused with FROB-REF-102. First-use admission records of the
+  sibling crates at the M5 pin are written by N30a-05 and N30a-06.

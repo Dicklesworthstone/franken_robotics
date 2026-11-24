@@ -6,10 +6,10 @@ priority: 3
 milestone: "M5"
 labels: ["m5", "suite", "habitat", "upstream", "franken_drone_geometry_reconstruction", "frontier"]
 parent: "WP-32"
-deps: ["BD-037", "NF-01", "STD-E2E"]
-needs: ["§33.15: the schema adapter in `frob-scene` and its fixtures (the M3 half of INT-FDGR-01), against which published geometry is first validated"]
-related: ["BD-398", "BD-228", "BD-305", "FD-FSS-01"]
-gates: ["INT-FDGR-01", "GATE-HAB-03"]
+deps: ["BD-037", "N33b-04", "N33c-25", "STD-E2E"]
+needs: []
+related: ["BD-398", "FD-FSS-01", "N19c-01", "N19c-04", "N19c-08", "N19c-09", "NFp2-02"]
+gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.15", "§19.13", "§33.4", "§37", "§42"]
 ---
 ## Background
@@ -37,9 +37,13 @@ accepting a relative-scale reconstruction into a physics scene (a relative scale
 ## Scope
 
 In: in that repository, the remaining steps to a published, metric geometry generation that satisfies its own
-schemas; here, the subprocess import lane switched on and its gates run on one capture. Out: the schema
-adapter and `scene.import` (BD-398); scene acceptance (BD-228); privacy handling of real-place data (BD-305);
-the twin-package route (FD-FSS-01).
+schemas; here, the fixture, the pin move with its admission record, and the schema check of the published
+generation through the drone schema module of N33c-25. Out: the schema adapter and `scene.import` (BD-398, which
+owns INT-FDGR-01 in full and GATE-HAB-03); the switch-over's gate runs through `scene.import` (INT-FDGR-01, then
+GATE-HAB-03 on one capture), the contract row of the drone adapter and the row's move to `adopted` (NFp2-02, which
+depends on this bead and on BD-398; split so that this upstream work starts after the M3 schema pilot instead of
+waiting for the M5 capstone); scene acceptance (BD-228); privacy handling of real-place data (BD-305); the
+twin-package route (FD-FSS-01).
 
 ## Technical approach
 
@@ -77,6 +81,13 @@ separately:
 Additive in the sense that applies to a growing project: the custody and audit chain already built is not
 weakened to reach publication.
 
+Tracking the stages. The mirrored bead in the sibling's tracker is broken into the three stages there, as that
+tracker's conventions allow, so that each lands and is reviewed on its own; this bead stays one item because
+the register has one row, one fixture and one switch-over for it, and the order of the stages is the sibling's
+to set. The row's note in `registries/upstream.toml` records which stages have landed, with their commits; the
+row's `status` becomes `landed` only when stage 3 is on the sibling's `main`, since this project consumes
+nothing before publication.
+
 **Interim posture here.** `scene.import` consumes the twin package first; scale is declared by the operator
 and the result carries `reality: no-claim`; the drone route is a schema adapter only. Fallback of the lane:
 mesh and point-cloud import through `fs-io` with scale declared by the operator.
@@ -88,20 +99,29 @@ recorded at the pinned commit (`observed_at`, the failing assertion and the obse
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
 itself a failure of the registry check. It runs the sibling's command-line tool at the pinned commit on its own
 smallest sample capture and expects a geometry generation that validates against the sibling's schema with a
-metric scale status; at the pin the tool publishes no geometry.
+metric scale status; at the pin the tool publishes no geometry. The sibling has no pin in `franken-stack.lock`
+when BD-037 writes the row at M0 (its schema fixtures are first needed at M3, by the pilot N33c-25), so BD-037's
+fixture timing rule applies: the fixture is written against the sibling's head as read on the day, `observed_at`
+names that commit, and the row carries `pin_state = "unpinned"`. This bead re-runs the fixture at the sibling's
+first pin (the duty BD-037 gives the item's own bead): in phase `pre` at the revision N33c-25's admission pinned,
+re-recording `observed_at` and the signature in `expected.toml` there; or, if no pin exists before this item's own
+pin move, in phase `post` at that pin. It then clears `pin_state` in the row.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
 is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
 (`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
-T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
-become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
-T moves while a ten-fold tournament is running. If a gate named here does not exist yet when the change lands,
-the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
-against the new pin.
+T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. This bead does steps (1), (2) and
+(4), re-runs the gates of step (3) that exist without the place lane (the sibling's admission and parity gates,
+this item's fixture, and the published generation validated by the drone schema module of N33c-25), and leaves
+the row `landed`. No PASS is recorded on a dirty sibling tree, and neither a pin nor T moves while a ten-fold
+tournament is running. The gates this item names need the `place` form of `scene.import`, so their first run
+against the new pin, the move to `adopted` and the end of the interim posture are the switch-over bead NFp2-02
+(the plan's rule: if a gate named here does not exist yet when the change lands, the pin still moves with the gates
+that do exist, the row stays `landed`, and the gate's first run is made against the new pin).
 
-**What the switch-over re-runs.** "Run INT-FDGR-01, then GATE-HAB-03 on one capture." INT-FDGR-01: the schema
+**What the switch-over re-runs (NFp2-02).** "Run INT-FDGR-01, then GATE-HAB-03 on one capture." INT-FDGR-01: the schema
 fixtures validate; a geometry generation whose scale status is not metric is refused; coverage masks become
 the scene's unknown-space label, so that a clearance certificate treats an unscanned region as unknown and
 never as free; the privacy inheritance of real-place data applies to the result. GATE-HAB-03 (Reality): one
@@ -117,12 +137,12 @@ a tape-measure survey, every surveyed dimension recorded as `measured`, and the 
 
 ## Acceptance criteria
 
+- [ ] In the sibling: stage 1 has landed: the audited relative bundle problem is solved, its residuals and covariance are retained in the evidence chain, and the planted-camera test below passes.
 - [ ] In the sibling: its tool publishes a geometry generation for its sample capture that validates against its own schemas, with `scale_status` `witnessed` or `surveyed`, a scale residual in parts per million, and coverage and uncertainty roots.
 - [ ] In the sibling: with the scale witness removed from the sample, the status is `estimated` or `relative_only`, never metric.
-- [ ] Here: INT-FDGR-01 passes on the published generation (validates; metric scale accepted; non-metric refused; coverage becomes unknown space; privacy mark inherited).
-- [ ] Here: GATE-HAB-03 is run on one capture, or recorded `no-claim` if no capture is admitted; the scene's scale label equals the sibling's status.
-- [ ] Here: no crate of the sibling is in `Cargo.lock`; the import is a subprocess.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] Here: at the new pin the fixture `upstream_fd_fdgr_01` passes, and the published sample generation validates through the drone schema module of N33c-25 (`cargo run -p frob-scene --features frontier-scan-import --example scan_schema -- <generation> --json`) with a metric scale status; the same generation with its scale model removed is refused.
+- [ ] Here: no crate of the sibling is in `Cargo.lock`; the sibling's tool is reached only as a binary.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead, the switch-over bead NFp2-02 and the mirrored bead in the sibling's tracker; its `status` is `landed` once stage 3 is on the sibling's `main` and the pin has moved (NFp2-02 moves it to `adopted`), and its `pin_state` field, `unpinned` as BD-037 wrote it, is cleared once the fixture has been re-run at the sibling's first pin.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
 
@@ -130,25 +150,30 @@ a tape-measure survey, every surveyed dimension recorded as `measured`, and the 
 
 ### Unit tests
 In the sibling (added, under its own conventions):
+- `bundle_adjustment_recovers_planted_cameras` (stage 1): 20 cameras on a circle of radius 5 m looking at the centre, 500 points in a 2 m cube, pixel noise σ = 0.5 px, initial cameras perturbed by 2° and 0.10 m; expected the reprojection RMS within 10% of σ·√((m − p)/m) for m residuals and p free parameters, camera centres within their reported 3σ ellipsoids after the seven-parameter similarity alignment (the gauge of a relative reconstruction) in at least 95 of 100 seeded runs, and residuals and covariance present in the evidence record.
+- `bundle_adjustment_keeps_the_audit_chain` (stage 1): the adjusted problem's identity cites the audited problem it solved; a solve whose input was not audited is refused.
 - `scale_from_surveyed_baseline`: a baseline surveyed at 2.000 m measures 1.999 m in the scaled reconstruction; expected a recorded residual of 500 parts per million and status `surveyed`.
 - `no_witness_is_not_metric`: expected `relative_only` or `estimated`.
 - `coverage_root_marks_unobserved_half`: a synthetic corridor captured from one end only; the far half's regions are marked unobserved.
 - `published_generation_validates`: against `geometry_generation.schema.json`.
 Here:
-- `non_metric_scale_is_refused`: a generation with `scale_status = "relative_only"`; expected the import refusal.
-- `unobserved_region_is_unknown_not_free`: the half-observed corridor; a traversal query through the far half returns `unknown` (the counterexample CX-355 as a test).
-- `privacy_mark_is_inherited`: a scene imported from a private capture is private, and so is every artifact derived from it.
+- `published_generation_passes_schema_module`: the sample generation, read by N33c-25's schema module, is admitted with a metric scale status; a copy with `scale_status = "relative_only"` is refused at the schema step.
+- `fixture_signature_flips`: the fixture's recorded signature at the old pin and a pass at the new pin; a fixture that passes at the old pin fails the registry check.
 - `no_sibling_crate_in_lockfile`: a search of `Cargo.lock`.
+(The import-side tests, a non-metric generation refused by the importer, the unobserved half as `unknown`, and the
+inherited privacy mark, run through `scene.import` and are NFp2-02's.)
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fdgr_01.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
 Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fdgr_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
-asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob scene import --json` on the published sample generation and
-`frob scene accept --json`, asserting the scale label, the unknown-space mask and the private mark; the log
-records identities and labels only, never capture content.
+asserting that they pass. Phase `post`, after the pin move: the same fixture must pass; the sibling's tool at the
+pin publishes the sample generation, which the drone schema module of N33c-25 admits with a metric scale status
+(`cargo run -p frob-scene --features frontier-scan-import --example scan_schema -- <generation> --json`) and
+refuses with the scale model removed; `Cargo.lock` holds no crate of the sibling; and the registry row must read
+`landed` with a stack receipt newer than the pin move. The imports through `scene.import`, the gates and the move
+to `adopted` are NFp2-02's script. The log records identities and labels only, never capture content.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fdgr_01/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,
@@ -161,7 +186,7 @@ gates touched. No private-scene data is logged.
 
 ### Known answers and negative controls
 - Known answers: 0.001 m in 2.000 m is 500 parts per million; CX-355 (a corridor whose far half was never observed appears as empty space in a naive import; with the coverage mask the same query returns unknown).
-- Negative controls: an import that ignores the coverage root must answer `free` in the unobserved half and be caught; a generation claiming `witnessed` without a scale model must be refused by schema validation.
+- Negative controls: a generation claiming `witnessed` without a scale model must be refused by schema validation; a fixture that passes at the old pin must fail the registry check. (An import that ignores the coverage root is NFp2-02's control.)
 - Determinism lanes: schema validation and label mapping are exact; the sibling's reconstruction carries its own determinism statement, recorded with the import.
 
 ## Considerations
@@ -170,8 +195,8 @@ gates touched. No private-scene data is logged.
 - Real-place data is governed by the privacy rules: the pack is private, is stored outside the repository, and everything derived from it inherits the mark; logs carry no private-scene data.
 - OPEN-HAB-5 (which reconstruction package and version is the import contract; default: the walkthrough twin package, and the drone route when it publishes geometry; owner: Habitat lead) is decided at GATE-HAB-03.
 - Ceiling, stated: one import lane among several; ingestion has no effect on decision time, and it is the precondition for any Reality claim about a particular place.
-- No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
-  milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
+- No milestone waits on this bead. Its milestone label says when its switch-over gate first exists (NFp2-02), not
+  that the milestone's exit depends on it; the work itself may start as soon as the M3 schema pilot N33c-25 is done. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its
   critical path.
 - If this change never lands, the program still ships on the interim posture, at the cost stated there. A change

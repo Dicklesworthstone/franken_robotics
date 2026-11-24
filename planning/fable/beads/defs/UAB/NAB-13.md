@@ -7,8 +7,8 @@ milestone: "M0"
 labels: ["m0", "gauntlet", "delivery", "solid", "registry"]
 parent: "WP-01"
 deps: ["NAB-09"]
-needs: ["§0.8: the hypothesis verdict register, whose 'what survives' ranges are read from these sources (N00-10, N00-11, N00-12)", "Appendix K.5: the review that re-reads every published figure the thesis, the audit and the bets quote (N00-34)", "§19.9, Appendix G: the asset-licence register that joins a scene asset to its licence (N19b-02)"]
-related: ["NAB-10", "NAB-12", "NAB-14", "NAB-16", "N00-11", "N00-12", "N00-13", "N00-34", "N19b-02"]
+needs: []
+related: ["NAB-14"]
 gates: []
 plan_refs: ["Appendix H.3", "Appendix H.1", "§0.8"]
 ---
@@ -45,7 +45,19 @@ the group name, `read_on = "2026-11-21"`. Each bracket becomes a `reading` with 
 is `covers`; "P for X; F elsewhere" becomes two readings. A bare arXiv identifier (`arXiv 2510.25850`) is
 stored with `locator = "https://arxiv.org/abs/<id>"` and `locator_derived = true`, because the identifier
 determines the address. A named source with no address (`a symmetry library's README`; the two retail-scene
-generators, for which the text says no URLs were recorded) has `unlocated = true`.
+generators, for which the text says no URLs were recorded) has `unlocated = true`. The one address printed
+without a scheme, `raw.githubusercontent.com/LeCAR-Lab/dial-mpc/main/dial_mpc/examples/` [P], is stored with
+`https://` prefixed and `locator_derived = true`; it is a record of its own and not one of the 98 URLs counted
+below. The register therefore holds 106 records for these topics: 98 URL records, 4 derived arXiv records, this
+one derived address and 3 unlocated records.
+
+**Readings versus brackets** (DESIGN, so that the counts below are reproducible). One bracket can yield more
+than one reading: (a) a split bracket ("P for X; F elsewhere", "P for X; S elsewhere") yields two readings,
+three times in these topics (arXiv 2511.19204v3, 2409.06366v4, 2505.05753v2); (b) the versioned bracket of
+arXiv 2510.25850 yields two P readings (versions 2 and 3); (c) a bracket after two sources joined by "and"
+gives each of the two records its own copy of the reading, four times (the abs and pdf URLs of 1512.08055; the
+abs and html URLs of 2107.07511; the bare identifiers 2603.13616 and 2503.10966; the two retail-scene generators,
+RoboBenchMart and MarketGen, which are two unlocated records). The 102 brackets therefore become 110 readings.
 
 **Special cases.**
 
@@ -168,14 +180,17 @@ generators, for which the text says no URLs were recorded) has `unlocated = true
 ## Acceptance criteria
 
 - [ ] The register holds one record for each of the 98 URLs of these nine topics, one for each of the four bare
-      arXiv identifiers, and one for each named source without an address.
-- [ ] Mark counts over the readings of this bead: 15 P, 63 F, 22 S, 2 U (102 bracketed readings).
+      arXiv identifiers, one for the scheme-less dial-mpc address, and one for each of the three named sources
+      without an address: 106 records.
+- [ ] Mark counts over the 102 brackets of these topics: 15 P, 63 F, 22 S, 2 U; over the 110 readings the
+      register holds after the rule above: 18 P, 66 F, 24 S, 2 U.
 - [ ] The two U sources are present, uncitable, and first in the reading-task report.
 - [ ] `arXiv 2510.25850` has separate readings for versions 2 and 3 with what each covers.
 - [ ] The seven figures of the table are typed; the 67.4% figure's derived ratio is recorded as derived.
 - [ ] The five asset collections carry `licence_verified = false`.
 - [ ] Every "what survives" figure of the hypothesis register that names a published source resolves to a
-      record of this bead or of NAB-12.
+      record of this bead or of NAB-12 (tested where the hypothesis records are entered: N00-11's resolution
+      check, which depends on this bead).
 
 ## Test plan
 
@@ -183,15 +198,21 @@ generators, for which the text says no URLs were recorded) has `unlocated = true
 
 `crates/frob-conformance/tests/sources_content.rs`, module `public_research`:
 
-- `ninety_eight_urls`: the frozen URL list of this bead equals the set of URL locators of the nine topics.
+- `ninety_eight_urls`: the frozen URL list of this bead equals the set of locators of the nine topics with
+  `locator_derived = false` and `unlocated = false`.
+- `record_count_is_106`: 98 URL records, 4 derived arXiv records, 1 derived scheme-less record (the dial-mpc
+  examples, one P reading), 3 unlocated records.
 - `per_topic_url_counts`: 7, 25, 10, 13, 8, 14, 12, 4, 5.
-- `mark_counts_15_63_22_2`.
+- `mark_counts`: 110 readings, per topic 11, 28, 11, 13, 8, 16, 12, 4, 7, with marks 18 P, 66 F, 24 S, 2 U;
+  the frozen bracket list gives 102 brackets with 15 P, 63 F, 22 S, 2 U.
+- `shared_bracket_copies`: the abs and pdf records of 1512.08055 each hold one F reading; RoboBenchMart and
+  MarketGen are two unlocated records, each with one P reading covering "abstract".
 - `u_sources_are_two`; `u_source_is_never_citable` (with NAB-10's grading function).
 - `versioned_readings_do_not_merge`: a citation `#minutes-and-dollars` resolves to version 2 only.
 - `derived_ratio`: 1/(1 − 0.674) = 3.067…, stored as 3.07 with `how = "derived"`.
 - `asset_licences_unverified`.
-- `no_url_is_fabricated`: every URL locator appears verbatim in this bead's text, and each derived arXiv
-  locator is built from an identifier that appears in it.
+- `no_url_is_fabricated`: every URL locator appears verbatim in this bead's text, and each derived locator is
+  built from an arXiv identifier or a scheme-less address that appears in it.
 
 ### End-to-end script and logging
 
@@ -200,8 +221,9 @@ URL is fetched. Logged per STD-E2E as `metric` lines with expected values.
 
 ### Known answers and negative controls
 
-Known answers: 98 URLs; 102 readings; 15 P, 63 F, 22 S, 2 U; together with NAB-12 the public register has 147
-URLs and 163 readings (39 P, 92 F, 30 S, 2 U) and no reading marked R or M. Negative controls: a hypothesis
+Known answers: 98 URLs; 106 records; 102 brackets (15 P, 63 F, 22 S, 2 U); 110 readings (18 P, 66 F, 24 S, 2 U); together
+with NAB-12 the public register has 147 URLs, 163 brackets (39 P, 92 F, 30 S, 2 U) and 174 readings (43 P,
+95 F, 34 S, 2 U), and no reading marked R or M. Negative controls: a hypothesis
 range restated as a gate threshold with an F citation (NAB-10 must fail the gate once it records a value); a
 U source given mark S without a `reread` entry (the frozen-mark comparison fails); the dollars figure cited
 against version 3.

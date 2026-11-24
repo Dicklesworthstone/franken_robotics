@@ -11,6 +11,10 @@ name = "frob-conformance"
 version = "0.0.1"
 
 [[package]]
+name = "frob-core"
+version = "0.0.1"
+
+[[package]]
 name = "xtask"
 version = "0.0.1"
 

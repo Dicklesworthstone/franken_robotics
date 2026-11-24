@@ -1,0 +1,5 @@
+repo: https://github.com/toml-lang/toml-test
+commit: 96fd088448ec0f4d9f061c730ed7854399c46faf
+toml_version: 1.0.0
+vendored_date: 2026-11-24
+license: MIT

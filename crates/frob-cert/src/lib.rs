@@ -11,22 +11,28 @@
         feature = "nc-skip-key-order",
         feature = "nc-interval-mul-nearest",
         feature = "nc-dup-key-first-wins",
+        feature = "shortcut-accept-on-hashes",
     ),
     any(not(feature = "gauntlet-mutations"), not(debug_assertions))
 ))]
 compile_error!(
-    "frob-cert negative-control nc-* features require debug builds with --features gauntlet-mutations"
+    "frob-cert negative-control features require debug builds with --features gauntlet-mutations"
 );
 
 pub mod bigint;
 pub mod blake3;
 pub mod interval;
 pub mod json;
+pub mod kinds;
 pub mod limits;
 pub mod rational;
 
 use crate::interval::INTERVAL_IMPL_ID;
 use crate::json::{JsonValue, parse_canonical, serialize_canonical};
+use crate::kinds::registry::{
+    CheckVerdict, Class, check_class_cap, dispatch, lookup, lookup_version, scope_for_claim_kind,
+};
+use crate::kinds::rules::{REFUSAL_UNKNOWN_PROOF_KIND, RuleId};
 use crate::limits::{COMPILED_LIMITS, Limits, RULE_KIND_UNKNOWN};
 
 /// Binary name reported in every trusted-base statement.
@@ -193,27 +199,172 @@ fn dispatch_m0_kind(val: &JsonValue, schema: Option<&str>) -> (Option<String>, V
             None,
             Verdict::Reject {
                 rule,
-                refusal: None,
+                refusal: Some(REFUSAL_UNKNOWN_PROOF_KIND),
                 path,
                 message,
             },
         ),
         Ok(Some(kind)) => {
-            // M0 closed registry (BD-026 item 8): no proof checkers are registered yet;
-            // every unknown proof kind is rejected with `kind.unknown`.
-            (
-                Some(kind.clone()),
-                Verdict::Reject {
-                    rule: RULE_KIND_UNKNOWN,
-                    refusal: None,
-                    path: if val.get("proof").is_some() {
-                        "$.proof.kind".to_string()
-                    } else {
-                        "$.kind".to_string()
-                    },
-                    message: format!("unknown proof kind {kind:?} in M0 registry"),
+            let kind_path = if val.get("proof").is_some() {
+                "$.proof.kind".to_string()
+            } else {
+                "$.kind".to_string()
+            };
+            let version = match val.get("proof").and_then(|p| p.get("version")) {
+                Some(v) => match v.as_i64() {
+                    Some(n) if n >= 0 && n <= i64::from(u32::MAX) => n as u32,
+                    _ => {
+                        return (
+                            Some(kind),
+                            Verdict::Reject {
+                                rule: RuleId::KindVersionUnknown.as_str(),
+                                refusal: RuleId::KindVersionUnknown.refusal_code(),
+                                path: "$.proof.version".to_string(),
+                                message: "proof.version must be a non-negative 32-bit integer"
+                                    .to_string(),
+                            },
+                        );
+                    }
                 },
-            )
+                None => 1,
+            };
+
+            // Check proof kind existence first (unknown kind -> kind.unknown, FROB-REF-823).
+            if lookup(&kind).is_none() {
+                #[cfg(feature = "shortcut-accept-on-hashes")]
+                {
+                    return (Some(kind), Verdict::Accept);
+                }
+                #[cfg(not(feature = "shortcut-accept-on-hashes"))]
+                {
+                    return (
+                        Some(kind.clone()),
+                        Verdict::Reject {
+                            rule: RuleId::KindUnknown.as_str(),
+                            refusal: Some(REFUSAL_UNKNOWN_PROOF_KIND),
+                            path: kind_path,
+                            message: format!("unknown proof kind {kind:?} in closed registry"),
+                        },
+                    );
+                }
+            }
+
+            let Some(row) = lookup_version(&kind, version) else {
+                return (
+                    Some(kind.clone()),
+                    Verdict::Reject {
+                        rule: RuleId::KindVersionUnknown.as_str(),
+                        refusal: Some(REFUSAL_UNKNOWN_PROOF_KIND),
+                        path: "$.proof.version".to_string(),
+                        message: format!(
+                            "unknown version {version} for proof kind {kind:?} in closed registry"
+                        ),
+                    },
+                );
+            };
+
+            // If claim.kind is present, resolve and enforce its scope via the closed table.
+            let scope = if let Some(claim_kind) = val
+                .get("claim")
+                .and_then(|c| c.get("kind"))
+                .and_then(JsonValue::as_str)
+            {
+                match scope_for_claim_kind(claim_kind) {
+                    Ok(s) => s,
+                    Err(CheckVerdict::Reject {
+                        rule,
+                        refusal,
+                        message,
+                        ..
+                    }) => {
+                        return (
+                            Some(kind),
+                            Verdict::Reject {
+                                rule: rule.as_str(),
+                                refusal,
+                                path: "$.claim.kind".to_string(),
+                                message,
+                            },
+                        );
+                    }
+                    Err(_) => unreachable!(),
+                }
+            } else {
+                // No claim envelope yet (minimal M0 proof snippet): use row's primary scope
+                // so version and status (disabled vs not-implemented) are still enforced.
+                row.scopes()[0]
+            };
+
+            if !row.allows_scope(scope) {
+                return (
+                    Some(kind.clone()),
+                    Verdict::Reject {
+                        rule: RuleId::KindOutOfScope.as_str(),
+                        refusal: Some(REFUSAL_UNKNOWN_PROOF_KIND),
+                        path: kind_path,
+                        message: format!(
+                            "proof kind {kind:?} v{version} is not permitted under scope {}",
+                            scope.as_str()
+                        ),
+                    },
+                );
+            }
+
+            // If claim.class is present, enforce the kind's class cap.
+            if let Some(class_str) = val
+                .get("claim")
+                .and_then(|c| c.get("class"))
+                .and_then(JsonValue::as_str)
+            {
+                let Some(claimed) = Class::parse(class_str) else {
+                    return (
+                        Some(kind),
+                        Verdict::Reject {
+                            rule: RuleId::SchemaFieldType.as_str(),
+                            refusal: None,
+                            path: "$.claim.class".to_string(),
+                            message: format!("unrecognized claim.class {class_str:?}"),
+                        },
+                    );
+                };
+                if let Err(CheckVerdict::Reject {
+                    rule,
+                    refusal,
+                    message,
+                    ..
+                }) = check_class_cap(row, claimed)
+                {
+                    return (
+                        Some(kind),
+                        Verdict::Reject {
+                            rule: rule.as_str(),
+                            refusal,
+                            path: "$.claim.class".to_string(),
+                            message,
+                        },
+                    );
+                }
+            }
+
+            let verdict = match dispatch(&kind, version, scope) {
+                Ok(_checker) => Verdict::Accept,
+                Err(CheckVerdict::Accept) => Verdict::Accept,
+                Err(CheckVerdict::Reject {
+                    rule,
+                    refusal,
+                    message,
+                    ..
+                }) => Verdict::Reject {
+                    rule: rule.as_str(),
+                    refusal,
+                    path: kind_path,
+                    message,
+                },
+                Err(CheckVerdict::Unsupported { kind: k, message, .. }) => {
+                    Verdict::Unsupported { kind: k, message }
+                }
+            };
+            (Some(kind), verdict)
         }
         Ok(None) => {
             if schema == Some("frob.cert/1") {
@@ -221,7 +372,7 @@ fn dispatch_m0_kind(val: &JsonValue, schema: Option<&str>) -> (Option<String>, V
                     None,
                     Verdict::Reject {
                         rule: RULE_KIND_UNKNOWN,
-                        refusal: None,
+                        refusal: Some(REFUSAL_UNKNOWN_PROOF_KIND),
                         path: "$.proof.kind".to_string(),
                         message: "frob.cert/1 bundle is missing proof.kind".to_string(),
                     },

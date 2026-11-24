@@ -57,10 +57,11 @@ The auditor produces **verdicts**, not claims. It does not run physics or attest
 - **Interval outward rounding (`PO-AUGUR-03`):** Property tests verifying that exact rational results lie inside every computed dyadic enclosure and that each bound is within 1 ULP (`2^-p`) of the exact bound, plus the stance-dual worked case (`[14/3, 6]` vs `[47/10, 6]` at `2^-40`).
 - **Canonical round-trip (`KA-222`):** Byte-exact re-serialization and negative-control mutation builds (`nc-skip-key-order`, `nc-interval-mul-nearest`, `nc-dup-key-first-wins`).
 - **Cross-implementation oracles (downstream, `N12-10`):** Differential comparison in `frob-conformance` against `fs-blake3` and FrankenSymPy.
+- **Test and evidence conventions (`STD-TEST`):** All unit, property, negative-control, and end-to-end tests in `frob-cert` follow `docs/testing/CONVENTIONS.md`.
 
 ## 10. Known Gaps
 
-- At the M0 floor (`BD-026`), no proof-kind checkers are registered yet; every bundle with a proof kind is rejected as `kind.unknown` until the closed proof-kind registry (`N12-02`), bundle schema validator (`N12-03`), report/exit contract (`N12-04`), kernel checkers (`BD-027`), and mission checkers (`BD-132`) land.
+- The closed proof-kind registry (`frob.cert.kinds/1`, 27 kinds, `RuleId` catalogue, `FROB-REF-823` / `FROB-REF-834`, closed `claim.kind` scope table) is compiled in (`N12-02`), while individual proof-kind checkers (`BD-027`, `BD-132`, `N12-13`..`N12-19`, `N12p1-01`, `N12p2-02`, `BD-381`), full bundle schema validation (`N12-03`), and the expanded report/exit CLI (`N12-04`) land in downstream beads; unregistered kinds reject (`kind.unknown`), and registered `not-implemented` kinds return `unsupported`, never `accept`.
 - Transcendental functions (`sin`, `cos`, `exp`, `log`) are intentionally outside the M0 interval set and yield `unsupported` unless rewritten in algebraic form by the producer.
 - Multiplication and division use straightforward schoolbook and Knuth Algorithm D routines (within the 12,000-line readability cap); asymptotically faster algorithms (e.g., Karatsuba) are deferred unless profiling shows a certificate budget breach.
 - The fourth clause of `GATE-WS-03` (corpus-wide verdict parity between standalone `frob-verify` and in-daemon `prove.verify`) is measured at M1 by `N25bp4-01`.

@@ -29,3 +29,29 @@ and their review continues beside it.
   Status changes (`br update --status`, `br close`) are not touched by the sync.
 - Every sibling project (frankensim, fastmcp_rust, asupersync and the rest) is the owner's: a change a Bead needs
   in a sibling is made in that sibling's repository, by the upstream Beads (`FD-…`), not worked around here.
+
+## Swarm rules (binding on every agent)
+
+The goal is working code. A Bead is done when its code and its tests exist and pass, not when a report says so.
+
+- **Claim, one at a time.** `br update <id> --claim --actor <YourAgentMailName> --no-auto-flush`. Hold one Bead in
+  `in_progress` at a time. Reserve the files you will edit through Agent Mail before editing them.
+- **Real code, real tests, same Bead.** Write what the Bead's technical approach and test plan name. Forbidden:
+  `todo!()`/`unimplemented!()` or stub bodies in a commit, tests that assert nothing or were weakened to pass,
+  fixtures or mocks presented as live proof, hard-coded success paths, golden files regenerated to force green,
+  silenced stderr in a command whose output is cited as evidence.
+- **Code first, builds through rch only.** `cargo` is shimmed to the rch fleet; never call it by absolute path. An
+  agent runs at most `cargo check -p <crate> --all-targets` on its own crate before handing off. The orchestrator
+  runs the test suites centrally. Shell and Python tests that build nothing may be run by the author.
+- **Commit only your own paths**, after `cargo check` passes (`git add <your paths>`, never `git add -A`). Never
+  stash, reset, revert or rewrite another agent's changes; other agents commit to `main` all the time.
+- **Hand off, never close.** When the code and tests are written and every acceptance item maps to a test, run
+  `br update <id> --status batch_pending --actor <You> --no-auto-flush --transition-comment "<commit sha>; tests:
+  <exact test names>; acceptance: <item -> test>; not done: <anything>"`. Only the orchestrator closes, after it
+  re-runs the tests; the tracker refuses every other close. An honest "not done: X" keeps the Bead open and is
+  worth more than a false close.
+- **No process artifacts.** No new ledgers, dashboards, certificates, status reports or meta-Beads unless a Bead
+  names them as its deliverable. Guard and refusal paths never close a Bead whose positive capability is missing.
+- **Staging files and sync.** Do not edit `planning/fable/beads/defs/` or run `sync_beads.py`; report a wrong Bead
+  to the orchestrator by Agent Mail instead. Do not change sibling repositories unless assigned an `FD-…` Bead.
+- **Talk through Agent Mail** (project key: this repository's absolute path). Check your inbox between Beads.

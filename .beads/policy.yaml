@@ -1,0 +1,61 @@
+# Closure and workflow policy for the implementation swarm (2026-11-24).
+#
+# - The only path to `closed` is `batch_pending -> closed` under the `batch_verify` gate, which the orchestrator
+#   alone reports after re-running the bead's tests itself. The poison gate `must_transition_through_batch_pending`
+#   is never reported as pass; without those rows `br close` would let `open -> closed` through.
+# - `require_acceptance_criteria_satisfied` is off: the acceptance criteria of these beads are a section of the
+#   description, not br's acceptance-criteria field, so the verifier checks them by hand and cites the evidence.
+# - Every mutation carries `--actor <AgentMailName>`.
+
+allow_bypass: false
+close_policy:
+  require_close_reason:
+    enabled: true
+    min_length: 20
+  require_acceptance_criteria_satisfied:
+    enabled: false
+  forbid_self_close_after_in_progress:
+    enabled: true
+workflow:
+  strict: true
+  statuses: [open, in_progress, batch_pending, rework, blocked, deferred, closed, tombstone]
+  status_groups:
+    ready: [open, rework]
+  transitions:
+    initial: [open, blocked]
+    open: [in_progress, blocked, deferred]
+    in_progress: [batch_pending, blocked, open]
+    batch_pending: [rework, closed]
+    rework: [in_progress, blocked, deferred]
+    blocked: [open, rework]
+    deferred: [open]
+    closed: [open]
+  required_fields:
+    "in_progress -> batch_pending": [transition_comment]
+    "batch_pending -> rework": [transition_comment]
+    "batch_pending -> closed": [transition_comment]
+  gates:
+    "open -> closed":
+      require_all: [must_transition_through_batch_pending]
+    "in_progress -> closed":
+      require_all: [must_transition_through_batch_pending]
+    "rework -> closed":
+      require_all: [must_transition_through_batch_pending]
+    "blocked -> closed":
+      require_all: [must_transition_through_batch_pending]
+    "deferred -> closed":
+      require_all: [must_transition_through_batch_pending]
+    "batch_pending -> closed":
+      require_all: [batch_verify]
+  capacity:
+    counting:
+      hierarchy: leaf_work
+    statuses:
+      in_progress:
+        soft: 6
+        hard: 8
+    groups:
+      verification_debt:
+        statuses: [in_progress, batch_pending]
+        soft: 12
+        hard: 16

@@ -443,7 +443,7 @@ else
   elif command -v gtimeout >/dev/null 2>&1; then
     TIMEOUT_CMD=(gtimeout 1200)
   fi
-  run_logged_cmd "cargo_check" "0" env "CARGO_TARGET_DIR=${SKELETON_TARGET_DIR}" "${TIMEOUT_CMD[@]}" cargo check --manifest-path "${TARGET_ROOT}/Cargo.toml" --workspace --all-targets
+  run_logged_cmd "cargo_check" "0" env "CARGO_TARGET_DIR=${SKELETON_TARGET_DIR}" ${TIMEOUT_CMD[@]+"${TIMEOUT_CMD[@]}"} cargo check --manifest-path "${TARGET_ROOT}/Cargo.toml" --workspace --all-targets
   if [ "${LAST_EXIT}" -eq 0 ]; then
     record_assert "cargo_check_workspace" "exit" "pass" "{\"observed\":0,\"expected\":0,\"wall_ms\":${LAST_WALL_MS}}"
   else

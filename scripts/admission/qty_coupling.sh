@@ -242,7 +242,7 @@ def resolve_inputs(opts: dict) -> tuple[Path, str, str]:
 
 def git_capture(repo: Path, args: list[str], *, text: bool = True) -> subprocess.CompletedProcess:
     return subprocess.run(
-        ["git", "-C", str(repo), *args],
+        ["git", "--no-optional-locks", "-C", str(repo), *args],
         capture_output=True,
         text=text,
     )
@@ -291,8 +291,7 @@ def compute_tree_hash(repo: Path) -> str:
     ls_proc = git_capture(repo, ["ls-files", "-z"], text=False)
     if ls_proc.returncode != 0:
         raise RuntimeError(f"git ls-files -z failed: {ls_proc.stderr!r}")
-    raw_paths = [p for p in ls_proc.stdout.split(b"\x00") if p]
-    raw_paths.sort()
+    raw_paths = sorted(set(p for p in ls_proc.stdout.split(b"\x00") if p))
 
     proc = subprocess.Popen(
         ["b3sum", "--no-names"],
@@ -318,8 +317,18 @@ def compute_tree_hash(repo: Path) -> str:
                 proc.stdin.write(b"\x00")
                 proc.stdin.write(struct.pack("<Q", len(target_b)))
                 proc.stdin.write(target_b)
+            elif stat.S_ISDIR(st.st_mode):
+                stage = git_capture(repo, ["ls-files", "--stage", "-z", "--", rel_s], text=False)
+                oid = b""
+                if stage.returncode == 0 and stage.stdout:
+                    first = stage.stdout.split(b"\x00")[0].split(b"\t")[0].split(b" ")
+                    if len(first) >= 2:
+                        oid = first[1]
+                proc.stdin.write(b"\x00")
+                proc.stdin.write(struct.pack("<Q", len(oid)))
+                proc.stdin.write(oid)
             else:
-                exec_byte = b"\x01" if (st.st_mode & stat.S_IXUSR) else b"\x00"
+                exec_byte = b"\x01" if (st.st_mode & 0o111) else b"\x00"
                 content = full.read_bytes()
                 proc.stdin.write(exec_byte)
                 proc.stdin.write(struct.pack("<Q", len(content)))
@@ -396,7 +405,7 @@ def cat_file_batch_extract(repo: Path, rev: str, paths: list[str], export_dir: P
         return
     query = "".join(f"{rev}:{p}\n" for p in paths).encode("utf-8")
     proc = subprocess.run(
-        ["git", "-C", str(repo), "cat-file", "--batch"],
+        ["git", "--no-optional-locks", "-C", str(repo), "cat-file", "--batch"],
         input=query,
         capture_output=True,
     )
@@ -431,7 +440,7 @@ def export_commit_readonly(repo: Path, rev: str, export_dir: Path) -> None:
 
     if len(all_paths) <= SMALL_REPO_FILE_THRESHOLD:
         p1 = subprocess.Popen(
-            ["git", "-C", str(repo), "archive", rev],
+            ["git", "--no-optional-locks", "-C", str(repo), "archive", rev],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )
@@ -818,7 +827,21 @@ def main() -> int:
     dirty = False
     tree_hash: str | None = None
     if working_tree:
-        dirty = len(before_status) > 0
+        if rev != before_head:
+            print(
+                f"qty_coupling.sh: --working-tree requires requested rev ({rev}) to match "
+                f"checkout HEAD ({before_head})",
+                file=sys.stderr,
+            )
+            return 2
+        tracked_stat = git_capture(repo_real, ["status", "--porcelain", "--untracked-files=no"], text=False)
+        if tracked_stat.returncode != 0:
+            print(
+                f"qty_coupling.sh: failed to check tracked dirty state of {repo_arg}",
+                file=sys.stderr,
+            )
+            return 2
+        dirty = len(tracked_stat.stdout.strip()) > 0
         if dirty:
             tree_hash = compute_tree_hash(repo_real)
         export_working_tree_readonly(repo_real, export_dir)

@@ -15,6 +15,7 @@ TESTS=(
   receipt_has_no_absolute_path.sh
   lock_parses_and_names_T.sh
   drift_class_table.sh
+  receipt_regressions.sh
 )
 
 PASSED=0

@@ -251,17 +251,18 @@ LAST_WALL_MS=0
 LAST_STDOUT=""
 LAST_STDERR=""
 
-run_logged_cmd() {
-  local label="$1"
-  local expected_exit="$2"
-  shift 2
+run_logged_cmd_in_dir() {
+  local work_dir="$1"
+  local label="$2"
+  local expected_exit="$3"
+  shift 3
   local seq_hint t0 t1 rc out_f err_f
   seq_hint="$(cat "${WORK_TMP}/seq")"
   out_f="${ARTIFACTS_DIR}/${CURRENT_STEP}.${seq_hint}.${label}.stdout"
   err_f="${ARTIFACTS_DIR}/${CURRENT_STEP}.${seq_hint}.${label}.stderr"
   t0="$(now_ms)"
   set +e
-  "$@" >"${out_f}" 2>"${err_f}"
+  (cd "${work_dir}" && "$@") >"${out_f}" 2>"${err_f}"
   rc=$?
   set -e
   t1="$(now_ms)"
@@ -292,10 +293,18 @@ PYEOF
   emit_json_line "${CURRENT_STEP}" "cmd" "${payload}"
 }
 
+run_logged_cmd() {
+  local label="$1"
+  local expected_exit="$2"
+  shift 2
+  run_logged_cmd_in_dir "${PWD}" "${label}" "${expected_exit}" "$@"
+}
+
 # Script-level start event.
 REPO_COMMIT="$(git --no-optional-locks -C "${REPO_ROOT}" rev-parse HEAD 2>/dev/null || echo 'unknown')"
 REPO_DIRTY_FLAG="false"
-if [ -n "$(git --no-optional-locks -C "${REPO_ROOT}" status --porcelain --untracked-files=no 2>/dev/null || true)" ]; then
+REPO_DIRTY_OUT="$(git --no-optional-locks -C "${REPO_ROOT}" status --porcelain --untracked-files=no 2>/dev/null || true)"
+if [ -n "${REPO_DIRTY_OUT}" ]; then
   REPO_DIRTY_FLAG="true"
 fi
 emit_json_line "" "start" "$(python3 - "${REPO_COMMIT}" "${REPO_DIRTY_FLAG}" "${SCRATCH_ONLY}" <<'PYEOF'
@@ -631,6 +640,10 @@ else
   FSIM_ABS="$(cd "${REPO_ROOT}/../frankensim" && pwd)"
   ASUP_ABS="$(cd "${REPO_ROOT}/../asupersync" && pwd)"
   cat > "${PROBE_DIR}/Cargo.toml" <<EOF
+[workspace]
+resolver = "3"
+members = ["."]
+
 [package]
 name = "frob-salt-probe"
 version = "0.0.1"
@@ -645,9 +658,10 @@ EOF
   printf 'pub fn probe() {}\n' > "${PROBE_DIR}/src/lib.rs"
   cp "${REPO_ROOT}/rust-toolchain.toml" "${PROBE_DIR}/rust-toolchain.toml"
   PROBE_TARGET="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-bd001-salt-probe"
-  # Run with FRANKENSIM_DEPGRAPH_SALT and FRANKENSIM_DEPGRAPH_RECEIPT unset, into private target dir.
+  # Run from PROBE_DIR (outside REPO_ROOT) with FRANKENSIM_DEPGRAPH_SALT and
+  # FRANKENSIM_DEPGRAPH_RECEIPT unset so Cargo does not inherit REPO_ROOT/.cargo/config.toml.
   # Never modifies ../frankensim (lockfile lives in PROBE_DIR, target in PROBE_TARGET).
-  run_logged_cmd "fs_la_salt_removed_probe" "101" env -u FRANKENSIM_DEPGRAPH_SALT -u FRANKENSIM_DEPGRAPH_RECEIPT "CARGO_TARGET_DIR=${PROBE_TARGET}" cargo check --manifest-path "${PROBE_DIR}/Cargo.toml" --offline
+  run_logged_cmd_in_dir "${PROBE_DIR}" "fs_la_salt_removed_probe" "101" env -u FRANKENSIM_DEPGRAPH_SALT -u FRANKENSIM_DEPGRAPH_RECEIPT "CARGO_TARGET_DIR=${PROBE_TARGET}" cargo check --manifest-path "${PROBE_DIR}/Cargo.toml" --offline
   if [ "${LAST_EXIT}" -ne 0 ] && grep -q "FRANKENSIM_DEPGRAPH_SALT" "${LAST_STDERR}"; then
     record_control "salt_removed_fs_la_probe" "true" '{"plant":"salt-removed"}'
   else

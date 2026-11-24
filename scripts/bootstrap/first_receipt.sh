@@ -140,9 +140,10 @@ DRIFT_REASON_ORDER = ("dirty", "retreated", "diverged", "unknown-pin")
 WORKSPACES = (
     ("core", "."),
     ("apps", "apps"),
-    ("bindings", "bindings"),
-    ("derive", "derive"),
-    ("spark", "spark"),
+    ("bindings", "bindings/frob-gymnasium"),
+    ("derive", "derive/frob-derive"),
+    ("spark-cuda", "spark/frob-spark-cuda"),
+    ("spark-metal", "spark/frob-spark-metal"),
     ("worker", "worker"),
 )
 
@@ -718,11 +719,26 @@ def build_receipt(root_dir: str, lock_path: str):
                 f"cargo tree -d failed in workspace {ws_name}: "
                 f"{tree_proc.stderr.decode('utf-8', 'replace').strip()}"
             )
-        # Strip checkout parent prefix from stdout only if a local path leaked into a duplicate line.
+        # Strip checkout root and parent prefixes (both realpath and abspath,
+        # longest first) so symlinked roots (/var -> /private/var) and renamed
+        # checkout directories produce identical command output hashes.
         stdout_norm = tree_proc.stdout
-        parent_prefix = os.fsencode(os.path.dirname(os.path.abspath(root_dir)) + os.sep)
-        if parent_prefix in stdout_norm:
-            stdout_norm = stdout_norm.replace(parent_prefix, b"../")
+        root_variants = {os.path.abspath(root_dir), os.path.realpath(root_dir)}
+        parent_variants = {os.path.dirname(p) for p in root_variants}
+        replacements = []
+        for rp in root_variants:
+            rp_clean = rp.rstrip(os.sep)
+            if rp_clean:
+                replacements.append((os.fsencode(rp_clean + os.sep), b"./"))
+                replacements.append((os.fsencode(rp_clean), b"."))
+        for pp in parent_variants:
+            pp_clean = pp.rstrip(os.sep)
+            if pp_clean:
+                replacements.append((os.fsencode(pp_clean + os.sep), b"../"))
+        replacements.sort(key=lambda pair: len(pair[0]), reverse=True)
+        for prefix, repl in replacements:
+            if prefix in stdout_norm:
+                stdout_norm = stdout_norm.replace(prefix, repl)
         commands.append(
             {
                 "argv": tree_argv if ws_name == "core" else ["cargo", "tree", "-d", "--manifest-path", f"{ws_rel}/Cargo.toml"],

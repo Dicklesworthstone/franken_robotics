@@ -370,10 +370,10 @@ def classify_checkout(repo_dir: str, pin_rev):
     if is_dirty_tracked(repo_dir):
         return ("drift", "dirty")
 
-    if not pin_rev or pin_rev == "unadmitted":
+    if pin_rev == "unadmitted":
         return ("on-pin", None)
 
-    if not HEX40_RE.match(pin_rev):
+    if not isinstance(pin_rev, str) or not HEX40_RE.match(pin_rev):
         return ("drift", "unknown-pin")
 
     h = head_rev(repo_dir)
@@ -479,6 +479,8 @@ def classify_sibling_own_lock(sib_dir: str, lock_pin_rev):
     pairs = [classify_checkout(sib_dir, lock_pin_rev)]
     sib_parent = os.path.dirname(os.path.abspath(sib_dir))
     for dep_name, dep_pin in entries:
+        if not dep_name or dep_name in (".", "..") or "/" in dep_name or "\\" in dep_name:
+            fail(f"invalid sibling dependency name in {own_file}: {dep_name!r}")
         dep_dir = os.path.join(sib_parent, dep_name)
         if os.path.isdir(dep_dir) and (
             os.path.exists(os.path.join(dep_dir, ".git"))
@@ -690,11 +692,13 @@ def build_receipt(root_dir: str, lock_path: str):
             if not os.path.isfile(ws_lock):
                 fail("core Cargo.lock is missing; run cargo check and commit Cargo.lock first")
         else:
-            if not (os.path.isfile(ws_manifest) and os.path.isfile(ws_lock)):
+            if not os.path.isfile(ws_manifest):
                 continue
+            if not os.path.isfile(ws_lock):
+                fail(f"annex workspace {ws_name} ({ws_rel}/Cargo.toml) is missing Cargo.lock")
 
-        # Verify lockfile integrity via cargo metadata --locked --format-version 1 (read-only).
-        meta_proc = run_cargo_ro(ws_dir, ["cargo", "metadata", "--locked", "--format-version", "1"])
+        # Verify lockfile integrity via cargo metadata --locked --offline --format-version 1 (read-only).
+        meta_proc = run_cargo_ro(ws_dir, ["cargo", "metadata", "--locked", "--offline", "--format-version", "1"])
         if meta_proc.returncode != 0:
             fail(
                 f"cargo metadata --locked failed in workspace {ws_name}: "

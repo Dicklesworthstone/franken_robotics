@@ -207,4 +207,127 @@ assert "run_logged_cmd_in_dir" in block or 'cd "${PROBE_DIR}"' in block, (
 )
 PYEOF
 
+# ---------------------------------------------------------------------------
+# Regression 4: empty/missing pin in stack lock or sibling own_lock fails closed
+#               as drift/unknown-pin (never silently on-pin); explicit
+#               "unadmitted" remains on-pin.
+# ---------------------------------------------------------------------------
+R4_BASE="${TMP}/empty_pin"
+mkdir -p "${R4_BASE}"
+REV_R4_A="$(create_synthetic_sibling "${R4_BASE}/sib_empty" "sib-empty")"
+REV_R4_B="$(create_synthetic_sibling "${R4_BASE}/sib_const_empty" "sib-const-empty")"
+REV_R4_N="$(create_synthetic_sibling "${R4_BASE}/dep_nopin" "dep-nopin")"
+cat > "${R4_BASE}/sib_const_empty/constellation.lock" <<'EOF'
+{
+  "schema": "frankensim-constellation-lock-v2",
+  "libraries": [
+    {"lib": "dep_nopin", "version": "0.1.0", "git_head": ""}
+  ]
+}
+EOF
+REV_R4_B="$(git_commit_all "${R4_BASE}/sib_const_empty" "add empty-pin constellation.lock")"
+REV_R4_U="$(create_synthetic_sibling "${R4_BASE}/sib_unadmitted" "sib-unadmitted")"
+: "${REV_R4_A}" "${REV_R4_N}" "${REV_R4_U}"
+
+LOCK_R4="$(cat <<EOF
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-EMPTY"
+name = "sib-empty"
+posture = "consume-path"
+path = "../sib_empty"
+git_rev = ""
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-E1"
+receipt = ""
+fallback = "fb"
+
+[[foundation]]
+id = "FD-CONST-EMPTY"
+name = "sib-const-empty"
+posture = "consume-path"
+path = "../sib_const_empty"
+git_rev = "${REV_R4_B}"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-E2"
+receipt = ""
+fallback = "fb"
+
+[[foundation]]
+id = "FD-UNADM"
+name = "sib-unadmitted"
+posture = "consume-path"
+path = "../sib_unadmitted"
+git_rev = "unadmitted"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-E3"
+receipt = ""
+fallback = "fb"
+EOF
+)"
+create_synthetic_workspace "${R4_BASE}/repo" "${LOCK_R4}" "nightly-2026-08-31" "" >/dev/null
+"${FIRST_RECEIPT}" --stdout --root "${R4_BASE}/repo" > "${TMP}/r4_receipt.json"
+python3 - "${TMP}/r4_receipt.json" <<'PYEOF'
+import json, sys
+r = json.load(open(sys.argv[1], "r", encoding="utf-8"))
+by_fd = {s["fd"]: s["own_lock"] for s in r["siblings"]}
+assert by_fd["FD-EMPTY"]["class"] == "drift" and by_fd["FD-EMPTY"]["reason"] == "unknown-pin" and by_fd["FD-EMPTY"]["agrees"] is False, (
+    f"empty git_rev failed open: {by_fd['FD-EMPTY']}"
+)
+assert by_fd["FD-CONST-EMPTY"]["class"] == "drift" and by_fd["FD-CONST-EMPTY"]["reason"] == "unknown-pin" and by_fd["FD-CONST-EMPTY"]["agrees"] is False, (
+    f"empty constellation.lock git_head failed open: {by_fd['FD-CONST-EMPTY']}"
+)
+assert by_fd["FD-UNADM"]["class"] == "on-pin" and by_fd["FD-UNADM"]["reason"] is None and by_fd["FD-UNADM"]["agrees"] is True, (
+    f"explicit unadmitted sentinel broken: {by_fd['FD-UNADM']}"
+)
+PYEOF
+
+# ---------------------------------------------------------------------------
+# Regression 5: annex workspace with Cargo.toml present but Cargo.lock missing
+#               must fail closed instead of silently disappearing from lockfiles[].
+# ---------------------------------------------------------------------------
+R5_BASE="${TMP}/annex_missing_lock"
+mkdir -p "${R5_BASE}"
+REV_R5="$(create_synthetic_sibling "${R5_BASE}/asupersync" "asupersync" "0.7.0")"
+LOCK_R5="$(cat <<EOF
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-ASUP"
+name = "asupersync"
+posture = "consume"
+path = "../asupersync"
+git_rev = "${REV_R5}"
+version = "=0.7.0"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-ASUP-01"
+receipt = ""
+fallback = "fb"
+EOF
+)"
+create_synthetic_workspace "${R5_BASE}/repo" "${LOCK_R5}" "nightly-2026-08-31" "" >/dev/null
+mkdir -p "${R5_BASE}/repo/apps/src"
+cat > "${R5_BASE}/repo/apps/Cargo.toml" <<'EOF'
+[workspace]
+resolver = "3"
+members = ["."]
+
+[package]
+name = "frob"
+version = "0.0.1"
+edition = "2024"
+EOF
+printf 'fn main() {}\n' > "${R5_BASE}/repo/apps/src/main.rs"
+set +e
+R5_OUT="$("${FIRST_RECEIPT}" --stdout --root "${R5_BASE}/repo" 2>&1)"
+R5_RC=$?
+set -e
+if [ "${R5_RC}" -eq 0 ]; then
+  fail_test "annex apps/Cargo.toml without Cargo.lock silently exited 0 instead of failing closed"
+fi
+if ! printf '%s\n' "${R5_OUT}" | grep -q "Cargo.lock"; then
+  fail_test "expected missing Cargo.lock diagnostic for annex workspace, got: ${R5_OUT}"
+fi
+
 pass_test

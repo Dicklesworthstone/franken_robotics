@@ -84,6 +84,15 @@ ensure_tool() {
   fi
   local tbase="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-e2e"
   local cand
+  if [ -n "${CARGO_TARGET_DIR:-}" ]; then
+    for cand in "${CARGO_TARGET_DIR}/debug/frob-e2e" "${CARGO_TARGET_DIR}/release/frob-e2e"; do
+      if [ -x "$cand" ]; then
+        FROB_E2E_TOOL="$cand"
+        export FROB_E2E_TOOL
+        return 0
+      fi
+    done
+  fi
   for cand in \
     "${REPO_ROOT}/target/debug/frob-e2e" \
     "${REPO_ROOT}/target/release/frob-e2e" \

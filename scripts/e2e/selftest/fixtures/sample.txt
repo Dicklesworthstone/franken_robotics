@@ -1,0 +1,2 @@
+synthetic selftest fixture file
+line 2: exact bytes for sha256 digest
